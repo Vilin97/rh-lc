@@ -18,7 +18,7 @@ variable {Ω : Type} [Field Ω] [ValuativeRel Ω] [TopologicalSpace Ω] [IsValua
 
 theorem finrank_inf_maximalUnramified [IsSepClosed Ω] [CharZero F] (E : IntermediateField F Ω)
     [FiniteDimensional F E] :
-    Module.finrank F ↥(E ⊓ maximalUnramifiedExtension F Ω) = residueDegree F E := by
+    Module.finrank F ↥(E ⊓ maximalUnramifiedExtension F Ω) = ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) := by
   set M := E ⊓ maximalUnramifiedExtension F Ω with hM
   have hME : M ≤ E := inf_le_left
   haveI : FiniteDimensional F M :=
@@ -39,11 +39,11 @@ theorem finrank_inf_maximalUnramified [IsSepClosed Ω] [CharZero F] (E : Interme
     rw [← ramificationIndex_mul_residueDegree F M, he, one_mul]
     exact Nat.le_of_dvd (residueDegree_pos F E) (residueDegree_dvd_of_le hME)
   · obtain ⟨ξ, hξ⟩ := exists_isPrimitiveRoot_card_residueField_sub_one (L := E)
-    have hξ' : IsPrimitiveRoot ((ξ : E) : Ω) (Nat.card 𝓀[F] ^ residueDegree F E - 1) := by
+    have hξ' : IsPrimitiveRoot ((ξ : E) : Ω) (Nat.card 𝓀[F] ^ ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) - 1) := by
       rw [← card_residueField_eq_pow_residueDegree F E]
       exact (hξ.map_of_injective (f := (𝒪[E]).subtype) Subtype.val_injective).map_of_injective
         (f := E.val) Subtype.val_injective
-    have hf0 : residueDegree F E ≠ 0 := (residueDegree_pos F E).ne'
+    have hf0 : ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) ≠ 0 := (residueDegree_pos F E).ne'
     rw [← (isUnramifiedSubextension_adjoin hf0 hξ').2]
     exact IntermediateField.finrank_le_of_le_right
       (le_inf (adjoin_simple_le_iff.mpr (ξ : E).2) (adjoin_le_maximalUnramifiedExtension hf0 hξ'))

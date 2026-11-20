@@ -208,7 +208,7 @@ theorem exists_nat_charArtinConductor_inducedFun (M : IntermediateField K L)
     (ψ : (L ≃ₐ[M] L) →* ℂˣ) :
     ∃ n : ℕ, charArtinConductor K L (inducedFun fun h ↦ (ψ h : ℂ)) = n := by
   obtain ⟨m, hm⟩ := exists_nat_artinConductor_charRep_eq ψ
-  refine ⟨residueDegree K M * differentExponent K M + residueDegree K M * m, ?_⟩
+  refine ⟨((IsLocalRing.maximalIdeal 𝒪[M]).inertiaDeg (𝒪[K])) * differentExponent K M + ((IsLocalRing.maximalIdeal 𝒪[M]).inertiaDeg (𝒪[K])) * m, ?_⟩
   have h1 : (fun h ↦ (ψ h : ℂ)) = (charRep ψ).character :=
     funext fun h ↦ (character_charRep ψ h).symm
   rw [h1, charArtinConductor_inducedFun, ← artinConductor_eq_charArtinConductor, hm,

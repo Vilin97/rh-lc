@@ -142,7 +142,7 @@ theorem ord_conj (x : E) : ord (conj K E x) = ord x := by
   have h1 := ord_norm (K := K) (conj K E x)
   have h2 := ord_norm (K := K) x
   rw [norm_conj] at h1
-  have hf : (residueDegree K E : ℤ) ≠ 0 := by exact_mod_cast (residueDegree_pos K E).ne'
+  have hf : (((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[K])) : ℤ) ≠ 0 := by exact_mod_cast (residueDegree_pos K E).ne'
   exact mul_left_cancel₀ hf (h1.symm.trans h2)
 
 theorem conj_mem_valBall_iff {n : ℤ} {x : E} : conj K E x ∈ valBall E n ↔ x ∈ valBall E n := by
@@ -189,7 +189,7 @@ theorem map_conj_eq [MeasurableSpace E] [BorelSpace E] (μ : Measure E) [μ.IsAd
     Measure.map_apply continuous_conj.measurable (measurableSet_valBall 0), conj_preimage_valBall,
     coe_valBall_zero, ← eq_smul_haarIntegers μ]
 
-theorem residueCard_eq_pow : residueCard E = residueCard K ^ residueDegree K E :=
+theorem residueCard_eq_pow : residueCard E = residueCard K ^ ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[K])) :=
   card_residueField_eq_pow_residueDegree K E
 
 theorem modulus_norm (x : E) : modulus (Algebra.norm K x) = modulus x := by

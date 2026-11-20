@@ -45,8 +45,8 @@ open Classical in
 
 theorem artinCharacter_restrictScalars (h : L ≃ₐ[M] L) :
     (artinCharacter K L (h.restrictScalars K) : ℂ) =
-      residueDegree K M * artinCharacter M L h +
-        if h = 1 then (Nat.card (L ≃ₐ[M] L) : ℂ) * (residueDegree K M * differentExponent K M : ℕ)
+      ((IsLocalRing.maximalIdeal 𝒪[M]).inertiaDeg (𝒪[K])) * artinCharacter M L h +
+        if h = 1 then (Nat.card (L ≃ₐ[M] L) : ℂ) * (((IsLocalRing.maximalIdeal 𝒪[M]).inertiaDeg (𝒪[K])) * differentExponent K M : ℕ)
         else 0 := by
   by_cases h1 : h = 1
   · subst h1
@@ -68,8 +68,8 @@ theorem artinCharacter_restrictScalars (h : L ≃ₐ[M] L) :
 
 theorem charArtinConductor_inducedFun (ψ : (L ≃ₐ[M] L) → ℂ) :
     charArtinConductor K L (inducedFun ψ) =
-      ((residueDegree K M * differentExponent K M : ℕ) : ℂ) * ψ 1 +
-        residueDegree K M * charArtinConductor M L ψ := by
+      ((((IsLocalRing.maximalIdeal 𝒪[M]).inertiaDeg (𝒪[K])) * differentExponent K M : ℕ) : ℂ) * ψ 1 +
+        ((IsLocalRing.maximalIdeal 𝒪[M]).inertiaDeg (𝒪[K])) * charArtinConductor M L ψ := by
   classical
   have hG : (Nat.card (L ≃ₐ[K] L) : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr Nat.card_pos.ne'
   have hH : (Nat.card (L ≃ₐ[M] L) : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr Nat.card_pos.ne'
@@ -103,8 +103,8 @@ theorem charArtinConductor_inducedFun (ψ : (L ≃ₐ[M] L) → ℂ) :
       (Finset.sum_congr rfl fun h _ ↦ hinner t h)), Finset.sum_const, Finset.card_univ,
       nsmul_eq_mul, Nat.card_eq_fintype_card]
   have hres : ∑ h : L ≃ₐ[M] L, ψ h * (artinCharacter K L (h.restrictScalars K) : ℂ) =
-      residueDegree K M * ∑ h : L ≃ₐ[M] L, ψ h * artinCharacter M L h +
-        ψ 1 * ((Nat.card (L ≃ₐ[M] L) : ℂ) * (residueDegree K M * differentExponent K M : ℕ)) := by
+      ((IsLocalRing.maximalIdeal 𝒪[M]).inertiaDeg (𝒪[K])) * ∑ h : L ≃ₐ[M] L, ψ h * artinCharacter M L h +
+        ψ 1 * ((Nat.card (L ≃ₐ[M] L) : ℂ) * (((IsLocalRing.maximalIdeal 𝒪[M]).inertiaDeg (𝒪[K])) * differentExponent K M : ℕ)) := by
     simp_rw [artinCharacter_restrictScalars, mul_add, Finset.sum_add_distrib, mul_ite, mul_zero,
       Finset.sum_ite_eq', if_pos (Finset.mem_univ _), Finset.mul_sum]
     congr 1

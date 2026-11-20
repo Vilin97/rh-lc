@@ -17,7 +17,7 @@ variable (K L : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K]
 
 theorem exists_tame_structure (he : Nat.Coprime (ramificationIndex K L) (ringChar 𝓀[K])) :
     ∃ T : IntermediateField K L, IsUnramified K T ∧
-      Module.finrank K T = residueDegree K L ∧ residueDegree T L = 1 ∧
+      Module.finrank K T = ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) ∧ ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[T])) = 1 ∧
       ramificationIndex T L = ramificationIndex K L ∧
       Module.finrank T L = ramificationIndex K L ∧
       ∃ π : 𝒪[T], Irreducible π ∧ ∃ α : 𝒪[L], Irreducible α ∧

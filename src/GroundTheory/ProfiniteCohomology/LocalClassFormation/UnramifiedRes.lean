@@ -64,13 +64,13 @@ theorem ramificationIndex_right_eq :
   rw [IsUnramified.ramificationIndex_eq_one (K := K') (L := L'), mul_one] at h2
   rw [← h1, h2]
 
-theorem card_residueField_eq_pow : Nat.card 𝓀[K'] = Nat.card 𝓀[K] ^ residueDegree K K' := by
+theorem card_residueField_eq_pow : Nat.card 𝓀[K'] = Nat.card 𝓀[K] ^ ((IsLocalRing.maximalIdeal 𝒪[K']).inertiaDeg (𝒪[K])) := by
   let := Fintype.ofFinite 𝓀[K]
   let := Fintype.ofFinite 𝓀[K']
   rw [Nat.card_eq_fintype_card, Nat.card_eq_fintype_card,
     Module.card_eq_pow_finrank (K := 𝓀[K]) (V := 𝓀[K']), residueDegree_eq_finrank]
 
-theorem galRestrict_frob : galRestrict K K' L L' (frob K' L') = frob K L ^ residueDegree K K' := by
+theorem galRestrict_frob : galRestrict K K' L L' (frob K' L') = frob K L ^ ((IsLocalRing.maximalIdeal 𝒪[K']).inertiaDeg (𝒪[K])) := by
   have he := IsUnramified.ramificationIndex_eq_one (K := K) (L := L)
   apply residueAlgEquiv_injective_of_unramified K L he
   ext y

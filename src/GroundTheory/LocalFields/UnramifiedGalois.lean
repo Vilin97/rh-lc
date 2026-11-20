@@ -96,7 +96,7 @@ theorem ramificationIndex_eq_one_of_adjoin_eq_top (hζ : IsPrimitiveRoot ζ m) (
     (htop : K⟮ζ⟯ = ⊤) : ramificationIndex K L = 1 := by
   have := isGalois_of_adjoin_eq_top hζ (natCast_ne_zero_of_residueField (L := K) hm) htop
   have hinj := residueAlgEquiv_injective_of_adjoin_eq_top K L hm hζ.pow_eq_one htop
-  have hcard : Module.finrank K L ≤ residueDegree K L := by
+  have hcard : Module.finrank K L ≤ ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) := by
     rw [← IsGalois.card_aut_eq_finrank, residueDegree_eq_finrank, ← IsGalois.card_aut_eq_finrank]
     exact Nat.card_le_card_of_injective _ hinj
   have hf := residueDegree_pos K L
@@ -111,7 +111,7 @@ section Unramified
 variable (K L)
 
 theorem residueDegree_eq_finrank_of_unramified (h : ramificationIndex K L = 1) :
-    residueDegree K L = Module.finrank K L := by
+    ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) = Module.finrank K L := by
   rw [← ramificationIndex_mul_residueDegree K L, h, one_mul]
 
 theorem exists_isPrimitiveRoot_adjoin_eq_top_of_unramified (h : ramificationIndex K L = 1) :

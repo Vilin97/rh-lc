@@ -250,7 +250,7 @@ variable [Algebra.IsSeparable K L]
 
 theorem addVal_norm_integer (y : 𝒪[L]) :
     IsDiscreteValuationRing.addVal 𝒪[K] (Algebra.norm 𝒪[K] y) =
-      residueDegree K L • IsDiscreteValuationRing.addVal 𝒪[L] y := by
+      ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) • IsDiscreteValuationRing.addVal 𝒪[L] y := by
   by_cases hy : y = 0
   · subst hy
     rw [Algebra.norm_zero, IsDiscreteValuationRing.addVal_zero, IsDiscreteValuationRing.addVal_zero,
@@ -268,7 +268,7 @@ theorem addVal_norm_integer (y : 𝒪[L]) :
   have h2 := ord_eq_of_addVal_eq hy hd
   rw [coe_norm_integer, ord_norm, h2] at h1
   rw [hk, hd, nsmul_eq_mul]
-  have : k = residueDegree K L * d := by exact_mod_cast h1.symm
+  have : k = ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) * d := by exact_mod_cast h1.symm
   rw [this]
   push_cast
   rfl
@@ -305,7 +305,7 @@ theorem discr_powerBasis_eq_norm_integer {x : 𝒪[L]} (hint : IsIntegral 𝒪[K
 
 theorem addVal_discr {ι : Type*} [Fintype ι] [DecidableEq ι] (b : Module.Basis ι 𝒪[K] 𝒪[L]) :
     IsDiscreteValuationRing.addVal 𝒪[K] (Algebra.discr 𝒪[K] b) =
-      (residueDegree K L * differentExponent K L : ℕ) := by
+      (((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) * differentExponent K L : ℕ) := by
   obtain ⟨x, hx⟩ := exists_integer_adjoin_eq_top K L
   have hint : IsIntegral 𝒪[K] x := Algebra.IsIntegral.isIntegral x
   rw [(IsDiscreteValuationRing.addVal_eq_iff_associated _ _).mpr

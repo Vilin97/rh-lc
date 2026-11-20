@@ -99,7 +99,7 @@ theorem ramIdx_eq_one (h1 : ord (algebraMap F E (unifUnit F : F)) = 1) : ramific
   omega
 
 theorem resDeg_eq_two (hd : Module.finrank F E = 2) (h1 : ord (algebraMap F E (unifUnit F : F)) = 1) :
-    residueDegree F E = 2 := by
+    ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) = 2 := by
   have h := ramificationIndex_mul_residueDegree F E
   rw [ramIdx_eq_one h1, hd] at h
   omega

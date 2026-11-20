@@ -594,7 +594,7 @@ variable (K M : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarc
   [Algebra K M] [ValuativeExtension K M] [FiniteDimensional K M]
 
 theorem card_residueField_eq_pow_residueDegree :
-    Nat.card 𝓀[M] = Nat.card 𝓀[K] ^ residueDegree K M := by
+    Nat.card 𝓀[M] = Nat.card 𝓀[K] ^ ((IsLocalRing.maximalIdeal 𝒪[M]).inertiaDeg (𝒪[K])) := by
   have := Fintype.ofFinite 𝓀[K]
   have := Fintype.ofFinite 𝓀[M]
   rw [residueDegree_eq_finrank, Nat.card_eq_fintype_card, Nat.card_eq_fintype_card,
@@ -609,16 +609,16 @@ variable {K : Type*} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchi
 
 theorem unramifiedCoord_fixingSubgroup (σ : L.fixingSubgroup) (n : ℕ+) :
     unramifiedCoord K (σ : Ω ≃ₐ[K] Ω) n =
-      (residueDegree K L : ZMod n) * unramifiedCoord L (fixingSubgroupEquiv L σ) n := by
+      (((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) : ZMod n) * unramifiedCoord L (fixingSubgroupEquiv L σ) n := by
   have hQ := card_residueField_eq_pow_residueDegree K L
-  have key : ((residueDegree K L * (unramifiedCoord L (fixingSubgroupEquiv L σ) n).val : ℕ) :
+  have key : ((((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) * (unramifiedCoord L (fixingSubgroupEquiv L σ) n).val : ℕ) :
       ZMod n) = unramifiedCoord K (σ : Ω ≃ₐ[K] Ω) n := by
     rw [natCast_eq_unramifiedCoord_iff_forall]
     intro ξ hξ
     have hξ' : ξ ^ (Nat.card 𝓀[L] ^ (n : ℕ) - 1) = 1 := by
       rw [hQ, ← pow_mul]
       obtain ⟨c, hc⟩ := pow_sub_one_dvd_pow_sub_one (Nat.card 𝓀[K])
-        (dvd_mul_left (n : ℕ) (residueDegree K L))
+        (dvd_mul_left (n : ℕ) (((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K]))))
       rw [hc, pow_mul, hξ, one_pow]
     have h := (natCast_eq_unramifiedCoord_iff_forall (K := L) (fixingSubgroupEquiv L σ) n
       (unramifiedCoord L (fixingSubgroupEquiv L σ) n).val).1 (ZMod.natCast_zmod_val _) ξ hξ'
@@ -627,7 +627,7 @@ theorem unramifiedCoord_fixingSubgroup (σ : L.fixingSubgroup) (n : ℕ+) :
   rw [← key, Nat.cast_mul, ZMod.natCast_zmod_val]
 
 theorem unramifiedDegree_fixingSubgroup (σ : L.fixingSubgroup) :
-    unramifiedDegree K Ω σ = unramifiedDegree L Ω (fixingSubgroupEquiv L σ) ^ residueDegree K L := by
+    unramifiedDegree K Ω σ = unramifiedDegree L Ω (fixingSubgroupEquiv L σ) ^ ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) := by
   refine multiplicative_ext fun n ↦ ?_
   rw [proj_toAdd_unramifiedDegree, toAdd_pow, map_nsmul, proj_toAdd_unramifiedDegree, nsmul_eq_mul,
     unramifiedCoord_fixingSubgroup]
@@ -636,7 +636,7 @@ variable [IsGalois K Ω]
 
 theorem map_unramifiedDegree_fixingSubgroup :
     L.fixingSubgroup.map (unramifiedDegree K Ω) =
-      (powMonoidHom (residueDegree K L) : Multiplicative ℤ̂ →* Multiplicative ℤ̂).range := by
+      (powMonoidHom (((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K]))) : Multiplicative ℤ̂ →* Multiplicative ℤ̂).range := by
   have := IsGalois.tower_top_of_isGalois K L Ω
   ext x
   simp only [Subgroup.mem_map, MonoidHom.mem_range, powMonoidHom_apply]
@@ -649,7 +649,7 @@ theorem map_unramifiedDegree_fixingSubgroup :
     exact ⟨σ, σ.2, (unramifiedDegree_fixingSubgroup L σ)⟩
 
 theorem inertiaDegree_unramifiedDegree_fixingSubgroup :
-    inertiaDegree (unramifiedDegree K Ω) L.fixingSubgroup = residueDegree K L := by
+    inertiaDegree (unramifiedDegree K Ω) L.fixingSubgroup = ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) := by
   rw [inertiaDegree, map_unramifiedDegree_fixingSubgroup,
     ProfiniteInteger.index_range_powMonoidHom (residueDegree_pos K L).ne']
 

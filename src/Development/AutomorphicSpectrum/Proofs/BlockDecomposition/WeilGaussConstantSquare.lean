@@ -30,7 +30,7 @@ theorem comp_norm_mem {f : F → ℂ} (hf : f ∈ schwartzBruhat F) :
   have hN0 : Algebra.norm F x ≠ 0 := Algebra.norm_ne_zero_iff.2 hx0
   have h1 := (mem_valBall_iff_le_ord hN0).1 (hM _ h0)
   rw [ord_norm (K := F) (L := E)] at h1
-  have hd : (1 : ℤ) ≤ residueDegree F E := by exact_mod_cast residueDegree_pos F E
+  have hd : (1 : ℤ) ≤ ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) := by exact_mod_cast residueDegree_pos F E
   show x ∈ valBall E (min M 0)
   rw [mem_valBall_iff_le_ord hx0]
   by_contra hlt

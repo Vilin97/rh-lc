@@ -38,16 +38,16 @@ variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchim
 
 variable (F E) in
 
-theorem residueDegree_pos' : 0 < residueDegree F E := by
+theorem residueDegree_pos' : 0 < ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) := by
   have h := FiltrationCocycleLiftCriterion.WeilRep.residueCard_eq_pow (K := F) (E := E)
   have h1 := one_lt_residueCard (K := E)
-  rcases Nat.eq_zero_or_pos (residueDegree F E) with h0 | h0
+  rcases Nat.eq_zero_or_pos (((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F]))) with h0 | h0
   · rw [h0, pow_zero] at h; omega
   · exact h0
 
 theorem char_norm_eq_one {χ : AddChar F Circle} (hχ : Continuous χ) (hχ1 : χ ≠ 1)
     {κ : F} (hκ : κ ≠ 0) {n : ℤ}
-    (hn : addCharConductor χ - ord κ ≤ (residueDegree F E : ℤ) * n) {r : E}
+    (hn : addCharConductor χ - ord κ ≤ (((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) : ℤ) * n) {r : E}
     (hr : r ∈ valBall E n) : χ (κ * Algebra.norm F r) = 1 := by
   rcases eq_or_ne r 0 with rfl | hr0
   · simp
@@ -55,7 +55,7 @@ theorem char_norm_eq_one {χ : AddChar F Circle} (hχ : Continuous χ) (hχ1 : �
   refine isTrivialOn_addCharConductor hχ hχ1 _ ((mem_valBall_iff_le_ord (mul_ne_zero hκ hN)).2 ?_)
   rw [ord_mul hκ hN, ord_norm (K := F) (L := E) r]
   have h1 : n ≤ ord r := (mem_valBall_iff_le_ord hr0).1 hr
-  have h2 : (residueDegree F E : ℤ) * n ≤ (residueDegree F E : ℤ) * ord r :=
+  have h2 : (((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) : ℤ) * n ≤ (((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) : ℤ) * ord r :=
     mul_le_mul_of_nonneg_left h1 (by positivity)
   linarith
 
@@ -71,14 +71,14 @@ theorem conductor_le_of_forall {χ : AddChar F Circle} (hχ : Continuous χ) (h�
   exact h r hr
 
 theorem residueCard_zpow_le {κ : F} (hκ : κ ≠ 0) {c n : ℤ}
-    (hn : (residueDegree F E : ℤ) * (n - 1) < c - ord κ) :
+    (hn : (((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) : ℤ) * (n - 1) < c - ord κ) :
     (residueCard E : ℝ) ^ n
       ≤ (residueCard E : ℝ) * (residueCard F : ℝ) ^ c * (modulus κ : ℝ) := by
   have hp : (1 : ℝ) < residueCard F := by exact_mod_cast one_lt_residueCard (K := F)
   have hQ : (1 : ℝ) < residueCard E := by exact_mod_cast one_lt_residueCard (K := E)
   have hp0 : (residueCard F : ℝ) ≠ 0 := by positivity
   have hQ0 : (residueCard E : ℝ) ≠ 0 := by positivity
-  have hQp : (residueCard E : ℝ) = (residueCard F : ℝ) ^ (residueDegree F E : ℤ) := by
+  have hQp : (residueCard E : ℝ) = (residueCard F : ℝ) ^ (((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) : ℤ) := by
     rw [FiltrationCocycleLiftCriterion.WeilRep.residueCard_eq_pow (K := F) (E := E)]
     push_cast
     rw [zpow_natCast]
@@ -117,9 +117,9 @@ theorem exists_lattice_adapted : ∀ (F : Type) [Field F] [ValuativeRel F] [Topo
     rcases eq_or_ne κ 0 with rfl | hκ
     · refine ⟨n₀, le_rfl, fun r _ => by simp, ?_⟩
       simpa using hA1
-    obtain ⟨n₁, hn₁, hn₁'⟩ := exists_ceil_div (residueDegree F E) (residueDegree_pos' F E)
+    obtain ⟨n₁, hn₁, hn₁'⟩ := exists_ceil_div (((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F]))) (residueDegree_pos' F E)
       (addCharConductor χ - ord κ)
-    have hf : (0 : ℤ) ≤ residueDegree F E := by positivity
+    have hf : (0 : ℤ) ≤ ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) := by positivity
     refine ⟨max n₀ n₁, le_max_left _ _, fun r hr => ?_, ?_⟩
     · exact char_norm_eq_one hχ hχ1 hκ
         (hn₁.trans (mul_le_mul_of_nonneg_left (le_max_right _ _) hf)) hr

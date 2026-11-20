@@ -56,7 +56,7 @@ variable {F E : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarch
 
 variable (F E) in
 
-def radius (c : F) (m : ℤ) : ℤ := -((ord c - m) / (residueDegree F E : ℤ))
+def radius (c : F) (m : ℤ) : ℤ := -((ord c - m) / (((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) : ℤ))
 
 theorem preimage_valBall {c : F} (hc : c ≠ 0) (m : ℤ) :
     (fun u : E => c * Algebra.norm F u) ⁻¹' (valBall F m : Set F) =
@@ -69,13 +69,13 @@ theorem preimage_valBall {c : F} (hc : c ≠ 0) (m : ℤ) :
     simp only [Set.mem_preimage, SetLike.mem_coe]
     rw [mem_valBall_iff_le_ord (mul_ne_zero hc hN), mem_valBall_iff_le_ord hu, ord_mul hc hN,
       ord_norm, radius]
-    have hf : (0 : ℤ) < residueDegree F E := by exact_mod_cast residueDegree_pos F E
+    have hf : (0 : ℤ) < ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) := by exact_mod_cast residueDegree_pos F E
     rw [neg_le, Int.le_ediv_iff_mul_le hf]
     constructor <;> intro h <;> linarith
 
-theorem radius_le {c : F} {m N₀ : ℤ} (h : m ≤ ord c + residueDegree F E * N₀) :
+theorem radius_le {c : F} {m N₀ : ℤ} (h : m ≤ ord c + ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) * N₀) :
     radius F E c m ≤ N₀ := by
-  have hf : (0 : ℤ) < residueDegree F E := by exact_mod_cast residueDegree_pos F E
+  have hf : (0 : ℤ) < ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) := by exact_mod_cast residueDegree_pos F E
   rw [radius, neg_le, Int.le_ediv_iff_mul_le hf]
   linarith
 
@@ -165,10 +165,10 @@ theorem ball_integrals_cancel : (∀ (F E : Type) [Field F] [ValuativeRel F] [To
   obtain ⟨κ, -, hκ⟩ := H F E hcont a hnr
   obtain ⟨b, hχb⟩ := AddChar.ne_one_iff.1 hχ1
   obtain ⟨M, hM⟩ := exists_mem_valBall_neg_nat b
-  obtain ⟨m, h0, h1, h2⟩ : ∃ m : ℤ, m ≤ -(M : ℤ) ∧ m ≤ ord (1 : F) + residueDegree F E * N₀ ∧
-      m ≤ ord (a : F) + residueDegree F E * N₀ :=
-    ⟨min (-(M : ℤ)) (min (ord (1 : F) + residueDegree F E * N₀)
-      (ord (a : F) + residueDegree F E * N₀)), min_le_left _ _,
+  obtain ⟨m, h0, h1, h2⟩ : ∃ m : ℤ, m ≤ -(M : ℤ) ∧ m ≤ ord (1 : F) + ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) * N₀ ∧
+      m ≤ ord (a : F) + ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) * N₀ :=
+    ⟨min (-(M : ℤ)) (min (ord (1 : F) + ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) * N₀)
+      (ord (a : F) + ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) * N₀)), min_le_left _ _,
       (min_le_right _ _).trans (min_le_left _ _), (min_le_right _ _).trans (min_le_right _ _)⟩
   have hbm : b ∈ valBall F m := valBall_antitone h0 hM
   exact ⟨radius F E 1 m, radius_le h1, radius F E (a : F) m, radius_le h2,

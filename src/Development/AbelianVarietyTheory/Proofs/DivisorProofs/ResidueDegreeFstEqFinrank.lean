@@ -31,7 +31,7 @@ theorem residueDegree_fst_eq_finrank {X Y S : Scheme.{0}} (f : X ⟶ S) (g : Y �
     have : P.1 = m (IsLocalRing.closedPoint T.tensor) := rfl
     rw [this, Subsingleton.elim (IsLocalRing.closedPoint T.tensor) (Scheme.Pullback.SpecOfPoint t)]
     exact Scheme.Pullback.SpecTensorTo_SpecOfPoint t
-  rw [show (pullback.fst f g).residueDegree P.1 = (pullback.fst f g).residueDegree t from
+  rw [show (pullback.fst f g).residueDegree P.1 = (pullback.fst f g).((IsLocalRing.maximalIdeal 𝒪[from]).inertiaDeg (𝒪[t]))
     congrArg _ hP] at h2
   show _ = ProjDrop.deg T.tensorInl.hom
   rw [h1] at h2 ⊢

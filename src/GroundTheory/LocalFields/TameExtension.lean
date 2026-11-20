@@ -88,14 +88,14 @@ theorem isUnramifiedSubextension_iff' (E : IntermediateField K Ω) [FiniteDimens
 
 theorem residueDegree_restrictScalars (T : IntermediateField K Ω) [FiniteDimensional K T]
     (F : IntermediateField T Ω) [FiniteDimensional T F] :
-    residueDegree K (F.restrictScalars K) = residueDegree K T * residueDegree T F := by
+    residueDegree K (F.restrictScalars K) = ((IsLocalRing.maximalIdeal 𝒪[T]).inertiaDeg (𝒪[K])) * ((IsLocalRing.maximalIdeal 𝒪[F]).inertiaDeg (𝒪[T])) := by
   have : FiniteDimensional K F := Module.Finite.trans T F
   have : FiniteDimensional K (F.restrictScalars K) := this
   have h1 : Nat.card 𝓀[F.restrictScalars K] = Nat.card 𝓀[K] ^ residueDegree K (F.restrictScalars K) :=
     card_residueField_eq_pow_residueDegree K _
-  have h2 : Nat.card 𝓀[F] = Nat.card 𝓀[T] ^ residueDegree T F :=
+  have h2 : Nat.card 𝓀[F] = Nat.card 𝓀[T] ^ ((IsLocalRing.maximalIdeal 𝒪[F]).inertiaDeg (𝒪[T])) :=
     card_residueField_eq_pow_residueDegree T F
-  have h3 : Nat.card 𝓀[T] = Nat.card 𝓀[K] ^ residueDegree K T :=
+  have h3 : Nat.card 𝓀[T] = Nat.card 𝓀[K] ^ ((IsLocalRing.maximalIdeal 𝒪[T]).inertiaDeg (𝒪[K])) :=
     card_residueField_eq_pow_residueDegree K T
   have h4 : Nat.card 𝓀[F.restrictScalars K] = Nat.card 𝓀[F] := rfl
   rw [h4, h2, h3, ← pow_mul] at h1
@@ -113,7 +113,7 @@ theorem ramificationIndex_restrictScalars (T : IntermediateField K Ω) [FiniteDi
   have h4 : Module.finrank K (F.restrictScalars K) = Module.finrank K T * Module.finrank T F :=
     (Module.finrank_mul_finrank K T F).symm
   rw [h4, ← h2, ← h3, hf] at h1
-  have hpos : 0 < residueDegree K T * residueDegree T F :=
+  have hpos : 0 < ((IsLocalRing.maximalIdeal 𝒪[T]).inertiaDeg (𝒪[K])) * ((IsLocalRing.maximalIdeal 𝒪[F]).inertiaDeg (𝒪[T])) :=
     Nat.mul_pos (residueDegree_pos K T) (residueDegree_pos T F)
   exact Nat.eq_of_mul_eq_mul_right hpos (by rw [h1]; ring)
 

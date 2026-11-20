@@ -50,8 +50,8 @@ open Classical in
 
 theorem artinCharacter_restrictScalars_tower (h : L ≃ₐ[F] L) :
     (artinCharacter K L (h.restrictScalars K) : ℂ) =
-      residueDegree K F * artinCharacter F L h +
-        if h = 1 then (Nat.card (L ≃ₐ[F] L) : ℂ) * (residueDegree K F * differentExponent K F : ℕ)
+      ((IsLocalRing.maximalIdeal 𝒪[F]).inertiaDeg (𝒪[K])) * artinCharacter F L h +
+        if h = 1 then (Nat.card (L ≃ₐ[F] L) : ℂ) * (((IsLocalRing.maximalIdeal 𝒪[F]).inertiaDeg (𝒪[K])) * differentExponent K F : ℕ)
         else 0 := by
   have : IsGalois F L := IsGalois.tower_top_of_isGalois K F L
   by_cases h1 : h = 1
@@ -74,14 +74,14 @@ theorem artinCharacter_restrictScalars_tower (h : L ≃ₐ[F] L) :
 
 theorem sum_mul_artinCharacter_restrictScalars (ψ : (L ≃ₐ[F] L) → ℂ) :
     ∑ h : L ≃ₐ[F] L, ψ h * (artinCharacter K L (h.restrictScalars K) : ℂ) =
-      Nat.card (L ≃ₐ[F] L) * (residueDegree K F * charArtinConductor F L ψ +
-        ((residueDegree K F * differentExponent K F : ℕ) : ℂ) * ψ 1) := by
+      Nat.card (L ≃ₐ[F] L) * (((IsLocalRing.maximalIdeal 𝒪[F]).inertiaDeg (𝒪[K])) * charArtinConductor F L ψ +
+        ((((IsLocalRing.maximalIdeal 𝒪[F]).inertiaDeg (𝒪[K])) * differentExponent K F : ℕ) : ℂ) * ψ 1) := by
   classical
   have hH : (Nat.card (L ≃ₐ[F] L) : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr Nat.card_pos.ne'
   simp_rw [artinCharacter_restrictScalars_tower, mul_add, Finset.sum_add_distrib, mul_ite, mul_zero,
     Finset.sum_ite_eq', if_pos (Finset.mem_univ _)]
-  have hs : ∑ h : L ≃ₐ[F] L, ψ h * ((residueDegree K F : ℂ) * artinCharacter F L h) =
-      residueDegree K F * ∑ h : L ≃ₐ[F] L, ψ h * artinCharacter F L h := by
+  have hs : ∑ h : L ≃ₐ[F] L, ψ h * ((((IsLocalRing.maximalIdeal 𝒪[F]).inertiaDeg (𝒪[K])) : ℂ) * artinCharacter F L h) =
+      ((IsLocalRing.maximalIdeal 𝒪[F]).inertiaDeg (𝒪[K])) * ∑ h : L ≃ₐ[F] L, ψ h * artinCharacter F L h := by
     rw [Finset.mul_sum]
     exact Finset.sum_congr rfl fun h _ ↦ by ring
   rw [hs, charArtinConductor]

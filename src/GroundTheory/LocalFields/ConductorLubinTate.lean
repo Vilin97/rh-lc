@@ -84,7 +84,7 @@ omit [IsSepClosed Ω] in
 
 theorem adjoin_eq_top_of_irreducible_of_residueDegree_eq_one {L : Type*} [Field L] [ValuativeRel L]
     [TopologicalSpace L] [IsNonarchimedeanLocalField L] [Algebra K L] [ValuativeExtension K L]
-    [FiniteDimensional K L] (h : residueDegree K L = 1) {x : 𝒪[L]} (hx : Irreducible x) :
+    [FiniteDimensional K L] (h : ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) = 1) {x : 𝒪[L]} (hx : Irreducible x) :
     Algebra.adjoin 𝒪[K] {x} = ⊤ := by
   refine adjoin_eq_top_of_residue_of_addVal_eq_one K ?_ (Algebra.self_mem_adjoin_singleton _ _)
     (addVal_uniformizer hx)

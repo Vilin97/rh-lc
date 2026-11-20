@@ -186,13 +186,13 @@ variable (K L : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [Algebra K L] [ValuativeExtension K L] [FiniteDimensional K L]
 
 theorem residueDegree_eq_one_of_ramificationIndex_eq_finrank
-    (h : ramificationIndex K L = Module.finrank K L) : residueDegree K L = 1 := by
+    (h : ramificationIndex K L = Module.finrank K L) : ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) = 1 := by
   have h1 := ramificationIndex_mul_residueDegree K L
   have h2 := ramificationIndex_pos K L
   rw [h] at h1 h2
   exact (Nat.mul_eq_left h2.ne').mp h1
 
-theorem exists_sub_algebraMap_mem_maximalIdeal (h : residueDegree K L = 1) (w : 𝒪[L]) :
+theorem exists_sub_algebraMap_mem_maximalIdeal (h : ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) = 1) (w : 𝒪[L]) :
     ∃ c : 𝒪[K], w - algebraMap 𝒪[K] 𝒪[L] c ∈ IsLocalRing.maximalIdeal 𝒪[L] := by
   rw [residueDegree_eq_finrank, finrank_eq_one_iff_of_nonzero' (1 : 𝓀[L]) one_ne_zero] at h
   obtain ⟨c, hc⟩ := h (IsLocalRing.residue 𝒪[L] w)

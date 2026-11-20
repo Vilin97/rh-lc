@@ -31,7 +31,7 @@ variable [IsGalois K L]
 
 theorem sum_irrChars_mul_charArtinConductor :
     ∑ χ ∈ irrChars (L ≃ₐ[K] L), χ 1 * charArtinConductor K L χ =
-      ((residueDegree K L * differentExponent K L : ℕ) : ℂ) := by
+      ((((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) * differentExponent K L : ℕ) : ℂ) := by
   classical
   rw [← charArtinConductor_regular, ← charArtinConductor_sum]
   congr 1

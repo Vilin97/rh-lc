@@ -104,7 +104,7 @@ theorem relDeg_fixingOpenSubgroup
       unramifiedDegree E Ω (fixingSubgroupHomeomorph E σ) := by
   have : IsSepClosed Ω := IsSepClosure.sep_closed K
   have hi : inertiaDegree (unramifiedDegree K Ω)
-      ((fixingOpenSubgroup E : OpenSubgroup (Ω ≃ₐ[K] Ω)) : Subgroup (Ω ≃ₐ[K] Ω)) = residueDegree K E :=
+      ((fixingOpenSubgroup E : OpenSubgroup (Ω ≃ₐ[K] Ω)) : Subgroup (Ω ≃ₐ[K] Ω)) = ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[K])) :=
     inertiaDegree_unramifiedDegree_fixingSubgroup E
   rw [ClassFieldData.relDeg_eq_iff, localClassFieldData_deg, hi]
   exact unramifiedDegree_fixingSubgroup E σ
@@ -114,10 +114,10 @@ theorem valuation_fixingOpenSubgroup
     (localClassFieldData K Ω).valuation (fixingOpenSubgroup E) a =
       Multiplicative.ofAdd ((ord ((unitsEquivFixingOpen K E a : Eˣ) : E) : ℤ) : ℤ̂) := by
   have : IsSepClosed Ω := IsSepClosure.sep_closed K
-  have hf : residueDegree K E ≠ 0 := (residueDegree_pos K E).ne'
+  have hf : ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[K])) ≠ 0 := (residueDegree_pos K E).ne'
   have h := (localClassFieldData K Ω).valuation_pow (fixingOpenSubgroup E) a
   have hi : inertiaDegree (unramifiedDegree K Ω)
-      ((fixingOpenSubgroup E : OpenSubgroup (Ω ≃ₐ[K] Ω)) : Subgroup (Ω ≃ₐ[K] Ω)) = residueDegree K E :=
+      ((fixingOpenSubgroup E : OpenSubgroup (Ω ≃ₐ[K] Ω)) : Subgroup (Ω ≃ₐ[K] Ω)) = ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[K])) :=
     inertiaDegree_unramifiedDegree_fixingSubgroup E
   rw [localClassFieldData_deg, hi, localClassFieldData_val, localValuation_apply] at h
   have : (E.fixingSubgroup.subgroupOf ⊤).FiniteIndex :=

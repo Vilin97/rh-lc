@@ -248,7 +248,7 @@ theorem residueDegree_base (M : DRBase O c) {B Bg : Scheme.{0}} {q : B ⟶ Sp (�
     IsPreimmersion.of_isLocalization (nonZeroDivisors (𝓞 O.κ.c.F)) (S := O.κ.c.F)
   haveI : IsPreimmersion (genι O.s.T.Z) :=
     MorphismProperty.of_isPullback (P := @IsPreimmersion) (IsPullback.of_hasPullback _ _).flip this
-  have e := congrArg (fun f => Scheme.Hom.residueDegree f x) h
+  have e := congrArg (fun f => Scheme.Hom.((IsLocalRing.maximalIdeal 𝒪[x]).inertiaDeg (𝒪[f]))) h
   simpa only [CurveDegreesCompare.residueDegree_comp, CoverDeg.residueDegree_eq_one_of_surjectiveOnStalks jB,
     CoverDeg.residueDegree_eq_one_of_surjectiveOnStalks M.b,
     CoverDeg.residueDegree_eq_one_of_surjectiveOnStalks (genι O.s.T.Z), mul_one, one_mul] using e.symm

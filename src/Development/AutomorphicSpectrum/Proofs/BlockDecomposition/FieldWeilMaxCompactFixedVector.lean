@@ -45,7 +45,7 @@ variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchim
 theorem ord_unif_of_card (hd : Module.finrank F E = 2) (hres : residueCard E = residueCard F ^ 2) :
     ord (algebraMap F E (unifUnit F : F)) = 1 := by
   have h := card_residueField_eq_pow_residueDegree F E
-  have hf : residueDegree F E = 2 :=
+  have hf : ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) = 2 :=
     Nat.pow_right_injective (one_lt_residueCard (K := F)) (h.symm.trans hres)
   have he := ramificationIndex_mul_residueDegree F E
   rw [hf, hd] at he

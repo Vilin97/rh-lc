@@ -16,8 +16,8 @@ theorem ord_unifUnit_of_residueCard_eq_sq : ∀ (F : Type) [Field F] [ValuativeR
   intro F _ _ _ _ _ _ _ E _ _ _ _ _ _ _ _ hfin _ hcard
   haveI : FiniteDimensional F E := Module.finite_of_finrank_pos (by omega)
   have hq : 1 < residueCard F := one_lt_residueCard (K := F)
-  have hf : residueDegree F E = 2 := by
-    have h : residueCard E = residueCard F ^ residueDegree F E :=
+  have hf : ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) = 2 := by
+    have h : residueCard E = residueCard F ^ ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) :=
       card_residueField_eq_pow_residueDegree F E
     rw [hcard] at h
     exact (Nat.pow_right_injective hq h).symm

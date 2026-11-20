@@ -44,7 +44,7 @@ theorem natCard_quotient_range_normUnits :
 theorem ramificationIndex_eq_one_of_units_le
     (h : unitFiltrationUnits k 0 ≤ (normUnits k M).range) : ramificationIndex k M = 1 := by
   set N := (normUnits k M).range
-  set f := residueDegree k M
+  set f := ((IsLocalRing.maximalIdeal 𝒪[M]).inertiaDeg (𝒪[k]))
   obtain ⟨π, hπ⟩ := exists_ord_eq_one_units k
   obtain ⟨ϖ, hϖ⟩ := exists_ord_eq_one_units M
 

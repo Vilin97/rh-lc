@@ -30,14 +30,14 @@ variable (K L : Type*) [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarc
   [Algebra K L] [ValuativeExtension K L] [FiniteDimensional K L]
 
 theorem isUnramified_iff_residueDegree_eq_finrank :
-    IsUnramified K L ↔ residueDegree K L = Module.finrank K L := by
+    IsUnramified K L ↔ ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) = Module.finrank K L := by
   rw [isUnramified_iff, ← ramificationIndex_mul_residueDegree K L]
   have h := residueDegree_pos K L
   constructor
   · intro h1
     rw [h1, one_mul]
   · intro h1
-    have : ramificationIndex K L * residueDegree K L = 1 * residueDegree K L := by
+    have : ramificationIndex K L * ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) = 1 * ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) := by
       rw [one_mul]
       exact h1.symm
     exact Nat.eq_of_mul_eq_mul_right h this
@@ -47,7 +47,7 @@ theorem isUnramified_iff_finrank_residueField :
   rw [isUnramified_iff_residueDegree_eq_finrank, residueDegree_eq_finrank]
 
 theorem IsUnramified.residueDegree_eq_finrank [IsUnramified K L] :
-    residueDegree K L = Module.finrank K L :=
+    ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) = Module.finrank K L :=
   (isUnramified_iff_residueDegree_eq_finrank K L).1 inferInstance
 
 theorem IsUnramified.finrank_residueField [IsUnramified K L] :

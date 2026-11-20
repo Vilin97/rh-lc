@@ -16,7 +16,7 @@ theorem exists_quadChar_unramified : ∀ (F : Type) [Field F] [ValuativeRel F] [
   haveI : Fact (Module.finrank F E = 2) := ⟨hfin⟩
   haveI : FiniteDimensional F E := Module.finite_of_finrank_pos (by omega)
   haveI : Algebra.IsSeparable F E := inferInstance
-  have hf : (GroundTheory.LocalField.residueDegree F E : ℤ) = 2 := by
+  have hf : (GroundTheory.LocalField.((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) : ℤ) = 2 := by
     have h := GroundTheory.LocalField.ord_norm (K := F) (L := E) (algebraMap F E (unifUnit F : F))
     rw [hord, GroundTheory.LocalField.FiltrationCocycleLiftCriterion.WeilRep.norm_algebraMap_eq_sq,
       GroundTheory.LocalField.ord_pow (Units.ne_zero _), GroundTheory.LocalField.ord_unifUnit] at h

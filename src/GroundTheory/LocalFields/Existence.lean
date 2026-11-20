@@ -84,7 +84,7 @@ theorem range_normUnits_sup_le {n m : ℕ} (hn : 0 < n) {E : IntermediateField K
   set L : IntermediateField K Ω := T ⊔ E
   rintro _ ⟨y, rfl⟩
 
-  have hdvd : m ∣ residueDegree K L := by
+  have hdvd : m ∣ ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) := by
     have h1 := residueDegree_dvd_of_le (le_sup_right : E ≤ L)
     rw [residueDegree_eq_finrank_of_unramified K E hE.ramificationIndex_eq_one] at h1
     exact hmE.trans h1

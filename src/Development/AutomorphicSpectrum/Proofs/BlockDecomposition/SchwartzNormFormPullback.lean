@@ -29,8 +29,8 @@ theorem continuous_norm_quadratic : Continuous (fun x : E => Algebra.norm F x) :
   exact (IsModuleTopology.continuous_of_linearMap (Algebra.trace F E)).comp
     (continuous_const.mul (continuous_id.mul continuous_conj))
 
-theorem residueDegree_pos_quadratic : 0 < residueDegree F E := by
-  rcases Nat.eq_zero_or_pos (residueDegree F E) with h | h
+theorem residueDegree_pos_quadratic : 0 < ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) := by
+  rcases Nat.eq_zero_or_pos (((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F]))) with h | h
   · have h1 := residueCard_eq_pow (K := F) (E := E)
     rw [h, pow_zero] at h1
     have h2 := one_lt_residueCard (K := E)
@@ -44,7 +44,7 @@ theorem mem_valBall_of_norm_mem {M : ℤ} {x : E} (h : Algebra.norm F x ∈ valB
   have hN : Algebra.norm F x ≠ 0 := Algebra.norm_ne_zero_iff.2 hx
   rw [mem_valBall_iff_le_ord hN, ord_norm (K := F) (L := E)] at h
   rw [mem_valBall_iff_le_ord hx]
-  have hd : (1 : ℤ) ≤ (residueDegree F E : ℤ) := by
+  have hd : (1 : ℤ) ≤ (((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[F])) : ℤ) := by
     exact_mod_cast residueDegree_pos_quadratic F E
   by_contra hlt
   push_neg at hlt

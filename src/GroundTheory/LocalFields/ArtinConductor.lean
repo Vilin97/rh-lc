@@ -72,13 +72,13 @@ open Classical in
 
 def artinCharacter (σ : L ≃ₐ[K] L) : ℤ :=
   if σ = 1 then
-    ((residueDegree K L * ∑ τ ∈ Finset.univ.erase (1 : L ≃ₐ[K] L), (lowerIndex K L τ).toNat : ℕ) : ℤ)
-  else -((residueDegree K L * (lowerIndex K L σ).toNat : ℕ) : ℤ)
+    ((((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) * ∑ τ ∈ Finset.univ.erase (1 : L ≃ₐ[K] L), (lowerIndex K L τ).toNat : ℕ) : ℤ)
+  else -((((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) * (lowerIndex K L σ).toNat : ℕ) : ℤ)
 
 open Classical in
 
 theorem artinCharacter_eq (σ : L ≃ₐ[K] L) :
-    (artinCharacter K L σ : ℂ) = residueDegree K L *
+    (artinCharacter K L σ : ℂ) = ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) *
       ((if σ = 1 then ∑ τ : L ≃ₐ[K] L, ((lowerIndex K L τ).toNat : ℂ) else 0) -
         (lowerIndex K L σ).toNat) := by
   by_cases h : σ = 1
@@ -91,16 +91,16 @@ theorem artinCharacter_eq (σ : L ≃ₐ[K] L) :
     ring
 
 theorem artinCharacter_of_ne_one {σ : L ≃ₐ[K] L} (hσ : σ ≠ 1) :
-    artinCharacter K L σ = -((residueDegree K L * (lowerIndex K L σ).toNat : ℕ) : ℤ) := by
+    artinCharacter K L σ = -((((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) * (lowerIndex K L σ).toNat : ℕ) : ℤ) := by
   classical
   unfold artinCharacter
   rw [if_neg hσ]
 
 theorem sum_mul_artinCharacter (χ : (L ≃ₐ[K] L) → ℂ) :
     ∑ σ : L ≃ₐ[K] L, χ σ * (artinCharacter K L σ : ℂ) =
-      residueDegree K L * ∑ σ : L ≃ₐ[K] L, ((lowerIndex K L σ).toNat : ℂ) * (χ 1 - χ σ) := by
+      ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) * ∑ σ : L ≃ₐ[K] L, ((lowerIndex K L σ).toNat : ℂ) * (χ 1 - χ σ) := by
   classical
-  have h : ∀ σ : L ≃ₐ[K] L, χ σ * (artinCharacter K L σ : ℂ) = residueDegree K L *
+  have h : ∀ σ : L ≃ₐ[K] L, χ σ * (artinCharacter K L σ : ℂ) = ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) *
       ((if σ = 1 then χ 1 * ∑ τ : L ≃ₐ[K] L, ((lowerIndex K L τ).toNat : ℂ) else 0) -
         (lowerIndex K L σ).toNat * χ σ) := by
     intro σ
@@ -154,17 +154,17 @@ def charArtinConductor (χ : (L ≃ₐ[K] L) → ℂ) : ℂ :=
   (Nat.card (L ≃ₐ[K] L) : ℂ)⁻¹ * ∑ σ : L ≃ₐ[K] L, χ σ * artinCharacter K L σ
 
 theorem card_aut_eq_card_lowerRamificationGroup_zero_mul [IsGalois K L] :
-    Nat.card (L ≃ₐ[K] L) = Nat.card (lowerRamificationGroup K L 0) * residueDegree K L := by
+    Nat.card (L ≃ₐ[K] L) = Nat.card (lowerRamificationGroup K L 0) * ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) := by
   rw [IsGalois.card_aut_eq_finrank, ← ramificationIndex_mul_residueDegree,
     card_lowerRamificationGroup_zero]
 
 theorem charArtinConductor_eq_sum_lowerIndex [IsGalois K L] (χ : (L ≃ₐ[K] L) → ℂ) :
     charArtinConductor K L χ = (Nat.card (lowerRamificationGroup K L 0) : ℂ)⁻¹ *
       ∑ σ : L ≃ₐ[K] L, ((lowerIndex K L σ).toNat : ℂ) * (χ 1 - χ σ) := by
-  have hf : (residueDegree K L : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr (residueDegree_pos K L).ne'
+  have hf : (((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr (residueDegree_pos K L).ne'
   rw [charArtinConductor, sum_mul_artinCharacter, card_aut_eq_card_lowerRamificationGroup_zero_mul]
   push_cast
-  rw [mul_inv, mul_assoc, ← mul_assoc (residueDegree K L : ℂ)⁻¹, inv_mul_cancel₀ hf, one_mul]
+  rw [mul_inv, mul_assoc, ← mul_assoc (((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) : ℂ)⁻¹, inv_mul_cancel₀ hf, one_mul]
 
 theorem artinConductor_eq_charArtinConductor [IsGalois K L] (ρ : Representation ℂ (L ≃ₐ[K] L) V) :
     (artinConductor ρ : ℂ) = charArtinConductor K L ρ.character := by
@@ -217,7 +217,7 @@ theorem differentExponent_eq_sum_toNat [DecidableEq (L ≃ₐ[K] L)] :
   exact_mod_cast h
 
 theorem artinCharacter_one :
-    artinCharacter K L 1 = ((residueDegree K L * differentExponent K L : ℕ) : ℤ) := by
+    artinCharacter K L 1 = ((((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) * differentExponent K L : ℕ) : ℤ) := by
   classical
   unfold artinCharacter
   rw [if_pos rfl, differentExponent_eq_sum_toNat]
@@ -231,7 +231,7 @@ open Classical in
 
 theorem charArtinConductor_regular :
     charArtinConductor K L (fun σ ↦ if σ = 1 then (Nat.card (L ≃ₐ[K] L) : ℂ) else 0) =
-      ((residueDegree K L * differentExponent K L : ℕ) : ℂ) := by
+      ((((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) * differentExponent K L : ℕ) : ℂ) := by
   have hG : (Nat.card (L ≃ₐ[K] L) : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr Nat.card_pos.ne'
   rw [charArtinConductor]
   simp_rw [ite_mul, zero_mul]
@@ -359,7 +359,7 @@ open Classical in
 
 def swanCharacter (σ : L ≃ₐ[K] L) : ℤ :=
   artinCharacter K L σ - ((if σ = 1 then (Nat.card (L ≃ₐ[K] L) : ℤ) else 0) -
-    (if σ ∈ lowerRamificationGroup K L 0 then (residueDegree K L : ℤ) else 0))
+    (if σ ∈ lowerRamificationGroup K L 0 then (((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) : ℤ) else 0))
 
 variable (K L) in
 
@@ -371,9 +371,9 @@ theorem swanConductor_eq_charSwanConductor [IsGalois K L] (ρ : Representation �
   classical
   have hG0 : (Nat.card (lowerRamificationGroup K L 0) : ℂ) ≠ 0 :=
     Nat.cast_ne_zero.mpr Nat.card_pos.ne'
-  have hf : (residueDegree K L : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr (residueDegree_pos K L).ne'
+  have hf : (((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr (residueDegree_pos K L).ne'
   have hcard : (Nat.card (L ≃ₐ[K] L) : ℂ) =
-      Nat.card (lowerRamificationGroup K L 0) * residueDegree K L := by
+      Nat.card (lowerRamificationGroup K L 0) * ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) := by
     exact_mod_cast card_aut_eq_card_lowerRamificationGroup_zero_mul
   have hsub : ∑ σ : L ≃ₐ[K] L,
       (if σ ∈ lowerRamificationGroup K L 0 then ρ.character σ else 0) =
@@ -399,11 +399,11 @@ theorem swanConductor_eq_charSwanConductor [IsGalois K L] (ρ : Representation �
   have hsum : ∑ σ : L ≃ₐ[K] L, ρ.character σ * (swanCharacter K L σ : ℂ) =
       ∑ σ : L ≃ₐ[K] L, ρ.character σ * (artinCharacter K L σ : ℂ) -
         (Nat.card (L ≃ₐ[K] L) * ρ.character 1 -
-          residueDegree K L * ∑ h : lowerRamificationGroup K L 0, ρ.character h) := by
+          ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) * ∑ h : lowerRamificationGroup K L 0, ρ.character h) := by
     have hpt : ∀ σ : L ≃ₐ[K] L, ρ.character σ * (swanCharacter K L σ : ℂ) =
         ρ.character σ * artinCharacter K L σ -
           ((if σ = 1 then (Nat.card (L ≃ₐ[K] L) : ℂ) * ρ.character 1 else 0) -
-            residueDegree K L *
+            ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) *
               (if σ ∈ lowerRamificationGroup K L 0 then ρ.character σ else 0)) := by
       intro σ
       simp only [swanCharacter]

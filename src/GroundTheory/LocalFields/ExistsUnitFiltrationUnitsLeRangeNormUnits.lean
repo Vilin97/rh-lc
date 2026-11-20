@@ -180,7 +180,7 @@ theorem ord_norm_units {π : 𝒪[L]} (hπ : Irreducible π) (x : Lˣ) :
   ring
 
 theorem ord_norm_uniformizer {π : 𝒪[L]} (hπ : Irreducible π) :
-    ord (Algebra.norm K (π : L)) = residueDegree K L := by
+    ord (Algebra.norm K (π : L)) = ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) := by
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[K]
   have hϖ0 : (ϖ : K) ≠ 0 := by exact_mod_cast hϖ.ne_zero
   have hϖL : algebraMap K L (ϖ : K) ≠ 0 := by simpa using hϖ0
@@ -192,7 +192,7 @@ theorem ord_norm_uniformizer {π : 𝒪[L]} (hπ : Irreducible π) :
   push_cast at h
   exact (mul_left_cancel₀ he (by linear_combination h)).symm
 
-theorem ord_norm (x : L) : ord (Algebra.norm K x) = residueDegree K L * ord x := by
+theorem ord_norm (x : L) : ord (Algebra.norm K x) = ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) * ord x := by
   rcases eq_or_ne x 0 with rfl | hx
   · simp
   obtain ⟨π, hπ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[L]
@@ -240,13 +240,13 @@ theorem isProperMap_normUnits : IsProperMap (normUnits K L) := by
   obtain ⟨t, ht⟩ := hC.elim_finite_subcover (fun m : ℤ ↦ {y : Kˣ | ord (y : K) = m})
     isOpen_setOf_ord_eq (fun y _ ↦ Set.mem_iUnion.2 ⟨_, rfl⟩)
   refine IsCompact.of_isClosed_subset
-    (t.isCompact_biUnion fun m _ ↦ isCompact_setOf_ord_eq (m / residueDegree K L))
+    (t.isCompact_biUnion fun m _ ↦ isCompact_setOf_ord_eq (m / ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K]))))
     (hC.isClosed.preimage (continuous_normUnits K L)) ?_
   intro x hx
   obtain ⟨m, hm, hxm⟩ := Set.mem_iUnion₂.1 (ht hx)
   refine Set.mem_iUnion₂.2 ⟨m, hm, ?_⟩
   simp only [Set.mem_ofPred_eq, coe_normUnits, ord_norm] at hxm ⊢
-  have hf : (residueDegree K L : ℤ) ≠ 0 := by exact_mod_cast (residueDegree_pos K L).ne'
+  have hf : (((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) : ℤ) ≠ 0 := by exact_mod_cast (residueDegree_pos K L).ne'
   rw [← hxm, Int.mul_ediv_cancel_left _ hf]
 
 theorem isClosed_range_normUnits : IsClosed ((normUnits K L).range : Set Kˣ) := by

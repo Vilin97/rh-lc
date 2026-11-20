@@ -62,7 +62,7 @@ theorem range_localValuation_comp_norm_of_eq (H : Subgroup (Ω ≃ₐ[K] Ω))
   have hsc : IsSepClosed Ω := IsSepClosure.sep_closed K
   rw [inertiaDegree_unramifiedDegree_fixingSubgroup]
   have key : ∀ u : Lˣ, ordUnitsHom K (normUnits K L u) =
-      Multiplicative.ofAdd (((residueDegree K L : ℤ) * ord (u : L) : ℤ) : ℤ̂) := fun u => by
+      Multiplicative.ofAdd (((((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) : ℤ) * ord (u : L) : ℤ) : ℤ̂) := fun u => by
     apply Multiplicative.toAdd.injective
     rw [toAdd_ordUnitsHom, coe_normUnits, ord_norm, toAdd_ofAdd]
   ext z

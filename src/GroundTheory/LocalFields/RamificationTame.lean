@@ -26,7 +26,7 @@ theorem natCast_ramificationIndex_ne_zero
   have h1 := Nat.Coprime.eq_one_of_dvd he.symm hdvd
   exact Nat.not_prime_one (h1 ▸ CharP.char_is_prime 𝓀[K] (ringChar 𝓀[K]))
 
-theorem exists_pow_eq_uniformizer_of_residueDegree_eq_one (hf : residueDegree K L = 1)
+theorem exists_pow_eq_uniformizer_of_residueDegree_eq_one (hf : ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) = 1)
     (he : Nat.Coprime (ramificationIndex K L) (ringChar 𝓀[K])) :
     ∃ π : 𝒪[K], Irreducible π ∧ ∃ α : 𝒪[L], Irreducible α ∧
       α ^ ramificationIndex K L = algebraMap 𝒪[K] 𝒪[L] π ∧ K⟮(α : L)⟯ = ⊤ := by
@@ -80,7 +80,7 @@ theorem exists_pow_eq_uniformizer_of_residueDegree_eq_one (hf : residueDegree K 
 variable {K L}
 
 theorem exists_pow_eq_uniformizer_of_isUnramified (T : IntermediateField K L) [IsUnramified K T]
-    (hf : residueDegree T L = 1) (he : Nat.Coprime (ramificationIndex K L) (ringChar 𝓀[K])) :
+    (hf : ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[T])) = 1) (he : Nat.Coprime (ramificationIndex K L) (ringChar 𝓀[K])) :
     ramificationIndex T L = ramificationIndex K L ∧
       ∃ π : 𝒪[T], Irreducible π ∧ ∃ α : 𝒪[L], Irreducible α ∧
         α ^ ramificationIndex K L = algebraMap 𝒪[T] 𝒪[L] π ∧ T⟮(α : L)⟯ = ⊤ := by

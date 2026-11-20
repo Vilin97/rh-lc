@@ -18,7 +18,7 @@ variable {K : Type} [Field K] [ValuativeRel K] [TopologicalSpace K] [IsNonarchim
 theorem finrank_inf_maximalUnramifiedExtension {Ω : Type} [Field Ω] [Algebra K Ω] [IsSepClosed Ω]
     [IsGalois K Ω] (L : IntermediateField K Ω) [FiniteDimensional K L]
     [ValuativeRel L] [TopologicalSpace L] [IsNonarchimedeanLocalField L] [ValuativeExtension K L] :
-    Module.finrank K ↥(L ⊓ maximalUnramifiedExtension K Ω) = residueDegree K L := by
+    Module.finrank K ↥(L ⊓ maximalUnramifiedExtension K Ω) = ((IsLocalRing.maximalIdeal 𝒪[L]).inertiaDeg (𝒪[K])) := by
   set H : Subgroup (Ω ≃ₐ[K] Ω) := L.fixingSubgroup ⊔ (maximalUnramifiedExtension K Ω).fixingSubgroup with hH
   have hopen : IsOpen (H : Set (Ω ≃ₐ[K] Ω)) :=
     Subgroup.isOpen_mono le_sup_left L.fixingSubgroup_isOpen

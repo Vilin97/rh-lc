@@ -63,7 +63,7 @@ theorem ramificationIndex_dvd_of_le {F E : IntermediateField K Ω} [FiniteDimens
   exact Dvd.intro _ (ramificationIndex_tower K F E).symm
 
 theorem residueDegree_dvd_of_le {F E : IntermediateField K Ω} [FiniteDimensional K F]
-    [FiniteDimensional K E] (h : F ≤ E) : residueDegree K F ∣ residueDegree K E := by
+    [FiniteDimensional K E] (h : F ≤ E) : ((IsLocalRing.maximalIdeal 𝒪[F]).inertiaDeg (𝒪[K])) ∣ ((IsLocalRing.maximalIdeal 𝒪[E]).inertiaDeg (𝒪[K])) := by
   let : Algebra F E := (IntermediateField.inclusion h).toRingHom.toAlgebra
   have : IsScalarTower K F E := IsScalarTower.of_algebraMap_eq fun _ ↦ rfl
   have : ValuativeExtension F E := valuativeExtension_algHom (K := K) (IntermediateField.inclusion h)
