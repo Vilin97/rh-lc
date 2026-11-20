@@ -37,7 +37,7 @@ theorem one_le_ddS_zpow (D : D7) (k : ℕ) :
         _ = 1 := one_mul 1
   have hne : ddS D ^ k ≠ 0 := pow_ne_zero _ (PI.SRW.ddS_ne D)
   rw [zpow_neg, zpow_natCast]
-  have := FractionalIdeal.inv_anti_mono hne one_ne_zero hk
+  have := FractionalIdeal.inv_anti_mono hne hk
   simpa using this
 
 theorem e_mem_of_XS (D : D7) {T : D.host.E} (Λ : Submodule (𝓞 D.host.E) (VS D).V)

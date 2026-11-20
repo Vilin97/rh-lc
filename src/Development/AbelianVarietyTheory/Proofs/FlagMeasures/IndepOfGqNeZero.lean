@@ -23,7 +23,7 @@ private theorem one_le_inv_differentIdeal :
     (1 : FractionalIdeal (𝓞 E)⁰ E) ≤ (↑(differentIdeal ℤ (𝓞 E)))⁻¹ := by
   have h := FractionalIdeal.inv_anti_mono (K := E)
     (I := (↑(differentIdeal ℤ (𝓞 E)) : FractionalIdeal (𝓞 E)⁰ E)) (J := 1)
-    (by simp [differentIdeal_ne_bot]) one_ne_zero FractionalIdeal.coeIdeal_le_one
+    (by simp [differentIdeal_ne_bot]) FractionalIdeal.coeIdeal_le_one
   simpa using h
 
 open NumberField Matrix in

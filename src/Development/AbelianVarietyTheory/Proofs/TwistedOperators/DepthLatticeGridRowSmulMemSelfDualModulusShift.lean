@@ -27,7 +27,7 @@ theorem smul_mem_latBig : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} 
   have hone : (1 : D.host.E) ∈ ((G.pl.modulBar sc : Ideal (𝓞 D.host.E)) : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E)⁻¹ := by
     have hle : (1 : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E) ≤
         ((G.pl.modulBar sc : Ideal (𝓞 D.host.E)) : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E)⁻¹ := by
-      have := FractionalIdeal.inv_anti_mono hmB one_ne_zero FractionalIdeal.coeIdeal_le_one
+      have := FractionalIdeal.inv_anti_mono hmB FractionalIdeal.coeIdeal_le_one
       rwa [inv_one] at this
     exact hle (FractionalIdeal.one_mem_one _)
   have hsub : G.modul • homLat (G.Λ (.grid (i + 1) 0)) (G.Λ (.grid i 0)) ≤

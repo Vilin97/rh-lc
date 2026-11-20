@@ -121,7 +121,7 @@ private theorem algebraMap_δ_mul_uP_mem_O (Z : LocDat D) (p : PlF D) :
     exact FractionalIdeal.coeIdeal_le_one
   have h1 : (1 : D.host.E) ∈ (ddS D)⁻¹ ^ 1 := by
     rw [pow_one]
-    have hle := FractionalIdeal.inv_anti_mono h0 one_ne_zero hle0
+    have hle := FractionalIdeal.inv_anti_mono h0 hle0
     rw [inv_one] at hle
     exact FractionalIdeal.one_le.mp hle
   obtain ⟨-, -, -, hO, -⟩ := Z.agree p

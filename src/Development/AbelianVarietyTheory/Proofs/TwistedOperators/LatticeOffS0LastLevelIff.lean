@@ -105,7 +105,7 @@ theorem smul_mem_mul {R K : Type} [CommRing R] [IsDedekindDomain R] [Field K] [A
   have hJb : ((J : FractionalIdeal R⁰ K) ^ b) ≠ 0 :=
     pow_ne_zero _ (FractionalIdeal.coeIdeal_ne_zero.mpr hJ0)
   have hone : (1 : FractionalIdeal R⁰ K) ≤ ((J : FractionalIdeal R⁰ K) ^ b)⁻¹ := by
-    have := FractionalIdeal.inv_anti_mono hJb one_ne_zero (pow_le_one' FractionalIdeal.coeIdeal_le_one _)
+    have := FractionalIdeal.inv_anti_mono hJb (pow_le_one' FractionalIdeal.coeIdeal_le_one _)
     simpa using this
   have hle : 𝔟 * (I : FractionalIdeal R⁰ K) ^ a ≤ 𝔟 * (I : FractionalIdeal R⁰ K) ^ a * ((J : FractionalIdeal R⁰ K) ^ b)⁻¹ :=
     le_mul_of_one_le_right' hone

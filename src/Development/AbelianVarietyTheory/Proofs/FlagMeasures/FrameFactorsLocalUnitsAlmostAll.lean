@@ -26,7 +26,7 @@ theorem one_mem_inv_pow (k : ℕ) : (1 : D.host.E) ∈ (ddS D)⁻¹ ^ k := by
     unfold ddS
     exact FractionalIdeal.coeIdeal_le_one
   have h1 : (1 : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E) ≤ (ddS D)⁻¹ := by
-    simpa using FractionalIdeal.inv_anti_mono ddS_ne_zero one_ne_zero hle
+    simpa using FractionalIdeal.inv_anti_mono ddS_ne_zero hle
   induction k with
   | zero => simp
   | succ k ih =>

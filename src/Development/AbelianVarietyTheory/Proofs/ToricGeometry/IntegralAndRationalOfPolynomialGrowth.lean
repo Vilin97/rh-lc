@@ -102,7 +102,7 @@ theorem exists_local_root {d : ℕ} (p : Polynomial (MvPolynomial (Fin d) ℂ)) 
     (ha' : (p.map (MvPolynomial.eval x₀)).derivative.eval a ≠ 0) :
     ∃ y : (Fin d → ℂ) → ℂ, y x₀ = a ∧ DifferentiableAt ℂ y x₀ ∧
       ∀ᶠ x in 𝓝 x₀, (p.map (MvPolynomial.eval x)).eval (y x) = 0 := by
-  have hs := (contDiff_eval_map p).contDiffAt.hasStrictFDerivAt (x := (x₀, a)) one_ne_zero
+  have hs := (contDiff_eval_map p).contDiffAt.hasStrictFDerivAt_fderiv (x := (x₀, a)) one_ne_zero
   set L := fderiv ℂ (fun z : (Fin d → ℂ) × ℂ => (p.map (MvPolynomial.eval z.1)).eval z.2) (x₀, a)
   have h1 : HasFDerivAt (fun y : ℂ => (p.map (MvPolynomial.eval x₀)).eval y)
       (L ∘L ContinuousLinearMap.inr ℂ (Fin d → ℂ) ℂ) a :=

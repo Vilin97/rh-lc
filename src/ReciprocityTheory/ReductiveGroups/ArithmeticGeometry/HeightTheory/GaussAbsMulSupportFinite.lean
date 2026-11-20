@@ -285,7 +285,7 @@ theorem relIndex_inv {κ : Type*} (G₀ : MvPolynomial κ (𝓞 K)) (h : G₀ �
   have hfg : ((J⁻¹ : FractionalIdeal (𝓞 K)⁰ K) : Submodule (𝓞 K) K).FG :=
     FractionalIdeal.fg_of_isNoetherianRing le_rfl _
   have h1 : (1 : Submodule (𝓞 K) K) ≤ ((J⁻¹ : FractionalIdeal (𝓞 K)⁰ K) : Submodule (𝓞 K) K) := by
-    have h2 := FractionalIdeal.inv_anti_mono hJ one_ne_zero FractionalIdeal.coeIdeal_le_one
+    have h2 := FractionalIdeal.inv_anti_mono hJ FractionalIdeal.coeIdeal_le_one
     rw [inv_one] at h2
     have h3 : ((1 : FractionalIdeal (𝓞 K)⁰ K) : Submodule (𝓞 K) K) ≤
         ((J⁻¹ : FractionalIdeal (𝓞 K)⁰ K) : Submodule (𝓞 K) K) := h2

@@ -14,7 +14,7 @@ theorem one_mem_ideal_zpow_neg {R K : Type*} [CommRing R] [IsDedekindDomain R] [
   have hI0 : (I : FractionalIdeal R⁰ K) ≠ 0 := FractionalIdeal.coeIdeal_ne_zero.mpr hI
   have h1 : ((I : FractionalIdeal R⁰ K) ^ n) ≤ 1 := pow_le_one' FractionalIdeal.coeIdeal_le_one n
   have h2 : (1 : FractionalIdeal R⁰ K) ≤ ((I : FractionalIdeal R⁰ K) ^ n)⁻¹ := by
-    have h3 := FractionalIdeal.inv_anti_mono (pow_ne_zero n hI0) one_ne_zero h1
+    have h3 := FractionalIdeal.inv_anti_mono (pow_ne_zero n hI0) h1
     rwa [inv_one] at h3
   rw [zpow_neg, zpow_natCast]
   exact h2 (FractionalIdeal.one_mem_one _)

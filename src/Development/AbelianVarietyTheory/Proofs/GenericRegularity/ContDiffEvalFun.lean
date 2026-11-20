@@ -39,7 +39,7 @@ theorem main : ∀ {d : ℕ} (p : Polynomial (MvPolynomial (Fin d) ℂ)) (x₀ :
   intro d p x₀ a h0 h1
   set q := Polynomial.map (MvPolynomial.eval x₀) p with hq
   have hFs : HasStrictFDerivAt (evalFun p) (fderiv ℂ (evalFun p) (x₀, a)) (x₀, a) :=
-    (contDiff_evalFun p).contDiffAt.hasStrictFDerivAt one_ne_zero
+    (contDiff_evalFun p).contDiffAt.hasStrictFDerivAt_fderiv one_ne_zero
   have hder : fderiv ℂ (evalFun p) (x₀, a) ∘L ContinuousLinearMap.inr ℂ (Fin d → ℂ) ℂ
       = (1 : ℂ →L[ℂ] ℂ).smulRight (Polynomial.eval a (Polynomial.derivative q)) := by
     have h1' : HasFDerivAt (fun z => evalFun p (x₀, z))

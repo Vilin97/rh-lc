@@ -59,7 +59,7 @@ theorem one_mem_dd (D : Formalism.BasicNotions.D7) (k : ℕ) :
   have hk0 : ddS D ^ k ≠ 0 := pow_ne_zero _ h0
   have hk1 : ddS D ^ k ≤ 1 := pow_le_one' hle k
   rw [zpow_neg, zpow_natCast]
-  have h1 := FractionalIdeal.inv_anti_mono hk0 one_ne_zero hk1
+  have h1 := FractionalIdeal.inv_anti_mono hk0 hk1
   rw [inv_one] at h1
   exact h1 (FractionalIdeal.one_mem_one _)
 

@@ -45,7 +45,7 @@ theorem submLB_holds : SubmLB := by
   have hs : HasStrictFDerivAt Θ
       ((ContinuousLinearEquiv.refl ℝ (Fin n → ℝ) : (Fin n → ℝ) ≃L[ℝ] (Fin n → ℝ)) :
         (Fin n → ℝ) →L[ℝ] (Fin n → ℝ)) x0 := by
-    have := hΘc.contDiffAt.hasStrictFDerivAt (x := x0) one_ne_zero
+    have := hΘc.contDiffAt.hasStrictFDerivAt_fderiv (x := x0) one_ne_zero
     rw [hid] at this
     exact this
   let PH := hs.toOpenPartialHomeomorph Θ

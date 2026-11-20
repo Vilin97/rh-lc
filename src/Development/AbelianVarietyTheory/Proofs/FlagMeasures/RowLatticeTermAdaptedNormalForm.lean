@@ -170,7 +170,7 @@ theorem admissibleFrame_congruent_mod_unitriangular {T T' : E} (G : Formalism.Ma
       (pow_le_pow_right_of_le_one' hD1 (Nat.sub_le_sub_left (Fin.le_iff_val_le_val.1 hij) r)) hs
   have hone : ∀ i : Fin r, ∀ o : 𝓞 E, (o : E) ∈ aaI 𝔡 i := by
     intro i o
-    have h1 := FractionalIdeal.inv_anti_mono (pow_ne_zero _ hD0) one_ne_zero (pow_le_one' hD1 (r - i.val))
+    have h1 := FractionalIdeal.inv_anti_mono (pow_ne_zero _ hD0) (pow_le_one' hD1 (r - i.val))
     rw [inv_one] at h1
     rw [hp]; exact h1 ((FractionalIdeal.mem_one_iff _).2 ⟨o, rfl⟩)
   have hsmulI : ∀ i : Fin r, ∀ s ∈ aaI 𝔡 i, ∀ o : 𝓞 E, s * (o : E) ∈ aaI 𝔡 i := by

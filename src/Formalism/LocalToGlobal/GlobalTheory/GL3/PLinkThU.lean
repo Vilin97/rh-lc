@@ -395,7 +395,7 @@ theorem one_mem_inverse_halfDifferent : (1 : D.host.E) ∈ (D.host.AA0 : Submodu
   have hle : (1 : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E) ≤ D.host.AA0 := by
     have := FractionalIdeal.inv_anti_mono
       (I := (D.host.𝔟 : FractionalIdeal (nonZeroDivisors (𝓞 D.host.E)) D.host.E)) (J := 1)
-      (FractionalIdeal.coeIdeal_ne_zero.mpr hb) one_ne_zero FractionalIdeal.coeIdeal_le_one
+      (FractionalIdeal.coeIdeal_ne_zero.mpr hb) FractionalIdeal.coeIdeal_le_one
     rwa [inv_one] at this
   exact hle (FractionalIdeal.one_mem_one _)
 
