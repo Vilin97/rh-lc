@@ -78,7 +78,7 @@ theorem period_of_tendsto (e : FamExp G M B ψ) (hsep : IsSeparated G.hom) (hhol
   · obtain ⟨Γ₀, hΓ, hdisc, -, -⟩ := GlobalTheory.T.period_lattice_discrete_free R G g n M B ψ e b₀ hb₀
     have hcl : IsClosed (Γ₀ : Set (Fin g → ℂ)) := by
       haveI := hdisc
-      exact AddSubgroup.isClosed_of_discrete (H := Γ₀.toAddSubgroup)
+      exact (Γ₀.toAddSubgroup).isClosed_of_discreteTopology
     rw [hΓ] at hcl
     refine hcl.mem_of_frequently_of_tendsto (hfreq.mono fun m hm => ?_) hq
     rw [← hm]

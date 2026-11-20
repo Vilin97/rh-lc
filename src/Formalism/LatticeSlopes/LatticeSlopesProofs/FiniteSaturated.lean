@@ -20,7 +20,7 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDim
 theorem finite_mem_norm_le (L : Submodule ℤ E) [hL : DiscreteTopology L] (C : ℝ) :
     {v : E | v ∈ L ∧ ‖v‖ ≤ C}.Finite := by
   have hD : DiscreteTopology (L.toAddSubgroup) := hL
-  have hcl : IsClosed (L : Set E) := AddSubgroup.isClosed_of_discrete (H := L.toAddSubgroup)
+  have hcl : IsClosed (L : Set E) := (L.toAddSubgroup).isClosed_of_discreteTopology
   have hs : IsDiscrete (L : Set E) := isDiscrete_iff_discreteTopology.mpr hL
   refine (Metric.finite_isBounded_inter_isClosed hs (Metric.isBounded_closedBall (x := (0 : E)) (r := C))
     hcl).subset ?_

@@ -27,7 +27,7 @@ theorem coeff_two_shift (L : PeriodPair) (P : ℂ) (hP : P ∉ L.lattice) :
       | exact L.isClosed_lattice
       | exact PeriodPair.isClosed_lattice L
       | (haveI : DiscreteTopology L.lattice.toAddSubgroup := inferInstanceAs (DiscreteTopology L.lattice)
-         exact AddSubgroup.isClosed_of_discrete (H := L.lattice.toAddSubgroup))
+         exact (L.lattice.toAddSubgroup).isClosed_of_discreteTopology)
   have hopen : ∀ᶠ w in nhds P, w ∉ L.lattice := hc.isOpen_compl.mem_nhds hP
   have hev : deriv L.weierstrassP =ᶠ[nhds P] L.derivWeierstrassP := by
     filter_upwards [hopen] with w hw

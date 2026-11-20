@@ -185,7 +185,7 @@ private theorem finite_setOf_ringOfIntegers_mixedEmbedding_mem_compact {K : Type
     (inferInstance : DiscreteTopology (mixedEmbedding.integerLattice K))
   have hcl : IsClosed ((mixedEmbedding.integerLattice K : Submodule ℤ (mixedSpace K)) :
       Set (mixedSpace K)) :=
-    AddSubgroup.isClosed_of_discrete (H := (mixedEmbedding.integerLattice K).toAddSubgroup)
+    ((mixedEmbedding.integerLattice K).toAddSubgroup).isClosed_of_discreteTopology
   have hc : IsCompact (((↑) : mixedEmbedding.integerLattice K → mixedSpace K) ⁻¹' C) :=
     hcl.isClosedEmbedding_subtypeVal.isCompact_preimage hC
   have hfin2 := hc.finite_of_discrete.image Subtype.val

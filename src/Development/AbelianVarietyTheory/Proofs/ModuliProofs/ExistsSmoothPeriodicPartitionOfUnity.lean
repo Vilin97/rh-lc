@@ -17,7 +17,7 @@ theorem _root_.GlobalTheory.PeriodicPartition.locallyFinite_support_translate (�
   intro x
   refine ⟨Metric.closedBall x 1, Metric.closedBall_mem_nhds x one_pos, ?_⟩
   have hclosed : IsClosed (Λ : Set E) :=
-    AddSubgroup.isClosed_of_discrete (H := Λ.toAddSubgroup)
+    (Λ.toAddSubgroup).isClosed_of_discreteTopology
   have hfin : ((tsupport φ - Metric.closedBall x 1) ∩ (Λ : Set E)).Finite :=
     Metric.finite_isBounded_inter_isClosed DiscreteTopology.isDiscrete
       (hφ.isBounded.sub Metric.isBounded_closedBall) hclosed

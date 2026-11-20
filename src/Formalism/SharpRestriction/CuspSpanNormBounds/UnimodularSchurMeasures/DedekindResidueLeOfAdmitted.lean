@@ -97,7 +97,7 @@ theorem qt_cover (h5 : covRad (L : Set (EuclideanSpace ℝ (Fin N))) * firstMin 
     simp [this]
   have hcl : IsClosed (L : Set (EuclideanSpace ℝ (Fin N))) := by
     have : DiscreteTopology L.toAddSubgroup := (inferInstance : DiscreteTopology L)
-    exact AddSubgroup.isClosed_of_discrete (H := L.toAddSubgroup)
+    exact (L.toAddSubgroup).isClosed_of_discreteTopology
   obtain ⟨y, hy, hxy⟩ := hcl.exists_infDist_eq_dist ⟨0, zero_mem L⟩ x
   refine ⟨y, hy, ?_⟩
   rw [← dist_eq_norm, ← hxy]

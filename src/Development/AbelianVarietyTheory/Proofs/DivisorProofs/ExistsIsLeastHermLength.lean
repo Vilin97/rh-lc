@@ -85,7 +85,7 @@ theorem exists_isLeast_hermLength {g : ℕ} (hg : 0 < g) (Λ : Submodule ℤ (Fi
   set T : Set (Fin g → ℂ) := {z | z ∈ Λ ∧ z ≠ 0 ∧ q z ≤ q z₀} with hT
   have hclosed : IsClosed (Λ : Set (Fin g → ℂ)) := by
     haveI : DiscreteTopology Λ.toAddSubgroup := hd
-    exact AddSubgroup.isClosed_of_discrete (H := Λ.toAddSubgroup)
+    exact (Λ.toAddSubgroup).isClosed_of_discreteTopology
   have hdisc : _root_.IsDiscrete (Λ : Set (Fin g → ℂ)) := isDiscrete_iff_discreteTopology.2 hd
   have hfin : T.Finite := by
     refine (Metric.finite_isBounded_inter_isClosed hdisc (Metric.isBounded_closedBall (x := (0 : Fin g → ℂ))

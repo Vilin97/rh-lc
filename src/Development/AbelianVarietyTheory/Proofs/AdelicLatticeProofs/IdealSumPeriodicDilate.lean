@@ -61,7 +61,7 @@ theorem finite_support_dilate (K : Type) [Field K] [NumberField K] (f : mixedSpa
     Metric.finite_isBounded_inter_isClosed
       (isDiscrete_iff_discreteTopology.2 hd)
       Metric.isBounded_closedBall
-      (AddSubgroup.isClosed_of_discrete (H := (idealLattice K I).toAddSubgroup))
+      (((idealLattice K I).toAddSubgroup).isClosed_of_discreteTopology)
   have hinj : Function.Injective fun α : 𝓞 K => mixedEmbedding K (α : K) :=
     (mixedEmbedding_injective K).comp RingOfIntegers.coe_injective
   refine (hfin.preimage hinj.injOn).subset fun α hα => ⟨?_, ?_⟩

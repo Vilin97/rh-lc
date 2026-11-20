@@ -12,7 +12,7 @@ theorem finite_inter_of_discrete_submodule {E : Type*} [NormedAddCommGroup E]
     {K : Set E} (hK : Bornology.IsBounded K) : {x : M' | (x : E) ∈ K}.Finite := by
   haveI : ProperSpace E := FiniteDimensional.proper_real E
   have hd : DiscreteTopology M'.toAddSubgroup := hM
-  have hcl : IsClosed (M' : Set E) := AddSubgroup.isClosed_of_discrete (H := M'.toAddSubgroup)
+  have hcl : IsClosed (M' : Set E) := (M'.toAddSubgroup).isClosed_of_discreteTopology
   have hdis : IsDiscrete (M' : Set E) := ⟨hM⟩
   have hfin : (K ∩ (M' : Set E)).Finite :=
     Metric.finite_isBounded_inter_isClosed hdis hK hcl
