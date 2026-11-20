@@ -386,6 +386,6 @@ theorem cxPosDens_aemeasurable : ∀ (K : Type) [Fintype K] (ι : K → Type) [�
     (∀ (c : K → ℂ) (z : (Σ k, ι k) → ℂ), (∀ k, c k ≠ 0) → g (fun p => c p.1 * z p) = g z) →
     AEMeasurable (cxPosDens (conePts Q) Ψ (pot L) g) := by
   intro K _ ι _ Q e Ψ L g hQ hΨ hL hg hdeg
-  exact cxPosDens_aemeasurable_of_finite (fun z hz => hz.1) (GlobalTheory.CompanionTheory.Ar.Pub.CxFib.setFibre_finite K ι Q e Ψ hQ hΨ) hL hg hdeg
+  exact cxPosDens_aemeasurable_of_finite (by exact fun z hz => hz.1) (GlobalTheory.CompanionTheory.Ar.Pub.CxFib.setFibre_finite K ι Q e Ψ hQ hΨ) hL hg hdeg
 
 end GlobalTheory.CompanionTheory.Ar.Pub.CxPosMeas

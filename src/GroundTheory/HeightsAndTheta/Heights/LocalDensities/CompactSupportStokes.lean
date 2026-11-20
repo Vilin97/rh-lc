@@ -286,7 +286,7 @@ theorem stokes_chart [T2Space X] (A : FinHolAtlas (e + 1) X) (χ : ChartPartitio
       have h1 : ContDiffOn ℝ ∞ ((β p) ∘ (A.chart j ∘ (A.chart k).symm))
           ((A.chart k).target ∩ (A.chart k).symm ⁻¹' (A.chart j).source) :=
         (hβs p).comp_contDiffOn (st_trans_smooth A k j)
-      refine ((h1.mono fun z hz => hz.2).mul ((hw k).mono fun z hz => hz.1)).congr ?_
+      refine ((h1.mono (by exact fun z hz => hz.2)).mul ((hw k).mono (by exact fun z hz => hz.1))).congr ?_
       intro z _
       simp only [Function.comp_apply, hwp]
     · have hyw : (A.chart k).symm y ∉ tsupport w := fun h => hyj (hwj h)

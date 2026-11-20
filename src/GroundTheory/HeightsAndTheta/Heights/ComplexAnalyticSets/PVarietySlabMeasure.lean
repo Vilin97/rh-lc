@@ -49,7 +49,7 @@ theorem VarietySlabMeasure.proof (hG : ComplexSets.FiniteProjectionsGeneric.Stat
   intro n d J u hJ hdim hu R
   rcases hdim.lt_or_eq with hlt | heq
   · refine ⟨1, 1, one_pos, one_pos, fun ε _ _ => ?_⟩
-    calc _ ≤ μH[((2 * d : ℕ) : ℝ)] (zeroSetEuc J) := measure_mono fun z hz => hz.1
+    calc _ ≤ μH[((2 * d : ℕ) : ℝ)] (zeroSetEuc J) := measure_mono (by exact fun z hz => hz.1)
       _ = 0 := NullSmaller.proof n d J hlt
       _ ≤ _ := by simp
   obtain ⟨U, hU, hfin⟩ := (hG n d J hJ heq).2.2 1 (fun _ => 1)
