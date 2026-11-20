@@ -6,6 +6,27 @@ set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.SchemeCoh
 
+section
+
+open AlgebraicGeometry CategoryTheory TopologicalSpace
+
+universe c236Ext c236Scheme
+
+private noncomputable def H.linearMapV436 {X : Scheme.{c236Scheme}}
+    [HasExt.{c236Ext} (Sheaf (Opens.grothendieckTopology X.toTopCat) AddCommGrpCat.{c236Scheme})]
+    (A : Type*) [CommRing A] [Algebra A Γ(X, ⊤)]
+    {F G : X.Modules} (φ : F ⟶ G) (n : ℕ) :
+    Sheaf.H.{c236Ext} (modulesAb F) n →ₗ[A] Sheaf.H.{c236Ext} (modulesAb G) n where
+  toFun := Sheaf.H.map.{c236Ext} (modulesAbMap φ) n
+  map_add' := map_add _
+  map_smul' a x := by
+    change Sheaf.H.map.{c236Ext} (modulesAbMap φ) n (a • x) =
+      a • Sheaf.H.map.{c236Ext} (modulesAbMap φ) n x
+    rw [H.smul_def, H.smul_def, ← Sheaf.H.map_comp_apply, ← Sheaf.H.map_comp_apply,
+      ← modulesAbMap_comp, ← modulesAbMap_comp, smulHom_comp]
+
+end
+
 open AlgebraicGeometry CategoryTheory Opposite TopologicalSpace Limits
 
 universe u
@@ -52,10 +73,10 @@ lemma cechK_succ_le {ι : Type u} (𝔘 : ι → X.Opens) (p n : ℕ) :
 lemma towerComp_formalτQ_val (q n : ℕ) : ∀ (c : ℕ) (y : formalQ I F q (n + c)),
     ((towerComp (E := fun m => formalQ I F q m) (formalτQ I F q) n c y : formalQ I F q n) :
       Sheaf.H.{u} (modulesAb (idealPow I F (n + 1))) (q + 1)) =
-      H.linearMap A (transMap I F n c) (q + 1) y
+      H.linearMapV436 A (transMap I F n c) (q + 1) y
   | 0, y => by
     change (y : Sheaf.H.{u} (modulesAb (idealPow I F (n + 1))) (q + 1)) =
-      H.linearMap A (𝟙 _) (q + 1) y
+      H.linearMapV436 A (𝟙 _) (q + 1) y
     rw [H.linearMap_id]
     rfl
   | c + 1, y => by

@@ -4,6 +4,27 @@ set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.SchemeCoh
 
+section
+
+open AlgebraicGeometry CategoryTheory TopologicalSpace
+
+universe c236Ext c236Scheme
+
+private noncomputable def H.linearMapV436 {X : Scheme.{c236Scheme}}
+    [HasExt.{c236Ext} (Sheaf (Opens.grothendieckTopology X.toTopCat) AddCommGrpCat.{c236Scheme})]
+    (A : Type*) [CommRing A] [Algebra A Γ(X, ⊤)]
+    {F G : X.Modules} (φ : F ⟶ G) (n : ℕ) :
+    Sheaf.H.{c236Ext} (modulesAb F) n →ₗ[A] Sheaf.H.{c236Ext} (modulesAb G) n where
+  toFun := Sheaf.H.map.{c236Ext} (modulesAbMap φ) n
+  map_add' := map_add _
+  map_smul' a x := by
+    change Sheaf.H.map.{c236Ext} (modulesAbMap φ) n (a • x) =
+      a • Sheaf.H.map.{c236Ext} (modulesAbMap φ) n x
+    rw [H.smul_def, H.smul_def, ← Sheaf.H.map_comp_apply, ← Sheaf.H.map_comp_apply,
+      ← modulesAbMap_comp, ← modulesAbMap_comp, smulHom_comp]
+
+end
+
 open AlgebraicGeometry CategoryTheory Opposite TopologicalSpace Limits IsLocalRing MonoidalCategory
 
 universe u
@@ -87,7 +108,7 @@ variable (A X) in
 
 abbrev fibreTower : ∀ n, Sheaf.H.{u} (modulesAb (fibreQuot A X (n + 1))) 0 →ₗ[A]
     Sheaf.H.{u} (modulesAb (fibreQuot A X n)) 0 :=
-  fun n => H.linearMap A (quotPowMap (maximalIdeal A) (𝟙_ X.Modules) n) 0
+  fun n => H.linearMapV436 A (quotPowMap (maximalIdeal A) (𝟙_ X.Modules) n) 0
 
 lemma mem_towerLimit_splitSection :
     (fun n => (Sheaf.H.equiv₀ (modulesAb (fibreQuot A X n)) isTerminalTop).symm
@@ -103,7 +124,7 @@ include hcov hdisj in
 theorem false_of_split (hΓ : Function.Surjective (algebraMap A Γ(X, ⊤)))
     (hsurj : ∀ x : (∀ n, Sheaf.H.{u} (modulesAb (fibreQuot A X n)) 0),
       x ∈ towerLimit (fibreTower A X) → x 0 ∈ LinearMap.range
-      (H.linearMap.{u} A (quotPowπ (maximalIdeal A) (𝟙_ X.Modules) 0) 0))
+      (H.linearMapV436.{u} A (quotPowπ (maximalIdeal A) (𝟙_ X.Modules) 0) 0))
     {x₁ x₂ : X} (hx₁ : x₁ ∈ closedFibre (A := A) X) (hx₁W : x₁ ∈ W₁)
     (hx₂ : x₂ ∈ closedFibre (A := A) X) (hx₂W : x₂ ∈ W₂) : False := by
   obtain ⟨h, hh⟩ := hsurj _ (mem_towerLimit_splitSection hcov hdisj)
@@ -111,7 +132,7 @@ theorem false_of_split (hΓ : Function.Surjective (algebraMap A Γ(X, ⊤)))
   obtain ⟨a, ha⟩ := hΓ g
   have hs : splitSection A hcov hdisj 0 = (algebraMap A Γ(X, ⊤) a) • fibreOne A X 0 := by
     have e1 : Sheaf.H.equiv₀ (modulesAb (fibreQuot A X 0)) isTerminalTop
-        (H.linearMap A (quotPowπ (maximalIdeal A) (𝟙_ X.Modules) 0) 0 h) =
+        (H.linearMapV436 A (quotPowπ (maximalIdeal A) (𝟙_ X.Modules) 0) 0 h) =
           splitSection A hcov hdisj 0 := by
       rw [hh]
       exact AddEquiv.apply_symm_apply _ _
@@ -159,7 +180,7 @@ theorem isConnected_closedFibre_of_surj [IsProper (X ↘ Spec (.of A))]
     (hΓ : Function.Bijective (algebraMap A Γ(X, ⊤)))
     (hsurj : ∀ x : (∀ n, Sheaf.H.{u} (modulesAb (fibreQuot A X n)) 0),
       x ∈ towerLimit (fibreTower A X) → x 0 ∈ LinearMap.range
-      (H.linearMap.{u} A (quotPowπ (maximalIdeal A) (𝟙_ X.Modules) 0) 0)) :
+      (H.linearMapV436.{u} A (quotPowπ (maximalIdeal A) (𝟙_ X.Modules) 0) 0)) :
     _root_.IsConnected (closedFibre (A := A) X) := by
   refine ⟨?_, ?_⟩
   ·

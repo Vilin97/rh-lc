@@ -4,6 +4,27 @@ set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.SchemeCoh
 
+section
+
+open AlgebraicGeometry CategoryTheory TopologicalSpace
+
+universe c236Ext c236Scheme
+
+private noncomputable def H.linearMapV436 {X : Scheme.{c236Scheme}}
+    [HasExt.{c236Ext} (Sheaf (Opens.grothendieckTopology X.toTopCat) AddCommGrpCat.{c236Scheme})]
+    (A : Type*) [CommRing A] [Algebra A Γ(X, ⊤)]
+    {F G : X.Modules} (φ : F ⟶ G) (n : ℕ) :
+    Sheaf.H.{c236Ext} (modulesAb F) n →ₗ[A] Sheaf.H.{c236Ext} (modulesAb G) n where
+  toFun := Sheaf.H.map.{c236Ext} (modulesAbMap φ) n
+  map_add' := map_add _
+  map_smul' a x := by
+    change Sheaf.H.map.{c236Ext} (modulesAbMap φ) n (a • x) =
+      a • Sheaf.H.map.{c236Ext} (modulesAbMap φ) n x
+    rw [H.smul_def, H.smul_def, ← Sheaf.H.map_comp_apply, ← Sheaf.H.map_comp_apply,
+      ← modulesAbMap_comp, ← modulesAbMap_comp, smulHom_comp]
+
+end
+
 open AlgebraicGeometry CategoryTheory Opposite TopologicalSpace Limits Abelian
 
 universe w' u
@@ -39,7 +60,7 @@ theorem FiniteH.of_shortExact₂ {S : ShortComplex X.Modules} (hS : S.ShortExact
     (h₁ : FiniteH.{w'} A S.X₁) (h₃ : FiniteH.{w'} A S.X₃) : FiniteH.{w'} A S.X₂ := fun p =>
   have := h₁ p
   have := h₃ p
-  finite_of_exact_noetherian (H.linearMap A S.f p) (H.linearMap A S.g p)
+  finite_of_exact_noetherian (H.linearMapV436 A S.f p) (H.linearMapV436 A S.g p)
     fun y hy => H.exact₂ (shortExact_abSC hS) y hy
 
 theorem FiniteH.of_shortExact₁ {S : ShortComplex X.Modules} (hS : S.ShortExact)
@@ -50,14 +71,14 @@ theorem FiniteH.of_shortExact₁ {S : ShortComplex X.Modules} (hS : S.ShortExact
   cases p with
   | zero =>
     have : Mono (abSC S).f := hS'.mono_f
-    refine finite_of_exact_noetherian (0 : (Fin 0 → A) →ₗ[A] _) (H.linearMap A S.f 0) ?_
+    refine finite_of_exact_noetherian (0 : (Fin 0 → A) →ₗ[A] _) (H.linearMapV436 A S.f 0) ?_
     intro y hy
     refine ⟨0, ?_⟩
     rw [LinearMap.zero_apply]
     exact (H.map_zero_injective.{w'} (abSC S).f (hy.trans (map_zero _).symm)).symm
   | succ p =>
     have := h₃ p
-    exact finite_of_exact_noetherian (H.δLinear A hS' p) (H.linearMap A S.f (p + 1))
+    exact finite_of_exact_noetherian (H.δLinear A hS' p) (H.linearMapV436 A S.f (p + 1))
       fun x hx => H.exact₁ hS' rfl x hx
 
 theorem FiniteH.of_shortExact₃ {S : ShortComplex X.Modules} (hS : S.ShortExact)

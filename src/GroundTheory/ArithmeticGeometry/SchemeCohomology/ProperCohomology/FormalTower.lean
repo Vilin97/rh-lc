@@ -6,6 +6,33 @@ set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.SchemeCoh
 
+section
+
+open AlgebraicGeometry CategoryTheory TopologicalSpace
+
+universe c236Ext c236Scheme
+
+private noncomputable def H.linearMapV436 {X : Scheme.{c236Scheme}}
+    [HasExt.{c236Ext} (Sheaf (Opens.grothendieckTopology X.toTopCat) AddCommGrpCat.{c236Scheme})]
+    (A : Type*) [CommRing A] [Algebra A Γ(X, ⊤)]
+    {F G : X.Modules} (φ : F ⟶ G) (n : ℕ) :
+    Sheaf.H.{c236Ext} (modulesAb F) n →ₗ[A] Sheaf.H.{c236Ext} (modulesAb G) n where
+  toFun := Sheaf.H.map.{c236Ext} (modulesAbMap φ) n
+  map_add' := map_add _
+  map_smul' a x := by
+    change Sheaf.H.map.{c236Ext} (modulesAbMap φ) n (a • x) =
+      a • Sheaf.H.map.{c236Ext} (modulesAbMap φ) n x
+    rw [H.smul_def, H.smul_def, ← Sheaf.H.map_comp_apply, ← Sheaf.H.map_comp_apply,
+      ← modulesAbMap_comp, ← modulesAbMap_comp, smulHom_comp]
+
+private lemma H.linearMapV436_apply {X : Scheme.{c236Scheme}}
+    [HasExt.{c236Ext} (Sheaf (Opens.grothendieckTopology X.toTopCat) AddCommGrpCat.{c236Scheme})]
+    (A : Type*) [CommRing A] [Algebra A Γ(X, ⊤)]
+    {F G : X.Modules} (φ : F ⟶ G) (n : ℕ) (x : Sheaf.H.{c236Ext} (modulesAb F) n) :
+    H.linearMapV436 A φ n x = Sheaf.H.map.{c236Ext} (modulesAbMap φ) n x := rfl
+
+end
+
 open AlgebraicGeometry CategoryTheory Opposite TopologicalSpace Limits
 
 universe u
@@ -19,7 +46,7 @@ variable {A : Type u} [CommRing A] [IsNoetherianRing A] (I : Ideal A) {X : Schem
 
 abbrev formalα (n : ℕ) : Sheaf.H.{u} (modulesAb (idealPow I F (n + 1))) q →ₗ[A]
     Sheaf.H.{u} (modulesAb F) q :=
-  H.linearMap A (idealPowι I F (n + 1)) q
+  H.linearMapV436 A (idealPowι I F (n + 1)) q
 
 def formalK (n : ℕ) : Submodule A (Sheaf.H.{u} (modulesAb F) q) :=
   LinearMap.range (formalα I F q n)
@@ -27,7 +54,7 @@ def formalK (n : ℕ) : Submodule A (Sheaf.H.{u} (modulesAb F) q) :=
 lemma formalK_antitone : Antitone (formalK I F q) := by
   refine antitone_nat_of_succ_le fun n => ?_
   rintro _ ⟨x, rfl⟩
-  refine ⟨H.linearMap A (idealPowSucc I F (n + 1)) q x, ?_⟩
+  refine ⟨H.linearMapV436 A (idealPowSucc I F (n + 1)) q x, ?_⟩
   change Sheaf.H.map.{u} (modulesAbMap (idealPowι I F (n + 1))) q
       (Sheaf.H.map.{u} (modulesAbMap (idealPowSucc I F (n + 1))) q x) =
     Sheaf.H.map.{u} (modulesAbMap (idealPowι I F (n + 1 + 1))) q x
@@ -35,11 +62,11 @@ lemma formalK_antitone : Antitone (formalK I F q) := by
 
 abbrev formalβ (n : ℕ) : Sheaf.H.{u} (modulesAb F) q →ₗ[A]
     Sheaf.H.{u} (modulesAb (quotPow I F n)) q :=
-  H.linearMap A (quotPowπ I F n) q
+  H.linearMapV436 A (quotPowπ I F n) q
 
 abbrev formalτE (n : ℕ) : Sheaf.H.{u} (modulesAb (quotPow I F (n + 1))) q →ₗ[A]
     Sheaf.H.{u} (modulesAb (quotPow I F n)) q :=
-  H.linearMap A (quotPowMap I F n) q
+  H.linearMapV436 A (quotPowMap I F n) q
 
 lemma shortExact_abSC_quotPow (n : ℕ) : (abSC (quotPowSC I F n)).ShortExact :=
   shortExact_abSC (quotPowSC_shortExact I F n)
@@ -109,8 +136,8 @@ def quotPowSCMap (n : ℕ) : quotPowSC I F (n + 1) ⟶ quotPowSC I F n where
 
 lemma formalδ_naturality (n : ℕ) (x : Sheaf.H.{u} (modulesAb (quotPow I F (n + 1))) q) :
     formalδ I F q n (formalτE I F q n x) =
-      H.linearMap A (idealPowSucc I F (n + 1)) (q + 1) (formalδ I F q (n + 1) x) := by
-  simp only [formalδ, formalτE, H.δLinear_apply, H.linearMap_apply]
+      H.linearMapV436 A (idealPowSucc I F (n + 1)) (q + 1) (formalδ I F q (n + 1) x) := by
+  simp only [formalδ, formalτE, H.δLinear_apply, H.linearMapV436_apply]
   exact H.δ_naturality (shortExact_abSC_quotPow I F (n + 1)) (shortExact_abSC_quotPow I F n)
     (abSCHom (quotPowSCMap I F n)) q (q + 1) rfl x
 
