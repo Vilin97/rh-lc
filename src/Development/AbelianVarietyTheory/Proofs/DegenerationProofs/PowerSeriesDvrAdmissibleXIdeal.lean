@@ -69,7 +69,7 @@ theorem exists_pelUnif_powerSeries :
     rw [hPA]
     exact H1.dim_unique _ A.smoothDim hdA (eSec A.A (IsLocalRing.closedPoint _))
   have h2 : 2 ≤ Module.finrank ℚ E := by
-    rw [← Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E, Algebra.IsQuadraticExtension.finrank_eq_two _ E]
+    rw [← (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E), Algebra.IsQuadraticExtension.finrank_eq_two _ E]
     have := Module.finrank_pos (R := ℚ) (M := maximalRealSubfield E)
     omega
   refine ⟨t, P, hP, hg, ?_, cDvr_powerSeries, hpol, hs,

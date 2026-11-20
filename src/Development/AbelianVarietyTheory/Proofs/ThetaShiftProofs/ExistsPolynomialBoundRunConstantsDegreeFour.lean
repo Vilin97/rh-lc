@@ -24,7 +24,7 @@ theorem constants_bounded_sq : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
     have h2 : (1 : ℤ) ≤ |NumberField.discr E| := Int.one_le_abs this
     exact_mod_cast h2
   have hn : 2 ≤ Module.finrank ℚ E := by
-    have h1 := Module.finrank_mul_finrank ℚ (NumberField.maximalRealSubfield E) E
+    have h1 := (letI : Module.Free (NumberField.maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (NumberField.maximalRealSubfield E) E)
     have h2 : Module.finrank (NumberField.maximalRealSubfield E) E = 2 := Algebra.IsQuadraticExtension.finrank_eq_two _ _
     have h3 : 0 < Module.finrank ℚ (NumberField.maximalRealSubfield E) := Module.finrank_pos
     rw [h2] at h1

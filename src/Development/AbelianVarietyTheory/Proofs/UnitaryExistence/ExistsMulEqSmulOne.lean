@@ -379,7 +379,7 @@ theorem rank_le_signature : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
     rw [← map_pow, H.rt_sq] at h2
     exact H.d_prime.ne_zero (by simpa using h2)
   refine ⟨Module.finrank (𝓞 E) U.D.toPre.X, ?_, ?_⟩
-  · have h1 := Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E
+  · have h1 := (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E)
     rw [Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E] at h1
     rw [finrank_int_eq E]
     congr 1

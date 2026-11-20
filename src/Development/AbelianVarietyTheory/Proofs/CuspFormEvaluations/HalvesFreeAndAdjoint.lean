@@ -367,7 +367,7 @@ theorem absNorm_conj {E : Type} [Field E] [NumberField E] [IsCMField E] (H : Hos
       NumberField.RingOfIntegers.rank, Int.natAbs_pow, Int.natAbs_natCast]
   have hdeg : Module.finrank ℚ E = 2 * fdeg E := by
     have h2 : Module.finrank ℚ E = Module.finrank ℚ (NumberField.maximalRealSubfield E) * 2 := by
-      rw [← Module.finrank_mul_finrank ℚ (NumberField.maximalRealSubfield E) E,
+      rw [← (letI : Module.Free (NumberField.maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (NumberField.maximalRealSubfield E) E),
         Algebra.IsQuadraticExtension.finrank_eq_two (NumberField.maximalRealSubfield E) E]
     unfold fdeg
     omega

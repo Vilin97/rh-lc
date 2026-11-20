@@ -16,7 +16,7 @@ theorem constPt_idem {k : Type} [Field k] {X : Scheme.{0}} (x : Sp (DualNumber k
   rw [reassoc_of% h]
 
 theorem two_mul_half_degree : 2 * (Module.finrank ℚ E / 2) = Module.finrank ℚ E := by
-  have h1 := Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E
+  have h1 := (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E)
   have h2 : Module.finrank (maximalRealSubfield E) E = 2 := Algebra.IsQuadraticExtension.finrank_eq_two _ _
   rw [h2] at h1
   omega

@@ -198,7 +198,7 @@ theorem dims : (∀ b, (X.A b).g = Module.finrank ℚ E / 2) ∧ X.B.g = Module.
   · cases b
     · simpa using key _ _ _ X.typeM
     · simpa using key _ _ _ X.typeP
-  · have e := Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E
+  · have e := (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E)
     rw [Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E] at e
     have : 0 < Module.finrank ℚ (maximalRealSubfield E) := Module.finrank_pos
     omega

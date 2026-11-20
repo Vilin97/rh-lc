@@ -61,7 +61,7 @@ theorem finrank_eq_two (hFE : Formalism.L2.SG.MassRatio.IsCMPair F E) : finrank 
     exact hx'
   have h1 : finrank F (IntermediateField.fixedField H) = 1 :=
     IntermediateField.finrank_eq_one_iff.mpr hbot
-  rw [← Module.finrank_mul_finrank F (IntermediateField.fixedField H) E, h1, hcard, one_mul]
+  rw [← (letI : Module.Free (IntermediateField.fixedField H) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank F (IntermediateField.fixedField H) E), h1, hcard, one_mul]
 
 end CMDeg
 

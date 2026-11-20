@@ -102,7 +102,7 @@ theorem card_eq_finrank {E : Type} [Field E] [NumberField E] [IsCMField E] {I : 
   have h1 := Fintype.card_of_bijective hbij
   rw [Fintype.card_sum, NumberField.Embeddings.card E ℂ] at h1
   have h3 : Module.finrank ℚ E = 2 * Module.finrank ℚ (maximalRealSubfield E) := by
-    rw [← Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E,
+    rw [← (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E),
       Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E, mul_comm]
   omega
 

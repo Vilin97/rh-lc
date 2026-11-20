@@ -68,7 +68,7 @@ theorem natCard_groupCohomology_two_galUnits_dvd_of_normal (N : Subgroup Gal(L/K
       Nat.card (groupCohomology (galUnits.{u} (fixedField N) L) 2) := by
     rw [← Nat.card_congr (groupCohomologyResGalUnitsIso N 2).toLinearEquiv.toEquiv]
     exact AddSubgroup.card_addSubgroup_dvd_card (LinearMap.range res).toAddSubgroup
-  rw [hcard, hker, ← Module.finrank_mul_finrank K (fixedField N) L, mul_comm (Module.finrank K _)]
+  rw [hcard, hker, ← (letI : Module.Free (fixedField N) L := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank K (fixedField N) L), mul_comm (Module.finrank K _)]
   exact Nat.mul_dvd_mul (hrange.trans hLE) hEK
 
 end Step
@@ -112,7 +112,7 @@ theorem natCard_groupCohomology_two_galUnits_dvd_of_finrank (n : ℕ) :
   obtain ⟨N, hN, hbot, htop⟩ := exists_normal_ne_bot_ne_top_of_not_isCyclic hcyc
   have hpos : 0 < Module.finrank K (fixedField N) := Module.finrank_pos
   have hLE : Module.finrank (fixedField N) L = Nat.card N := finrank_fixedField_eq_card N
-  have hmul := Module.finrank_mul_finrank K (fixedField N) L
+  have hmul := (letI : Module.Free (fixedField N) L := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank K (fixedField N) L)
   have hcardG : Nat.card Gal(L/K) = Module.finrank K L := IsGalois.card_aut_eq_finrank K L
   have hNlt : Nat.card N < Module.finrank K L := by
     rw [← hcardG]

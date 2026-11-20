@@ -229,7 +229,7 @@ theorem sz_discField : RayField → ∀ (P : Pre) (δ : FieldDat P),
     (TorsionRam.dvd_discr_torsionField d δ.jField A hg)
   have hM' := hM.trans (Nat.mul_le_mul_left _ card_GL_le)
   have hrel : Module.finrank (hilbertField d δ.jField) (torsionField d A) ≤ 20736 := by
-    rw [← Module.finrank_mul_finrank ℚ (hilbertField d δ.jField) (torsionField d A)] at hM'
+    rw [← (letI : Module.Free (hilbertField d δ.jField) (torsionField d A) := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (hilbertField d δ.jField) (torsionField d A))] at hM'
     exact Nat.le_of_mul_le_mul_left hM' Module.finrank_pos
   rw [← Module.finrank_mul_finrank ℚ K (hilbertField d δ.jField), hK] at hM'
   rw [hdn] at hdeg

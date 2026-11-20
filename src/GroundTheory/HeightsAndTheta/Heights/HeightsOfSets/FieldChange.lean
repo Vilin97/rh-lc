@@ -206,7 +206,7 @@ theorem height_eq_of_le (A : HermLine n) {x : Cone n (AlgebraicClosure ℚ)} (hx
   have hfin := finsum_finiteTerm_algebraMap (L := L) A hblock
   have harch := sum_embeddings_restrict (K := coordField x) (L := L)
     (fun τ ↦ Real.log (A.metric fun k i ↦ τ (coordVec x k i)))
-  have hdeg := Module.finrank_mul_finrank ℚ (coordField x) L
+  have hdeg := (letI : Module.Free (coordField x) L := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (coordField x) L)
   rw [hco, hfin]
   change _ = _ * (_ + ∑ σ : L →+* ℂ, Real.log (A.metric fun k i ↦
     (σ.comp (algebraMap (coordField x) L)) (coordVec x k i)))

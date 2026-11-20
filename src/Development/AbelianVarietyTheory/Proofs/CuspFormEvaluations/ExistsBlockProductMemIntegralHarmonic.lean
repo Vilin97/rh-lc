@@ -280,7 +280,7 @@ theorem sum_mult_le (Dw : Datum H) :
   simp only [Function.Involutive.coe_toPerm] at h1
   rw [h1] at h2
   have h3 : Module.finrank (maximalRealSubfield E) E = 2 := Algebra.IsQuadraticExtension.finrank_eq_two _ _
-  have hm := Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E
+  have hm := (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E)
   have h4 : Module.finrank ℚ E = 2 * I2.PT.f E := by
     unfold I2.PT.f
     rw [h3] at hm

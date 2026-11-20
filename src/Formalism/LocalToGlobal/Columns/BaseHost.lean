@@ -203,7 +203,7 @@ theorem host_quad : Module.finrank ℚ (hostFields H.toHostRaw ι LL hE).Kq = 2 
       rw [hφ, h2, ← hφ, map_one]
       rfl
   have h1 : Module.finrank (fixedField P) H.EQ = Nat.card P := finrank_fixedField_eq_card P
-  have h2 := Module.finrank_mul_finrank ℚ (fixedField P) H.EQ
+  have h2 := (letI : Module.Free (fixedField P) H.EQ := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (fixedField P) H.EQ)
   rw [h1, hcard, finrank_EQ T, show 4 * R.ord = 2 * R.ord * 2 by ring, mul_comm] at h2
   have h3 : Module.finrank ℚ (fixedField P) = 2 := Nat.eq_of_mul_eq_mul_left (Nat.mul_pos two_pos R.ord_pos) h2
   let f : fixedField P →+* (hostFields H.toHostRaw ι LL hE).Kq :=

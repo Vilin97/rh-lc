@@ -113,8 +113,8 @@ theorem compositum (K Ω₁ Ω₂ : Type) [Field K] [Field Ω₁] [Field Ω₂] 
     Module.Finite.of_surjective (Ideal.Quotient.mkₐ K M).toLinearMap (Ideal.Quotient.mkₐ_surjective K M)
   let j₁ : Ω₁ →ₐ[K] Ω₃ := (Ideal.Quotient.mkₐ K M).comp Algebra.TensorProduct.includeLeft
   let j₂ : Ω₂ →ₐ[K] Ω₃ := (Ideal.Quotient.mkₐ K M).comp Algebra.TensorProduct.includeRight
-  have e₁ := Module.finrank_mul_finrank K j₁.fieldRange Ω₃
-  have e₂ := Module.finrank_mul_finrank K j₂.fieldRange Ω₃
+  have e₁ := (letI : Module.Free j₁.fieldRange Ω₃ := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank K j₁.fieldRange Ω₃)
+  have e₂ := (letI : Module.Free j₂.fieldRange Ω₃ := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank K j₂.fieldRange Ω₃)
   have q₁ : Module.finrank K Ω₁ = Module.finrank K j₁.fieldRange :=
     (AlgEquiv.ofInjectiveField j₁).toLinearEquiv.finrank_eq
   have q₂ : Module.finrank K Ω₂ = Module.finrank K j₂.fieldRange :=

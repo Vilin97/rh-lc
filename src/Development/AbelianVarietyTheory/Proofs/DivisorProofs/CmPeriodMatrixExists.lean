@@ -20,7 +20,7 @@ theorem surj_lattice : ∀ (K : Type) [Field K] [NumberField K] (d : ℕ) (δ : 
   classical
   have hEK : Module.finrank K E = Module.finrank ℚ (FR E) := by
     have h1 : Module.finrank ℚ E = 2 * Module.finrank ℚ (FR E) := by
-      rw [← Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E,
+      rw [← (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E),
         Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E, mul_comm]
     have h2 : Module.finrank ℚ K * Module.finrank K E = Module.finrank ℚ E := Module.finrank_mul_finrank ℚ K E
     rw [hK, h1] at h2

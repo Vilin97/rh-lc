@@ -40,7 +40,7 @@ lemma prim_bound {E K : Type*} [Field E] [Field K] [Algebra ℚ E] [Algebra ℚ 
     rw [IntermediateField.adjoin.finrank hint, ← minpoly.eq_of_irreducible_of_monic
       (cyclotomic.irreducible_rat hg.pos) hroot (cyclotomic.monic g ℚ),
       natDegree_cyclotomic, Nat.totient_prime hg]
-  rw [← h1, ← Module.finrank_mul_finrank ℚ (IntermediateField.adjoin ℚ {μ}) K]
+  rw [← h1, ← (letI : Module.Free (IntermediateField.adjoin ℚ {μ}) K := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (IntermediateField.adjoin ℚ {μ}) K)]
   exact Nat.le_mul_of_pos_right _ Module.finrank_pos
 
 lemma dim_bound {E : Type*} [Field E] [Algebra ℚ E] [FiniteDimensional ℚ E]

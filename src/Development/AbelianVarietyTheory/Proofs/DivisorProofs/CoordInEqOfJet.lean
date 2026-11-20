@@ -74,7 +74,7 @@ theorem two_le_finrank_of_unramFin (E : Type) [Field E] [NumberField E] [IsCMFie
   have h1 : Module.finrank ℚ (maximalRealSubfield E) = 1 := by omega
   have h2 : Module.finrank (maximalRealSubfield E) E = 2 := Algebra.IsQuadraticExtension.finrank_eq_two _ _
   have hE : Module.finrank ℚ E = 2 := by
-    rw [← Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E, h1, h2]
+    rw [← (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E), h1, h2]
   have hgt := NumberField.abs_discr_gt_two (K := E) (by omega)
   have hbt : (⊥ : Subalgebra ℚ (maximalRealSubfield E)) = ⊤ := Subalgebra.bot_eq_top_of_finrank_eq_one h1
   let f : (maximalRealSubfield E) ≃ₐ[ℚ] ℚ :=

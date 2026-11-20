@@ -64,7 +64,7 @@ theorem quarticFields_ok [IsGalois ℚ E] (hab : ∀ s t : E ≃ₐ[ℚ] E, s * 
   · cases b
     · rfl
     · exact AlgEquiv.congr_fun (hab σ (conj E)) x
-  · have := Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E
+  · have := (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E)
     rw [hr, h4] at this
     change Fintype.card Bool = Module.finrank ℚ (maximalRealSubfield E)
     rw [Fintype.card_bool]
@@ -97,7 +97,7 @@ theorem quarticFields_ok [IsGalois ℚ E] (hab : ∀ s t : E ≃ₐ[ℚ] E, s * 
   · have ho : orderOf σ = 2 := orderOf_eq_prime (by rw [pow_two, h2]) h1
     have hM := IntermediateField.finrank_fixedField_eq_card (Subgroup.zpowers σ)
     rw [Nat.card_zpowers, ho] at hM
-    have ht := Module.finrank_mul_finrank ℚ (IntermediateField.fixedField (Subgroup.zpowers σ)) E
+    have ht := (letI : Module.Free (IntermediateField.fixedField (Subgroup.zpowers σ)) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (IntermediateField.fixedField (Subgroup.zpowers σ)) E)
     rw [hM, h4] at ht
     have he : (IntermediateField.fixedField (Subgroup.zpowers σ)).toSubfield = (quarticFields E σ).Kq := by
       ext x

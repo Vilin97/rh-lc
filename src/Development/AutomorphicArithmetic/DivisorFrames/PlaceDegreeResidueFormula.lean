@@ -87,7 +87,7 @@ theorem UpperTheory.place_degree_residue_formula :
   haveI : IsScalarTower (ZMod p) (ResidueField (O.comap ε)) (ResidueField O) :=
     IsScalarTower.of_algebraMap_eq' (RingHom.ext_zmod _ _)
   have h2 : Module.finrank (ZMod p) (ResidueField (O.comap ε)) * vdeg ε O = resDeg O p :=
-    Module.finrank_mul_finrank (ZMod p) (ResidueField (O.comap ε)) (ResidueField O)
+    (letI : Module.Free (ResidueField (O.comap ε)) (ResidueField O) := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank (ZMod p) (ResidueField (O.comap ε)) (ResidueField O))
   have h3 : Ideal.absNorm v.asIdeal = p ^ Module.finrank (ZMod p) (ResidueField (O.comap ε)) := by
     rw [← hcard, Module.natCard_eq_pow_finrank (K := ZMod p), Nat.card_zmod]
   have h4 : Real.log (p : ℝ) ≠ 0 := (Real.log_pos (by exact_mod_cast hp.out.one_lt)).ne'

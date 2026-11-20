@@ -266,7 +266,7 @@ theorem nbMain (n : ℕ) : ∀ (V' : Type) [CommRing V'] [IsDomain V'] [IsDiscre
       have h2 := minpoly.natDegree_pos hint
       omega
     have hlt : Module.finrank (ResidueField (AdjoinRoot f)) k'' < n := by
-      have h1 := Module.finrank_mul_finrank (ResidueField V') (ResidueField (AdjoinRoot f)) k''
+      have h1 := (letI : Module.Free (ResidueField (AdjoinRoot f)) k'' := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank (ResidueField V') (ResidueField (AdjoinRoot f)) k'')
       have h2 : 0 < Module.finrank (ResidueField (AdjoinRoot f)) k'' := Module.finrank_pos
       rw [hn] at h1
       nlinarith

@@ -28,8 +28,7 @@ theorem UpperTheory.solvable_cyclic_subextension_over_rat :
   have hH : Nat.card (Subgroup.zpowers (g ^ p)) = (q - 1) / p := by
     rw [Nat.card_zpowers, orderOf_pow_of_dvd hp.ne_zero (by rw [hg, hcardG]; exact hpdvd), hg, hcardG]
   have hfin : Module.finrank ℚ (IntermediateField.fixedField (Subgroup.zpowers (g ^ p))) = p := by
-    have h1 := Module.finrank_mul_finrank ℚ (IntermediateField.fixedField (Subgroup.zpowers (g ^ p)))
-      (CyclotomicField q ℚ)
+    have h1 := (letI : Module.Free (IntermediateField.fixedField (Subgroup.zpowers (g ^ p))) (CyclotomicField q ℚ) := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (IntermediateField.fixedField (Subgroup.zpowers (g ^ p))) (CyclotomicField q ℚ))
     rw [IntermediateField.finrank_fixedField_eq_card, hH,
       IsCyclotomicExtension.Rat.finrank q (CyclotomicField q ℚ), Nat.totient_prime hq] at h1
     obtain ⟨m, hm⟩ := hpdvd

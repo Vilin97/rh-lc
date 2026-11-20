@@ -166,7 +166,7 @@ theorem ideleClassRep_of_isPGroup_of_finrank (p : ℕ) [Fact p.Prime] (n : ℕ) 
   obtain ⟨N, hN, hbot, htop⟩ := exists_normal_ne_bot_ne_top_of_not_isCyclic hcyc
   have hpos : 0 < finrank K (fixedField N) := Module.finrank_pos
   have hLE : finrank (fixedField N) L = Nat.card N := finrank_fixedField_eq_card N
-  have hmul := Module.finrank_mul_finrank K (fixedField N) L
+  have hmul := (letI : Module.Free (fixedField N) L := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank K (fixedField N) L)
   have hcardG : Nat.card Gal(L/K) = finrank K L := IsGalois.card_aut_eq_finrank K L
   have hNlt : Nat.card N < finrank K L := by
     rw [← hcardG]

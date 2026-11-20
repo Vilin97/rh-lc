@@ -111,7 +111,7 @@ end Iso
 
 theorem surjective_algebraMap_real (K : Type) [Field K] [NumberField K] [IsCMField K] (h : Module.finrank ℚ K = 2) :
     Function.Surjective (algebraMap ℚ (maximalRealSubfield K)) := by
-  have h1 := Module.finrank_mul_finrank ℚ (maximalRealSubfield K) K
+  have h1 := (letI : Module.Free (maximalRealSubfield K) K := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield K) K)
   rw [h, Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield K) K] at h1
   have h2 : Module.finrank ℚ (maximalRealSubfield K) = 1 := by omega
   exact ((Algebra.finrank_eq_one_iff_bijective_algebraMap).1 h2).2

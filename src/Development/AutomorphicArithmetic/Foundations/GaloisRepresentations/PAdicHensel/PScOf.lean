@@ -8,7 +8,7 @@ theorem UpperTheory.Gal.G1.pScOf :
   intro hB E _ _ _ hev A n p _ S hn
   obtain ⟨hga, -, hc⟩ := hB E A n p S
   have hmul : Module.finrank ℚ (maximalRealSubfield E) * Module.finrank (maximalRealSubfield E) E =
-      Module.finrank ℚ E := Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E
+      Module.finrank ℚ E := (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E)
   have h2 : Module.finrank (maximalRealSubfield E) E = 2 := Algebra.IsQuadraticExtension.finrank_eq_two _ _
   have hpos : 0 < Module.finrank ℚ (maximalRealSubfield E) := Module.finrank_pos
   have hlt : 2 < Module.finrank ℚ E := by

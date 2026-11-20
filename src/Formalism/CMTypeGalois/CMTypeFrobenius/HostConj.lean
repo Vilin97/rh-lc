@@ -143,7 +143,7 @@ theorem hostConj_of (hH : HostGalois) (hK : MQKummer) : HostConj := by
       rw [h σc hσc] at this
       exact this.symm
   have h4 : Module.finrank ℚ (maximalRealSubfield E) = 4 := by
-    have h := Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E
+    have h := (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E)
     rw [Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E, hfin] at h
     omega
   refine ⟨h1, hCM, ?_, h4, h5, ?_⟩

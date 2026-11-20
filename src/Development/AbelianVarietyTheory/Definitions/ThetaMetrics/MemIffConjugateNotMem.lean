@@ -95,7 +95,7 @@ theorem two_mul_card : 2 * Fintype.card Φ = Module.finrank ℚ E := by
 
 theorem card_eq_finrank [IsCMField E] :
     Fintype.card Φ = Module.finrank ℚ (maximalRealSubfield E) := by
-  have h := Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E
+  have h := (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E)
   rw [Algebra.IsQuadraticExtension.finrank_eq_two _ E, ← Φ.two_mul_card] at h
   omega
 

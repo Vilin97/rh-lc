@@ -77,7 +77,7 @@ theorem exists_mulPullback_eq_of_forall_translate_eq {n : ℤ} (hn : (n : F) ≠
     have : Module.Free M (IntermediateField.fixedField H) := Module.Free.of_divisionRing _ _
     have : Module.Free (IntermediateField.fixedField H) W.toAffine.FunctionField :=
       Module.Free.of_divisionRing _ _
-    have := Module.finrank_mul_finrank M (IntermediateField.fixedField H) W.toAffine.FunctionField
+    have := (letI : Module.Free (IntermediateField.fixedField H) W.toAffine.FunctionField := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank M (IntermediateField.fixedField H) W.toAffine.FunctionField)
     rw [hfix, hdeg] at this
     exact (Nat.mul_eq_right hpos.ne').mp this
   have hbot : IntermediateField.fixedField H = ⊥ := IntermediateField.finrank_eq_one_iff.mp hone

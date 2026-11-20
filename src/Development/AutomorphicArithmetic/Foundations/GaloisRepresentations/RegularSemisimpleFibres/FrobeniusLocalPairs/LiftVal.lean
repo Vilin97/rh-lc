@@ -12,7 +12,7 @@ private theorem pow_finrank_aut {k K : Type} [Field k] [Field K] [Algebra k K] [
   classical
   have h1 : Nat.card (⊤ : Subgroup (K ≃ₐ[k] K)) ∣ Module.finrank k K := by
     rw [← IntermediateField.finrank_fixedField_eq_card,
-      ← Module.finrank_mul_finrank k (IntermediateField.fixedField (⊤ : Subgroup (K ≃ₐ[k] K))) K]
+      ← (letI : Module.Free (IntermediateField.fixedField (⊤ : Subgroup (K ≃ₐ[k] K))) K := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank k (IntermediateField.fixedField (⊤ : Subgroup (K ≃ₐ[k] K))) K)]
     exact dvd_mul_left _ _
   rw [Subgroup.card_top] at h1
   exact orderOf_dvd_iff_pow_eq_one.1 ((orderOf_dvd_natCard s).trans h1)

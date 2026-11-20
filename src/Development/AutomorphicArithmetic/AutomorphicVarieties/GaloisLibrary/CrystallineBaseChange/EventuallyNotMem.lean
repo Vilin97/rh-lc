@@ -109,7 +109,7 @@ theorem UpperTheory.V.Br.conjPrime₂ :
   obtain ⟨r, wt, HT, H⟩ := P.litN.aut.gal K (AlgebraicClosure K) 2 ι n (by omega) π _ hreg hpol
   obtain ⟨μ, ⟨-, art, a, -, ha, -⟩, -⟩ := H.pol
   have hF : Module.finrank ℚ (maximalRealSubfield K) = 1 := by
-    have h1 := Module.finrank_mul_finrank ℚ (maximalRealSubfield K) K
+    have h1 := (letI : Module.Free (maximalRealSubfield K) K := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield K) K)
     rw [Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield K) K] at h1
     omega
   obtain ⟨χ', hsg, hv⟩ := UpperTheory.V.Br.charConj _ hF χ a ha σ

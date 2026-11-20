@@ -102,7 +102,7 @@ theorem det_eq_norm (K : Type) [Field K] [Algebra (ZMod g) K] (hK : Nat.card K =
   have hint : IsIntegral (ZMod g) (z : K) := Algebra.IsIntegral.isIntegral _
   have hfr2 : Module.finrank (IntermediateField.adjoin (ZMod g) {(z : K)}) K = 1 := by
     have h3 := IntermediateField.adjoin.finrank hint
-    have h4 := Module.finrank_mul_finrank (ZMod g) (IntermediateField.adjoin (ZMod g) {(z : K)}) K
+    have h4 := (letI : Module.Free (IntermediateField.adjoin (ZMod g) {(z : K)}) K := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank (ZMod g) (IntermediateField.adjoin (ZMod g) {(z : K)}) K)
     rw [h3, ← hmin, hdeg, hfr] at h4
     exact Nat.eq_of_mul_eq_mul_left hn (h4.trans (mul_one n).symm)
   have hnorm : Algebra.norm (ZMod g) (z : K) = (-1) ^ n * ((y : Mt g n).charpoly).coeff 0 := by

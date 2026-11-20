@@ -30,7 +30,7 @@ theorem dim_add_sum_choose : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
   have h2 := GlobalTheory.PeriodCoord.card_cmType H
   rw [Nat.card_eq_fintype_card, Fintype.card_subtype] at h2
   have h3 : Module.finrank ℚ E = 2 * Module.finrank ℚ (maximalRealSubfield E) := by
-    rw [← Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E,
+    rw [← (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E),
       Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E, mul_comm]
   have h4 : (Finset.univ.filter (fun τ : E →+* ℂ => ¬ τ (H.rt : E) = H.rt0)).card =
       Module.finrank ℚ E / 2 := by

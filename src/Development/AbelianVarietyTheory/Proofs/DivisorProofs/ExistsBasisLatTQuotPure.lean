@@ -342,7 +342,7 @@ variable [IsAlgClosed C] [CharZero C]
 omit [NumberField K] in
 theorem two_mul_half : 2 * (Module.finrank ℚ E / 2) = Module.finrank ℚ E :=
   Nat.mul_div_cancel' ⟨Module.finrank ℚ (maximalRealSubfield E), by
-    rw [← Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E, Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E, mul_comm]⟩
+    rw [← (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E), Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E, mul_comm]⟩
 
 theorem exists_isFrameDet : ∃ δ, IsFrameDet hv ε i X δ := by
   letI := H.starRing

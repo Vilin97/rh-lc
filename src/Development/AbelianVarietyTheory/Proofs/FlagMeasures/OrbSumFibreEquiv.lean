@@ -235,7 +235,7 @@ theorem card_classes (hK : IsCMUnram K) {T : ℕ} (hT : T.Prime)
   have key := card_norm_classes _ K hcm T hT hsp c (by rw [← sp, hc]) hcop
   have hf : Module.finrank ℚ (maximalRealSubfield K) = fDeg K := by
     haveI := hK.1
-    have h1 := Module.finrank_mul_finrank ℚ (maximalRealSubfield K) K
+    have h1 := (letI : Module.Free (maximalRealSubfield K) K := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield K) K)
     have h2 := IsTotallyComplex.finrank K
     have h3 := InfinitePlace.card_eq_nrRealPlaces_add_nrComplexPlaces K
     rw [IsTotallyComplex.nrRealPlaces_eq_zero] at h3

@@ -217,7 +217,7 @@ theorem LiesOver.deg_mul_finrank {w : Place k K'} {v : Place k K} (h : w.LiesOve
   let := h.algebra
   have := h.isLocalHom
   have := h.isScalarTower
-  exact Module.finrank_mul_finrank k v.ResidueField w.ResidueField
+  exact (letI : Module.Free v.ResidueField w.ResidueField := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank k v.ResidueField w.ResidueField)
 
 omit [IsFunctionField k K'] in
 

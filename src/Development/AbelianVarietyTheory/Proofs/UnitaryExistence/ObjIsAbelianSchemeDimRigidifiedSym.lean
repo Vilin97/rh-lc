@@ -111,7 +111,7 @@ theorem finrank_eq_of_eigen (H : Host E) {k : Type} [Field k] [IsAlgClosed k] [C
     conv_lhs => arg 2; rw [← this]
     rw [← Finset.sum_add_distrib, ← hc]
     exact (Finset.sum_congr rfl fun φ _ => h2 φ).trans (by simp)
-  rw [← Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E,
+  rw [← (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E),
     Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E] at h3 ⊢
   rw [Nat.mul_div_cancel _ two_pos]
   linarith

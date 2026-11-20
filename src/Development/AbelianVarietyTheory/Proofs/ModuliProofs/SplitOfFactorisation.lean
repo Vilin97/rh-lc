@@ -538,7 +538,7 @@ def levelEquiv (H : Tor.Host E) : Tor.Level H ≃ IndefiniteRowSideFullHecke.Hos
 end Level
 
 theorem f_eq (H : IndefiniteRowSideFullHecke.HostConjugateIdeal.Host E) : H.f = Module.finrank ℚ E / 2 := by
-  rw [← Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E,
+  rw [← (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E),
     Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E, Nat.mul_div_cancel _ two_pos]
   rfl
 

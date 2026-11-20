@@ -150,7 +150,7 @@ theorem SectionIndexNorm.proof (hC : CurveCharts.Statement) (hI : InvertibleIdea
     rw [hB, KLinesLineDegree.genIndex_map_of_injective f hinj, genIndex_span_div ?_ hx0,
       Real.log_mul (genIndex_span_pos (p0 := ⟨(), t1⟩) ht1).ne'
         (abs_pos.mpr (by exact_mod_cast Algebra.norm_ne_zero_iff.mpr hx0)).ne',
-      hrank, ← Module.finrank_mul_finrank ℚ (blockFnField y) K'] at key
+      hrank, ← (letI : Module.Free (blockFnField y) K' := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (blockFnField y) K')] at key
     · have hF : (0 : ℝ) < Module.finrank ℚ (blockFnField y) := Nat.cast_pos.mpr Module.finrank_pos
       apply mul_left_cancel₀ hF.ne'
       push_cast at key

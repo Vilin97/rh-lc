@@ -13,7 +13,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Tor.Host E}
 
 theorem dim_eq (D : Tor.Datum H) : D.dim = IndefiniteRowSideFullHecke.CoefficientFieldBaseChange.dimD D := by
   have h2 : Module.finrank (maximalRealSubfield E) E = 2 := Algebra.IsQuadraticExtension.finrank_eq_two _ _
-  have h := Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E
+  have h := (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E)
   rw [h2] at h
   unfold Tor.Datum.dim IndefiniteRowSideFullHecke.CoefficientFieldBaseChange.dimD
   rw [← h, Nat.mul_div_cancel _ two_pos]

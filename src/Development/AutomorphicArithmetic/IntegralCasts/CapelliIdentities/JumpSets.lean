@@ -253,7 +253,7 @@ theorem UpperTheory.Reformulated.B.JumpSetsAlt.hostReal_of :
     have hd : (d : L) ≠ 0 := Nat.cast_ne_zero.mpr hqd.2.1.ne_zero
     exact hd (by simpa using h)
   refine ⟨?_, fun x => ⟨?_, ?_⟩⟩
-  · have h := Module.finrank_mul_finrank ℚ ↥(UpperTheory.Reformulated.B.JumpSetsAlt.hostF ζ a b) ↥(UpperTheory.Reformulated.B.JumpSetsAlt.hostE ζ a b)
+  · have h := (letI : Module.Free ↥(UpperTheory.Reformulated.B.JumpSetsAlt.hostF ζ a b) ↥(UpperTheory.Reformulated.B.JumpSetsAlt.hostE ζ a b) := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ ↥(UpperTheory.Reformulated.B.JumpSetsAlt.hostF ζ a b) ↥(UpperTheory.Reformulated.B.JumpSetsAlt.hostE ζ a b))
     rw [Algebra.IsQuadraticExtension.finrank_eq_two ↥(UpperTheory.Reformulated.B.JumpSetsAlt.hostF ζ a b) ↥(UpperTheory.Reformulated.B.JumpSetsAlt.hostE ζ a b),
       hfin, show 2 ^ (e + 2) = 2 ^ (e + 1) * 2 from pow_succ 2 (e + 1)] at h
     exact Nat.eq_of_mul_eq_mul_right two_pos h

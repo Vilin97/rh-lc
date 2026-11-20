@@ -26,7 +26,7 @@ theorem exists_eigenbasis_fibre : Out.SecTwistSt → Out.Laws → ∀ (E : Type)
   have hsp : Splits E K := hs1.2 (by
     rw [← Nat.card_eq_of_bijective lab hlab, Nat.card_eq_fintype_card, NumberField.Embeddings.card])
   have hpos : 1 ≤ Module.finrank ℚ E / 2 := by
-    have h1 := Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E
+    have h1 := (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E)
     rw [Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E] at h1
     have h2 : 0 < Module.finrank ℚ (maximalRealSubfield E) := Module.finrank_pos
     omega

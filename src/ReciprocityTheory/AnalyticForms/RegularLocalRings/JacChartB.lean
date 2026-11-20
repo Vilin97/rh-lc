@@ -144,7 +144,7 @@ theorem finrank_cot_eq :
   haveI : Module.Free ℂ (ResidueField (locR K p)) := Module.Free.of_divisionRing ℂ _
   haveI : Module.Free (ResidueField (locR K p)) (CotangentSpace (locR K p)) :=
     Module.Free.of_divisionRing (ResidueField (locR K p)) _
-  rw [← Module.finrank_mul_finrank ℂ (ResidueField (locR K p)) (CotangentSpace (locR K p)),
+  rw [← (letI : Module.Free (ResidueField (locR K p)) (CotangentSpace (locR K p)) := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℂ (ResidueField (locR K p)) (CotangentSpace (locR K p))),
     finrank_residueField, one_mul] at h
   exact h
 

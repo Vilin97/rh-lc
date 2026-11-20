@@ -52,7 +52,7 @@ theorem absNorm_level_half {E : Type} [Field E] [NumberField E] [IsCMField E] {H
     rw [this, Algebra.norm_algebraMap, NumberField.RingOfIntegers.rank]
     simp [Int.natAbs_pow]
   have hev : Module.finrank ℚ E = 2 * FD.fdeg E := by
-    have h := Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E
+    have h := (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E)
     rw [Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E] at h
     unfold FD.fdeg
     omega

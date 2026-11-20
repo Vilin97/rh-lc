@@ -54,7 +54,7 @@ theorem quadField_pf : QuadField := by
   · rw [InfinitePlace.card_eq_nrRealPlaces_add_nrComplexPlaces, IsTotallyReal.nrComplexPlaces_eq_zero, add_zero,
       ← IsTotallyReal.finrank, ← IsCMField.card_infinitePlace_eq_card_infinitePlace E,
       InfinitePlace.card_eq_nrRealPlaces_add_nrComplexPlaces, IsTotallyReal.nrComplexPlaces_eq_zero, add_zero,
-      ← IsTotallyReal.finrank, ← Module.finrank_mul_finrank ℚ (maximalRealSubfield E) K, mul_comm]
+      ← IsTotallyReal.finrank, ← (letI : Module.Free (maximalRealSubfield E) K := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) K), mul_comm]
   generalize hδ : algebraMap (maximalRealSubfield E) K d = δ
   have hkey : ∀ (τ : K →+* ℂ) (t : ℂ), starRingEnd ℂ t = t → t ^ 2 ≠ τ δ := by
     intro τ t ht

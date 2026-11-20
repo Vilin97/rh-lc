@@ -62,7 +62,7 @@ theorem exists_reps (E : Type) [Field E] [NumberField E] (M : ℕ) (hM : 1 ≤ M
 
 theorem two_mul_fdeg (E : Type) [Field E] [NumberField E] [IsCMField E] :
     2 * fdeg E = Module.finrank ℚ E := by
-  have h := Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E
+  have h := (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E)
   have h2 : Module.finrank (maximalRealSubfield E) E = 2 :=
     Algebra.IsQuadraticExtension.finrank_eq_two _ _
   rw [h2] at h

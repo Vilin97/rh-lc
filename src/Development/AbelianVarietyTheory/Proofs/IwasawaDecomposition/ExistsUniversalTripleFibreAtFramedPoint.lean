@@ -27,7 +27,7 @@ theorem card_frame_index {E : Type} [Field E] [NumberField E] [IsCMField E] {H :
   have h2 := GlobalTheory.PeriodCoord.card_cmType H
   rw [Nat.card_eq_fintype_card, Fintype.card_subtype] at h2
   have h3 : Module.finrank ℚ E = 2 * Module.finrank ℚ (maximalRealSubfield E) := by
-    rw [← Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E,
+    rw [← (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E),
       Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E, mul_comm]
   have h4 : (Finset.univ.filter (fun τ : E →+* ℂ => ¬ τ (H.rt : E) = H.rt0)).card = Module.finrank ℚ E / 2 := by
     omega
@@ -47,7 +47,7 @@ theorem exists_tied : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H 
     exact ⟨_, ⟨m⟩⟩
   obtain ⟨⟨T, rfl, hTg⟩, -⟩ := GlobalTheory.CM.PAT.exists_of_sabMap E H _ _ y.x U t (hU ▸ m)
   have hpos : 1 ≤ Module.finrank ℚ E / 2 := by
-    have h1 := Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E
+    have h1 := (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E)
     rw [Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E] at h1
     have h2 : 0 < Module.finrank ℚ (maximalRealSubfield E) := Module.finrank_pos
     omega

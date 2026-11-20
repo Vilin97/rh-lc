@@ -76,7 +76,7 @@ theorem exists_cmIn : Known → ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
   obtain ⟨th, hth⟩ := exists_section hK.laws2.secTwist a.D₀.P
   obtain ⟨v, hv⟩ := KeyPow.exists_isLieBasis a.D₀.P.A a.D₀.P.smoothDim
   have hf : 0 < Module.finrank ℚ E / 2 := by
-    have e := Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E
+    have e := (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E)
     rw [Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E] at e
     have : 0 < Module.finrank ℚ (maximalRealSubfield E) := Module.finrank_pos
     omega

@@ -83,7 +83,7 @@ theorem eigK_finrank_eq_one : GlobalTheory.Published.PeriodComparison → Global
       show P _ = P w
       congr 1; apply Subtype.ext; rw [hw]; funext j; simp [Φ, GlobalTheory.IndefiniteRowSideFullHecke.DefiningCoordinates.defCoord]
   have hdim : Module.finrank ℂ (HdR X.A) = Module.finrank ℚ E := by
-    rw [hrank, ← Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E,
+    rw [hrank, ← (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E),
       Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E, mul_comm]
   have hT : ∀ (a : orderC (condQ 𝔣 Q)) (x x' : L), (x' : E) = a * x → T a (P' x) = P' x' := by
     intro a x x' hx'

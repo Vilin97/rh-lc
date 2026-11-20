@@ -109,7 +109,7 @@ theorem UpperTheory.GalN.V.conjPrime₂ :
     exact e ▸ h4 _ _ (hinf _)
   obtain ⟨a, ha⟩ := GlobalTheory.T.isAlgebraicHeckeChar_of_regularAlgebraic_polarizedPair K n (by omega) π χ hreg hpol
   have hF : Module.finrank ℚ (maximalRealSubfield K) = 1 := by
-    have h1 := Module.finrank_mul_finrank ℚ (maximalRealSubfield K) K
+    have h1 := (letI : Module.Free (maximalRealSubfield K) K := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield K) K)
     rw [Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield K) K] at h1
     omega
   obtain ⟨χ', hsg, hv⟩ := UpperTheory.V.Br.charConj _ hF χ a ha σ

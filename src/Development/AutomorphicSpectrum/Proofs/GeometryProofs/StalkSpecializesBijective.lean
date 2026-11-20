@@ -333,7 +333,7 @@ theorem finrank_adjoin_pull (fn : Ω₀ →+* Ω) (fn' : Ω₀' →+* Ω') (ψ :
       exact ⟨a, Subtype.ext ha⟩⟩
   have h1 : Module.finrank A Ω = Module.finrank A' i.fieldRange :=
     Algebra.finrank_eq_of_equiv_equiv e₁ e₂ (by ext x; rfl)
-  rw [← Module.finrank_mul_finrank A' i.fieldRange Ω', h1, mul_comm]
+  rw [← (letI : Module.Free i.fieldRange Ω' := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank A' i.fieldRange Ω'), h1, mul_comm]
 
 theorem genericFlag_pull (fn : Ω₀ →+* Ω) (fn' : Ω₀' →+* Ω') (ψ : Ω₀ ≃+* Ω₀') (i : Ω →+* Ω')
     (hc : fn'.comp ψ.toRingHom = i.comp fn) {E F F' : Type} [AddCommGroup E] [Module Ω₀ E] [Module Ω₀' E]

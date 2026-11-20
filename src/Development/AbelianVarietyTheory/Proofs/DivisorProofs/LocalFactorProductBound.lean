@@ -89,7 +89,7 @@ theorem tprod_locFactor_bound : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
     have h2 : Module.finrank (maximalRealSubfield E) E = 2 :=
       Algebra.IsQuadraticExtension.finrank_eq_two _ _
     unfold fdeg
-    rw [← Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E, h2]
+    rw [← (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E), h2]
     omega
   have g_nonneg : ∀ x : ℝ, 1 ≤ x → 0 ≤ g x := fun x hx =>
     Finset.prod_nonneg fun i _ => sub_nonneg.2 (inv_le_one_of_one_le₀ (one_le_pow₀ hx))

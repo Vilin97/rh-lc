@@ -39,8 +39,7 @@ theorem relIndex_eq_finrank {U V : OpenSubgroup Gal(Ksep/K)} (h : V ≤ U) :
   have : IsScalarTower K (fixedField (U : Subgroup Gal(Ksep/K)))
       (fixedField (V : Subgroup Gal(Ksep/K))) := IsScalarTower.of_algebraMap_eq' rfl
   have h1 := Subgroup.relIndex_mul_index (show (V : Subgroup Gal(Ksep/K)) ≤ U from h)
-  rw [index_openSubgroup, index_openSubgroup, ← Module.finrank_mul_finrank K
-    (fixedField (U : Subgroup Gal(Ksep/K))) (fixedField (V : Subgroup Gal(Ksep/K))), mul_comm] at h1
+  rw [index_openSubgroup, index_openSubgroup, ← (letI : Module.Free (fixedField (U : Subgroup Gal(Ksep/K))) (fixedField (V : Subgroup Gal(Ksep/K))) := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank K (fixedField (U : Subgroup Gal(Ksep/K))) (fixedField (V : Subgroup Gal(Ksep/K)))), mul_comm] at h1
   exact Nat.eq_of_mul_eq_mul_left Module.finrank_pos h1
 
 def galFixedFieldToOpen (U : OpenSubgroup Gal(Ksep/K)) :

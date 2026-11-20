@@ -42,7 +42,7 @@ theorem OrbitLocalSum.proof (hR : OrbitChartRing.Statement) (hM : OrbitChartMax.
     finsum_mem_congr rfl fun v hv ↦ hterm v fun k hk ↦ hc k (by
       rw [← (show orbitCenter x v = V from hv)]
       exact hk)
-  have hdeg := Module.finrank_mul_finrank ℚ (ratioField x) (coordField x)
+  have hdeg := (letI : Module.Free (ratioField x) (coordField x) := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (ratioField x) (coordField x))
   rw [hsum, hset, hS (ratioField x) (coordField x) (chartRing x c) (chartPoint x c V),
     hU ι n A x s hx hs V hV c hc, hF ι n A x s hx hs V hV c hc,
     ← hP (ratioField x) (chartRing x c) hft hfr (chartPoint x c V) (chartEval x c s) hf0, ← hdeg]

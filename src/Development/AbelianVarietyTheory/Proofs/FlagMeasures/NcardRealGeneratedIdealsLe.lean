@@ -53,7 +53,7 @@ private theorem isCMField_of_star_compat {E : Type} [Field E] [NumberField E] [S
 
 private theorem finrank_maximalRealSubfield_eq_fDeg (E : Type) [Field E] [NumberField E] [IsCMField E] :
     Module.finrank ℚ (maximalRealSubfield E) = Formalism.HermitianLatticesTheory.fDeg E := by
-  have h1 := Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E
+  have h1 := (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E)
   rw [Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E,
     IsTotallyComplex.finrank (K := E)] at h1
   have h2 := InfinitePlace.card_eq_nrRealPlaces_add_nrComplexPlaces (K := E)

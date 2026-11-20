@@ -36,7 +36,7 @@ theorem hdR_rank_eq_finrank_cm : GlobalTheory.Published.AbelianDeRham → ∀ (E
   rw [hP p] at h1
   have h2 : Module.finrank (maximalRealSubfield E) E = 2 :=
     Algebra.IsQuadraticExtension.finrank_eq_two _ _
-  have h3 := Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E
+  have h3 := (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E)
   rw [h2] at h3
   rw [h1, ← h3, mul_comm]
 

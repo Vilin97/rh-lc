@@ -56,7 +56,7 @@ def kerEquiv (E : Type) [Field E] [NumberField E] [IsCMField E] :
 theorem finrank_imSp : Module.finrank ℚ (imSp E) = fdeg E := by
   have h := LinearMap.finrank_range_add_finrank_ker (dm E)
   rw [range_dm, (kerEquiv E).finrank_eq] at h
-  have h1 := Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E
+  have h1 := (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E)
   have h2 : Module.finrank (maximalRealSubfield E) E = 2 :=
     Algebra.IsQuadraticExtension.finrank_eq_two _ _
   unfold fdeg

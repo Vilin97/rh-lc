@@ -22,9 +22,9 @@ theorem evenReal (E M : Type) [Field E] [NumberField E] [IsCMField E] [Field M] 
     [Algebra E M] (h : Even (Module.finrank ℚ (maximalRealSubfield E))) :
     Even (Module.finrank ℚ (maximalRealSubfield M)) := by
   have hE : Module.finrank ℚ E = Module.finrank ℚ (maximalRealSubfield E) * 2 := by
-    rw [← Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E, Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E]
+    rw [← (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E), Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E]
   have hM : Module.finrank ℚ M = Module.finrank ℚ (maximalRealSubfield M) * 2 := by
-    rw [← Module.finrank_mul_finrank ℚ (maximalRealSubfield M) M, Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield M) M]
+    rw [← (letI : Module.Free (maximalRealSubfield M) M := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield M) M), Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield M) M]
   have hEM : Module.finrank ℚ M = Module.finrank ℚ E * Module.finrank E M :=
     (Module.finrank_mul_finrank ℚ E M).symm
   obtain ⟨k, hk⟩ := h

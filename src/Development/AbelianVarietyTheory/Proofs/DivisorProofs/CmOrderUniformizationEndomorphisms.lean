@@ -89,7 +89,7 @@ theorem fil_eq_iSup_eigenspace_bar : GlobalTheory.Published.PeriodComparison →
   have hpos : 0 < g := Module.finrank_pos
   haveI : FiniteDimensional ℂ (HdR X.A) := Module.finite_of_finrank_pos (by rw [hdim]; omega)
   have hEdim : Module.finrank ℂ (HdR X.A) = Module.finrank ℚ E := by
-    rw [hdim, ← Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E,
+    rw [hdim, ← (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E),
       Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E, mul_comm]
 
   let Φ : E →+* (Fin g → ℂ) := Pi.ringHom fun j ↦ φ (U.e j)

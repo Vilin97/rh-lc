@@ -24,7 +24,7 @@ theorem PointVertR.proof (hI : VertRIndex.Statement) (hN : SectionIndexNorm.Stat
     PointVertR.Statement := by
   intro T _ K' _ _ y s hP hs hsP
   rw [hI T K' y s hP hs hsP, PointVertRAux.degC_eq_finrank hP,
-    ← Module.finrank_mul_finrank ℚ (blockFnField y) K', Nat.cast_mul, mul_assoc,
+    ← (letI : Module.Free (blockFnField y) K' := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (blockFnField y) K'), Nat.cast_mul, mul_assoc,
     hN T K' y s hP hs hsP]
 
 end

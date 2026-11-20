@@ -124,7 +124,7 @@ theorem finrank_eq_two_mul_card {Ψ : Type} [Fintype Ψ] {σ : Ψ → (𝓞 E �
 
 theorem finrank_real_eq_card {Ψ : Type} [Fintype Ψ] {σ : Ψ → (𝓞 E →+* ℂ)} (hσ : IsCMFam σ) :
     Module.finrank ℚ (maximalRealSubfield E) = Fintype.card Ψ := by
-  have h1 := Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E
+  have h1 := (letI : Module.Free (maximalRealSubfield E) E := Module.Free.of_divisionRing _ _; Module.finrank_mul_finrank ℚ (maximalRealSubfield E) E)
   rw [Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield E) E,
     finrank_eq_two_mul_card hσ] at h1
   omega
