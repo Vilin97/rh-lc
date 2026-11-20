@@ -99,7 +99,7 @@ lemma logDeriv_Lent (χ : DirichletCharacter ℂ N) {s : ℂ} (hs : s ≠ 1) (h0
     have h2 : logDeriv (fun z : ℂ => z - 1) s = 1 / (s - 1) := by
       simp [logDeriv_apply]
     have hdz : DifferentiableAt ℂ (fun z : ℂ => z - 1) s := differentiableAt_id.sub_const (1 : ℂ)
-    rw [h1, logDeriv_mul (f := fun z : ℂ => z - 1) (g := LFunction χ) s
+    rw [h1, logDeriv_fun_mul (f := fun z : ℂ => z - 1) (g := LFunction χ) s
       (sub_ne_zero.mpr hs) h0 hdz hd, h2]
     simp only [del1, if_pos h]
     ring
