@@ -151,7 +151,7 @@ theorem _root_.GlobalTheory.LawDer.Kernel.constantCoeff_iterate_invDer_mem : ∀
         exact hβ (Finsupp.ext h)
       have h := congrArg (fun x => x (Sum.inl k)) he
       rw [Finsupp.mapDomain_notin_range _ _ (by simp)] at h
-      simp [Finsupp.mapDomain_apply Sum.inl_injective] at h
+      simp [Finsupp.mapDomain_apply_of_injective Sum.inl_injective] at h
       omega
   have hg : ∀ β, coeff β (D l - C (algebraMap B Q (u j))) ∈ S := by
     intro β

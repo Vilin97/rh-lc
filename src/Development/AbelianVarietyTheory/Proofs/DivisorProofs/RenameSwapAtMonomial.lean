@@ -73,7 +73,7 @@ theorem rename_swapAt_monomial (τ : ι) {a b : Fin N} {m : (ι × Fin N) →₀
     Function.LeftInverse.injective (g := swapAt τ a b) (swapAt_swapAt τ a b)
   suffices hm : m.mapDomain (swapAt τ a b) = m by rw [rename_monomial, hm]
   ext x
-  rw [← swapAt_swapAt τ a b x, Finsupp.mapDomain_apply inj, swapAt_swapAt]
+  rw [← swapAt_swapAt τ a b x, Finsupp.mapDomain_apply_of_injective inj, swapAt_swapAt]
   rcases x with ⟨σ, i⟩
   by_cases hσ : σ = τ
   · subst hσ

@@ -37,12 +37,12 @@ theorem effAt_etTower : ∀ {K L : Type} [Field K] [Field L] (cK : ℂ →+* K) 
     exact one_ne_zero (hC.1 (a₁ := 1) (a₂ := 0) (by simp [h]))
   · rw [Finsupp.add_apply]
     have h1 : Finsupp.mapDomain (fun g : R => (ι g : L)) φ 0 = 0 := by
-      have e := Finsupp.mapDomain_apply hi φ 0
+      have e := Finsupp.mapDomain_apply_of_injective hi φ 0
       simp only [map_zero, ZeroMemClass.coe_zero] at e
       rw [e]
       exact Finsupp.notMem_support_iff.1 fun h => hφ 0 h rfl
     have h2 : Finsupp.mapDomain (fun g : T => (g : L)) θ 0 = 0 := by
-      have e := Finsupp.mapDomain_apply Subtype.val_injective θ 0
+      have e := Finsupp.mapDomain_apply_of_injective Subtype.val_injective θ 0
       simp only [ZeroMemClass.coe_zero] at e
       rw [e]
       exact Finsupp.notMem_support_iff.1 fun h => (hθ 0 h).1 rfl

@@ -897,7 +897,7 @@ theorem mem_vars_rename_inj {R σ τ : Type} [CommRing R] (f : σ → τ) (hf : 
   obtain ⟨d, hd, hud⟩ := (mem_vars_iff_mem_support u).mp hu
   refine (mem_vars_iff_mem_support _).mpr ⟨Finsupp.mapDomain f d, ?_, ?_⟩
   · rw [support_rename_of_injective hf]; exact Finset.mem_image_of_mem _ hd
-  · rw [Finsupp.mem_support_iff, Finsupp.mapDomain_apply hf]; exact Finsupp.mem_support_iff.mp hud
+  · rw [Finsupp.mem_support_iff, Finsupp.mapDomain_apply_of_injective hf]; exact Finsupp.mem_support_iff.mp hud
 
 theorem mem_Pol_iff {R ι : Type} [CommRing R] {n : ℕ} {d : ι → ℕ} {g : MvPolynomial (ι × Fin n) R} :
     g ∈ Pol R n d ↔ ∀ m ∈ g.support, ∀ i, multideg m i = d i := by
@@ -1076,11 +1076,11 @@ theorem word_ord {R : Type} [CommRing R] {K : ℕ} (b' b'' : Fin (segN F j) → 
       simp only [Prod.mk.injEq] at hv
       exact hne _ _ hv.2
     have z2 : ∀ c : Fin K, Finsupp.mapDomain (fun v : Fin (segN F j) × Fin K => (segE F j v.1, Fin.natAdd r v.2)) u2
-        (segE F j i, Fin.natAdd r c) = u2 (i, c) := fun c => Finsupp.mapDomain_apply hf2 u2 (i, c)
+        (segE F j i, Fin.natAdd r c) = u2 (i, c) := fun c => Finsupp.mapDomain_apply_of_injective hf2 u2 (i, c)
     simp only [z1, z2, Finset.sum_const_zero, zero_add]
     exact d2
   · have z1 : ∀ c : Fin r, Finsupp.mapDomain (fun v : Fin (segN F j) × Fin r => (segE F j v.1, Fin.castAdd K v.2)) u1
-        (segE F j i, Fin.castAdd K c) = u1 (i, c) := fun c => Finsupp.mapDomain_apply hf1 u1 (i, c)
+        (segE F j i, Fin.castAdd K c) = u1 (i, c) := fun c => Finsupp.mapDomain_apply_of_injective hf1 u1 (i, c)
     have z2 : ∀ c : Fin r, Finsupp.mapDomain (fun v : Fin (segN F j) × Fin K => (segE F j v.1, Fin.natAdd r v.2)) u2
         (segE F j i, Fin.castAdd K c) = 0 := by
       intro c
@@ -2322,9 +2322,9 @@ theorem proj_word_biPol {R : Type} [CommRing R] {N r K : ℕ} (b' b'' : Fin N �
     simp only [plVar, Prod.mk.injEq] at hv
     exact hne _ _ hv.2
   have z2 : ∀ c : Fin K, Finsupp.mapDomain (tanVar (N := N) (r := r) (K := K)) u2 (i, Fin.natAdd r c) = u2 (i, c) :=
-    fun c => Finsupp.mapDomain_apply hf2 u2 (i, c)
+    fun c => Finsupp.mapDomain_apply_of_injective hf2 u2 (i, c)
   have z3 : ∀ c : Fin r, Finsupp.mapDomain (plVar (N := N) (r := r) (K := K)) u1 (i, Fin.castAdd K c) = u1 (i, c) :=
-    fun c => Finsupp.mapDomain_apply hf1 u1 (i, c)
+    fun c => Finsupp.mapDomain_apply_of_injective hf1 u1 (i, c)
   have z4 : ∀ c : Fin r, Finsupp.mapDomain (tanVar (N := N) (r := r) (K := K)) u2 (i, Fin.castAdd K c) = 0 := by
     intro c
     refine Finsupp.mapDomain_of_notMem_range _ _ ?_

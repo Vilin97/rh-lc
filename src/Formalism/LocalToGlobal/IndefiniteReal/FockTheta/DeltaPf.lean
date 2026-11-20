@@ -43,7 +43,7 @@ theorem fockF_rename {σ τ : Type*} {i : σ → τ} (hi : Function.Injective i)
     Finsupp.mapDomain_support_of_injective hi, Finset.prod_image (by
       intro a _ b _ hab
       exact hi hab)]
-  simp only [Finsupp.mapDomain_apply hi]
+  simp only [Finsupp.mapDomain_apply_of_injective hi]
 
 theorem fockF_map_rat {σ : Type*} (f : MvPolynomial σ ℚ) :
     fockF (map (algebraMap ℚ ℂ) f) (map (algebraMap ℚ ℂ) f) = ((Formalism.GradedWeylDivisibility.fockQ f f : ℝ) : ℂ) := by

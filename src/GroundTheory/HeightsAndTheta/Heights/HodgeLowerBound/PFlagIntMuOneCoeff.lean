@@ -29,7 +29,7 @@ theorem flagInt_unit_eq (N : ℕ) (P : RootPoly Unit N) :
       ext ⟨⟨⟩, k⟩
       obtain ⟨i, rfl⟩ := σ.surjective k
       have : ((), σ i) = weylAct Unit N ((Equiv.funUnique Unit _).symm σ) ((), i) := rfl
-      rw [this, Finsupp.mapDomain_apply hinj]
+      rw [this, Finsupp.mapDomain_apply_of_injective hinj]
       simp [rhoMono, rhoPerm, weylAct]
     rw [hρ, coeff_rename_mapDomain _ hinj]
 

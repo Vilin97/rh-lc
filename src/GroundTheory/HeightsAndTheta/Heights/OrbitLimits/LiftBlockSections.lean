@@ -83,7 +83,7 @@ theorem homog_rename_old (r : ℕ) {g : MRing ι} {d : K → ℕ} (hg : IsMultiH
   · have h := hg m hm k
     simp only [Option.elim_some]
     rw [← h]
-    exact Finset.sum_congr rfl fun i _ => Finsupp.mapDomain_apply (oldEmb_injective r) m ⟨k, i⟩
+    exact Finset.sum_congr rfl fun i _ => Finsupp.mapDomain_apply_of_injective (oldEmb_injective r) m ⟨k, i⟩
 
 theorem addBlock_comp_oldEmb {r : ℕ} (y : (Σ k, ι k) → Ω) (v : Fin r → Ω) : addBlock y v ∘ oldEmb r = y := by
   funext p

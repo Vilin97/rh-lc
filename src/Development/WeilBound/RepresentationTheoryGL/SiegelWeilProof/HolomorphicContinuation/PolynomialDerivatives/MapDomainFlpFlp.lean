@@ -123,7 +123,7 @@ theorem degree_mapDomain (t : Ix m n →₀ ℕ) : (Finsupp.mapDomain flp t).deg
   simp only [Finsupp.degree_eq_sum]
   rw [← Equiv.sum_comp flpEquiv]
   refine Finset.sum_congr rfl fun i _ => ?_
-  exact Finsupp.mapDomain_apply flp_injective t i
+  exact Finsupp.mapDomain_apply_of_injective flp_injective t i
 
 theorem mapDomain_flp_flp (t : Ix m n →₀ ℕ) : Finsupp.mapDomain flp (Finsupp.mapDomain flp t) = t := by
   rw [← Finsupp.mapDomain_comp]

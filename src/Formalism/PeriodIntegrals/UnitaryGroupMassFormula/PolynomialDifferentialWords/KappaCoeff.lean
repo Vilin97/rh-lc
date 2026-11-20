@@ -13,8 +13,8 @@ lemma mapDomain_inl_add_inr (u g : Fin k →₀ ℕ) :
     u.mapDomain Sum.inl + g.mapDomain Sum.inr = Finsupp.sumElim u g := by
   ext v
   rcases v with i | i
-  · simp [Finsupp.mapDomain_apply Sum.inl_injective, Finsupp.mapDomain_notin_range]
-  · simp [Finsupp.mapDomain_apply Sum.inr_injective, Finsupp.mapDomain_notin_range]
+  · simp [Finsupp.mapDomain_apply_of_injective Sum.inl_injective, Finsupp.mapDomain_notin_range]
+  · simp [Finsupp.mapDomain_apply_of_injective Sum.inr_injective, Finsupp.mapDomain_notin_range]
 
 lemma sumElim_inj {u g u' g' : Fin k →₀ ℕ} :
     Finsupp.sumElim u g = Finsupp.sumElim u' g' ↔ u = u' ∧ g = g' := by

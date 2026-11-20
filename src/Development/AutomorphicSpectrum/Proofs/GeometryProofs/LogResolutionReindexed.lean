@@ -69,7 +69,7 @@ theorem isMultiHomog_rename' {κ : K₀ → K} {v : (Σ k, J₀ k) → (Σ k, J 
         exact eq_of_heq (Sigma.mk.inj (hv.2.1 h2)).2
     calc ∑ i', (Finsupp.mapDomain v m0) ⟨κ k, i'⟩ = ∑ i', m0 ⟨k, g i'⟩ := by
           refine Finset.sum_congr rfl fun i' _ => ?_
-          rw [← hg i', Finsupp.mapDomain_apply hv.2.1]
+          rw [← hg i', Finsupp.mapDomain_apply_of_injective hv.2.1]
       _ = ∑ i, m0 ⟨k, i⟩ := hb.sum_comp fun i => m0 ⟨k, i⟩
   · rw [Function.extend_apply' _ _ _ (by simpa using hk)]
     refine Finset.sum_eq_zero fun i' _ => ?_

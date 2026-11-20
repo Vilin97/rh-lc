@@ -57,11 +57,11 @@ theorem mapDomain_add_inj (hf : Function.Injective f) (hg : Function.Injective g
   · ext x
     have := DFunLike.congr_fun h (f x)
     have hx : f x ∉ Set.range g := fun ⟨y, hy⟩ => hfg x y hy.symm
-    simpa [Finsupp.mapDomain_apply hf, Finsupp.mapDomain_notin_range _ _ hx] using this
+    simpa [Finsupp.mapDomain_apply_of_injective hf, Finsupp.mapDomain_notin_range _ _ hx] using this
   · ext y
     have := DFunLike.congr_fun h (g y)
     have hy : g y ∉ Set.range f := fun ⟨x, hx⟩ => hfg x y hx
-    simpa [Finsupp.mapDomain_apply hg, Finsupp.mapDomain_notin_range _ _ hy] using this
+    simpa [Finsupp.mapDomain_apply_of_injective hg, Finsupp.mapDomain_notin_range _ _ hy] using this
 
 theorem coeff_rename_mul (hf : Function.Injective f) (hg : Function.Injective g)
     (hfg : ∀ x y, f x ≠ g y) (α : σ₁ →₀ ℕ) (β : σ₂ →₀ ℕ) (P : MvPolynomial σ₁ ℂ)

@@ -14,7 +14,7 @@ theorem permExp_comp_perm {ι : Type} [Fintype ι] {N : ℕ} (σ : Equiv.Perm ι
     σ.injective.prodMap Function.injective_id
   ext ⟨a, i⟩
   obtain ⟨b, rfl⟩ := σ.surjective a
-  have h := Finsupp.mapDomain_apply hinj (permExp (fun τ => p (σ τ))) (b, i)
+  have h := Finsupp.mapDomain_apply_of_injective hinj (permExp (fun τ => p (σ τ))) (b, i)
   rw [show Prod.map σ (id : Fin N → Fin N) (b, i) = (σ b, i) from rfl] at h
   rw [h]
   rfl

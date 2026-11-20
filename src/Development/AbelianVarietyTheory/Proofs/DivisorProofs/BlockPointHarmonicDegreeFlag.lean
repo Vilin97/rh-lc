@@ -40,7 +40,7 @@ private theorem apolar_rename (f : V → V) (hf : Function.Involutive f) (P Q : 
     congr 2
     rw [← Equiv.prod_comp hf.toPerm]
     refine Finset.prod_congr rfl fun x _ => ?_
-    rw [Function.Involutive.coe_toPerm, Finsupp.mapDomain_apply hf.injective]
+    rw [Function.Involutive.coe_toPerm, Finsupp.mapDomain_apply_of_injective hf.injective]
   | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 private theorem apolar_rename' (f : V → V) (hf : Function.Involutive f) (P Q : MvPolynomial V ℝ) :

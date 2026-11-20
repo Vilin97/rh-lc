@@ -158,7 +158,7 @@ theorem flagInt_eq (G : GroundTheory.Heights₂.Heights.LowerBoundFree.RootPoly 
     ext ⟨τ, i⟩
     have : (τ, i) = GroundTheory.Heights₂.Heights.LowerBoundFree.weylAct Ψ N σ (τ, (σ τ).symm i) := by
       simp [GroundTheory.Heights₂.Heights.LowerBoundFree.weylAct]
-    rw [this, Finsupp.mapDomain_apply hinj]
+    rw [this, Finsupp.mapDomain_apply_of_injective hinj]
     simp [GroundTheory.Heights₂.Heights.LowerBoundFree.rhoMono, permExp, GroundTheory.Heights₂.Heights.LowerBoundFree.weylAct]
   rw [coeff_smul, hm, coeff_rename_mapDomain _ hinj, smul_eq_mul, Rat.cast_mul, coeff_map]
   congr 1

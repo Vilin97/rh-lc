@@ -1150,7 +1150,7 @@ theorem wf_mapDomain (m : Fin (N + 1) × Fin r →₀ ℕ) :
   rw [← Finset.prod_subset (Finset.subset_univ (Finset.univ.map ⟨cs' (N := N), cs'_inj⟩))]
   · rw [Finset.prod_map]
     refine Finset.prod_congr rfl (fun x _ => ?_)
-    simp [Finsupp.mapDomain_apply cs'_inj]
+    simp [Finsupp.mapDomain_apply_of_injective cs'_inj]
   · intro v _ hv
     have : v ∉ Set.range (cs' (N := N) (r := r)) := by
       rintro ⟨x, rfl⟩; exact hv (Finset.mem_map.mpr ⟨x, Finset.mem_univ _, rfl⟩)

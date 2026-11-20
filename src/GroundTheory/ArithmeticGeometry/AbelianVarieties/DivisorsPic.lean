@@ -88,7 +88,7 @@ theorem eq_mapDomain_affinePart_add (D : CurveDivisor W) :
   · rw [Finsupp.mapDomain_of_notMem_range _ _ (fun ⟨v, hv⟩ => pointOfIdeal_ne_zero W v hv),
       Finsupp.single_eq_same, zero_add]
   · obtain ⟨v, rfl⟩ := exists_pointOfIdeal_eq W hP
-    rw [Finsupp.mapDomain_apply (pointOfIdeal_injective W), affinePart_apply, Finsupp.single_apply,
+    rw [Finsupp.mapDomain_apply_of_injective (pointOfIdeal_injective W), affinePart_apply, Finsupp.single_apply,
       if_neg (pointOfIdeal_ne_zero W v).symm, add_zero]
 
 theorem divisorDegree_eq (D : CurveDivisor W) :
@@ -198,7 +198,7 @@ noncomputable def divisorOf (f : W.toAffine.FunctionField) : CurveDivisor W :=
 theorem divisorOf_pointOfIdeal (f : W.toAffine.FunctionField)
     (v : HeightOneSpectrum W.toAffine.CoordinateRing) :
     divisorOf W f (pointOfIdeal W v) = ordAtIdeal W v f := by
-  rw [divisorOf, Finsupp.add_apply, Finsupp.mapDomain_apply (pointOfIdeal_injective W),
+  rw [divisorOf, Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective (pointOfIdeal_injective W),
     Finsupp.single_apply, if_neg (pointOfIdeal_ne_zero W v).symm, add_zero, affineDivisorOf_apply]
 
 omit [DecidableEq F] in

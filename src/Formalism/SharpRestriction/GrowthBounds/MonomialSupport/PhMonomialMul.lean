@@ -208,7 +208,7 @@ theorem liftMon_phExp (hP : ∀ j m, 0 < Dt.P j m) (β : TL J Dt.nL r × Fin r �
   ext w
   by_cases hw : w ∈ Set.range Dt.liftVar
   · obtain ⟨x, rfl⟩ := hw
-    simp only [liftMon, Finsupp.add_apply, Finsupp.mapDomain_apply (liftVar_injective' Dt)]
+    simp only [liftMon, Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective (liftVar_injective' Dt)]
     rcases x with ⟨⟨j, l | m⟩, a⟩
     · simp [liftE, Pof, phExp_inl, SignedChainData.liftVar]
     · simp only [liftE, Finsupp.onFinset_apply, Pof, Finsupp.add_apply, phExp_inr, h1, zero_add,

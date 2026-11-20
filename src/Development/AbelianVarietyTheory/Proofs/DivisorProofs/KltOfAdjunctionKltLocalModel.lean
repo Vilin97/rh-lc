@@ -77,7 +77,7 @@ theorem klt_of_adjKlt_locModel : GlobalTheory.Published.Principalisation → ∀
     simp [hEff.apply_zero, Finsupp.single_apply, hf0]
   obtain ⟨m, g, hm, hg⟩ := GlobalTheory.T.exists_ordQ_eq_ord_div_of_rational_combination (Cartier.constFn p)
     (Finsupp.mapDomain e.symm (φ + Finsupp.single f 1)) (by
-      rw [← map_zero e.symm, Finsupp.mapDomain_apply e.symm.injective]
+      rw [← map_zero e.symm, Finsupp.mapDomain_apply_of_injective e.symm.injective]
       exact hψ0)
 
   have hkey : ∀ E : Place c, (Φ E).disc (dForm (Cartier.constFn p) (e.symm ∘ x))

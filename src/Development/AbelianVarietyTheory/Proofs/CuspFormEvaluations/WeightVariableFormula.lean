@@ -446,7 +446,7 @@ theorem prod_emb_monomial (e : S → Fin n × Fin n →₀ ℕ) :
   ext ⟨s, v⟩
   simp only [Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.equivFunOnFinite_symm_apply_apply]
   rw [Finset.sum_eq_single s]
-  · exact Finsupp.mapDomain_apply (fun a b h => (Prod.ext_iff.1 h).2) _ _
+  · exact Finsupp.mapDomain_apply_of_injective (fun a b h => (Prod.ext_iff.1 h).2) _ _
   · intro t _ ht
     apply Finsupp.mapDomain_notin_range
     rintro ⟨u, hu⟩
@@ -1863,7 +1863,7 @@ theorem deg_fw (a : (E →+* ℂ) × ℕ → ℕ) (P : MvPolynomial (Lt Ix Dw.p 
         ∑ b, Finsupp.mapDomain (fw Dw he) m (fw Dw he (ρ, b)) := by
     intro m ρ
     rw [weight_apply, Fintype.sum_prod_type, Finset.sum_eq_single ρ]
-    · simp [Finsupp.mapDomain_apply (fw_inj Dw he)]
+    · simp [Finsupp.mapDomain_apply_of_injective (fw_inj Dw he)]
     · intro r _ hr; simp [hr]
     · simp
   rw [RowDeg, support_rename_of_injective (fw_inj Dw he)]

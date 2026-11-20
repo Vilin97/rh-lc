@@ -138,7 +138,7 @@ theorem restTr : RestTr := by
       exact Int.even_iff.mp (Int.even_coe_nat _ |>.mpr hev)
     show (l.mapDomain (castV hk) + ga) (plVar Fr hk Dt.nL (⟨j, Sum.inl ll⟩ : TL J Dt.nL r) a) /
       lowP Fr p (⟨j, Sum.inl ll⟩ : TL J Dt.nL r) = 0
-    rw [Finsupp.add_apply, hgz, add_zero, hpv, Finsupp.mapDomain_apply hinj]
+    rw [Finsupp.add_apply, hgz, add_zero, hpv, Finsupp.mapDomain_apply_of_injective hinj]
     exact Nat.div_eq_of_lt hlab
 
 end Formalism.MainNotions.PairMembershipBlocks

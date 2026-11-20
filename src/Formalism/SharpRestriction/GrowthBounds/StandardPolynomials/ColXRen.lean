@@ -129,7 +129,7 @@ theorem mem_Pol_rename {R : Type} [CommRing R] {ι ι' : Type} [Fintype ι] {k k
   · obtain ⟨i, rfl⟩ := hl
     have h1 : ∀ c, (Finsupp.mapDomain (renV e rfl) u) (e i, c) = u (i, c) := by
       intro c
-      have h2 := Finsupp.mapDomain_apply (renV_injective e he rfl) u (i, c)
+      have h2 := Finsupp.mapDomain_apply_of_injective (renV_injective e he rfl) u (i, c)
       simpa [renV] using h2
     simp only [h1]
     rw [Finset.sum_eq_single i (fun j _ hj => by rw [if_neg (fun h => hj (he h))]) (by simp), if_pos rfl]

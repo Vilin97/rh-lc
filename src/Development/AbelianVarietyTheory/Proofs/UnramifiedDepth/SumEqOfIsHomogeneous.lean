@@ -158,7 +158,7 @@ theorem pair_rename_inl (F : MvPolynomial κ C) (g : MvPowerSeries (κ ⊕ κ') 
   have h : A.mapDomain Sum.inl = Finsupp.sumFinsuppEquivProdFinsupp.symm (A, (0 : κ' →₀ ℕ)) := by
     ext x
     rcases x with x | x
-    · rw [Finsupp.mapDomain_apply Sum.inl_injective]; simp
+    · rw [Finsupp.mapDomain_apply_of_injective Sum.inl_injective]; simp
     · rw [Finsupp.mapDomain_notin_range _ _ (by simp)]; simp
   rw [coeff_slice, ← h, fact, fact, Finsupp.prod_mapDomain_index_inj Sum.inl_injective]
 
@@ -372,7 +372,7 @@ theorem act_mul (g : MvPowerSeries (κ ⊕ κ') C) (R : MvPolynomial κ C)
       have h1 : (Finsupp.sumFinsuppEquivProdFinsupp (a.mapDomain Sum.inl + m)).1 =
           a + (Finsupp.sumFinsuppEquivProdFinsupp m).1 := by
         ext x
-        simp [Finsupp.mapDomain_apply Sum.inl_injective]
+        simp [Finsupp.mapDomain_apply_of_injective Sum.inl_injective]
       have h2 : (Finsupp.sumFinsuppEquivProdFinsupp (a.mapDomain Sum.inl + m)).2 =
           (Finsupp.sumFinsuppEquivProdFinsupp m).2 := by
         ext x

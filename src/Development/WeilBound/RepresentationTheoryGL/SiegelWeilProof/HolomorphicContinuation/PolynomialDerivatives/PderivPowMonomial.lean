@@ -122,7 +122,7 @@ theorem comap_inl_add (t : σ ⊕ σ →₀ ℕ) (μ : σ →₀ ℕ) :
     (t + Finsupp.mapDomain Sum.inl μ).comapDomain Sum.inl Sum.inl_injective.injOn =
       t.comapDomain Sum.inl Sum.inl_injective.injOn + μ := by
   ext k
-  simp [Finsupp.comapDomain_apply, Finsupp.mapDomain_apply Sum.inl_injective]
+  simp [Finsupp.comapDomain_apply, Finsupp.mapDomain_apply_of_injective Sum.inl_injective]
 
 theorem inr_add (t : σ ⊕ σ →₀ ℕ) (μ : σ →₀ ℕ) (k : σ) :
     ((t + Finsupp.mapDomain Sum.inl μ : σ ⊕ σ →₀ ℕ)) (Sum.inr k) = t (Sum.inr k) := by
@@ -166,7 +166,7 @@ theorem opMono_inr (γ δ : σ →₀ ℕ) :
     · rfl
     · rintro ⟨x, hx⟩; exact Sum.inr_ne_inl hx
   rw [h0]
-  simp only [Finsupp.mapDomain_apply Sum.inr_injective]
+  simp only [Finsupp.mapDomain_apply_of_injective Sum.inr_injective]
   rw [list_pderiv γ _ (Finset.nodup_toList _), Finset.prod_map_toList, Finset.sum_map_toList,
     Finsupp.univ_sum_single]
   rw [← C_apply, C_1, one_mul, one_mul]
@@ -207,7 +207,7 @@ theorem sf_sum {ι : Type*} (S : Finset ι) (g : ι → Sym m n) (h : ∀ i ∈ 
 theorem goodT_add_inl (t : σ ⊕ σ →₀ ℕ) (μ : σ →₀ ℕ) (ht : GoodT ε t) (hμ : ∀ k ∈ μ.support, inF1 ε k) :
     GoodT ε (Finsupp.mapDomain Sum.inl μ + t) := by
   intro k hk
-  simp only [Finsupp.add_apply, Finsupp.mapDomain_apply Sum.inl_injective] at hk
+  simp only [Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective Sum.inl_injective] at hk
   have h2 : (Finsupp.mapDomain Sum.inl μ : σ ⊕ σ →₀ ℕ) (Sum.inr k) = 0 := by
     rw [Finsupp.mapDomain_of_notMem_range]; rintro ⟨x, hx⟩; exact Sum.inl_ne_inr hx
   rw [h2, zero_add] at hk
@@ -236,7 +236,7 @@ theorem sf_inr (γ : σ →₀ ℕ) (hγ : ∀ k ∈ γ.support, inF1 ε k) (c :
   refine sf_monomial ε _ _ fun k hk => ?_
   have h1 : (Finsupp.mapDomain Sum.inr γ : σ ⊕ σ →₀ ℕ) (Sum.inl k) = 0 := by
     rw [Finsupp.mapDomain_of_notMem_range]; rintro ⟨x, hx⟩; exact Sum.inr_ne_inl hx
-  rw [h1, Finsupp.mapDomain_apply Sum.inr_injective] at hk
+  rw [h1, Finsupp.mapDomain_apply_of_injective Sum.inr_injective] at hk
   exact hγ k (Finsupp.mem_support_iff.mpr (hk.resolve_left (by simp)))
 
 theorem indicator (Γ : Finset (σ →₀ ℕ)) (hΓ : ∀ γ ∈ Γ, ∀ k ∈ γ.support, inF1 ε k) :

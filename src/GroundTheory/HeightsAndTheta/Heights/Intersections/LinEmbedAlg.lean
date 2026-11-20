@@ -318,7 +318,7 @@ theorem divCycle_comap (V : Ideal (MRingOver F ι)) (f : MRingOver F ι') :
   ext W'
   by_cases hW : W' ∈ Set.range (Ideal.comap (blockLinSubst e A).toRingHom)
   · obtain ⟨W, rfl⟩ := hW
-    rw [Finsupp.mapDomain_apply (comap_injective hA)]
+    rw [Finsupp.mapDomain_apply_of_injective (comap_injective hA)]
     by_cases hs : W ∈ divSupp V (blockLinSubst e A f)
     · rw [DivisorCycleSwap.divCycle_apply_of_mem hs, DivisorCycleSwap.divCycle_apply_of_mem ((mem_divSupp_comap_iff hA V W f).mpr hs),
         comap_sup_span hA]
@@ -342,7 +342,7 @@ theorem ratDiv_comap (V : Ideal (MRingOver F ι)) (f g : MRingOver F ι') :
   by_cases hW : W' ∈ Set.range (Ideal.comap (blockLinSubst e A).toRingHom)
   · obtain ⟨W, rfl⟩ := hW
     simp only [ratDiv, Finsupp.coe_sub, Pi.sub_apply, Finsupp.mapRange_apply, divCycle_comap hA,
-      Finsupp.mapDomain_apply (comap_injective hA)]
+      Finsupp.mapDomain_apply_of_injective (comap_injective hA)]
   · simp only [ratDiv, Finsupp.coe_sub, Pi.sub_apply, Finsupp.mapRange_apply, divCycle_comap hA,
       Finsupp.mapDomain_of_notMem_range _ _ hW, Nat.cast_zero, sub_zero]
 

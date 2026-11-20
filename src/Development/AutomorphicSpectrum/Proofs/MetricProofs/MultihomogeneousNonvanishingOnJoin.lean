@@ -336,7 +336,7 @@ theorem homog_rename_inl {f : MRing ι} {d : K → ℕ} (hf : IsMultiHomog f d) 
   cases k with
   | inl k =>
     rw [Sum.elim_inl, ← hf m' hm' k]
-    exact Finset.sum_congr rfl fun i _ => Finsupp.mapDomain_apply joinInl_injective m' ⟨k, i⟩
+    exact Finset.sum_congr rfl fun i _ => Finsupp.mapDomain_apply_of_injective joinInl_injective m' ⟨k, i⟩
   | inr k =>
     refine Finset.sum_eq_zero fun i _ => Finsupp.mapDomain_notin_range _ _ ?_
     rintro ⟨q, hq⟩

@@ -1657,7 +1657,7 @@ theorem pol_comap (n : Fin T.t → ℕ) {v' : MvPolynomial (Fin (T.pos i + 1 + 1
   have h3 := h2 (ιF N (T.pos i + 1) a)
   have e : ∀ c, Finsupp.mapDomain (fun x : Fin (T.pos i + 1 + 1) × Fin r => (ιF N (T.pos i + 1) x.1, x.2)) m'
       (ιF N (T.pos i + 1) a, c) = m' (a, c) := fun c =>
-    Finsupp.mapDomain_apply (inclusion_prodMap_injective (r := r) hK) m' (a, c)
+    Finsupp.mapDomain_apply_of_injective (inclusion_prodMap_injective (r := r) hK) m' (a, c)
   simp only [e] at h3
   rw [h3, deg_compat LL T hadm i n a]
   have : ((ιF N (T.pos i + 1) a : Fin N) : ℕ) < T.pos i + 1 + 1 := by rw [ιF_val hK]; exact a.isLt

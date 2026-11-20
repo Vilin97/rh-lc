@@ -384,7 +384,7 @@ theorem curve_coefficient_linear_term (Y : FBChart C V O dd) {γ : Fin dd → Po
     rw [Finsupp.add_apply, Finsupp.single_apply, if_neg (by simp), add_zero]
     unfold io0
     rw [show ((0 : Fin 2), i) = (fun q : Fin 1 × Fin dd => ((0 : Fin 2), q.2)) ((0 : Fin 1), i) from rfl,
-      Finsupp.mapDomain_apply zero_axis_embedding_injective]
+      Finsupp.mapDomain_apply_of_injective zero_axis_embedding_injective]
     exact hi
 
   have hA := coeff_l_frob (Sv Y v) hSI hSF hγ

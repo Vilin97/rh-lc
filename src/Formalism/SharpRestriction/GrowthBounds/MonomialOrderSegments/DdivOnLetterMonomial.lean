@@ -85,7 +85,7 @@ theorem onLetter_apply (i : L) (β : Fin r →₀ ℕ) (j : L) (a : Fin r) :
   by_cases h : j = i
   · subst h
     rw [if_pos rfl]
-    exact Finsupp.mapDomain_apply (fun x y hxy => by simpa using hxy) β a
+    exact Finsupp.mapDomain_apply_of_injective (fun x y hxy => by simpa using hxy) β a
   · rw [if_neg h]
     have hne : (j, a) ∉ Set.range (fun b : Fin r => (i, b)) := by
       rintro ⟨b, hb⟩

@@ -19,7 +19,7 @@ theorem pa_degFl_relabel {Ψ : Type} [Fintype Ψ] [DecidableEq Ψ] {N : ℕ} (σ
     intro ρ
     ext ⟨t, i⟩
     have ht : ((t, i) : Ψ × Fin N) = (fun x : Ψ × Fin N => (σ x.1, x.2)) (σ.symm t, i) := by simp
-    rw [ht, Finsupp.mapDomain_apply hinj]
+    rw [ht, Finsupp.mapDomain_apply_of_injective hinj]
     simp [permExp]
   unfold degFl
   congr 1
@@ -57,7 +57,7 @@ theorem degFl_symmetry_invariance : ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ
       intro ρ
       ext y
       conv_rhs => rw [← hinv y]
-      rw [Finsupp.mapDomain_apply hinj]
+      rw [Finsupp.mapDomain_apply_of_injective hinj]
       rcases y with ⟨t, i⟩
       by_cases ht : t = τ
       · subst ht

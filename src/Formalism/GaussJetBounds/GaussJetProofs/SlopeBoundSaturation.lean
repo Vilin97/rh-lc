@@ -34,7 +34,7 @@ lemma sat_glue_apply {S τ σ : Type} [Fintype S] [DecidableEq S] (e : S → τ 
     (he : ∀ s t v w, e s v = e t w → s = t ∧ v = w) (m : S → τ →₀ ℕ) (s : S) (v : τ) :
     (∑ t, (m t).mapDomain (e t)) (e s v) = m s v := by
   rw [Finsupp.finsetSum_apply, Finset.sum_eq_single s]
-  · exact Finsupp.mapDomain_apply (fun x y h => (he s s x y h).2) _ _
+  · exact Finsupp.mapDomain_apply_of_injective (fun x y h => (he s s x y h).2) _ _
   · intro t _ hts
     apply Finsupp.mapDomain_of_notMem_range
     rintro ⟨w, hw⟩

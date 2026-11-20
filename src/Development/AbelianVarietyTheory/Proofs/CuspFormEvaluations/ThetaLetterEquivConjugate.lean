@@ -101,7 +101,7 @@ theorem rowDeg_iff_rename {τ : ι} {i : Fin (dim τ)} {t : {τ // Ψ τ}} {r : 
   have hk : ∀ k : Fin n, (Finsupp.mapDomain (typeLetterEquiv hσ hΨ hp hq n) m) (t, r, k) =
       m ⟨τ, i, k⟩ := fun k => by
     rw [← typeLetterEquiv_apply hσ hΨ hp hq h k,
-      Finsupp.mapDomain_apply (typeLetterEquiv hσ hΨ hp hq n).injective]
+      Finsupp.mapDomain_apply_of_injective (typeLetterEquiv hσ hΨ hp hq n).injective]
   simp only [hk]
 
 theorem mem_HHa_iff_rename [CharZero K] (a : ι → ℕ → ℕ)

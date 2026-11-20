@@ -43,7 +43,7 @@ theorem mapDomain_pullE (ζ : D.EM) :
     have hinj : Function.Injective (Prod.map (D.e0 j) (id : Fin D.r → Fin D.r)) :=
       (D.index_embedding_injective j).prodMap Function.injective_id
     have hout : ¬ D.outSeg j (D.e0 j k) := fun h => h ⟨k, rfl⟩
-    exact (Finsupp.mapDomain_apply hinj (D.pullE j ζ) (k, a)).trans
+    exact (Finsupp.mapDomain_apply_of_injective hinj (D.pullE j ζ) (k, a)).trans
       ((D.pullE_apply j ζ k a).trans ((eIn_apply (out := D.outSeg j) ζ (D.e0 j k, a)).trans (if_neg hout)).symm)
   · have hout : D.outSeg j i := hi
     rw [Finsupp.mapDomain_notin_range]

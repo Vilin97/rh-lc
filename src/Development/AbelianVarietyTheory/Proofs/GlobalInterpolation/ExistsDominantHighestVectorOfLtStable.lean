@@ -68,7 +68,7 @@ theorem isWeightedHomogeneous_rename_rows {k : Type} [Field k] {N : ℕ} (σ : E
   unfold rowDeg
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [show ((a, s) : Fin N × Fin N) = (fun x : Fin N × Fin N => (σ x.1, x.2)) (σ.symm a, s) by simp]
-  exact Finsupp.mapDomain_apply hinj u _
+  exact Finsupp.mapDomain_apply_of_injective hinj u _
 
 end GlobalTheory.Alc.HighestVec
 

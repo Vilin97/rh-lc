@@ -15,7 +15,7 @@ lemma sum_apply_pair {V W : Type} (T : Finset (List V)) (g : List V → List W �
   rw [Finsupp.finsetSum_apply]
   split_ifs with h
   · rw [Finset.sum_eq_single l]
-    · exact Finsupp.mapDomain_apply (inj_pair l) _ _
+    · exact Finsupp.mapDomain_apply_of_injective (inj_pair l) _ _
     · intro l' _ hne
       apply Finsupp.mapDomain_notin_range
       rintro ⟨w', hw'⟩

@@ -70,7 +70,7 @@ theorem coeff_map_mul_eR {π : Γ →* G} {ι : G →* Γ} (h : IsSplit π ι) (
     · have : γ * (r : Γ)⁻¹ = ι (π γ) := by
         subst hr
         simp [r0]
-      rw [this, Finsupp.mapDomain_apply (isSplit_injective h)]
+      rw [this, Finsupp.mapDomain_apply_of_injective (isSplit_injective h)]
     · apply Finsupp.mapDomain_notin_range
       rintro ⟨g, hg⟩
       apply hr

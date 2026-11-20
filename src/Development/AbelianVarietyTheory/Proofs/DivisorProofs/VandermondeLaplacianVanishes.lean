@@ -44,7 +44,7 @@ theorem coeff_eq_zero_of_swap {r : ℕ} {a b : Fin r} (P : MvPolynomial (Option 
     have hx : Option.map (Equiv.swap a b) (Option.map (Equiv.swap a b) x) = x := by
       cases x <;> simp
     conv_lhs => rw [← hx]
-    rw [Finsupp.mapDomain_apply hinj]
+    rw [Finsupp.mapDomain_apply_of_injective hinj]
     rcases x with _ | i
     · rfl
     · by_cases ha : i = a

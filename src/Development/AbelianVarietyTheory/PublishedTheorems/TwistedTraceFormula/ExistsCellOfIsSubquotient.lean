@@ -282,7 +282,7 @@ theorem clsGL_irr {n : ℕ} (σ : IrrRep (GL (Fin n) k)) (h : HasFiniteLength σ
 
 theorem clsGL_apply {n : ℕ} (π : Representation ℂ (GL (Fin n) k) V) (h : HasFiniteLength π)
     (c : IrrCl (GL (Fin n) k)) : clsGL π h ⟨n, c⟩ = cls π h c :=
-  Finsupp.mapDomain_apply sigma_mk_injective _ _
+  Finsupp.mapDomain_apply_of_injective sigma_mk_injective _ _
 
 theorem clsGL_congr {n : ℕ} {π : Representation ℂ (GL (Fin n) k) V}
     {τ : Representation ℂ (GL (Fin n) k) W} (φ : π.Equiv τ) (h : HasFiniteLength π)

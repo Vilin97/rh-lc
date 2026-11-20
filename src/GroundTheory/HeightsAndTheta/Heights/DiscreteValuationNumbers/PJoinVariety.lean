@@ -96,7 +96,7 @@ theorem JoinVariety.proof : JoinVariety.Statement := by
       | inl k =>
         change ∑ i : ι k, (Finsupp.mapDomain (liftVar (ι := ι) ptIdx) m0)
           (liftVar (ι := ι) ptIdx ⟨k, i⟩) = a k
-        simp only [Finsupp.mapDomain_apply liftVar_injective]
+        simp only [Finsupp.mapDomain_apply_of_injective liftVar_injective]
         exact ha m0 hm0 k
       | inr u =>
         simp only [Sum.elim_inr, Pi.zero_apply]

@@ -428,7 +428,7 @@ theorem eVia_eq {om : ∀ i : Fin 2, (ZMod (D.host.g i))ˣ →* ℂˣ} (hI : Ide
     eVia (b.trans (sqEquiv D).symm) (fun PP => (φ PP).toRingHom) = BadPlacesGoodCoefficients.goodCoeff b φ om := by
   have e0 : D.ntypes.e0.coeff = Finsupp.mapDomain pull (LevelCuspCharacters.goodIdem (H := D.host) om).coeff := by
     rw [Finsupp.ext_iff, pull_bijective.2.forall]
-    simp only [Finsupp.mapDomain_apply pull_bijective.1]
+    simp only [Finsupp.mapDomain_apply_of_injective pull_bijective.1]
     exact hI
   unfold eVia BadPlacesGoodCoefficients.goodCoeff
   rw [e0, ← Finsupp.mapDomain_comp]

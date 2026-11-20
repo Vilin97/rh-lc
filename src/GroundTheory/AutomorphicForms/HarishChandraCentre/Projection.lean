@@ -47,7 +47,7 @@ theorem isDiagExp_diagEmbExp (μ : Fin n →₀ ℕ) : IsDiagExp (diagEmbExp μ)
 
 theorem diagExp_diagEmbExp (μ : Fin n →₀ ℕ) : diagExp (diagEmbExp μ) = μ := by
   ext i
-  rw [diagExp_apply, diagEmbExp, Finsupp.mapDomain_apply diagEmbExp_injective]
+  rw [diagExp_apply, diagEmbExp, Finsupp.mapDomain_apply_of_injective diagEmbExp_injective]
 
 theorem hcEmb_monomial_one (μ : Fin n →₀ ℕ) : hcEmb (monomial μ 1) = canon (diagEmbExp μ) := by
   rw [canon_of_isDiagExp (isDiagExp_diagEmbExp μ), diagExp_diagEmbExp]

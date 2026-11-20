@@ -398,14 +398,14 @@ variable {K : Type} [Field K] {ι : Type} [Fintype ι] {a b : ℕ}
 private theorem comapDomain_inl_mapDomain_add (p : (ι × Fin b × Fin b) →₀ ℕ) (m : DVar ι a b →₀ ℕ) :
     (p.mapDomain Sum.inl + m.mapDomain Sum.inr).comapDomain Sum.inl Sum.inl_injective.injOn = p := by
   ext v
-  rw [Finsupp.comapDomain_apply, Finsupp.add_apply, Finsupp.mapDomain_apply Sum.inl_injective,
+  rw [Finsupp.comapDomain_apply, Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective Sum.inl_injective,
     Finsupp.mapDomain_notin_range (f := Sum.inr) m (Sum.inl v) (by simp), add_zero]
 
 private theorem comapDomain_inr_mapDomain_add (p : (ι × Fin b × Fin b) →₀ ℕ) (m : DVar ι a b →₀ ℕ) :
     (p.mapDomain Sum.inl + m.mapDomain Sum.inr).comapDomain Sum.inr Sum.inr_injective.injOn = m := by
   ext v
   rw [Finsupp.comapDomain_apply, Finsupp.add_apply, Finsupp.mapDomain_notin_range (f := Sum.inl) p (Sum.inr v) (by simp),
-    Finsupp.mapDomain_apply Sum.inr_injective, zero_add]
+    Finsupp.mapDomain_apply_of_injective Sum.inr_injective, zero_add]
 
 theorem jetLin_mixed (J : (DVar ι a b →₀ ℕ) → K) (p : (ι × Fin b × Fin b) →₀ ℕ) (m : DVar ι a b →₀ ℕ) (c : K) :
     jetLin J (monomial (p.mapDomain Sum.inl + m.mapDomain Sum.inr) c) = monomial p (c * J m) := by
@@ -669,10 +669,10 @@ theorem split_mono (m : ((ι × Fin b × Fin b) ⊕ DVar ι a b) →₀ ℕ) :
     m = (m.comapDomain Sum.inl Sum.inl_injective.injOn).mapDomain Sum.inl + (m.comapDomain Sum.inr Sum.inr_injective.injOn).mapDomain Sum.inr := by
   ext x
   rcases x with v | v
-  · rw [Finsupp.add_apply, Finsupp.mapDomain_apply Sum.inl_injective,
+  · rw [Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective Sum.inl_injective,
       Finsupp.mapDomain_notin_range (f := Sum.inr) _ (Sum.inl v) (by simp), Finsupp.comapDomain_apply, add_zero]
   · rw [Finsupp.add_apply, Finsupp.mapDomain_notin_range (f := Sum.inl) _ (Sum.inr v) (by simp),
-      Finsupp.mapDomain_apply Sum.inr_injective, Finsupp.comapDomain_apply, zero_add]
+      Finsupp.mapDomain_apply_of_injective Sum.inr_injective, Finsupp.comapDomain_apply, zero_add]
 
 theorem evY_mixed (cD : ι → ℂ) (y' : ι × Fin b × Fin b → ℂ) (p : (ι × Fin b × Fin b) →₀ ℕ) (q : DVar ι a b →₀ ℕ) :
     evY cD y' (monomial (p.mapDomain Sum.inl + q.mapDomain Sum.inr) 1) =

@@ -183,10 +183,10 @@ theorem coeff_hCv (X : RawChart C d I κ) {γ : κ → PowerSeries C} (hγ : ∀
   have i1 : Function.Injective (fun x : κ => ((1 : Fin 2), x)) := fun _ _ h => (Prod.ext_iff.1 h).2
   have g0 : ∀ ν x, g ν (0, x) = ν x := fun ν x => by
     simp only [g, Finsupp.add_apply]
-    rw [Finsupp.mapDomain_apply i0, Finsupp.mapDomain_notin_range _ _ (by simp), add_zero]
+    rw [Finsupp.mapDomain_apply_of_injective i0, Finsupp.mapDomain_notin_range _ _ (by simp), add_zero]
   have g1 : ∀ ν x, g ν (1, x) = μ x := fun ν x => by
     simp only [g, Finsupp.add_apply]
-    rw [Finsupp.mapDomain_apply i1, Finsupp.mapDomain_notin_range _ _ (by simp), zero_add]
+    rw [Finsupp.mapDomain_apply_of_injective i1, Finsupp.mapDomain_notin_range _ _ (by simp), zero_add]
   have gi : Function.Injective g := fun ν ν' h => by
     ext x
     rw [← g0 ν, h, g0]

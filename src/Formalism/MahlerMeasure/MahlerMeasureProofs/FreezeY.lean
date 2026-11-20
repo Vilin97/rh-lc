@@ -775,7 +775,7 @@ private theorem llPart_mapDomain_emb (m : Fin N × Fin r →₀ ℕ) :
     llPart (Finsupp.mapDomain emb m) = m := by
   ext ⟨i, c⟩
   rw [llPart_apply]
-  exact Finsupp.mapDomain_apply emb_inj m (i, c)
+  exact Finsupp.mapDomain_apply_of_injective emb_inj m (i, c)
 
 private theorem etaPart_mapDomain_emb (m : Fin N × Fin r →₀ ℕ) :
     etaPart (Finsupp.mapDomain emb m) = 0 := by

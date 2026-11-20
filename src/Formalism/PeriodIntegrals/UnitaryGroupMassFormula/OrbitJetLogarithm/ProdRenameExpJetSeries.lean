@@ -36,7 +36,7 @@ theorem sum_mapDomain_kz (D : D7) {N0 N1 : ℕ} (k : Pl D × Fin N0 × Fin N1 �
   rw [Finsupp.finsetSum_apply, Finset.sum_eq_single z0]
   · have h : ((z0, w) : Pl D × Fin N0 × Fin N1) =
         pEmb (ptE D z0) (Fin N0 × Fin N1) ((0 : ZMod 1), w) := rfl
-    rw [h, Finsupp.mapDomain_apply (pEmb (ptE D z0) _).injective]
+    rw [h, Finsupp.mapDomain_apply_of_injective (pEmb (ptE D z0) _).injective]
     rfl
   · intro z _ hz
     apply Finsupp.mapDomain_notin_range

@@ -53,7 +53,7 @@ theorem eb_w_mapDomain (ε : κ → σ) (hε : Function.Injective ε) (F : MvPow
   congr 1
   apply Finset.prod_congr rfl
   intro y _
-  rw [Finsupp.mapDomain_apply hε]
+  rw [Finsupp.mapDomain_apply_of_injective hε]
 
 theorem eb_J_rename (ε : κ → σ) (hε : Function.Injective ε) (F : MvPowerSeries σ K)
     (Q : MvPolynomial κ (MvPolynomial τ K)) : eb_J F (MvPolynomial.rename ε Q) = eb_J (resV ε F) Q := by

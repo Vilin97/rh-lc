@@ -80,7 +80,7 @@ theorem isMultiHomogeneous_rename_castLE {B N n : ℕ} (h : N ≤ n) (a : Fin B 
   rw [← Finset.sum_subset hsub ?_]
   · rw [Finset.sum_map]
     refine Finset.sum_congr rfl fun j _ => ?_
-    exact Finsupp.mapDomain_apply he t (b, j)
+    exact Finsupp.mapDomain_apply_of_injective he t (b, j)
   · intro j _ hj
     apply Finsupp.mapDomain_notin_range
     rintro ⟨q, hq⟩

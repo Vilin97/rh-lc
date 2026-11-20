@@ -148,7 +148,7 @@ theorem sum_resM {γ : Type} {R : Finset (Pl D)} (hR : IsReps D p R) (m : Pl D �
     show (z, c) = (orbMap D p r0 (e0 : ZMod (nP D p)), c)
     rw [← posPl_eq_orbMap, he0]
   rw [Finset.sum_eq_single r0]
-  · rw [hx0, Finsupp.mapDomain_apply (pE D p r0 γ).injective]
+  · rw [hx0, Finsupp.mapDomain_apply_of_injective (pE D p r0 γ).injective]
     rfl
   · intro r hr hne
     apply Finsupp.mapDomain_notin_range

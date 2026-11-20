@@ -137,7 +137,7 @@ theorem finsupp_eq_head_add_tail {N r K : ℕ} (m : Fin N × Fin (r + K) →₀ 
   rw [Finsupp.add_apply]
   refine Fin.addCases (fun a => ?_) (fun a => ?_) c
   · have e1 : (i, Fin.castAdd K a) = plVar (K := K) (i, a) := rfl
-    rw [e1, Finsupp.mapDomain_apply (headVar_injective N r K), Finsupp.comapDomain_apply,
+    rw [e1, Finsupp.mapDomain_apply_of_injective (headVar_injective N r K), Finsupp.comapDomain_apply,
       Finsupp.mapDomain_of_notMem_range, add_zero]
     rintro ⟨⟨l, b⟩, h⟩
     simp only [tanVar, plVar, Prod.mk.injEq] at h
@@ -145,7 +145,7 @@ theorem finsupp_eq_head_add_tail {N r K : ℕ} (m : Fin N × Fin (r + K) →₀ 
     simp only [Fin.val_castAdd, Fin.val_natAdd] at this
     omega
   · have e1 : (i, Fin.natAdd r a) = tanVar (r := r) (i, a) := rfl
-    rw [e1, Finsupp.mapDomain_apply (tailVar_injective N r K), Finsupp.comapDomain_apply,
+    rw [e1, Finsupp.mapDomain_apply_of_injective (tailVar_injective N r K), Finsupp.comapDomain_apply,
       Finsupp.mapDomain_of_notMem_range, zero_add]
     rintro ⟨⟨l, b⟩, h⟩
     simp only [tanVar, plVar, Prod.mk.injEq] at h

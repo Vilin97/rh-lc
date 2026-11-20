@@ -13,7 +13,7 @@ theorem curry_sum_mapDomain {ι β : Type} [Fintype ι] (v : ι → (β →₀ �
   classical
   ext x
   rw [Finsupp.curry_apply, Finsupp.finsetSum_apply, Finset.sum_eq_single τ]
-  · exact Finsupp.mapDomain_apply (fun a b h => (Prod.mk.inj h).2) (v τ) x
+  · exact Finsupp.mapDomain_apply_of_injective (fun a b h => (Prod.mk.inj h).2) (v τ) x
   · intro σ _ hσ
     apply Finsupp.mapDomain_notin_range
     rintro ⟨y, hy⟩

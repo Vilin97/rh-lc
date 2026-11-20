@@ -479,7 +479,7 @@ theorem coeff_prod_rename {A ι : Type} [CommRing A] [Fintype ι] {n : ℕ} (b :
   have h3 : ∀ τ s, (∑ τ', (p τ').mapDomain fun q : Unit × Fin n => (τ', q.2)) (τ, s) = p τ ((), s) := by
     intro τ s
     rw [Finsupp.finsetSum_apply, Finset.sum_eq_single τ]
-    · exact Finsupp.mapDomain_apply (hinj τ) (p τ) ((), s)
+    · exact Finsupp.mapDomain_apply_of_injective (hinj τ) (p τ) ((), s)
     · intro τ' _ h
       refine Finsupp.mapDomain_of_notMem_range _ _ ?_
       rintro ⟨q, hq⟩

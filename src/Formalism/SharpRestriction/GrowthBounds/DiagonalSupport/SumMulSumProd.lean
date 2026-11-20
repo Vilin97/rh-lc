@@ -198,7 +198,7 @@ theorem seg_dec (hA : ATL) (hS : ValSlice) (F : MvPolynomial ((ZMod J × ℤ) ×
           Finsupp.mapDomain (fun v : ℤ × Fin n => ((j, v.1), v.2)) mo ((j, x), c) := by
         rw [he]
       rw [partOf_apply_pos Prod.fst j mo' ((j, x), c) rfl,
-        Finsupp.mapDomain_apply hinj mo (x, c)] at h4
+        Finsupp.mapDomain_apply_of_injective hinj mo (x, c)] at h4
       exact h4.symm
     · intro q hq
       have h3 := hmem.2.1 _ ⟨q, hq, rfl⟩

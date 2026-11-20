@@ -142,7 +142,7 @@ theorem eq_up_of {p : Fin 3 × Fin dd →₀ ℕ} (hp : ∀ j, p ((0 : Fin 3), j
     exact Fin.succ_ne_zero _ hq.1
   | succ k' =>
     have e : ((Fin.succ k', j) : Fin 3 × Fin dd) = up 2 (k', j) := rfl
-    rw [e, Finsupp.mapDomain_apply (up_inj 2), Finsupp.comapDomain_apply]
+    rw [e, Finsupp.mapDomain_apply_of_injective (up_inj 2), Finsupp.comapDomain_apply]
 
 theorem coeff_free {f : PS C 3 dd} (h1 : ev (rz 2) f = 1) {p : Fin 3 × Fin dd →₀ ℕ}
     (hp : ∀ j, p ((0 : Fin 3), j) = 0) : coeff p f = if p = 0 then 1 else 0 := by

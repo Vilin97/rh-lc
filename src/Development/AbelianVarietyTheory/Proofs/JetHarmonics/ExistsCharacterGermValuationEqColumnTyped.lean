@@ -97,7 +97,7 @@ theorem exists_germ_valuation_eq : ∀ (C : Type) [Field C] [CharZero C] (v : Va
         rw [MvPolynomial.mem_support_iff, MvPolynomial.coeff_rename_mapDomain _ (letterEquiv Ty r n).injective]
         exact MvPolynomial.mem_support_iff.1 hmo
       exact hP _ hmem (letterEquiv Ty r n (l, b))
-        (by rwa [Finsupp.mapDomain_apply (letterEquiv Ty r n).injective]))
+        (by rwa [Finsupp.mapDomain_apply_of_injective (letterEquiv Ty r n).injective]))
   refine ⟨PowGerm.boxSer g, ?_⟩
   rw [map_boxSer, MvPolynomial.map_rename,
     GlobalTheory.nabValN_boxSer O d OE B C h w0 hh k n _ (Σ τ : Ty, Fin (r τ)) (Letter Ty r n) (letterEquiv Ty r n) _

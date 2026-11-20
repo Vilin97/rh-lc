@@ -1260,13 +1260,13 @@ theorem isWeightedHomogeneous_of_column_scaling {R : Type} [CommRing R] {m n : �
     d.mapDomain Sum.inl + d.mapDomain (Sum.inr ∘ Prod.snd)
   have hEl : ∀ d v, E d (Sum.inl v) = d v := by
     intro d v
-    simp only [E, Finsupp.add_apply, Finsupp.mapDomain_apply Sum.inl_injective]
+    simp only [E, Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective Sum.inl_injective]
     rw [Finsupp.mapDomain_of_notMem_range _ _ (by simp), add_zero]
   have hEr : ∀ d s, E d (Sum.inr s) = d.mapDomain Prod.snd s := by
     intro d s
     simp only [E, Finsupp.add_apply]
     rw [Finsupp.mapDomain_of_notMem_range _ _ (by simp), Finsupp.mapDomain_comp,
-      Finsupp.mapDomain_apply Sum.inr_injective, zero_add]
+      Finsupp.mapDomain_apply_of_injective Sum.inr_injective, zero_add]
   have hmono : ∀ d (a : R), aeval (fun v : Fin m × Fin n =>
         (X (Sum.inr v.2) * X (Sum.inl v) : MvPolynomial ((Fin m × Fin n) ⊕ Fin n) R)) (monomial d a) =
       monomial (E d) a := by
@@ -1314,8 +1314,8 @@ theorem isWeightedHomogeneous_of_column_scaling {R : Type} [CommRing R] {m n : �
     have h1 := DFunLike.congr_fun hu (Sum.inr t)
     have h2 := hle (Sum.inr t)
     rw [Finsupp.mapDomain_of_notMem_range _ _ (by simp), Finsupp.tsub_apply,
-      Finsupp.mapDomain_apply Sum.inr_injective] at h1
-    rw [Finsupp.mapDomain_apply Sum.inr_injective] at h2
+      Finsupp.mapDomain_apply_of_injective Sum.inr_injective] at h1
+    rw [Finsupp.mapDomain_apply_of_injective Sum.inr_injective] at h2
     have hν : (Finsupp.equivFunOnFinite.symm ν) t = ν t := rfl
     rw [hν] at h1 h2
     omega

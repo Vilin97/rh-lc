@@ -75,7 +75,7 @@ theorem product_support_weights (K : Type) [Field K] (lam : ι → DomWeight n) 
     by_cases hτ : τ = t
     · subst hτ
       have : ∀ a, m1 (τ, a, s) = u (a, s) := fun a => by
-        rw [← hu]; exact Finsupp.mapDomain_apply hinj u (a, s)
+        rw [← hu]; exact Finsupp.mapDomain_apply_of_injective hinj u (a, s)
       simp only [this, column_sum_eq_weight _ u hw s, if_neg ht, Finset.mem_insert, true_or, if_true, add_zero]
     · have : ∀ a, m1 (τ, a, s) = 0 := fun a => by
         rw [← hu]

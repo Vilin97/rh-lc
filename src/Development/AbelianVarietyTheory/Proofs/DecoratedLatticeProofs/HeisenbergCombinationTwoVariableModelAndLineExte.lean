@@ -41,7 +41,7 @@ theorem comb_resS_slice (ψ : AddChar (AF D.host.F) ℂ) {V A L S : HSp D} (o : 
   simp only [comb, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   rw [Finsupp.mapDomain_support_of_injective hinj, Finset.sum_image (fun a _ b _ h => hinj h)]
   refine Finset.sum_congr rfl fun w _ => ?_
-  rw [Finsupp.mapDomain_apply hinj, heisO_resS_slice]
+  rw [Finsupp.mapDomain_apply_of_injective hinj, heisO_resS_slice]
 
 theorem comb_resT_slice (ψ : AddChar (AF D.host.F) ℂ) {V A L S : HSp D} (o : OrthDec V A L) (c : WO S A →₀ ℂ)
     (F : WO S V → ℂ) (u : WO S A) (v : WO S L) :
@@ -55,7 +55,7 @@ theorem comb_resT_slice (ψ : AddChar (AF D.host.F) ℂ) {V A L S : HSp D} (o : 
   simp only [comb, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   rw [Finsupp.mapDomain_support_of_injective hinj, Finset.sum_image (fun a _ b _ h => hinj h)]
   refine Finset.sum_congr rfl fun w _ => ?_
-  rw [Finsupp.mapDomain_apply hinj, heisO_resT_slice]
+  rw [Finsupp.mapDomain_apply_of_injective hinj, heisO_resT_slice]
 
 section Loc
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]

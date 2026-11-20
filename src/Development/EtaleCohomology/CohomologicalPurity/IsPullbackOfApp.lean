@@ -14,7 +14,7 @@ theorem fin_pb {α β γ δ M : Type*} [AddCommMonoid M] (t : α → β) (l : α
   have hsupp : ∀ s ∈ x.support, s ∈ Set.range t := by
     intro s hs
     have h1 : (Finsupp.mapDomain r x) (r s) ≠ 0 := by
-      rw [Finsupp.mapDomain_apply hr]; exact Finsupp.mem_support_iff.1 hs
+      rw [Finsupp.mapDomain_apply_of_injective hr]; exact Finsupp.mem_support_iff.1 hs
     rw [h] at h1
     have h2 : r s ∈ (Finsupp.mapDomain b y).support := Finsupp.mem_support_iff.2 h1
     have h3 := Finsupp.mapDomain_support h2

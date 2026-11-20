@@ -108,7 +108,7 @@ theorem evalPoints_first_order_of_sq_eq_zero {R : Type} [CommRing R] {d : ℕ} (
       · rw [Finsupp.add_apply, Finsupp.mapDomain_notin_range _ _
           (by rintro ⟨q, hq⟩; exact Fin.succ_ne_zero _ (congrArg Prod.fst hq))]
         simp [hn0, Finsupp.single_apply, Pi.single_apply, eq_comm]
-      · rw [Finsupp.add_apply, Finsupp.mapDomain_apply hinj _ (a, j),
+      · rw [Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective hinj _ (a, j),
           Finsupp.single_eq_of_ne (fun h => Fin.succ_ne_zero _ (congrArg Prod.fst h))]
         simp
     rw [this, map_mul, Algebra.smul_def]

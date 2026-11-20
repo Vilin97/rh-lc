@@ -67,7 +67,7 @@ theorem coeff_coact {c : (Fin m → ℤ) →₀ ℂ} {w : Sgn m} (h : ∀ γ, ev
     rw [Finsupp.linearCombination_mapDomain]
     simpa [Finsupp.linearCombination_apply, Finsupp.sum, ev, mono_act] using h γ
   conv_lhs => rw [← e]
-  exact Finsupp.mapDomain_apply (coact_injective w) _ _
+  exact Finsupp.mapDomain_apply_of_injective (coact_injective w) _ _
 
 def chr (γ : Fin m → ℂˣ) : Multiplicative (Fin m → ℤ) →* ℂ where
   toFun a := mono a.toAdd γ

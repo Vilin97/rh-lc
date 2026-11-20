@@ -221,7 +221,7 @@ theorem isMultiHomog_relabel {f : MRing ι} {d : K → ℕ} (hf : IsMultiHomog f
   dsimp only
   rw [ε.symm_apply_apply, ← hf m₀ hm₀ k, ← (Equiv.cast (h k)).sum_comp]
   exact Finset.sum_congr rfl fun i _ =>
-    Finsupp.mapDomain_apply (relabelBlocks ε h).injective m₀ ⟨k, i⟩
+    Finsupp.mapDomain_apply_of_injective (relabelBlocks ε h).injective m₀ ⟨k, i⟩
 
 theorem isMultiHomog_relabel_symm {g : MRing ι'} {d : K' → ℕ} (hg : IsMultiHomog g d) :
     IsMultiHomog ((relabelRingEquiv ε h).symm g) (fun k => d (ε k)) := by
@@ -233,7 +233,7 @@ theorem isMultiHomog_relabel_symm {g : MRing ι'} {d : K' → ℕ} (hg : IsMulti
   dsimp only
   rw [← hg m₀ hm₀ (ε k), ← (Equiv.cast (h k)).sum_comp]
   refine Finset.sum_congr rfl fun i _ => ?_
-  have := Finsupp.mapDomain_apply (relabelBlocks ε h).symm.injective m₀ (relabelBlocks ε h ⟨k, i⟩)
+  have := Finsupp.mapDomain_apply_of_injective (relabelBlocks ε h).symm.injective m₀ (relabelBlocks ε h ⟨k, i⟩)
   rw [Equiv.symm_apply_apply] at this
   exact this
 

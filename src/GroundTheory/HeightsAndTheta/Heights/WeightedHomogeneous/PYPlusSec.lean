@@ -20,7 +20,7 @@ theorem newEmb_injective : Function.Injective (newEmb D) := by
 
 theorem mapDomain_newEmb_none (m : (Σ _ : Unit, Fin (D.size + 1)) →₀ ℕ) (j : Fin (D.extSizes none + 1)) :
     Finsupp.mapDomain (newEmb D) m ⟨none, j⟩ = m ⟨(), j⟩ :=
-  Finsupp.mapDomain_apply (newEmb_injective D) m ⟨(), j⟩
+  Finsupp.mapDomain_apply_of_injective (newEmb_injective D) m ⟨(), j⟩
 
 theorem mapDomain_newEmb_some (m : (Σ _ : Unit, Fin (D.size + 1)) →₀ ℕ) (k : ι)
     (i : Fin (D.extSizes (some k) + 1)) :

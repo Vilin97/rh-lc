@@ -49,7 +49,7 @@ theorem xx_span_MGen0 (th o : ℤ → ℝ) {xi : SegRing O r K} (hxi : xi ∈ XX
         · rw [support_rename_of_injective (md_f_inj F j K)]
           exact Finset.mem_image_of_mem _ hm0
         · rw [Finsupp.mem_support_iff]
-          have := Finsupp.mapDomain_apply (md_f_inj F j K) m0 v
+          have := Finsupp.mapDomain_apply_of_injective (md_f_inj F j K) m0 v
           rw [this]
           exact Finsupp.mem_support_iff.1 hvm
       exact ((mem_supported.1 hG) h3).2

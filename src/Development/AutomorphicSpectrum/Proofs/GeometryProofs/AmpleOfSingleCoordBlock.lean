@@ -28,7 +28,7 @@ theorem homog_rename (k₀ : K) {F : MvPolynomial (J k₀) ℤ} {n : ℕ} (h : F
     simp
   by_cases hk : k = k₀
   · subst hk
-    simp [Finsupp.mapDomain_apply sigma_mk_injective, hd]
+    simp [Finsupp.mapDomain_apply_of_injective sigma_mk_injective, hd]
   · have h0 : ∀ i, Finsupp.mapDomain (Sigma.mk k₀) m' ⟨k, i⟩ = 0 := fun i =>
       Finsupp.mapDomain_notin_range _ _ (by
         rintro ⟨i', hi'⟩

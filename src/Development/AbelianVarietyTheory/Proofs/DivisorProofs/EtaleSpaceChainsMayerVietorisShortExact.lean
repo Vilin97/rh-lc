@@ -89,7 +89,7 @@ private theorem exists_mapDomain_eq_of_pullback_square {S : Type*} [Ring S] {W A
     have hn : Finsupp.mapDomain b n (r a) ≠ 0 := by
       intro h0
       have h1 := congrArg (fun v => v (r a)) h
-      simp only [Finsupp.add_apply, Finsupp.mapDomain_apply hr, h0, add_zero, Finsupp.coe_zero,
+      simp only [Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective hr, h0, add_zero, Finsupp.coe_zero,
         Pi.zero_apply] at h1
       exact hma h1
     obtain ⟨c, hc⟩ : r a ∈ Set.range b := by

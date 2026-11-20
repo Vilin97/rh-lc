@@ -242,7 +242,7 @@ theorem blk_mapDomain {p : ℕ} [Fact p.Prime] (X : Sys p) (D : D7) (pos : (Σ v
   refine Fintype.sum_equiv (finCongr hN.2).symm _ _ fun b => ?_
   have h := eIdx_pos X D pos j hN v s ((finCongr hN.2).symm b) ((finCongr hN.1).symm a)
   simp only [finCongr_symm, finCongr_apply, Fin.cast_cast, Fin.cast_eq_self] at h
-  rw [← h, Finsupp.mapDomain_apply (eIdx_injective X D pos j hN)]
+  rw [← h, Finsupp.mapDomain_apply_of_injective (eIdx_injective X D pos j hN)]
   rfl
 
 def CmpVtOf : Prop :=

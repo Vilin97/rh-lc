@@ -64,7 +64,7 @@ theorem bM_repr (bs : Module.Basis (Fin 2) F E) (X : Mx F E m n) (k : Fin m × F
   simp [bM, Module.Basis.matrix, crdB, Pi.basis_repr]
   rw [show ((i, j, l) : Fin m × Fin n × Fin 2) = (Prod.map id ⇑(Equiv.sigmaEquivProd (Fin n) (Fin 2)) ∘
       ⇑(Equiv.sigmaEquivProd (Fin m) (Σ _ : Fin n, Fin 2))) ⟨i, ⟨j, l⟩⟩ from rfl,
-    Finsupp.mapDomain_apply hinj, Pi.basis_repr, Pi.basis_repr]
+    Finsupp.mapDomain_apply_of_injective hinj, Pi.basis_repr, Pi.basis_repr]
   rfl
 
 theorem incM_one {ι : Type} [Fintype ι] [DecidableEq ι] : incM F (1 : Matrix ι ι E) = 1 :=

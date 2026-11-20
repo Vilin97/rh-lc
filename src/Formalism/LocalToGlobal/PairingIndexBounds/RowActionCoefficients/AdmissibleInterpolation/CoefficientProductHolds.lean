@@ -20,7 +20,7 @@ lemma dGlue_apply (em : B → σ → τ) (hem : Function.Injective fun x : B × 
   classical
   unfold dGlue
   rw [Finsupp.finsetSum_apply, Finset.sum_eq_single b]
-  · exact Finsupp.mapDomain_apply (fun x y h => congrArg Prod.snd (hem (a₁ := (b, x)) (a₂ := (b, y)) h)) _ _
+  · exact Finsupp.mapDomain_apply_of_injective (fun x y h => congrArg Prod.snd (hem (a₁ := (b, x)) (a₂ := (b, y)) h)) _ _
   · intro b' _ hb
     apply Finsupp.mapDomain_of_notMem_range
     rintro ⟨w, hw⟩

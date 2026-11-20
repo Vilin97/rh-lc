@@ -53,7 +53,7 @@ theorem curry_sum_mapDomain {ι σ : Type} [Fintype ι] [DecidableEq ι] (F : ι
   classical
   ext s
   rw [Finsupp.curry_apply, Finsupp.coe_finset_sum, Finset.sum_apply, Finset.sum_eq_single τ]
-  · exact Finsupp.mapDomain_apply (fun _ _ h => congrArg Prod.snd h) _ _
+  · exact Finsupp.mapDomain_apply_of_injective (fun _ _ h => congrArg Prod.snd h) _ _
   · intro ρ _ hρ
     apply Finsupp.mapDomain_notin_range
     rintro ⟨t, ht⟩

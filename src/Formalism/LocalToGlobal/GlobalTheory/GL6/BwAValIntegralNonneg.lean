@@ -474,7 +474,7 @@ theorem bwA_rowDeg_le {r n : ℕ} (hn : n ≤ r) (ν : Fin n → ℕ) (hν : Ant
     unfold Formalism.GradedWeylDivisibility.rowDeg
     refine Finset.sum_congr rfl fun s _ => ?_
     have : (z, s) = e (a, s) := by simp [he_def, hσ]
-    rw [this, Finsupp.mapDomain_apply he]
+    rw [this, Finsupp.mapDomain_apply_of_injective he]
   omega
 
 theorem bwA_rowDeg_eq_weight {r n : ℕ} (m : Fin r × Fin n →₀ ℕ) (a : Fin r) :

@@ -331,9 +331,9 @@ lemma coeff_rename_mul (he : Function.Injective e) (n : τ →₀ ℕ) (μ : σ 
       by_cases hv : v ∈ Set.range e
       · obtain ⟨x, rfl⟩ := hv
         have hx := DFunLike.congr_fun huw (e x)
-        rw [Finsupp.add_apply, Finsupp.add_apply, Finsupp.mapDomain_apply he, Finsupp.mapDomain_apply he,
+        rw [Finsupp.add_apply, Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective he, Finsupp.mapDomain_apply_of_injective he,
           hμ x, hw0 x] at hx
-        rw [Finsupp.mapDomain_apply he, Finsupp.mapDomain_apply he]
+        rw [Finsupp.mapDomain_apply_of_injective he, Finsupp.mapDomain_apply_of_injective he]
         omega
       · rw [Finsupp.mapDomain_of_notMem_range _ _ hv, Finsupp.mapDomain_of_notMem_range _ _ hv]
     rw [h1] at huw

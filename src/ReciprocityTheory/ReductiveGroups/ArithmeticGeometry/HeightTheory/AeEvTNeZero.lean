@@ -64,7 +64,7 @@ theorem ae_evT_ne_zero (sg : K →+* ℂ) (q : KTp K d.D d.N) (hq : q ≠ 0) (m 
     have hmem : Finsupp.mapDomain ψ s ∈ q.support := by
       rw [MvPolynomial.mem_support_iff, ← hq', MvPolynomial.coeff_rename_mapDomain ψ hψ]
       exact hs'
-    exact (Finset.sum_congr rfl fun j _ => (Finsupp.mapDomain_apply hψ s (b, j)).symm).trans
+    exact (Finset.sum_congr rfl fun j _ => (Finsupp.mapDomain_apply_of_injective hψ s (b, j)).symm).trans
       (hqm' _ hmem b.succ)
 
   have hg0 : g ≠ 0 := by

@@ -249,7 +249,7 @@ theorem restModel : RestModel := by
         · rw [support_rename_of_injective (md_f_inj F j K)]
           exact Finset.mem_image_of_mem _ hm0
         · rw [Finsupp.mem_support_iff]
-          have := Finsupp.mapDomain_apply (md_f_inj F j K) m0 v
+          have := Finsupp.mapDomain_apply_of_injective (md_f_inj F j K) m0 v
           rw [this]
           exact Finsupp.mem_support_iff.1 hvm
       exact ((mem_supported.1 hG) h3).2
@@ -283,7 +283,7 @@ theorem restModel : RestModel := by
     rw [← h4]
     unfold multideg
     refine Finset.sum_congr rfl fun c _ => ?_
-    exact (Finsupp.mapDomain_apply (md_f_inj F j (r + K)) m0 (i, c)).symm
+    exact (Finsupp.mapDomain_apply_of_injective (md_f_inj F j (r + K)) m0 (i, c)).symm
   have h5 := md_comp_gen F j m th (fun i => dd (eL F j i)) hξ0
   rw [hwh.weightedHomogeneousComponent_same] at h5
   have h6 := Submodule.mem_map_of_mem (f := (plnm F j O K).toLinearMap) h5

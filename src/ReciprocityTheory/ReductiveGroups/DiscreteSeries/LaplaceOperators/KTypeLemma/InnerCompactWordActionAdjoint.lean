@@ -24,13 +24,13 @@ theorem klw_cons_cons (a b : Fin n) (p q : Fin n × Fin n) (w w' : List (Fin n �
   congr 1
   · split_ifs with h
     · subst h
-      exact Finsupp.mapDomain_apply (f := fun x => x :: w') (fun x y hxy => (List.cons.inj hxy).1) _ _
+      exact Finsupp.mapDomain_apply_of_injective (f := fun x => x :: w') (fun x y hxy => (List.cons.inj hxy).1) _ _
     · rw [Finsupp.mapDomain_of_notMem_range]
       rintro ⟨x, hx⟩
       exact h (List.cons.inj hx).2.symm
   · split_ifs with h
     · subst h
-      exact Finsupp.mapDomain_apply (f := fun x => q :: x) List.cons_injective _ _
+      exact Finsupp.mapDomain_apply_of_injective (f := fun x => q :: x) List.cons_injective _ _
     · rw [Finsupp.mapDomain_of_notMem_range]
       rintro ⟨x, hx⟩
       exact h (List.cons.inj hx).1.symm

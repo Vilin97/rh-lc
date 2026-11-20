@@ -51,7 +51,7 @@ variable (K : Type*) [Field K] {S : Type*} [Fintype S] [DecidableEq S] {k n : �
 theorem ldtensor_glue_apply (α : S → (Fin k × Fin n →₀ ℕ)) (s : S) (v : Fin k × Fin n) :
     (∑ t, (α t).mapDomain (Prod.mk t)) (s, v) = α s v := by
   rw [Finsupp.finsetSum_apply, Finset.sum_eq_single s]
-  · exact Finsupp.mapDomain_apply (fun x y h => by simpa using h) _ v
+  · exact Finsupp.mapDomain_apply_of_injective (fun x y h => by simpa using h) _ v
   · intro t _ hts
     apply Finsupp.mapDomain_notin_range
     rintro ⟨w, hw⟩

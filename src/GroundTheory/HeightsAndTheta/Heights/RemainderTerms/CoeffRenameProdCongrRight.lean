@@ -54,7 +54,7 @@ theorem coeff_rename_prodCongrRight {R : Type*} [CommSemiring R] (w : Fin f → 
   congr 1
   ext v
   obtain ⟨u, rfl⟩ := (Equiv.prodCongrRight w).surjective v
-  rw [Finsupp.mapDomain_apply (Equiv.injective _)]
+  rw [Finsupp.mapDomain_apply_of_injective (Equiv.injective _)]
   simp
 
 theorem coeff_rho_antisym {R : Type*} [CommRing R] (P : MvPolynomial (Fin f × Fin N) R) :

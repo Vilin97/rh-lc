@@ -106,7 +106,7 @@ lemma glue_apply (p : S → (Fin k × Fin n →₀ ℕ)) (s : S) (v : Fin k × F
   classical
   unfold glue
   rw [Finsupp.finsetSum_apply, Finset.sum_eq_single s]
-  · exact Finsupp.mapDomain_apply (Prod.mk_right_injective s) _ _
+  · exact Finsupp.mapDomain_apply_of_injective (Prod.mk_right_injective s) _ _
   · intro t _ hts
     apply Finsupp.mapDomain_of_notMem_range
     rintro ⟨w, hw⟩

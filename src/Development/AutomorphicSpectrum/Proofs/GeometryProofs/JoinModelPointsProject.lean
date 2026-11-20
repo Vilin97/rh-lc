@@ -278,7 +278,7 @@ theorem isMultiHomog_rename_inl {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomo
   cases k with
   | inl k =>
     have h1 : ∀ i : joinIdx ι ι' (Sum.inl k), Finsupp.mapDomain (joinInl ι ι') m₀ ⟨Sum.inl k, i⟩ = m₀ ⟨k, i⟩ :=
-      fun i => Finsupp.mapDomain_apply joinInl_injective m₀ ⟨k, i⟩
+      fun i => Finsupp.mapDomain_apply_of_injective joinInl_injective m₀ ⟨k, i⟩
     simp only [h1]
     exact hg m₀ hm₀ k
   | inr k =>

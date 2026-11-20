@@ -44,7 +44,7 @@ theorem blockEmb_hom {K : Type} [Field K] {ι : Type} [Fintype ι] {n : ℕ} (τ
   · subst h
     rw [Pi.single_eq_same, ← e, GlobalTheory.LvT.KerLat.weight_rowW, rowDeg]
     refine Finset.sum_congr rfl fun s _ => ?_
-    exact Finsupp.mapDomain_apply (fun x y hxy => (Prod.mk.inj hxy).2) u (a, s)
+    exact Finsupp.mapDomain_apply_of_injective (fun x y hxy => (Prod.mk.inj hxy).2) u (a, s)
   · rw [Pi.single_eq_of_ne h]
     refine Finset.sum_eq_zero fun s _ => ?_
     apply Finsupp.mapDomain_notin_range

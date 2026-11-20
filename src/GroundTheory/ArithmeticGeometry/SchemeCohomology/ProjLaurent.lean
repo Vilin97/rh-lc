@@ -185,7 +185,7 @@ lemma coeff_toLaurent_eq_zero {a : MvPolynomial (Fin (n + 1)) A} {m : Fin (n + 1
 
 lemma coeff_toLaurent_expHom (a : MvPolynomial (Fin (n + 1)) A) (e : Fin (n + 1) →₀ ℕ) :
     (toLaurent A n a).coeff (expHom n e) = a.coeff e :=
-  Finsupp.mapDomain_apply expHom_injective _ _
+  Finsupp.mapDomain_apply_of_injective expHom_injective _ _
 
 theorem mem_LDeg_iff {p : ℕ} (i : Fin (p + 1) → Fin (n + 1)) (k : ℤ) (ℓ : Laurent A n) :
     ℓ ∈ LDeg A (Set.range i) k ↔

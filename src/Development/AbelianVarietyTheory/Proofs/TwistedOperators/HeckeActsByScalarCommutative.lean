@@ -88,7 +88,7 @@ private theorem permRep_apply_eq_mapDomain (g : G) (φ : G ⧸ K →₀ ℂ) :
 
 theorem permRep_apply (g : G) (φ : G ⧸ K →₀ ℂ) (c : G ⧸ K) : permRep K g φ (g • c) = φ c := by
   rw [permRep_apply_eq_mapDomain]
-  exact Finsupp.mapDomain_apply (MulAction.injective g) φ c
+  exact Finsupp.mapDomain_apply_of_injective (MulAction.injective g) φ c
 
 theorem mem_finOrbit (hK : IsCommensurated K) (φ : G ⧸ K →₀ ℂ) : φ ∈ finOrbit (permRep K) K := by
   classical

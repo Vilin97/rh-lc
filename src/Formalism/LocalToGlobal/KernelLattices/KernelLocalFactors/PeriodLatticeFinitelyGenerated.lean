@@ -1145,12 +1145,12 @@ theorem split_pos (τ : ι) (m : ι × Fin n × Fin n →₀ ℕ) :
   ext ⟨t, v⟩
   by_cases h : t = τ
   · subst h
-    rw [Finsupp.add_apply, Finsupp.mapDomain_apply (Prod.mk_right_injective t), Finsupp.mapDomain_of_notMem_range, add_zero]
+    rw [Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective (Prod.mk_right_injective t), Finsupp.mapDomain_of_notMem_range, add_zero]
     · rfl
     · rintro ⟨w, hw⟩
       exact w.2 (congrArg Prod.fst hw)
   · rw [Finsupp.add_apply, Finsupp.mapDomain_of_notMem_range, zero_add]
-    · exact (Finsupp.mapDomain_apply Subtype.val_injective (rOf τ m) (⟨(t, v), h⟩ : Off ι n τ)).symm
+    · exact (Finsupp.mapDomain_apply_of_injective Subtype.val_injective (rOf τ m) (⟨(t, v), h⟩ : Off ι n τ)).symm
     · rintro ⟨w, hw⟩
       exact h (congrArg Prod.fst hw).symm
 
@@ -1231,7 +1231,7 @@ theorem mem_TS_empty [Fintype ι] (W : ι → Submodule K (MvPolynomial (Fin n �
   have hm : m = ∑ t, (gOf t m).mapDomain (Prod.mk t) := by
     ext ⟨t, v⟩
     rw [Finsupp.finsetSum_apply, Finset.sum_eq_single t]
-    · exact (Finsupp.mapDomain_apply (Prod.mk_right_injective t) (gOf t m) v).symm
+    · exact (Finsupp.mapDomain_apply_of_injective (Prod.mk_right_injective t) (gOf t m) v).symm
     · intro σ _ hσ
       refine Finsupp.mapDomain_of_notMem_range _ _ ?_
       rintro ⟨w, hw⟩

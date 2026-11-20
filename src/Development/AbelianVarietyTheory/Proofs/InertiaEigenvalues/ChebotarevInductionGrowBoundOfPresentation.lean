@@ -497,7 +497,7 @@ theorem grow : TameLocal → ∀ (D : Formalism.BasicNotions.D7) (N : NData D.R 
     · obtain ⟨F', hF', h3⟩ := hno t.2 t.1
       refine ⟨MvPolynomial.killCompl inj_ext F', killCompl_mem _ fun m h4 h5 => h3 _ (by rwa [Finsupp.degree_mapDomain])
         fun j hj => ?_, by rw [← hF', restr_toLam X i M inj_ext]⟩
-      exact (Finsupp.mapDomain_apply inj_ext m (.inl j)).trans (h5 _ ⟨j, hj, rfl⟩)
+      exact (Finsupp.mapDomain_apply_of_injective inj_ext m (.inl j)).trans (h5 _ ⟨j, hj, rfl⟩)
     · rintro _ ⟨j, h3, rfl⟩
       exact hm0 j (by omega)
 

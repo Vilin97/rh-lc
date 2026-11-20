@@ -25,7 +25,7 @@ theorem sum_mapDomain_eq (d : ι → σ →₀ ℕ) :
     ∑ τ, (d τ).mapDomain (Prod.mk τ) = expEquiv ι σ d := by
   ext ⟨a, b⟩
   rw [expEquiv_apply, Finsupp.coe_finset_sum, Finset.sum_apply, Finset.sum_eq_single a]
-  · exact Finsupp.mapDomain_apply (fun x y h => by simpa using h) _ _
+  · exact Finsupp.mapDomain_apply_of_injective (fun x y h => by simpa using h) _ _
   · intro τ _ hτ
     apply Finsupp.mapDomain_notin_range
     rintro ⟨c, hc⟩

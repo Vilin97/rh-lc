@@ -28,7 +28,7 @@ theorem incl_apply (w w' : List W) (z : List V →₀ ℤ) (l : List V) :
   by_cases h : w = w'
   · subst h
     rw [if_pos rfl]
-    exact Finsupp.mapDomain_apply (pair_injective w) z l
+    exact Finsupp.mapDomain_apply_of_injective (pair_injective w) z l
   · rw [if_neg h]
     apply Finsupp.mapDomain_notin_range
     rintro ⟨l', hl'⟩

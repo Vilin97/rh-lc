@@ -28,7 +28,7 @@ theorem homog_rename {f : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) :
   obtain ⟨m₀, hm₀, rfl⟩ := Finset.mem_image.mp hm
   rw [← hf m₀ hm₀ k]
   refine (Fintype.sum_equiv (e k) _ _ fun i => ?_).symm
-  exact (Finsupp.mapDomain_apply (E e).injective m₀ ⟨k, i⟩).symm
+  exact (Finsupp.mapDomain_apply_of_injective (E e).injective m₀ ⟨k, i⟩).symm
 
 omit [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] in
 theorem mem_map_iff (P : Ideal (MRing ι)) (f : MRing ι) : φ e f ∈ P.map (φ e) ↔ f ∈ P :=

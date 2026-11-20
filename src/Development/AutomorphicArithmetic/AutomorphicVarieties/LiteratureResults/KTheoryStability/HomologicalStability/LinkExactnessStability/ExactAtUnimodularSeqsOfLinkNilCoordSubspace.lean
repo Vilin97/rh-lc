@@ -11,7 +11,7 @@ noncomputable def emb (R : Type) [CommRing R] (m : ℕ) : (Fin m → R) →ₗ[R
 
 theorem emb_apply_val {R : Type} [CommRing R] {m : ℕ} (v : Fin m → R) (k : Fin m) :
     emb R m v (k : ℕ) = v k := by
-  simp [emb, Finsupp.mapDomain_apply Fin.val_injective]
+  simp [emb, Finsupp.mapDomain_apply_of_injective Fin.val_injective]
 
 theorem emb_apply_of_le {R : Type} [CommRing R] {m : ℕ} (v : Fin m → R) (n : ℕ) (h : m ≤ n) :
     emb R m v n = 0 := by

@@ -170,7 +170,7 @@ theorem coeff_inCol_sg (c : Fin 2) (v : Fin 2 × Fin dd → C) (μ : Fin 2 × Fi
     intro x _
     have hne : (μ.mapDomain (fun x => ((0 : Fin 2), x)) + Finsupp.single ((1 : Fin 2), x) 1 : Fin 2 × (Fin 2 × Fin dd) →₀ ℕ)
         ((0 : Fin 2), x0) ≠ 0 := by
-      rw [Finsupp.add_apply, Finsupp.mapDomain_apply (fun a b h => (Prod.ext_iff.1 h).2), Finsupp.single_apply,
+      rw [Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective (fun a b h => (Prod.ext_iff.1 h).2), Finsupp.single_apply,
         if_neg (by simp)]
       simpa using hx0
     rw [coeff_rename_zero (fun q : Fin 2 × Fin dd => (q.1, (c, q.2))) _ _ ((0 : Fin 2), x0) hne, mul_zero]

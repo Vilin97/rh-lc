@@ -33,7 +33,7 @@ lemma prodMk_inj (τ : T) : Function.Injective (Prod.mk τ : σ → T × σ) := 
 lemma emb_apply (g : T → σ →₀ ℕ) (τ : T) (k : σ) : emb g (τ, k) = g τ k := by
   unfold emb
   rw [Finsupp.finsetSum_apply, Finset.sum_eq_single τ]
-  · exact Finsupp.mapDomain_apply (prodMk_inj τ) _ _
+  · exact Finsupp.mapDomain_apply_of_injective (prodMk_inj τ) _ _
   · intro τ' _ hτ'
     apply Finsupp.mapDomain_of_notMem_range
     rintro ⟨k', hk'⟩

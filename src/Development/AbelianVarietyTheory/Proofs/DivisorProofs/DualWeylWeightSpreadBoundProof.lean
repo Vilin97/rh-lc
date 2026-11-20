@@ -38,7 +38,7 @@ theorem nablaBdd_rowDeg_bounds {M : ℕ} (ν : Fin (M + 1) → ℕ) (f : MvPolyn
       exact mem_support_iff.mp hm
     · unfold rowDeg
       refine Finset.sum_congr rfl fun s _ => ?_
-      exact Finsupp.mapDomain_apply hinj m (c, s)
+      exact Finsupp.mapDomain_apply_of_injective hinj m (c, s)
   constructor
   · obtain ⟨h1, h2, h3⟩ := key (Equiv.swap c 0)
     have dom := (GlobalTheory.DualWeyl.rowDeg_dominated_of_mem_nabla ν _ h1 _ h2).1 1

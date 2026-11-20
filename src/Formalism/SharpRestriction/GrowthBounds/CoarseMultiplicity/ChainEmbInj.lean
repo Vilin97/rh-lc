@@ -61,7 +61,7 @@ theorem cth_rename {τ : Type} (f : τ → σ) (hf : Function.Injective f) (x : 
     cth (f x) n (rename f y) = rename f (cth x n y) := by
   induction y using MvPolynomial.induction_on' with
   | monomial e c =>
-    rw [rename_monomial, cth_monomial, cth_monomial, rename_monomial, Finsupp.mapDomain_apply hf]
+    rw [rename_monomial, cth_monomial, cth_monomial, rename_monomial, Finsupp.mapDomain_apply_of_injective hf]
   | add p q hp hq => rw [map_add (f := _), cth_add, cth_add, map_add (f := _), hp, hq]
 
 theorem cth_X_pow (v : σ) (b z : ℕ) : cth v b ((X v : MvPolynomial σ K) ^ z) = (z.choose b) • (X v : MvPolynomial σ K) ^ z := by

@@ -24,7 +24,7 @@ private theorem ge_coeff_rename_inl {C : Type} [Field C] (V : VF C) {ι ι' : Ty
   rw [Set.Finite.mem_toFinset, Set.mem_preimage, Set.mem_singleton_iff] at hν
   apply h
   rw [Finsupp.degree_eq_sum, ← hν]
-  simp [Finsupp.mapDomain_apply Sum.inl_injective]
+  simp [Finsupp.mapDomain_apply_of_injective Sum.inl_injective]
 
 private theorem ge_coeff_rename_inr {C : Type} [Field C] (V : VF C) {ι ι' : Type} [Fintype ι]
     [Fintype ι'] (F : MvPowerSeries ι' C) (μ : ι ⊕ ι' →₀ ℕ)
@@ -36,7 +36,7 @@ private theorem ge_coeff_rename_inr {C : Type} [Field C] (V : VF C) {ι ι' : Ty
   rw [Set.Finite.mem_toFinset, Set.mem_preimage, Set.mem_singleton_iff] at hν
   apply h
   rw [Finsupp.degree_eq_sum, ← hν]
-  simp [Finsupp.mapDomain_apply Sum.inr_injective]
+  simp [Finsupp.mapDomain_apply_of_injective Sum.inr_injective]
 
 private theorem constantCoeff_linPull_eq_zero {C : Type} [Field C] {σ ι : Type} [Fintype σ]
     [Fintype ι] (e : ι → σ → C) (F : MvPowerSeries σ C)

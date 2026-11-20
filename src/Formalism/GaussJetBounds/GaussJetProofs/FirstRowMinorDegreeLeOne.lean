@@ -42,7 +42,7 @@ lemma bSlice_mapDomain_same (e : T × σ → ρ) (he : Function.Injective e) (t 
     bSlice e he t (u.mapDomain (fun y => e (t, y))) = u := by
   ext y
   rw [bSlice_apply]
-  exact Finsupp.mapDomain_apply (injective_apply_prodMk_of_injective e he t) u y
+  exact Finsupp.mapDomain_apply_of_injective (injective_apply_prodMk_of_injective e he t) u y
 
 lemma bSlice_mapDomain_ne (e : T × σ → ρ) (he : Function.Injective e) {t t' : T} (h : t ≠ t')
     (u : σ →₀ ℕ) : bSlice e he t (u.mapDomain (fun y => e (t', y))) = 0 := by

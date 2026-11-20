@@ -475,7 +475,7 @@ private theorem single_zero_apply_up_two_eq_zero (i : Fin dd) (L : ℕ) (t : Fin
 
 private theorem ix_apply_up_two (i : Fin dd) (L : ℕ) (γ : Fin 2 × Fin dd →₀ ℕ) (t : Fin 2 × Fin dd) :
     ix i L γ (up 2 t) = γ t := by
-  rw [ix, Finsupp.add_apply, single_zero_apply_up_two_eq_zero, zero_add, Finsupp.mapDomain_apply (up_inj 2)]
+  rw [ix, Finsupp.add_apply, single_zero_apply_up_two_eq_zero, zero_add, Finsupp.mapDomain_apply_of_injective (up_inj 2)]
 
 theorem ix_div (i : Fin dd) (γ : Fin 2 × Fin dd →₀ ℕ) (L : ℕ) (hL : 0 < L) :
     (ix i L γ).mapRange (fun n => n / L) (Nat.zero_div L) =
@@ -496,7 +496,7 @@ theorem ix_div (i : Fin dd) (γ : Fin 2 × Fin dd →₀ ℕ) (L : ℕ) (hL : 0 
   | succ k' =>
     have e : ((Fin.succ k', j) : Fin 3 × Fin dd) = up 2 (k', j) := rfl
     rw [e, Finsupp.mapRange_apply, ix_apply_up_two, Finsupp.add_apply, single_zero_apply_up_two_eq_zero, add_zero,
-      Finsupp.mapDomain_apply (up_inj 2), Finsupp.mapRange_apply]
+      Finsupp.mapDomain_apply_of_injective (up_inj 2), Finsupp.mapRange_apply]
 
 theorem ix_dvd (i : Fin dd) (γ : Fin 2 × Fin dd →₀ ℕ) :
     (∀ s, V.l ∣ ix i V.l γ s) ↔ ∀ t, V.l ∣ γ t := by

@@ -40,7 +40,7 @@ theorem seeSaw_iteratedIntegrand_vacuumForm_base_points_alt : ∀ (D : D7) (c : 
     rw [(hw.e j α).1, Finsupp.mapDomain_support_of_injective (mul_left_injective (v.b j)),
       Finset.sum_image (fun x _ y _ hxy => mul_right_cancel hxy), Finset.mul_sum]
     refine Finset.sum_congr rfl fun g _ => ?_
-    rw [Finsupp.mapDomain_apply (mul_left_injective (v.b j))]
+    rw [Finsupp.mapDomain_apply_of_injective (mul_left_injective (v.b j))]
     have e₁ : (t.sBF j (σ + 1) h).om (g * v.b j, a * (p₁ * v.b (j + 1))) (t.pt j P₁) =
         w.sc j • (t.sBF j (σ + 1) h).om (g, p₁) (comb c.ψ _ _ (v.eG j) (comb c.ψ _ _ (w.eQ j) Ψ₁)) := by
       rw [(ht.sBF j (σ + 1) h).1, ec₁,

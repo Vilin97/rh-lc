@@ -2317,7 +2317,7 @@ theorem hw_is_Ffull (μ : Fin r → ℤ) (v : MvPolynomial (Fin N × Fin r) ℚ_
       ((MvPolynomial.mem_restrictSupport_iff ℚ_[p]).mp hvP) (Finset.mem_coe.mpr (hsupp m hm))
     have h2 := h1 (ιF N (T.pos i + 1) a)
     have h3 : ∀ c, Finsupp.mapDomain ι m (ιF N (T.pos i + 1) a, c) = m (a, c) :=
-      fun c => Finsupp.mapDomain_apply hι m (a, c)
+      fun c => Finsupp.mapDomain_apply_of_injective hι m (a, c)
     simp only [h3] at h2
     rw [h2]
     simp only [Lz]

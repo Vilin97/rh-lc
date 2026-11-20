@@ -67,11 +67,11 @@ theorem ph_rename_iotaL (p : ℕ) (G : MvPolynomial (D.OL × Fin D.r) K) :
 
 theorem mapDomain_mb (α : D.EA) (b : D.Lb) (a : Fin D.r) :
     (α.mapDomain (Prod.map D.iotaL id)) (D.mb b, a) = α (Sum.inl b, a) :=
-  Finsupp.mapDomain_apply D.localizationToLaurent_injective α (Sum.inl b, a)
+  Finsupp.mapDomain_apply_of_injective D.localizationToLaurent_injective α (Sum.inl b, a)
 
 theorem mapDomain_mlab (α : D.EA) (t : D.Tau) (a : Fin D.r) :
     (α.mapDomain (Prod.map D.iotaL id)) (D.mlab t, a) = α (Sum.inr t, a) :=
-  Finsupp.mapDomain_apply D.localizationToLaurent_injective α (Sum.inr t, a)
+  Finsupp.mapDomain_apply_of_injective D.localizationToLaurent_injective α (Sum.inr t, a)
 
 theorem mapDomain_mw (α : D.EA) (t : D.Tau) (a : Fin D.r) :
     (α.mapDomain (Prod.map D.iotaL id)) (D.mw t, a) = 0 := by

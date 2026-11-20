@@ -280,7 +280,7 @@ theorem fZ_multiHomogeneous_degree_sum (hd : d.AxH 𝒜) (h : d.S1) (c : ι) (F 
     refine Finset.sum_congr rfl fun j _ => ?_
     have hsw : (swapT (D := d.D) (N := d.N)) (1, j) = (0, j) := by
       simp [swapT, Equiv.swap_apply_right]
-    rw [← hsw, Finsupp.mapDomain_apply (swapT (D := d.D) (N := d.N)).injective]
+    rw [← hsw, Finsupp.mapDomain_apply_of_injective (swapT (D := d.D) (N := d.N)).injective]
   have hA : d.aMM h c = d.delc c := by
     have h1 := d.aMM_nonneg hd h c
     omega

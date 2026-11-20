@@ -159,7 +159,7 @@ theorem derivation_divided_power_term (sg : ι → R) (src dst : ι → σ) (hs 
     dividedPowerDerivation sg src dst l (dividedPowerTerm sg src dst s m f) =
       (f l + 1) • dividedPowerTerm sg src dst s m (f + Finsupp.single l 1) := by
   classical
-  have h1 : Finsupp.mapDomain src f (src l) = f l := Finsupp.mapDomain_apply hs f l
+  have h1 : Finsupp.mapDomain src f (src l) = f l := Finsupp.mapDomain_apply_of_injective hs f l
   have h2 : ∀ g : ι →₀ ℕ, Finsupp.mapDomain dst g (src l) = 0 := fun g =>
     Finsupp.mapDomain_of_notMem_range _ _ (by rintro ⟨l', h⟩; exact hd l l' h)
   have hexp : Finsupp.single (dst l) 1 + (dividedPowerShiftedExponent src dst m f - Finsupp.single (src l) 1) =

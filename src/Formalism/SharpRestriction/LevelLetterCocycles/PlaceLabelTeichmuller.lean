@@ -241,7 +241,7 @@ theorem mapDomain_mulSingle (i : ι) (a : MonoidAlgebra ℂ (G i)) :
       · subst hj
         simp
       · rw [Pi.mulSingle_eq_of_ne hj, hg j hj]
-    rw [hgeq, Finsupp.mapDomain_apply hinj, Fintype.prod_eq_single i]
+    rw [hgeq, Finsupp.mapDomain_apply_of_injective hinj, Fintype.prod_eq_single i]
     · simp
     · intro j hj
       rw [Pi.mulSingle_eq_of_ne hj]

@@ -36,7 +36,7 @@ theorem isMultiHomog_rename_baseInc {β : MRing (baseIdx ι blk)} {b : NonPlucke
   obtain ⟨m₀, hm₀, rfl⟩ := Finset.mem_image.1 hm
   by_cases h : ∀ p, blk p ≠ some k
   · have e : ∀ i : ι k, (Finsupp.mapDomain (baseInc blk) m₀) ⟨k, i⟩ = m₀ ⟨⟨k, h⟩, i⟩ := fun i =>
-      Finsupp.mapDomain_apply (baseInc_injective blk) m₀ (⟨⟨k, h⟩, i⟩ : Σ k, baseIdx ι blk k)
+      Finsupp.mapDomain_apply_of_injective (baseInc_injective blk) m₀ (⟨⟨k, h⟩, i⟩ : Σ k, baseIdx ι blk k)
     simp only [e, extDeg, dif_pos h]
     exact hβ m₀ hm₀ ⟨k, h⟩
   · have e : ∀ i : ι k, (Finsupp.mapDomain (baseInc blk) m₀) ⟨k, i⟩ = 0 := fun i =>

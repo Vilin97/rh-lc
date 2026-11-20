@@ -63,7 +63,7 @@ theorem dec_mul {χ : X} {f : A} (hf : P χ f) (h : A) (ψ : X) :
   set G : X →₀ A := Finsupp.mapDomain (fun ψ => χ + ψ) ((dec P hdec h).mapRange (f * ·) (mul_zero f)) with hG
   have hinj : Function.Injective (fun ψ : X => χ + ψ) := add_right_injective χ
   have hGv : ∀ ψ, G (χ + ψ) = f * dec P hdec h ψ := fun ψ => by
-    rw [hG, Finsupp.mapDomain_apply hinj, Finsupp.mapRange_apply]
+    rw [hG, Finsupp.mapDomain_apply_of_injective hinj, Finsupp.mapRange_apply]
   have key : dec P hdec (f * h) = G := by
     refine dec_eq P hdec (fun ω => ?_) ?_
     · have e : ω = χ + (ω - χ) := by abel

@@ -23,11 +23,11 @@ theorem jetLin_mul_monomial (J : (DVar ι a b →₀ ℕ) → K) (P : Pol K ι b
     rw [rename_monomial, rename_monomial, monomial_mul, mul_one, jetLin, constr_monomial]
     have h1 : (p.mapDomain Sum.inl + m.mapDomain Sum.inr).comapDomain Sum.inl Sum.inl_injective.injOn = p := by
       ext x
-      rw [Finsupp.comapDomain_apply, Finsupp.add_apply, Finsupp.mapDomain_apply Sum.inl_injective,
+      rw [Finsupp.comapDomain_apply, Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective Sum.inl_injective,
         Finsupp.mapDomain_notin_range _ _ (by simp), add_zero]
     have h2 : (p.mapDomain Sum.inl + m.mapDomain Sum.inr).comapDomain Sum.inr Sum.inr_injective.injOn = m := by
       ext x
-      rw [Finsupp.comapDomain_apply, Finsupp.add_apply, Finsupp.mapDomain_apply Sum.inr_injective,
+      rw [Finsupp.comapDomain_apply, Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective Sum.inr_injective,
         Finsupp.mapDomain_notin_range _ _ (by simp), zero_add]
     rw [h1, h2, smul_monomial, smul_monomial, smul_eq_mul, smul_eq_mul, mul_comm]
   | add p q hp hq => rw [map_add (f := _), add_mul, map_add (f := _), hp, hq, smul_add]

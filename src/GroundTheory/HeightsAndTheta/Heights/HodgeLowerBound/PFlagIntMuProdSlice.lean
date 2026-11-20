@@ -34,7 +34,7 @@ theorem sum_mapDomain_sliceEmb (A : Ψ → (Fin N →₀ ℕ)) :
     ∑ τ, Finsupp.mapDomain (sliceEmb τ) (A τ) = glue A := by
   ext ⟨σ, i⟩
   rw [Finsupp.coe_finsetSum, Finset.sum_apply, Finset.sum_eq_single σ]
-  · rw [show ((σ, i) : Ψ × Fin N) = sliceEmb σ i from rfl, Finsupp.mapDomain_apply (sliceEmb_injective σ)]
+  · rw [show ((σ, i) : Ψ × Fin N) = sliceEmb σ i from rfl, Finsupp.mapDomain_apply_of_injective (sliceEmb_injective σ)]
     rfl
   · intro τ _ hτ
     apply Finsupp.mapDomain_of_notMem_range

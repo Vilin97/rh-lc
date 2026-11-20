@@ -28,7 +28,7 @@ theorem expSet_eq (n N : ℕ) (B : Fin N → ℕ) :
       unfold multideg
       refine Finset.sum_congr rfl fun a _ => ?_
       have : ((i, a) : ℕ × Fin n) = iv N n (⟨i, h⟩, a) := rfl
-      rw [this, Finsupp.mapDomain_apply (iv_inj N n)]
+      rw [this, Finsupp.mapDomain_apply_of_injective (iv_inj N n)]
     · rw [if_neg h]
       refine Finset.sum_eq_zero fun a _ => ?_
       apply Finsupp.mapDomain_of_notMem_range

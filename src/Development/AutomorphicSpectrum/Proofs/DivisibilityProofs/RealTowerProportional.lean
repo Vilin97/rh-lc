@@ -98,7 +98,7 @@ theorem degree_mapDomain_some {J : Type} (m : J →₀ ℕ) : (m.mapDomain some)
   show ∑ i ∈ (m.mapDomain some).support, (m.mapDomain some) i = ∑ i ∈ m.support, m i
   rw [Finsupp.mapDomain_support_of_injective (Option.some_injective _), Finset.sum_image
     (fun x _ y _ hxy => Option.some_injective _ hxy)]
-  exact Finset.sum_congr rfl fun x _ => Finsupp.mapDomain_apply (Option.some_injective _) m x
+  exact Finset.sum_congr rfl fun x _ => Finsupp.mapDomain_apply_of_injective (Option.some_injective _) m x
 
 theorem geoFun_monomial {Ψ : Type} [Fintype Ψ] {N : ℕ} (M : RootModel Ψ N) (m : Option (Ψ × Fin N) →₀ ℕ) :
     M.geoFun (monomial m 1) = M.geoMono m := by

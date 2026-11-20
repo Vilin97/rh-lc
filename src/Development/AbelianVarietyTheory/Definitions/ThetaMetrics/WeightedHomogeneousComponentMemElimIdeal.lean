@@ -314,7 +314,7 @@ theorem IsBlockHomogeneous.rename [Fintype σ] (e : β ≃ β') {f : MvPolynomia
   obtain ⟨c, hc, rfl⟩ := hd
   rw [Function.comp_apply, ← h c hc]
   refine Finset.sum_congr rfl fun j _ => ?_
-  have := Finsupp.mapDomain_apply hinj c (e.symm i, j)
+  have := Finsupp.mapDomain_apply_of_injective hinj c (e.symm i, j)
   simpa using this
 
 theorem IsBlockHomogeneous.aeval_smul [Fintype σ] [Fintype β] {G : Type*} [CommRing G]

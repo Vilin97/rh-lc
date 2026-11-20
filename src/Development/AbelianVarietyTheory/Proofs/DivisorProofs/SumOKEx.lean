@@ -598,7 +598,7 @@ theorem GridChoice.exists_isCosExpansion {μ₀ : T} (hL : L.Is μ₀) (S : Grid
   · intro d' hd'
     obtain ⟨κ, -, rfl⟩ := Finset.mem_image.1 (Finsupp.mapDomain_support hd')
     refine ⟨rX κ, rY κ, fun j => (hR1 j _ (κ.1 j).2).1, fun i => (hR1' i _ (κ.2 i).2).1, fun j => rfl, fun i => rfl, ?_⟩
-    rw [Finsupp.mapDomain_apply hinj]
+    rw [Finsupp.mapDomain_apply_of_injective hinj]
     rfl
 
 theorem GridChoice.sumOK_flat_fin_ex {μ₀ : T} (hL : L.Is μ₀) (S : GridChoice W U) (t : T) (Φ : G.Datum)

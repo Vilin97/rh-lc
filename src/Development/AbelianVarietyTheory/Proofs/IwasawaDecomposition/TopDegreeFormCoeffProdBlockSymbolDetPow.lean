@@ -76,7 +76,7 @@ def glue (D : ι → (γ × γ →₀ ℕ)) : (ι × γ) × (ι × γ) →₀ �
 theorem glue_emb (D : ι → (γ × γ →₀ ℕ)) (τ : ι) (v : γ × γ) : glue D (emb τ v) = D τ v := by
   unfold glue
   rw [Finsupp.finsetSum_apply, Finset.sum_eq_single τ]
-  · exact Finsupp.mapDomain_apply (emb_injective τ) _ _
+  · exact Finsupp.mapDomain_apply_of_injective (emb_injective τ) _ _
   · intro τ' _ hτ'
     apply Finsupp.mapDomain_notin_range
     rintro ⟨u, hu⟩

@@ -95,7 +95,7 @@ theorem isMultiHomog_inc {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintyp
     show ∑ i, (Finsupp.mapDomain oldIdx m0) ⟨some k, i⟩ = a k
     rw [← hs m0 hm0 k]
     refine Finset.sum_congr rfl fun i _ => ?_
-    exact Finsupp.mapDomain_apply (f := oldIdx (ι := ι)) oldIdx_injective m0 ⟨k, i⟩
+    exact Finsupp.mapDomain_apply_of_injective (f := oldIdx (ι := ι)) oldIdx_injective m0 ⟨k, i⟩
 
 theorem isSectionOn_twist {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {p : ℕ}
     {Q : Ideal (MRing ι)} {A : HermLine ι} {s : MRing ι} (hs : IsSectionOn Q A s) :

@@ -90,7 +90,7 @@ theorem rename_divDiff_natAdd_monomial {N r : ℕ} (l : Fin r) (α : Fin N →�
       have := congrArg Fin.val hk
       simp only [Fin.val_natAdd, Fin.val_castAdd] at this
       omega
-    rw [Finsupp.add_apply, hA, Finsupp.mapDomain_apply (Fin.castAdd_injective _ _),
+    rw [Finsupp.add_apply, hA, Finsupp.mapDomain_apply_of_injective (Fin.castAdd_injective _ _),
       Finsupp.mapDomain_of_notMem_range _ _ hj, add_zero]
   have hn : ∀ j, (A + Finsupp.mapDomain (Fin.natAdd N) μ) (Fin.natAdd N j) = μ j := by
     intro j
@@ -100,7 +100,7 @@ theorem rename_divDiff_natAdd_monomial {N r : ℕ} (l : Fin r) (α : Fin N →�
       simp only [Fin.val_natAdd, Fin.val_castAdd] at this
       omega
     rw [Finsupp.add_apply, hA, Finsupp.mapDomain_of_notMem_range _ _ hj,
-      Finsupp.mapDomain_apply (Fin.natAdd_injective _ _), zero_add]
+      Finsupp.mapDomain_apply_of_injective (Fin.natAdd_injective _ _), zero_add]
   rw [coeff_monomial_mul', if_pos le_self_add, add_tsub_cancel_left,
     coeff_rename_mapDomain _ (Fin.natAdd_injective _ _), term_head l α μ _ hc hn, C_mul]
   simp only [map_mul, rename_C]

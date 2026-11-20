@@ -113,14 +113,14 @@ theorem block_apply_left (m₁ : Letter T r n₁ →₀ ℕ) (m₂ : Letter T r 
       ⟨σ, i, Fin.castAdd n₂ b⟩ = m₁ ⟨σ, i, b⟩ := by
   rw [Finsupp.add_apply, Finsupp.mapDomain_of_notMem_range _ _
     (notMem_range_col (fun x => (castAdd_ne_natAdd b x).symm) σ i), add_zero]
-  exact Finsupp.mapDomain_apply (col_injective castAdd_inj') m₁ ⟨σ, (i, b)⟩
+  exact Finsupp.mapDomain_apply_of_injective (col_injective castAdd_inj') m₁ ⟨σ, (i, b)⟩
 
 theorem block_apply_right (m₁ : Letter T r n₁ →₀ ℕ) (m₂ : Letter T r n₂ →₀ ℕ) (σ : T) (i : Fin (r σ)) (b : Fin n₂) :
     (m₁.mapDomain (col (Fin.castAdd n₂)) + m₂.mapDomain (col (Fin.natAdd n₁)) : Letter T r (n₁ + n₂) →₀ ℕ)
       ⟨σ, i, Fin.natAdd n₁ b⟩ = m₂ ⟨σ, i, b⟩ := by
   rw [Finsupp.add_apply, Finsupp.mapDomain_of_notMem_range _ _
     (notMem_range_col (fun x => castAdd_ne_natAdd x b) σ i), zero_add]
-  exact Finsupp.mapDomain_apply (col_injective natAdd_inj') m₂ ⟨σ, (i, b)⟩
+  exact Finsupp.mapDomain_apply_of_injective (col_injective natAdd_inj') m₂ ⟨σ, (i, b)⟩
 
 theorem mul_mem_HHa (cc : T → T) (isX : T → Prop) {a₁ a₂ : T → ℕ → ℕ}
     {P₁ : MvPolynomial (Letter T r n₁) k} {P₂ : MvPolynomial (Letter T r n₂) k}

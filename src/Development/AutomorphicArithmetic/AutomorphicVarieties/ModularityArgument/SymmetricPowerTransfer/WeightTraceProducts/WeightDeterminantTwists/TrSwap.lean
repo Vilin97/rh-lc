@@ -54,7 +54,7 @@ theorem UpperTheory.V.Z.Sym.Wt.trSwap :
       Finsupp.mapDomain (UpperTheory.V.Z.Sym.Wt.flip I d) (glue μ) = glue (fun k => μ (k.1, !k.2)) := by
     intro μ
     ext ⟨⟨i, b⟩, j⟩
-    have := Finsupp.mapDomain_apply hinj (glue μ) ((i, !b), j)
+    have := Finsupp.mapDomain_apply_of_injective hinj (glue μ) ((i, !b), j)
     rw [show UpperTheory.V.Z.Sym.Wt.flip I d ((i, !b), j) = ((i, b), j) by
       simp [UpperTheory.V.Z.Sym.Wt.flip]] at this
     rw [this, glue_apply, glue_apply]

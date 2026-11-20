@@ -59,7 +59,7 @@ theorem fixed_eq_smul (w : (G ⧸ K) →₀ ℂ) (hw : ∀ k ∈ K, lam K k w = 
   · have hy' : y ∈ MulAction.orbit K (u : G ⧸ K) := by rw [← hS]; exact hy
     obtain ⟨k, rfl⟩ := hy'
     have h1 : (lam K (k : G) w) ((k : G) • (u : G ⧸ K)) = w (u : G ⧸ K) :=
-      Finsupp.mapDomain_apply (MulAction.injective (k : G)) _ _
+      Finsupp.mapDomain_apply_of_injective (MulAction.injective (k : G)) _ _
     rw [hw k k.2] at h1
     rw [if_pos hy, smul_eq_mul, mul_one]
     exact h1

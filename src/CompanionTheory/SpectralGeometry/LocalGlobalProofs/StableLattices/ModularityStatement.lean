@@ -149,7 +149,7 @@ theorem lam_single (g : G) (x : G ⧸ K) (c : ℂ) :
   simp [lam, Finsupp.lmapDomain_apply, Finsupp.mapDomain_single]
 
 theorem lam_apply_smul (g : G) (f : (G ⧸ K) →₀ ℂ) (x : G ⧸ K) : lam K g f (g • x) = f x :=
-  Finsupp.mapDomain_apply (MulAction.injective g) f x
+  Finsupp.mapDomain_apply_of_injective (MulAction.injective g) f x
 
 theorem comm_lam (h : Hk K) (g : G) (u : (G ⧸ K) →₀ ℂ) : h.1 (lam K g u) = lam K g (h.1 u) := by
   have := (Subalgebra.mem_centralizer_iff ℂ).1 h.2 (lam K g) ⟨g, rfl⟩

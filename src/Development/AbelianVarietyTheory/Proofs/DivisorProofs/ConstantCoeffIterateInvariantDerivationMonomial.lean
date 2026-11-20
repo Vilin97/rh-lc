@@ -76,7 +76,7 @@ theorem coeff_subst_zero_X (H : MvPowerSeries (Fin d ⊕ Fin d) R) (e : Fin d �
   have h1 : ∀ j : Fin d, (e.mapDomain (Sum.inr : Fin d → Fin d ⊕ Fin d)) (Sum.inl j) = 0 := fun j =>
     Finsupp.mapDomain_notin_range _ _ (by simp)
   have h2 : ∀ j : Fin d, (e.mapDomain (Sum.inr : Fin d → Fin d ⊕ Fin d)) (Sum.inr j) = e j := fun j =>
-    Finsupp.mapDomain_apply Sum.inr_injective _ _
+    Finsupp.mapDomain_apply_of_injective Sum.inr_injective _ _
   rw [coeff_subst ha, finsum_eq_single _ (e.mapDomain Sum.inr)]
   · rw [key]
     have h3 : (Finsupp.equivFunOnFinite.symm fun j : Fin d => (e.mapDomain (Sum.inr : Fin d → Fin d ⊕ Fin d)) (Sum.inr j)) = e := by

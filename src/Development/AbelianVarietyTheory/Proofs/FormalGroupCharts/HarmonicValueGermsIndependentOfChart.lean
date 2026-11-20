@@ -51,7 +51,7 @@ theorem chartVal_eq {y : FrPt Xo c S} (C : ChartAt Xo c y) (k : ℕ) {n : ℕ} (
   congr 1
   refine Finset.prod_congr rfl fun b _ => ?_
   refine congrArg (fun z => C.B.nabVal S C.h H.w0 k (f b) C.uvec (MvPolynomial.monomial z 1)) (Finsupp.ext fun ℓ => ?_)
-  exact (Finsupp.mapDomain_apply (ltEquiv Dw n).injective m ⟨ℓ.1, ℓ.2, b⟩).symm
+  exact (Finsupp.mapDomain_apply_of_injective (ltEquiv Dw n).injective m ⟨ℓ.1, ℓ.2, b⟩).symm
 
 omit [StarRing (𝓞 E)] [Algebra ℚ S] in
 

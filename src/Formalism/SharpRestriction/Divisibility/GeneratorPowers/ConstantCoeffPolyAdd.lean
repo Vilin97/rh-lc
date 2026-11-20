@@ -291,7 +291,7 @@ theorem coeff_prod_cols {S : Type} [CommRing S] {n d : ℕ} (g : Fin n → MvPow
     · subst h
       rw [if_pos rfl]
       show Finsupp.mapDomain (ι b') (colPart b' M) (ι b' (0, j)) = M (b', j)
-      rw [Finsupp.mapDomain_apply (colEmb_inj b')]
+      rw [Finsupp.mapDomain_apply_of_injective (colEmb_inj b')]
       simp [colPart, Finsupp.comapDomain_apply, ι]
     · rw [if_neg h]
       apply Finsupp.mapDomain_notin_range
@@ -375,13 +375,13 @@ theorem prodCol_holds : ProdColSt := by
     set ℓ := (ltIdx Dw).symm j with hℓ
     have e1 : ((z, j) : Fin 1 × Fin (dL Dw)) = ((0 : Fin 1), ltIdx Dw ℓ) := by
       rw [hℓ, Equiv.apply_symm_apply, Subsingleton.elim z 0]
-    rw [e1, Finsupp.mapDomain_apply hι]
+    rw [e1, Finsupp.mapDomain_apply_of_injective hι]
     unfold KAV.colPart colIdx
     rw [Finsupp.comapDomain_apply]
     dsimp only
     rw [show ((b, ltIdx Dw ℓ) : Fin n × Fin (dL Dw)) =
         (fun p : LtN Dw n => (p.2.2, ltIdx Dw ⟨p.1, p.2.1⟩)) (⟨ℓ.1, ℓ.2, b⟩ : LtN Dw n) from rfl,
-      Finsupp.mapDomain_apply hκ]
+      Finsupp.mapDomain_apply_of_injective hκ]
     rfl
 
 end Formalism.MainNotions.ModuliIntegralCharts.H1

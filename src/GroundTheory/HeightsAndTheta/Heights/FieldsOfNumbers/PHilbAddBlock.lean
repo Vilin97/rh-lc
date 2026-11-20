@@ -110,7 +110,7 @@ theorem comb_decomp (μ : (Σ o, addBlock ι N o) →₀ ℕ) :
       rintro ⟨v, hv⟩
       simpa [addBlockIncl, newVar] using congrArg Sigma.fst hv
     rw [comb, Finsupp.add_apply, Finsupp.mapDomain_of_notMem_range _ _ hn,
-      Finsupp.mapDomain_apply newVar_injective, Finsupp.comapDomain_apply, zero_add]
+      Finsupp.mapDomain_apply_of_injective newVar_injective, Finsupp.comapDomain_apply, zero_add]
   have h2 : ∀ v : (Σ k, ι k), comb (μ.comapDomain (addBlockIncl ι N) addBlockIncl_injective.injOn)
       (μ.comapDomain (newVar ι N) newVar_injective.injOn) (addBlockIncl ι N v) =
         μ (addBlockIncl ι N v) := by
@@ -119,7 +119,7 @@ theorem comb_decomp (μ : (Σ o, addBlock ι N o) →₀ ℕ) :
       rintro ⟨j, hj⟩
       simpa [addBlockIncl, newVar] using congrArg Sigma.fst hj
     rw [comb, Finsupp.add_apply, Finsupp.mapDomain_of_notMem_range _ _ hn,
-      Finsupp.mapDomain_apply addBlockIncl_injective, Finsupp.comapDomain_apply, add_zero]
+      Finsupp.mapDomain_apply_of_injective addBlockIncl_injective, Finsupp.comapDomain_apply, add_zero]
   ext ⟨_ | k, i⟩
   · exact h1 i
   · exact h2 ⟨k, i⟩

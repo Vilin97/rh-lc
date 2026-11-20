@@ -175,7 +175,7 @@ theorem zExp_apply (b : ι → Fin n → ℕ) (τ : ι) (a s : Fin (n + 1)) :
 
 theorem mapDomain_up_castSucc (m' : ι × Fin n × Fin n →₀ ℕ) (τ : ι) (a s : Fin n) :
     Finsupp.mapDomain (upVar (rfl : n + 1 = n + 1)) m' (τ, a.castSucc, s.castSucc) = m' (τ, a, s) := by
-  exact Finsupp.mapDomain_apply (upVar_inj rfl) m' (τ, a, s)
+  exact Finsupp.mapDomain_apply_of_injective (upVar_inj rfl) m' (τ, a, s)
 
 theorem mapDomain_up_last_left (m' : ι × Fin n × Fin n →₀ ℕ) (τ : ι) (s : Fin (n + 1)) :
     Finsupp.mapDomain (upVar (rfl : n + 1 = n + 1)) m' (τ, Fin.last n, s) = 0 := by
@@ -948,7 +948,7 @@ theorem lx_isTop_iff (b : ι → Fin n → ℕ) (m : ι × Fin N × Fin N →₀
         exact lx_iC_ne_iL hN _ this
       · obtain ⟨a', rfl⟩ := lx_eq_iC_of_ne hN a ha
         have e : ((τ, iC hN a', iC hN s') : ι × Fin N × Fin N) = upVar hN (τ, a', s') := rfl
-        rw [e, Finsupp.mapDomain_apply (upVar_inj hN), Finsupp.comapDomain_apply,
+        rw [e, Finsupp.mapDomain_apply_of_injective (upVar_inj hN), Finsupp.comapDomain_apply,
           lx_zExp_off hN b _ (Or.inl (lx_iC_ne_iL hN a')), add_zero]
   · rintro rfl
     refine ⟨⟨fun τ s => ?_, fun τ a => ?_⟩, ?_⟩
@@ -961,7 +961,7 @@ theorem lx_isTop_iff (b : ι → Fin n → ℕ) (m : ι × Fin N × Fin N →₀
       have := congrArg (fun x => x.2.2) hw
       exact lx_iC_ne_iL hN _ this
     · ext v
-      rw [Finsupp.comapDomain_apply, Finsupp.add_apply, Finsupp.mapDomain_apply (upVar_inj hN),
+      rw [Finsupp.comapDomain_apply, Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective (upVar_inj hN),
         lx_zExp_off hN b _ (Or.inl (lx_iC_ne_iL hN _)), add_zero]
 
 theorem lx_coeff_coefLast (b : ι → Fin n → ℕ) (f : Pol K ι N) (m' : ι × Fin n × Fin n →₀ ℕ) :
@@ -2078,7 +2078,7 @@ theorem mon_eq_sum {α : Type} (mon : ι × α →₀ ℕ) :
     mon = ∑ σ, (mon.comapDomain (Prod.mk σ) (Prod.mk_right_injective σ).injOn).mapDomain (Prod.mk σ) := by
   ext ⟨τ, x⟩
   rw [Finsupp.finsetSum_apply, Finset.sum_eq_single τ]
-  · rw [Finsupp.mapDomain_apply (Prod.mk_right_injective τ), Finsupp.comapDomain_apply]
+  · rw [Finsupp.mapDomain_apply_of_injective (Prod.mk_right_injective τ), Finsupp.comapDomain_apply]
   · intro σ _ hσ
     apply Finsupp.mapDomain_of_notMem_range
     rintro ⟨y, hy⟩
@@ -4782,7 +4782,7 @@ theorem ta_sum_map_comap {α : Type} (mon : ι × α →₀ ℕ) :
     ∑ σ, (mon.comapDomain (Prod.mk σ) (Prod.mk_right_injective σ).injOn).mapDomain (Prod.mk σ) = mon := by
   ext ⟨τ, x⟩
   rw [Finsupp.finsetSum_apply, Finset.sum_eq_single τ]
-  · rw [Finsupp.mapDomain_apply (Prod.mk_right_injective τ), Finsupp.comapDomain_apply]
+  · rw [Finsupp.mapDomain_apply_of_injective (Prod.mk_right_injective τ), Finsupp.comapDomain_apply]
   · intro σ _ hσ
     apply Finsupp.mapDomain_of_notMem_range
     rintro ⟨y, hy⟩

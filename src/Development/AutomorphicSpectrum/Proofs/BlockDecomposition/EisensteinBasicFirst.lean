@@ -282,7 +282,7 @@ theorem exists_of_nonneg (hprime : ∀ v, (pOf v).Prime) (hinj : Function.Inject
     exact hprime v
   refine ⟨f.prod (· ^ ·), ?_, fun v => ?_⟩
   · refine Finset.prod_ne_zero_iff.2 fun p hp => pow_ne_zero _ (hfp p hp).ne_zero
-  · rw [Nat.prod_pow_factorization_eq_self hfp, hf, Finsupp.mapDomain_apply hinj]
+  · rw [Nat.prod_pow_factorization_eq_self hfp, hf, Finsupp.mapDomain_apply_of_injective hinj]
     simp [hn v]
 
 theorem Hf_zero (hprime : ∀ v, (pOf v).Prime) (hinj : Function.Injective pOf)

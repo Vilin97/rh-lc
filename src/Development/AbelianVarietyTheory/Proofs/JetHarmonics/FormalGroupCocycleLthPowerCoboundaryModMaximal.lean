@@ -133,11 +133,11 @@ theorem split_bij {ρ κ β : Type} [Finite κ] [Finite β] {j0 : κ → ρ} {j1
   have dj : ∀ a b, j0 a ≠ j1 b := fun a b h => Sum.inl_ne_inr (hj.1 (a₁ := Sum.inl a) (a₂ := Sum.inr b) h)
   have v0 : ∀ (ν : κ →₀ ℕ) (μ : β →₀ ℕ) a, (ν.mapDomain j0 + μ.mapDomain j1) (j0 a) = ν a := by
     intro ν μ a
-    rw [Finsupp.add_apply, Finsupp.mapDomain_apply i0, Finsupp.mapDomain_notin_range, add_zero]
+    rw [Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective i0, Finsupp.mapDomain_notin_range, add_zero]
     rintro ⟨b, hb⟩; exact dj a b hb.symm
   have v1 : ∀ (ν : κ →₀ ℕ) (μ : β →₀ ℕ) b, (ν.mapDomain j0 + μ.mapDomain j1) (j1 b) = μ b := by
     intro ν μ b
-    rw [Finsupp.add_apply, Finsupp.mapDomain_apply i1, Finsupp.mapDomain_notin_range, zero_add]
+    rw [Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective i1, Finsupp.mapDomain_notin_range, zero_add]
     rintro ⟨a, ha⟩; exact dj a b ha
   constructor
   · rintro ⟨ν, μ⟩ ⟨ν', μ'⟩ h

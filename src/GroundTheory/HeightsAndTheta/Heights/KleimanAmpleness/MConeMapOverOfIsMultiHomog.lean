@@ -49,7 +49,7 @@ theorem isMultiHomog_rename [DecidableEq K] (k : K) {f : MvPolynomial (ι k) F} 
   by_cases hk : k' = k
   · subst hk
     rw [Pi.single_eq_same, ← hdeg]
-    exact Finset.sum_congr rfl fun i _ => Finsupp.mapDomain_apply sigma_mk_injective d i
+    exact Finset.sum_congr rfl fun i _ => Finsupp.mapDomain_apply_of_injective sigma_mk_injective d i
   · rw [Pi.single_eq_of_ne hk]
     refine Finset.sum_eq_zero fun i _ => ?_
     exact Finsupp.mapDomain_of_notMem_range _ _

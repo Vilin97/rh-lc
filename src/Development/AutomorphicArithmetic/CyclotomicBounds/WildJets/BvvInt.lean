@@ -18,7 +18,7 @@ private theorem sum_map_apply {ι σ : Type} [Fintype ι] (m : ι → σ →₀ 
     (∑ j, Finsupp.mapDomain (fun v : σ => (j, v)) (m j)) (i, x) = m i x := by
   classical
   rw [Finsupp.finsetSum_apply, Finset.sum_eq_single i]
-  · exact Finsupp.mapDomain_apply (fun a b h => (Prod.mk.inj h).2) _ _
+  · exact Finsupp.mapDomain_apply_of_injective (fun a b h => (Prod.mk.inj h).2) _ _
   · intro j _ hj
     apply Finsupp.mapDomain_notin_range
     rintro ⟨y, hy⟩

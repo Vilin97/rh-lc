@@ -183,7 +183,7 @@ theorem JoinDivCycle.proof : JoinDivCycle.Statement := by
   ext W
   by_cases hW : ∃ Q : Ideal (MRing ι R), Q.map (rename (R := R) (liftVar (ι := ι) ptIdx)) = W
   · obtain ⟨Q, rfl⟩ := hW
-    rw [Finsupp.mapDomain_apply hinj]
+    rw [Finsupp.mapDomain_apply_of_injective hinj]
     simp only [ReciprocityTheory.ChartRestriction.G.Geo.divCycle, Finsupp.ofSupportFinite_coe]
     by_cases hQ : Q ∈ ReciprocityTheory.ChartRestriction.G.Geo.divSupp P f
     · haveI : Q.IsPrime := hQ.1.1.1

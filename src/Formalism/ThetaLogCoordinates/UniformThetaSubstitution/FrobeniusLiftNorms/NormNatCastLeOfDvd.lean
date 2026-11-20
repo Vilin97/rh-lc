@@ -21,7 +21,7 @@ def jn (e : Tp →₀ ℕ) (n : Lw →₀ ℕ) : Tp ⊕ Lw →₀ ℕ := e.mapDo
 
 lemma mapDomain_inl_inl (e : Tp →₀ ℕ) (τ : Tp) :
     (e.mapDomain (Sum.inl : Tp → Tp ⊕ Lw)) (Sum.inl τ) = e τ :=
-  Finsupp.mapDomain_apply Sum.inl_injective _ _
+  Finsupp.mapDomain_apply_of_injective Sum.inl_injective _ _
 
 lemma mapDomain_inl_inr (e : Tp →₀ ℕ) (x : Lw) :
     (e.mapDomain (Sum.inl : Tp → Tp ⊕ Lw)) (Sum.inr x) = 0 :=
@@ -29,7 +29,7 @@ lemma mapDomain_inl_inr (e : Tp →₀ ℕ) (x : Lw) :
 
 lemma mapDomain_inr_inr (n : Lw →₀ ℕ) (x : Lw) :
     (n.mapDomain (Sum.inr : Lw → Tp ⊕ Lw)) (Sum.inr x) = n x :=
-  Finsupp.mapDomain_apply Sum.inr_injective _ _
+  Finsupp.mapDomain_apply_of_injective Sum.inr_injective _ _
 
 lemma mapDomain_inr_inl (n : Lw →₀ ℕ) (τ : Tp) :
     (n.mapDomain (Sum.inr : Lw → Tp ⊕ Lw)) (Sum.inl τ) = 0 :=

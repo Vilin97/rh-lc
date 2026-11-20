@@ -11,7 +11,7 @@ variable {K : Type} [CommRing K]
 theorem coeff_nat (p : Polynomial K) (k : ℕ) :
     (Polynomial.toLaurent p).coeff (k : ℤ) = p.coeff k := by
   rw [LaurentPolynomial.coeff_toLaurent]
-  exact Finsupp.mapDomain_apply Nat.castEmbedding.injective _ k
+  exact Finsupp.mapDomain_apply_of_injective Nat.castEmbedding.injective _ k
 
 theorem coeff_neg (p : Polynomial K) (k : ℤ) (hk : k < 0) :
     (Polynomial.toLaurent p).coeff k = 0 := by

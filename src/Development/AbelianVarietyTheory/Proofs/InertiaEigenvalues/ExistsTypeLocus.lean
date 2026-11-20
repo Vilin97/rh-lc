@@ -62,7 +62,7 @@ theorem atPlace_eq_tens (k : Fin 2) (v : D.nd.PlG k)
   by_cases hg : g ∈ Set.range (Pi.mulSingle (M := fun kv : (Σ k : Fin 2, D.nd.PlG k) =>
       GL (Fin D.R.r) (ZMod (D.host.g kv.1))) (⟨k, v⟩ : Σ k : Fin 2, D.nd.PlG k))
   · obtain ⟨h, rfl⟩ := hg
-    rw [Finsupp.mapDomain_apply hinj, Fintype.prod_eq_single (⟨k, v⟩ : Σ k : Fin 2, D.nd.PlG k)
+    rw [Finsupp.mapDomain_apply_of_injective hinj, Fintype.prod_eq_single (⟨k, v⟩ : Σ k : Fin 2, D.nd.PlG k)
       (fun i hi => by rw [Function.update_of_ne hi, Pi.mulSingle_eq_of_ne hi, MonoidAlgebra.coeff_one_one]),
       Function.update_self, Pi.mulSingle_eq_same]
   · rw [Finsupp.mapDomain_of_notMem_range _ _ hg]

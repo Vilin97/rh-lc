@@ -78,7 +78,7 @@ theorem mapDomain_permExp (u : Ψ → Equiv.Perm (Fin N)) :
     Finsupp.mapDomain (weylAct Ψ N u) (Top.permExp u) = rhoMono Ψ N := by
   ext ⟨τ, i⟩
   have h : ((τ, i) : Ψ × Fin N) = weylAct Ψ N u (τ, (u τ)⁻¹ i) := by simp [weylAct]
-  rw [h, Finsupp.mapDomain_apply (weylAct_injective u)]
+  rw [h, Finsupp.mapDomain_apply_of_injective (weylAct_injective u)]
   simp [Top.permExp, rhoMono, weylAct]
 
 theorem flagInt_eq_sum (P : RootPoly Ψ N) :

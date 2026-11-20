@@ -79,7 +79,7 @@ theorem monoList_append {N r : ℕ} (d : Fin N → K → ℤ) (Y : Fin r → K �
     funext s
     have h1 : (Fin.castLE (Nat.le_add_right N r) s) = Fin.castAdd r s := rfl
     simp only [id, h1, Finsupp.add_apply,
-      Finsupp.mapDomain_apply (Fin.castAdd_injective N r), Fin.append_left]
+      Finsupp.mapDomain_apply_of_injective (Fin.castAdd_injective N r), Fin.append_left]
     rw [Finsupp.mapDomain_of_notMem_range, add_zero]
     rintro ⟨j, hj⟩
     have := congrArg Fin.val hj
@@ -88,7 +88,7 @@ theorem monoList_append {N r : ℕ} (d : Fin N → K → ℤ) (Y : Fin r → K �
   · congr 1
     funext s
     simp only [id, Finsupp.add_apply,
-      Finsupp.mapDomain_apply (Fin.natAdd_injective r N), Fin.append_right]
+      Finsupp.mapDomain_apply_of_injective (Fin.natAdd_injective r N), Fin.append_right]
     rw [Finsupp.mapDomain_of_notMem_range, zero_add]
     rintro ⟨j, hj⟩
     have := congrArg Fin.val hj

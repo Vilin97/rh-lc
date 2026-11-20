@@ -16,7 +16,7 @@ theorem polMap_index_injective (W Λ : Type) [Fintype W] :
       (∑ w, Finsupp.mapDomain (Prod.mk w) (f w)) (w, l) = f w l := by
     intro f w l
     rw [Finsupp.finsetSum_apply, Finset.sum_eq_single w]
-    · exact Finsupp.mapDomain_apply (Prod.mk_right_injective w) _ _
+    · exact Finsupp.mapDomain_apply_of_injective (Prod.mk_right_injective w) _ _
     · intro v _ hv
       apply Finsupp.mapDomain_notin_range
       rintro ⟨x, hx⟩

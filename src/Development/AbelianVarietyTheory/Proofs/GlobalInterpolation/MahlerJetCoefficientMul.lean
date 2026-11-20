@@ -259,9 +259,9 @@ theorem cop_Pn (n : κ → ℕ) :
 theorem split_rename (a b : κ →₀ ℕ) :
     Finsupp.sumFinsuppAddEquivProdFinsupp (Finsupp.mapDomain Sum.inl a + Finsupp.mapDomain Sum.inr b) = (a, b) := by
   ext j
-  · simp [Finsupp.fst_sumFinsuppAddEquivProdFinsupp, Finsupp.mapDomain_apply Sum.inl_injective,
+  · simp [Finsupp.fst_sumFinsuppAddEquivProdFinsupp, Finsupp.mapDomain_apply_of_injective Sum.inl_injective,
       Finsupp.mapDomain_notin_range]
-  · simp [Finsupp.snd_sumFinsuppAddEquivProdFinsupp, Finsupp.mapDomain_apply Sum.inr_injective,
+  · simp [Finsupp.snd_sumFinsuppAddEquivProdFinsupp, Finsupp.mapDomain_apply_of_injective Sum.inr_injective,
       Finsupp.mapDomain_notin_range]
 
 theorem BJ_rename (v : κ → V) (F G : V → ℂ) (p q : MvPolynomial κ ℂ) :

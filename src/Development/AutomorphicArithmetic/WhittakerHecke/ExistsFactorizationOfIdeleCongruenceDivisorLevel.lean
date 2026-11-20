@@ -94,7 +94,7 @@ theorem UpperTheory.exists_factorization_of_ideleCongruence_divisor_level :
     have h6 : Valued.v (H.cp v ((y⁻¹ : (A ℚ)ˣ) : A ℚ)) ≤ 1 := h4
     exact h5.symm.trans_le (mul_le_of_le_one_right' h6)
   let f : ℕ →₀ ℕ := Finsupp.mapDomain normV (Finsupp.ofSupportFinite e hfin)
-  have hf : ∀ v, f (normV v) = e v := fun v => Finsupp.mapDomain_apply GlobalTheory.TwAtt.normV_injective _ v
+  have hf : ∀ v, f (normV v) = e v := fun v => Finsupp.mapDomain_apply_of_injective GlobalTheory.TwAtt.normV_injective _ v
   have hfs : ∀ p ∈ f.support, ∃ v : H.P ℚ, normV v = p := fun p hp => by
     obtain ⟨v, -, hv'⟩ := Finset.mem_image.1 (Finsupp.mapDomain_support hp)
     exact ⟨v, hv'⟩

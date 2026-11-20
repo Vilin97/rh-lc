@@ -47,7 +47,7 @@ theorem eq_one_of_groupLike {B X : Type} [CommRing B] [AddCommGroup X] (I : Idea
     have e := congrArg (fun a => a.coeff (x, x)) h
     simp only [coeff_inl_mul_inr] at e
     refine e.symm.trans ?_
-    exact Finsupp.mapDomain_apply (f := fun x : X => (x, x)) (fun _ _ q => congrArg Prod.fst q) g.coeff x
+    exact Finsupp.mapDomain_apply_of_injective (f := fun x : X => (x, x)) (fun _ _ q => congrArg Prod.fst q) g.coeff x
   ext x
   have e := congrArg (fun a => a.coeff x) h₁
   simp only [AddMonoidAlgebra.coeff_mapRingHom, AddMonoidAlgebra.one_def, AddMonoidAlgebra.coeff_single,

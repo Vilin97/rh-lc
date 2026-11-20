@@ -83,7 +83,7 @@ private theorem glue_eq_sum_mapDomain_inB (ν : K → (Unit × Fin d →₀ ℕ)
       rintro ⟨⟨⟩, a⟩ ⟨⟨⟩, b⟩ h
       simp only [inB, Prod.mk.injEq] at h
       rw [h.2]
-    exact (Finsupp.mapDomain_apply hinj (ν k) ((), i)).symm
+    exact (Finsupp.mapDomain_apply_of_injective hinj (ν k) ((), i)).symm
   · intro k' _ hk
     apply Finsupp.mapDomain_notin_range
     rintro ⟨p, hp⟩

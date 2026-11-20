@@ -120,7 +120,7 @@ theorem tvar_inj (hinj : Function.Injective fun x : TL J nL r => posOf n' (posTL
 theorem bigM_apply (hinj : Function.Injective fun x : TL J nL r => posOf n' (posTL Fr x))
     (rho : TL J nL r × Fin (r + K) → ℕ) (bp : TL J nL r × Fin r →₀ ℕ) (bn : TL J nL r × Fin K →₀ ℕ)
     (v : TL J nL r × Fin (r + K)) : bigM Fr p hk nL rho bp bn (tvar Fr hk nL v) = bigE Fr p nL rho bp bn v := by
-  rw [bigM, Finsupp.mapDomain_apply (tvar_inj hinj)]
+  rw [bigM, Finsupp.mapDomain_apply_of_injective (tvar_inj hinj)]
   rfl
 
 theorem bigM_pl (hinj : Function.Injective fun x : TL J nL r => posOf n' (posTL Fr x))

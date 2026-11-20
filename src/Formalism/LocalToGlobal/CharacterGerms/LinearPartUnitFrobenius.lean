@@ -122,7 +122,7 @@ theorem idx_apply (μ : Fin 1 × Fin dd →₀ ℕ) (i j : Fin dd) :
     intro h
     exact h10 (congrArg Prod.fst h)
   rw [Finsupp.add_apply, Finsupp.single_apply, if_neg hne, add_zero]
-  exact Finsupp.mapDomain_apply hinj μ ((0 : Fin 1), i)
+  exact Finsupp.mapDomain_apply_of_injective hinj μ ((0 : Fin 1), i)
 
 theorem aLin_eq (Y : FBChart C V O dd) (u w : Fin dd → C) :
     Y.aLin u w = ∑ i, coeff (Finsupp.single ((0 : Fin 1), i) V.l) (zl w Y.u1) * u i ^ V.l := by

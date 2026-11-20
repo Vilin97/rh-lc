@@ -196,7 +196,7 @@ theorem sumElim_eq_inl {d : ℕ} (a e δ : Fin d →₀ ℕ) :
 theorem sumElim_eq_inr {d : ℕ} (a e δ : Fin d →₀ ℕ) :
     Finsupp.sumElim a e = δ.mapDomain Sum.inr ↔ a = 0 ∧ δ = e := by
   have hr : ∀ k, (δ.mapDomain Sum.inr : Fin d ⊕ Fin d →₀ ℕ) (Sum.inr k) = δ k :=
-    fun k => Finsupp.mapDomain_apply Sum.inr_injective δ k
+    fun k => Finsupp.mapDomain_apply_of_injective Sum.inr_injective δ k
   constructor
   · intro h
     refine ⟨?_, ?_⟩

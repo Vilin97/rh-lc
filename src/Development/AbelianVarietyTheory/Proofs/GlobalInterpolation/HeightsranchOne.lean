@@ -301,7 +301,7 @@ private theorem toUnit_symm_monomial {n : ℕ} (W : Unit × Fin n × Fin n →�
   have e : (W.comapDomain (Prod.mk ()) (Prod.mk_right_injective ()).injOn).mapDomain (Prod.mk ()) = W := by
     ext ⟨u, x⟩
     cases u
-    rw [Finsupp.mapDomain_apply (Prod.mk_right_injective ()), Finsupp.comapDomain_apply]
+    rw [Finsupp.mapDomain_apply_of_injective (Prod.mk_right_injective ()), Finsupp.comapDomain_apply]
   apply (Formalism.L2.Ker.toUnit ℂ n).injective
   rw [AlgEquiv.apply_symm_apply, toUnit_monomial, e]
 
@@ -318,7 +318,7 @@ private theorem coefLast_monomial' {ι : Type} [Fintype ι] {N n : ℕ} (hN : N 
         M (τ, x) := by
     intro τ u x
     cases u
-    rw [Finsupp.mapDomain_apply (Prod.mk_right_injective ()), Finsupp.comapDomain_apply]
+    rw [Finsupp.mapDomain_apply_of_injective (Prod.mk_right_injective ()), Finsupp.comapDomain_apply]
   have hiff : Formalism.L2.Col.Br.IsTop hN (Formalism.L2.Col.Br.bExp hN lam sg) M ↔
       ∀ τ, Formalism.L2.Col.Br.IsTop hN (Formalism.L2.Col.Br.bExp hN (fun _ : Unit => lam τ) (fun _ : Unit => sg τ))
         ((M.comapDomain (Prod.mk τ) (Prod.mk_right_injective τ).injOn).mapDomain (Prod.mk ())) := by

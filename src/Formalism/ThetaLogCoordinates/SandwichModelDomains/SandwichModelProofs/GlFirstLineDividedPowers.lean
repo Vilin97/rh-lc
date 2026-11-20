@@ -72,7 +72,7 @@ theorem rgl_rowDiv_zero (a b : Fin r) (f : MvPolynomial (Fin r × Fin n) R) : ro
 
 theorem rgl_mapDomain_apply (m : Fin r × Fin n →₀ ℕ) (a : Fin r) (s : Fin n) :
     Finsupp.mapDomain (Equiv.prodComm (Fin r) (Fin n)) m (s, a) = m (a, s) :=
-  Finsupp.mapDomain_apply (Equiv.injective _) m (a, s)
+  Finsupp.mapDomain_apply_of_injective (Equiv.injective _) m (a, s)
 
 theorem rgl_support_swp (f : MvPolynomial (Fin r × Fin n) R) :
     (swp R r n f).support =

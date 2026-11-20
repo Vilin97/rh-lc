@@ -187,7 +187,7 @@ theorem dX_surj (h₁ : Q.Crit a r) (h₂ : Q.Crit a (r - 1)) (h₃ : Q.Crit b r
   let c : ℕ →₀ Φ.A.obj T := Finsupp.mapDomain (· + 1) c'
   have hs : sh c = c' := by
     ext k
-    exact Finsupp.mapDomain_apply inj c' k
+    exact Finsupp.mapDomain_apply_of_injective inj c' k
   have hc : ev Q T c ∈ (a r).S (Q.P T) := by
     refine (h₁ T c).2 fun k => ?_
     cases k with
@@ -198,7 +198,7 @@ theorem dX_surj (h₁ : Q.Crit a r) (h₂ : Q.Crit a (r - 1)) (h₃ : Q.Crit b r
     | succ k =>
       have e : r - ((k + 1 : ℕ) : ℤ) = r - 1 - (k : ℤ) := by push_cast; ring
       rw [e]
-      have : c (k + 1) = c' k := Finsupp.mapDomain_apply inj c' k
+      have : c (k + 1) = c' k := Finsupp.mapDomain_apply_of_injective inj c' k
       rw [this]
       exact (h₂ T c').1 hm k
   exact ⟨⟨_, Ideal.mem_map_of_mem _ hc⟩, dX_eq Q h₁ h₂ h₃ h₄ _ z c rfl (by rw [hs, hz])⟩

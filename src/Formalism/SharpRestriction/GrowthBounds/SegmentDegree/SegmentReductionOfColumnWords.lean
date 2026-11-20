@@ -41,7 +41,7 @@ theorem plEmb_Pol {R : Type} [CommRing R] (r K : ℕ) {d : ℤ → ℕ} {A : MvP
   unfold multideg
   rw [Fin.sum_univ_add]
   have z1 : ∀ c : Fin r, Finsupp.mapDomain (fun v : ℤ × Fin r => (v.1, Fin.castAdd K v.2)) u (i, Fin.castAdd K c)
-      = u (i, c) := fun c => Finsupp.mapDomain_apply hf u (i, c)
+      = u (i, c) := fun c => Finsupp.mapDomain_apply_of_injective hf u (i, c)
   have z2 : ∀ c : Fin K, Finsupp.mapDomain (fun v : ℤ × Fin r => (v.1, Fin.castAdd K v.2)) u (i, Fin.natAdd r c)
       = 0 := by
     intro c
@@ -69,7 +69,7 @@ theorem nmEmb_Pol {R : Type} [CommRing R] (r K : ℕ) {d : ℤ → ℕ} {A : MvP
   unfold multideg
   rw [Fin.sum_univ_add]
   have z1 : ∀ c : Fin K, Finsupp.mapDomain (fun v : ℤ × Fin K => (v.1, Fin.natAdd r v.2)) u (i, Fin.natAdd r c)
-      = u (i, c) := fun c => Finsupp.mapDomain_apply hf u (i, c)
+      = u (i, c) := fun c => Finsupp.mapDomain_apply_of_injective hf u (i, c)
   have z2 : ∀ c : Fin r, Finsupp.mapDomain (fun v : ℤ × Fin K => (v.1, Fin.natAdd r v.2)) u (i, Fin.castAdd K c)
       = 0 := by
     intro c

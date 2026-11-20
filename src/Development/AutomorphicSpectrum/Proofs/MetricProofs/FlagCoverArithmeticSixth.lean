@@ -31,7 +31,7 @@ theorem isMultiHomog_rename_incl [Fintype K] [∀ k, Fintype (ι k)] (S : K → 
   · have he : Function.extend Subtype.val a 0 k = a ⟨k, hk⟩ := Subtype.val_injective.extend_apply a 0 ⟨k, hk⟩
     rw [he, ← hD m₀ hm₀ ⟨k, hk⟩]
     refine Finset.sum_congr rfl fun i _ => ?_
-    exact Finsupp.mapDomain_apply (incl_injective S) m₀ ⟨⟨k, hk⟩, i⟩
+    exact Finsupp.mapDomain_apply_of_injective (incl_injective S) m₀ ⟨⟨k, hk⟩, i⟩
   · rw [Function.extend_apply' _ _ _ (by rintro ⟨c, rfl⟩; exact hk c.2), Pi.zero_apply]
     refine Finset.sum_eq_zero fun i _ => ?_
     refine Finsupp.mapDomain_notin_range _ _ ?_

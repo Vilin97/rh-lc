@@ -26,7 +26,7 @@ theorem FlagCoeffBlockPermute.proof : FlagCoeffBlockPermute.Statement := by
   have hmap : Finsupp.mapDomain E β = α := by
     ext q
     obtain ⟨p, rfl⟩ := E.surjective q
-    rw [Finsupp.mapDomain_apply E.injective]
+    rw [Finsupp.mapDomain_apply_of_injective E.injective]
     simp [hβ, hE, blockPermuteEquiv]
   have hren : blockPermute f N w P = rename E P := rfl
   rw [hren, ← hmap, coeff_rename_mapDomain E E.injective]

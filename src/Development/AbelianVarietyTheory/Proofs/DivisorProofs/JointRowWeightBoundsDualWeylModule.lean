@@ -128,7 +128,7 @@ theorem jointWt_bounds : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteVal
       unfold rowDeg
       refine Finset.sum_congr rfl fun s _ => ?_
       have : (b, s) = e (σ.symm b, s) := by simp [e]
-      rw [this, Finsupp.mapDomain_apply he]
+      rw [this, Finsupp.mapDomain_apply_of_injective he]
     have hd := dualWeyl_rowDeg_dominance O N _ _ (rename_rowPerm_mem O N _ σ f hfmem) _ hm'
     simp only [hrd'] at hd
     exact hd

@@ -16,6 +16,6 @@ theorem comb_extS_slice :
   rw [Finsupp.mapDomain_support_of_injective hinj, Finset.sum_image (fun a _ b _ h => hinj h),
     Finset.sum_apply, Finset.sum_apply]
   refine Finset.sum_congr rfl fun u _ => ?_
-  rw [Finsupp.mapDomain_apply hinj, Pi.smul_apply, Pi.smul_apply, heisO_resS_symm]
+  rw [Finsupp.mapDomain_apply_of_injective hinj, Pi.smul_apply, Pi.smul_apply, heisO_resS_symm]
 
 end GlobalTheory.FinPl.ExtZero

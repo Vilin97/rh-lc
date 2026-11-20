@@ -207,7 +207,7 @@ theorem emb_Pol {R : Type} [CommRing R] {k a : ℕ} (s : S) (P : MvPolynomial (F
   · subst hi
     simp only [Pi.single_eq_same]
     rw [← hd]
-    exact Finset.sum_congr rfl fun c _ => Finsupp.mapDomain_apply hinj ν c
+    exact Finset.sum_congr rfl fun c _ => Finsupp.mapDomain_apply_of_injective hinj ν c
   · rw [Pi.single_eq_of_ne hi]
     exact Finset.sum_eq_zero fun c _ => Finsupp.mapDomain_notin_range _ _
       (by rintro ⟨c', hc'⟩; exact hi (congrArg Prod.fst hc').symm)

@@ -23,7 +23,7 @@ private theorem exists_linearMap_prod_rename_eq {K : Type} [Field K] (I β γ : 
     intro g i
     ext b
     rw [Finsupp.curry_apply, Finsupp.finsetSum_apply, Finset.sum_eq_single i]
-    · exact Finsupp.mapDomain_apply (fun a c h => (Prod.ext_iff.1 h).2) _ _
+    · exact Finsupp.mapDomain_apply_of_injective (fun a c h => (Prod.ext_iff.1 h).2) _ _
     · intro j _ hj
       apply Finsupp.mapDomain_notin_range
       rintro ⟨c, hc⟩

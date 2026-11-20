@@ -21,7 +21,7 @@ private theorem X_mul_monomialPlaneCoefficients {σ R : Type} [CommSemiring R] (
 private theorem liftMon_apply_liftVar (mo : TL J Dt.nL r × Fin r →₀ ℕ) (w : TL J Dt.nL r × Fin r) :
     liftMon Dt mo (Dt.liftVar w) = mo w / Pof Dt w := by
   unfold liftMon
-  rw [Finsupp.mapDomain_apply (liftVar_inj Dt)]
+  rw [Finsupp.mapDomain_apply_of_injective (liftVar_inj Dt)]
   simp [liftE, Finsupp.onFinset_apply]
 
 private theorem liftMon_eq_add_single_of_eq_off (mo mo' : TL J Dt.nL r × Fin r →₀ ℕ) (v : TL J Dt.nL r × Fin r) (d : ℕ)

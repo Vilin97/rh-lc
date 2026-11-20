@@ -60,13 +60,13 @@ theorem weight_mapDomain_midVar [DecidableEq K] [DecidableEq K'] [DecidableEq K�
   rcases l with k | k | k
   · change _ = Finsupp.weight (blockWeight (Sum.elim ι ι')) d (.inl k)
     rw [Objects.weight_blockWeight_apply]
-    exact Finset.sum_congr rfl fun i _ => Finsupp.mapDomain_apply midVar_injective d ⟨.inl k, i⟩
+    exact Finset.sum_congr rfl fun i _ => Finsupp.mapDomain_apply_of_injective midVar_injective d ⟨.inl k, i⟩
   · change _ = 0
     refine Finset.sum_eq_zero fun i _ => Finsupp.mapDomain_of_notMem_range _ _ ?_
     rintro ⟨⟨k' | k', j⟩, h⟩ <;> dsimp only [midVar] at h <;> cases h
   · change _ = Finsupp.weight (blockWeight (Sum.elim ι ι')) d (.inr k)
     rw [Objects.weight_blockWeight_apply]
-    exact Finset.sum_congr rfl fun i _ => Finsupp.mapDomain_apply midVar_injective d ⟨.inr k, i⟩
+    exact Finset.sum_congr rfl fun i _ => Finsupp.mapDomain_apply_of_injective midVar_injective d ⟨.inr k, i⟩
 
 theorem isMultiHomog_rename [DecidableEq K] [DecidableEq K'] [DecidableEq K₂] {R : Type} [CommRing R]
     {f : MvPolynomial (Σ k : K ⊕ K', Sum.elim ι ι' k) R} {a : K ⊕ K' → ℕ} (hf : IsMultiHomog f a) :

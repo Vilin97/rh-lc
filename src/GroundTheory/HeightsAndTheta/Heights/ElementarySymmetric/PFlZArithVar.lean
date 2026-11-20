@@ -29,7 +29,7 @@ theorem isMultiHomog_rename_sigma (e : ∀ k, ι k ≃ ι' k) {g : MRing ι} {a 
   have h1 : ∀ i : ι' k, Finsupp.mapDomain (Equiv.sigmaCongrRight e) m0 ⟨k, i⟩ = m0 ⟨k, (e k).symm i⟩ := by
     intro i
     have : (⟨k, i⟩ : Σ k, ι' k) = Equiv.sigmaCongrRight e ⟨k, (e k).symm i⟩ := by simp
-    rw [this, Finsupp.mapDomain_apply (Equiv.sigmaCongrRight e).injective]
+    rw [this, Finsupp.mapDomain_apply_of_injective (Equiv.sigmaCongrRight e).injective]
   simp only [h1]
   rw [Equiv.sum_comp (e k).symm (fun j => m0 ⟨k, j⟩)]
   exact hg m0 hm0 k

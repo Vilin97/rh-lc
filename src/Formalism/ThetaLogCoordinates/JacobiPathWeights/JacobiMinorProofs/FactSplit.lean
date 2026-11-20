@@ -228,7 +228,7 @@ theorem supp_sub {i : ℕ} (hS : ∀ j, j ∈ S ↔ j < i) (last : Bool) (G : Mv
       (fun γ _ δ _ h => Finsupp.mapDomain_injective Sum.inl_injective h) hβ he
     intro γ hγ x hx
     obtain ⟨j', a, hj', rfl⟩ := hx
-    rw [Finsupp.mapDomain_apply Sum.inl_injective]
+    rw [Finsupp.mapDomain_apply_of_injective Sum.inl_injective]
     exact high_zero S hS hγ j' a hj'
   · rw [wExp_add, wExp_high isVec S last (high_zero S hS hβ), add_zero]
 

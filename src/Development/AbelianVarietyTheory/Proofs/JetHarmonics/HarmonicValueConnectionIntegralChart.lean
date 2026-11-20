@@ -272,7 +272,7 @@ theorem nabValN_columns {E : Type} [Field E] [NumberField E] [IsCMField E] {H : 
     refine Finset.prod_congr rfl fun b _ => ?_
     have hc : colM mo b = colOf (Finsupp.mapDomain (HarmCopies.letterEquiv (E →+* ℂ) Dw.mult n) mo) b := by
       ext ℓ
-      exact (Finsupp.mapDomain_apply (HarmCopies.letterEquiv (E →+* ℂ) Dw.mult n).injective mo (ℓ, b)).symm
+      exact (Finsupp.mapDomain_apply_of_injective (HarmCopies.letterEquiv (E →+* ℂ) Dw.mult n).injective mo (ℓ, b)).symm
     rw [hc]
   rw [hP, MvPolynomial.support_map_of_injective _ g.injective]
   simp only [MvPolynomial.coeff_map]

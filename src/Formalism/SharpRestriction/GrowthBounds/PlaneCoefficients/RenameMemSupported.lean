@@ -131,7 +131,7 @@ theorem restT_of (hGeo : RestGeo) : RestT := by
         simp
       omega
     have h1 : (l.mapDomain (castV hk)) (noVar Fr hk nL x c) = l (posOf n' (posTL Fr x), Fin.natAdd r c) :=
-      Finsupp.mapDomain_apply (castV_inj hk) l (posOf n' (posTL Fr x), Fin.natAdd r c)
+      Finsupp.mapDomain_apply_of_injective (castV_inj hk) l (posOf n' (posTL Fr x), Fin.natAdd r c)
     rw [Finsupp.add_apply, h0, add_zero, h1]
     have h3 := Formalism.MainNotions.Proposition5Numerics.tl_mem_letters hV hr hnL x
     exact hl (segZ x.1) (posTL Fr x) h3.1 h3.2 _

@@ -55,9 +55,9 @@ theorem monomial_split {α β : Type} (m : α ⊕ β →₀ ℕ) :
   rw [rename_monomial, rename_monomial, monomial_mul, one_mul]
   congr 2
   ext (x | x)
-  · rw [Finsupp.add_apply, Finsupp.mapDomain_apply Sum.inl_injective, Finsupp.mapDomain_notin_range _ _ (by simp)]
+  · rw [Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective Sum.inl_injective, Finsupp.mapDomain_notin_range _ _ (by simp)]
     simp
-  · rw [Finsupp.add_apply, Finsupp.mapDomain_apply Sum.inr_injective, Finsupp.mapDomain_notin_range _ _ (by simp)]
+  · rw [Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective Sum.inr_injective, Finsupp.mapDomain_notin_range _ _ (by simp)]
     simp
 
 theorem jetLin_mul (J : (DVar ι a b →₀ ℕ) → K) (p : Pol K ι b) (q : MvPolynomial (DVar ι a b) K) :
@@ -72,11 +72,11 @@ theorem jetLin_mul (J : (DVar ι a b →₀ ℕ) → K) (p : Pol K ι b) (q : Mv
         rw [smul_monomial, smul_eq_mul, mul_one]
       have e1 : (m.mapDomain Sum.inl + m'.mapDomain Sum.inr).comapDomain Sum.inl Sum.inl_injective.injOn = m := by
         ext x
-        rw [Finsupp.comapDomain_apply, Finsupp.add_apply, Finsupp.mapDomain_apply Sum.inl_injective,
+        rw [Finsupp.comapDomain_apply, Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective Sum.inl_injective,
           Finsupp.mapDomain_notin_range _ _ (by simp), add_zero]
       have e2 : (m.mapDomain Sum.inl + m'.mapDomain Sum.inr).comapDomain Sum.inr Sum.inr_injective.injOn = m' := by
         ext x
-        rw [Finsupp.comapDomain_apply, Finsupp.add_apply, Finsupp.mapDomain_apply Sum.inr_injective,
+        rw [Finsupp.comapDomain_apply, Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective Sum.inr_injective,
           Finsupp.mapDomain_notin_range _ _ (by simp), zero_add]
       rw [rename_monomial, rename_monomial, monomial_mul, e _ (c * c'), map_smul, jetLin_monomial, e1, e2, e m' c', map_smul,
         tabFn_monomial, smul_monomial, smul_monomial]

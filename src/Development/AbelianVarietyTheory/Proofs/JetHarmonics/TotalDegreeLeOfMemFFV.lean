@@ -95,7 +95,7 @@ theorem chartVal_boxSer (C : IntegralChartA3 Xo c T io y) (k : ℕ) {n : ℕ} (f
   refine Finset.prod_congr rfl fun b _ => ?_
   have hc : colM mo b = colOf (Finsupp.mapDomain (letterEquiv (E →+* ℂ) Dw.mult n) mo) b := by
     ext ℓ
-    exact (Finsupp.mapDomain_apply (letterEquiv (E →+* ℂ) Dw.mult n).injective mo (ℓ, b)).symm
+    exact (Finsupp.mapDomain_apply_of_injective (letterEquiv (E →+* ℂ) Dw.mult n).injective mo (ℓ, b)).symm
   rw [hc]
 
 theorem bound_all_iff_bound_prod (C : IntegralChartA3 Xo c T io y) (e k : ℕ) {n : ℕ} (P : MvPolynomial (LtN Dw n) T.Fr)

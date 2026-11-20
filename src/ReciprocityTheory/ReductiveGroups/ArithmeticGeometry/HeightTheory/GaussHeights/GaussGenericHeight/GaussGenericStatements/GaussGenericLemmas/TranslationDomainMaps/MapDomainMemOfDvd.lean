@@ -130,7 +130,7 @@ theorem bdeg_mapDomain (e : Equiv.Perm (Fin (D + 1))) (b : Fin (D + 1))
   unfold bdeg
   refine Finset.sum_congr rfl fun j _ => ?_
   have h : ((e b, j) : Fin (D + 1) × Fin (N + 1)) = eT e (b, j) := rfl
-  rw [h, Finsupp.mapDomain_apply (eT e).injective]
+  rw [h, Finsupp.mapDomain_apply_of_injective (eT e).injective]
 
 theorem mapDomain_mem_of_dvd (e : Equiv.Perm (Fin (D + 1)))
     {g : MvPolynomial (Fin (D + 1) × Fin (N + 1)) K}

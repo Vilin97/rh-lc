@@ -126,10 +126,10 @@ theorem sumV_cancel_hom : ∀ (F : Type) [Field F] (v : AddValuation F (WithTop 
     rw [hw, AddMonoidAlgebra.mapDomainRingHom_apply, AddMonoidAlgebra.coeff_mapDomain]
     refine ⟨fun H χ => ?_, fun H β => ?_⟩
     · have := H (h χ)
-      rwa [Finsupp.mapDomain_apply hinj] at this
+      rwa [Finsupp.mapDomain_apply_of_injective hinj] at this
     · by_cases hβ : β ∈ Set.range h
       · obtain ⟨χ, rfl⟩ := hβ
-        rw [Finsupp.mapDomain_apply hinj]
+        rw [Finsupp.mapDomain_apply_of_injective hinj]
         exact H χ
       · rw [Finsupp.mapDomain_of_notMem_range _ _ hβ, v.map_zero]
         exact le_top

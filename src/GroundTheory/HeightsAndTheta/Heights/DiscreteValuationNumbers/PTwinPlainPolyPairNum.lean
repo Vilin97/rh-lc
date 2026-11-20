@@ -100,7 +100,7 @@ theorem rename_divDiff_castAdd_monomial {N q : ℕ} (i : Fin N) (G : MvPolynomia
       have := congrArg Fin.val hk
       simp only [Fin.val_natAdd, Fin.val_castAdd] at this
       omega
-    rw [Finsupp.add_apply, Finsupp.mapDomain_apply (Fin.castAdd_injective _ _), hT,
+    rw [Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective (Fin.castAdd_injective _ _), hT,
       Finsupp.mapDomain_of_notMem_range _ _ hj, add_zero]
   have hn : ∀ j, (Finsupp.mapDomain (Fin.castAdd q) μ + T) (Fin.natAdd N j) = t j := by
     intro j
@@ -110,7 +110,7 @@ theorem rename_divDiff_castAdd_monomial {N q : ℕ} (i : Fin N) (G : MvPolynomia
       simp only [Fin.val_natAdd, Fin.val_castAdd] at this
       omega
     rw [Finsupp.add_apply, Finsupp.mapDomain_of_notMem_range _ _ hj, hT,
-      Finsupp.mapDomain_apply (Fin.natAdd_injective _ _), zero_add]
+      Finsupp.mapDomain_apply_of_injective (Fin.natAdd_injective _ _), zero_add]
   rw [coeff_mul_monomial, coeff_rename_mapDomain _ (Fin.castAdd_injective _ _),
     term_tail i μ t _ hc hn, C_mul]
   simp only [map_mul, rename_C]

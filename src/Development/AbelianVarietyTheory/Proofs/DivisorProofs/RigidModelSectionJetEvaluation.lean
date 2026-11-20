@@ -92,7 +92,7 @@ theorem topCoeff_mul {i : ℕ} (u z : EpsAlg R i)
       ext a
       by_cases ha : a ∈ Set.range (n.support.orderEmbOfFin rfl)
       · obtain ⟨b, rfl⟩ := ha
-        rw [Finsupp.mapDomain_apply hσ, topMon_apply]
+        rw [Finsupp.mapDomain_apply_of_injective hσ, topMon_apply]
         have h1 := Finsupp.mem_support_iff.1 (n.support.orderEmbOfFin_mem rfl b)
         have := hle (n.support.orderEmbOfFin rfl b)
         omega

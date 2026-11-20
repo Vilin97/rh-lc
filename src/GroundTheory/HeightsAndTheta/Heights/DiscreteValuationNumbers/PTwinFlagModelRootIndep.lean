@@ -34,7 +34,7 @@ theorem monoList_mapDomain {m : ℕ} {A : Type*} (deg : Fin ((m + 1) + (m + 1)) 
       omega)
   have h3 : ∀ i : Fin m, Finsupp.mapDomain (fun i : Fin m => Fin.natAdd (m + 1) i.castSucc) ν
       (Fin.natAdd (m + 1) i.castSucc) = ν i :=
-    fun i => Finsupp.mapDomain_apply he ν i
+    fun i => Finsupp.mapDomain_apply_of_injective he ν i
   have hA : (List.ofFn fun i : Fin (m + 1) =>
       List.replicate (Finsupp.mapDomain (fun i : Fin m => Fin.natAdd (m + 1) i.castSucc) ν
         (Fin.castLE (Nat.le_add_right (m + 1) (m + 1)) i))
@@ -81,7 +81,7 @@ theorem divDiff_last {m : ℕ} (P : MvPolynomial (Fin m) ℤ) :
       rintro ⟨j, hj⟩
       exact (Fin.castSucc_lt_last j).ne hj)
   have hc : ∀ i : Fin m, Finsupp.mapDomain Fin.castSucc ν i.castSucc = ν i :=
-    fun i => Finsupp.mapDomain_apply hcs ν i
+    fun i => Finsupp.mapDomain_apply_of_injective hcs ν i
   have hs : ∀ i : Fin m, Finsupp.single (Fin.last m) 1 i.castSucc = 0 := fun i => by
     rw [Finsupp.single_apply, if_neg (Fin.castSucc_lt_last i).ne']
   have hemp : (Finset.univ.filter fun j : Fin (m + 1) => Fin.last m < j) = ∅ :=

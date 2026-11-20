@@ -159,7 +159,7 @@ variable {R : Type} [CommRing R]
 
 theorem mdl_inl {d : ℕ} (β : Fin d →₀ ℕ) (k : Fin d) :
     (β.mapDomain Sum.inl : Fin d ⊕ Fin d →₀ ℕ) (Sum.inl k) = β k :=
-  Finsupp.mapDomain_apply Sum.inl_injective β k
+  Finsupp.mapDomain_apply_of_injective Sum.inl_injective β k
 
 theorem mdl_inr {d : ℕ} (β : Fin d →₀ ℕ) (k : Fin d) :
     (β.mapDomain Sum.inl : Fin d ⊕ Fin d →₀ ℕ) (Sum.inr k) = 0 :=
@@ -358,7 +358,7 @@ theorem coeff_cob1_additive_law_mixed (d : ℕ) (f : MvPowerSeries (Fin d) R) (�
     rw [if_neg, smul_zero]
     intro h
     have := DFunLike.congr_fun h (Sum.inr i)
-    simp [mdl_inr, Finsupp.mapDomain_apply Sum.inl_injective] at this
+    simp [mdl_inr, Finsupp.mapDomain_apply_of_injective Sum.inl_injective] at this
   have h2 : (∑ᶠ δ : Fin d →₀ ℕ, coeff δ f • (if β.mapDomain Sum.inl + Finsupp.single (Sum.inr i) 1 =
       δ.mapDomain Sum.inr then (1 : R) else 0)) = 0 := by
     refine finsum_eq_zero_of_forall_eq_zero fun δ => ?_

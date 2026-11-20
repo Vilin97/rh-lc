@@ -617,7 +617,7 @@ theorem goodA [NeZero r] (hB : D.BlockOK) (j : Fin D.T.t → ℕ) (jp : ℕ) (y 
       exact hv c hc
     refine ⟨m1, hm1, m2, hm2, ?_, ?_, ?_⟩
     · intro b c
-      rw [Finsupp.add_apply, Finsupp.mapDomain_apply (chainEmb_inj _),
+      rw [Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective (chainEmb_inj _),
         hm2z (chainEmb N r D.T.t (b, c)) (fun c' h => (Fin.castSucc_lt_last b).ne
           (congrArg Prod.fst (Sum.inl_injective h : (Fin.castSucc b, c) = (Fin.last N, c')))), add_zero]
     · intro c

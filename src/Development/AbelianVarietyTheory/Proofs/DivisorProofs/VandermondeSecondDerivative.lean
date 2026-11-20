@@ -58,7 +58,7 @@ theorem apolar_rename_equiv (e : ν ≃ ν) (P D : MvPolynomial ν ℝ) :
     congr 2
     rw [← Equiv.prod_comp e]
     refine Finset.prod_congr rfl fun x _ => ?_
-    rw [Finsupp.mapDomain_apply e.injective]
+    rw [Finsupp.mapDomain_apply_of_injective e.injective]
   | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 end General

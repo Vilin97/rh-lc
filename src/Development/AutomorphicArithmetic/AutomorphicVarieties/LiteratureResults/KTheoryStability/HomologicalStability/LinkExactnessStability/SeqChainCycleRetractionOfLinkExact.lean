@@ -15,7 +15,7 @@ theorem mapDomain_prepend_apply' {V : Type} (τ : List V) (y : List V →₀ ℤ
   · obtain ⟨u, rfl⟩ := h
     rw [if_pos (List.prefix_append τ u)]
     have hinj : Function.Injective (fun w : List V => τ ++ w) := fun a b hab => List.append_cancel_left hab
-    rw [Finsupp.mapDomain_apply hinj y u]
+    rw [Finsupp.mapDomain_apply_of_injective hinj y u]
     simp
   · rw [if_neg h, Finsupp.mapDomain_notin_range]
     rintro ⟨u, rfl⟩

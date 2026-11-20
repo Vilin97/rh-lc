@@ -66,6 +66,6 @@ theorem rename_isomorphism : RenameIso := by
   congr 2
   rw [Finsupp.mapDomain_support_of_injective hφ, Finset.prod_image (fun a _ b _ h => hφ h)]
   refine Finset.prod_congr rfl fun k _ => ?_
-  rw [Finsupp.mapDomain_apply hφ]
+  rw [Finsupp.mapDomain_apply_of_injective hφ]
 
 end PI.HookSteps

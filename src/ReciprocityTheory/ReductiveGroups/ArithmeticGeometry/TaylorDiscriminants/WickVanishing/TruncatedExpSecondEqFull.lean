@@ -71,7 +71,7 @@ theorem glue_apply (g : Fin n → (ι →₀ ℕ)) (l : ι) (b : Fin n) : glue g
   classical
   unfold glue
   rw [Finsupp.finsetSum_apply, Finset.sum_eq_single b]
-  · exact Finsupp.mapDomain_apply (fun x y h => congrArg Prod.fst h) _ _
+  · exact Finsupp.mapDomain_apply_of_injective (fun x y h => congrArg Prod.fst h) _ _
   · intro b' _ hb
     apply Finsupp.mapDomain_notin_range
     rintro ⟨x, hx⟩

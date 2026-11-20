@@ -33,7 +33,7 @@ theorem res_sum (n : Lt → (ℕ × Fin N0 →₀ ℕ)) (t : Lt) :
     res t (∑ s, (n s).mapDomain (emb s)) = n t := by
   ext p
   rw [res_apply, Finsupp.finsetSum_apply, Finset.sum_eq_single t]
-  · exact Finsupp.mapDomain_apply (emb_inj t) _ _
+  · exact Finsupp.mapDomain_apply_of_injective (emb_inj t) _ _
   · intro s _ hst
     apply Finsupp.mapDomain_of_notMem_range
     rintro ⟨q, hq⟩

@@ -57,7 +57,7 @@ theorem isMultiHomog_rename_base {σ : Type} (blk : σ → Option K) {d' : NonPl
   by_cases h : ∀ p, blk p ≠ some k
   · rw [dif_pos h, ← hg m' hm' ⟨k, h⟩]
     refine Finset.sum_congr rfl fun i _ => ?_
-    exact Finsupp.mapDomain_apply hinj m' ⟨⟨k, h⟩, i⟩
+    exact Finsupp.mapDomain_apply_of_injective hinj m' ⟨⟨k, h⟩, i⟩
   · rw [dif_neg h]
     refine Finset.sum_eq_zero fun i _ => Finsupp.mapDomain_of_notMem_range _ _ ?_
     rintro ⟨⟨⟨k', hk'⟩, b⟩, e⟩

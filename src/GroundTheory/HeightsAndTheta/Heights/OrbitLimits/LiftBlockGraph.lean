@@ -106,7 +106,7 @@ theorem isMultiHomog_rename_none [DecidableEq K] {ι' : Type} [Fintype ι'] {g :
       intro i
       have : (⟨none, i⟩ : Σ k, addIdx ι (Fintype.card ι') k) = φ ⟨(), (Fintype.equivFin ι').symm i⟩ := by
         simp [hφ]
-      rw [this, Finsupp.mapDomain_apply hinj]
+      rw [this, Finsupp.mapDomain_apply_of_injective hinj]
     change ∑ i : Fin (Fintype.card ι'), (Finsupp.mapDomain φ m0) ⟨none, i⟩ = _
     simp only [hterm]
     rw [Fintype.sum_equiv (Fintype.equivFin ι').symm (fun i => m0 ⟨(), (Fintype.equivFin ι').symm i⟩)

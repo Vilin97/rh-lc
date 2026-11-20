@@ -58,7 +58,7 @@ theorem weylAct_injective (w : Ψ → Perm (Fin N)) : Function.Injective (weylAc
 omit [Fintype Ψ] [DecidableEq Ψ] in
 theorem mapDomain_weylAct_apply (w : Ψ → Perm (Fin N)) (b : Ψ × Fin N →₀ ℕ) (τ : Ψ) (i : Fin N) :
     Finsupp.mapDomain (weylAct Ψ N w) b (τ, w τ i) = b (τ, i) :=
-  Finsupp.mapDomain_apply (weylAct_injective Ψ N w) b (τ, i)
+  Finsupp.mapDomain_apply_of_injective (weylAct_injective Ψ N w) b (τ, i)
 
 omit [DecidableEq Ψ] in
 theorem rhoBlock_apply (τ : Ψ) (i : Fin N) :

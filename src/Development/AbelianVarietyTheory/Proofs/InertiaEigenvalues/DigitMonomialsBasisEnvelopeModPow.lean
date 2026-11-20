@@ -185,6 +185,6 @@ theorem GlobalTheory.digitMonomials_basis_mod_pow : ∀ (l : ℕ) [Fact l.Prime]
     have h3 : g' (α, 0) = 0 := by
       rw [← hl]; exact (Finsupp.mem_supported' (A ⧸ J ^ n) l').mp hl' _ (by simp)
     have h4 : g' (α, 0) = Ideal.Quotient.mk (J ^ n) (c α) :=
-      Finsupp.mapDomain_apply hinj (c.mapRange (Ideal.Quotient.mk (J ^ n)) (map_zero _)) α
+      Finsupp.mapDomain_apply_of_injective hinj (c.mapRange (Ideal.Quotient.mk (J ^ n)) (map_zero _)) α
     rw [h4] at h3
     exact Ideal.Quotient.eq_zero_iff_mem.mp h3

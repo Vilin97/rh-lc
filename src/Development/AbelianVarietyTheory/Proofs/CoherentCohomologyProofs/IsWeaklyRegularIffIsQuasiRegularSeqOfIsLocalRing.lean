@@ -40,7 +40,7 @@ noncomputable def MonoDeg.optionEquiv (ι : Type*) (a : ℕ) :
           ext o
           cases o with
           | none => rw [Finsupp.mapDomain_of_notMem_range _ _ (by simp), h0]
-          | some i => rw [Finsupp.mapDomain_apply (Option.some_injective _), Finsupp.some_apply]
+          | some i => rw [Finsupp.mapDomain_apply_of_injective (Option.some_injective _), Finsupp.some_apply]
         refine ⟨Sum.inl ⟨α.some, ?_⟩, Subtype.ext h1⟩
         rw [← hα, ← h1, Finsupp.degree_mapDomain, h1]
       · have h1 : α - Finsupp.single none 1 + Finsupp.single none 1 = α :=

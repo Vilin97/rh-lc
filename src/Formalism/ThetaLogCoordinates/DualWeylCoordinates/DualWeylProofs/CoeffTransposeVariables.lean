@@ -86,7 +86,7 @@ theorem qn_mem_otherWts (n : ℕ) (lam : Fin n → ℤ) (g : MvPolynomial (Fin n
 
 theorem qn_swap_apply {n : ℕ} (m : Fin n × Fin n →₀ ℕ) (a l : Fin n) :
     (Finsupp.mapDomain Prod.swap m) (a, l) = m (l, a) :=
-  Finsupp.mapDomain_apply Prod.swap_injective m (l, a)
+  Finsupp.mapDomain_apply_of_injective Prod.swap_injective m (l, a)
 
 theorem coeff_transposeVariables (n : ℕ) (g : MvPolynomial (Fin n × Fin n) ℚ) (m : Fin n × Fin n →₀ ℕ) :
     AddMonoidAlgebra.coeff (transposeVariables ℚ n g) (Finsupp.mapDomain Prod.swap m) = AddMonoidAlgebra.coeff g m :=

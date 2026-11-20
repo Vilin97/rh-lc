@@ -89,7 +89,7 @@ theorem isMultiHomog_map {f : MRingOver F ι} {d : K → ℕ} (hf : IsMultiHomog
   obtain ⟨k, rfl⟩ := e.surjective k'
   rw [Function.comp_apply, e.symm_apply_apply, ← hf m₀ hm₀ k, ← (h k).sum_comp]
   exact Finset.sum_congr rfl fun i _ =>
-    Finsupp.mapDomain_apply (vars e h).injective m₀ ⟨k, i⟩
+    Finsupp.mapDomain_apply_of_injective (vars e h).injective m₀ ⟨k, i⟩
 
 theorem isMultiHomog_symm {g : MRingOver F ι'} {d : K' → ℕ} (hg : IsMultiHomog g d) :
     IsMultiHomog ((ringEquiv F e h).symm g) (d ∘ e) := by
@@ -100,7 +100,7 @@ theorem isMultiHomog_symm {g : MRingOver F ι'} {d : K' → ℕ} (hg : IsMultiHo
   obtain ⟨m₀, hm₀, rfl⟩ := hm
   rw [Function.comp_apply, ← hg m₀ hm₀ (e k), ← (h k).sum_comp]
   refine Finset.sum_congr rfl fun i _ => ?_
-  have := Finsupp.mapDomain_apply (vars e h).symm.injective m₀ (vars e h ⟨k, i⟩)
+  have := Finsupp.mapDomain_apply_of_injective (vars e h).symm.injective m₀ (vars e h ⟨k, i⟩)
   rw [Equiv.symm_apply_apply] at this
   exact this
 
@@ -191,7 +191,7 @@ theorem ratDiv_map (V : Ideal (MRingOver F ι)) (f g : MRingOver F ι) :
       Finsupp.mapDomain (Ideal.map (ringEquiv F e h)) (ratDiv V f g) := by
   ext W'
   obtain ⟨W, rfl⟩ := exists_map_eq e h W'
-  rw [Finsupp.mapDomain_apply (map_ringEquiv_injective (ringEquiv F e h))]
+  rw [Finsupp.mapDomain_apply_of_injective (map_ringEquiv_injective (ringEquiv F e h))]
   simp only [ratDiv, Finsupp.coe_sub, Pi.sub_apply, Finsupp.mapRange_apply, divCycle_map_apply]
 
 theorem isRatSection_of_map {V : Ideal (MRingOver F ι)} {A : K' → ℤ} {f g : MRingOver F ι}

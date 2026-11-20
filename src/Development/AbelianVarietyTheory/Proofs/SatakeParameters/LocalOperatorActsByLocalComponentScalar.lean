@@ -62,7 +62,7 @@ theorem GlobalTheory.Cong.opOf_locU_eq_smul : ∀ (E : Type) [Field E] [NumberFi
   refine ⟨f.mapDomain j, ?_, ?_⟩
   · intro g hg
     obtain ⟨h, -, rfl⟩ := Finset.mem_image.1 (Finsupp.mapDomain_support hg)
-    exact ⟨(e.symm h).2, by rw [Finsupp.mapDomain_apply hinj, hcj]⟩
+    exact ⟨(e.symm h).2, by rw [Finsupp.mapDomain_apply_of_injective hinj, hcj]⟩
   · intro U hU σ hσ φ hφU hφK
     have hop : ∀ ψ, opOf (RU E a) (f.mapDomain j) ψ = opOf ρ' f ψ := by
       intro ψ

@@ -18,7 +18,7 @@ theorem coeff_eq_mapDomain (hG : GlobalTheory.Published.GreenCuspidal) (D : D7) 
     D.ntypes.e0.coeff =
       Finsupp.mapDomain GlobalTheory.DimPartsCompare.pull (GlobalTheory.IndefiniteRowSideFullHecke.LevelCuspCharacters.goodIdem (H := D.host) om).coeff := by
   rw [Finsupp.ext_iff, GlobalTheory.DimPartsCompare.pull_bijective.2.forall]
-  simp only [Finsupp.mapDomain_apply GlobalTheory.DimPartsCompare.pull_bijective.1]
+  simp only [Finsupp.mapDomain_apply_of_injective GlobalTheory.DimPartsCompare.pull_bijective.1]
   exact idemTie_of_tameTie hG D om hT
 
 end GlobalTheory.GoodIdemTie

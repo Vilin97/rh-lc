@@ -85,7 +85,7 @@ theorem rename_block_isWeightedHomogeneous (k₀ : ι) {N : ℕ} {g : MvPolynomi
   rw [weight_coordDeg_apply]
   by_cases hk : k = k₀
   · subst hk
-    simp only [Finsupp.mapDomain_apply (blockInj_injective k), hN]
+    simp only [Finsupp.mapDomain_apply_of_injective (blockInj_injective k), hN]
     simp
   · have h0 : ∀ i, Finsupp.mapDomain (fun i ↦ (⟨k₀, i⟩ : Coord n)) d' ⟨k, i⟩ = 0 := fun i ↦
       Finsupp.mapDomain_of_notMem_range _ _ (by rintro ⟨j, hj⟩; exact hk (congrArg Sigma.fst hj).symm)

@@ -199,7 +199,7 @@ theorem rename_divDiff_castAdd {N r : ℕ} (i : Fin N) (G : MvPolynomial (Fin N)
   refine Finset.sum_congr rfl fun μ _ => ?_
   have hc : ∀ j, (Finsupp.mapDomain (Fin.castAdd r) μ + tailMono N r) (Fin.castAdd r j) = μ j := by
     intro j
-    rw [Finsupp.add_apply, Finsupp.mapDomain_apply (Fin.castAdd_injective _ _), tailMono_castAdd,
+    rw [Finsupp.add_apply, Finsupp.mapDomain_apply_of_injective (Fin.castAdd_injective _ _), tailMono_castAdd,
       add_zero]
   have hn : ∀ j, (Finsupp.mapDomain (Fin.castAdd r) μ + tailMono N r) (Fin.natAdd N j) = 1 := by
     intro j

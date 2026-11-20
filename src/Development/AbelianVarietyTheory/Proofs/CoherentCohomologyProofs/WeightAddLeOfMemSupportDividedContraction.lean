@@ -331,7 +331,7 @@ theorem dividedContraction_succ_rename_inr (γ : ι → κ → R) (n : ℕ) (q :
     have : multiChoose (t.mapDomain (Sum.inr : κ → ι ⊕ κ)) (α.mapDomain Sum.inl) = 0 := by
       by_contra h
       have := le_of_multiChoose_ne_zero h (Sum.inl i)
-      rw [Finsupp.mapDomain_apply Sum.inl_injective, Finsupp.mapDomain_notin_range _ _ (by simp)]
+      rw [Finsupp.mapDomain_apply_of_injective Sum.inl_injective, Finsupp.mapDomain_notin_range _ _ (by simp)]
         at this
       exact hi (Nat.le_zero.mp this)
     rw [this, zero_smul]
@@ -355,7 +355,7 @@ theorem dividedContraction_succ_X_inl_mul (γ : ι → κ → R) (n : ℕ) (i : 
           if α i = 0 then 0 else rowContraction γ i (E (monomial (α - Finsupp.single i 1) 1)
             (dividedDeriv R ((α - Finsupp.single i 1).mapDomain Sum.inl) P)) := by
     split_ifs with h
-    · rw [dividedDeriv_X_mul_of_eq_zero (by rwa [Finsupp.mapDomain_apply Sum.inl_injective]), hX,
+    · rw [dividedDeriv_X_mul_of_eq_zero (by rwa [Finsupp.mapDomain_apply_of_injective Sum.inl_injective]), hX,
         add_zero]
     · obtain ⟨β, rfl⟩ : ∃ β, α = β + Finsupp.single i 1 :=
         ⟨α - Finsupp.single i 1, (tsub_add_cancel_of_le

@@ -21,7 +21,7 @@ theorem fockS_rename {σ τ : Type} {e : σ → τ} (he : Function.Injective e) 
   unfold mfact
   rw [Finsupp.mapDomain_support_of_injective he, Finset.prod_image (fun _ _ _ _ h => he h)]
   refine Finset.prod_congr rfl fun k _ => ?_
-  rw [Finsupp.mapDomain_apply he]
+  rw [Finsupp.mapDomain_apply_of_injective he]
 
 def colIncl {n₀ n₁ : ℕ} (h : n₀ ≤ n₁) (r : ℕ) : Fin r × Fin n₀ → Fin r × Fin n₁ :=
   fun v => (v.1, Fin.castLE h v.2)

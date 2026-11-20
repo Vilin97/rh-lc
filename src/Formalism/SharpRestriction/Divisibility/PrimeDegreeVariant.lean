@@ -502,7 +502,7 @@ theorem mapDomain_mulSingle (i : ι) (a : MonoidAlgebra ℂ (G i)) :
       · rw [Pi.mulSingle_eq_of_ne hj]; exact hg j (Finset.mem_erase.2 ⟨hj, Finset.mem_univ _⟩)
     rw [if_pos hg, mul_one]
     conv_lhs => rw [this]
-    exact Finsupp.mapDomain_apply hinj _ _
+    exact Finsupp.mapDomain_apply_of_injective hinj _ _
   · rw [if_neg hg, mul_zero]
     refine Finsupp.mapDomain_of_notMem_range _ _ ?_
     rintro ⟨h, rfl⟩

@@ -46,7 +46,7 @@ variable {K : Type} [Field K] {L L' : Type} {r : ℕ}
 theorem mapDomain_prod_apply (g : L → L') (hg : Function.Injective g) (α : L × Fin r →₀ ℕ) (i : L) (a : Fin r) :
     (α.mapDomain (Prod.map g (id : Fin r → Fin r))) (g i, a) = α (i, a) := by
   have hinj : Function.Injective (Prod.map g (id : Fin r → Fin r)) := fun x y h => Prod.ext (hg (congrArg Prod.fst h)) (by have h2 := congrArg Prod.snd h; exact h2)
-  exact Finsupp.mapDomain_apply hinj α (i, a)
+  exact Finsupp.mapDomain_apply_of_injective hinj α (i, a)
 
 theorem PolK_rename (g : L ≃ L') (d' : L' → ℕ) (F : MvPolynomial (L × Fin r) K) :
     rename (Prod.map g (id : Fin r → Fin r)) F ∈ PolK K r d' ↔ F ∈ PolK K r (d' ∘ g) := by
@@ -334,7 +334,7 @@ theorem fM_inj : Function.Injective (Prod.map (fM Dt) (id : Fin r → Fin r)) :=
 theorem md_apply (mo : PlaneGramData.TL J Dt.nL r × Fin r →₀ ℕ) (y : (toData Dt).OL) (a : Fin r) :
     (mo.mapDomain (Prod.map (gO Dt) (id : Fin r → Fin r))) (y, a) = mo ((gO Dt).symm y, a) := by
   have hinj : Function.Injective (Prod.map (gO Dt) (id : Fin r → Fin r)) := gO_inj Dt
-  have := Finsupp.mapDomain_apply hinj mo ((gO Dt).symm y, a)
+  have := Finsupp.mapDomain_apply_of_injective hinj mo ((gO Dt).symm y, a)
   simpa using this
 
 theorem ph_comm (Gm : MvPolynomial (PlaneGramData.ML J Dt.nL r × Fin r) (G.KK O)) :
@@ -566,7 +566,7 @@ theorem binom_comm (lam : (PlaneGramData.TL J Dt.nL r × Fin r →₀ ℕ) →�
   have hα : ∀ v : PlaneGramData.TL J Dt.nL r × Fin r,
       (α.mapDomain (Prod.map (eO Dt).symm id)) v = α (gO Dt v.1, v.2) := by
     intro v
-    have := Finsupp.mapDomain_apply hinj α (gO Dt v.1, v.2)
+    have := Finsupp.mapDomain_apply_of_injective hinj α (gO Dt v.1, v.2)
     simpa [gO] using this
   have hsub : ∏ v ∈ m.support, ((((α.mapDomain (Prod.map (eO Dt).symm id)) v).choose (m v) : ℕ) : G.KK O) =
       ∏ v, ((((α.mapDomain (Prod.map (eO Dt).symm id)) v).choose (m v) : ℕ) : G.KK O) :=

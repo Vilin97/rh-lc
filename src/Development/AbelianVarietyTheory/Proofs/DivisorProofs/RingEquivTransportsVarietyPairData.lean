@@ -206,7 +206,7 @@ theorem formMap_ne_zero_iff {n : ℕ} (η : Forms c n) :
   map_ne_zero_iff _ (formMap_bijective e (RingHom.ext he) n).1
 
 theorem mapDomain_apply_zero (φ : K →₀ ℚ) : Finsupp.mapDomain e φ 0 = φ 0 := by
-  have := Finsupp.mapDomain_apply e.injective φ 0
+  have := Finsupp.mapDomain_apply_of_injective e.injective φ 0
   rwa [map_zero] at this
 
 theorem klt_iff {n : ℕ} (R : Subring K) (η : Forms c n) (φ : K →₀ ℚ) :
