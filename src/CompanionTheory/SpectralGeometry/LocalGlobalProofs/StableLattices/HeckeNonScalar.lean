@@ -33,7 +33,7 @@ theorem IsP.mul {f g : ℂ → A} (hf : IsP f) (hg : IsP g) : IsP (fun t => f t 
 theorem IsP.sum {ι : Type*} (s : Finset ι) {f : ι → ℂ → A} (hf : ∀ i, IsP (f i)) :
     IsP (fun t => ∑ i ∈ s, f i t) := by
   choose p hp using hf
-  exact ⟨∑ i ∈ s, p i, fun t => by simp [eval_finset_sum, hp]⟩
+  exact ⟨∑ i ∈ s, p i, fun t => by simp [Polynomial.eval_finsetSum, hp]⟩
 
 theorem IsP.listProd (l : List (ℂ → A)) (h : ∀ f ∈ l, IsP f) :
     IsP (fun t => (l.map fun f => f t).prod) := by
@@ -86,7 +86,7 @@ theorem coeff_extract {W : Type*} [AddCommGroup W] [Module ℂ W] (T : Module.En
       refine Polynomial.funext fun t => ?_
       have := congrArg φ (h t)
       simp only [map_add, map_sum, map_smul, smul_eq_mul] at this
-      simp only [eval_sub, eval_add, eval_mul, eval_finset_sum, eval_C, eval_X, eval_pow, eval_zero]
+      simp only [eval_sub, eval_add, eval_mul, Polynomial.eval_finsetSum, eval_C, eval_X, eval_pow, eval_zero]
       rw [sub_eq_zero, mul_comm (φ u)]
       simp only [mul_comm (φ _) (t ^ _)]
       exact this
@@ -94,7 +94,7 @@ theorem coeff_extract {W : Type*} [AddCommGroup W] [Module ℂ W] (T : Module.En
     have c1 := congrArg (fun q : ℂ[X] => q.coeff 1) hQ
     have k0 : 0 ∈ range k := mem_range.2 (by omega)
     have k1 : 1 ∈ range k := mem_range.2 (by omega)
-    simp only [coeff_sub, coeff_add, finset_sum_coeff, coeff_C_mul, coeff_X_pow, coeff_zero,
+    simp only [coeff_sub, coeff_add, Polynomial.finsetSum_coeff, coeff_C_mul, coeff_X_pow, coeff_zero,
       mul_ite, mul_one, mul_zero, coeff_X_mul, coeff_X_mul_zero, hP0, hP1] at c0 c1
     simp [k0, k1] at c0 c1
     exact ⟨c0, by rw [map_add]; exact c1⟩

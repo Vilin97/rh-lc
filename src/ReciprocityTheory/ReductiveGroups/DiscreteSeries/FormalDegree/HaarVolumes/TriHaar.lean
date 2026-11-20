@@ -114,7 +114,7 @@ theorem triMeas_compact_lt_top (K : Set (TriCo N)) (hK : IsCompact K) (hK0 : K �
   unfold triMeas
   rw [withDensity_apply _ hKm, Measure.restrict_restrict hKm, Set.inter_eq_left.mpr hK0]
   have hgc : ContinuousOn (fun t : TriCo N => ∏ j : Fin N, t.1 j ^ (-(2 * ((j : ℕ) : ℤ) + 1))) K := by
-    refine continuousOn_finset_prod _ (fun j _ => ?_)
+    refine continuousOn_finsetProd _ (fun j _ => ?_)
     exact ContinuousOn.zpow₀ (by fun_prop : Continuous fun t : TriCo N => t.1 j).continuousOn _
       (fun x hx => Or.inl (hK0 hx j).ne')
   obtain ⟨C, hC⟩ := hK.exists_bound_of_continuousOn hgc

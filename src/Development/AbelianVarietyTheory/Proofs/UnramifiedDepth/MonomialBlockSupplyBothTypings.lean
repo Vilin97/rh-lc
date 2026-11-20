@@ -179,9 +179,9 @@ theorem core (X : RowData C V d I J) (g : Fin 2) (r : ZMod d → ℕ) (en : ∀ 
     exact Finset.sum_le_sum fun ρ _ => GlobalTheory.LegendreBounds.upper V.l V.l_prime _
   · rw [hval, GlobalTheory.LegendreFacts.mfact_eq_prod]
     refine le_of_eq (val_coprime V.v V.l_prime V.v_l fun hd => ?_)
-    obtain ⟨x, -, hx⟩ := (Prime.dvd_finset_prod_iff V.l_prime.prime _).1 hd
+    obtain ⟨x, -, hx⟩ := (Prime.dvd_finsetProd_iff V.l_prime.prime _).1 hd
     refine absurd ((V.l_prime.dvd_factorial).1 hx) (not_le.2 ?_)
-    rw [Finsupp.finset_sum_apply]
+    rw [Finsupp.finsetSum_apply]
     by_cases hx' : ∃ a y, x = j a y
     · obtain ⟨a, y, rfl⟩ := hx'
       rw [Finset.sum_eq_single a, dg_apply (j a) (hj' a) _ y.1 y.2]

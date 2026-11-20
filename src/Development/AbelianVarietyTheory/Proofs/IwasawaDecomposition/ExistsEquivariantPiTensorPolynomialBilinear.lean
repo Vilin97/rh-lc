@@ -26,7 +26,7 @@ theorem prodRename_apply [DecidableEq ι] (P : ι → MvPolynomial σ ℂ) :
 theorem sum_mapDomain_apply (a : ι → σ →₀ ℕ) (j : ι) (s : σ) :
     (∑ i, Finsupp.mapDomain (Prod.mk i) (a i)) (j, s) = a j s := by
   classical
-  rw [Finsupp.finset_sum_apply, Finset.sum_eq_single j]
+  rw [Finsupp.finsetSum_apply, Finset.sum_eq_single j]
   · exact Finsupp.mapDomain_apply (Prod.mk_right_injective j) _ _
   · intro i _ hi
     refine Finsupp.mapDomain_notin_range _ _ ?_

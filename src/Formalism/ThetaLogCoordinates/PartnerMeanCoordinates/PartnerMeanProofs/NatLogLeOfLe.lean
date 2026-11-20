@@ -21,7 +21,7 @@ private lemma digits_sum_le_sub_one_mul_log_add_one (p : ℕ) [hp : Fact p.Prime
   rcases Nat.eq_zero_or_pos n with rfl | hpos
   · simp only [Nat.digits_zero, List.sum_nil, Nat.cast_zero]
     exact mul_nonneg (by linarith) (by positivity)
-  · have hlen := Nat.digits_len p n hp.out.one_lt hpos.ne'
+  · have hlen := Nat.length_digits p n hp.out.one_lt hpos.ne'
     have hsum : (p.digits n).sum ≤ (p.digits n).length * (p - 1) := by
       have := List.sum_le_card_nsmul (p.digits n) (p - 1)
         (fun x hx => Nat.le_sub_one_of_lt (Nat.digits_lt_base hp.out.one_lt hx))

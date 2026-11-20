@@ -121,8 +121,8 @@ theorem adb_measurable_cxHessian (f : (Fin D → ℂ) → ℝ) (i j : Fin D) :
 theorem adb_continuous_mixedDisc :
     Continuous (mixedDisc : (Fin D → Matrix (Fin D) (Fin D) ℂ) → ℂ) := by
   unfold mixedDisc
-  exact continuous_const.mul (continuous_finset_sum _ fun S _ => continuous_const.mul
-    ((continuous_finset_sum _ fun k _ => continuous_apply k).matrix_det))
+  exact continuous_const.mul (continuous_finsetSum _ fun S _ => continuous_const.mul
+    ((continuous_finsetSum _ fun k _ => continuous_apply k).matrix_det))
 
 theorem adb_measurable_maDensity (φ : Fin D → (Fin D → ℂ) → ℝ) : Measurable (maDensity φ) := by
   have hcx : ∀ k i j, Measurable fun z => cxHessian (φ k) z i j := fun k i j =>

@@ -74,7 +74,7 @@ theorem rowDiv_diag {r n : ℕ} (a : Fin r) (k : ℕ) (f : MvPolynomial (Fin r �
   classical
   unfold rowDiv
   conv_lhs => rw [f.as_sum]
-  rw [map_sum, Polynomial.finset_sum_coeff]
+  rw [map_sum, Polynomial.finsetSum_coeff]
   conv_rhs => rw [f.as_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [rowGen_diag_monomial, Polynomial.coeff_C_mul, Polynomial.coeff_one_add_X_pow]
@@ -168,7 +168,7 @@ private theorem isWeightedHomogeneous_coeff_rowGen {r n : ℕ} (a b c : Fin r) (
     IsWeightedHomogeneous (rw1 c) ((rowGen ℂ a b g).coeff j)
       (H + j * ((if a = c then 1 else 0) - (if b = c then 1 else 0))) := by
   classical
-  rw [g.as_sum, map_sum, Polynomial.finset_sum_coeff, ← mem_weightedHomogeneousSubmodule]
+  rw [g.as_sum, map_sum, Polynomial.finsetSum_coeff, ← mem_weightedHomogeneousSubmodule]
   refine Submodule.sum_mem _ fun m hm => ?_
   rw [mem_weightedHomogeneousSubmodule]
   have hw := hg (mem_support_iff.mp hm)

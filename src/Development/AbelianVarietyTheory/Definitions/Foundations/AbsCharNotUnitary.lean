@@ -46,7 +46,7 @@ theorem logInf_one : logInf F 1 = 0 := by
 
 theorem continuous_logInf : Continuous (logInf F) := by
   unfold logInf
-  refine continuous_finset_sum _ fun w _ => continuous_const.mul ?_
+  refine continuous_finsetSum _ fun w _ => continuous_const.mul ?_
   refine Continuous.log ?_ fun a => norm_ne_zero_iff.2 (inf_ne F a w)
   have h : Continuous fun x : InfiniteAdeleRing F => x w := continuous_apply w
   exact (h.comp Units.continuous_val).norm
@@ -175,7 +175,7 @@ theorem infDiag_parts (k : Fˣ) : infPart F (infDiag k) = infPart F (diagUnits F
   constructor
   · apply Units.ext
     funext w
-    rw [infDiag, MonoidHom.finset_prod_apply, map_prod, Units.coe_prod]
+    rw [infDiag, MonoidHom.finsetProd_apply, map_prod, Units.coe_prod]
     have e : (∏ u : InfinitePlace F, ((infPart F (((infIdele F u).comp (atInf u)) k) : (InfiniteAdeleRing F)ˣ) :
         InfiniteAdeleRing F)) w = ∏ u : InfinitePlace F, ((infPart F (((infIdele F u).comp (atInf u)) k) :
           (InfiniteAdeleRing F)ˣ) : InfiniteAdeleRing F) w := Finset.prod_apply _ _ _
@@ -184,7 +184,7 @@ theorem infDiag_parts (k : Fˣ) : infPart F (infDiag k) = infPart F (diagUnits F
     · intro u _ hu
       exact Model.infIdele_fst_ne F u w (Ne.symm hu) _
     · simp
-  · rw [infDiag, MonoidHom.finset_prod_apply, map_prod]
+  · rw [infDiag, MonoidHom.finsetProd_apply, map_prod]
     exact Finset.prod_eq_one fun u _ => Units.ext rfl
 
 theorem logNorm_infDiag (k : Fˣ) : logNorm F (infDiag k) = ∑ φ : F →+* ℂ, Real.log ‖φ (k : F)‖ := by
@@ -220,7 +220,7 @@ theorem absChar_not_unitary : ¬ (absChar F 1).IsUnitary := by
   have h1 := h (localIdele F v (atFin v (unif v)))
   change ‖Complex.exp (1 * logNorm F _)‖ = 1 at h1
   rw [logNorm_local v _ 1 (unif_spec v), one_mul, Complex.norm_exp_ofReal, Real.exp_eq_one_iff] at h1
-  have h2 : (1 : ℝ) < (Ideal.absNorm v.asIdeal : ℕ) := by exact_mod_cast NumberField.RingOfIntegers.HeightOneSpectrum.one_lt_absNorm v
+  have h2 : (1 : ℝ) < (Ideal.absNorm v.asIdeal : ℕ) := by exact_mod_cast NumberField.HeightOneSpectrum.one_lt_absNorm v
   have := Real.log_pos h2
   push_cast at h1 this
   linarith

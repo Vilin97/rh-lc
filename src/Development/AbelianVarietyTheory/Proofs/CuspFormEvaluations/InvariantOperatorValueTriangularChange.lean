@@ -273,7 +273,7 @@ theorem nabVal_triangular : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
   have hs : ∀ x ∈ s, ∀ y ∈ s, x * y = y * x := by
     rintro _ ⟨e, rfl⟩ _ ⟨e', rfl⟩
     exact hcomm _ _
-  letI : CommRing (Algebra.adjoin S s) := Algebra.adjoinCommRingOfComm S hs
+  letI : CommRing (Algebra.adjoin S s) := Algebra.isMulCommutative_adjoin S hs
   have hmem : ∀ v : Fin d → S, dEnd (B.FK S) v ∈ Algebra.adjoin S s := by
     intro v
     rw [dEnd_comb (B.FK S) (fun e => v e) (fun e => Pi.single e 1) v (fun e' => by simp [Pi.single_apply])]

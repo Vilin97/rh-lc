@@ -43,7 +43,7 @@ theorem isHomogeneous_ideal_cone {σ E : Type} [Fintype σ] (f : σ → E → �
   have hQ : Q = 0 := by
     apply Polynomial.funext
     intro s
-    simp only [Q, Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C,
+    simp only [Q, Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C,
       Polynomial.eval_pow, Polynomial.eval_X, Polynomial.eval_zero]
     have hs := (hI F).1 hF s z
     conv_lhs at hs => rw [← MvPolynomial.sum_homogeneousComponent F]
@@ -54,7 +54,7 @@ theorem isHomogeneous_ideal_cone {σ E : Type} [Fintype σ] (f : σ → E → �
     ring
   by_cases hi : i ≤ F.totalDegree
   · have hc := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P i) hQ
-    simpa [Q, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow, Finset.mem_range,
+    simpa [Q, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow, Finset.mem_range,
       Nat.lt_succ_iff.mpr hi] using hc
   · rw [MvPolynomial.homogeneousComponent_eq_zero, map_zero]
     omega

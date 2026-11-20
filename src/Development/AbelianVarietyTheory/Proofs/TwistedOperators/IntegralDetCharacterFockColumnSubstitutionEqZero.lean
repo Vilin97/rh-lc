@@ -181,7 +181,7 @@ theorem integral_detZpow_colSub_eq_zero :
     calc (M : ℂ) * ∫ x, f x ∂ν = ∑ k ∈ Finset.range M, ∫ x, f (u k * x) ∂ν := by
           rw [Finset.sum_congr rfl fun k _ => (hinvar (u k)).2, Finset.sum_const, Finset.card_range, nsmul_eq_mul]
       _ = ∫ x, ∑ k ∈ Finset.range M, f (u k * x) ∂ν :=
-          (integral_finset_sum _ fun k _ => (hinvar (u k)).1).symm
+          (MeasureTheory.integral_finsetSum _ fun k _ => (hinvar (u k)).1).symm
       _ = 0 := by simp [hsum0]
   exact (mul_eq_zero.1 hkey).resolve_left (by exact_mod_cast hM0)
 

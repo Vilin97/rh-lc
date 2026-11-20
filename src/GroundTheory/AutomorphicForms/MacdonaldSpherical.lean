@@ -78,7 +78,7 @@ theorem integrable_indicator_mul_sphericalFun (z : Fin n → ℂˣ) (g : GL (Fin
     continuous_of_mul_right_invariant fun g k hk => sphericalFun_mul_right (isUnramified_paramChar z) g hk
   refine Continuous.integrable_of_hasCompactSupport ?_ ?_
   · exact (isClopen_integralGL.continuous_indicator continuous_const).mul
-      (hφ.comp (continuous_mul_right g))
+      (hφ.comp (continuous_mul_const g))
   · refine HasCompactSupport.intro (isCompact_integralGL F n) fun x hx => ?_
     simp only [Set.indicator_of_notMem hx, zero_mul]
 
@@ -153,7 +153,7 @@ theorem sum_zonalSpherical_gMat (z : Fin n → ℂˣ) (r : ℕ) (g : GL (Fin n) 
         ind x * sphericalFun (paramChar F z) (x * (g * gMat S c)) ∂μ := by
     have e := integral_finsetSum (μ := μ) (f := fun S x => ∑ c : Pairs S → 𝓀[F],
       ind x * sphericalFun (paramChar F z) (x * (g * gMat S c))) P
-      (fun S _ => integrable_finset_sum _ fun c _ => hint _)
+      (fun S _ => MeasureTheory.integrable_finsetSum _ fun c _ => hint _)
     rw [e]
     refine Finset.sum_congr rfl fun S _ => ?_
     have e' := integral_finsetSum (μ := μ) (f := fun c x =>

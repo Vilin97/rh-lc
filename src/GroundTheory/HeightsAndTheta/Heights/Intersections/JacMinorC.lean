@@ -34,7 +34,7 @@ theorem pderiv_facts_charZero {F : Type*} [Field F] [CharZero F] {σ : Type*} (p
     simp only [Finsupp.add_apply, Finsupp.single_eq_same] at this
     omega
   · intro i hi
-    rw [mem_vars] at hi ⊢
+    rw [MvPolynomial.mem_vars_iff_mem_support] at hi ⊢
     obtain ⟨m, hm, him⟩ := hi
     refine ⟨m + Finsupp.single j 1, hsupp m hm, ?_⟩
     rw [Finsupp.mem_support_iff] at him ⊢
@@ -195,7 +195,7 @@ theorem exists_jacobian_minor_not_mem_charZero {F : Type} [Field F] [CharZero F]
       intro i hi
       rcases hQv hi with rfl | hi'
       · exfalso
-        rw [Finset.mem_coe, mem_vars] at hi
+        rw [Finset.mem_coe, MvPolynomial.mem_vars_iff_mem_support] at hi
         obtain ⟨m, hm, him⟩ := hi
         have := monomial_le_degreeOf j hm
         rw [Finsupp.mem_support_iff] at him

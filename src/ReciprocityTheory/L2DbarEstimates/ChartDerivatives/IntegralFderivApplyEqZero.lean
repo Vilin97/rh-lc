@@ -201,7 +201,7 @@ theorem integral_db_eq_zero {M : Type*} [TopologicalSpace M] [T2Space M] [Second
         exact hx (d_db_eq_zero_of_not_mem_tsupport n z hz j _ x hx').2)
   have hsum : (fun x => db n z j (fun x => ∑ i, h i x) x) = fun x => ∑ i, db n z j (h i) x :=
     funext fun x => db_finset_sum n z Finset.univ h (fun i => hh i) j x
-  rw [hsum, integral_finset_sum _ fun i _ => dint i]
+  rw [hsum, MeasureTheory.integral_finsetSum _ fun i _ => dint i]
   exact Finset.sum_eq_zero fun i _ =>
     integral_db_chart_eq_zero n z hz (e i) (he i) j (h i) (hh i) (hc' i) (hs i)
 

@@ -73,7 +73,7 @@ theorem isInternal : DirectSum.IsInternal (piece M) := by
       DirectSum.of (fun e => piece M e) n ⟨mono M n ⟨_, r.2 n⟩, _, rfl⟩, ?_⟩
     rw [map_sum]
     apply Subtype.ext
-    simp only [DirectSum.coeAddMonoidHom_of, AddSubmonoidClass.coe_finset_sum, mono_val]
+    simp only [DirectSum.coeAddMonoidHom_of, AddSubmonoidClass.coe_finsetSum, mono_val]
     exact (as_sum_support _).symm
 
 def grading : GradedAlgebra (piece M) where

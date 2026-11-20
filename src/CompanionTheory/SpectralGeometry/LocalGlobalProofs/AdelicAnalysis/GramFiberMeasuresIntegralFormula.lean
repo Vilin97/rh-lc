@@ -102,7 +102,7 @@ theorem tup_continuousSMul :
     tupR p.2 ((p.1⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K)
   refine continuous_pi fun a => continuous_pi fun i => ?_
   simp only [tupR]
-  refine continuous_finset_sum _ fun c _ => ?_
+  refine continuous_finsetSum _ fun c _ => ?_
   refine Continuous.mul ?_ ?_
   · exact (continuous_apply i).comp ((continuous_apply c).comp continuous_snd)
   · exact (continuous_apply a).comp ((continuous_apply c).comp (continuous_inv_val.comp continuous_fst))

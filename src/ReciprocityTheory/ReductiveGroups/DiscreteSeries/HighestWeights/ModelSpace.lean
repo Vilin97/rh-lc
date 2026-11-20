@@ -78,7 +78,7 @@ theorem rtr_evalK (ε : Fin n → Bool) (k : KG ε) (Q : MvPolynomial (Fin n × 
 theorem totalDegree_rsub (ε : Fin n → Bool) (k : KG ε) (p : Fin n × Fin n) :
     (rsub ε k p).totalDegree ≤ 1 := by
   simp only [rsub]
-  refine (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun l _ => ?_)
+  refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun l _ => ?_)
   refine (MvPolynomial.totalDegree_mul _ _).trans ?_
   simp [MvPolynomial.totalDegree_X, MvPolynomial.totalDegree_C]
 
@@ -87,11 +87,11 @@ theorem totalDegree_bind₁_le {σ τ : Type*} (g : σ → MvPolynomial τ ℂ) 
   classical
   conv_lhs => rw [Q.as_sum]
   rw [map_sum]
-  refine (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun d hd => ?_)
+  refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun d hd => ?_)
   rw [MvPolynomial.bind₁_monomial]
   refine (MvPolynomial.totalDegree_mul _ _).trans ?_
   rw [MvPolynomial.totalDegree_C, zero_add]
-  refine (MvPolynomial.totalDegree_finset_prod _ _).trans ?_
+  refine (MvPolynomial.totalDegree_finsetProd _ _).trans ?_
   refine le_trans ?_ (MvPolynomial.le_totalDegree hd)
   rw [Finsupp.sum]
   refine Finset.sum_le_sum fun i _ => ?_

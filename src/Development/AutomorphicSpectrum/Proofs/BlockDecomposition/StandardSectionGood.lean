@@ -20,7 +20,7 @@ theorem mem_unitary_of_euclid (U : Matrix (Fin n) (Fin n) 𝕜)
   classical
   let f : EuclideanSpace 𝕜 (Fin n) →ₗ[𝕜] EuclideanSpace 𝕜 (Fin n) := Matrix.toEuclideanLin Uᵀ
   have hf : ∀ x : EuclideanSpace 𝕜 (Fin n), (f x).ofLp = x.ofLp ᵥ* U := fun x => by
-    simp [f, Matrix.toEuclideanLin_apply, Matrix.mulVec_transpose]
+    simp [f, Matrix.toLpLin_apply, Matrix.mulVec_transpose]
   have hn : ∀ x, ‖f x‖ = ‖x‖ := fun x => by
     have := h x.ofLp
     rw [EuclideanSpace.norm_eq, EuclideanSpace.norm_eq, hf]

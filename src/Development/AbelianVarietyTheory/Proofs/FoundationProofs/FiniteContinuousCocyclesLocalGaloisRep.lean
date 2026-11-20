@@ -305,7 +305,7 @@ theorem _root_.GlobalTheory.LocalH1Finiteness.finite_continuous_cocycles_localGa
       htoLL.comp ((hr.comp Bw.e_symm_cont).matrix_elem a b)
     refine continuous_pi fun a => ?_
     simp only [_root_.GlobalTheory.LocalH1Finiteness.rep_apply]
-    exact continuous_finset_sum _ fun b _ =>
+    exact continuous_finsetSum _ fun b _ =>
       ((hent a b).comp continuous_fst).mul ((continuous_apply b).comp continuous_snd)
   · intro g v
     refine (pi_norm_le_iff_of_nonneg (norm_nonneg v)).2 fun a => ?_

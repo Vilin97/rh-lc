@@ -94,7 +94,7 @@ theorem continuous_orbit (hσ : IsURepOn (UJset ε) σ) (v : H) :
 theorem continuous_cf (hσ : IsURepOn (UJset ε) σ) (dual : Bool) (y : H) (ξ : Fin n) (F : Fin n → H) :
     Continuous (cf dual ε σ y ξ F) := by
   unfold cf
-  exact continuous_finset_sum _ fun c _ => ((continuous_wt dual ε ξ c).comp continuous_umat).mul
+  exact continuous_finsetSum _ fun c _ => ((continuous_wt dual ε ξ c).comp continuous_umat).mul
     (continuous_const.inner (continuous_orbit hσ (F c)))
 
 theorem memLp_cf (hσ : IsURepOn (UJset ε) σ) (dual : Bool) (y : H) (ξ : Fin n) (F : Fin n → H)
@@ -103,7 +103,7 @@ theorem memLp_cf (hσ : IsURepOn (UJset ε) σ) (dual : Bool) (y : H) (ξ : Fin 
       2 (Formalism.REAL.muG ε)) :
     MemLp (cf dual ε σ y ξ F) 2 (Formalism.REAL.muG ε) := by
   unfold cf
-  refine memLp_finset_sum _ fun c _ => ?_
+  refine MeasureTheory.memLp_finsetSum _ fun c _ => ?_
   refine MemLp.of_le (hW c) ?_ (Filter.Eventually.of_forall fun g => ?_)
   · exact (((continuous_wt dual ε ξ c).comp continuous_umat).mul
       (continuous_const.inner (continuous_orbit hσ (F c)))).aestronglyMeasurable

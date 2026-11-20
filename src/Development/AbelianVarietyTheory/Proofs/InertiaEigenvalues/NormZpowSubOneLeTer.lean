@@ -106,7 +106,7 @@ theorem surj_of_small [CompleteSpace C] {r : ℕ} (X : AddSubgroup C) (hX : IsCl
       Filter.atTop (nhds (g (y a) - y a + p * q * B.mulVec (fun b => g (y b)) a)) := by
     refine (((hg.tendsto _).comp (hY a)).sub (hY a)).add (Filter.Tendsto.const_mul _ ?_)
     simp only [Matrix.mulVec, dotProduct]
-    exact tendsto_finset_sum _ fun b _ => ((hg.tendsto _).comp (hY b)).const_mul _
+    exact tendsto_finsetSum _ fun b _ => ((hg.tendsto _).comp (hY b)).const_mul _
   have t0 : Filter.Tendsto (fun N => q ^ N * v N a) Filter.atTop (nhds 0) :=
     squeeze_zero_norm (fun N => hbd N _ (hv N a))
       (tendsto_pow_atTop_nhds_zero_of_lt_one (norm_nonneg q) hq1)

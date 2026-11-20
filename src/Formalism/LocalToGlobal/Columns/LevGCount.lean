@@ -319,7 +319,7 @@ theorem detChar_uGL (χ : ℕ → κˣ →* Kˣ) {a : ℕ} (bl : List ℕ) {P : 
     (hP : ∀ i j, P i j → i < j) (hPa : ∀ i j, P i j → j.val < a) (f : {p : Fin n × Fin n // P p.1 p.2} → κ) :
     detChar χ n a bl ⟨uGL hP f, uniUT_le_blockUT n κ a bl (uGL_mem_uniUT bl hP hPa f)⟩ = 1 := by
   unfold detChar
-  rw [MonoidHom.finset_prod_apply]
+  rw [MonoidHom.finsetProd_apply]
   apply Finset.prod_eq_one
   intro s _
   rw [MonoidHom.comp_apply]
@@ -556,7 +556,7 @@ theorem dGL_mem_HK {r : ℕ} (bl : List ℕ) (i₀ : Fin n) (h₀ : r ≤ i₀.v
 theorem detChar_dGL (χ : ℕ → κˣ →* Kˣ) {a : ℕ} (bl : List ℕ) (i₀ : Fin n) {s : ℕ} (hs : s < bl.length)
     (h₀ : coarse a bl i₀.val = s + 1) (u : κˣ) : detChar χ n a bl ⟨dGL i₀ u, dGL_mem_btG _ i₀ u⟩ = χ s u := by
   unfold detChar
-  rw [MonoidHom.finset_prod_apply, Finset.prod_eq_single s]
+  rw [MonoidHom.finsetProd_apply, Finset.prod_eq_single s]
   · rw [MonoidHom.comp_apply, blkDet_dGL, if_pos h₀]
   · intro c _ hc
     rw [MonoidHom.comp_apply, blkDet_dGL, if_neg (by omega), map_one]
@@ -754,7 +754,7 @@ theorem lamGen_diagEmb (ψ : AddChar κ K) (χ : ℕ → κˣ →* Kˣ) {s a : �
     have e2 : Subgroup.inclusion (uniUT_le_blockUT s κ a bl) g = ⟨g.1, uniUT_le_blockUT s κ a bl g.2⟩ := rfl
     rw [e1, e2]
     unfold detChar
-    rw [MonoidHom.finset_prod_apply, MonoidHom.finset_prod_apply]
+    rw [MonoidHom.finsetProd_apply, MonoidHom.finsetProd_apply]
     apply Finset.prod_congr rfl
     intro c hc
     rw [MonoidHom.comp_apply, MonoidHom.comp_apply]

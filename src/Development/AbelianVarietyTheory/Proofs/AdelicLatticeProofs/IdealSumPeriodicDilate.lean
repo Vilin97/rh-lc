@@ -110,7 +110,7 @@ theorem ideal_sum_periodic_dilate : ∀ (K : Type) [Field K] [NumberField K] (m 
     (idealLattice K (FractionalIdeal.mk0 K J)) f hf hfc A
   refine ⟨(∑ r : 𝓞 K ⧸ m, ‖ψ (s r)‖) * C, fun t ht ht1 => ?_⟩
   have hsum : Summable fun α : b => ψ α * f (t • mixedEmbedding K ((α : 𝓞 K) : K)) := by
-    refine summable_of_finite_support ?_
+    refine summable_of_hasFiniteSupport ?_
     refine ((finite_support_dilate K f hfc t ht).preimage
       (Subtype.val_injective (p := fun x => x ∈ b)).injOn).subset fun α hα => ?_
     exact right_ne_zero_of_mul hα

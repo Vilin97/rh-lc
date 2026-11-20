@@ -20,7 +20,7 @@ theorem norm_herm_idem_le (R : Matrix ι ι ℂ) (h1 : R.IsHermitian) (h2 : R * 
   have hs : (Matrix.toEuclideanLin R).IsSymmetric := (Matrix.isHermitian_iff_isSymmetric).1 h1
   have hTT : ∀ w, Matrix.toEuclideanLin R (Matrix.toEuclideanLin R w) = Matrix.toEuclideanLin R w := by
     intro w
-    rw [Matrix.toEuclideanLin_eq_toLin, ← LinearMap.comp_apply, ← Matrix.toLin_mul, h2]
+    rw [Matrix.toLpLin_eq_toLin, ← LinearMap.comp_apply, ← Matrix.toLin_mul, h2]
   set y := Matrix.toEuclideanLin R z with hy
   have h3 : @inner ℂ _ _ y y = @inner ℂ _ _ z y := by
     have h4 := hs z y

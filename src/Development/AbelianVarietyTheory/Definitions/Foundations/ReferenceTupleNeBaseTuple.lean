@@ -25,7 +25,7 @@ theorem emb_mul_indep {L I : Type} [Field L] [CharZero L] [Fintype I] (σ : I �
       have h2 := (hasDerivAt_zpow (m i) ((fun t : ℂ => 1 + t * σ i x) 0) (Or.inl (by simp))).comp (0 : ℂ) h1
       simpa [Function.comp_def] using h2
     have hf : HasDerivAt f (∑ i, (m i : ℂ) * σ i x) 0 := by
-      have := HasDerivAt.fun_finset_prod hd
+      have := HasDerivAt.fun_finsetProd hd
       simpa [f] using this
     have hs := hasDerivAt_iff_tendsto_slope.1 hf
     have hu : Tendsto (fun n : ℕ => ((1 : ℂ) / ((n : ℂ) + 1))) atTop (𝓝[≠] 0) := by
@@ -112,7 +112,7 @@ theorem inf_eq_one_of_order {L : Type} [Field L] [NumberField L] [IsTotallyCompl
     rw [this, map_pow, map_pow, hx]
   show χ.1 (infDiag k) = 1
   unfold infDiag
-  rw [MonoidHom.finset_prod_apply, map_prod]
+  rw [MonoidHom.finsetProd_apply, map_prod]
   exact Finset.prod_eq_one fun w _ => hw w _
 
 instance totallyComplexE {R : Ranks} (H : Formalism.BasicNotions.Host R) : IsTotallyComplex H.E := by
@@ -291,7 +291,7 @@ theorem infDiag_fst {L : Type} [Field L] [NumberField L] (k : Lˣ) (w : Infinite
       (MonoidHom.fst (InfiniteAdeleRing L) (FiniteAdeleRing (𝓞 L) L))).comp (Units.coeHom _)
   show p (infDiag k) = _
   unfold infDiag
-  rw [MonoidHom.finset_prod_apply, map_prod, Finset.prod_eq_single w]
+  rw [MonoidHom.finsetProd_apply, map_prod, Finset.prod_eq_single w]
   · show Pi.mulSingle (M := fun w : InfinitePlace L => w.Completion) w _ w = _
     rw [Pi.mulSingle_eq_same]; rfl
   · intro w' _ hw
@@ -317,7 +317,7 @@ theorem val_finPart {L I : Type} [Field L] [NumberField L] [Fintype I] {φ : I �
 theorem eDt_finPart (T : DtTied D C) (k : D.host.Eˣ) : T.eDt (finPart k) = T.eDt (diagUnits D.host.E k) := by
   have : T.eDt (infDiag k) = 1 := by
     unfold infDiag
-    rw [MonoidHom.finset_prod_apply, map_prod]
+    rw [MonoidHom.finsetProd_apply, map_prod]
     exact Finset.prod_eq_one fun w _ => T.inf w _
   rw [finPart, map_mul, map_inv, this, inv_one, mul_one]
 

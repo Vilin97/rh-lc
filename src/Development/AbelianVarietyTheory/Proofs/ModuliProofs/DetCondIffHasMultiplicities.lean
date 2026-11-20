@@ -59,7 +59,7 @@ theorem comb_iff {t : Sp k ⟶ S} {n : ℕ} (v : Fin n → Lie G t) (c : Fin n �
       w = (comb v c).1 := by
   have key : (comb v c).1 = (List.ofFn fun i => (smulLie (c i) (v i)).1).prod := by
     rw [List.prod_ofFn]
-    exact SubmonoidClass.coe_finset_prod (fun i => smulLie (c i) (v i)) Finset.univ
+    exact SubmonoidClass.coe_finsetProd (fun i => smulLie (c i) (v i)) Finset.univ
   constructor
   · rintro ⟨u, hu, rfl⟩
     obtain rfl : u = fun i => (smulLie (c i) (v i)).1 := funext fun i => Over.OverMorphism.ext (hu i)
@@ -82,7 +82,7 @@ theorem lieEquiv_comb {t : Sp k ⟶ S} {n : ℕ} (v : Fin n → Lie G t) (c : Fi
     lieEquiv t (comb v c) = ∑ i, c i • lieEquiv t (v i) := by
   apply TanSp.ext
   rw [TanSp.pt_sum]
-  exact SubmonoidClass.coe_finset_prod (fun i => smulLie (c i) (v i)) Finset.univ
+  exact SubmonoidClass.coe_finsetProd (fun i => smulLie (c i) (v i)) Finset.univ
 
 theorem mem_eigenspace_iff (act : OAct O G) (t : Sp k ⟶ S) (τ : O →+* k) (v : Lie G t) :
     v ∈ eigenspace act t τ ↔ lieEquiv t v ∈ eigenSub (TanSp.act t act) τ := by

@@ -295,9 +295,9 @@ theorem pnorm_contOn (X : Data E r) (la : Wt X.Ψ r) {P : Frame X.Ψ r → ℂ} 
   unfold Data.pnorm
   apply ContinuousOn.mul
   · exact continuous_norm.comp_continuousOn hP.1.continuousOn
-  · apply continuousOn_finset_prod
+  · apply continuousOn_finsetProd
     intro τ _
-    apply continuousOn_finset_prod
+    apply continuousOn_finsetProd
     intro i _
     apply ContinuousOn.rpow_const
     · exact (((hd τ i.succ).continuousOn).div (hd τ i.castSucc).continuousOn
@@ -317,7 +317,7 @@ theorem Hf_contOn (X : Data E r) (Xa : ArchInM X) : ContinuousOn (Hf X Xa) X.dom
     intro x _
     right
     positivity
-  · exact (continuousOn_finset_sum _ fun k _ => (hw k).pow 2).pow 2
+  · exact (continuousOn_finsetSum _ fun k _ => (hw k).pow 2).pow 2
   · intro x hx
     exact pow_ne_zero _ (S_pos X Xa hx).ne'
 

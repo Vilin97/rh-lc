@@ -48,7 +48,7 @@ theorem isCompact_of_fg {O LL V : Type} [CommRing O] [Field LL] [Algebra O LL] [
       exact Submodule.sum_mem _ (fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩))
   rw [heq]
   exact (isCompact_univ_pi fun _ => hc).image
-    (continuous_finset_sum _ fun i _ => (continuous_apply i).smul continuous_const)
+    (continuous_finsetSum _ fun i _ => (continuous_apply i).smul continuous_const)
 
 end GlobalTheory.LimCocycle
 

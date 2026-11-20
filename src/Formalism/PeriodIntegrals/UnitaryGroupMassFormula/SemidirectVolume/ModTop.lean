@@ -37,7 +37,7 @@ theorem continuous_sigR : Continuous (sigR R σ) := by
 theorem continuous_hR {X : Type} [TopologicalSpace X] {u v : X → Fin M → R ⊗[F] E}
     (hu : Continuous u) (hv : Continuous v) : Continuous fun x => hR R σ J (u x) (v x) := by
   unfold hR Formalism.UG.hform
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   exact (((continuous_sigR R σ).comp ((continuous_apply i).comp hu)).mul continuous_const).mul
     ((continuous_apply j).comp hv)
 
@@ -51,7 +51,7 @@ theorem continuous_linMap {X : Type} [TopologicalSpace X]
     rw [map_sum]
     simp only [map_smul]
   rw [key]
-  refine continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun j _ => ?_
   exact ((continuous_apply j).comp hv).smul continuous_const
 
 theorem continuous_linear_action {X : Type} [TopologicalSpace X] {g : X → HA R σ J}
@@ -87,7 +87,7 @@ theorem continuous_L_apply {X : Type} [TopologicalSpace X]
       intro a
       have h3 : Continuous fun x => s x a b := (continuous_apply b).comp ((continuous_apply a).comp hs)
       exact h3.smul continuous_const
-    exact h1.add (continuous_finset_sum _ fun a _ => h2 a)
+    exact h1.add (continuous_finsetSum _ fun a _ => h2 a)
   have hB : ∀ b : Fin r, Continuous fun x => D.hL (D.e b) v • (w x b + ∑ a, s x a b • D.e a) := by
     intro b
     exact (continuous_const (y := D.hL (D.e b) v)).smul (hA b)
@@ -95,8 +95,8 @@ theorem continuous_L_apply {X : Type} [TopologicalSpace X]
     intro a
     have h4 : Continuous fun x => D.hL (w x a) (D.pW v) := (hh (D.pW v)).comp ((continuous_apply a).comp hw)
     exact h4.smul continuous_const
-  exact (continuous_const.add (continuous_finset_sum _ fun b _ => hB b)).sub
-    (continuous_finset_sum _ fun a _ => hC a)
+  exact (continuous_const.add (continuous_finsetSum _ fun b _ => hB b)).sub
+    (continuous_finsetSum _ fun a _ => hC a)
 
 theorem continuous_toMatrix'_L {X : Type} [TopologicalSpace X]
     {w : X → Fin r → Fin M → R ⊗[F] E} {s : X → Fin r → Fin r → R ⊗[F] E}

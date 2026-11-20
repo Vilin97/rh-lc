@@ -147,7 +147,7 @@ theorem vol_prodFin_eq {M : Type*} [TopologicalSpace M] [SecondCountableTopology
   have hA' : A = ⋃ i : Fin p, ((fun x => (x, i)) ⁻¹' A) ×ˢ {i} := by
     ext ⟨x, j⟩
     simp
-  rw [Measure.coe_finset_sum, Finset.sum_apply]
+  rw [MeasureTheory.Measure.coe_finsetSum, Finset.sum_apply]
   conv_lhs => rw [hA']
   rw [measure_iUnion (fun i j hij => Set.disjoint_left.2 fun q hq1 hq2 => hij (hq1.2.symm.trans hq2.2))
     (fun i => (hS i).prod (measurableSet_singleton i)), tsum_fintype]
@@ -158,17 +158,17 @@ theorem vol_prodFin_eq {M : Type*} [TopologicalSpace M] [SecondCountableTopology
 
 theorem lintegral_vol_prodFin {M : Type*} [TopologicalSpace M] [T2Space M] [SecondCountableTopology M] [MeasurableSpace M] [BorelSpace M] (n : ℕ) (z : M → V n) (hz : IsLocalHomeomorph z) (p : ℕ) (f : M × Fin p → ℝ≥0∞) (hf : Measurable f) :
     ∫⁻ q, f q ∂vol n (fun q : M × Fin p => z q.1) = ∑ i, ∫⁻ x, f (x, i) ∂vol n z := by
-  rw [vol_prodFin_eq n z hz p, lintegral_finset_sum_measure]
+  rw [vol_prodFin_eq n z hz p, MeasureTheory.lintegral_finsetSum_measure]
   refine Finset.sum_congr rfl fun i _ => ?_
   exact lintegral_map hf (measurable_id.prodMk measurable_const)
 
 theorem integral_vol_prodFin {M : Type*} [TopologicalSpace M] [T2Space M] [SecondCountableTopology M] [MeasurableSpace M] [BorelSpace M] (n : ℕ) (z : M → V n) (hz : IsLocalHomeomorph z) (p : ℕ) (f : M × Fin p → ℂ) (hf : Integrable f (vol n (fun q : M × Fin p => z q.1))) :
     ∫ q, f q ∂vol n (fun q : M × Fin p => z q.1) = ∑ i, ∫ x, f (x, i) ∂vol n z := by
   rw [vol_prodFin_eq n z hz p] at hf ⊢
-  rw [integral_finset_sum_measure (integrable_finset_sum_measure.1 hf)]
+  rw [MeasureTheory.integral_finsetSum_measure (MeasureTheory.integrable_finsetSum_measure.1 hf)]
   refine Finset.sum_congr rfl fun i _ => ?_
   exact integral_map (measurable_id.prodMk measurable_const).aemeasurable
-    (integrable_finset_sum_measure.1 hf i (Finset.mem_univ _)).aestronglyMeasurable
+    (MeasureTheory.integrable_finsetSum_measure.1 hf i (Finset.mem_univ _)).aestronglyMeasurable
 
 def EtaleStein.prodFin {M : Type*} [TopologicalSpace M] [T2Space M] [SecondCountableTopology M]
     [MeasurableSpace M] [BorelSpace M] (n : ℕ) (X : EtaleStein n M) (p : ℕ) :

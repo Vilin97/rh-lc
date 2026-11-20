@@ -228,7 +228,7 @@ theorem coords_map (b : Module.Basis ι R T) (σ : W →ₐ[R] W) (ρ : T →ₗ
       rw [← map_smul ρ]
       generalize a • t = u
       conv_lhs => rw [← b.sum_repr u]
-      simp only [map_sum, LinearMap.map_smul_of_tower, map_smul, Finsupp.coe_finset_sum,
+      simp only [map_sum, LinearMap.map_smul_of_tower, map_smul, Finsupp.coe_finsetSum,
         Finset.sum_apply, Finsupp.smul_apply, Finset.sum_smul, smul_eq_mul, Algebra.smul_def,
         map_mul, Finset.sum_mul]
       exact Finset.sum_congr rfl fun j _ => by ring
@@ -255,7 +255,7 @@ theorem exists_top_tensor [TopologicalSpace R] [TopologicalSpace W] [IsTopologic
   refine ⟨τ, h2, Topology.IsInducing.topologicalAddGroup (coords W O b) ⟨rfl⟩, ?_, ?_⟩
   · refine continuous_induced_rng.2 (continuous_pi fun i => ?_)
     simp only [Function.comp_apply, coords_map]
-    refine continuous_finset_sum _ fun j _ => ?_
+    refine continuous_finsetSum _ fun j _ => ?_
     exact ((hc.comp (hρ i j)).comp continuous_fst).mul
       (hσ.comp (continuous_fst.prodMk ((continuous_apply j).comp (h0.comp continuous_snd))))
   · refine (Continuous.isClosedEmbedding ?_ ?_).isEmbedding
@@ -277,7 +277,7 @@ theorem compact_of_basis {p : ℕ} [Fact p.Prime] {T ι : Type} [AddCommGroup T]
     have : (b.equivFun.symm : (ι → ℤ_[p]) → T) = fun c => ∑ i, c i • b i :=
       funext fun c => b.equivFun_symm_apply c
     rw [this]
-    exact continuous_finset_sum _ fun i _ => (h (b i)).comp (continuous_apply i)
+    exact continuous_finsetSum _ fun i _ => (h (b i)).comp (continuous_apply i)
   refine ⟨b.equivFun.symm.surjective.compactSpace hF, fun U hU => ?_⟩
   have h1 : b.equivFun.symm ⁻¹' U ∈ 𝓝 (0 : ι → ℤ_[p]) :=
     hF.continuousAt (by simpa using hU)

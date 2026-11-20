@@ -117,7 +117,7 @@ theorem divPushFibre_of (h1 : DivPushResSideStatement) (h2 : DivPushPointStateme
     · simp [hmk]
     · rw [integral_const_mul, (hres k hmk).2]
   rw [Finset.sum_congr rfl step,
-    ← integral_finset_sum Finset.univ (f := fun k y => (m k : ℝ) * divFib R L B₁ Ψ (BW k) y) hint]
+    ← MeasureTheory.integral_finsetSum Finset.univ (f := fun k y => (m k : ℝ) * divFib R L B₁ Ψ (BW k) y) hint]
   apply integral_congr_ae
   filter_upwards [h2 K ι P J n R L B B₁ s r m W BW Ψ hAr hLs hBs hB1s hB1a hsec hsnc hHolo hΨ]
     with y hy

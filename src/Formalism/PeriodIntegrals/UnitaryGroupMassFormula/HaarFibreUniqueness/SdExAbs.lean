@@ -47,7 +47,7 @@ theorem B_cont (hBa : ∀ x x' y, B (x + x') y = B x y + B x' y)
     rw [B_expand v B hBa hBs β β' h1]
     exact Finset.sum_congr rfl fun j _ => by rw [hBsym p.1 (β' j)]
   rw [e]
-  exact continuous_finset_sum _ fun j _ =>
+  exact continuous_finsetSum _ fun j _ =>
     ((hBc (β' j)).comp continuous_fst).mul ((hBc (β j)).comp continuous_snd)
 
 def M0 (hBa : ∀ x x' y, B (x + x') y = B x y + B x' y)
@@ -98,7 +98,7 @@ theorem isCompact_dual_integral_module (hBa : ∀ x x' y, B (x + x') y = B x y +
   have hK : IsCompact ((fun c : ι → Fv F v => ∑ j, c j • β j) ''
       Set.univ.pi fun _ => (v.adicCompletionIntegers F : Set (Fv F v))) :=
     (isCompact_univ_pi fun _ => hO).image
-      (continuous_finset_sum _ fun j _ => (continuous_apply j).smul continuous_const)
+      (continuous_finsetSum _ fun j _ => (continuous_apply j).smul continuous_const)
   have hcl : IsClosed (M0 v B hBa hBs β' : Set V) :=
     AddSubgroup.isClosed_of_isOpen _ (isOpen_dual_integral_module v B hBa hBs hBsym hBc β')
   refine hK.of_isClosed_subset hcl fun x hx => ⟨fun j => B x (β' j), fun j _ => hx j, ?_⟩
@@ -189,7 +189,7 @@ theorem absSd_main (ψ0 : Fv F v → ℂ) (hψc : Continuous ψ0) (hψa : ∀ r 
     have hK : IsCompact ((fun c : ι → Fv F v => ∑ j, ((π ^ N)⁻¹ * y0 * c j) • β' j) ''
         Set.univ.pi fun _ => (v.adicCompletionIntegers F : Set (Fv F v))) :=
       (isCompact_univ_pi fun _ => hO).image
-        (continuous_finset_sum _ fun j _ =>
+        (continuous_finsetSum _ fun j _ =>
           (continuous_const.mul (continuous_apply j)).smul continuous_const)
     refine hK.of_isClosed_subset hNcl fun y hy => ?_
     have hin : ∀ j, π ^ N * B (β j) y ∈ Aset v ψ0 := by
@@ -209,7 +209,7 @@ theorem absSd_main (ψ0 : Fv F v → ℂ) (hψc : Continuous ψ0) (hψa : ∀ r 
     congr 1
     rw [mul_assoc, ← hts j, ← mul_assoc, inv_mul_cancel₀ hπN, one_mul]
 
-  set M : ℕ → AddSubgroup V := fun k => L.comap (DistribMulAction.toAddMonoidHom V (π ^ k))
+  set M : ℕ → AddSubgroup V := fun k => L.comap (DistribSMul.toAddMonoidHom V (π ^ k))
     with hMdef
   have hMset : ∀ k, (M k : Set V) = (fun x => π ^ k • x) ⁻¹' (L : Set V) := fun k => rfl
   have hπk : ∀ k, π ^ k ≠ 0 := fun k => pow_ne_zero k hπ0
@@ -335,7 +335,7 @@ theorem exists_selfDual_measure (ψ0 : Fv F v → ℂ) (hψc : Continuous ψ0) (
     rw [← hB' y]
     exact hy x' hx'
 
-  set M : ℕ → AddSubgroup V := fun k => L.comap (DistribMulAction.toAddMonoidHom V (π ^ k))
+  set M : ℕ → AddSubgroup V := fun k => L.comap (DistribSMul.toAddMonoidHom V (π ^ k))
     with hMdef
   have hMset : ∀ k, (M k : Set V) = (fun x => π ^ k • x) ⁻¹' (L : Set V) := fun k => rfl
   have hπk : ∀ k, π ^ k ≠ 0 := fun k => pow_ne_zero k hπ0

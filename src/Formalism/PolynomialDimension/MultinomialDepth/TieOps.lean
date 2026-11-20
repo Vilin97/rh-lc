@@ -2286,7 +2286,7 @@ theorem hw_is_Ffull (μ : Fin r → ℤ) (v : MvPolynomial (Fin N × Fin r) ℚ_
   obtain ⟨F, hF⟩ : ∃ F, rename ι F = v := by
     apply exists_rename_eq_of_vars_subset_range v ι hι
     intro x hx
-    rw [Finset.mem_coe, mem_vars] at hx
+    rw [Finset.mem_coe, MvPolynomial.mem_vars_iff_mem_support] at hx
     obtain ⟨m, hm, hxm⟩ := hx
     have hlt : (x.1 : ℕ) < T.pos i + 1 + 1 := hvF m hm x (Finsupp.mem_support_iff.mp hxm)
     exact ⟨(⟨x.1, hlt⟩, x.2), Prod.ext (Fin.ext (ιF_val hK _)) rfl⟩

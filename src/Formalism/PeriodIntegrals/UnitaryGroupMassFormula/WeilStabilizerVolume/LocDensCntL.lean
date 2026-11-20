@@ -29,7 +29,7 @@ theorem repr_change {ι ι' : Type} [Fintype ι'] (b : Module.Basis ι F E)
       ∑ j, (Algebra.TensorProduct.basis (Fv F v) c).repr z j *
         algebraMap F (Fv F v) (b.repr (c j) k) := by
   conv_lhs => rw [← (Algebra.TensorProduct.basis (Fv F v) c).sum_repr z]
-  simp only [map_sum, Finsupp.coe_finset_sum, Finset.sum_apply, Algebra.TensorProduct.basis_apply,
+  simp only [map_sum, Finsupp.coe_finsetSum, Finset.sum_apply, Algebra.TensorProduct.basis_apply,
     TensorProduct.smul_tmul', smul_eq_mul, mul_one, Algebra.TensorProduct.basis_repr_tmul,
     Finsupp.smul_apply, Finsupp.mapRange_apply]
 

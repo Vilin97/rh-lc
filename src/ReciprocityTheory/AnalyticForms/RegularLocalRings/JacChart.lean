@@ -34,7 +34,7 @@ theorem locRing_isLocalRing_isNoetherian (K : Ideal (MvPolynomial (Fin n) ℂ)) 
     rw [Ideal.map_le_iff_le_comap]
     intro h hh
     have h2 : h ∈ ptIdeal p := (RingHom.mem_ker).2 (hp h hh)
-    rw [← Localization.AtPrime.comap_maximalIdeal (I := ptIdeal p)] at h2
+    rw [← Localization.AtPrime.under_maximalIdeal (I := ptIdeal p)] at h2
     exact h2
   have hne : Ideal.map (algebraMap (MvPolynomial (Fin n) ℂ) (locPt p)) K ≠ ⊤ :=
     ne_top_of_le_ne_top (IsLocalRing.maximalIdeal.isMaximal _).ne_top hK

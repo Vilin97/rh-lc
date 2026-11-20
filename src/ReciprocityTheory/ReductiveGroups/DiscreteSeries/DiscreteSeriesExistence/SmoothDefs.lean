@@ -224,7 +224,7 @@ theorem dS_smul_vec (c : ℂ) (X : Matrix (Fin n) (Fin n) ℂ) (v : H) : dS σ X
   show deriv (fun t : ℝ => σ (NormedSpace.exp ((t : ℂ) • X)) (c • v)) 0 =
     c • deriv (fun t : ℝ => σ (NormedSpace.exp ((t : ℂ) • X)) v) 0
   simp only [map_smul]
-  exact deriv_const_smul' (f := fun t : ℝ => σ (NormedSpace.exp ((t : ℂ) • X)) v) (x := 0) c
+  exact deriv_const_smul_field (f := fun t : ℝ => σ (NormedSpace.exp ((t : ℂ) • X)) v) (x := 0) c
 
 theorem dS_add_smul (hσ : IsURepOn (UJset ε) σ) {X Y : Matrix (Fin n) (Fin n) ℂ} (hX : inG ε X) (hY : inG ε Y)
     (r : ℝ) {v : H} (hv : IsSmoothVecU ε σ v) :

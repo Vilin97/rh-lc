@@ -214,7 +214,7 @@ def cTor (K : FinExt l) (s H : ℕ) (U : Finset ℤ) (e : ℕ) : ℕ :=
   cWindow l s H U e + ((e + 2) * s + padicValNat l e + e / (l - 1) + 1) +
     (s + padicValNat l (e + 1)) + gK K s
 
-example : padicValNat l 0 = 0 := padicValNat.zero
+example : padicValNat l 0 = 0 := _root_.padicValNat_zero_right
 
 def TorsionBound {K LL : FinExt l} {s : ℕ} (h : Good K s LL) (e : ℕ) : Prop :=
   ∀ (Y Yt : Lat K LL) (ι : LatHom Y.L Yt.L) (π : LatHom Yt.L (unitLat K LL)),

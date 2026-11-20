@@ -53,7 +53,7 @@ theorem rw_smul (w : List (Mat k r)) (c : ℂ) (f : Mat k r → E) : Rw w (c •
     rw [ih]
     funext g
     simp only [RdV, Pi.smul_apply]
-    exact deriv_const_smul' (f := fun t : ℝ => Rw w f (g * NormedSpace.exp ((t : ℂ) • X))) c
+    exact deriv_const_smul_field (f := fun t : ℝ => Rw w f (g * NormedSpace.exp ((t : ℂ) • X))) c
 
 end local_
 

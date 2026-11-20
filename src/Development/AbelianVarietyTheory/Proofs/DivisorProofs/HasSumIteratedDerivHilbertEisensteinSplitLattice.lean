@@ -38,7 +38,7 @@ theorem hasSum_iterD_gval_split : ∀ (F : Type) [Field F] [NumberField F] [IsTo
     (fun z ↦ D⁻¹ * G z) M hr hM
     (fun ξ z hz ↦ by
       refine (DifferentiableAt.const_mul ?_ _).differentiableWithinAt
-      refine (HasFDerivAt.finset_prod (𝕜 := ℂ) (u := (Finset.univ : Finset (Emb F)))
+      refine (HasFDerivAt.finsetProd (𝕜 := ℂ) (u := (Finset.univ : Finset (Emb F)))
         (g := fun i (z : Emb F → ℂ) ↦ (1 + z i * c)⁻¹ ^ k * Complex.exp ((2 * Real.pi * Complex.I) * (i ξ : ℂ) * t * z i / (1 + z i * c)))
         (fun i _ ↦ DifferentiableAt.hasFDerivAt ?_)).differentiableAt
       have h1 := ((hψ ((2 * Real.pi * Complex.I) * (i ξ : ℂ) * t)).differentiableAt

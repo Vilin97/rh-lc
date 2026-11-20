@@ -115,7 +115,7 @@ theorem mem_smul_iff {ι : Type} [Fintype ι] (nb : Module.Basis ι (LetA O n) �
     exact key.2
   · intro h
     have h1 := congrArg Subtype.val (nb.sum_repr ⟨y, hy⟩)
-    simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] at h1
+    simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] at h1
     rw [← h1]
     exact Submodule.sum_mem _ fun j _ => Submodule.smul_mem_smul (h j) (nb j).2
 

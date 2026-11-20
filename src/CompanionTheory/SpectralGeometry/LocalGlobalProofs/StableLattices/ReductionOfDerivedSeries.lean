@@ -172,8 +172,8 @@ theorem reduce : DsLin → DsAd → DsDer → Reduce := by
     have iB : ∀ i, Integrable fun t => (φ t * b i t) • dsW σ W (σ (s t) (ds σ (Q i) u)) := fun i =>
       integrable_cut (hB i).1.continuous (hB i).2.1 (hg i).continuous
     simp only [hpt]
-    rw [integral_add (integrable_finset_sum _ fun j _ => iA j) (integrable_finset_sum _ fun j _ => iB j),
-      integral_finset_sum _ fun j _ => iA j, integral_finset_sum _ fun j _ => iB j, add_mul, Finset.sum_mul,
+    rw [integral_add (MeasureTheory.integrable_finsetSum _ fun j _ => iA j) (MeasureTheory.integrable_finsetSum _ fun j _ => iB j),
+      MeasureTheory.integral_finsetSum _ fun j _ => iA j, MeasureTheory.integral_finsetSum _ fun j _ => iB j, add_mul, Finset.sum_mul,
       Finset.sum_mul]
     refine (norm_add_le _ _).trans (add_le_add ((norm_sum_le _ _).trans (Finset.sum_le_sum fun j _ => ?_))
       ((norm_sum_le _ _).trans (Finset.sum_le_sum fun i _ => ?_)))

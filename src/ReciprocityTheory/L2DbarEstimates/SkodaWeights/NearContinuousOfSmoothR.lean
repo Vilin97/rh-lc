@@ -39,7 +39,7 @@ theorem near_smoothR_log {M : Type*} [TopologicalSpace M] [T2Space M] (n : ℕ) 
 theorem near_continuous_vsq {M : Type*} [TopologicalSpace M] {p : ℕ} (g : Fin p → M → ℂ)
     (hg : ∀ l, Continuous (g l)) : Continuous (fun x => vsq (gv g x)) := by
   unfold vsq gv
-  exact continuous_finset_sum _ fun i _ => ((hg i).norm).pow 2
+  exact continuous_finsetSum _ fun i _ => ((hg i).norm).pow 2
 
 theorem near_continuous_of_smoothR {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V n)
     (hz : IsLocalHomeomorph z) (f : M → ℝ) (hf : SmoothR n z f) : Continuous f := by

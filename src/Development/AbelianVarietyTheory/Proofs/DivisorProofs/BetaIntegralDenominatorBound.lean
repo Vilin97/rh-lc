@@ -46,7 +46,7 @@ theorem GlobalTheory.LeviCut.betaDen : GlobalTheory.LeviCut.BetaDen := by
   intro l w hl
   refine ⟨∏ s ∈ Finset.Icc 1 w, ordCompl[l] s, ?_, ?_⟩
   · intro hd
-    obtain ⟨s, hs, hds⟩ := (Prime.dvd_finset_prod_iff hl.prime _).mp hd
+    obtain ⟨s, hs, hds⟩ := (Prime.dvd_finsetProd_iff hl.prime _).mp hd
     have : s ≠ 0 := by have := (Finset.mem_Icc.mp hs).1; omega
     exact Nat.not_dvd_ordCompl hl this hds
   · intro j k hjk

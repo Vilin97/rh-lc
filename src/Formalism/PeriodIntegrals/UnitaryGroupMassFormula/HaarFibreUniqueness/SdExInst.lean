@@ -115,8 +115,8 @@ theorem pairHerm_cont_joint (σ : E →ₐ[F] E) (a : ℕ) :
     | exact IsModuleTopology.continuous_of_linearMap _
     | exact LinearMap.continuous_of_finiteDimensional _
   unfold pairHerm
-  refine continuous_const.mul (htr.comp (continuous_finset_sum _ fun i _ =>
-    continuous_finset_sum _ fun j _ => ?_))
+  refine continuous_const.mul (htr.comp (continuous_finsetSum _ fun i _ =>
+    continuous_finsetSum _ fun j _ => ?_))
   exact ((continuous_subtype_val.comp continuous_fst).matrix_elem i j).mul
     ((continuous_subtype_val.comp continuous_snd).matrix_elem j i)
 

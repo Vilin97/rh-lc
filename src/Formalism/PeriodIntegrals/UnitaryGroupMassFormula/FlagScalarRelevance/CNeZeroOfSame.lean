@@ -59,7 +59,7 @@ theorem hT_X_fvec (F : FlagG S r T) {x : S.V} (hx : x ∈ F.X) (m : Fin (r + 1))
   | cast k => rw [fvec_castSucc]; exact hT_X_X F hx (fe_mem_X F k)
 
 theorem fvec_indep (F : FlagG S r T) (hT0 : T ≠ 0) : LinearIndependent E F.fvec := by
-  rw [FlagG.fvec, linearIndependent_fin_snoc]
+  rw [FlagG.fvec, linearIndependent_finSnoc]
   refine ⟨F.e_indep, fun hz => hT0 ?_⟩
   have h1 := hT_X_alt F hz
   rw [F.z_norm] at h1

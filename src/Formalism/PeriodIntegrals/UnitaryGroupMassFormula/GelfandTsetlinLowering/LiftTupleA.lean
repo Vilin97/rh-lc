@@ -178,7 +178,7 @@ theorem rowDiv_prod {r c n K : ℕ} (e : Fin n → Fin r) (sz : Fin K → ℕ)
   classical
   unfold rowDiv
   rw [map_mul, hC, map_prod, Finset.prod_congr rfl (fun k _ => hG k a b (I k)), Fintype.prod_sum,
-    Finset.mul_sum, Polynomial.finset_sum_coeff]
+    Finset.mul_sum, Polynomial.finsetSum_coeff]
   refine Finset.sum_congr rfl fun F _ => ?_
   rw [Finset.prod_ite_zero]
   by_cases hA : ∀ k ∈ (Finset.univ : Finset (Fin K)), ∀ p ∈ F k, I k p = b

@@ -631,13 +631,13 @@ lemma sz_bc_zero {k : ℕ} (c : Fin 0 → ℂ) (μ : B.Mat k 0) (i j : Fin (2 * 
 lemma sz_contK {r : ℕ} (s : ℕ) (K : Set (Fin r → ℂ)) (hK0 : ∀ c ∈ K, ∀ a, c a ≠ 0) :
     ContinuousOn (fun c : Fin r → ℂ => 2 * unitriangularFactorConstant c + ∑ a, ‖c a‖ + (s.factorial : ℝ) / ‖∏ a, c a‖) K := by
   have hp : ∀ (q : ℕ) (f : Fin q → Fin r), ContinuousOn (fun c : Fin r → ℂ => ‖∏ t, c (f t)‖) K :=
-    fun q f => (continuous_finset_prod _ fun t _ => continuous_apply (f t)).norm.continuousOn
+    fun q f => (continuous_finsetProd _ fun t _ => continuous_apply (f t)).norm.continuousOn
   have hne : ∀ (q : ℕ) (f : Fin q → Fin r), ∀ c ∈ K, ‖∏ t, c (f t)‖ ≠ 0 := fun q f c hc => by
     rw [norm_ne_zero_iff]; exact Finset.prod_ne_zero_iff.mpr fun t _ => hK0 c hc (f t)
   refine ((continuousOn_const.mul ?_).add ?_).add ?_
   · unfold unitriangularFactorConstant
-    exact continuousOn_finset_sum _ fun i _ => continuousOn_const.div (hp _ _) (hne _ _)
-  · exact continuousOn_finset_sum _ fun a _ => (continuous_apply a).norm.continuousOn
+    exact continuousOn_finsetSum _ fun i _ => continuousOn_const.div (hp _ _) (hne _ _)
+  · exact continuousOn_finsetSum _ fun a _ => (continuous_apply a).norm.continuousOn
   · exact (continuousOn_const (c := (s.factorial : ℝ)) (s := K)).div (hp r id) (hne r id)
 
 theorem sizes (k r : ℕ) (K : Set (Fin r → ℂ)) (hK : IsCompact K) (hK0 : ∀ c ∈ K, ∀ a, c a ≠ 0) :

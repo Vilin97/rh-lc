@@ -179,7 +179,7 @@ theorem la_coeff (A : Type) [CommRing A] (u v w : A) (p k : ℕ) :
     refine Finset.sum_congr rfl (fun m _ => ?_)
     simp only [mul_pow, map_mul, map_pow, map_natCast]
     ring
-  rw [h, Polynomial.finset_sum_coeff]
+  rw [h, Polynomial.finsetSum_coeff]
   simp only [Polynomial.coeff_C_mul_X_pow]
   rw [Finset.sum_ite_eq]
   split_ifs with hk
@@ -351,7 +351,7 @@ theorem la_coeff_binLat {n : ℕ} (s : Fin n) (d : ℕ) (f : MvPolynomial (Fin 2
 theorem la_arith (l d : ℕ) (hl : l.Prime) :
     ∃ m : ℕ, ¬ l ∣ m ∧ ∀ i ≤ d, d.choose i ∣ m * l ^ Formalism.RankGapBounds.JumpSetsAlt.maxVal l d := by
   refine ⟨∏ i ∈ Finset.range (d + 1), d.choose i / l ^ ((d.choose i).factorization l), ?_, ?_⟩
-  · rw [Prime.dvd_finset_prod_iff hl.prime]
+  · rw [Prime.dvd_finsetProd_iff hl.prime]
     push_neg
     intro i hi
     exact Nat.not_dvd_ordCompl hl (Nat.choose_pos (by rw [Finset.mem_range] at hi; omega)).ne'
@@ -1143,7 +1143,7 @@ theorem la_incl_of_gens (r n : ℕ) (hn : n ≤ r) (ν : Fin n → ℕ) (l e : �
     exact Submodule.subset_span hg
   unfold InclZ
   refine ⟨∏ g ∈ S, M g, ?_, fun x hx => ?_⟩
-  · rw [Prime.dvd_finset_prod_iff hl.prime]
+  · rw [Prime.dvd_finsetProd_iff hl.prime]
     push_neg
     exact fun g hg => hM g (hS' g hg)
   · rw [← hS] at hx

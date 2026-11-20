@@ -41,7 +41,7 @@ theorem sum_single_apply (R₀ R : E.toAffine.Point) :
     (∑ T : φ.pointHom.ker, Finsupp.single (R₀ + (T : E.toAffine.Point)) (1 : ℤ)) R =
       if φ.pointMap R = φ.pointMap R₀ then 1 else 0 := by
   classical
-  rw [Finsupp.finset_sum_apply]
+  rw [Finsupp.finsetSum_apply]
   simp only [Finsupp.single_apply]
   split_ifs with h
   · have hk : R - R₀ ∈ φ.pointHom.ker := by

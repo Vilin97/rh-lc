@@ -225,14 +225,14 @@ theorem exists_K (c u : Fin r → EuclideanSpace ℂ (Fin (2 * r + k + 1))) (hc 
     (hui : ∀ a b, inner ℂ (u a) (Matrix.toEuclideanLin (Hpk k r) (u b)) = 0) :
     ∃ κ ∈ GG k r, κᴴ * κ = 1 ∧ ∀ a, κ *ᵥ (c a).ofLp = (u a).ofLp := by
   obtain ⟨K, hκH, hκi, hκc⟩ := exists_comm (Matrix.toEuclideanLin (Hpk k r))
-    (fun x => by simp [Matrix.toEuclideanLin_apply, Hpk_sq])
+    (fun x => by simp [Matrix.toLpLin_apply, Hpk_sq])
     (Matrix.isHermitian_iff_isSymmetric.1 Hpk_herm) c u hc hu hci hui
   set κ : Mat k r := Matrix.toEuclideanLin.symm K with hκdef
   have hκ : ∀ v, WithLp.toLp 2 (κ *ᵥ v) = K (WithLp.toLp 2 v) := by
     intro v
     have h1 : Matrix.toEuclideanLin κ = K := LinearEquiv.apply_symm_apply _ _
     have := LinearMap.congr_fun h1 (WithLp.toLp 2 v)
-    rw [Matrix.toEuclideanLin_apply, WithLp.ofLp_toLp] at this
+    rw [Matrix.toLpLin_apply, WithLp.ofLp_toLp] at this
     exact this
   have hunit : κᴴ * κ = 1 := by
     ext i j
@@ -248,7 +248,7 @@ theorem exists_K (c u : Fin r → EuclideanSpace ℂ (Fin (2 * r + k + 1))) (hc 
   have hv : ∀ v, κ *ᵥ (Hpk k r *ᵥ v) = Hpk k r *ᵥ (κ *ᵥ v) := by
     intro v
     have := hκH (WithLp.toLp 2 v)
-    rw [Matrix.toEuclideanLin_apply, WithLp.ofLp_toLp, ← hκ, ← hκ, Matrix.toEuclideanLin_apply,
+    rw [Matrix.toLpLin_apply, WithLp.ofLp_toLp, ← hκ, ← hκ, Matrix.toLpLin_apply,
       WithLp.ofLp_toLp] at this
     simpa using congrArg WithLp.ofLp this
   have hcomm : κ * Hpk k r = Hpk k r * κ := by
@@ -274,15 +274,15 @@ theorem iwasawa : ∀ (k r : ℕ), ∀ g ∈ GG k r, ∃ n ∈ Nset k r, ∃ a :
     intro a b
     simp [c, EuclideanSpace.inner_eq_star_dotProduct, bvec, Pi.single_apply, eI_inj, eq_comm, Pi.star_single]
   have hgw : ∀ a, Matrix.toEuclideanLin g (w a) = c a := fun a => by
-    simp [w, c, Matrix.toEuclideanLin_apply, Matrix.mul_nonsing_inv _ hgu]
+    simp [w, c, Matrix.toLpLin_apply, Matrix.mul_nonsing_inv _ hgu]
   have hw : LinearIndependent ℂ w := LinearIndependent.of_comp (Matrix.toEuclideanLin g) (by
     have : (Matrix.toEuclideanLin g) ∘ w = c := funext hgw
     rw [this]; exact hc.linearIndependent)
   have hci : ∀ a b, inner ℂ (c a) (Matrix.toEuclideanLin (Hpk k r) (c b)) = 0 := fun a b => by
-    simp [c, EuclideanSpace.inner_eq_star_dotProduct, bvec, Matrix.toEuclideanLin_apply, Pi.star_single, H_ee]
+    simp [c, EuclideanSpace.inner_eq_star_dotProduct, bvec, Matrix.toLpLin_apply, Pi.star_single, H_ee]
   have hwi : ∀ a b, inner ℂ (w a) (Matrix.toEuclideanLin (Hpk k r) (w b)) = 0 := fun a b => by
     rw [← hci a b]
-    simp only [w, c, EuclideanSpace.inner_eq_star_dotProduct, Matrix.toEuclideanLin_apply, WithLp.ofLp_toLp]
+    simp only [w, c, EuclideanSpace.inner_eq_star_dotProduct, Matrix.toLpLin_apply, WithLp.ofLp_toLp]
     rw [dotProduct_comm, star_mulVec, ← dotProduct_mulVec, mulVec_mulVec, mulVec_mulVec, hgi, dotProduct_comm]
   have hspan : ∀ a, gramSchmidtNormed ℂ w a ∈ Submodule.span ℂ (Set.range w) := fun a => by
     rw [← span_gramSchmidt, ← span_gramSchmidtNormed_range]; exact Submodule.subset_span ⟨a, rfl⟩
@@ -321,7 +321,7 @@ theorem iwasawa : ∀ (k r : ℕ), ∀ g ∈ GG k r, ∃ n ∈ Nset k r, ∃ a :
     have h1 := hlow b i hi _ (hgs b)
     rw [map_sub, hgw, PiLp.sub_apply, sub_eq_zero] at h1
     have h2 : (g * κ) i (eI k r b) = (Matrix.toEuclideanLin g (gramSchmidtNormed ℂ w b)) i := by
-      rw [← mulVec_bvec (g * κ), ← mulVec_mulVec, Matrix.toEuclideanLin_apply, ← hκc]
+      rw [← mulVec_bvec (g * κ), ← mulVec_mulVec, Matrix.toLpLin_apply, ← hκc]
     rw [h2, gramSchmidtNormed, map_smul, PiLp.smul_apply, ← h1]
     show _ • bvec (eI k r b) i = _
     rw [bvec_apply]

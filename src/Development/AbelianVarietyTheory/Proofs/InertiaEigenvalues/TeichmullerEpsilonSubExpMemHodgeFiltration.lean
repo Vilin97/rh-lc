@@ -76,7 +76,7 @@ theorem exp_log_dvd (M : ℕ) :
     have hL0 : L.eval 0 = 0 := by
       rw [← coeff_zero_eq_eval_zero]; exact X_dvd_iff.1 (X_dvd_logT K _)
     rw [coeff_zero_eq_eval_zero, hD, Finset.sum_range_succ']
-    simp [eval_finset_sum, hL0]
+    simp [Polynomial.eval_finsetSum, hL0]
   rw [X_pow_dvd_iff] at h1 ⊢
   intro d
   induction d with

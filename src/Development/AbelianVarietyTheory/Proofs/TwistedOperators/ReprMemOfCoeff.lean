@@ -80,7 +80,7 @@ theorem coeff_map_mem {ι : Type} [Fintype ι] {n n' : ℕ} {σ : ι → Formali
     conv_lhs => rw [← (bVV ℂ σ).sum_repr v]
     simp only [map_sum, map_smul]
   rw [e]
-  simp only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul]
+  simp only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul]
   rw [← RingHom.coe_fieldRange]
   refine Subfield.sum_mem _ fun b _ => ?_
   exact Subfield.mul_mem _ (RingHom.mem_fieldRange.2 (repr_mem_of_coeff σ κ v hv b)) (RingHom.mem_fieldRange.2 (hf a b))

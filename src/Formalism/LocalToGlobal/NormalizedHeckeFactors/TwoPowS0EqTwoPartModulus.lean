@@ -36,13 +36,13 @@ theorem exists_delta (T : Subalgebra O (X → O))
   choose g hgT hgx hgy using key
   let e : X → T := fun y => if hy : y = x then 1 else ⟨g y hy, hgT y hy⟩
   refine ⟨∏ y, e y, ?_, ?_⟩
-  · simp only [SubmonoidClass.coe_finset_prod, Finset.prod_apply]
+  · simp only [SubmonoidClass.coe_finsetProd, Finset.prod_apply]
     refine Finset.prod_ne_zero_iff.mpr fun y _ => ?_
     by_cases hy : y = x
     · simp [e, hy]
     · simp [e, hy, hgx y hy]
   · intro y hy
-    simp only [SubmonoidClass.coe_finset_prod, Finset.prod_apply]
+    simp only [SubmonoidClass.coe_finsetProd, Finset.prod_apply]
     exact Finset.prod_eq_zero (Finset.mem_univ y) (by simp [e, hy, hgy y hy])
 
 theorem evPt_surjective (T : Subalgebra O (X → O))
@@ -58,7 +58,7 @@ theorem evPt_surjective (T : Subalgebra O (X → O))
     funext z
     have hR : ((algebraMap O T N : T) : X → O) z = N := by simp
     rw [hR]
-    simp only [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply, SetLike.val_smul, Pi.smul_apply, smul_eq_mul]
+    simp only [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply, SetLike.val_smul, Pi.smul_apply, smul_eq_mul]
     rw [Finset.sum_eq_single z (fun x _ hxz => by rw [hPy x z (fun h => hxz h.symm), mul_zero])
       (fun h => absurd (Finset.mem_univ z) h)]
     exact Finset.prod_erase_mul _ _ (Finset.mem_univ z)

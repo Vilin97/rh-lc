@@ -108,7 +108,7 @@ private lemma sum_embDomain_apply_eq_of_disjoint (hd : ∀ i j x y, e i x = e j 
     (z : ∀ i, σ i →₀ ℕ) (j : ι) (x : σ j) :
     (∑ k, Finsupp.embDomain (e k) (z k)) (e j x) = z j x := by
   classical
-  rw [Finsupp.finset_sum_apply, Finset.sum_eq_single j]
+  rw [Finsupp.finsetSum_apply, Finset.sum_eq_single j]
   · exact Finsupp.embDomain_apply_self (e j) (z j) x
   · intro k _ hk
     apply Finsupp.embDomain_notin_range
@@ -171,7 +171,7 @@ private lemma prod_factorial_sum_embDomain_eq_prod_prod_factorial (hd : ∀ i j 
   classical
   have hsub : (∑ k, Finsupp.embDomain (e k) (m k)).support ⊆
       Finset.univ.biUnion fun j => (m j).support.map (e j) := by
-    refine (Finsupp.support_finset_sum).trans ?_
+    refine (Finsupp.support_finsetSum).trans ?_
     simp [Finsupp.support_embDomain]
   have hdisj : ((Finset.univ : Finset ι) : Set ι).PairwiseDisjoint
       fun j => (m j).support.map (e j) := by

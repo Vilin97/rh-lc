@@ -16,7 +16,7 @@ theorem continuous_hsNorm (k r : ℕ) :
     Continuous (fun x : Formalism.QuantumDeterminants.Mt k r => Formalism.FourierDecayAlt.B.gN (Matrix.of x : Mx k r)) := by
   unfold Formalism.FourierDecayAlt.B.gN
   refine Real.continuous_sqrt.comp ?_
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   refine Complex.continuous_normSq.comp ?_
   exact (continuous_apply j).comp (continuous_apply i)
 

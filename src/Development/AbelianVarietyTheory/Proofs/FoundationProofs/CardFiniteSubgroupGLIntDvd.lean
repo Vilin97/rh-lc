@@ -54,7 +54,7 @@ theorem val_prod (n p l : ℕ) (hp : p.Prime) (hl : l.Prime) (hne : p ≠ l) :
   have hne0 : ∀ i, i < n → l ^ n - l ^ i ≠ 0 := fun i hi =>
     Nat.sub_ne_zero_of_lt (Nat.pow_lt_pow_right hl.one_lt hi)
   rw [Fin.prod_univ_eq_prod_range (fun i => l ^ n - l ^ i) n,
-    Nat.factorization_prod (fun i hi => hne0 i (Finset.mem_range.mp hi)), Finsupp.finset_sum_apply,
+    Nat.factorization_prod (fun i hi => hne0 i (Finset.mem_range.mp hi)), Finsupp.finsetSum_apply,
     ← Finset.sum_range_reflect]
   refine Finset.sum_congr rfl fun i hi => ?_
   have hi' := Finset.mem_range.mp hi

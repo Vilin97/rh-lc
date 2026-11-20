@@ -53,7 +53,7 @@ private theorem gram_continuous_comp {α : Type*} [TopologicalSpace α] (τ : E 
   refine continuous_pi fun a => continuous_pi fun b => ?_
   simp only [ReciprocityTheory.ChartRestriction.G.FD.gram, ReciprocityTheory.ChartRestriction.G.FD.hermC, ReciprocityTheory.ChartRestriction.G.FD.col,
     Matrix.of_apply]
-  refine continuous_finset_sum _ fun k _ => continuous_finset_sum _ fun l _ => ?_
+  refine continuous_finsetSum _ fun k _ => continuous_finsetSum _ fun l _ => ?_
   refine ((hf.matrix_elem k a).mul continuous_const).mul ?_
   first
     | exact Complex.continuous_conj.comp (hf.matrix_elem l b)

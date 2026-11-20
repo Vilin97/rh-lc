@@ -54,7 +54,7 @@ theorem _root_.GlobalTheory.GLm.OpenCell.wh_eq (ψ : AddChar (ZMod g) ℂ) {n : 
       ∑ u ∈ Finset.univ.filter (fun u : _root_.GlobalTheory.GLq.Gn g n => _root_.Formalism.MainNotions.ArithmeticCylinders.IsUniUp (u : _root_.GlobalTheory.GLq.Mt g n)), (ψ (_root_.GlobalTheory.GLm.supFrom 0 (u : _root_.GlobalTheory.GLq.Mt g n)))⁻¹ * χ u := by
   unfold _root_.GlobalTheory.GLq.wh _root_.GlobalTheory.GLq.tr _root_.Formalism.MainNotions.ArithmeticCylinders.eU _root_.Formalism.MainNotions.ArithmeticCylinders.eDat _root_.GlobalTheory.GLm.supFrom
   simp only [MonoidAlgebra.coeff_smul, MonoidAlgebra.coeff_sum, MonoidAlgebra.coeff_single,
-    Finsupp.smul_apply, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.single_apply,
+    Finsupp.smul_apply, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.single_apply,
     Finset.sum_ite_eq', smul_eq_mul, Finset.range_eq_Ico]
   rw [Finset.mul_sum, Finset.sum_filter]
   refine Finset.sum_congr rfl fun x _ => ?_

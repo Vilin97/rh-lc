@@ -46,7 +46,7 @@ variable {G : Type} [Group G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field 
     [IsScalarTower K₀ K BdR] [IsScalarTower Qp K₀ BdR]
     (PD : _root_.Formalism.WeaklyAdmissibleFiltrations.PeriodData G Qp K₀ K B BdR) in
 private theorem fil_antitone' {a b : ℤ} (h : b ≤ a) : PD.Fil a ≤ PD.Fil b := by
-  induction a, h using Int.le_induction with
+  induction a, h using Int.leInduction with
   | base => exact le_rfl
   | succ n _ ih => exact (PD.Fil_anti n).trans ih
 

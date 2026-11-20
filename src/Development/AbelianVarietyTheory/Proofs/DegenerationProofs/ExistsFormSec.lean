@@ -70,7 +70,7 @@ theorem supp_form {B J : Type} [CommRing B] (f : A →+* B)
     change _ = AddMonoidAlgebra.liftNCRingHom f g hc _
     simp [AddMonoidAlgebra.liftNCRingHom]
   change (e.symm.toRingHom _).coeff α ≠ 0 at hα
-  rw [map_form, AddMonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply] at hα
+  rw [map_form, AddMonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply] at hα
   obtain ⟨m, hm, hne⟩ := Finset.exists_ne_zero_of_sum_ne_zero hα
   have h2 : ((e.symm.toRingHom (f (c m))).coeff.support : Set X) ⊆ 0 := by
     change ((e.symm (f (c m))).coeff.support : Set X) ⊆ 0

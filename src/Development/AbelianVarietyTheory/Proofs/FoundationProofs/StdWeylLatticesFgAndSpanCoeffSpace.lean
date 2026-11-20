@@ -46,7 +46,7 @@ private lemma prod_image_blockEmb_eq_setOf_prod {K : Type} [Field K] {S : Type} 
       {P | ∃ F : S → MvPolynomial (Fin k × Fin n) K, (∀ s, F s ∈ X s) ∧
         P = ∏ s, _root_.Formalism.GradedWeylDivisibility.blockEmb K s (F s)} := by
   ext P
-  rw [Set.mem_finset_prod]
+  rw [Set.mem_finsetProd]
   constructor
   · rintro ⟨g, hg, rfl⟩
     choose F hF hFe using fun s => hg (Finset.mem_univ s)

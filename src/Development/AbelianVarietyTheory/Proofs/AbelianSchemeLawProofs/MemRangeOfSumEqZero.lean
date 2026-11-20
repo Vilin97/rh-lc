@@ -95,11 +95,11 @@ theorem mem_range_of_sum_eq_zero {K R : Type} [Field K] [IsAlgClosed K] [CommRin
   let p : Polynomial K := ∑ k : Fin n, Polynomial.monomial (k : ℕ) (c k)
   have hp : p ≠ 0 := fun h0 => hc (funext fun k => by
     have := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q k) h0
-    simp only [p, Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, Fin.val_inj,
+    simp only [p, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Fin.val_inj,
       Finset.sum_ite_eq', Finset.mem_univ, if_true, Polynomial.coeff_zero] at this
     exact this)
   refine (IsAlgClosed.splits p).mem_range_of_isRoot hp ?_
-  rw [Polynomial.IsRoot, Polynomial.eval_map, Polynomial.eval₂_finset_sum]
+  rw [Polynomial.IsRoot, Polynomial.eval_map, Polynomial.eval₂_finsetSum]
   simpa [Polynomial.eval₂_monomial] using h
 
 theorem eq_one_of_forall_pow_dvd :

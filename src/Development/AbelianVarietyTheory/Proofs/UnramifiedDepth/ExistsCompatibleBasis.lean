@@ -68,7 +68,7 @@ theorem exists_compatible_basis (p : ℕ) [hp : Fact p.Prime] (g : ℕ) (Γ : Ty
     simp only [τ, Function.iterate_succ_apply', hd]
   have hsum : ∀ t : Ix g → ZMod p, ((∑ j, (t j).val • b j : V) : Γ) = ∑ j, (t j).val • τ j 0 :=
     fun t => by
-      rw [AddSubmonoidClass.coe_finset_sum]
+      rw [AddSubmonoidClass.coe_finsetSum]
       rfl
   refine ⟨τ, fun i n => ?_, hτp, fun x hx => ?_⟩
   · induction n with

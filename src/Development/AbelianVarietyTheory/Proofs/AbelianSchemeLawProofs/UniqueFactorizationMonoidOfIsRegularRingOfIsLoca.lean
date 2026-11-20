@@ -130,11 +130,11 @@ private lemma uniqueFactorizationMonoid_localization_of_height_le
         IsLocalRing.le_maximalIdeal (Ideal.comap_ne_top _ hq.ne_top)
       have hq₂Q : q₂ < Q := by
         refine lt_of_le_of_ne ?_ ?_
-        · rw [← IsLocalization.AtPrime.comap_maximalIdeal (Localization.AtPrime Q) Q]
+        · rw [← IsLocalization.AtPrime.under_maximalIdeal (Localization.AtPrime Q) Q]
           exact Ideal.comap_mono hq₁m
         · intro h
           apply hxq₁
-          have := IsLocalization.map_comap Q.primeCompl (Localization.AtPrime Q) q₁
+          have := IsLocalization.map_under Q.primeCompl (Localization.AtPrime Q) q₁
           rw [← this]
           change x ∈ Ideal.map _ q₂
           rw [h, IsLocalization.AtPrime.map_eq_maximalIdeal]

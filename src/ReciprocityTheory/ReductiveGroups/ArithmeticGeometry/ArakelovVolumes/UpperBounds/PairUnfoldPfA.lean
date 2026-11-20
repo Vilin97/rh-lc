@@ -114,13 +114,13 @@ theorem muF_lact {γ : GL (Fin r) E} (hγ : γ ∈ X.Γ) (x0 : Frame X.Ψ r) : m
 theorem lact_cont (γ : GL (Fin r) E) : Continuous (lact (Ψ := X.Ψ) (r := r) γ) := by
   refine continuous_pi fun τ => continuous_pi fun a => continuous_pi fun b => ?_
   simp only [lact, mat, Matrix.mul_apply, Matrix.of_apply, Matrix.map_apply]
-  exact continuous_finset_sum _ fun k _ =>
+  exact continuous_finsetSum _ fun k _ =>
     continuous_const.mul ((continuous_apply b).comp ((continuous_apply k).comp (continuous_apply τ)))
 
 theorem cpt_cont (x0 : Frame X.Ψ r) : Continuous (cpt X x0) := by
   refine continuous_pi fun τ => continuous_pi fun a => continuous_pi fun b => ?_
   simp only [cpt, rmul, mat, Matrix.mul_apply, Matrix.of_apply]
-  refine continuous_finset_sum _ fun k _ => continuous_const.mul ?_
+  refine continuous_finsetSum _ fun k _ => continuous_const.mul ?_
   simp only [nmat]
   split_ifs
   · exact PiLp.continuous_apply 2 _ _

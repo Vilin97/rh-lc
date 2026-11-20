@@ -100,7 +100,7 @@ theorem CWLin.eq_zero (hU : URep Hm σ) {B : H → V} (hB : CWLin Hm σ B) {w : 
 theorem CWLin.continuousOn_orbit [FiniteDimensional ℂ V] (hF : Factor) (hU : URep Hm σ) {B : H → V}
     (hB : CWLin Hm σ B) {w : H} (hw : IsSm (UH Hm) σ w) : ContinuousOn (fun g => B (σ g w)) (UH Hm) := by
   obtain ⟨N, W, β, hW, hβ⟩ := hF n Hm H σ hU V B hB
-  refine (continuousOn_finset_sum Finset.univ fun i _ =>
+  refine (continuousOn_finsetSum Finset.univ fun i _ =>
     (β i).continuous.comp_continuousOn (continuousOn_dsW_orbit hU.rep hw (hW i).lieW)).congr fun g hg => ?_
   exact hβ _ (hw.apply hU.rep hg)
 

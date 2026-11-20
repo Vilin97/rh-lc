@@ -223,7 +223,7 @@ theorem volume_fd_map [IsTotallyComplex E] {ι : Type} [Fintype ι] (b : Basis �
         exact ⟨fun w => absurd w.2 (InfinitePlace.not_isReal_iff_isComplex.2 (IsTotallyComplex.isComplex w.1)),
           fun w => h w.1⟩
     simp only [this, cube, Set.mem_setOf_eq]
-    exact forall_swap
+    exact forall_comm
   rw [ZSpan.measureReal_fundamentalDomain _ volume ((Pi.basis fun _ : Fin j => s).map (mix E j)), hc,
     ← hpi b, ZSpan.measureReal_fundamentalDomain _ volume (Pi.basis fun _ : Fin j => s), hpi s, hs1,
     Measure.real, volume_cube, Basis.det_map]

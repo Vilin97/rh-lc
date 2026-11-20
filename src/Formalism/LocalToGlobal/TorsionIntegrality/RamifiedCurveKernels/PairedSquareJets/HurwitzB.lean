@@ -106,7 +106,7 @@ theorem rep_apply (B : Type) [Fintype B] {ι : Type} (m : B → ι →₀ ℕ) (
     rep B m (k, i) = m k i := by
   classical
   unfold rep
-  rw [Finsupp.finset_sum_apply, Finset.sum_eq_single k]
+  rw [Finsupp.finsetSum_apply, Finset.sum_eq_single k]
   · first
       | exact Finsupp.embDomain_apply_self (blockEmb B ι k) (m k) i
       | exact Finsupp.embDomain_apply_self (f := blockEmb B ι k) (v := m k) (a := i)
@@ -151,7 +151,7 @@ theorem coeff_prod_inBlock {K : Type} [Field K] {ι B : Type} [Fintype B]
     congr 1
     ext i
     have h1 := congrArg (fun x : B × ι →₀ ℕ => x (k, i)) hl.1
-    simp only [Finsupp.finset_sum_apply, rep_apply, hm] at h1
+    simp only [Finsupp.finsetSum_apply, rep_apply, hm] at h1
     rw [Finset.sum_eq_single k] at h1
     · rw [← h1]
       symm
@@ -171,7 +171,7 @@ theorem coeff_prod_inBlock {K : Type} [Field K] {ι B : Type} [Fintype B]
     rw [Finset.mem_finsuppAntidiag]
     refine ⟨?_, fun _ _ => Finset.mem_univ _⟩
     ext ⟨k, i⟩
-    rw [Finsupp.finset_sum_apply, rep_apply, Finset.sum_eq_single k]
+    rw [Finsupp.finsetSum_apply, rep_apply, Finset.sum_eq_single k]
     · show (Finsupp.embDomain (blockEmb B ι k) κ) (k, i) = κ i
       first
         | exact Finsupp.embDomain_apply_self (blockEmb B ι k) κ i

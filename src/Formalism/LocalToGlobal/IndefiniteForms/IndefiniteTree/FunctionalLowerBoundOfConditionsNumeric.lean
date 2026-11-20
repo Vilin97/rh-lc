@@ -701,7 +701,7 @@ theorem fcoord_sum {ι V P : Type} [Fintype ι] [DecidableEq ι] [AddCommGroup V
     Formalism.HermitianLatticesTheory.fcoord b X v (∑ p ∈ s, f p) = ∑ p ∈ s, Formalism.HermitianLatticesTheory.fcoord b X v (f p) := by
   have hv : Formalism.HermitianLatticesTheory.vecAt b v (∑ p ∈ s, f p) = ∑ p ∈ s, Formalism.HermitianLatticesTheory.vecAt b v (f p) := by
     funext i
-    simp [Formalism.HermitianLatticesTheory.vecAt, map_sum, Finsupp.finset_sum_apply, Finset.sum_apply]
+    simp [Formalism.HermitianLatticesTheory.vecAt, map_sum, Finsupp.finsetSum_apply, Finset.sum_apply]
   unfold Formalism.HermitianLatticesTheory.fcoord
   rw [hv]
   first

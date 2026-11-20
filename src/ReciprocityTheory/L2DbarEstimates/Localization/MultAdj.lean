@@ -57,7 +57,7 @@ theorem multAdj (n : ℕ) (M : Type*) [TopologicalSpace M] [T2Space M]
     (multA_intOn_w _ w ph₁ hc1 hw.1 hw.2 K hK).mul_continuousOn hE1.continuousOn hK
   have hP : Integrable (fun x => ∑ j, f x j * (Real.exp (-ph₂ x) : ℂ) *
       conj (db n z j (fun y => (η y : ℂ) * g y) x)) (vol n z) := by
-    refine integrable_finset_sum _ (fun j _ => ?_)
+    refine MeasureTheory.integrable_finsetSum _ (fun j _ => ?_)
     exact multA_int_mul _ _ _ (hfE j)
       (Complex.continuous_conj.comp (ReciprocityTheory.L2DbarEstimates.Smooth.continuous n z hz _
         (ReciprocityTheory.L2DbarEstimates.Smooth.db n z j _ hψs)))
@@ -65,7 +65,7 @@ theorem multAdj (n : ℕ) (M : Type*) [TopologicalSpace M] [T2Space M]
         (ReciprocityTheory.L2DbarEstimates.tsupport_db_subset n z j _))).comp_left (map_zero _))
   have hR : Integrable (fun x => ∑ j, f x j * (Real.exp (-ph₂ x) : ℂ) *
       (d n z j (fun y => (η y : ℂ)) x * conj (g x))) (vol n z) := by
-    refine integrable_finset_sum _ (fun j _ => ?_)
+    refine MeasureTheory.integrable_finsetSum _ (fun j _ => ?_)
     exact multA_int_mul _ _ _ (hfE j)
       ((ReciprocityTheory.L2DbarEstimates.Smooth.continuous n z hz _ (ReciprocityTheory.L2DbarEstimates.Smooth.d n z j _ he)).mul
         (Complex.continuous_conj.comp hcg)) hgc.mul_left
@@ -184,13 +184,13 @@ theorem multDiv (n : ℕ) (M : Type*) [TopologicalSpace M] [T2Space M]
   have hGj : ∀ j K, IsCompact K → IntegrableOn (fun x => G x j) K (vol n z) := fun j K hK =>
     integrableOn_compact_of_locL2 _ _ (locL2_form_component _ G hG j) K hK
   have hI1 : Integrable (fun x => ∑ j, G x j * d n z j (fun y => (η y : ℂ) * φ y) x) (vol n z) := by
-    refine integrable_finset_sum _ (fun j _ => ?_)
+    refine MeasureTheory.integrable_finsetSum _ (fun j _ => ?_)
     exact multA_int_mul _ _ _ (hGj j)
       (ReciprocityTheory.L2DbarEstimates.Smooth.continuous n z hz _ (ReciprocityTheory.L2DbarEstimates.Smooth.d n z j _ hψs))
       (hψ.2.mono' ((subset_tsupport _).trans (ReciprocityTheory.L2DbarEstimates.tsupport_d_subset n z j _)))
   have hI2 : Integrable (fun x => ∑ j, G x j * (d n z j (fun y => (η y : ℂ)) x * φ x))
       (vol n z) := by
-    refine integrable_finset_sum _ (fun j _ => ?_)
+    refine MeasureTheory.integrable_finsetSum _ (fun j _ => ?_)
     exact multA_int_mul _ _ _ (hGj j)
       ((ReciprocityTheory.L2DbarEstimates.Smooth.continuous n z hz _ (ReciprocityTheory.L2DbarEstimates.Smooth.d n z j _ he)).mul hcφ)
       hφ.2.mul_left

@@ -299,7 +299,7 @@ private theorem isWeightedHomogeneous_rowDiv {r n : ℕ} (a b : Fin r) (p : MvPo
   classical
   rw [MvPolynomial.as_sum p]
   unfold rowDiv
-  rw [map_sum, Polynomial.finset_sum_coeff]
+  rw [map_sum, Polynomial.finsetSum_coeff]
   first
     | (apply MvPolynomial.IsWeightedHomogeneous.sum
        intro x hx

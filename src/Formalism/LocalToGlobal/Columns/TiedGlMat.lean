@@ -250,7 +250,7 @@ theorem glm_lamGen (e : κ ≃+* k') (σ₀ : K →+* ℂ) (ψ : AddChar κ K) (
       ∏ i ∈ Finset.range j, (((χ i) (blkDet n κ (coarse a (List.replicate j t)) (i + 1)
         (Subgroup.inclusion (uniUT_le_blockUT n κ a (List.replicate j t)) M)) : Kˣ) : K) := by
     unfold detChar
-    rw [MonoidHom.finset_prod_apply, Units.coe_prod, List.length_replicate]
+    rw [MonoidHom.finsetProd_apply, Units.coe_prod, List.length_replicate]
     rfl
   have hL : ((lamGen ψ χ n a (List.replicate j t) S M : Kˣ) : K) =
       ((supChar ψ n a (List.replicate j t) S M : Kˣ) : K) *

@@ -328,7 +328,7 @@ theorem continuous_of_comp {O : Type} [CommRing O] [TopologicalSpace O] [IsTopol
   rw [continuous_iff_continuousAt]
   intro x0 s hs
   have h0 : (fun y => y + f x0) ⁻¹' s ∈ 𝓝 (0 : O) :=
-    (continuous_add_right (f x0)).continuousAt.preimage_mem_nhds (by simpa using hs)
+    (continuous_add_const (f x0)).continuousAt.preimage_mem_nhds (by simpa using hs)
   obtain ⟨n, hn⟩ := (isAdic_iff.1 hJ).2 _ h0
   obtain ⟨ε, hε0, hε⟩ := hε n
   have hU : {x | ‖ι (f x) - ι (f x0)‖ < ε} ∈ 𝓝 x0 := by

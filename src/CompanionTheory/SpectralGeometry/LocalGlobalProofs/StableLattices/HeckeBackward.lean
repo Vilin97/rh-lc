@@ -148,7 +148,7 @@ theorem IsPol.scalar {F : ℂ → Module.End ℂ M} (h : IsPol F) (v : M) (φ : 
   have e : ∀ i, (p.coeff i * (algebraMap ℂ (Module.End ℂ M) x) ^ i) v = x ^ i • (p.coeff i v) := by
     intro i
     rw [← map_pow, Module.End.mul_apply, Module.algebraMap_end_apply, map_smul]
-  rw [hp, eval₂_eq_sum_range, LinearMap.sum_apply, map_sum, eval_finset_sum]
+  rw [hp, eval₂_eq_sum_range, LinearMap.sum_apply, map_sum, Polynomial.eval_finsetSum]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [RingHom.id_apply, e, map_smul, smul_eq_mul, eval_mul, eval_C, eval_pow, eval_X, mul_comm]
 

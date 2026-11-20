@@ -45,8 +45,8 @@ theorem continuous_mat_inv : Continuous fun g : UG c (stdJ ν E) => mat c g⁻¹
 theorem continuous_pr (hc : Continuous c) (htr : Continuous (Algebra.trace F E)) [ContinuousMul F] (Q : Matrix α α E) :
     Continuous fun p : Matrix α ν E × Matrix α ν E => pr c Q p.1 p.2 := by
   simp only [pr, form, GlobalTheory.WeilM.hTens]
-  refine continuous_const.mul (htr.comp (continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
-    continuous_finset_sum _ fun k _ => continuous_finset_sum _ fun l _ => ?_))
+  refine continuous_const.mul (htr.comp (continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
+    continuous_finsetSum _ fun k _ => continuous_finsetSum _ fun l _ => ?_))
   refine Continuous.mul (Continuous.mul (Continuous.mul ?_ continuous_const) continuous_const) (hc.comp ?_)
   · rcases j with j | j
     · exact continuous_fst.matrix_elem i j

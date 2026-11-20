@@ -54,7 +54,7 @@ theorem sum_log_sq_div_sq_primes_dyadic_le (y : ℕ) (hy : 1 ≤ y) :
       _ ≤ Real.log (4 ^ (2 * y)) := by
           apply Real.log_le_log
           · exact_mod_cast primorial_pos (2 * y)
-          · exact_mod_cast primorial_le_4_pow (2 * y)
+          · exact_mod_cast primorial_le_four_pow (2 * y)
       _ = 2 * y * Real.log 4 := by
           rw [Real.log_pow]
           push_cast
@@ -214,7 +214,7 @@ private theorem sum_log_primes_le_mul_log_four' (y : ℕ) :
     _ ≤ Real.log (4 ^ y) := by
         apply Real.log_le_log
         · exact_mod_cast primorial_pos y
-        · exact_mod_cast primorial_le_4_pow y
+        · exact_mod_cast primorial_le_four_pow y
     _ = y * Real.log 4 := by rw [Real.log_pow]
 
 private theorem sP_cN_le_log_add_sqrt_mul_log_div (x : ℝ) (hx : 0 ≤ x) (N p : ℕ) (hp : p.Prime) :

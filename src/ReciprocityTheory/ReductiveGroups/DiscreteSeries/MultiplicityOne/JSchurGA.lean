@@ -364,7 +364,7 @@ private theorem nuG_map_eq_of_psiG_comm {μ : Measure (Mt k r)} (hμ : IsHaarOn 
 theorem nuG_left {μ : Measure (Mt k r)} (hμ : IsHaarOn (GV k r) μ) : (nuG μ).IsMulLeftInvariant := by
   constructor
   intro u
-  exact nuG_map_eq_of_psiG_comm hμ _ (continuous_mul_left u).measurable (lmulM (psiM k r u)) (measurable_lmulM _)
+  exact nuG_map_eq_of_psiG_comm hμ _ (continuous_const_mul u).measurable (lmulM (psiM k r u)) (measurable_lmulM _)
     (fun x => psiG_mul' u x) (hμ.left _ (psiM_mem u))
 
 theorem nuG_finite {μ : Measure (Mt k r)} (hμ : IsHaarOn (GV k r) μ) : IsFiniteMeasureOnCompacts (nuG μ) := by
@@ -415,7 +415,7 @@ theorem nuG_inv {μ : Measure (Mt k r)} (hμ : IsHaarOn (GV k r) μ) : (nuG μ).
   haveI hR : (nuG μ).IsMulRightInvariant := by
     constructor
     intro u
-    refine nuG_map_eq_of_psiG_comm hμ _ (continuous_mul_right u).measurable (Formalism.FourierDecayAlt.B.rmulF (psiM k r u)) ?_
+    refine nuG_map_eq_of_psiG_comm hμ _ (continuous_mul_const u).measurable (Formalism.FourierDecayAlt.B.rmulF (psiM k r u)) ?_
       (fun x => ?_) (hμ.right _ (psiM_mem u))
     · apply Continuous.measurable
       unfold Formalism.FourierDecayAlt.B.rmulF

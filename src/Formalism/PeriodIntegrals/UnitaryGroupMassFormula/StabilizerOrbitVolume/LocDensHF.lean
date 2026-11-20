@@ -62,7 +62,7 @@ theorem fib_of_ratio (μ : Measure V) (ν : Measure X) [ν.IsAddHaarMeasure]
         rw [hmemS]
         simpa using hw
     rw [e]
-    exact (hHc n).image (continuous_add_right T)
+    exact (hHc n).image (continuous_add_const T)
   have hνS : ∀ n, ν (S n) = ν (H n) := by
     intro n
     have e : S n = (fun z => -T + z) ⁻¹' (H n : Set X) := by
@@ -260,7 +260,7 @@ theorem fibCos (μ : Measure V) (ν : Measure X) [μ.IsAddHaarMeasure] [ν.IsAdd
       · rintro ⟨z, hz, rfl⟩
         simpa using hz
     rw [e]
-    exact (hΛc 0).image (continuous_add_right y)
+    exact (hΛc 0).image (continuous_add_const y)
   have hH0 : ν (H 0) ≠ 0 := (hHo 0).measure_ne_zero ν ⟨0, (H 0).zero_mem⟩
   have hH0' : ν (H 0) ≠ ⊤ := (hHc 0).measure_lt_top.ne
   refine fib_of_ratio μ ν f ι hι G hGc hfG U B fib hfib T hB Nb hNb hNbU _ hQo hQcl hQc H hHo hHc

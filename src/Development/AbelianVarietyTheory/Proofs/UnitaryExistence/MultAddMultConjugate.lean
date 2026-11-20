@@ -453,7 +453,7 @@ theorem reflexLe_of_basis (hB : ReflexBasis Dw c) : ReflexLe Dw c := by
   simp only [← map_pow, ← map_prod] at e
   obtain ⟨x, y, hx0, -, hxy⟩ := ClassGroup.mk0_eq_mk0_iff.1 e
   have h2 := isBe_mul (isBe_principal Dw c y) (isBe_prod Finset.univ fun i => isBe_pow (h1 i) (a i))
-  simp only [SubmonoidClass.coe_finset_prod, SubmonoidClass.coe_pow] at hxy
+  simp only [SubmonoidClass.coe_finsetProd, SubmonoidClass.coe_pow] at hxy
   rw [← hxy] at h2
   exact ⟨_, isBe_div (by simpa using hx0) (isBe_principal Dw c x) h2⟩
 

@@ -134,7 +134,7 @@ theorem bsA_nsq_cont {la : La} {a : ι → Y → ℂ} (ha : A.IsSec la a) : Cont
 theorem bsA_sqn_cont {la : La} {N : ℕ} {w : Fin N → ι → Y → ℂ} (hw : ∀ k, A.IsSec la (w k)) :
     Continuous (A.sqn la w) := by
   show Continuous (fun y => ∑ k, A.nsq la (w k) y)
-  exact continuous_finset_sum _ (fun k _ => bsA_nsq_cont A (hw k))
+  exact continuous_finsetSum _ (fun k _ => bsA_nsq_cont A (hw k))
 
 theorem bsA_nsq_nonneg (la : La) (a : ι → Y → ℂ) (y : Y) : 0 ≤ A.nsq la a y := by
   unfold WeightedAtlas.nsq

@@ -102,7 +102,7 @@ theorem ev_notMem (L : PeriodPair) : ∀ᶠ z in 𝓝[≠] (0 : ℂ), z ∉ L.la
 theorem tendsto_mul_nhdsNE {α : ℂ} (hα : α ≠ 0) :
     Tendsto (fun z : ℂ => α * z) (𝓝[≠] 0) (𝓝[≠] 0) := by
   refine tendsto_nhdsWithin_iff.2 ⟨?_, eventually_nhdsWithin_of_forall fun z hz => ?_⟩
-  · have h0 : Tendsto (fun z : ℂ => α * z) (𝓝 0) (𝓝 (α * 0)) := (continuous_mul_left α).tendsto 0
+  · have h0 : Tendsto (fun z : ℂ => α * z) (𝓝 0) (𝓝 (α * 0)) := (continuous_const_mul α).tendsto 0
     rw [mul_zero] at h0
     exact h0.mono_left nhdsWithin_le_nhds
   · exact mul_ne_zero hα hz

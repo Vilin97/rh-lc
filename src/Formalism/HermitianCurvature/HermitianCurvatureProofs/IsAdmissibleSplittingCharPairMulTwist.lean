@@ -65,7 +65,7 @@ theorem jacobi_square_integrable : Formalism.FourierDecayAlt.MA.SourceSquareInte
   show Integrable ((sysQ P l L j lam α β Lb c Ntot).dens []) (mu0 P.r P.TT)
   rw [show (sysQ P l L j lam α β Lb c Ntot).dens [] = fun ω => ∑ π, ‖(j π : Qp P.r P.TT → ℂ) ω‖ ^ 2 from
     funext (MAx3.dens_nil P l L j lam α β Lb c Ntot)]
-  refine integrable_finset_sum _ fun π _ => ?_
+  refine MeasureTheory.integrable_finsetSum _ fun π _ => ?_
   have := hD [] (by simp) (by simp) π
   rw [List.prod_nil, MAx3.one_act] at this
   exact this
@@ -10842,7 +10842,7 @@ theorem sx_cont (l : ℕ) (π : M.Ty P) : Continuous (fun Z => MAx3.R.sx P l π 
 
 theorem qp_cont : Continuous (fun Z => MAx3.R.qp P Z) := by
   unfold MAx3.R.qp I.qpoly
-  exact continuous_const.mul (continuous_finset_prod _ fun i _ =>
+  exact continuous_const.mul (continuous_finsetProd _ fun i _ =>
     ((continuous_id.add continuous_const).add continuous_const).mul
       ((continuous_id.add continuous_const).add continuous_const))
 

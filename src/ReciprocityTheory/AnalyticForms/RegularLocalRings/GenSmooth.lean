@@ -96,7 +96,7 @@ theorem gs_pderiv_facts {σ : Type*} (p : MvPolynomial σ ℚ) (j : σ) (hj : 0 
     have hne2 : (m' j : ℚ) ≠ 0 := by exact_mod_cast hm'j.ne'
     exact mul_ne_zero hne hne2 hc.symm
   · intro i hi
-    rw [mem_vars] at hi ⊢
+    rw [MvPolynomial.mem_vars_iff_mem_support] at hi ⊢
     obtain ⟨m, hm, him⟩ := hi
     obtain ⟨m', hm', rfl⟩ := key m hm
     refine ⟨m', hm', ?_⟩
@@ -259,7 +259,7 @@ theorem exists_jacobian_minor_not_mem' {σ : Type} [Fintype σ]
       intro i hi
       rcases hQv hi with rfl | hi'
       · exfalso
-        rw [Finset.mem_coe, mem_vars] at hi
+        rw [Finset.mem_coe, MvPolynomial.mem_vars_iff_mem_support] at hi
         obtain ⟨m, hm, him⟩ := hi
         have := monomial_le_degreeOf j hm
         rw [Finsupp.mem_support_iff] at him

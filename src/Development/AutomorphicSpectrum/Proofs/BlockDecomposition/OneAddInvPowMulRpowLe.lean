@@ -114,7 +114,7 @@ theorem majorant_tensor (φ : 𝓢(ι → mixedSpace K, ℂ)) (I : (FractionalId
   have hfc : Continuous (Adele2.finRingHom (K := K)) := continuous_snd
   have hic : Continuous (Adele2.infRingHom (K := K)) :=
     (homeomorphMixedSpace K).continuous.comp continuous_fst
-  have hT : Continuous T := continuous_pi fun i ↦ continuous_finset_sum _ fun j _ ↦
+  have hT : Continuous T := continuous_pi fun i ↦ continuous_finsetSum _ fun j _ ↦
     (hfc.comp ((continuous_inv_entry i j).comp continuous_fst)).mul
       ((continuous_apply j).comp continuous_snd)
   set S : Set 𝔸ᶠ[K] := ⋃ i : ι, (fun x : ι → 𝔸ᶠ[K] ↦ x i) '' (T '' (C ×ˢ B))
@@ -132,7 +132,7 @@ theorem majorant_tensor (φ : 𝓢(ι → mixedSpace K, ℂ)) (I : (FractionalId
     exact h.symm
   let c : GL ι 𝔸[K] → ℝ := fun h ↦ ∑ i, ∑ j,
     ‖Adele2.infRingHom (((h⁻¹ : GL ι 𝔸[K]) : Matrix ι ι 𝔸[K]) i j)‖
-  have hc : Continuous c := continuous_finset_sum _ fun i _ ↦ continuous_finset_sum _ fun j _ ↦
+  have hc : Continuous c := continuous_finsetSum _ fun i _ ↦ continuous_finsetSum _ fun j _ ↦
     (hic.comp (continuous_inv_entry i j)).norm
   obtain ⟨D, hD⟩ := hC.exists_bound_of_continuousOn hc.continuousOn
   set D' := max D 1
@@ -436,7 +436,7 @@ theorem lineInt_nonneg (L : (FractionalIdeal (𝓞 K)⁰ K)ˣ) (A : ℕ) (x : �
 
 theorem continuous_lineFn (L : (FractionalIdeal (𝓞 K)⁰ K)ˣ) (A : ℕ) {x : ℝ} (hx : 0 ≤ x) (ν : ι → K) :
     Continuous (lineFn L A x ν) :=
-  (continuous_finset_prod _ fun j _ ↦ continuous_tw L A (ν j)).mul
+  (continuous_finsetProd _ fun j _ ↦ continuous_tw L A (ν j)).mul
     (continuous_ideleModule_val.rpow_const fun _ ↦ Or.inr hx)
 
 theorem lineFn_mul_diagonal (L : (FractionalIdeal (𝓞 K)⁰ K)ˣ) (A : ℕ) (x : ℝ) (ν : ι → K) (c : Kˣ)
@@ -483,8 +483,8 @@ theorem summable_lineInt {L : (FractionalIdeal (𝓞 K)⁰ K)ˣ} {A : ℕ} {x c 
   have hint : ∀ ν ∈ F', Integrable (lineFn L A x ν) (ideleMeasure K) := fun ν hν ↦
     integrable_lineFn (by linarith) hI₁ (hF' ν hν)
   simp only [lineInt]
-  rw [← integral_finset_sum _ hint]
-  refine integral_mono (integrable_finset_sum _ hint) hB fun t ↦ ?_
+  rw [← MeasureTheory.integral_finsetSum _ hint]
+  refine integral_mono (MeasureTheory.integrable_finsetSum _ hint) hB fun t ↦ ?_
   obtain ⟨hs, ht⟩ := hθ t
   set s : ℝ := (ideleModule K t : ℝ)
   have hs0 : 0 < s := (ideleModule K t).2

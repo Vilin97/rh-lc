@@ -202,7 +202,7 @@ theorem cro_coeff_lin (G : FGLaw k d) (i j : Fin d) :
       apply hD
       ext ⟨s1, s2⟩
       have hev := congrArg (fun D' : Fin 1 × Fin d →₀ ℕ => D' ((0 : Fin 1), s2)) heq
-      simp only [Finsupp.finset_sum_apply, Finsupp.single_apply, Prod.mk.injEq, true_and] at hev
+      simp only [Finsupp.finsetSum_apply, Finsupp.single_apply, Prod.mk.injEq, true_and] at hev
       rw [Finset.sum_eq_single ((1 : Fin 2), s2)] at hev
       · fin_cases s1
         · have h0 : D ((0 : Fin 2), s2) = 0 := by

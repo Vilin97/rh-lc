@@ -36,7 +36,7 @@ theorem finite_of_jumps {L M : Type} [Field L] [AddCommGroup M] [Module L M] (F 
   have hb0 : b ≤ a₀ := hb' a₀ ha₀
   have hst : ∀ a ≤ b, F a = F b := by
     intro a ha
-    induction a, ha using Int.le_induction_down with
+    induction a, ha using Int.leInductionDown with
     | base => rfl
     | pred a ha ih =>
       haveI := hfin (a - 1) (by omega)

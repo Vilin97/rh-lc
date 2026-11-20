@@ -69,7 +69,7 @@ theorem badElt_eq_sum (k : Fin 2) (S : Finset (Tup D k)) :
     badElt D k S = ∑ t ∈ S, Formalism.BasicNotions.Examples₂.NZ.tens (fac D k t) := by
   apply MonoidAlgebra.coeff_injective
   ext g
-  rw [MonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply]
+  rw [MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply]
   simp only [Formalism.BasicNotions.Examples₂.NZ.tens_coeff, prod_fac_coeff]
   simp only [badElt, MonoidAlgebra.coeff_ofCoeff, Finsupp.equivFunOnFinite_symm_apply_apply]
   split_ifs with hc

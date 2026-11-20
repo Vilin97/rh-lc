@@ -68,7 +68,7 @@ theorem fibre_loc_fin : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
   have hr : Continuous fun p : (Fin n → Fin M → R ⊗[F] E) × Matrix (Fin n) (Fin n) (R ⊗[F] E) =>
       rmul R p.1 p.2 := by
     unfold rmul
-    refine continuous_pi fun a => continuous_pi fun i => continuous_finset_sum _ fun c _ => ?_
+    refine continuous_pi fun a => continuous_pi fun i => continuous_finsetSum _ fun c _ => ?_
     exact ((continuous_apply_apply c i).comp continuous_fst).mul (continuous_snd.matrix_elem c a)
   let T : (Fin n → Fin M → R ⊗[F] E) → (Fin n → Fin M → R ⊗[F] E) := fun X =>
     rmul R X (((gs (g X))⁻¹ : GL (Fin n) (R ⊗[F] E)) : Matrix (Fin n) (Fin n) (R ⊗[F] E))

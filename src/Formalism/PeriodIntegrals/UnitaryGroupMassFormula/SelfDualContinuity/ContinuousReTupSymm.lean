@@ -128,7 +128,7 @@ theorem continuous_localTracePairing (ι : Type) [Fintype ι] :
     | exact IsModuleTopology.continuous_of_linearMap _
     | exact LinearMap.continuous_of_finiteDimensional _
   unfold trP
-  refine continuous_finset_sum _ fun i _ => htr.comp ?_
+  refine continuous_finsetSum _ fun i _ => htr.comp ?_
   exact ((continuous_apply i).comp continuous_fst).mul ((continuous_apply i).comp continuous_snd)
 
 theorem dualAt_trP (ι : Type) [Fintype ι] : DualAt v (trP (E := E) v ι) :=

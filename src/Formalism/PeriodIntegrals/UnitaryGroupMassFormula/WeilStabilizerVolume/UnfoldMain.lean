@@ -107,7 +107,7 @@ theorem unfold_of (hW : Witt) (hFT : FinTheta) (hI : InvInv) (hMO : MeasOrb) (hM
     intro h
     have hF := hFT F E σ hE M J hJ ha hc a ha1 ha2 X0 hT hdet (fun X => (φ X : ℂ)) hadm h
     rw [hθS h]
-    refine ENNReal.tsum_coe_ne_top_iff_summable.2 (summable_of_finite_support ?_)
+    refine ENNReal.tsum_coe_ne_top_iff_summable.2 (summable_of_hasFiniteSupport ?_)
     refine (hF.preimage Subtype.val_injective.injOn).subset ?_
     intro X hX
     simp only [Function.mem_support, ne_eq, Real.toNNReal_eq_zero, not_le] at hX

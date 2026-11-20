@@ -168,7 +168,7 @@ theorem continuousOn_normSq {m : ConeMetric ℂ (Ix κ)} (hm : IsSmoothMetric m)
     ContinuousOn (fun z => ‖∑ i, c i * secFun (b i) z‖ ^ 2 * wgt m n z) {0}ᶜ := by
   have hρ : ContinuousOn m.ρ {0}ᶜ := hm.continuousOn.mono fun _ hz => hz
   refine ContinuousOn.mul ?_ ?_
-  · exact ((continuous_finset_sum _ fun i _ => continuous_const.mul (continuous_secFun (b i))).norm.pow 2).continuousOn
+  · exact ((continuous_finsetSum _ fun i _ => continuous_const.mul (continuous_secFun (b i))).norm.pow 2).continuousOn
   · exact ContinuousOn.inv₀ (hρ.pow _) fun z hz => pow_ne_zero _ (m.pos z hz).ne'
 
 theorem nonempty_pts {x : Ix κ → Ω} {m : ConeMetric ℂ (Ix κ)} {μ : Measure (Ix κ → ℂ)}
@@ -241,8 +241,8 @@ theorem bGram_change {J : Type} {μ : Measure (J → ℂ)} {r : ℕ} (s s' : Fin
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => by ring
   rw [integral_congr_ae hae,
-    integral_finset_sum _ (fun k _ => integrable_finset_sum _ fun l _ => (hint k l).const_mul _)]
-  simp_rw [integral_finset_sum _ (fun l _ => (hint _ l).const_mul _), integral_const_mul]
+    MeasureTheory.integral_finsetSum _ (fun k _ => MeasureTheory.integrable_finsetSum _ fun l _ => (hint k l).const_mul _)]
+  simp_rw [MeasureTheory.integral_finsetSum _ (fun l _ => (hint _ l).const_mul _), integral_const_mul]
   simp only [Finset.sum_mul]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => by ring

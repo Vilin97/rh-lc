@@ -103,7 +103,7 @@ theorem trdeg_of_isArithVar (x : (Σ k, ι k) → G) (d : ℕ) (hx : IsArithVar 
     ring
   have h2 : (Algebra.trdeg ℤ (blockFnField x)).toENat = (d : ℕ∞) :=
     WithTop.add_right_cancel (ENat.coe_ne_top _) h3
-  exact Cardinal.toENat_eq_nat.mp h2
+  exact Cardinal.toENat_eq_natCast.mp h2
 
 end Dim
 

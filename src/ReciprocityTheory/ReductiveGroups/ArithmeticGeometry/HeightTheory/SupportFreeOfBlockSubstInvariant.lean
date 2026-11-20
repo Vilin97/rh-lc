@@ -107,13 +107,13 @@ theorem one_block (b : Fin (D + 1)) (z : KTf K D N)
       have hu := hroot (Units.mk0 ((n : K) + 1) (Nat.cast_add_one_ne_zero n))
       rw [Units.val_mk0] at hu
       show Polynomial.eval _ _ = 0
-      rw [Polynomial.eval_finset_sum]
+      rw [Polynomial.eval_finsetSum]
       simp only [Polynomial.eval_monomial]
       exact hu
   have hcoef : ∀ k < M, algebraMap (KTp K D N) (KTf K D N) (compB b k p) - z * algebraMap (KTp K D N) (KTf K D N) (compB b k q) = 0 := by
     intro k hk
     have h4 := congrArg (fun P => _root_.AddMonoidAlgebra.coeff (M := ℕ) P k) hQ
-    simp only [Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_zero] at h4
+    simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_zero] at h4
     first
     | rwa [Finset.sum_ite_eq', if_pos (Finset.mem_range.mpr hk)] at h4
     | rwa [Finset.sum_ite_eq, if_pos (Finset.mem_range.mpr hk)] at h4

@@ -322,7 +322,7 @@ theorem coeff_prod_cols {S : Type} [CommRing S] {n d : ℕ} (g : Fin n → MvPow
     rw [Finsupp.coe_equivFunOnFinite_symm, hMb]
     split_ifs with hqb
     · have hq := congrArg (fun F : Fin n × Fin d →₀ ℕ => F q) hsum
-      simp only [Finsupp.finset_sum_apply] at hq
+      simp only [Finsupp.finsetSum_apply] at hq
       rw [← hq, Finset.sum_eq_single b]
       · intro b' _ hb'
         exact hsupp b' q (by rw [hqb]; exact Ne.symm hb')
@@ -334,7 +334,7 @@ theorem coeff_prod_cols {S : Type} [CommRing S] {n d : ℕ} (g : Fin n → MvPow
     rw [Finset.mem_finsuppAntidiag]
     refine ⟨?_, Finset.subset_univ _⟩
     ext q
-    rw [Finsupp.finset_sum_apply]
+    rw [Finsupp.finsetSum_apply]
     simp only [Finsupp.coe_equivFunOnFinite_symm, hMb]
     simp
 

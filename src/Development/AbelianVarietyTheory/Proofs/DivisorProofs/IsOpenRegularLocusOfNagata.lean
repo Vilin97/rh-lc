@@ -16,7 +16,7 @@ theorem isRegularLocalRing_atPrime_of_le {B : Type} [CommRing B] (p q : Ideal B)
   let P' : Ideal (Localization.AtPrime q) := p.map (algebraMap B _)
   haveI hP' : P'.IsPrime := IsLocalization.isPrime_of_isPrime_disjoint q.primeCompl _ p ‹_› hd
   have hc : P'.comap (algebraMap B (Localization.AtPrime q)) = p :=
-    IsLocalization.comap_map_of_isPrime_disjoint q.primeCompl _ ‹p.IsPrime› hd
+    IsLocalization.under_map_of_isPrime_disjoint q.primeCompl _ ‹p.IsPrime› hd
   have hsub : (P'.comap (algebraMap B (Localization.AtPrime q))).primeCompl = p.primeCompl := by
     ext x
     rw [Ideal.mem_primeCompl_iff, Ideal.mem_primeCompl_iff, hc]

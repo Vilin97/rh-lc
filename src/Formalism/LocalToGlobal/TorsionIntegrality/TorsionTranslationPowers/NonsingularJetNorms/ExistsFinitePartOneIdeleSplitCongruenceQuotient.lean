@@ -41,7 +41,7 @@ private theorem weierstrassP_addition_identity (a b : ℂ) (ha : a ∉ L.lattice
   have hne : L.weierstrassP a - L.weierstrassP b ≠ 0 := P_sub_ne L a b ha hb hab hmab
   have hD : 2 * (L.weierstrassP a - L.weierstrassP b) ≠ 0 := mul_ne_zero two_ne_zero hne
   have h2 : ∀ᶠ u in nhds a, u + b ∉ L.lattice :=
-    ((continuous_add_right b).tendsto a).eventually (notMem_nhds L (a + b) hab)
+    ((continuous_add_const b).tendsto a).eventually (notMem_nhds L (a + b) hab)
   have h3 : ∀ᶠ u in nhds a, u - b ∉ L.lattice :=
     ((continuous_sub_right b).tendsto a).eventually (notMem_nhds L (a - b) hmab)
   have hev : (fun u => Formalism.L2.Th1.F.wZeta L (u + b)) =ᶠ[nhds a]
@@ -88,7 +88,7 @@ theorem collinear (z w : ℂ) (hz : z ∉ L.lattice) (hw : w ∉ L.lattice) (hp 
     ((hasDerivAt_P L z hz).sub_const (L.weierstrassP w)) hne
   have hg := (((hf.mul hf).div_const 4).sub (hasDerivAt_P L z hz)).sub_const (L.weierstrassP w)
   have h2 : ∀ᶠ u in nhds z, u + w ∉ L.lattice :=
-    ((continuous_add_right w).tendsto z).eventually (notMem_nhds L (z + w) hp)
+    ((continuous_add_const w).tendsto z).eventually (notMem_nhds L (z + w) hp)
   have h3 : ∀ᶠ u in nhds z, u - w ∉ L.lattice :=
     ((continuous_sub_right w).tendsto z).eventually (notMem_nhds L (z - w) hm)
   have hev : (fun u => L.weierstrassP (u + w)) =ᶠ[nhds z]

@@ -155,7 +155,7 @@ theorem finrank_symm_comm_le (E : Type) [Field E] [NumberField E] [IsCMField E] 
       have hb : ∀ i, Θ.1.mulVec (star (b ⟨τ, hτ⟩ i : Fin g → ℂ)) = 0 := fun i =>
         congrArg Subtype.val (congrFun (congrFun hΘ ⟨τ, hτ⟩) i)
       have e := congrArg Subtype.val ((b ⟨τ, hτ⟩).sum_repr ⟨v, hv⟩)
-      simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] at e
+      simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] at e
       rw [← e, star_sum, Matrix.mulVec_sum]
       refine Finset.sum_eq_zero fun i _ => ?_
       rw [star_smul, Matrix.mulVec_smul, hb, smul_zero]

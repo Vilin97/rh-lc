@@ -210,7 +210,7 @@ variable {K A : Type} [Field K] [CommRing A] [Algebra K A] (R : Subring K)
 theorem coord_mem {ι₁ ι₂ : Type} [Fintype ι₁] (P : Module.Basis ι₁ K A) (Q : Module.Basis ι₂ K A)
     (hPQ : ∀ i l, Q.repr (P i) l ∈ R) (y : A) (hy : ∀ i, P.repr y i ∈ R) (l : ι₂) :
     Q.repr y l ∈ R := by
-  rw [← P.sum_repr y, map_sum, Finsupp.finset_sum_apply]
+  rw [← P.sum_repr y, map_sum, Finsupp.finsetSum_apply]
   refine R.sum_mem fun i _ => ?_
   rw [map_smul, Finsupp.smul_apply, smul_eq_mul]
   exact R.mul_mem (hy i) (hPQ i l)

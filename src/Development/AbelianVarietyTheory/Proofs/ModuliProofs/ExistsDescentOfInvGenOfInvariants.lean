@@ -23,7 +23,7 @@ theorem sum_coeff_eq_zero_of_linearIndependent {R M ι C : Type*} [Ring R] [AddC
   have h1 := linearIndependent_iff.1 hv (∑ c, Finsupp.single (p c) (a c)) (by
     simpa only [map_sum, Finsupp.linearCombination_single] using h)
   have h2 := DFunLike.congr_fun h1 i
-  simpa only [Finsupp.finset_sum_apply, Finsupp.single_apply, Finsupp.zero_apply] using h2
+  simpa only [Finsupp.finsetSum_apply, Finsupp.single_apply, Finsupp.zero_apply] using h2
 
 variable {L : LB X} {C : Type} {t : C → (X ⟶ X)} {π : X ⟶ Y}
 

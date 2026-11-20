@@ -114,7 +114,7 @@ theorem _root_.GlobalTheory.Up.polePoint_holds : _root_.GlobalTheory.Up.PolePoin
       exact _root_.ReciprocityTheory.ChartRestriction.G.AR.Up.IW.dmin_ne_zero X (_root_.ReciprocityTheory.ChartRestriction.G.AR.Up.IW.orth_mem_dom X x0 h0) τ i
     have hcont : ContinuousAt (_root_.ReciprocityTheory.ChartRestriction.G.AR.Up.densF X x0) 0 := by
       unfold _root_.ReciprocityTheory.ChartRestriction.G.AR.Up.densF
-      refine tendsto_finset_prod _ fun τ _ ↦ tendsto_finset_prod _ fun i _ ↦ ?_
+      refine tendsto_finsetProd _ fun τ _ ↦ tendsto_finsetProd _ fun i _ ↦ ?_
       exact ((hc' τ _).continuousAt.norm).zpow₀ _ (Or.inl (norm_ne_zero_iff.2 (hne τ _)))
     have hpos : 0 < _root_.ReciprocityTheory.ChartRestriction.G.AR.Up.densF X x0 0 := by
       unfold _root_.ReciprocityTheory.ChartRestriction.G.AR.Up.densF

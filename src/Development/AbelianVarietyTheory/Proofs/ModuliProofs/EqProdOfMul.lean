@@ -169,7 +169,7 @@ theorem monic_ev {m : ℕ} {Φ : MvPolynomial (Fin 2) ℚ} (h : Φ.IsHomogeneous
     refine natDegree_sum_le_of_forall_le _ _ fun d hd' => (natDegree_monomial_le _).trans ?_
     have := hd d hd'; omega
   have hc : (ev Φ (C X - X : ℚ[X][X])).coeff m = 1 := by
-    rw [e, ← h1, finset_sum_coeff]
+    rw [e, ← h1, Polynomial.finsetSum_coeff]
     unfold ev
     rw [MvPolynomial.aeval_def, MvPolynomial.eval₂_eq']
     refine Finset.sum_congr rfl fun d hd' => ?_

@@ -316,7 +316,7 @@ theorem err_bound (hC : CountBd) (F : Type) [Field F] [NumberField F] (hF : IsTo
         (∏ v ∈ U, g v (algebraMap F (Fv F v) x) - ∏ v ∈ T, g v (algebraMap F (Fv F v) x))|) atTop
       (𝓝 (δ ^ Module.finrank ℚ F * ∑ x ∈ B, |G (θ δ * algebraMap F (Ainf F) x) *
         (∏' v, g v (algebraMap F (Fv F v) x) - ∏ v ∈ T, g v (algebraMap F (Fv F v) x))|)) := by
-    refine Tendsto.const_mul _ (tendsto_finset_sum _ fun x hx => ?_)
+    refine Tendsto.const_mul _ (tendsto_finsetSum _ fun x hx => ?_)
     exact (((hMul x (hB0 x hx)).hasProd.sub_const _).const_mul _).abs
   have hfinal := le_of_tendsto hlim ((eventually_ge_atTop T).mono fun U hU => key U hU)
   unfold fullSum truncSum

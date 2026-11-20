@@ -199,7 +199,7 @@ theorem GlobalTheory.CycTrace.normalised_trace_bound (l : ℕ) [hl : Fact l.Prim
     rw [map_mul, expand_aeval, hp2]; simp
   have hco : ∀ j, P.coeff (j * l ^ m) = (p ⟨0, hM⟩).coeff j := by
     intro j
-    rw [hPdef, finset_sum_coeff, Finset.sum_eq_single ⟨0, hM⟩]
+    rw [hPdef, Polynomial.finsetSum_coeff, Finset.sum_eq_single ⟨0, hM⟩]
     · simp [coeff_expand_mul hM]
     · intro i _ hi
       rw [coeff_mul_X_pow']

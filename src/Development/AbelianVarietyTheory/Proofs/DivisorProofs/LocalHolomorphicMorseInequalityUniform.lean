@@ -39,7 +39,7 @@ theorem morse_local : ∀ (n : ℕ) (U K : Set (V n)) (φ g : V n → ℝ) (ε :
 
   obtain ⟨C, hC⟩ : ∃ C, ∀ z ∈ K, ∀ j l, ‖cHess n (fun v => (φ v : ℂ)) z j l‖ ≤ C := by
     have hc : ContinuousOn (fun z => ∑ j, ∑ l, ‖cHess n (fun v => (φ v : ℂ)) z j l‖) K :=
-      continuousOn_finset_sum _ fun j _ => continuousOn_finset_sum _ fun l _ =>
+      continuousOn_finsetSum _ fun j _ => continuousOn_finsetSum _ fun l _ =>
         ((hcont j l).mono hKU).norm
     obtain ⟨C, hC⟩ := hK.exists_bound_of_continuousOn hc
     refine ⟨C, fun z hz j l => ?_⟩

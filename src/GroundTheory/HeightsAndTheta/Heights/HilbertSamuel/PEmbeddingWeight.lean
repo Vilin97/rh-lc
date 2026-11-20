@@ -145,7 +145,7 @@ theorem isClosed_zeros (P : Ideal (MRing ι)) :
 
 theorem isCompact_sphere : IsCompact {z : (Σ k, ι k) → ℂ | ∀ k, blockNormSq z k = 1} := by
   have hN : ∀ k, Continuous fun z : (Σ k, ι k) → ℂ => blockNormSq z k := fun k =>
-    continuous_finset_sum _ fun i _ => ((continuous_apply _).norm).pow 2
+    continuous_finsetSum _ fun i _ => ((continuous_apply _).norm).pow 2
   refine Metric.isCompact_of_isClosed_isBounded ?_ ?_
   · simp only [Set.setOf_forall]
     exact isClosed_iInter fun k => isClosed_eq (hN k) continuous_const

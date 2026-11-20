@@ -32,7 +32,7 @@ private lemma leading_polynomial_eq_zero_iff_lt_weightedOrder {k : Type} [Field 
       (∑ e' ∈ S, Polynomial.C (MvPowerSeries.coeff e' f) * Polynomial.X ^ (e' 1)).coeff (e 1) =
         MvPowerSeries.coeff e f := by
     intro e he
-    rw [Polynomial.finset_sum_coeff, Finset.sum_eq_single e]
+    rw [Polynomial.finsetSum_coeff, Finset.sum_eq_single e]
     · simp [Polynomial.coeff_C_mul_X_pow]
     · intro e' he' hne
       rw [Polynomial.coeff_C_mul_X_pow, if_neg]
@@ -119,7 +119,7 @@ private lemma coeff_subst_eq_pow_mul_eval_leading {k : Type} [Field k] {m n : �
     PowerSeries.coeff D (MvPowerSeries.subst (![z, w] : Fin 2 → PowerSeries k) f) =
       s ^ D * (∑ e ∈ S, Polynomial.C (MvPowerSeries.coeff e f) * Polynomial.X ^ (e 1)).eval t := by
   rw [PowerSeries.coeff, MvPowerSeries.coeff_subst hs, finsum_eq_sum_of_support_subset (s := S)]
-  · rw [Polynomial.eval_finset_sum, Finset.mul_sum]
+  · rw [Polynomial.eval_finsetSum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun e he => ?_
     have hwe := (hS e).1 he
     rw [weight_fin_two] at hwe

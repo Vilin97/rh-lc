@@ -284,7 +284,7 @@ theorem homot : PositivityTheory.RgBcC.Homot := by
       rw [hSd s, ← hydef, clm_fst_eq]
     have hcalc : ∫ v in C, D s v = ∑ i, ∫ v in C, fderiv ℝ (b i) v (Pi.single i 1) := by
       rw [setIntegral_congr_fun hC.measurableSet (fun v hv => hpt v (hCU hv))]
-      refine integral_finset_sum _ fun i _ => ?_
+      refine MeasureTheory.integral_finsetSum _ fun i _ => ?_
       exact ((((hbd i).continuousOn_fderiv_of_isOpen hU le_rfl).clm_apply continuousOn_const).mono hCU).integrableOn_compact hC
     rw [hcalc]
     exact Finset.sum_eq_zero fun i _ => setIntegral_fderiv_eq_zero hU hCU hC (b i) (hbd i) (hz i) _

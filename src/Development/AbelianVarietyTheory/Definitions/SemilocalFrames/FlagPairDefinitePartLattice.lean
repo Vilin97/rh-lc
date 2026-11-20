@@ -189,7 +189,7 @@ theorem _root_.GlobalTheory.HermLat.mem_isomGrp (H : _root_.Formalism.HermitianL
   unfold _root_.GlobalTheory.HermLat.isomGrp _root_.Formalism.HermitianLatticesTheory.isom
   change (∀ x y : V, H.B.flip (s x) (s y) = H.B.flip x y) ↔ _
   simp only [LinearMap.flip_apply]
-  exact forall_swap
+  exact forall_comm
 
 def imLat (s : V ≃ₗ[K] V) (M : Submodule R V) : Submodule R V := Formalism.HermitianLatticesTheory.gmap s M
 

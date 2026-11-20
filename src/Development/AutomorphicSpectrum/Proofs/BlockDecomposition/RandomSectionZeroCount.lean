@@ -74,8 +74,8 @@ theorem continuous_kernel (d : ℕ) (β : Type) [Fintype β] :
   have h4 : Continuous fun q : (Fin d → β → ℂ) × ((β → ℂ) × (β → Fin d → ℂ)) =>
       Real.exp (-∑ k, ‖∑ j, q.1 k j * q.2.1 j‖ ^ 2) := by
     refine Real.continuous_exp.comp (continuous_neg.comp ?_)
-    refine continuous_finset_sum _ fun k _ => (Continuous.norm ?_).pow 2
-    refine continuous_finset_sum _ fun j _ => Continuous.mul ?_ ?_
+    refine continuous_finsetSum _ fun k _ => (Continuous.norm ?_).pow 2
+    refine continuous_finsetSum _ fun j _ => Continuous.mul ?_ ?_
     · exact (continuous_apply j).comp ((continuous_apply k).comp continuous_fst)
     · exact (continuous_apply j).comp (continuous_fst.comp continuous_snd)
   exact h4.mul (h3.norm.pow 2)

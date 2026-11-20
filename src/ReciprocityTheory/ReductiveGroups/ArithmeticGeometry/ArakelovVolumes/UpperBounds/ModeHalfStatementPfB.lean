@@ -114,7 +114,7 @@ noncomputable def Mt (p0 : ℕ) (hp : p0 ≤ r) (q : (Fin r → ℂ) × (Fin r �
 private theorem continuous_sf {T : Type*} [TopologicalSpace T] (p0 : ℕ) {f g : T → Fin r → ℂ}
     (hf : Continuous f) (hg : Continuous g) : Continuous fun x => sf p0 (f x) (g x) := by
   simp only [sf]
-  exact continuous_finset_sum _ fun k _ =>
+  exact continuous_finsetSum _ fun k _ =>
     (continuous_const.mul ((continuous_apply k).comp hf)).mul
       (Complex.continuous_conj.comp ((continuous_apply k).comp hg))
 
@@ -124,8 +124,8 @@ theorem Mt_cont (p0 : ℕ) (hp : p0 ≤ r) : Continuous (Mt p0 hp) := by
     continuous_sf p0 continuous_fst
       (continuous_pi fun k => (continuous_apply c).comp ((continuous_apply k).comp continuous_snd.fst))
   unfold Mt
-  exact (continuous_const.mul (Complex.continuous_re.comp (continuous_finset_sum _ fun a _ =>
-    continuous_finset_sum _ fun b _ =>
+  exact (continuous_const.mul (Complex.continuous_re.comp (continuous_finsetSum _ fun a _ =>
+    continuous_finsetSum _ fun b _ =>
       ((hc _).mul ((continuous_apply b).comp ((continuous_apply a).comp continuous_snd.snd))).mul
         (Complex.continuous_conj.comp (hc _))))).sub
     (Complex.continuous_re.comp (continuous_sf p0 continuous_fst continuous_fst))
@@ -178,7 +178,7 @@ theorem Ms_unif (X : Data E r) (τ : X.Ψ) {κ : ℝ} (hκ : 1 < κ) :
       Ms X.p0 X.p0_le N v ≤ κ * ∑ k, ‖v k‖ ^ 2 := by
   set S : Set (Fin r → ℂ) := {v | ∑ k, ‖v k‖ ^ 2 = 1} with hS
   have hScont : Continuous fun v : Fin r → ℂ => ∑ k, ‖v k‖ ^ 2 :=
-    continuous_finset_sum _ fun k _ => ((continuous_apply k).norm).pow 2
+    continuous_finsetSum _ fun k _ => ((continuous_apply k).norm).pow 2
   have hSc : IsCompact S := by
     apply Metric.isCompact_of_isClosed_isBounded (isClosed_eq hScont continuous_const)
     refine (Metric.isBounded_closedBall (x := (0 : Fin r → ℂ)) (r := 1)).subset ?_

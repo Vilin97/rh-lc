@@ -94,7 +94,7 @@ theorem coeffCont_subst2 [TopologicalSpace K] [IsTopologicalRing K] {T : Type} [
         by ext i; fin_cases i <;> rfl⟩)
     rw [coeff_mul_pow_zero (ha0 t) (hb0 t) hlt, smul_zero]
   rw [show (fun t => MvPowerSeries.coeff n (MvPowerSeries.subst ![a t, b t] f)) = _ from funext key]
-  refine continuous_finset_sum _ fun d _ => ?_
+  refine continuous_finsetSum _ fun d _ => ?_
   exact (((ha.pow (d 0)).mul (hb.pow (d 1))) n).const_smul (MvPowerSeries.coeff d f)
 
 end Cont

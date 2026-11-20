@@ -595,7 +595,7 @@ private theorem finsupp_prod_torus_pow_eq_C_mul_monomial {K : Type u} [Field K] 
   rw [hmono]
   rw [show ∑ t, Finsupp.single t (dd t) = dd from by
     ext u
-    simp [Finsupp.finset_sum_apply, Finsupp.single_apply]]
+    simp [Finsupp.finsetSum_apply, Finsupp.single_apply]]
 
 theorem bnx_torus_cong {K : Type u} [Field K] (l d : ℕ) [NeZero d] (hl : l.Prime) (hl3 : 3 ≤ l)
     (hd2 : 2 ≤ d) (hde : Even d) (ζ : K) (hζ : IsPrimitiveRoot ζ (l ^ d - 1))

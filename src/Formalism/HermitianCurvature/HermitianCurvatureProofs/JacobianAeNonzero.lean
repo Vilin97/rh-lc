@@ -94,7 +94,7 @@ theorem rootCOV_statement : C2.RootCOV := by
   simp only [hroots]
   have hmeas : ∀ j ∈ Finset.range s, Measurable (fun D => φ (ζ ^ j * ρ D)) :=
     fun j _ => hφ.comp (measurable_const.mul hρm)
-  rw [lintegral_finset_sum _ hmeas]
+  rw [MeasureTheory.lintegral_finsetSum _ hmeas]
   have hterm : ∀ j ∈ Finset.range s, ∫⁻ D, φ (ζ ^ j * ρ D) =
       ∫⁻ y in (fun z => ζ ^ j * z) '' S, wt y * φ y := by
     intro j _

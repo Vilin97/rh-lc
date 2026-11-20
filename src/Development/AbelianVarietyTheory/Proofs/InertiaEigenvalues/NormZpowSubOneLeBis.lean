@@ -37,7 +37,7 @@ theorem map_mulVec {r : ℕ} (X : AddSubgroup C) (O : Set C) (hOX : ∀ o ∈ O,
   let T' : X →+ C := AddMonoidHom.mk' (fun x => T x) fun x x' => hadd _ x.2 _ x'.2
   funext a
   have h := map_sum T' (fun b => (⟨B a b * v b, hOX _ (hB a b) _ (hv b)⟩ : X)) Finset.univ
-  simp only [T', AddMonoidHom.mk'_apply, AddSubgroup.val_finset_sum] at h
+  simp only [T', AddMonoidHom.mk'_apply, AddSubgroup.val_finsetSum] at h
   simp only [Matrix.mulVec, dotProduct]
   rw [h]
   exact Finset.sum_congr rfl fun b _ => hlin _ (hB a b) _ (hv b)

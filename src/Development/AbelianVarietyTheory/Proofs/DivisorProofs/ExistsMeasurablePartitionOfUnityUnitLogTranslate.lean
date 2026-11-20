@@ -48,7 +48,7 @@ theorem exists_nonneg_hasSum_lattice_translates (V : Type) [NormedAddCommGroup V
   · simp only [hSp]
     have hfin : (Function.support fun l : L => b (y + l)).Finite := hlf.point_finite y
     have h1 : HasSum (fun l : L => b (y + l)) (S y) := by
-      have hs : Summable (fun l : L => b (y + l)) := summable_of_finite_support hfin
+      have hs : Summable (fun l : L => b (y + l)) := summable_of_hasFiniteSupport hfin
       have := hs.hasSum
       rwa [tsum_eq_finsum hfin] at this
     have := h1.div_const (S y)

@@ -32,7 +32,7 @@ theorem detNorm_pos_iff (x : MatInf E j) : 0 < detNorm E j x ↔ ∀ w, (Matrix.
 theorem continuous_detNorm :
     Continuous fun x : InfinitePlace E → Fin j → Fin j → ℂ => detNorm E j x := by
   unfold detNorm
-  refine continuous_finset_prod _ fun w _ => ?_
+  refine continuous_finsetProd _ fun w _ => ?_
   refine (Continuous.norm ?_).pow 2
   exact Continuous.matrix_det (A := fun x : InfinitePlace E → Fin j → Fin j → ℂ => Matrix.of (x w))
     (continuous_apply w)

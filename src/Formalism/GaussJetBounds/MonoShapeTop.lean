@@ -77,7 +77,7 @@ private lemma sum_single_pair_apply_eq_card_filter {J : Type*} [DecidableEq J] {
     ∑ b : Fin N1, (∑ i, Finsupp.single (κ i, I i) 1 : J × Fin N1 →₀ ℕ) (j, b) =
       (Finset.univ.filter fun i => κ i = j).card := by
   rw [Finset.card_filter]
-  simp only [Finsupp.finset_sum_apply, Finsupp.single_apply]
+  simp only [Finsupp.finsetSum_apply, Finsupp.single_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => ?_
   by_cases h : κ i = j <;> simp [h, Prod.ext_iff]
@@ -105,7 +105,7 @@ theorem monoShapeLow : MonoShapeLow.{u} := by
   have hsum : ∀ k, ∑ b : Fin N1, mono (k, b) = ∑ c, ∑ b : Fin N1, g c (k, b) := by
     intro k
     rw [hmg]
-    simp only [Finsupp.finset_sum_apply]
+    simp only [Finsupp.finsetSum_apply]
     exact Finset.sum_comm
   refine ⟨?_, fun k => ?_⟩
   · simp only [hsum]

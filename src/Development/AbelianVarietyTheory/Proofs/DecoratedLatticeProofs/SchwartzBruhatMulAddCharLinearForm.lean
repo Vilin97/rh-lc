@@ -18,7 +18,7 @@ theorem sb_mul_addChar_linear : ∀ (k : Type) [Field k] [ValuativeRel k] [Topol
   have hf : Continuous f := by
     have : (f : Matrix R Q k → k) = fun x => ∑ i, ∑ j, x i j * f (Matrix.single i j 1) := funext hexp
     rw [this]
-    exact continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+    exact continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
       (continuous_id.matrix_elem i j).mul continuous_const
   refine ⟨?_, ?_⟩
   · exact ((OpenKernel.isLocallyConstant_coe_addChar ψ hψ).comp_continuous

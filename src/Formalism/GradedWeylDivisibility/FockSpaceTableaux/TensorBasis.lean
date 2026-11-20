@@ -39,7 +39,7 @@ theorem ldtensor_span_prod (R K : Type*) [CommRing R] [CommRing K] [Algebra R K]
   rw [Submodule.prod_span] at h2
   refine Submodule.span_mono ?_ h2
   intro y hy
-  rw [Set.mem_finset_prod] at hy
+  rw [Set.mem_finsetProd] at hy
   obtain ⟨g, hg, rfl⟩ := hy
   choose i hi using fun s => hg (Finset.mem_univ s)
   exact ⟨i, Finset.prod_congr rfl fun s _ => hi s⟩
@@ -50,7 +50,7 @@ variable (K : Type*) [Field K] {S : Type*} [Fintype S] [DecidableEq S] {k n : �
 
 theorem ldtensor_glue_apply (α : S → (Fin k × Fin n →₀ ℕ)) (s : S) (v : Fin k × Fin n) :
     (∑ t, (α t).mapDomain (Prod.mk t)) (s, v) = α s v := by
-  rw [Finsupp.finset_sum_apply, Finset.sum_eq_single s]
+  rw [Finsupp.finsetSum_apply, Finset.sum_eq_single s]
   · exact Finsupp.mapDomain_apply (fun x y h => by simpa using h) _ v
   · intro t _ hts
     apply Finsupp.mapDomain_notin_range

@@ -154,7 +154,7 @@ theorem lim_exists_matrix (L : Submodule (𝓞 E) (Fin n → E))
     apply Subtype.ext
     funext i
     have hdi : (d i : E) ≠ 0 := Nat.cast_ne_zero.mpr (hd i).ne'
-    simp only [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply]
+    simp only [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply]
     rw [Finset.sum_eq_single i]
     · change y.natAbs • (a : Fin n → E) i = (y.natAbs • ((d i : E)⁻¹ * (a : Fin n → E) i)) *
         (d i • (Pi.single i (1 : E) : Fin n → E) i)

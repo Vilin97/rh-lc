@@ -67,7 +67,7 @@ theorem continuousAt_potential {ε : Fin n → Bool} (lam : Fin n → ℝ) (y : 
     have hc : Continuous (fun X : Matrix (Fin n) (Fin n) ℂ => (Del (NormedSpace.exp X) (i + 1)).re) :=
       Complex.continuous_re.comp ((continuous_leading_minor (i + 1)).comp continuous_matrix_exp)
     exact continuousAt_const.mul (hc.continuousAt.log (leading_minor_exp_re_pos y hi').ne')
-  exact tendsto_finset_sum _ key
+  exact tendsto_finsetSum _ key
 
 theorem continuous_potential_comp {ε : Fin n → Bool} (lam : Fin n → ℝ) {α : Type*} [TopologicalSpace α]
     {M : α → Matrix (Fin n) (Fin n) ℂ} (hM : Continuous M) (hp : ∀ a, ∃ y : PCoord ε → ℂ, M a = pmat y) :
@@ -265,7 +265,7 @@ theorem lemma6b {ε : Fin n → Bool} {lam : Fin n → ℝ} (T : KType ε (lowK 
         Finset.sum_le_sum (fun i _ => hv _)
     _ = (Module.finrank ℂ T.V : ℝ) * ∫ k, ∑ i, Real.exp (-Ph lam (toMK k⁻¹ * pmat z * toMK k)) ^ 2 *
           ‖⟪stdOrthonormalBasis ℂ T.V i, T.op k T.w⟫_ℂ‖ ^ 2 ∂(dk ε) := by
-        rw [integral_finset_sum univ (fun i _ => integrable_dk_of_continuous (hterm i)), Finset.mul_sum]
+        rw [MeasureTheory.integral_finsetSum univ (fun i _ => integrable_dk_of_continuous (hterm i)), Finset.mul_sum]
     _ = _ := by
         congr 1
         refine integral_congr_ae (Filter.Eventually.of_forall (fun k => ?_))

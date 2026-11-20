@@ -111,12 +111,12 @@ theorem exists_decay_boundC_tensor (w : InfinitePlace k) (φ : 𝓢(ι → mixed
   set S : Set 𝔸ᶠ[k] := ⋃ j : ι,
     (fun p : Matrix ι ι 𝔸[k] × (ι → 𝔸ᶠ[k]) ↦ ∑ i, (p.1 j i).2 * p.2 i) '' (Ci ×ˢ Set.pi Set.univ T)
   have hS : IsCompact S := isCompact_iUnion fun j ↦ (hCi.prod hTpi).image
-    (continuous_finset_sum _ fun i _ ↦ ((hent j i).comp continuous_fst).mul
+    (continuous_finsetSum _ fun i _ ↦ ((hent j i).comp continuous_fst).mul
       ((continuous_apply i).comp continuous_snd))
   obtain ⟨J, κ₀, hκ₀, hJ, hN⟩ := exists_ideal_of_isCompact hS
 
   have hcont : Continuous fun M : Matrix ι ι 𝔸[k] ↦ ∑ j, ∑ i, ‖infC (M j i)‖ :=
-    continuous_finset_sum _ fun j _ ↦ continuous_finset_sum _ fun i _ ↦
+    continuous_finsetSum _ fun j _ ↦ continuous_finsetSum _ fun i _ ↦
       continuous_norm.comp (continuous_infC.comp (continuous_id.matrix_elem j i))
   obtain ⟨B, hB⟩ := hCi.exists_bound_of_continuousOn hcont.continuousOn
   set B' := max B 1

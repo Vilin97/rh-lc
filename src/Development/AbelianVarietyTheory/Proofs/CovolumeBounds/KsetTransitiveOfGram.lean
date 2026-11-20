@@ -89,7 +89,7 @@ lemma star_dot_self {n : ℕ} (v : Fin n → ℂ) : star v ⬝ᵥ v = (sqLen v :
 
 lemma continuous_sqLen' {n : ℕ} : Continuous (sqLen : (Fin n → ℂ) → ℝ) := by
   unfold sqLen
-  exact continuous_finset_sum _ fun i _ => Complex.continuous_normSq.comp (continuous_apply i)
+  exact continuous_finsetSum _ fun i _ => Complex.continuous_normSq.comp (continuous_apply i)
 
 lemma mul_mem_GV {k r : ℕ} {a b : Mat k r} (ha : a ∈ GV k r) (hb : b ∈ GV k r) : a * b ∈ GV k r := by
   have ha' : aᴴ * Hpk k r * a = Hpk k r := ha

@@ -139,7 +139,7 @@ theorem chart_p_smul_lift_eq_bt :
     · have h := btTan_chi_tg D.ch (hF D.ch _) D.wd.ρW D.sm.nil D.wd.πW hsq D.wd.ρ1 D.wd.ρW_eq v k
       simp only [hpt]
       rw [h]
-      simp only [v, map_sum, map_nsmul, AddSubmonoidClass.coe_finset_sum,
+      simp only [v, map_sum, map_nsmul, AddSubmonoidClass.coe_finsetSum,
         AddSubmonoidClass.coe_nsmul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [btTanCrd_nat, ← LinearMap.lTensor_def, btTanCrd_nat, ← D.wd.ξ_img, mul_smul_comm,

@@ -123,7 +123,7 @@ theorem differentiableAt_det {M : ℝ → ι → ι → ℂ} (hM : Differentiabl
     DifferentiableAt ℝ (fun t => (Matrix.of (M t)).det) 0 := by
   simp only [Matrix.det_apply', Matrix.of_apply]
   refine DifferentiableAt.fun_sum fun σ _ => DifferentiableAt.const_mul ?_ _
-  exact DifferentiableAt.fun_finset_prod fun i _ => differentiableAt_pi.1 (differentiableAt_pi.1 hM _) _
+  exact DifferentiableAt.fun_finsetProd fun i _ => differentiableAt_pi.1 (differentiableAt_pi.1 hM _) _
 
 def sand (A A' : Matrix ι ι ℂ) : (ι → ι → ℂ) →L[ℝ] (ι → ι → ℂ) :=
   LinearMap.toContinuousLinearMap

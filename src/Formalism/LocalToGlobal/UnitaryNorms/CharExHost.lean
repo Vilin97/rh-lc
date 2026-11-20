@@ -33,12 +33,12 @@ theorem aFi_mem (w : InfinitePlace F) (k : Fˣ) : (aFi F w k : Ideles L) ∈ uni
 
 theorem resFin_eq (χ : HChar L) (v : HeightOneSpectrum (𝓞 F)) (k : Fˣ) : χ.resFin v k = χ.1 (aF F v k) := by
   unfold HChar.resFin aF
-  rw [map_prod, MonoidHom.finset_prod_apply]
+  rw [map_prod, MonoidHom.finsetProd_apply]
   exact Finset.prod_congr rfl fun P _ => rfl
 
 theorem resInf_eq (χ : HChar L) (w : InfinitePlace F) (k : Fˣ) : χ.resInf w k = χ.1 (aFi F w k) := by
   unfold HChar.resInf aFi
-  rw [map_prod, MonoidHom.finset_prod_apply]
+  rw [map_prod, MonoidHom.finsetProd_apply]
   exact Finset.prod_congr rfl fun w' _ => rfl
 
 end Sub
@@ -60,7 +60,7 @@ theorem localIdele_mem {v : HeightOneSpectrum (𝓞 L)} {x : (v.adicCompletion L
 
 theorem infDiag_mem (k : Lˣ) : infDiag k ∈ unitIdeles L := by
   unfold infDiag
-  rw [MonoidHom.finset_prod_apply]
+  rw [MonoidHom.finsetProd_apply]
   refine Subgroup.prod_mem _ fun w _ => ?_
   show ∀ v : HeightOneSpectrum (𝓞 L),
     Valued.v (((infIdele L w (atInf w k) : Ideles L) : AdeleRing (𝓞 L) L).2 v) = 1

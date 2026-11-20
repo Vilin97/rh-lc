@@ -86,7 +86,7 @@ theorem levelMult_ofLocal {K : Type} [Field K] (s : K →+* ℂ) {Pg : Finset (P
   rw [map_mul, hχ, Finset.prod_mul_distrib, Finset.prod_inv_distrib, Units.val_inv_eq_inv_val, map_inv₀]
   congr 2
   show s ((((∏ PP : ↥Pg, (cl PP).comp (LevelP.prj Hl PP)) x : Kˣ)) : K) = _
-  rw [MonoidHom.finset_prod_apply, Units.coe_prod, map_prod]
+  rw [MonoidHom.finsetProd_apply, Units.coe_prod, map_prod]
   rfl
 
 theorem edgeSum_sup_eq {κ : Type} [CommRing κ] {r k : ℕ} {g : GL (Fin r) κ} (hg : g ∈ unipCol κ r 0 k) :

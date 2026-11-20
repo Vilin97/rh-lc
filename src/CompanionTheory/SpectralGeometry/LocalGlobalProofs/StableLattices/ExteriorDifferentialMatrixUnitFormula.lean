@@ -14,7 +14,7 @@ theorem hasDerivAt_det {m : ℕ} (A : ℝ → Matrix (Fin m) (Fin m) ℂ) (A' : 
       (∑ σ : Equiv.Perm (Fin m), ((Equiv.Perm.sign σ : ℤ) : ℂ) *
         ∑ j, (∏ i ∈ univ.erase j, A 0 (σ i) i) • A' (σ j) j) 0 := by
     refine HasDerivAt.fun_sum fun σ _ => HasDerivAt.const_mul _ ?_
-    exact HasDerivAt.fun_finset_prod (f := fun i t => A t (σ i) i) fun i _ => h _ _
+    exact HasDerivAt.fun_finsetProd (f := fun i t => A t (σ i) i) fun i _ => h _ _
   have h2 : ∀ j, ∑ i, adjugate (A 0) j i * A' i j = ((A 0).updateCol j fun i => A' i j).det := by
     intro j
     rw [← cramer_apply, cramer_eq_adjugate_mulVec]

@@ -55,7 +55,7 @@ theorem scalar_core (n : ℕ) (hn : 2 ≤ n) (ρ μ a : Fin n → ℂ) (b : Fin 
     refine Set.Infinite.mono (s := {0}ᶜ) ?_ (Set.finite_singleton (0:ℂ)).infinite_compl
     intro t ht
     have ht : t ≠ 0 := ht
-    simp only [Set.mem_setOf_eq, eval_add, eval_mul, eval_C, eval_X, eval_pow, eval_finset_sum,
+    simp only [Set.mem_setOf_eq, eval_add, eval_mul, eval_C, eval_X, eval_pow, Polynomial.eval_finsetSum,
       eval_one, rev_eval _ _ _ ht, card_univ, Fintype.card_fin]
     have := congrArg (fun z => t ^ n * z) (h t⁻¹)
     simp only [mul_add, mul_sum] at this ⊢
@@ -90,7 +90,7 @@ theorem scalar_core (n : ℕ) (hn : 2 ≤ n) (ρ μ a : Fin n → ℂ) (b : Fin 
   have c2 : ∀ p : ℂ[X], (X * p).coeff 2 = p.coeff 1 := fun p => coeff_X_mul p 1
   rw [c1] at k1
   rw [c2] at k2
-  simp only [finset_sum_coeff, coeff_C_mul, (rev_coeff _ _).1, (rev_coeff _ _).2.1, le_refl, if_true,
+  simp only [Polynomial.finsetSum_coeff, coeff_C_mul, (rev_coeff _ _).1, (rev_coeff _ _).2.1, le_refl, if_true,
     Nat.sub_self, mul_one] at k1 k2
   norm_num at k1 k2
   constructor

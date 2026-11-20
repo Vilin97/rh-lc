@@ -16,7 +16,7 @@ theorem isOpen_GLs' (n : ℕ) : IsOpen (GLs n) := by
 
 theorem continuous_cm' (n : ℕ) : Continuous (cm (n := n)) := by
   unfold cm
-  exact continuous_finset_sum _ fun p _ => (continuous_apply p).smul continuous_const
+  exact continuous_finsetSum _ fun p _ => (continuous_apply p).smul continuous_const
 
 theorem cm_zero' (n : ℕ) : cm (n := n) 0 = 0 := by
   simp [cm]

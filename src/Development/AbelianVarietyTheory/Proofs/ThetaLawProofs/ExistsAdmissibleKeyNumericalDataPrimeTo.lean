@@ -32,7 +32,7 @@ theorem exists_admissibleKeyNumericalData_prime_to : ∀ g p : ℕ, 1 ≤ g → 
   have hp0 := hp.pos
   have hnd : ¬ p ∣ degProd g (4 * p) (g * (4 * p) + 1) (g * (4 * p) + 1 + p) := by
     unfold degProd
-    rw [Prime.dvd_finset_prod_iff hp.prime]
+    rw [Prime.dvd_finsetProd_iff hp.prime]
     rintro ⟨j, hj, hd⟩
     have hj' : j ≤ g := Nat.lt_succ_iff.mp (Finset.mem_range.mp hj)
     obtain ⟨k, rfl⟩ := Nat.exists_eq_add_of_le hj'

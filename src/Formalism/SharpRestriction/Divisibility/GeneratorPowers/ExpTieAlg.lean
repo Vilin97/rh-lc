@@ -61,7 +61,7 @@ theorem pderiv_subst {σ τ : Type} [Fintype σ] [DecidableEq σ] {a : σ → Mv
   have hc1 : Continuous fun f : MvPowerSeries σ S => pderiv S t (subst a f) :=
     (continuous_pderiv_disc t).comp (MvPowerSeries.continuous_subst ha)
   have hc2 : Continuous fun f : MvPowerSeries σ S => ∑ s, subst a (pderiv S s f) * pderiv S t (a s) :=
-    continuous_finset_sum _ fun s _ =>
+    continuous_finsetSum _ fun s _ =>
       ((MvPowerSeries.continuous_subst ha).comp (continuous_pderiv_disc s)).mul continuous_const
   have heq := MvPowerSeries.WithPiTopology.denseRange_toMvPowerSeries.equalizer hc1 hc2 (funext hpoly)
   exact congrFun heq g

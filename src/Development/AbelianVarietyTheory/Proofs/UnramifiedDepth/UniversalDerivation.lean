@@ -279,8 +279,8 @@ lemma tg_act {E : Type} [CommRing E] (Ac : OAct B O p E) (a : E) (gb : Module.Ba
   have hx' : x = ∑ k, (⟨B.tg (sqProj O M) (sqProj_sqZero O M) (gb k ⊗ₜ[R₀] sqKer (m k)),
       tg_torP B p _ _ _ _ (hk k)⟩ : torP B p (sqAlg O M)) := by
     refine Subtype.ext ?_
-    rw [hx, AddSubmonoidClass.coe_finset_sum, tgPt, map_sum]
-  rw [hx', map_sum, AddSubmonoidClass.coe_finset_sum]
+    rw [hx, AddSubmonoidClass.coe_finsetSum, tgPt, map_sum]
+  rw [hx', map_sum, AddSubmonoidClass.coe_finsetSum]
   simp only [Ac.act_tg a (sqIncl O M) (sqProj O M) (sqProj_sqZero O M) _ _ (hk _)]
   rw [← map_sum, tgPt]
   congr 1

@@ -131,7 +131,7 @@ theorem mem_hermLat {m : ℕ} (X : Matrix (Fin m) (Fin m) E) :
     simp [cT, h1]
 
 theorem mem_mul_herm {m : ℕ} {p : E} (hp : IsUnit p) (hc : L.cj p = p) (X : Matrix (Fin m) (Fin m) E) :
-    X ∈ (hermLat L m).map (DistribMulAction.toAddMonoidHom _ p) ↔
+    X ∈ (hermLat L m).map (DistribSMul.toAddMonoidHom _ p) ↔
       IsHerm L X ∧ ∀ a b, ∃ c ∈ L.O, X a b = p * c := by
   constructor
   · rintro ⟨Y, hY, rfl⟩
@@ -152,7 +152,7 @@ theorem mem_mul_herm {m : ℕ} {p : E} (hp : IsUnit p) (hc : L.cj p = p) (X : Ma
       simp [hc2]
 
 theorem mem_mul_tup {n m : ℕ} (Λ : Submodule L.O (Fin n → E)) (p : E) (t : Fin m → Fin n → E) :
-    t ∈ (tupLat L Λ m).map (DistribMulAction.toAddMonoidHom _ p) ↔
+    t ∈ (tupLat L Λ m).map (DistribSMul.toAddMonoidHom _ p) ↔
       ∃ w : Fin m → Fin n → E, (∀ a, w a ∈ Λ) ∧ t = p • w := by
   constructor
   · rintro ⟨w, hw, rfl⟩
@@ -211,7 +211,7 @@ theorem herm_sub {m : ℕ} {X Y : Matrix (Fin m) (Fin m) E} (hX : IsHerm L X) (h
 theorem gram_add {n m : ℕ} {Hm : Matrix (Fin n) (Fin n) E} (h : IsHerm L Hm)
     {Λ : Submodule L.O (Fin n → E)} (hΛ : IsSD L Hm Λ) {p : E} (hp : p ∈ L.O) (hp' : IsUnit p)
     (hc : L.cj p = p) {z w : Fin m → Fin n → E} (hz : ∀ a, z a ∈ Λ) (hw : ∀ a, w a ∈ Λ) :
-    gramT L Hm (z + p • w) - gramT L Hm z ∈ (hermLat L m).map (DistribMulAction.toAddMonoidHom _ p) := by
+    gramT L Hm (z + p • w) - gramT L Hm z ∈ (hermLat L m).map (DistribSMul.toAddMonoidHom _ p) := by
   have hi : ∀ x ∈ Λ, ∀ y ∈ Λ, hf L Hm x y ∈ L.O := fun x hx y hy => (hΛ.2 _).2 hy _ hx
   refine (mem_mul_herm L hp' hc _).2 ⟨herm_sub L (gram_herm L h _) (gram_herm L h _), fun a b => ?_⟩
   refine ⟨hf L Hm (z b) (w a) + hf L Hm (w b) (z a) + p * hf L Hm (w b) (w a),
@@ -233,9 +233,9 @@ theorem fibre_card {n m : ℕ} {Hm : Matrix (Fin n) (Fin n) E} (h : IsHerm L Hm)
       (∃ y : Fin m → Fin n → E, (∀ a i, y a i ∈ L.O) ∧
         ∀ a b, hf L 1 (x a) (y b) = if a = b then 1 else 0) ∧
       ∀ a b, ∃ c ∈ L.O, hf L 1 (x b) (x a) - G a b = p * c})
-    (U : Set ((Fin m → Fin n → E) ⧸ (tupLat L Λ m).map (DistribMulAction.toAddMonoidHom _ p)))
+    (U : Set ((Fin m → Fin n → E) ⧸ (tupLat L Λ m).map (DistribSMul.toAddMonoidHom _ p)))
     (hU : U = QuotientAddGroup.mk '' {z | IsPrimT L Hm Λ z ∧
-      gramT L Hm z - G ∈ (hermLat L m).map (DistribMulAction.toAddMonoidHom _ p)}) :
+      gramT L Hm z - G ∈ (hermLat L m).map (DistribSMul.toAddMonoidHom _ p)}) :
     U.Finite ∧ U.ncard = S.ncard := by
   have hi : ∀ x ∈ Λ, ∀ y ∈ Λ, hf L Hm x y ∈ L.O := fun x hx y hy => (hΛ.2 _).2 hy _ hx
   have hbm : ∀ i, b i ∈ Λ := fun i => hbΛ ▸ Submodule.subset_span ⟨i, rfl⟩

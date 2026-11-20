@@ -138,7 +138,7 @@ private theorem mul_inv_quotient_mem_twistedCentralizerGL_lemma_3 {E : Type} [Fi
     _root_.GlobalTheory.Tw.CentralizerAdjoin.mem_adjoin_of_commute N g hsep hg
   have hNA : N ∈ A := Algebra.self_mem_adjoin_singleton E N
   have hcomm : ∀ a ∈ A, ∀ b ∈ A, a * b = b * a := fun a ha b hb =>
-    letI : CommRing A := Algebra.adjoinCommRingOfComm E (by simp)
+    letI : CommRing A := Algebra.isMulCommutative_adjoin E (by simp)
     congrArg Subtype.val (mul_comm (⟨a, ha⟩ : A) ⟨b, hb⟩)
   have hinvA : ∀ g ∈ A, IsUnit g → g⁻¹ ∈ A := by
     intro g hg hu
@@ -221,7 +221,7 @@ private theorem mul_inv_quotient_mem_twistedCentralizerGL_lemma_3 {E : Type} [Fi
     simp only [X, hτmul, hτadd, hτpow, hττ, hτw]
   have hτP : τA P = (w * τA cA ^ 3 + (cA * τA cA) ^ 3) * (w + τA cA ^ 2) := by
     simp only [P, hτmul, hτadd, hτpow, hττ, hτw]
-  letI : CommRing A := Algebra.adjoinCommRingOfComm E (by simp)
+  letI : CommRing A := Algebra.isMulCommutative_adjoin E (by simp)
   have htt : cA * Qi * τA (cA * Qi) = 1 :=
     mul_inv_mul_conj_eq_one_of_norm_quotient τA w cA QA Qi X Xi hτmul hτone rfl hτX hτP
       e1 e2 e3
@@ -289,7 +289,7 @@ theorem _root_.GlobalTheory.TwIntegral.integral_twConj_mem_cent_mul : ∀ (F E :
   have hcommN : ∀ g ∈ Algebra.adjoin E {_root_.GlobalTheory.Tw.nrm δ},
       g * _root_.GlobalTheory.Tw.nrm δ = _root_.GlobalTheory.Tw.nrm δ * g := fun g hg =>
     letI : CommRing (Algebra.adjoin E {_root_.GlobalTheory.Tw.nrm δ}) :=
-      Algebra.adjoinCommRingOfComm E (by simp)
+      Algebra.isMulCommutative_adjoin E (by simp)
     congrArg Subtype.val (mul_comm (⟨g, hg⟩ : Algebra.adjoin E {_root_.GlobalTheory.Tw.nrm δ})
       ⟨_, Algebra.self_mem_adjoin_singleton E _⟩)
   have hsN := hcommN _ (Subalgebra.mul_mem _ haA hcA)

@@ -52,7 +52,7 @@ theorem continuous_len_inv_smul {h : HermitianForm F E W} {v : Basis ι E W} (M 
     (Units.continuous_val.comp ((continuous_apply w).comp
       (continuous_subtype_val.comp continuous_inv))).matrix_mulVec continuous_const
   unfold Majorant.len
-  refine Real.continuous_sqrt.comp (continuous_finset_sum _ fun w _ => ?_)
+  refine Real.continuous_sqrt.comp (continuous_finsetSum _ fun w _ => ?_)
   exact Complex.continuous_re.comp
     (((continuous_star.comp (hw w))).dotProduct (continuous_const.matrix_mulVec (hw w)))
 
@@ -208,7 +208,7 @@ theorem ScalingLaw.proof (h : HermitianForm F E W) (v : Basis ι E W) [FiniteDim
   have hm : ∀ t : ℝ, 0 < t → massBelow M μ FD VV t =
       ∑ o ∈ T, Cf (Y o) * ENNReal.ofReal (t ^ (2 * finrank ℚ F * (finrank E W - 1))) := by
     intro t ht
-    rw [massBelow, lintegral_congr fun g => hcount g t, lintegral_finset_sum]
+    rw [massBelow, lintegral_congr fun g => hcount g t, MeasureTheory.lintegral_finsetSum]
     · exact Finset.sum_congr rfl fun o ho => hCeq (Y o) (hSV (hYS o ho)) t ht
     · exact fun o _ => @Measurable.tsum _ _ _ (hQc _) _ fun q =>
         (measurable_belowIndicator M _ t).comp (measurable_const_mul _)

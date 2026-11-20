@@ -24,7 +24,7 @@ theorem hasCOSub_of_lat {𝕜 V : Type} [Field 𝕜] [TopologicalSpace 𝕜] [Ad
     (P := fun (c : 𝕜) (y : V) => c • y ∈ N) hP
   obtain ⟨k, hk⟩ := (hπ.eventually hev).exists
   have hk0 : π ^ k ≠ 0 := pow_ne_zero k h0
-  refine ⟨L.map (DistribMulAction.toAddMonoidHom V (π ^ k)), ?_, ?_, ?_⟩
+  refine ⟨L.map (DistribSMul.toAddMonoidHom V (π ^ k)), ?_, ?_, ?_⟩
   · rw [AddSubgroup.coe_map]
     exact (Homeomorph.smulOfNeZero (π ^ k) hk0).isOpenMap _ hLo
   · rw [AddSubgroup.coe_map]
@@ -80,7 +80,7 @@ theorem tensNA_holds : TensNA := by
 
 def scaledB (𝕜 : Type) {V : Type} [Field 𝕜] [AddCommGroup V] [Module 𝕜 V] (L : AddSubgroup V)
     (Λ : AddSubgroup V) : Prop :=
-  ∃ c : 𝕜, c ≠ 0 ∧ Λ = L.map (DistribMulAction.toAddMonoidHom V c)
+  ∃ c : 𝕜, c ≠ 0 ∧ Λ = L.map (DistribSMul.toAddMonoidHom V c)
 
 theorem isCOBasis_scaled {𝕜 V : Type} [Field 𝕜] [TopologicalSpace 𝕜] [AddCommGroup V]
     [Module 𝕜 V] [TopologicalSpace V] [ContinuousSMul 𝕜 V] (L : AddSubgroup V)
@@ -96,7 +96,7 @@ theorem isCOBasis_scaled {𝕜 V : Type} [Field 𝕜] [TopologicalSpace 𝕜] [A
     (P := fun (c : 𝕜) (y : V) => c • y ∈ N) hP
   obtain ⟨k, hk⟩ := (hπ.eventually hev).exists
   have hk0 : π ^ k ≠ 0 := pow_ne_zero k h0
-  refine ⟨L.map (DistribMulAction.toAddMonoidHom V (π ^ k)), ⟨π ^ k, hk0, rfl⟩, ?_, ?_, ?_⟩
+  refine ⟨L.map (DistribSMul.toAddMonoidHom V (π ^ k)), ⟨π ^ k, hk0, rfl⟩, ?_, ?_, ?_⟩
   · rw [AddSubgroup.coe_map]
     exact (Homeomorph.smulOfNeZero (π ^ k) hk0).isOpenMap _ hLo
   · rw [AddSubgroup.coe_map]

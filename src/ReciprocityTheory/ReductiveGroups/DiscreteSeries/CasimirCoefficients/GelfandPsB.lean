@@ -257,7 +257,7 @@ lemma Fint_sum (T : KType ε Λ) {ι : Type*} (s : Finset ι)
   rw [← Finset.smul_sum]
   congr 1
   simp only [Finset.sum_apply, Finset.sum_smul]
-  exact integral_finset_sum s fun i hi => int_int T (hG i hi) hx
+  exact MeasureTheory.integral_finsetSum s fun i hi => int_int T (hG i hi) hx
 
 end Int
 

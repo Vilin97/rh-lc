@@ -357,7 +357,7 @@ theorem lamVol_of (hC : MpCF (ι × ι)) : LamVol ε e := by
   have hballm : MeasurableSet (Formalism.BasicNotions.ballU P Q r) := by
     apply IsOpen.measurableSet
     apply isOpen_lt _ continuous_const
-    exact continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+    exact continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
       (continuous_subtype_val.matrix_elem i j).norm
   rw [hc, hc1, one_smul, Measure.map_apply hφm hballm, preimage_ballU]
 

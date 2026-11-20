@@ -215,7 +215,7 @@ theorem fibre_rapid_eq_density : ∀ (F E : Type) [Field F] [NumberField F] [Fie
   have hrmulc : Continuous fun q : (Fin 1 → Fin M → Ainf F ⊗[F] E) ×
       Matrix (Fin 1) (Fin 1) (Ainf F ⊗[F] E) => rmul (Ainf F) q.1 q.2 := by
     refine continuous_pi fun a => continuous_pi fun i => ?_
-    refine continuous_finset_sum _ fun c _ => ?_
+    refine continuous_finsetSum _ fun c _ => ?_
     refine Continuous.mul ?_ ?_
     · exact (continuous_apply i).comp ((continuous_apply c).comp continuous_fst)
     · exact continuous_snd.matrix_elem c a

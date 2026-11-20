@@ -111,7 +111,7 @@ theorem dv_support (D : (Y ⟶ X) →₀ ℤ) : dv (fun k : D.support => k.1) (f
 
 theorem dv_comp {Y' : Scheme.{0}} (h : Y' ⟶ Y) (φ : K → (Y ⟶ X)) (ε : K → ℤ) :
     dv (fun k => h ≫ φ k) ε = (dv φ ε).mapDomain (h ≫ ·) := by
-  simp only [dv, Finsupp.mapDomain_finset_sum, Finsupp.mapDomain_single]
+  simp only [dv, Finsupp.mapDomain_finsetSum, Finsupp.mapDomain_single]
 
 theorem ev_add {φ : K → (Y ⟶ X)} {ε : K → ℤ} {s t u : LB.Sec (LB.LinComb L φ ε)}
     (h : ∀ j, u.f j = s.f j + t.f j) : ev p u = ev p s + ev p t :=

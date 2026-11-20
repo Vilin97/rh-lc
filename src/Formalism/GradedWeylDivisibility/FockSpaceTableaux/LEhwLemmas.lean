@@ -159,7 +159,7 @@ theorem lehw_rowDiv_shift (R : Type*) [CommRing R] {r n : ℕ} (w : Fin r × Fin
     (f : MvPolynomial (Fin r × Fin n) R) (hf : IsWeightedHomogeneous w f H) :
     IsWeightedHomogeneous w (rowDiv R a b k f) (H + k * δ) := by
   unfold rowDiv
-  rw [f.as_sum, map_sum, Polynomial.finset_sum_coeff]
+  rw [f.as_sum, map_sum, Polynomial.finsetSum_coeff]
   refine (mem_weightedHomogeneousSubmodule _ _ _ _).mp (Submodule.sum_mem _ fun d hd => ?_)
   refine (mem_weightedHomogeneousSubmodule _ _ _ _).mpr ?_
   have h := lehwShift_rowGen_monomial R w δ a b hstep d (AddMonoidAlgebra.coeff f d) k

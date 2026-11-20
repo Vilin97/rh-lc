@@ -142,7 +142,7 @@ theorem measurable_rhX (h0 : IsOrth X x0) : Measurable (rhX X x0) :=
   (Real.measurable_log.comp (FramePotential.frame_potential_basic r X x0 h0).1).neg
 
 theorem continuousOn_rhX (h0 : IsOrth X x0) : ContinuousOn (rhX X x0) X.dom := by
-  refine ContinuousOn.neg (ContinuousOn.log (continuousOn_finset_prod _ fun τ _ => ?_)
+  refine ContinuousOn.neg (ContinuousOn.log (continuousOn_finsetProd _ fun τ _ => ?_)
     fun x hx => (Finset.prod_pos fun τ _ => (FramePotential.factor_mem X h0 hx τ).1).ne')
   refine ContinuousOn.div (ExtFPf.cont_dmin X τ _).norm.continuousOn ?_
     fun x hx => pow_ne_zero _ (norm_ne_zero_iff.2 (lminor_inv_mul_ne_zero h0 hx τ))

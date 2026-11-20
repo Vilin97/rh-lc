@@ -123,7 +123,7 @@ theorem map_integral_of_bound (h : RepOn G σ) {v : H} (hv : IsSm G σ v) (hφ :
     rw [ContinuousAt, tendsto_iff_norm_sub_tendsto_zero]
     have hT : Continuous fun g : MG G hG =>
         C * ∑ i, ‖dsW σ (W i) (σ g.mat v) - dsW σ (W i) (σ g₀.mat v)‖ :=
-      continuous_const.mul (continuous_finset_sum _ fun i _ =>
+      continuous_const.mul (continuous_finsetSum _ fun i _ =>
         ((continuous_orbit h hv (hW i)).sub continuous_const).norm)
     refine squeeze_zero (fun _ => norm_nonneg _) (fun g => ?_) (by simpa using hT.tendsto g₀)
     exact hbd ((J (σ g.mat v), B (σ g.mat v)) - (J (σ g₀.mat v), B (σ g₀.mat v)))

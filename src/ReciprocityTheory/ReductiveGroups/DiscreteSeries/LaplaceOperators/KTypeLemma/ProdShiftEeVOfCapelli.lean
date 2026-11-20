@@ -123,11 +123,11 @@ theorem poly_coeff_eq_zero {N : ℕ} (v : ℕ → X) (h : ∀ x : ℂ, ∑ k ∈
     have h1 := congrArg φ (h x)
     rw [map_sum, map_zero] at h1
     simp only [map_smul, smul_eq_mul] at h1
-    rw [Polynomial.eval_zero, Polynomial.eval_finset_sum, ← h1]
+    rw [Polynomial.eval_zero, Polynomial.eval_finsetSum, ← h1]
     exact Finset.sum_congr rfl fun j _ => by
       rw [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X, mul_comm]
   have h2 := congrArg (fun q : Polynomial ℂ => q.coeff k) hp0
-  simpa [Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow, Finset.mem_range.2 hk] using h2
+  simpa [Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow, Finset.mem_range.2 hk] using h2
 
 end Poly
 

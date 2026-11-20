@@ -30,7 +30,7 @@ theorem evS_sub {Γ : Type} [Finite Γ] (ψ : Γ → K) (x y : MonoidAlgebra K �
 theorem evS_sum {Γ ι : Type} [Finite Γ] (ψ : Γ → K) (s : Finset ι) (x : ι → MonoidAlgebra K Γ) :
     evS ψ (∑ i ∈ s, x i) = ∑ i ∈ s, evS ψ (x i) := by
   unfold evS
-  simp only [MonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply, Finset.sum_mul]
+  simp only [MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply, Finset.sum_mul]
   exact Finset.sum_comm
 
 theorem evS_one {Γ : Type} [Group Γ] [Finite Γ] (ψ : Γ → K) : evS ψ (1 : MonoidAlgebra K Γ) = ψ 1 := by

@@ -19,7 +19,7 @@ theorem coeff_mem_of_eval {σ : Type*} (U : Submodule ℂ (MvPolynomial σ ℂ))
     have h1 : (φ.comp U.mkQ) (p.eval (C (n : ℂ))) = 0 := by
       rw [LinearMap.comp_apply, Submodule.mkQ_apply, (Submodule.Quotient.mk_eq_zero U).mpr (h n), map_zero]
     rw [Polynomial.eval_eq_sum_range, map_sum] at h1
-    rw [hq, Polynomial.eval_finset_sum, ← h1]
+    rw [hq, Polynomial.eval_finsetSum, ← h1]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     rw [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow, Polynomial.eval_X, ← MvPolynomial.C_pow,
       mul_comm (p.coeff i), ← MvPolynomial.smul_eq_C_mul, map_smul, smul_eq_mul, mul_comm]
@@ -27,7 +27,7 @@ theorem coeff_mem_of_eval {σ : Type*} (U : Submodule ℂ (MvPolynomial σ ℂ))
   · have hq0 : q = 0 := Polynomial.eq_zero_of_infinite_isRoot q
       (Set.infinite_of_injective_forall_mem Nat.cast_injective (fun n => hroot n))
     have hc := congrArg (fun r => _root_.AddMonoidAlgebra.coeff (M := ℕ) r k) hq0
-    simp only [hq, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero,
+    simp only [hq, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero,
       Finset.sum_ite_eq, Finset.mem_range, Nat.lt_succ_iff.mpr hk, if_true] at hc
     simpa using hc
   · rw [Polynomial.coeff_eq_zero_of_natDegree_lt (by omega)]

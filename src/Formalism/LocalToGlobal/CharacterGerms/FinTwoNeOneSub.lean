@@ -32,7 +32,7 @@ theorem no_conj_of_rowsOK {G : ∀ g, Cart V d (I g) (J g)} {alt : Prop} {N : �
     {kind : Fin N → Knd d} (h : RowsOK G alt P kind) {ρ : Fin N} {w w' : WV I} (hw : (ρ, w) ∈ P.vars)
     (hw' : (ρ, w') ∈ P.vars) (hg : w.1 ≠ w'.1) (ht : tyW G w = tyW G w') : False := by
   obtain ⟨h1, h2⟩ := h
-  rw [MvPolynomial.mem_vars] at hw hw'
+  rw [MvPolynomial.mem_vars_iff_mem_support] at hw hw'
   obtain ⟨μ, hμ, hμw⟩ := hw
   obtain ⟨μ', hμ', hμw'⟩ := hw'
   rcases hk : kind ρ with _ | ⟨g, a, a'⟩

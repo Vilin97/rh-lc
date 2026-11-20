@@ -83,7 +83,7 @@ theorem coe_prod' {ι : Type*} (s : Finset ι) (h : ι → T) (z : X) :
 theorem coe_sum' {ι : Type*} (s : Finset ι) (h : ι → T) (z : X) :
     ((∑ y ∈ s, h y : T) : X → O) z = ∑ y ∈ s, ((h y : T) : X → O) z := by
   first
-  | rw [AddSubmonoidClass.coe_finset_sum, Finset.sum_apply]
+  | rw [AddSubmonoidClass.coe_finsetSum, Finset.sum_apply]
   | simp [Finset.sum_apply]
 
 theorem exists_bump (hsep : ∀ x y : X, x ≠ y → ∃ f ∈ T, f x ≠ f y) (x : X) :

@@ -88,7 +88,7 @@ theorem sm_ind {X Y : Type*} [TopologicalSpace X] [MeasurableSpace X] [BorelSpac
 
 theorem continuous_ell (z : Fin (2 * r + k + 1) → ℂ) : Continuous fun x : Mt k r => ell k r z (Matrix.of x) := by
   unfold ell
-  refine continuous_finset_sum _ fun a _ => ?_
+  refine continuous_finsetSum _ fun a _ => ?_
   first
     | (split_ifs <;> fun_prop)
     | (by_cases h : a.val + 1 < r <;> simp [h] <;> fun_prop)
@@ -664,7 +664,7 @@ theorem d_pi_smul {ι : Type*} [Fintype ι] {α : ι → Type*} [∀ i, Measurab
     Measure.pi (fun i => c i • μ i) = (∏ i, c i) • Measure.pi μ := by
   refine Measure.pi_eq fun s _ => ?_
   first
-    | simp only [Measure.smul_apply, Measure.pi_pi, ENNReal.smul_def, smul_eq_mul, ENNReal.coe_finset_prod,
+    | simp only [Measure.smul_apply, Measure.pi_pi, ENNReal.smul_def, smul_eq_mul, ENNReal.ofNNReal_finsetProd,
         Finset.prod_mul_distrib]
     | simp [Finset.prod_mul_distrib]
 

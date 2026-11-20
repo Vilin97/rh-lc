@@ -111,7 +111,7 @@ theorem setIntegral_units_eq_sum {c : ℕ} (G : Kˣ → ℂ)
     rw [multHaar_unitsModCoset]
     exact (multHaar_unitFiltrationUnits_lt_top c).ne
   rw [← integral_indicator ((isOpen_unitFiltrationUnits 0).measurableSet), hcover,
-    integral_finset_sum _ fun t _ => hint t]
+    MeasureTheory.integral_finsetSum _ fun t _ => hint t]
   · simp only [integral_indicator_const _ (measurableSet_unitsModCoset _), measureReal_def,
       multHaar_unitsModCoset, Complex.real_smul]
     rw [Finset.mul_sum]

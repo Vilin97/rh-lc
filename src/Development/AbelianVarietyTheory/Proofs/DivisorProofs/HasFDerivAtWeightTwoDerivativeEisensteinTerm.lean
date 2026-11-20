@@ -68,7 +68,7 @@ theorem hasFDerivAt_eTerm : ∀ (E : Type) [Field E] [NumberField E] (I : Type) 
   have hF : ∀ i, HasFDerivAt (𝕜 := ℝ) (F i) ((F i z * α i) • dz i + (F i z * β i) • dzbar i) z := fun i =>
     hasFDerivAt_factor_norm_cpow i (φ i x) (c i) (C (m i) * c i ^ m i) σ (2 + m i) z
       (GlobalTheory.DeformedSum.defCoord_ne_zero φ z hz x hx i)
-  have hprod := HasFDerivAt.finset_prod (u := Finset.univ) (g := F) (x := z) (fun i _ => hF i)
+  have hprod := HasFDerivAt.finsetProd (u := Finset.univ) (g := F) (x := z) (fun i _ => hF i)
   have hfun : (fun w : I → ℂ => eTerm φ m σ w x) = fun w => ∏ i ∈ Finset.univ, F i w := rfl
   have hval : eTerm φ m σ z x = ∏ i ∈ Finset.univ, F i z := rfl
   rw [hfun]

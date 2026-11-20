@@ -82,7 +82,7 @@ theorem transfer (n : ℕ) : TransferStatement n := by
     intro i
     rw [(hword _).2.2 x₀ hx₀, ContinuousLinearMap.smul_apply, ContinuousLinearMap.integral_apply (hint i)]
     rfl
-  rw [Finset.sum_congr rfl fun i _ => hterm i, ← Finset.smul_sum, ← integral_finset_sum _ hint']
+  rw [Finset.sum_congr rfl fun i _ => hterm i, ← Finset.smul_sum, ← MeasureTheory.integral_finsetSum _ hint']
   have hAv : ∀ (k : KG ε) (u : T.V), (T.op k * projW T * T.op k⁻¹) u = ⟪T.op k T.w, u⟫_ℂ • T.op k T.w := by
     intro k u
     simp only [ContinuousLinearMap.mul_apply, projW, ContinuousLinearMap.smulRight_apply,

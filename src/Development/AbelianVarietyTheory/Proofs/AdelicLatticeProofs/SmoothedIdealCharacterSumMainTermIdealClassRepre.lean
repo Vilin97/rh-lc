@@ -216,7 +216,7 @@ private theorem tsum_principal_le_eq_tsum_mul_cutoff_span {K : Type} [Field K] [
       ∑' β : B, (h (mixedEmbedding K ((β : 𝓞 K) : K)) : ℂ) * G (Ideal.span {(β : 𝓞 K)}) := by
   set g : B → ℂ := fun β =>
     (h (mixedEmbedding K ((β : 𝓞 K) : K)) : ℂ) * G (Ideal.span {(β : 𝓞 K)}) with hg
-  have hgsum : Summable g := summable_of_finite_support hfin
+  have hgsum : Summable g := summable_of_hasFiniteSupport hfin
 
   let gen : {J : Ideal (𝓞 K) // J ≠ ⊥ ∧ J.IsPrincipal ∧ J ≤ B} → 𝓞 K := fun J =>
     @Submodule.IsPrincipal.generator _ _ _ _ _ J.1 J.2.2.1
@@ -320,7 +320,7 @@ private theorem tsum_ideal_eq_sum_classGroup_tsum_mul_isPrincipal {K : Type} [Fi
   have hsum := hasSum_sum (s := Finset.univ) (L := SummationFilter.unconditional _)
     (f := fun (c : ClassGroup (𝓞 K)) (I : Ideal (𝓞 K)) =>
       ({I : Ideal (𝓞 K) | I ≠ ⊥ ∧ (I * (b c : Ideal (𝓞 K))).IsPrincipal}).indicator F I)
-    (fun c _ => (summable_of_finite_support
+    (fun c _ => (summable_of_hasFiniteSupport
       (hfin.subset fun I hI h0 => hI (Set.indicator_apply_eq_zero.2 fun _ => h0))).hasSum)
   rw [← hsum.tsum_eq]
   refine tsum_congr fun I => ?_

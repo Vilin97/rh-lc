@@ -49,7 +49,7 @@ private theorem side {k r : ℕ} (s : Fin (r + 1) → ℝ) (hs : ∀ l, 0 ≤ s 
     ⟨_, Finset.prod_nonneg fun l _ => Real.rpow_nonneg (pow_nonneg (by linarith) _) _, rfl⟩
   have hlam : Continuous (fun m : Mt k r => lam k r z (Matrix.of m)) := by
     unfold lam ell
-    refine Complex.continuous_re.comp (continuous_const.mul (continuous_finset_sum _ fun a _ => ?_))
+    refine Complex.continuous_re.comp (continuous_const.mul (continuous_finsetSum _ fun a _ => ?_))
     split_ifs with ha
     · first
         | (simp only [Matrix.of_apply]; fun_prop)

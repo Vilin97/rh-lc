@@ -134,7 +134,7 @@ lemma isURepOn_of_isTau (h : IsTau ε abelian₂ τ w) : IsURepOn (Kset ε) τ :
     have e : (fun k => τ k v) = fun k => ∑ i, ⟪b i, τ k v⟫_ℂ • b i :=
       funext fun k => (b.sum_repr' _).symm
     rw [e]
-    refine continuousOn_finset_sum _ fun i _ => ContinuousOn.smul ?_ continuousOn_const
+    refine continuousOn_finsetSum _ fun i _ => ContinuousOn.smul ?_ continuousOn_const
     exact (hdiff (b i) v).continuousOn.mono fun k hk => K_KC hk
 
 lemma schur_norm (h : IsTau ε abelian₂ τ w) (x : W) :
@@ -153,7 +153,7 @@ lemma schur_norm (h : IsTau ε abelian₂ τ w) (x : W) :
         (Module.finrank ℂ W : ℂ) * c := by
       simp only [hc', inner_self_eq_norm_sq_to_K, b.orthonormal.1]
       simp
-    rw [← h2, ← integral_finset_sum _ fun i _ =>
+    rw [← h2, ← MeasureTheory.integral_finsetSum _ fun i _ =>
       ((h1.inner continuous_const).mul (continuous_const.inner h1)).integrable_of_hasCompactSupport
         (HasCompactSupport.of_compactSpace _)]
     have h3 : ∀ k : KG ε, ‖τ (toMK k) w‖ = 1 := fun k => (hU.2.1 _ k.2 w).trans hw
@@ -181,7 +181,7 @@ lemma ps_entry (h : IsTau ε abelian₂ τ w) (lam : Fin n → ℝ) {x : Matrix 
     have e : ∀ k : KG ε, (toMK k)⁻¹ = (toMK k)ᴴ := fun k => K_inv k.2
     simp only [e]
     unfold Phi
-    refine continuous_finset_prod _ fun i _ => Continuous.zpow₀ ?_ _ fun k => Or.inl ?_
+    refine continuous_finsetProd _ fun i _ => Continuous.zpow₀ ?_ _ fun k => Or.inl ?_
     · unfold leadMinor
       exact (((hk.matrix_conjTranspose.matrix_mul continuous_const).matrix_mul hk).matrix_submatrix
         _ _).matrix_det

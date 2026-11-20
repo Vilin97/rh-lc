@@ -41,7 +41,7 @@ theorem unweightBack (n : ℕ) (M : Type*) [TopologicalSpace M] [T2Space M]
     first
     | exact ((Real.continuous_exp.comp hw2c).add (Real.continuous_exp.comp hw1c)).add
         ((Real.continuous_exp.comp hw1c).mul (continuous_const.add (continuous_const.mul
-          (continuous_finset_sum _ (fun j _ => ((hdbc j).norm.pow 2))))))
+          (continuous_finsetSum _ (fun j _ => ((hdbc j).norm.pow 2))))))
     | fun_prop
   obtain ⟨C, hC, hCK⟩ := unwBack_bound K hK _ hFc
   have hbd : ∀ x ∈ K, Real.exp (w2 ph ψ x) ≤ C ∧ Real.exp (w1 ph ψ x) ≤ C ∧

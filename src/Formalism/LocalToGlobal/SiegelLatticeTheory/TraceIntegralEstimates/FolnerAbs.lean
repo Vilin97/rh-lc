@@ -138,14 +138,14 @@ theorem map_cjB {S : Set G} {μ : Measure G} (hμ : LeftHaarSub S μ) (b : G) (h
       ext x
       simp only [Set.mem_preimage, Set.mem_compl_iff, hb x]
     · intro s hs
-      rw [Measure.map_map (continuous_mul_left s).measurable hcont.measurable]
+      rw [Measure.map_map (continuous_const_mul s).measurable hcont.measurable]
       have e1 : (fun x => s * x) ∘ cjB b = cjB b ∘ (fun y => (b * s * b⁻¹) * y) := by
         funext y
         simp [cjB, mul_assoc]
       have hs' : b * s * b⁻¹ ∈ S := by
         rw [hb]
         simpa [cjB, mul_assoc] using hs
-      rw [e1, ← Measure.map_map hcont.measurable (continuous_mul_left _).measurable, hl _ hs']
+      rw [e1, ← Measure.map_map hcont.measurable (continuous_const_mul _).measurable, hl _ hs']
   exact haarSub_prop hL ⟨hC, h1, hm, hi, hσ, h0, hc, hl⟩
 
 theorem cjB_pow_iff {S : Set G} {a : G} (ha : ∀ s, s ∈ S ↔ cjB a s ∈ S) (m : ℕ) (s : G) :

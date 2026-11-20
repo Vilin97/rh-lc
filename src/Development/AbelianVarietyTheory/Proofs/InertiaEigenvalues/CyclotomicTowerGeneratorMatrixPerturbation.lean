@@ -120,7 +120,7 @@ theorem surj_of_lattice [CompleteSpace C] {r : ℕ} (X : AddSubgroup C) (hX : Is
   have t1 : Filter.Tendsto (fun n => g (P n a) - P n a + p * ∑ b, π * B a b * g (P n b))
       Filter.atTop (nhds (g (y a) - y a + p * ∑ b, π * B a b * g (y b))) :=
     (((hgc.tendsto _).comp (hP a)).sub (hP a)).add
-      ((tendsto_finset_sum _ fun b _ => ((hgc.tendsto _).comp (hP b)).const_mul _).const_mul p)
+      ((tendsto_finsetSum _ fun b _ => ((hgc.tendsto _).comp (hP b)).const_mul _).const_mul p)
   have t0 : Filter.Tendsto (fun n : ℕ => (-π) ^ n * u n a) Filter.atTop (nhds 0) :=
     squeeze_zero_norm (fun n => hbd n _ (huX n a))
       (tendsto_pow_atTop_nhds_zero_of_lt_one (norm_nonneg π) hπ)

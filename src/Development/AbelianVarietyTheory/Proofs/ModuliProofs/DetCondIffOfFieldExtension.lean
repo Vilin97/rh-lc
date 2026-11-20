@@ -70,7 +70,7 @@ theorem lieMult_iff_finrank {k : Type} [Field k] {O : Type} [CommRing O] {G : Ov
     obtain ⟨h, E⟩ := Chart.prodPts_tan hx d (fun i => tvec (x := x) (b i)) fun i => Chart.isTan_tvec hx _
     have E' : prodPts d (fun i => tvec (x := x) (b i)) = tvec (x := x) _ := Chart.tcoord_spec hx _ h
     rw [E', E, Subtype.ext_iff, Fintype.linearCombination_apply]
-    simp only [Chart.tcoord_tvec, AddSubmonoidClass.coe_finset_sum, SetLike.val_smul]
+    simp only [Chart.tcoord_tvec, AddSubmonoidClass.coe_finsetSum, SetLike.val_smul]
     exact ⟨fun h => (Chart.tvec_inj hx h).symm, fun h => by rw [h]⟩
   rw [key]
   constructor

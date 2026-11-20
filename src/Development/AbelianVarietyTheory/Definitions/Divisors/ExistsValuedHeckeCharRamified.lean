@@ -58,10 +58,10 @@ theorem isValChar_one {I : Type} [Fintype I] (φ : I → E →+* ℂ) (Q : Finse
     IsValChar φ 0 (fun _ => 0) ⊤ Q (1 : HChar E) := by
   refine ⟨fun x => by simp, ⟨fun v k => ?_, fun w k => ?_⟩, fun k => ?_, fun v P _ => ⟨fun _ => levelLe_one P 1, fun _ m => ?_⟩⟩
   · unfold Formalism.L2.Host.HChar.resFin
-    rw [MonoidHom.finset_prod_apply]
+    rw [MonoidHom.finsetProd_apply]
     exact Finset.prod_eq_one fun _ _ => rfl
   · unfold Formalism.L2.Host.HChar.resInf
-    rw [MonoidHom.finset_prod_apply]
+    rw [MonoidHom.finsetProd_apply]
     exact Finset.prod_eq_one fun _ _ => rfl
   · have : (1 : HChar E).inf k = 1 := rfl
     simp [this]
@@ -162,12 +162,12 @@ theorem IsValChar.inv {I : Type} [Fintype I] {φ : I → E →+* ℂ} {s : ℕ} 
     rw [Units.val_inv_eq_inv_val, norm_inv, h1 x, inv_one]
   · have h := h2 v k
     unfold Formalism.L2.Host.HChar.resFin at h ⊢
-    rw [MonoidHom.finset_prod_apply] at h ⊢
+    rw [MonoidHom.finsetProd_apply] at h ⊢
     rw [← inv_eq_one, ← Finset.prod_inv_distrib] at h
     exact h
   · have h := h2' w k
     unfold Formalism.L2.Host.HChar.resInf at h ⊢
-    rw [MonoidHom.finset_prod_apply] at h ⊢
+    rw [MonoidHom.finsetProd_apply] at h ⊢
     rw [← inv_eq_one, ← Finset.prod_inv_distrib] at h
     exact h
   · change (((χ.inf k)⁻¹ : ℂˣ) : ℂ) = _

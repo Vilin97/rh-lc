@@ -29,7 +29,7 @@ theorem generic_mono_det {R : Type*} [CommRing R] [Nontrivial R] {d N0 n : ℕ} 
   have hval : ∀ (f : Fin n → ZMod d) (g : Fin n → ℕ) (i : Fin n),
       (∑ j, Finsupp.single (f j, z, γ j) (g j)) (f i, z, γ i) = g i := by
     intro f g i
-    rw [Finsupp.finset_sum_apply, Finset.sum_eq_single i]
+    rw [Finsupp.finsetSum_apply, Finset.sum_eq_single i]
     · simp
     · intro j _ hj
       rw [Finsupp.single_apply, if_neg]
@@ -39,7 +39,7 @@ theorem generic_mono_det {R : Type*} [CommRing R] [Nontrivial R] {d N0 n : ℕ} 
   have hval2 : ∀ (i : Fin n) (u : ZMod d),
       (∑ j, Finsupp.single (t j, z, γ j) (L j)) (u, z, γ i) = if t i = u then L i else 0 := by
     intro i u
-    rw [Finsupp.finset_sum_apply, Finset.sum_eq_single i]
+    rw [Finsupp.finsetSum_apply, Finset.sum_eq_single i]
     · rw [Finsupp.single_apply]
       by_cases h : t i = u
       · simp [h]

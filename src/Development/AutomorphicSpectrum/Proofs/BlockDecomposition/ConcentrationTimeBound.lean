@@ -146,7 +146,7 @@ theorem cls_sum' {ι : Type} (s : Finset ι) (F : ι → Mat n → V)
     have h2 : ∀ i ∈ s, MemLp (fun y : G n => F i y.val) 2 μ :=
       fun i hi => h i (Finset.mem_insert_of_mem hi)
     have hs : MemLp (fun y : G n => (fun g => ∑ i ∈ s, F i g) y.val) 2 μ :=
-      memLp_finset_sum s h2
+      MeasureTheory.memLp_finsetSum s h2
     have e : (fun g => ∑ i ∈ insert a s, F i g) = (1 : ℂ) • F a + fun g => ∑ i ∈ s, F i g := by
       ext g; simp [Finset.sum_insert ha]
     rw [e, cls_add_smul μ 1 h1 hs, ih h2, Finset.sum_insert ha, one_smul]
@@ -161,7 +161,7 @@ theorem cls_om (hOm : OmFormula) {f : Mat n → V} (hf : Sob μ f) :
   have hs : ∀ a c, MemLp (fun y : G n => Rw (pw true a c) f y.val - Rw (pw false a c) f y.val) 2 μ :=
     fun a c => (hf.2 _).sub (hf.2 _)
   rw [e, cls_sum' Finset.univ (fun a g => ∑ c, (Rw (pw true a c) f g - Rw (pw false a c) f g))
-    (fun a _ => memLp_finset_sum _ fun c _ => hs a c)]
+    (fun a _ => MeasureTheory.memLp_finsetSum _ fun c _ => hs a c)]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [cls_sum' Finset.univ (fun c g => Rw (pw true a c) f g - Rw (pw false a c) f g)
     (fun c _ => hs a c)]

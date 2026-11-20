@@ -18,7 +18,7 @@ theorem mul_sum_law : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpac
   | insert j S hj ih =>
     intro Θ Θ' h
     have hc : Continuous fun t : Matrix m m' k => ∑ e ∈ S, b e * (t e.1 e.2 - β e.1 e.2) :=
-      continuous_finset_sum _ fun e _ => continuous_const.mul
+      continuous_finsetSum _ fun e _ => continuous_const.mul
         ((continuous_id.matrix_elem _ _).sub continuous_const)
     let Θm : SB (Matrix m m' k) := ⟨fun t => (ψ (∑ e ∈ S, b e * (t e.1 e.2 - β e.1 e.2)) : ℂ) * Θ.1 t,
       (hlc.comp_continuous hc).mul Θ.2.1, Θ.2.2.mul_left⟩

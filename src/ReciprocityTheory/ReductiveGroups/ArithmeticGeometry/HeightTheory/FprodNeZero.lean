@@ -48,7 +48,7 @@ private theorem gen_ne_zero_of_mem_htOne_heightData {p : Ideal (KTp K d.D d.N)} 
     have h0 : (Ideal.span {q}).height ≤ (0 : ℕ) := by
       rw [ENat.lt_one_iff_eq_zero] at h3
       rw [h3]; rfl
-    have h2 := (Ideal.height_le_iff.mp h0) ⊥ Ideal.bot_prime hbot
+    have h2 := (Ideal.height_le_iff.mp h0) ⊥ Ideal.isPrime_bot hbot
     first
       | (simp at h2; done)
       | exact absurd h2 (not_lt_of_ge bot_le)

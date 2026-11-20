@@ -24,7 +24,7 @@ theorem integrable_hecke_mul {f : GL (Fin n) F → ℂ}
     Integrable (fun x => (h : HeckeAlgebra μ) x * f (g * x)) μ := by
   refine Continuous.integrable_of_hasCompactSupport ?_ (h : HeckeAlgebra μ).mem.2.mul_right
   exact (h : HeckeAlgebra μ).mem.1.continuous.mul
-    ((continuous_of_mul_right_invariant hf).comp (continuous_mul_left g))
+    ((continuous_of_mul_right_invariant hf).comp (continuous_const_mul g))
 
 theorem integral_one_mul {f : GL (Fin n) F → ℂ}
     (hf : ∀ g, ∀ k ∈ integralGL F n, f (g * k) = f g) (g : GL (Fin n) F) :

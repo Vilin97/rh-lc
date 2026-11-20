@@ -43,9 +43,9 @@ theorem continuous_form :
     fun i j => (hent i j).comp continuous_fst
   simp only [dotProduct, mulVec, Pi.star_apply]
   refine Complex.continuous_re.comp ?_
-  refine continuous_finset_sum _ fun i _ => ?_
+  refine continuous_finsetSum _ fun i _ => ?_
   refine (continuous_star.comp ((continuous_apply i).comp continuous_snd)).mul ?_
-  refine continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun j _ => ?_
   exact (hent' i j).mul ((continuous_apply j).comp continuous_snd)
 
 theorem posDef_of_sphere {M : Matrix (Fin n) (Fin n) ℂ} (hM : M.IsHermitian)

@@ -59,7 +59,7 @@ theorem infDiag_parts (k : Fˣ) : infPart F (infDiag k) = infPart F (diagUnits F
   constructor
   · apply Units.ext
     funext w
-    rw [infDiag, MonoidHom.finset_prod_apply, map_prod, Units.coe_prod]
+    rw [infDiag, MonoidHom.finsetProd_apply, map_prod, Units.coe_prod]
     have e : (∏ u : InfinitePlace F, ((infPart F (((infIdele F u).comp (atInf u)) k) : (InfiniteAdeleRing F)ˣ) :
         InfiniteAdeleRing F)) w = ∏ u : InfinitePlace F, ((infPart F (((infIdele F u).comp (atInf u)) k) :
           (InfiniteAdeleRing F)ˣ) : InfiniteAdeleRing F) w := Finset.prod_apply _ _ _
@@ -68,7 +68,7 @@ theorem infDiag_parts (k : Fˣ) : infPart F (infDiag k) = infPart F (diagUnits F
     · intro u _ hu
       exact infIdele_fst_ne F u w (Ne.symm hu) _
     · simp
-  · rw [infDiag, MonoidHom.finset_prod_apply, map_prod]
+  · rw [infDiag, MonoidHom.finsetProd_apply, map_prod]
     exact Finset.prod_eq_one fun u _ => Units.ext rfl
 
 end Parts

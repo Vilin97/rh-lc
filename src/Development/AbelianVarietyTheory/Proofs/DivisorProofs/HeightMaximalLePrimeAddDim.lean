@@ -130,7 +130,7 @@ theorem exists_maximal_mvPolynomial_localization (N : ℕ) (p : Ideal ℤ) [p.Is
       simpa using this
     have h3 := (‹𝔑.IsMaximal›.eq_of_le h2 h1)
     have h4 : J = 𝔑' := by
-      have h5 := IsLocalization.map_comap W (MvPolynomial (Fin N) (Localization.AtPrime p)) J
+      have h5 := IsLocalization.map_under W (MvPolynomial (Fin N) (Localization.AtPrime p)) J
       change Ideal.map _ (J.comap (algebraMap (MvPolynomial (Fin N) ℤ) (MvPolynomial (Fin N) (Localization.AtPrime p)))) = J at h5
       rw [← h3] at h5
       exact h5.symm

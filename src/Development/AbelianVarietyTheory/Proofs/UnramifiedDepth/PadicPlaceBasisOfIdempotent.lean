@@ -188,7 +188,7 @@ theorem eigDim_eq_of_basis : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [
     | add x y hx hy => rw [add_mul]; exact Submodule.add_mem _ hx hy
     | tmul c a =>
       have h1 := congrArg Subtype.val (b.sum_repr ⟨w.e * a, a, rfl⟩)
-      simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] at h1
+      simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] at h1
       rw [Algebra.TensorProduct.tmul_mul_tmul, _root_.mul_one, mul_comm a, ← h1, TensorProduct.tmul_sum]
       refine Submodule.sum_mem _ fun i _ => ?_
       rw [hs]

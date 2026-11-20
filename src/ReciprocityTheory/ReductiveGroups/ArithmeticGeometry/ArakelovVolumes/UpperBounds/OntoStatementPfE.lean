@@ -130,9 +130,9 @@ theorem nfac_cont (la : Wt X.Ψ r) : ContinuousOn (fun z => X.nfac la (cpt X x0 
     rw [h, Complex.zero_re, mul_zero] at h2
     exact lt_irrefl _ h2
   unfold ReciprocityTheory.ChartRestriction.G.FD.Data.nfac
-  apply continuousOn_finset_prod
+  apply continuousOn_finsetProd
   intro τ _
-  apply continuousOn_finset_prod
+  apply continuousOn_finsetProd
   intro i _
   intro z hz
   apply ContinuousAt.continuousWithinAt

@@ -187,7 +187,7 @@ theorem swd_invariant_bound : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
   have hf : ‖hFac Ψ γ Z (0 : CM Ψ n (N + 1)) 0‖ =
       (∏ τ, ‖(hDen Ψ γ Z τ).det‖ ^ 2) ^ ((n : ℝ) / 2) := by
     have h0 : ∀ (τ : Ψ) (k : Fin n), (0 : CM Ψ n (N + 1)) τ k = 0 := fun _ _ => rfl
-    rw [← Real.finset_prod_rpow _ _ fun _ _ => by positivity]
+    rw [← Real.finsetProd_rpow _ _ fun _ _ => by positivity]
     simp only [hFac, h0, zero_dotProduct, Finset.sum_const_zero, mul_zero, Complex.exp_zero,
       mul_one, norm_prod, norm_pow]
     refine Finset.prod_congr rfl fun τ _ => ?_

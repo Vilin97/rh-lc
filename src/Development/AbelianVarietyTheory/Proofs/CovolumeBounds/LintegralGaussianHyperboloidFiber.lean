@@ -14,7 +14,7 @@ noncomputable abbrev pt {k : ℕ} (τ : ℝ) (p : (Fin k → ℂ) × ℝ) : Fin 
 
 theorem continuous_sqLen {n : ℕ} : Continuous (sqLen : (Fin n → ℂ) → ℝ) := by
   unfold sqLen
-  exact continuous_finset_sum _ fun i _ => Complex.continuous_normSq.comp (continuous_apply i)
+  exact continuous_finsetSum _ fun i _ => Complex.continuous_normSq.comp (continuous_apply i)
 
 theorem form_eq {k : ℕ} (v : Fin (k + 1) → ℂ) :
     star v ⬝ᵥ (sgnMat k *ᵥ v) =

@@ -331,7 +331,7 @@ theorem satake_coeff (h : SphericalHecke μ (F := F) (n := n)) (l : Fin n → �
         if iwasawaExponent F n x.out = l then (h : HeckeAlgebra μ) x.out else 0 := by
   classical
   rw [satake, AddMonoidAlgebra.coeff_smul, Finsupp.smul_apply, AddMonoidAlgebra.coeff_sum,
-    Finsupp.finset_sum_apply, smul_eq_mul]
+    Finsupp.finsetSum_apply, smul_eq_mul]
   congr 1
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [AddMonoidAlgebra.coeff_single, Finsupp.single_apply]

@@ -17,7 +17,7 @@ private lemma measurable_phiA (k : ℕ) (A : ℝ) : Measurable (PhiA k A) := by
   have hc : Continuous fun g : Mt k 0 => gN (Matrix.of g) := by
     unfold gN
     apply Continuous.sqrt
-    refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+    refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
     exact Complex.continuous_normSq.comp ((continuous_apply j).comp (continuous_apply i))
   unfold PhiA
   exact ENNReal.measurable_ofReal.comp (hc.measurable.pow_const (-A))

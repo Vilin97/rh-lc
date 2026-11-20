@@ -384,14 +384,14 @@ lemma op_smul (b : Bool) (X : Mat k r) (a : ℂ) (f : Mat k r → E) : op b X (a
   funext g
   simp only [op, Pi.smul_apply]
   first
-    | exact deriv_const_smul' (f := fun t : ℝ => f (cv b X t g)) (x := 0) a
+    | exact deriv_const_smul_field (f := fun t : ℝ => f (cv b X t g)) (x := 0) a
     | exact deriv_const_smul_field (f := fun t : ℝ => f (cv b X t g)) (x := 0) a
 
 lemma op_rsmul (b : Bool) (X : Mat k r) (a : ℝ) (f : Mat k r → E) : op b X (a • f) = a • op b X f := by
   funext g
   simp only [op, Pi.smul_apply]
   first
-    | exact deriv_const_smul' (f := fun t : ℝ => f (cv b X t g)) (x := 0) a
+    | exact deriv_const_smul_field (f := fun t : ℝ => f (cv b X t g)) (x := 0) a
     | exact deriv_const_smul_field (f := fun t : ℝ => f (cv b X t g)) (x := 0) a
 
 lemma cv_rsmul (b : Bool) (X g : Mat k r) (c t : ℝ) : cv b ((c : ℂ) • X) t g = cv b X (c * t) g := by

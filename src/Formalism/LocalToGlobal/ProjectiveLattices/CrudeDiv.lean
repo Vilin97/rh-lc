@@ -190,7 +190,7 @@ theorem linMon_aeval_monomial {ι : Type} [Fintype ι] [DecidableEq ι] (cp : ι
   have hS : ((Finset.univ : Finset ι).toList.map fun l => Finsupp.single l (a l)).sum = a := by
     rw [hLs]
     ext j
-    simp [Finsupp.finset_sum_apply, Finsupp.single_apply]
+    simp [Finsupp.finsetSum_apply, Finsupp.single_apply]
   have hP : ((Finset.univ : Finset ι).toList.map fun l => ((α l).descFactorial (a l) : k)).prod =
       ∏ l, ((α l).descFactorial (a l) : k) := hLp k _
   rw [hS, hP, one_mul]

@@ -232,7 +232,7 @@ theorem finrank_of_lieMult {S : Scheme.{0}} {G : Over S} [GrpObj G] {k : Type} [
     refine (existsUnique_congr fun d => ?_).1 (H _ ⟨isTangent_prodPts hv.1 c, (mem _).1 c.2⟩)
     refine (Chart.isLieComb_iff d _ _).trans ?_
     rw [prodPts_prodPts hv.1, Subtype.ext_iff, Fintype.linearCombination_apply, eq_comm]
-    simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul]
+    simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul]
     exact (prodPts_injective hv).eq_iff
   rw [← (LinearEquiv.ofBijective _ ((Function.bijective_iff_existsUnique _).2 key)).finrank_eq,
     Module.finrank_fin_fun]

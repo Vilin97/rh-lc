@@ -97,7 +97,7 @@ theorem _root_.GlobalTheory.idealCharacterL_continuation_ne_zero_one :
     fun s => by simp [F, Finset.prod_apply]
   refine ⟨fun s => LX s * F s, ?_, ?_, ?_⟩
   · apply hLXd.differentiableOn.mul
-    apply DifferentiableOn.finset_prod
+    apply DifferentiableOn.finsetProd
     intro P _
     refine DifferentiableOn.inv ?_ (fun s hs => hfac P s hs)
     refine DifferentiableOn.const_sub ?_ _

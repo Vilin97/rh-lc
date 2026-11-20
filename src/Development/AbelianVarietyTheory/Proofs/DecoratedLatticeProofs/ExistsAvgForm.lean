@@ -192,7 +192,7 @@ theorem exists_avg_form {ρ : ℕ} (hcρ : c + 1 = 2 * ρ) {ψ : AddChar k Circl
   have hw' : ∀ Ψ (Φ₀ : SB (n₁ → k)), app (T Ψ) (opEFJ ψ ν ρ Φ₀.1 (om μ₂ h 1 Φ₂.1)) v = fj Ψ (ρ₁ h Φ₂) Φ₀ :=
     fun Ψ Φ₀ => hw Ψ (ρ₁ h Φ₂) Φ₀
   simp only [hw', (hrep.2 _ _ _).2]
-  rw [← integral_finset_sum _ fun i _ => (hrep.2 _ _ _).1]
+  rw [← MeasureTheory.integral_finsetSum _ fun i _ => (hrep.2 _ _ _).1]
   congr 1; funext β
   have e := om_mul μ₁ 1 1 (colE (c + 1) (ρ + 1) β) h Φ₁
   rw [one_mul] at e

@@ -529,7 +529,7 @@ theorem linearIndependent_map {σ κ : Type} (s : K →+* ℂ) (v : κ → MvPol
       rfl
     have h2 : ∑ j ∈ t, (AddMonoidAlgebra.coeff (v j) m) * B.repr (g j) b = 0 := by
       have h3 := congrArg (fun z => B.repr z b) hm'
-      simpa only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
+      simpa only [map_sum, map_smul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.smul_apply,
         smul_eq_mul, map_zero, Finsupp.coe_zero, Pi.zero_apply] using h3
     exact (Finset.sum_congr rfl fun j _ => mul_comm _ _).trans h2
   have h4 : B.repr (g i) = 0 := by

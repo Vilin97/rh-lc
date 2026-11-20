@@ -54,7 +54,7 @@ theorem mem_ker_cone {o σ K : Type} [CommRing o] [Field K] (β : o →+* K) (u 
   · intro h0 e
     by_cases he : e ∈ Finset.range (F.totalDegree + 1)
     · have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p e) h0
-      simp only [Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_zero,
+      simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_zero,
         Finset.sum_ite_eq', he, if_true] at this
       exact this
     · rw [homogeneousComponent_eq_zero, map_zero]

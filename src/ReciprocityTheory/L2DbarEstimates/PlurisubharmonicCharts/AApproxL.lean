@@ -54,7 +54,7 @@ theorem continuous_nsq_of_isSec {la : La} {u : ι → Y → ℂ} (hu : A.IsSec l
 theorem continuous_sqn_of_isSec {N : ℕ} {la : La} {w : Fin N → ι → Y → ℂ} (hw : ∀ k, A.IsSec la (w k)) :
     Continuous (A.sqn la w) := by
   show Continuous fun y => ∑ k, A.nsq la (w k) y
-  exact continuous_finset_sum _ fun k _ => A.continuous_nsq_of_isSec (hw k)
+  exact continuous_finsetSum _ fun k _ => A.continuous_nsq_of_isSec (hw k)
 
 theorem int_h_le {Sf : Finset Y} (D : CutData A Sf) {L : La} {N : ℕ} {w : Fin N → ι → Y → ℂ}
     {w0 : ι → Y → ℂ} {s : Fin n → ι → Y → ℂ} (hD : A.D0 L w w0 s) {ps1 : Y → ℝ}

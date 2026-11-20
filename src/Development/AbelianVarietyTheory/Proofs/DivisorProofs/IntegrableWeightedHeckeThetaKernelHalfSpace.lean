@@ -115,7 +115,7 @@ theorem continuous_theta {ι : Type} (e : ι → I → ℂ) (a : ι → ℂ) (n 
     · apply Continuous.continuousOn
       apply continuous_const.mul
       unfold gauss
-      refine continuous_finset_prod _ fun i _ => ?_
+      refine continuous_finsetProd _ fun i _ => ?_
       have hd : Continuous fun y : I → ℝ => dil y (e j) i := by unfold dil; fun_prop
       exact ((continuous_hmon _).comp hd).mul (by fun_prop)
     · exact (ha _ (by positivity)).mul_left _

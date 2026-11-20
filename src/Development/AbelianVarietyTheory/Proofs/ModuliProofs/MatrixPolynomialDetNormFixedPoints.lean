@@ -131,7 +131,7 @@ theorem exists_tower (l : ℕ) [hl : Fact l.Prime] (m : ℕ) (Q : Type) [AddComm
   have hs : ∀ t : Fin m → ZMod l,
       ((∑ j, (t j).val • b j : T l) : Q) = ∑ j, (t j).val • τ j 0 := by
     intro t
-    rw [AddSubgroup.val_finset_sum]
+    rw [AddSubgroup.val_finsetSum]
     rfl
   refine ⟨τ, h1, fun i n => hg2 _ _ (h1 i n), fun x hx => ?_⟩
   simpa only [Subtype.ext_iff, hs] using hb ⟨x, hx⟩

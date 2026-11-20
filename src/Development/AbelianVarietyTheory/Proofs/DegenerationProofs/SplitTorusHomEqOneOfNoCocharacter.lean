@@ -34,7 +34,7 @@ theorem splitTorus_hom_eq_one_of_no_cocharacter :
       rw [Finset.sum_insert hi, SplitTorus.torusMap_add, MonObj.mul_comp, h1, ih, _root_.mul_one]
   have h3 : (∑ i, (c i).comp (l i)) = AddMonoidHom.id X := by
     ext x
-    rw [AddMonoidHom.finset_sum_apply]
+    rw [AddMonoidHom.finsetSum_apply]
     exact b.sum_repr x
   have := h2 Finset.univ
   rwa [h3, SplitTorus.torusMap_id, Category.id_comp] at this

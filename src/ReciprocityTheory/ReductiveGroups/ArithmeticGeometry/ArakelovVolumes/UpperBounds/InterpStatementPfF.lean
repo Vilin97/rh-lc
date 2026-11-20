@@ -58,7 +58,7 @@ theorem wdb_cut_continuous (ε : ℝ) (hε : 0 < ε) (j : Fin n) :
 theorem wdb_cut_bdd (ε : ℝ) (hε : 0 < ε) :
     ∃ M : ℝ, 0 ≤ M ∧ ∀ y : V n, ∑ j, ‖wdb n j (cut ε hε) y‖ ^ 2 ≤ M := by
   have hcont : Continuous (fun y : V n => ∑ j, ‖wdb n j (cut ε hε) y‖ ^ 2) :=
-    continuous_finset_sum _ fun j _ => ((wdb_cut_continuous ε hε j).norm).pow 2
+    continuous_finsetSum _ fun j _ => ((wdb_cut_continuous ε hε j).norm).pow 2
   obtain ⟨C, hC⟩ :=
     (isCompact_closedBall (0 : V n) (2 * ε)).exists_bound_of_continuousOn hcont.continuousOn
   refine ⟨max C 0, le_max_right _ _, fun y => ?_⟩

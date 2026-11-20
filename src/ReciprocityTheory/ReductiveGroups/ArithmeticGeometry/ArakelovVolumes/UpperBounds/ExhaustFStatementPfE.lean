@@ -217,8 +217,8 @@ theorem isClosed_psdF : IsClosed {z : V (nd X) | ∀ τ, (Am X z τ).PosSemidef}
   have he : ∀ a c, Continuous fun z : V (nd X) => Am X z τ a c := fun a c => (cd_Am_entry X τ a c).continuous
   have hf : Continuous fun z : V (nd X) => star x ⬝ᵥ (Am X z τ) *ᵥ x := by
     simp only [dotProduct, Matrix.mulVec]
-    exact continuous_finset_sum _ fun a _ =>
-      continuous_const.mul (continuous_finset_sum _ fun c _ => (he a c).mul continuous_const)
+    exact continuous_finsetSum _ fun a _ =>
+      continuous_const.mul (continuous_finsetSum _ fun c _ => (he a c).mul continuous_const)
   exact isClosed_le continuous_const hf
 
 theorem isCompact_subF (x0 : Frame X.Ψ r) (ho : IsOrth X x0) (a : ℝ) : IsCompact {z : V (nd X) | z ∈ OmF X x0 ∧ eF X x0 z ≤ a} := by
@@ -227,7 +227,7 @@ theorem isCompact_subF (x0 : Frame X.Ψ r) (ho : IsOrth X x0) (a : ℝ) : IsComp
   · refine (isClosed_psdF X).inter (isClosed_le ?_ ?_)
     · exact Real.continuous_exp.comp ((Continuous.log (continuous_const.add (continuous_norm.pow 2))
         fun z => (by positivity : (0 : ℝ) < 1 + ‖z‖ ^ 2).ne').sub continuous_const)
-    · exact continuous_finset_prod _ fun τ _ => Complex.continuous_re.comp (cd_detAm X τ).continuous
+    · exact continuous_finsetProd _ fun τ _ => Complex.continuous_re.comp (cd_detAm X τ).continuous
   · refine (Metric.isBounded_iff_subset_closedBall 0).2 ⟨Real.exp a, fun z hz => ?_⟩
     obtain ⟨hpsd, hle⟩ := hz
     have hP : ∏ τ, (Am X z τ).det.re ≤ 1 :=

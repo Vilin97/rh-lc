@@ -345,7 +345,7 @@ theorem Gq_pos (q : Qp P.r P.TT) : 0 < Gq P q := by
 
 theorem Gq_meas : Measurable (Gq P) := by
   apply Continuous.measurable
-  exact (continuous_finset_prod _ fun l _ => Complex.continuous_normSq.comp
+  exact (continuous_finsetProd _ fun l _ => Complex.continuous_normSq.comp
       ((continuous_apply l).comp (continuous_fst.comp continuous_subtype_val))).mul
     ((Complex.continuous_normSq.comp (continuous_snd.comp continuous_subtype_val)).sub continuous_const)
 

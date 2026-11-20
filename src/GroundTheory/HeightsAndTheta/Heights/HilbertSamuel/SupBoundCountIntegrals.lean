@@ -209,9 +209,9 @@ theorem quad_pairRe (A : HermLine ι) (n : ℕ) {r : ℕ} (f : Fin r → MRing �
 theorem sum_integral {X : Type*} [MeasurableSpace X] (μ : Measure X) {r : ℕ} (a b : Fin r → Fin r → ℝ)
     (g : Fin r → Fin r → X → ℝ) (hg : ∀ k l, Integrable (g k l) μ) :
     ∑ k, ∑ l, a k l * (∫ x, g k l x ∂μ) * b k l = ∫ x, ∑ k, ∑ l, a k l * g k l x * b k l ∂μ := by
-  rw [integral_finset_sum _ fun k _ => integrable_finset_sum _ fun l _ => ((hg k l).const_mul _).mul_const _]
+  rw [MeasureTheory.integral_finsetSum _ fun k _ => MeasureTheory.integrable_finsetSum _ fun l _ => ((hg k l).const_mul _).mul_const _]
   refine Finset.sum_congr rfl fun k _ => ?_
-  rw [integral_finset_sum _ fun l _ => ((hg k l).const_mul _).mul_const _]
+  rw [MeasureTheory.integral_finsetSum _ fun l _ => ((hg k l).const_mul _).mul_const _]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [integral_mul_const, integral_const_mul]
 

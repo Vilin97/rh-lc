@@ -30,7 +30,7 @@ theorem unitBounded_of_split (hL : TensorLattice) {F B : Type} [Field F] [Number
   let Φ : (∀ i, C i ⊗[F] AdeleRing (𝓞 F) F) → B ⊗[F] AdeleRing (𝓞 F) F :=
     fun x => ∑ i, LinearMap.rTensor (AdeleRing (𝓞 F) F) (s i) (x i)
   have hΦ : Continuous Φ :=
-    continuous_finset_sum _ fun i _ =>
+    continuous_finsetSum _ fun i _ =>
       (continuous_rTensor (AdeleRing (𝓞 F) F) (s i)).comp (continuous_apply i)
   have hp : ∀ i u, p i (sigR τ _ u) = sigR (ρ i) _ (p i u) := by
     intro i u

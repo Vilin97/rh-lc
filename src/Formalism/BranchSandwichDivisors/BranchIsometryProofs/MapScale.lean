@@ -90,7 +90,7 @@ theorem ms_opNorm_nat [Nonempty ι] (b : Basis ι K V) (X : InfinitePlace K → 
   have h3 : Matrix.toEuclideanLin (1 : Matrix ι ι ℂ) = LinearMap.id := by
     first
       | exact Matrix.toEuclideanLin_one
-      | (ext x i; simp [Matrix.toEuclideanLin_apply])
+      | (ext x i; simp [Matrix.toLpLin_apply])
       | (simp [Matrix.toEuclideanLin, Matrix.toLin'_one])
   have h4 : LinearMap.toContinuousLinearMap (Matrix.toEuclideanLin ((n : ℂ) • (1 : Matrix ι ι ℂ)))
       = (n : ℂ) • ContinuousLinearMap.id ℂ (EuclideanSpace ℂ ι) := by

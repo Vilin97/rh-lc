@@ -35,7 +35,7 @@ theorem nsq_zero (M : ι → Matrix n n ℂ) : nsq M 0 = 0 := by simp [nsq]
 
 theorem continuous_nsq (M : ι → Matrix n n ℂ) : Continuous (nsq M) := by
   unfold nsq
-  refine continuous_finset_sum _ fun τ _ => Complex.continuous_re.comp ?_
+  refine continuous_finsetSum _ fun τ _ => Complex.continuous_re.comp ?_
   exact ((continuous_apply τ).star).dotProduct (continuous_const.matrix_mulVec (continuous_apply τ))
 
 theorem nsq_conj (M T : ι → Matrix n n ℂ) (v : ι → n → ℂ) :

@@ -64,7 +64,7 @@ theorem repr_coe {κ : Type} [Fintype κ] [DecidableEq κ] (b : Basis κ K V) (y
     congr 1
     simp only [bO, Basis.span_apply]
   rw [hy, map_sum]
-  simp only [map_smul, Basis.repr_self, Finsupp.coe_finset_sum, Finset.sum_apply,
+  simp only [map_smul, Basis.repr_self, Finsupp.coe_finsetSum, Finset.sum_apply,
     Finsupp.smul_apply, Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero,
     Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
 

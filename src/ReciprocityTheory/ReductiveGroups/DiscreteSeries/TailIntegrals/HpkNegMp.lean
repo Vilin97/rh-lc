@@ -148,19 +148,19 @@ theorem tm_mp (k r' : ℕ) : MeasurePreserving (tm k r') volume volume :=
 
 theorem lsq_cont {p m : ℕ} (l : Fin (p + 1)) : Continuous fun x : Xp p m => Lsq x l := by
   unfold Lsq
-  exact continuous_const.add (continuous_finset_sum _ fun j _ => Continuous.if_const _
+  exact continuous_const.add (continuous_finsetSum _ fun j _ => Continuous.if_const _
     (((continuous_apply j).comp continuous_fst).norm.pow 2) continuous_const)
 
 theorem de_cont {p m : ℕ} (l : Fin (p + 1)) : Continuous fun x : Xp p m => de x l := by
   unfold de
   refine Real.continuous_sqrt.comp (((lsq_cont l).mul ?_).add ?_)
   · unfold rhoSq
-    exact ((lsq_cont _).add (continuous_finset_sum _ fun i _ =>
+    exact ((lsq_cont _).add (continuous_finsetSum _ fun i _ =>
       ((continuous_apply i).comp (continuous_fst.comp (continuous_snd.comp continuous_snd))).norm.pow 2)).add
-      (continuous_finset_sum _ fun j _ => Continuous.if_const _
+      (continuous_finsetSum _ fun j _ => Continuous.if_const _
         (((continuous_apply j).comp (continuous_fst.comp continuous_snd)).norm.pow 2) continuous_const)
   · have h2 : Continuous fun x : Xp p m => ∑ j : Fin p, if (l : ℕ) ≤ (j : ℕ) then x.2.1 j * star (x.1 j) else 0 :=
-      continuous_finset_sum _ fun j _ => Continuous.if_const _
+      continuous_finsetSum _ fun j _ => Continuous.if_const _
         (((continuous_apply j).comp (continuous_fst.comp continuous_snd)).mul
           ((continuous_apply j).comp continuous_fst).star) continuous_const
     unfold bco

@@ -77,7 +77,7 @@ theorem exists_Kmat (hk : 1 ≤ k) (c u : Fin (r + 1) → EE k r) (hc : Orthonor
     intro v
     have h1 : Matrix.toEuclideanLin κ = κL.toLinearEquiv.toLinearMap := LinearEquiv.apply_symm_apply _ _
     have := LinearMap.congr_fun h1 (WithLp.toLp 2 v)
-    rw [Matrix.toEuclideanLin_apply, WithLp.ofLp_toLp] at this
+    rw [Matrix.toLpLin_apply, WithLp.ofLp_toLp] at this
     exact this
   have hunit : κᴴ * κ = 1 := by
     ext i j

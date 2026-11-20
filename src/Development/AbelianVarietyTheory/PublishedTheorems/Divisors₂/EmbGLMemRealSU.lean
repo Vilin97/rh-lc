@@ -64,7 +64,7 @@ theorem _root_.GlobalTheory.SUVol.isClosed_realSU (Ψ : Finset (E →+* ℂ)) (G
   unfold _root_.ReciprocityTheory.ChartRestriction.G.FD.hermC
   have hu := (hc τ).matrix_mulVec (continuous_const (y := u))
   have hw := (hc τ).matrix_mulVec (continuous_const (y := w))
-  refine continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun b _ => ?_
+  refine continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ => ?_
   exact (((continuous_apply a).comp hu).mul continuous_const).mul
     (Complex.continuous_conj.comp ((continuous_apply b).comp hw))
 

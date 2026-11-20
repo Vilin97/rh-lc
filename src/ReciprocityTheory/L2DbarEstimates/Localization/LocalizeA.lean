@@ -507,7 +507,7 @@ theorem loc_lintegral_sum_lt {M : Type*} [MeasurableSpace M] (μ : Measure M) {N
     (hδ : δ' * (N * N) < δ) : ∫⁻ x, F x ∂μ < δ := by
   calc ∫⁻ x, F x ∂μ ≤ ∫⁻ x, N * ∑ i, f i x ∂μ := lintegral_mono hle
     _ = N * ∑ i, ∫⁻ x, f i x ∂μ := by
-      rw [lintegral_const_mul' _ _ (ENNReal.natCast_ne_top N), lintegral_finset_sum' _ (fun i _ => hf i)]
+      rw [lintegral_const_mul' _ _ (ENNReal.natCast_ne_top N), MeasureTheory.lintegral_finsetSum' _ (fun i _ => hf i)]
     _ ≤ N * ∑ _i : Fin N, δ' := by
       gcongr with i
       exact (hi i).le

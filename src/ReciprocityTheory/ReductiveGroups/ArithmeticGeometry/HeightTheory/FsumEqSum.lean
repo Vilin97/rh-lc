@@ -24,7 +24,7 @@ theorem fsum_eq_sum {α M : Type*} [AddCommMonoid M] (s : Set α) (S : Finset α
   rw [finsum_mem_def]
   apply finsum_eq_sum_of_support_subset
   intro x hx
-  simp only [Function.mem_support, ne_eq, Set.indicator_apply_eq_zero, _root_.not_imp] at hx
+  simp only [Function.mem_support, ne_eq, Set.indicator_apply_eq_zero, Classical.not_imp] at hx
   exact hS x hx.1 hx.2
 
 noncomputable def Emin (c : ι) (v : AddValuation (Ω c) (WithTop ℤ)) : ℤ :=

@@ -62,7 +62,7 @@ theorem exists_uniform {p : ℕ} (hp : p.Prime) {A B : Submodule (𝓞 E) (Fin n
   obtain ⟨S, rfl⟩ := hA
   choose! k hk using h
   refine ⟨∏ s ∈ S, k s, ?_, ?_⟩
-  · rw [Prime.dvd_finset_prod_iff hp.prime]
+  · rw [Prime.dvd_finsetProd_iff hp.prime]
     rintro ⟨s, hs, hd⟩
     exact (hk s (Submodule.subset_span hs)).1 hd
   · intro x hx

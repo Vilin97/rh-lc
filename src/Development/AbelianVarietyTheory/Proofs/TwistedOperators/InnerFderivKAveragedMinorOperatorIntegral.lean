@@ -98,7 +98,7 @@ private lemma continuous_tau_toMK_apply {ε : Fin n → Bool} {abelian₂ : Fin 
   have e : (fun k : KG ε => τ (toMK k) v) = fun k => ∑ i, ⟪b i, τ (toMK k) v⟫_ℂ • b i := by
     funext k; exact (b.sum_repr' _).symm
   rw [e]
-  exact continuous_finset_sum _ fun i _ => (continuous_inner_tau_toMK h (b i) v).smul continuous_const
+  exact continuous_finsetSum _ fun i _ => (continuous_inner_tau_toMK h (b i) v).smul continuous_const
 
 private lemma continuous_Phi_conj_toMK {ε : Fin n → Bool} (lam : Fin n → ℝ) {z : Matrix (Fin n) (Fin n) ℂ}
     (hz : z ∈ U1 ε) : Continuous (fun k : KG ε => Phi lam ((toMK k)⁻¹ * z * toMK k)) :=

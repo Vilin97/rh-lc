@@ -56,7 +56,7 @@ theorem coneHom_of_isHomogeneous (c : k →+* A) (r : J → A) {f : MvPolynomial
 theorem coeff_coneHom (c : k →+* A) (r : J → A) (f : MvPolynomial J k) (n : ℕ) :
     (coneHom c r f).coeff n = MvPolynomial.eval₂Hom c r (MvPolynomial.homogeneousComponent n f) := by
   conv_lhs => rw [← f.sum_homogeneousComponent]
-  rw [map_sum, Polynomial.finset_sum_coeff]
+  rw [map_sum, Polynomial.finsetSum_coeff]
   simp only [coneHom_of_isHomogeneous c r (MvPolynomial.homogeneousComponent_isHomogeneous _ f),
     Polynomial.coeff_monomial]
   rw [Finset.sum_ite_eq']

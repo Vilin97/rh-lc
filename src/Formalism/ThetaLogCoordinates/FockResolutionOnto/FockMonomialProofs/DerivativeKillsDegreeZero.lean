@@ -105,7 +105,7 @@ theorem derivative_kills_degree_zero (a : Fin (s + 1)) : ∀ x ∈ XSp p (setLas
   rw [Pol, MvPolynomial.mem_restrictSupport_iff] at hP
   show pderiv (Fin.last K, a) x = 0
   have hnv : (Fin.last K, a) ∉ x.vars := by
-    rw [MvPolynomial.mem_vars]
+    rw [MvPolynomial.mem_vars_iff_mem_support]
     rintro ⟨d, hd, hda⟩
     have h1 : MultiDeg (setLast LL 0) d := hP hd
     have h2 : ∑ b, d (Fin.last K, b) = 0 := by simpa [setLast] using h1 (Fin.last K)

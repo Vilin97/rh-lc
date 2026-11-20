@@ -56,8 +56,8 @@ theorem rankOne_integral {X : Type} [MeasurableSpace X] (ν : Measure X)
               | exact Finset.aemeasurable_sum' _ fun i _ => hterm j i
               | exact (Finset.aemeasurable_sum _ fun i _ => hterm j i).congr
                   (Filter.Eventually.of_forall fun x => by simp [Finset.sum_apply])
-          rw [lintegral_finset_sum' _ fun j _ => hsum j]
-          exact Finset.sum_congr rfl fun j _ => lintegral_finset_sum' _ fun i _ => hterm j i
+          rw [MeasureTheory.lintegral_finsetSum' _ fun j _ => hsum j]
+          exact Finset.sum_congr rfl fun j _ => MeasureTheory.lintegral_finsetSum' _ fun i _ => hterm j i
       _ ≤ ∑ j, ∑ i, ENNReal.ofReal K :=
           Finset.sum_le_sum fun j _ => Finset.sum_le_sum fun i _ =>
             h (e j) (b i) (e.orthonormal.1 j) (b.orthonormal.1 i)

@@ -19,7 +19,7 @@ theorem continuousOn_rmul_self {Ψ : Finset (E →+* ℂ)} {r : ℕ} {β : Frame
     {K : Set (Frame Ψ r)} (hβ : ContinuousOn β K) : ContinuousOn (fun y => rmul y (β y)) K := by
   refine continuousOn_pi.2 fun τ => continuousOn_pi.2 fun a => continuousOn_pi.2 fun c => ?_
   show ContinuousOn (fun y : Frame Ψ r => ∑ k, y τ a k * β y τ k c) K
-  refine continuousOn_finset_sum _ fun k _ => ContinuousOn.mul (by fun_prop) ?_
+  refine continuousOn_finsetSum _ fun k _ => ContinuousOn.mul (by fun_prop) ?_
   exact continuousOn_pi.1 (continuousOn_pi.1 (continuousOn_pi.1 hβ τ) k) c
 
 theorem norm_apply_le_of_diagonal {Ψ : Finset (E →+* ℂ)} {r : ℕ} (z t : Frame Ψ r)

@@ -279,15 +279,15 @@ lemma continuous_gramF : Continuous (gramF X) := by
   apply continuous_entry
   intro τ a b
   simp only [gramF, ReciprocityTheory.ChartRestriction.G.FD.gram, Matrix.of_apply, ReciprocityTheory.ChartRestriction.G.FD.hermC, ReciprocityTheory.ChartRestriction.G.FD.col, mat]
-  exact continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+  exact continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
     ((continuous_coord X τ i a).mul continuous_const).mul (Complex.continuous_conj.comp (continuous_coord X τ j b))
 
 lemma continuous_gramTF : Continuous (gramTF X) := by
   apply continuous_entry
   intro τ a b
   simp only [gramTF, gramT, Matrix.mul_apply, Matrix.transpose_apply, Matrix.map_apply, mat, Matrix.of_apply]
-  exact continuous_finset_sum _ fun l _ =>
-    (continuous_finset_sum _ fun k _ => (continuous_coord X τ k a).mul continuous_const).mul
+  exact continuous_finsetSum _ fun l _ =>
+    (continuous_finsetSum _ fun k _ => (continuous_coord X τ k a).mul continuous_const).mul
       (Complex.continuous_conj.comp (continuous_coord X τ l b))
 
 private lemma isOpen_X_dom : IsOpen X.dom := by

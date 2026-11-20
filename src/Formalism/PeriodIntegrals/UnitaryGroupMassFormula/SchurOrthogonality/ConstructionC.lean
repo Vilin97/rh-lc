@@ -186,7 +186,7 @@ theorem schurOrth_of (h : PI.HwIrred) (hA : EvalOne) : SchurOrth := by
     exact cf_ee lam
   have htrace : ∑ i, Aform μ (b i : MvPolynomial (Fin N × Fin N) ℂ) (b i) = 1 := by
     simp only [Aform]
-    rw [← integral_finset_sum _ fun i _ => ci_integrable hμ (ci_cont2 _ _)]
+    rw [← MeasureTheory.integral_finsetSum _ fun i _ => ci_integrable hμ (ci_cont2 _ _)]
     rw [integral_congr_ae (g := fun _ => (1 : ℂ)) ?_]
     · haveI := hμ.1
       simp

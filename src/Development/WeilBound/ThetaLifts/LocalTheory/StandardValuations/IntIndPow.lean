@@ -205,7 +205,7 @@ theorem int_cosets (hm : IsVol m) (hϖ : IsUnif ϖ) (c : ℕ) (f : k → ℂ) (h
       (HasCompactSupport.intro (IsNonarchimedeanLocalField.isCompact_closedBall k (valuation k ((ϖ : k) ^ c)))
         fun x hx => by unfold ind; exact if_neg hx)
   conv_lhs => rw [e]
-  rw [integral_finset_sum _ fun y _ => (hi.comp_sub_right _).const_mul _, finsum_eq_sum_of_fintype, Finset.mul_sum]
+  rw [MeasureTheory.integral_finsetSum _ fun y _ => (hi.comp_sub_right _).const_mul _, finsum_eq_sum_of_fintype, Finset.mul_sum]
   refine Finset.sum_congr rfl fun y _ => ?_
   rw [integral_const_mul, integral_sub_right_eq_self, int_ind_pow hm hϖ, mul_comm]
 

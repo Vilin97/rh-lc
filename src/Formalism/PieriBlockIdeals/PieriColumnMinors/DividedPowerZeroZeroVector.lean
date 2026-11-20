@@ -246,7 +246,7 @@ theorem ld_coeff_lin {S : Type*} [CommRing S] (a b c : S) (m k : ℕ) :
       (m.choose k : S) * a ^ (m - k) * b ^ k * c := by
   rw [Polynomial.coeff_mul_C]
   congr 1
-  rw [add_comm (Polynomial.C a), add_pow, Polynomial.finset_sum_coeff]
+  rw [add_comm (Polynomial.C a), add_pow, Polynomial.finsetSum_coeff]
   have hterm : ∀ j ∈ Finset.range (m + 1),
       ((Polynomial.X * Polynomial.C b) ^ j * Polynomial.C a ^ (m - j) * (m.choose j : Polynomial S)).coeff k =
         if k = j then (m.choose j : S) * a ^ (m - j) * b ^ j else 0 := by

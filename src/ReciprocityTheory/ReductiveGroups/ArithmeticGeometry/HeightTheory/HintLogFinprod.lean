@@ -357,8 +357,8 @@ theorem hint_intU (hd : d.AxH 𝒜) (h : d.S1) (c : ι) (sg : K →+* ℂ) :
     fun P _ => (ReciprocityTheory.MultiplicativeHeights.Closed.sphereLinLog (d.N + 1) (d.hintU c P)
       (fun h0 => d.hint_U_coord_ne hd c P (by rw [h0]; rfl))).1
   simp only [Pi.add_apply, Pi.sub_apply]
-  rw [integral_congr_ae hpt, integral_add (integrable_const _) (integrable_finset_sum _ hInt),
-    integral_const, integral_finset_sum _ hInt, finsum_mem_eq_finite_toFinset_sum _ hfin]
+  rw [integral_congr_ae hpt, integral_add (integrable_const _) (MeasureTheory.integrable_finsetSum _ hInt),
+    integral_const, MeasureTheory.integral_finsetSum _ hInt, finsum_mem_eq_finite_toFinset_sum _ hfin]
   have hval : ∀ P ∈ hfin.toFinset, ∫ s, Real.log ‖∑ j, (WithLp.ofLp (d.hintU c P)) j *
       spherePoint s j‖ ∂(sphereProb (d.N + 1)) = Real.log ‖d.hintU c P‖ - (harmonic d.N : ℝ) / 2 := by
     intro P _

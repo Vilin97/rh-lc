@@ -138,7 +138,7 @@ theorem pa_fderiv_bound {κ : Type} (G : κ → EuclideanSpace ℂ ι → ℂ) (
   intro k y hy
   refine pa_cauchy1 (hG k) y j fun t ht => hu k _ ?_
   calc ‖y + t • EuclideanSpace.single j (1 : ℂ)‖ ≤ ‖y‖ + ‖t • EuclideanSpace.single j (1 : ℂ)‖ := norm_add_le _ _
-    _ = ‖y‖ + 1 := by rw [norm_smul, EuclideanSpace.norm_single, ht, norm_one, mul_one]
+    _ = ‖y‖ + 1 := by rw [norm_smul, PiLp.norm_single, ht, norm_one, mul_one]
     _ ≤ R + 1 := by linarith
 
 theorem pa_fderiv_norm {κ : Type} (G : κ → EuclideanSpace ℂ ι → ℂ) (hG : ∀ k, Differentiable ℂ (G k))

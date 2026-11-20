@@ -26,7 +26,7 @@ theorem emb_mul_indep {L I : Type} [Field L] [CharZero L] [Fintype I] (σ : I �
       have h2 := (hasDerivAt_zpow (m i) ((fun t : ℂ => 1 + t * σ i x) 0) (Or.inl (by simp))).comp (0 : ℂ) h1
       simpa [Function.comp_def] using h2
     have hf : HasDerivAt f (∑ i, (m i : ℂ) * σ i x) 0 := by
-      have := HasDerivAt.fun_finset_prod hd
+      have := HasDerivAt.fun_finsetProd hd
       simpa [f] using this
     have hs := hasDerivAt_iff_tendsto_slope.1 hf
     have hu : Tendsto (fun n : ℕ => ((1 : ℂ) / ((n : ℂ) + 1))) atTop (𝓝[≠] 0) := by

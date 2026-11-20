@@ -85,7 +85,7 @@ theorem hasFDerivAt_uncurry {h h₀ : ℝ → Mat n → V} {hp : (Bool × Fin n 
     refine continuousOn_clm_apply.2 fun ξ => ?_
     have h1 : ContinuousOn (fun z : ℝ × Mat n => ∑ p, eps p (ξ * z.2⁻¹) • hp p z.1 z.2)
         (Set.univ ×ˢ GLs n) :=
-      continuousOn_finset_sum _ fun p _ => (contDiffOn_coeff' p ξ).continuousOn.smul (cp p)
+      continuousOn_finsetSum _ fun p _ => (contDiffOn_coeff' p ξ).continuousOn.smul (cp p)
     refine h1.congr ?_
     rintro ⟨s, y⟩ ⟨-, hy⟩
     have hy' : y ∈ GLs n := hy

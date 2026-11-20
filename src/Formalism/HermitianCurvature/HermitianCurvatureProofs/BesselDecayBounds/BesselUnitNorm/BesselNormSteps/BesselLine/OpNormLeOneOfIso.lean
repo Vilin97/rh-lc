@@ -71,7 +71,7 @@ theorem norm_psi (z : Fin (2 * r + k + 1) → ℂ) (c : ℂ) (g : Mx k r) : ‖p
 
 theorem ell_cont (z : Fin (2 * r + k + 1) → ℂ) : Continuous (ell k r z) := by
   unfold ell
-  refine continuous_finset_sum _ (fun a _ => ?_)
+  refine continuous_finsetSum _ (fun a _ => ?_)
   split_ifs
   · exact continuous_id.matrix_elem _ _
   · first

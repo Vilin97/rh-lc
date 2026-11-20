@@ -87,7 +87,7 @@ private lemma dw_const_smul {F : Type*} [NormedAddCommGroup F] [NormedSpace ℂ 
     show Dx x (Dw w (fun g => c • f g)) g = c • Dx x (Dw w f) g
     rw [ih, Dx_eq, Dx_eq]
     first
-    | exact deriv_const_smul' c (f := fun t => Dw w f (crv x g t))
+    | exact deriv_const_smul_field c (f := fun t => Dw w f (crv x g t))
     | exact deriv_const_smul' (f := fun t => Dw w f (crv x g t)) c
     | simp [deriv_const_smul']
 

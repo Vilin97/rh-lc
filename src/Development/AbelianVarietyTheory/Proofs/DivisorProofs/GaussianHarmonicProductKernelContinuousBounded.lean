@@ -14,7 +14,7 @@ theorem gauss_cont_bound : ∀ (I : Type) [Fintype I] (n : I → ℤ), Continuou
   intro I _ n
   refine ⟨?_, ⟨Decay.gC n, fun w => ?_⟩⟩
   · unfold gauss
-    refine continuous_finset_prod _ fun i _ => ?_
+    refine continuous_finsetProd _ fun i _ => ?_
     have hc : Continuous fun w : EuclideanSpace ℂ I => (WithLp.ofLp w) i :=
       (continuous_apply i).comp (PiLp.continuous_ofLp 2 _)
     exact ((Decay.continuous_hmon _).comp hc).mul (by fun_prop)

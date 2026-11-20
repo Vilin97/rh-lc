@@ -17,7 +17,7 @@ def coneMeasure (n : ℕ) : Measure (Fin (n + 1) → ℂ) :=
 
 theorem continuous_sqLen (n : ℕ) : Continuous (sqLen : (Fin n → ℂ) → ℝ) := by
   unfold sqLen
-  exact continuous_finset_sum _ fun i _ => Complex.continuous_normSq.comp (continuous_apply i)
+  exact continuous_finsetSum _ fun i _ => Complex.continuous_normSq.comp (continuous_apply i)
 
 theorem sqLen_nonneg {n : ℕ} (w : Fin n → ℂ) : 0 ≤ sqLen w :=
   Finset.sum_nonneg fun _ _ => Complex.normSq_nonneg _

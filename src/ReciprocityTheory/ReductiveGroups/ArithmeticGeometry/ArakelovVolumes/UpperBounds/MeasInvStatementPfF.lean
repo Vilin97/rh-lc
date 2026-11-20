@@ -19,11 +19,11 @@ lemma continuous_lu : Continuous (lu (ι := ι) (r := r)) := by
     by_cases h : b < a <;> simp [up, h] <;> fun_prop
   refine continuous_pi fun i => ?_
   simp only [lu, Matrix.mul_apply, Matrix.add_apply]
-  exact continuous_finset_sum _ fun k _ => (continuous_const.add (hsl _ _ _)).mul (hup _ _ _)
+  exact continuous_finsetSum _ fun k _ => (continuous_const.add (hsl _ _ _)).mul (hup _ _ _)
 
 lemma continuous_jac : Continuous (jac (ι := ι) (r := r)) := by
   unfold jac
-  refine continuous_finset_prod _ fun i _ => ?_
+  refine continuous_finsetProd _ fun i _ => ?_
   by_cases h : i.2.2 < i.2.1 <;> simp [h] <;> fun_prop
 
 lemma measurableSet_sS : MeasurableSet (sS ι r) := by

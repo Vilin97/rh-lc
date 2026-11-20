@@ -129,7 +129,7 @@ theorem lineBundle_global_sections_functionField_iff [Algebra K X.functionField]
     have e : ∀ j hj, gen _ hj (∑ i, constFn p _ (a i) * (s i).f j) =
         tr N j j₀ hj h₀ * ((∑ i, a i • θ (s i) : V) : X.functionField) := by
       intro j hj
-      rw [map_sum, AddSubmonoidClass.coe_finset_sum, Finset.mul_sum]
+      rw [map_sum, AddSubmonoidClass.coe_finsetSum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, gen_constFn, ← halg, gen_sec (s i) j j₀ hj h₀, SetLike.val_smul, Algebra.smul_def]
       ring

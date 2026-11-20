@@ -87,7 +87,7 @@ theorem measurable_lmulM (a : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1))
   intro j
   have : Continuous (fun x : Mt k r => (a * Matrix.of x) i j) := by
     simp only [Matrix.mul_apply, Matrix.of_apply]
-    exact continuous_finset_sum _ fun l _ =>
+    exact continuous_finsetSum _ fun l _ =>
       continuous_const.mul ((continuous_apply j).comp (continuous_apply l))
   exact this.measurable
 

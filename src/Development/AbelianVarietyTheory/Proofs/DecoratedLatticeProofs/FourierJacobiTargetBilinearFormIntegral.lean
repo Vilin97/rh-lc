@@ -107,7 +107,7 @@ theorem target_bilinear : ∀ (k : Type) [Field k] [ValuativeRel k] [Topological
           ∂(Measure.pi fun _ => ν) := by
       rintro w ⟨m, Ψ, Φ₀, hd, rfl⟩
       simp only [(hb.2 _ _ _).2]
-      rw [← integral_finset_sum _ fun i _ => (hb.2 _ _ _).1]
+      rw [← MeasureTheory.integral_finsetSum _ fun i _ => (hb.2 _ _ _).1]
       congr 1; funext β
       have : (fun x₀ => fl ψ ν μ ρ (om μ 1 h Φ.1) x₀ β) = (∑ i, (Φ₀ i).1 β • Ψ i : SB (Matrix n n' k)).1 := by
         funext x₀

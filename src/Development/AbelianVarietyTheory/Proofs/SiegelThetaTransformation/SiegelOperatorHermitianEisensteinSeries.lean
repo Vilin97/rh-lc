@@ -110,7 +110,7 @@ theorem term_tendsto_zero (hΨ : IsType Ψ) (hn : n ≠ 0) {γ : M2 E N} (hγ : 
     refine Tendsto.inv_tendsto_atTop ((tendsto_pow_atTop hn).comp (tendsto_atTop_mono h3 ?_))
     exact Tendsto.const_mul_atTop (norm_pos_iff.2 h0)
       (tendsto_atTop_add_const_left _ _ (tendsto_id.atTop_mul_const (h2 hv)))
-  have h2 := (tendsto_finset_prod Finset.univ fun τ _ => h1 τ).const_mul (weil Ψ γ φ 0)
+  have h2 := (tendsto_finsetProd Finset.univ fun τ _ => h1 τ).const_mul (weil Ψ γ φ 0)
   rwa [Finset.prod_const, zero_pow (Finset.card_univ.trans_ne Fintype.card_ne_zero), mul_zero] at h2
 
 end GlobalTheory.SW.EisSiegel

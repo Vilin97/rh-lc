@@ -112,7 +112,7 @@ theorem fx_differentiableOn_wd {n : ℕ} (j : Fin n) (h : V n → ℂ) (U : Set 
   have hvn : ‖v‖ = 1 := by
     rw [hvdef]
     unfold bas
-    rw [EuclideanSpace.norm_single, norm_one]
+    rw [PiLp.norm_single, norm_one]
   have hwd_eq : ∀ y ∈ U, wd n j h y = fderiv ℂ h y v :=
     fun y hy => fx_wd_eq_fderiv j h y (hh.differentiableAt (hU.mem_nhds hy))
   suffices H : ∀ y ∈ U, DifferentiableAt ℂ (fun y' => fderiv ℂ h y' v) y by
@@ -353,7 +353,7 @@ theorem fx_continuous_ev {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V
     rw [e]
     exact Complex.continuous_re.comp hphc
   unfold ev
-  exact ((continuous_finset_sum _ fun i _ => (hgc i).norm.pow 2).mul
+  exact ((continuous_finsetSum _ fun i _ => (hgc i).norm.pow 2).mul
     (Real.continuous_exp.comp hph'.neg)).div_const _
 
 theorem fx_gt_eq_toFinset {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V n)
@@ -486,7 +486,7 @@ theorem fx_otNorm_eq_wint {M : Type*} [MeasurableSpace M] (n : ℕ) (z : M → V
 
 theorem fx_lintegral_enorm_sq_eq {α : Type*} [MeasurableSpace α] (μ : Measure α) (F : α → ℂ) :
     ∫⁻ x, ‖F x‖ₑ ^ 2 ∂μ = eLpNorm F 2 μ ^ (2 : ℝ) := by
-  rw [eLpNorm_eq_lintegral_rpow_enorm (by norm_num) (by norm_num), ← ENNReal.rpow_mul]
+  rw [MeasureTheory.eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num), ← ENNReal.rpow_mul]
   norm_num
 
 end

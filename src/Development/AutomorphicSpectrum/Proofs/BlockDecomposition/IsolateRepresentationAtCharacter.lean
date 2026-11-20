@@ -200,7 +200,7 @@ theorem exists_hk_avg {K : Subgroup (GL ι F)} (hKo : IsOpen (K : Set (GL ι F))
     refine ⟨hKo, hKc, ?_, ?_⟩
     · refine HasCompactSupport.of_support_subset_isCompact
         (K := ⋃ q, (fun y => a q * y) '' (K : Set (GL ι F)))
-        (isCompact_iUnion fun q => hKc.image (continuous_mul_left _)) ?_
+        (isCompact_iUnion fun q => hKc.image (continuous_const_mul _)) ?_
       intro x hx
       obtain ⟨q, hq⟩ := hsupp x hx
       exact Set.mem_iUnion.2 ⟨q, _, hq, by simp⟩

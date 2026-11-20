@@ -69,7 +69,7 @@ private theorem norm_le_one_of_isIntegral_int' {l : ℕ} [Fact l.Prime] (z : Om 
       | (rcases Int.eq_nat_or_neg c with ⟨m, rfl | rfl⟩ <;>
           simp [IsUltrametricDist.norm_natCast_le_one])
   rw [hmon.as_sum] at hp
-  simp only [Polynomial.eval₂_add, Polynomial.eval₂_finset_sum, Polynomial.eval₂_mul,
+  simp only [Polynomial.eval₂_add, Polynomial.eval₂_finsetSum, Polynomial.eval₂_mul,
     Polynomial.eval₂_C, Polynomial.eval₂_X_pow, eq_intCast] at hp
   have hcast : ∀ c : ℤ, Polynomial.eval₂ (algebraMap ℤ (Om l)) z (c : Polynomial ℤ) = (c : Om l) :=
     fun c => map_intCast (Polynomial.eval₂RingHom (algebraMap ℤ (Om l)) z) c

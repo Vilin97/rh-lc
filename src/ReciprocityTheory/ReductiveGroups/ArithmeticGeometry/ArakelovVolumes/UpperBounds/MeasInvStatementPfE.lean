@@ -91,7 +91,7 @@ lemma Cy_subset_ball : Cy ι r ⊆ Metric.closedBall 0 2 := fun y hy =>
 
 lemma continuous_jacU : Continuous (jacU (ι := ι) (r := r)) := by
   unfold jacU
-  refine continuous_finset_prod _ fun i _ => ?_
+  refine continuous_finsetProd _ fun i _ => ?_
   by_cases h : i.2.2 < i.2.1
   · simp only [h, ↓reduceIte]
     exact continuous_apply _

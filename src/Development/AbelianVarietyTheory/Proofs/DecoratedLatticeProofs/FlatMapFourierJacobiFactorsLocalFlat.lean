@@ -19,7 +19,7 @@ theorem ch_add_mat {k : Type} [Field k] {n n' : Type} {c : ℕ} (a b : Matrix (n
 
 theorem continuous_ch {k : Type} [Field k] [TopologicalSpace k] [IsTopologicalRing k] {n n' : Type} {c : ℕ} :
     Continuous (ch : Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k → k) :=
-  continuous_finset_sum _ fun i _ => continuous_id.matrix_elem _ _
+  continuous_finsetSum _ fun i _ => continuous_id.matrix_elem _ _
 
 section
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
@@ -103,7 +103,7 @@ theorem GlobalTheory.FlatFactor.flCol_factor : ∀ (k : Type) [Field k] [Valuati
       simp only [itB, Finset.mem_filter, Finset.mem_univ, true_and] at he
       rw [hL', hL']
       set E : Mt := Matrix.single r q a
-      let Φ' : SB Mt := ⟨fun t => (ψ (ch (t + E)) : ℂ) * Θ'.1 t, tw _ (continuous_ch.comp (continuous_add_right E)) Θ'⟩
+      let Φ' : SB Mt := ⟨fun t => (ψ (ch (t + E)) : ℂ) * Θ'.1 t, tw _ (continuous_ch.comp (continuous_add_const E)) Θ'⟩
       have h3 := H3 r q he.1 he.2 a (T Θ) Φ' (fun t => by
         show (ψ (ch (t + E)) : ℂ) * Θ'.1 t = (ψ (ch (t + E)) : ℂ) * Θ.1 (t + E)
         rw [hΘ])

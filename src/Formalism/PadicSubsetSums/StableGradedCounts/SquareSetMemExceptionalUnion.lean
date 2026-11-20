@@ -294,7 +294,7 @@ theorem square_set_mem_exceptional_union {N : ℕ} {c : Fin N → K} (hc : c ∈
       omega
     have hpos : Fintype.card K ^ d - 1 ≠ 0 := by
       intro h
-      rw [h, padicValNat.zero] at hv
+      rw [h, _root_.padicValNat_zero_right] at hv
       exact hv rfl
     have hldvd : l ∣ Fintype.card K ^ d - 1 := dvd_of_one_le_padicValNat (Nat.one_le_iff_ne_zero.2 hv)
     have hle : l ≤ Fintype.card K ^ d - 1 := Nat.le_of_dvd (by omega) hldvd

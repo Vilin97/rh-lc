@@ -232,7 +232,7 @@ theorem d_transport (F : Frame Dc Mo T) (F' : Frame Dc Mo T') (σ : LetA LL n �
   · apply Subtype.ext
     have h1 := congrFun (congrFun hU k) p
     simp only [Matrix.mul_apply, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul] at h1
-    simp only [Ut, MulMemClass.coe_mul, SubmonoidClass.coe_pow, AddSubmonoidClass.coe_finset_sum, Disc.coe_jA,
+    simp only [Ut, MulMemClass.coe_mul, SubmonoidClass.coe_pow, AddSubmonoidClass.coe_finsetSum, Disc.coe_jA,
       Disc.coe_res, Disc.coe_cstC, map_mul, map_pow]
     simp only [mul_left_comm _ (σ (Dc.t : LetA LL n) ^ F.w), mul_assoc, ← Finset.mul_sum]
     rw [h1]
@@ -254,7 +254,7 @@ theorem lev_transport (F : Frame Dc Mo T) (F' : Frame Dc Mo T') (σ : LetA LL n 
       toL O LL n q' • H.map (toL O LL n) *ᵥ (σ ∘ fun k => toL O LL n (F.nb.repr x k)) := by
     funext j
     have h1 := congrArg (fun z => toL O LL n (F'.nb.repr z j)) hxy
-    simp only [map_smul, map_sum, Module.Basis.repr_self, Finsupp.smul_apply, Finsupp.finset_sum_apply,
+    simp only [map_smul, map_sum, Module.Basis.repr_self, Finsupp.smul_apply, Finsupp.finsetSum_apply,
       Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
       if_true, map_mul, hσA] at h1
     simp only [Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, Matrix.map_apply, Function.comp_apply, h1]
@@ -264,7 +264,7 @@ theorem lev_transport (F : Frame Dc Mo T) (F' : Frame Dc Mo T') (σ : LetA LL n 
       Dc.t ^ F'.w * (Dc.jA q' * ∑ p, Dc.cstC (Cm j p) * Dc.res σ hσ (F.a x p)) := by
     intro j
     apply Subtype.ext
-    simp only [MulMemClass.coe_mul, SubmonoidClass.coe_pow, AddSubmonoidClass.coe_finset_sum, Disc.coe_jA,
+    simp only [MulMemClass.coe_mul, SubmonoidClass.coe_pow, AddSubmonoidClass.coe_finsetSum, Disc.coe_jA,
       Disc.coe_res, Disc.coe_cstC, map_mul, map_pow, coe_a, h2]
     simp only [Pi.smul_apply, smul_eq_mul]
     rw [Matrix.mulVec, dotProduct]
@@ -279,7 +279,7 @@ theorem expand (F : Frame Dc Mo T) (f : E.DD T →ₗ[O] E.DD T') (σA : LetA O 
     (hf : ∀ (a : LetA O n) (x : E.DD T), f (a • x) = σA a • f x) (x : ↥(Mo.N T)) :
     f (x : E.DD T) = ∑ p, σA (F.nb.repr x p) • f (F.nb p : E.DD T) := by
   conv_lhs => rw [← F.nb.sum_repr x]
-  simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul, map_sum, hf]
+  simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, map_sum, hf]
 
 theorem γD_smulA (T : LocLat G Qp LL O) (g : Γ.Gam) (a : LetA O n) (x : E.DD T) :
     E.γD T g (a • x) = letγ (R.γ₀ g) a • E.γD T g x := by
@@ -356,7 +356,7 @@ theorem lev_Γ (F : Frame Dc Mo T) (g : Γ.Gam) (i : ZMod n) (ζ ζ' : LL) (j a 
     x ⟨E.γD T g (x : E.DD T), hx⟩ (by
       rw [one_smul, one_smul]
       apply Subtype.ext
-      simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul, ← F.Gm_def]
+      simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, ← F.Gm_def]
       exact F.expand _ _ (γD_smulA T g) x) LinearMap.id (fun p => (sum_one_smul (F.Dl bT i) i p).symm) k
   rw [this, map_one, finsum_coeff_one]
   simp
@@ -436,7 +436,7 @@ theorem lev_φ (hT : IsCrys PD T.ρ) (F : Frame Dc Mo T) (i : ZMod n) (ζ : LL)
     (Dc.ex_φ i ζ hζ) (R.Q ^ F.m) _ (Q_pow_cancel R _) F.Pm F.Cm F.PU (letφ R.φ₀).toRingHom (toL_φ R) x _ ?_ _
     (Dl_transport bT F F _ i (i - 1) (fun z => ?_) _ hd) k
   · apply Subtype.ext
-    simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul, ← F.Pm_def]
+    simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, ← F.Pm_def]
     rw [F.expand _ (letφ R.φ₀).toRingHom (φD_smulA T) x]
     simp only [Finset.smul_sum, smul_smul]
     refine Finset.sum_congr rfl fun p _ => ?_
@@ -463,7 +463,7 @@ theorem lev_map (hinv : ∀ a : LetA LL n, γL R Γ.gam a = a → ∃ c, a = cst
     intro p
     have := congrArg Subtype.val
       (F'.nb.sum_repr ⟨E.map f (F.nb p : E.DD T), Mo.map_N f hT hT' _ (F.nb p).2⟩)
-    simpa only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] using this.symm
+    simpa only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] using this.symm
   have hfA : ∀ (a : LetA O n) (z : E.DD T), E.map f (a • z) = a • E.map f z := by
     intro a z
     rw [← algebraMap_smul R.EE a z, map_smul, algebraMap_smul]
@@ -475,7 +475,7 @@ theorem lev_map (hinv : ∀ a : LetA LL n, γL R Γ.gam a = a → ∃ c, a = cst
     have h2 : ∑ a, F.Gm Γ.gam a p • ∑ b, H b a • F'.nb b =
         ∑ a, letγ (R.γ₀ Γ.gam) (H a p) • ∑ b, F'.Gm Γ.gam b a • F'.nb b := Subtype.ext (by simpa using h1)
     have h3 := congrArg (fun z => F'.nb.repr z j) h2
-    simp only [map_smul, map_sum, Module.Basis.repr_self, Finsupp.smul_apply, Finsupp.finset_sum_apply,
+    simp only [map_smul, map_sum, Module.Basis.repr_self, Finsupp.smul_apply, Finsupp.finsetSum_apply,
       Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ,
       if_true] at h3
     simp only [Matrix.mul_apply, Matrix.map_apply]
@@ -517,9 +517,9 @@ theorem lev_map (hinv : ∀ a : LetA LL n, γL R Γ.gam a = a → ∃ c, a = cst
     x ⟨E.map f (x : E.DD T), hx⟩ (by
       rw [one_smul, one_smul]
       apply Subtype.ext
-      simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul, ← hH, ← hfA, ← map_sum, RingHom.id_apply]
+      simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, ← hH, ← hfA, ← map_sum, RingHom.id_apply]
       congr 1
-      simpa only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] using
+      simpa only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] using
         (congrArg Subtype.val (F.nb.sum_repr x)).symm) _
     (Dl_transport bT F F' _ i i (fun z => hh _ z) _ hd) k
   rw [this, map_one, finsum_coeff_one]
@@ -533,14 +533,14 @@ theorem bT_eq (hT : IsCrys PD T.ρ) (F : Frame Dc Mo T) (x : ↥(Mo.N T)) :
     apply Subtype.ext
     have h2 := congrFun (Matrix.mulVec_mulVec (fun k => toL O LL n (F.nb.repr x k)) F.U F.V) i
     rw [F.UV, Matrix.one_mulVec] at h2
-    simp only [Ut, MulMemClass.coe_mul, SubmonoidClass.coe_pow, AddSubmonoidClass.coe_finset_sum, Disc.coe_jA,
+    simp only [Ut, MulMemClass.coe_mul, SubmonoidClass.coe_pow, AddSubmonoidClass.coe_finsetSum, Disc.coe_jA,
       coe_a]
     rw [← h2]
     conv_rhs => rw [Matrix.mulVec, dotProduct, Finset.mul_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     ring
   rw [Finset.smul_sum, bT_sum hP hT (F.nb.repr x) F.nb x (by
-    simpa only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] using
+    simpa only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] using
       (congrArg Subtype.val (F.nb.sum_repr x)).symm)]
   simp only [smul_comm (Dc.J Dc.t ^ F.w) (Dc.J (F.a x _)), d_spec]
   simp only [Finset.smul_sum, smul_smul]

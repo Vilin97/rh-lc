@@ -43,7 +43,7 @@ theorem continuous_psiA : Continuous (psiA F) := by
       | exact UniformSpace.Completion.continuous_extension
   have hs : Continuous (fun x : Ainf F =>
       (∑ w : InfinitePlace F, (InfinitePlace.Completion.extensionEmbedding w (x w)).re : ℝ)) :=
-    continuous_finset_sum _ (fun w _ => Complex.continuous_re.comp ((hc w).comp (hp w)))
+    continuous_finsetSum _ (fun w _ => Complex.continuous_re.comp ((hc w).comp (hp w)))
   unfold psiA
   exact Complex.continuous_exp.comp (continuous_const.mul (Complex.continuous_ofReal.comp hs))
 

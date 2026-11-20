@@ -364,7 +364,7 @@ theorem Epow_val (s : Bool) {F : Mat n → V} (x : Sm n V) (hx : Set.EqOn F x.1 
   | succ m ih =>
     intro a b g hg
     simp only [Epow, pow_succ', mul_apply, LinearMap.sum_apply, Module.End.mul_apply, Finset.sum_apply,
-      AddSubmonoidClass.coe_finset_sum]
+      AddSubmonoidClass.coe_finsetSum]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [Eu_congr' s a c (ih c b) hg, Eu_val s a c _ hg]
 
@@ -374,7 +374,7 @@ def tr (V : Type) [NormedAddCommGroup V] [NormedSpace ℂ V] (n : ℕ) (s : Bool
 theorem gel_val (s : Bool) {F : Mat n → V} (x : Sm n V) (hx : Set.EqOn F x.1 (GLs n)) (m : ℕ) :
     Set.EqOn (gel s m F) (tr V n s m x).1 (GLs n) := by
   intro g hg
-  simp only [gel, tr, Matrix.trace, Matrix.diag, LinearMap.sum_apply, Finset.sum_apply, AddSubmonoidClass.coe_finset_sum]
+  simp only [gel, tr, Matrix.trace, Matrix.diag, LinearMap.sum_apply, Finset.sum_apply, AddSubmonoidClass.coe_finsetSum]
   exact Finset.sum_congr rfl fun a _ => Epow_val s x hx m a a hg
 
 end Sm

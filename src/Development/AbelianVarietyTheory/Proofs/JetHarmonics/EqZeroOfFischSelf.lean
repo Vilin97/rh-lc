@@ -332,7 +332,7 @@ theorem RowStable.exists_top [Infinite k] {U : Submodule k (MvPolynomial (Letter
     have := hd m (hQs m hm).1
     omega
   · simp only [i.2, dif_pos, Fin.eta]
-    rw [← (hQs m hm).2, Finsupp.weight_apply, Finsupp.sum, Finsupp.finset_sum_apply]
+    rw [← (hQs m hm).2, Finsupp.weight_apply, Finsupp.sum, Finsupp.finsetSum_apply]
     simp only [w, Finsupp.smul_apply, Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero]
     rw [← Finset.sum_filter]
     refine Finset.sum_bij_ne_zero (fun b _ _ => ⟨σ, i, b⟩) ?_ ?_ ?_ ?_

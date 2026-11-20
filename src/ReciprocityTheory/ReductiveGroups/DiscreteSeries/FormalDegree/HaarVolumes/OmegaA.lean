@@ -234,7 +234,7 @@ def gaussEOm (Z : (Fin N ⊕ Fin 0) × (Fin N ⊕ Fin 0) → ℂ) : ℝ := ∏ p
 
 theorem continuous_gaussEOm : Continuous (gaussEOm (N := N)) := by
   unfold gaussEOm
-  exact continuous_finset_prod _ fun p _ => Real.continuous_exp.comp
+  exact continuous_finsetProd _ fun p _ => Real.continuous_exp.comp
     (continuous_const.mul (Complex.continuous_normSq.comp (continuous_apply p)))
 
 theorem integral_gaussEOm : ∫ Z, gaussEOm (N := N) Z = Real.pi ^ (N * N) := by

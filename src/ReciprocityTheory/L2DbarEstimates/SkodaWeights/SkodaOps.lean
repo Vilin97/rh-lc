@@ -126,7 +126,7 @@ theorem skodaOps (n : ℕ) (M : Type*) [TopologicalSpace M] [T2Space M]
     linarith
   have hvc : Continuous fun x => vsq (gv g x) := by
     show Continuous fun x => ∑ i, ‖g i x‖ ^ 2
-    exact continuous_finset_sum _ fun i _ => ((hgc i).norm).pow 2
+    exact continuous_finsetSum _ fun i _ => ((hgc i).norm).pow 2
   have hvm : Measurable fun x => vsq (gv g x) := hvc.measurable
   have hφm : Measurable φ := hφ.measurable
   have hψm : Measurable fun x => φ x + Real.log (vsq (gv g x)) :=

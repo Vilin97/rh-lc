@@ -170,7 +170,7 @@ theorem lower {s m : ℕ} (φ : MvPolynomial (Fin s) K →ₐ[K] B) (hφ : Funct
     intro a
     refine ⟨∏ i, q i ^ (a i : ℕ), ?_, ?_⟩
     · refine (MvPolynomial.mem_restrictTotalDegree _ _ _).2 ?_
-      refine (MvPolynomial.totalDegree_finset_prod _ _).trans ?_
+      refine (MvPolynomial.totalDegree_finsetProd _ _).trans ?_
       calc ∑ i, (q i ^ (a i : ℕ)).totalDegree ≤ ∑ i, (t / E) * (q i).totalDegree :=
             Finset.sum_le_sum fun i _ => (MvPolynomial.totalDegree_pow _ _).trans
               (Nat.mul_le_mul_right _ (Nat.le_of_lt_succ (a i).2))

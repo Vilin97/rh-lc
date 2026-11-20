@@ -100,7 +100,7 @@ def bet (x : Mt k r) : ℝ := gN (Matrix.of x : Mat k r) ^ (-AB k r)
 
 private theorem continuous_gN_lemma : Continuous (fun x : Mt k r => gN (Matrix.of x : Mat k r)) := by
   unfold gN
-  exact Real.continuous_sqrt.comp (continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+  exact Real.continuous_sqrt.comp (continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
     Complex.continuous_normSq.comp ((continuous_apply j).comp (continuous_apply i)))
 
 theorem measurable_bet : Measurable (bet (k := k) (r := r)) := by

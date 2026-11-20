@@ -11,7 +11,7 @@ theorem dvd_prod_primes_iff {R : Type} [CommRing R] [IsDedekindDomain R]
     v.asIdeal ∣ ∏ q ∈ Q, q.asIdeal ↔ v ∈ Q := by
   constructor
   · intro h
-    obtain ⟨q, hq, hd⟩ := (v.prime.dvd_finset_prod_iff _).1 h
+    obtain ⟨q, hq, hd⟩ := (v.prime.Prime.dvd_finsetProd_iff _).1 h
     have : q.asIdeal = v.asIdeal :=
       q.isMaximal.eq_of_le v.isPrime.ne_top (Ideal.le_of_dvd hd)
     rwa [← HeightOneSpectrum.ext this]

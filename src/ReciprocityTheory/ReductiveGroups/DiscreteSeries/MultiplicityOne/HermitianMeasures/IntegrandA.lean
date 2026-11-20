@@ -30,14 +30,14 @@ theorem ig_ellA_continuous (k r : ℕ) (z : Fin (2 * r + k + 1) → ℂ) (a : Fi
   split_ifs with h
   · exact (continuous_apply _).comp (continuous_apply _)
   · simp only [Matrix.mulVec, dotProduct]
-    refine continuous_finset_sum _ (fun j _ => ?_)
+    refine continuous_finsetSum _ (fun j _ => ?_)
     exact Continuous.mul (by exact (continuous_apply j).comp (continuous_apply _)) continuous_const
 
 theorem ig_psiGen_continuous (k r : ℕ) (z : Fin (2 * r + k + 1) → ℂ) (c : Fin r → ℂ) :
     Continuous (Formalism.MainNotions.S.psiGen k r z c) := by
   unfold Formalism.MainNotions.S.psiGen
   exact Complex.continuous_exp.comp (continuous_const.mul (Complex.continuous_ofReal.comp
-    (Complex.continuous_re.comp (continuous_finset_sum _ fun a _ =>
+    (Complex.continuous_re.comp (continuous_finsetSum _ fun a _ =>
       continuous_const.mul (ig_ellA_continuous k r z a)))))
 
 end ReciprocityTheory.ChartRestriction.DS.Mult1.S0.A

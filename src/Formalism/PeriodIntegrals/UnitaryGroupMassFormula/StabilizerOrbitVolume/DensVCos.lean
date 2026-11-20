@@ -79,7 +79,7 @@ theorem isCompact_cos (Λ : AddSubgroup V) (hΛc : IsCompact (Λ : Set V)) (y : 
     · rintro ⟨w, hw, rfl⟩
       simpa using hw
   rw [he]
-  exact hΛc.image (continuous_add_right y)
+  exact hΛc.image (continuous_add_const y)
 
 theorem integrable_cos [IsFiniteMeasureOnCompacts μ] (Λ : AddSubgroup V)
     (hΛo : IsOpen (Λ : Set V)) (hΛc : IsCompact (Λ : Set V)) (y : V) :

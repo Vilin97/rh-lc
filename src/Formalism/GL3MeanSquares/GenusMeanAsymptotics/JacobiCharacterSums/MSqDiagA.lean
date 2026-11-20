@@ -47,7 +47,7 @@ lemma dA_sum_vM_le (N : ℕ) : ∑ n ∈ Icc 1 N, vonMangoldt n ≤ dA_KC * N :=
     calc Real.log ((∏ n ∈ (Icc 1 M).filter Nat.Prime, n : ℕ) : ℝ) ≤ Real.log (primorial M : ℝ) :=
           Real.log_le_log (by exact_mod_cast hpos) (by exact_mod_cast hle)
       _ ≤ Real.log ((4:ℝ) ^ M) :=
-          Real.log_le_log (by exact_mod_cast primorial_pos M) (by exact_mod_cast primorial_le_4_pow M)
+          Real.log_le_log (by exact_mod_cast primorial_pos M) (by exact_mod_cast primorial_le_four_pow M)
       _ = M * Real.log 4 := Real.log_pow 4 M
   have hR : ∀ M : ℕ, ∑ n ∈ (Icc 1 M).filter (fun n => ¬ n.Prime), vonMangoldt n
       ≤ ∑ n ∈ Icc 1 (M / 2), vonMangoldt n := by

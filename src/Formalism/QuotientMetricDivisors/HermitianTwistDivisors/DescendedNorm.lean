@@ -56,7 +56,7 @@ theorem opNorm_le_iff {a D : ℕ} (A : Matrix (Fin D) (Fin a) ℂ) (c : ℝ) (hc
         Formalism.HermitianLatticesTheory.cnorm (A.mulVec x) := by
     intro x
     rw [cnorm_eq]
-    simp [Matrix.toEuclideanLin_apply]
+    simp [Matrix.toLpLin_apply]
   constructor
   · intro h x y
     have h2 : Formalism.HermitianLatticesTheory.cnorm (A.mulVec x) ≤ c * Formalism.HermitianLatticesTheory.cnorm x := by
@@ -444,7 +444,7 @@ theorem nrm_mul_le {a b c : ℕ} (A : Matrix (Fin c) (Fin b) ℂ) (B : Matrix (F
       (LinearMap.toContinuousLinearMap (Matrix.toEuclideanLin A)).comp
         (LinearMap.toContinuousLinearMap (Matrix.toEuclideanLin B)) := by
     ext x : 1
-    simp [Matrix.toEuclideanLin_apply, Matrix.mulVec_mulVec]
+    simp [Matrix.toLpLin_apply, Matrix.mulVec_mulVec]
   rw [e]
   exact ContinuousLinearMap.opNorm_comp_le _ _
 
@@ -781,7 +781,7 @@ theorem place_bound {K : Type} [Field K] [NumberField K] [StarRing K] {n D a b :
     unfold nrm
     have e : WithLp.toLp 2 (M *ᵥ u) =
         LinearMap.toContinuousLinearMap (Matrix.toEuclideanLin M) (WithLp.toLp 2 u) := by
-      simp [Matrix.toEuclideanLin_apply]
+      simp [Matrix.toLpLin_apply]
     rw [e]
     exact ContinuousLinearMap.le_opNorm _ _
   have h4 : fnorm (Xb v) ((col.map v.embedding) *ᵥ x) ≤ k * fnorm (Xa v) x := by

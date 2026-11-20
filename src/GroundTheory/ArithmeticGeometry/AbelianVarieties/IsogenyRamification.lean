@@ -143,7 +143,7 @@ theorem ramIdx_mulIsogeny_mul_card_ker (n : ℤ) (hn : n ≠ 0) :
   have hD : divisorOf E a = D := by
     ext P
     rw [divisorOf_apply]
-    simp only [D, Finsupp.add_apply, Finsupp.finset_sum_apply, Finsupp.single_apply]
+    simp only [D, Finsupp.add_apply, Finsupp.finsetSum_apply, Finsupp.single_apply]
     by_cases hP : P = 0
     · subst hP
       rw [Finset.sum_eq_zero (fun T hT => if_neg (Finset.ne_of_mem_erase hT)), if_pos rfl, zero_add,
@@ -223,7 +223,7 @@ theorem ramIdx_dvd_insepDeg (φ : Isogeny E E') : φ.ramIdx ∣ φ.insepDeg := b
     exact Fintype.prod_equiv (Equiv.addLeft (⟨R, hR⟩ : φ.pointHom.ker)) _ _ (fun T => rfl)
   have hu : ordPoint E 0 u = 1 := by
     rw [← divisorOf_apply, divisorOf_prod E _ _ (fun T _ => translate_ne_zero E _ ht),
-      Finsupp.finset_sum_apply]
+      Finsupp.finsetSum_apply]
     have : ∀ T : φ.pointHom.ker, divisorOf E (translate E T t) 0 =
         if (T : E.toAffine.Point) = 0 then 1 else 0 := by
       intro T

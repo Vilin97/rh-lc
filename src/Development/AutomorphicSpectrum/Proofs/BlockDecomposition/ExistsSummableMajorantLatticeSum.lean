@@ -80,7 +80,7 @@ theorem exists_fractionalIdeal_of_isCompact (I : (FractionalIdeal (𝓞 K)⁰ K)
   have hT : Continuous T := by
     refine continuous_pi fun i ↦ ?_
     simp only [T, Matrix.mulVec, dotProduct, Matrix.map_apply]
-    refine continuous_finset_sum _ fun j _ ↦ ?_
+    refine continuous_finsetSum _ fun j _ ↦ ?_
     exact (continuous_finRingHom.comp ((continuous_inv_entry i j).comp continuous_fst)).mul
       ((continuous_apply j).comp continuous_snd)
   set S : Set 𝔸ᶠ[K] := ⋃ i : ι, (fun x : ι → 𝔸ᶠ[K] ↦ x i) '' (T '' (C ×ˢ B))
@@ -133,7 +133,7 @@ theorem exists_summable_bound_tensor_cosetIndicator (φ : 𝓢(ι → mixedSpace
   obtain ⟨A, hA, hφ⟩ := exists_norm_le_inv_one_add_pow φ (k * n)
   let c : GL ι 𝔸[K] → ℝ := fun h ↦ ∑ i, ∑ j,
     ‖(((h⁻¹ : GL ι 𝔸[K]) : Matrix ι ι 𝔸[K]).map Adele2.infRingHom) i j‖
-  have hc : Continuous c := continuous_finset_sum _ fun i _ ↦ continuous_finset_sum _ fun j _ ↦
+  have hc : Continuous c := continuous_finsetSum _ fun i _ ↦ continuous_finsetSum _ fun j _ ↦
     (continuous_infRingHom.comp (continuous_inv_entry i j)).norm
   obtain ⟨B, hB⟩ := hC.exists_bound_of_continuousOn hc.continuousOn
   set B' := max B 1

@@ -69,7 +69,7 @@ theorem ldbasis_rowWt_bidetExp {r n K : ℕ} (sz : Fin K → ℕ) (hsz : ∀ k, 
     rowWt (bidetExp sz hsz I) = ∑ k : Fin K, ∑ p : Fin (sz k), (Pi.single (I k p) 1 : Fin r → ℕ) := by
   classical
   funext a
-  simp only [rowWt, rowDeg, bidetExp, Finsupp.finset_sum_apply, Finset.sum_apply,
+  simp only [rowWt, rowDeg, bidetExp, Finsupp.finsetSum_apply, Finset.sum_apply,
     Finsupp.single_apply, Pi.single_apply]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl (fun k _ => ?_)

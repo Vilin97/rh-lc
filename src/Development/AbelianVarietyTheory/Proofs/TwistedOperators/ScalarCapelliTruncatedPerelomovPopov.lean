@@ -189,7 +189,7 @@ theorem scalar_newton : ∀ (m N : ℕ) (χ : Fin (m + 1) → ℂ), ∃ r : ℂ[
     exact (natDegree_mul_C_le _ _).trans (natDegree_adjugate_pmat_le m χ a c)
   · intro u
     rw [← poly_identity, det_pmat, det_pmat_add]
-    simp only [eval_sub, eval_mul, eval_pow, eval_X, eval_C, eval_prod, eval_add, eval_finset_sum, eval_neg,
+    simp only [eval_sub, eval_mul, eval_pow, eval_X, eval_C, eval_prod, eval_add, Polynomial.eval_finsetSum, eval_neg,
       eval_one]
     have e1 : ∏ s, (u + (χ s - (m : ℂ) / 2 + 1)) = ∏ s, (u + 1 - (m : ℂ) / 2 + χ s) :=
       Finset.prod_congr rfl fun _ _ => by ring

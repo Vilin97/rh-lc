@@ -54,7 +54,7 @@ theorem constantCoeff_DpolyN_eq_jetAt0 : ∀ (C : Type) [Field C] (dd n : ℕ) (
   congr 1
   rw [← cc_subst hE, ← jetAt0_one_left, DmonN,
     jetAt0_foldr (fun g => MvPowerSeries.subst E g) (fun l => DofN F (cp l) (uv l)) co m
-      (fun l hl => h l ((MvPolynomial.mem_vars l).2 ⟨m, hm, Finsupp.mem_support_iff.2 hl⟩)),
+      (fun l hl => h l ((MvPolynomial.mem_vars_iff_mem_support l).2 ⟨m, hm, Finsupp.mem_support_iff.2 hl⟩)),
     one_mul, Finset.prod_map_toList]
 
 end GlobalTheory.DerivJet

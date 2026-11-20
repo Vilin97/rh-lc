@@ -117,7 +117,7 @@ variable {κ : Type*} [Fintype κ] [DecidableEq κ] (b : Basis κ F E) (h : Herm
 
 def dictLattice (d : ℤ) (g : unitaryPoints F E (gram h.toSesq v) (FinAdele F)) : AddSubgroup W :=
   (coreLattice b (gram h.toSesq v) g).comap
-    ((coordEquiv F v : W →+ (ι → F ⊗[F] E)).comp (DistribMulAction.toAddMonoidHom W ((d : E)⁻¹)))
+    ((coordEquiv F v : W →+ (ι → F ⊗[F] E)).comp (DistribSMul.toAddMonoidHom W ((d : E)⁻¹)))
 
 variable {b h v}
 
@@ -129,7 +129,7 @@ theorem dictLattice_eq_iff {d : ℤ} (hd : d ≠ 0) {g g' : unitaryPoints F E (g
     dictLattice b h v d g = dictLattice b h v d g' ↔ g⁻¹ * g' ∈ coreStabilizer b (gram h.toSesq v) := by
   rw [← coreLattice_eq_iff b]
   have hsurj : Function.Surjective ((coordEquiv F v : W →+ (ι → F ⊗[F] E)).comp
-      (DistribMulAction.toAddMonoidHom W ((d : E)⁻¹))) := by
+      (DistribSMul.toAddMonoidHom W ((d : E)⁻¹))) := by
     intro X
     refine ⟨(d : E) • (coordEquiv F v).symm X, ?_⟩
     show coordEquiv F v ((d : E)⁻¹ • ((d : E) • (coordEquiv F v).symm X)) = X

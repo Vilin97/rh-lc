@@ -169,7 +169,7 @@ theorem memLp_Rd {f : Mat n → V} (hf : Sob μ f) (X : Mat n) : MemLp (fun y : 
   have e : (fun y : G n => Rd X f y.val) = fun y : G n => ∑ p, c p • Rd (bs p) f y.val :=
     funext fun y => Rd_expand f hc y.val
   rw [e]
-  exact memLp_finset_sum _ fun p _ => (hf.2 [p]).const_smul (c p)
+  exact MeasureTheory.memLp_finsetSum _ fun p _ => (hf.2 [p]).const_smul (c p)
 
 theorem memLp_self {f : Mat n → V} (hf : Sob μ f) : MemLp (fun y : G n => f y.val) 2 μ := hf.2 []
 

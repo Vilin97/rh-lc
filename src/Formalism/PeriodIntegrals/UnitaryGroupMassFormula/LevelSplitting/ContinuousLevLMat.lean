@@ -37,9 +37,9 @@ theorem continuous_levL_mat (T : F) (P : Frame E M r) {X : Type} [TopologicalSpa
     (hU : ∀ a b, Continuous fun x => U x a b) (hW : ∀ a b, Continuous fun x => W x a b) :
     Continuous fun x => LinearMap.toMatrix' (levL (datR (Af F) σ J P T) (U x) (W x)) := by
   simp only [levL, map_add, map_sum, map_smul]
-  refine (continuous_const.add (continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun b _ =>
+  refine (continuous_const.add (continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ =>
     (hU a b).smul continuous_const)).add
-    (continuous_finset_sum _ fun d _ => continuous_finset_sum _ fun b _ => (hW d b).smul continuous_const)
+    (continuous_finsetSum _ fun d _ => continuous_finsetSum _ fun b _ => (hW d b).smul continuous_const)
 
 theorem continuous_levG (hσσ : ∀ x, σ (σ x) = x) (hJ : IsHermND σ J) (P : Frame E M r) (T : F)
     (hP : P.IsStd σ J T) : Continuous (levG (R := Af F) hσσ hJ hP) := by

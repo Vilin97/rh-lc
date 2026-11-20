@@ -24,7 +24,7 @@ private lemma traceOnCharacter_averagedSingles_eq (g N : ℕ) [Fact g.Prime]
           (ψ (E u))⁻¹ * χ u := by
   unfold _root_.GlobalTheory.GLq.tr _root_.Formalism.MainNotions.ArithmeticCylinders.eDat
   simp only [MonoidAlgebra.coeff_smul, MonoidAlgebra.coeff_sum, Finsupp.smul_apply,
-    Finsupp.finset_sum_apply, MonoidAlgebra.coeff_single_apply, smul_eq_mul, Finset.sum_mul,
+    Finsupp.finsetSum_apply, MonoidAlgebra.coeff_single_apply, smul_eq_mul, Finset.sum_mul,
     Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun u _ => ?_
