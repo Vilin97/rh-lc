@@ -51,8 +51,8 @@ theorem exists_KC_subset {n : ℕ} (hsub : ∀ r, ((KCg k n r : Set (GL (Fin n) 
     intro a b
     exact ⟨max a b, Set.inter_subset_inter_left _ (KC_anti (le_max_left a b)),
       Set.inter_subset_inter_left _ (KC_anti (le_max_right a b))⟩
-  obtain ⟨r, hr⟩ := (GlobalTheory.SplitFlip.isCompact_KO (k := k) (n := Fin n)).elim_directed_family_closed
-    (fun r => KC k n r ∩ Uᶜ) (fun r => (hcl r).inter hU.isClosed_compl) hst hdt
+  obtain ⟨r, hr⟩ := ((GlobalTheory.SplitFlip.isCompact_KO (k := k) (n := Fin n)).elim_directed_family_closed
+    (fun r => KC k n r ∩ Uᶜ) (fun r => (hcl r).inter hU.isClosed_compl) (Set.disjoint_iff_inter_eq_empty.2 hst) hdt).imp (fun _ => Disjoint.inter_eq)
   refine ⟨r, fun g hg => ?_⟩
   by_contra hgU
   have : g ∈ (KO k (Fin n) : Set (GL (Fin n) k)) ∩ (KC k n r ∩ Uᶜ) := ⟨hg.1, hg, hgU⟩

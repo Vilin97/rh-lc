@@ -287,7 +287,7 @@ theorem hasBasis_nhds_one :
     fun m m' h => Set.inter_subset_inter_left _
       (SetLike.coe_subset_coe.mpr (congruenceSubgroup_antitone F n h))
   obtain ⟨m, hm⟩ :=
-    (isCompact_integralGL F n).elim_directed_family_closed _ hclosed hempty hanti.directed_ge
+    ((isCompact_integralGL F n).elim_directed_family_closed _ hclosed (Set.disjoint_iff_inter_eq_empty.2 hempty) hanti.directed_ge).imp (fun _ => Disjoint.inter_eq)
   refine ⟨m, trivial, fun g hg => interior_subset (by_contra fun h => ?_)⟩
   have : g ∈ (integralGL F n : Set (GL (Fin n) F)) ∩
       ((congruenceSubgroup F n m : Set (GL (Fin n) F)) ∩ (interior U)ᶜ) :=

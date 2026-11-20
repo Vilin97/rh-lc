@@ -67,12 +67,12 @@ theorem exists_finset_subset {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {C U : Set
   haveI := GlobalTheory.AdelicUnitaryTop.t2Space_adeleRing_numberField F
   haveI : T2Space (AE F E) := GlobalTheory.Doubling.t2Space_tensorProduct_finiteExtension
   haveI : T2Space (UA σ J) := inferInstance
-  obtain ⟨S, hS⟩ := (hC.diff hU).elim_finite_subfamily_closed (fun v : Pl F => {k | compAt σ J v k = 1})
+  obtain ⟨S, hS⟩ := ((hC.diff hU).elim_finite_subfamily_closed (fun v : Pl F => {k | compAt σ J v k = 1})
     (fun v => isClosed_eq ((continuous_components F E σ n J).1 v) continuous_const) (by
-      rw [Set.eq_empty_iff_forall_notMem]
+      rw [Set.disjoint_iff_inter_eq_empty, Set.eq_empty_iff_forall_notMem]
       rintro k ⟨⟨hk, hkU⟩, hv⟩
       rw [Set.mem_iInter] at hv
-      exact hkU (eq_one_of_components (hA k hk) hv ▸ h1))
+      exact hkU (eq_one_of_components (hA k hk) hv ▸ h1))).imp (fun _ => Disjoint.inter_eq)
   refine ⟨S, fun k hk hv => ?_⟩
   by_contra hkU
   exact (Set.eq_empty_iff_forall_notMem.1 hS k) ⟨⟨hk, hkU⟩, Set.mem_iInter₂.2 hv⟩
