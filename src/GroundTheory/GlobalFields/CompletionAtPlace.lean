@@ -98,7 +98,9 @@ theorem valued_algebraMap_adicCompletion' [w.asIdeal.LiesOver v.asIdeal]
   rw [← hk1, ← hk2, ← IsScalarTower.algebraMap_apply,
     IsScalarTower.algebraMap_apply K L (w.adicCompletion L)]
   erw [valuedAdicCompletion_eq_valuation' w, valuedAdicCompletion_eq_valuation' v]
-  exact (valuation_liesOver L v w k).symm
+  simpa only [Algebra.algebraMap_self, RingHom.id_apply,
+    Ideal.ramificationIdx'_eq_ramificationIdx v.asIdeal w.asIdeal v.ne_bot] using
+    (valuation_liesOver L v w k).symm
 
 theorem valued_algebraMap_adicCompletion [w.asIdeal.LiesOver v.asIdeal]
     (x : v.adicCompletion K) :
@@ -109,7 +111,7 @@ theorem valued_algebraMap_adicCompletion [w.asIdeal.LiesOver v.asIdeal]
 
 instance valuativeExtension_adicCompletion [w.asIdeal.LiesOver v.asIdeal] :
     ValuativeExtension (v.adicCompletion K) (w.adicCompletion L) where
-  vle_iff_vle a b := by
+  vle_iff_vle {a b} := by
     have he : v.asIdeal.ramificationIdx' w.asIdeal ≠ 0 :=
       Ideal.IsDedekindDomain.ramificationIdx'_ne_zero_of_liesOver w.asIdeal v.ne_bot
     rw [Valuation.Compatible.vle_iff_le (v := (Valued.v : Valuation (w.adicCompletion L) ℤᵐ⁰)),
