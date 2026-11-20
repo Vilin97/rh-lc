@@ -68,17 +68,8 @@ theorem exists_fullLattice_of_fg :
     exact (h3 v x).symm
   refine ⟨finrank K U, e, Y, L, ?_, hY, ⟨hfg, ?_⟩, fun x => ?_, fun v => ?_, ?_⟩
   · exact c.linearIndependent.map' U.subtype (Submodule.ker_subtype U)
-  · rw [eq_top_iff]
-    intro x _
-    have hsp : Submodule.span K (N : Set (Fin n → K)) =
-        (Submodule.span K (L : Set (Fin (finrank K U) → K))).map ψ := by
-      rw [Submodule.map_span, ← hmap]
-      rfl
-    have hx : ψ x ∈ (Submodule.span K (L : Set (Fin (finrank K U) → K))).map ψ := by
-      rw [← hsp]
-      exact hmemU x
-    obtain ⟨y, hy, hxy⟩ := hx
-    exact hinj hxy ▸ hy
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · rw [← hψ]
     rfl
   · ext a b

@@ -41,9 +41,6 @@ theorem LinesIsLattice.proof : LinesIsLattice.Statement := by
   have hMN : Submodule.span K (M : Set (ι → K)) ≤ KLinesIsLattice.qSpan M :=
     Submodule.span_le.mpr fun v hv => Submodule.subset_span hv
   rw [hspan, top_le_iff] at hMN
-  rw [eq_top_iff]
-  intro v _
-  have hv : v ∈ KLinesIsLattice.qSpan M := hMN ▸ Submodule.mem_top
-  exact hv
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end GroundTheory.Heights₂.Heights

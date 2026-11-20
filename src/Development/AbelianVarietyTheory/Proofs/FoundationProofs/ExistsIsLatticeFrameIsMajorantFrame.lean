@@ -201,10 +201,8 @@ theorem exists_finset_latLoc_eq (L : Submodule (𝓞 E) (Fin n → E)) [hL : Sub
   obtain ⟨d, hd, h⟩ := exists_smul_le (F := F) (L' := L)
     (Submodule.fg_span (Set.finite_range fun j : Fin n => (Pi.single j 1 : Fin n → E))) hL.span_eq_top
   obtain ⟨d', hd', h'⟩ := exists_smul_le (F := F) (L' := stdLattice E n) hL.fg (by
-    rw [eq_top_iff, ← (Pi.basisFun E (Fin n)).span_eq]
-    refine Submodule.span_mono ?_
-    rintro _ ⟨j, rfl⟩
-    simpa using single_mem_stdLattice j)
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   have hf := Ideal.finite_factors (I := Ideal.span {d * d'}) (by simp [hd, hd'])
   refine ⟨hf.toFinset, fun v hv y => ?_⟩
   have hv' : d * d' ∉ v.asIdeal := fun hc => hv (hf.mem_toFinset.2 (Ideal.dvd_span_singleton.2 hc))

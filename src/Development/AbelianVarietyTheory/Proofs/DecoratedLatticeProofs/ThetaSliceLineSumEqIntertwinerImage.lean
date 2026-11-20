@@ -77,15 +77,8 @@ theorem line_sum {L : HSp D} {ζ : Fin L.rank → D.host.E} (hζ : IsLineVec L �
 theorem isLattice_span {L : HSp D} {ζ : Fin L.rank → D.host.E} (hζ : IsLineVec L ζ) :
     Submodule.IsLattice D.host.E (Submodule.span (NumberField.RingOfIntegers D.host.E) {ζ} : Lat L) := by
   refine ⟨Submodule.fg_span (Set.finite_singleton _), ?_⟩
-  rw [eq_top_iff]
-  intro x _
-  have j : Fin L.rank := ⟨0, by have := hζ.1; omega⟩
-  have hx : x = (x j / ζ j) • ζ := by
-    funext i
-    rw [line_eq hζ i j, Pi.smul_apply, smul_eq_mul, div_mul_cancel₀ _ (line_ne hζ j)]
-  rw [hx]
-  exact Submodule.smul_mem _ _ (Submodule.subset_span (Submodule.subset_span rfl))
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem exists_colFun (p : SplitPt D k) {n : Type} [Fintype n] [DecidableEq n] {L S : HSp D}
     {ζ : Fin L.rank → D.host.E} (hζ : IsLineVec L ζ) (β : Frame p S n) {LL : Lat L} {LS : Lat S}
     (hL : Submodule.IsLattice D.host.E LL) (hS : Submodule.IsLattice D.host.E LS) {Φ : WO L S → ℂ}

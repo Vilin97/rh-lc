@@ -54,19 +54,8 @@ theorem isLattice_comap (n n₁ : ℕ) (L : Submodule (𝓞 E) (Fin n → E)) (�
     have := congrArg (P *ᵥ ·) (show ι *ᵥ u = ι *ᵥ u' from e)
     simpa [Matrix.mulVec_mulVec, hP] using this) L hL.fg
   span_eq_top := by
-    rw [eq_top_iff]
-    intro u _
-    obtain ⟨t, ht⟩ := multiple_mem_span_of_mem_localization_span (𝓞 E)⁰ E (L : Set (Fin n → E)) (ι *ᵥ u)
-      (by rw [hL.span_eq_top]; trivial)
-    rw [Submodule.span_eq] at ht
-    have h0 : ((t : 𝓞 E) : E) ≠ 0 := by simpa using nonZeroDivisors.coe_ne_zero t
-    have : u = ((t : 𝓞 E) : E)⁻¹ • (((t : 𝓞 E) : E) • u) := by rw [inv_smul_smul₀ h0]
-    rw [this]
-    refine Submodule.smul_mem _ _ (Submodule.subset_span ?_)
-    change ι *ᵥ (((t : 𝓞 E) : E) • u) ∈ L
-    rw [Matrix.mulVec_smul]
-    exact ht
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem exists_ideal (n : ℕ) (L : Submodule (𝓞 E) (Fin n → E)) (hL : L.IsLattice E) (x : Fin n → E) (hx : x ≠ 0) :
     ∃ 𝔟 : FractionalIdeal (𝓞 E)⁰ E, ∀ s : E, s ∈ 𝔟 ↔ s • x ∈ L :=
   ⟨⟨L.comap ((LinearMap.toSpanSingleton E _ x).restrictScalars (𝓞 E)), FractionalIdeal.isFractional_of_fg

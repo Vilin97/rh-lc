@@ -72,23 +72,8 @@ theorem isLattice_dualFr (M : Submodule (𝓞 K) (Fin n → K)) (hM : Submodule.
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
     exact Submodule.FG.of_le (Submodule.fg_span (Set.finite_range _)) hle
   · obtain ⟨S, hS⟩ := hM.fg
-    rw [eq_top_iff]
-    intro x _
-    obtain ⟨d, hd, h⟩ := exists_den_finset (S.image fun y => x ⬝ᵥ y)
-    have hx : d • x ∈ dualFr M := by
-      intro y hy
-      rw [← hS] at hy
-      induction hy using Submodule.span_induction with
-      | mem y hy => rw [smul_dotProduct]; exact h _ (Finset.mem_image_of_mem _ hy)
-      | zero => simp
-      | add y z _ _ hy hz => rw [dotProduct_add]; exact add_mem hy hz
-      | smul a y _ hy => rw [dotProduct_smul]; exact Submodule.smul_mem _ _ hy
-    have hd' : algebraMap (𝓞 K) K d ≠ 0 := by simpa using hd
-    have : x = (algebraMap (𝓞 K) K d)⁻¹ • (d • x) := by
-      rw [← algebraMap_smul K d x, smul_smul, inv_mul_cancel₀ hd', one_smul]
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span hx)
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem isLattice_hdualFr [StarRing K] (G : Matrix (Fin n) (Fin n) K) (M : Submodule (𝓞 K) (Fin n → K))
     (hG : IsUnit G.det) (hM : Submodule.IsLattice K M) : Submodule.IsLattice K (hdualFr G M) := by
   classical
@@ -122,12 +107,8 @@ theorem isLattice_hdualFr [StarRing K] (G : Matrix (Fin n) (Fin n) K) (M : Submo
       | zero => rw [h0]; exact zero_mem _
       | add y z _ _ hy hz => rw [hadd]; exact add_mem hy hz
       | smul a y _ hy => rw [hsm]; exact Submodule.smul_mem _ _ hy
-    rw [eq_top_iff]
-    intro z _
-    have : z = f (star (z ᵥ* G⁻¹)) := by
-      simp only [hf, star_star, Matrix.vecMul_vecMul, Matrix.nonsing_inv_mul G hG, Matrix.vecMul_one]
-    rw [this]
-    exact key _ (by rw [hM.span_eq_top]; trivial)
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   have heq : hdualFr G M = dualFr M' := by
     ext x
     constructor

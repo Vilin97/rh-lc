@@ -32,18 +32,6 @@ theorem isLattice_lowLat : ∀ (E : Type) [Field E] [NumberField E] (n n₁ : �
     have hN : IsNoetherian (𝓞 E) L := isNoetherian_of_fg_of_noetherian L hfg
     have hm : ((lowLat ι L).map f).FG := (isNoetherian_submodule.mp hN) _ hle
     exact Submodule.fg_of_fg_map_injective f hf hm
-  · rw [eq_top_iff]
-    intro u _
-    obtain ⟨d, hd, hdu⟩ := exists_ne_zero_smul_mem_of_mem_span L (ι *ᵥ u) (by rw [hsp]; trivial)
-    have hd1 : algebraMap (𝓞 E) E d ≠ 0 := by
-      intro h
-      exact hd (IsFractionRing.injective (𝓞 E) E (by simpa using h))
-    have hmem : (algebraMap (𝓞 E) E d) • u ∈ lowLat ι L := by
-      rw [mem_lowLat, Matrix.mulVec_smul, algebraMap_smul]
-      exact hdu
-    have : u = (algebraMap (𝓞 E) E d)⁻¹ • ((algebraMap (𝓞 E) E d) • u) := by
-      rw [smul_smul, inv_mul_cancel₀ hd1, one_smul]
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end GlobalTheory.PlaneSkew

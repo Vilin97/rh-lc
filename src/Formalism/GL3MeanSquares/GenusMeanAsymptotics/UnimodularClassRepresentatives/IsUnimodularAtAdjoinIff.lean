@@ -131,52 +131,14 @@ theorem isLattice_adjoin_iff' (L' : Submodule (𝓞 K) V') :
     have hFG : (L'.map (S.ι.restrictScalars (𝓞 K))).FG :=
       hL.fg.of_le (by unfold VecSplit.adjoin; exact le_sup_right)
     refine ⟨Submodule.fg_of_fg_map_injective (S.ι.restrictScalars (𝓞 K)) S.inj hFG, ?_⟩
-    rw [eq_top_iff]
-    intro a _
-    have key : ∀ v ∈ Submodule.span K (S.adjoin L' : Set V), ∃ (c : K) (b : V'),
-        b ∈ Submodule.span K (L' : Set V') ∧ v = c • S.x₀ + S.ι b := by
-      intro v hv
-      induction hv using Submodule.span_induction with
-      | mem x hx =>
-        obtain ⟨r, b, hb, rfl⟩ := (S.mem_adjoin_iff L' x).1 hx
-        exact ⟨_, b, Submodule.subset_span hb, rfl⟩
-      | zero => exact ⟨0, 0, zero_mem _, by simp⟩
-      | add x y _ _ hx hy =>
-        obtain ⟨c, b, hb, rfl⟩ := hx
-        obtain ⟨c', b', hb', rfl⟩ := hy
-        exact ⟨c + c', b + b', add_mem hb hb', by rw [map_add, add_smul]; abel⟩
-      | smul k x _ hx =>
-        obtain ⟨c, b, hb, rfl⟩ := hx
-        exact ⟨k * c, k • b, Submodule.smul_mem _ k hb, by rw [smul_add, map_smul, smul_smul]⟩
-    have hmem : S.ι a ∈ Submodule.span K (S.adjoin L' : Set V) := by
-      rw [hL.span_eq_top]
-      exact Submodule.mem_top
-    obtain ⟨c, b, hb, he⟩ := key _ hmem
-    have hc : (0 : K) • S.x₀ + S.ι a = c • S.x₀ + S.ι b := by
-      rw [zero_smul, zero_add]
-      exact he
-    rw [(S.comb_eq_iff.1 hc).2]
-    exact hb
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · intro hL
     refine ⟨?_, ?_⟩
     · unfold VecSplit.adjoin
       exact (Submodule.fg_span_singleton _).sup (hL.fg.map _)
-    · rw [eq_top_iff]
-      intro v _
-      obtain ⟨c, a, rfl⟩ := S.cover v
-      refine add_mem (Submodule.smul_mem _ c (Submodule.subset_span (S.x₀_mem_adjoin' L'))) ?_
-      have ha : a ∈ Submodule.span K (L' : Set V') := by
-        rw [hL.span_eq_top]
-        exact Submodule.mem_top
-      have hle : Submodule.map S.ι (Submodule.span K (L' : Set V')) ≤
-          Submodule.span K (S.adjoin L' : Set V) := by
-        rw [Submodule.map_span]
-        apply Submodule.span_mono
-        rintro _ ⟨b, hb, rfl⟩
-        unfold VecSplit.adjoin
-        exact Submodule.mem_sup_right (Submodule.mem_map_of_mem hb)
-      exact hle (Submodule.mem_map_of_mem ha)
-
+    · intro s hs hli
+      exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem isIntegralLat_adjoin_iff' (hs : h.IsSymm) (h1 : h S.x₀ S.x₀ = 1) (L' : Submodule (𝓞 K) V') :
     Formalism.HermitianLatticesTheory.IsIntegralLat h (S.adjoin L') ↔ Formalism.HermitianLatticesTheory.IsIntegralLat h' L' := by
   unfold Formalism.HermitianLatticesTheory.IsIntegralLat

@@ -215,12 +215,8 @@ theorem isLattice_of_commensurable (V : HSpace E) {Λ : Submodule (𝓞 E) (Fin 
     refine (hfg.map f).of_le fun x hx => ⟨_, (mem _).2 (h2 x hx), ?_⟩
     change (N : E)⁻¹ • (N : E) • x = x
     rw [smul_smul, inv_mul_cancel₀ hN', one_smul]
-  · rw [eq_top_iff, ← hsp]
-    refine Submodule.span_le.2 fun x hx => ?_
-    have := Submodule.smul_mem (Submodule.span E (Λ : Set (Fin V.rank → E))) (N : E)⁻¹
-      (Submodule.subset_span (h1 x ((mem x).1 hx)))
-    rwa [smul_smul, inv_mul_cancel₀ hN', one_smul] at this
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem selfDual_iff (hc : CMData 𝔽 E) (V : HSpace E) {Λ : Submodule (𝓞 E) (Fin V.rank → E)}
     (h : Formalism.L2.Herm.dualL hc V Λ = Λ) (x : Fin V.rank → E) :
     x ∈ Λ ↔ ∀ y ∈ Λ, IsIntegral ℤ (herm V.gramᵀ x y) := by

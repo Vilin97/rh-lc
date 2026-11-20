@@ -71,22 +71,8 @@ theorem exists_pair_of_line {k : Type} [Field k] [ValuativeRel k] [TopologicalSp
     · refine Submodule.fg_of_fg_map_injective (inX k n 1) (fun x y h => ?_) (hΛ.fg.of_le (Submodule.map_comap_le _ _))
       funext j
       exact congrFun h (Sum.inl j)
-    · rw [eq_top_iff]
-      intro y _
-      have hle : Submodule.span k (Λ : Set (n ⊕ Fin 1 → k)) ≤
-          (Submodule.span k (L : Set (n → k))).comap (LinearMap.funLeft k k Sum.inl) := by
-        refine Submodule.span_le.2 fun x hx => ?_
-        have h3 := (key x ⟨_, hint x hx⟩ rfl).1 hx
-        have h4 : e ∘ Sum.inl ∈ Submodule.span k (L : Set (n → k)) := by
-          rw [← q.inv_smul_smul (e ∘ Sum.inl)]
-          exact Submodule.smul_mem _ _ (Submodule.subset_span hqe)
-        have h5 := add_mem (Submodule.subset_span (R := k) (s := (L : Set (n → k))) h3)
-          (Submodule.smul_mem _ ((q.1 : k) * (m * x (Sum.inr 0))) h4)
-        have h6 : ∀ a b : n → k, a - (⟨_, hint x hx⟩ : 𝒪[k]) • b + ((q.1 : k) * (m * x (Sum.inr 0))) • b = a :=
-          fun a b => sub_add_cancel a _
-        rw [h6] at h5
-        exact h5
-      exact hle (x := Sum.elim y 0) (by rw [hΛ.span_eq_top]; trivial)
+    · intro s hs hli
+      exact (LinearIndependent.iff_fractionRing _ _).mp hli
   have hglue : IsGlue L (e ∘ Sum.inl) := by
     refine (isGlue_iff q).2 ⟨hlat, fun h => hqi ?_, hqe⟩
     have h3 : (Sum.elim 0 (fun _ => e (Sum.inr 0)) : n ⊕ Fin 1 → k) ∈ Λ := by

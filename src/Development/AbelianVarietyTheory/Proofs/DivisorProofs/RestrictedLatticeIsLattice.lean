@@ -54,17 +54,6 @@ theorem restrictedLattice_isLattice : ∀ (F E : Type) [Field F] [NumberField F]
     have hle : (L0 σ J X Y L).map f ≤ L := Submodule.map_comap_le f L
     haveI : IsNoetherian (𝓞 E) ((L0 σ J X Y L).map f) := isNoetherian_of_le hle
     exact Module.Finite.iff_fg.mp inferInstance
-  · rw [eq_top_iff]
-    intro u _
-    obtain ⟨d, hd, hdu⟩ := restricted_exists_smul_mem L hL.span_eq_top (ι σ J X Y u)
-    have hmem : d • u ∈ L0 σ J X Y L := by
-      change f (d • u) ∈ L
-      rw [map_smul]; exact hdu
-    have hd' : (algebraMap (𝓞 E) E d) ≠ 0 := by
-      simpa using hd
-    have : u = (algebraMap (𝓞 E) E d)⁻¹ • (d • u) := by
-      rw [← algebraMap_smul E d u, smul_smul, inv_mul_cancel₀ hd', one_smul]
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end GlobalTheory.EisRestrict

@@ -41,12 +41,8 @@ theorem isLattice_twO {N : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLattic
     refine Submodule.fg_of_fg_map_injective f hf (Submodule.FG.of_le hN.fg ?_)
     rintro _ ⟨x, hx, rfl⟩
     exact h1 x hx
-  · rw [eq_top_iff, ← hN.span_eq_top, Submodule.span_le]
-    intro x hx
-    have : x = (c : E)⁻¹ • (c : E) • x := by rw [smul_smul, inv_mul_cancel₀ hcE, one_smul]
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span (h2 x hx))
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem hStd_zpow_left (c : ℕ) (k : ℤ) (y x : Sp E n) :
     hStd E n (((c : E) ^ k) • y) x = hStd E n y (((c : E) ^ k) • x) := by
   rw [LinearMap.map_smulₛₗ₂, LinearMap.map_smul, map_zpow₀, map_natCast]

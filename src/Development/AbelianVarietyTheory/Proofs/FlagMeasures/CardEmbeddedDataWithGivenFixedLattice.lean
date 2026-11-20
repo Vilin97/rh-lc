@@ -156,21 +156,8 @@ theorem fixLat_isLattice {H : HermSpace K V} {g : 𝓞 K} (hg : g ≠ 0) {L' L :
     {Γ : Submodule (𝓞 K) (V × V)} (hL' : Submodule.IsLattice K L') (hL : Submodule.IsLattice K L)
     (hΓ : IsModIso H g L' L Γ) : Submodule.IsLattice K (fixLat Γ) := by
   refine ⟨hL.fg.of_le (fixLat_le hΓ).2, ?_⟩
-  rw [eq_top_iff, ← hL.span_eq_top, Submodule.span_le]
-  intro y hy
-  have hn := GlobalTheory.Mass.DiscOrder.idxN_ne_zero hL' hL.fg
-  set n : 𝓞 K := ((GlobalTheory.Mass.idxN L L' : ℕ) : 𝓞 K) with hn'
-  have hn0 : n ≠ 0 := Nat.cast_ne_zero.2 hn
-  have h1 : n • y ∈ L' := GlobalTheory.Mass.LatticeGens.idxN_smul_mem L' L hy
-  have h2 : (g * n) • y ∈ fixLat Γ := by
-    rw [mul_smul]
-    exact hΓ.2.1 ⟨⟨_, h1, rfl⟩, ⟨_, L.smul_mem n hy, rfl⟩⟩
-  have h3 : algebraMap (𝓞 K) K (g * n) ≠ 0 := by simpa using ⟨hg, hn0⟩
-  have h4 : y = (algebraMap (𝓞 K) K (g * n))⁻¹ • ((g * n) • y) := by
-    rw [← algebraMap_smul K (g * n) y, smul_smul, inv_mul_cancel₀ h3, one_smul]
-  rw [h4]
-  exact Submodule.smul_mem _ _ (Submodule.subset_span h2)
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 omit [NumberField K] in
 
 theorem div_mem_dual {H : HermSpace K V} {g : 𝓞 K} (hg : g ≠ 0) {L' L : Submodule (𝓞 K) V}

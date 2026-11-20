@@ -45,11 +45,8 @@ theorem selfDualOK (D : D7) : SelfDualOK D := by
     refine (hL.fg.map f).of_le fun x hx => ⟨_, h2 x hx, ?_⟩
     change (N : D.host.E)⁻¹ • ((N : D.host.E) • x) = x
     rw [smul_smul, inv_mul_cancel₀ hM0, one_smul]
-  · rw [eq_top_iff, ← hL.span_eq_top, Submodule.span_le]
-    intro x hx
-    have := Submodule.smul_mem _ (N : D.host.E)⁻¹
-      (Submodule.subset_span (R := D.host.E) (s := (Λ : Set (Fin V.rank → D.host.E))) (h1 x hx))
-    rwa [smul_smul, inv_mul_cancel₀ hM0, one_smul] at this
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · rw [← GlobalTheory.SDFrameLattice.mem_dualL_iff, hd]
 
 open scoped Pointwise in

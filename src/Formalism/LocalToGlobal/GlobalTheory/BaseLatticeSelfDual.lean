@@ -55,22 +55,13 @@ theorem Coord.lat_dual (K : Coord hc S n) (L : Submodule (𝓞 E) S.V) :
 theorem Coord.isLat_lat (K : Coord hc S n) {L : Submodule (𝓞 E) S.V} (hL : Submodule.IsLattice E L) :
     IsLat (K.lat L) := by
   refine ⟨Module.Finite.iff_fg.2 (hL.fg.map _), ?_⟩
-  rw [eq_top_iff]
-  intro y _
-  have h1 : K.κ.symm y ∈ Submodule.span E (L : Set S.V) := by rw [hL.span_eq_top]; trivial
-  have h2 : K.κ (K.κ.symm y) ∈ (Submodule.span E (L : Set S.V)).map (K.κ : S.V →ₗ[E] (n → E)) := ⟨_, h1, rfl⟩
-  rw [LinearEquiv.apply_symm_apply, Submodule.map_span] at h2
-  exact h2
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem Coord.exists_lat (K : Coord hc S n) {M : Submodule (𝓞 E) (n → E)} (hM : IsLat M) :
     ∃ L : Submodule (𝓞 E) S.V, Submodule.IsLattice E L ∧ K.lat L = M := by
   refine ⟨M.map ((K.κ.symm : (n → E) →ₗ[E] S.V).restrictScalars (𝓞 E)), ⟨(Module.Finite.iff_fg.1 hM.1).map _, ?_⟩, ?_⟩
-  · rw [eq_top_iff]
-    intro x _
-    have h1 : K.κ x ∈ Submodule.span E (M : Set (n → E)) := by rw [hM.2]; trivial
-    have h2 : K.κ.symm (K.κ x) ∈ (Submodule.span E (M : Set (n → E))).map (K.κ.symm : (n → E) →ₗ[E] S.V) := ⟨_, h1, rfl⟩
-    rw [LinearEquiv.symm_apply_apply, Submodule.map_span] at h2
-    exact h2
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · ext y
     rw [K.mem_lat]
     constructor

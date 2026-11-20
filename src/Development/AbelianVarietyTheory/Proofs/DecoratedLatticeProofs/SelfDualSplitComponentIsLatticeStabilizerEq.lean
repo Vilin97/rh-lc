@@ -360,13 +360,8 @@ theorem exists_lat : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topolog
       rw [hexp x]
       exact Submodule.sum_mem _ fun l _ =>
         Submodule.smul_mem _ (⟨_, hint _ hx l⟩ : 𝒪[k]) (Submodule.subset_span ⟨l, rfl⟩)
-    · rw [eq_top_iff]
-      intro x _
-      rw [hexp x]
-      refine Submodule.sum_mem _ fun l _ => Submodule.smul_mem _ _ (Submodule.subset_span ?_)
-      change (fun i => p.sec ((β.b *ᵥ (β.b' *ᵥ fun a => p.pr (incA D (s l a)))) i)) ∈ latV S L _
-      rw [Matrix.mulVec_mulVec, β.bb', Matrix.one_mulVec]
-      exact sec_inc_mem (hs l)
+    · intro s hs hli
+      exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · intro g
     have key : ∀ x : n → k, mt S (β.gl g) *ᵥ (fun i => p.sec ((β.b *ᵥ x) i)) =
         fun i => p.sec ((β.b *ᵥ (g.val *ᵥ x)) i) := by

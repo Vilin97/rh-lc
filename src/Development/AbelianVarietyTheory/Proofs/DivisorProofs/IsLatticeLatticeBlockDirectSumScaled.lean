@@ -50,13 +50,8 @@ theorem scLat_isLattice {n : ℕ} {𝔞 : FractionalIdeal (𝓞 E)⁰ E} (h𝔞 
       obtain ⟨r, hr⟩ := (FractionalIdeal.mem_one_iff _).mp hca
       rw [smul_smul, ← hr, algebraMap_smul]
       exact Λ.smul_mem r hy
-    rw [eq_top_iff, ← hΛ.span_eq_top]
-    refine Submodule.span_le.mpr fun y hy => ?_
-    have h1 : a • y ∈ Submodule.span E (GlobalTheory.SkewLat.scLat 𝔞 Λ : Set (Fin n → E)) :=
-      Submodule.subset_span (hmem y hy)
-    have h2 := Submodule.smul_mem _ a⁻¹ h1
-    rwa [smul_smul, inv_mul_cancel₀ ha0, one_smul] at h2
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem prod_span_eq_top {a b : ℕ} {M : Submodule (𝓞 E) (Fin a → E)} {N : Submodule (𝓞 E) (Fin b → E)}
     (hM : Submodule.IsLattice E M) (hN : Submodule.IsLattice E N) :
     Submodule.span E ((M.prod N : Submodule (𝓞 E) ((Fin a → E) × (Fin b → E))) : Set ((Fin a → E) × (Fin b → E))) = ⊤ := by
@@ -75,11 +70,8 @@ theorem prod_span_eq_top {a b : ℕ} {M : Submodule (𝓞 E) (Fin a → E)} {N :
     intro y
     have hy : y ∈ Submodule.span E (N : Set (Fin b → E)) := by rw [hN.span_eq_top]; trivial
     exact this hy
-  rw [eq_top_iff]
-  rintro ⟨x, y⟩ -
-  have := S.add_mem (hl x) (hr y)
-  simpa using this
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem pairLat_isLattice {a b d : ℕ} {M : Submodule (𝓞 E) (Fin a → E)} {N : Submodule (𝓞 E) (Fin b → E)}
     (hM : Submodule.IsLattice E M) (hN : Submodule.IsLattice E N) (e : Fin a ⊕ Fin b ≃ Fin d) :
     Submodule.IsLattice E (GlobalTheory.SkewLat.pairLat M N e) := by

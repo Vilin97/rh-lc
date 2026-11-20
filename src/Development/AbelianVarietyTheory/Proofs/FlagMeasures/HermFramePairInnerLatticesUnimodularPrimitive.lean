@@ -292,14 +292,8 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
     subst ht
     rw [zero_smul, add_zero] at hxI ⊢
     exact (Submodule.mem_bot K).1 (hL.2.1 ▸ ⟨hw, hxI⟩)
-  · rw [eq_top_iff, ← hC.sup_eq_top]
-    refine sup_le (fun w hw => ?_) ?_
-    · obtain ⟨c, hc, h⟩ := exists_mult hΛ w
-      have hwn : c • w ∈ N.Wn := by rw [hWn]; exact Submodule.mem_sup_left (N.Wt.smul_mem c hw)
-      rw [← Submodule.smul_mem_iff _ hc]
-      exact Submodule.subset_span (Submodule.mem_sup_right ⟨⟨hWU hwn, Submodule.mem_sup_left h⟩, hwn⟩)
-    · rw [hPi, ← span_hermFramePair_lattice_eq_sup]
-      exact Submodule.span_mono (le_sup_left : N.P0 ≤ N.Ref _)
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · refine le_antisymm ?_ (inf_le_inf_right _ le_sup_left)
     rintro x ⟨hx, hxV⟩
     refine ⟨?_, hxV⟩

@@ -33,20 +33,8 @@ theorem GlobalTheory.UnitLemma.InvAlg.lin_fst_snd : ∀ (K : UQ) (B₁ B₂ : In
     apply Submodule.fg_of_fg_map_injective (LinearMap.inl K.O B₁.A B₂.A) LinearMap.inl_injective
     exact isNoetherian_submodule.1 (isNoetherian_of_fg_of_noetherian M hfg) _ (Submodule.map_comap_le _ _)
   ·
-    rw [eq_top_iff]
-    intro a _
-    have hx : ((a, 0) : B₁.A × B₂.A) ∈ Submodule.span K.E (M : Set (B₁.A × B₂.A)) := by
-      rw [hspan]; exact Submodule.mem_top
-    obtain ⟨d, hd, hdm⟩ := exists_smul_mem_of_mem_span K M hx
-    have hda : d • a ∈ M.comap (LinearMap.inl K.O B₁.A B₂.A) := by
-      rw [Submodule.mem_comap]; simpa using hdm
-    have hdE : algebraMap K.O K.E d ≠ 0 := by
-      rw [Ne, ← map_zero (algebraMap K.O K.E)]
-      exact fun h => hd (IsFractionRing.injective K.O K.E h)
-    have : a = (algebraMap K.O K.E d)⁻¹ • (d • a) := by
-      rw [← algebraMap_smul (A := K.E) d a, smul_smul, inv_mul_cancel₀ hdE, one_smul]
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span hda)
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · intro y hy
     have := hg' _ hy
     simpa [Submodule.mem_comap] using this

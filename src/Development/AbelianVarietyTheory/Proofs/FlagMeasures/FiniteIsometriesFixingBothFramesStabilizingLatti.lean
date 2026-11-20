@@ -67,14 +67,8 @@ theorem finite_of_fix (hT : V →ₗ⋆[E] V →ₗ[E] E) (U : Submodule E V)
     apply Submodule.fg_of_fg_map_injective (W.subtype.restrictScalars (𝓞 E)) Subtype.val_injective
     exact hΛ.fg.of_le (Submodule.map_comap_le _ _)
   haveI : Submodule.IsLattice E L := ⟨hfg, by
-    rw [eq_top_iff]
-    intro w _
-    obtain ⟨d, hd0, hd⟩ := hmul (w : V)
-    have hdw : d • w ∈ L := hd
-    have := Submodule.smul_mem (Submodule.span E (L : Set W)) (algebraMap (𝓞 E) E d)⁻¹
-      (Submodule.subset_span hdw)
-    rwa [← algebraMap_smul E d w, inv_smul_smul₀
-      ((map_ne_zero_iff _ (IsFractionRing.injective (𝓞 E) E)).mpr hd0)] at this⟩
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   let hW := hT.domRestrict₁₂ W W
   have hposW : ∀ w : W, w ≠ 0 → 0 < Algebra.trace ℚ E (hW w w) := fun w hw =>
     hpos w w.2 fun h0 => hw (Subtype.ext h0)

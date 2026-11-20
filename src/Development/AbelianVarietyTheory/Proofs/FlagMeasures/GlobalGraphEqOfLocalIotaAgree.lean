@@ -170,15 +170,8 @@ theorem ngx_lattice {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T) (F' : LFlag (V
     (h : Submodule.IsLattice D.host.E Λ) : Submodule.IsLattice D.host.E (NgX Λ (gS D) F F') := by
   have hle : NgX Λ (gS D) F F' ≤ Λ := sup_le (sup_le Submodule.smul_le_right inf_le_left) inf_le_left
   refine ⟨h.fg.of_le hle, ?_⟩
-  rw [eq_top_iff, ← h.span_eq_top]
-  refine Submodule.span_le.2 fun v hv => ?_
-  have hm : ((gS D : ℕ) : 𝓞 D.host.E) • v ∈ NgX Λ (gS D) F F' :=
-    Submodule.mem_sup_left (Submodule.mem_sup_left (Submodule.smul_mem_smul (Ideal.mem_span_singleton_self _) hv))
-  have e : v = ((gS D : ℕ) : D.host.E)⁻¹ • (((gS D : ℕ) : 𝓞 D.host.E) • v) := by
-    rw [← algebraMap_smul D.host.E ((gS D : ℕ) : 𝓞 D.host.E) v, map_natCast, smul_smul, inv_mul_cancel₀ gS_ne, one_smul]
-  rw [e]
-  exact Submodule.smul_mem _ _ (Submodule.subset_span hm)
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem lrep_mem_lsub {T : D.host.E} {Λ : LV D} {G : LFlag (VS D) D.R.rS T} {l : (VS D).V}
     (hl : l ∈ Lrep Λ G) : l ∈ Lsub Λ G :=
   Submodule.mem_inf.2 ⟨Submodule.mem_sup_left hl, (Submodule.mem_inf.1 hl).2⟩

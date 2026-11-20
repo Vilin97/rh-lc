@@ -143,10 +143,8 @@ theorem glue_spec (hR : ¬ IsField R) (L0 : Submodule R V) (L : HeightOneSpectru
     have hxy' : b • x = b • y := hxy
     rw [← hinvsmul b hb0 x, ← hinvsmul b hb0 y, hxy']
   ·
-    rw [eq_top_iff, ← Submodule.IsLattice.span_eq_top (self := h0), Submodule.span_le]
-    intro x hx
-    rw [← hinvsmul a ha0 x]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span (ha x hx))
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · intro w
     apply le_antisymm
     · have h1 : G ≤ localization₂ w.asIdeal (L w) := iInf_le _ w

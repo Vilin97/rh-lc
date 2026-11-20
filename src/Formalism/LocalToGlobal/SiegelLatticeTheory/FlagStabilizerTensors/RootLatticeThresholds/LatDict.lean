@@ -551,13 +551,8 @@ theorem latOf_isLattice (h : Hfin X u) (Λ : Submodule (𝓞 D.host.E) (VS D).V)
     rw [hmemΛ, mem_latOf, hmem_nsmul]
     exact (hNL _ (adelic_mem_of_base_lattice X hy)).2
   refine ⟨fg_of_nsmul_le hL0.fg N hN h1, ?_⟩
-  rw [eq_top_iff, ← hL0.span_eq_top, Submodule.span_le]
-  intro y hy
-  have e : y = ((N : D.host.E))⁻¹ • (N • y) := by
-    rw [← Nat.cast_smul_eq_nsmul D.host.E, smul_smul, inv_mul_cancel₀ (Nat.cast_ne_zero.2 hN.ne'), one_smul]
-  rw [e]
-  exact Submodule.smul_mem _ _ (Submodule.subset_span (h2 y hy))
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem latOf_unimod (h : Hfin X u) (Λ : Submodule (𝓞 D.host.E) (VS D).V) (hΛ : (Λ : Set (VS D).V) = latOf X u h) :
     Formalism.HermitianLatticesTheory.IsUnimodular (VS D).hT Λ := by
   have hSD := PIW.AdelClassFin.lattice_m_dual X.B.I ((h : X.B.I.Gf) * X.xu u)

@@ -96,12 +96,6 @@ theorem isLattice_span_image_alt : IsLatticeSpanImage := by
   refine ⟨⟨S.image j, ?_⟩, ?_⟩
   · rw [Finset.coe_image, hNP]
   · rw [Submodule.span_span_of_tower, ← span_image_span_alt (K' := K') j (M : Set V), hM2]
-    rw [eq_top_iff, ← (hj.basis (Module.finBasis K V)).span_eq, Submodule.span_le]
-    rintro _ ⟨i, rfl⟩
-    apply Submodule.subset_span
-    refine ⟨Module.finBasis K V i, Submodule.mem_top, ?_⟩
-    first
-    | simp [IsBaseChange.basis_apply]
-    | simp
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end Formalism.LatticeBaseChangeAlt

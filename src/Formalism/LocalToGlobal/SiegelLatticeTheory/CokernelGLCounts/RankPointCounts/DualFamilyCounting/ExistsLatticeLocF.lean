@@ -74,8 +74,8 @@ theorem exists_lattice_locF {Λ L₁ L₂ : Submodule (𝓞 K) V} {𝔭 : Ideal 
     (hL₁ : Submodule.IsFullLattice K L₁) (hL₂ : L₂.FG) (hΛ : locF 𝔭 Λ = Λ) (h1 : L₁ ≤ Λ)
     (h2 : Λ ≤ locF 𝔭 L₂) : ∃ Λ', Submodule.IsLattice K Λ' ∧ locF 𝔭 Λ' = Λ := by
   refine ⟨(L₁ ⊔ L₂) ⊓ Λ, ⟨(hL₁.fg.sup hL₂).of_le inf_le_left, ?_⟩, ?_⟩
-  · rw [eq_top_iff, ← hL₁.span_eq_top]
-    exact Submodule.span_mono (fun x hx => ⟨Submodule.mem_sup_left hx, h1 hx⟩)
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · have e := LIOrb.IA.locF_inf 𝔭 h𝔭.isPrime (L₁ ⊔ L₂) Λ
     rw [hΛ] at e
     rw [e]

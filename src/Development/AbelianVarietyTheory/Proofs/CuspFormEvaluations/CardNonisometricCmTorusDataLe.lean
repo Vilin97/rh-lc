@@ -80,12 +80,8 @@ theorem isLattice_divLat {r : ℕ} {AA : Submodule (𝓞 E) E} (hfg : AA.FG) (h0
     refine Submodule.FG.of_le_of_isNoetherian (T := M) ?_
     rintro _ ⟨v, hv, rfl⟩
     exact hv a ha
-  · rw [eq_top_iff, ← hs, Submodule.span_le]
-    intro v hv
-    refine mem_of_forall_mul_smul AA hfg h0 (Submodule.span E _).toAddSubmonoid v fun a _ b hb => ?_
-    rw [mul_smul]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span (smul_mem_divLat hv hb))
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 variable [IsCMField E]
 
 theorem herm_smul_smul {r : ℕ} (G : Matrix (Fin r) (Fin r) E) (ξ a b : E) (x y : Fin r → E) :

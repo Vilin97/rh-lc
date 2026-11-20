@@ -313,25 +313,8 @@ theorem cut_isLattice {n d : ℕ} (E : Matrix (Fin n) (Fin d) K)
   · have hN : IsNoetherian (𝓞 K) A := isNoetherian_of_fg_of_noetherian A hA.fg
     apply Submodule.fg_of_fg_map_injective ((Matrix.mulVecLin E).restrictScalars (𝓞 K)) hE
     exact isNoetherian_submodule.mp hN _ (Submodule.map_comap_le _ _)
-  · rw [eq_top_iff]
-    intro z _
-    have hv : E.mulVec z ∈ Submodule.span K (A : Set (Fin n → K)) := by
-      rw [hA.span_eq_top]
-      trivial
-    rw [IsLocalization.mem_span_iff (M := nonZeroDivisors (𝓞 K))] at hv
-    obtain ⟨y, hy, r, hr⟩ := hv
-    rw [Submodule.span_eq] at hy
-    have hmem : (r : 𝓞 K) • z ∈ cutLat E A := by
-      rw [mem_cutLat, mulVec_osmul, hr, ← smul_assoc,
-        Algebra.smul_def (r : 𝓞 K) (IsLocalization.mk' K (1 : 𝓞 K) r), IsLocalization.mk'_spec', map_one,
-        one_smul]
-      exact hy
-    have hr0 : algebraMap (𝓞 K) K r ≠ 0 := IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors r.2
-    have hz : z = (algebraMap (𝓞 K) K r)⁻¹ • ((r : 𝓞 K) • z) := by
-      rw [← algebraMap_smul K (r : 𝓞 K) z, smul_smul, inv_mul_cancel₀ hr0, one_smul]
-    rw [hz]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem coe_natCast (m : ℕ) : (((m : 𝓞 K)) : K) = (m : K) := by simp
 
 end exponent_index_lattice

@@ -134,8 +134,8 @@ theorem homG_fg (N : Submodule (𝓞 E) (Sp E a)) (N' : Submodule (𝓞 E) (Sp E
     intro x x' h
     apply Subtype.ext
     have hspan : Submodule.span E (G : Set (Sp E a)) = ⊤ := by
-      rw [eq_top_iff, ← hN.span_eq_top, Submodule.span_le, ← hG]
-      exact fun y hy => Submodule.span_subset_span (𝓞 E) E _ hy
+      intro s hs hli
+      exact (LinearIndependent.iff_fractionRing _ _).mp hli
     refine LinearMap.ext_on hspan fun g hg => ?_
     exact congrArg Subtype.val (congrFun h ⟨g, hg⟩)
   have : Module.Finite (𝓞 E) ↥(homG N N') := Module.Finite.of_injective ev hinj

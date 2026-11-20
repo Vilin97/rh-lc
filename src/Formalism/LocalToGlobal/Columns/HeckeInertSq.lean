@@ -219,8 +219,8 @@ theorem hiCorner_lattice {α β : 𝓞 E} (hab : α + β = 1) {N e M : Submodule
     (hN : Submodule.IsLattice E N) (hM : Submodule.IsFullLattice E M) {i j : 𝓞 E} (hi : i ≠ 0) (hj : j ≠ 0)
     (hNi : ∀ x ∈ N, i • x ∈ e) (hej : ∀ y ∈ e, j • y ∈ M) : Submodule.IsLattice E (hiCorner α β M N) := by
   have hD : Submodule.IsLattice E (M ⊔ N) := ⟨hM.fg.sup hN.fg, by
-    rw [eq_top_iff, ← hM.span_eq_top]
-    exact Submodule.span_mono (SetLike.coe_subset_coe.2 (le_sup_left : M ≤ M ⊔ N))⟩
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   refine lattice_of_smul hN hD (hiCorner_le (fun m hm => Submodule.mem_sup_left (M.smul_mem α hm))
     (fun x hx => Submodule.mem_sup_right (N.smul_mem β hx))) (mul_ne_zero hj hi) fun x hx => ?_
   refine hiCorner_inf hab M N ⟨?_, N.smul_mem _ hx⟩

@@ -156,12 +156,8 @@ theorem isLattice_fractionalIdeal_smul {a : FractionalIdeal (𝓞 E)⁰ E} (ha :
       by_contra h
       push Not at h
       exact ha (FractionalIdeal.eq_zero_iff.2 fun x hx => by_contra fun h0 => h x h0 hx)
-    rw [eq_top_iff, ← hΛ.2, Submodule.span_le]
-    intro y hy
-    have : y = α⁻¹ • α • y := by rw [smul_smul, inv_mul_cancel₀ hα0, one_smul]
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span (Submodule.smul_mem_smul hα hy))
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 omit [NumberField E] [IsCMField E] in
 theorem smul_mem_of_isIntegral (Λ : Submodule (𝓞 E) (Fin r → E)) {a : E} (ha : IsIntegral ℤ a)
     {y : Fin r → E} (hy : y ∈ Λ) : a • y ∈ Λ :=
@@ -331,23 +327,8 @@ theorem exists_rat_basis_of_isLattice (hΛ : ReciprocityTheory.MultiplicativeHei
     · have : Module.Finite (𝓞 E) Λ := Module.Finite.iff_fg.2 hΛ.1
       have : Module.Finite ℤ Λ := Module.Finite.trans (𝓞 E) Λ
       exact Module.Finite.iff_fg.1 this
-    · rw [eq_top_iff]
-      intro x _
-      obtain ⟨d, hd, hdx⟩ := exists_smul_mem (F := E) Λ (x := x) (hΛ.2 ▸ Submodule.mem_top)
-      obtain ⟨e, he⟩ : ∃ e : 𝓞 E, e * d = (Algebra.norm ℤ d : 𝓞 E) := by
-        have := Ideal.absNorm_mem (Ideal.span {d})
-        rw [Ideal.absNorm_span_singleton, Ideal.mem_span_singleton'] at this
-        obtain ⟨e, he⟩ := this
-        rcases Int.natAbs_eq (Algebra.norm ℤ d) with h | h
-        · exact ⟨e, by rw [he, h]; simp⟩
-        · exact ⟨-e, by rw [neg_mul, he, h]; simp⟩
-      have hn : (Algebra.norm ℤ d : ℚ) ≠ 0 := by
-        exact_mod_cast Algebra.norm_ne_zero_iff.2 hd
-      have h1 : (Algebra.norm ℤ d : ℚ) • x ∈ Λ := by
-        have := Λ.smul_mem e hdx
-        rwa [smul_smul, he, Int.cast_smul_eq_zsmul, ← Int.cast_smul_eq_zsmul ℚ] at this
-      rw [← inv_smul_smul₀ hn x]
-      exact Submodule.smul_mem _ _ (Submodule.subset_span h1)
+    · intro s hs hli
+      exact (LinearIndependent.iff_fractionRing _ _).mp hli
   let b := Module.finBasis ℤ (Λ.restrictScalars ℤ)
   refine ⟨_, b.extendOfIsLattice ℚ, ?_⟩
   have h1 : Set.range (b.extendOfIsLattice ℚ) = (Λ.restrictScalars ℤ).subtype '' Set.range b := by

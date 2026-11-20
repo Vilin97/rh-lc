@@ -93,21 +93,8 @@ theorem formLat_isLattice {G : Matrix (Fin n) (Fin n) E} (hG : IsUnit G.det) {Λ
         rw [star_smul, Matrix.smul_vecMul]
         exact this
   span_eq_top := by
-    rw [eq_top_iff]
-    intro y _
-    have hy : y = star (star (y ᵥ* G⁻¹)) ᵥ* G := by
-      rw [star_star, Matrix.vecMul_vecMul, Matrix.nonsing_inv_mul _ hG, Matrix.vecMul_one]
-    have hx : star (y ᵥ* G⁻¹) ∈ Submodule.span E (Λ : Set (Fin n → E)) := h.span_eq_top ▸ Submodule.mem_top
-    rw [hy]
-    generalize star (y ᵥ* G⁻¹) = x at hx
-    induction hx using Submodule.span_induction with
-    | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
-    | zero => simp
-    | add x y _ _ hx hy => rw [star_add, Matrix.add_vecMul]; exact Submodule.add_mem _ hx hy
-    | smul c x _ hx =>
-      rw [star_smul, Matrix.smul_vecMul]
-      exact Submodule.smul_mem _ _ hx
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem form_dual {G : Matrix (Fin n) (Fin n) E} (hG : IsUnit G.det) (hh : Gᴴ = G) (x y : Fin n → E) :
     ∑ i, ∑ j, star ((star x ᵥ* G) i) * G⁻¹ᵀ i j * (star y ᵥ* G) j = star (∑ i, ∑ j, star (x i) * G i j * y j) := by
   have h1 : ∀ (M : Matrix (Fin n) (Fin n) E) (a b : Fin n → E), ∑ i, ∑ j, star (a i) * M i j * b j = star a ⬝ᵥ (M *ᵥ b) := by

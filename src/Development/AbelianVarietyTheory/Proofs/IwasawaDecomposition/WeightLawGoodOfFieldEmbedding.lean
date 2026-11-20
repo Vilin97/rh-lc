@@ -127,25 +127,8 @@ theorem values_isLattice (M : C.Cl → Submodule (𝓞 K) C.V) (hM : ∀ c, Subm
     refine Submodule.FG.of_le (Submodule.fg_pi fun c => (hM c).fg) ?_
     rintro _ ⟨x, hx, rfl⟩ c _
     exact (hL x).1 hx c
-  · rw [eq_top_iff]
-    intro x _
-    have h : ∀ c, ∃ d : 𝓞 K, d ≠ 0 ∧ d • x.1 c ∈ M c := fun c =>
-      exists_smul_mem (by rw [(hM c).span_eq_top]; trivial)
-    choose d hd hdM using h
-    have hx : (∏ c, d c) • x ∈ L := by
-      rw [hL]
-      intro c
-      rw [← Finset.prod_erase_mul _ _ (Finset.mem_univ c)]
-      show ((∏ c' ∈ Finset.univ.erase c, d c') * d c) • x.1 c ∈ M c
-      rw [mul_smul]
-      exact (M c).smul_mem _ (hdM c)
-    have hd0 : (∏ c, d c) ≠ 0 := Finset.prod_ne_zero_iff.mpr fun c _ => hd c
-    have hd' : algebraMap (𝓞 K) K (∏ c, d c) ≠ 0 := by simpa only [ne_eq, FaithfulSMul.algebraMap_eq_zero_iff] using hd0
-    have : x = (algebraMap (𝓞 K) K (∏ c, d c))⁻¹ • ((∏ c, d c) • x) := by
-      rw [← algebraMap_smul K (∏ c, d c) x, smul_smul, inv_mul_cancel₀ hd', one_smul]
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span hx)
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end Datum
 
 theorem root_mem_cmMax {K : Type} [Field K] [StarRing K] (σ : K →+* ℂ)

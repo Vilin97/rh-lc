@@ -140,13 +140,8 @@ theorem disc_of_over (P : Ideal (𝓞 K)) (hP0 : P ≠ ⊥) (hc : IsCoprime P (c
   have hP : ∀ a ∈ P, ∀ y ∈ M, a • y ∈ L := fun a ha y hy => smul_mem_of_gen k1 k2 ha hy
   have hL : Submodule.IsLattice K L := by
     refine ⟨hM.fg.of_le hLM, ?_⟩
-    rw [eq_top_iff, ← hM.span_eq_top, Submodule.span_le]
-    intro y hy
-    have hne : algebraMap (𝓞 K) K t ≠ 0 := (map_ne_zero_iff _ genusCovol_hinj).2 ht0
-    have : y = (algebraMap (𝓞 K) K t)⁻¹ • (t • y) := by
-      rw [← algebraMap_smul K t y, smul_smul, inv_mul_cancel₀ hne, one_smul]
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span (hP t ht y hy))
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   have hMD : M ≤ dual h L := hMu' ▸ an _ _ hLM
   have hDD := (dl L hL).2.1
   refine ⟨⟨hL, (hint L).2 (hLM.trans hMD)⟩, ?_⟩

@@ -36,14 +36,8 @@ theorem isSelfDualC_of_base {V : HSp D} {β : GL (Fin V.rank) (EAf D)} {Λ : Sub
     have h2 := h1.map (Formalism.IndefR.Fin.SelfDualLatticeFinitePlaces.l0s V).subtype
     rw [Submodule.map_comap_eq, Submodule.range_subtype, inf_eq_right.2 hle] at h2
     exact Submodule.fg_of_fg_map_injective φ hφinj h2
-  · rw [eq_top_iff, ← hl0.span_eq_top, Submodule.span_le]
-    intro x hx
-    have hNx : (N : D.host.E) • x ∈ Λ := hin x ((Formalism.IndefR.Fin.SelfDualLatticeFinitePlaces.mem_self_dual_lattice_set V x).1 hx)
-    have : x = (N : D.host.E)⁻¹ • ((N : D.host.E) • x) := by rw [smul_smul, inv_mul_cancel₀ hN0, one_smul]
-    have key : (N : D.host.E)⁻¹ • ((N : D.host.E) • x) ∈ Submodule.span D.host.E (Λ : Set (Fin V.rank → D.host.E)) :=
-      Submodule.smul_mem _ _ (Submodule.subset_span hNx)
-    rw [← this] at key
-    exact key
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · rw [Formalism.IndefR.Eqv.dual_of_dualL hdual y]
     simp only [Formalism.UG.hform, starRingEnd_apply, RingHom.mem_range]
 

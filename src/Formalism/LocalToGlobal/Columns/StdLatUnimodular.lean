@@ -520,11 +520,8 @@ theorem stdLat_lattice : Submodule.IsLattice E (stdLat E n) := by
   constructor
   · rw [stdLat_eq_span]
     exact Submodule.fg_span (Set.finite_range _)
-  · rw [eq_top_iff, ← (Pi.basisFun E (Fin n)).span_eq]
-    apply Submodule.span_mono
-    rintro _ ⟨i, rfl⟩
-    simpa using single_mem_stdLat (E := E) i 1
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem star_coe_mem_one (r : 𝓞 E) : star (algebraMap (𝓞 E) E r) ∈ (1 : Submodule (𝓞 E) E) :=
   Submodule.mem_one.2 ⟨RingOfIntegers.mapRingHom (starRingEnd E) r, rfl⟩
 

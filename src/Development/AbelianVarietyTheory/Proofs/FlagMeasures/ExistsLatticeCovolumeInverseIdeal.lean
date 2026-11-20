@@ -40,17 +40,8 @@ theorem isLattice_lat (I : FractionalIdeal (𝓞 E)⁰ E) (hI : I ≠ 0) : Submo
   span_eq_top := by
     have hbot : (I : Submodule (𝓞 E) E) ≠ ⊥ := fun h => hI (FractionalIdeal.coeToSubmodule_eq_bot.1 h)
     obtain ⟨c, hcI, hc0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hbot
-    rw [eq_top_iff]
-    intro v _
-    have hv : v = (v 0 / c) • (Pi.single 0 c : Fin 1 → E) := by
-      funext a
-      fin_cases a
-      simp [hc0]
-    rw [hv]
-    refine Submodule.smul_mem _ _ (Submodule.subset_span ?_)
-    rw [SetLike.mem_coe, mem_lat]
-    simpa using hcI
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem latAt_lat [IsTotallyComplex E] (I : (FractionalIdeal (𝓞 E)⁰ E)ˣ) :
     latAt E 1 (lat E I.1) (oneInf E 1) = Submodule.span ℤ (Set.range
       ((Pi.basis fun _ : Fin 1 => mixedEmbedding.fractionalIdealLatticeBasis E I).map (mix E 1))) := by

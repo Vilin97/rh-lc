@@ -361,12 +361,8 @@ theorem ratLine_isTraceDef : IsTraceDef ratLine := by
 theorem ratLine_isLattice :
     Submodule.IsLattice ℚ (1 : Submodule (NumberField.RingOfIntegers ℚ) ℚ) := by
   refine ⟨by rw [Submodule.one_eq_span]; exact Submodule.fg_span_singleton _, ?_⟩
-  rw [eq_top_iff]
-  intro x _
-  have h1 : (1 : ℚ) ∈ Submodule.span ℚ ((1 : Submodule (NumberField.RingOfIntegers ℚ) ℚ) : Set ℚ) :=
-    Submodule.subset_span (Submodule.mem_one.2 ⟨1, map_one _⟩)
-  simpa using Submodule.smul_mem _ x h1
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 example : genusMean ratLine (1 : Submodule (NumberField.RingOfIntegers ℚ) ℚ) (fun _ => 1) = 1 :=
   genusMean_one ratLine_isTraceDef ratLine_isLattice
 

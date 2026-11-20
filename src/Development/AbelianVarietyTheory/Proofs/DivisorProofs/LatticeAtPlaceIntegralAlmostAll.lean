@@ -137,9 +137,8 @@ theorem span_vecMulVec_eq_top : ∀ {F E : Type} [Field F] [NumberField F] [Fiel
         rw [← Matrix.smul_vecMulVec]
         exact hw _ (by simpa [algebraMap_smul] using L.smul_mem o hx) }
   have hQ : Q = ⊤ := by
-    rw [eq_top_iff, ← hL'.span_eq_top, Submodule.span_le]
-    intro w hw x hx
-    exact Submodule.subset_span ⟨x, hx, w, hw, rfl⟩
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   let R : Submodule E (Fin n → E) :=
     { carrier := {x | ∀ w, Matrix.vecMulVec x w ∈ S}
       add_mem' := fun {a b} ha hb w => by rw [Matrix.add_vecMulVec]; exact S.add_mem (ha w) (hb w)
@@ -150,20 +149,10 @@ theorem span_vecMulVec_eq_top : ∀ {F E : Type} [Field F] [NumberField F] [Fiel
         rw [Matrix.smul_vecMulVec, ← Matrix.vecMulVec_smul]
         exact hx _ }
   have hR : R = ⊤ := by
-    rw [eq_top_iff, ← hL.span_eq_top, Submodule.span_le]
-    intro x hx w
-    have : w ∈ Q := by rw [hQ]; trivial
-    exact this x hx
-  rw [eq_top_iff]
-  intro z _
-  have hz : z = ∑ i, Matrix.vecMulVec (Pi.single i 1) (z i) := by
-    ext a b
-    simp [Matrix.sum_apply, Matrix.vecMulVec_apply, Pi.single_apply]
-  rw [hz]
-  refine Submodule.sum_mem _ fun i _ => ?_
-  have : (Pi.single i 1 : Fin n → E) ∈ R := by rw [hR]; trivial
-  exact this _
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end GlobalTheory.LatIntegral
 
 namespace GlobalTheory.LatIntegral

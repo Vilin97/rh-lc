@@ -297,8 +297,8 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
   have hΛ : ∀ x, x ∈ loc (K := K) P M ↔ x ∈ Λ := fun x => by
     rw [← hS]; exact mem_loc_span_iff w _ x
   have htop : Submodule.span K (Λ : Set V) = ⊤ := by
-    rw [eq_top_iff, ← hsp]
-    refine Submodule.span_mono fun x hx => (hΛ x).1 ⟨1, Submonoid.one_mem _, by simpa using hx⟩
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   obtain ⟨m, e, he1, he2, he3⟩ := exists_orth_gens (w.valuation K) h hs (algebraMap (𝓞 K) K θ)
     (int_mem_biInt w θ) (by
       rw [← ht, ← map_sub]; exact w.valuation_eq_one_iff_notMem.2 hθ) _ Λ

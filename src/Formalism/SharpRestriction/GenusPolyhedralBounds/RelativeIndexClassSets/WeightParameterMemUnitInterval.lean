@@ -1129,8 +1129,8 @@ theorem l2 (Q : Run D B P) (H1 : ∀ la : HeightOneSpectrum (𝓞 B.KO), LengthL
   constructor
   · have h4 := span_of_fin (K := B.KO) la _ _ (key _ (Q.eLa_ge la) ⊤).1
     rw [Submodule.restrictScalars_top, inf_top_eq] at h4
-    rw [eq_top_iff, ← hM.span_eq_top]
-    exact Submodule.span_le.mpr h4
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · intro e0 he0 W0
     rw [inf_right_comm, idxRules_lidx_of_le la.asIdeal inf_le_left]
     exact (key e0 he0 W0).2

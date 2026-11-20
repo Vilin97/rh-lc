@@ -44,14 +44,6 @@ theorem isLattice_comap_subtype {K V : Type} [Field K] [NumberField K] [AddCommG
       W.injective_subtype
     refine Submodule.fg_of_fg_map_injective _ hinj ?_
     exact Submodule.FG.of_le hΛ.fg (Submodule.map_comap_le _ _)
-  · rw [eq_top_iff]
-    intro w _
-    obtain ⟨a, ha, haw⟩ := exists_smul_mem Λ hΛ.span_eq_top (w : V)
-    have haK : algebraMap (𝓞 K) K a ≠ 0 := by simpa using ha
-    have hw : w = (algebraMap (𝓞 K) K a)⁻¹ • (a • w) := by
-      rw [← algebraMap_smul K a w, smul_smul, inv_mul_cancel₀ haK, one_smul]
-    rw [hw]
-    refine Submodule.smul_mem _ _ (Submodule.subset_span ?_)
-    simpa using haw
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end GlobalTheory.SmulMemComapLattice

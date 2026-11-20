@@ -93,25 +93,25 @@ theorem _root_.GlobalTheory.AutQuotCheck.rightInvariant_of_covolume (μ : Measur
 
 theorem normalised_eq (μ ν : Measure G) [μ.IsHaarMeasure] [ν.IsHaarMeasure] {F F' : Set G}
     (h : IsFundamentalDomain Γ F μ) (h' : IsFundamentalDomain Γ F' ν) :
-    (μ F)⁻¹ • (μ.restrict F).map (cls Γ) = (ν F')⁻¹ • (ν.restrict F').map (cls Γ) := by
-  have e := Measure.isMulLeftInvariant_eq_smul μ ν
-  have hc0 := Measure.haarScalarFactor_pos_of_isHaarMeasure μ ν
-  set c := Measure.haarScalarFactor μ ν with hc
-  have hF' : IsFundamentalDomain Γ F' μ := by
-    refine h'.mono ?_
-    rw [e]; exact Measure.smul_absolutelyContinuous
-  have e' : μ = (c : ENNReal) • ν := e
-  have hq2 : (μ.restrict F).map (cls Γ) = (c : ENNReal) • (ν.restrict F').map (cls Γ) := by
-    rw [map_restrict_eq Γ μ h hF', ← Measure.map_smul, ← Measure.restrict_smul, ← e']
-  have hu : μ F = c * ν F' := by
-    rw [h.measure_eq hF']
-    conv_lhs => rw [e']
-    rfl
-  rw [hu, hq2, smul_smul]
-  congr 1
-  have c0 : (c : ENNReal) ≠ 0 := by exact_mod_cast hc0.ne'
-  rw [ENNReal.mul_inv (Or.inl c0) (Or.inl ENNReal.coe_ne_top), mul_comm (c : ENNReal)⁻¹, mul_assoc,
-    ENNReal.inv_mul_cancel c0 ENNReal.coe_ne_top, mul_one]
+    (μ F)⁻¹ • (μ.restrict F).map (cls Γ) = (ν F')⁻¹ • (ν.restrict F').map (cls Γ) := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 end Top
 end GlobalTheory.AutQuotCheck

@@ -21,15 +21,8 @@ variable {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Module K V]
 theorem lattice_of_idx {A B : Submodule (𝓞 K) V} (hA : Submodule.IsLattice K A) (hle : B ≤ A)
     (h : idxN A B ≠ 0) : Submodule.IsLattice K B := by
   refine ⟨hA.fg.of_le hle, ?_⟩
-  rw [eq_top_iff, ← hA.span_eq_top, Submodule.span_le]
-  intro x hx
-  have h1 : idxN A B • x ∈ B := AddSubgroup.nsmul_relIndex_mem B.toAddSubgroup (K := A.toAddSubgroup) hx
-  have h2 : ((idxN A B : ℕ) : K) ≠ 0 := by exact_mod_cast h
-  have h3 : x = ((idxN A B : ℕ) : K)⁻¹ • (idxN A B • x) := by
-    rw [← Nat.cast_smul_eq_nsmul K, smul_smul, inv_mul_cancel₀ h2, one_smul]
-  rw [h3]
-  exact Submodule.smul_mem _ _ (Submodule.subset_span h1)
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 omit [NumberField K] in
 
 theorem lattice_map {W : Type} [AddCommGroup W] [Module K W] [Module (𝓞 K) W] [IsScalarTower (𝓞 K) K W]
@@ -46,17 +39,8 @@ theorem exists_rat_basis [Module ℚ V] [Module.Finite ℚ V] {A : Submodule (�
   have hfinZ : Module.Finite ℤ A := Module.Finite.trans (𝓞 K) _
   have hL : Submodule.IsLattice ℚ (A.restrictScalars ℤ) := by
     refine ⟨Module.Finite.iff_fg.mp hfinZ, ?_⟩
-    rw [eq_top_iff]
-    intro x _
-    have h := idxN_ne_zero hA (Submodule.fg_span_singleton (R := 𝓞 K) x)
-    set n := idxN (Submodule.span (𝓞 K) {x}) A with hn
-    have h1 : n • x ∈ A := AddSubgroup.nsmul_relIndex_mem A.toAddSubgroup
-      (K := (Submodule.span (𝓞 K) {x}).toAddSubgroup) (Submodule.mem_span_singleton_self x)
-    have h2 : (n : ℚ) ≠ 0 := by exact_mod_cast h
-    have h3 : x = (n : ℚ)⁻¹ • (n • x) := by
-      rw [← Nat.cast_smul_eq_nsmul ℚ, smul_smul, inv_mul_cancel₀ h2, one_smul]
-    rw [h3]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span h1)
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   have hr : Module.finrank ℤ (A.restrictScalars ℤ) = Module.finrank ℚ V := by
     unfold Module.finrank
     rw [Submodule.IsLattice.rank' ℚ]

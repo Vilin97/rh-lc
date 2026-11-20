@@ -72,12 +72,8 @@ theorem patchAt_isLattice_locP (P : HeightOneSpectrum (𝓞 E)) (A B : Submodule
     · refine Submodule.fg_of_fg_map_injective f hf (Submodule.FG.of_le hB.fg ?_)
       rintro _ ⟨x, hx, rfl⟩
       exact hle x hx
-    · rw [eq_top_iff, ← hB.span_eq_top, Submodule.span_le]
-      intro y hy
-      have hy' : y = (algebraMap (𝓞 E) E d)⁻¹ • (d • y) := by
-        rw [← algebraMap_smul E d y, smul_smul, inv_mul_cancel₀ hdE, one_smul]
-      rw [hy']
-      exact Submodule.smul_mem _ _ (Submodule.subset_span (hmem y hy))
+    · intro s hs hli
+      exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · rw [hpat]
     exact Formalism.L2.DIV.localized_iInf Λ B d hd hcl h1 h2 Q
 

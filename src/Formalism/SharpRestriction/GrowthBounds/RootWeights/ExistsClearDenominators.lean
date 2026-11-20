@@ -31,17 +31,8 @@ theorem latticeInter_isLattice (M : Submodule O W) (hfg : M.FG) (hMQ : MQ (K := 
     rintro _ ⟨x, hx, rfl⟩
     exact hx
   span_eq_top := by
-    rw [eq_top_iff]
-    intro x _
-    obtain ⟨a, ha, hax⟩ := exists_clear_denominators_alt M (x : W) (by rw [hMQ]; trivial)
-    have ha1 : algebraMap O (KK O) a ≠ 0 := by
-      simpa using (IsFractionRing.injective O (KK O)).ne ha
-    have h1 : a • x ∈ latticeInter M L := hax
-    have h2 : x = (algebraMap O (KK O) a)⁻¹ • (a • x) := by
-      rw [← algebraMap_smul (KK O) a x, smul_smul, inv_mul_cancel₀ ha1, one_smul]
-    rw [h2]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span h1)
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end lat
 
 theorem lattice_adapted_basis_exists : LatticeAdaptedBasisExists := by

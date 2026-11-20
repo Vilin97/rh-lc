@@ -137,20 +137,8 @@ theorem lmap_isLattice (u : D.what₂.Word) (Λ : Submodule (𝓞 D.host.E) (VS 
     calc pr X l = pr X (l + x) := by rw [map_add, hx0, add_zero]
       _ = pr X w := by rw [hlx]
       _ = w := pr_Wb X w.2
-  · rw [eq_top_iff]
-    intro w _
-    obtain ⟨o, ho, hmem⟩ := exists_smul_mem_lat Λ hΛ (w : (VS D).V)
-    have h1 : o • w ∈ Lmap X u Λ := by
-      rw [mem_Lmap]
-      exact Submodule.mem_sup_left hmem
-    have ho' : ((o : D.host.E)) ≠ 0 := by simpa using ho
-    have e : w = ((o : D.host.E)⁻¹) • (o • w) := by
-      rw [← algebraMap_smul D.host.E o w, smul_smul]
-      have : (o : D.host.E)⁻¹ * algebraMap (𝓞 D.host.E) D.host.E o = 1 := inv_mul_cancel₀ ho'
-      rw [this, one_smul]
-    rw [e]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span h1)
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end GlobalTheory.RowsOrb.Basic
 
 namespace GlobalTheory.RowsOrb.Basic

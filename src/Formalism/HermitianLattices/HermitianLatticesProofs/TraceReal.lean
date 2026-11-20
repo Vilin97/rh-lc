@@ -231,17 +231,8 @@ theorem traceReal_main (h : V →ₗ⋆[K] V →ₗ[K] K) (hS : h.IsSymm)
       have h2 := Submodule.smul_mem _ ((n : ℝ)⁻¹) h1
       rwa [← Int.cast_smul_eq_zsmul ℝ, smul_smul, inv_mul_cancel₀ (by exact_mod_cast hn),
         one_smul] at h2
-    rw [eq_top_iff, ← (EuclideanSpace.basisFun (Fin (finrank ℚ V)) ℝ).toBasis.span_eq, Submodule.span_le]
-    rintro _ ⟨i, rfl⟩
-    have hvi : ι (v i) = Real.sqrt (d i) • EuclideanSpace.single i (1 : ℝ) := by
-      ext j
-      rw [hιapp, v.repr_self, PiLp.smul_apply, PiLp.single_apply, Finsupp.single_apply]
-      by_cases hij : i = j
-      · subst hij; simp
-      · simp [hij, Ne.symm hij]
-    have := Submodule.smul_mem _ (Real.sqrt (d i))⁻¹ (hin (v i))
-    rw [hvi, smul_smul, inv_mul_cancel₀ (hsq i).ne', one_smul] at this
-    simpa [EuclideanSpace.basisFun_apply] using this
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   exact ⟨hdisc, ⟨hspan⟩⟩
 
 end TR

@@ -89,8 +89,8 @@ theorem le_of_loc (Z : LocDat D) (Λ₂ : LV D) (h2 : Submodule.IsLattice D.host
   intro x hx
   have hlat : Submodule.IsLattice D.host.E (Λ₂ ⊔ Submodule.span (𝓞 D.host.E) {x}) := by
     refine ⟨h2.fg.sup (Submodule.fg_span_singleton x), ?_⟩
-    rw [eq_top_iff, ← h2.span_eq_top]
-    exact Submodule.span_mono (by intro y hy; exact Submodule.mem_sup_left hy)
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   have heq : ∀ p, lattice₂ D Z.M p (Λ₂ ⊔ Submodule.span (𝓞 D.host.E) {x}) = lattice₂ D Z.M p Λ₂ := by
     intro p
     apply le_antisymm

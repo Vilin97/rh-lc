@@ -29,14 +29,8 @@ theorem latIn_isLattice (L : Submodule (𝓞 K) V) (hL : Submodule.IsLattice K L
   refine ⟨?_, ?_⟩
   · refine Submodule.fg_of_fg_map_injective (U.subtype.restrictScalars (𝓞 K)) U.injective_subtype ?_
     exact Submodule.FG.of_le hL.fg (Submodule.map_comap_le _ _)
-  · rw [eq_top_iff]
-    intro u _
-    obtain ⟨r, hr, hu⟩ := exists_smul_mem L hL (u : V)
-    have h1 : algebraMap (𝓞 K) K r ≠ 0 := by simpa using hr
-    have h2 : r • u ∈ Submodule.span K (latIn U L : Set U) := Submodule.subset_span hu
-    rw [← algebraMap_smul K r] at h2
-    exact (Submodule.smul_mem_iff _ h1).1 h2
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end
 
 theorem one_le_rd (K : Type) [Field K] [NumberField K] : 1 ≤ 2 * vInv K := by

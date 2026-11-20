@@ -25,15 +25,8 @@ theorem isLattice_of_eq_span_frac_smul {K V : Type} [Field K] [NumberField K] [A
       exact Submodule.subset_span ⟨a, haI, y, hy, rfl⟩
     have hfg : (N.map f).FG := Submodule.FG.of_le hM.fg hle
     exact Submodule.fg_of_fg_map_injective f hf hfg
-  · rw [eq_top_iff, ← hM.span_eq_top, Submodule.span_le, h]
-    intro x hx
-    have : Submodule.span (𝓞 K) {x | ∃ a ∈ I, ∃ y ∈ N, x = (a : K) • y} ≤
-        (Submodule.span K (N : Set V)).restrictScalars (𝓞 K) := by
-      rw [Submodule.span_le]
-      rintro _ ⟨b, _, y, hy, rfl⟩
-      exact Submodule.smul_mem (Submodule.span K (N : Set V)) b (Submodule.subset_span hy)
-    exact this hx
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem isLattice_comap_equiv {K V W : Type} [Field K] [NumberField K] [AddCommGroup V]
     [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] [AddCommGroup W]
     [Module K W] [Module (𝓞 K) W] [IsScalarTower (𝓞 K) K W]

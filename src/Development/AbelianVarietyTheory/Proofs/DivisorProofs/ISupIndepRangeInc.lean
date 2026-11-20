@@ -101,10 +101,8 @@ theorem le_slope_sq_of_sum : ∀ (K : Type) [Field K] [NumberField K] [IsTotally
     rw [h1, h2, GlobalTheory.AllWt.deg, GlobalTheory.AllWt.slope]
     exact mul_le_mul_of_nonneg_left (by linarith [hs o]) (Nat.cast_nonneg _)
   have htop : Submodule.span K ((⨆ o, P o : Submodule (𝓞 K) _) : Set (∀ o, ι o → K)) = ⊤ := by
-    rw [eq_top_iff, ← LinearMap.iSup_range_single K (fun o => ι o → K)]
-    refine iSup_le fun o => ?_
-    rw [← hsp o]
-    exact Submodule.span_mono (le_iSup P o)
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   have hmap : (⨆ o, P o).map (Φ.restrictScalars (𝓞 K)) ≤ M := by
     rw [Submodule.map_iSup]
     refine iSup_le fun o => ?_

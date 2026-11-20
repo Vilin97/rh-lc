@@ -40,15 +40,8 @@ private theorem isLattice_inf_locF_of_isLattice {𝔭 : Ideal (𝓞 F)} (h𝔭 :
     have : IsNoetherian (𝓞 K) ↥(M ⊓ locF 𝔭 N) := isNoetherian_of_le inf_le_left
     rw [← Module.Finite.iff_fg]
     infer_instance
-  · rw [eq_top_iff, ← hM.2, Submodule.span_le]
-    intro y hy
-    have hmem : algebraMap (𝓞 F) (𝓞 K) a • y ∈ M ⊓ locF 𝔭 N := ⟨M.smul_mem _ hy, hr a ha y hy⟩
-    have ey : y = c⁻¹ • (algebraMap (𝓞 F) (𝓞 K) a • y) := by
-      rw [← algebraMap_smul K (algebraMap (𝓞 F) (𝓞 K) a) y, ← hc_def, smul_smul, inv_mul_cancel₀ hc,
-        one_smul]
-    rw [SetLike.mem_coe, ey]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem card_quot_inf_mul (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hd : IsTotPosDef h)
     {M₁ M₂ : Submodule (𝓞 K) V} (hM₁ : Submodule.IsLattice K M₁)

@@ -214,19 +214,8 @@ theorem divisor_bounds_first : BoundsI := by
   · have h1 : (M.map ((Matrix.mulVecLin I0).restrictScalars (𝓞 K))).FG := by
       exact Submodule.FG.of_le hA.fg (Submodule.map_comap_le _ _)
     exact Submodule.fg_of_fg_map_injective _ hinj h1
-  · rw [eq_top_iff]
-    intro x _
-    obtain ⟨s0, _, b, hbs, hs0⟩ := Formalism.HermitianLatticesTheory.dualLattice_basis (R := 𝓞 K) A hA.span_eq_top
-    obtain ⟨d, m, hd, hdm⟩ := GoodDualLattice.denom (R := 𝓞 K) b (I0.mulVec x)
-    have hdM : d • x ∈ M := by
-      rw [hMmem, Matrix.mulVec_smul, hdm]
-      exact A.sum_mem fun i _ => A.smul_mem _ (by rw [hbs]; exact hs0 i.2)
-    have hd' : algebraMap (𝓞 K) K d ≠ 0 :=
-      (map_ne_zero_iff _ (IsFractionRing.injective (𝓞 K) K)).mpr hd
-    have : x = (algebraMap (𝓞 K) K d)⁻¹ • (d • x) := by
-      rw [← algebraMap_smul K d x, smul_smul, inv_mul_cancel₀ hd', one_smul]
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span hdM)
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · intro x hx
     rw [Formalism.HermitianLatticesTheory.dualBasic_mem_dual] at hx
     have h1 : I0.mulVec x ∈ Formalism.HermitianLatticesTheory.dual (Formalism.DivisionValues.hform H')

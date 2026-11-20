@@ -175,12 +175,8 @@ theorem isLattice_of (N : Submodule (𝓞 E) E) (hfg : N.FG) (hne : N ≠ ⊥) :
   fg := hfg
   span_eq_top := by
     obtain ⟨x, hx, hx0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hne
-    rw [eq_top_iff]
-    intro y _
-    have : y = (y / x) • x := by rw [smul_eq_mul]; field_simp
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span hx)
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 omit [StarRing E] in
 theorem absNorm_le (hE : IsTotallyComplex E) (𝔫 : Ideal (𝓞 E)) (b : 𝓞 E) (hb : b ∈ 𝔫) (hb0 : b ≠ 0) (ρ : ℝ)
     (hρ : ∀ φ : E →+* ℂ, ‖φ (b : E)‖ ≤ ρ) : (Ideal.absNorm 𝔫 : ℝ) ≤ ρ ^ (2 * Formalism.HermitianLatticesTheory.fDeg E) := by

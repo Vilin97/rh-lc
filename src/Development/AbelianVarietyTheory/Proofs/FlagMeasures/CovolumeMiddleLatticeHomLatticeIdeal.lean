@@ -193,17 +193,8 @@ theorem isLattice_coordLat {m : ℕ} {Λ : Submodule (𝓞 E) (Fin n → E)} (hS
   · refine Submodule.fg_of_fg_map_injective _ hinj (Submodule.FG.of_le hSD.1 ?_)
     rintro _ ⟨u, hu, rfl⟩
     exact hu
-  · rw [eq_top_iff]
-    intro u _
-    obtain ⟨d, hd, hm⟩ := exists_smul_mem σ J hSD (Y *ᵥ u)
-    have hd' : (d : E) ≠ 0 := by exact_mod_cast hd
-    have h1 : ((d : E)) • u ∈ coordLat Λ Y := by
-      rw [mem_coordLat, Matrix.mulVec_smul]
-      exact hm
-    have : u = (d : E)⁻¹ • ((d : E) • u) := by rw [smul_smul, inv_mul_cancel₀ hd', one_smul]
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span h1)
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem smul_mem_iff (hσ : ∀ x, σ (σ x) = x) (hJ : ∀ i j, σ (J j i) = J i j)
     {Λ : Submodule (𝓞 E) (Fin n → E)} (hSD : GlobalTheory.SgGlob.SelfDual σ J Λ) {r : ℕ} (e g : Fin r → Fin n → E)
     (hee : ∀ c d, form σ J (e c) (e d) = 0) (hgg : ∀ c d, form σ J (g c) (g d) = 0)
@@ -442,16 +433,8 @@ theorem isLattice_lineLat {I : FractionalIdeal (𝓞 E)⁰ E} (hI : I ≠ 0) : S
     exact hI (FractionalIdeal.ext fun y => ⟨fun hy => (FractionalIdeal.mem_zero_iff _).2 (h y hy),
       fun hy => by rw [(FractionalIdeal.mem_zero_iff _).1 hy]; exact FractionalIdeal.zero_mem _⟩)
   refine ⟨hm ▸ hfg.map _, ?_⟩
-  rw [eq_top_iff]
-  intro y _
-  have h1 : (fun _ : Fin 1 => x) ∈ lineLat E I := hx
-  have : y = (y 0 / x) • fun _ : Fin 1 => x := by
-    ext i
-    rw [Subsingleton.elim i 0]
-    simp [hx0]
-  rw [this]
-  exact Submodule.smul_mem _ _ (Submodule.subset_span h1)
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 def gS (c : ℝ) : MatInf E 1 := fun _ _ _ => ((c : ℂ))⁻¹
 
 def gC {m : ℕ} (C : InfinitePlace E → Matrix (Fin m) (Fin m) ℂ) : MatInf E m := fun w => ((C w)⁻¹ : Matrix (Fin m) (Fin m) ℂ)

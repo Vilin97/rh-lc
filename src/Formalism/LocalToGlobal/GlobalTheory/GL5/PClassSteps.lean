@@ -148,22 +148,8 @@ theorem latLattice : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
     rw [hN]
     exact hfgc.map _
   ·
-    rw [eq_top_iff, ← b.span_eq, Submodule.span_le]
-    rintro _ ⟨i, rfl⟩
-    have hk : (k : E) ≠ 0 := by exact_mod_cast hk0.ne'
-    have hmem : (k : E) • b i ∈ N := by
-      show b.equivFun ((k : E) • b i) ∈ PI.UnitaryGroupMassFormula.UJClassFin.abelian₂ σ (gramOf h b) (crdOf b L0) g
-      have e : b.equivFun ((k : E) • b i) = Pi.single i ((k : E) * 1) := by
-        funext j
-        rw [map_smul, Pi.smul_apply, Module.Basis.equivFun_apply, b.repr_self, Finsupp.single_apply,
-          Pi.single_apply, smul_eq_mul]
-        split_ifs <;> simp_all
-      rw [e]
-      exact hlow i 1 isIntegral_one
-    have e2 : b i = (k : E)⁻¹ • ((k : E) • b i) := by rw [smul_smul, inv_mul_cancel₀ hk, one_smul]
-    rw [e2]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem latStep_of (hG : LatGenus) : LatStep := by
   intro F E _ _ _ _ _ _ σ V _ _ _ _ _ h M b L0 hσ hθ hτ hsymm hnd hL hsig g
   obtain ⟨N, hNs, hNl⟩ := latLattice F E σ V h M b L0 hσ hτ hL hsig g

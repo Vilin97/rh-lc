@@ -392,10 +392,8 @@ theorem span_lattice {n : ℕ} {N : Submodule (𝓞 E) (Fin n → E)} (hN : Subm
       | zero => intro a; simp
       | add y z _ _ hy hz => intro a; rw [smul_add]; exact Submodule.add_mem _ (hy a) (hz a)
       | smul c y _ hy => intro a; rw [smul_smul]; exact hy _
-    rw [eq_top_iff]
-    intro y _
-    simpa using key y (by rw [hN.span_eq_top]; trivial) 1
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 omit [NumberField E] in
 theorem comb_surjective {n m : ℕ} {x : Fin m → Fin n → E} (hx : Submodule.span F (Set.range x) = ⊤) :
     Function.Surjective (Fintype.linearCombination R fun k i => ((1 : R) ⊗ₜ[F] x k i : R ⊗[F] E)) := by

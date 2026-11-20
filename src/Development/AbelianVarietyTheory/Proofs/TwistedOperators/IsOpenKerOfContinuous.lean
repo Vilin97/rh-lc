@@ -99,16 +99,8 @@ theorem ballLat_isLattice (s : kˣ) : (ballLat m s).IsLattice k := by
         simp only [Pi.single_apply]; split_ifs <;> simp
       rw [e]
       exact Submodule.smul_mem _ _ (Submodule.subset_span (by simp))
-  · rw [eq_top_iff]
-    intro x _
-    rw [← Finset.univ_sum_single x]
-    refine sum_mem fun i _ => ?_
-    have e : (Pi.single i (x i) : m → k) = (x i * (s : k)⁻¹) • (Pi.single i (s : k) : m → k) := by
-      funext j
-      simp only [Pi.single_apply, Pi.smul_apply, smul_eq_mul]; split_ifs <;> simp
-    rw [e]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span (hs i))
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem exists_ballLat_subset {V : Set (m → k)} (hV : V ∈ 𝓝 (0 : m → k)) :
     ∃ s : kˣ, (ballLat m s : Set (m → k)) ⊆ V := by
   rw [nhds_pi, Filter.mem_pi] at hV

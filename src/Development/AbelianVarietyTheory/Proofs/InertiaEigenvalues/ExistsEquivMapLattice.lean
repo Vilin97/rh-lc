@@ -64,16 +64,8 @@ theorem exists_semilinear {L V O K U : Type} [Field L] [AddCommGroup V] [Module 
       | zero => rw [map_zero]; exact Submodule.zero_mem _
       | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
       | smul c y _ hy => rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ hy
-    rw [eq_top_iff, ← (Pi.basisFun K (Fin (Module.finrank L V))).span_eq, Submodule.span_le]
-    rintro _ ⟨i, rfl⟩
-    have h2 : Pi.basisFun K (Fin (Module.finrank L V)) i = f₀ (b₀ i) := by
-      funext j
-      show _ = e (b₀.repr (b₀ i) j)
-      by_cases hij : i = j
-      · subst hij; simp
-      · simp [hij, Ne.symm hij]
-    rw [h2]
-    exact h1 _
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   let A : Submodule O (Fin (Module.finrank L V) → K) := Submodule.span O (f₀ '' S)
   haveI : A.IsLattice K :=
     ⟨Submodule.fg_span (hS.image _), by rw [Submodule.span_span_of_tower, hf₀ S hspan]⟩

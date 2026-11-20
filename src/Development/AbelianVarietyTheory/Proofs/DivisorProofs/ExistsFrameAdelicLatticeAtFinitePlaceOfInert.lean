@@ -264,16 +264,8 @@ theorem exists_basis_at_inert : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
       convert Submodule.smul_mem _ (κ c) h using 1
       funext i; simp [hκmul]
   have hsp : Submodule.span L (M : Set (Fin n → L)) = ⊤ := by
-    rw [eq_top_iff, ← (Pi.basisFun L (Fin n)).span_eq, Submodule.span_le]
-    rintro _ ⟨i, rfl⟩
-    rw [SetLike.mem_coe]
-    have := hQ (Pi.single i 1)
-    convert this using 1
-    funext j
-    rw [Pi.basisFun_apply]
-    by_cases hij : j = i
-    · subst hij; simp [hκ1]
-    · simp [Pi.single_apply, hij, hκ0]
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   have hfg : M.FG := Submodule.fg_span ((s.finite_toSet).image _)
   obtain ⟨P, hP⟩ := exists_basis_of_fg M hfg hsp
   exact ⟨P, fun x => (hP x).trans (hMem _)⟩

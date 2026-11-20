@@ -160,13 +160,8 @@ theorem perp_lattice {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hn : h.
   · refine (hΛ.fg.map (π.restrictScalars (𝓞 K))).of_le fun w hw => ?_
     obtain ⟨l, hl, e⟩ := (hL w).1 hw
     exact ⟨l, hl, hπl (Submodule.mem_sup_left e)⟩
-  · rw [eq_top_iff]
-    intro w _
-    obtain ⟨d, hd0, hd⟩ := exists_smul_mem hΛ (ι w)
-    have h1 : d • w ∈ L := (hL _).2 ⟨_, hd, by
-      rw [← algebraMap_smul K d w, map_smul, algebraMap_smul, sub_self]; exact X.zero_mem⟩
-    have h2 := Submodule.smul_mem _ (algebraMap (𝓞 K) K d)⁻¹ (Submodule.subset_span (R := K) h1)
-    rwa [← algebraMap_smul K d w, inv_smul_smul₀ ((map_ne_zero_iff _ inj).mpr hd0)] at h2
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · obtain ⟨l, hl, e⟩ := (hL y).1 hy
     rw [← hπl (Submodule.mem_sup_left e)]
     exact hpair x hx l hl (hperp (Submodule.mem_sup_left e))

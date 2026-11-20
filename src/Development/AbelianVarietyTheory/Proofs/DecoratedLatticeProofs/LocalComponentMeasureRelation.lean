@@ -146,22 +146,8 @@ theorem selfDualFor_sum {ι κ : Type} [Fintype ι] [Fintype κ] {GA : Matrix ι
         rw [this]; exact ΛA.zero_mem
   refine ⟨⟨?_, ?_⟩, ?_⟩
   · rw [heq]; exact (hA.1.fg.map _).sup (hB.1.fg.map _)
-  · rw [eq_top_iff]
-    intro y _
-    rw [split_vec (D := D) y]
-    refine Submodule.add_mem _ ?_ ?_
-    · have h1 : extL (D := D) ι κ (y ∘ Sum.inl) ∈ Submodule.span D.host.E (extL (D := D) ι κ '' (ΛA : Set _)) := by
-        rw [Submodule.span_image, hA.1.span_eq_top]; exact ⟨_, Submodule.mem_top, rfl⟩
-      refine Submodule.span_mono ?_ h1
-      rintro _ ⟨x, hx, rfl⟩
-      rw [SetLike.mem_coe, heq]
-      exact Submodule.mem_sup_left ⟨x, hx, rfl⟩
-    · have h1 : extR (D := D) ι κ (y ∘ Sum.inr) ∈ Submodule.span D.host.E (extR (D := D) ι κ '' (ΛB : Set _)) := by
-        rw [Submodule.span_image, hB.1.span_eq_top]; exact ⟨_, Submodule.mem_top, rfl⟩
-      refine Submodule.span_mono ?_ h1
-      rintro _ ⟨x, hx, rfl⟩
-      rw [SetLike.mem_coe, heq]
-      exact Submodule.mem_sup_right ⟨x, hx, rfl⟩
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · intro y
     rw [mem_sumLat, hA.2, hB.2]
     constructor

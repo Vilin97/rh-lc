@@ -76,17 +76,8 @@ theorem isLattice_capX_and_exists_glue (D : D7) (u : D.what₂.Word) (Y X : HSp 
   refine ⟨GlobalTheory.StdFrames.isLattice_crdLat X ⟨?_, ?_⟩, ?_⟩
   · refine Submodule.fg_of_fg_map_injective (ι.restrictScalars (𝓞 D.host.E)) hinj (hfg.of_le ?_)
     exact Submodule.map_comap_le _ _
-  · rw [eq_top_iff]
-    intro x _
-    obtain ⟨c, hc, hx⟩ := exists_smul_mem L (y := ι x) (hsp ▸ Submodule.mem_sup_left ⟨x, rfl⟩)
-    have hc1 : algebraMap (𝓞 D.host.E) D.host.E c ≠ 0 := by simpa using hc
-    have : x = (algebraMap (𝓞 D.host.E) D.host.E c)⁻¹ • (c • x) := by
-      rw [← algebraMap_smul D.host.E c, smul_smul, inv_mul_cancel₀ hc1, one_smul]
-    rw [this]
-    refine Submodule.smul_mem _ _ (Submodule.subset_span ?_)
-    change (ι.restrictScalars (𝓞 D.host.E)) (c • x) ∈ L
-    rw [map_smul]
-    exact hx
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · let I : Ideal (𝓞 D.host.E) :=
       (L.map ((Y.hT z).restrictScalars (𝓞 D.host.E))).comap (Algebra.linearMap (𝓞 D.host.E) D.host.E)
     have hI : ∀ i : 𝓞 D.host.E, i ∈ I ↔ ∃ y ∈ L, Y.hD y z = (i : D.host.E) := fun i => Iff.rfl

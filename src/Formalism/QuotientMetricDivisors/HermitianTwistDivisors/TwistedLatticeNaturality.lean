@@ -616,9 +616,8 @@ theorem shift_idealSmul_lattice (I : FractionalIdeal (𝓞 K)⁰ K) (hI : I ≠ 
       obtain ⟨x, hx, rfl⟩ := (shift_mem_smulLat _ N z).mp hz
       exact Submodule.subset_span ⟨_, hb0, x, hx, rfl⟩
     have h1 := Submodule.IsLattice.span_eq_top (self := shift_smulLat_lattice (b : K) hbK N hN)
-    rw [eq_top_iff, ← h1]
-    exact Submodule.span_mono hle
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem shift_eq_of_locP {A B : Submodule (𝓞 K) (Fin d → K)}
     (h : ∀ w : HeightOneSpectrum (𝓞 K), Formalism.HermitianLatticesTheory.localization₂ w.asIdeal A = Formalism.HermitianLatticesTheory.localization₂ w.asIdeal B) :
     A = B := by

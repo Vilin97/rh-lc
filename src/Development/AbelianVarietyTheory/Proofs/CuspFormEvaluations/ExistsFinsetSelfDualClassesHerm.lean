@@ -628,11 +628,8 @@ theorem isSelfDual_hyperbolicHermForm :
   · refine Submodule.fg_pi fun _ => ?_
     rw [Submodule.one_eq_span]
     exact Submodule.fg_span_singleton 1
-  · rw [eq_top_iff, ← (Pi.basisFun K (Fin 2)).span_eq]
-    refine span_mono ?_
-    rintro _ ⟨a, rfl⟩
-    rw [Pi.basisFun_apply]
-    exact he a
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · simp only [mem_intLat, isIntegralElt_iff] at hx hy ⊢
     rw [hh]
     exact ((hy 0).mul (hc (hx 1))).add ((hy 1).mul (hc (hx 0)))

@@ -106,13 +106,8 @@ theorem perp_lattice (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSymm) (hn : h.
     refine ⟨?_, ?_⟩
     · refine Submodule.fg_of_fg_map_injective (ι.restrictScalars (𝓞 K)) hinj ?_
       exact Submodule.FG.of_le hL.fg (Submodule.map_comap_le _ _)
-    · rw [eq_top_iff]
-      intro u _
-      obtain ⟨s, hs⟩ := GlobalTheory.UnimodQuot.exists_smul_mem hL (ι u)
-      have h0 : algebraMap (𝓞 K) K s ≠ 0 := IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors s.2
-      refine (Submodule.smul_mem_iff _ h0).1 (Submodule.subset_span ?_)
-      show ι (algebraMap (𝓞 K) K s • u) ∈ Λ
-      rw [map_smul, algebraMap_smul]; exact hs
+    · intro s hs hli
+      exact (LinearIndependent.iff_fractionRing _ _).mp hli
   have hle1 : Λ.comap (ι.restrictScalars (𝓞 K)) ≤ L := fun w hw =>
     (hmem w).2 ⟨0, X.zero_mem, by rw [add_zero]; exact hw⟩
   have hst : ∀ r : 𝓞 K, star (algebraMap (𝓞 K) K r) ∈ Set.range (algebraMap (𝓞 K) K) := fun r =>
@@ -121,8 +116,8 @@ theorem perp_lattice (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSymm) (hn : h.
     refine ⟨?_, ?_⟩
     · refine Submodule.FG.of_le (dualLattice (𝓞 K) K W hW hsW hnW hst _ hL1).1.fg fun w hw => ?_
       exact (dualBasic_mem_dual _ _ _).2 fun y hy => hI y (hle1 hy) w hw
-    · rw [eq_top_iff, ← hL1.span_eq_top]
-      exact Submodule.span_mono hle1
+    · intro s hs hli
+      exact (LinearIndependent.iff_fractionRing _ _).mp hli
   refine ⟨hLat, hI, ?_⟩
   have dec : ∀ l, (∀ x ∈ X, h x l = 0) → ∃ w, ∃ x ∈ X, l = ι w + (-(h z l) * (T : K)⁻¹) • z + x := by
     intro l hl

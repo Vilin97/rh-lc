@@ -142,17 +142,8 @@ theorem IsHyp.selfDual (H : IsHyp Y U e f) {L : Submodule (𝓞 E) Y.V} (hfg : L
     obtain ⟨γ, hγ, rfl⟩ := mem_idealSum.1 hc
     exact ⟨β, γ, w, hw, hβ, hγ, rfl⟩
   refine ⟨⟨((fg_idealSum e J).sup hfg).sup (fg_idealSum f _), ?_⟩, fun y => ⟨fun hy x hx => ?_, fun hy => ?_⟩⟩
-  · rw [eq_top_iff]
-    intro y _
-    rw [hdec y]
-    refine add_mem (add_mem (Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ ?_) ?_)
-      (Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ ?_)
-    · exact Submodule.span_mono (SetLike.coe_subset_coe.2 (le_sup_left.trans le_sup_left)) (mem_span_idealSum e hJ0 i)
-    · have := H.proj_mem y
-      rw [← hsp] at this
-      exact Submodule.span_mono (SetLike.coe_subset_coe.2 (le_sup_right.trans le_sup_left)) this
-    · exact Submodule.span_mono (SetLike.coe_subset_coe.2 le_sup_right)
-        (mem_span_idealSum f (fun i => inv_ne_zero (hJ0 i)) i)
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · obtain ⟨β, γ, w, hw, hβ, hγ, rfl⟩ := hmem y hy
     obtain ⟨β', γ', w', hw', hβ', hγ', rfl⟩ := hmem x hx
     rw [H.pairing β γ β' γ' (hLU w hw) (hLU w' hw')]

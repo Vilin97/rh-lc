@@ -111,38 +111,8 @@ theorem latW_isLattice (L : GlobalTheory.FinPl.Lat S) (hL : Submodule.IsLattice 
     intro w hw
     have h := pr_mem_span q G hG hw
     simpa only [q.pr_sec] using h
-  · rw [eq_top_iff]
-    have hinc : ∀ x ∈ Submodule.span D.host.E (L : Set (Fin S.rank → D.host.E)),
-        aux₃ q x ∈ Submodule.span k (latW q L : Set (Fin S.rank → k)) := by
-      intro x hx
-      induction hx using Submodule.span_induction with
-      | mem x hx =>
-        refine Submodule.subset_span ?_
-        rw [SetLike.mem_coe, mem_latW]
-        exact GlobalTheory.FinPl.FrameLat.sec_inc_mem hx
-      | zero =>
-        have h : aux₃ q (0 : Fin S.rank → D.host.E) = 0 := by funext a; simp [aux₃]
-        rw [h]; exact zero_mem _
-      | add x y _ _ hx hy =>
-        have h : aux₃ q (x + y) = aux₃ q x + aux₃ q y := by funext a; simp [aux₃]
-        rw [h]; exact add_mem hx hy
-      | smul c x _ hx =>
-        have h : aux₃ q (c • x) = q.pr (incA D c) • aux₃ q x := by
-          funext a
-          show q.pr (incA D (c * x a)) = q.pr (incA D c) * q.pr (incA D (x a))
-          rw [map_mul, map_mul]
-        rw [h]; exact Submodule.smul_mem _ _ hx
-    intro w _
-    rw [pi_eq_sum_univ w]
-    refine Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ ?_
-    have h := hinc (Pi.single i 1) (by rw [hL.span_eq_top]; trivial)
-    have e : aux₃ q (Pi.single i (1 : D.host.E)) = fun j => if i = j then (1 : k) else 0 := by
-      funext j
-      by_cases hij : i = j
-      · subst hij; simp [aux₃]
-      · simp [aux₃, Pi.single_apply, hij, Ne.symm hij]
-    rwa [e] at h
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end GlobalTheory.LocMod.FullLatFrame
 
 namespace GlobalTheory.LocMod.FullLatFrame

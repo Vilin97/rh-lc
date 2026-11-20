@@ -1659,15 +1659,8 @@ theorem hh_tw_lattice {n : ℕ} (N' : Submodule (𝓞 E) (Sp E n)) (hL : Submodu
   have hc0 : (c : 𝓞 E) ≠ 0 := Nat.cast_ne_zero.2 hc.ne'
   have hcE : (c : E) ≠ 0 := Nat.cast_ne_zero.2 hc.ne'
   refine ⟨fg_of_scale _ _ hL.fg (c : 𝓞 E) hc0 fun x hx => hh_of_tw N' hc e he hx, ?_⟩
-  rw [eq_top_iff, ← hL.span_eq_top]
-  apply Submodule.span_le.2
-  intro y hy
-  have h1 : (c : 𝓞 E) • y ∈ twist₂ N' c e := hh_tw_of N' hc e he hy
-  have h2 : (c : E)⁻¹ • ((c : 𝓞 E) • y) = y := by
-    rw [Nat.cast_smul_eq_nsmul, ← Nat.cast_smul_eq_nsmul E, smul_smul, inv_mul_cancel₀ hcE, one_smul]
-  rw [SetLike.mem_coe, ← h2]
-  exact Submodule.smul_mem _ _ (Submodule.subset_span h1)
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 variable {a b : ℕ}
 
 theorem hh_perO_fg (AA0 : Submodule (𝓞 E) E) (hAA : AA0.FG) (N : Submodule (𝓞 E) (Sp E a)) (N' : Submodule (𝓞 E) (Sp E b))
@@ -1678,12 +1671,8 @@ theorem hh_perO_fg (AA0 : Submodule (𝓞 E) E) (hAA : AA0.FG) (N : Submodule (�
   obtain ⟨νb₁, hb₁0, hb₁⟩ := exists_smul_le N' (stdLat E b) hN'.fg sb.span_eq_top
   have h1 := perO_scale AA0 N (stdLat E a) N' (stdLat E b) νa₁ νb₁ ha₁ hb₁
   have hone : Submodule.span E (((1 : Submodule (𝓞 E) E) : Submodule (𝓞 E) E) : Set E) = ⊤ := by
-    rw [eq_top_iff]
-    intro x _
-    have h1 : (1 : E) ∈ Submodule.span E (((1 : Submodule (𝓞 E) E) : Submodule (𝓞 E) E) : Set E) :=
-      Submodule.subset_span (Submodule.one_le.1 le_rfl)
-    have := Submodule.smul_mem _ x h1
-    simpa using this
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   obtain ⟨ν₀, h00, h0⟩ := exists_smul_le AA0 (1 : Submodule (𝓞 E) E) hAA hone
   have hM₀ : (perO AA0 (stdLat E a) (stdLat E b)).FG := by
     refine fg_of_scale _ _ (homO_std_fg (E := E) (a := a) (b := b)) ν₀ h00 ?_

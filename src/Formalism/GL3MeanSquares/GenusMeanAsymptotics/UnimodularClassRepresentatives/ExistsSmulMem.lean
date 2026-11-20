@@ -112,19 +112,8 @@ theorem isLattice_cut (S : VecSplit h h') {Λ : Submodule (𝓞 K) V}
     have hle : (S.cut Λ).map (S.ι.restrictScalars (𝓞 K)) ≤ Λ := Submodule.map_comap_le _ _
     exact Submodule.fg_of_fg_map_injective (S.ι.restrictScalars (𝓞 K)) S.inj
       (Submodule.FG.of_le_of_isNoetherian hle)
-  · rw [eq_top_iff]
-    intro a _
-    obtain ⟨r, hr, hra⟩ := exists_smul_mem hΛ (S.ι a)
-    have h1 : r • a ∈ S.cut Λ := by
-      rw [VecSplit.mem_cut_iff, ← algebraMap_smul K r a, map_smul, algebraMap_smul]
-      exact hra
-    have hr' : algebraMap (𝓞 K) K r ≠ 0 := by
-      simpa using hr
-    have e : a = (algebraMap (𝓞 K) K r)⁻¹ • (r • a) := by
-      rw [← algebraMap_smul K r a, smul_smul, inv_mul_cancel₀ hr', one_smul]
-    rw [e]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span h1)
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 def emb (S : VecSplit h h') (Λ' : Submodule (𝓞 K) V') : Submodule (𝓞 K) V :=
   Λ'.map (S.ι.restrictScalars (𝓞 K))
 

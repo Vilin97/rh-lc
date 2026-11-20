@@ -87,14 +87,8 @@ theorem isLattice_of_idx {L M : Submodule (𝓞 K) V} (hL : Submodule.IsLattice 
   refine ⟨?_, ?_⟩
   · haveI : IsNoetherian (𝓞 K) L := isNoetherian_of_fg_of_noetherian L hL.fg
     exact Submodule.FG.of_le_of_isNoetherian hM
-  · rw [eq_top_iff, ← hL.span_eq_top, Submodule.span_le]
-    intro v hv
-    have h1 : idx L M • v ∈ M := AddSubgroup.nsmul_relIndex_mem M.toAddSubgroup (K := L.toAddSubgroup) hv
-    have h2 : ((idx L M : K)⁻¹) • (idx L M • v) = v := by
-      rw [← Nat.cast_smul_eq_nsmul K, smul_smul, inv_mul_cancel₀ (by exact_mod_cast h), one_smul]
-    rw [← h2]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span h1)
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 omit [FiniteDimensional K V] [NumberField K] in
 
 theorem idx_latIn_le (U : Submodule K V) (L M : Submodule (𝓞 K) V) (h : idx L M ≠ 0) :

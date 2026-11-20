@@ -30,10 +30,8 @@ theorem fibP_eq (h : V →ₗ⋆[K] V →ₗ[K] K) (U : Submodule K V) (𝔭 : I
 theorem isLattice_sup {X Y : Submodule K V} (hc : IsCompl X Y) {A B : Submodule (𝓞 K) V}
     (hA : IsLatIn X A) (hB : IsLatIn Y B) : Submodule.IsLattice K (A ⊔ B) := by
   refine ⟨hA.1.sup hB.1, ?_⟩
-  rw [eq_top_iff, ← hc.sup_eq_top, ← hA.2, ← hB.2]
-  exact sup_le (Submodule.span_mono (SetLike.coe_subset_coe.mpr le_sup_left))
-    (Submodule.span_mono (SetLike.coe_subset_coe.mpr le_sup_right))
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem exists_locF_eq {A B : Submodule (𝓞 K) V} (hA : Submodule.IsLattice K A)
     (hB : Submodule.IsLattice K B) :
     ∃ s : Finset {𝔭 : Ideal (𝓞 F) // 𝔭.IsMaximal}, ∀ 𝔭 ∉ s, locF 𝔭.1 A = locF 𝔭.1 B := by

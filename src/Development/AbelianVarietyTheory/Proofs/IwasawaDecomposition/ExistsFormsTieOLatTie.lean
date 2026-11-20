@@ -149,15 +149,11 @@ theorem exists_lat [NumberField K] {O : Type} [CommRing O] (o : O →+* K) (σ :
     | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
     | smul a x _ hx => rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
   have hGK : Submodule.span K (G : Set (Fin n → K)) = ⊤ := by
-    rw [eq_top_iff, ← hN.span_eq_top, Submodule.span_le]
-    intro x hx
-    have hx' : x ∈ Submodule.span ℤ (G : Set (Fin n → K)) := by rw [hG]; exact hx
-    exact Submodule.span_le_restrictScalars ℤ K _ hx'
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   have hspan : Submodule.span ℂ ((G.image j : Finset W) : Set W) = ⊤ := by
-    rw [eq_top_iff, ← hsp, Submodule.span_le]
-    rintro _ ⟨i, rfl⟩
-    exact key _ (hGK ▸ Submodule.mem_top)
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   have hZ : ∀ x ∈ N, ∃ f : (Fin n → K) → ℤ, j x = ∑ g ∈ G, (f g : ℂ) • j g := by
     intro x hx
     have hx' : x ∈ Submodule.span ℤ (G : Set (Fin n → K)) := by rw [hG]; exact hx

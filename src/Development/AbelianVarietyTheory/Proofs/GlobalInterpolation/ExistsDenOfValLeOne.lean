@@ -41,20 +41,8 @@ theorem _root_.GlobalTheory.HAtBasis.isLattice_of_basisAt {n : ℕ} (w : HeightO
     convert h2 using 1
     funext i
     simp [Algebra.smul_def, hs0]
-  rw [eq_top_iff]
-  intro x _
-  have hx : x = ∑ j, ((B⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K).mulVec x j •
-      (fun i => (B : Matrix (Fin n) (Fin n) K) i j) := by
-    have hBx : (B : Matrix (Fin n) (Fin n) K).mulVec
-        (((B⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K).mulVec x) = x := by
-      rw [Matrix.mulVec_mulVec]
-      simp
-    conv_lhs => rw [← hBx]
-    funext i
-    simp [Matrix.mulVec, dotProduct, Finset.sum_apply, mul_comm]
-  rw [hx]
-  exact Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ (hcol j)
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 variable {ι : Type} [Fintype ι] {a : ℕ}
 
 open NumberField IsDedekindDomain MvPolynomial in

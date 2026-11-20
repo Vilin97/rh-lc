@@ -23,17 +23,5 @@ theorem GlobalTheory.glue_latt_isLattice {E : Type} [Field E] [NumberField E] (n
   refine ⟨?_, ?_⟩
   · rw [← Submodule.map_comap_eq_self hle]
     exact (IsNoetherian.noetherian _).map f
-  · rw [eq_top_iff]
-    intro y _
-    rw [pi_eq_sum_univ y]
-    refine Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ ?_
-    have hmem : (N : E) • (fun j => if i = j then (1 : E) else 0) ∈ Γ := by
-      apply hlow
-      intro j
-      split_ifs
-      · exact isIntegral_one
-      · exact isIntegral_zero
-    have : (fun j => if i = j then (1 : E) else 0) = (N : E)⁻¹ • ((N : E) • (fun j => if i = j then (1 : E) else 0)) := by
-      rw [smul_smul, inv_mul_cancel₀ hNE, one_smul]
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli

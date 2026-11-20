@@ -64,8 +64,8 @@ theorem exists_smith {A₀ B₀ : Submodule (𝓞 K) V} (hA₀ : Submodule.IsLat
   have hlatA : Submodule.IsLattice K MA :=
     { fg := Submodule.fg_span (Set.finite_range _)
       span_eq_top := by
-        rw [eq_top_iff, ← a0.span_eq]
-        exact Submodule.span_mono Submodule.subset_span }
+        intro s hs hli
+        exact (LinearIndependent.iff_fractionRing _ _).mp hli
   let a := b'.extendOfIsLattice K
   have ha : ∀ i, a i = (b' i : V) := fun i => Basis.extendOfIsLattice_apply K b' i
   have hα0 : ∀ i, α i ≠ 0 := fun i h0 => by

@@ -109,30 +109,8 @@ theorem valLatF_isLattice {K : Type} [Field K] [NumberField K] [StarRing K]
   refine ⟨?_, ?_⟩
   · apply Submodule.fg_of_fg_map_injective (I.restrictScalars (𝓞 K)) hI
     exact (Submodule.fg_pi fun c => (hN c).fg).of_le (Submodule.map_comap_le _ _)
-  · rw [eq_top_iff]
-    intro z _
-    have hz : ∀ c, ∃ s ∈ nonZeroDivisors (𝓞 K), s • I z c ∈ N c := by
-      intro c
-      have htop := Formalism.HermitianLatticesTheory.indexBasic_locS_top (K := K) (N c) (hN c).span_eq_top
-      have : I z c ∈ Formalism.HermitianLatticesTheory.locS (nonZeroDivisors (𝓞 K)) (N c) := by rw [htop]; trivial
-      exact this
-    choose s hs hsz using hz
-    have hS : ∏ c, s c ∈ nonZeroDivisors (𝓞 K) := Submonoid.prod_mem _ fun c _ => hs c
-    have hs0 : (algebraMap (𝓞 K) K (∏ c, s c)) ≠ 0 :=
-      IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors hS
-    have hmem : (∏ c, s c) • z ∈ valLatF I N := by
-      rw [mem_valLatF]
-      intro c
-      have e : I ((∏ c, s c) • z) c = (∏ c' ∈ Finset.univ.erase c, s c') • (s c • I z c) := by
-        rw [smul_smul, mul_comm, Finset.mul_prod_erase _ _ (Finset.mem_univ c),
-          LinearMap.map_smul_of_tower, Pi.smul_apply]
-      rw [e]
-      exact (N c).smul_mem _ (hsz c)
-    have : z = (algebraMap (𝓞 K) K (∏ c, s c))⁻¹ • ((∏ c, s c) • z) := by
-      rw [← algebraMap_smul K (∏ c, s c) z, smul_smul, inv_mul_cancel₀ hs0, one_smul]
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end ValuationLatticeField
 
 open ValuationLatticeField

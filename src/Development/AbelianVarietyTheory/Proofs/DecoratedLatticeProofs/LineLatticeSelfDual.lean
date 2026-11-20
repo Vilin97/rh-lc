@@ -76,13 +76,6 @@ theorem isSelfDualC_lineLat : ∀ (D : D7) (S : HSp D) (ζ : Fin S.rank → D.ho
         exact ⟨0, by simp [hcon c hc]⟩
       exact one_ne_zero (hcon 1 h1m)
     have hcζ : c • ζ ∈ lineLat S ζ 𝔄 := (memΛ _).2 ⟨c, hc, rfl⟩
-    rw [eq_top_iff]
-    intro y _
-    have hζs : ζ ∈ Submodule.span D.host.E (lineLat S ζ 𝔄 : Set (Fin S.rank → D.host.E)) := by
-      have := Submodule.smul_mem (Submodule.span D.host.E (lineLat S ζ 𝔄 : Set (Fin S.rank → D.host.E)))
-        c⁻¹ (Submodule.subset_span hcζ)
-      rwa [smul_smul, inv_mul_cancel₀ hc0, one_smul] at this
-    rw [repr y]
-    exact Submodule.smul_mem _ _ hζs
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end GlobalTheory.SeeSaw.LiftModel

@@ -81,15 +81,8 @@ theorem isLattice_smul (g : V ≃ₗ[K] V) {Λ : Submodule (𝓞 K) V} (hΛ : Su
     Submodule.IsLattice K (g • Λ) := by
   refine ⟨?_, ?_⟩
   · exact hΛ.fg.map _
-  · rw [eq_top_iff]
-    intro x _
-    obtain ⟨N, hN, h⟩ := exists_mul_mem hΛ.span_eq_top (g⁻¹ x)
-    have h1 : N • x ∈ g • Λ := by rw [mem_smul_iff, map_zsmul]; exact h
-    have h2 : x = (N : K)⁻¹ • (N • x) := by
-      rw [← Int.cast_smul_eq_zsmul K, smul_smul, inv_mul_cancel₀ (by exact_mod_cast hN), one_smul]
-    rw [h2]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span h1)
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem relIndex_ne_zero (G : Subgroup (V ≃ₗ[K] V)) {Λ Λ' : Submodule (𝓞 K) V}
     (hΛ : Submodule.IsLattice K Λ) (hΛ' : Submodule.IsLattice K Λ') :
     (G ⊓ MulAction.stabilizer (V ≃ₗ[K] V) Λ).relIndex

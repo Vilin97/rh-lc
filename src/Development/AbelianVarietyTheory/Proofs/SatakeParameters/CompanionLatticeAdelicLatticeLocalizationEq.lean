@@ -140,9 +140,8 @@ theorem isLattice_compan {R : Ranks} {F E : Type} [Field F] [NumberField F] [Fie
     Submodule.IsLattice E (compan (sp := sp) J a M) := by
   refine ⟨?_, ?_⟩
   · exact hM.fg.sup ((Submodule.FG.smul (IsNoetherian.noetherian (Ideal.span {a})) (dualL_fg (sp.cm.sig : E →+* E) J hJ M hM)))
-  · rw [eq_top_iff, ← hM.span_eq_top]
-    exact Submodule.span_mono (SetLike.coe_subset_coe.2 le_sup_left)
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem compan_latAd_eq {R : Ranks} {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [StarRing E] [Algebra F E]
     (sp : Spaces R F E) {N : ℕ} (σ : E →ₐ[F] E) (hσ : (σ : E →+* E) = sp.cm.sig) (J : Matrix (Fin N) (Fin N) E)
     (hJ : IsUnit J.det) (a : 𝓞 E) (x : GL (Fin N) (E ⊗[F] FiniteAdeleRing (𝓞 F) F))

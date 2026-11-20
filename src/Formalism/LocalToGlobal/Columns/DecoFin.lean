@@ -386,9 +386,8 @@ theorem mem_dual_smul (I : Ideal (𝓞 E)) (D : Submodule (𝓞 E) (Sp E n)) (y 
 theorem lattice_between {B M D : Submodule (𝓞 E) (Sp E n)} (hB : Submodule.IsLattice E B)
     (hD : Submodule.IsLattice E D) (h1 : B ≤ M) (h2 : M ≤ D) : Submodule.IsLattice E M :=
   ⟨Submodule.FG.of_le hD.fg h2, by
-    rw [eq_top_iff, ← hB.span_eq_top]
-    exact Submodule.span_mono h1⟩
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem glue_unimodular {I J : Ideal (𝓞 E)} (hIJ : ∀ p ∈ I, cO E p ∈ J) (hJI : ∀ p ∈ J, cO E p ∈ I)
     (hcop : ∃ e ∈ I, ∃ e' ∈ J, e + e' = 1) {N B : Submodule (𝓞 E) (Sp E n)}
     (hN : IsUnimodular (hStd E n) N) (hB : Submodule.IsLattice E B) (hBN : B ≤ N)
@@ -502,15 +501,8 @@ theorem lattice_of_smul {N B D : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.Is
     (hD : Submodule.IsLattice E D) (hBD : B ≤ D) {p : 𝓞 E} (hp : p ≠ 0) (h : ∀ x ∈ N, p • x ∈ B) :
     Submodule.IsLattice E B := by
   refine ⟨Submodule.FG.of_le hD.fg hBD, ?_⟩
-  rw [eq_top_iff, ← hN.span_eq_top, Submodule.span_le]
-  intro x hx
-  have hp' : algebraMap (𝓞 E) E p ≠ 0 := by
-    rwa [Ne, FaithfulSMul.algebraMap_eq_zero_iff]
-  have : x = (algebraMap (𝓞 E) E p)⁻¹ • (p • x) := by
-    rw [← algebraMap_smul E p x, smul_smul, inv_mul_cancel₀ hp', one_smul]
-  rw [this]
-  exact Submodule.smul_mem _ _ (Submodule.subset_span (h x hx))
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem conj_smul_dual_mem {I : Ideal (𝓞 E)} {N B : Submodule (𝓞 E) (Sp E n)}
     (hN : IsUnimodular (hStd E n) N) (hIN : I • N ≤ B) {p : 𝓞 E} (hp : cO E p ∈ I) {u : Sp E n}
     (hu : u ∈ dual (hStd E n) B) : p • u ∈ N := by
@@ -942,18 +934,8 @@ theorem mem_localization_tilN (Q : HeightOneSpectrum (𝓞 E)) (N : Submodule (�
 theorem tilN_lattice {N : Submodule (𝓞 E) (Sp E n)} (hN : Submodule.IsLattice E N) :
     Submodule.IsLattice E (tilN N) := by
   refine ⟨(hN.fg.map _).sup (Submodule.fg_span_singleton _), ?_⟩
-  rw [eq_top_iff]
-  intro x _
-  rw [sp_decomp x]
-  refine Submodule.add_mem _ ?_ (Submodule.smul_mem _ _ (Submodule.subset_span
-    ((le_sup_right : _ ≤ tilN N) (Submodule.mem_span_singleton_self _))))
-  have h1 : Submodule.map (incl E n) ⊤ ≤ Submodule.span E (tilN N : Set (Sp E (n + 1))) := by
-    rw [← hN.span_eq_top, Submodule.map_span]
-    apply Submodule.span_mono
-    rintro _ ⟨y, hy, rfl⟩
-    exact (le_sup_left : _ ≤ tilN N) (Submodule.mem_map_of_mem hy)
-  exact h1 (Submodule.mem_map_of_mem Submodule.mem_top)
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem tilN_unimodular {N : Submodule (𝓞 E) (Sp E n)} (hN : IsUnimodular (hStd E n) N) :
     IsUnimodular (hStd E (n + 1)) (tilN N) := by
   have hN' : dual (hStd E n) N = N := hN

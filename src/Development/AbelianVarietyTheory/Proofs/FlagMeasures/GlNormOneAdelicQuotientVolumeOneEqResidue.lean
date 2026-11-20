@@ -196,13 +196,8 @@ theorem exists_lattice (I : (FractionalIdeal (𝓞 E)⁰ E)ˣ) :
   refine ⟨_, ⟨(FractionalIdeal.fg_unit I).map e, ?_⟩, hm⟩
   obtain ⟨x, hx0, hx⟩ := FractionalIdeal.exists_ne_zero_mem_isInteger I.ne_zero
   have hx0' : algebraMap (𝓞 E) E x ≠ 0 := by simpa using hx0
-  rw [eq_top_iff]
-  intro y _
-  have : y = (y 0 / algebraMap (𝓞 E) E x) • fun _ : Fin 1 => algebraMap (𝓞 E) E x := by
-    ext i; rw [Subsingleton.elim i 0]; simp only [Pi.smul_apply, smul_eq_mul]; field_simp
-  rw [this]
-  exact Submodule.smul_mem _ _ (Submodule.subset_span ((hm _).2 hx))
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem mul_principal_eq_iff (I J : (FractionalIdeal (𝓞 E)⁰ E)ˣ) (c : Eˣ) :
     I * toPrincipalIdeal (𝓞 E) E c = J ↔
       ∀ t : E, (c : E) * t ∈ (J : FractionalIdeal (𝓞 E)⁰ E) ↔ t ∈ (I : FractionalIdeal (𝓞 E)⁰ E) := by

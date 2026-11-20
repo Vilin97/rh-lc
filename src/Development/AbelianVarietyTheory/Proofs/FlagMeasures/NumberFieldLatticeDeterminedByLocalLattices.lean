@@ -225,16 +225,8 @@ theorem lattice_local : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Nu
     fun p => ⟨?_, ?_⟩, ?_⟩
   · rw [← hS, lat_span]
     exact Submodule.fg_span (S.finite_toSet.image _)
-  · rw [eq_top_iff]
-    intro v _
-    have hv : v = ∑ i, v i • (Pi.single i 1 : Fin n → (A.loc p).Ep) := by
-      ext j
-      simp [Pi.single_apply]
-    rw [hv]
-    refine Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ ?_
-    rw [hsingle p i]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span
-      (Submodule.subset_span ⟨_, hm i, rfl⟩))
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · have hfin := (PlacesInt.integers_local A).2.1
     have h1 : (⋃ s ∈ (S : Set (Fin n → E)), ⋃ i, {p | (A.loc p).ιE (s i) ∉ (A.L p).O}).Finite :=
       S.finite_toSet.biUnion fun s _ => Set.finite_iUnion fun i => hfin (s i)

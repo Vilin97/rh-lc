@@ -411,12 +411,8 @@ theorem neighbourConstruct_main (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSym
     have hsP : σ p ∈ conjIdeal (K := K) P := (hcmem _).mpr (by rw [hσσ]; exact hp)
     have hα : algebraMap R K (σ p) ≠ 0 := by
       rw [hσ, star_ne_zero]; exact (map_ne_zero_iff _ hinj).mpr hp0
-    rw [eq_top_iff, ← hLat.span_eq_top, Submodule.span_le]
-    intro l hl
-    have e : l = (algebraMap R K (σ p))⁻¹ • ((σ p) • l) := by
-      rw [rs, smul_smul, inv_mul_cancel₀ hα, one_smul]
-    rw [e]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span (hLxM (sLx _ hsP l hl)))
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   exact ⟨hLat', hInt, neighbourBasic_unimod h hs hstar P hP hPc L M eL eM hL hInt,
     ⟨hloc, ⟨eL⟩, ⟨eM⟩⟩, hE⟩
 

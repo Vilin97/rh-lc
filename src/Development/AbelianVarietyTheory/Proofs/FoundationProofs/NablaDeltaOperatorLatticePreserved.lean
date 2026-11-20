@@ -179,28 +179,8 @@ theorem transLat_isLattice (hB : BasisAtEx) (lam : ι → DomWeight n) (T : Subm
     let w : HeightOneSpectrum (𝓞 K) :=
       ⟨m, hm.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hm (RingOfIntegers.not_isField K)⟩
     choose B hBw using fun τ => hB K n (M τ) (hM τ) w
-    rw [eq_top_iff]
-    rintro x -
-    obtain ⟨s, hs, hsx⟩ := exists_smul_mem_of_mem_span T (x := actP lam B⁻¹ x.1)
-      (by rw [hsp]; exact polyAction_mem_VV lam B⁻¹ x.2)
-    have h1 : s • x.1 ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal (transLat lam T M) := by
-      rw [hloc w B hBw]
-      refine ⟨_, ⟨1, Submonoid.one_mem _, by rw [one_smul]; exact hsx⟩, ?_⟩
-      rw [map_smul, LinearMap.restrictScalars_apply, ← polyAction_mul, mul_inv_cancel, polyAction_one₂]
-    obtain ⟨u, hu, hux⟩ := h1
-    have hu0 : u ≠ 0 := by
-      rintro rfl
-      exact hu w.asIdeal.zero_mem
-    have hne : algebraMap (𝓞 K) K (u * s) ≠ 0 := fun h0 =>
-      mul_ne_zero hu0 hs ((IsFractionRing.injective (𝓞 K) K) (by rw [h0, map_zero]))
-    have h2 : algebraMap (𝓞 K) K (u * s) • x ∈
-        (transLat lam T M).comap ((VV K lam).subtype.restrictScalars (𝓞 K)) := by
-      show algebraMap (𝓞 K) K (u * s) • x.1 ∈ transLat lam T M
-      rw [algebraMap_smul, mul_smul]
-      exact hux
-    rw [← Submodule.smul_mem_iff _ hne]
-    exact Submodule.subset_span h2
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem nabDelLattice : NabDelLattice := by
   intro K _ _ ι _ n lam M hM
   obtain ⟨h1, h2, h3, h4⟩ := GlobalTheory.T.stdWeylLattices_fg_and_span_coeffSpace K ι n lam

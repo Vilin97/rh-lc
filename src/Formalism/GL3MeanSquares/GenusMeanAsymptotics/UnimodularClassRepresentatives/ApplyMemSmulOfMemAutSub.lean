@@ -78,14 +78,8 @@ theorem isLattice_inf {M₁ M₂ : Submodule (𝓞 K) V} (hM₁ : Submodule.IsLa
     infer_instance
   span_eq_top := by
     obtain ⟨n, hn, hnx⟩ := LocF.exists_zsmul_le hM₁ hM₂
-    rw [eq_top_iff, ← hM₁.span_eq_top, Submodule.span_le]
-    intro x hx
-    have h1 : n • x ∈ Submodule.span K ((M₁ ⊓ M₂ : Submodule (𝓞 K) V) : Set V) :=
-      Submodule.subset_span ⟨zsmul_mem hx n, hnx x hx⟩
-    have h2 := Submodule.smul_mem _ ((n : K)⁻¹) h1
-    rwa [← Int.cast_smul_eq_zsmul K, smul_smul, inv_mul_cancel₀ (by exact_mod_cast hn),
-      one_smul] at h2
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem finite_quot_inf {M₁ M₂ : Submodule (𝓞 K) V} (hM₁ : Submodule.IsLattice K M₁)
     (hM₂ : Submodule.IsLattice K M₂) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) (k : ℕ) :
     Finite (↥(locF 𝔭 M₁ ⊓ locF 𝔭 M₂) ⧸

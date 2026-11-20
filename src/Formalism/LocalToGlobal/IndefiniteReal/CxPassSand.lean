@@ -407,11 +407,8 @@ theorem glue_lattice {D : ℕ} {T : Type} [Finite T] (t0 : T) (μ : HeightOneSpe
     have : algebraMap (𝓞 K) K r ≠ 0 := by simpa using (IsFractionRing.injective (𝓞 K) K).ne hr
     rw [← algebraMap_smul K r y, smul_smul, inv_mul_cancel₀ this, one_smul]
   refine ⟨Submodule.FG.of_le hNfg hle, ?_⟩
-  rw [eq_top_iff, ← Submodule.IsLattice.span_eq_top (self := hL t0), Submodule.span_le]
-  intro x hx
-  rw [← hinvsmul _ hc0 x]
-  exact Submodule.smul_mem _ _ (Submodule.subset_span (hcL x hx))
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end Glue
 
 theorem cpt_sum_smul {K : Type} [Field K] (σ : K →+* ℂ) {n : ℕ} {ι : Type} (s : Finset ι) (c : ι → K)

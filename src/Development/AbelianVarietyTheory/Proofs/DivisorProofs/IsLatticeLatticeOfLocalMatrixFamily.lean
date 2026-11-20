@@ -59,13 +59,6 @@ theorem isLattice_locLat (K : Type) [Field K] [NumberField K] (ι : Type) [Finty
     refine ⟨y, funext fun i => ?_⟩
     change (e : K)⁻¹ * algebraMap (𝓞 K) K (y i) = x i
     rw [hy, inv_mul_cancel_left₀ heK]
-  · rw [eq_top_iff, ← (Pi.basisFun K ι).span_eq, Submodule.span_le]
-    rintro _ ⟨j, rfl⟩
-    have hm : (d : K) • (Pi.basisFun K ι j) ∈ locLat A := fun w i => by
-      rw [Matrix.mulVec_smul, ← Matrix.smul_mulVec]
-      refine mulVec_le w (hd w) (fun k => ?_) i
-      by_cases hk : k = j <;> simp [Pi.single_apply, hk]
-    have := Submodule.smul_mem (Submodule.span K (locLat A : Set (ι → K))) (d : K)⁻¹ (Submodule.subset_span hm)
-    rwa [inv_smul_smul₀ hdK] at this
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end GlobalTheory.LocMatLat

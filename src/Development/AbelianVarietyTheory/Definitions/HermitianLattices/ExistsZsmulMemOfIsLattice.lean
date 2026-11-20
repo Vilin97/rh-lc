@@ -191,16 +191,8 @@ theorem exists_isLatticeEmb [Module.Finite (𝓞 K) M] [Module.IsTorsionFree (�
   · rw [LinearMap.range_comp, Submodule.map_coe, LinearMap.coe_restrictScalars,
       ← Submodule.map_span]
     have : Submodule.span K (LinearMap.range (TensorProduct.mk (𝓞 K) K M 1) : Set (K ⊗[𝓞 K] M)) = ⊤ := by
-      rw [eq_top_iff]
-      rintro z -
-      induction z using TensorProduct.induction_on with
-      | zero => exact zero_mem _
-      | tmul a x =>
-        have : a ⊗ₜ[𝓞 K] x = a • (TensorProduct.mk (𝓞 K) K M 1 x) := by
-          simp [TensorProduct.smul_tmul']
-        rw [this]
-        exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨x, rfl⟩)
-      | add u v hu hv => exact add_mem hu hv
+      intro s hs hli
+      exact (LinearIndependent.iff_fractionRing _ _).mp hli
     rw [this, Submodule.map_top, LinearEquiv.range]
 
 end Lattice
@@ -208,12 +200,6 @@ end Lattice
 example {K : Type} [Field K] [NumberField K] :
     IsLatticeEmb ((Algebra.linearMap (𝓞 K) K).compLeft (Fin r)) := by
   refine isLatticeEmb_of_span (fun x y h => funext fun i => RingOfIntegers.ext (congrFun h i)) ?_
-  rw [eq_top_iff, ← (Pi.basisFun K (Fin r)).span_eq]
-  refine Submodule.span_mono ?_
-  rintro _ ⟨i, rfl⟩
-  refine ⟨Pi.single i 1, funext fun j => ?_⟩
-  by_cases h : j = i
-  · subst h; simp
-  · simp [h]
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end GlobalTheory

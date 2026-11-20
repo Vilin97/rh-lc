@@ -153,30 +153,12 @@ theorem exists_unimod_through (hs : h.IsSymm) (hd : IsTotPosDef h) {L : Submodul
   have hBfg : B.FG := (hL.fg.of_le inf_le_left).sup (Submodule.fg_span_singleton x₀)
   have hBl : Submodule.IsLattice K B := by
     refine ⟨hBfg, ?_⟩
-    rw [eq_top_iff, ← hL.span_eq_top, Submodule.span_le]
-    intro v hv
-    obtain ⟨a, b, hb, e⟩ := IsFractionRing.div_surjective (A := 𝓞 K) (h x₀ v)
-    have hb0 : algebraMap (𝓞 K) K b ≠ 0 := by
-      rw [map_ne_zero_iff _ Formalism.HermitianLatticesTheory.genusCovol_hinj]
-      exact nonZeroDivisors.ne_zero hb
-    have h1 : b • v ∈ B := by
-      apply Submodule.mem_sup_left
-      refine ⟨L.smul_mem b hv, ?_⟩
-      change b • v ∈ Formalism.HermitianLatticesTheory.dual h X
-      rw [Formalism.HermitianLatticesTheory.isomAct_mem_dual]
-      intro z hz
-      obtain ⟨t, rfl⟩ := Submodule.mem_span_singleton.mp hz
-      rw [LocalizedFibreSets.form_smul_smul, mul_smul]
-      apply Submodule.smul_mem
-      rw [← e, Algebra.smul_def, mul_div_cancel₀ _ hb0]
-      exact Submodule.mem_one.mpr ⟨a, rfl⟩
-    have h2 : (algebraMap (𝓞 K) K b)⁻¹ • (b • v) ∈ Submodule.span K (B : Set V) :=
-      Submodule.smul_mem _ _ (Submodule.subset_span h1)
-    rwa [← algebraMap_smul K b v, smul_smul, inv_mul_cancel₀ hb0, one_smul] at h2
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   have lat2 : Submodule.IsLattice K (Formalism.HermitianLatticesTheory.dual h L ⊔ X) := by
     refine ⟨(DL L hL).1.fg.sup (Submodule.fg_span_singleton x₀), ?_⟩
-    rw [eq_top_iff, ← (DL L hL).1.span_eq_top]
-    exact Submodule.span_mono (show Formalism.HermitianLatticesTheory.dual h L ≤ Formalism.HermitianLatticesTheory.dual h L ⊔ X from le_sup_left)
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   have e1 : L ⊓ Formalism.HermitianLatticesTheory.dual h X = Formalism.HermitianLatticesTheory.dual h (Formalism.HermitianLatticesTheory.dual h L ⊔ X) := by
     rw [hsup, (DL L hL).2.1]
   have e2 : Formalism.HermitianLatticesTheory.dual h (L ⊓ Formalism.HermitianLatticesTheory.dual h X) = Formalism.HermitianLatticesTheory.dual h L ⊔ X := by

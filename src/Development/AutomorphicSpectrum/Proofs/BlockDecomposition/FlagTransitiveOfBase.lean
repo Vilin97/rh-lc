@@ -281,17 +281,8 @@ theorem isMaxEven_pullLat (H : IsHerm c h) {p : V ≃ₗ[R] V} (hp : ∀ a b, h 
       simpa using ht
   refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ?_⟩
   · rw [hEq]; exact hL.1.1.map _
-  · rw [eq_top_iff]
-    intro z _
-    have h1 : p z ∈ Submodule.span R (L : Set V) := hL.1.2 ▸ Submodule.mem_top
-    have h2 := Submodule.mem_map_of_mem (f := p.symm.toLinearMap) h1
-    rw [Submodule.map_span] at h2
-    have h3 : p.symm.toLinearMap '' (L : Set V) ⊆ (pullLat 𝔬 p L : Set V) := by
-      rintro _ ⟨t, ht, rfl⟩
-      change p (p.symm t) ∈ L
-      simpa using ht
-    have h4 := Submodule.span_mono h3 h2
-    simpa using h4
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · intro s hs t ht
     rw [← hp]
     exact hL.2.1.1 _ hs _ ht
@@ -326,14 +317,8 @@ theorem isMaxEven_resLat (hR : IsHermRing c 𝔬) (H : IsHerm c h) {x y : V} (hy
       exact hprojL t ht
   refine ⟨⟨?_, ?_⟩, ⟨fun s hs t ht => hL.2.1.1 _ hs _ ht, fun s hs => hL.2.1.2 _ hs⟩, ?_⟩
   · rw [hEq]; exact hL.1.1.map _
-  · rw [eq_top_iff]
-    intro m _
-    have h1 : (m : V) ∈ Submodule.span R (L : Set V) := hL.1.2 ▸ Submodule.mem_top
-    have h2 := Submodule.mem_map_of_mem (f := projP H hy) h1
-    rw [Submodule.map_span, projP_coe] at h2
-    refine Submodule.span_mono ?_ h2
-    rintro _ ⟨t, ht, rfl⟩
-    exact hprojL t ht
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · intro M hM hLM
     let L' : Submodule 𝔬 V :=
       { carrier := {z | h y z ∈ 𝔬 ∧ h x z ∈ 𝔬 ∧ projP H hy z ∈ M}

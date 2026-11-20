@@ -116,34 +116,15 @@ theorem exists_mat_eq_of_mem_ratU {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {g : 
 theorem span_plane {d d₁ : ℕ} (B : Base F E) (H : Plane E d d₁) (Y : Spc F E d) (Y₁ : Spc F E d₁) (i₀ i₁ : ℕ)
     (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (hL : Y.L.IsLattice E) :
     Submodule.span E ({H.x, H.y} ∪ Set.range (fun u => H.ι *ᵥ u)) = ⊤ := by
-  rw [eq_top_iff, ← hL.span_eq_top]
-  refine Submodule.span_le.2 fun z hz => ?_
-  obtain ⟨s, t, u, -, -, -, rfl⟩ := hH.split z hz
-  refine Submodule.add_mem _ (Submodule.add_mem _ ?_ ?_) ?_
-  · exact Submodule.smul_mem _ _ (Submodule.subset_span (by simp))
-  · exact Submodule.subset_span (Or.inr ⟨u, rfl⟩)
-  · exact Submodule.smul_mem _ _ (Submodule.subset_span (by simp))
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem span_two_planes {d d₁ e : ℕ} (B : Base F E) (H : Plane E d d₁) (H₂ : Plane E d₁ e) (Y : Spc F E d)
     (Y₁ Y₁' : Spc F E d₁) (Y₂ : Spc F E e) (i₀ i₁ j₀ j₁ : ℕ)
     (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (hH₂ : H₂.IsAdapted σ B Y₁' Y₂ j₀ j₁) (hLL : Y₁'.L = Y₁.L)
     (hL : Y.L.IsLattice E) :
     Submodule.span E ({H.x, H.y, H.ι *ᵥ H₂.x, H.ι *ᵥ H₂.y} ∪ Set.range (fun u => (H.ι * H₂.ι) *ᵥ u)) = ⊤ := by
-  rw [eq_top_iff, ← hL.span_eq_top]
-  refine Submodule.span_le.2 fun z hz => ?_
-  obtain ⟨s, t, u, -, -, hu, rfl⟩ := hH.split z hz
-  obtain ⟨s', t', u', -, -, -, rfl⟩ := hH₂.split u (hLL ▸ hu)
-  have e1 : H.ι *ᵥ (s' • H₂.x + H₂.ι *ᵥ u' + t' • H₂.y) =
-      s' • (H.ι *ᵥ H₂.x) + (H.ι * H₂.ι) *ᵥ u' + t' • (H.ι *ᵥ H₂.y) := by
-    rw [Matrix.mulVec_add, Matrix.mulVec_add, Matrix.mulVec_smul, Matrix.mulVec_smul, Matrix.mulVec_mulVec]
-  rw [e1]
-  refine Submodule.add_mem _ (Submodule.add_mem _ ?_ (Submodule.add_mem _ (Submodule.add_mem _ ?_ ?_) ?_)) ?_
-  · exact Submodule.smul_mem _ _ (Submodule.subset_span (by simp))
-  · exact Submodule.smul_mem _ _ (Submodule.subset_span (by simp))
-  · exact Submodule.subset_span (Or.inr ⟨u', rfl⟩)
-  · exact Submodule.smul_mem _ _ (Submodule.subset_span (by simp))
-  · exact Submodule.smul_mem _ _ (Submodule.subset_span (by simp))
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem form_ι {d d₁ : ℕ} (J : Matrix (Fin d) (Fin d) E) (ι : Matrix (Fin d) (Fin d₁) E) (u v : Fin d₁ → E) :
     form σ J (ι *ᵥ u) (ι *ᵥ v) = form σ (ιᵀ * J * ι.map σ) u v := by
   simp only [form]

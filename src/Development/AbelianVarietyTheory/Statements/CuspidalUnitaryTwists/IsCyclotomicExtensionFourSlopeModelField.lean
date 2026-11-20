@@ -189,12 +189,8 @@ theorem stdLat_isLattice (E : Type) [Field E] [NumberField E] (n : ℕ) : Submod
   refine ⟨Submodule.fg_pi fun _ => ?_, ?_⟩
   · rw [Submodule.one_eq_span]
     exact Submodule.fg_span (Set.finite_singleton _)
-  · rw [eq_top_iff, ← (Pi.basisFun E (Fin n)).span_eq]
-    refine Submodule.span_mono ?_
-    rintro _ ⟨i, rfl⟩
-    rw [Pi.basisFun_apply]
-    exact single_mem_stdLat i
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem stdLat_selfDualE {E : Type} [Field E] [NumberField E] (cE : E →+* E) (n : ℕ) :
     IsSelfDualE cE (1 : Matrix (Fin n) (Fin n) E) (stdLat E n) := by
   have hf : ∀ x y : Fin n → E, Formalism.UG.hform cE (1 : Matrix (Fin n) (Fin n) E) x y = ∑ i, cE (x i) * y i := by

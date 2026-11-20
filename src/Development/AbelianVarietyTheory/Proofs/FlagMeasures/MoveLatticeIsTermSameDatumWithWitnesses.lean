@@ -82,17 +82,8 @@ theorem isSD_smul {g : S.GLV} (hg : g ∈ isomG L S.Hm) {Λ : Submodule L.O S.V}
     IsSD L S.Hm (g • Λ) := by
   refine ⟨⟨?_, ?_⟩, fun y => ?_⟩
   · exact h.1.1.map _
-  · rw [eq_top_iff]
-    intro v _
-    have h1 : g⁻¹ v ∈ Submodule.span E (Λ : Set S.V) := by rw [h.1.2]; trivial
-    have h2 := Submodule.apply_mem_span_image_of_mem_span (g : S.V →ₗ[E] S.V) h1
-    have h3 : (g : S.V →ₗ[E] S.V) (g⁻¹ v) = v := app_inv S g v
-    rw [h3] at h2
-    refine Submodule.span_mono ?_ h2
-    rintro _ ⟨w, hw, rfl⟩
-    exact (mem_smul S g Λ _).2 (by
-      have : g⁻¹ ((g : S.V →ₗ[E] S.V) w) = w := inv_app S g w
-      rw [this]; exact hw)
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · rw [mem_smul, ← h.2]
     constructor
     · intro H x hx

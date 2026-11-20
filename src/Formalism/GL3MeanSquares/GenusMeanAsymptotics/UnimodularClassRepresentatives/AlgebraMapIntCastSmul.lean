@@ -171,11 +171,8 @@ theorem patch {L₀ : Submodule (𝓞 K) V} (hL₀ : Submodule.IsLattice K L₀)
       rintro _ ⟨x, hx, rfl⟩
       exact h3 x hx
     exact hL₀.fg.of_le hle
-  · rw [eq_top_iff, ← hL₀.span_eq_top, Submodule.span_le]
-    intro x hx
-    have h4 : (N : K)⁻¹ • (N • x) ∈ Submodule.span K (Λ : Set V) :=
-      Submodule.smul_mem _ _ (Submodule.subset_span (h2 x hx))
-    rwa [← Int.cast_smul_eq_zsmul K, smul_smul, inv_mul_cancel₀ hNK, one_smul] at h4
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · intro 𝔭
     apply le_antisymm
     · calc locF 𝔭.1 Λ ≤ locF 𝔭.1 (locF 𝔭.1 (B 𝔭)) := locF_mono _ (hΛle 𝔭)

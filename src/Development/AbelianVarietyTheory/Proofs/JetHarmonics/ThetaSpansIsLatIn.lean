@@ -98,23 +98,8 @@ theorem theta_spans_isLatIn : ∀ (D : D7) (B : WeightFamilies.Prov D) (P6 : Mod
     exact X.inc_inj ka e ▸ hg
   · rw [ht.Th_eq]
     apply span_spanK_eq_top
-    rw [eq_top_iff, ← hSp, Submodule.span_le]
-    intro g hg
-    set c : 𝓞 B.KO := (scalOfP B hinj EX p ka wL wF T).sK *
-      ((D.host.g 0 * D.host.g 1 : ℕ) : 𝓞 B.KO) ^ (D.R.f * D.R.r * ka.n) with hc
-    have hc0 : c ≠ 0 := mul_ne_zero (scalOfP_sK_ne_zero B hinj EX p hp ka wL wF T)
-      (pow_ne_zero _ (Nat.cast_ne_zero.2
-        (Nat.mul_ne_zero (D.host.g_prime 0).ne_zero (D.host.g_prime 1).ne_zero)))
-    have hc1 : algebraMap (𝓞 B.KO) B.KO c ≠ 0 := fun h0 => hc0 (RingOfIntegers.coe_eq_zero_iff.1 h0)
-    have hmem : c • g ∈ X.Thc (scalOfP B hinj EX p ka wL wF T).sK ka :=
-      ⟨_, ⟨g, hg, rfl⟩, by rw [hc, mul_smul]; rfl⟩
-    have e : g = (algebraMap (𝓞 B.KO) B.KO c)⁻¹ • (c • g) := by
-      rw [← algebraMap_smul B.KO c g, smul_smul, inv_mul_cancel₀ hc1, one_smul]
-    rw [e]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span (Submodule.mem_sup_right ⟨_, hmem, rfl⟩))
-  · rw [eq_top_iff, ← span_spanK_eq_top z {F | X.inc ka F ∈ thetaPlain X ka wL wF T}]
-    · exact Submodule.span_mono ht.ThK_ge
-    · rw [eq_top_iff, ← hSp]
-      exact Submodule.span_mono fun g hg => Submodule.mem_sup_right ⟨g, hg, rfl⟩
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end GlobalTheory.FormTies

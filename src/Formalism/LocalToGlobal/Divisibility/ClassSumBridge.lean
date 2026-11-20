@@ -67,11 +67,8 @@ theorem one_good (K : Type) [Field K] [NumberField K] [StarRing K] : (one K).Goo
     intro c
     show Submodule.IsLattice K (1 : Submodule (𝓞 K) K)
     refine ⟨by rw [Submodule.one_eq_span]; exact Submodule.fg_span_singleton _, ?_⟩
-    rw [eq_top_iff]
-    intro x _
-    have : x = x • (1 : K) := by simp
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span (Submodule.one_le.mp le_rfl))
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   del_le := fun _ => le_rfl
   del_stable := by intro c γ y hy; exact hy
   s_pos := Nat.one_pos

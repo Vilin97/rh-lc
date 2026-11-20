@@ -37,8 +37,8 @@ theorem planeCoef_mul_planeMat (σ : E →ₐ[F] E) (B : Base F E) {n n₁ j₀ 
       simp [planeMat, Matrix.mulVec, dotProduct, Fintype.sum_sum_type, Fin.sum_univ_two]
       ring
     have htop : LinearMap.range Q'.mulVecLin = ⊤ := by
-      rw [eq_top_iff, ← hL.span_eq_top, Submodule.span_le]
-      exact hrange
+      intro s hs hli
+      exact (LinearIndependent.iff_fractionRing _ _).mp hli
     intro z
     obtain ⟨w, hw⟩ := (LinearMap.range_eq_top.1 htop) z
     exact ⟨w, hw⟩

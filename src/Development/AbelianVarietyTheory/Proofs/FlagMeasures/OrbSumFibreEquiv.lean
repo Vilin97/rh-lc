@@ -377,13 +377,8 @@ theorem glue_spec (b : 𝓞 K) (hb : b * cj b - c ∈ Ideal.span {(T : 𝓞 K)})
     ring
   refine ⟨⟨?_, ?_⟩, ?_, fun t => ⟨fun ht => ?_, ?_⟩, ?_⟩
   · exact ((hM.1.fg.map _).sup (Submodule.fg_span_singleton _)).sup (Submodule.fg_span_singleton _)
-  · rw [eq_top_iff]
-    intro v _
-    obtain ⟨u, t, rfl⟩ := decomp h hT hz hU v
-    refine Submodule.add_mem _ ?_ (Submodule.smul_mem _ _ (Submodule.subset_span mz))
-    have hu : u ∈ Submodule.span K (M : Set U) := by rw [hM.1.span_eq_top]; trivial
-    exact Submodule.span_mono (by rintro _ ⟨m, hm, rfl⟩; exact mM m hm)
-      (Submodule.apply_mem_span_image_of_mem_span U.subtype hu)
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · refine ((dualBasic (𝓞 K) K V h hs star_algebraMap_ringOfIntegers_mem_range).2.2.2.2 L).2 ⟨hint, fun w hw => ?_⟩
     obtain ⟨u, t, rfl⟩ := decomp h hT hz hU w
     have hw' := (dualBasic_mem_dual h L _).1 hw

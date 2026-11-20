@@ -1017,18 +1017,8 @@ theorem smul_lattice (P : Pl E) {N : Submodule (𝓞 E) (Fin n → E)} (hN : Sub
   haveI : IsNoetherian (𝓞 E) N := isNoetherian_of_fg_of_noetherian N hN.fg
   haveI : IsNoetherian (𝓞 E) ↥(P.asIdeal • N) := isNoetherian_of_le Submodule.smul_le_right
   refine ⟨inferInstance, ?_⟩
-  rw [eq_top_iff, ← hN.span_eq_top, Submodule.span_le]
-  intro x hx
-  obtain ⟨p, hp, hp0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot P.ne_bot
-  have hpE : algebraMap (𝓞 E) E p ≠ 0 :=
-    (map_ne_zero_iff _ (IsFractionRing.injective (𝓞 E) E)).2 hp0
-  have h1 : p • x ∈ Submodule.span E ((P.asIdeal • N : Submodule (𝓞 E) (Fin n → E)) : Set (Fin n → E)) :=
-    Submodule.subset_span (Submodule.smul_mem_smul hp hx)
-  have e : x = (algebraMap (𝓞 E) E p)⁻¹ • (p • x) := by
-    rw [← algebraMap_smul E p x, inv_smul_smul₀ hpE]
-  rw [SetLike.mem_coe, e]
-  exact Submodule.smul_mem _ _ h1
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem reduction_kernel_equality : RedKer F E n := by
   classical
   intro x P v hv h0

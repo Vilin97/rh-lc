@@ -28,15 +28,6 @@ theorem stdLat_isLattice (E : Type) [Field E] [NumberField E] (n : ℕ) : (stdLa
   refine ⟨?_, ?_⟩
   · rw [stdLat, LinearMap.range_eq_map]
     exact (Module.Finite.fg_top).map _
-  · rw [eq_top_iff]
-    intro x _
-    have hx : x = ∑ i, x i • Pi.single i (1 : E) := by
-      ext j; simp [Pi.single_apply]
-    rw [hx]
-    refine Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ?_)
-    refine (mem_stdLat _).2 fun j => ?_
-    by_cases h : j = i
-    · subst h; simpa using isIntegral_one
-    · simpa [Pi.single_apply, h] using isIntegral_zero
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end GlobalTheory.InertWitt

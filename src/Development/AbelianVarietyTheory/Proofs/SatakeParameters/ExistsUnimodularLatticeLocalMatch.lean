@@ -135,8 +135,8 @@ theorem exists_glue {L L' : Submodule (𝓞 E) (Sp E n)} (hL : Submodule.IsLatti
   refine ⟨L'', ?_, ⟨s, hsP, s, hsP, hB, hA⟩, fun Q hQ => ?_⟩
   · have hsup : Submodule.IsLattice E (L' ⊔ L) :=
       ⟨hL'.fg.sup hL.fg, by
-        rw [eq_top_iff, ← hL.span_eq_top]
-        exact Submodule.span_mono (le_sup_right : L ≤ L' ⊔ L)⟩
+        intro s hs hli
+        exact (LinearIndependent.iff_fractionRing _ _).mp hli
     exact lattice_of_smul hL' hsup (sup_le_sup Submodule.smul_le_right Submodule.smul_le_right) hs0 hA
   · obtain ⟨t, htP, htQ⟩ := exists_mem_notMem hQ.symm
     have ht : t ^ k ∈ P.asIdeal ^ k := Ideal.pow_mem_pow htP k

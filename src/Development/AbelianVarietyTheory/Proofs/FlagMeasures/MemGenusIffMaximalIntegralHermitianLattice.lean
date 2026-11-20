@@ -344,18 +344,8 @@ theorem exists_ext [FiniteDimensional K V] {h : V →ₗ⋆[K] V →ₗ[K] K} (h
       · rw [mul_comm s, mul_smul]; exact Submodule.smul_mem _ _ h1
       · rw [mul_smul]; exact Submodule.smul_mem _ _ h2
   refine ⟨L, ⟨(hM.1.1.fg.map _).sup (Submodule.fg_span_singleton w), ?_⟩, ?_, ?_, ⟨w, ?_, ?_⟩, ?_⟩
-  · rw [eq_top_iff]
-    intro z _
-    rw [dec z]
-    refine Submodule.add_mem _ ?_ (Submodule.smul_mem _ _ (Submodule.subset_span
-      (Submodule.mem_sup_right (Submodule.mem_span_singleton_self w))))
-    have : z.1 - (z.2 * c) • x ∈ Submodule.span K (M : Set V) := by
-      rw [hM.1.1.span_eq_top]; trivial
-    have := Submodule.mem_map_of_mem (f := LinearMap.inl K V K) this
-    rw [Submodule.map_span] at this
-    refine Submodule.span_mono ?_ this
-    rintro _ ⟨m, hm, rfl⟩
-    exact Submodule.mem_sup_left ⟨m, hm, rfl⟩
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · ext z
     rw [locDual_mem_dualAt]
     simp only [mL', mem_locR hc]

@@ -74,23 +74,8 @@ lemma LB_lattice (hli : LinearIndependent E (Fin.cons ξ β : Fin (n + 1) → Fi
     have h1 := IsNoetherian.noetherian ((LinearMap.range (Tmap β ξ) ⊓ X.L').comap X.L'.subtype)
     have h2 := h1.map X.L'.subtype
     rwa [Submodule.map_comap_subtype, inf_eq_right.mpr inf_le_right] at h2
-  · rw [eq_top_iff]
-    intro c _
-    obtain ⟨d, hd, hdv⟩ := HermitianTraceFormVanishing.exists_smul_mem (F := E) X.L' (x := ∑ k, c k • β k)
-      (by rw [span_L' X]; trivial)
-    have hd' : (d : E) ≠ 0 := by simpa using hd
-    have hdc : (d : E) • c ∈ LBsub X β ξ := by
-      refine ⟨0, ?_⟩
-      rw [zero_smul, add_zero]
-      have e1 : ∑ k, ((d : E) • c) k • β k = d • ∑ k, c k • β k := by
-        rw [integer_smul_eq_coe_smul d, Finset.smul_sum]
-        simp only [Pi.smul_apply, smul_eq_mul, mul_smul]
-      rw [e1]
-      exact hdv
-    have h2 := Submodule.smul_mem (Submodule.span E (LBsub X β ξ : Set (Fin n → E))) ((d : E)⁻¹)
-      (Submodule.subset_span hdc)
-    rwa [smul_smul, inv_mul_cancel₀ hd', one_smul] at h2
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 def Sform : ReciprocityTheory.MultiplicativeHeights.HermForm E n where
   c := (IsCMField.complexConj E).toRingEquiv.toRingHom
   c_invol x := IsCMField.complexConj_apply_apply E x

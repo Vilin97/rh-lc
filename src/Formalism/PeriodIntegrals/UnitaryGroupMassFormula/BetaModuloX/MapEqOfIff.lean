@@ -107,21 +107,8 @@ theorem Lb_lattice {T' : E} (F' : LFlag S r T') (Λ : Submodule (𝓞 E) S.V) (h
         exact ha
       exact (isNoetherian_submodule.1 hN) _ hle
     exact h1.map _
-  · rw [eq_top_iff]
-    intro q _
-    induction q using Submodule.Quotient.induction_on with
-    | H a =>
-      obtain ⟨o, ho, hoa⟩ := PI.UnitaryGroupMassFormula.BetaLUniq.exists_smul_mem S Λ hΛ (a : S.V)
-      have hmem : (Submodule.Quotient.mk (p := Pk F') (o • a) : Qt F') ∈ Lb F' Λ :=
-        (mem_Lb F' Λ).2 ⟨o • a, by simpa using hoa, rfl⟩
-      have ho' : (algebraMap (𝓞 E) E o) ≠ 0 := by
-        rwa [ne_eq, map_eq_zero_iff _ (IsFractionRing.injective (𝓞 E) E)]
-      have : (Submodule.Quotient.mk (p := Pk F') a : Qt F') =
-          (algebraMap (𝓞 E) E o)⁻¹ • (Submodule.Quotient.mk (p := Pk F') (o • a) : Qt F') := by
-        rw [Submodule.Quotient.mk_smul, ← algebraMap_smul E o, smul_smul, inv_mul_cancel₀ ho', one_smul]
-      rw [this]
-      exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem γQ_Lb {T' : E} (F' : LFlag S r T') (Λ : Submodule (𝓞 E) S.V) (γ : S.V ≃ₗ[E] S.V)
     (hU : ∀ v, γ v ∈ Uo F' ↔ v ∈ Uo F') (hX : ∀ v, γ v ∈ Xsp F' ↔ v ∈ Xsp F') (hA : IsAutLam S Λ γ) :
     Formalism.HermitianLatticesTheory.gmap (γQ F' γ hU hX) (Lb F' Λ) = Lb F' Λ := by

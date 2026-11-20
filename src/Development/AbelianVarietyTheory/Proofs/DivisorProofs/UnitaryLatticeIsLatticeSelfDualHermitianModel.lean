@@ -87,17 +87,8 @@ theorem unitLat_isLat_selfDual : ∀ (E : Type) [Field E] [NumberField E] [IsCMF
   refine ⟨⟨?_, ?_⟩, ?_⟩
   · rw [hmap]
     exact (intVec_fg K n).map _
-  · rw [eq_top_iff]
-    have key : Submodule.map G ⊤ ≤ Submodule.span K.E (unitLat e B ψ q : Set B.A) := by
-      rw [← (Pi.basisFun K.E (Fin n)).span_eq, Submodule.map_span, Submodule.span_le]
-      rintro _ ⟨_, ⟨i, rfl⟩, rfl⟩
-      apply Submodule.subset_span
-      show G _ ∈ unitLat e B ψ q
-      rw [hmemL, Pi.basisFun_apply, hPG]
-      exact single_mem_intVec K i
-    intro y _
-    rw [← hGP y]
-    exact key (Submodule.mem_map_of_mem trivial)
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · intro y
     rw [hmemL]
     constructor

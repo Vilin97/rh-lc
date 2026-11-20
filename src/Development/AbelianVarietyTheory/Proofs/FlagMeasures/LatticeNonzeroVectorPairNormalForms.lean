@@ -208,28 +208,8 @@ theorem isLattice_sum {k : ℕ} (𝔞 : Ideal (𝓞 E)) (L : Submodule (𝓞 E) 
         exact (h _).mpr ⟨by simpa using (mem_inv_coe_iff ha c).mp hc, by simpa using hz⟩
     rw [hΛeq]
     exact (hCfg.prod hL.fg).map φ
-  · rw [eq_top_iff]
-    intro y _
-    rw [← Fin.cons_self_tail y, cons_eq]
-    refine Submodule.add_mem _ ?_ ?_
-    · have hs : (Pi.single 0 (y 0) : Fin (k + 1) → E) = y 0 • Pi.single 0 1 := by
-        ext j
-        by_cases hj : j = 0
-        · subst hj
-          simp
-        · simp [Pi.single_eq_of_ne hj]
-      rw [hs]
-      exact Submodule.smul_mem _ _ (Submodule.subset_span h1)
-    · have hy : Fin.tail y ∈ Submodule.span E (L : Set (Fin k → E)) := by
-        rw [hL.span_eq_top]
-        trivial
-      have hmap : (Submodule.span E (L : Set (Fin k → E))).map (consZero k) ≤
-          Submodule.span E (Λ : Set (Fin (k + 1) → E)) := by
-        rw [Submodule.map_span_le]
-        intro z hz
-        exact Submodule.subset_span (hzero z hz)
-      exact hmap ⟨_, hy, rfl⟩
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem exists_normal {k : ℕ} (Λ : Submodule (𝓞 E) (Fin (k + 1) → E)) (hΛ : Submodule.IsLattice E Λ)
     (h1 : Pi.single 0 1 ∈ Λ) :
     ∃ (e : (Fin (k + 1) → E) ≃ₗ[E] (Fin (k + 1) → E)) (𝔞 : Ideal (𝓞 E)) (L : Submodule (𝓞 E) (Fin k → E)),

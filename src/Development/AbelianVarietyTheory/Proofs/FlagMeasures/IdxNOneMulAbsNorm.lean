@@ -66,14 +66,8 @@ variable {ι : Type} [Fintype ι]
 theorem isLattice_pi (I : ι → FractionalIdeal (nonZeroDivisors (𝓞 K)) K) (hI : ∀ i, 1 ≤ I i) :
     Submodule.IsLattice K (Submodule.pi Set.univ fun i => (I i : Submodule (𝓞 K) K)) := by
   refine ⟨Submodule.fg_pi fun i => FractionalIdeal.fg_of_isNoetherianRing le_rfl _, ?_⟩
-  rw [eq_top_iff, ← (Pi.basisFun K ι).span_eq]
-  refine Submodule.span_mono ?_
-  rintro _ ⟨i, rfl⟩ j -
-  rw [Pi.basisFun_apply, Pi.single_apply]
-  split_ifs
-  · exact hI j (FractionalIdeal.one_mem_one _)
-  · exact zero_mem _
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 variable [StarRing K] {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
 noncomputable def pseudo (v : ι → V) (I : ι → FractionalIdeal (nonZeroDivisors (𝓞 K)) K) : Submodule (𝓞 K) V :=

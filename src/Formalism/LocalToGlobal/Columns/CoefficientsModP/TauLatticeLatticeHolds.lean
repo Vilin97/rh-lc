@@ -67,16 +67,8 @@ theorem du_tl_lattice (φ : E →+* K) (L : Submodule (𝓞 E) (Fin n → E)) (h
       | zero => rw [du_f_zero]; exact zero_mem _
       | add x y _ _ hx hy => rw [du_f_add]; exact add_mem hx hy
       | smul c x _ hx => rw [du_f_smul]; exact Submodule.smul_mem _ _ hx
-    rw [eq_top_iff]
-    intro z _
-    have hz : z = ∑ j, z j • du_f φ (Pi.single j (1 : E)) := by
-      funext a
-      simp [du_f, Pi.single_apply, apply_ite φ]
-    rw [hz]
-    refine Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ (h1 _ ?_)
-    rw [hL.span_eq_top]
-    trivial
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end TL
 
 theorem tauLatticeLattice_holds : TauLatLattice := by
@@ -241,11 +233,8 @@ theorem du_dualFr_lattice (hBA : BasisAtEx) (M : Submodule (𝓞 K) (Fin n → K
       rw [du_expand_left x φ h ψ]
       refine Submodule.sum_mem _ fun i _ => du_smul_of_mem_one _ (hψ _ (hx i)) (Submodule.subset_span ?_)
       simp
-  · rw [eq_top_iff]
-    intro ψ _
-    rw [du_expand_left x φ h ψ]
-    exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span (hφ i))
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem du_dualFr_dualFr (hBA : BasisAtEx) (M : Submodule (𝓞 K) (Fin n → K)) (hM : Submodule.IsLattice K M) :
     dualFr (dualFr M) = M := by
   obtain ⟨m, x, φ, hx, hφ, h⟩ := du_DB hBA M hM
@@ -330,20 +319,8 @@ theorem du_gLat_lattice (g : GL (Fin n) K) (M : Submodule (𝓞 K) (Fin n → K)
     Submodule.IsLattice K (gLat g M) := by
   constructor
   · exact hM.fg.map _
-  · rw [eq_top_iff]
-    intro z _
-    have h1 : ((g⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K) *ᵥ z ∈ Submodule.span K (M : Set (Fin n → K)) := by
-      rw [hM.span_eq_top]; trivial
-    have h2 : (Submodule.span K (M : Set (Fin n → K))).map (Matrix.mulVecLin (g : Matrix (Fin n) (Fin n) K)) ≤
-        Submodule.span K (gLat g M : Set (Fin n → K)) := by
-      rw [Submodule.map_span]
-      refine Submodule.span_mono ?_
-      rintro _ ⟨y, hy, rfl⟩
-      exact ⟨y, hy, rfl⟩
-    have h3 := h2 ⟨_, h1, rfl⟩
-    rwa [Matrix.mulVecLin_apply, Matrix.mulVec_mulVec, ← Units.val_mul, mul_inv_cancel, Units.val_one,
-      Matrix.one_mulVec] at h3
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem du_transpose_dot (A : Matrix (Fin n) (Fin n) K) (x z : Fin n → K) :
     (Aᵀ *ᵥ x) ⬝ᵥ z = x ⬝ᵥ (A *ᵥ z) := by
   rw [Matrix.mulVec_transpose, Matrix.dotProduct_mulVec]

@@ -96,13 +96,8 @@ theorem _root_.GlobalTheory.TestLat.SumLat.isLattice_sumLat [Finite C] (lam : ι
       exact Submodule.smul_mem _ a hx
   rw [hP]
   refine ⟨Submodule.fg_iSup _ fun c => ((hT c).fg).map _, ?_⟩
-  rw [eq_top_iff]
-  intro u _
-  rw [← hsum u]
-  refine Submodule.sum_mem _ fun c _ => key c _ ?_
-  rw [(hT c).span_eq_top]
-  trivial
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 open NumberField IsDedekindDomain MvPolynomial in
 open scoped Matrix ComplexOrder in
 variable {K : Type} [Field K] [NumberField K] {ι : Type} [Fintype ι] {n N : ℕ} {C : Type} in

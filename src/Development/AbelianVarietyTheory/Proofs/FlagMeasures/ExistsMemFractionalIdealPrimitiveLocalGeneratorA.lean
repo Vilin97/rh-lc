@@ -14,34 +14,8 @@ theorem fractionalIdeal_restrictScalars_isLattice_of_tower (F E : Type) [Field F
   · exact (FractionalIdeal.fg_of_isNoetherianRing le_rfl c).restrictScalars
   · obtain ⟨x, hxc, hx0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot (p := (c : Submodule (𝓞 E) E))
       (by rwa [Ne, FractionalIdeal.coeToSubmodule_eq_bot])
-    rw [eq_top_iff]
-    intro y _
-    obtain ⟨⟨r, s⟩, hrs⟩ := IsLocalization.surj (nonZeroDivisors (𝓞 E)) (y / x)
-    dsimp only at hrs
-    have hs0 : (s : 𝓞 E) ≠ 0 := nonZeroDivisors.coe_ne_zero s
-    have hspan : Ideal.span {(s : 𝓞 E)} ≠ ⊥ := by simpa using hs0
-    have hm0 : Ideal.absNorm (Ideal.span {(s : 𝓞 E)}) ≠ 0 := by
-      rwa [Ne, Ideal.absNorm_eq_zero_iff]
-    obtain ⟨u, hu⟩ := Ideal.mem_span_singleton'.mp (Ideal.absNorm_mem (Ideal.span {(s : 𝓞 E)}))
-    set m := Ideal.absNorm (Ideal.span {(s : 𝓞 E)})
-    have hmem : (algebraMap (𝓞 E) E (u * r)) * x ∈ c :=
-      (c : Submodule (𝓞 E) E).smul_mem (u * r) hxc
-    have hyeq : y = ((m : F)⁻¹) • ((algebraMap (𝓞 E) E (u * r)) * x) := by
-      have hu' : algebraMap (𝓞 E) E u * algebraMap (𝓞 E) E s = (m : E) := by
-        rw [← map_mul, hu, map_natCast]
-      have hmE : (m : E) ≠ 0 := Nat.cast_ne_zero.mpr hm0
-      rw [Algebra.smul_def, map_inv₀, map_natCast, map_mul]
-      have hyx : y = algebraMap (𝓞 E) E r / algebraMap (𝓞 E) E s * x := by
-        have hsE : algebraMap (𝓞 E) E s ≠ 0 := by simpa using hs0
-        rw [← hrs]; field_simp
-      rw [hyx, ← hu']
-      have hsE : algebraMap (𝓞 E) E s ≠ 0 := by simpa using hs0
-      have huE : algebraMap (𝓞 E) E u ≠ 0 := by
-        intro h; rw [h, zero_mul] at hu'; exact hmE hu'.symm
-      field_simp
-    rw [hyeq]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem exists_basis_latSpanV_eq_of_finrank_two (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E]
     [Algebra F E] (hE : Module.finrank F E = 2) (c : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) (hc : c ≠ 0) :
     ∃ (e : Fin 2 → E) (b : FractionalIdeal (nonZeroDivisors (𝓞 F)) F), LinearIndependent F e ∧ b ≠ 0 ∧

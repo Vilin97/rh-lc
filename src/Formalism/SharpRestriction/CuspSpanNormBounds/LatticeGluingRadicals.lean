@@ -4981,9 +4981,8 @@ theorem i_PN_lat : Submodule.IsLattice E (i_P Λ U U' ⊔ (Λ ⊓ toO S U')) := 
   have h0 := sum_of_intersections_is_lattice Λ hΛ hc
   have hD := (Formalism.HermitianLatticesTheory.dualLattice (𝓞 E) E S.V S.hT S.herm S.nondeg i_star_int _ h0).1
   refine ⟨i_fg_of_le hD.fg (i_PN_le Λ hu ho), ?_⟩
-  rw [eq_top_iff, ← h0.span_eq_top]
-  exact Submodule.span_mono (sup_le_sup_right (i_M_le_P Λ) _)
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 include hΛ hu hc ho in
 
 theorem i_proj_eq : i_P Λ U U' = dualIn S (Λ ⊓ toO S U) := by

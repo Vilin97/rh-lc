@@ -115,18 +115,8 @@ theorem qLat_isLattice (Λ : Submodule (𝓞 E) V) [hΛ : Submodule.IsLattice E 
       intro v hv
       obtain ⟨w, hw, rfl⟩ := hv
       exact hw
-  · rw [eq_top_iff]
-    intro q _
-    induction q using Submodule.Quotient.induction_on with | H w => ?_
-    obtain ⟨s, hs, hsw⟩ := exists_smul_mem Λ (w : V)
-    have hmem : Submodule.Quotient.mk (s • w) ∈ qLat Λ W X := mem_qLat.2 ⟨s • w, by simpa using hsw, rfl⟩
-    have hsE : algebraMap (𝓞 E) E s ≠ 0 := by simpa using hs
-    have : (Submodule.Quotient.mk w : QW W X) =
-        (algebraMap (𝓞 E) E s)⁻¹ • (Submodule.Quotient.mk (s • w) : QW W X) := by
-      rw [Submodule.Quotient.mk_smul, ← algebraMap_smul E s, smul_smul, inv_mul_cancel₀ hsE, one_smul]
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem quot_fix (h : V →ₗ⋆[E] V →ₗ[E] E) (hs : h.IsSymm) (W X : Submodule E V)
     (hR : ∀ x ∈ W, ∀ y ∈ X, h x y = 0) (hL : ∀ x ∈ X, ∀ y ∈ W, h x y = 0)
     (hpos : ∀ w ∈ W, w ∉ X → 0 < Algebra.trace ℚ E (h w w))

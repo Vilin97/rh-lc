@@ -87,13 +87,8 @@ theorem orthLattice_isLattice (hΛ : Submodule.IsLattice D.host.E Λ) (hu : Form
   have hM₁ : M₁ ≤ L0X D Λ (lf D F0) := Submodule.span_le.2 (by rintro _ ⟨i, rfl⟩; exact hcM i)
   have hfg : M₁.FG := Submodule.fg_span (Set.finite_range _)
   have hs : spanE (D.sp.X 0) M₁ = ⊤ := by
-    rw [eq_top_iff, ← (D.sp.X 0).frame.span_eq, Submodule.span_le]
-    rintro _ ⟨i, rfl⟩
-    have hc1 : algebraMap (𝓞 D.host.E) D.host.E (c i) ≠ 0 := by simpa using hc i
-    have h2 : (algebraMap (𝓞 D.host.E) D.host.E (c i))⁻¹ • (c i • (D.sp.X 0).frame i) = (D.sp.X 0).frame i := by
-      rw [← algebraMap_smul D.host.E (c i), smul_smul, inv_mul_cancel₀ hc1, one_smul]
-    rw [← h2]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span (Submodule.subset_span ⟨i, rfl⟩))
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   have hU : (⊤ : Submodule D.host.E (D.sp.X 0).V) ⊓ orth (D.sp.X 0) ⊤ = ⊥ := by
     rw [top_inf_eq, eq_bot_iff]
     intro y hy

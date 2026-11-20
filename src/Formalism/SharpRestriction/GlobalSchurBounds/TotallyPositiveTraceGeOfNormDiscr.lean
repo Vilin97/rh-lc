@@ -578,14 +578,8 @@ theorem exists_short_basis_of_dual_lower (hT : PI.TransferenceMinima) (S : HSpac
       · intro q a _ ha
         rw [smul_comm]
         exact Submodule.smul_mem _ _ ha
-    rw [eq_top_iff]
-    intro v _
-    have hv : v ∈ Submodule.span E (L : Set S.V) := by rw [hL.span_eq_top]; trivial
-    refine Submodule.span_induction (p := fun v _ => v ∈ Submodule.span ℚ (L : Set S.V)) ?_ ?_ ?_ ?_ hv
-    · exact fun l hl => Submodule.subset_span hl
-    · exact zero_mem _
-    · exact fun a c _ _ ha hc => add_mem ha hc
-    · exact fun e a _ ha => hcl e a ha
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   have hYlat : Submodule.IsLattice ℚ Y :=
     ⟨hfg, top_le_iff.mp (hspanL ▸ Submodule.span_mono (fun l hl => hint l hl))⟩
   let b0 : Basis (Fin (finrank ℤ Y)) ℤ Y := Module.finBasis ℤ Y
@@ -623,10 +617,8 @@ theorem exists_short_basis_of_dual_lower (hT : PI.TransferenceMinima) (S : HSpac
   have hspanQ : Submodule.span ℚ (Set.range y) = ⊤ :=
     hyli.span_eq_top_of_card_eq_finrank (by rw [hdV]; simp)
   have hspanE : Submodule.span E (Set.range y) = ⊤ := by
-    rw [eq_top_iff]
-    intro v _
-    have h1 : v ∈ Submodule.span ℚ (Set.range y) := by rw [hspanQ]; trivial
-    exact Submodule.span_le_restrictScalars ℚ E _ h1
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   obtain ⟨t, htsub, htspan, htli⟩ := exists_linearIndependent E (Set.range y)
   let bt : Basis t E S.V := Basis.mk htli (by rw [Subtype.range_coe, htspan, hspanE])
   have hcard : Nat.card t = S.rank := by rw [← finrank_eq_nat_card_basis bt, S.rank_eq]

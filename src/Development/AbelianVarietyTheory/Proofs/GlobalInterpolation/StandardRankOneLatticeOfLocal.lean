@@ -314,14 +314,8 @@ theorem self_dual_rank_one_lattice {I : Submodule (𝓞 E) E} (hI : NormOne I) :
       rw [Submodule.bot_mul] at hIJ
       have : (1 : E) ∈ (⊥ : Submodule (𝓞 E) E) := hIJ ▸ Submodule.mem_one.2 ⟨1, map_one _⟩
       simp at this)
-    rw [eq_top_iff]
-    intro x _
-    have : x = (x 0 / a) • (fun _ => a : Sp E 1) := by
-      funext i
-      rw [Subsingleton.elim i 0]
-      simp [h0]
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span ha)
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · ext x
     rw [mem_dual, mem_rank_one_lattice]
     constructor

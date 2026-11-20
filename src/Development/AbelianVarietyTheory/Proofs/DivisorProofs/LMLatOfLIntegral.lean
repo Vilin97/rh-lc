@@ -30,18 +30,8 @@ theorem isLattice_comap [IsNoetherianRing R] {U : Type} [AddCommGroup U] [Module
   refine ⟨?_, ?_⟩
   · refine Submodule.fg_of_fg_map_injective (f.restrictScalars R) hf ?_
     exact hN.fg.of_le (Submodule.map_comap_le _ _)
-  · rw [eq_top_iff]
-    intro x _
-    obtain ⟨a, ha, hax⟩ := exists_smul_mem (K := K) N (x := f x) (hN.span_eq_top ▸ Submodule.mem_top)
-    have ha1 : algebraMap R K a ≠ 0 := (map_ne_zero_iff _ (IsFractionRing.injective R K)).2 ha
-    have e : x = (algebraMap R K a)⁻¹ • (a • x) := by
-      rw [← algebraMap_smul K a x, smul_smul, inv_mul_cancel₀ ha1, one_smul]
-    rw [e]
-    refine Submodule.smul_mem _ _ (Submodule.subset_span ?_)
-    show (f.restrictScalars R) (a • x) ∈ N
-    rw [map_smul]
-    exact hax
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end General
 
 section Forms
@@ -75,11 +65,8 @@ theorem isLattice_span_MK (hK : A.IsKsForm) (hM : A.MKFull) :
       rw [SetLike.mem_coe, e]
       exact Submodule.smul_mem _ _ ih
   · obtain ⟨n, b, hb, -, -, -, h4⟩ := hK
-    rw [eq_top_iff, ← h4, Submodule.span_le]
-    rintro _ ⟨i, rfl⟩
-    have h1 : b i ∈ Submodule.span Ks (A.MK : Set WL) := hsp ▸ hb i
-    exact Submodule.span_mono Submodule.subset_span (Submodule.span_le_restrictScalars Ks LL _ h1)
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem isLattice_Mcoord (hK : A.IsKsForm) (hM : A.MKFull) (J0 : Subgroup G0) (lam0 : J0 →* LLˣ) (eC : G0 → LL)
     {d : ℕ} (b : Fin d → WL) (hb : LinearIndependent LL b) (hW : ∀ i, b i ∈ A.Wgood J0 lam0 eC) :
     Submodule.IsLattice LL (A.Mcoord J0 lam0 eC b) := by

@@ -92,16 +92,8 @@ theorem pull_isLattice {r : ℕ} (γ : GL (Fin r) E) (Λ : Submodule (𝓞 E) (F
       change (γ : Matrix (Fin r) (Fin r) E) *ᵥ (((γ⁻¹ : GL (Fin r) E) : Matrix (Fin r) (Fin r) E) *ᵥ x) ∈ Λ
       rwa [mulVec_inv_cancel]
   refine ⟨hm ▸ h.fg.map _, ?_⟩
-  rw [eq_top_iff]
-  intro y _
-  have hy : (γ : Matrix (Fin r) (Fin r) E) *ᵥ y ∈ Submodule.span E (Λ : Set (Fin r → E)) := by
-    rw [h.span_eq_top]; trivial
-  have := Submodule.mem_map_of_mem (f := Matrix.mulVecLin
-      ((γ⁻¹ : GL (Fin r) E) : Matrix (Fin r) (Fin r) E)) hy
-  rw [Submodule.map_span, Matrix.mulVecLin_apply, inv_mulVec_cancel] at this
-  rw [hm]
-  exact this
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem pull_unimodular {r : ℕ} (γ : GL (Fin r) E) (J : Matrix (Fin r) (Fin r) E)
     (Λ : Submodule (𝓞 E) (Fin r → E))
     (h : ∀ x, x ∈ Λ ↔ ∀ y ∈ Λ, star y ⬝ᵥ (J *ᵥ x) ∈ (algebraMap (𝓞 E) E).range) (x : Fin r → E) :

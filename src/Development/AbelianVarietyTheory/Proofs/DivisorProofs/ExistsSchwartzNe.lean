@@ -486,10 +486,8 @@ theorem exists_frame_inv (hH : H.IsAdapted σ B Y Y₁ i₀ i₁) (hL : Y.L.IsLa
     obtain ⟨s, t, u, hs, ht, hu, rfl⟩ := hH.split z hz
     exact ⟨Sum.elim u ![s, t], frame_mulVec H _, hu, hs, ht⟩
   have h2 : LinearMap.range (frame H).mulVecLin = ⊤ := by
-    rw [eq_top_iff, ← hL.span_eq_top, Submodule.span_le]
-    intro z hz
-    obtain ⟨w, hw, -⟩ := h1 z hz
-    exact ⟨w, hw⟩
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   choose f hf using fun j : Fin m => LinearMap.range_eq_top.1 h2 (Pi.single j 1)
   have h3 : frame H * (Matrix.of f)ᵀ = 1 := by
     ext i j

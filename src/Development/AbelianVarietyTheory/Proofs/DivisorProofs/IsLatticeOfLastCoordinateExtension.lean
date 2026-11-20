@@ -66,15 +66,6 @@ theorem latLast_isLattice : ∀ {E : Type} [Field E] [NumberField E] {n N : ℕ}
   refine ⟨?_, ?_⟩
   · rw [hLeq]
     exact Submodule.FG.sup (hM.fg.map _) (Submodule.fg_span_singleton e)
-  · rw [eq_top_iff]
-    intro x _
-    rw [dec x]
-    refine Submodule.add_mem _ ?_ (Submodule.smul_mem _ _ (Submodule.subset_span he))
-    have hy : (fun k => x (Fin.castSucc k)) ∈ Submodule.span E (M : Set (Fin n → E)) := by
-      rw [hM.span_eq_top]; exact Submodule.mem_top
-    have hmap : (Submodule.span E (M : Set (Fin n → E))).map g ≤ Submodule.span E (L : Set (Fin (n + 1) → E)) := by
-      rw [Submodule.map_span]
-      exact Submodule.span_mono (by rintro _ ⟨m, hm, rfl⟩; exact gm m hm)
-    exact hmap (Submodule.mem_map_of_mem hy)
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end GlobalTheory

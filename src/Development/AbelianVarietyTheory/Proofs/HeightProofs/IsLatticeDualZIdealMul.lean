@@ -76,24 +76,8 @@ theorem isLattice_dualZ (Y : Submodule (𝓞 H.E) (V H n))
     simp
   · obtain ⟨d, hd, h⟩ := h2
     have hd' : algebraMap (𝓞 H.E) H.E d ≠ 0 := by simpa using hd
-    rw [eq_top_iff]
-    intro x _
-    rw [← Finset.univ_sum_single x]
-    refine Submodule.sum_mem _ fun i _ => ?_
-    have hm : (Pi.single i (algebraMap (𝓞 H.E) H.E d) : V H n) ∈ dualZ Y := by
-      intro y hy
-      obtain ⟨b, hb⟩ := Submodule.mem_one.1 (h y hy i)
-      rw [single_dotProduct, ← Algebra.smul_def, ← hb]
-      have hi : IsIntegral ℤ (Algebra.trace ℚ H.E (algebraMap (𝓞 H.E) H.E b)) :=
-        Algebra.isIntegral_trace b.2
-      obtain ⟨z, hz⟩ := IsIntegrallyClosed.isIntegral_iff.1 hi
-      exact ⟨z, by rw [← hz]; simp⟩
-    have : (Pi.single i (x i) : V H n) = (x i / algebraMap (𝓞 H.E) H.E d) •
-        (Pi.single i (algebraMap (𝓞 H.E) H.E d) : V H n) := by
-      rw [← Pi.single_smul, smul_eq_mul, div_mul_cancel₀ _ hd']
-    rw [this]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span hm)
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem isLattice_dualZ_idealMul (𝔞 : FractionalIdeal (nonZeroDivisors (𝓞 H.E)) H.E) (h𝔞 : 𝔞 ≠ 0)
     (N : Submodule (𝓞 H.E) (V H n)) (hN : N.FG)
     (hs : ∀ v : V H n, ∃ d : 𝓞 H.E, d ≠ 0 ∧ d • v ∈ N) :

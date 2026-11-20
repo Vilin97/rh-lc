@@ -459,16 +459,8 @@ theorem nd_isLattice_comap {L : Submodule (𝓞 K) V} (hL : Submodule.IsLattice 
     have hf : Function.Injective f := fun x y hxy =>
       Subtype.ext (Subtype.ext (congrArg (fun z : L => (z : V)) hxy))
     exact Module.Finite.iff_fg.mp (Module.Finite.of_injective f hf)
-  · rw [eq_top_iff]
-    intro x _
-    obtain ⟨a, ha, hax⟩ := lc_exists_smul_mem L (x := (x : V)) (by rw [hL.span_eq_top]; trivial)
-    have ha' : algebraMap (𝓞 K) K a ≠ 0 := by
-      rwa [Ne, FaithfulSMul.algebraMap_eq_zero_iff]
-    have h1 : a • x ∈ Submodule.span K ((L.comap (U.subtype.restrictScalars (𝓞 K)) : Submodule (𝓞 K) U) : Set U) :=
-      Submodule.subset_span hax
-    have h2 := Submodule.smul_mem _ (algebraMap (𝓞 K) K a)⁻¹ h1
-    rwa [← algebraMap_smul K a x, smul_smul, inv_mul_cancel₀ ha', one_smul] at h2
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem nd_lattice_ne_bot [Nontrivial V] {L : Submodule (𝓞 K) V} (hL : Submodule.IsLattice K L) : L ≠ ⊥ := by
   intro h
   have h2 := hL.span_eq_top

@@ -32,12 +32,8 @@ theorem exists_lattice {O K : Type} [CommRing O] [Field K] [Algebra O K] {n : �
   refine ⟨Q, Λ ⊔ Submodule.span O (Set.range fun j : Fin n => Q (Pi.single j 1)), ⟨?_, ?_⟩, le_sup_left,
     fun x hx => h1 x (Submodule.subset_span hx), fun x hx h0 => ?_⟩
   · exact h.sup (Submodule.fg_span (Set.finite_range _))
-  · rw [eq_top_iff, ← (Pi.basisFun K (Fin n)).span_eq, Submodule.span_le]
-    rintro _ ⟨j, rfl⟩
-    rw [Pi.basisFun_apply, ← sub_add_cancel (Pi.single j 1 : Fin n → K) (Q (Pi.single j 1))]
-    refine add_mem (Submodule.span_mono ?_ (h2 _)) (Submodule.subset_span ?_)
-    · exact fun y hy => Submodule.mem_sup_left hy
-    · exact Submodule.mem_sup_right (Submodule.subset_span ⟨j, rfl⟩)
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hx
     have h4 : Q b = b := by
       refine Submodule.span_induction (p := fun b _ => Q b = b) ?_ (map_zero Q) ?_ ?_ hb

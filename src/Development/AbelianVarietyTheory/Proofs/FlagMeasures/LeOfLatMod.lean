@@ -181,12 +181,8 @@ theorem latIn_isLattice {M : Submodule (𝓞 K) V} (hM : IsLatMod M S I) :
       | zero => rw [map_zero]; exact zero_mem _
       | add x y _ _ a b => rw [map_add]; exact add_mem a b
       | smul r x _ a => rw [map_smul]; exact Submodule.smul_mem _ _ a
-    rw [eq_top_iff]
-    intro c _
-    obtain ⟨y, hy, e⟩ := key c (hs ▸ hCS c.2)
-    rw [hC c c.2] at e
-    rwa [← Subtype.ext (show (y : V) = c from e)]
-
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 end Compl
 
 theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [Module K V] [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (H : HermSpace K V), Formalism.HermitianLatticesTheory.IsCMUnram K → ∀ (M M' : Submodule (𝓞 K) V) (S I : Submodule K V), I ≤ S → (∀ x ∈ S, (∀ y ∈ S, H.B x y = 0) ↔ x ∈ I) → IsLatMod M S I → IsLatMod M' S I → 0 < del H M ∧ 0 < gidx M M' ∧ del H M' = gidx M M' * del H M ∧ (IsIntegralLat H M → 1 ≤ del H M ∧ del H M ^ 2 = idx (dual H M) M) := by

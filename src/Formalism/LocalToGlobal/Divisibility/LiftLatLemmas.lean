@@ -248,16 +248,8 @@ variable {K : Type} [Field K] [NumberField K] [StarRing K] (S : CSD K)
 theorem lf_del_isLattice {s : ℕ} (hS : S.Good s) (c : S.Cl) : Submodule.IsLattice K (S.Del c) := by
   refine ⟨(hS.nab_lat c).fg.of_le (hS.del_le c), ?_⟩
   have hD := (Formalism.HermitianLatticesTheory.dualLattice (𝓞 K) K S.V S.pair hS.symm hS.nondeg exponent_index_lattice.hstar (S.Nab c) (hS.nab_lat c)).1
-  rw [eq_top_iff, ← hD.span_eq_top, Submodule.span_le]
-  intro y hy
-  have hs0 : (algebraMap (𝓞 K) K (s : 𝓞 K)) ≠ 0 := by
-    rw [map_natCast]
-    exact_mod_cast hS.s_pos.ne'
-  have e : y = (algebraMap (𝓞 K) K (s : 𝓞 K))⁻¹ • ((s : 𝓞 K) • y) := by
-    rw [← algebraMap_smul K (s : 𝓞 K) y, smul_smul, inv_mul_cancel₀ hs0, one_smul]
-  rw [e]
-  exact Submodule.smul_mem _ _ (Submodule.subset_span (hS.dual_le c y hy))
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem lf_nabLat_isLattice {s : ℕ} (hS : S.Good s) : Submodule.IsLattice K S.nabLat :=
   ValuationLatticeField.valLatF_isLattice S.I S.I_injective S.Nab hS.nab_lat
 

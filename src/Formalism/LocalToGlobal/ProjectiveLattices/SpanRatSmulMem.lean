@@ -204,21 +204,8 @@ theorem xcFD_lat (𝔄 : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) (h𝔄 : 
   refine ⟨?_, ?_⟩
   · rw [← Submodule.FG.restrictScalars_iff (R := ℤ), hX]
     exact Submodule.fg_span (Set.finite_range _)
-  · rw [eq_top_iff]
-    have h1 : Submodule.span ℚ (Set.range ((trBE ρ).dualBasis (trBE_nondeg ρ) b)) = ⊤ :=
-      Module.Basis.span_eq _
-    have h2 : Set.range ((trBE ρ).dualBasis (trBE_nondeg ρ) b) ⊆ (XcFD 𝔄 cu : Set (Fin ρ → E)) := by
-      have h3 : Set.range ((trBE ρ).dualBasis (trBE_nondeg ρ) b) ⊆
-          ((XcFD 𝔄 cu).restrictScalars ℤ : Set (Fin ρ → E)) := by
-        rw [hX]; exact Submodule.subset_span
-      rwa [Submodule.coe_restrictScalars] at h3
-    intro v _
-    have hv : v ∈ Submodule.span ℚ (XcFD 𝔄 cu : Set (Fin ρ → E)) := by
-      have h4 := Submodule.span_mono (R := ℚ) h2
-      rw [h1] at h4
-      exact h4 Submodule.mem_top
-    exact Submodule.span_le_restrictScalars ℚ E _ hv
-
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem xcLatF {Comp : Type} (X : Comp → Data E r) (𝔄 : FractionalIdeal (nonZeroDivisors (𝓞 E)) E)
     (h𝔄 : 𝔄 ≠ 0) : XcLatF X 𝔄 ρ :=
   fun cu => xcFD_lat 𝔄 h𝔄 cu.2

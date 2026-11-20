@@ -94,11 +94,8 @@ theorem globLat_smul_le {Λ : Submodule (𝓞 E) (Fin n → E)} (hΛ : Submodule
     | smul a x _ hx => rw [mulVec_smul]; exact Submodule.smul_mem _ a hx
   obtain ⟨a, ha, ha0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot h𝔪
   have hsp : Submodule.span E ((𝔪 • CS.globLat g Λ : Submodule (𝓞 E) (Fin n → E)) : Set (Fin n → E)) = ⊤ := by
-    rw [eq_top_iff, ← hL.span_eq_top, Submodule.span_le]
-    intro y hy
-    have := Submodule.smul_mem _ (algebraMap (𝓞 E) E a)⁻¹
-      (Submodule.subset_span (R := E) (Submodule.smul_mem_smul ha hy : a • y ∈ 𝔪 • CS.globLat g Λ))
-    rwa [← algebraMap_smul E a y, inv_smul_smul₀ (by simpa using ha0)] at this
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   intro y hy
   rw [← P.global_lattice_one_holds F E (Fin n) _
     (Module.Finite.iff_fg.2 (hL.fg.smul (IsNoetherian.noetherian _))) hsp]

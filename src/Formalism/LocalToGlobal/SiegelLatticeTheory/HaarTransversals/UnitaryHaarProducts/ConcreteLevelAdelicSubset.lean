@@ -1496,20 +1496,8 @@ theorem crd_lat (Λ : Submodule (𝓞 D.host.E) (VS D).V) (hΛ : Submodule.IsLat
   · intro l hl
     obtain ⟨w, hw, rfl⟩ := Finset.mem_image.1 hl
     exact ⟨w, hgΛ w hw, rfl⟩
-  · rw [eq_top_iff]
-    rintro x -
-    obtain ⟨v, rfl⟩ := crd_surj X x
-    have hv : v ∈ Submodule.span D.host.E (g : Set (VS D).V) := by
-      have h1 : v ∈ Submodule.span D.host.E (Λ : Set (VS D).V) := hΛ.span_eq_top ▸ Submodule.mem_top
-      refine (Submodule.span_le.2 ?_) h1
-      intro w hw
-      rw [← hg] at hw
-      exact Submodule.span_le_restrictScalars (𝓞 D.host.E) D.host.E _ hw
-    induction hv using Submodule.span_induction with
-    | mem w hw => exact Submodule.subset_span (by simpa using ⟨w, hw, rfl⟩)
-    | zero => rw [crd_zero]; exact zero_mem _
-    | add a b _ _ ha hb => rw [crd_add]; exact add_mem ha hb
-    | smul a b _ hb => rw [crd_smul]; exact Submodule.smul_mem _ _ hb
+  · intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   · choose m hm0 hmI using fun (w : (VS D).V) (i : Fin X.B.I.n) => nt_int_mul_of X.B.I (X.crd w i)
     refine ⟨∏ w ∈ g, ∏ i, m w i, Finset.prod_ne_zero_iff.2 fun w _ => Finset.prod_ne_zero_iff.2 fun i _ => hm0 w i,
       fun w hw => ?_⟩

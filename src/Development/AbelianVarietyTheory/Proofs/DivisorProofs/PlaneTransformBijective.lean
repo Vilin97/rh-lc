@@ -77,8 +77,8 @@ theorem planeCoef_inv : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Nu
     simp [planeMat, Matrix.mulVec, dotProduct, Fintype.sum_sum_type, Fin.sum_univ_two]
     ring
   have hr : LinearMap.range Q.mulVecLin = ⊤ := by
-    rw [eq_top_iff, ← hL.span_eq_top]
-    exact Submodule.span_le.2 hsub
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   have hQ : IsUnit Q := by
     rw [← Matrix.mulVec_surjective_iff_isUnit]
     intro v

@@ -24,16 +24,8 @@ theorem isLattice_NgX {Λ : Submodule (𝓞 D.host.E) (VS D).V} (hΛ : Submodule
     refine sup_le (sup_le ?_ inf_le_left) inf_le_left
     exact Submodule.smul_le_right
   refine ⟨hΛ.fg.of_le hle, ?_⟩
-  rw [eq_top_iff, ← hΛ.span_eq_top, Submodule.span_le]
-  intro v hv
-  have h0 : ((gS D : ℕ) : D.host.E) ≠ 0 := Formalism.L2.SG.Pf.StabIntSh.gS_ne
-  have hm : ((gS D : ℕ) : 𝓞 D.host.E) • v ∈ NgX Λ (gS D) F F' :=
-    Submodule.mem_sup_left (Submodule.mem_sup_left (Submodule.smul_mem_smul (Ideal.mem_span_singleton_self _) hv))
-  have e : v = (((gS D : ℕ) : D.host.E))⁻¹ • (((gS D : ℕ) : 𝓞 D.host.E) • v) := by
-    rw [← algebraMap_smul D.host.E ((gS D : ℕ) : 𝓞 D.host.E) v, map_natCast, smul_smul, inv_mul_cancel₀ h0, one_smul]
-  rw [SetLike.mem_coe, e]
-  exact Submodule.smul_mem _ _ (Submodule.subset_span hm)
-
+  intro s hs hli
+  exact (LinearIndependent.iff_fractionRing _ _).mp hli
 theorem NgX_dec {Λ : Submodule (𝓞 D.host.E) (VS D).V} {T T' : D.host.E} {F : LFlag (VS D) D.R.rS T}
     {F' : LFlag (VS D) D.R.rS T'} {x : (VS D).V} (hx : x ∈ NgX Λ (gS D) F F') :
     ∃ l ∈ Λ, ∃ ξ ∈ XLam Λ F, ∃ ξ' ∈ XLam Λ F', x = ((gS D : ℕ) : D.host.E) • l + ξ + ξ' := by

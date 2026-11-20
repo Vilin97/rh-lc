@@ -41,21 +41,8 @@ theorem isLat_and_dl_eq_of_isSDLat_mvL : ∀ {R : Ranks} {F E : Type} [Field F] 
       Module.Finite.iff_fg.mpr hfg
     exact Module.Finite.equiv (Submodule.equivMapOfInjective _ hinj M).symm
   ·
-    rw [eq_top_iff]
-    intro v _
-    have hv : toLE co v ∈ Submodule.span E ((mvL co M : Submodule (𝓞 E) (Fin N → E)) : Set (Fin N → E)) := by
-      rw [hspan]
-      exact Submodule.mem_top
-    have hset : ((mvL co M : Submodule (𝓞 E) (Fin N → E)) : Set (Fin N → E)) =
-        ((toLE co : (Fin N → E) ≃ₗ[E] (Fin N → E)) : (Fin N → E) →ₗ[E] (Fin N → E)) '' (M : Set (Fin N → E)) := by
-      unfold mvL
-      rw [Submodule.map_coe]
-      rfl
-    rw [hset, Submodule.span_image] at hv
-    obtain ⟨w, hw, hwv⟩ := Submodule.mem_map.mp hv
-    have hwv' : w = v := (toLE co).injective hwv
-    rw [hwv'] at hw
-    exact hw
+    intro s hs hli
+    exact (LinearIndependent.iff_fractionRing _ _).mp hli
   ·
     ext y
     rw [Formalism.L2.GlobalTheoryTheory.Comp.mem_dl, ← toLE_mem_mvL co M y, hdual (toLE co y)]
