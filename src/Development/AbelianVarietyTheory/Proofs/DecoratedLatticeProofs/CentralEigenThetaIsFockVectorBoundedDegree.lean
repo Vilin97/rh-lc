@@ -65,7 +65,7 @@ theorem thPair_sum_right {ι : Type} (s : Finset ι) (a : ι → ℂ) (g : Mx D 
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, star_sum, star_mul', Finset.mul_sum]
     exact Finset.sum_congr rfl fun i _ => by ring
   simp_rw [e]
-  rw [integral_finset_sum _ fun i _ => (hi i).const_mul _]
+  rw [integral_finsetSum _ fun i _ => (hi i).const_mul _]
   exact Finset.sum_congr rfl fun i _ => integral_const_mul _ _
 
 theorem thPair_sub_sum_left {ι : Type} (s : Finset ι) (a : ι → ℂ) (f g : Mx D m n → ℂ) (h : ι → Mx D m n → ℂ)
@@ -80,7 +80,7 @@ theorem thPair_sub_sum_left {ι : Type} (s : Finset ι) (a : ι → ℂ) (f g : 
     exact Finset.sum_congr rfl fun i _ => by ring
   simp_rw [e]
   rw [integral_sub hf (integrable_finset_sum _ fun i _ => (hi i).const_mul _),
-    integral_finset_sum _ fun i _ => (hi i).const_mul _]
+    integral_finsetSum _ fun i _ => (hi i).const_mul _]
   congr 1
   exact Finset.sum_congr rfl fun i _ => integral_const_mul _ _
 

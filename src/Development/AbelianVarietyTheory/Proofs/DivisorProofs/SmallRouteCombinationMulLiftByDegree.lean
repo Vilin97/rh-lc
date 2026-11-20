@@ -134,7 +134,7 @@ theorem zdeg_mul_liftT : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {
       zdeg z * ∫ u in M.fd (.grid i j), outer W M d F g₁ u ∂M.ν (.grid i j) := by
     unfold translates zdeg
     simp only [Finsupp.sum]
-    rw [integral_finset_sum _ fun k _ => ((key d hd k).1.integrable.const_mul _),
+    rw [integral_finsetSum _ fun k _ => ((key d hd k).1.integrable.const_mul _),
       Finset.sum_mul]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [integral_const_mul, (key d hd k).2]

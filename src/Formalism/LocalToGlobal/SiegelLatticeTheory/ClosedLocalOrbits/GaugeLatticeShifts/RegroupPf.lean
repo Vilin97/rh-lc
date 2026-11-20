@@ -582,7 +582,7 @@ theorem regroup_of (hK : X.LevelSubgroupCharacter) (Dt' : Set X.B.I.GA) (hA : Ab
       ∑ ρ', ∫ y in Ωs ρ, conj (Ph X u hK T (y, aC cs ρ)) *
           ∑' c : ColCl cs cs' ρ ρ', Ph X u' hK T' ((ColCl.pt cs cs' c)⁻¹ * (y, aC cs ρ))
             ∂(Formalism.L2.SG.ProjRows.muInf X.B.I) := by
-    rw [← integral_finset_sum _ (fun ρ' _ => (hOU' ρ').1)]
+    rw [← integral_finsetSum _ (fun ρ' _ => (hOU' ρ').1)]
     refine integral_congr_ae (Filter.Eventually.of_forall fun y => ?_)
     try dsimp only
     rw [hPs y, Finset.mul_sum]

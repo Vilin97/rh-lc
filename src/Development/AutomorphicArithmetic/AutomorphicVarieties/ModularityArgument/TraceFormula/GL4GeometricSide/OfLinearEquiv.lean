@@ -45,7 +45,7 @@ private theorem exists_wint [CompactSpace G] [MeasurableSpace G] [BorelSpace G] 
     simp only [map_smul, smul_eq_mul, Module.Basis.coord_apply]
   simp_rw [e]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [integral_finset_sum _ fun i _ =>
+    rw [integral_finsetSum _ fun i _ =>
     ((hf (b.coord i)).integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _)).mul_const _, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [integral_mul_const, map_smul, smul_eq_mul]
@@ -182,7 +182,7 @@ private theorem fin_case [FiniteDimensional ℂ V] [MeasurableSpace (Un n)] [Bor
     ((LinearMap.trace ℂ E.V).comp (ContinuousLinearMap.coeLM ℂ)).continuous_of_finiteDimensional.comp
       (E.cont.mul continuous_const)
   simp_rw [LinearMap.trace_eq_sum_inner _ b, Finset.mul_sum, Module.End.mul_apply, hP _ _]
-  exact (integral_finset_sum _ fun i _ =>
+  exact (integral_finsetSum _ fun i _ =>
     (hc.mul (hσ _ _)).integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _)).symm
 
 private theorem iso_stable (σ : Un n →* (V →ₗ[ℂ] V)) (E : KMod n) {A : Module.End ℂ V}

@@ -266,13 +266,13 @@ theorem exists_const_tensor : ∀ (F : Type) [Field F] [NumberField F] (κ : Typ
       (Filter.Eventually.of_forall fun x => (hexp _ x).symm)
   rw [lintegral_sq_eq hI1, lintegral_sq_eq hI2, integral_congr_ae (Filter.Eventually.of_forall (hexp _)),
     integral_congr_ae (Filter.Eventually.of_forall (hexp _)),
-    integral_finset_sum _ fun i _ => integrable_finset_sum _ fun j _ => hint1 i j,
-    integral_finset_sum _ fun i _ => integrable_finset_sum _ fun j _ => hint2 i j]
+    integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ => hint1 i j,
+    integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ => hint2 i j]
   have hsum : ∀ i, ∫ x, ∑ j, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (ei (f i)) (fun v => ev v (φ i v)) x *
       conj (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (ei (f j)) (fun v => ev v (φ j v)) x) ∂μ =
       (K : ℂ) * ∫ x, ∑ j, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f i) (φ i) x * conj (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (f j) (φ j) x) ∂μ := by
     intro i
-    rw [integral_finset_sum _ fun j _ => hint2 i j, integral_finset_sum _ fun j _ => hint1 i j, Finset.mul_sum]
+    rw [integral_finsetSum _ fun j _ => hint2 i j, integral_finsetSum _ fun j _ => hint1 i j, Finset.mul_sum]
     exact Finset.sum_congr rfl fun j _ =>
       (hcross (f i) (f j) (φ i) (φ j) (hSB i) (hvacφ i) (hSB j) (hvacφ j)).2.2
   rw [Finset.sum_congr rfl fun i _ => hsum i, ← Finset.mul_sum, Complex.re_ofReal_mul, ENNReal.ofReal_mul hK0]

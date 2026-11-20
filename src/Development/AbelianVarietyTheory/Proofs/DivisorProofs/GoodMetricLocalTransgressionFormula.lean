@@ -61,7 +61,7 @@ theorem _root_.GlobalTheory.GoodTop.integral_cutTop_sub : ∀ {n : ℕ} {r : Typ
       ((ρ v : ℂ) * _root_.GlobalTheory.GoodTop.mixTop (fun _ => _root_.GlobalTheory.GoodTop.curvAt G₁ v) -
       (ρ v : ℂ) * _root_.GlobalTheory.GoodTop.mixTop (fun _ => _root_.GlobalTheory.GoodTop.curvAt G₀ v) -
       _root_.GlobalTheory.GoodTop.corrC ρ G₀ G₁ v) = 0 := by
-    rw [integral_congr_ae (Eventually.of_forall hpt), integral_finset_sum _ fun j _ => (hstokes j).1]
+    rw [integral_congr_ae (Eventually.of_forall hpt), integral_finsetSum _ fun j _ => (hstokes j).1]
     exact Finset.sum_eq_zero fun j _ => (hstokes j).2
   have hsplit : ∫ v in _root_.GlobalTheory.GoodTop.offHyp S U,
       ((ρ v : ℂ) * _root_.GlobalTheory.GoodTop.mixTop (fun _ => _root_.GlobalTheory.GoodTop.curvAt G₁ v) -

@@ -203,7 +203,7 @@ private theorem mem_iso [ν.IsMulLeftInvariant] (hσ : IsK σ) (E : KMod n) (T :
     refine ext_inner_left ℂ fun w => ?_
     rw [hP x w, inner_sum]
     simp_rw [fun i => hw i (innerSL ℂ (b i)) w]
-    rw [← integral_finset_sum]
+    rw [← integral_finsetSum]
     · refine integral_congr_ae (Filter.Eventually.of_forall fun κ => ?_)
       simp only []
       rw [tr_eq, Finset.sum_mul]

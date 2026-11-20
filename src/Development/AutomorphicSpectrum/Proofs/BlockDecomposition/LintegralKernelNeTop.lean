@@ -284,7 +284,7 @@ theorem unfold_abs [TopologicalSpace G] [IsTopologicalGroup G] [T2Space G] [Seco
       χ ((q.out : G)⁻¹ * x) * φ (twConj θ ((q.out : G)⁻¹ * x) (ι (rep c))) := fun x =>
     kernel_decomp hι hθ hcls hH hχi x (hsing x) T (hT x)
   simp_rw [hdec]
-  rw [integral_finset_sum]
+  rw [integral_finsetSum]
   · exact Finset.sum_congr rfl fun c _ => (hterm c).symm
   · intro c _
     haveI := hdisc c

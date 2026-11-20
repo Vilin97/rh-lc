@@ -29,7 +29,7 @@ theorem UpperTheory.Gal.Gen.rInt_pf :
     rw [h2 n t ht0 ht1 l (pt θ) hθ (hnorm θ)]
     refine Finset.sum_congr rfl fun σ _ => ?_
     rw [hpt]
-  rw [integral_congr_ae hae, integral_finset_sum]
+  rw [integral_congr_ae hae, integral_finsetSum]
   · simp_rw [hperm]
     rw [hF, h3 n t ht0 ht1 l hl, Finset.sum_const, Finset.card_univ, Fintype.card_perm, Fintype.card_fin]
     split_ifs <;> simp

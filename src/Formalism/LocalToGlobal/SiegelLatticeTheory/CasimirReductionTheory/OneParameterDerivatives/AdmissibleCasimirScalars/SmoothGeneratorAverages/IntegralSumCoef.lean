@@ -73,10 +73,10 @@ theorem integral_sumCoef {ι : Type} [Fintype ι] [DecidableEq ι] {σ : Matrix 
   refine ⟨?_, ?_⟩
   · rw [hexp]
     exact integrable_finset_sum _ fun i _ => integrable_finset_sum _ fun j _ => hint i j
-  · rw [hexp, integral_finset_sum _ fun i _ => integrable_finset_sum _ fun j _ => hint i j]
+  · rw [hexp, integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ => hint i j]
     calc _ = ∑ i, ∑ j, ∫ g, coefOn σ (v i) (v i) g * star (coefOn σ (v j) (v j) g) ∂(muG ε) := by
           refine Finset.sum_congr rfl fun i _ => ?_
-          exact integral_finset_sum _ fun j _ => hint i j
+          exact integral_finsetSum _ fun j _ => hint i j
       _ = _ := by
           simp only [hij, Finset.sum_ite_eq, Finset.mem_univ, if_true, Finset.sum_const,
             Finset.card_univ, nsmul_eq_mul]

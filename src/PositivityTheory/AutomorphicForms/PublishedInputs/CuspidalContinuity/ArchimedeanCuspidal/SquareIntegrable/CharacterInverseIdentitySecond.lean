@@ -193,6 +193,6 @@ theorem Ad3.SchwartzSpaceL2.pfe : Ad3.SchwartzSpaceL2.SFe := by
     rw [hW, Finset.sum_apply, Finset.sum_mul, Finset.sum_mul]
   rw [hL, hR]
   refine ⟨integrable_finset_sum _ fun i _ => (hP i).1, integrable_finset_sum _ fun i _ => (hP i).2.1, ?_⟩
-  rw [integral_finset_sum _ fun i _ => (hP i).1, integral_finset_sum _ fun i _ => (hP i).2.1,
+  rw [integral_finsetSum _ fun i _ => (hP i).1, integral_finsetSum _ fun i _ => (hP i).2.1,
     Finset.mul_sum]
   exact Finset.sum_congr rfl fun i _ => (hP i).2.2

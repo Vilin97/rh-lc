@@ -283,7 +283,7 @@ private theorem core (μ : Measure A) (U : A → G)
     have hΘ : (Θ : G → ℂ) ∈ T.toSubmodule := by
       refine ⟨Θ.2, fun x => ?_⟩
       simp only [hval]
-      rw [integral_finset_sum]
+      rw [integral_finsetSum]
       · refine Finset.sum_eq_zero fun q _ => ?_
         rw [integral_const_mul]
         have := hfZ x q.out

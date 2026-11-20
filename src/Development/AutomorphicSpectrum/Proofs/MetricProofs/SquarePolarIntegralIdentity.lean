@@ -85,7 +85,7 @@ theorem fibre_sum {d k : ℕ} (B : Set (Fin d → ℂ)) (F : ℕ → (Fin (d + 2
   have hY := fubini_piece volume volume volume (eY d) (eY_measurePreserving d) B _ hSY H hH
   simp only [eW_apply, eY_apply] at hW hY
   rw [hY.2, Finset.sum_congr rfl fun i hi => (hW i (Finset.mem_range.1 hi)).2,
-    ← integral_finset_sum _ fun i hi => (hW i (Finset.mem_range.1 hi)).1, ← integral_const_mul]
+    ← integral_finsetSum _ fun i hi => (hW i (Finset.mem_range.1 hi)).1, ← integral_const_mul]
   exact setIntegral_congr_fun hB fun y hy => hpt y hy
 
 theorem ae_ne (d : ℕ) : ∀ᵐ z : Fin (d + 2) → ℂ, z 0 ≠ z 1 := by

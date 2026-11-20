@@ -178,7 +178,7 @@ private theorem killed_of {d : ℕ} {ρ : KA E (r + s) → Matrix (Fin d) (Fin d
       rw [resL, dif_pos (hlev k)]) y
     rwa [Finsupp.sum_mapDomain_index (h := fun (k : KA E (r + s)) (c : ℂ) => c * φ (y * (k : GA E (r + s)))) (fun _ => zero_mul _) (fun _ _ _ => add_mul _ _ _)] at this
   simp only [Finsupp.sum, lev_right, constantTerm, ← integral_const_mul] at h1 ⊢
-  rw [← integral_finset_sum _ fun k _ => (integrableOn_constantTerm hc _).const_mul _]
+  rw [← integral_finsetSum _ fun k _ => (integrableOn_constantTerm hc _).const_mul _]
   simp only [← mul_assoc, h1, integral_zero]
 
 end UpperTheory.ConvolutionTheory.BW

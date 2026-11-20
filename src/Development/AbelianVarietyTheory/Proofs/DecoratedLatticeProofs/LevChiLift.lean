@@ -79,7 +79,7 @@ theorem lift_sum {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T : HSp D} 
     exact integrable_finset_sum _ fun i _ => (hi _).const_mul _
   · show ∫ h in 𝓕, thetaKO om g h (pureTensorO ψ θ S T sS sT BS BT f' φ) * F h ∂ν = _
     simp only [e]
-    rw [integral_finset_sum _ fun i _ => (hi _).const_mul _]
+    rw [integral_finsetSum _ fun i _ => (hi _).const_mul _]
     have : ∀ i, ∫ h in 𝓕, (a i)⁻¹ * (thetaKO om (g * κ i) h (pureTensorO ψ θ S T sS sT BS BT f φ) * F h) ∂ν = U g := fun i => by
       rw [integral_const_mul]
       have h1 := hU (g * κ i)

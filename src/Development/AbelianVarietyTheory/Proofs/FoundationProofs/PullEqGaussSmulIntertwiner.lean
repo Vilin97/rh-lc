@@ -132,7 +132,7 @@ theorem const_eq (μ : Measure V) [μ.IsAddHaarMeasure] (H : Sesq V) (hH : IsPos
       rw [hc, finsum_eq_sum_of_fintype]
       simp only [← mul_assoc, ← Finset.sum_mul]
     simp only [e]
-    rw [integral_const_mul, integral_finset_sum _ fun q _ => (hR q).1.const_mul _]
+    rw [integral_const_mul, integral_finsetSum _ fun q _ => (hR q).1.const_mul _]
     congr 1
     rw [Finset.sum_eq_single 0]
     · have h0 := (GlobalTheory.ThetaInter.out_mem_iff (A₁ := A) (A₂ := A₁) 0).2 rfl

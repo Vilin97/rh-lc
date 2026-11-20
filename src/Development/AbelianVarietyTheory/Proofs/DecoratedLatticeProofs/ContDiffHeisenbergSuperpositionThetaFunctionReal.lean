@@ -159,7 +159,7 @@ theorem hasFDerivAt_superpos (h : Chart θ σ) (hψ : IsStdChar D ψ (-1)) {F : 
     (ha.norm.mul_const _)
     (Filter.Eventually.of_forall fun x z _ => hasFDerivAt_pt h hψ hF (v x) (a x) z)
   refine key.congr_fderiv ?_
-  rw [integral_finset_sum _ fun i _ => (integral_sco h hψ hF μ hv ha (bas S T i) z₀).1.smul_const _]
+  rw [integral_finsetSum _ fun i _ => (integral_sco h hψ hF μ hv ha (bas S T i) z₀).1.smul_const _]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [integral_smul_const, (integral_sco h hψ hF μ hv ha (bas S T i) z₀).2]
 

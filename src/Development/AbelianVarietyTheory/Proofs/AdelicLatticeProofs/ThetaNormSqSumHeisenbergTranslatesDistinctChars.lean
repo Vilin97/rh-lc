@@ -44,11 +44,11 @@ theorem integral_norm_sq_sum {X ι : Type} [MeasurableSpace X] (ν : Measure X) 
   apply Complex.ofReal_injective
   rw [← integral_complex_ofReal]
   simp_rw [e]
-  rw [integral_finset_sum _ fun i _ => integrable_finset_sum _ fun j _ => (hi i j).const_mul _,
+  rw [integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ => (hi i j).const_mul _,
     Finset.card_eq_sum_ones]
   push_cast
   refine Finset.sum_congr rfl fun i hi' => ?_
-  rw [integral_finset_sum _ fun j _ => (hi i j).const_mul _, Finset.sum_eq_single i]
+  rw [integral_finsetSum _ fun j _ => (hi i j).const_mul _, Finset.sum_eq_single i]
   · rw [integral_const_mul, Complex.mul_conj', hc i hi']
     simp_rw [Complex.mul_conj', ← Complex.ofReal_pow]
     rw [integral_complex_ofReal, h1 i hi']

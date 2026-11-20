@@ -125,7 +125,7 @@ theorem SmallPl.integral_sum_translates {D : D7} {ψ : AddChar (AF D.host.F) ℂ
         rw [hHb i hi h]
         ring
     _ = ∑ i ∈ s, c * ∫ h in vS.𝓕, K h ∂vS.μ := by
-        rw [integral_finset_sum _ hint]
+        rw [integral_finsetSum _ hint]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [integral_const_mul, GlobalTheory.ChainOnto.setIntegral_fd_mul_right D S vS.μ vS.𝓕 vS.haar vS.fund K hKa]
     _ = _ := by

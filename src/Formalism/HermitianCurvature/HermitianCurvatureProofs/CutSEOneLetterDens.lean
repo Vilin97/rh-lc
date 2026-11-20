@@ -405,7 +405,7 @@ theorem pairSum_eq (μ : Measure (Mt k r)) (hμ : B.IsHaarOn (Glev k r (Fin.last
     (hx : ∀ b, x b ∈ lcSub k r z z' π π') (hy : ∀ b, y b ∈ lcSub k r z z' π π') (p : Fin r → ℂ) :
     ∑ b, pairAt μ (x b) (y b) p = ∫ g, hsSum x y p g ∂μ := by
   unfold hsSum pairAt
-  rw [integral_finset_sum _ fun b _ => int_lc μ hμ (hx b) (hy b) p]
+  rw [integral_finsetSum _ fun b _ => int_lc μ hμ (hx b) (hy b) p]
 
 theorem int4 {α : Type} [MeasurableSpace α] {ν : Measure α} (f1 f2 f3 f4 : α → ℂ) (c d : ℂ)
     (i1 : Integrable f1 ν) (i2 : Integrable f2 ν) (i3 : Integrable f3 ν) (i4 : Integrable f4 ν) :

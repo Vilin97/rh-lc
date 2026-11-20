@@ -19,7 +19,7 @@ private theorem simp_int {X E : Type} [MeasurableSpace X] [NormedAddCommGroup E]
       exact Set.indicator_of_notMem (by simpa using fun h => hb h.symm) _
     · intro h
       exact absurd (s.mem_range_self k) h
-  rw [h, integral_finset_sum]
+  rw [h, integral_finsetSum]
   · refine Finset.sum_congr rfl fun x _ => ?_
     rw [integral_indicator_const _ (s.measurableSet_preimage _)]
   · intro x _

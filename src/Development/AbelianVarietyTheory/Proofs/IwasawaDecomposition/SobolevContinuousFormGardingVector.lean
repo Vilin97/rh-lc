@@ -66,7 +66,7 @@ theorem sobCont_gard : ∀ (n : ℕ) (ε : Fin n → Bool) (H : Type) [NormedAdd
     refine ⟨continuous_finset_sum _ fun i _ => hc i, fun φ hφ => ?_⟩
     rw [hrep _ (gard_mem hP h hσ hφ w)]
     simp only [Finset.smul_sum]
-    rw [integral_finset_sum _ fun i _ => hφ.integrable (hc i)]
+    rw [integral_finsetSum _ fun i _ => hφ.integrable (hc i)]
     exact Finset.sum_congr rfl fun i _ => inner_word_gard hP h hσ hφ (ls i) (hls i) hw (a i)
 
 end GlobalTheory.SobGarding

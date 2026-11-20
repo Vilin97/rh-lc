@@ -48,7 +48,7 @@ theorem fts_sum {χ : AddChar F Circle} (hχ : Continuous χ) {n : ℕ} {f g : F
     exact Finset.sum_congr rfl fun i _ => by ring
   unfold FTs
   simp only [e]
-  rw [integral_finset_sum _ fun i _ => Integrable.mul_prod
+  rw [integral_finsetSum _ fun i _ => Integrable.mul_prod
     (integrable_mul_char_of_mem_schwartzBruhat _ hχ (hf i) u.2)
     (integrable_mul_char_of_mem_schwartzBruhat _ hχ (hg i) u.1)]
   exact Finset.sum_congr rfl fun i _ =>
@@ -132,7 +132,7 @@ theorem sGauss : SGauss := by
         show _ * _ = _
         rw [fts_sum hχ hf' hg', Finset.mul_sum]
     _ = ∑ i, ∫ x, localFourier (selfDualMeasure χ) χ (g i) x * f i (-((a : F) * x)) ∂selfDualMeasure χ := by
-        rw [integral_finset_sum _ fun i _ => (left_term hχ hχ1 a (hf' i) (hg' i)).1]
+        rw [integral_finsetSum _ fun i _ => (left_term hχ hχ1 a (hf' i) (hg' i)).1]
         exact Finset.sum_congr rfl fun i _ => (left_term hχ hχ1 a (hf' i) (hg' i)).2
     _ = (((modulus (a : F) : ℝ)⁻¹ : ℝ) : ℂ) *
           ∑ i, ∫ x, f i x * localFourier (selfDualMeasure χ) χ (g i) (-x / a) ∂selfDualMeasure χ := by
@@ -142,7 +142,7 @@ theorem sGauss : SGauss := by
           ∫ z, (χ (-(z.1 * z.2) / a) : ℂ) * ∑ i, f i z.1 * g i z.2 ∂muS χ := by
         congr 1
         simp only [Finset.mul_sum]
-        rw [integral_finset_sum _ fun i _ => (right_term hχ ha (hf' i) (hg' i)).1]
+        rw [integral_finsetSum _ fun i _ => (right_term hχ ha (hf' i) (hg' i)).1]
         exact Finset.sum_congr rfl fun i _ => (right_term hχ ha (hf' i) (hg' i)).2.symm
 
 end GlobalTheory.CompanionTheory.SplitGauss

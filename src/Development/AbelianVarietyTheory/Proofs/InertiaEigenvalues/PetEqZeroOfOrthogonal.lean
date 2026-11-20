@@ -226,7 +226,7 @@ theorem hasFDerivAt_coef (hω : ω.IsUnitary) (h' : ψ ∈ bddForms E a ω) {φ 
       refine ((hasFDerivAt_chart φ (q.out * x) hy.1).mul_const (conj (ψ q.out))).congr_fderiv ?_
       ext1 v
       simp [Finset.mul_sum, mul_comm, mul_left_comm])
-  rw [integral_finset_sum _ fun i _ => hi i] at key
+  rw [integral_finsetSum _ fun i _ => hi i] at key
   rw [funext (chart_coef μ φ.1 x)]
   refine key.congr_fderiv (Finset.sum_congr rfl fun i _ => ?_)
   rw [chart_coef]
@@ -259,7 +259,7 @@ theorem lieD_coef (hω : ω.IsUnitary) (h' : ψ ∈ bddForms E a ω) {φ : Sm E 
   rw [lieD, (hasFDerivAt_coef μ hω h' h hl x (z := oneL E a) isUnit_one).fderiv, e (coef μ ψ _)]
   simp only [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smulRight_apply, chart_coef, chart_lie X,
     Finset.sum_mul, smul_mul_assoc]
-  refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) (integral_finset_sum _ fun i _ =>
+  refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) (integral_finsetSum _ fun i _ =>
     (integrable_chart μ hω h' (hl (bas E a i)) x (oneL E a)).smul ((bas E a).coord i X)).symm
   simp only [Pi.smul_apply]
   rw [integral_smul, crd, ContinuousLinearMap.comp_apply, e1]

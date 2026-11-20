@@ -220,7 +220,7 @@ theorem opTensor : ∀ (D : D7) (V : HSp D) (S : D.what₂.Tau → SPar) (M : DS
     rw [map_smul, ContinuousMultilinearMap.smul_apply, smul_comm]
     rfl
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [(hR (T w y)).2, integral_congr_ae (.of_forall hpt), integral_finset_sum _ fun r hr => (hL r hr).1,
+    rw [(hR (T w y)).2, integral_congr_ae (.of_forall hpt), integral_finsetSum _ fun r hr => (hL r hr).1,
     hAw, map_sum, ContinuousMultilinearMap.sum_apply]
   refine Finset.sum_congr rfl fun r hr => ?_
   rw [(hL r hr).2, (hpi r).2, map_smul, ContinuousMultilinearMap.smul_apply, hνB r hr, Complex.coe_smul]

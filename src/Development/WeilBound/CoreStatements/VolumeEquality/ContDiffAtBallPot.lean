@@ -115,7 +115,7 @@ theorem sum_sheets {X : Type*} [MeasurableSpace X] (μ : Measure X) {np : ℕ}
       have h := (hasSum_sheets FF pc B d hB f t ht).tsum_eq
       simpa only [nsmul_eq_mul] using h
     rw [integral_congr_ae hae2,
-      integral_finset_sum _ (fun k _ => ((hf k).integrable_indicator (hF k)).const_mul _)]
+      integral_finsetSum _ (fun k _ => ((hf k).integrable_indicator (hF k)).const_mul _)]
     apply Finset.sum_congr rfl
     intro k _
     rw [integral_const_mul, integral_indicator (hF k)]

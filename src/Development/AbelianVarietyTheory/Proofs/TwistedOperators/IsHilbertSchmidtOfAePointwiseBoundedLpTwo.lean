@@ -101,7 +101,7 @@ theorem sum_le {X : Type} [MeasurableSpace X] {ν : Measure X} [IsFiniteMeasure 
     have hm : MemLp f ((2 : ℕ) : ENNReal) ν := by simpa using Lp.memLp f
     exact hm.integrable_norm_pow (by norm_num)
   calc ∑ i ∈ s, ‖T (e i)‖ ^ 2 = ∫ x, ∑ i ∈ s, ‖T (e i) x‖ ^ 2 ∂ν := by
-        rw [integral_finset_sum s fun i _ => hint (T (e i))]
+        rw [integral_finsetSum s fun i _ => hint (T (e i))]
         exact Finset.sum_congr rfl fun i _ => hn _
     _ ≤ ∫ _x, C ^ 2 ∂ν :=
         integral_mono_ae (integrable_finset_sum s fun i _ => hint (T (e i)))

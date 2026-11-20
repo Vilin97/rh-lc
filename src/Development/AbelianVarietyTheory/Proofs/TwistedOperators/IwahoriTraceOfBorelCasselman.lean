@@ -102,7 +102,7 @@ theorem exists_setOp (μ : Measure G) [IsFiniteMeasureOnCompacts μ] {π : Repre
     refine ⟨∑ u ∈ hf.toFinset, (∫ g in D, (if π g v = u then 1 else 0 : ℂ) ∂μ) • u, fun l => ?_⟩
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_smul, smul_eq_mul, ← integral_mul_const]
-    rw [← integral_finset_sum _ fun u _ => hint v fun x => (if x = u then 1 else 0 : ℂ) * l u]
+    rw [← integral_finsetSum _ fun u _ => hint v fun x => (if x = u then 1 else 0 : ℂ) * l u]
     refine setIntegral_congr_fun hm fun g hg => ?_
     have : π g v ∈ hf.toFinset := hf.mem_toFinset.2 ⟨⟨g, hg⟩, rfl⟩
     simp [this]

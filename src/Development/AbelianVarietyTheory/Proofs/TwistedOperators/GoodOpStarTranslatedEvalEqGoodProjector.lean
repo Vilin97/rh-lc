@@ -135,7 +135,7 @@ theorem goodOp_star_ev : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : 
         symm
         refine Finset.sum_eq_zero fun γ _ => Set.indicator_of_notMem (fun hm => hk ((hCmem γ k).1 hm).1) _
     rw [integral_congr_ae (Filter.Eventually.of_forall hpt)]
-    rw [integral_finset_sum _ (fun γ _ => (integrable_indicator_iff (hCmeas γ)).2
+    rw [integral_finsetSum _ (fun γ _ => (integrable_indicator_iff (hCmeas γ)).2
       (integrableOn_const (by rw [hCvol]; exact hvol_fin.ne)))]
     refine Finset.sum_congr rfl fun γ _ => ?_
     rw [integral_indicator_const _ (hCmeas γ), Measure.real, hCvol, ← hvol, Complex.real_smul]

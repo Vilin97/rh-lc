@@ -94,7 +94,7 @@ theorem subY_eq_sum_averages : ∀ (ι : Type) [Fintype ι] (a b : ℕ) (hab : a
     obtain ⟨C, hC⟩ := (isCompact_entries_le_one (ι := ι) (a := a)).exists_bound_of_continuousOn (hcont j).continuousOn
     refine Integrable.of_bound ((hcont j).comp hr.cont).aestronglyMeasurable C (Filter.Eventually.of_forall fun k => ?_)
     exact hC _ fun τ i i' => entry_norm_bound_of_unitary (hr.uni k τ) i i'
-  rw [← integral_finset_sum _ hint]
+  rw [← integral_finsetSum _ hint]
   simp_rw [hpt]
   simp
 

@@ -15117,7 +15117,7 @@ theorem first_identity_of_integral (h : IntHyp) : EnergyPolynomialInPoints := by
     have : (fun q => ((actA P (prodC P l Y) (chiJ P j c ε) π : SmQ P.r P.TT) : Qp P.r P.TT → ℂ) q *
         conj (((chiJ P j c ε π : SmQ P.r P.TT) : Qp P.r P.TT → ℂ) q)) = fun q => ∑ κ, mono κ Y * f κ π q :=
       funext fun q => hF Y π q
-    rw [this, integral_finset_sum _ (fun κ _ => (hint κ π).const_mul _)]
+    rw [this, integral_finsetSum _ (fun κ _ => (hint κ π).const_mul _)]
     exact Finset.sum_congr rfl fun κ _ => integral_const_mul _ _
   simp_rw [hI]
   rw [Finset.sum_comm, Complex.re_sum]
@@ -16206,7 +16206,7 @@ theorem multAdj {m : ℕ} (hD : JDecay P L j m) {a β s : A P (DQ P)} {C : ℝ} 
             exact mul_le_mul (hMb q π π') (hBb q π) (norm_nonneg _) hC0
       _ = _ := by rw [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
   refine ⟨int1, int2, ?_⟩
-  rw [ipA_eq, ipA_eq, ← integral_finset_sum _ fun π _ => int1 π, ← integral_finset_sum _ fun π _ => int2 π]
+  rw [ipA_eq, ipA_eq, ← integral_finsetSum _ fun π _ => int1 π, ← integral_finsetSum _ fun π _ => int2 π]
   congr 1; funext q
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [e1, e2, map_sum, map_mul, Complex.conj_conj, Finset.mul_sum, Finset.sum_mul]
@@ -17590,9 +17590,9 @@ theorem pair_sum {N : ℕ} (j : M.Ty P → SmQ P.r P.TT) (F Gf : Qp P.r P.TT →
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← hF, ← hG, Formalism.FourierDecayAlt.P.MAx3.G.iotaOf_ixOf]
   simp_rw [hpt]
-  rw [integral_finset_sum _ fun e _ => integrable_finset_sum _ fun π _ => hint e π]
+  rw [integral_finsetSum _ fun e _ => integrable_finset_sum _ fun π _ => hint e π]
   refine Finset.sum_congr rfl fun e _ => ?_
-  rw [integral_finset_sum _ fun π _ => hint e π, AD.ipA_eq]
+  rw [integral_finsetSum _ fun π _ => hint e π, AD.ipA_eq]
 
 end
 
@@ -17944,7 +17944,7 @@ theorem adjoint_bounded : Formalism.FourierDecayAlt.MA.AdjBQ := by
       unfold LE.pr
       exact Fintype.sum_prod_type _
     rw [integral_congr_ae (Filter.Eventually.of_forall hpt)]
-    rw [integral_finset_sum _ fun b _ => pair_int j _ _ _ _ (hF b) (hG b) (fun e π => swap_int ((QR b e).1 π))]
+    rw [integral_finsetSum _ fun b _ => pair_int j _ _ _ _ (hF b) (hG b) (fun e π => swap_int ((QR b e).1 π))]
     exact Finset.sum_congr rfl fun b _ => pair_sum j _ _ _ _ (hF b) (hG b) (fun e π => swap_int ((QR b e).1 π))
   show (∫ ω, LE.pr (baseQ P) (fun _ _ => 1)
       (gstL P l L' w Y (fun ω k => (dwW P l (Y :: w) ω k : ℂ) * gL P l L' w Y (Xw P l L' (ju P j) w) ω k))

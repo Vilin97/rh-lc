@@ -535,7 +535,7 @@ theorem unrCorr_inert : GlobalTheory.Hk3.HoweUnram → ∀ (D : D7) (G : Type) [
       rw [map_smul, thetaKO_smul, mul_comm]
       rfl
     simp_rw [e1]
-    exact integral_finset_sum _ fun k _ => integrable_contAut hW hpos hν.1.1 hν.2 (hvac _).1 (hxk k) g
+    exact integral_finsetSum _ fun k _ => integrable_contAut hW hpos hν.1.1 hν.2 (hvac _).1 (hxk k) g
 
   have : IsTopologicalGroup (GA D (Vc D i)) := Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.Unfold.topGroupHA _ _
   let X := contAut (Vc D i)

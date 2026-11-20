@@ -108,7 +108,7 @@ theorem coefN_eq_integral {F E : Type} [Field F] [NumberField F] [Field E] [Numb
   have hP := fun i => pure_identity σ hCM J hJ hn hM ψ hψ dx hdx db hdb d b laminf lam hinf hlam minf hminf m hm T hT I hI S
     (φ i) (hφ i) (A i) (hA i) (hAl i)
   have hΦe : Φ = fun X => ∑ i, pureN (φ i) (A i) X := funext hsum
-  rw [hΦe, GlobalTheory.T.siegel_weil_orbital_integral_formula F E σ hCM M J hJ n hn hM ψ hψ dx hdx db hdb T k _ hSB, integral_finset_sum _ fun i _ => (hP i).1]
+  rw [hΦe, GlobalTheory.T.siegel_weil_orbital_integral_formula F E σ hCM M J hJ n hn hM ψ hψ dx hdx db hdb T k _ hSB, integral_finsetSum _ fun i _ => (hP i).1]
   exact Finset.sum_congr rfl fun i _ => (hP i).2
 
 end GlobalTheory.CompanionTheory.WhitFree

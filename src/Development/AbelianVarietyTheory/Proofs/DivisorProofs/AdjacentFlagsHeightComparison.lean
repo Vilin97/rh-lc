@@ -119,7 +119,7 @@ theorem total_sum (hR : Nonempty (AnRead p σ D)) {J : Type} [Fintype J] {ρ : J
     (h : ∀ j, IsDens (ρ j)) : total (fun c y => ∑ j, ρ j c y) = ∑ j, total (ρ j) := by
   obtain ⟨ν, w, _, -, -, -, h₁, h₂⟩ := exists_refMeasure k X p σ D hR
   choose g hg e using fun j => h₁ (ρ j) (h j)
-  rw [Finset.sum_congr rfl fun j _ => (h₂ _ _ (hg j) (e j)).2, ← integral_finset_sum _ fun j _ =>
+  rw [Finset.sum_congr rfl fun j _ => (h₂ _ _ (hg j) (e j)).2, ← integral_finsetSum _ fun j _ =>
     (hg j).integrable_of_hasCompactSupport (μ := ν) (HasCompactSupport.of_compactSpace _)]
   refine (h₂ _ _ (continuous_finset_sum _ fun j _ => hg j) fun c y hy => ?_).2
   rw [Finset.sum_mul]
@@ -184,7 +184,7 @@ theorem green_sum (hR : Nonempty (AnRead p σ D)) {J : Type} [Fintype J] (a : J 
         ring)
   rw [(hmeas δ e he hew).2, ← main]
   simp only [hs]
-  rw [integral_const_mul, integral_finset_sum _ fun j _ => (key j).1.const_mul _]
+  rw [integral_const_mul, integral_finsetSum _ fun j _ => (key j).1.const_mul _]
   refine congrArg (2 * ·) (Finset.sum_congr rfl fun j _ => ?_)
   rw [integral_const_mul, ← (key j).2, p₁, p₂, setIntegral_congr_fun hSm hF, setIntegral_congr_fun hSm hF]
 

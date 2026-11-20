@@ -195,13 +195,13 @@ theorem ff_ident_of (χ : ∀ n : ℕ, (Fin n → ℝ) → ℕ → ℂ) (q1 : QO
       ffg_int_mul hψL2 (hL2 j)
     have I2 : ∀ i ∈ t, Integrable (fun g => φ i g * star (φ j g)) (Formalism.REAL.muG ε) :=
       fun i _ => ffg_int_mul (hL2 i) (hL2 j)
-    rw [integral_sub I1 (integrable_finset_sum t I2), integral_finset_sum t I2, F2 j hOj,
+    rw [integral_sub I1 (integrable_finset_sum t I2), integral_finsetSum t I2, F2 j hOj,
       Finset.sum_eq_zero fun i hi => F3 i (by rw [ht] at hi; exact (Finset.mem_filter.1 hi).2) j hOj, sub_zero]
   have hzero : ∫ g, h g * star (h g) ∂(Formalism.REAL.muG ε) = 0 := by
     have e2 : ∀ g, h g * star (h g) = ∑ j ∈ s, h g * star (φ j g) := fun g => by
       rw [← Finset.mul_sum, ← star_sum, ← hh' g]
     simp_rw [e2]
-    rw [integral_finset_sum _ fun j _ => ffg_int_mul hhL2 (hL2 j)]
+    rw [integral_finsetSum _ fun j _ => ffg_int_mul hhL2 (hL2 j)]
     exact Finset.sum_eq_zero key
   have h0 : h = 0 := ffg_zero_of_int hhC hhL2 hzero
   have hpt : ∀ g, ⟪x, Ψ (umat g) y⟫_ℂ = ∑ i ∈ t, φ i g := fun g => by

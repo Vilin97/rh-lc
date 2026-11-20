@@ -208,7 +208,7 @@ theorem ell_moment (ℓ : MvPolynomial (Fin 3) ℝ →ₗ[ℝ] ℝ) (Q : MvPolyn
   have h := fun p : S2 × S2 => ell_pp ℓ (fun p : S2 × S2 => crd p.1) (fun p => crd p.2) Q p
   simp only [pp_eq] at h
   simp only [h, Finset.mul_sum]
-  rw [integral_finset_sum _ fun m _ => by
+  rw [integral_finsetSum _ fun m _ => by
     simpa only [mul_assoc] using (hI m).mul_const (ℓ (monomial m 1))]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [momentPoly, map_sum]

@@ -50,7 +50,7 @@ theorem conv_mono_mem (ε : Fin n → Bool) (s : List (Fin n × Fin n × Bool)) 
       funext k'
       simp only [Finset.sum_apply, Pi.mul_apply]
       simp only [← integral_const_mul]
-      rw [← integral_finset_sum]
+      rw [← integral_finsetSum]
       · refine integral_congr_ae (Filter.Eventually.of_forall fun k => ?_)
         have h1 : mono ε (c :: s) (k'⁻¹ * k) = coord ε c (k'⁻¹ * k) * mono ε s (k'⁻¹ * k) := by simp [mono]
         simp only [h1, coord_mul_eq_sum, Finset.sum_mul]

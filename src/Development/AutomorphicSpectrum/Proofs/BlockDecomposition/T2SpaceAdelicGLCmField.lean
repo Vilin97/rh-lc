@@ -269,7 +269,7 @@ theorem abstract_unfold
   · by_contra hcT
     exact hc (hT0 _ fun x => hzero c hcT _ (Quot.out_eq c) x)
   · simp_rw [hpt]
-    rw [integral_finset_sum T fun c _ => hint c, finsum_eq_sum_of_support_subset (s := T)]
+    rw [integral_finsetSum T fun c _ => hint c, finsum_eq_sum_of_support_subset (s := T)]
     · exact Finset.sum_congr rfl fun c _ => (hclass c).symm
     · intro c hc
       by_contra hcT

@@ -62,7 +62,7 @@ private theorem coset_fun {G : Type*} [Group G] [TopologicalSpace G] [IsTopologi
       (HasCompactSupport.intro (coset_cpt U ho hc c).2 fun x hx => by
         rw [Pi.smul_apply', Set.indicator_of_notMem hx, zero_smul])
   refine (integral_congr_ae (Eventually.of_forall h1)).trans ?_
-  rw [integral_finset_sum _ h2]
+  rw [integral_finsetSum _ h2]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [← integral_mul_left_eq_self _ c.out, coset_pre]
   congr 1

@@ -148,7 +148,7 @@ theorem isHeatKernel_pullOp {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E
             lamL S (pullFullL a (∫ x in D, K t z (per (τ b) x) (rhoL S (f (per (τ b) x))))) := by
       filter_upwards [self_mem_nhdsWithin] with t ht z
       simp only [pullOp_apply]
-      rw [integral_finset_sum]
+      rw [integral_finsetSum]
       · exact Finset.sum_congr rfl fun S _ =>
           ((lamL S).comp (pullFullL a)).integral_comp_comm (hint t ht z S)
       · exact fun S _ => ((lamL S).comp (pullFullL a)).integrable_comp (hint t ht z S)

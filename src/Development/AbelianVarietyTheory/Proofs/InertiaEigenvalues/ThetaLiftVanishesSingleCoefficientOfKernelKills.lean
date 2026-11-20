@@ -73,7 +73,7 @@ theorem integral_expand {H W ι : Type} [MeasurableSpace H] (ν : Measure H) (s 
     rw [map_smul, smul_eq_mul, Module.Basis.coord_apply]
     ring
   rw [show (fun h => θ h * l (F h)) = fun h => ∑ k, l (b k) * (θ h * b.coord k (F h)) from funext e,
-    integral_finset_sum _ fun k _ => (hf k).const_mul (l (b k))]
+    integral_finsetSum _ fun k _ => (hf k).const_mul (l (b k))]
   exact Finset.sum_congr rfl fun k _ => integral_const_mul _ _
 
 theorem downInt_expand (R : RealDat D A Ks) (i : Fin D.R.m) (t : T) (y : (R.HV i t).H) (f : WO (Vc D i) (Wc D i) → ℂ)
@@ -244,7 +244,7 @@ theorem thF_eq_sum (hP : R.IsThP)
     fun h => theta_expand R i t g _ b h _
   rw [show (fun h => thetaKO (R.ωP i t) h g (R.ptP i t (R.ioP i (PiTensorProduct.tprod ℂ v) (R.extV i t y h)))) =
       fun h => ∑ k, thetaKO (R.ωP i t) h g (phi R i t (PiTensorProduct.tprod ℂ v) (b k)) * b.coord k (R.extV i t y h)
-      from funext e, integral_finset_sum _ fun k _ => hint _ _ (hth _)]
+      from funext e, integral_finsetSum _ fun k _ => hint _ _ (hth _)]
   rfl
 
 end GlobalTheory.GenRealSchur

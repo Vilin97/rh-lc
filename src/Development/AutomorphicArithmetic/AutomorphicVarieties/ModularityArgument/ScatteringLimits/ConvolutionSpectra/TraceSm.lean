@@ -48,7 +48,7 @@ theorem UpperTheory.V.Z.IntegralApplyAeEq.traceSm :
   have sub : ∀ {ι : Type} [Fintype ι] (g : ι → ℝ → ℂ), (∀ i, Continuous (g i)) → ∀ a b : ℝ,
       ∫ y in a..b, ∑ i, g i (2 * y) = (1 / 2 : ℂ) * ∑ i, ∫ s in (2 * a)..(2 * b), g i s := by
     intro ι _ g hg a b
-    rw [intervalIntegral.integral_finset_sum fun i _ =>
+    rw [intervalIntegral.integral_finsetSum fun i _ =>
       (show Continuous fun y => g i (2 * y) from (hg i).comp (continuous_const.mul continuous_id)).intervalIntegrable _ _, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [intervalIntegral.integral_comp_mul_left _ two_ne_zero]

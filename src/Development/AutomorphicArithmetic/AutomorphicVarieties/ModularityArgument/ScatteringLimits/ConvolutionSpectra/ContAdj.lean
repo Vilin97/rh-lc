@@ -89,7 +89,7 @@ private theorem summ (J : L V ≃ₗᵢ[ℂ] H) (a b : ℝ) {k : ℝ → V →L[
   have ci : ∀ {f : ℝ → ℝ}, Continuous f → IntegrableOn f (Ioc a b) := fun hf => hf.integrableOn_Icc.mono_set Ioc_subset_Icc_self
   refine summable_of_sum_le (c := ∫ y in Ioc a b, ∑ i, ‖k y (stdOrthonormalBasis ℂ V i)‖ ^ 2) (fun _ => sq_nonneg _) fun s => ?_
   simp only [normEq J a b hk hY]
-  rw [← integral_finset_sum _ fun m _ => ci (cSq hk _)]
+  rw [← integral_finsetSum _ fun m _ => ci (cSq hk _)]
   refine integral_mono (integrable_finset_sum _ fun m _ => ci (cSq hk _))
     (ci (continuous_finset_sum _ fun i _ => (hk.clm_apply continuous_const).norm.pow 2)) fun y => ?_
   exact sum_le_hasSum s (fun _ _ => sq_nonneg _) (ptSumR c (k y))

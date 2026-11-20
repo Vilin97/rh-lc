@@ -54,7 +54,7 @@ theorem linRedC : LinRedC := by
       (Filter.Eventually.of_forall (fun β => (hpsi _).le))
   simp only
   simp_rw [← MeasureTheory.integral_const_mul]
-  rw [← MeasureTheory.integral_finset_sum]
+  rw [← MeasureTheory.integral_finsetSum]
   · refine MeasureTheory.integral_congr_ae (Filter.Eventually.of_forall (fun β => ?_))
     simp only [flat, section_linear_finset_sum, Finset.mul_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl (fun i _ => ?_)

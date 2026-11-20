@@ -158,9 +158,9 @@ theorem qLast_of_pin : ∀ (D : D7) (c : Comm D) (v : VCom c) (t : Tup c) (w : V
       (c.lst j h (v.τ j h) (t.sBF j 0 h) (t.om j (g, 1) X) Y) (E (h', 1)) ∂c.volT.μ =
       ∫ h' in c.volT.𝓕, f h' * G α (E (h', 1)) ∂c.volT.μ := by
     intro α
-    rw [key α, integral_finset_sum _ fun g _ => ((han α).1 _ (hom g) f hfc).const_mul _]
+    rw [key α, integral_finsetSum _ fun g _ => ((han α).1 _ (hom g) f hfc).const_mul _]
     exact Finset.sum_congr rfl fun g _ => (integral_const_mul _ _).symm
-  rw [Finset.sum_congr rfl fun α _ => hL α, ← integral_finset_sum _ fun α _ => hint α]
+  rw [Finset.sum_congr rfl fun α _ => hL α, ← integral_finsetSum _ fun α _ => hint α]
 
   have hcard : Fintype.card (t.Ch (j + 1 + 1)) = 1 := by
     rw [Fintype.card_congr (F.eqv (j + 1 + 1)), Fintype.card_pi]

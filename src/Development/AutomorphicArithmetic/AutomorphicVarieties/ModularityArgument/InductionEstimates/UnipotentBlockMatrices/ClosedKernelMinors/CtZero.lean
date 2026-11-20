@@ -118,7 +118,7 @@ private theorem thFix {K : Type} [Field K] [NumberField K] (D : TypeDat K (2 + 2
     exact ⟨g * k, ⟨k, hk, rfl⟩, hq⟩
   have h1 := hs 1 D.U.one_mem
   simp only [mul_one] at h1
-  rw [h1, ← Finset.sum_congr rfl fun q _ => hfix ((q.out : G1 K (2 + 2)) * g), ← integral_finset_sum]
+  rw [h1, ← Finset.sum_congr rfl fun q _ => hfix ((q.out : G1 K (2 + 2)) * g), ← integral_finsetSum]
   · refine integral_congr_ae ?_
     filter_upwards [D.supp] with k hk
     rw [hs k hk, Finset.mul_sum]

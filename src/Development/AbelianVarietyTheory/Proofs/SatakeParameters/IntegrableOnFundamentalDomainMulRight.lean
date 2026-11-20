@@ -73,11 +73,11 @@ theorem setIntegral_kernel_doubleCoset_adjoint :
   calc ∫ h in 𝓕, Kn g h * ∑ a ∈ A, F (h * a) ∂μ
       = ∑ a ∈ A, ∫ h in 𝓕, Kn g h * F (h * a) ∂μ := by
         simp_rw [Finset.mul_sum]
-        exact integral_finset_sum _ fun a _ => hint g a
+        exact integral_finsetSum _ fun a _ => hint g a
     _ = ∑ a ∈ A', ∫ h in 𝓕, Kn g (h * a) * F h ∂μ := by
         rw [Finset.sum_congr rfl h1, Finset.sum_congr rfl h2, Finset.sum_const, Finset.sum_const,
           hcard]
-    _ = ∫ h in 𝓕, ∑ a ∈ A', Kn g (h * a) * F h ∂μ := (integral_finset_sum _ h2i).symm
+    _ = ∫ h in 𝓕, ∑ a ∈ A', Kn g (h * a) * F h ∂μ := (integral_finsetSum _ h2i).symm
     _ = ∫ h in 𝓕, ∑ j ∈ Finset.range n, c j * ∑ b ∈ B j, Kn (g * b) h * F h ∂μ := by
         congr 1
         funext h
@@ -85,9 +85,9 @@ theorem setIntegral_kernel_doubleCoset_adjoint :
         refine Finset.sum_congr rfl fun j _ => ?_
         rw [mul_assoc, Finset.sum_mul]
     _ = _ := by
-        rw [integral_finset_sum]
+        rw [integral_finsetSum]
         · refine Finset.sum_congr rfl fun j _ => ?_
-          rw [integral_const_mul, integral_finset_sum _ fun b _ => hi1 (g * b)]
+          rw [integral_const_mul, integral_finsetSum _ fun b _ => hi1 (g * b)]
         · intro j _
           exact (integrable_finset_sum _ fun b _ => hi1 (g * b)).const_mul _
 

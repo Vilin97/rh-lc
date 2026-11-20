@@ -115,14 +115,14 @@ theorem holValueAt_integral_of_expansion {X ι : Type} [MeasurableSpace X] {ν :
     exact integrable_finset_sum _ fun j _ => (hc j).mul_const (w j)
   refine ⟨hΨe, hΨi, ?_⟩
   have e1 : ∫ x, Ψ x ∂ν = ∑ j, (∫ x, c j x ∂ν) * w j := by
-    rw [funext hΨe, integral_finset_sum _ fun j _ => (hc j).mul_const (w j)]
+    rw [funext hΨe, integral_finsetSum _ fun j _ => (hc j).mul_const (w j)]
     exact Finset.sum_congr rfl fun j _ => integral_mul_const _ _
   rw [e1]
   refine (holValueAt_sum Finset.univ fun j _ => (holValueAt_const (∫ x, c j x ∂ν) s₀).mul (hv j)).congr
     ⟨σ, fun s hs => ?_⟩
   simp only
   rw [integral_congr_ae (Eventually.of_forall (hexp s hs)),
-    integral_finset_sum _ fun j _ => (hc j).mul_const (v j s)]
+    integral_finsetSum _ fun j _ => (hc j).mul_const (v j s)]
   exact Finset.sum_congr rfl fun j _ => (integral_mul_const _ _).symm
 
 end Passage

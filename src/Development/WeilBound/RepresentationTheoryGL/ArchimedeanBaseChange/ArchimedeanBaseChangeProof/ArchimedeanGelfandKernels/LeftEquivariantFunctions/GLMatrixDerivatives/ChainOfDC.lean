@@ -68,7 +68,7 @@ theorem param_dc {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] [Complete
     intro t
     simp only [DC, Finset.smul_sum, map_add, map_smul, smul_add]
   rw [integral_congr_ae (Filter.Eventually.of_forall hpt)]
-  rw [integral_finset_sum _ (fun p _ => (ε (hb p)).integrable_comp (iab p))]
+  rw [integral_finsetSum _ (fun p _ => (ε (hb p)).integrable_comp (iab p))]
   simp only [DC, hRd _ x hx]
   refine Finset.sum_congr rfl (fun p _ => ?_)
   rw [(ε (hb p)).integral_comp_comm (iab p),

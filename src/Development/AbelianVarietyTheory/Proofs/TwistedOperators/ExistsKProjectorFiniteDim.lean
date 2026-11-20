@@ -299,7 +299,7 @@ theorem exists_fix {π : UJ ε →* (U →L[ℂ] U)} (hπ : IsUnitaryRep π) (S 
           refine integral_congr_ae (Filter.Eventually.of_forall fun k => ?_)
           simp only [hexp, Finset.smul_sum, smul_smul]
       _ = ∑ j, (∫ k, e k * F (i, j) k ∂(muK ε)) • (b j : U) := by
-          rw [integral_finset_sum _ fun j _ =>
+          rw [integral_finsetSum _ fun j _ =>
             ((GlobalTheory.KFinReproduce.integrable_mul hec (hFc (i, j))).smul_const _)]
           simp only [integral_smul_const]
       _ = ∑ j, F (i, j) 1 • (b j : U) := by simp only [hej]

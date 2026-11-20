@@ -312,8 +312,8 @@ theorem biComb_avg (ha : IsWeilDatumO ψ A S χA χS oma) (hb : IsWeilDatumO ψ 
     simp only [biComb, GlobalTheory.FrComb.comb_apply, Finset.mul_sum, avg, integral_const_mul, mul_assoc]
   rw [e1]
   simp only [avg, s1]
-  rw [← Finset.sum_congr rfl fun x _ => integral_finset_sum _ fun y _ => hi _ _ _,
-    ← integral_finset_sum _ fun x _ => integrable_finset_sum _ fun y _ => hi _ _ _]
+  rw [← Finset.sum_congr rfl fun x _ => integral_finsetSum _ fun y _ => hi _ _ _,
+    ← integral_finsetSum _ fun x _ => integrable_finset_sum _ fun y _ => hi _ _ _]
   congr 1
   refine Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ => ?_
   ring

@@ -134,9 +134,9 @@ theorem casInv_lap_symm {d : ℕ} {a b : KG ε → ℂ} (ha : a ∈ polyV ε d) 
     ∫ k, a k * (∑ j, rder ε [X j, X j] b) k ∂(muK ε) =
       ∫ k, (∑ j, rder ε [X j, X j] a) k * b k ∂(muK ε) := by
   simp only [Finset.sum_apply, Finset.mul_sum, Finset.sum_mul]
-  rw [integral_finset_sum _ (fun j _ => casInv_integrable (f := fun k => a k * rder ε [X j, X j] b k)
+  rw [integral_finsetSum _ (fun j _ => casInv_integrable (f := fun k => a k * rder ε [X j, X j] b k)
       ((continuous_of_mem ha).mul (continuous_of_mem (casInv_rder2_mem (hX j) hb)))),
-    integral_finset_sum _ (fun j _ => casInv_integrable (f := fun k => rder ε [X j, X j] a k * b k)
+    integral_finsetSum _ (fun j _ => casInv_integrable (f := fun k => rder ε [X j, X j] a k * b k)
       ((continuous_of_mem (casInv_rder2_mem (hX j) ha)).mul (continuous_of_mem hb)))]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [casInv_rder_pair, casInv_rder_pair]
@@ -157,7 +157,7 @@ theorem casInv_energy {d : ℕ} {p : KG ε → ℂ} (hp : p ∈ polyV ε d) :
     ∫ k, (∑ j, rder ε [X j, X j] p) k * star (p k) ∂(muK ε) =
       -(((∑ j, ∫ k, ‖rder ε [X j] p k‖ ^ 2 ∂(muK ε) : ℝ)) : ℂ) := by
   simp only [Finset.sum_apply, Finset.sum_mul]
-  rw [integral_finset_sum _ (fun j _ => casInv_integrable (f := fun k => rder ε [X j, X j] p k * star (p k))
+  rw [integral_finsetSum _ (fun j _ => casInv_integrable (f := fun k => rder ε [X j, X j] p k * star (p k))
       ((continuous_of_mem (casInv_rder2_mem (hX j) hp)).mul (continuous_star.comp (continuous_of_mem hp))))]
   push_cast
   rw [← Finset.sum_neg_distrib]

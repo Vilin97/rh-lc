@@ -317,7 +317,7 @@ theorem whitTAdd : PositivityTheory.PfSWUS.WhitTAdd := by
       rw [hsum, jt_eq hS.hω hw hC.1, map_sum, AddSubmonoidClass.coe_finset_sum, Finset.sum_apply]
     exact Finset.sum_congr rfl fun j _ => (jt_eq hS.hω hw hC.1 (Ψ j) b).symm
   simp only [whitT]
-  rw [← integral_finset_sum _ fun j _ => hI j]
+  rw [← integral_finsetSum _ fun j _ => hI j]
   refine integral_congr_ae (Filter.Eventually.of_forall fun b => ?_)
   simp only [hJ, Finset.mul_sum, Finset.sum_mul]
   rfl

@@ -53,7 +53,7 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.dropP_pf :
         ∑ i, (v : H E n 0 → ℂ) z * inner ℂ (ContinuousLinearMap.adjoint Q (s.k₁ x i)) (s.k₂ (th z) i) := fun z => by
       simp only [hf, Finset.mul_sum, ContinuousLinearMap.adjoint_inner_left]
     simp only [hpt]
-    rw [integral_finset_sum _ fun i _ => (hw i).1]
+    rw [integral_finsetSum _ fun i _ => (hw i).1]
     refine Finset.sum_eq_zero fun i _ => ?_
     rw [(hw i).2, ContinuousLinearMap.adjoint_inner_left]
     exact hz _ i)

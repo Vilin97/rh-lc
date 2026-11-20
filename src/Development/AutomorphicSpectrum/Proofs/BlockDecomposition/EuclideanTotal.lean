@@ -166,7 +166,7 @@ lemma char_zero (lam : Measure Z) [lam.IsAddHaarMeasure] (h : Z → ℝ) (hc : C
       push_cast
       rw [mul_pow]
       ring
-    rw [hF, integral_finset_sum]
+    rw [hF, integral_finsetSum]
     · refine Finset.sum_eq_zero fun n _ => ?_
       rw [integral_const_mul, integral_complex_ofReal, hm ℓ n]
       simp

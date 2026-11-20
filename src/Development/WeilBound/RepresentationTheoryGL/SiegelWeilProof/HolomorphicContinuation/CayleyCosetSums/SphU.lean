@@ -214,9 +214,9 @@ theorem sphU : SphU := by
     beta_reduce at h1 h2
     rw [← h1, h2]
   simp only [hR]
-  rw [integral_finset_sum _ (fun σ _ => ?_)]
+  rw [integral_finsetSum _ (fun σ _ => ?_)]
   · refine Finset.sum_congr rfl fun σ _ => ?_
-    rw [integral_finset_sum _ (fun τ _ => ?_)]
+    rw [integral_finsetSum _ (fun τ _ => ?_)]
     · refine Finset.sum_congr rfl fun τ _ => ?_
       rw [integral_const_mul]
     · exact ((ContinuousMultilinearMap.apply ℂ _ ℂ _).integrable_comp (hint _ g hgW)).const_mul _

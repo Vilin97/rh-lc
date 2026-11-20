@@ -505,11 +505,11 @@ theorem hasFDerivAt_J (Q : Sw) {h : M22} {t : ℂ} (hh : (Matrix.of h).det ≠ 0
         ell M i j m * (fX (PH i j Q) h t M p - if i = j then fX Q h t M p else 0) +
         ellc M i j m * (fX (PA i j Q) h t M p - if i = j then fX Q h t M p else 0)) :=
       fun i j => (hI _ _ i j).add (hI _ _ i j)
-    rw [integral_finset_sum _ fun i _ => integrable_finset_sum _ fun j _ => hadd i j]
+    rw [integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ => hadd i j]
     simp only [dInn, ContinuousLinearMap.sum_apply, ContinuousLinearMap.add_apply,
       ContinuousLinearMap.smul_apply, smul_eq_mul]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [integral_finset_sum _ fun j _ => hadd i j]
+    rw [integral_finsetSum _ fun j _ => hadd i j]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [integral_add (hI _ _ i j) (hI _ _ i j), integral_term _ _ _ (hfi _) (hfi _),
       integral_term _ _ _ (hfi _) (hfi _), J_eq, J_eq, J_eq, mul_comm, mul_comm (ellc M i j m)]
@@ -639,9 +639,9 @@ theorem hasFDerivAt_intG (hI : IbpBound) (hMj : MajScaled) (k : ℕ) (Ψ : Sw) {
         (G k (PA i j Ψ) M p - if i = j then G k Ψ M p else 0) • ellc M i j) :=
       fun i j => (hT _ i j _).1.add (hT _ i j _).1
     simp only [dG]
-    rw [integral_finset_sum _ fun i _ => integrable_finset_sum _ fun j _ => hadd i j]
+    rw [integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ => hadd i j]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [integral_finset_sum _ fun j _ => hadd i j]
+    rw [integral_finsetSum _ fun j _ => hadd i j]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [integral_add (hT _ i j _).1 (hT _ i j _).1, (hT _ i j _).2, (hT _ i j _).2]
   rw [e] at hmain

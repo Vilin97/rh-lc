@@ -67,7 +67,7 @@ theorem exists_integral_eq_sum {G : Type} [Group G] [TopologicalSpace G] [Contin
         integral_congr_ae (Filter.Eventually.of_forall hsum)
     _ = ∑ q ∈ Q, ∫ g,
         ({g : G | (QuotientGroup.mk g : G ⧸ K) = q}).indicator (fun _ => F (Quotient.out q)) g ∂μ :=
-        integral_finset_sum Q hint
+        integral_finsetSum Q hint
     _ = _ := by
       rw [Finset.mul_sum]
       refine Finset.sum_congr rfl fun q _ => ?_

@@ -175,10 +175,10 @@ theorem capacity_adjoint_integral_scalar : CapAdjIntOfScalar := by
     filter_upwards [Formalism.FourierDecayAlt.P.HaarUniquenessConjugation.ae_mem hμ] with x hx
     rw [hCV' _ (B.GV k r) (b i j) (ckOn_of_contDiff (hb_s i j) _ _) _ hx hx]
   rw [integral_congr_ae (Eventually.of_forall hP1), integral_congr_ae hP2,
-    integral_finset_sum _ (fun i _ => integrable_finset_sum _ fun j _ => hI1 i j),
-    integral_finset_sum _ (fun i _ => integrable_finset_sum _ fun j _ => hI2 i j)]
+    integral_finsetSum _ (fun i _ => integrable_finset_sum _ fun j _ => hI1 i j),
+    integral_finsetSum _ (fun i _ => integrable_finset_sum _ fun j _ => hI2 i j)]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [integral_finset_sum _ (fun j _ => hI1 i j), integral_finset_sum _ (fun j _ => hI2 i j)]
+  rw [integral_finsetSum _ (fun j _ => hI1 i j), integral_finsetSum _ (fun j _ => hI2 i j)]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [integral_const_mul, integral_const_mul,
     hS k r Y μ hμ (a i j) (b i j) (ha_s i j) (ha_c i j) (hb_s i j) (hb_c i j)]

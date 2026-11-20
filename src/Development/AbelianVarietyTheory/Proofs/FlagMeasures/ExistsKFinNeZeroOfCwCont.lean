@@ -137,7 +137,7 @@ theorem exists_kFin_ne_zero_of_cwCont : PI.KFinSmooth → ∀ (k r : ℕ) (ε : 
         rw [hab, Finset.sum_smul]
         simp only [mul_smul]
       simp_rw [hx]
-      rw [integral_finset_sum Finset.univ (f := fun i x => a i y • (b i x • R.σ (κ x) v))
+      rw [integral_finsetSum Finset.univ (f := fun i x => a i y • (b i x • R.σ (κ x) v))
         (fun i _ => (hint _ (b i).continuous).smul (a i y))]
       simp only [integral_smul, hc]
     have hFT : FiniteDimensional ℂ (Submodule.span ℂ (Set.range c)) :=

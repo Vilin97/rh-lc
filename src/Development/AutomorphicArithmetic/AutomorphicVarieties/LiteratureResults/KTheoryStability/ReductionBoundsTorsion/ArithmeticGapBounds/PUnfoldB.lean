@@ -163,7 +163,7 @@ theorem unfold_fd (Λ S : Type) [Group Λ] [Countable Λ] [Group S] [MeasurableS
     rw [hD'.setIntegral_eq hD0 hinvΔ, hD0def, integral_iUnion_ae hmeasc hdisj hint0, tsum_fintype]
     have hterm : ∀ c, ∫ x in rep j B K c • D, u x ∂μ = ∫ x in D, u (rep j B K c * x) ∂μ :=
       fun c => (hmp _).setIntegral_image_emb (hemb _) u D
-    rw [Finset.sum_congr rfl fun c _ => hterm c, ← integral_finset_sum _ fun c _ => hcs c,
+    rw [Finset.sum_congr rfl fun c _ => hterm c, ← integral_finsetSum _ fun c _ => hcs c,
       ← integral_const_mul]
     congr 1
     ext x

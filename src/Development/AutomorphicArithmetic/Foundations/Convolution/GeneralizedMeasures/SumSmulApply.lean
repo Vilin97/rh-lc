@@ -124,5 +124,5 @@ theorem UpperTheory.ConvolutionTheory.GM.twLin :
       fun y => twK_sum θ s c f _
     unfold twInt
     simp only [e]
-    rw [integral_finset_sum _ fun i hi => (twKQ_int θ (f i) Z (h i hi)).const_mul _]
+    rw [integral_finsetSum _ fun i hi => (twKQ_int θ (f i) Z (h i hi)).const_mul _]
     simp only [integral_const_mul]

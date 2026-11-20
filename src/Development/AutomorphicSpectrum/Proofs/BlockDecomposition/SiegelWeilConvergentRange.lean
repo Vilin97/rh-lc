@@ -74,7 +74,7 @@ theorem integrable_starN : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
   have hdec : starN σ J ψ dx Φ = fun b => ∑ i, starN σ J ψ dx (fun X => P i (projInf X) * Q i (projFin X)) b := by
     funext b
     unfold starN
-    rw [← integral_finset_sum _ fun i _ => GlobalTheory.T.twisted_schwartz_function_integrable F E σ hCM M J n ψ hψ dx hdx.1 _ (hpureSB i) b]
+    rw [← integral_finsetSum _ fun i _ => GlobalTheory.T.twisted_schwartz_function_integrable F E σ hCM M J n ψ hψ dx hdx.1 _ (hpureSB i) b]
     refine integral_congr_ae (Filter.Eventually.of_forall fun X => ?_)
     show Φ X * _ = _
     rw [hsum, Finset.sum_mul]

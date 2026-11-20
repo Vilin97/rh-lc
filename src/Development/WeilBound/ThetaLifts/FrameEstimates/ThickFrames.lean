@@ -136,11 +136,11 @@ theorem dom_sum (hB : ThetaBasic) (hp : IsPair B M χX χW om r s r' s') {𝓕} 
           rw [hsum]
           exact norm_sum_le _ _
       _ = ∑ i, ∫ g in M.dom, ‖theta om (pureA F (f i) (φ i)) g h‖ ∂M.μ :=
-          integral_finset_sum _ fun i _ => (hconv i h).norm
+          integral_finsetSum _ fun i _ => (hconv i h).norm
   · show ∫ g in M.dom, theta om (∑ i, pureA F (f i) (φ i)) g h ∂M.μ =
       ∑ i, ∫ g in M.dom, theta om (pureA F (f i) (φ i)) g h ∂M.μ
     simp_rw [hsum]
-    exact integral_finset_sum _ fun i _ => hconv i h
+    exact integral_finsetSum _ fun i _ => hconv i h
 
 end
 

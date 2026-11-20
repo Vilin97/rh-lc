@@ -172,7 +172,7 @@ theorem wh_sum {φ : G2 → ℂ} (hφ : Continuous φ) {ι : Type} (S : Finset �
     (h : ∀ t : 𝔸[ℚ], ∑ b ∈ S, φ (uni2 t * G b) = c * φ (uni2 t * G₀)) :
     ∑ b ∈ S, Wh φ (G b) = c * Wh φ G₀ := by
   simp only [wh_eq]
-  rw [← integral_finset_sum _ (fun b _ => wh_integrable hφ (G b)), ← integral_const_mul]
+  rw [← integral_finsetSum _ (fun b _ => wh_integrable hφ (G b)), ← integral_const_mul]
   refine integral_congr_ae (Eventually.of_forall fun t => ?_)
   simp only [← Finset.sum_mul, h t, mul_assoc]
 
@@ -180,7 +180,7 @@ theorem wh_sum' {φ : G2 → ℂ} (hφ : Continuous φ) {ι : Type} (S : Finset 
     (h : ∀ t : 𝔸[ℚ], ∑ b ∈ S, φ (uni2 t * G b) + φ (uni2 t * G') = c * φ (uni2 t * G₀)) :
     ∑ b ∈ S, Wh φ (G b) + Wh φ G' = c * Wh φ G₀ := by
   simp only [wh_eq]
-  rw [← integral_finset_sum _ (fun b _ => wh_integrable hφ (G b)),
+  rw [← integral_finsetSum _ (fun b _ => wh_integrable hφ (G b)),
     ← integral_add (integrable_finset_sum _ fun b _ => wh_integrable hφ (G b)) (wh_integrable hφ G'),
     ← integral_const_mul]
   refine integral_congr_ae (Eventually.of_forall fun t => ?_)

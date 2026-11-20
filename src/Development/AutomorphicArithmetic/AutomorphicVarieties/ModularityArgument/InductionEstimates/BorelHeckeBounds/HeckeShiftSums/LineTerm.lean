@@ -95,7 +95,7 @@ private theorem lineTerm [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.
     simp only [← fun i => (thCt (F i) (hB i).1 (hB i).2 z).2.2.2]
     rw [ct, heq]
     simp only [Finset.sum_apply]
-    refine integral_finset_sum _ fun i _ => ?_
+    refine integral_finsetSum _ fun i _ => ?_
     obtain ⟨-, -, C, hC, hsub, -⟩ := volOne (K := K) (2 + 2) 2
     have hcont : Continuous fun X => th (F i) (unipOne K (2 + 2) 2 X * z) :=
       (hT i).2.1.comp ((continuous_unipOne 2).mul continuous_const)

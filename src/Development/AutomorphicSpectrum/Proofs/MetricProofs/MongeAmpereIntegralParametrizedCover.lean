@@ -160,7 +160,7 @@ theorem integrableOn_hasSum_paramCover : ∀ (e : ℕ) (X : Type) [TopologicalSp
         fun n => ∑ j, ∫ z in B n, hne.some.χ j (Φ n z) * g (Φ n z) * paramDens P (Φ n) z := by
       funext n
       rw [hfun n]
-      exact integral_finset_sum _ fun j _ => (hj j).1 n
+      exact integral_finsetSum _ fun j _ => (hj j).1 n
     rw [hEq]
     exact hs
 

@@ -67,7 +67,7 @@ theorem isCuspFun_of_locApprox {f : GA D V → ℂ} (h : LocApprox V f) : IsCusp
   obtain ⟨m, ψ, hψ, happ⟩ := h _ (hK.image hcont) ε hε
   refine ⟨fun n => ∑ l, ψ l (n.1 * g), integrable_finset_sum _ fun l _ => hint _ (hψ l).1 (hψ l).2.1, ?_,
     fun n => ?_⟩
-  · rw [integral_finset_sum _ fun l _ => hint _ (hψ l).1 (hψ l).2.1]
+  · rw [integral_finsetSum _ fun l _ => hint _ (hψ l).1 (hψ l).2.1]
     exact Finset.sum_eq_zero fun l _ =>
       (GlobalTheory.AutFunCompare.isCuspFun_iff_constTerm V _).1 (hψ l).2.2 W hW μ hμ 𝓕 h𝓕 g
   · obtain ⟨γ, hγ, hk⟩ := hKs n

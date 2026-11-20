@@ -175,7 +175,7 @@ theorem Good.fderiv_integral {φ : Sm E a} (h : Good φ) (g : GA E a) {y : Lie E
       chart (fun g => ∫ x, (CuspRep.lie E a (Module.finBasis ℝ (Lie E a) i) φ).1 (unip x * g) ∂ν) g y • coef i y := by
   rw [(h.hasFDerivAt ν g hy).fderiv]
   simp only [fderiv_chart φ _ hy, chart_integral]
-  rw [integral_finset_sum _ fun i _ =>
+  rw [integral_finsetSum _ fun i _ =>
     (integrable_unip ν (h.lie _).continuousOn_chart (h.lie _).chart_left g hy).smul_const _]
   exact Finset.sum_congr rfl fun i _ => integral_smul_const _ _
 

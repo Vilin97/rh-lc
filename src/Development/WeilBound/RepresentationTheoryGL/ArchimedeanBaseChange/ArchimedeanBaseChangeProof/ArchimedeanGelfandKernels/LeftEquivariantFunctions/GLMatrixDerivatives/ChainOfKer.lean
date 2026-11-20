@@ -97,7 +97,7 @@ theorem kapL_int (hA : ActDer) (hU : Unimod) (hL : LgFacts) {E : KMod n} (Fr : M
     intro y
     simp [kapL]
   simp_rw [ek]
-  rw [integral_finset_sum _ fun p _ => iP p]
+  rw [integral_finsetSum _ fun p _ => iP p]
   simp only [DC]
   refine Finset.sum_congr rfl fun p _ => ?_
   have e1 : ∫ a : G n, (ε (hb p)) ((Ld (hb p) k a.val) (f a.val) + ((fderiv ℝ Fr 1) (hb p)) ((k a.val) (f a.val))) ∂μ =
@@ -155,11 +155,11 @@ theorem kapR_int (hI : IBPAct) (hU : Unimod) (hR : RCalc) (hL : LgFacts) {E : KM
   have sL : ∫ y : G n, ∑ p, ((k y.val * ε (hb p)) (Rd (hb p) f y.val) +
       (k y.val * ε (hb p) * (fderiv ℝ Fr 1) (hb p)) (f y.val)) ∂μ = ∑ p, ∫ y : G n, ((k y.val * ε (hb p)) (Rd (hb p) f y.val) +
       (k y.val * ε (hb p) * (fderiv ℝ Fr 1) (hb p)) (f y.val)) ∂μ :=
-    integral_finset_sum _ fun p _ => (iA p).add (iB p)
+    integral_finsetSum _ fun p _ => (iA p).add (iB p)
   have sR : ∫ y : G n, ∑ p, (-((Rd (hb p) k y.val * ε (hb p)) (f y.val)) +
       (k y.val * ε (hb p) * (fderiv ℝ Fr 1) (hb p)) (f y.val)) ∂μ = ∑ p, ∫ y : G n, (-((Rd (hb p) k y.val * ε (hb p)) (f y.val)) +
       (k y.val * ε (hb p) * (fderiv ℝ Fr 1) (hb p)) (f y.val)) ∂μ :=
-    integral_finset_sum _ fun p _ => (iC p).neg.add (iB p)
+    integral_finsetSum _ fun p _ => (iC p).neg.add (iB p)
   rw [sL, sR]
   refine Finset.sum_congr rfl fun p _ => ?_
   have a1 : ∫ y : G n, ((k y.val * ε (hb p)) (Rd (hb p) f y.val) +

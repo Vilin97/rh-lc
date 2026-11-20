@@ -136,7 +136,7 @@ theorem map_Q (n : ℕ) (q : ℤ) (l : U2) (x : H) :
   rw [Q, map_kC_Kint σ (continuous_conj_psi n q n)]
   simp only [Q, Kint]
   simp_rw [← integral_smul]
-  rw [← integral_finset_sum]
+  rw [← integral_finsetSum]
   · congr 1; funext k
     set_option synthInstance.maxHeartbeats 100000 in
       rw [psi_inv_mul, map_sum, Finset.sum_smul]
@@ -220,7 +220,7 @@ theorem collapse (n : ℕ) (q : ℤ) (u : ℕ → H) :
   have e : (fun k => conj (psi n q n k) • ∑ i ∈ range (n + 1), ((n.choose i : ℂ) * psi n q i k) • u i) =
       fun k => ∑ i ∈ range (n + 1), (conj (psi n q n k) * ((n.choose i : ℂ) * psi n q i k)) • u i := by
     funext k; rw [Finset.smul_sum]; simp_rw [smul_smul]
-  rw [e, integral_finset_sum _ (fun i _ => (hint i).smul_const _)]
+  rw [e, integral_finsetSum _ (fun i _ => (hint i).smul_const _)]
   simp_rw [integral_smul_const]
   rw [Finset.sum_eq_single n]
   · have h1 : ∫ k, conj (psi n q n k) * ((n.choose n : ℂ) * psi n q n k) ∂μK = (normSqInt n q : ℂ) := by

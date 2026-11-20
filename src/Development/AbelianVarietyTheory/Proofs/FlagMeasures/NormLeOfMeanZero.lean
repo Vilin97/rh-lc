@@ -40,7 +40,7 @@ theorem norm_le_of_mean_zero {X : Type} [MeasurableSpace X] (ν : Measure X) [Is
       Integrable (fun m => star (c i) * (c i - f i m)) ν :=
     fun i _ => ((integrable_const (c i)).sub (hi i)).const_mul (star (c i))
   have hval : ∫ m, (∑ i, star (c i) * (c i - f i m)) ∂ν = (S : ℂ) := by
-    rw [integral_finset_sum _ hint, hS, Complex.ofReal_sum]
+    rw [integral_finsetSum _ hint, hS, Complex.ofReal_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [integral_const_mul, integral_sub (integrable_const _) (hi i), h0 i, integral_const]
     simp [Complex.conj_mul']

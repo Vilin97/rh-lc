@@ -39,10 +39,10 @@ theorem dbl_mem {κ Z A B : Type} [MeasurableSpace A] [MeasurableSpace B] (μA :
       ∫ a, ∫ b, ∑ j ∈ t, c j * g a b (p j) ∂μB ∂μA = ∑ j ∈ t, c j * I (p j) := by
     intro J t c p
     have inner : ∀ a, ∫ b, ∑ j ∈ t, c j * g a b (p j) ∂μB = ∑ j ∈ t, c j * ∫ b, g a b (p j) ∂μB := fun a => by
-      rw [integral_finset_sum _ fun j _ => ((hint (p j)).1 a).const_mul (c j)]
+      rw [integral_finsetSum _ fun j _ => ((hint (p j)).1 a).const_mul (c j)]
       simp only [integral_const_mul]
     simp only [inner]
-    rw [integral_finset_sum _ fun j _ => (hint (p j)).2.const_mul (c j)]
+    rw [integral_finsetSum _ fun j _ => (hint (p j)).2.const_mul (c j)]
     simp only [integral_const_mul, hI]
 
   have hmem : I ∈ V := by

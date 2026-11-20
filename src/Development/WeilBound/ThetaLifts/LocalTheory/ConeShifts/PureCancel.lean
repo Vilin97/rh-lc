@@ -42,7 +42,7 @@ theorem int_fin {α Y : Type} [MeasurableSpace α] (μ : Measure α) (G : α →
   · have : (fun y => ∫ a, G a y * w a ∂μ) = ∑ g ∈ s, (∫ a, ({a | G a = g} : Set α).indicator w a ∂μ) • g := by
       funext y
       simp only [e y, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
-      rw [integral_finset_sum _ fun g hg => (hi g hg).const_mul _]
+      rw [integral_finsetSum _ fun g hg => (hi g hg).const_mul _]
       exact Finset.sum_congr rfl fun g _ => by rw [integral_const_mul, mul_comm]
     rw [this]
     refine S.sum_mem fun g hg => S.smul_mem _ ?_

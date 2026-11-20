@@ -221,7 +221,7 @@ theorem quotInt_sum (H : Subgroup SL(2, ℤ)) [H.FiniteIndex] {ι : Type} (s : F
   haveI : Fintype (SL(2, ℤ) ⧸ H) := Fintype.ofFinite _
   simp only [quotInt, finsum_eq_sum_of_fintype]
   rw [Finset.sum_comm]
-  exact Finset.sum_congr rfl fun γ _ => integral_finset_sum _ fun i _ => intOn (hc i) (hb i).choose_spec _
+  exact Finset.sum_congr rfl fun γ _ => integral_finsetSum _ fun i _ => intOn (hc i) (hb i).choose_spec _
 
 theorem quotInt_mul (H : Subgroup SL(2, ℤ)) [H.FiniteIndex] (c : ℂ) (φ : ℍ → ℂ) :
     quotInt H (fun z => c * φ z) = c * quotInt H φ := by

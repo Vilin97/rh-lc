@@ -96,14 +96,14 @@ theorem biLift_biComb_fockSum : ∀ (D : D7), BiAct D → CenFock D → LiftSum 
         k'.om (h₁, h₂) (k'.pt ψ θ y z (P' i)) 0) = fun h₀ => ∑ i,
           k.om (h₀, h₁) (k.pt ψ θ x y (P i)) 0 * φ h₀ * k'.om (h₁, h₂) (k'.pt ψ θ y z (P' i)) 0 := by
       funext h₀; rw [Finset.mul_sum]; exact Finset.sum_congr rfl fun i _ => by ring
-    rw [e, integral_finset_sum]
+    rw [e, integral_finsetSum]
     · refine Finset.sum_congr rfl fun i _ => ?_
       rw [integral_mul_const]
       rfl
     · intro i _
       exact (integrableOn_kernel hx.cpt x.vol hwA (hX i) hφ h₁).mul_const _
   simp only [biLift, hbi, hint, hin, Finset.sum_apply]
-  rw [integral_finset_sum]
+  rw [integral_finsetSum]
   · refine Finset.sum_congr rfl fun i _ => ?_
     simp only [KerDat.lift, liftT_apply]
     congr 1

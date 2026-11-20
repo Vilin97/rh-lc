@@ -69,7 +69,7 @@ theorem integral_extChar : ∀ (n : ℕ) [NeZero n] (ε : Fin n → Bool) (μ' :
     simp only [hGdef, Prod.map, scalarMul_cen, Circle.coe_mul, mul_zpow]
     ring
   simp only [hpt]
-  rw [integral_const_mul, integral_finset_sum (f := fun j p => G (Prod.map (fun z : Circle => z * ZMod.toCircle j)
+  rw [integral_const_mul, integral_finsetSum (f := fun j p => G (Prod.map (fun z : Circle => z * ZMod.toCircle j)
       (fun g : SUJ ε => GlobalTheory.ExtChar.cen ε j * g) p)) _ (fun j _ => ((hT j).integrable_comp_emb (hEmb j)).2 hG)]
   simp only [fun j => (hT j).integral_comp (hEmb j) G]
   rw [Finset.sum_const, Finset.card_univ, ZMod.card, nsmul_eq_mul, ← mul_assoc,

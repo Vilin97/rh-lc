@@ -114,7 +114,7 @@ theorem setIntegral_eq_zero_of_semi {G H : Type} [Group G] [TopologicalSpace G] 
       rw [this]
       simp [Measure.real, h𝓐1]
     simp only [e]
-    rw [integral_const_mul, integral_finset_sum _ fun i _ => (hψi i).mul_const _, Finset.sum_eq_zero, mul_zero]
+    rw [integral_const_mul, integral_finsetSum _ fun i _ => (hψi i).mul_const _, Finset.sum_eq_zero, mul_zero]
     intro i _
     rw [integral_mul_const, hf0, zero_mul]
   haveI : LocallyCompactSpace R := hRc.locallyCompactSpace

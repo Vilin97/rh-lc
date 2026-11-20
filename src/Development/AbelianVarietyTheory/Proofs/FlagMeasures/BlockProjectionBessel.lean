@@ -153,7 +153,7 @@ theorem amp_pieri : Hyps → AmpKF → CellConv → ∀ (k r : ℕ) (ι κ : Typ
         (l v) (l' v')) γ ν := by
     unfold OrbInt
     simp only [← integral_smul]
-    refine Eq.trans (integral_congr_ae ?_) (integral_finset_sum _ (fun I _ => (eI I).1.smul (ep I : ℂ)))
+    refine Eq.trans (integral_congr_ae ?_) (integral_finsetSum _ (fun I _ => (eI I).1.smul (ep I : ℂ)))
     filter_upwards [hae] with p hp
     obtain ⟨hm, he⟩ := herm_cell hρ hom hom' hD.1 hp.1 hp.2.1 hp.2.2.1 hp.2.2.2
     have hs := hsplit _ hm

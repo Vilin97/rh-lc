@@ -188,6 +188,6 @@ theorem UpperTheory.ConvolutionTheory.R2.H.eigenvalue_sum_mul_thetaConstantTerm_
     unfold T0
     rw [← integral_const_mul]
     simp only [hpt]
-    rw [integral_add (integrable_finset_sum _ fun b _ => hki _) (hki _), integral_finset_sum _ fun b _ => hki _]
+    rw [integral_add (integrable_finset_sum _ fun b _ => hki _) (hki _), integral_finsetSum _ fun b _ => hki _]
     simp [hk]
   exact (mul_eq_zero.1 key).resolve_left hq

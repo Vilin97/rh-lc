@@ -34,7 +34,7 @@ theorem ip_sum_right {ι : Type} (s : Finset ι) {u : H → ℂ} (hu : Continuou
     (hw : ∀ i, Continuous (w i)) : ip μ u (fun y => ∑ i ∈ s, c i * w i y) = ∑ i ∈ s, c i * ip μ u (w i) := by
   unfold ip
   simp only [Finset.mul_sum]
-  rw [integral_finset_sum]
+  rw [integral_finsetSum]
   · refine Finset.sum_congr rfl fun i _ => ?_
     rw [← integral_const_mul]
     congr 1
@@ -53,7 +53,7 @@ theorem ip_sum_left {ι : Type} (s : Finset ι) {w : H → ℂ} (hw : Continuous
     rw [star_mul']
     ring
   simp only [key]
-  rw [integral_finset_sum]
+  rw [integral_finsetSum]
   · refine Finset.sum_congr rfl fun i _ => ?_
     exact integral_const_mul _ _
   · intro i _

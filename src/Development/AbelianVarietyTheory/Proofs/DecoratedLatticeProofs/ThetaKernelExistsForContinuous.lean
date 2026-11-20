@@ -144,7 +144,7 @@ theorem dblInt_collect : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : Inf
   rw [(hconv.dblInt_eq hX).2, hEq]
   have hXXm : MeasurableSet (X ×ˢ X) := hXm.prod hXm
   rw [setIntegral_congr_fun hXXm (g := fun x => ∑ j, (c j x * w x) * Λ (b j)) fun x hx => ?_]
-  · rw [integral_finset_sum _ fun j _ => ?_]
+  · rw [integral_finsetSum _ fun j _ => ?_]
     · rw [lin_sum Λ φ hφ hadd hsmul _ _ _ hb]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [integral_mul_const]

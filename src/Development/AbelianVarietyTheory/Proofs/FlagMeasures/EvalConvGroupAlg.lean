@@ -115,7 +115,7 @@ theorem top_expand [Fintype (G0g D.nd)] (X : HidaSetting D) {red : X.B.I.Gf → 
       refine Finset.sum_eq_zero fun b _ => ?_
       exact Set.indicator_of_notMem (by exact fun hm => hg hm.1) _
   rw [integral_congr_ae (Filter.Eventually.of_forall hpt)]
-  rw [integral_finset_sum]
+  rw [integral_finsetSum]
   · refine Finset.sum_congr rfl fun γ _ => ?_
     rw [integral_indicator_const _ (hFb γ).1, measureReal_def, (hFb γ).2, ← hV]
     simp only [cf, Complex.real_smul]

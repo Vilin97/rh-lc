@@ -129,8 +129,8 @@ theorem integral_eWf_move : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T
     refine Finset.sum_congr rfl fun g _ => ?_
     ring
   simp only [eL, eR]
-  rw [integral_finset_sum _ fun g _ => ((hper g).1.const_mul _),
-    integral_finset_sum _ fun g _ => ((hi (R.gW i σ g y)).const_mul _)]
+  rw [integral_finsetSum _ fun g _ => ((hper g).1.const_mul _),
+    integral_finsetSum _ fun g _ => ((hi (R.gW i σ g y)).const_mul _)]
   simp only [integral_const_mul, (hper _).2, star_eC hX]
   exact Fintype.sum_equiv (Equiv.inv G) _ _ (fun g => rfl)
 

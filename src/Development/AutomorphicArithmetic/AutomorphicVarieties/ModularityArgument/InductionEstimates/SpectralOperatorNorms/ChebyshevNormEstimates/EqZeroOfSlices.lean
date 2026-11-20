@@ -310,10 +310,10 @@ private theorem core [IsTotallyComplex E] {S : Set (Pl E)} {τa τb : Submodule 
         refine Finset.sum_congr rfl fun j _ => ?_
         ring
       simp only [hHdef, e1]
-      rw [integral_finset_sum _ fun i _ => integrable_finset_sum _ fun j _ => hi i j]
+      rw [integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ => hi i j]
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
       refine Finset.sum_congr rfl fun i _ => ?_
-      rw [integral_finset_sum _ fun j _ => hi i j, Finset.sum_mul]
+      rw [integral_finsetSum _ fun j _ => hi i j, Finset.sum_mul]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [integral_const_mul]
       ring

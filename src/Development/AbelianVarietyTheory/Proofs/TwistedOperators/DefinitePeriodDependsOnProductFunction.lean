@@ -30,7 +30,7 @@ theorem lin_van {X I : Type} (A : Module.End ℂ (X → ℂ)) (S : Finset I) (a 
 theorem int_van {X I : Type} [MeasurableSpace X] (μ : Measure X) (S : Finset I) (a : I → ℂ) (f : I → X → ℂ)
     (hf : ∀ i ∈ S, Integrable (f i) μ) (h : ∀ u, ∑ i ∈ S, a i * f i u = 0) : ∑ i ∈ S, a i * ∫ x, f i x ∂μ = 0 := by
   simp_rw [← integral_const_mul]
-  rw [← integral_finset_sum _ fun i hi => (hf i hi).const_mul _]
+  rw [← integral_finsetSum _ fun i hi => (hf i hi).const_mul _]
   simp only [h, integral_zero]
 
 variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc}

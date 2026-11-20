@@ -75,7 +75,7 @@ lemma torus_lipschitz_l2_bound {G ι : Type} [Fintype ι] [TopologicalSpace G] [
     have h4 : ∫ u in (0:ℝ)..1, M * ∑ i, ‖Φ i (s * u) g‖ ^ 2 =
         M * ∑ i, ∫ u in (0:ℝ)..1, ‖Φ i (s * u) g‖ ^ 2 := by
       rw [intervalIntegral.integral_const_mul,
-        intervalIntegral.integral_finset_sum (f := fun i u => ‖Φ i (s * u) g‖ ^ 2)
+        intervalIntegral.integral_finsetSum (f := fun i u => ‖Φ i (s * u) g‖ ^ 2)
           (fun i _ => ((hΦc i g).norm.pow 2).intervalIntegrable 0 1)]
     have h5 : ∑ i, q i g = β g * ∑ i, ∫ u in (0:ℝ)..1, ‖Φ i (s * u) g‖ ^ 2 := by
       rw [Finset.mul_sum]
@@ -140,7 +140,7 @@ lemma torus_lipschitz_l2_bound {G ι : Type} [Fintype ι] [TopologicalSpace G] [
         integral_mono_of_nonneg (Filter.Eventually.of_forall (fun g => mul_nonneg (hβ0 g) (sq_nonneg _)))
           hg_int (Filter.Eventually.of_forall hpt)
     _ = M * s ^ 2 * ∑ i, ∫ g, q i g ∂μ := by
-        rw [integral_const_mul, integral_finset_sum _ (fun i _ => (hq i).1)]
+        rw [integral_const_mul, integral_finsetSum _ (fun i _ => (hq i).1)]
     _ ≤ M * s ^ 2 * ∑ i, B i :=
         mul_le_mul_of_nonneg_left (Finset.sum_le_sum (fun i _ => (hq i).2)) (mul_nonneg hM (sq_nonneg s))
 
@@ -618,7 +618,7 @@ theorem torus_lipschitz : ∀ (n : ℕ) (ε : Fin n → Bool) (W : Submodule ℂ
         refine Finset.sum_congr rfl (fun i _ => ?_)
         rw [ContinuousLinearMap.map_smul_of_tower, ← Complex.coe_smul, inner_smul_right]
       simp only [hpt]
-      rw [integral_finset_sum _ (fun i _ => (hint_i t i).const_mul _)]
+      rw [integral_finsetSum _ (fun i _ => (hint_i t i).const_mul _)]
       simp_rw [integral_const_mul]
     show (∫ m, ⟪v, σ (umat (m * (a s * g))) w⟫_ℂ ∂ν) - (∫ m, ⟪v, σ (umat (m * g)) w⟫_ℂ ∂ν) =
       ∫ t in (0:ℝ)..s, ∑ i, ((((Xg * (E i)ᴴ).trace).re : ℝ) : ℂ) *

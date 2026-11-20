@@ -30,7 +30,7 @@ private theorem sum_norm_sq_le_integral_of_plancherel {G : Type} [Group G] {n : 
       funext θ
       rw [← hA θ g⁻¹, Finset.mul_sum, Finset.sum_mul]
       exact Finset.sum_congr rfl fun g' _ => by ring
-    have hsum := integral_finset_sum T fun g' _ =>
+    have hsum := integral_finsetSum T fun g' _ =>
       hI (fun θ => (mr : ℂ) * f g' * (φ θ (g⁻¹ * g') * D θ))
         (continuous_const.mul ((hφc _).mul hDc))
     rw [e, hsum]
@@ -62,7 +62,7 @@ private theorem sum_norm_sq_le_integral_of_plancherel {G : Type} [Group G] {n : 
           congr 1
           exact Finset.sum_congr rfl fun g hg => by rw [h1 g hg]
       _ = c * ∫ θ, (mr : ℂ) * ∑ g ∈ T, starRingEnd ℂ (f g) * (S θ * φ θ g⁻¹ * D θ) := by
-          have hsum := integral_finset_sum T fun g _ =>
+          have hsum := integral_finsetSum T fun g _ =>
             hI (fun θ => starRingEnd ℂ (f g) * (S θ * φ θ g⁻¹ * D θ))
               (continuous_const.mul ((hSc.mul (hφc _)).mul hDc))
           rw [integral_const_mul, hsum]

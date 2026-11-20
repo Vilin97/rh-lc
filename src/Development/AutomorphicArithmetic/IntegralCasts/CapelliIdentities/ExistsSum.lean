@@ -55,7 +55,7 @@ theorem UpperTheory.Reformulated.B.Qg3.exists_sum.{u_1} :
       rw [Set.indicator_of_mem (show g ∈ C (QuotientGroup.mk g) from rfl), hout]
       exact h0 g fun hgS => hg (hfin.mem_toFinset.2 ⟨g, hgS, rfl⟩)
   rw [MeasureTheory.integral_congr_ae (Filter.Eventually.of_forall hdec),
-    MeasureTheory.integral_finset_sum]
+    MeasureTheory.integral_finsetSum]
   · refine Finset.sum_congr rfl fun x _ => ?_
     rw [MeasureTheory.integral_indicator_const _ (hmeas x), Complex.real_smul]
   · intro x _

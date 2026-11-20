@@ -50,7 +50,7 @@ theorem sum_pet_FFStar (vS : Vol S) (hS : CoCpt S) (q : Unif k) (χ : AddChar �
     unfold pet
     rw [FFStar_apply, hP]
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.sum_mul, mul_assoc]
-    rw [integral_finset_sum _ (fun P₁ _ => (hint P₁ P).const_mul _)]
+    rw [integral_finsetSum _ (fun P₁ _ => (hint P₁ P).const_mul _)]
     exact Finset.sum_congr rfl fun P₁ _ => integral_const_mul _ _
   have e2 : ∀ P₁ ∈ withKer L, pet vS φ (FF q χ ψ) P₁ =
       ∑ P ∈ withLat L, χ (-cross q P₁ P) * ∫ g in vS.𝓕, φ P₁ g * star (ψ P g) ∂vS.μ := by
@@ -66,7 +66,7 @@ theorem sum_pet_FFStar (vS : Vol S) (hS : CoCpt S) (q : Unif k) (χ : AddChar �
       change φ P₁ g * ((starRingEnd ℂ) (χ (cross q P₁ P)) * star (ψ P g)) = _
       ring
     simp only [this]
-    rw [integral_finset_sum _ (fun P _ => (hint P₁ P).const_mul _)]
+    rw [integral_finsetSum _ (fun P _ => (hint P₁ P).const_mul _)]
     exact Finset.sum_congr rfl fun P _ => integral_const_mul _ _
   rw [Finset.sum_congr rfl e1, Finset.sum_congr rfl e2, Finset.sum_comm]
 

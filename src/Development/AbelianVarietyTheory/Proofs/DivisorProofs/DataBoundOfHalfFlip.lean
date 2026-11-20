@@ -65,7 +65,7 @@ theorem absLe_integral [MeasurableSpace X] [OpensMeasurableSpace X] [MeasurableA
       exact h (hmem x h')
   have hint : ∫ x, f x ∂μ = ∑ c ∈ V, (μ.real (f ⁻¹' {c}) : ℂ) * c := by
     conv_lhs => rw [hdec]
-    rw [integral_finset_sum _ fun c hc' => (integrable_indicator_iff (hm c)).2 (integrableOn_const (hfi c hc'))]
+    rw [integral_finsetSum _ fun c hc' => (integrable_indicator_iff (hm c)).2 (integrableOn_const (hfi c hc'))]
     exact Finset.sum_congr rfl fun c _ => by rw [integral_indicator_const _ (hm c), Complex.real_smul]
   refine ⟨∑ c ∈ V, (r c : D.what₂.LL) * y c, ?_, ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in

@@ -1835,11 +1835,11 @@ theorem avg_norm_sq [μ.IsMulLeftInvariant] [μ.IsInvInvariant] [μ.IsOpenPosMea
   have hC : ((∫ κ, ‖T (ρ κ u)‖ ^ 2 ∂μ : ℝ) : ℂ) = ((‖u‖ ^ 2 / d * ∑ j, ‖T (e j)‖ ^ 2 : ℝ) : ℂ) := by
     rw [← integral_complex_ofReal]
     simp_rw [hexp]
-    rw [integral_finset_sum _ fun j _ => integrable_finset_sum _ fun j' _ => hint j j']
+    rw [integral_finsetSum _ fun j _ => integrable_finset_sum _ fun j' _ => hint j j']
     have hj : ∀ j, ∫ κ, ∑ j', (⟪e j', ρ κ u⟫_ℂ * star ⟪e j, ρ κ u⟫_ℂ) * ⟪T (e j), T (e j')⟫_ℂ ∂μ =
         ((‖u‖ ^ 2 / d * ‖T (e j)‖ ^ 2 : ℝ) : ℂ) := by
       intro j
-      rw [integral_finset_sum _ fun j' _ => hint j j']
+      rw [integral_finsetSum _ fun j' _ => hint j j']
       have hjj : ∀ j', ∫ κ, (⟪e j', ρ κ u⟫_ℂ * star ⟪e j, ρ κ u⟫_ℂ) * ⟪T (e j), T (e j')⟫_ℂ ∂μ =
           (⟪u, u⟫_ℂ * ⟪e j', e j⟫_ℂ / (d : ℂ)) * ⟪T (e j), T (e j')⟫_ℂ := by
         intro j'

@@ -47,7 +47,7 @@ private theorem exists_avg [CompactSpace (Un n)] [MeasurableSpace (Un n)] [Borel
     rw [inner_smul_right]
     ring
   simp_rw [hint]
-  rw [integral_finset_sum _ fun i _ => (integrable_coef ν σ hσ hf v _).mul_const _, inner_sum]
+  rw [integral_finsetSum _ fun i _ => (integrable_coef ν σ hσ hf v _).mul_const _, inner_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [inner_smul_right, integral_mul_const]
 

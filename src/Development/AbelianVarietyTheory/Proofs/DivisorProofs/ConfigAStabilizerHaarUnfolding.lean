@@ -139,11 +139,11 @@ theorem cone_mem : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFie
     funext x
     rw [Finset.sum_apply]
     simp only [pureA, hg, RingEquiv.symm_apply_apply, cone, ← integral_mul_const]
-    rw [← integral_finset_sum _ fun j _ => by
+    rw [← integral_finsetSum _ fun j _ => by
       simpa only [← integral_mul_const] using (hi₂ fun q => ((x q).1, c j q)).mul_const (φ j fun q => (x q).2)]
     refine integral_congr_ae (Eventually.of_forall fun k => ?_)
     beta_reduce
-    rw [← integral_finset_sum _ fun j _ => (hi₁ k fun q => ((x q).1, c j q)).mul_const (φ j fun q => (x q).2)]
+    rw [← integral_finsetSum _ fun j _ => (hi₁ k fun q => ((x q).1, c j q)).mul_const (φ j fun q => (x q).2)]
     refine integral_congr_ae (Eventually.of_forall fun l => ?_)
     beta_reduce
     rw [hsum k.1 k.2 l x, Finset.sum_mul, Finset.sum_mul]

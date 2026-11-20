@@ -120,9 +120,9 @@ theorem sum_expand {α : Type} (hS : Set0 μ 𝓕 mK 𝓓) (hc : Continuous φ)
         (integral_const_mul _ _).symm
     _ = ∫ g in 𝓕 ∩ band, ∑ b ∈ B, ∑ b' ∈ B, φ (g * t b) * conj (φ (g * t b')) ∂μ := by simp only [key]
     _ = ∑ b ∈ B, ∫ g in 𝓕 ∩ band, ∑ b' ∈ B, φ (g * t b) * conj (φ (g * t b')) ∂μ :=
-        integral_finset_sum _ fun b _ => integrable_finset_sum _ fun b' _ => trans_integrable hS hc hb _ _
+        integral_finsetSum _ fun b _ => integrable_finset_sum _ fun b' _ => trans_integrable hS hc hb _ _
     _ = _ := Finset.sum_congr rfl fun b _ =>
-        integral_finset_sum _ fun b' _ => trans_integrable hS hc hb _ _
+        integral_finsetSum _ fun b' _ => trans_integrable hS hc hb _ _
 
 theorem pr_self_ne (hS : Set0 μ 𝓕 mK 𝓓) (hG : G1) {ω : HeckeCharacter ℚ} (hc : Continuous φ)
     (hb : ∃ C : ℝ, ∀ g, ‖φ g‖ ≤ C) (hl : LInv φ)

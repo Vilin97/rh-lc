@@ -55,7 +55,7 @@ theorem differentiableOn_integral_of_invariant {K : Type*} [Group K] [Topologica
       · intro b _ hb
         exact Set.indicator_of_notMem (fun h => hb h.symm) _
       · simp
-    rw [hpt, integral_finset_sum _ (fun q _ => (integrable_const _).indicator (hS q))]
+    rw [hpt, integral_finsetSum _ (fun q _ => (integrable_const _).indicator (hS q))]
     refine Finset.sum_congr rfl fun q _ => ?_
     rw [integral_indicator_const _ (hS q)]
   have e : (fun s => ∫ κ, G s κ ∂m) = fun s => ∑ q : K ⧸ U, m.real (S q) • G s (Quotient.out q) :=

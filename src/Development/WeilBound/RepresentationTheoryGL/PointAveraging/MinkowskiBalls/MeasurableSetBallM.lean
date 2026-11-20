@@ -333,7 +333,7 @@ theorem decomp_smul (ν : Measure k) (hν : IsUnitVol ν) {n r : ℕ} {V W : Typ
   have hint : ∫ y, Ψ.1 y ∂volM ν (Fin n) (Fin r) =
       (∑ x ∈ S, Ψ.1 x) * ((volM ν (Fin n) (Fin r) (ballM c' x₀)).toReal : ℂ) := by
     rw [integral_congr_ae (Filter.Eventually.of_forall hfun),
-      integral_finset_sum S (f := fun x a => Ψ.1 x • (ballM c' x).indicator (fun _ => (1 : ℂ)) a)
+      integral_finsetSum S (f := fun x a => Ψ.1 x • (ballM c' x).indicator (fun _ => (1 : ℂ)) a)
         (fun x _ => (integrable_ind ν hν c' x).smul (Ψ.1 x)), Finset.sum_mul]
     refine Finset.sum_congr rfl fun x _ => ?_
     rw [integral_smul, integral_ind, volM_ballM_eq ν hν c' x x₀, smul_eq_mul]

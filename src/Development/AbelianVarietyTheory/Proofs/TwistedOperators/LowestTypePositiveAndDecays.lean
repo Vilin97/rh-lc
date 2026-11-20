@@ -48,7 +48,7 @@ theorem funSchmid_ps (hl : IsHCParam lam) (hτ : IsTau ε (lowK ε lam) τ w) (h
   have hd := fun p => GlobalTheory.T.inner_fderiv_kAveragedMinorOperator_integral n ε lam W τ w hl hτ z hz (z * thE ε p) y (G p)
   rw [inner_sum, inner_zero_right]
   simp only [fun p => (hd p).2]
-  rw [← Finset.mul_sum, ← integral_finset_sum _ fun p _ => (hd p).1]
+  rw [← Finset.mul_sum, ← integral_finsetSum _ fun p _ => (hd p).1]
   refine mul_eq_zero_of_right _ (integral_eq_zero_of_ae (Eventually.of_forall fun k => ?_))
   obtain ⟨G', hG', he⟩ := GlobalTheory.T.lowerKTypes_pTensor_stable_under_K V W n ε E _ u j τ w hD hτ ht G hG (toMK k) k.2
   have hk : toMK k * (toMK k)⁻¹ = 1 :=

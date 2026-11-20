@@ -88,7 +88,7 @@ theorem approx : GlobalTheory.IndefiniteRowSideFullHecke.CuspAlongSmoothLifts.Li
       ∑ l, ∫ g in (G.meas t i j).fd, thetaKO (G.X i j).ω h g
         (GlobalTheory.Grid.fock R.ψ R.θ true (G.V (i + 1) j) (G.V i j) (f₀ l) (c l • P l)) * F v g ∂(G.meas t i j).ν =
       ∫ g in (G.meas t i j).fd, thetaKO (G.X i j).ω h g (Φ - g0) * F v g ∂(G.meas t i j).ν := by
-    rw [← integral_finset_sum _ (fun l _ => hintl l),
+    rw [← integral_finsetSum _ (fun l _ => hintl l),
       ← integral_sub (hint h) (integrable_finset_sum _ fun l _ => hintl l)]
     refine integral_congr_ae (Filter.Eventually.of_forall fun g => ?_)
     set_option synthInstance.maxHeartbeats 100000 in

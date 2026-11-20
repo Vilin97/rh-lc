@@ -99,7 +99,7 @@ theorem param_hadamard (f : SchwartzMap (κ' ⊕ κ'' → W) ℂ) (hf : ∀ x : 
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_smul, map_smul, Complex.real_smul, hdi, hL]
     simp_rw [e1]
-    rw [integral_finset_sum]
+    rw [integral_finsetSum]
     · exact Finset.sum_congr rfl fun i _ => integral_const_mul _ _
     · intro i _
       exact (continuous_const.mul ((d i).continuous.comp (continuous_Ain_apply x))).integrableOn_Ioc

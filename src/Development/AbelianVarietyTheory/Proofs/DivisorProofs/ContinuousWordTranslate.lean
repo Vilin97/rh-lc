@@ -476,7 +476,7 @@ theorem cyclic_UJ [CompleteSpace H] (hσ : IsURepOn (UJset ε) σ) (hirr : IsIrr
         = ∫ g : Formalism.REAL.UJ ε, φ (umat g) • ℓ (σ (umat g) v) ∂(Formalism.REAL.muG ε) := fun v hv => by
       rw [hsum _ (garding_mem hσ hφ hφc v)]
       simp only [fun g : Formalism.REAL.UJ ε => hsum _ (translate_mem hσ hv g.2), Finset.smul_sum]
-      refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) (integral_finset_sum _ fun i _ =>
+      refine Eq.trans (Finset.sum_congr rfl fun i _ => ?_) (integral_finsetSum _ fun i _ =>
         integrable_smul hφ.continuous hφc ((f i).continuous.comp (continuous_word_translate hσ hirr (hl i) hv))).symm
       rw [word_garding hσ hirr hφ hφc (hl i) hv, ← ContinuousLinearMap.integral_comp_comm _
         (integrable_smul hφ.continuous hφc (continuous_word_translate hσ hirr (hl i) hv))]

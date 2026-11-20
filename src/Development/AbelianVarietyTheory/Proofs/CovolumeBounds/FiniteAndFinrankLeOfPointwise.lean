@@ -97,7 +97,7 @@ theorem integral_sum_eq_finrank' {ι : Type*} [Fintype ι] (l : ∀ x, V →ₗ[
     (hint : ∀ f, Integrable (fun x => ‖l x f‖ ^ 2) μ)
     (hnorm : ∀ f, ‖f‖ ^ 2 = ∫ x, ‖l x f‖ ^ 2 ∂μ) (b : OrthonormalBasis ι ℂ V) :
     ∫ x, ∑ i, ‖l x (b i)‖ ^ 2 ∂μ = finrank ℂ V := by
-  rw [integral_finset_sum _ fun i _ => hint (b i)]
+  rw [integral_finsetSum _ fun i _ => hint (b i)]
   simp_rw [← hnorm, b.orthonormal.1]
   simp [finrank_eq_card_basis b.toBasis]
 

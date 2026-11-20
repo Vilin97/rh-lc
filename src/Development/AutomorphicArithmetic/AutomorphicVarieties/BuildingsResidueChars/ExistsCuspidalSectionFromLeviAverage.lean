@@ -43,7 +43,7 @@ private theorem avg_mem {X Y : Type} [MeasurableSpace Y] (E : Submodule ℂ (X �
     have : ∀ w, h w u = ∑ l : Fin a × Fin b × Fin a × Fin b,
         (s l.1 l.2.2.1 * t l.2.1 l.2.2.2 * ψ l.2.1 ()) * h w (x l.1 l.2.2.1) * φ l.1 u := fun w => e _ (hE w) u
     simp only [this]
-    rw [integral_finset_sum _ fun l _ => ((hi _).const_mul _).mul_const _]
+    rw [integral_finsetSum _ fun l _ => ((hi _).const_mul _).mul_const _]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [integral_mul_const, integral_const_mul]
   rw [key]

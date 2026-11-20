@@ -101,7 +101,7 @@ theorem mem_of_finiteDimensional_span_rightTranslates :
       simp only [inv_mul_cancel_left] at h1
       rw [h1]
       simp only [hp', Finset.mul_sum, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
-      rw [integral_finset_sum]
+      rw [integral_finsetSum]
       · refine Finset.sum_congr rfl fun i _ => ?_
         rw [← integral_mul_const]
         congr 1
@@ -140,7 +140,7 @@ theorem mem_of_finiteDimensional_span_rightTranslates :
       rw [hl] at h1
       rw [← h1]
       simp only [Finset.sum_mul]
-      rw [integral_finset_sum]
+      rw [integral_finsetSum]
       · refine Finset.sum_congr rfl fun x _ => ?_
         change _ = (∫ k, f (x * k) * p k ∂μ) * c x
         rw [← integral_mul_const]
@@ -163,7 +163,7 @@ theorem mem_of_finiteDimensional_span_rightTranslates :
       rw [hdec y k, Finset.sum_mul]
       exact Finset.sum_congr rfl fun x _ => by ring
     simp only [h2]
-    rw [integral_finset_sum]
+    rw [integral_finsetSum]
     · refine Finset.sum_congr rfl fun x _ => ?_
       rw [integral_mul_const]
       congr 1

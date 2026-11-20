@@ -282,7 +282,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E.heckeEx :
     have hint : ∀ c : FA K (2 + 2) ⧸ levOn S U, Integrable (fun g => tens b φ g * flat 0 (A.sec v) (x * fin1 c.out * g)) μ :=
       fun c => ((tens b φ).continuous.mul ((hTc v).comp (continuous_const.mul continuous_id))).integrable_of_hasCompactSupport
         (tens b φ).hasCompactSupport.mul_right
-    rw [← integral_finset_sum _ fun c _ => hint c]
+    rw [← integral_finsetSum _ fun c _ => hint c]
     refine integral_congr_ae (Eventually.of_forall fun g => ?_)
     by_cases hg : tens b φ g = 0
     · simp [hg]

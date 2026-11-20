@@ -212,9 +212,9 @@ theorem contrOp : ∀ D : D7, ContrOp D := by
         (ae_of_all _ fun x => ?_)
       simp only
       ring
-    rw [integral_finset_sum _ fun u' hu' => integrable_finset_sum _ fun u hu => hI u' hu' u hu]
+    rw [integral_finsetSum _ fun u' hu' => integrable_finset_sum _ fun u hu => hI u' hu' u hu]
     refine Finset.sum_congr rfl fun u' hu' => ?_
-    rw [integral_finset_sum _ fun u hu => hI u' hu' u hu]
+    rw [integral_finsetSum _ fun u hu => hI u' hu' u hu]
     refine Finset.sum_congr rfl fun u _ => ?_
     rw [← integral_const_mul]
     congr 1

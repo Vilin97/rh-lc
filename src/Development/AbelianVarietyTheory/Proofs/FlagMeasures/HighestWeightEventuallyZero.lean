@@ -257,10 +257,10 @@ theorem eab_integral_eq_zero : ∀ (n : ℕ) (ε : Fin n → Bool) (H : Type) [N
         exact eab_integral hlc hd (hw a b) hz hg a b
     _ = ∫ k, ∑ a, ∑ b, dInt l (Matrix.single a b 1) (umat g) k *
         (⟪y, σ (toMK k) (u : H)⟫_ℂ * ⟪σ (toMK k) (u : H), (at1 G a b : V)⟫_ℂ) ∂(muK ε) := by
-        rw [integral_finset_sum _ fun a _ =>
+        rw [integral_finsetSum _ fun a _ =>
           integrable_finset_sum _ fun b _ => integrable_dInt hlc _ hz1 (hw a b)]
         refine Finset.sum_congr rfl fun a _ => ?_
-        rw [integral_finset_sum _ fun b _ => integrable_dInt hlc _ hz1 (hw a b)]
+        rw [integral_finsetSum _ fun b _ => integrable_dInt hlc _ hz1 (hw a b)]
     _ = 0 := by simp only [hpt, integral_zero]
 
 end GlobalTheory.Jet.SchmidIntegral

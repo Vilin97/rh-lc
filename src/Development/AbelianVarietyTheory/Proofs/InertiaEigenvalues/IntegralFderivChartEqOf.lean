@@ -55,7 +55,7 @@ theorem integral_fderiv_chart_eq_of {X : Type} [MeasurableSpace X] (ν : Measure
     obtain ⟨C, hC⟩ := hb p.1
     exact (hrc p).integrable (lie E a (lieBasis E a p.1) φ).2 ⟨C, 0, fun y => by simpa using hC _⟩
   simp_rw [smul_fderiv_chart_comp]
-  rw [integral_finset_sum _ fun p _ => (hint p).smul_const _]
+  rw [integral_finsetSum _ fun p _ => (hint p).smul_const _]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [integral_smul_const]
   rfl

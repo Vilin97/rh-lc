@@ -91,7 +91,7 @@ theorem thetaInt_sum {ι : Type} (s : Finset ι) {Φ : ι → WO M X → ℂ} (h
     thetaInt ω ν 𝓕 (∑ i ∈ s, Φ i) = ∑ i ∈ s, thetaInt ω ν 𝓕 (Φ i) := by
   funext h
   simp only [thetaInt, thetaKO_sum, Finset.sum_apply]
-  exact integral_finset_sum s fun i hi => hΦ i hi h
+  exact integral_finsetSum s fun i hi => hΦ i hi h
 
 end Lin
 

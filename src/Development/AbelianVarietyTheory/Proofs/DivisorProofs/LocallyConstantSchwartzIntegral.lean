@@ -98,10 +98,10 @@ theorem integ_mem_SB_and_map : ∀ {P Q Y : Type} [TopologicalSpace P] [CompactS
         funext q
         rw [hdec φ h0 p q, Finset.sum_mul]
         exact Finset.sum_congr rfl fun s _ => by ring
-      rw [this, integral_finset_sum _ (fun s hs => (hint_in s hs p).mul_const _)]
+      rw [this, integral_finsetSum _ (fun s hs => (hint_in s hs p).mul_const _)]
       exact Finset.sum_congr rfl fun s _ => integral_mul_const _ _
     rw [integral_congr_ae (ae_of_all _ e1),
-      integral_finset_sum _ (fun s _ => (hint_out s).mul_const _)]
+      integral_finsetSum _ (fun s _ => (hint_out s).mul_const _)]
     exact Finset.sum_congr rfl fun s _ => integral_mul_const _ _
   have hL0 : L 0 = 0 := by
     have := hsmul 0 0 (Submodule.zero_mem _)

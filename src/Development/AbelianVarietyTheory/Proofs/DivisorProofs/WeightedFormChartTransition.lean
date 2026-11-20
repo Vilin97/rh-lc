@@ -144,7 +144,7 @@ theorem total_dbar_eq_zero_of_compact_chart : ∀ (k : Type) [CommRing k] (X : S
   have hHi : Integrable H := (integrable_finset_sum _ fun l _ => (hI l).1).const_mul _
   have hH0 : ∫ v, H v = 0 := by
     simp only [hHdef]
-    rw [integral_const_mul, integral_finset_sum _ fun l _ => (hI l).1]
+    rw [integral_const_mul, integral_finsetSum _ fun l _ => (hI l).1]
     simp [fun l => (hI l).2]
   have hHA : ∀ v ∉ A, H v = 0 := fun v hv => by
     simp only [hHdef]

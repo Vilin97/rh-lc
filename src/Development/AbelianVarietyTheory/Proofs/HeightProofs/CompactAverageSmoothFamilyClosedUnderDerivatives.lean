@@ -144,7 +144,7 @@ theorem avg_closed : ∀ (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.h
   rw [Finset.sum_congr rfl fun idx _ => (hL τ _ (hmem idx) F hF).2]
   funext x
   simp only [Finset.sum_apply]
-  rw [integral_finset_sum _ fun idx _ => hint _ (hL τ _ (hmem idx) F hF).1 x]
+  rw [integral_finsetSum _ fun idx _ => hint _ (hL τ _ (hmem idx) F hF).1 x]
 
 end GlobalTheory.AvgFam
 

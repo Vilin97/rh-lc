@@ -81,7 +81,7 @@ theorem vcOf : PositivityTheory.RgBcC.VCOf := by
       rw [phiOf, ← trT_apply, hk _ hm, map_sum]
     simp only [map_smul, smul_eq_mul, Units.val_mul]
   simp only [hsum]
-  rw [MeasureTheory.integral_finset_sum _ (fun i _ => (hone i).1.const_mul (c i))]
+  rw [MeasureTheory.integral_finsetSum _ (fun i _ => (hone i).1.const_mul (c i))]
   simp [MeasureTheory.integral_const_mul, (hone _).2]
 
 end PositivityTheory.RgBcC.VC

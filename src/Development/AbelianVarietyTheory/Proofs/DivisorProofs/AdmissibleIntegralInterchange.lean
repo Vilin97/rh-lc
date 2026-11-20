@@ -98,10 +98,10 @@ theorem adm_integral_comm : ∀ (F : Type) [Field F] [NumberField F] (κ : Type)
     have ho : ∀ j, Integrable (fun s => (∫ t, f j s t a ∂μ₂) * g j b) μ₁ := fun j =>
       (hFj j (evalAt a)).2.1.mul_const _
     have e1 : ∀ s, ∫ t, ∑ j, f j s t a * g j b ∂μ₂ = ∑ j, (∫ t, f j s t a ∂μ₂) * g j b := fun s => by
-      rw [integral_finset_sum _ fun j _ => hi j s]
+      rw [integral_finsetSum _ fun j _ => hi j s]
       exact Finset.sum_congr rfl fun j _ => integral_mul_const _ _
     simp_rw [e1]
-    rw [integral_finset_sum _ fun j _ => ho j]
+    rw [integral_finsetSum _ fun j _ => ho j]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [integral_mul_const]
     congr 1
@@ -113,9 +113,9 @@ theorem adm_integral_comm : ∀ (F : Type) [Field F] [NumberField F] (κ : Type)
       rw [map_sum]; exact Finset.sum_congr rfl fun j _ => hT j _
   simp_rw [e2]
   have e3 : ∀ s, ∫ t, ∑ j, T j (f j s t) ∂μ₂ = ∑ j, ∫ t, T j (f j s t) ∂μ₂ := fun s =>
-    integral_finset_sum _ fun j _ => (hFj j (T j)).1 s
+    integral_finsetSum _ fun j _ => (hFj j (T j)).1 s
   simp_rw [e3]
-  rw [integral_finset_sum _ fun j _ => (hFj j (T j)).2.1]
+  rw [integral_finsetSum _ fun j _ => (hFj j (T j)).2.1]
   exact Finset.sum_congr rfl fun j _ => by rw [hT j]; exact (hFj j (T j)).2.2
 
 end GlobalTheory.AdmInt

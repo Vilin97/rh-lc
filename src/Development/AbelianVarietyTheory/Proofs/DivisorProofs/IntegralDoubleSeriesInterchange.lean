@@ -31,7 +31,7 @@ theorem integral_tsum_prod_of_bounded : ∀ (X : Type) [MeasurableSpace X] (μ :
   have hsum : Summable (fun i => ∫ u in 𝓕, ‖∑' k, Φ i k u‖ ∂μ) := by
     refine summable_of_sum_le (c := ∫ _u in 𝓕, C ∂μ)
       (fun i => integral_nonneg fun u => norm_nonneg _) fun s => ?_
-    rw [← integral_finset_sum s fun i _ => (hint i).norm]
+    rw [← integral_finsetSum s fun i _ => (hint i).norm]
     exact integral_mono (integrable_finset_sum s fun i _ => (hint i).norm) (integrable_const C)
       fun u => hfin u s
   refine ⟨?_, ?_⟩

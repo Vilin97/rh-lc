@@ -157,7 +157,7 @@ theorem functional_eq_integral {ϖ : kˣ} (hϖ : IsUnif ϖ) (C : Matrix (Fin a) 
       have : ∀ X, Ψ.1 X = ∑ c ∈ s, Ψ.1 c * boxFn ϖ c (fun _ => m) X := fun X => by
         conv_lhs => rw [hs]
         simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
-      rw [integral_congr_ae (Filter.Eventually.of_forall this), integral_finset_sum, Finset.sum_mul]
+      rw [integral_congr_ae (Filter.Eventually.of_forall this), integral_finsetSum, Finset.sum_mul]
       · exact Finset.sum_congr rfl fun c _ => by rw [integral_const_mul, integral_boxFn]
       · intro c _
         obtain ⟨h1, h2⟩ := boxFn_mem_SB ϖ c (fun _ => m)

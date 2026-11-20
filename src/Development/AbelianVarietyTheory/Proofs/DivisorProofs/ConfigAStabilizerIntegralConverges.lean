@@ -33,7 +33,7 @@ theorem admissible_integral_exchange {F : Type} [Field F] [NumberField F] {κ T 
   have e : (fun y => ∫ t, D t y ∂μ) = ∑ j, pureA F (g j) (φ j) := by
     funext y
     simp only [hD, Finset.sum_apply, pureA]
-    rw [integral_finset_sum _ fun j _ => (hi j _).mul_const _]
+    rw [integral_finsetSum _ fun j _ => (hi j _).mul_const _]
     exact Finset.sum_congr rfl fun j _ => by rw [integral_mul_const, hg]
   rw [e]
   refine ⟨Submodule.sum_mem _ fun j _ => Submodule.subset_span ⟨g j, φ j, hφ j, rfl⟩, fun l hl => ?_⟩
@@ -41,7 +41,7 @@ theorem admissible_integral_exchange {F : Type} [Field F] [NumberField F] {κ T 
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [hD, map_sum, hLl]
   refine ⟨integrable_finset_sum _ fun j _ => (hL j _).1, ?_⟩
-  rw [integral_finset_sum _ fun j _ => (hL j _).1]
+  rw [integral_finsetSum _ fun j _ => (hL j _).1]
   exact Finset.sum_congr rfl fun j _ => (hL j _).2
 
 open scoped Classical in

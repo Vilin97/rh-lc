@@ -187,7 +187,7 @@ theorem GlobalTheory.EisM.pet_hsum_adjoint : ∀ (k L N q : ℕ) (ε : Dirichlet
   have hC : ∀ j (x : ℍ), K k N ε h f (α j) ((toG (α j))⁻¹ • x) =
       conj (ch ε⁻¹ (α j 0 0) * slz k (α j).adjugate h x) * f x * (x.im : ℂ) ^ k := fun j x => by
     rw [K_adj k N ε h f _ (hdet _ (hα j)), smul_inv_smul]
-  rw [← integral_finset_sum _ fun i _ => hP i, ← integral_finset_sum _ fun j _ => hQ j] at key
+  rw [← integral_finsetSum _ fun i _ => hP i, ← integral_finsetSum _ fun j _ => hQ j] at key
   simp only [hC] at key
   unfold pet hsum
   refine Eq.trans ?_ (key.trans ?_)

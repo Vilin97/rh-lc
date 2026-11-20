@@ -286,7 +286,7 @@ theorem integral_mul_rr (β : Measure B) [β.IsHaarMeasure] (Γ' K U : Subgroup 
         exact if_neg (hne q hqq)
   have hterm := fun q => integral_term β K U hKo hKc hU F hF (Quotient.out q) (c q)
   rw [integral_congr_ae (Filter.Eventually.of_forall hpt),
-    integral_finset_sum S (fun q _ => (hterm q).1), dcSum,
+    integral_finsetSum S (fun q _ => (hterm q).1), dcSum,
     finsum_eq_sum_of_support_subset (s := S), Finset.mul_sum]
   · refine Finset.sum_congr rfl fun q _ => ?_
     rw [(hterm q).2]

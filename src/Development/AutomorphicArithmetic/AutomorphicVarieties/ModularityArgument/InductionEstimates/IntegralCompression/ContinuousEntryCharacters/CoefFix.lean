@@ -73,7 +73,7 @@ private theorem innerOf (ψ : U4 → ℂ) (ι : U2 → U4) (hι : Continuous ι)
     rw [hexp, Finset.mul_sum]
     exact Finset.sum_congr rfl fun j _ => by ring
   simp only [h1]
-  rw [integral_finset_sum _ fun j _ => (hci j).mul_const _]
+  rw [integral_finsetSum _ fun j _ => (hci j).mul_const _]
   simp only [integral_mul_const]
   rw [Finset.sum_eq_single j₀ (fun j _ hj => by rw [hz j hj, zero_mul]) (fun h => absurd (Finset.mem_univ _) h), ha, hb]
   congr 1

@@ -58,7 +58,7 @@ private theorem swap_int {K : Type} [Field K] [NumberField K] (F : G1 K (2 + 2) 
   have hI : ∀ q : Cos K, Integrable (fun X => F ((q.out : G1 K (2 + 2)) * (nn X * g)))
       ((unipMeasure K (2 + 2) 2).restrict (unipFundamentalDomain K (2 + 2) 2)) := fun q =>
     ((hF.comp (continuous_const.mul hc)).continuousOn.integrableOn_compact hC).mono_set hD
-  rw [e _ hz', ← integral_finset_sum _ fun q _ => hI q]
+  rw [e _ hz', ← integral_finsetSum _ fun q _ => hI q]
   exact setIntegral_congr_fun measurableSet_unipFundamentalDomain fun X hX => e _ fun q hq => hz q hq X hX
 
 theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.thCt :

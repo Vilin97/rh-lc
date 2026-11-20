@@ -352,7 +352,7 @@ theorem UpperTheory.ConvolutionTheory.R2.H.integral_thetaRowZero_eq_zero_of_iwah
     rw [e, thRow_sum] at h
     rw [h, mul_zero]
   have hsum : ∑ k ∈ s, ∫ g in M.D, u (g * j k.1) ∂M.μ = 0 := by
-    rw [← integral_finset_sum s fun k _ => (rightInv F M u hu hint (j k.1)).1]
+    rw [← integral_finsetSum s fun k _ => (rightInv F M u hu hint (j k.1)).1]
     simp only [hz, integral_zero]
   have hcard : (s.card : ℂ) * ∫ g in M.D, u g ∂M.μ = 0 := by
     have e : ∀ k ∈ s, ∫ g in M.D, u (g * j k.1) ∂M.μ = ∫ g in M.D, u g ∂M.μ :=

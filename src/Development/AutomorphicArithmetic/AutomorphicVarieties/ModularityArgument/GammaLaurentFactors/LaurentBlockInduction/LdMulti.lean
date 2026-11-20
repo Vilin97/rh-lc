@@ -270,7 +270,7 @@ theorem ldMulti_succ (hB : LdBlock) {ψ : AddChar F Circle} (hψ : Continuous ψ
               ∂Measure.pi (fun j : {i // i ≠ a} => μ j) := by
             simp_rw [hinner]
         _ = _ := by
-            rw [integral_finset_sum]
+            rw [integral_finsetSum]
             · simp_rw [integral_const_mul]
             · intro i _
               exact ((hint' (fun j => Ψ j) (fun j => hΨ j) (b i : W) ℓ ((hρ'sm ℓ).2 hℓ)).1 s hs₃).const_mul _
@@ -327,7 +327,7 @@ theorem ldMulti_succ (hB : LdBlock) {ψ : AddChar F Circle} (hψ : Continuous ψ
               ∂Measure.pi (fun j : {i // i ≠ a} => μ j) := by
             simp_rw [hinner]
         _ = _ := by
-            rw [integral_finset_sum]
+            rw [integral_finsetSum]
             · simp_rw [integral_const_mul]
             · intro i _
               exact ((hint' (fun j => GJMatrix.localMatrixFourier ψ (Ψ j))

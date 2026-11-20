@@ -75,7 +75,7 @@ theorem avgS_of (hEv : SEv) : AvgS := by
           rw [hterm i, integral_const_mul]
       _ = ∫ x, ∑ i : Fin (k + 3), (-1 : ℝ) ^ (i : ℕ) * F (fun j => Q x (i.succAbove j))
             ∂(Measure.pi fun _ => P) :=
-          (integral_finset_sum _ fun i _ => (hint' i).const_mul _).symm
+          (integral_finsetSum _ fun i _ => (hint' i).const_mul _).symm
       _ = ∫ x, dC F (Q x) ∂(Measure.pi fun _ => P) := rfl
       _ = 0 := by simp [hcoc]
   let b₀ : Yb H := ((1 : H), false)

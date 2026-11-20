@@ -89,7 +89,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA.lineInj :
     have hs : ∀ a b : G1 K 2, f (lv a b 0 * y) = ∑ j, φ j a * ψ j b := fun a b =>
       p₃ a b _ (by rw [Subgroup.coe_mul, lv_zero])
     simp only [hs, Finset.mul_sum]
-    rw [integral_finset_sum]
+    rw [integral_finsetSum]
     · refine Finset.sum_eq_zero fun j _ => ?_
       obtain ⟨v, hv, hr⟩ := (p₁ j).2
       have h0 := (ptPi K ι C μ₂ v (φ j) (p₁ j).1 hr).1 i n₀ q₀ ((hmin i).2 n₀ q₀ hA v hv) M
@@ -107,7 +107,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA.lineInj :
     have hs : ∀ a b : G1 K 2, f (lv a b 0 * y) = ∑ j, φ j a * ψ j b := fun a b =>
       p₃ a b _ (by rw [Subgroup.coe_mul, lv_zero])
     simp only [hs, Finset.mul_sum]
-    rw [integral_finset_sum]
+    rw [integral_finsetSum]
     · refine Finset.sum_eq_zero fun j _ => ?_
       obtain ⟨v, hv, hr⟩ := (p₂ j).2
       have h0 := (ptPi K ι C μ₂ v (ψ j) (p₂ j).1 hr).1 i n₀ q₀ ((hmin' i).2 n₀ q₀ hA v hv) M

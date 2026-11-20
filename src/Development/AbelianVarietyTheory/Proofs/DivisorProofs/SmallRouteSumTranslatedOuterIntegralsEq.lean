@@ -42,9 +42,9 @@ theorem sum_integral_translates_outer_eq : ∀ {D : D7} {T : Type} {L : LevCh D 
       simp only [translates, kerSmall, Finsupp.sum, Finset.mul_sum]
       exact Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun d _ => by ring
     simp_rw [e]
-    rw [integral_finset_sum _ fun k _ => integrable_finset_sum _ fun d hd =>
+    rw [integral_finsetSum _ fun k _ => integrable_finset_sum _ fun d hd =>
       (((hint d hd k).const_mul _).const_mul _).const_mul _]
-    simp_rw [integral_finset_sum _ fun d hd => (((hint d hd _).const_mul _).const_mul _).const_mul _]
+    simp_rw [integral_finsetSum _ fun d hd => (((hint d hd _).const_mul _).const_mul _).const_mul _]
     simp only [integral_const_mul, translates, outer, Finsupp.sum, Finset.mul_sum]
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun d _ => Finset.sum_congr rfl fun k _ => by ring
@@ -62,7 +62,7 @@ theorem sum_integral_translates_outer_eq : ∀ {D : D7} {T : Type} {L : LevCh D 
         simp_rw [hpt]
     _ = _ := by
         simp only [Finsupp.sum]
-        rw [integral_finset_sum _ fun d hd => (hint2 d hd).const_mul _]
+        rw [integral_finsetSum _ fun d hd => (hint2 d hd).const_mul _]
         simp_rw [integral_const_mul]
 
 end GlobalTheory.SmallRoute

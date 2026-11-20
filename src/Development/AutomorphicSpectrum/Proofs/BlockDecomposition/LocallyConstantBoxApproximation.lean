@@ -256,11 +256,11 @@ theorem loc_approx : ∀ (F : Type) [Field F] [NumberField F] (v : HeightOneSpec
   have hs : Integrable (fun y => ∑ c ∈ C, boxInd v k c y) μ :=
     integrable_finset_sum _ fun c _ => hbi c
   have e1 : ∫ y, ∑ c ∈ C, ψ c * boxInd v k c y ∂μ = ∑ c ∈ C, ψ c * vol := by
-    rw [integral_finset_sum _ fun c _ => (hbi c).const_mul _]
+    rw [integral_finsetSum _ fun c _ => (hbi c).const_mul _]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [integral_const_mul, hint]
   have e2 : ∫ y, ∑ c ∈ C, boxInd v k c y ∂μ = (C.card : ℝ) * vol := by
-    rw [integral_finset_sum _ fun c _ => hbi c]
+    rw [integral_finsetSum _ fun c _ => hbi c]
     simp [hint]
   have hb := norm_integral_le_of_norm_le (hs.const_mul δ)
     (Eventually.of_forall fun y => (by simpa [Real.norm_eq_abs] using hpt y :

@@ -78,7 +78,7 @@ private theorem Cls.hasFDerivAt (h : Cls ν p w Gd) {F : Sm E a} (hF : Gd F) (g 
       rw [fderiv_chart F _ (hSU hz), Finset.smul_sum] at h1
       simp only [smul_smul, mul_comm (w y)] at h1
       exact h1)
-  rw [integral_finset_sum _ fun i _ => hi i] at key
+  rw [integral_finsetSum _ fun i _ => hi i] at key
   simp only [integral_smul_const] at key
   simp only [chart_avg]
   exact key
@@ -104,7 +104,7 @@ theorem Cls.lieD_avg (h : Cls ν p w Gd) {F : Sm E a} (hF : Gd F) (X : Lie E a) 
   have h1 : oneL E a ∈ invSet E a := isUnit_one
   rw [lieD, (h.hasFDerivAt hF g h1).fderiv]
   simp only [chart_avg, ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply, smul_eq_mul, ← integral_mul_const]
-  rw [← integral_finset_sum _ fun i _ => (h.integrable_chart (h.lie F _ hF) g h1).mul_const _]
+  rw [← integral_finsetSum _ fun i _ => (h.integrable_chart (h.lie F _ hF) g h1).mul_const _]
   refine integral_congr_ae (.of_forall fun y => ?_)
   simp only [lie_apply, lieD]
   rw [fderiv_chart F _ h1]

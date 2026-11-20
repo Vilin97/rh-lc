@@ -135,7 +135,7 @@ theorem exists_ip {F : Face D A} (hL : Laws R F) (hLP : LevProd R i) {γ : GA D 
     have h2 := (hc v v').2
     rw [hy] at h2
     simp only [heckeOn_apply, Finset.mul_sum] at h2
-    rw [integral_finset_sum _ fun δ _ => int_tr hL hT hT' v v' δ, Finset.sum_congr rfl key, Finset.sum_const,
+    rw [integral_finsetSum _ fun δ _ => int_tr hL hT hT' v v' δ, Finset.sum_congr rfl key, Finset.sum_const,
       nsmul_eq_mul] at h2
     simp only [heckeOn_single_apply]
     rw [div_mul_eq_mul_div, eq_div_iff hn, mul_comm, h2]
@@ -197,7 +197,7 @@ theorem transLaws_of {F : Face D A} (hL : Laws R F) (hLP : LevProd R i) : TransL
     refine ⟨y', hy', fun γ hγ x => ?_⟩
     have hCf : ∀ δ ∈ C, δ ∈ GfC (Wc D i) := fun δ hδ => (hR.1 δ hδ).1
     rw [htp γ hγ, Finset.sum_congr rfl fun δ hδ => htp (γ * δ) (mul_mem hγ (hCf δ hδ)) x y, ← Finset.sum_div,
-      ← Finset.mul_sum, ← integral_finset_sum _ fun δ _ => hI x y (γ * δ)]
+      ← Finset.mul_sum, ← integral_finsetSum _ fun δ _ => hI x y (γ * δ)]
     congr 3
     funext g
     rw [hy', heckeOn_apply, Finset.mul_sum]

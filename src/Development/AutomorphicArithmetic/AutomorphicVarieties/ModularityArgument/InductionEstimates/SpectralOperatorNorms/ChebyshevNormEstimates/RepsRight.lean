@@ -39,7 +39,7 @@ theorem cosetSum {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G
     · exact (hout h).symm
     · exact h0 h fun hc => hh ⟨h, hc, rfl⟩
   conv_lhs => rw [hF']
-  rw [integral_finset_sum]
+  rw [integral_finsetSum]
   · refine Finset.sum_congr rfl fun q _ => ?_
     rw [integral_indicator_const _ (hmeas q), Measure.real, hval, Measure.real]
   · intro q _
@@ -247,7 +247,7 @@ theorem lin_fix {D : TypeDat K (2 + 2)} {Kf : Subgroup GF} (hL : D.Level Kf) (hl
     have := (D.cont.mul (hc.comp (continuous_const.mul continuous_id : Continuous fun u => y * u))).continuousOn.integrableOn_compact
       (μ := D.ν) (typeFin D).1
     rwa [IntegrableOn, Measure.restrict_eq_self_of_ae_mem D.supp] at this
-  rw [integral_congr_ae (g := fun u => ∑ h ∈ s, c h * ω (dl g h) * (D.e u * f (g * pf h * u))), integral_finset_sum, lin_apply]
+  rw [integral_congr_ae (g := fun u => ∑ h ∈ s, c h * ω (dl g h) * (D.e u * f (g * pf h * u))), integral_finsetSum, lin_apply]
   · exact Finset.sum_congr rfl fun h _ => by rw [integral_const_mul, hf]
   · exact fun h _ => (hint _).const_mul _
   · filter_upwards [D.supp] with u hu

@@ -42,7 +42,7 @@ theorem act_sum (hL : LgFacts) [MeasurableSpace (G n)] [BorelSpace (G n)] (μ : 
     funext y
     rw [hsum _ (mem_GLs_of y)]
     simp [ContinuousLinearMap.sum_apply]
-  rw [hfun, integral_finset_sum _ hint']
+  rw [hfun, integral_finsetSum _ hint']
   refine Finset.sum_congr rfl (fun i _ => ?_)
   rw [integral_smul]
 

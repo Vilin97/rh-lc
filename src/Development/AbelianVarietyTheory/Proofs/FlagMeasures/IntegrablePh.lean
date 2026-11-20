@@ -109,7 +109,7 @@ theorem ae_eq_of_pairing {X ι : Type} [Fintype ι] [TopologicalSpace X] [T2Spac
     by_cases hzs : z ∈ s <;> simp [hzs]
   rw [integral_sub (hk.continuousOn.integrableOn_compact hs)
     ((continuous_finset_sum _ fun i _ => hc i).continuousOn.integrableOn_compact hs),
-    integral_finset_sum _ fun i _ => (hc i).continuousOn.integrableOn_compact hs, ← e, h1, sub_eq_zero]
+    integral_finsetSum _ fun i _ => (hc i).continuousOn.integrableOn_compact hs, ← e, h1, sub_eq_zero]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [integral_const_mul, ← e, mul_comm, L2.inner_def]
   congr 1
@@ -212,7 +212,7 @@ theorem kernelB : KernelB := by
   · simp only [hK]
     exact integrable_finset_sum _ fun i _ => (hI i).1
   · simp only [hK]
-    rw [integral_finset_sum _ fun i _ => (hI i).1]
+    rw [integral_finsetSum _ fun i _ => (hI i).1]
     simp only [(hI _).2]
     simp
   · refine (norm_sum_sq_le c fun i => F i x).trans ?_

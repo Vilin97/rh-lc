@@ -145,7 +145,7 @@ theorem coeff_eq_zero : ∀ (N : ℕ) (Ξ : Type) (lam : Ξ → Fin N → ℝ) (
     haveI := rho_prob hR
     have hint : ∫ t, ∑ ξ ∈ F, g ξ t ∂(Measure.pi fun _ : Fin N => rho R)
         = ∑ ξ ∈ F, c ξ * ∏ j, avg R ((lam ξ - lam ξ₀) j) := by
-      rw [integral_finset_sum]
+      rw [integral_finsetSum]
       · refine Finset.sum_congr rfl fun ξ _ => ?_
         simp only [g]
         rw [integral_const_mul, integral_chr hR]

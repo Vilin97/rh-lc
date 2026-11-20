@@ -87,7 +87,7 @@ theorem schur_orthogonality {G : Type} [Group G] [MeasurableSpace G] [Measurable
     intro y y'
     simp only [hB]
     simp_rw [← integral_const_mul]
-    rw [← integral_finset_sum _ (fun i _ => (hint (b i) y').const_mul _)]
+    rw [← integral_finsetSum _ (fun i _ => (hint (b i) y').const_mul _)]
     congr 1; funext g
     simp only [hF]
     have hs : ∀ z, star ⟪a, ρ g⁻¹ z⟫_ℂ = ⟪z, ρ g a⟫_ℂ := by
@@ -128,7 +128,7 @@ theorem schur_orthogonality {G : Type} [Group G] [MeasurableSpace G] [Measurable
     exact hBinv h hh _ _
   have hsum : ∑ i, B (b i) (b i) = ⟪a', a⟫_ℂ := by
     simp only [hB]
-    rw [← integral_finset_sum _ (fun i _ => hint (b i) (b i))]
+    rw [← integral_finsetSum _ (fun i _ => hint (b i) (b i))]
     have : ∀ g, ∑ i, F (b i) (b i) g = ⟪a', a⟫_ℂ := by
       intro g
       simp only [hF]

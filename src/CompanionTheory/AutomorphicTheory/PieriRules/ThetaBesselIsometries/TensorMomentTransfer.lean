@@ -84,7 +84,7 @@ theorem pairing : HypsG → ∀ (k r : ℕ) (ι κ : Type) [Fintype ι] [Decidab
       (Matrix.of x) hx, inner_sum]
     simp only [inner_smul_right]
   refine (MeasureTheory.integral_congr_ae hpt).trans ?_
-  rw [MeasureTheory.integral_finset_sum]
+  rw [MeasureTheory.integral_finsetSum]
   · rw [Finset.sum_eq_single I]
     · rw [MeasureTheory.integral_const_mul,
         (Gp91.GlobalTheory.T.isometric_bessel_memLp_and_integral_inner_eq hK k r ε (muI I) (RI I) Wp z π u μW μN μG νq (BI I) (hRI I) hS hIso).2 _ (hv I) y hy]

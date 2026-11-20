@@ -36,7 +36,7 @@ theorem GlobalTheory.BaseChain.stepY_integrable_and_eq {D : D7} {L : SizeData₂
     exact (hio.integ ⟨F.1, hF⟩ Q x (g * κ p)).const_mul _
   simp_rw [Finset.sum_mul]
   refine ⟨integrable_finset_sum _ hint, ?_⟩
-  rw [integral_finset_sum _ hint]
+  rw [integral_finsetSum _ hint]
   have e : ∀ p ∈ (Finset.univ : Finset (lvP W).H), ∫ h in (pk W).fdY t (j + 1), (levChi (Yc D j) ((pk W).βY j) ((pk W).datYt t j (lvP W)) (κ p))⁻¹ * thetaKO ((pk W).ωY t j) (g * κ p) h ((pk W).ptY t j Q) * F.1 x h ∂(pk W).νY t (j + 1) =
       ((pk W).ioY t j ⟨F.1, hF⟩).1 ((pk W).ItY j Q x) g := by
     intro p _

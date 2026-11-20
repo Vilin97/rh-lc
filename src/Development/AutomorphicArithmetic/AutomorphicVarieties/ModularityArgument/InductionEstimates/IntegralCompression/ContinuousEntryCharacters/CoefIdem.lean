@@ -71,7 +71,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA.coefIdem :
       rw [hexp, Finset.mul_sum]
       exact Finset.sum_congr rfl fun j _ => (mul_assoc _ _ _).symm
     simp_rw [e1]
-    rw [integral_finset_sum (μ := μ) Finset.univ (f := fun j h => ψ h * a j h⁻¹ * b j k) fun j _ =>
+    rw [integral_finsetSum (μ := μ) Finset.univ (f := fun j h => ψ h * a j h⁻¹ * b j k) fun j _ =>
       hint _ ((hψc.mul ((hcont j).1.comp hinv)).mul continuous_const)]
     simp_rw [integral_mul_const]
     rw [Finset.sum_eq_single j₀]
@@ -94,7 +94,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.EA.coefIdem :
       rw [hexp, Finset.mul_sum]
       exact Finset.sum_congr rfl fun j _ => by ring
     simp_rw [e1]
-    rw [integral_finset_sum (μ := μ) Finset.univ (f := fun j k => a j g * (conj (ψ k) * b j k)) fun j _ =>
+    rw [integral_finsetSum (μ := μ) Finset.univ (f := fun j k => a j g * (conj (ψ k) * b j k)) fun j _ =>
       hint _ (continuous_const.mul ((Complex.continuous_conj.comp hψc).mul (hcont j).2))]
     simp_rw [integral_const_mul]
     rw [Finset.sum_eq_single j₀]

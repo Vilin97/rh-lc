@@ -599,11 +599,11 @@ theorem iso_core (T : Tor D) {La₁ La₂ : AddSubgroup (VC D N N')}
       ((((La₁.addSubgroupOf La₂).index : ℝ))⁻¹ : ℂ) * ∑ q : La₂ ⧸ La₁.addSubgroupOf La₂,
         ((∫ z in t, Formalism.L2.Ker.Cd.IntegralLatticeDensity.dens D T (U D T ((Quotient.out q : La₂) : VC D N N') G) z : ℝ) : ℂ) := by
     simp_rw [hexp]
-    rw [MeasureTheory.integral_const_mul, MeasureTheory.integral_finset_sum _
+    rw [MeasureTheory.integral_const_mul, MeasureTheory.integral_finsetSum _
       (fun q _ => MeasureTheory.integrable_finset_sum _ (fun q' _ => hint q q'))]
     congr 1
     refine Finset.sum_congr rfl fun q _ => ?_
-    rw [MeasureTheory.integral_finset_sum _ (fun q' _ => hint q q'),
+    rw [MeasureTheory.integral_finsetSum _ (fun q' _ => hint q q'),
       Finset.sum_eq_single q (fun q' _ hq' => hoff q q' (Ne.symm hq'))
         (fun h => absurd (Finset.mem_univ q) h)]
     simp_rw [hdiag]

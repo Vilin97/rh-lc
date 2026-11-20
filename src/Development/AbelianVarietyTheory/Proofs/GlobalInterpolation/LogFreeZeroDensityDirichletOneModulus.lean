@@ -66,7 +66,7 @@ theorem count_le (Z : Finset ℂ) (w : ℂ → ℝ) (F : ℝ → ℝ) (U h δ M 
     simp only [setIntegral_const, smul_eq_mul]
     rw [Real.volume_real_Icc_of_le (by linarith)]
     ring
-  rw [Finset.mul_sum, ← Finset.sum_congr rfl hint, ← integral_finset_sum _ (fun ρ _ => hgi ρ),
+  rw [Finset.mul_sum, ← Finset.sum_congr rfl hint, ← integral_finsetSum _ (fun ρ _ => hgi ρ),
     ← intervalIntegral.integral_const_mul, intervalIntegral.integral_of_le hU',
     ← integral_Icc_eq_integral_Ioc]
   refine integral_mono (integrable_finset_sum _ (fun ρ _ => hgi ρ)) ?_ fun τ => ?_
@@ -169,7 +169,7 @@ theorem mean_le : ∃ C CM : ℝ, 0 < C ∧ 0 ≤ CM ∧ ∀ (q : ℕ) [NeZero q
   have hJ : ∀ χ : DirichletCharacter ℂ q, Integrable (fun y : ℝ =>
       ∫ τ in Set.Ioc (-T) T, ‖primeSum χ N y τ‖ ^ 2 / y) (volume.restrict (Set.Ioc N M)) :=
     fun χ => (hI χ).integral_prod_right
-  rw [← integral_finset_sum _ (fun χ _ => hJ χ)]
+  rw [← integral_finsetSum _ (fun χ _ => hJ χ)]
   have hlM : 0 ≤ Real.log M := Real.log_nonneg (by linarith)
   have hc : IntegrableOn (fun y : ℝ => C * (Real.log M + CM) * y⁻¹) (Set.Ioc N M) := by
     refine (ContinuousOn.integrableOn_Icc ?_).mono_set Set.Ioc_subset_Icc_self

@@ -23,9 +23,9 @@ theorem UpperTheory.V.Lit.Bor.avgPos :
       (A * Matrix.of (fun a b => ∫ h, F h a b ∂μ) * C) i j = ∫ h, (A * F h * C) i j ∂μ := by
     intro A C i j
     simp only [Matrix.mul_apply, Matrix.of_apply]
-    rw [integral_finset_sum]
+    rw [integral_finsetSum]
     · refine Finset.sum_congr rfl fun b _ => ?_
-      rw [integral_mul_const, integral_finset_sum]
+      rw [integral_mul_const, integral_finsetSum]
       · congr 1
         refine Finset.sum_congr rfl fun a _ => ?_
         rw [integral_const_mul]
@@ -50,9 +50,9 @@ theorem UpperTheory.V.Lit.Bor.avgPos :
       have hdot : star x ⬝ᵥ (Matrix.of (fun a b => ∫ h, F h a b ∂μ) *ᵥ x) =
           ∫ h, star x ⬝ᵥ (F h *ᵥ x) ∂μ := by
         simp only [dotProduct, Matrix.mulVec, Matrix.of_apply, Finset.mul_sum]
-        rw [integral_finset_sum]
+        rw [integral_finsetSum]
         · refine Finset.sum_congr rfl fun i _ => ?_
-          rw [integral_finset_sum]
+          rw [integral_finsetSum]
           · refine Finset.sum_congr rfl fun j _ => ?_
             rw [integral_const_mul, integral_mul_const]
           · intro j _

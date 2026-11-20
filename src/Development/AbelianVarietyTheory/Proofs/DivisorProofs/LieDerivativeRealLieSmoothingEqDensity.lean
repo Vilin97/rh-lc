@@ -50,7 +50,7 @@ theorem integral_mul_fderiv_lmul_eq_dens (ν : Measure (Lie E a)) [ν.IsAddHaarM
     simpa using (((hc i).fderiv (b i)).mul contDiff_const (β := fun _ => (1 : ℂ))).integrable_mul ν isOpen_invSet
       hG.continuousOn
   calc ∫ x, α x * fderiv ℝ G x (L x) ∂ν = ∫ x, ∑ i, c i x * fderiv ℝ G x (b i) ∂ν := integral_congr_ae (.of_forall e)
-    _ = ∑ i, ∫ x, c i x * fderiv ℝ G x (b i) ∂ν := integral_finset_sum _ fun i _ => hi1 i
+    _ = ∑ i, ∫ x, c i x * fderiv ℝ G x (b i) ∂ν := integral_finsetSum _ fun i _ => hi1 i
     _ = ∑ i, ∫ x, -(fderiv ℝ (c i) x (b i) * G x) ∂ν := by
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [integral_mul_fderiv_eq_neg_fderiv_mul_of_integrable (hi2 i) (hi1 i)
@@ -58,7 +58,7 @@ theorem integral_mul_fderiv_lmul_eq_dens (ν : Measure (Lie E a)) [ν.IsAddHaarM
         (fun x _ => (hc i).1.differentiable (by simp) x)
         (fun x hx => (hG.contDiffAt (isOpen_invSet.mem_nhds ((hc i).2.2 hx))).differentiableAt (by simp)),
         integral_neg]
-    _ = ∫ x, ∑ i, -(fderiv ℝ (c i) x (b i) * G x) ∂ν := (integral_finset_sum _ fun i _ => (hi2 i).neg).symm
+    _ = ∫ x, ∑ i, -(fderiv ℝ (c i) x (b i) * G x) ∂ν := (integral_finsetSum _ fun i _ => (hi2 i).neg).symm
     _ = ∫ x, dens X α x * G x ∂ν := by
       refine integral_congr_ae (.of_forall fun x => ?_)
       dsimp only

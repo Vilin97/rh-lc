@@ -64,7 +64,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.ellLin {E : Type} [Fie
     · rw [funext (e m₁)]
       exact integrable_finset_sum _ fun i _ => (i₂ i).const_mul _
     · simp only [e]
-      have : ∀ m₁ : RightCosetSpace (Gam E 2), _ := fun m₁ => integral_finset_sum (μ := Q) Finset.univ fun i _ =>
+      have : ∀ m₁ : RightCosetSpace (Gam E 2), _ := fun m₁ => integral_finsetSum (μ := Q) Finset.univ fun i _ =>
         (i₂ i).const_mul (φ i (Quotient.out m₁) * starRingEnd ℂ (b.f.1 ((Quotient.out m₁ : G1 E 2) : GlobalTheory.CuspRep.GA E 2)))
       simp only [this, integral_const_mul]
       exact integrable_finset_sum _ fun i _ => (i₁ i).mul_const _

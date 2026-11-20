@@ -155,7 +155,7 @@ theorem integral_fundamentalDomain_eq_sum_unfold : ∀ (G : Type) [Group G] [Top
     exact integrable_finset_sum _ fun i _ => hint i
   · have h1 : ∫ x in 𝓖, f x ∂ν = ∫ x in 𝓖, ∑ i, (C i).indicator f x ∂ν := by
       conv_lhs => rw [hF]
-    rw [h1, integral_finset_sum _ fun i _ => hint i]
+    rw [h1, integral_finsetSum _ fun i _ => hint i]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [integral_indicator (hC i), ← hAint i, ← (hU i).2]
     have : (({γ : G | γ ∈ Γ ∧ (h i)⁻¹ * γ * h i ∈ Ω}.ncard : ℕ) : ℂ) ≠ 0 := by

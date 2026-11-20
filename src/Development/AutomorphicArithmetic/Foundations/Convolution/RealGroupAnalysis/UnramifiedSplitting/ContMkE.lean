@@ -119,7 +119,7 @@ private theorem eig_int {n : ℕ} {w : HeightOneSpectrum (𝓞 E)} {B : Multiset
   obtain ⟨s, hs⟩ := sum_Tj (n := n) hϖ j
   rw [hs]
   simp only [← integral_const_mul]
-  rw [← integral_finset_sum _ fun c _ => (hi _).const_mul _]
+  rw [← integral_finsetSum _ fun c _ => (hi _).const_mul _]
   refine integral_congr_ae (Filter.Eventually.of_forall fun x => ?_)
   have e := (h x).eig ϖ hϖ j hj g
   rw [hs] at e

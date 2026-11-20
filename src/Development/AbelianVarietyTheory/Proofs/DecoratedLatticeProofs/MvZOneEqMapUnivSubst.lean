@@ -125,7 +125,7 @@ theorem avg_span : ∀ (ι : Type) [Fintype ι] (a b : ℕ) (hab : a ≤ b), 0 <
         ∑ m ∈ S, c m k * evalAt (fun τ => r k τ * y τ) F * Λ (monomial m 1) := by
       intro k; rw [hΛ, Finset.sum_mul]; exact Finset.sum_congr rfl fun _ _ => by ring
     simp only [e]
-    rw [integral_finset_sum _ (fun m _ => (hint m F).mul_const _)]
+    rw [integral_finsetSum _ (fun m _ => (hint m F).mul_const _)]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [Q, LinearMap.sum_apply, LinearMap.smulRight_apply, map_sum, map_smul, smul_eq_mul]
     refine Finset.sum_congr rfl fun m _ => ?_

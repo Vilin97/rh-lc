@@ -118,7 +118,7 @@ theorem th_addf (hB : ThetaBasic) (hE : EpsOf) (hV : FinVolU) (hp : IsPair B M �
     {f : ι → UA σ W.J → ℂ} (hf : ∀ i, IsRapid (Y := W) (f i)) {Ψ} (hΨ : Ψ ∈ schA F _) (g) :
     th om μ D (∑ i ∈ S, f i) Ψ g = ∑ i ∈ S, th om μ D (f i) Ψ g := by
   simp only [th, pet, Finset.sum_apply, Finset.sum_mul]
-  exact integral_finset_sum _ fun i _ => th_int hB hE hV hp hμ hD (hf i) hΨ g
+  exact integral_finsetSum _ fun i _ => th_int hB hE hV hp hμ hD (hf i) hΨ g
 
 theorem pairLoc_of (hB : ThetaBasic) (hE : EpsOf) (hV : FinVolU) (hU : PositivityTheory.ThKF.Unimod) (hL : LocDist) (hS : SplitB) :
     PairLoc := by

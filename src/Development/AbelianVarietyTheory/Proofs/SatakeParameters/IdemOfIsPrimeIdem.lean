@@ -73,8 +73,8 @@ theorem integral_adjoint (h𝓕 : IsFundamentalDomain Γ 𝓕 μ) (K : Subgroup 
     simp only [this]
     rw [hr k₁ hk₁, ← mul_assoc, hr' k₂ hk₂]
   simp_rw [star_sum, Finset.sum_mul, Finset.mul_sum]
-  rw [integral_finset_sum _ fun a _ => by simpa [IntegrableOn] using hint a 1,
-    integral_finset_sum _ fun a _ => by simpa [IntegrableOn] using hint 1 a,
+  rw [integral_finsetSum _ fun a _ => by simpa [IntegrableOn] using hint a 1,
+    integral_finsetSum _ fun a _ => by simpa [IntegrableOn] using hint 1 a,
     Finset.sum_congr rfl h1, Finset.sum_congr rfl h2, Finset.sum_const, Finset.sum_const, hcard]
 
 end Generic

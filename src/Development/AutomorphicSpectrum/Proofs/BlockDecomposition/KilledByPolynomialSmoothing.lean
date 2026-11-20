@@ -63,7 +63,7 @@ theorem GlobalTheory.CompanionTheory.Conc.kill_sm : ∀ (K : Type) [Field K] [Nu
       p.coeff j * An.ctn r (sm ν β f) (An.aR K n r j * g) =
         ∫ y, p.coeff j * ((β y : ℂ) * An.ctn r f (An.aR K n r j * g * infEmb K n y)) ∂ν := fun j _ => by
     rw [(ctn_sm ν hk.cont hk.cpt hf r _).2, integral_const_mul]
-  rw [Finset.sum_congr rfl h1, ← integral_finset_sum _ fun j _ =>
+  rw [Finset.sum_congr rfl h1, ← integral_finsetSum _ fun j _ =>
     ((ctn_sm ν hk.cont hk.cpt hf r _).1).const_mul _]
   refine integral_eq_zero_of_ae (Eventually.of_forall fun y => ?_)
   have h2 := hkill (g * infEmb K n y)

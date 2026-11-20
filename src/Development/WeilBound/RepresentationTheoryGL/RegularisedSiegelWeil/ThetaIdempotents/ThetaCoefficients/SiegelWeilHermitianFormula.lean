@@ -331,7 +331,7 @@ theorem GlobalTheory.CompanionTheory.SiegelND.Coef.coefN_eq_theta : ∀ (F E : T
   have e1 : ∫ X, Φ X ∂(GlobalTheory.CompanionTheory.SW.thetaMeas σ J μ 𝓕 {X | HeckeCharacterZeroLocus.SiegelWeilU.gramE σ J X = T}) =
       ∑ i, ∫ X, Coef.pureN (φ i) (A i) X ∂(GlobalTheory.CompanionTheory.SW.thetaMeas σ J μ 𝓕 {X | HeckeCharacterZeroLocus.SiegelWeilU.gramE σ J X = T}) := by
     simp only [hsum]
-    exact integral_finset_sum _ fun i _ => (hP i).1
+    exact integral_finsetSum _ fun i _ => (hP i).1
   rw [e1, hΦe, GlobalTheory.T.siegel_weil_hermitian_coefficient F E σ hCM M J hJ n h2n ψ hψ dx hdx db hdb T N _ hSB]
   exact Finset.sum_congr rfl fun i _ => (hP i).2
 

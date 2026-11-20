@@ -54,7 +54,7 @@ private theorem coset_integral (μ : Measure G) [μ.IsMulLeftInvariant] {K : Sub
       rw [hy0, zero_mul]
       refine (Finset.sum_eq_zero fun q hq => Set.indicator_of_notMem (fun hyq => hy ?_) _).symm
       rwa [(hcm q y).1 hyq]
-  rw [hsum, integral_finset_sum]
+  rw [hsum, integral_finsetSum]
   · refine Finset.sum_congr rfl fun q _ => ?_
     rw [integral_indicator_const _ (hco q).measurableSet]
     simp only [Measure.real, hmeas q, Complex.real_smul]

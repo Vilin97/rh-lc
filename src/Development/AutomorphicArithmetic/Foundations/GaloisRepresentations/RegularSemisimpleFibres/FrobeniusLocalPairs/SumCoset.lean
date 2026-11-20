@@ -99,7 +99,7 @@ theorem UpperTheory.Gal.InertialTypesAlt.L.sumCoset :
     simp [quotIntegral]
   rw [quotIndep_holds G μ hμ T ν hsf hinv F hFm hFT ρ hρ, finsum_eq_sum_of_support_subset _ hsupp,
     Finset.sum_congr rfl (fun q _ => hq_eq q),
-    ← integral_finset_sum _ (fun q _ => hInt.indicator (hSo q).measurableSet)]
+    ← integral_finsetSum _ (fun q _ => hInt.indicator (hSo q).measurableSet)]
   congr 1
   funext g
   by_cases hg : F g = 0

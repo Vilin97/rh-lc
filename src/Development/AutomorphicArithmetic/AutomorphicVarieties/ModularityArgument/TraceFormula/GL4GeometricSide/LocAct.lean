@@ -52,7 +52,7 @@ private theorem sec_eq (hc : ∀ j, Continuous (c j))
     rw [hF y hy κ, Finset.sum_smul]
     exact Finset.sum_congr rfl fun j _ => by rw [smul_smul, mul_comm]
   simp only [h1]
-  rw [integral_finset_sum (f := fun j κ => F j y • (c j κ • M.ρ κ)) _ fun j _ => (integrable_c ν M hc j).smul (F j y)]
+  rw [integral_finsetSum (f := fun j κ => F j y • (c j κ • M.ρ κ)) _ fun j _ => (integrable_c ν M hc j).smul (F j y)]
   simp only [integral_smul]
 
 private theorem sec_equiv (hc : ∀ j, Continuous (c j))
@@ -107,12 +107,12 @@ private theorem ker_avg (hν : ν Set.univ = 1) (hk : IsMult μ M k val T') (hc 
     have h4 := fun j => ((ContinuousLinearMap.mul ℂ (M.V →L[ℂ] M.V)).flip (c j κ • M.ρ κ)).integral_comp_comm
       (integrable_k M μ hk (hs j))
     simp only [ContinuousLinearMap.flip_apply, ContinuousLinearMap.mul_apply'] at h4
-    rw [integral_finset_sum _ fun j _ => (integrable_k M μ hk (hs j)).mul_const _]
+    rw [integral_finsetSum _ fun j _ => (integrable_k M μ hk (hs j)).mul_const _]
     exact Finset.sum_congr rfl fun j _ => h4 j
   have h5 : ∫ y : G n, F0 y.val • k y.val ∂μ = ∫ _κ : Un n, (∫ y : G n, F0 y.val • k y.val ∂μ) ∂ν := by
     simp [Measure.real, hν]
   rw [h5, integral_congr_ae (Filter.Eventually.of_forall h1),
-    integral_finset_sum _ fun j _ => (integrable_c ν M hc j).const_mul _]
+    integral_finsetSum _ fun j _ => (integrable_c ν M hc j).const_mul _]
   refine Finset.sum_congr rfl fun j _ => ?_
   have h6 := (ContinuousLinearMap.mul ℂ (M.V →L[ℂ] M.V) (∫ y : G n, F j y.val • k y.val ∂μ)).integral_comp_comm
     (integrable_c ν M hc j)
@@ -137,7 +137,7 @@ private theorem ker_val (hk : IsMult μ M k val T') (hc : ∀ j, Continuous (c j
   rw [← h]
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [act, one_mul, map_sum, map_smul]
-  rw [integral_finset_sum (f := fun j (y : PositivityTheory.RgTw.G n) => F j y.val • k y.val (B j e)) _
+  rw [integral_finsetSum (f := fun j (y : PositivityTheory.RgTw.G n) => F j y.val • k y.val (B j e)) _
     fun j _ => (hI j).apply_continuousLinearMap (B j e)]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [ContinuousLinearMap.integral_apply (hI j)]

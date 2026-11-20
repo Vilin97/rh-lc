@@ -170,7 +170,7 @@ theorem contDiff_integral_of_closed {k : ℕ} {Λ ι : Type} [Fintype ι] (nxt :
         rw [norm_smul]
         exact mul_le_mul (hC j x hx θ) (hA j x hx) (norm_nonneg _) ((norm_nonneg _).trans (hC j x hx θ))))
       intervalIntegrable_const (ae_of_all _ fun θ _ x _ => hd l x θ)
-    rw [intervalIntegral.integral_finset_sum (f := fun j θ => φ (nxt j l) x₀ θ • a j x₀) fun j _ => ((hc _ x₀).smul continuous_const).intervalIntegrable _ _] at h
+    rw [intervalIntegral.integral_finsetSum (f := fun j θ => φ (nxt j l) x₀ θ • a j x₀) fun j _ => ((hc _ x₀).smul continuous_const).intervalIntegrable _ _] at h
     simpa only [intervalIntegral.integral_smul_const] using h
   have ind : ∀ m : ℕ, ∀ l, ContDiff ℝ m fun x => ∫ θ in p..q, φ l x θ := by
     intro m

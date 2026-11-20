@@ -307,8 +307,8 @@ theorem pet_tie : ∀ (D : D7) (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor
           starRingEnd ℂ ((∑ j, as j • rdU (U σ) (fs j)) (dict σ q.out).1 (dict σ q.out).2) ∂(muQ1 W) := by
       simp only [ipAll_eq, ← integral_const_mul]
       rw [Finset.sum_congr rfl fun j _ =>
-        (integral_finset_sum _ fun j' _ => (hint j j').const_mul (as j * starRingEnd ℂ (as j'))).symm,
-        ← integral_finset_sum _ fun j _ => integrable_finset_sum _ fun j' _ =>
+        (integral_finsetSum _ fun j' _ => (hint j j').const_mul (as j * starRingEnd ℂ (as j'))).symm,
+        ← integral_finsetSum _ fun j _ => integrable_finset_sum _ fun j' _ =>
           (hint j j').const_mul (as j * starRingEnd ℂ (as j'))]
       refine integral_congr_ae (Filter.Eventually.of_forall fun q => ?_)
       set_option synthInstance.maxHeartbeats 100000 in

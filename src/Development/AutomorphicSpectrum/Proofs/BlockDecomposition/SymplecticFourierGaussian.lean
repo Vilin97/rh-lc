@@ -237,7 +237,7 @@ theorem localFourierPi_sum {v : Pl} (hc : Continuous (localAdelicChar ℚ v)) (N
         (GroundTheory.Automorphic.GJMatrix.localTensor_mem fun i =>
           GroundTheory.Automorphic.GJMatrix.cosetInd_valBall_mem N (a i))) y
   simp only [localFourierPi, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.sum_mul, mul_assoc]
-  rw [integral_finset_sum _ fun a _ => (hi a).const_mul (c a)]
+  rw [integral_finsetSum _ fun a _ => (hi a).const_mul (c a)]
   exact Finset.sum_congr rfl fun a _ => integral_const_mul _ _
 
 theorem finiteFourier2_sum {ι : Type} (s : Finset ι) (c : ι → ℂ) (f : ι → (Fin 2 → Af) → ℂ)

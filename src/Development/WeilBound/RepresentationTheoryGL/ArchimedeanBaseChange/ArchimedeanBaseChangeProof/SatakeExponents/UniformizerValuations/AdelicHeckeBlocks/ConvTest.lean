@@ -195,14 +195,14 @@ theorem assoc {ψ ψ' ψ'' : Matrix κ κ (Hf E a b → ℂ)} (h1 : IsFinM ψ) (
       ∑ z, ∫ h, (∫ k, ψ x z k * ψ' z w (k⁻¹ * h) ∂ν) * ψ'' w y (h⁻¹ * g) ∂ν := by
     intro w
     simp_rw [Finset.sum_mul]
-    refine integral_finset_sum _ fun z _ => ?_
+    refine integral_finsetSum _ fun z _ => ?_
     obtain ⟨c1, c2⟩ := convTest ν (h1 x z) (h2 z w)
     exact (c1.mul ((h3 w y).1.comp (continuous_inv.mul continuous_const))).integrable_of_hasCompactSupport c2.mul_right
   have R : ∀ z, ∫ k, ψ x z k * (∑ w, ∫ h, ψ' z w h * ψ'' w y (h⁻¹ * (k⁻¹ * g)) ∂ν) ∂ν =
       ∑ w, ∫ k, ψ x z k * ∫ h, ψ' z w h * ψ'' w y (h⁻¹ * (k⁻¹ * g)) ∂ν ∂ν := by
     intro z
     simp_rw [Finset.mul_sum]
-    refine integral_finset_sum _ fun w _ => ?_
+    refine integral_finsetSum _ fun w _ => ?_
     obtain ⟨c1, -⟩ := convTest ν (h2 z w) (h3 w y)
     have c3 : Continuous fun k : Hf E a b => ∫ h, ψ' z w h * ψ'' w y (h⁻¹ * (k⁻¹ * g)) ∂ν :=
       c1.comp (continuous_inv.mul continuous_const)

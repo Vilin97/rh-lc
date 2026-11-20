@@ -65,7 +65,7 @@ theorem sq_dist_right_translate_le {n : ℕ} (ε : Fin n → Bool) {r : ℕ} (X 
     integrable_real_of_continuousK ((hcont j).norm.pow 2)
   have h2 : ∫ x, ‖(∑ j, (c j : ℂ) • rder ε [X j] p) x‖ ^ 2 ∂(muK ε) ≤
       (∑ j, c j ^ 2) * ∑ j, ∫ x, ‖rder ε [X j] p x‖ ^ 2 ∂(muK ε) := by
-    rw [← integral_finset_sum _ fun j _ => hint j, ← integral_const_mul]
+    rw [← integral_finsetSum _ fun j _ => hint j, ← integral_const_mul]
     exact integral_mono_of_nonneg (Filter.Eventually.of_forall fun x => by positivity)
       ((integrable_finset_sum _ fun j _ => hint j).const_mul _) (Filter.Eventually.of_forall hpt)
   have hE : 0 ≤ ∑ j, ∫ x, ‖rder ε [X j] p x‖ ^ 2 ∂(muK ε) :=

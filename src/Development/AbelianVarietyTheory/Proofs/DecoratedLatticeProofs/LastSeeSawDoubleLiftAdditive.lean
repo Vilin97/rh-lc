@@ -127,10 +127,10 @@ theorem biLift_sum (hB : BiAct D) (hwa : IsWeilDatumO ψ A S χA χS oma) (hwX :
       ∑ i, ∫ h₀ in vA.𝓕, φ h₀ * ker oma omX (C i) h₀ h₁ h₂ ∂vA.μ := by
     intro h₁
     simp only [ker_sum, Finset.mul_sum]
-    exact integral_finset_sum _ fun i _ => (inner hB hwa hwX (hC i) hA vA hφ).1 h₁ h₂
+    exact integral_finsetSum _ fun i _ => (inner hB hwa hwX (hC i) hA vA hφ).1 h₁ h₂
   rw [biLift_eq]
   simp only [e1]
-  rw [integral_finset_sum _ fun i _ => (mid hB hwa hwX (hC i) hA hS vA vS hφ).1 h₂]
+  rw [integral_finsetSum _ fun i _ => (mid hB hwa hwX (hC i) hA hS vA vS hφ).1 h₂]
   rfl
 
 end
@@ -163,7 +163,7 @@ theorem seeSmall : ∀ D : D7, SeeSmall D := by
       ∑ i, biLift oma omX vA vS φ (lastBi o o'' τ (Ξ i) (Φ₂ i)) h₂ := fun h₂ =>
     biLift_sum hB ha hX hA hS vA vS hφ (fun i => lastBi o o'' τ (Ξ i) (Φ₂ i)) hC h₂
   simp only [hsum, Finset.mul_sum]
-  rw [integral_finset_sum _ fun i _ => outer hB ha hX (hC i) hA hS hT vA vS vT o'' hφ hF]
+  rw [integral_finsetSum _ fun i _ => outer hB ha hX (hC i) hA hS hT vA vS vT o'' hφ hF]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [smallPair, hpt]
 

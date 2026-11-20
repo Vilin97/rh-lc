@@ -181,11 +181,11 @@ theorem avgLaw : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type) (A
     exact Finset.sum_congr rfl fun j _ => by ring
   show ∫ h in R.fdV i t, thetaKO (R.ωP i t) h g (avgW R i t PP a tr ε κ f) * compF R i t y l h ∂(R.νV i t) = 0
   rw [integral_congr_ae (Filter.Eventually.of_forall hpt1),
-    integral_finset_sum _ fun j _ => (hu_int j).const_mul _]
+    integral_finsetSum _ fun j _ => (hu_int j).const_mul _]
   simp only [integral_const_mul]
   simp only [hsub]
   simp only [← integral_const_mul]
-  rw [← integral_finset_sum _ fun j _ => (hv_int j).const_mul _]
+  rw [← integral_finsetSum _ fun j _ => (hv_int j).const_mul _]
   rw [integral_congr_ae (Filter.Eventually.of_forall hpt2)]
   exact integral_zero _ _
 

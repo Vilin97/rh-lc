@@ -67,7 +67,7 @@ theorem integral_eq_sum_cosets {G : Type} [Group G] [TopologicalSpace G] [IsTopo
       rw [key] at h0
       simp [Set.indicator, key, h0]
   conv_lhs => rw [hfun]
-  rw [integral_finset_sum]
+  rw [integral_finsetSum]
   · rw [Finset.mul_sum]
     refine Finset.sum_congr rfl fun q _ => ?_
     rw [integral_indicator_const _ (hmeas q), Measure.real, hμ q, Complex.real_smul, Measure.real]

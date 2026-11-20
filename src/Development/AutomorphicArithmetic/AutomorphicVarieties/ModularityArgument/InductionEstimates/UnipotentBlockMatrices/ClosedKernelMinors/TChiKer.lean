@@ -142,7 +142,7 @@ private theorem assemble {X : Type*} {d : ℕ} (S : Eu d →ₗ[ℂ] (X → ℂ)
   refine Eq.trans ?_ e.symm
   rw [hc w i]
   simp only [hw, ← integral_const_mul]
-  rw [← integral_finset_sum _ fun x _ => hI x]
+  rw [← integral_finsetSum _ fun x _ => hI x]
   refine integral_congr_ae (Eventually.of_forall fun s => ?_)
   change _ = χ s * β s v i
   rw [hβv, ContinuousLinearMap.sum_apply, Finset.mul_sum]

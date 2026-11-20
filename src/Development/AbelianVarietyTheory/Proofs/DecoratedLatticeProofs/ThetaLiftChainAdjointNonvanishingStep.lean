@@ -19,7 +19,7 @@ theorem pet_val_sum {D : D7} {c : Com D} {s : PiLocalization₂ D} {ipD : SmT s.
   rw [← Finset.sum_congr rfl (fun i _ => hs i)]
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [PiLocalization₂.pet, Lift.pet, Finset.sum_apply, map_sum, Finset.mul_sum]
-  exact integral_finset_sum _ (fun i _ => h.integ y (ys i) w (ws i))
+  exact integral_finsetSum _ (fun i _ => h.integ y (ys i) w (ws i))
 
 theorem stepUp : ∀ D : D7, FinDim D → ParOfVal D → UpSpan D → UpAdj D → UpPar D → UpNe D → StepUp D := by
   intro D hFin hPV hSpan hAdj hPar hNe

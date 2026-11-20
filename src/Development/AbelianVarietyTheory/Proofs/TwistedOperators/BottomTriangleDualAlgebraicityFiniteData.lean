@@ -482,7 +482,7 @@ theorem real_right (hX : IsBottomTri W i j X) (t : T) {γ r : GA D WW} (hγ : γ
       rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one], map_smul, map_smul, Pi.smul_apply, smul_eq_mul]
   unfold Tri.I'
   simp_rw [hker]
-  rw [integral_finset_sum _ fun k' _ => (integrable_snd hX t _ x).const_mul _]
+  rw [integral_finsetSum _ fun k' _ => (integrable_snd hX t _ x).const_mul _]
   exact Finset.sum_congr rfl fun k' _ => integral_const_mul _ _
 
 end Real

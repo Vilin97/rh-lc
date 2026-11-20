@@ -78,9 +78,9 @@ theorem perSum_all : ∀ D : D7, PerSum D := by
   have e2 : (fun h => ∫ n in B.vN.𝓝, ∑ i ∈ s, a i * besFun ψ 1 B.d B.o B.ζ (φ i) f h n ∂B.vN.ν) =
       fun h => ∑ i ∈ s, a i * ∫ n in B.vN.𝓝, besFun ψ 1 B.d B.o B.ζ (φ i) f h n ∂B.vN.ν := by
     funext h
-    rw [integral_finset_sum s fun i hi => ((hconv i hi).1 h).const_mul (a i)]
+    rw [integral_finsetSum s fun i hi => ((hconv i hi).1 h).const_mul (a i)]
     exact Finset.sum_congr rfl fun i _ => integral_const_mul _ _
-  rw [e2, integral_finset_sum s fun i hi => (hconv i hi).2.const_mul (a i)]
+  rw [e2, integral_finsetSum s fun i hi => (hconv i hi).2.const_mul (a i)]
   exact Finset.sum_congr rfl fun i _ => integral_const_mul _ _
 
 end GlobalTheory.SeeSaw

@@ -77,7 +77,7 @@ theorem UpperTheory.irreducible_hermitian_form_unique :
       simp [this, mul_comm]
     have h2 : ∑ i, S (e i) (e i) = ∫ _g : G, B a c ∂μ := by
       simp only [S]
-      rw [← integral_finset_sum _ (fun i _ => hint _ _ _ _)]
+      rw [← integral_finsetSum _ (fun i _ => hint _ _ _ _)]
       congr 1
       funext g
       rw [← hinv g a c, hpar (ρ g a) (ρ g c)]

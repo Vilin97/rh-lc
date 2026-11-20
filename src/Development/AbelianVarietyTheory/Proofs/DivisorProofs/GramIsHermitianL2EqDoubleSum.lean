@@ -66,10 +66,10 @@ theorem _root_.GlobalTheory.HSAmp.gram_isHermitian_and_l2_eq_quadratic_form (S :
       simp only [_root_.GlobalTheory.HSAmp.cmb]
       rw [← integral_complex_ofReal,
         integral_congr_ae (ae_of_all _ fun y => ofReal_norm_sum_mul_sq_eq_double_sum_conj c (v σ y)),
-        integral_finset_sum _ fun i _ => integrable_finset_sum _ fun j _ =>
+        integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ =>
           (hint σ i j).const_mul _]
       refine Finset.sum_congr rfl fun i _ => ?_
-      rw [integral_finset_sum _ fun j _ => (hint σ i j).const_mul _]
+      rw [integral_finsetSum _ fun j _ => (hint σ i j).const_mul _]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [integral_const_mul]
     rw [Complex.ofReal_sum]

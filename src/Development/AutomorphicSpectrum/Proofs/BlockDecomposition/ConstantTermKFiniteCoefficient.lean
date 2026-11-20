@@ -59,7 +59,7 @@ theorem integral_mem {K K' : Type} [MeasurableSpace K'] (μ : Measure K') (S : S
       conv_lhs => rw [hexp (F k') (hF k')]
       simp [Finset.sum_apply]
     simp_rw [hk]
-    rw [integral_finset_sum (f := fun (t : T) k' => F k' t * ((L (b t) : S) : K → ℂ) k) Finset.univ
+    rw [integral_finsetSum (f := fun (t : T) k' => F k' t * ((L (b t) : S) : K → ℂ) k) Finset.univ
       fun t _ => (hi t).mul_const _]
     simp [Finset.sum_apply, integral_mul_const]
   rw [this]

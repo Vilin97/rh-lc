@@ -110,7 +110,7 @@ theorem form_approx_of (s1 : GlobalTheory.FunPr.Hypotheses₂ → ∀ (D : D7), 
     funext h
     have hk : ∀ k ∈ K, IntegrableOn (fun g => thetaKO (G.dn i).ω g h Φ * (F k (v k)) g) (G.mP (i + 1)).fd (G.mP (i + 1)).ν :=
       fun k hk => hint _ (autSm_cusp_of_mem_cusp _ _ (hF k hk) (v k)).1 (autSm_cusp_of_mem_cusp _ _ (hF k hk) (v k)).2 h
-    rw [← integral_finset_sum _ hk, ← integral_sub (hint φ hφ.1 hφ.2.1 h) (integrable_finset_sum _ hk)]
+    rw [← integral_finsetSum _ hk, ← integral_sub (hint φ hφ.1 hφ.2.1 h) (integrable_finset_sum _ hk)]
     congr 1
   rw [e]
   calc GlobalTheory.Size.growthSize (G.P i).V N (fun h => ∫ g in (G.mP (i + 1)).fd, thetaKO (G.dn i).ω g h Φ * (φ - ∑ k ∈ K, F k (v k)) g ∂(G.mP (i + 1)).ν)

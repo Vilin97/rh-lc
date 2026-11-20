@@ -103,7 +103,7 @@ theorem integral_log_eq_of_forall_pow [IsFiniteMeasure ν] {v D d : Y → ℝ}
 
   have hQ : ∀ N : ℕ, ∫ y, (∑ n ∈ Finset.range N, (((n : ℝ) + 1)⁻¹ *
       (v y ^ (n + 1) * D y + ((n : ℝ) + 1) * v y ^ n * (1 - v y) * d y))) ∂ν = 0 := fun N => by
-    rw [integral_finset_sum _ fun n _ => (hhi n).const_mul _]
+    rw [integral_finsetSum _ fun n _ => (hhi n).const_mul _]
     refine Finset.sum_eq_zero fun n _ => ?_
     rw [integral_const_mul]
     have := H n

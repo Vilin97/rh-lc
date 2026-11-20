@@ -63,9 +63,9 @@ theorem contr_comb_ext : ∀ (D : D7) (ρ σ : ℕ) (B : BesLev D ρ) (B' : BesL
         exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring
     _ = ∑ a ∈ c.support, ∑ b ∈ c'.support, (c a * ψ (symplOH B.A S u a) * (c' b * ψ (symplOH S B'.A v b))) *
           contr l S vL f₁ f₂ (u + a) (v + b) := by
-        rw [integral_finset_sum _ fun a _ => integrable_finset_sum _ fun b _ => (hI a b).const_mul _]
+        rw [integral_finsetSum _ fun a _ => integrable_finset_sum _ fun b _ => (hI a b).const_mul _]
         refine Finset.sum_congr rfl fun a _ => ?_
-        rw [integral_finset_sum _ fun b _ => (hI a b).const_mul _]
+        rw [integral_finsetSum _ fun b _ => (hI a b).const_mul _]
         refine Finset.sum_congr rfl fun b _ => ?_
         rw [integral_const_mul]
         rfl

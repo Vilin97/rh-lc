@@ -228,7 +228,7 @@ theorem exists_hadamard [FiniteDimensional ℝ Y] (P : Submodule ℝ Y) (f : �
     fun_prop
   have hI := intervalIntegral.integral_eq_sub_of_hasDerivAt (a := (0 : ℝ)) (b := 1) (fun s _ => hd s)
     ((continuous_finset_sum _ fun j _ => continuous_const.mul (hcK j)).intervalIntegrable _ _)
-  rw [intervalIntegral.integral_finset_sum (f := fun j s => (L j x : ℂ) * K j ((B₀ + s • B₁) x)) fun j _ =>
+  rw [intervalIntegral.integral_finsetSum (f := fun j s => (L j x : ℂ) * K j ((B₀ + s • B₁) x)) fun j _ =>
     (continuous_const.mul (hcK j)).intervalIntegrable _ _] at hI
   simp only [intervalIntegral.integral_const_mul, ← hg] at hI
   rw [hI, hB, hB, hH, hH]

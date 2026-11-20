@@ -38,5 +38,5 @@ theorem UpperTheory.whittaker_sum_mul_eq_sum_mul_whittaker :
     rw [Finset.sum_mul]
     exact Finset.sum_congr rfl fun i _ => mul_assoc _ _ _
   simp only [Wo, e]
-  rw [integral_finset_sum _ fun i _ => (hi i).const_mul (c i)]
+  rw [integral_finsetSum _ fun i _ => (hi i).const_mul (c i)]
   exact Finset.sum_congr rfl fun i _ => integral_const_mul _ _

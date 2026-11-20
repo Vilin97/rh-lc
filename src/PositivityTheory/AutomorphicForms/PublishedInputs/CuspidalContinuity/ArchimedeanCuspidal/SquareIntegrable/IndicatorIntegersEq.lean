@@ -112,7 +112,7 @@ theorem W_formula (ψ : AddChar F Circle) (hψ : IsStd ψ) (μ₁ μ₂ : Fˣ �
         (multHaar F) := fun j =>
       (integrableOn_const (by rw [multHaar_ordShell]; exact ENNReal.one_ne_top)).integrable_indicator
         (measurableSet_ordShell j)
-    rw [integral_finset_sum _ (fun j _ => hint j), Finset.mul_sum]
+    rw [integral_finsetSum _ (fun j _ => hint j), Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [integral_indicator_const _ (measurableSet_ordShell j), measureReal_def, multHaar_ordShell,
       ENNReal.toReal_one, one_smul]

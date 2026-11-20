@@ -186,7 +186,7 @@ theorem soCont (hP : KP) : SoCont := by
     intro w hw
     rw [hred w hw]
     simp only [Model.I]
-    rw [← integral_finset_sum _ fun j _ => hint (t j) (htT j) (w j)]
+    rw [← integral_finsetSum _ fun j _ => hint (t j) (htT j) (w j)]
     congr 1
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum]

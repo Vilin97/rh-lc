@@ -131,7 +131,7 @@ theorem downward_growth_approximation : _root_.GlobalTheory.FunPr.ThetaLocalInpu
         (Φ - ∑ l, ptF R.ψ R.θ (negFr (G.P (i + 1))) (Fr.ofModel (G.P i).M) (f l) (p l)) * Fm k (v k) g
           ∂(G.mP (i + 1)).ν := by
     intro k hk h
-    rw [← integral_finset_sum _ fun l _ => hint l k hk h,
+    rw [← integral_finsetSum _ fun l _ => hint l k hk h,
       ← integral_sub (hMb Φ hΦU k hk h).1 (integrable_finset_sum _ fun l _ => hint l k hk h)]
     refine integral_congr_ae (.of_forall fun g => ?_)
     set_option synthInstance.maxHeartbeats 100000 in

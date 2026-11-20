@@ -49,7 +49,7 @@ theorem integral_prod_log {I : Type} [Fintype I] [Nontrivial I] (φ : I → ℝ 
   simp_rw [key]
   rw [integral_add (hP.const_mul _) (integrable_finset_sum _ fun w _ => (hψP w).const_mul _),
     integral_const_mul, hφzero,
-    integral_finset_sum _ fun w _ => (hψP w).const_mul _]
+    integral_finsetSum _ fun w _ => (hψP w).const_mul _]
   simp [integral_const_mul, hψzero]
 
 end UpperTheory.Esk.UnipotentIntegrandLemmas

@@ -163,7 +163,7 @@ theorem avg_eq_jet (hab : a ≤ b) (ha : 0 < a) (lam : ι → DomWeight a) (lam'
       ((ℓ.comp (mvZ (fun _ => 1) h).toLinearMap) (mvZ (fun τ => (r k τ)⁻¹) (fun _ => 1) P) *
         evalAt (fun τ => r k τ * y j τ) (v.1 * (∏ τ, (frDet ℂ a τ : PY ι a) ^ n τ)))) ν :=
     fun j _ => (integrable_term ν hr P _ (y j) _).const_mul (Pc j)
-  rw [integral_congr_ae (Filter.Eventually.of_forall hmain), integral_const_mul, integral_finset_sum _ hint]
+  rw [integral_congr_ae (Filter.Eventually.of_forall hmain), integral_const_mul, integral_finsetSum _ hint]
   simp only [integral_const_mul, hS _ _ hFV]
   simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.comp_apply,
     Submodule.subtype_apply, evalLin_apply, smul_eq_mul, hu, evalAt_smul', evalAt_lft_eq,

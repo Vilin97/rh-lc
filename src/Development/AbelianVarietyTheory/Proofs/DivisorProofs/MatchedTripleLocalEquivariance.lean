@@ -90,8 +90,8 @@ theorem setIntegral_comb_transl : GlobalTheory.ThK.KP → ∀ (F E : Type) [Fiel
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_sum, map_mul, Complex.conj_conj, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => by ring
-  rw [eL, eR, integral_finset_sum _ (fun i _ => (hint _ (hmem i) _ hΨ').const_mul (c i)),
-    integral_finset_sum _ (fun i _ => (hint _ hΨ _ (hmem' i)).const_mul (c i))]
+  rw [eL, eR, integral_finsetSum _ (fun i _ => (hint _ (hmem i) _ hΨ').const_mul (c i)),
+    integral_finsetSum _ (fun i _ => (hint _ hΨ _ (hmem' i)).const_mul (c i))]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [integral_const_mul, integral_const_mul, hterm i]
 

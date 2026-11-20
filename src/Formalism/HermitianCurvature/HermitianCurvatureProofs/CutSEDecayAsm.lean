@@ -273,7 +273,7 @@ theorem form_eq_sum_components {k r : ℕ} {z z' : Fin (2 * r + k + 1) → ℂ} 
     (hv : ∀ a, v a ∈ squareIntegrableSmoothSubmoduleGL k r z z' π π' μ hμ) (c : Fin r → ℂ) :
     form μ 0 u v c = ∑ a, LocFacts₂ μ 0 (u a) (v a) c := by
   unfold form LocFacts₂
-  rw [← integral_finset_sum]
+  rw [← integral_finsetSum]
   · congr 1
     funext c'
     rw [Finset.mul_sum]

@@ -115,7 +115,7 @@ private theorem kappa (b : Blo S r) {w : Pl E} (hw : w ∉ S) {ϖ : w.adicComple
       simpa only [zt_comm t, mul_assoc] using hI (zt E r t * finGL E r (locGL E r w (c i)⁻¹)))
     simpa only [inv_inv] using this
   have h3 := Finset.sum_congr (rfl : (Finset.univ : Finset (Fin n)) = _) fun i _ => h1 i
-  rw [← integral_finset_sum _ fun i _ => h2 i] at h3
+  rw [← integral_finsetSum _ fun i _ => h2 i] at h3
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [← Finset.mul_sum, ← map_sum, hs', map_mul, mul_left_comm _ (starRingEnd ℂ μ), integral_const_mul,
     Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul] at h3
@@ -147,7 +147,7 @@ private theorem adj (b : Blo S r) {w : Pl E} (hw : w ∉ S) {ϖ : w.adicCompleti
   have h1 := Finset.sum_congr (rfl : (Finset.univ : Finset (SatakeIdx w hϖ (n := r) a)) = _) fun i _ =>
     hκ b.f.1 b.cusp.1.isLeftInvariant hf hi 0 _ (satakeB_mem w hϖ hu i)
   simp only [mul_assoc, b.cen] at h1
-  rw [← integral_finset_sum _ fun i _ => hi _] at h1
+  rw [← integral_finsetSum _ fun i _ => hi _] at h1
   simp only [← Finset.sum_mul, hs, mul_assoc, integral_const_mul] at h1
   rw [Finset.sum_congr rfl fun i _ => hκ Φ hΦ hK hI t _ (satakeB_mem w hϖ hu i), ← Finset.sum_mul,
     ← mul_right_cancel₀ h0 h1]
@@ -215,8 +215,8 @@ theorem UpperTheory.ConvolutionTheory.BW.sliceHecke :
         starRingEnd ℂ (b.f.1 ((Quotient.out y : normOneGL E r) : GA E r))) ∂(quotientMeasure (rationalGLOne E r) (mu1 E r)) =
       satEig (qV E w) r (b.sat w) p.1 * (qc w ^ ((((p.2 : ℕ) : ℂ) * ((s : ℂ) - (p.2 : ℕ))) / 2) *
         (hk s w p.2 (ψ (t - (p.1 : ℕ) * Real.log (qV E w)))).1 m) := fun p => by
-    rw [integral_finset_sum _ fun i _ => integrable_finset_sum _ fun i' _ => hI _ _]
-    simp only [fun i => integral_finset_sum (Finset.univ : Finset (SatakeIdx w hϖ (n := s) p.2))
+    rw [integral_finsetSum _ fun i _ => integrable_finset_sum _ fun i' _ => hI _ _]
+    simp only [fun i => integral_finsetSum (Finset.univ : Finset (SatakeIdx w hϖ (n := s) p.2))
       fun i' _ => hI (finGL E r (locGL E r w (satakeB w hϖ hu (j := p.1) i)))
         (m * finGL E s (locGL E s w (satakeB w hϖ hu i')))]
     rw [Finset.sum_comm, Finset.sum_congr rfl fun i _ => adj b hw hϖ hu (Nat.lt_succ_iff.1 p.1.2) _ (hl _) (hK _)
@@ -229,7 +229,7 @@ theorem UpperTheory.ConvolutionTheory.BW.sliceHecke :
   rw [(hkOps E (r + s) w j).1, Submodule.coe_smul, slice]
   simp only [AutomorphicForm.constantTerm_smul, UpperTheory.constantTerm_heckeOperator_eq_sum_satake E r s w _ hϖ hu j hj φ hU (hS w hw), smul_eq_mul, mul_assoc,
     Finset.sum_mul, integral_const_mul]
-  rw [integral_finset_sum _ fun p _ => (integrable_finset_sum _ fun i _ => integrable_finset_sum _ fun i' _ => by
+  rw [integral_finsetSum _ fun p _ => (integrable_finset_sum _ fun i _ => integrable_finset_sum _ fun i' _ => by
     simpa only [mul_assoc] using hI _ _).const_mul _]
   simp only [integral_const_mul, ← mul_assoc (zt E r t), h1]
   rw [Submodule.coe_sum, Finset.sum_apply, Finset.mul_sum]

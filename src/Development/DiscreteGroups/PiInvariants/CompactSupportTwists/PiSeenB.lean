@@ -57,7 +57,7 @@ theorem poly_vanish (hn : 1 ≤ n) (D : Dom E n 0) {π : CuspSub E n} (hθ : The
     refine Finset.sum_congr rfl fun k _ => ?_
     ring
   simp_rw [e]
-  rw [integral_finset_sum]
+  rw [integral_finsetSum]
   · refine Finset.sum_eq_zero fun k _ => ?_
     rw [integral_const_mul, h k, mul_zero]
   · intro k _

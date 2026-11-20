@@ -127,8 +127,8 @@ theorem jet_bound_place : ∀ (K'' : Type) [Field K''] (σ : K'' →+* ℂ) (g r
         ∑ k, ∑ l, starRingEnd ℂ (gm k) * gm l * ∫ z in Fd, starRingEnd ℂ (θ k z) * θ l z * (E z : ℂ) := by
       rw [← integral_complex_ofReal]
       simp only [← integral_const_mul]
-      rw [Finset.sum_congr rfl fun k _ => (integral_finset_sum _ fun l _ => (hint k l).const_mul _).symm,
-        ← integral_finset_sum _ fun k _ => integrable_finset_sum _ fun l _ => (hint k l).const_mul _]
+      rw [Finset.sum_congr rfl fun k _ => (integral_finsetSum _ fun l _ => (hint k l).const_mul _).symm,
+        ← integral_finsetSum _ fun k _ => integrable_finset_sum _ fun l _ => (hint k l).const_mul _]
       refine integral_congr_ae (ae_of_all _ fun z => ?_)
       have : ((‖Θ z‖ ^ 2 : ℝ) : ℂ) = starRingEnd ℂ (Θ z) * Θ z := by
         rw [Complex.conj_mul']; push_cast; rfl

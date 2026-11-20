@@ -137,7 +137,7 @@ theorem smallF_mem : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace
       have : {g : GL A' k | q g.val = q y} = Cs y := by
         ext g; simp only [Set.mem_setOf_eq, Cs]; exact hq _ _
       rw [this]; exact hCs_meas y
-    rw [hdec, integral_finset_sum _ (fun t _ => hint.indicator (hmeas t))]
+    rw [hdec, integral_finsetSum _ (fun t _ => hint.indicator (hmeas t))]
     refine sum_mem fun t _ => ?_
     obtain ⟨y, rfl⟩ := QuotientAddGroup.mk_surjective t
     have hset : {g : GL A' k | q g.val = q y} = Cs y := by

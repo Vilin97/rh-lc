@@ -57,9 +57,9 @@ theorem integral_dens_delAt {F : V n → Alt n} (hF : ∀ S, ContDiff ℝ 1 fun 
     fun a S => (del_integral (hF S) (hc S) _).1.mul_const _
   simp only [dens_delAt]
   refine ⟨integrable_finset_sum _ fun a _ => integrable_finset_sum _ fun S _ => hi a S, ?_⟩
-  rw [integral_finset_sum _ fun a _ => integrable_finset_sum _ fun S _ => hi a S]
+  rw [integral_finsetSum _ fun a _ => integrable_finset_sum _ fun S _ => hi a S]
   refine Finset.sum_eq_zero fun a _ => ?_
-  rw [integral_finset_sum _ fun S _ => hi a S]
+  rw [integral_finsetSum _ fun S _ => hi a S]
   refine Finset.sum_eq_zero fun S _ => ?_
   rw [integral_mul_const, (del_integral (hF S) (hc S) _).2, zero_mul]
 

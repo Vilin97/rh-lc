@@ -196,7 +196,7 @@ theorem integral_eq_lin (ν : Measure K) [IsProbabilityMeasure ν] (n : ι → �
     exact Finset.sum_congr rfl fun m _ => by ring
   set_option synthInstance.maxHeartbeats 100000 in
     rw [integral_congr_ae (Filter.Eventually.of_forall hL),
-    integral_finset_sum _ (fun m _ => (integrable_term ν n ρ hρ P m).mul_const _), map_sum]
+    integral_finsetSum _ (fun m _ => (integrable_term ν n ρ hρ P m).mul_const _), map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [integral_mul_const]
   exact (hmono m _).symm

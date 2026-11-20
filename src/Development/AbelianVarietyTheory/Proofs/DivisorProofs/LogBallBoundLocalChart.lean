@@ -219,7 +219,7 @@ theorem main : ∀ {d : ℕ} (U : Set (ReciprocityTheory.L2DbarEstimates.V d)) (
         integral_mono_ae hint hbint (hle.mono fun x hx => (le_abs_self _).trans (by rwa [Real.norm_eq_abs] at hx))
     _ = volume.real (Metric.ball v ρ) * M + ∑ i ∈ I, ∫ y in Metric.ball v ρ, max 0 (-Real.log (‖Ψ y i‖ ^ 2)) := by
         rw [integral_add hci (integrable_finset_sum I fun i _ => (hcoord i).1),
-          integral_finset_sum I fun i _ => (hcoord i).1, setIntegral_const, smul_eq_mul]
+          integral_finsetSum I fun i _ => (hcoord i).1, setIntegral_const, smul_eq_mul]
     _ ≤ ρ ^ (2 * d) * c * max M 0 + ∑ i ∈ I, J⁻¹ * A * 4 * (ρ ^ (2 * d) * (1 + ℓ)) := by
         rw [hvol]
         gcongr with i

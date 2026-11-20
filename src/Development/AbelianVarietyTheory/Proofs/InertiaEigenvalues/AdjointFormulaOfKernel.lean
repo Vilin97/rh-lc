@@ -88,7 +88,7 @@ theorem adjoint_formula_of_kernel {H₁ H₂ W Gv Gw : Type} [NormedAddCommGroup
         (((P / c : ℝ)) : ℂ) * (((P / c : ℝ)) : ℂ) * ⟪U x, U y⟫_ℂ := by
       rw [hadj x, ← inner_conj_symm, hadj y, map_mul, Complex.conj_ofReal, inner_conj_symm, mul_assoc]
     have e2 : ⟪U x, U y⟫_ℂ = (c : ℂ) * ∑ k, ∫ h, star (K k x h) * K k y h ∂μV := by
-      rw [(hcV (U x) (U y)).1, ← integral_finset_sum _ hint]
+      rw [(hcV (U x) (U y)).1, ← integral_finsetSum _ hint]
       simp only [hsum]
     rw [e1, e2]
     push_cast

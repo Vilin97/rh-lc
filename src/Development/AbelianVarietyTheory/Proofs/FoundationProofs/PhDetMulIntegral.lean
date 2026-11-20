@@ -133,7 +133,7 @@ theorem ph_det_mul_integral : ∀ (V : Type) [NormedAddCommGroup V] [NormedSpace
     exact term_shift H hH a ha Λ α hα (s m) y z (hs m) (hle y.2) (haΛ _ y.2) (hαa _ y.2)
   have hu := fun m => GlobalTheory.T.setIntegral_tsum_translate_eq_integral V μ Λ' Fd hFd _ (hint (s m))
   simp only [hsum]
-  rw [integral_finset_sum _ (fun m _ => (hu m).1)]
+  rw [integral_finsetSum _ (fun m _ => (hu m).1)]
   simp only [fun m => (hu m).2, hval]
   rw [← Finset.mul_sum, ← mul_assoc, mul_div_cancel₀ _ hdet]
   exact (ph_real κ).mul hph

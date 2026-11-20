@@ -291,7 +291,7 @@ theorem _root_.GlobalTheory.SpacedDetected.card_spaced_detected_le : ∃ C : ℝ
       (fun p hp => Finset.mem_image_of_mem _ hp)]
     apply Finset.sum_le_sum
     intro x _
-    rw [← intervalIntegral.integral_finset_sum (fun p _ => (hW _ _).intervalIntegrable _ _)]
+    rw [← intervalIntegral.integral_finsetSum (fun p _ => (hW _ _).intervalIntegrable _ _)]
     apply intervalIntegral.integral_mono_on hle
     · exact (continuous_finset_sum _ (fun p _ => hW _ _)).intervalIntegrable _ _
     · exact (hGcont x).intervalIntegrable _ _
@@ -401,7 +401,7 @@ theorem _root_.GlobalTheory.SpacedDetected.card_spaced_detected_le : ∃ C : ℝ
           exact sum_weighted_moebius_coeff_sq_le K hK hdiv Q hQ σ hσ'
       _ = C₂ * (3 * K ^ 2 * 80) * (Q : ℝ) ^ ((1 : ℝ) / 8) := by ring
   have hint : ∑ x ∈ P, ∫ σ in σ₀..σ₁, G x σ ≤ (1 / 200) * (C₂ * (3 * K ^ 2 * 80) * (Q : ℝ) ^ ((1 : ℝ) / 8)) := by
-    rw [← intervalIntegral.integral_finset_sum (fun x _ => (hGcont x).intervalIntegrable _ _)]
+    rw [← intervalIntegral.integral_finsetSum (fun x _ => (hGcont x).intervalIntegrable _ _)]
     have hle : σ₀ ≤ σ₁ := by rw [hσ₀, hσ₁, hr]; norm_num
     calc ∫ σ in σ₀..σ₁, ∑ x ∈ P, G x σ ≤ ∫ σ in σ₀..σ₁, C₂ * (3 * K ^ 2 * 80) * (Q : ℝ) ^ ((1 : ℝ) / 8) := by
           apply intervalIntegral.integral_mono_on hle

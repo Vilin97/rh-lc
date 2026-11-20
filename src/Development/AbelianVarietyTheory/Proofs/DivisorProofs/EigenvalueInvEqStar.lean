@@ -60,14 +60,14 @@ theorem eigenvalue_inv_eq_star : ∀ {G : Type} [Group G] [TopologicalSpace G] [
     simp only [mul_one, ← mul_assoc, hJ _ k₁.2, hJ _ k₂.2]
   have s1 : ∑ γ ∈ R, ∫ g in 𝓕, star (φ (g * γ)) * φ (g * 1) ∂μ
       = star a * ∫ g in 𝓕, star (φ g) * φ g ∂μ := by
-    rw [← integral_finset_sum _ (fun γ _ => pairing_integrable μ Γ 𝓕 φ h hc hΓ hi γ 1),
+    rw [← integral_finsetSum _ (fun γ _ => pairing_integrable μ Γ 𝓕 φ h hc hΓ hi γ 1),
       ← integral_const_mul]
     refine integral_congr_ae (Filter.Eventually.of_forall fun g => ?_)
     simp only [mul_one]
     rw [← Finset.sum_mul, ← star_sum, ha, star_mul', mul_assoc]
   have s2 : ∑ γ ∈ R', ∫ g in 𝓕, star (φ (g * 1)) * φ (g * γ) ∂μ
       = b * ∫ g in 𝓕, star (φ g) * φ g ∂μ := by
-    rw [← integral_finset_sum _ (fun γ _ => pairing_integrable μ Γ 𝓕 φ h hc hΓ hi 1 γ),
+    rw [← integral_finsetSum _ (fun γ _ => pairing_integrable μ Γ 𝓕 φ h hc hΓ hi 1 γ),
       ← integral_const_mul]
     refine integral_congr_ae (Filter.Eventually.of_forall fun g => ?_)
     simp only [mul_one]

@@ -70,7 +70,7 @@ theorem orth_periodic (hψ : IsStdChar D ψ (-1)) {μ : Measure (WO S T)} {𝓕 
       exact this.const_mul (c a)
     have hP : ∫ x in 𝓕, star (h x) * ((∑ a ∈ s, c a * ψ (symplO S T x a)) * k x) ∂μ = 0 := by
       simp_rw [hsum]
-      rw [integral_finset_sum s hint_a]
+      rw [integral_finsetSum s hint_a]
       refine Finset.sum_eq_zero fun a _ => ?_
       rw [integral_const_mul]
       have := horth a a.2

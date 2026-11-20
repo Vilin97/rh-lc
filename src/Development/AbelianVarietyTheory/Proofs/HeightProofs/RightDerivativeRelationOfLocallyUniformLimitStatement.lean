@@ -43,7 +43,7 @@ theorem _root_.GlobalTheory.T.rightDerivativeRelation_of_locallyUniformLimit : �
         funext g
         rw [Finset.mul_sum]
         exact Finset.sum_congr rfl (fun i _ => by ring)
-      rw [hfun, MeasureTheory.integral_finset_sum]
+      rw [hfun, MeasureTheory.integral_finsetSum]
       · refine Finset.sum_congr rfl (fun i _ => ?_)
         rw [MeasureTheory.integral_const_mul, hadj i G hG]
       · intro i _

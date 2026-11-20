@@ -192,7 +192,7 @@ theorem conv_sliceB (hF : CompatFub) (D : Dom E a b) (hC : Compat D μa μb ν) 
       ∫ r, cB v ka kb ψ i j r * f j (p * ιB v t * σB v r) ∂restB μa μb ν v) μb := fun j =>
     ((hs j).1.integral_prod_left).congr (ae_of_all _ fun t => hpt j t)
   show ∑ j, ∫ g, tens ka kb ψ i j g * f j (p * g) ∂D.μ = _
-  rw [Finset.sum_congr rfl fun j _ => hsplit j, ← integral_finset_sum _ fun j _ => hint j]
+  rw [Finset.sum_congr rfl fun j _ => hsplit j, ← integral_finsetSum _ fun j _ => hint j]
   refine integral_congr_ae (ae_of_all _ fun t => ?_)
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [RvB, map_sum, map_smul, inner_sum, inner_smul_right]

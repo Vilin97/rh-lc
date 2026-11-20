@@ -51,7 +51,7 @@ private theorem integral_invol {X : Type} [TopologicalSpace X] [MeasurableSpace 
   have hi : ∀ a (c : ℂ), Integrable ((p a).indicator (fun _ => c)) μ := fun a c =>
     (integrable_indicator_iff (ho a).measurableSet).2 (integrableOn_const (hfin a))
   have l : ∫ x, F x ∂μ = ∑ S ∈ Q, ∫ x, S.indicator F x ∂μ := by
-    rw [← integral_finset_sum]
+    rw [← integral_finsetSum]
     · exact integral_congr_ae (Filter.Eventually.of_forall hsum)
     · intro S hS
       obtain ⟨a, rfl⟩ := hQ S hS
@@ -59,7 +59,7 @@ private theorem integral_invol {X : Type} [TopologicalSpace X] [MeasurableSpace 
       exact hi a _
   have r : ∫ x, (((μ.real (p (t x)) / μ.real (p x) : ℝ)) : ℂ) * F (t x) ∂μ =
       ∑ S ∈ Q, ∫ x, (((μ.real (p (t x)) / μ.real (p x) : ℝ)) : ℂ) * S.indicator F (t x) ∂μ := by
-    rw [← integral_finset_sum]
+    rw [← integral_finsetSum]
     · refine integral_congr_ae (Filter.Eventually.of_forall fun x => ?_)
       simp only []
       rw [← Finset.mul_sum, ← hsum]

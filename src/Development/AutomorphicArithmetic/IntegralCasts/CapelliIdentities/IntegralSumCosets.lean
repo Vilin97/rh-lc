@@ -61,7 +61,7 @@ theorem UpperTheory.Reformulated.B.IntegralSumCosets.integral_eq_measure_mul_sum
         congrArg (fun F : G → ℂ => ∫ g, F g ∂μ) hdec
     _ = ∑ a ∈ S, ∫ g,
           ((fun g : G => g * (R a)⁻¹) ⁻¹' (K : Set G)).indicator (fun _ => f (R a)) g ∂μ :=
-        MeasureTheory.integral_finset_sum S hint
+        MeasureTheory.integral_finsetSum S hint
     _ = (↑(μ.real (↑K : Set G)) : ℂ) * ∑ a ∈ S, f (R a) := by
         rw [Finset.mul_sum]
         refine Finset.sum_congr rfl fun a _ => ?_

@@ -197,7 +197,7 @@ theorem integral_fib_eq_of_ddc_eq_zero {γ : (famAtlas A).Fld} (hγ : (famAtlas 
   have hint (j : Fin N) : Integrable fun w : ℂ =>
       A.integral (A.fn (χ j) * (famAtlas A).pullback A (fib (w : OnePoint ℂ)) γ) * (Laplacian.laplacian φ w / (4 * π)) :=
     (((hcj j).comp OnePoint.continuous_coe).mul hlc).integrable_of_hasCompactSupport hls.mul_left
-  rw [← integral_finset_sum _ fun j _ => hint j] at key
+  rw [← integral_finsetSum _ fun j _ => hint j] at key
   simp only [← Finset.sum_mul, ← hsum] at key
   simp only [← mul_div_assoc, integral_div] at key
   exact (div_eq_zero_iff.1 key.symm).resolve_right (by positivity)

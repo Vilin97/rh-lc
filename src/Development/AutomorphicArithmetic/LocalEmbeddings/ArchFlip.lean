@@ -154,7 +154,7 @@ theorem sz_zeta {A : Type} [Fintype A] [DecidableEq A] {J : Subgroup (GL A k)} (
   by_cases hint : Integrable (fun g : GL A k => φ g.val * f g) (haarVol J)
   · have hI : ∫ g, φ g.val * (ν (gdet g) : ℂ) * apow (gdet g) ((n : ℂ) / 2) ∂(haarVol J) =
         ∑ T, φ (liftRes T) * ∫ g in S T, f g ∂(haarVol J) := by
-      rw [hF, integral_finset_sum _ (fun T _ => hint.indicator (hSm T))]
+      rw [hF, integral_finsetSum _ (fun T _ => hint.indicator (hSm T))]
       refine Finset.sum_congr rfl fun T _ => ?_
       rw [integral_indicator (hSm T)]
       rw [setIntegral_congr_fun (hSm T) (g := fun g => φ (liftRes T) * f g) (fun g hg => by

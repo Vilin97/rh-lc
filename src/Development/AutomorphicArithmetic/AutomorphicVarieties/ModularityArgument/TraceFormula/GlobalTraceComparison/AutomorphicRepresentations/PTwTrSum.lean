@@ -90,7 +90,7 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.twTrSum_pf :
       simp [LinearMap.sum_apply]
     rw [hv, Finset.sum_congr rfl fun j hj => by rw [e j hj ψ x]]
     simp_rw [← integral_const_mul]
-    rw [← integral_finset_sum _ fun j hj => (hi j hj).const_mul _]
+    rw [← integral_finsetSum _ fun j hj => (hi j hj).const_mul _]
     refine integral_congr_ae (Filter.Eventually.of_forall fun y => ?_)
     simp [Finset.sum_apply, Finset.sum_mul, mul_assoc]
   · rw [hT.2]

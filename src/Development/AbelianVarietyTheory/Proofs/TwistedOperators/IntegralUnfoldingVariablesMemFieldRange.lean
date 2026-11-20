@@ -112,7 +112,7 @@ theorem integral_eq_sum [MeasurableSpace X] [OpensMeasurableSpace X] [Measurable
   refine ⟨T.image Quotient.out, ?_⟩
   rw [Finset.sum_image (fun a _ b _ h => Quotient.out_injective h)]
   conv_lhs => rw [hdec]
-  rw [integral_finset_sum]
+  rw [integral_finsetSum]
   · rw [Finset.sum_mul]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [integral_indicator_const _ (hmeas c)]

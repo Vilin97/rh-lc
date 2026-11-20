@@ -66,10 +66,10 @@ theorem lift_finSum {θ : InfFam D} {A B : Node D} {P : Type} {m : A.MeasDat} {n
       ∑ l, ∑ k, F' l k (It (ps l) (vs k)) := by
     funext h
     simp_rw [hsplit]
-    rw [integral_finset_sum _ fun l _ => integrable_finset_sum _ fun k _ => (hI l k (ps l) (vs k) h).1]
+    rw [integral_finsetSum _ fun l _ => integrable_finset_sum _ fun k _ => (hI l k (ps l) (vs k) h).1]
     simp only [Finset.sum_apply]
     refine Finset.sum_congr rfl fun l _ => ?_
-    rw [integral_finset_sum _ fun k _ => (hI l k (ps l) (vs k) h).1]
+    rw [integral_finsetSum _ fun k _ => (hI l k (ps l) (vs k) h).1]
     exact Finset.sum_congr rfl fun k _ => (hI l k (ps l) (vs k) h).2
   rw [heq]
   exact ⟨hint, autCusp_sum B.V _ _ fun l _ => by

@@ -57,7 +57,7 @@ theorem Wc_sum : ∀ (F : Type) [Field F] [ValuativeRel F] [TopologicalSpace F] 
         funext u
         rw [Finset.mul_sum]
         exact Finset.sum_congr rfl fun j _ => by ring
-      rw [this, integral_finset_sum _ fun j _ => (hint p s r t j).const_mul (a j),
+      rw [this, integral_finsetSum _ fun j _ => (hint p s r t j).const_mul (a j),
         Finset.mul_sum]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [integral_const_mul]

@@ -79,7 +79,7 @@ theorem perT_comb {c : Comm D} (t : Tup c) (n : ℕ) (h : n = D.R.m) {Y : Type} 
       funext h'
       simp only [Pi.smul_apply, Finset.sum_apply, smul_eq_mul, Finset.mul_sum]
       exact Finset.sum_congr rfl fun y' _ => by ring
-    rw [e2, integral_finset_sum _ (fun y' _ => (hi y' β).const_mul _)]
+    rw [e2, integral_finsetSum _ (fun y' _ => (hi y' β).const_mul _)]
     simp_rw [integral_const_mul]
   simp only [Tup.perT, e1, Finset.mul_sum]
   rw [Finset.sum_comm]

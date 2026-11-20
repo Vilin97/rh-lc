@@ -393,7 +393,7 @@ theorem sum_integral_norm_le (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ
   have hψ : Integrable ψ (ideleMeasure k) :=
     integrable_finset_sum _ fun c _ ↦ (integrable_Gc hF ω hz1 c).norm
   have h1 : ∑ l ∈ S, ∫ x, ‖Gc F ω z l x‖ ∂ideleMeasure k = ∫ x, ψ x ∂ideleMeasure k :=
-    (integral_finset_sum _ fun c _ ↦ (integrable_Gc hF ω hz1 c).norm).symm
+    (integral_finsetSum _ fun c _ ↦ (integrable_Gc hF ω hz1 c).norm).symm
   have hnn : ∀ x, 0 ≤ ψ x := fun x ↦ Finset.sum_nonneg fun c _ ↦ norm_nonneg _
   rw [h1, integral_ideleMeasure_eq_integral_fundamentalDomain w hψ]
   refine integral_mono_of_nonneg (ae_of_all _ fun t ↦ ?_) hρi (ae_of_all _ fun t ↦ ?_)

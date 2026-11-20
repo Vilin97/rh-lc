@@ -150,7 +150,7 @@ theorem adjoint_eq_upLift : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T
       (R.HW i σ).e (GlobalTheory.LiftLower.projH R i σ y) (fun ρ => v ρ) g ∂(R.νW i) = inner ℂ u hzex.choose := by
     intro u
     refine (congrArg (fun F => ∫ g in R.fdW i, F g ∂(R.νW i)) (eF u (GlobalTheory.LiftLower.projH R i σ y))).trans ?_
-    refine (integral_finset_sum _ fun j _ => (hth' _ _ _).const_mul _).trans ?_
+    refine (integral_finsetSum _ fun j _ => (hth' _ _ _).const_mul _).trans ?_
     refine Eq.trans ?_ (hH.2.2 u hzex.choose).symm
     refine Eq.trans ?_ (congrArg (Bridge.adInner _ _ _ (H.e u)) hz).symm
     unfold Bridge.adInner

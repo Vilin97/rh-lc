@@ -141,7 +141,7 @@ theorem asm (hA : StokesSimplexSubdivision) (hH : SubHyp) (hS : SubSlice) (U : S
       ∫ t in Δ (q + 1), fderiv ℝ (fun z => ω z (i.removeNth fun j => y j.succ - y 0)) (P t)
         (y i.succ - y 0) := by
     show ∫ t in Δ (q + 1), extDeriv ω (P t) (fun j => y j.succ - y 0) = _
-    rw [setIntegral_congr_fun (hmeas _) hext, integral_finset_sum]
+    rw [setIntegral_congr_fun (hmeas _) hext, integral_finsetSum]
     · congr 1
       funext i
       rw [← integral_const_mul]
@@ -160,7 +160,7 @@ theorem asm (hA : StokesSimplexSubdivision) (hH : SubHyp) (hS : SubSlice) (U : S
       funext s
       rw [← hA V q]
       congr 1
-    rw [e1, integral_finset_sum]
+    rw [e1, integral_finsetSum]
     · congr 1
       funext i
       rw [integral_const_mul]

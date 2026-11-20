@@ -124,7 +124,7 @@ theorem integral_gI {ω : HChar F} (hfin : IsOfFinOrder ω) (c : HeightOneSpectr
     (integrableOn_shell hfin v (A + j)).integrable_indicator (measurableSet_ordShell _)
   rw [hfun]
   refine ⟨integrable_finset_sum _ hint, ?_⟩
-  rw [integral_finset_sum _ hint]
+  rw [integral_finsetSum _ hint]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [integral_indicator (measurableSet_ordShell _)]
 

@@ -38,7 +38,7 @@ private theorem th_int (μ : Measure (G1 K (2 + 2))) [μ.IsHaarMeasure] (a : CC 
       by_contra hn
       exact hq (by simpa only [mul_assoc] using h0 q hn g)
   simp only [h1]
-  rw [integral_finset_sum, th, finsum_eq_sum_of_support_subset (s := hS.toFinset)]
+  rw [integral_finsetSum, th, finsum_eq_sum_of_support_subset (s := hS.toFinset)]
   · intro q hq
     by_contra hn
     exact hq (by simp only [h0 q hn, integral_zero])

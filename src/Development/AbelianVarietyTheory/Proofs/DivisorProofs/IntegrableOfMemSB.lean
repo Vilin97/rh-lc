@@ -66,7 +66,7 @@ theorem matInt_sum [MeasurableSpace k] [BorelSpace k] (ν : Measure k) [ν.IsAdd
     matInt ν (∑ i ∈ s, f i) = ∑ i ∈ s, matInt ν (f i) := by
   unfold matInt
   simp only [Finset.sum_apply]
-  exact integral_finset_sum s fun i hi => integrable_of_mem_SB ν (hf i hi)
+  exact integral_finsetSum s fun i hi => integrable_of_mem_SB ν (hf i hi)
 
 theorem comp_mem_fullRk {n d : ℕ} (A : GL (Fin n) k) (h : GL (Fin d) k) {φ : Matrix (Fin n) (Fin d) k → ℂ}
     (hφ : φ ∈ fullRk k n d) : (fun Y : Matrix (Fin n) (Fin d) k => φ (A.val * Y * h.val)) ∈ fullRk k n d := by

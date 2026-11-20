@@ -72,7 +72,7 @@ theorem torus_vanish {g : ℕ} {ι : Type} [Fintype ι] (M : Submodule ℤ (Fl g
     have : ((∫ x in D, q x : ℝ) : ℂ) = 0 := by
       rw [← integral_complex_ofReal]
       simp_rw [hqF]
-      rw [integral_finset_sum _ fun i _ => hint i]
+      rw [integral_finsetSum _ fun i _ => hint i]
       exact Finset.sum_eq_zero fun i _ =>
         integral_fderiv_eq_zero M D hDm hDb hD (F i) (hF i) (hper i) (y i)
     exact_mod_cast this

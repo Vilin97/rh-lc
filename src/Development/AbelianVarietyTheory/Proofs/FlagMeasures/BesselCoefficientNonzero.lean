@@ -202,8 +202,8 @@ theorem oneAt : BranchingSupport.Hyps → ∀ (k r : ℕ) (L : Formalism.MainNot
     fun i j => (key (hxy i).1 (hxy i).2 _ _).1
   have e2 : OrbInt L F γ ν = ∑ i, ∑ j, OrbInt L (coefF L (x i) (y i) (X i (e j)) (e j)) γ ν := by
     unfold OrbInt
-    rw [integral_congr_ae hae, integral_finset_sum _ fun i _ => integrable_finset_sum _ fun j _ => hi i j]
-    exact Finset.sum_congr rfl fun i _ => integral_finset_sum _ fun j _ => hi i j
+    rw [integral_congr_ae hae, integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ => hi i j]
+    exact Finset.sum_congr rfl fun i _ => integral_finsetSum _ fun j _ => hi i j
   rw [e2, Finset.sum_smul]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [hc]

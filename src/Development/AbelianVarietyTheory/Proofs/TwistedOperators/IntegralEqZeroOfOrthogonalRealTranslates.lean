@@ -80,7 +80,7 @@ theorem integral_eq_zero_of_translates : GlobalTheory.Published.CuspRapidDecay �
       rw [← e1]
       ring
     simp_rw [e] at h0
-    rw [integral_finset_sum _ (fun j _ => (hint _).const_mul (c j))] at h0
+    rw [integral_finsetSum _ (fun j _ => (hint _).const_mul (c j))] at h0
     simp_rw [integral_const_mul] at h0
     exact h0
   have hB := GlobalTheory.T.multilinear_zero_of_kills_translates_tensor D.what₂.Tau (fun τ => M.H τ) (fun τ => Formalism.IndefR.SchurOrthogonalityAlt.Gt V τ) (fun τ => Formalism.IndefR.SchurOrthogonalityAlt.piR M τ) (Formalism.IndefR.SchurOrthogonalityAlt.piR_norm M)

@@ -84,7 +84,7 @@ theorem ker_pf :
   · simp only [hG]
     exact integrable_finset_sum _ fun i _ => hI i
   · simp only [hG]
-    rw [integral_finset_sum _ fun i _ => hI i]
+    rw [integral_finsetSum _ fun i _ => hI i]
     simp only [hterm]
     have e2 : ∀ y, kerH m.φ x y * (w : H E n 0 → ℂ) y =
         ∑ i, ∑ j, s.M j i * (kerH (m.Φ i j) x y * (w : H E n 0 → ℂ) y) := by
@@ -96,9 +96,9 @@ theorem ker_pf :
     simp only [e2]
     have hr : ∀ i j, Integrable (fun y => kerH (m.Φ i j) x y * (w : H E n 0 → ℂ) y) s.D.ν :=
       fun i j => row_int s.D (m.t i j) w x
-    rw [integral_finset_sum _ fun i _ => integrable_finset_sum _ fun j _ => (hr i j).const_mul _]
+    rw [integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ => (hr i j).const_mul _]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [integral_finset_sum _ fun j _ => (hr i j).const_mul _]
+    rw [integral_finsetSum _ fun j _ => (hr i j).const_mul _]
     exact Finset.sum_congr rfl fun j _ => (integral_const_mul _ _).symm
 
 end UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi

@@ -77,7 +77,7 @@ theorem integral_eq_sum : ∀ (k : Type) [Field k] [ValuativeRel k] [Topological
         = ∫ x, ∑ t ∈ P, (box t).indicator (fun _ => F t) x ∂(Measure.pi fun _ : I => ν) := by
           congr 1; funext x; exact hdec x
     _ = ∑ t ∈ P, ∫ x, (box t).indicator (fun _ => F t) x ∂(Measure.pi fun _ : I => ν) := by
-          refine integral_finset_sum P fun t _ => ?_
+          refine integral_finsetSum P fun t _ => ?_
           refine IntegrableOn.integrable_indicator ?_ (hmeasBox t)
           exact integrableOn_const (by rw [hμbox]; simp)
     _ = ∑ t ∈ P, (Measure.pi fun _ : I => ν).real (box t) • F t := by

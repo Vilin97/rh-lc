@@ -75,7 +75,7 @@ theorem hsOp_integral_rank_one (m : Measure K) [IsFiniteMeasure m] {u : K → V}
       _ = ∑ i, (d : ℂ) * ∫ k, ((φ k : ℝ) : ℂ) * (⟪u k, b i⟫_ℂ * ⟪A (b i), u k⟫_ℂ) ∂m :=
           sum_congr rfl fun i _ => hterm i
       _ = (d : ℂ) * ∫ k, ∑ i, ((φ k : ℝ) : ℂ) * (⟪u k, b i⟫_ℂ * ⟪A (b i), u k⟫_ℂ) ∂m := by
-          rw [← mul_sum, integral_finset_sum _ hintg]
+          rw [← mul_sum, integral_finsetSum _ hintg]
       _ = (d : ℂ) * ∫ k, ((φ k * (d * ∫ k', φ k' * ‖⟪u k, u k'⟫_ℂ‖ ^ 2 ∂m) : ℝ) : ℂ) ∂m := by
           congr 1
           refine integral_congr_ae (Filter.Eventually.of_forall fun k => ?_)

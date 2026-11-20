@@ -275,7 +275,7 @@ theorem kernel_adjoint : LgFacts → Unimod → RCalc → WaveSpeed → WaveEx �
             simp only [inner_sub_left, sum_inner, inner_smul_left]
           simp only [hpt]
           rw [integral_sub int1 (integrable_finset_sum _ fun i _ => int2 i),
-            integral_finset_sum _ fun i _ => int2 i]
+            integral_finsetSum _ fun i _ => int2 i]
           simp only [integral_const_mul]
           rw [chain μ hL hU hR hS hE hb hk hw hK hf cf hh ch, sub_self])
       have h1 := hA0 1 (GlobalTheory.CompanionTheory.WaveKer.one_mem_GLs n)

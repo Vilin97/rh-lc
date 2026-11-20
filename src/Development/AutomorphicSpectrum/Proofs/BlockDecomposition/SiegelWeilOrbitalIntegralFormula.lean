@@ -86,7 +86,7 @@ theorem coefN_finset_sum : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     intro b
     unfold starN
     simp_rw [Finset.sum_mul]
-    refine integral_finset_sum _ fun i _ => ?_
+    refine integral_finsetSum _ fun i _ => ?_
     obtain ⟨hc, hi⟩ := continuous_integrable_tuple σ hCM M n dx hdx.1 (Φ i) (hΦ i)
     have hq : Continuous fun X : Fin n → Fin M → AF F ⊗[F] E =>
         algebraMap F (AF F) (1 / 2) * Algebra.trace (AF F) (AF F ⊗[F] E)
@@ -97,7 +97,7 @@ theorem coefN_finset_sum : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     rw [norm_mul, hψn, mul_one]
   unfold coefN
   simp_rw [hstar, Finset.sum_mul]
-  refine integral_finset_sum _ fun i _ => ?_
+  refine integral_finsetSum _ fun i _ => ?_
   have hI := GlobalTheory.T.siegel_weil_convergent_range F E σ hCM M J hJ n hM ψ hψ dx hdx db hdb (Φ i) (hΦ i)
   have hc : Continuous fun b : HermR (AF F) σ n =>
       ψ (-(algebraMap F (AF F) (1 / 2) * Algebra.trace (AF F) (AF F ⊗[F] E)

@@ -442,7 +442,7 @@ theorem weightedIntegral_mem_span_and_map_integral :
       rw [map_smul, smul_eq_mul, mul_assoc]
     simp_rw [h1]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [integral_finset_sum _ (fun i _ => (hint i).mul_const _), map_sum]
+      rw [integral_finsetSum _ (fun i _ => (hint i).mul_const _), map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [integral_mul_const, map_smul, smul_eq_mul]
   set w : Submodule.span ℂ (Set.range ρ) := ∑ i, (∫ k, e k * c i k ∂ν) • b i with hw

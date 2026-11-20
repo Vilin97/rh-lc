@@ -39,9 +39,9 @@ theorem Ph_sum [FiniteDimensional ℂ Wp] (D : B.RealPlaceData k r Wp Wq) {m : �
   unfold B.Ph
   have e1 : ∀ i, ∑ j, ∫ g, B.hsInner (B.rho D p (f i) (Matrix.of g)) (f j (Matrix.of g)) ∂D.μG =
       ∫ g, ∑ j, B.hsInner (B.rho D p (f i) (Matrix.of g)) (f j (Matrix.of g)) ∂D.μG :=
-    fun i => (integral_finset_sum _ fun j _ => hint i j).symm
+    fun i => (integral_finsetSum _ fun j _ => hint i j).symm
   simp only [e1]
-  rw [← integral_finset_sum _ fun i _ => integrable_finset_sum _ fun j _ => hint i j]
+  rw [← integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ => hint i j]
   refine integral_congr_ae (hae.mono fun g hg => ?_)
   have h1 : B.rho D p F (Matrix.of g) = ∑ i, B.rho D p (f i) (Matrix.of g) := by
     unfold B.rho
@@ -86,11 +86,11 @@ theorem normSq_coef : Hyps → ∀ (k r : ℕ) (Wp : Type) [NormedAddCommGroup W
         ∫ p, ∑ i, ∑ j, B.xiTau D (1, 1) p * B.Ph D (f i) (f j) p ∂D.μSS := by
       refine integral_congr_ae (hPh.mono fun p hp => ?_)
       simp only [hp, Finset.mul_sum]
-    rw [e0, integral_finset_sum _ fun i _ => integrable_finset_sum _ fun j _ => hxi i j]
+    rw [e0, integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ => hxi i j]
     have e1 : ∀ i, ∫ p, ∑ j, B.xiTau D (1, 1) p * B.Ph D (f i) (f j) p ∂D.μSS =
         ∑ j, ⟪l (x i), X i (l' (y i))⟫_ℂ * star ⟪l (x j), X j (l' (y j))⟫_ℂ / (dd : ℂ) := by
       intro i
-      rw [integral_finset_sum _ fun j _ => hxi i j]
+      rw [integral_finsetSum _ fun j _ => hxi i j]
       exact Finset.sum_congr rfl fun j _ => (hI i j).2
     simp only [e1]
     have e2 : ((‖s‖ ^ 2 / dd : ℝ) : ℂ) = s * star s / (dd : ℂ) := by

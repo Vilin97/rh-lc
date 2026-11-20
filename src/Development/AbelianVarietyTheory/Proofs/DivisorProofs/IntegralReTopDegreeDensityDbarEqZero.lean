@@ -48,9 +48,9 @@ theorem integral_re_dens_dbarAt_eq_zero {n : ℕ} (F : V n → Alt n)
     exact integrable_finset_sum _ fun a _ => integrable_finset_sum _ fun S _ => hi a S
   have h0 : ∫ v, dens (dbarAt F v) = 0 := by
     simp only [dens_dbarAt_eq_sum]
-    rw [integral_finset_sum _ fun a _ => integrable_finset_sum _ fun S _ => hi a S]
+    rw [integral_finsetSum _ fun a _ => integrable_finset_sum _ fun S _ => hi a S]
     refine Finset.sum_eq_zero fun a _ => ?_
-    rw [integral_finset_sum _ fun S _ => hi a S]
+    rw [integral_finsetSum _ fun S _ => hi a S]
     refine Finset.sum_eq_zero fun S _ => ?_
     rw [integral_mul_const, (h a S).2, zero_mul]
   have := Complex.reCLM.integral_comp_comm hD

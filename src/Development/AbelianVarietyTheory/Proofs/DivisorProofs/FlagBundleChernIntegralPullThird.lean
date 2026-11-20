@@ -171,7 +171,7 @@ theorem integral_fsDens_qMat {n : ℕ} (H : Matrix (Fin 2) (Fin 2) (Ev n)) (m : 
     (densL n (((∏ i, FibLine.entries H (f i) : Ev n) : Alt n) * Z))
   simp only [e]
   refine ⟨integrable_finset_sum _ fun f _ => hi f, ?_⟩
-  rw [integral_finset_sum _ fun f _ => hi f]
+  rw [integral_finsetSum _ fun f _ => hi f]
   change _ = densL n _
   set_option synthInstance.maxHeartbeats 100000 in
     rw [fibPow, map_sum, AddSubmonoidClass.coe_finsetSum, Finset.sum_mul, map_sum]

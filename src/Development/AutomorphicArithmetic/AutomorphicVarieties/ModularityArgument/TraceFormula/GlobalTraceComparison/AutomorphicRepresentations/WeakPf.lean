@@ -75,7 +75,7 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.weak_pf :
       rw [hv]
       simp only [g]
       ring
-    rw [integral_congr_ae h, integral_finset_sum _ fun l _ => (F j l).2.1.const_mul _]
+    rw [integral_congr_ae h, integral_finsetSum _ fun l _ => (F j l).2.1.const_mul _]
     exact Finset.sum_congr rfl fun l _ => integral_const_mul _ _
   have hint : Integrable (fun y => ∑ j, ∑ l, c l *
       ((∫ z, g j z * kerH (s.Φ₂ j l) z y ∂s.D.ν) * (v : H E n 0 → ℂ) y)) s.D.ν :=
@@ -84,9 +84,9 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.weak_pf :
   · simpa only [hrep] using hint
   · simp only [hrep]
     change _ = inner ℂ u (s.T₂ (vecM v c))
-    rw [hR, integral_finset_sum _ fun j _ => integrable_finset_sum _ fun l _ => (F j l).1.const_mul _]
+    rw [hR, integral_finsetSum _ fun j _ => integrable_finset_sum _ fun l _ => (F j l).1.const_mul _]
     refine Finset.sum_congr rfl fun j _ => ?_
-    rw [integral_finset_sum _ fun l _ => (F j l).1.const_mul _]
+    rw [integral_finsetSum _ fun l _ => (F j l).1.const_mul _]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [integral_const_mul, (F j l).2.2]
 

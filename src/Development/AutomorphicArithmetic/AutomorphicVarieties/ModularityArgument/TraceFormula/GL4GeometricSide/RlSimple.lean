@@ -70,7 +70,7 @@ private theorem dbl (μ : Measure G) [μ.IsHaarMeasure] (K : Subgroup G) (hKo : 
         rw [(hC x (hA.mem_toFinset.1 hx) y).1 h]
         exact hA.mem_toFinset.1 hx
     simp only [hpt]
-    rw [integral_finset_sum, Finset.mul_sum]
+    rw [integral_finsetSum, Finset.mul_sum]
     · refine Finset.sum_congr rfl fun x _ => ?_
       rw [integral_indicator_const _ (hCm x)]
       simp only [Measure.real, hCμ, Complex.real_smul]

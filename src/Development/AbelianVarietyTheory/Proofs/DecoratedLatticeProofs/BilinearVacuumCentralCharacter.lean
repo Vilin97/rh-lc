@@ -345,7 +345,7 @@ theorem comb_mean (hom : IsWeilDatumO ψ S T χS χT om)
     exact Finset.sum_congr rfl fun _ _ => by ring
   rw [GlobalTheory.FrComb.comb_apply]
   simp only [mean, e]
-  rw [integral_finset_sum]
+  rw [integral_finsetSum]
   · simp only [integral_const_mul]
   · exact fun x _ => ((GlobalTheory.AvgFam.integrable_of_continuous ν (hχ.mul ((hom.om_cont f hf _).comp
       (continuous_subtype_val.prodMk continuous_const)))).const_mul _).const_mul _
@@ -461,11 +461,11 @@ theorem biLift_sum (hwa : IsWeilDatumO ψ A S χA χS oma) (hwb : IsWeilDatumO �
     have e : (fun h₀ => φ h₀ * ∑ i, oma (h₀, h₁) (X i) 0 * omb (h₁, h₂) (Y i) 0) =
         fun h₀ => ∑ i, oma (h₀, h₁) (X i) 0 * φ h₀ * omb (h₁, h₂) (Y i) 0 := by
       funext h₀; rw [Finset.mul_sum]; exact Finset.sum_congr rfl fun i _ => by ring
-    rw [e, integral_finset_sum]
+    rw [e, integral_finsetSum]
     · exact Finset.sum_congr rfl fun i _ => integral_mul_const _ _
     · exact fun i _ => (integrableOn_kernel hA vA hwa (hX i) hφ h₁).mul_const _
   simp only [biLift, hint, hin]
-  rw [integral_finset_sum]
+  rw [integral_finsetSum]
   intro i _
   exact Integrable.congr (integrableOn_kernel hS vS hwb (hY i) (contAut_lift hwa hA vA (hX i) hφ) h₂)
     (Filter.Eventually.of_forall fun h₁ => mul_comm _ _)

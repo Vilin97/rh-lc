@@ -37,11 +37,11 @@ theorem integral_mixTop_mdbar_eq_zero : ∀ {n : ℕ} {r : Type} [Fintype r] [De
         (volume.restrict (offHyp S U)) := fun p => integrable_finset_sum _ fun π _ => hI2 p π
   unfold mixTop
   refine ⟨Integrable.const_mul (integrable_finset_sum _ fun p _ => hI3 p) _, ?_⟩
-  rw [integral_const_mul, integral_finset_sum _ fun p _ => hI3 p]
+  rw [integral_const_mul, integral_finsetSum _ fun p _ => hI3 p]
   refine mul_eq_zero_of_right _ (Finset.sum_eq_zero fun p _ => ?_)
-  rw [integral_finset_sum _ fun π _ => hI2 p π]
+  rw [integral_finsetSum _ fun π _ => hI2 p π]
   refine Finset.sum_eq_zero fun π _ => ?_
-  rw [integral_finset_sum _ fun u _ => hI p π u]
+  rw [integral_finsetSum _ fun u _ => hI p π u]
   refine Finset.sum_eq_zero fun u _ => ?_
   rw [integral_const_mul, (key p π u).2, mul_zero]
 

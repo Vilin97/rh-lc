@@ -40,7 +40,7 @@ theorem integral_translate_mem_of_finiteDimensional {G : Type} [Group G] [Topolo
       ∑ l, (∫ q, c q * b.coord l (φ q) ∂μ) • (b l : G → ℂ) := by
     funext g
     simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, hexp, Finset.mul_sum]
-    rw [integral_finset_sum]
+    rw [integral_finsetSum]
     · refine Finset.sum_congr rfl fun l _ => ?_
       rw [← integral_mul_const]
       simp only [mul_assoc]
@@ -143,7 +143,7 @@ theorem exists_equivariant_mem_subalgebra_of_compact :
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [← integral_mul_left_eq_self _ q₀]
       simp only [← integral_const_mul]
-      rw [← integral_finset_sum]
+      rw [← integral_finsetSum]
       swap
       · intro k _
         exact hint _ (continuous_const.mul ((hρc k j).mul (hPc j g)))
@@ -160,7 +160,7 @@ theorem exists_equivariant_mem_subalgebra_of_compact :
   have hv : Φ F₀ = v := by
     funext i
     simp only [Φ]
-    rw [← integral_finset_sum _ fun j _ => hint _ (ContinuousMap.continuous _)]
+    rw [← integral_finsetSum _ fun j _ => hint _ (ContinuousMap.continuous _)]
     have : ∀ q : Q, ∑ j, (r i j * (F₀ j).comp ι) q = v i := by
       intro q
       have h : (ρ q).mulVec ((ρ q⁻¹).mulVec v) = v := by

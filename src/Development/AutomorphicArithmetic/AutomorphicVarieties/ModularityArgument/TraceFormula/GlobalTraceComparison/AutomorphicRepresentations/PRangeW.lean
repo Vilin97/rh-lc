@@ -68,7 +68,7 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.rangeW_pf :
     rw [one_mul]
     ring
   simp_rw [hG]
-  rw [integral_finset_sum _ fun b _ => ((rep (p.x b)).1).const_mul _]
+  rw [integral_finsetSum _ fun b _ => ((rep (p.x b)).1).const_mul _]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [integral_const_mul, key (p.x b) (p.zero b)]
 

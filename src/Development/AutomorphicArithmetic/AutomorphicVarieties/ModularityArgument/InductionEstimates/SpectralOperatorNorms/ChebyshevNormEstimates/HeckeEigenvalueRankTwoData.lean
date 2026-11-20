@@ -89,7 +89,7 @@ private theorem act_cc {H V : Type} [NormedAddCommGroup H] [InnerProductSpace �
       filter_upwards [(measurePreserving_add_left volume x).quasiMeasurePreserving.ae hU] with t ht
       rw [ht]
   · rw [integral_add (sc.integrable_of_hasCompactSupport ss) (cvc.integrable_of_hasCompactSupport cvs), cvi, hs0,
-      integral_finset_sum _ fun t _ => (tc t).integrable_of_hasCompactSupport (ts t), ContinuousLinearMap.add_apply, Finsupp.sum,
+      integral_finsetSum _ fun t _ => (tc t).integrable_of_hasCompactSupport (ts t), ContinuousLinearMap.add_apply, Finsupp.sum,
       ContinuousLinearMap.sum_apply]
     congr 1
     refine Finset.sum_congr rfl fun t _ => ?_
@@ -173,7 +173,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.genT :
   have hui := uc.integrable_of_hasCompactSupport (μ := volume) us
   have h4 := integral_congr_ae (μ := volume) (Eventually.of_forall pw)
   rw [ℓ.integral_comp_comm (uc'.integrable_of_hasCompactSupport us'),
-    integral_finset_sum _ fun a _ => (ℓ.integrable_comp (hui.comp_sub_right _)).const_mul _] at h4
+    integral_finsetSum _ fun a _ => (ℓ.integrable_comp (hui.comp_sub_right _)).const_mul _] at h4
   simp only [integral_const_mul, integral_sub_right_eq_self fun x => ℓ (u x)] at h4
   rw [← Finset.sum_mul, esymm_two, ℓ.integral_comp_comm hui, iu', iu, add_comm] at h4
   rw [← hℓ, map_sub, sub_eq_zero]

@@ -509,7 +509,7 @@ theorem eq_zero_of_translates [CompleteSpace H] (hσ : IsURepOn (UJset ε) σ) (
     intro v hv
     rw [hΛ _ (hγs v)]
     simp only [fun i => hex _ (hS i) v hv, fun i => ((Λ i).integral_comp_comm (hint _ (hS i) v hv)).symm]
-    rw [← integral_finset_sum _ fun i _ => (Λ i).integrable_comp (hint _ (hS i) v hv)]
+    rw [← integral_finsetSum _ fun i _ => (Λ i).integrable_comp (hint _ (hS i) v hv)]
     refine integral_congr_ae (Filter.Eventually.of_forall fun g => ?_)
     simp only [hΛ _ (htr v hv (umat g) g.2), Finset.smul_sum, ContinuousLinearMap.map_smul_of_tower]
 

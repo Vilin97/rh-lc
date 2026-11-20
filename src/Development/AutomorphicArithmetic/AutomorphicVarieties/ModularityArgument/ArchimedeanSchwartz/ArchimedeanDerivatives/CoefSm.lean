@@ -39,7 +39,7 @@ private theorem abs_deriv (hU : IsOpen U) (hA : ∀ b, ContinuousOn (A b) U)
       rw [ContinuousLinearMap.norm_smulRight_apply]
       exact mul_le_mul (hz.2 b).le (hC _ z hz.1 x) (norm_nonneg _) (by positivity)))
     (integrable_const _) (Filter.Eventually.of_forall fun x z hz => hd v x z hz.1)
-  rw [integral_finset_sum _ fun b _ => hL b] at key
+  rw [integral_finsetSum _ fun b _ => hL b] at key
   refine key.congr_fderiv (Finset.sum_congr rfl fun b _ => ?_)
   exact ((ContinuousLinearMap.smulRightL ℝ P ℂ (A b y)).integral_comp_comm (hi _))
 

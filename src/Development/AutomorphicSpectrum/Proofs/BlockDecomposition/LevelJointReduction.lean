@@ -91,7 +91,7 @@ theorem integral_of_factor {V P Q : Type} [AddCommGroup V] [MeasurableSpace V] [
       exact hy ⟨x, rfl⟩
   have hint : ∀ c, Integrable ((Pc c).indicator (fun _ => g c)) μ := fun c =>
     (integrable_indicator_iff (hPm c)).2 (integrableOn_const (by rw [hPμ]; exact hHfin))
-  rw [hdec, integral_finset_sum _ (fun c _ => hint c)]
+  rw [hdec, integral_finsetSum _ (fun c _ => hint c)]
   simp only [integral_indicator_const _ (hPm _)]
   have : ∀ c, μ.real (Pc c) = ((Fintype.card Q : ℝ))⁻¹ := fun c => by
     rw [← hreal, Measure.real, Measure.real, hPμ]

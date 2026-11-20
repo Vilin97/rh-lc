@@ -112,7 +112,7 @@ theorem avg_mem (hθ : IsInfFam (D := D) θ) (hP : IsUnit P) (hJ : Pᴴ * Jm ε 
         have := congrFun (hrep k) x
         simpa [f, rTr, Finset.sum_apply] using this
     simp only [avg, hx, Finset.mul_sum, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
-    rw [integral_finset_sum _ fun i _ => ?_]
+    rw [integral_finsetSum _ fun i _ => ?_]
     · refine Finset.sum_congr rfl fun i _ => ?_
       rw [← integral_mul_const]
       congr 1

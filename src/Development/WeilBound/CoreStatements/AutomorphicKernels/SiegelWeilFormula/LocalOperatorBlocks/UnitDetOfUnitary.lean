@@ -44,7 +44,7 @@ theorem four_diag (sg : ℤˣ) (t : ℂ) (z : Fin n → ℂ) (hz : ∀ j, 0 < ((
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [evX, map_sum, Finset.sum_mul, Finset.mul_sum]
     simp_rw [hsplit]
-    rw [integral_finset_sum _ (fun e _ => intg_mono sg t z hz e (Q.coeff e) u)]
+    rw [integral_finsetSum _ (fun e _ => intg_mono sg t z hz e (Q.coeff e) u)]
     rw [Finset.sum_congr rfl (fun e he => hF e he u)]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [evX, map_sum, Finset.sum_mul]

@@ -192,7 +192,7 @@ private theorem ct_int {T : GL (Fin n) F → ℂ} (hT : T ∈ locallyConstantCom
         refine (Finset.sum_eq_zero fun l _ => ?_).symm
         rw [Set.indicator_of_notMem (fun h => hc ⟨l, h⟩), mul_zero]
   simp_rw [hpt]
-  rw [integral_finset_sum _ fun l _ => (hTi.indicator (hm l)).const_mul _]
+  rw [integral_finsetSum _ fun l _ => (hTi.indicator (hm l)).const_mul _]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [integral_const_mul, integral_indicator (hm l)]
 

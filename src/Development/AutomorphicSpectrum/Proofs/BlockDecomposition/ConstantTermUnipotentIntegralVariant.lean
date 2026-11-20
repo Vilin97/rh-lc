@@ -161,7 +161,7 @@ theorem integrable_fderiv {φ : Sm E a} (hφ : LO φ) (g : GA E a) {y : Lie E a}
 theorem integral_fderiv {φ : Sm E a} (hφ : LO φ) (g : GA E a) {y : Lie E a} (hy : y ∈ invSet E a) :
     ∫ x : BlockIx a r → Ad E, fderiv ℝ (chart φ.1 (unip x * g)) y ∂ν = ∑ i : Ix E a,
       ContinuousLinearMap.smulRightL ℝ (Lie E a) ℂ (coordL i (invL y)) (ct ν (lie E a (bs E a i) φ) g y) := by
-  rw [fderiv_fun φ g hy, integral_finset_sum _ fun i _ =>
+  rw [fderiv_fun φ g hy, integral_finsetSum _ fun i _ =>
     ContinuousLinearMap.integrable_comp _ (integrable_chart ν (lo_lie hφ _) g hy)]
   exact Finset.sum_congr rfl fun i _ =>
     ContinuousLinearMap.integral_comp_comm _ (integrable_chart ν (lo_lie hφ _) g hy)

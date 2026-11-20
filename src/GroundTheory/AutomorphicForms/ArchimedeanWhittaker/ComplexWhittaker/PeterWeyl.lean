@@ -64,7 +64,7 @@ theorem Lam_const_mul (q : ℤ) (c : ℂ) (f : U2 → ℂ) :
 theorem Lam_sum (hg : Continuous g) (q : ℤ) {ι : Type*} (s : Finset ι) {f : ι → U2 → ℂ}
     (hf : ∀ i, Continuous (f i)) : abelian₂ g q (fun k => ∑ i ∈ s, f i k) = ∑ i ∈ s, abelian₂ g q (f i) := by
   unfold abelian₂
-  rw [← integral_finset_sum s (fun i _ => integrable_Lam hg q (hf i))]
+  rw [← integral_finsetSum s (fun i _ => integrable_Lam hg q (hf i))]
   congr 1; funext k; rw [Finset.sum_mul, Finset.sum_mul]
 
 theorem Lam_congr (q : ℤ) {f f' : U2 → ℂ} (h : ∀ k, f k = f' k) : abelian₂ g q f = abelian₂ g q f' := by

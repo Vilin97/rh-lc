@@ -66,7 +66,7 @@ theorem liftSum : ∀ D : D7, LiftSum D := by
         fun g => ∑ i ∈ s, a i * (k.om (g, h) (k.pt ψ θ x y P) 0 * φ i g) := by
       funext g
       exact Finset.sum_congr rfl fun i _ => by ring
-    rw [e, integral_finset_sum s (fun i hi => ((key (φ i) (hφ i hi)).1 h).const_mul (a i))]
+    rw [e, integral_finsetSum s (fun i hi => ((key (φ i) (hφ i hi)).1 h).const_mul (a i))]
     exact Finset.sum_congr rfl fun i _ => integral_const_mul (a i) _
 
 end GlobalTheory.SeeSaw.LiftSumProof

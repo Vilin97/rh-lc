@@ -47,7 +47,7 @@ theorem mn_integral (S : Subgroup G) {X E : Type} [MeasurableSpace X] {μ : Meas
   · haveI := fin_of_ne h
     letI := Fintype.ofFinite (Quotient (QuotientGroup.rightRel S))
     simp only [mn_fin]
-    rw [integral_smul, integral_finset_sum _ fun c _ => he c]
+    rw [integral_smul, integral_finsetSum _ fun c _ => he c]
 
 theorem mn_contOn (S : Subgroup G) {X E : Type} [TopologicalSpace X] [NormedAddCommGroup E] [NormedSpace ℝ E]
     (e : Quotient (QuotientGroup.rightRel S) → X → E) {s : Set X} (he : ∀ c, ContinuousOn (e c) s) :

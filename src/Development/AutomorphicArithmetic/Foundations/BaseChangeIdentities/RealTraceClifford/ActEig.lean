@@ -125,7 +125,7 @@ theorem UpperTheory.RealTr.actEig :
   have hk' : ∀ y : G n, k y.val = ∑ i, c i • ks i y.val := fun y => hk _ (val_mem_GLs' y)
   have hsum : act μ E k f x = ∑ i, c i • act μ E (ks i) f x := by
     simp only [act, hk', ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply]
-    rw [integral_finset_sum]
+    rw [integral_finsetSum]
     · simp only [integral_smul]
     · intro i _
       exact (hint i).smul (c i)

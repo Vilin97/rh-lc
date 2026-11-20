@@ -42,10 +42,10 @@ theorem dint_sum {A C : Type} [MeasurableSpace A] [MeasurableSpace C] (μK : Mea
     (hc2 : ∀ i, Integrable (fun k => ∫ l, cf i k l ∂μ) μK) :
     ∫ k, ∫ l, ∑ i, cf i k l * w i ∂μ ∂μK = ∑ i, (∫ k, ∫ l, cf i k l ∂μ ∂μK) * w i := by
   have e : ∀ k, ∫ l, ∑ i, cf i k l * w i ∂μ = ∑ i, (∫ l, cf i k l ∂μ) * w i := fun k => by
-    rw [integral_finset_sum _ (fun i _ => (hc1 i k).mul_const _)]
+    rw [integral_finsetSum _ (fun i _ => (hc1 i k).mul_const _)]
     exact Finset.sum_congr rfl fun i _ => integral_mul_const _ _
   simp_rw [e]
-  rw [integral_finset_sum _ (fun i _ => (hc2 i).mul_const _)]
+  rw [integral_finsetSum _ (fun i _ => (hc2 i).mul_const _)]
   exact Finset.sum_congr rfl fun i _ => integral_mul_const _ _
 
 theorem absE_pos (t : (AE F E)ˣ) : (0 : ℝ) < absE F E t := by

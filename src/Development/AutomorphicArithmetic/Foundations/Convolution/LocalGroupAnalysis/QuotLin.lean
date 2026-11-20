@@ -84,7 +84,7 @@ theorem UpperTheory.ConvolutionTheory.G.quotLin_of :
       Finset.sum_congr rfl fun i hi => by
         rw [(hE G T μ j ν hP _ (hF i hi).1 (hF i hi).2.1 _ hρ₀).2.2]]
     simp only [Finset.sum_mul, mul_assoc]
-    rw [integral_finset_sum s fun i hi => ((hF i hi).2.2 _ hρ₀).const_mul (c i)]
+    rw [integral_finsetSum s fun i hi => ((hF i hi).2.2 _ hρ₀).const_mul (c i)]
     exact Finset.sum_congr rfl fun i _ => integral_const_mul _ _
   · have hP' : Pair (a • μ) j (b • ν) := ⟨uni_smul hP.1 ha, hP.2.1, uni_smul hP.2.2 hb⟩
     refine ⟨hP', fun F hF hinv => ⟨qInt_iff ha hb, ?_⟩⟩

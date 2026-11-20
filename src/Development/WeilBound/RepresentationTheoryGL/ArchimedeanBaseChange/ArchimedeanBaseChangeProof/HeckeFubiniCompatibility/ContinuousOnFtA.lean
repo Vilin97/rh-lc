@@ -171,7 +171,7 @@ theorem Rv_eq (hF : CompatFub) (D : Dom E a b) (hC : Compat D μa μb ν) (v : I
       c⁻¹ * ⟪eb Ma v q, ∫ t, K t (St v μa μb ν ka kb ψ f i q0 (p * ιA v t)) ∂μa⟫_ℂ := by
     intro q
     simp only [hI]
-    rw [← Finset.mul_sum, ← integral_finset_sum _ fun j _ => (hgi j).integral_prod_right]
+    rw [← Finset.mul_sum, ← integral_finsetSum _ fun j _ => (hgi j).integral_prod_right]
     congr 1
     rw [← integral_inner hWi]
     refine integral_congr_ae (ae_of_all _ fun t => ?_)

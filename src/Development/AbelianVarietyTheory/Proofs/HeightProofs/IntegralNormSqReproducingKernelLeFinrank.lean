@@ -160,7 +160,7 @@ theorem integral_norm_sq_ker_le : ∀ {n : ℕ} (ε : Fin n → Bool) (i : ℕ) 
     exact (integrable_of_continuousK (Complex.continuous_ofReal.comp hns)).re
   calc ∫ k, ‖e k‖ ^ 2 ∂(muK ε) = ∫ _a, (∫ k, ‖e k‖ ^ 2 ∂(muK ε)) ∂(muK ε) := by simp
     _ = ∫ a, ∑ j, ‖φ j a‖ ^ 2 ∂(muK ε) := by congr 1; funext a; exact key a
-    _ = ∑ j, ∫ a, ‖φ j a‖ ^ 2 ∂(muK ε) := integral_finset_sum _ fun j _ => hint j
+    _ = ∑ j, ∫ a, ‖φ j a‖ ^ 2 ∂(muK ε) := integral_finsetSum _ fun j _ => hint j
     _ = (Module.finrank ℂ (topV ε i) : ℝ) := by simp [h1]
     _ ≤ _ := by exact_mod_cast Submodule.finrank_mono (topV_le ε i)
 

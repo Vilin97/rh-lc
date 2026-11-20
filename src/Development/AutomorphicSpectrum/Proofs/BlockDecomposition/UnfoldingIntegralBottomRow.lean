@@ -107,9 +107,9 @@ theorem integral_mul_parts (a b : Ω → ℂ) (m : Ω → ℝ) (ha : Measurable 
   have e : ∫ ω, a ω * b ω * (m ω : ℂ) ∂ρ = ∫ ω, ∑ k, ∑ j, uu k * uu j *
       ((pp k (a ω) * pp j (b ω) * m ω : ℝ) : ℂ) ∂ρ :=
     integral_congr_ae (Eventually.of_forall fun ω => mul_eq_parts _ _ _)
-  rw [e, integral_finset_sum _ fun k _ => integrable_finset_sum _ fun j _ => hintC k j]
+  rw [e, integral_finsetSum _ fun k _ => integrable_finset_sum _ fun j _ => hintC k j]
   refine Finset.sum_congr rfl fun k _ => ?_
-  rw [integral_finset_sum _ fun j _ => hintC k j]
+  rw [integral_finsetSum _ fun j _ => hintC k j]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [integral_const_mul, integral_complex_ofReal,
     integral_eq_lintegral_of_nonneg_ae (Eventually.of_forall (hnn k j))

@@ -167,8 +167,8 @@ theorem integral_sum_sum {X T L : HSp D} (o : OrthDec X T L) (cT : CoCpt T) (vT 
     {I J : Type} [Fintype I] [Fintype J] {Φ : I → J → GA D X → ℂ} (hΦ : ∀ i j, IsContAut X (Φ i j)) :
     ∫ h in vT.𝓕, f h * (∑ i, ∑ j, Φ i j) (o.emb (h, 1)) ∂vT.μ = ∑ i, ∑ j, ∫ h in vT.𝓕, f h * Φ i j (o.emb (h, 1)) ∂vT.μ := by
   simp only [Finset.sum_apply, Finset.mul_sum]
-  rw [integral_finset_sum _ fun i _ => integrable_finset_sum _ fun j _ => integrableOn_emb o cT vT hf (hΦ i j)]
-  exact Finset.sum_congr rfl fun i _ => integral_finset_sum _ fun j _ => integrableOn_emb o cT vT hf (hΦ i j)
+  rw [integral_finsetSum _ fun i _ => integrable_finset_sum _ fun j _ => integrableOn_emb o cT vT hf (hΦ i j)]
+  exact Finset.sum_congr rfl fun i _ => integral_finsetSum _ fun j _ => integrableOn_emb o cT vT hf (hΦ i j)
 
 theorem lst_smul (c : Comm D) (j : ℕ) (h : j + 2 * 0 + 2 = D.R.m) (τ) (s₁ : StepBF c.ψ (c.B j 0 h) (c.J j 0 h)) (a b : ℂ)
     (Ψ₁ : WO (c.V j) (c.V (j + 1)) → ℂ) (Ψ₂ : WO (c.V (j + 1)) c.T → ℂ) :

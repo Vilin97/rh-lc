@@ -39,11 +39,11 @@ theorem integral_sq_sum {ε : Fin n → Bool} {σ : Mx n → (H →L[ℂ] H)} {�
   apply Complex.ofReal_injective
   rw [← integral_complex_ofReal]
   simp only [e]
-  rw [integral_finset_sum _ fun p _ => i1 p]
+  rw [integral_finsetSum _ fun p _ => i1 p]
   push_cast
   rw [Finset.sum_div]
   refine Finset.sum_congr rfl fun p _ => ?_
-  rw [integral_finset_sum _ fun q _ => (hd.2 _ _ _ _).1]
+  rw [integral_finsetSum _ fun q _ => (hd.2 _ _ _ _).1]
   simp only [(hd.2 _ _ _ _).2, orthonormal_iff_ite.1 hh]
   rw [Finset.sum_eq_single p (fun q _ hq => by simp [Ne.symm hq]) (by simp)]
   simp [inner_self_eq_norm_sq_to_K]

@@ -59,7 +59,7 @@ theorem IsTest.exists_transpose (hU : IsOpen U) (h : IsTest U α) (L : V →L[�
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_smul, Finset.mul_sum, c, Complex.real_smul, mul_assoc]
   simp only [e, Finset.sum_apply, Finset.sum_mul]
-  rw [integral_finset_sum _ fun i _ => (hc i).integrable_mul ν hU (hG' _), integral_finset_sum _ fun i _ =>
+  rw [integral_finsetSum _ fun i _ => (hc i).integrable_mul ν hU (hG' _), integral_finsetSum _ fun i _ =>
     (((hc i).fderiv _).mul contDiff_const).integrable_mul ν hU hG.continuousOn]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [integral_mul_fderiv_eq_neg_fderiv_mul_of_integrable (((hc i).fderiv _).integrable_mul ν hU hG.continuousOn)

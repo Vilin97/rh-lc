@@ -190,7 +190,7 @@ theorem energy_diff_ineq : ∀ {n : ℕ} {W : Type} [NormedAddCommGroup W] [Inne
   calc ∫ y : G n, dt ρ s y.val ∂μ
       = ∫ y : G n, (dt ρ s y.val - (1 / 2 : ℝ) * ∑ p : Ix n, Rr (hm p) (Ψ p s) y.val) ∂μ := by
         rw [integral_sub I_dt I_sum, integral_const_mul,
-          integral_finset_sum _ fun p _ => I_rr p]
+          integral_finsetSum _ fun p _ => I_rr p]
         simp [hZ]
     _ ≤ ∫ y : G n, (‖A‖ + 1) * ρ s y.val ∂μ :=
         integral_mono (I_dt.sub I_sum) (I_ρ.const_mul _) fun y =>

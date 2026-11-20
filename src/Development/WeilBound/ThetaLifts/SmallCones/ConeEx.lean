@@ -72,12 +72,12 @@ theorem LineOK.coneI_eq [SFinite μ] [SFinite M₀.μ] (h : LineOK B M om M₀ o
       simp only [LinearMap.proj_apply] at e2
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [hd, rho_linear, map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.sum_mul]
-      rw [integral_finset_sum _ fun i _ => by simpa only [mul_assoc] using (e2 i).1.const_mul (c i k)]
+      rw [integral_finsetSum _ fun i _ => by simpa only [mul_assoc] using (e2 i).1.const_mul (c i k)]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [(e2 i).2, ← integral_const_mul]
       simp only [mul_assoc]
     simp only [cone, e1, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
-    rw [integral_finset_sum _ fun i _ => (hc i).mul_const _]
+    rw [integral_finsetSum _ fun i _ => (hc i).mul_const _]
     simp only [integral_mul_const]
   have h2 : ∀ i g, theta om₀ (Λ i) g h₁ =
       ∫ l, theta om₀ (e (M.co.rho B.ψ (u l) (Ψ i))) g h₁ * ((ν l : ℂ) * ((absE F E l : ℝ) : ℂ) ^ z) ∂μ := fun i g => by
@@ -100,19 +100,19 @@ theorem LineOK.coneI_eq [SFinite μ] [SFinite M₀.μ] (h : LineOK B M om M₀ o
       ∑ i, c i k * T i := fun k => by
     rw [← Finset.sum_congr rfl fun i _ => congrArg (c i k * ·) (h4 i)]
     simp only [← integral_const_mul]
-    rw [← integral_finset_sum _ fun i _ => (h5 i).const_mul _]
+    rw [← integral_finsetSum _ fun i _ => (h5 i).const_mul _]
     refine integral_congr_ae ?_
     have : ∀ᵐ l ∂μ, ∀ i, Integrable (fun g => theta om₀ (e (M.co.rho B.ψ (u l) (Ψ i))) g h₁ *
         ((ν l : ℂ) * ((absE F E l : ℝ) : ℂ) ^ z)) (M₀.μ.restrict M₀.dom) :=
       ae_all_iff.2 fun i => (h.int _ (hΨ i) h₁).prod_right_ae
     filter_upwards [this] with l hl
     simp only [Model.I, hd, h.val_sum _ hΨ, mul_assoc, ← integral_mul_const, ← integral_const_mul, Finset.sum_mul]
-    rw [integral_finset_sum _ fun i _ => (hl i).const_mul _]
+    rw [integral_finsetSum _ fun i _ => (hl i).const_mul _]
   rw [h1]
   simp only [coneI, h6]
-  rw [integral_finset_sum _ fun i _ => (hc i).mul_const _]
+  rw [integral_finsetSum _ fun i _ => (hc i).mul_const _]
   simp only [integral_mul_const, Model.I, h.theta_sum _ hΛ]
-  rw [integral_finset_sum _ fun i _ => (h3 i).const_mul _]
+  rw [integral_finsetSum _ fun i _ => (h3 i).const_mul _]
   simp only [integral_const_mul, hT, Model.I]
 
 end Core

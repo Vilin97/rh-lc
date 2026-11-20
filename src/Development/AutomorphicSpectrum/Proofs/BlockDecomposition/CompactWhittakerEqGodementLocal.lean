@@ -68,7 +68,7 @@ theorem phiW_mem {χ : AddChar F Circle} (hχ : IsStd χ) {Φ : F × F → ℂ}
       f i (x 0) * localFourier (selfDualMeasure χ) χ (g i) (x 1) := by
     funext x
     simp only [phiW, hfg, Finset.sum_mul, Finset.sum_apply]
-    rw [integral_finset_sum _ fun i _ => ?_]
+    rw [integral_finsetSum _ fun i _ => ?_]
     · refine Finset.sum_congr rfl fun i _ => ?_
       simp only [localFourier, mul_assoc]
       exact integral_const_mul _ _

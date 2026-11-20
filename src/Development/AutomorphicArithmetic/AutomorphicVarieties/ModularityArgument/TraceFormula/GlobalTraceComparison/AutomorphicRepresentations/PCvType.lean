@@ -81,7 +81,7 @@ theorem cvType_pf : DetZero → EvalBasis → CvType := by
         rw [this, Finset.sum_mul, Finset.sum_mul]
         exact Finset.sum_congr rfl fun b _ => by ring
       simp only [e]
-      rw [integral_finset_sum _ fun b _ => (term_integrable D φ u f g _ hφ hu hf).const_mul _]
+      rw [integral_finsetSum _ fun b _ => (term_integrable D φ u f g _ hφ hu hf).const_mul _]
       simp only [integral_const_mul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, hc]
       exact Finset.sum_congr rfl fun b _ => mul_comm _ _
     rw [key]

@@ -56,7 +56,7 @@ theorem heckeAct_indicator_eq_sum {K : Subgroup G} (hKc : IsCompact (K : Set G))
     · rw [Set.indicator_of_notMem hg, zero_mul]
       refine (Finset.sum_eq_zero fun s hs => Set.indicator_of_notMem (fun h => hg ?_) _).symm
       exact (hU g).2 ⟨s, hs, Set.mem_smul_set_iff_inv_smul_mem.1 h⟩
-  rw [integral_congr_ae (Filter.Eventually.of_forall hpt), integral_finset_sum]
+  rw [integral_congr_ae (Filter.Eventually.of_forall hpt), integral_finsetSum]
   · rw [Finset.smul_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [integral_indicator_const _ (hmeas s), Measure.real, Measure.real, measure_smul,

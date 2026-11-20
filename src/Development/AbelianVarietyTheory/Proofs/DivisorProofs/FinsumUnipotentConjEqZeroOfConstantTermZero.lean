@@ -167,7 +167,7 @@ theorem integral_step {V : Type} [AddGroup V] [MeasurableSpace V] [MeasurableAdd
     intro q; ext X; simp [Set.indicator_apply]
   have hmeas : ∀ q, MeasurableSet ((fun X => -x q + X) ⁻¹' M) := fun q => measurable_const_add _ hM
   have hvol : ∀ q, μ ((fun X => -x q + X) ⁻¹' M) = μ M := fun q => measure_preimage_add μ _ M
-  rw [integral_finset_sum]
+  rw [integral_finsetSum]
   · rw [Finset.mul_sum]
     refine Finset.sum_congr rfl fun q _ => ?_
     rw [hind q, integral_indicator_const _ (hmeas q), Measure.real, hvol q, Complex.real_smul]

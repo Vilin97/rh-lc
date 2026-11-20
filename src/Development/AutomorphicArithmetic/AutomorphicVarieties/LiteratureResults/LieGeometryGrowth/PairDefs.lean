@@ -167,11 +167,11 @@ theorem pairFacts_of_steps (h1 : BddInt) (h2 : CsBdd) (h3 : LevInv) (h4 : PtInv)
       (β (Matrix.vecCons (e j) fun i => e (J i))) (η fun i => e (J i)) (hv _ β hβ _) (hv _ η hη _)
       (hs.imp (fun h => h.imp fun R hR g hg => hR _ g hg) fun h => h.imp fun R hR g hg => hR _ g hg)
     simp only [pair, (h6 E a Ξ χ G n e q (smLie Ξ) β η _).1, (h6 E a Ξ χ G n e q (smAdj Ξ r) β η _).2]
-    rw [integral_const_mul, integral_finset_sum _ fun J _ => integrable_finset_sum _ fun j _ => (hA J j).1,
-      integral_finset_sum _ fun J _ => integrable_finset_sum _ fun j _ => (hA J j).2.1]
+    rw [integral_const_mul, integral_finsetSum _ fun J _ => integrable_finset_sum _ fun j _ => (hA J j).1,
+      integral_finsetSum _ fun J _ => integrable_finset_sum _ fun j _ => (hA J j).2.1]
     congr 1
     refine Finset.sum_congr rfl fun J _ => ?_
-    rw [integral_finset_sum _ fun j _ => (hA J j).1, integral_finset_sum _ fun j _ => (hA J j).2.1]
+    rw [integral_finsetSum _ fun j _ => (hA J j).1, integral_finsetSum _ fun j _ => (hA J j).2.1]
     exact Finset.sum_congr rfl fun j _ => (hA J j).2.2
 
 end UpperTheory.V.Lit.Geo.Pf

@@ -139,7 +139,7 @@ theorem integral_plane_measure_sum_products (ψ : AddChar F Circle) {n : ℕ} {A
     (hA : ∀ i, Integrable (A i) (selfDualMeasure ψ)) (hB : ∀ i, Integrable (B i) (selfDualMeasure ψ)) :
     ∫ r, ∑ i, A i (r 0) * B i (r 1) ∂m2 ψ =
       ∑ i, (∫ t, A i t ∂selfDualMeasure ψ) * ∫ t, B i t ∂selfDualMeasure ψ := by
-  rw [integral_finset_sum _ fun i _ => integrable_plane_measure_product ψ (hA i) (hB i)]
+  rw [integral_finsetSum _ fun i _ => integrable_plane_measure_product ψ (hA i) (hB i)]
   exact Finset.sum_congr rfl fun i _ => integral_plane_measure_product ψ _ _
 
 theorem integrable_mul_char {ψ : AddChar F Circle} (hψ : Continuous ψ) {g : F → ℂ}

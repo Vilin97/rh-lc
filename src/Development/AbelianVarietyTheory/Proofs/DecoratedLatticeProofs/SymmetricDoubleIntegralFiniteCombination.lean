@@ -118,13 +118,13 @@ theorem tensorVal_unique {n₀ n₁ n₂ : Type} [Fintype n₀] [DecidableEq n�
       ∫ u, app (C u) (fun x => GlobalTheory.IndefiniteRowSideFullHecke.FourierJacobiAverage.hat ψ ν (Θ x) u) ∂(Measure.pi fun _ => ν) := by
     intro m Ψ Φ₀ hd
     simp only [key]
-    rw [← integral_finset_sum _ fun i _ => int1 _ _]
+    rw [← integral_finsetSum _ fun i _ => int1 _ _]
     congr 1; funext u
     have : (fun x => GlobalTheory.IndefiniteRowSideFullHecke.FourierJacobiAverage.hat ψ ν (Θ x) u) =
         (∑ i, GlobalTheory.IndefiniteRowSideFullHecke.FourierJacobiAverage.hat ψ ν (Φ₀ i).1 u • Ψ i : SB (Matrix n₁ n₀ k)).1 := by
       funext x
       simp only [GlobalTheory.IndefiniteRowSideFullHecke.FourierJacobiAverage.hat, hd, Finset.sum_mul, mul_assoc]
-      rw [integral_finset_sum _ fun i _ => (int2 _ u).const_mul _]
+      rw [integral_finsetSum _ fun i _ => (int2 _ u).const_mul _]
       simp [integral_const_mul, mul_comm]
     rw [this, GlobalTheory.IndefiniteRowSideFullHecke.FourierJacobiAverage.app_coe]
     simp

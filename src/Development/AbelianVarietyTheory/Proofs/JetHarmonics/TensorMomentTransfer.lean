@@ -37,7 +37,7 @@ theorem pairing : Hyps → ∀ (k r : ℕ) (ι κ : Type) [Fintype ι] [Decidabl
     filter_upwards [hae] with x hx
     rw [hexp _ hx, inner_sum]
     simp only [inner_smul_right]
-  rw [h1, integral_finset_sum]
+  rw [h1, integral_finsetSum]
   · simp only [integral_const_mul]
     rw [Finset.sum_eq_single I]
     · rw [hpolI.2 _ (hmem I) y hy]

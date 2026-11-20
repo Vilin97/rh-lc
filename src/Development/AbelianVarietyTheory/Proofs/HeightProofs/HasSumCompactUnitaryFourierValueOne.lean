@@ -145,7 +145,7 @@ theorem hasSum_kFourier (ε : Fin n → Bool) (e : ℕ → KG ε → ℂ) (he : 
       simp only [hrdef]
       simpa using this
     have e3 : ∫ k, star (q k) * u k ∂(muK ε) = ∫ k, star (q k) * g k ∂(muK ε) := by
-      rw [e1, tsum_congr e2, tsum_eq_sum hr0, ← integral_finset_sum]
+      rw [e1, tsum_congr e2, tsum_eq_sum hr0, ← integral_finsetSum]
       · congr 1; funext y
         rw [← Finset.mul_sum, hrs y, mul_comm]
       · intro i _

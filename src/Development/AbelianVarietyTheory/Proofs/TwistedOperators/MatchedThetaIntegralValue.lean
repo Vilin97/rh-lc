@@ -91,7 +91,7 @@ theorem integral_translates {D : D7} (V : HSp D) (ν : Measure (GA D V)) [ν.IsH
     funext u; rfl
   rw [e]
   refine ⟨integrable_finset_sum _ fun k _ => (h k).1.const_mul _, ?_⟩
-  rw [integral_finset_sum _ fun k _ => (h k).1.const_mul _]
+  rw [integral_finsetSum _ fun k _ => (h k).1.const_mul _]
   simp only [integral_const_mul, (h _).2]
   rw [zdeg, Finsupp.sum, Finset.sum_mul]
 

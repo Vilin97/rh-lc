@@ -54,7 +54,7 @@ theorem isAvg_kAvg [CompleteSpace H] (hσ : IsURepOn (UJset ε) σ) {e : KG ε �
       fun k => K_le_UJ (toMK_mem_K k))).integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _)
   simp only [kAvg]
   simp only [fun j => (integral_inner (𝕜 := ℂ) (hi (w j)) (x j)).symm]
-  rw [← integral_finset_sum _ fun j _ => (hi (w j)).const_inner (x j), ← integral_mul_const]
+  rw [← integral_finsetSum _ fun j _ => (hi (w j)).const_inner (x j), ← integral_mul_const]
   refine norm_integral_le_of_norm_le ((he.norm.integrable_of_hasCompactSupport
     (HasCompactSupport.of_compactSpace _)).mul_const M) (Eventually.of_forall fun k => ?_)
   simp only [inner_smul_right, ← Finset.mul_sum, norm_mul]

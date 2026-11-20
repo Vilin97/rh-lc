@@ -24,7 +24,7 @@ theorem schwartz_integral_mul_conj_eq_polarization {V : Type} [NormedAddCommGrou
     ∫ x, u x * starRingEnd ℂ (v x) ∂μ = (1 / 4 : ℂ) * ∑ k ∈ Finset.range 4,
       Complex.I ^ k * ((∫ x, ‖(u + (Complex.I ^ k) • v) x‖ ^ 2 ∂μ : ℝ) : ℂ) := by
   simp_rw [complex_mul_conj_eq_polarization (u _)]
-  rw [integral_const_mul, integral_finset_sum]
+  rw [integral_const_mul, integral_finsetSum]
   · congr 1
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [integral_const_mul]

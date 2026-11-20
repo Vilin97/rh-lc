@@ -40,8 +40,8 @@ theorem chernInt_sum_mul {k : Type} [CommRing k] {X : Scheme.{0}} {p : X ⟶ Sp 
     (h : ∀ j, φ.ChernIntegrableOn D S (f j)) :
     φ.chernInt D S (fun y => ∑ j, r j * f j y) = ∑ j, r j * φ.chernInt D S (f j) := by
   unfold Weight.chernInt
-  rw [MeasureTheory.integral_finset_sum _ fun j _ => (h j).1.const_mul (r j),
-    MeasureTheory.integral_finset_sum _ fun j _ => (h j).2.const_mul (r j), ← Finset.sum_sub_distrib]
+  rw [MeasureTheory.integral_finsetSum _ fun j _ => (h j).1.const_mul (r j),
+    MeasureTheory.integral_finsetSum _ fun j _ => (h j).2.const_mul (r j), ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [MeasureTheory.integral_const_mul, MeasureTheory.integral_const_mul, mul_sub]
 

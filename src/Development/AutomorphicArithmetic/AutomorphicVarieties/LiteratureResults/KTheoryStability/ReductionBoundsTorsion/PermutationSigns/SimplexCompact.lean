@@ -241,7 +241,7 @@ theorem intP_sum {q : ℕ} {ι : Type} [Fintype ι] (c : ι → ℝ) (ω : ι �
     intro p v
     simp
   simp only [e]
-  rw [MeasureTheory.integral_finset_sum _ fun x _ => (intP_integrable (hω x) y).const_mul (c x)]
+  rw [MeasureTheory.integral_finsetSum _ fun x _ => (intP_integrable (hω x) y).const_mul (c x)]
   simp only [MeasureTheory.integral_const_mul]
 
 theorem intP_inv {q : ℕ} {ω : Form (HS L N) q} (hω : ∀ g, FInv ω g) (g : Gp L N) (y : Fin (q + 1) → Pos L N) :

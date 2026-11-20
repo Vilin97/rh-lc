@@ -43,6 +43,6 @@ theorem I'_sum {B : Base F E} {G : Geo σ a a'} {X : Chars F E} {om : Rep σ G.V
         ih (fun j hj => hΨ j (Finset.mem_insert_of_mem hj)) (fun j hj => hc j (Finset.mem_insert_of_mem hj))
           (fun j hj => hm j (Finset.mem_insert_of_mem hj))]
   simp only [Model.I, e]
-  exact integral_finset_sum s fun j hj => hc j hj h
+  exact integral_finsetSum s fun j hj => hc j hj h
 
 end GlobalTheory.ThK.PolynomialMatching

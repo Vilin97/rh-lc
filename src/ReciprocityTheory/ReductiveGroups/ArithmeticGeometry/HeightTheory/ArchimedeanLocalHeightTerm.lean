@@ -239,7 +239,7 @@ theorem archimedean_local_height_term (hd : d.AxH 𝒜) (h : d.S1) (x : Fin (d.N
           Real.log ‖MvPolynomial.eval (hintPt 0 z) (MvPolynomial.map sg b2)‖ +
           ∑ P ∈ hfin.toFinset, Real.log ‖d.hintU c P‖ - d.delc c * (harmonic d.N : ℝ) / 2 := by
       rw [integral_congr_ae hptU, integral_add (integrable_const _) (integrable_finset_sum _ hInt),
-        integral_const, integral_finset_sum _ hInt, Finset.sum_congr rfl hval, Finset.sum_sub_distrib,
+        integral_const, integral_finsetSum _ hInt, Finset.sum_congr rfl hval, Finset.sum_sub_distrib,
         Finset.sum_const, ← Set.ncard_eq_toFinset_card _ hfin, hcard]
       simp only [probReal_univ, one_smul, nsmul_eq_mul]
       ring

@@ -157,7 +157,7 @@ theorem _root_.GlobalTheory.Ker.integral_fundamentalDomain_eq_sum_doubleCoset : 
   · exact (integrable_finset_sum _ fun i _ => hint i).congr
       (ae_of_all _ fun x => (hdecomp x).symm)
   · refine (congrArg (fun f : G → ℂ => ∫ x in 𝓖, f x ∂ν) (funext hdecomp)).trans ?_
-    rw [integral_finset_sum _ fun i _ => hint i, Finset.mul_sum]
+    rw [integral_finsetSum _ fun i _ => hint i, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [integral_indicator_const _ (hCmeas i), measureReal_def, Measure.restrict_apply (hCmeas i),
       hCG i, ENNReal.toReal_div, ENNReal.toReal_natCast, Complex.real_smul]

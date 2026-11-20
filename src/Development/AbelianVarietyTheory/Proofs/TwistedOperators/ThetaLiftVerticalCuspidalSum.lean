@@ -100,8 +100,8 @@ theorem lift_finSum_smooth : GlobalTheory.IndefiniteRowSideFullHecke.CuspAlongSm
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [thetaKO, map_sum, Finset.sum_apply, Finset.sum_mul_sum]
   rw [integral_congr_ae (Filter.Eventually.of_forall key)]
-  rw [integral_finset_sum _ fun l _ => integrable_finset_sum _ fun i _ => (hI l i (p l) (w i) h).1]
-  simp_rw [integral_finset_sum _ fun i _ => (hI _ i _ (w i) h).1]
+  rw [integral_finsetSum _ fun l _ => integrable_finset_sum _ fun i _ => (hI l i (p l) (w i) h).1]
+  simp_rw [integral_finsetSum _ fun i _ => (hI _ i _ (w i) h).1]
   have e2 : ∀ l i, ∫ g in (G.measX j).fd, thetaKO (G.col t j).ω g h (fock R.ψ R.θ false (G.Xp j) (G.Xp (j + 1)) (f l) (p l)) *
       (F i).1 (w i) g ∂(G.measX j).ν = F' l i ((G.col t j).It (p l) (w i)) h := fun l i => (hI l i (p l) (w i) h).2
   simp_rw [e2]

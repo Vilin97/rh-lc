@@ -134,7 +134,7 @@ theorem contr_flat_eq_sum : ∀ (k : Type) [Field k] [ValuativeRel k] [Topologic
       unfold GlobalTheory.StepData.hat GlobalTheory.IndefiniteRowSideFullHecke.FourierJacobiAverage.hat
       rw [← integral_neg_eq_self]
       simp only [← hfl, hd, dotProduct_neg, neg_mul_neg, one_mul, Finset.sum_mul, mul_assoc]
-      rw [integral_finset_sum]
+      rw [integral_finsetSum]
       · simp only [integral_const_mul]
       · intro i _
         have := GlobalTheory.StepData.integrable_hat ψ ν 1 hψ (Φ₀ i).2 u
@@ -142,7 +142,7 @@ theorem contr_flat_eq_sum : ∀ (k : Type) [Field k] [ValuativeRel k] [Topologic
         exact this.const_mul _
     unfold contr
     simp only [hhat, hE, Finset.mul_sum]
-    rw [integral_finset_sum]
+    rw [integral_finsetSum]
     · refine Finset.sum_congr rfl fun i _ => ?_
       rw [← integral_const_mul]
       congr 1

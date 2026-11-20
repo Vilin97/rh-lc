@@ -82,9 +82,9 @@ theorem stHomot : GlobalTheory.PsCo.Pc1.StHomot := by
     have hftc := intervalIntegral.integral_eq_sub_of_hasDerivAt hder (hDc.intervalIntegrable _ _)
     have hint : ∫ s in (1:ℝ)..t, D s = ∑ x : Mode ε, ∑ j ∈ Finset.range (nMode ε + 1),
         adBas ε (Matrix.single x.1.2 x.1.1 1) (fun y => ∫ s in (1:ℝ)..t, scF G j s y) (q x j) g := by
-      rw [hD, intervalIntegral.integral_finset_sum]
+      rw [hD, intervalIntegral.integral_finsetSum]
       · refine Finset.sum_congr rfl fun x _ => ?_
-        rw [intervalIntegral.integral_finset_sum]
+        rw [intervalIntegral.integral_finsetSum]
         · refine Finset.sum_congr rfl fun j _ => ?_
           rw [intervalIntegral.integral_add (((hc _).mul_const _).intervalIntegrable _ _)
             (((hc _).mul_const _).intervalIntegrable _ _),

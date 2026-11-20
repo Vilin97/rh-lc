@@ -36,7 +36,7 @@ theorem UpperTheory.locallyFinite_of_algMod_criterion :
       simp only [map_smul] at h
       exact h.symm
     simp only [h1, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
-    rw [integral_finset_sum _ (fun i _ => (hint (b.coord i)).mul_const _)]
+    rw [integral_finsetSum _ (fun i _ => (hint (b.coord i)).mul_const _)]
     exact Finset.sum_congr rfl fun i _ => integral_mul_const _ _
   rw [key]
   exact V.sum_mem fun i _ => V.smul_mem _ (b i).2

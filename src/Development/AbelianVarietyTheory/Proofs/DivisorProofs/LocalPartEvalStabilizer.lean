@@ -90,7 +90,7 @@ theorem coneFin_finite_comb : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Ty
           (fun hl => hgx (show Gh _ = g from hl).symm) _), Set.indicator_of_mem (s := A _) (show l ∈ A _ from rfl)]
     have hI : ∀ g ∈ s, Integrable ((A g).indicator fun l => L g y * w l) μ := fun g hg =>
       IntegrableOn.integrable_indicator (((hwint C hC).mono_set (hAC g hg)).const_mul (L g y)) (hAm g)
-    rw [integral_congr_ae (ae_of_all _ hpt), integral_finset_sum s hI]
+    rw [integral_congr_ae (ae_of_all _ hpt), integral_finsetSum s hI]
     refine Finset.sum_congr rfl fun g _ => ?_
     rw [integral_indicator (hAm g), integral_const_mul, mul_comm]
   choose! s c hsSB hint using hinner
@@ -124,7 +124,7 @@ theorem coneFin_finite_comb : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Ty
       refine (integral_congr_ae (ae_of_all _ fun l => ?_)).trans (hint _ (locOp_mem v _ φ) L y)
       simp only [hw]
       ring
-    rw [integral_congr_ae (ae_of_all _ hpt), integral_finset_sum S (fun ψ _ => (integrable_const _).indicator (hBm ψ))]
+    rw [integral_congr_ae (ae_of_all _ hpt), integral_finsetSum S (fun ψ _ => (integrable_const _).indicator (hBm ψ))]
     simp only [integral_indicator_const _ (hBm _), smul_eq_mul]
     rw [show (∑ i : Fin T.card, μK.real (Bk (T.equivFin.symm i).1.1) * c (T.equivFin.symm i).1.1 (T.equivFin.symm i).1.2 *
         L (T.equivFin.symm i).1.2 y) = ∑ x ∈ T, μK.real (Bk x.1) * c x.1 x.2 * L x.2 y from by

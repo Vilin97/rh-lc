@@ -112,7 +112,7 @@ theorem piInv_of (hC : PiClosureInv) : PiInv := by
           congr 1
           exact integral_congr_ae ((hgu j).mono fun y hy => by simp only [hy, hFt])
       _ = ∑ j, ∫ x, starRingEnd ℂ ((h i : H E n 0 → ℂ) x) * ∫ y, kerH (Φ i j) x y * Ft j y ∂D.ν ∂D.ν :=
-          integral_finset_sum _ fun j _ => (hP j).1
+          integral_finsetSum _ fun j _ => (hP j).1
       _ = 0 := Finset.sum_eq_zero fun j _ => (hP j).2
   intro f hf
   have hle : Submodule.span ℂ {f | IsPiVec D π f} ≤ (piSp D π ι).comap (T : Hs (ι := ι) D →ₗ[ℂ] Hs (ι := ι) D) :=

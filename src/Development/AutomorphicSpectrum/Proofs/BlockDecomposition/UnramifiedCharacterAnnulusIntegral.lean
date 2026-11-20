@@ -51,7 +51,7 @@ theorem integral_unramified_shells : ∀ (F : Type) [Field F] [ValuativeRel F] [
     intro j
     rw [integrable_indicator_iff (measurableSet_ordShell _)]
     exact integrableOn_const (by rw [multHaar_ordShell]; exact ENNReal.one_ne_top)
-  rw [hpt, integral_finset_sum _ fun j _ => hint j]
+  rw [hpt, integral_finsetSum _ fun j _ => hint j]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [integral_indicator (measurableSet_ordShell _), setIntegral_const, measureReal_def,
     multHaar_ordShell]

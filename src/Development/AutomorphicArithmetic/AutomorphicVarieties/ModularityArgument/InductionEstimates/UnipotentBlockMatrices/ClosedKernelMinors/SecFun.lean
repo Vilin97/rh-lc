@@ -176,9 +176,9 @@ private theorem cusp_sum {K : Type} [Field K] [NumberField K] {μ₂ : Measure (
       ((unipMeasure K 2 1).restrict (unipFundamentalDomain K 2 1)) := fun j i =>
     ((continuous_const.mul ((hφ i).cont.comp ((continuous_unipOne 1).mul continuous_const))).continuousOn.integrableOn_compact
       hD).mono_set hsub
-  rw [integral_finset_sum _ fun j _ => integrable_finset_sum _ fun i _ => hi j i]
+  rw [integral_finsetSum _ fun j _ => integrable_finset_sum _ fun i _ => hi j i]
   refine Finset.sum_eq_zero fun j _ => ?_
-  rw [integral_finset_sum _ fun i _ => hi j i]
+  rw [integral_finsetSum _ fun i _ => hi j i]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [integral_const_mul, (hφ i).cusp, mul_zero]
 

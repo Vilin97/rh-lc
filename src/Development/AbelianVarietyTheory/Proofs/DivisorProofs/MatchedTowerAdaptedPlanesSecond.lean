@@ -64,7 +64,7 @@ private theorem smoothMod_thLift (hK : KP) (hP : IsPair B M χX χW om r s r' s'
       have hs : ∑ i ∈ t, (a i : ℂ) • Ψ i ∈ schA F (Fin n × Fin d) :=
         Submodule.sum_mem _ fun i hi => Submodule.smul_mem _ _ (hΨ i hi)
       simp only [thLift_def, ← integral_const_mul]
-      rw [← integral_finset_sum _ fun i hi => ((hreg _ (hΨ i hi)).1 _).const_mul _]
+      rw [← integral_finsetSum _ fun i hi => ((hreg _ (hΨ i hi)).1 _).const_mul _]
       refine integral_congr_ae (.of_forall fun h => ?_)
       simp only [theta]
       set_option synthInstance.maxHeartbeats 100000 in

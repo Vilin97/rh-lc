@@ -39,7 +39,7 @@ theorem GlobalTheory.BaseChain.stepY_integrable_and_eq_alt {D : D7} {L : SizeDat
     exact (hio.integ ⟨F.1, hF⟩ Q x (g * κ p)).const_mul _
   simp_rw [Finset.sum_mul]
   refine ⟨integrable_finset_sum _ hint, ?_⟩
-  rw [integral_finset_sum _ hint]
+  rw [integral_finsetSum _ hint]
   have e : ∀ p ∈ (Finset.univ : Finset (_root_.GlobalTheory.Fam.complexLevelStructure W).H), ∫ h in (_root_.GlobalTheory.Fam.pk_z W).fdY t (j + 1), (levChi (Yc D j) ((_root_.GlobalTheory.Fam.pk_z W).βY j) ((_root_.GlobalTheory.Fam.pk_z W).datYt t j (_root_.GlobalTheory.Fam.complexLevelStructure W)) (κ p))⁻¹ * thetaKO ((_root_.GlobalTheory.Fam.pk_z W).ωY t j) (g * κ p) h ((_root_.GlobalTheory.Fam.pk_z W).ptY t j Q) * F.1 x h ∂(_root_.GlobalTheory.Fam.pk_z W).νY t (j + 1) =
       ((_root_.GlobalTheory.Fam.pk_z W).ioY t j ⟨F.1, hF⟩).1 ((_root_.GlobalTheory.Fam.pk_z W).ItY j Q x) g := by
     intro p _

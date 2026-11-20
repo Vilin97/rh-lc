@@ -89,7 +89,7 @@ theorem hasFDerivAt_chart_whit' {φ : Sm E a} (h : Good φ) (g : GA E a) :
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [smul_smul, mul_comm]
   simp_rw [e]
-  rw [integral_finset_sum _ fun i _ => ?_]
+  rw [integral_finsetSum _ fun i _ => ?_]
   · refine Finset.sum_congr rfl fun i _ => ?_
     rw [integral_smul_const, ← congrFun (chart_whit _ g) (oneL E a), chart_oneL]
   · have hl := h.lie (Module.finBasis ℝ (Lie E a) i)

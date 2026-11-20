@@ -246,18 +246,18 @@ private theorem oneS {ι M Kc : Type} [Fintype ι] [MeasurableSpace M] [Measurab
     intro x y
     have : ∀ t, ∫ k, ∑ i, u i t * b i x y k ∂κ = ∑ i, u i t * Q i (x, y) := by
       intro t
-      rw [integral_finset_sum _ fun i _ => (hS i x y).const_mul _]
+      rw [integral_finsetSum _ fun i _ => (hS i x y).const_mul _]
       simp only [integral_const_mul, Q]
     simp only [this]
-    rw [integral_finset_sum _ fun i _ => (hu i).mul_const _]
+    rw [integral_finsetSum _ fun i _ => (hu i).mul_const _]
     simp only [integral_mul_const]
   simp only [e1]
   have e2 : ∀ x, ∫ y, ∑ i, (∫ t, u i t) * Q i (x, y) ∂a = ∑ i, (∫ t, u i t) * ∫ y, Q i (x, y) ∂a := by
     intro x
-    rw [integral_finset_sum _ fun i _ => (hY i x).const_mul _]
+    rw [integral_finsetSum _ fun i _ => (hY i x).const_mul _]
     simp only [integral_const_mul]
   simp only [e2]
-  rw [integral_finset_sum _ fun i _ => (hX i).const_mul _]
+  rw [integral_finsetSum _ fun i _ => (hX i).const_mul _]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [integral_const_mul]
   congr 1
@@ -406,7 +406,7 @@ private theorem ipSec {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] 
       rw [inner_exp, Finset.mul_sum]
       exact Finset.sum_congr rfl fun i _ => by ring
     simp only [hin]
-    rw [integral_finset_sum _ fun i _ => (hui' i).mul_const _]
+    rw [integral_finsetSum _ fun i _ => (hui' i).mul_const _]
     simp only [integral_mul_const]
   have t1 : ∀ i, (c : ℂ) * ((∫ t, ui (Sum.inl i) t) * ∫ k, ∫ x, ∫ y, bi (Sum.inl i) x y k ∂fd μ₂ ∂fd μ₂ ∂κ) =
       (∫ t, conj (β t) * U t i) * ⟪v, e i⟫_ℂ := fun i => by

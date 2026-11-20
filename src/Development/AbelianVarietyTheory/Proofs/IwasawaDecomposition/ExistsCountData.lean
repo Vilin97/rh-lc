@@ -57,7 +57,7 @@ theorem integral_inflate [Fintype Q] (μf : Measure I.Gf) [μf.IsHaarMeasure] (h
     (integrable_indicator_iff (hm q).1).2 (integrableOn_const ((hm q).2 ▸ hfin))
   rw [e]
   refine ⟨integrable_finset_sum _ fun q _ => hi q, ?_⟩
-  rw [integral_finset_sum _ fun q _ => hi q, Finset.mul_sum]
+  rw [integral_finsetSum _ fun q _ => hi q, Finset.mul_sum]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [integral_indicator_const _ (hm q).1, Measure.real, (hm q).2, Complex.real_smul]
 

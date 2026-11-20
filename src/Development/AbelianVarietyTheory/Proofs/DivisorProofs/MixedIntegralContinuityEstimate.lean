@@ -182,7 +182,7 @@ theorem abs_mInt_comb_le : ∀ (e : ℕ) (X : Type) [TopologicalSpace X] [Compac
             gcongr
             exact mul_nonneg hχ ((abs_nonneg _).trans hg)
         _ = _ := by ring
-    · rw [integral_finset_sum _ fun s _ => i2 s]
+    · rw [integral_finsetSum _ fun s _ => i2 s]
       refine Finset.sum_congr rfl fun s _ => ?_
       rw [integral_const_mul]
       simp only [Pi.add_apply]

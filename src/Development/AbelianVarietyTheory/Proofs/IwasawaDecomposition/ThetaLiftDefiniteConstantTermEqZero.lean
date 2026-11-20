@@ -104,7 +104,7 @@ theorem zcusp_lift : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D)
       rfl
     simp only [e]
     obtain ⟨n, hn, a, ha⟩ := hav x h g ξ hξ
-    have h1 := integral_finset_sum (μ := μ.restrict 𝓖) Finset.univ
+    have h1 := integral_finsetSum (μ := μ.restrict 𝓖) Finset.univ
       (fun (k : Fin n) _ => hint _ (GlobalTheory.ThetaClosed.isThetaFunO_heisO_all H.std hf (along S T ξ (a k))))
     have h2 : ∀ z : ZI T ξ,
         ∑ k, om (1, (z : GA D T)) (heisO ψ S T (along S T ξ (a k)) (om (h, g) (L x))) 0 = 0 := by

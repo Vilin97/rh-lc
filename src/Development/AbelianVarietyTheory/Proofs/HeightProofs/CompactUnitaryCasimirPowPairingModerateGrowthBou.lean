@@ -192,7 +192,7 @@ theorem casimir_pow_bound : ∀ {n : ℕ} (ε : Fin n → Bool) (N : ℕ) (F : L
       rw [by_parts hF hg hc hy (h1 j) (hX j) hq, neg_neg] at a
       exact a
     simp only [Finset.sum_apply, Finset.sum_mul]
-    rw [integral_finset_sum _ fun j _ => integrable_mul_fam hF hg hc hy hu (continuous_of_mem (hrr j))]
+    rw [integral_finsetSum _ fun j _ => integrable_mul_fam hF hg hc hy hu (continuous_of_mem (hrr j))]
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun j _ => ?_)
     rw [e j]
     exact hC j d p hp y hy

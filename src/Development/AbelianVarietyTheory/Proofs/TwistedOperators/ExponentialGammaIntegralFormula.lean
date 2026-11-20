@@ -354,7 +354,7 @@ theorem damped (k : ℕ) (P R : Finset (SV k)) (Y : A0 k) (h : IsPar P) (_hR : R
     exact mul_pos ht (sum_vec_gen_pos h (hb S hS).1 i)
   simp only [gamP, Complex.ofReal_sum, mul_sum]
   refine ⟨integrable_finset_sum _ fun S hS => (T S hS).1, ?_⟩
-  rw [integral_finset_sum _ fun S hS => (T S hS).1]
+  rw [integral_finsetSum _ fun S hS => (T S hS).1]
   exact sum_congr rfl fun S hS => (T S hS).2
 
 end GlobalTheory.Chamber.DampedCone

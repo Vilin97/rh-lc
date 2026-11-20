@@ -153,7 +153,7 @@ theorem integral_eq_sum_ker [Fintype Q] (hF : Integrable F μ) (h0 : ∀ g ∉ K
         rw [map_mul, map_inv, Function.surjInv_eq hr, inv_mul_eq_one]
       simp only [indicator_apply, this, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     · simp [indicator_apply, h0 g hg]
-  rw [integral_congr_ae (.of_forall e), integral_finset_sum _ fun q _ => hF.indicator (hm.preimage (by fun_prop))]
+  rw [integral_congr_ae (.of_forall e), integral_finsetSum _ fun q _ => hF.indicator (hm.preimage (by fun_prop))]
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [← integral_mul_left_eq_self _ ((Function.surjInv hr q : K) : G), ← integral_indicator hm]
   refine integral_congr_ae (.of_forall fun x => ?_)

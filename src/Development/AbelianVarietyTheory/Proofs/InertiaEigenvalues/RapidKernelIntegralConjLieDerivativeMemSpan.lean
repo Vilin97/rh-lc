@@ -193,7 +193,7 @@ theorem integral_lieD_conj_mem_kSpan : ∀ (E : Type) [Field E] [NumberField E] 
       (g * infGL E a (γ x)) ∂ν) =
       ∑ j, fun g : GA E a => ∫ x, k x * c j x * lieD (b j) G (g * infGL E a (γ x)) ∂ν := by
     funext g
-    rw [Finset.sum_apply, ← integral_finset_sum _ fun j _ => hintj j g]
+    rw [Finset.sum_apply, ← integral_finsetSum _ fun j _ => hintj j g]
     congr 1
     funext x
     rw [lieD_eq_sum b, Finset.mul_sum]
