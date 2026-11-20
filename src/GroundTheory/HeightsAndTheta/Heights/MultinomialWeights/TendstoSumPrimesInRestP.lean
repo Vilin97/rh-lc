@@ -9,7 +9,7 @@ namespace GroundTheory.Heights₂.Heights.TheoremB
 open Finset Filter Topology
 
 theorem tendsto_sum_primesIn_restP {d : IndexData} (S : EndSystem d) (B0 : ℕ)
-    (Q : ℕ → Fin d.f → XPoly d)
+    (Q : ℕ → Fin d.f → MvPolynomial (Fin d.f × Fin d.N) ℚ)
     (h : Summable (fun p : primesAbove S B0 => |rest₂ d S.vol p (S.frob p) Q|)) :
     Tendsto (fun B : ℕ => ∑ p ∈ primesIn S B0 B, rest₂ d S.vol p (S.frob p) Q) atTop
       (𝓝 (restTot S B0 Q)) := by

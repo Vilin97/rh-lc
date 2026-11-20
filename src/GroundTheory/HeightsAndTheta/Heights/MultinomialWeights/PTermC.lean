@@ -26,8 +26,8 @@ theorem flagIntegral_blockVandermonde_pos (f N : ℕ) :
   exact Finset.prod_pos fun i _ => by dsimp only; exact_mod_cast Nat.factorial_pos _
 
 theorem exists_intFl_eq_one (d : IndexData) :
-    ∃ Q : XPoly d, Q.IsHomogeneous d.D ∧ intFl d Q = 1 := by
-  set Δ : XPoly d := RestTerms.blockVandermonde d.f d.N
+    ∃ Q : MvPolynomial (Fin d.f × Fin d.N) ℚ, Q.IsHomogeneous d.D ∧ intFl d Q = 1 := by
+  set Δ : MvPolynomial (Fin d.f × Fin d.N) ℚ := RestTerms.blockVandermonde d.f d.N
   have hΔ : Δ.IsHomogeneous d.D := RestTerms.FlagVandermondeHomogeneous.proof d.f d.N
   have hval : intFl d Δ = flagNormalisation d.f d.N * RestTerms.flagIntegral d.f d.N Δ := rfl
   have hc : intFl d Δ ≠ 0 := by

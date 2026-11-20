@@ -8,15 +8,15 @@ namespace GroundTheory.Heights₂.Heights.TheoremB
 
 open MvPolynomial Finset Filter Topology
 
-def restCoeffBound (d : IndexData) (Q : ℕ → Fin d.f → XPoly d) (τ : Fin d.f) (k : ℕ) : ℝ :=
+def restCoeffBound (d : IndexData) (Q : ℕ → Fin d.f → MvPolynomial (Fin d.f × Fin d.N) ℚ) (τ : Fin d.f) (k : ℕ) : ℝ :=
   ∑ e : Emb d, |((((k : ℚ) * intFl d (liePowerSum d (k - 1) e * Q k τ) : ℚ) : ℝ))|
 
-theorem restCoeffBound_nonneg (d : IndexData) (Q : ℕ → Fin d.f → XPoly d) (τ : Fin d.f) (k : ℕ) :
+theorem restCoeffBound_nonneg (d : IndexData) (Q : ℕ → Fin d.f → MvPolynomial (Fin d.f × Fin d.N) ℚ) (τ : Fin d.f) (k : ℕ) :
     0 ≤ restCoeffBound d Q τ k :=
   sum_nonneg fun _ _ => abs_nonneg _
 
 theorem restSeries_abs_le (d : IndexData) (p : ℕ) (hp : 1 ≤ p) (φ : Equiv.Perm (Emb d))
-    (Q : ℕ → Fin d.f → XPoly d) (τ : Fin d.f) (k : ℕ) (hk : 2 ≤ k) (n : ℕ) :
+    (Q : ℕ → Fin d.f → MvPolynomial (Fin d.f × Fin d.N) ℚ) (τ : Fin d.f) (k : ℕ) (hk : 2 ≤ k) (n : ℕ) :
     |restSeries d p φ Q τ k n| ≤ restCoeffBound d Q τ k * ((p : ℝ) ^ 2)⁻¹ ^ (n + 1) := by
   have hp' : (1 : ℝ) ≤ p := by exact_mod_cast hp
   have hpos : (0 : ℝ) < p := by linarith
@@ -40,7 +40,7 @@ theorem restSeries_abs_le (d : IndexData) (p : ℕ) (hp : 1 ≤ p) (φ : Equiv.P
         · exact restCoeffBound_nonneg d Q τ k
 
 theorem restSeries_tsum_bound (d : IndexData) (p : ℕ) (hp : p.Prime) (φ : Equiv.Perm (Emb d))
-    (Q : ℕ → Fin d.f → XPoly d) (τ : Fin d.f) (k : ℕ) (hk : 2 ≤ k) :
+    (Q : ℕ → Fin d.f → MvPolynomial (Fin d.f × Fin d.N) ℚ) (τ : Fin d.f) (k : ℕ) (hk : 2 ≤ k) :
     Summable (restSeries d p φ Q τ k) ∧
       |∑' n : ℕ, restSeries d p φ Q τ k n| ≤ restCoeffBound d Q τ k * (2 * ((p : ℝ) ^ 2)⁻¹) := by
   obtain ⟨r, hr⟩ : ∃ r : ℝ, r = ((p : ℝ) ^ 2)⁻¹ := ⟨_, rfl⟩

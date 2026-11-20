@@ -9,18 +9,18 @@ namespace GroundTheory.Heights₂.Heights.TheoremB
 
 open MvPolynomial Finset
 
-theorem intFl_apply (d : IndexData) (G : XPoly d) :
+theorem intFl_apply (d : IndexData) (G : MvPolynomial (Fin d.f × Fin d.N) ℚ) :
     intFl d G = flagNormalisation d.f d.N * RestTerms.flagIntegral d.f d.N G := rfl
 
 theorem intFl_powerSum_mul (hK : RestTerms.FlagIntegralKillsPowerSums.Statement) (d : IndexData)
-    {k : ℕ} (hk1 : 1 ≤ k) (hkN : k ≤ d.N) (σ : Fin d.f) (G : XPoly d) :
+    {k : ℕ} (hk1 : 1 ≤ k) (hkN : k ≤ d.N) (σ : Fin d.f) (G : MvPolynomial (Fin d.f × Fin d.N) ℚ) :
     intFl d (RestTerms.blockPowerSum d.f d.N k σ * G) = 0 := by
   rw [intFl_apply, hK d.f d.N k σ G hk1 hkN, mul_zero]
 
-def totalDeriv (d : IndexData) (τ : Fin d.f) : Derivation ℚ (XPoly d) (XPoly d) :=
+def totalDeriv (d : IndexData) (τ : Fin d.f) : Derivation ℚ (MvPolynomial (Fin d.f × Fin d.N) ℚ) (MvPolynomial (Fin d.f × Fin d.N) ℚ) :=
   ∑ i : Fin d.N, pderiv (τ, i)
 
-theorem totalDeriv_apply (d : IndexData) (τ : Fin d.f) (G : XPoly d) :
+theorem totalDeriv_apply (d : IndexData) (τ : Fin d.f) (G : MvPolynomial (Fin d.f × Fin d.N) ℚ) :
     totalDeriv d τ G = ∑ i : Fin d.N, pderiv (τ, i) G := by
   set_option synthInstance.maxHeartbeats 100000 in
     rw [totalDeriv, ← Derivation.coeFnAddMonoidHom_apply, map_sum, Finset.sum_apply]

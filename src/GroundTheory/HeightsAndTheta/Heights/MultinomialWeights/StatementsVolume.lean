@@ -476,7 +476,7 @@ theorem flagIntegral_X (f N : ℕ) (v : Fin f × Fin N) :
     simp
 
 theorem blockVandermonde_rankTwo :
-    RestTerms.blockVandermonde d1.f d1.N = (X p0 - X p1 : XPoly d1) := by
+    RestTerms.blockVandermonde d1.f d1.N = (X p0 - X p1 : MvPolynomial (Fin d1.f × Fin d1.N) ℚ) := by
   have h0 : Finset.Ioi (0 : Fin 2) = {1} := by decide
   have h1 : Finset.Ioi (1 : Fin 2) = ∅ := by decide
   simp [RestTerms.blockVandermonde, RestTerms.vandermondeOf, Fin.prod_univ_two, h0, h1]
@@ -490,20 +490,20 @@ theorem flagNormalisation_rankTwo : flagNormalisation d1.f d1.N = -1 := by
   norm_num
 
 theorem intFl_X_of_two_variables (v : Idx d1) :
-    intFl d1 (X v) = -AddMonoidAlgebra.coeff (X p0 - X p1 : XPoly d1) (Finsupp.single v 1) := by
+    intFl d1 (X v) = -AddMonoidAlgebra.coeff (X p0 - X p1 : MvPolynomial (Fin d1.f × Fin d1.N) ℚ) (Finsupp.single v 1) := by
   rw [intFl, LinearMap.smul_apply, flagNormalisation_rankTwo]
   show (-1 : ℚ) • RestTerms.flagIntegral d1.f d1.N (X v) = _
   rw [flagIntegral_X, blockVandermonde_rankTwo]
   simp
 
-theorem degPoly_eq_sub_of_two_variables : degPoly d1 = (X p0 - X p1 : XPoly d1) := by
+theorem degPoly_eq_sub_of_two_variables : degPoly d1 = (X p0 - X p1 : MvPolynomial (Fin d1.f × Fin d1.N) ℚ) := by
   have hD : d1.D = 1 := rfl
   rw [degPoly, hD, polarPoly_one]
   simp only [map_neg, intFl_X_of_two_variables, neg_neg, Fintype.sum_prod_type, Fin.sum_univ_one, Fin.sum_univ_two]
   have hne : p1 ≠ p0 := by decide
-  have e00 : AddMonoidAlgebra.coeff (X p0 - X p1 : XPoly d1) (Finsupp.single p0 1) = 1 := by
+  have e00 : AddMonoidAlgebra.coeff (X p0 - X p1 : MvPolynomial (Fin d1.f × Fin d1.N) ℚ) (Finsupp.single p0 1) = 1 := by
     simp [coeff_X, Finsupp.single_left_inj one_ne_zero, hne]
-  have e01 : AddMonoidAlgebra.coeff (X p0 - X p1 : XPoly d1) (Finsupp.single p1 1) = -1 := by
+  have e01 : AddMonoidAlgebra.coeff (X p0 - X p1 : MvPolynomial (Fin d1.f × Fin d1.N) ℚ) (Finsupp.single p1 1) = -1 := by
     simp [coeff_X, Finsupp.single_left_inj one_ne_zero, hne.symm]
   have q0 : ((0 : Fin 1), (0 : Fin 2)) = p0 := rfl
   have q1 : ((0 : Fin 1), (1 : Fin 2)) = p1 := rfl

@@ -30,7 +30,7 @@ theorem RestPWellDefined.proof : RestPWellDefined.Statement := by
   have hG := liePowerSum_isHomogeneous d (k - 1) ((φ ^ (n + 1)) (τ, false))
   have h := RestTerms.RestTermWellDefined.full d.f d.N F Q Q' hQ hQ' k (by omega) hkN τ _ hG
   unfold RestTerms.restTerm at h
-  have e : ∀ R : ℕ → Fin d.f → XPoly d,
+  have e : ∀ R : ℕ → Fin d.f → MvPolynomial (Fin d.f × Fin d.N) ℚ,
       (k : ℚ) * intFl d (liePowerSum d (k - 1) ((φ ^ (n + 1)) (τ, false)) * R k τ) =
         flagNormalisation d.f d.N *
           ((k : ℚ) * RestTerms.flagIntegral d.f d.N (liePowerSum d (k - 1) ((φ ^ (n + 1)) (τ, false)) * R k τ)) := by

@@ -8,10 +8,10 @@ namespace GroundTheory.Heights₂.Heights.TheoremB
 
 open MvPolynomial Finset Filter Topology
 
-def singleDecomp (d : IndexData) (τ : Fin d.f) (Q : XPoly d) : ℕ → Fin d.f → XPoly d :=
+def singleDecomp (d : IndexData) (τ : Fin d.f) (Q : MvPolynomial (Fin d.f × Fin d.N) ℚ) : ℕ → Fin d.f → MvPolynomial (Fin d.f × Fin d.N) ℚ :=
   fun k σ => if k = 1 then (if σ = τ then Q else 0) else 0
 
-theorem singleDecomp_isHomDecomp (d : IndexData) (τ : Fin d.f) (Q : XPoly d)
+theorem singleDecomp_isHomDecomp (d : IndexData) (τ : Fin d.f) (Q : MvPolynomial (Fin d.f × Fin d.N) ℚ)
     (hQ : Q.IsHomogeneous d.D) :
     IsHomDecomp d (RestTerms.blockPowerSum d.f d.N 1 τ * Q) (singleDecomp d τ Q) := by
   refine ⟨?_, ?_, ?_⟩
@@ -35,7 +35,7 @@ theorem singleDecomp_isHomDecomp (d : IndexData) (τ : Fin d.f) (Q : XPoly d)
       simp [hk]
 
 theorem restTot_singleDecomp (d : IndexData) (S : EndSystem d) (B0 : ℕ) (τ : Fin d.f)
-    (Q : XPoly d) : restTot S B0 (singleDecomp d τ Q) = 0 := by
+    (Q : MvPolynomial (Fin d.f × Fin d.N) ℚ) : restTot S B0 (singleDecomp d τ Q) = 0 := by
   unfold restTot rest₂
   have h : ∀ (p : ℕ) (σ : Fin d.f), ∑ k ∈ Icc 2 d.N,
       ∑' n : ℕ, restSeries d p (S.frob p) (singleDecomp d τ Q) σ k n = 0 := by
@@ -70,9 +70,9 @@ theorem HeightLimitIdentity.proof (h83 : HeightTauIdentity.Statement) (hSh : ShF
         have := d.two_le_N
         simp; omega
       rw [Finset.sum_eq_single_of_mem 1 h1]
-      · have hl : lowerPowerSum d (1 - 1) τ = (d.j : XPoly d) := by
+      · have hl : lowerPowerSum d (1 - 1) τ = (d.j : MvPolynomial (Fin d.f × Fin d.N) ℚ) := by
           simp [lowerPowerSum, card_lowerIdx_filter]
-        have hj : ((d.j : XPoly d)) * Q = d.j • Q := (nsmul_eq_mul _ _).symm
+        have hj : ((d.j : MvPolynomial (Fin d.f × Fin d.N) ℚ)) * Q = d.j • Q := (nsmul_eq_mul _ _).symm
         simp only [singleDecomp, if_true, Nat.cast_one, one_mul, hl, hj, map_nsmul, hint]
         simp
       · intro k _ hk

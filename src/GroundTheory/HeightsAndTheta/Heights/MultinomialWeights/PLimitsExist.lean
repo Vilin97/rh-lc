@@ -31,15 +31,15 @@ theorem tendsto_sum_primesIn {d : IndexData} (S : EndSystem d) (B0 : ℕ) (g : �
     simp only [primesIn, mem_filter, mem_Ioc]
     exact ⟨⟨h3, Nat.le_of_lt_succ (mem_range.1 hp)⟩, h1, h2⟩
 
-theorem homDecomp_exists {d : IndexData} {F : XPoly d} (hF : F.IsHomogeneous (d.D + 1)) :
-    ∃ Q : ℕ → Fin d.f → XPoly d, IsHomDecomp d F Q := by
+theorem homDecomp_exists {d : IndexData} {F : MvPolynomial (Fin d.f × Fin d.N) ℚ} (hF : F.IsHomogeneous (d.D + 1)) :
+    ∃ Q : ℕ → Fin d.f → MvPolynomial (Fin d.f × Fin d.N) ℚ, IsHomDecomp d F Q := by
   obtain ⟨Q, hQh, hQ⟩ :=
     RestTerms.CoinvAboveTop.full ℚ d.f d.N (d.D + 1) F hF (Nat.lt_succ_self _)
   exact ⟨Q, hF, fun k _ τ => hQh k τ, hQ⟩
 
 theorem combo_tendsto (h82 : HeightSumIdentity.Statement) (hsum : RestSummable.Statement)
     {d : IndexData} (S : EndSystem d) (hin : HeightIdentityInputs S) (B0 : ℕ)
-    (F : XPoly d) (Q : ℕ → Fin d.f → XPoly d) (hQ : IsHomDecomp d F Q) :
+    (F : MvPolynomial (Fin d.f × Fin d.N) ℚ) (Q : ℕ → Fin d.f → MvPolynomial (Fin d.f × Fin d.N) ℚ) (hQ : IsHomDecomp d F Q) :
     ∃ L : ℝ, Tendsto (fun B : ℕ => aB S B0 B * (shSum d F : ℝ) + bB S B0 B * (totSum d F : ℝ))
       atTop (𝓝 L) := by
   obtain ⟨B1, hB1⟩ := h82 d S hin B0

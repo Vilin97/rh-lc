@@ -44,9 +44,9 @@ abbrev LamPoly := MvPolynomial (Idx d) ℝ
 
 abbrev XPoly := RestTerms.RootRing d.f d.N
 
-def lamDotX (u : Idx d → ℚ) : XPoly d := ∑ p : Idx d, C (u p) * X p
+def lamDotX (u : Idx d → ℚ) : MvPolynomial (Fin d.f × Fin d.N) ℚ := ∑ p : Idx d, C (u p) * X p
 
-def lineClass (u : Idx d → ℚ) : XPoly d := -lamDotX d u
+def lineClass (u : Idx d → ℚ) : MvPolynomial (Fin d.f × Fin d.N) ℚ := -lamDotX d u
 
 def permWeight {R : Type*} (w : Fin d.f → Equiv.Perm (Fin d.N)) (u : Idx d → R) : Idx d → R :=
   fun p => u (p.1, w p.1 p.2)
@@ -67,10 +67,10 @@ def IsRegular (lam : Weight d) : Prop :=
 
 def varpi (τ : Fin d.f) : Weight d := fun p => if p.1 = τ ∧ p.2.val < d.j then 1 else 0
 
-def lowerPowerSum (k : ℕ) (τ : Fin d.f) : XPoly d :=
+def lowerPowerSum (k : ℕ) (τ : Fin d.f) : MvPolynomial (Fin d.f × Fin d.N) ℚ :=
   ∑ i ∈ univ.filter (fun i : Fin d.N => i.val < d.j), X (τ, i) ^ k
 
-def upperPowerSum (k : ℕ) (τ : Fin d.f) : XPoly d :=
+def upperPowerSum (k : ℕ) (τ : Fin d.f) : MvPolynomial (Fin d.f × Fin d.N) ℚ :=
   ∑ i ∈ univ.filter (fun i : Fin d.N => d.j ≤ i.val), X (τ, i) ^ k
 
 def flagIntegralLin (f N : ℕ) : RestTerms.RootRing f N →ₗ[ℚ] ℚ where
@@ -82,7 +82,7 @@ def flagIntegralLin (f N : ℕ) : RestTerms.RootRing f N →ₗ[ℚ] ℚ where
 def flagNormalisation (f N : ℕ) : ℚ :=
   (-1) ^ RestTerms.topDegree f N / (∏ i : Fin N, ((i : ℕ).factorial : ℚ)) ^ f
 
-def intFl : XPoly d →ₗ[ℚ] ℚ := flagNormalisation d.f d.N • flagIntegralLin d.f d.N
+def intFl : MvPolynomial (Fin d.f × Fin d.N) ℚ →ₗ[ℚ] ℚ := flagNormalisation d.f d.N • flagIntegralLin d.f d.N
 
 def degAt (u : Idx d → ℚ) : ℚ := intFl d (lineClass d u ^ d.D)
 
@@ -95,10 +95,10 @@ def polarPoly {σ R : Type*} [CommRing R] [Fintype σ] (Φ : MvPolynomial σ R �
 
 def degPoly : MvPolynomial (Idx d) ℚ := polarPoly (intFl d) d.D
 
-def shiftFl (τ : Fin d.f) (F : XPoly d) : ℚ :=
+def shiftFl (τ : Fin d.f) (F : MvPolynomial (Fin d.f × Fin d.N) ℚ) : ℚ :=
   intFl d (∑ i ∈ univ.filter (fun i : Fin d.N => i.val < d.j), pderiv (τ, i) F)
 
-def totalFl (τ : Fin d.f) (F : XPoly d) : ℚ :=
+def totalFl (τ : Fin d.f) (F : MvPolynomial (Fin d.f × Fin d.N) ℚ) : ℚ :=
   intFl d (∑ i : Fin d.N, pderiv (τ, i) F)
 
 abbrev vSpace : Submodule ℝ (LamPoly d) := antisymSpace (Fin d.f) d.N d.j
@@ -160,14 +160,14 @@ def CFlPos.Statement : Prop :=
   ∀ d : IndexData, ∃ c : ℚ, 0 < c ∧ degPoly d = C c * RestTerms.blockVandermonde d.f d.N
 
 def ShFormula.Statement : Prop :=
-  ∀ (d : IndexData) (τ : Fin d.f) (F : XPoly d) (Q : ℕ → Fin d.f → XPoly d),
+  ∀ (d : IndexData) (τ : Fin d.f) (F : MvPolynomial (Fin d.f × Fin d.N) ℚ) (Q : ℕ → Fin d.f → MvPolynomial (Fin d.f × Fin d.N) ℚ),
     F.IsHomogeneous (d.D + 1) →
     (∀ k ∈ Icc 1 d.N, ∀ τ' : Fin d.f, (Q k τ').IsHomogeneous (d.D + 1 - k)) →
     RestTerms.IsPowerSumDecomposition d.f d.N F Q →
     shiftFl d τ F = ∑ k ∈ Icc 1 d.N, (k : ℚ) * intFl d (lowerPowerSum d (k - 1) τ * Q k τ)
 
 def TotFormula.Statement : Prop :=
-  ∀ (d : IndexData) (τ : Fin d.f) (F : XPoly d) (Q : ℕ → Fin d.f → XPoly d),
+  ∀ (d : IndexData) (τ : Fin d.f) (F : MvPolynomial (Fin d.f × Fin d.N) ℚ) (Q : ℕ → Fin d.f → MvPolynomial (Fin d.f × Fin d.N) ℚ),
     F.IsHomogeneous (d.D + 1) →
     (∀ k ∈ Icc 1 d.N, ∀ τ' : Fin d.f, (Q k τ').IsHomogeneous (d.D + 1 - k)) →
     RestTerms.IsPowerSumDecomposition d.f d.N F Q →
@@ -283,9 +283,9 @@ theorem DegVanishesOnWall.hypotheses_inhabited :
     ∃ (u : Idx d1 → ℚ) (a b : Fin d1.N), b.val = a.val + 1 ∧ u (0, a) = u (0, b) :=
   ⟨fun _ => 1, ⟨0, by norm_num⟩, ⟨1, by norm_num⟩, rfl, rfl⟩
 
-def sampleQ : ℕ → Fin d1.f → XPoly d1 := fun k τ => if k = 1 then X (τ, ⟨0, by norm_num⟩) else 0
+def sampleQ : ℕ → Fin d1.f → MvPolynomial (Fin d1.f × Fin d1.N) ℚ := fun k τ => if k = 1 then X (τ, ⟨0, by norm_num⟩) else 0
 
-def sampleF : XPoly d1 := ∑ k ∈ Icc 1 d1.N, ∑ τ : Fin d1.f, RestTerms.blockPowerSum d1.f d1.N k τ * sampleQ k τ
+def sampleF : MvPolynomial (Fin d1.f × Fin d1.N) ℚ := ∑ k ∈ Icc 1 d1.N, ∑ τ : Fin d1.f, RestTerms.blockPowerSum d1.f d1.N k τ * sampleQ k τ
 
 theorem blockPowerSum_isHomogeneous (f N k : ℕ) (τ : Fin f) :
     (RestTerms.blockPowerSum f N k τ).IsHomogeneous k := by

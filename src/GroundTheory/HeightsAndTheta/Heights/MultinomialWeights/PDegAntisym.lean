@@ -21,7 +21,7 @@ theorem blockPermute_lineClass_permWeight (d : IndexData) (w : Fin d.f → Equiv
     RestTerms.blockPermute d.f d.N w (lineClass d (permWeight d w u)) = lineClass d u := by
   simp only [lineClass, map_neg, blockPermute_lamDotX_permWeight]
 
-theorem intFl_blockPermute (d : IndexData) (w : Fin d.f → Equiv.Perm (Fin d.N)) (H : XPoly d) :
+theorem intFl_blockPermute (d : IndexData) (w : Fin d.f → Equiv.Perm (Fin d.N)) (H : MvPolynomial (Fin d.f × Fin d.N) ℚ) :
     intFl d (RestTerms.blockPermute d.f d.N w H) = RestTerms.blockSign d.f d.N w * intFl d H := by
   simp only [intFl, LinearMap.smul_apply, flagIntegralLin, LinearMap.coe_mk, AddHom.coe_mk,
     smul_eq_mul, RestTerms.FlagIntegralPermute.full d.f d.N w H]
