@@ -288,7 +288,7 @@ theorem comap_derivIdealSheafIterate_le_exceptionalIdeal_pow_mul (k : Type u) [F
             @EtaleCoordinates.coord k _ (ULift.{u} (Fin n)) Γ(X₁, (V : X₁.Opens)) _ algV
               (ULift.up s) := by
       intro i hi his
-      have hids : i.down ≠ s := fun hh => his (ULift.ext i (ULift.up s) hh)
+      have hids : i.down ≠ s := fun hh => his (ULift.ext hh)
       have hmem : i.down ∈ S := down_mem_of_mem_uliftFinset hi
       rw [hcoordU i, hcoordV i, hcoordVs]
       rw [hφ, Bc.appLE_coord_of_mem i.down hmem hids, map_mul, hcoordres, hcoordres]
