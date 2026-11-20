@@ -129,7 +129,7 @@ theorem retract_step : ∀ (V : Type) (F : Set (List V)) (S : Set V), SubClosed 
   have happly : ∀ l, (∑ τ ∈ P, Finsupp.mapDomain (fun w => τ ++ w) (ys τ)) l =
       ∑ τ ∈ P, if τ <+: l then c l else 0 := by
     intro l
-    rw [Finsupp.finset_sum_apply]
+    rw [Finsupp.finsetSum_apply]
     refine Finset.sum_congr rfl fun τ _ => ?_
     rw [mapDomain_prepend_apply']
     split_ifs with h
@@ -208,7 +208,7 @@ theorem retract_step : ∀ (V : Type) (F : Set (List V)) (S : Set V), SubClosed 
     ext w
     have h0 := congrArg (fun f => f (τ0 ++ w)) hdec
     simp only [hbd, Finsupp.zero_apply] at h0
-    rw [Finsupp.add_apply, Finsupp.finset_sum_apply] at h0
+    rw [Finsupp.add_apply, Finsupp.finsetSum_apply] at h0
     have hg0 : g (τ0 ++ w) = 0 := by
       by_contra hne
       exact hpre τ0 hτ0 (τ0 ++ w) (List.prefix_append _ _)

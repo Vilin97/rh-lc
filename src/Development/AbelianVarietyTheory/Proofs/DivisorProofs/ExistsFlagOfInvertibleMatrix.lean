@@ -58,7 +58,7 @@ theorem exists_flag_of_isFrame_top {s : Fin r → Γ(N, ⊤)} (hs : VB.IsFrame s
   intro φ t h1
   obtain ⟨a, rfl⟩ := (isFrame_freeFrame X (Fin k) ⊤ le_rfl).2 t
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [Fintype.linearCombination_apply, map_sum, map_sum, Finsupp.finset_sum_apply]
+    rw [Fintype.linearCombination_apply, map_sum, map_sum, Finsupp.finsetSum_apply]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [Scheme.Modules.Hom.app_smul, resM_self, h1, map_smul, Module.Basis.repr_self, Finsupp.smul_apply,
     Finsupp.single_eq_of_ne, smul_zero]
@@ -96,7 +96,7 @@ theorem exists_flag_flagMat : ∀ (B : Scheme.{0}) (M : B.Modules) (r : ℕ) (hM
     rw [Module.Basis.repr_sum_self]
     rfl
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul, h1, map_mul, hc,
+    simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul, h1, map_mul, hc,
     Matrix.vecMul, dotProduct]
 
 end GlobalTheory.FlagCls

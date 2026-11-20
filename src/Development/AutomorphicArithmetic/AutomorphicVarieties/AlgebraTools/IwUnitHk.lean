@@ -101,7 +101,7 @@ private theorem unitHk_coeff (hI : HeckePair I) (x : G) (p : G ⧸ I) :
     refine h1.trans ?_
     congr 1
     rw [MulAction.Quotient.smul_mk, smul_eq_mul, mul_one, QuotientGroup.out_eq']
-  simp only [hs, MonoidAlgebra.coeff_sum, MonoidAlgebra.coeff_single, Finsupp.finset_sum_apply, Finsupp.single_apply]
+  simp only [hs, MonoidAlgebra.coeff_sum, MonoidAlgebra.coeff_single, Finsupp.finsetSum_apply, Finsupp.single_apply]
   by_cases hp : p ∈ MulAction.orbit I (x : G ⧸ I)
   · rw [if_pos hp, Finset.sum_eq_single ⟨p, hp⟩]
     · simp

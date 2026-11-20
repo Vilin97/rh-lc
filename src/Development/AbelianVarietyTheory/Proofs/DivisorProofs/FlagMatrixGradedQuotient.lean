@@ -25,7 +25,7 @@ theorem linearIndependent_repr {R N K : Type} [CommRing R] [AddCommGroup N] [Mod
     have h1 : ∑ j, b.repr (b' k) j * b'.repr (b j) k' = b'.repr (b' k) k' := by
       conv_rhs => rw [← b.sum_repr (b' k)]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul]
+        simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [← map_mul, ← map_sum]
     rw [h1, b'.repr_self, Finsupp.single_apply]

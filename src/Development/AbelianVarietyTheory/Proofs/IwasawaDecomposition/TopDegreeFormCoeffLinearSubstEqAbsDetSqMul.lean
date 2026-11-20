@@ -34,7 +34,7 @@ theorem topCoeff_sum {ι : Type} (s : Finset ι) (f : ι → MvPolynomial (Fin n
 
 theorem sum_apply_sum_single {k : ℕ} (f : Fin k → Fin n × Fin n) :
     ∑ x, (∑ i, Finsupp.single (f i) 1 : Fin n × Fin n →₀ ℕ) x = k := by
-  simp only [Finsupp.finset_sum_apply]
+  simp only [Finsupp.finsetSum_apply]
   rw [Finset.sum_comm]
   simp [Finsupp.single_apply]
 
@@ -56,7 +56,7 @@ theorem topCoeff_prod_X_of_ne {k : ℕ} (hk : k ≠ n) (f : Fin k → Fin n × F
 
 theorem graph_apply (g : Fin n → Fin n) (x y : Fin n) :
     (∑ a, Finsupp.single (a, g a) 1 : Fin n × Fin n →₀ ℕ) (x, y) = if g x = y then 1 else 0 := by
-  rw [Finsupp.finset_sum_apply, Finset.sum_eq_single x (fun c _ hc => by simp [Finsupp.single_apply, hc]) (by simp)]
+  rw [Finsupp.finsetSum_apply, Finset.sum_eq_single x (fun c _ hc => by simp [Finsupp.single_apply, hc]) (by simp)]
   simp [Finsupp.single_apply]
 
 theorem graph_eq_iff (g h : Fin n → Fin n) :
@@ -141,7 +141,7 @@ theorem topCoeff_prod_X_pair (c d : Fin n → Fin n) :
       have : ¬ Function.Surjective c := fun hs => hc (Finite.injective_iff_surjective.mpr hs)
       simpa [Function.Surjective] using this
     have h1 := DFunLike.congr_fun h (x, w x)
-    rw [graph_apply, if_pos rfl, Finsupp.finset_sum_apply] at h1
+    rw [graph_apply, if_pos rfl, Finsupp.finsetSum_apply] at h1
     simp [Finsupp.single_apply, hx] at h1
 
 theorem rowSel_mul_apply (c : Fin n → Fin n) (M : Matrix (Fin n) (Fin n) ℂ) (i b : Fin n) :

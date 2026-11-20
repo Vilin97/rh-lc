@@ -1321,7 +1321,7 @@ theorem det_xm_nzd (t : Ix) (g : MvPolynomial (Lt Ix p q n) K) (hg : (xm p q n K
     by_contra hc
     simp only [not_or] at hc
     obtain ⟨h1, h2⟩ := hc
-    rw [Finsupp.finset_sum_apply] at h2
+    rw [Finsupp.finsetSum_apply] at h2
     obtain ⟨k, -, hk⟩ := Finset.exists_ne_zero_of_sum_ne_zero h2
     split_ifs at hk with hk'
     · rw [Finsupp.single_apply_ne_zero] at hk

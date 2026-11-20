@@ -90,7 +90,7 @@ theorem weylConj_of_sym {α β : Fin m → ℂˣ} (h : ∀ a, sym a α = sym a �
       simpa [map_sum, sym] using (show ∑ w : Sgn m, chr (act w α) a = ∑ w : Sgn m, chr (act w β) a from h a.toAdd)
   by_contra hn
   have h1 := DFunLike.congr_fun e β
-  rw [Finsupp.finset_sum_apply, Finsupp.finset_sum_apply, Finset.sum_eq_zero fun w _ =>
+  rw [Finsupp.finsetSum_apply, Finsupp.finsetSum_apply, Finset.sum_eq_zero fun w _ =>
     Finsupp.single_eq_of_ne (a := act w α) (a' := β) fun h0 => hn (by rw [h0]; exact weylConj_act w α)] at h1
   simp only [Finsupp.single_apply, Finset.sum_boole, eq_comm (a := (0 : ℂ)), Nat.cast_eq_zero,
     Finset.card_eq_zero, Finset.filter_eq_empty_iff] at h1

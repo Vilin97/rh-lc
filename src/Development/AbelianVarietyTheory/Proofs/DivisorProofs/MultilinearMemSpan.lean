@@ -274,7 +274,7 @@ theorem mem_span_solutions {K C O : Type} [Field K] [NumberField K] [Field C] [C
       rw [← Finset.univ_sum_single z, map_sum] at h₃
     have h₄ := congrArg (fun f : Fin k →₀ 𝓞 K => algebraMap (𝓞 K) K (f u)) h₃
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Finsupp.finset_sum_apply, map_sum, Finsupp.zero_apply, map_zero] at h₄
+      simp only [Finsupp.finsetSum_apply, map_sum, Finsupp.zero_apply, map_zero] at h₄
     refine mul_left_cancel₀ (a := ((d : 𝓞 K) : K))
       (RingOfIntegers.coe_ne_zero_iff.2 (nonZeroDivisors.coe_ne_zero d)) ?_
     rw [mul_zero, Finset.mul_sum, ← h₄]

@@ -377,7 +377,7 @@ def CSpan {n : ℕ} (lam : ι → DomWeight n) : Submodule ℂ (MvPolynomial (ι
 lemma comap_sum {α : Type} (v : ι → (α →₀ ℕ)) (τ : ι) :
     (∑ σ, (v σ).mapDomain (Prod.mk σ)).comapDomain (Prod.mk τ) (Prod.mk_right_injective τ).injOn = v τ := by
   ext a
-  rw [Finsupp.comapDomain_apply, Finsupp.finset_sum_apply, Finset.sum_eq_single τ]
+  rw [Finsupp.comapDomain_apply, Finsupp.finsetSum_apply, Finset.sum_eq_single τ]
   · exact Finsupp.mapDomain_apply (Prod.mk_right_injective τ) _ a
   · intro b _ hb
     apply Finsupp.mapDomain_notin_range

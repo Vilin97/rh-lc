@@ -20,10 +20,10 @@ theorem finCoord_mul_denom : ∀ (D : D7), ∃ c : ℕ, 0 < c ∧ ∀ (e₁ e₂
   have hb' : ∀ i, (e₂ : Af D.host.F) * B.repr b i ∈ GlobalTheory.HolDict.ShortVec.intRing D.host.F := hb
   change ((c * e₁ * e₂ : ℕ) : Af D.host.F) * B.repr (a * b) k ∈ _
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [← B.sum_repr a, ← B.sum_repr b, Finset.sum_mul_sum, map_sum, Finsupp.finset_sum_apply, Finset.mul_sum]
+    rw [← B.sum_repr a, ← B.sum_repr b, Finset.sum_mul_sum, map_sum, Finsupp.finsetSum_apply, Finset.mul_sum]
   refine Subring.sum_mem _ fun i _ => ?_
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sum, Finsupp.finset_sum_apply, Finset.mul_sum]
+    rw [map_sum, Finsupp.finsetSum_apply, Finset.mul_sum]
   refine Subring.sum_mem _ fun j _ => ?_
   rw [smul_mul_smul_comm, map_smul, Finsupp.smul_apply, smul_eq_mul]
   have e : ((c * e₁ * e₂ : ℕ) : Af D.host.F) * (B.repr a i * B.repr b j * B.repr (B i * B j) k) =

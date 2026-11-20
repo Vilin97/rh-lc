@@ -52,7 +52,7 @@ theorem repr_smul_expand (b : Basis (Fin d) ℤ Y) (u : 𝓞 E) (y : Y) (a : Fin
     rw [Finset.smul_sum]
     exact Finset.sum_congr rfl fun j _ => smul_comm u (b.repr y j) (b j)
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [h, map_sum, Finsupp.finset_sum_apply, Int.cast_sum]
+    rw [h, map_sum, Finsupp.finsetSum_apply, Int.cast_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [map_zsmul, Finsupp.smul_apply, smul_eq_mul, Int.cast_mul]
 

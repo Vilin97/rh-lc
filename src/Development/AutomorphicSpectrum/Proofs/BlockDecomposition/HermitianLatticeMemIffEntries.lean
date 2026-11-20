@@ -39,7 +39,7 @@ theorem coord_sig {R : Type} [CommRing R] [Algebra F R] {d : ℕ} (σ : E →ₐ
     rw [TensorProduct.smul_tmul', TensorProduct.smul_tmul']
     simp [sigR]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [h, map_sum, Finsupp.finset_sum_apply]
+    rw [h, map_sum, Finsupp.finsetSum_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, Finsupp.smul_apply, smul_eq_mul]
 

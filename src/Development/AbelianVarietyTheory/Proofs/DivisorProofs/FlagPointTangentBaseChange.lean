@@ -82,7 +82,7 @@ theorem tanBasis_and_eigFrame_of_baseChange : ∀ {E : Type} [Field E] [NumberFi
       have h2 : B.repr (φ w) z = 0 := by
         have h3 : ∀ i, y.frame.vec τ i = B ⟨τ, i⟩ := fun i => (hB ⟨τ, i⟩).symm
         set_option synthInstance.maxHeartbeats 100000 in
-          rw [ha', map_sum, Finsupp.finset_sum_apply]
+          rw [ha', map_sum, Finsupp.finsetSum_apply]
         refine Finset.sum_eq_zero fun i _ => ?_
         rw [h3, map_smul, B.repr_self, Finsupp.smul_apply, Finsupp.single_eq_of_ne fun h => hz (congrArg Sigma.fst h),
           smul_zero]

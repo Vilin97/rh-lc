@@ -28,7 +28,7 @@ private theorem cf_smul (c : ℂ) (f : FR n) (x : Wt n) : cf (c • f) x = c * c
 
 private theorem cf_sum {ι : Type} (s : Finset ι) (f : ι → FR n) (x : Wt n) :
     cf (∑ i ∈ s, f i) x = ∑ i ∈ s, cf (f i) x := by
-  simp [cf, Finsupp.finset_sum_apply]
+  simp [cf, Finsupp.finsetSum_apply]
 
 private theorem cf_ex (y x : Wt n) : cf (ex y) x = if y = x then 1 else 0 := by
   classical

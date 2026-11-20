@@ -73,10 +73,10 @@ private theorem orbit_of_sums (hn : 0 < n) (θ θ' : Kˣ →* ℂˣ)
     simpa only [map_pow, Units.val_pow_eq_pow_val] using this
   have he : l1 = l2 := hv.finsuppLinearCombination_injective hl
   have h1 : l1 θ' = 0 := by
-    simp only [l1, Finsupp.finset_sum_apply, Finsupp.single_apply]
+    simp only [l1, Finsupp.finsetSum_apply, Finsupp.single_apply]
     exact Finset.sum_eq_zero fun i hi => if_neg fun e => hne i (Finset.mem_range.mp hi) e.symm
   have h2 : l2 θ' ≠ 0 := by
-    simp only [l2, Finsupp.finset_sum_apply, Finsupp.single_apply]
+    simp only [l2, Finsupp.finsetSum_apply, Finsupp.single_apply]
     rw [Finset.sum_boole]
     have : (Finset.filter (fun i => θ' ^ g ^ i = θ') (Finset.range n)).card ≠ 0 := by
       refine Finset.card_ne_zero.mpr ⟨0, ?_⟩

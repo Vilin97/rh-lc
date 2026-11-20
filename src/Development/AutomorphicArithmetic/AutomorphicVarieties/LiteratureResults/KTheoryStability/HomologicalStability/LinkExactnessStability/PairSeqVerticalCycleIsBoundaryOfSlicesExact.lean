@@ -12,7 +12,7 @@ lemma inj_pair {V W : Type} (l : List V) : Function.Injective (fun w : List W =>
 open Classical in
 lemma sum_apply_pair {V W : Type} (T : Finset (List V)) (g : List V → List W →₀ ℤ) (l : List V) (w : List W) :
     (∑ l' ∈ T, Finsupp.mapDomain (fun w => (l', w)) (g l')) (l, w) = if l ∈ T then g l w else 0 := by
-  rw [Finsupp.finset_sum_apply]
+  rw [Finsupp.finsetSum_apply]
   split_ifs with h
   · rw [Finset.sum_eq_single l]
     · exact Finsupp.mapDomain_apply (inj_pair l) _ _

@@ -26,7 +26,7 @@ theorem delAt_sum_smul {ι : Type} [Fintype ι] {v : V n} {f : ι → V n → �
     set_option synthInstance.maxHeartbeats 100000 in
       rw [repr_coefwise, repr_sum_smul,
       del_sum (A := fun i x => f i x * (bas n).repr (e i) S) fun i _ => (hf i).mul (differentiableAt_const _),
-      ContinuousLinearMap.sum_apply, map_sum, Finsupp.finset_sum_apply]
+      ContinuousLinearMap.sum_apply, map_sum, Finsupp.finsetSum_apply]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [del_mul (b := fun _ => (bas n).repr (e i) S) (hf i) (differentiableAt_const _), del_const]
     simp

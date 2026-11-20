@@ -33,7 +33,7 @@ theorem repr_semi {r : ℕ} (e : Module.Basis (Fin r) S M) (φ : S → S) (Φ : 
     e.repr (Φ m) i = ∑ k, e.repr (Φ (e k)) i * φ (e.repr m k) := by
   set_option synthInstance.maxHeartbeats 100000 in
     conv_lhs => rw [← e.sum_repr m, map_sum, map_sum]
-  simp [hΦ, Finsupp.finset_sum_apply, mul_comm]
+  simp [hΦ, Finsupp.finsetSum_apply, mul_comm]
 
 theorem isUnit_det {r : ℕ} (e : Module.Basis (Fin r) S M) (φ : S → S) (Φ : M →+ M)
     (hΦ : ∀ c m, Φ (c • m) = φ c • Φ m) (hsp : Submodule.span S {m | Φ m = m} = ⊤) :
@@ -187,7 +187,7 @@ theorem mem_range (E : WEt I) (T : LocLat G Qp LL O) (H : G → Prop) (hH : ∀ 
     simp only [Matrix.mul_apply, Matrix.of_apply, Matrix.map_apply]
     rw [← h1, LinearMap.toAddMonoidHom_coe, hφ]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_mulLeft, map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul]
+      simp only [map_mulLeft, map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
 
 end Generic

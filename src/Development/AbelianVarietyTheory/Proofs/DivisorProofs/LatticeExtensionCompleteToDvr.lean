@@ -100,7 +100,7 @@ theorem exists_lat_iff [IsNoetherianRing R] (hint : ∀ x, θ x ∈ ψ.range ↔
       rw [← lat_map_iff hint hj he, lat_iff_repr, hj, hc]
       intro i
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_smul, map_sum, Finsupp.smul_apply, Finsupp.finset_sum_apply, smul_eq_mul, Finset.mul_sum]
+        simp only [map_smul, map_sum, Finsupp.smul_apply, Finsupp.finsetSum_apply, smul_eq_mul, Finset.mul_sum]
       exact sum_mem fun k _ => by
         rw [mul_left_comm]; exact mul_mem ⟨_, rfl⟩ (hg k i)
     obtain ⟨r, hr⟩ := this

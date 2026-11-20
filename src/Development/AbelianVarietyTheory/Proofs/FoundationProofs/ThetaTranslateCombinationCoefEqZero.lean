@@ -19,7 +19,7 @@ theorem sum_trivial_char_eq_zero {G ι : Type} [Monoid G] [Fintype ι] (κ : ι 
     simp only [Finsupp.linearCombination_single, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply]
     exact h y)
   have h1 := congrArg (fun l : (G →* ℂ) →₀ ℂ => l 1) h0
-  simp only [Finsupp.finset_sum_apply, Finsupp.single_apply, Finsupp.coe_zero, Pi.zero_apply] at h1
+  simp only [Finsupp.finsetSum_apply, Finsupp.single_apply, Finsupp.coe_zero, Pi.zero_apply] at h1
   rw [← h1]
   exact Finset.sum_congr rfl fun i _ => by congr
 

@@ -37,7 +37,7 @@ theorem exists_tmul_add_mul_isIntB : ∀ (L : Type) [Field L] [NumberField L] (�
     algebraMap ℚ (v.adicCompletion ℚ) (q i)) / D) ⊗ₜ[ℚ] ℓ i, ?_, ?_⟩
   · intro k
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_sum, Finsupp.finset_sum_apply]
+      rw [map_sum, Finsupp.finsetSum_apply]
     simp only [repr_tmul_apply ℓ v, ℓ.repr_self, Finsupp.single_apply, apply_ite (algebraMap ℚ (v.adicCompletion ℚ)),
       map_one, map_zero, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     rw [HeightOneSpectrum.mem_adicCompletionIntegers, map_div₀]

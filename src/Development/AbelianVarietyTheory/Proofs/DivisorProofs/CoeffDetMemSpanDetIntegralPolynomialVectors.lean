@@ -58,7 +58,7 @@ theorem coeff_det_mem_span_det : ∀ (F V : Type) [Field F] [NumberField F] [Add
     rw [Module.Basis.det_apply]
     congr 1
     ext i k
-    simp [Module.Basis.toMatrix_apply, Finsupp.finset_sum_apply, Finsupp.single_apply]
+    simp [Module.Basis.toMatrix_apply, Finsupp.finsetSum_apply, Finsupp.single_apply]
   · exact Submodule.zero_mem _
 
 end GlobalTheory.DetCoeff

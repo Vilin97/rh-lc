@@ -30,7 +30,7 @@ theorem eig_frob : ∀ (K : Type) [Field K] (p : ℕ) [Fact p.Prime] [CharP K p]
     have hsum : ∀ ι (f : Fin d → K), (β.repr (∑ j, f j) ι : K) = ∑ j, (β.repr (f j) ι : K) := by
       intro ι f
       set_option synthInstance.maxHeartbeats 100000 in
-        simp [map_sum, Finsupp.finset_sum_apply]
+        simp [map_sum, Finsupp.finsetSum_apply]
     let z : _ → Fin d → K := fun ι j => (β.repr (y j) ι : K)
     have hz : ∀ ι a r, ∑ j, ρ a r j ^ p * z ι j = χ a ^ p * z ι r := by
       intro ι a r

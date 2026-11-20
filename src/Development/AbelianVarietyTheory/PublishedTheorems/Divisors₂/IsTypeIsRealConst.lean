@@ -152,7 +152,7 @@ theorem delAt_dbarAt_fun {u : V n → ℝ} {v : V n} (hu : ContDiffAt ℝ 2 u v)
       ∑ b, if S = {finSumFinEquiv (.inr b)} then dbar (fun x => (u x : ℂ)) x (coordVec b) else 0 := by
     simp only [dbarAt, Algebra.algebraMap_eq_smul_one, ← bas_empty]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_sum, Finsupp.finset_sum_apply]
+      rw [map_sum, Finsupp.finsetSum_apply]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [coefwise_smul (by simp), bas_empty, mul_smul_comm, mul_one, dzb, ← bas_singleton]
     simp [Finsupp.single_apply, eq_comm]
@@ -160,7 +160,7 @@ theorem delAt_dbarAt_fun {u : V n → ℝ} {v : V n} (hu : ContDiffAt ℝ 2 u v)
       ∑ b, leviForm u v (coordVec a) (coordVec b) • dzb b := by
     refine (bas n).ext_elem fun S => ?_
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [coefwise, h₁, map_sum, map_smul, Module.Basis.repr_self, Finsupp.finset_sum_apply, Finsupp.smul_apply,
+      simp only [coefwise, h₁, map_sum, map_smul, Module.Basis.repr_self, Finsupp.finsetSum_apply, Finsupp.smul_apply,
       Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true, dzb,
       ← bas_singleton]
     by_cases h : ∃ b, S = {finSumFinEquiv (.inr b)}

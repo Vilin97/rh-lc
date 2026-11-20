@@ -82,7 +82,7 @@ theorem contrTensor : ContrTensor := by
     intro m
     funext τ
     ext s
-    simp only [r, Finsupp.comapDomain_apply, Finsupp.finset_sum_apply]
+    simp only [r, Finsupp.comapDomain_apply, Finsupp.finsetSum_apply]
     rw [Finset.sum_eq_single τ]
     · exact Finsupp.mapDomain_apply (hinj τ) _ _
     · intro τ' _ hne

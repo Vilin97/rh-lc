@@ -71,7 +71,7 @@ theorem _root_.GlobalTheory.GaugeEx.IntBasis.sum_mem' {ι : Type} (s : Finset ι
   rw [mem_intV_iff_basis_repr_mem_integers]
   intro k
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sum, Finsupp.finset_sum_apply]
+    rw [map_sum, Finsupp.finsetSum_apply]
   exact sum_mem fun i hi => (mem_intV_iff_basis_repr_mem_integers b v (f i)).1 (hf i hi) k
 
 theorem compact_open : IsCompact (intV b v) ∧ IsOpen (intV b v) := by

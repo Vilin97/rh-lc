@@ -36,7 +36,7 @@ theorem prod_neg_X_pow_eq_monomial : ∀ (n : ℕ) (τ : Equiv.Perm (Fin (n + 1)
   have hexp : (∑ j : Fin (n + 1), Finsupp.single (τ j) (n - (j : ℕ))) =
       Finsupp.equivFunOnFinite.symm (fun k : Fin (n + 1) => n - ((τ.symm k : Fin (n + 1)) : ℕ)) := by
     ext k
-    rw [Finsupp.finset_sum_apply, Finsupp.coe_equivFunOnFinite_symm]
+    rw [Finsupp.finsetSum_apply, Finsupp.coe_equivFunOnFinite_symm]
     simp only [Finsupp.single_apply]
     rw [Finset.sum_eq_single (τ.symm k)]
     · simp

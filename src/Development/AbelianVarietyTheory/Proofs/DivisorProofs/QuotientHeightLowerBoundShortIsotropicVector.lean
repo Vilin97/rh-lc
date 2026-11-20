@@ -33,10 +33,10 @@ theorem exists_denom_dot (b : Module.Basis (Fin m) F E) (R : Subring A)
     (fun p : Fin n × Fin m × Fin m => B.repr (B p.2.1 * w p.1) p.2.2) fun _ => hR _
   refine ⟨d, hd, fun y e hy l => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sum, Finsupp.finset_sum_apply, Finset.mul_sum]
+    rw [map_sum, Finsupp.finsetSum_apply, Finset.mul_sum]
   refine R.sum_mem fun j _ => ?_
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [← B.sum_repr (y j), Finset.sum_mul, map_sum, Finsupp.finset_sum_apply, Finset.mul_sum]
+    rw [← B.sum_repr (y j), Finset.sum_mul, map_sum, Finsupp.finsetSum_apply, Finset.mul_sum]
   refine R.sum_mem fun k _ => ?_
   rw [smul_mul_assoc, map_smul, Finsupp.smul_apply, smul_eq_mul, Nat.cast_mul, mul_comm (d : A), mul_mul_mul_comm]
   exact R.mul_mem (hy j k) (h (j, k, l))

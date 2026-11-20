@@ -38,7 +38,7 @@ theorem repr_ι (x : Fin n ⊕ Fin n → ℂ) (S : Finset (Fin (n + n))) :
       ∑ i, x i * (bas n).repr (ExteriorAlgebra.ι ℂ (Pi.single i 1)) S := by
   conv_lhs => rw [← Finset.univ_sum_single x]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, Finsupp.finset_sum_apply]
+    simp only [map_sum, Finsupp.finsetSum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [show (Pi.single i (x i) : Fin n ⊕ Fin n → ℂ) = x i • Pi.single i 1 by
     ext j; simp [Pi.single_apply]]

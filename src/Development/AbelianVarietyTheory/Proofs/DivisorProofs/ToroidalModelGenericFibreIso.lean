@@ -36,7 +36,7 @@ theorem repr_app {X : Scheme.{0}} {M M' : X.Modules} {r : ℕ} (g : M ⟶ M') {U
     rw [QCoh.appLinear_apply, Twist.app_resM]
   rw [← hf'.repr_resM, Twist.resM_resM, h3, h1]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_smul, h2, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul, Finset.mul_sum, trCo]
+    simp only [map_sum, map_smul, h2, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul, Finset.mul_sum, trCo]
 
 theorem sum_smul_three {K N : Type} [CommRing K] {_ : AddCommMonoid N} {_ : Module K N} {r : ℕ} {P : Fin r → K}
     {A Q : Fin r → Fin r → K} {u u' v : Fin r → N} {w : N} (e1 : w = ∑ a, P a • u a)

@@ -123,7 +123,7 @@ theorem repr_degPart (k : ℕ) (α : Alt n) (S : Finset (Fin (n + n))) :
     (bas n).repr (degPart n k α) S = if S.card = k then (bas n).repr α S else 0 := by
   conv_lhs => rw [← (bas n).sum_repr α]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_smul, degPart, Module.Basis.constr_basis, Finsupp.finset_sum_apply, Finsupp.smul_apply]
+    simp only [map_sum, map_smul, degPart, Module.Basis.constr_basis, Finsupp.finsetSum_apply, Finsupp.smul_apply]
   rw [Finset.sum_eq_single S (fun T _ h => by split_ifs <;> simp [h]) (by simp)]
   split_ifs <;> simp
 
@@ -260,7 +260,7 @@ theorem repr_linear (L : Alt n →ₗ[ℂ] Alt n) (α : Alt n) (S : Finset (Fin 
     (bas n).repr (L α) S = ∑ T, (bas n).repr (L (bas n T)) S • (bas n).repr α T := by
   conv_lhs => rw [← (bas n).sum_repr α]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul, mul_comm]
+    simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul, mul_comm]
 
 theorem coefwise_dirD_linear (i : Fin n ⊕ Fin n) (L : Alt n →ₗ[ℂ] Alt n) {F : V n → Alt n}
     (hF : ∀ S, DifferentiableAt ℝ (fun x => (bas n).repr (F x) S) v) :

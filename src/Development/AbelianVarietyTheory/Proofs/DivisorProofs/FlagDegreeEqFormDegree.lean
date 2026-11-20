@@ -106,7 +106,7 @@ theorem coeff_aeval_lin (r : V → MvPolynomial E ℝ) (c : E → V → ℝ) (h 
   | insert e S he ih =>
     have h1 := coeff_pderiv' (aeval r P) e (∑ e ∈ S, Finsupp.single e 1)
     have h2 : (∑ e ∈ S, Finsupp.single e 1 : E →₀ ℕ) e = 0 := by
-      rw [Finsupp.finset_sum_apply]
+      rw [Finsupp.finsetSum_apply]
       refine Finset.sum_eq_zero fun f hf => ?_
       rw [Finsupp.single_apply, if_neg]
       rintro rfl
@@ -168,7 +168,7 @@ def pairs (ι : Type) [Fintype ι] (N : ℕ) : Finset (ι × Fin N × Fin N) := 
 
 theorem volExp_eq : (volExp : (ι × Fin N × Fin N) →₀ ℕ) = ∑ e ∈ pairs ι N, Finsupp.single e 1 := by
   ext p
-  simp [volExp, pairs, Finsupp.finset_sum_apply, Finsupp.single_apply]
+  simp [volExp, pairs, Finsupp.finsetSum_apply, Finsupp.single_apply]
 
 theorem sum_card_Ioi (N : ℕ) : ∑ a : Fin N, (Finset.Ioi a).card = N * (N - 1) / 2 := by
   simp only [Fin.card_Ioi]

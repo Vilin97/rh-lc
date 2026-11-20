@@ -24,7 +24,7 @@ theorem del_loc_repr_contDiffOn : ∀ {M : Type} [TopologicalSpace M] {n : ℕ} 
     rw [h1, GlobalTheory.CxForm.delAt]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [GlobalTheory.CxForm.coefwise, Finset.mul_sum, mul_smul_comm, map_sum, map_smul,
-      Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul]
+      Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul]
   refine ContDiffOn.congr ?_ key
   have ho := (A.e i).open_target
   refine ContDiffOn.sum fun a _ => ContDiffOn.sum fun T _ => ContDiffOn.mul ?_ contDiffOn_const

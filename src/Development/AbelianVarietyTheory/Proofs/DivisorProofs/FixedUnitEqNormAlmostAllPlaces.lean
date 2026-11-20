@@ -57,32 +57,32 @@ theorem good_eventually : ∀ (L : Type) [Field L] [NumberField L] (c : L →ₐ
   · rw [Algebra.TensorProduct.one_def]; exact hint 1 (fun k => hlv (0, k))
   · intro y z hy hz k
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [eq_sum_tmul bL v y, eq_sum_tmul bL v z, Finset.sum_mul_sum, map_sum, Finsupp.finset_sum_apply]
+      rw [eq_sum_tmul bL v y, eq_sum_tmul bL v z, Finset.sum_mul_sum, map_sum, Finsupp.finsetSum_apply]
     refine sum_mem fun i _ => ?_
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_sum, Finsupp.finset_sum_apply]
+      rw [map_sum, Finsupp.finsetSum_apply]
     refine sum_mem fun j _ => ?_
     rw [Algebra.TensorProduct.tmul_mul_tmul, repr_tmul_apply]
     exact mul_mem (mul_mem (hy i) (hz j)) (hcv (i, j, k))
   · intro y z hy hz k
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [eq_sum_tmul bL v y, eq_sum_tmul bL v z, Finset.sum_mul_sum, map_sum, Finsupp.finset_sum_apply]
+      rw [eq_sum_tmul bL v y, eq_sum_tmul bL v z, Finset.sum_mul_sum, map_sum, Finsupp.finsetSum_apply]
     refine Valuation.map_sum_lt _ one_ne_zero fun i _ => ?_
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_sum, Finsupp.finset_sum_apply]
+      rw [map_sum, Finsupp.finsetSum_apply]
     refine Valuation.map_sum_lt _ one_ne_zero fun j _ => ?_
     rw [Algebra.TensorProduct.tmul_mul_tmul, repr_tmul_apply, map_mul, map_mul]
     exact lt_of_le_of_lt (mul_le_mul' (mul_le_mul' ((hmem _).1 (hy i)) le_rfl) ((hmem _).1 (hcv (i, j, k))))
       (by simpa using hz j)
   · intro y hy k
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [eq_sum_tmul bL v y, map_sum, map_sum, Finsupp.finset_sum_apply]
+      rw [eq_sum_tmul bL v y, map_sum, map_sum, Finsupp.finsetSum_apply]
     refine sum_mem fun i _ => ?_
     rw [Algebra.TensorProduct.map_tmul, AlgHom.id_apply, repr_tmul_apply]
     exact mul_mem (hy i) (hsv (i, k))
   · intro y hy k
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [eq_sum_tmul bL v y, map_sum, map_sum, Finsupp.finset_sum_apply]
+      rw [eq_sum_tmul bL v y, map_sum, map_sum, Finsupp.finsetSum_apply]
     refine Valuation.map_sum_lt _ one_ne_zero fun i _ => ?_
     rw [Algebra.TensorProduct.map_tmul, AlgHom.id_apply, repr_tmul_apply, map_mul]
     exact lt_of_le_of_lt (mul_le_mul' le_rfl ((hmem _).1 (hsv (i, k)))) (by simpa using hy i)

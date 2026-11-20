@@ -11,7 +11,7 @@ theorem UpperTheory.V.ZK.Cl.cGtNe :
   have hsum : ∀ x : ZMod q, ∑ i : {j // χ j = x}, η i.1 = 0 := by
     intro x
     have h1 : η.mapDomain χ x = 0 := by rw [h]; rfl
-    rw [Finsupp.mapDomain, Finsupp.sum_fintype _ _ (by simp), Finsupp.finset_sum_apply] at h1
+    rw [Finsupp.mapDomain, Finsupp.sum_fintype _ _ (by simp), Finsupp.finsetSum_apply] at h1
     rw [← h1, ← Finset.sum_subtype (Finset.univ.filter fun j => χ j = x) (by simp) (fun j => η j), Finset.sum_filter]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [Finsupp.single_apply]

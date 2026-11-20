@@ -176,7 +176,7 @@ theorem univCoef_eq (β : DetBases k r n) (κ : kˣ →* Multiplicative C) (c : 
       rintro ⟨u, hu, -⟩
       exact hC ((dU_ne_zero_iff β U y).1 (hu ▸ u.ne_zero))
   unfold univCoef univ
-  rw [AddMonoidAlgebra.coeff_smul_apply, AddMonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply]
+  rw [AddMonoidAlgebra.coeff_smul_apply, AddMonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply]
   simp_rw [hterm]
   clear hterm
   rw [Finset.sum_boole, smul_eq_mul]

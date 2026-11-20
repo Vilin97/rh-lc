@@ -146,7 +146,7 @@ theorem zExp_apply (b : ι → Fin n → ℕ) (τ : ι) (a s : Fin (n + 1)) :
     zExp (rfl : n + 1 = n + 1) b (τ, a, s) =
       if h : a = Fin.last n ∧ s.val < n then b τ ⟨s.val, h.2⟩ else 0 := by
   classical
-  simp only [zExp, Finsupp.finset_sum_apply, Finsupp.single_apply, iL_eq, iC_eq]
+  simp only [zExp, Finsupp.finsetSum_apply, Finsupp.single_apply, iL_eq, iC_eq]
   split_ifs with h
   · rw [Finset.sum_eq_single τ]
     · rw [Finset.sum_eq_single ⟨s.val, h.2⟩]

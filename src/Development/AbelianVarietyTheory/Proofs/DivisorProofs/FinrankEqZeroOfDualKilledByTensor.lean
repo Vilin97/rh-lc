@@ -97,7 +97,7 @@ theorem finrank_eq_zero_of_dual_killed : ∀ (F : Type) [Field F] [NumberField F
       B.repr (ρ (∑ i, e i • b i) χ) r = ∑ i, e i * B.repr (ρ (b i) χ) r := by
     intro e χ r
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [map_sum, map_zsmul, LinearMap.sum_apply, Finsupp.finset_sum_apply]
+      simp [map_sum, map_zsmul, LinearMap.sum_apply, Finsupp.finsetSum_apply]
   rcases CharP.char_is_prime_or_zero k (ringChar k) with hp | hp
   · set p := ringChar k with hpdef
     haveI : Fact p.Prime := ⟨hp⟩

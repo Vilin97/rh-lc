@@ -66,7 +66,7 @@ theorem coords_den {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
     set_option synthInstance.maxHeartbeats 100000 in
       simp [map_sum]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [ho, map_sum, map_sum, Finsupp.finset_sum_apply, Finset.mul_sum]
+    rw [ho, map_sum, map_sum, Finsupp.finsetSum_apply, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_zsmul, map_zsmul, Finsupp.smul_apply, hr (i, k)]
   simp only [zsmul_eq_mul]

@@ -66,7 +66,7 @@ theorem descent {R₁ E : Type} [CommRing R₁] [CommRing E] [IsLocalRing E] (a 
   have hs : ∑ j, -(α (ev j.succ) l) * g j i = -∑ j, g j i * α (ev j.succ) l := by
     rw [← Finset.sum_neg_distrib]
     exact Finset.sum_congr rfl fun j _ => by ring
-  simp only [Finsupp.add_apply, Finsupp.smul_apply, Finsupp.finset_sum_apply, smul_eq_mul] at h2
+  simp only [Finsupp.add_apply, Finsupp.smul_apply, Finsupp.finsetSum_apply, smul_eq_mul] at h2
   rw [hs]
   simp only [ev] at h2 ⊢
   linear_combination h2

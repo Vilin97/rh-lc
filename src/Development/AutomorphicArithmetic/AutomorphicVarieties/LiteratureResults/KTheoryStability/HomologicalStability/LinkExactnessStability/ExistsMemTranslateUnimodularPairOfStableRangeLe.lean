@@ -83,13 +83,13 @@ theorem unimodular_partner_aff : ∀ (R : Type) [CommRing R] (s : ℕ), StableRa
   let y : ℕ →₀ R := ∑ i : Fin n, Finsupp.single (i : ℕ) (-(t i * a j))
   have hy0 : ∀ m, n ≤ m → y m = 0 := by
     intro m hm
-    simp only [y, Finsupp.finset_sum_apply]
+    simp only [y, Finsupp.finsetSum_apply]
     exact Finset.sum_eq_zero fun i _ => by
       have := i.isLt
       simp [Finsupp.single_apply, show (i : ℕ) ≠ m by omega]
   have hyi : ∀ i : Fin n, y i = -(t i * a j) := by
     intro i
-    simp only [y, Finsupp.finset_sum_apply]
+    simp only [y, Finsupp.finsetSum_apply]
     rw [Finset.sum_eq_single i]
     · simp
     · intro b _ hb

@@ -28,7 +28,7 @@ theorem exists_perm_of_word_eq {n : ℕ} (v w : Fin n → σ)
   have count : ∀ (u : Fin n → σ) (s : σ),
       (∑ j, Finsupp.single (u j) 1 : σ →₀ ℕ) s = Fintype.card {j // u j = s} := by
     intro u s
-    rw [Finsupp.finset_sum_apply, Fintype.card_subtype, Finset.card_filter]
+    rw [Finsupp.finsetSum_apply, Fintype.card_subtype, Finset.card_filter]
     exact Finset.sum_congr rfl fun j _ => by simp [Finsupp.single_apply]
   have hc : ∀ s, Fintype.card {j // v j = s} = Fintype.card {j // w j = s} := fun s => by
     rw [← count, ← count, h]

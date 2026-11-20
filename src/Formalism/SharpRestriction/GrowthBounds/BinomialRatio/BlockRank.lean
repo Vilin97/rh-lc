@@ -30,13 +30,13 @@ theorem xiVar_inj (N r t : ℕ) : Function.Injective (xiVar N r t) := by
 
 theorem xiExp_xi (N r t : ℕ) (β : Fin r → ℕ) (c : Fin r) : xiExp N r t β (xiVar N r t c) = β c := by
   classical
-  simp only [xiExp, Finsupp.finset_sum_apply, Finsupp.single_apply, (xiVar_inj N r t).eq_iff]
+  simp only [xiExp, Finsupp.finsetSum_apply, Finsupp.single_apply, (xiVar_inj N r t).eq_iff]
   simp
 
 theorem xiExp_other (N r t : ℕ) (β : Fin r → ℕ) (v : BVar N r t) (hv : ∀ c, v ≠ xiVar N r t c) :
     xiExp N r t β v = 0 := by
   classical
-  simp only [xiExp, Finsupp.finset_sum_apply, Finsupp.single_apply]
+  simp only [xiExp, Finsupp.finsetSum_apply, Finsupp.single_apply]
   exact Finset.sum_eq_zero fun c _ => if_neg fun h => hv c h.symm
 
 theorem eq_xiExp (N r t : ℕ) (μ : BVar N r t →₀ ℕ) (h : ∀ v ∈ μ.support, ∃ c, v = xiVar N r t c) :

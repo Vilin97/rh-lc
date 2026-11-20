@@ -244,7 +244,7 @@ theorem coeff_subst_pow {σ : Type} [Fintype σ] (w : σ → ℕ) (hw : ∀ s, 1
     rw [← pow_mul]
   have hpt : ∀ (D' : σ →₀ ℕ) t, (∑ s ∈ D'.support, Finsupp.single s (w s * D' s)) t = w t * D' t := by
     intro D' t
-    rw [Finsupp.finset_sum_apply]
+    rw [Finsupp.finsetSum_apply]
     simp only [Finsupp.single_apply]
     rw [Finset.sum_ite_eq']
     split_ifs with ht

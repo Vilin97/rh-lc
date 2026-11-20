@@ -21,10 +21,10 @@ theorem repr_mul (a b : Alt n) (S : Finset (Fin (n + n))) :
       (bas n).repr a p.1 * (bas n).repr b p.2 * (bas n).repr (bas n p.1 * bas n p.2) S := by
   conv_lhs => rw [← (bas n).sum_repr a, ← (bas n).sum_repr b]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [Fintype.sum_prod_type, Finset.sum_mul_sum, map_sum, Finsupp.finset_sum_apply]
+    rw [Fintype.sum_prod_type, Finset.sum_mul_sum, map_sum, Finsupp.finsetSum_apply]
   refine Finset.sum_congr rfl fun T _ => ?_
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sum, Finsupp.finset_sum_apply]
+    rw [map_sum, Finsupp.finsetSum_apply]
   refine Finset.sum_congr rfl fun U _ => ?_
   rw [smul_mul_smul_comm, map_smul, Finsupp.smul_apply, smul_eq_mul]
 

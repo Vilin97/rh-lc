@@ -17,7 +17,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 private theorem sum_map_apply {ι σ : Type} [Fintype ι] (m : ι → σ →₀ ℕ) (i : ι) (x : σ) :
     (∑ j, Finsupp.mapDomain (fun v : σ => (j, v)) (m j)) (i, x) = m i x := by
   classical
-  rw [Finsupp.finset_sum_apply, Finset.sum_eq_single i]
+  rw [Finsupp.finsetSum_apply, Finset.sum_eq_single i]
   · exact Finsupp.mapDomain_apply (fun a b h => (Prod.mk.inj h).2) _ _
   · intro j _ hj
     apply Finsupp.mapDomain_notin_range

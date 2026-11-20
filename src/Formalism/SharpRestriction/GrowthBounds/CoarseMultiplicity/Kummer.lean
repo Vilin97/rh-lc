@@ -73,7 +73,7 @@ theorem expFact_mul {ι : Type*} [Fintype ι] {n : ℕ} (p : ℕ) (d : ι → �
     refine Finset.prod_congr rfl fun x _ => ?_
     rw [Nat.multinomial_spec, ← hμ x]
     rfl
-  · rw [Nat.factorization_prod fun x _ => (Nat.multinomial_pos _ _).ne', Finsupp.finset_sum_apply]
+  · rw [Nat.factorization_prod fun x _ => (Nat.multinomial_pos _ _).ne', Finsupp.finsetSum_apply]
     refine Finset.sum_le_sum fun x _ => ?_
     have := multinomial_val p Finset.univ (fun c : Fin n => μ (x, c))
     rw [Finset.card_univ, Fintype.card_fin] at this

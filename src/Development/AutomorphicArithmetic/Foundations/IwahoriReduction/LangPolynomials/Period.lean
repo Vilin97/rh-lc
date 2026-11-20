@@ -48,13 +48,13 @@ private theorem transpose_leftMulMatrix_mul_structure_mul_eq {l : ℕ} [Fact (Na
   have h1 : ∀ m, ∑ k, Algebra.leftMulMatrix e a k k' * e.repr (e k * e m) i = e.repr (a * e k' * e m) i := by
     intro m
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [← hsum a k', Finset.sum_mul, map_sum, Finsupp.finset_sum_apply]
+      rw [← hsum a k', Finset.sum_mul, map_sum, Finsupp.finsetSum_apply]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [smul_mul_assoc, map_smul, Finsupp.smul_apply, smul_eq_mul]
   simp only [h1]
   have h2 : ∑ m, e.repr (a * e k' * e m) i * Algebra.leftMulMatrix e b m m' = e.repr (a * e k' * (b * e m')) i := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [← hsum b m', Finset.mul_sum, map_sum, Finsupp.finset_sum_apply]
+      rw [← hsum b m', Finset.mul_sum, map_sum, Finsupp.finsetSum_apply]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [mul_smul_comm, map_smul, Finsupp.smul_apply, smul_eq_mul]
     ring

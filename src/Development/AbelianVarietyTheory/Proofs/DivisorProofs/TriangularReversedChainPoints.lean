@@ -34,7 +34,7 @@ theorem exists_isTri_of_gl : ∀ (X : Scheme.{0}) (A V V' : X.Opens) (h : V' ≤
   have key (l i : Fin r) : coordIn hs (fun l => ∑ m, (P : Matrix (Fin r) (Fin r) Γ(X, V')) (Fin.rev l) m • resM F h (e m)) l i =
       ((P : Matrix (Fin r) (Fin r) Γ(X, V')).map (resG X (inf_le_left : V' ⊓ A ≤ V')) * (Matrix.of fun l j => GlobalTheory.ChainPts.coef true he hs l (Fin.rev j)).map (resG X (inf_le_inf_right A h))) (Fin.rev l) (Fin.rev i) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [coordIn, map_sum, resM_smul, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul,
+      simp only [coordIn, map_sum, resM_smul, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul,
       Matrix.mul_apply, Matrix.map_apply, Matrix.of_apply, Fin.rev_rev]
     refine Finset.sum_congr rfl fun m _ => congrArg _ ?_
     have := hs.repr_resM (inf_le_right : V ⊓ A ≤ A) (inf_le_inf_right A h) (resM F inf_le_left (e m)) i

@@ -29,7 +29,7 @@ theorem exists_isUnit_repr {R N : Type} [CommRing R] [IsLocalRing R] [AddCommGro
   by_contra! hn
   have h1 : c.repr (c q) q ∈ IsLocalRing.maximalIdeal R := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [← b.sum_repr (c q), map_sum, Finsupp.finset_sum_apply]
+      rw [← b.sum_repr (c q), map_sum, Finsupp.finsetSum_apply]
     refine Ideal.sum_mem _ fun x _ => ?_
     rw [map_smul, Finsupp.smul_apply, smul_eq_mul]
     rcases x with i | j

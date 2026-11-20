@@ -63,12 +63,12 @@ theorem closure_iff {H I : Type} (Z : Set H) (mom : H → I → ℂ_[p]) (G : Se
     · intro x hx
       by_contra hn
       refine Finsupp.mem_support_iff.1 (Finset.mem_coe.1 hx) ?_
-      rw [Finsupp.finset_sum_apply]
+      rw [Finsupp.finsetSum_apply]
       refine Finset.sum_eq_zero fun i _ => Finsupp.single_eq_of_ne ?_
       intro h
       exact hn (h ▸ hz i)
     · intro x
-      rw [Finsupp.finset_sum_apply]
+      rw [Finsupp.finsetSum_apply]
       refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun i _ => ?_
       rw [Finsupp.single_apply]
       split_ifs

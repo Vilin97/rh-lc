@@ -148,7 +148,7 @@ theorem prod_coef (M : RootModel Ψ N) (lam : Wt Ψ N) (s : ℝ) (w : Fin (dimFl
     cases h : w j with
     | none => simp [RootModel.coef, div_eq_mul_inv]
     | some r => simp [RootModel.coef]
-  simp only [h1, Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum, Finsupp.finset_sum_apply]
+  simp only [h1, Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum, Finsupp.finsetSum_apply]
   rw [inv_pow, div_eq_mul_inv]
 
 theorem sum_coef_lineCoef (M : RootModel Ψ N) (lam : Wt Ψ N) (s : ℝ) (a : Option (Ψ × Fin N)) :

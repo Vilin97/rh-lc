@@ -29,7 +29,7 @@ theorem exists_ringHom_of_isLieComb {R O : Type} [CommRing R] [CommRing O] {G : 
   have h2 : x • B j = ∑ k, ρ x k j • B k := by
     apply GlobalTheory.Serre.Lie.ext
     rw [GlobalTheory.Serre.Lie.hom_act_smul, ← h1, GlobalTheory.Serre.Lie.hom_basis]
-  simp [LinearMap.toMatrixAlgEquiv_apply, h2, Finsupp.finset_sum_apply, Finsupp.single_apply]
+  simp [LinearMap.toMatrixAlgEquiv_apply, h2, Finsupp.finsetSum_apply, Finsupp.single_apply]
 
 theorem MChart.exists_ringHom_rho :
     ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H)

@@ -16,7 +16,7 @@ theorem coeff_mul_eSerC {g : ℕ} [Fact g.Prime] (L : LabelDatum g) {N : ℕ} (f
     (a * eSerC L N f).coeff 1 = ∑ χ ∈ hfin.toFinset, χ 1 / (Fintype.card (Gn g N) : ℂ) * tr a χ := by
   unfold eSerC
   rw [finsum_mem_eq_finite_toFinset_sum _ hfin, Finset.mul_sum]
-  simp only [MonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply]
+  simp only [MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply]
   refine Finset.sum_congr rfl fun χ _ => ?_
   exact ((GlobalTheory.GLq.trIdem (Gn g N) a χ).2.2)
 

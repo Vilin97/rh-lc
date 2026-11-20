@@ -66,7 +66,7 @@ theorem lsd_coordO : ∃ r : 𝓞 D.host.F, r ≠ 0 ∧ ∀ (x : 𝓞 D.host.E) 
   choose y hy using hl
   refine ⟨∑ l, (ω.repr x l : ℤ) • y l, ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [hx, map_sum, Finsupp.finset_sum_apply, Finset.mul_sum]
+    rw [hx, map_sum, Finsupp.finsetSum_apply, Finset.mul_sum]
   have hc : ((∑ l, (ω.repr x l : ℤ) • y l : 𝓞 D.host.F) : D.host.F) =
       ∑ l, (ω.repr x l : ℤ) • ((y l : 𝓞 D.host.F) : D.host.F) := by
     set_option synthInstance.maxHeartbeats 100000 in

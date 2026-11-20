@@ -162,7 +162,7 @@ theorem UpperTheory.WildA.jetInt :
     simp only [Submodule.coe_smul, hJQ]
     exact hS J
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [hop, hsum, map_sum, Finsupp.finset_sum_apply]
+    rw [hop, hsum, map_sum, Finsupp.finsetSum_apply]
   simp only [map_smul, Finsupp.smul_apply, smul_eq_mul, hz]
   rw [← Finsupp.sum_finset_sum_index (by simp) (by intros; push_cast; ring)]
   refine Finset.sum_congr rfl fun k _ => ?_

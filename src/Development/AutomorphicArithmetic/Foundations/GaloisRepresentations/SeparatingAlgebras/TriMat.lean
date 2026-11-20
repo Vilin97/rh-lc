@@ -10,7 +10,7 @@ private lemma repr_sum_mul {k X ι : Type*} [Field k] [Fintype X] [DecidableEq X
     simp [Finset.sum_apply, Pi.single_apply]
   conv_rhs => rw [hv]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp [map_sum, Finsupp.finset_sum_apply, mul_comm]
+    simp [map_sum, Finsupp.finsetSum_apply, mul_comm]
 
 private lemma conj_apply {k X ι : Type*} [Field k] [Fintype X] [DecidableEq X] [Fintype ι]
     (b : Module.Basis ι k (X → k)) (M : Matrix X X k) (i j : ι) :

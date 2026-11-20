@@ -15,7 +15,7 @@ theorem isIntB_of_isIntB_of_repr {M : Type} [Ring M] [Algebra ℚ M] {κ κ' : T
     (y : v.adicCompletion ℚ ⊗[ℚ] M) (hy : IsIntB v b' y) : IsIntB v b y := by
   intro k
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [eq_sum_tmul b' v y, map_sum, Finsupp.finset_sum_apply]
+    rw [eq_sum_tmul b' v y, map_sum, Finsupp.finsetSum_apply]
   refine sum_mem fun k' _ => ?_
   rw [repr_tmul_apply]
   exact mul_mem (hy k') (h k' k)
@@ -93,10 +93,10 @@ theorem isIntB_sum_leftBasis_iff_eventually : ∀ (L : Type) [Field L] [NumberFi
       (Algebra.TensorProduct.basis (v.adicCompletion ℚ) ℓ).repr (β i) a := by
     intro i a
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_sum, Finsupp.finset_sum_apply]
+      rw [map_sum, Finsupp.finsetSum_apply]
     simp_rw [hcoord]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [← Finsupp.finset_sum_apply, ← map_sum]
+      rw [← Finsupp.finsetSum_apply, ← map_sum]
     congr 2
     simp [Finset.sum_apply, Pi.single_apply]
   rw [hS v hv]

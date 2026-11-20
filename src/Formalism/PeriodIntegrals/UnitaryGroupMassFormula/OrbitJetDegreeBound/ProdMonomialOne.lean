@@ -142,7 +142,7 @@ theorem mem_orbit_unique {R : Finset (Pl D)} (hR : IsReps D p R) {r r' : Pl D} (
 theorem sum_resM {γ : Type} {R : Finset (Pl D)} (hR : IsReps D p R) (m : Pl D × γ →₀ ℕ) :
     ∑ r ∈ R, mapDomain (pE D p r γ) (resM D p r m) = m := by
   ext ⟨z, c⟩
-  rw [Finsupp.finset_sum_apply]
+  rw [Finsupp.finsetSum_apply]
   obtain ⟨r0, ⟨hr0, e0, he0⟩, huniq⟩ := hR z
   have hx0 : ((z, c) : Pl D × γ) = pE D p r0 γ ((e0 : ZMod (nP D p)), c) := by
     show (z, c) = (orbMap D p r0 (e0 : ZMod (nP D p)), c)

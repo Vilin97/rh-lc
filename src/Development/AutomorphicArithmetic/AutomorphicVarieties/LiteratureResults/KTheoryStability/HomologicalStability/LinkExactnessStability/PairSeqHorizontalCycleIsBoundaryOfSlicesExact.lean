@@ -49,7 +49,7 @@ theorem hbd_incl (w : List W) (z : List V →₀ ℤ) : hbd V W (incl w z) = inc
 theorem decomp (x : List V × List W →₀ ℤ) :
     x = ∑ w ∈ x.support.image Prod.snd, incl w (proj w x) := by
   ext ⟨l, w'⟩
-  rw [Finsupp.finset_sum_apply]
+  rw [Finsupp.finsetSum_apply]
   simp only [incl_apply, proj_apply]
   rw [Finset.sum_ite_eq']
   split_ifs with h
@@ -78,7 +78,7 @@ theorem dblRow_exact : ∀ (V W : Type) (D : Set (List V × List W)) (a b : ℕ)
     intro w hw
     ext l
     have := congrArg (fun z => z (l, w)) h1
-    simp only [h0, Finsupp.coe_zero, Pi.zero_apply, Finsupp.finset_sum_apply, incl_apply] at this
+    simp only [h0, Finsupp.coe_zero, Pi.zero_apply, Finsupp.finsetSum_apply, incl_apply] at this
     rw [Finset.sum_ite_eq', if_pos hw] at this
     simpa using this.symm
   have hslice : ∀ w ∈ T, ∃ y ∈ chains {l | (l, w) ∈ D} (a + 1), bd V y = proj w x := by

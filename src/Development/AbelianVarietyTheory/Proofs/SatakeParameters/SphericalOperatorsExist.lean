@@ -55,7 +55,7 @@ theorem single_mem {G : Type} (S : Subring ℂ) (x : G) {c : ℂ} (hc : c ∈ S)
 theorem conv_mem {G : Type} [Group G] (S : Subring ℂ) (F f : G →₀ ℂ) (hF : ∀ g, F g ∈ S) (hf : ∀ g, f g ∈ S) (x : G) :
     OpPoly.conv F f x ∈ S := by
   classical
-  simp only [OpPoly.conv, Finsupp.sum, Finsupp.finset_sum_apply]
+  simp only [OpPoly.conv, Finsupp.sum, Finsupp.finsetSum_apply]
   refine Subring.sum_mem _ fun g _ => Subring.sum_mem _ fun h _ => ?_
   exact single_mem S _ (S.mul_mem (hF g) (hf h)) x
 
@@ -91,7 +91,7 @@ theorem exists_finsupp_heckeVec (S : Subring ℂ) {G : Type} [Group G] {K : Subg
   classical
   let s := (Formalism.UG.P.finite_support_cosets hK hh.2).toFinset
   refine ⟨∑ c ∈ s, Finsupp.single c.out (h c.out), fun g => ?_, fun V _ _ ρ x => ?_⟩
-  · rw [Finsupp.finset_sum_apply]
+  · rw [Finsupp.finsetSum_apply]
     exact Subring.sum_mem _ fun c _ => single_mem S _ (hS _) g
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [← opHom_apply ρ x, map_sum, heckeVec, finsum_eq_sum_of_support_subset (s := s)]

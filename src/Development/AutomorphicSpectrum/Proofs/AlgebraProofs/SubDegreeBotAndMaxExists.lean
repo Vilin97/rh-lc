@@ -109,7 +109,7 @@ theorem exists_scale (i : C.I) {n m : ℕ} (b : Module.Basis (Fin n) K V)
     have hx' : b.repr x q = ∑ j, b'.repr x j * b.repr (b' j) q := by
       conv_lhs => rw [← b'.sum_repr x]
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_sum, Finsupp.finset_sum_apply]
+        rw [map_sum, Finsupp.finsetSum_apply]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_smul, Finsupp.smul_apply, smul_eq_mul]
     rw [hx']

@@ -79,10 +79,10 @@ theorem intC_stab : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (β : G.Cˣ), �
   refine ⟨fun y z hy hz k => ?_, fun y hy k => ?_, hin w _ hbv, hin w _ hbv'⟩
   · change (Algebra.TensorProduct.basis (w.1.adicCompletion ℚ) bb).repr (y * z) k ∈ _
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [eq_sum_tmul' bb w.1 y, eq_sum_tmul' bb w.1 z, Finset.sum_mul_sum, map_sum, Finsupp.finset_sum_apply]
+      rw [eq_sum_tmul' bb w.1 y, eq_sum_tmul' bb w.1 z, Finset.sum_mul_sum, map_sum, Finsupp.finsetSum_apply]
     refine sum_mem fun i _ => ?_
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_sum, Finsupp.finset_sum_apply]
+      rw [map_sum, Finsupp.finsetSum_apply]
     refine sum_mem fun j _ => ?_
     rw [Algebra.TensorProduct.tmul_mul_tmul, repr_tmul_apply']
     exact mul_mem (mul_mem (hy i) (hz j)) (hcv (i, j, k))
@@ -91,7 +91,7 @@ theorem intC_stab : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (β : G.Cˣ), �
       fun f => map_sum (MulOpposite.opAddEquiv : w.1.adicCompletion ℚ ⊗[ℚ] G.C ≃+ _).symm f Finset.univ
     change (Algebra.TensorProduct.basis (w.1.adicCompletion ℚ) bb).repr _ k ∈ _
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [eq_sum_tmul' bb w.1 y, map_sum, hu, map_sum, Finsupp.finset_sum_apply]
+      rw [eq_sum_tmul' bb w.1 y, map_sum, hu, map_sum, Finsupp.finsetSum_apply]
     refine sum_mem fun i _ => ?_
     rw [starT_tmul, repr_tmul_apply']
     exact mul_mem (hy i) (hsv (i, k))

@@ -23,7 +23,7 @@ theorem curvEv_entry_smooth : ∀ (n : ℕ) (r : Type) [Fintype r] [DecidableEq 
     funext x
     rw [e x]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [map_sum, Finsupp.finset_sum_apply]
+      simp [map_sum, Finsupp.finsetSum_apply]
   rw [hf]
   exact ContDiffAt.sum fun a _ => ContDiffAt.sum fun b _ => (hc a b).mul contDiffAt_const
 

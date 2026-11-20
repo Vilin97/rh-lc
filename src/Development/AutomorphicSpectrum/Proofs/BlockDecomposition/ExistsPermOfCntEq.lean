@@ -10,7 +10,7 @@ noncomputable def cnt {ι : Type} {m : ℕ} (f : Fin m → ι) : ι →₀ ℕ :
 open Classical in
 theorem cnt_apply {ι : Type} {m : ℕ} (f : Fin m → ι) (i : ι) :
     cnt f i = Fintype.card {j // f j = i} := by
-  simp [cnt, Finsupp.finset_sum_apply, Finsupp.single_apply, Fintype.card_subtype]
+  simp [cnt, Finsupp.finsetSum_apply, Finsupp.single_apply, Fintype.card_subtype]
 
 theorem degree_cnt {ι : Type} {m : ℕ} (f : Fin m → ι) : (cnt f).degree = m := by
   classical

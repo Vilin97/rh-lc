@@ -81,7 +81,7 @@ theorem laurent_coefficients_mem_property (y : MvPolynomial (ι × Fin n) R) (K 
   rw [MvPolynomial.coeff_sum] at hz
   simp_rw [MvPolynomial.coeff_C_mul, MvPolynomial.coeff_map] at hz
   have hz2 := congrArg (fun p : LaurentPolynomial k1 => p.coeff k) hz
-  rw [AddMonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply] at hz2
+  rw [AddMonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply] at hz2
   have hT : ∀ k' (c : k1), (LaurentPolynomial.T k' * ψ c).coeff k = if k' = k then c else 0 := by
     intro k' c
     rw [hψ, mul_comm, ← LaurentPolynomial.single_eq_C_mul_T, AddMonoidAlgebra.coeff_single, Finsupp.single_apply]

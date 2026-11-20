@@ -93,7 +93,7 @@ theorem repr_bc (bc : V →ₗ[Ω] V₁) (w : Module.Basis (Fin N) Ω V) (w₁ :
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_smul, hw, algebraMap_smul]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [h1, map_sum, Finsupp.finset_sum_apply, Finset.sum_eq_single j]
+    rw [h1, map_sum, Finsupp.finsetSum_apply, Finset.sum_eq_single j]
   · rw [map_smul, Module.Basis.repr_self, Finsupp.smul_apply, Finsupp.single_eq_same, smul_eq_mul,
       mul_one]
   · intro i _ hij

@@ -83,7 +83,7 @@ theorem fam_deg (F : Type) [Field F] (m : ℕ) (vec : Bool) (α : Fin (m + 1) �
 
 theorem dg_false_diag (m : ℕ) (c t : Fin (m + 1)) (ht : t.val < m) :
     dg m false c (t, t) = if t < c then 1 else 0 := by
-  simp only [dg, Bool.false_eq_true, if_false, Finsupp.finset_sum_apply, Finsupp.single_apply]
+  simp only [dg, Bool.false_eq_true, if_false, Finsupp.finsetSum_apply, Finsupp.single_apply]
   rw [Finset.sum_eq_single (⟨t.val, ht⟩ : Fin m)]
   · by_cases htc : t < c
     · rw [if_pos htc, if_pos]
@@ -195,7 +195,7 @@ theorem key_inj (m : ℕ) (top vec : Bool) (d : ℕ) (ν : Fin (m + 1) → ℕ) 
         · by_cases hnm : n ≤ m
           · have ht : n - 1 < m + 1 := by omega
             have he := congrArg (fun f => f ((⟨n - 1, ht⟩ : Fin (m + 1)), (⟨n - 1, ht⟩ : Fin (m + 1)))) h
-            simp only [Finsupp.add_apply, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul] at he
+            simp only [Finsupp.add_apply, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul] at he
             rw [hz x, hz x', add_zero, add_zero,
               sum_mul_dg_diag_eq_sum_filter m n α _ (by show n - 1 < m; omega) (by show n - 1 + 1 = n; omega),
               sum_mul_dg_diag_eq_sum_filter m n α' _ (by show n - 1 < m; omega) (by show n - 1 + 1 = n; omega)] at he
@@ -222,7 +222,7 @@ theorem key_inj (m : ℕ) (top vec : Bool) (d : ℕ) (ν : Fin (m + 1) → ℕ) 
           exact h00
         · exact Finset.sum_eq_zero_iff.mp hrest a (Finset.mem_erase.mpr ⟨ha, Finset.mem_univ a⟩)
       have he := congrArg (fun f => f (c, (0 : Fin (m + 1)))) h
-      simp only [Finsupp.add_apply, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul] at he
+      simp only [Finsupp.add_apply, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul] at he
       rw [hcol x, hcol x'] at he
       have hs1 : ∀ β : Fin (m + 1) →₀ ℕ, ∑ c', β c' * dg m true c' (c, 0) = β c := by
         intro β

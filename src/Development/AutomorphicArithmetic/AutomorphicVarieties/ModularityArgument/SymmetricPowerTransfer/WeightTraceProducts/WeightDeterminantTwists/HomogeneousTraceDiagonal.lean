@@ -37,7 +37,7 @@ private theorem tri (d : ℕ) : ∀ (V : Type) [AddCommGroup V] [Module ℂ V] [
       rw [Submodule.coe_sum] at this
       exact this.symm
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [e, map_sum, Finsupp.finset_sum_apply]
+      rw [e, map_sum, Finsupp.finsetSum_apply]
     refine Finset.sum_eq_zero fun k _ => ?_
     rw [map_smul, Module.Basis.repr_self, Finsupp.smul_apply, Finsupp.single_apply]
     split_ifs with hk

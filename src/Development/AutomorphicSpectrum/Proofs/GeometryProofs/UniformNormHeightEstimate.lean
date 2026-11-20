@@ -224,7 +224,7 @@ theorem geomDeg_combLine_top (hI : PB.Inputs) (M : Top.RootModel Ψ N) (n : Opti
     have : ∏ i, (n (w i) : ℝ) = 0 := Finset.prod_eq_zero (Finset.mem_univ j) (by simp [hj, hn])
     simp [this]
   · have hc : (∑ j, Finsupp.single (w j) (1 : ℕ)) none = 0 := by
-      rw [Finsupp.finset_sum_apply]
+      rw [Finsupp.finsetSum_apply]
       refine Finset.sum_eq_zero fun j _ => ?_
       rw [Finsupp.single_apply, if_neg fun h => hw ⟨j, h⟩]
     rw [Top.RealGeo.geoMono_word hI M R w, hc, pow_zero, mul_one,

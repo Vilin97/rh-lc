@@ -195,7 +195,7 @@ theorem values_basis : ∀ (E : Type) [Field E] [NumberField E] (Ω Vs C : Type)
       unfold comb
       exact Finset.sum_congr rfl fun i _ => by rw [hB]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [this, map_sum, Finsupp.finset_sum_apply]
+      rw [this, map_sum, Finsupp.finsetSum_apply]
     simp [Finsupp.single_apply]
   have htrΩ : (∑ k, ((∑ i, c k i • x i) k : R') : R') = (n : R') := by
     apply Subtype.ext

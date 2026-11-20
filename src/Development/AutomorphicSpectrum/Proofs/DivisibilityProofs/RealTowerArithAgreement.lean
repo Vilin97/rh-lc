@@ -227,7 +227,7 @@ theorem prod_cS (lam : Wt Ψ N) (s : ℝ) {d : ℕ} (w : Fin d → Option (Ψ ×
     ∏ k, cS lam s (w k) = (∏ k, M.coef lam s (w k)) *
       (M.kA : ℝ) ^ ((∑ k, Finsupp.single (w k) 1 : Option (Ψ × Fin N) →₀ ℕ) none) := by
   have hk : (M.kA : ℝ) ≠ 0 := Nat.cast_ne_zero.2 M.kA_pos.ne'
-  rw [Finsupp.finset_sum_apply, ← Finset.prod_pow_eq_pow_sum, ← Finset.prod_mul_distrib]
+  rw [Finsupp.finsetSum_apply, ← Finset.prod_pow_eq_pow_sum, ← Finset.prod_mul_distrib]
   refine Finset.prod_congr rfl fun k _ => ?_
   cases w k with
   | none => simp [cS, RootModel.coef, hk]

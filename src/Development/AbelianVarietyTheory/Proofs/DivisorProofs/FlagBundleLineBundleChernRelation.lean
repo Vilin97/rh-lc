@@ -75,7 +75,7 @@ theorem dens_sym_mul_pull (x : Fin (d + 1) × Fin (d + 1)) (β : Alt d) :
   have hv : (bas d).repr (vol d : Alt d) Finset.univ = c := by simp [e]
   conv_lhs => rw [← (bas d).sum_repr β]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sum, Finset.mul_sum, dens, map_sum, Finsupp.finset_sum_apply, Finset.sum_eq_single Finset.univ _ (by simp)]
+    rw [map_sum, Finset.mul_sum, dens, map_sum, Finsupp.finsetSum_apply, Finset.sum_eq_single Finset.univ _ (by simp)]
   · simp only [dens, hv, e, map_smul, mul_smul_comm, Finsupp.smul_apply, smul_eq_mul, Module.Basis.repr_self,
       Finsupp.single_eq_same]
     field_simp
@@ -125,7 +125,7 @@ theorem dens_ofValues_mul_pull (α : V (d + 1) → V (d + 1) → ℂ) (β : Alt 
     simp only [dens, map_smul, Finsupp.smul_apply, smul_eq_mul, mul_div_assoc]
   have hsum {ι : Type} (s : Finset ι) (f : ι → Alt (d + 1)) : dens (∑ i ∈ s, f i) = ∑ i ∈ s, dens (f i) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [dens, map_sum, Finsupp.finset_sum_apply, Finset.sum_div]
+      simp only [dens, map_sum, Finsupp.finsetSum_apply, Finset.sum_div]
   simp only [ofValues, AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, Finset.sum_mul, smul_mul_assoc, hsum, hs,
     ite_and]
   simp

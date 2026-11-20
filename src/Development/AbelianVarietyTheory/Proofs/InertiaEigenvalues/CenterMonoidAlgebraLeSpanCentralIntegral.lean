@@ -12,7 +12,7 @@ noncomputable def classSum [DecidableEq (ConjClasses G)] (C : ConjClasses G) : M
 theorem coeff_classSum [DecidableEq (ConjClasses G)] (C : ConjClasses G) (y : G) :
     (classSum C).coeff y = if ConjClasses.mk y = C then 1 else 0 := by
   classical
-  simp [classSum, coeff_sum, coeff_single, Finsupp.finset_sum_apply, Finsupp.single_apply]
+  simp [classSum, coeff_sum, coeff_single, Finsupp.finsetSum_apply, Finsupp.single_apply]
 
 theorem classSum_comm [DecidableEq (ConjClasses G)] (C : ConjClasses G) (a : MonoidAlgebra ℤ G) :
     classSum C * a = a * classSum C := by
@@ -53,11 +53,11 @@ theorem mem_span (R G : Type) [CommRing R] [Group G] [Finite G] (z : MonoidAlgeb
     intro C x
     set_option synthInstance.maxHeartbeats 100000 in
       simp [classSum, map_sum, MonoidAlgebra.mapRangeRingHom_single, coeff_sum, coeff_single,
-      Finsupp.finset_sum_apply, Finsupp.single_apply, apply_ite (Int.cast : ℤ → R)]
+      Finsupp.finsetSum_apply, Finsupp.single_apply, apply_ite (Int.cast : ℤ → R)]
   have hz' : z = ∑ C, z.coeff (rep C) • MonoidAlgebra.mapRingHom G (Int.castRingHom R) (classSum C) := by
     apply MonoidAlgebra.ext
     ext x
-    rw [coeff_sum, Finsupp.finset_sum_apply]
+    rw [coeff_sum, Finsupp.finsetSum_apply]
     simp only [coeff_smul, Finsupp.smul_apply, hmap, smul_eq_mul, mul_ite, mul_one, mul_zero,
       Finset.sum_ite_eq, Finset.mem_univ, if_true]
     refine coeff_conj_eq z hz ?_

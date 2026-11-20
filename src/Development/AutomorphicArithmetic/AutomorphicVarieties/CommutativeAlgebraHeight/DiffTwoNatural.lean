@@ -173,7 +173,7 @@ private theorem PRep.d2 {D : GDet n A G} {P : MvPolynomial G A} (h : PRep D P) :
         MvPolynomial (G ⊕ G) A) := by
     funext g
     simp only [_root_.el, Finset.sum_mul_sum, MonoidAlgebra.single_mul_single, MonoidAlgebra.coeff_sum,
-      MonoidAlgebra.coeff_single, Finsupp.finset_sum_apply, Finsupp.single_apply]
+      MonoidAlgebra.coeff_single, Finsupp.finsetSum_apply, Finsupp.single_apply]
     apply Finset.sum_congr rfl
     intro a _
     rw [Finset.sum_eq_single (a⁻¹ * g)]

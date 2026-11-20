@@ -284,7 +284,7 @@ theorem exists_integral_descent {LL : Type} [Field LL] [NumberField LL] (L0 : In
     exact Finset.sum_congr rfl fun t _ => by ring
   have h3 := congrArg (fun z : L0 => (z : LL)) h2
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul, hα, map_zero, Finsupp.zero_apply]
+    simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul, hα, map_zero, Finsupp.zero_apply]
   simpa using h3
 
 theorem normV_isUnit (D : D7) (T : TwR D.LL0 D.nd) (i : T.Tw) (w : PlE D.host) (hw : w ∉ T.S0 i) :

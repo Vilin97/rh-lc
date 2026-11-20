@@ -184,7 +184,7 @@ private theorem map_gen {B C G : Type} [CommRing B] [CommRing C] [Group G] (s : 
   ext g
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [gen, map_sum, MonoidAlgebra.mapRingHom_single, MonoidAlgebra.coeff_sum,
-    MonoidAlgebra.coeff_single, Finsupp.finset_sum_apply, Finsupp.single_apply, Finset.sum_ite_eq']
+    MonoidAlgebra.coeff_single, Finsupp.finsetSum_apply, Finsupp.single_apply, Finset.sum_ite_eq']
   split_ifs with hg
   · exact hψ g hg
   · exact (Finsupp.notMem_support_iff.1 fun h => hg (hy h)).symm
@@ -192,7 +192,7 @@ private theorem map_gen {B C G : Type} [CommRing B] [CommRing C] [Group G] (s : 
 private theorem gen_coeff {B G : Type} [CommRing B] [DecidableEq G] (s : Finset G) (g : G) :
     (gen B s).coeff g = if g ∈ s then MvPolynomial.X g else 0 := by
   simp only [gen, MonoidAlgebra.coeff_sum,
-    MonoidAlgebra.coeff_single, Finsupp.finset_sum_apply, Finsupp.single_apply, Finset.sum_ite_eq']
+    MonoidAlgebra.coeff_single, Finsupp.finsetSum_apply, Finsupp.single_apply, Finset.sum_ite_eq']
 
 private theorem lemB {n : ℕ} {B A G : Type} [CommRing B] [CommRing A] [Group G] (R : GDet n A G)
     (f : B →+* A) (hf : Function.Injective f)

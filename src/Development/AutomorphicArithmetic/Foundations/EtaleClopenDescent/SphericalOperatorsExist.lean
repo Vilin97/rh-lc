@@ -40,7 +40,7 @@ private def cv (A B : G →₀ ℂ) : G →₀ ℂ :=
 private theorem cv_mem (R : Subring ℂ) {A B : G →₀ ℂ} (hA : ∀ g, A g ∈ R) (hB : ∀ g, B g ∈ R) (x : G) :
     cv A B x ∈ R := by
   classical
-  simp only [cv, Finsupp.sum, Finsupp.finset_sum_apply]
+  simp only [cv, Finsupp.sum, Finsupp.finsetSum_apply]
   refine R.sum_mem fun g _ => R.sum_mem fun h _ => ?_
   rw [Finsupp.single_apply]
   split_ifs
@@ -169,7 +169,7 @@ private theorem exists_Tj_op (R : Subring ℂ) {ϖ : w.adicCompletion E} (hϖ : 
     · exact R.zero_mem
   refine ⟨∑ c ∈ hfin.toFinset, Finsupp.single c.out (Formalism.UG.Tj ℂ a (Formalism.UG.Ov E w) ϖ j c.out), fun g => ?_,
     fun V _ _ ρ x => ?_⟩
-  · rw [Finsupp.finset_sum_apply]
+  · rw [Finsupp.finsetSum_apply]
     refine R.sum_mem fun c _ => ?_
     rw [Finsupp.single_apply]
     split_ifs

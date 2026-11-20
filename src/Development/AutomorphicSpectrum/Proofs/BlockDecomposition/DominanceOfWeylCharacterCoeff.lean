@@ -114,7 +114,7 @@ theorem bd_single (φ : (Fin n → ℤ) →+ ℤ) (m : Fin n → ℤ) (r : ℂ) 
 theorem Bd.sum {ι : Type*} {φ : (Fin n → ℤ) →+ ℤ} (s : Finset ι) (F : ι → LP n) {B : ℤ}
     (h : ∀ i ∈ s, Bd φ (F i) B) : Bd φ (∑ i ∈ s, F i) B := by
   intro ν hν
-  rw [AddMonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply] at hν
+  rw [AddMonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply] at hν
   obtain ⟨i, hi, hi'⟩ := Finset.exists_ne_zero_of_sum_ne_zero hν
   exact h i hi ν hi'
 
@@ -173,7 +173,7 @@ theorem delZ_injective : Function.Injective (delZ n) := by
 theorem coeff_altL_delZ : (altL (delZ n)).coeff (delZ n) = 1 := by
   classical
   unfold altL
-  rw [AddMonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply, Finset.sum_eq_single (1 : Equiv.Perm (Fin n))]
+  rw [AddMonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply, Finset.sum_eq_single (1 : Equiv.Perm (Fin n))]
   · simp
   · intro σ _ hσ
     rw [AddMonoidAlgebra.coeff_smul, Finsupp.smul_apply, AddMonoidAlgebra.coeff_single, Finsupp.single_apply,

@@ -27,7 +27,7 @@ theorem repr_coord {K L : Type} [Field K] [Field L] [Algebra K L] {n : ℕ} {s :
     (b : Module.Basis s K L) (a : Fin n → K) (y : Fin n → L) (j : s) :
     b.repr (∑ k, algebraMap K L (a k) * y k) j = ∑ k, a k * b.repr (y k) j := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp [← Algebra.smul_def, map_sum, Finsupp.finset_sum_apply]
+    simp [← Algebra.smul_def, map_sum, Finsupp.finsetSum_apply]
 
 theorem map_mulVec_comp {K L : Type} [Field K] [Field L] [Algebra K L] {n : ℕ}
     (M : Matrix (Fin n) (Fin n) K) (x : Fin n → K) :

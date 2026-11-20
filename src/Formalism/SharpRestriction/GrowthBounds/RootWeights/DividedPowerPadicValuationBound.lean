@@ -38,7 +38,7 @@ theorem sum_single_apply_section {ι : Type} {n : ℕ} (g : ι → ι × Fin n) 
     (v : ι × Fin n) [Decidable (v = g v.1)] :
     (∑ l ∈ f.support, Finsupp.single (g l) (f l)) v = if v = g v.1 then f v.1 else 0 := by
   classical
-  rw [Finsupp.finset_sum_apply]
+  rw [Finsupp.finsetSum_apply]
   have key : ∀ l, g l = v → l = v.1 ∧ v = g v.1 := by
     rintro l rfl
     exact ⟨(hg l).symm, by rw [hg l]⟩

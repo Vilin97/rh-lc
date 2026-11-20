@@ -143,7 +143,7 @@ private lemma typ_perm {g g' : Fin n → G} (h : typ g = typ g') : ∃ σ : Equi
   classical
   have c : ∀ (u : Fin n → G) (a : G), typ u a = Fintype.card {i // u i = a} := by
     intro u a
-    simp [typ, Finsupp.finset_sum_apply, Finsupp.single_apply, Fintype.card_subtype]
+    simp [typ, Finsupp.finsetSum_apply, Finsupp.single_apply, Fintype.card_subtype]
   refine ⟨Equiv.ofFiberEquiv (f := g') (g := g) fun a => Fintype.equivOfCardEq (by rw [← c, ← c, h]), ?_⟩
   funext i
   exact Equiv.ofFiberEquiv_map _ i
@@ -151,7 +151,7 @@ private lemma typ_perm {g g' : Fin n → G} (h : typ g = typ g') : ∃ σ : Equi
 omit [Group G] in
 private lemma mem_support_typ {g : Fin n → G} {a : G} : a ∈ (typ g).support ↔ ∃ i, g i = a := by
   classical
-  simp [typ, Finsupp.finset_sum_apply, Finsupp.single_apply, Finset.eq_empty_iff_forall_notMem]
+  simp [typ, Finsupp.finsetSum_apply, Finsupp.single_apply, Finset.eq_empty_iff_forall_notMem]
 
 omit [Group G] in
 private lemma exists_typ : ∀ (n : ℕ) (α : G →₀ ℕ), α.degree = n → ∃ g : Fin n → G, typ g = α := by
@@ -175,7 +175,7 @@ private def gam (B : Type) [CommRing B] (S : Finset G) : MonoidAlgebra (MvPolyno
 omit [Group G] in
 private lemma coeff_gam [DecidableEq G] (S : Finset G) (g : G) :
     (gam B S).coeff g = if g ∈ S then MvPolynomial.X g else 0 := by
-  simp [gam, coeff_sum, Finsupp.finset_sum_apply, Finsupp.single_apply]
+  simp [gam, coeff_sum, Finsupp.finsetSum_apply, Finsupp.single_apply]
 
 omit [Group G] in
 private lemma coeff_tens_gam [DecidableEq G] (S : Finset G) (g : Fin n → G) :
@@ -553,7 +553,7 @@ private lemma sum_pc (x : MonoidAlgebra B G) (i : Fin n) :
   have e : (tens fun _ => lin x) = ∑ j ∈ Finset.range (n + 1),
       (X ^ j : B[X]) • mapRingHom _ (algebraMap B B[X]) (pc n x j) := by
     ext g : 2
-    rw [MonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply, coeff_tens,
+    rw [MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply, coeff_tens,
       Polynomial.as_sum_range_C_mul_X_pow' _ (Nat.lt_succ_of_le (natDegree_tens_lin x g))]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [coeff_smul_apply, coeff_mapRingHom, coeff_pc, smul_eq_mul, mul_comm]
@@ -657,7 +657,7 @@ private theorem cayley_hamilton (D : GDet n A G) (x m r : MonoidAlgebra B G) :
         (MvPolynomial.monomial α 1 : MvPolynomial ℕ B) • mapRingHom _ (algebraMap B _)
           (MonoidAlgebra.map (MvPolynomial.lcoeff B α : MvPolynomial ℕ B →+ B) z) := by
       ext g : 2
-      rw [coeff_sum, Finsupp.finset_sum_apply]
+      rw [coeff_sum, Finsupp.finsetSum_apply]
       ext β
       simp only [coeff_smul_apply, coeff_mapRingHom, coeff_map, Finsupp.mapRange_apply, smul_eq_mul,
         MvPolynomial.coeff_sum, MvPolynomial.algebraMap_eq, mul_comm _ (MvPolynomial.C _),
@@ -1108,7 +1108,7 @@ private lemma eq_ofRep [Field k] [Algebra A k] [IsLocalHom (algebraMap A k)] (D 
       (M : Matrix (Fin n) (Fin n) B), σ B' (M.map g) = mapRingHom G (g : B →+* B') (σ B M) := by
     intro B B' _ _ _ _ g M
     ext h
-    simp [hσ, MonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply]
+    simp [hσ, MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply]
   have h2 : ∀ (B : Type) [CommRing B] [Algebra A B] (y : MonoidAlgebra B G),
       y - σ B (GDet.repAlg ρ B y) ∈ kerB D B := by
     intro B _ _ y

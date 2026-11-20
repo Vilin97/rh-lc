@@ -229,7 +229,7 @@ theorem sumW_single (k : Fin 2) (f : Polynomial (ZMod (D.host.g k))) (g : GL (Fi
 theorem sumW_all (k : Fin 2) (g : GL (Fin D.R.r) (ZMod (D.host.g k))) :
     ∑ c : Fin D.R.r → ZMod (D.host.g k), (D.ntypes.eSer k (Formalism.CyclotomicNorms.monicOf c)).coeff g =
       (1 : MonoidAlgebra ℂ (GL (Fin D.R.r) (ZMod (D.host.g k)))).coeff g := by
-  rw [← Formalism.L2.SG.AllRowsOf.sum_eSer' k, MonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply]
+  rw [← Formalism.L2.SG.AllRowsOf.sum_eSer' k, MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply]
 
 open Classical in
 
@@ -529,7 +529,7 @@ theorem mul_supp {H : Subgroup (∀ i, G i)} (A B : MonoidAlgebra ℂ (∀ i, G 
 
 theorem sum_supp {κ : Type} (T : Finset κ) {H : Subgroup (∀ i, G i)} (A : κ → MonoidAlgebra ℂ (∀ i, G i))
     (hA : ∀ t, ∀ γ, (A t).coeff γ ≠ 0 → γ ∈ H) (γ : ∀ i, G i) (h : (∑ t ∈ T, A t).coeff γ ≠ 0) : γ ∈ H := by
-  rw [MonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply] at h
+  rw [MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply] at h
   obtain ⟨t, -, ht⟩ := Finset.exists_ne_zero_of_sum_ne_zero h
   exact hA t γ ht
 

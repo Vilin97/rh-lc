@@ -411,7 +411,7 @@ theorem exists_hasSupport (hZ : GlobalTheory.Published.ZelevinskyPolynomialRing)
     have h2 : Finsupp.single x (1 : ℤ) = Ψ.symm P := (Ψ.symm_apply_apply _).symm
     have h3 : Ψ.symm P x = 0 := by
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [MvPolynomial.as_sum P, map_sum, Finsupp.finset_sum_apply]
+        rw [MvPolynomial.as_sum P, map_sum, Finsupp.finsetSum_apply]
       refine Finset.sum_eq_zero fun m _ => ?_
       have h4 : MvPolynomial.monomial m (AddMonoidAlgebra.coeff P m) =
           (AddMonoidAlgebra.coeff P m) • MvPolynomial.monomial m (1 : ℤ) := by

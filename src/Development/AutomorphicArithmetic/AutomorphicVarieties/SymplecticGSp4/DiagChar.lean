@@ -54,7 +54,7 @@ private theorem match_chars {H K : Type} [Group H] [Field K] (a b : Fin 4 → H 
       funext g
       simpa using h g
     have h2 := congrArg (fun f => f (b j)) h1
-    simp only [Finsupp.finset_sum_apply, Finsupp.single_apply, hn, hb.eq_iff] at h2
+    simp only [Finsupp.finsetSum_apply, Finsupp.single_apply, hn, hb.eq_iff] at h2
     simp at h2
   choose n hn using key
   have hinj : Function.Injective n := fun x y e => hb (by rw [← hn x, ← hn y, e])

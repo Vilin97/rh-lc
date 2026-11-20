@@ -40,7 +40,7 @@ theorem repr_mul_incl (y : R ⊗[F] E) (e : E) (k : Fin d) :
       ∑ l, (Algebra.TensorProduct.basis R b).repr y l * algebraMap F R (b.repr (b l * e) k) := by
   conv_lhs => rw [← (Algebra.TensorProduct.basis R b).sum_repr y]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [Finset.sum_mul, map_sum, Finsupp.finset_sum_apply]
+    rw [Finset.sum_mul, map_sum, Finsupp.finsetSum_apply]
   refine Finset.sum_congr rfl fun l _ => ?_
   rw [smul_mul_assoc, map_smul, Finsupp.smul_apply, Algebra.TensorProduct.basis_apply]
   simp [inclR, Algebra.TensorProduct.tmul_mul_tmul, Algebra.TensorProduct.basis_repr_tmul]
@@ -67,7 +67,7 @@ theorem coE_rmul {n M : ℕ} (X : Fin n → Fin M → R ⊗[F] E) (g : Matrix (F
   funext ⟨a, i, k⟩
   change (Algebra.TensorProduct.basis R b).repr (∑ c, X c i * inclR R (g c a)) k = _
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sum, Finsupp.finset_sum_apply]
+    rw [map_sum, Finsupp.finsetSum_apply]
   simp only [Matrix.mulVec, dotProduct, Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [repr_mul_incl, Finset.sum_eq_single i]

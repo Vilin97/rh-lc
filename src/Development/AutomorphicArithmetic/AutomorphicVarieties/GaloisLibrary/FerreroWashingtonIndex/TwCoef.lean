@@ -101,7 +101,7 @@ theorem UpperTheory.V.FW.twCoef :
     have h1 := congrArg (fun x => MonoidAlgebra.coeff x q) htw
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, toK, MonoidAlgebra.mapRingHom_single, eq_intCast, tw_single,
-      MonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply, MonoidAlgebra.single_apply,
+      MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply, MonoidAlgebra.single_apply,
       MonoidAlgebra.coeff_zero, Finsupp.coe_zero, Pi.zero_apply] at h1
     rw [Finset.sum_filter]
     exact h1

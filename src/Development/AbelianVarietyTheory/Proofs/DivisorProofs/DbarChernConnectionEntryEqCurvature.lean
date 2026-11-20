@@ -19,7 +19,7 @@ theorem coefwise_dbar_sum_smul_bas {n : ℕ} {J : Type} [Fintype J] (u : J → V
       ∑ a, GlobalTheory.dbar (u a) v η • bas n (S a) := by
   refine (bas n).ext_elem fun S' => ?_
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [coefwise, map_sum, map_smul, Module.Basis.repr_self, Finsupp.finset_sum_apply, Finsupp.smul_apply,
+    simp only [coefwise, map_sum, map_smul, Module.Basis.repr_self, Finsupp.finsetSum_apply, Finsupp.smul_apply,
     Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
   have hd (a : J) : DifferentiableAt ℝ (fun x => if S a = S' then u a x else 0) v := by
     split_ifs

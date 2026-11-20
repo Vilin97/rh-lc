@@ -13,7 +13,7 @@ noncomputable def allOne (q : ℕ) : Fin q →₀ ℕ := ∑ j, Finsupp.single j
 
 theorem toMultiset_allOne (q : ℕ) : (allOne q).toMultiset = Finset.univ.val := by
   ext j
-  simp [allOne, Finsupp.count_toMultiset, Finsupp.finset_sum_apply, Finsupp.single_apply]
+  simp [allOne, Finsupp.count_toMultiset, Finsupp.finsetSum_apply, Finsupp.single_apply]
 
 theorem degree_allOne (q : ℕ) : (allOne q).degree = q := by
   set_option synthInstance.maxHeartbeats 100000 in

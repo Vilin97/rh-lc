@@ -22,7 +22,7 @@ theorem coefwise_dbar_sum_smul {n : ℕ} {ι : Type} [Fintype ι] {c : ι → V 
         fun x => ∑ i, c i x * (bas n).repr (F i x) S := by
       funext x
       set_option synthInstance.maxHeartbeats 100000 in
-        simp [map_sum, Finsupp.finset_sum_apply]
+        simp [map_sum, Finsupp.finsetSum_apply]
     rw [e, GlobalTheory.dbar_sum (A := fun i x => c i x * (bas n).repr (F i x) S) (fun i _ => (hc i).mul (hF i S)),
       ContinuousLinearMap.sum_apply]
     exact Finset.sum_congr rfl fun i _ => GlobalTheory.dbar_mul (hc i) (hF i S) w

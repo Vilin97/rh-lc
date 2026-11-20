@@ -26,7 +26,7 @@ theorem polMapD_index_injective (W : Type) [Fintype W] (Λ : W → Type) :
   have key : ∀ (f : ∀ w, (Λ w →₀ ℕ)) (w : W) (l : Λ w),
       (∑ w, Finsupp.mapDomain (Sigma.mk w) (f w)) ⟨w, l⟩ = f w l := by
     intro f w l
-    rw [Finsupp.finset_sum_apply, Finset.sum_eq_single w]
+    rw [Finsupp.finsetSum_apply, Finset.sum_eq_single w]
     · exact Finsupp.mapDomain_apply sigma_mk_injective _ _
     · intro v _ hv
       apply Finsupp.mapDomain_notin_range

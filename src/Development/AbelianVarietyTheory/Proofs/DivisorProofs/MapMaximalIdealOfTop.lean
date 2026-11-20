@@ -140,7 +140,7 @@ theorem exists_functional_prod (e : ℕ) (I : (Fin e → ι) → ℝ) (hI : ∀ 
   rw [e₁, Module.Basis.constr_basis, dif_pos h]
   have hc (c : ι) : Fintype.card {j // h.choose j = c} = Fintype.card {j // a j = c} := by
     have := DFunLike.congr_fun h.choose_spec c
-    simp only [Finsupp.finset_sum_apply, Finsupp.single_apply] at this
+    simp only [Finsupp.finsetSum_apply, Finsupp.single_apply] at this
     simp only [Fintype.card_subtype, Finset.card_filter]
     exact this
   rw [← hI a (Equiv.ofFiberEquiv fun c => Fintype.equivOfCardEq (hc c))]

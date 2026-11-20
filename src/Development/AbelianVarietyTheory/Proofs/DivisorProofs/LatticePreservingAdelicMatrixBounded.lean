@@ -85,7 +85,7 @@ theorem coord_mem {n : ℕ} (b : Module.Basis (Fin n) F E) (W : Spc F E d) (v : 
     rw [Pi.smul_apply, tensMap_smul, tensMap_inclR, map_smul, Pi.smul_apply, crd_inclR, smul_eq_mul]
     have hrep : b.repr ((∑ k, c k • x k) i) l = ∑ k, (c k : F) * b.repr (x k i) l := by
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [Finset.sum_apply, map_sum, Finsupp.finset_sum_apply]
+        rw [Finset.sum_apply, map_sum, Finsupp.finsetSum_apply]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [Pi.smul_apply, map_zsmul, Finsupp.smul_apply, zsmul_eq_mul]
     set_option synthInstance.maxHeartbeats 100000 in

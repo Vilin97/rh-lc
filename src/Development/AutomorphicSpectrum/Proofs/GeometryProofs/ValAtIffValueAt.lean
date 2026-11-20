@@ -88,7 +88,7 @@ theorem chartMonomial_homog (j : ∀ k, J k) (d : K → ℕ) : IsMultiHomog (cha
   rw [e] at hm
   have hm' := Finset.mem_singleton.mp (MvPolynomial.support_monomial_subset hm)
   subst hm'
-  simp only [Finsupp.finset_sum_apply]
+  simp only [Finsupp.finsetSum_apply]
   rw [Finset.sum_comm, Finset.sum_eq_single k]
   · rw [Finset.sum_eq_single (j k)]
     · simp

@@ -72,7 +72,7 @@ theorem push_mul (i : A →* G) (e e' : MonoidAlgebra ℂ A) : push i (e * e') =
 
 theorem tr_sum {ι : Type} (s : Finset ι) (e : ι → MonoidAlgebra ℂ G) (χ : G → ℂ) :
     tr (∑ i ∈ s, e i) χ = ∑ i ∈ s, tr (e i) χ := by
-  simp only [tr, MonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply, Finset.sum_mul]
+  simp only [tr, MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply, Finset.sum_mul]
   exact Finset.sum_comm
 
 theorem tr_single (x : G) (c : ℂ) (χ : G → ℂ) : tr (MonoidAlgebra.single x c) χ = c * χ x := by

@@ -266,7 +266,7 @@ theorem repr_rho (g : S'.G) (x : S'.V) (l : S.ιV) :
     b.bas.repr (S'.ρ g x) l = ∑ i, b.bas.repr x i * ι (S.bV.repr (S.ρ (b.eG g) (S.bV i)) l) := by
   conv_lhs => rw [← b.bas.sum_repr x]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sum, map_sum, Finsupp.finset_sum_apply]
+    rw [map_sum, map_sum, Finsupp.finsetSum_apply]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_smul, b.bas_apply, b.rho, map_smul, Finsupp.smul_apply, b.repr_j, smul_eq_mul]
 
@@ -280,7 +280,7 @@ theorem coord_rho (k : Fin F.r) (g : S'.G) (x : S'.V) :
       rw [coord, map_sum]
     exact Finset.sum_congr rfl fun i _ => map_smul _ _ _
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [h2, map_sum, Finsupp.finset_sum_apply]
+    rw [h2, map_sum, Finsupp.finsetSum_apply]
   simp only [Finset.sum_apply, map_smul, Finsupp.smul_apply, smul_eq_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [mul_comm, F.smul, Pi.smul_apply, smul_eq_mul, mul_comm]

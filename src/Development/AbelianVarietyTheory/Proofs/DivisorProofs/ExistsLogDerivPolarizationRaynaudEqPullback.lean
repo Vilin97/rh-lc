@@ -246,7 +246,7 @@ theorem exists_dlg_eq_pbT : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRin
     fun m => ⟨w.repr m, (w.sum_repr m).symm⟩, fun a a' => ?_, fun b i i' W hW => ?_⟩
   · have h := congrArg (fun m => w.repr (pushL Y.q m) a') (v.sum_repr (u a))
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_smul, hu, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul,
+      simp only [map_sum, map_smul, hu, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul,
       Module.Basis.repr_self, Finsupp.single_apply] at h
     exact h
   · simp only [dlg, pbT_id]

@@ -103,7 +103,7 @@ theorem flat_ker {R R' : Type} [CommRing R] [CommRing R'] (φ : R →+* R') (hφ
       simp [f, Matrix.mulVec_single_one, Finset.sum_apply, Pi.single_apply]
     set_option synthInstance.maxHeartbeats 100000 in
       rw [h2, map_sum] at h1
-    simpa [Matrix.mulVec, dotProduct, Finsupp.finset_sum_apply] using h1
+    simpa [Matrix.mulVec, dotProduct, Finsupp.finsetSum_apply] using h1
   · have h1 := congrArg (fun g => g (Pi.single k 1)) hxy
     simp only [LinearMap.comp_apply] at h1
     have h2 : X (Pi.single k 1) = x k := by simp [X, Fintype.linearCombination_apply, Pi.single_apply]

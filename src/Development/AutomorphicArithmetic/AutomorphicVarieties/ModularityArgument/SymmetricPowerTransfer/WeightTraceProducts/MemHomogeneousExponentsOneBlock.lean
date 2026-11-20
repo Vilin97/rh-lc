@@ -78,7 +78,7 @@ def inB (k : K) (p : Unit × Fin d) : K × Fin d := (k, p.2)
 private theorem glue_eq_sum_mapDomain_inB (ν : K → (Unit × Fin d →₀ ℕ)) :
     glue ν = ∑ k, (ν k).mapDomain (inB k) := by
   ext ⟨k, i⟩
-  rw [glue_apply, Finsupp.finset_sum_apply, Finset.sum_eq_single k]
+  rw [glue_apply, Finsupp.finsetSum_apply, Finset.sum_eq_single k]
   · have hinj : Function.Injective (inB (d := d) k) := by
       rintro ⟨⟨⟩, a⟩ ⟨⟨⟩, b⟩ h
       simp only [inB, Prod.mk.injEq] at h

@@ -201,14 +201,14 @@ theorem mem_range_jD (hd : Descends E) (T : LocLat G Qp LL O) {ι : Type} [Finty
         ∑ q, E.ioE (e.repr (W.φD T (e q)) k) * φR (c.repr (z b) q) := by
       intro b
       set_option synthInstance.maxHeartbeats 100000 in
-        conv_lhs => rw [← c.sum_repr (z b), map_sum, map_sum, Finsupp.finset_sum_apply]
+        conv_lhs => rw [← c.sum_repr (z b), map_sum, map_sum, Finsupp.finsetSum_apply]
       refine Finset.sum_congr rfl fun q _ => ?_
       rw [TWmap, map_smul_alg]
       change c.repr (_ • TWmap φR T (c q)) k = _
       rw [h2, map_smul, Finsupp.smul_apply, c.repr_sum_self, smul_eq_mul, mul_comm]
     change c.repr (z a) k = _
     set_option synthInstance.maxHeartbeats 100000 in
-      conv_lhs => rw [hU a, map_sum, Finsupp.finset_sum_apply]
+      conv_lhs => rw [hU a, map_sum, Finsupp.finsetSum_apply]
     rw [Fintype.sum_prod_type]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [map_smul, Finsupp.smul_apply, h3, smul_eq_mul, Finset.mul_sum]

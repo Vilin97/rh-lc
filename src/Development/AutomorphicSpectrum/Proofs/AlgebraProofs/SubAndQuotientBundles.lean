@@ -39,7 +39,7 @@ theorem finite_not_mapsTo {V V' : Type} [AddCommGroup V] [Module K V] [AddCommGr
       rw [map_sum]
     simp only [map_smul]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [hx', map_sum, Finsupp.finset_sum_apply]
+    rw [hx', map_sum, Finsupp.finsetSum_apply]
   refine (C.v i).map_sum_le fun r _ => ?_
   rw [map_smul, Finsupp.smul_apply, smul_eq_mul, (C.v i).map_mul]
   exact mul_le_one' (hx r) (hcon q r)

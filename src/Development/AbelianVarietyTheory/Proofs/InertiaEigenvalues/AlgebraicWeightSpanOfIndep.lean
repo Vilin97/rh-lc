@@ -215,7 +215,7 @@ theorem GlobalTheory.hwAt_of_hwAtF : ∀ (L : Type) [Field L] [NumberField L] [I
     have hb' : ∀ k, ω (b k) = b' k := fun k => (Module.Basis.mk_apply hli hsp k).symm
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [hb', map_sum, map_smul, Module.Basis.repr_self]
-    rw [Finsupp.finset_sum_apply]
+    rw [Finsupp.finsetSum_apply]
     simp only [Finsupp.smul_apply, Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero,
       Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     rw [hev]

@@ -68,7 +68,7 @@ theorem linInd_map {F K σ ι : Type} [Field F] [Field K] (e : F →+* K) {v : �
     simp only [coeff_sum, coeff_smul, coeff_map, smul_eq_mul, coeff_zero] at h1 ⊢
     have h2 := congrArg (fun x => B.repr x j) h1
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_zero, Finsupp.finset_sum_apply, Finsupp.coe_zero, Pi.zero_apply] at h2
+      simp only [map_sum, map_zero, Finsupp.finsetSum_apply, Finsupp.coe_zero, Pi.zero_apply] at h2
     rw [← h2]
     refine Finset.sum_congr rfl fun i _ => ?_
     have h3 : c i * e (AddMonoidAlgebra.coeff (v i) m) = AddMonoidAlgebra.coeff (v i) m • c i := by

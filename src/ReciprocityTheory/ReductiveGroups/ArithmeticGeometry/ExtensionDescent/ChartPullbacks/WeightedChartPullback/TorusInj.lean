@@ -156,7 +156,7 @@ lemma coeff_sum_single {A : Type} [CommRing A] (s : Finset X) (g : X → A) (χ�
   classical
   first
   | simp [AddMonoidAlgebra.coeff, Finsupp.finsetSum_apply, Finsupp.single_apply, h]
-  | simp [Finsupp.finset_sum_apply, Finsupp.single_apply, h]
+  | simp [Finsupp.finsetSum_apply, Finsupp.single_apply, h]
   | simp [AddMonoidAlgebra.coeff_sum, AddMonoidAlgebra.coeff_single, h]
 
 theorem eq_zero_of_sum {V : Y.left.Opens} (s : Finset X) (h : X → Γ(Y.left, V))

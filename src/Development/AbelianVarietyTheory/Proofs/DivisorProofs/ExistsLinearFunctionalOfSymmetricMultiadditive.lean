@@ -20,7 +20,7 @@ theorem prod_X_eq {ι : Type} {n : ℕ} (c : Fin n → ι) :
 
 theorem expv_apply {ι : Type} [DecidableEq ι] {n : ℕ} (c : Fin n → ι) (i : ι) :
     expv c i = Fintype.card {a // c a = i} := by
-  rw [expv, Finsupp.finset_sum_apply, Fintype.card_subtype]
+  rw [expv, Finsupp.finsetSum_apply, Fintype.card_subtype]
   simp only [Finsupp.single_apply]
   rw [Finset.sum_boole]
   simp

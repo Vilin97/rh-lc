@@ -65,7 +65,7 @@ theorem exists_actOn_eq {C V : Type} [Ring C] [Algebra ℚ C] [AddCommGroup V] [
     apply e.injective
     ext j
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_sum, LinearMap.sum_apply, map_sum, Finsupp.finset_sum_apply]
+      rw [map_sum, LinearMap.sum_apply, map_sum, Finsupp.finsetSum_apply]
     simp_rw [actOn_tmul_tmul, _root_.mul_one, hx, he, Module.Basis.repr_self, Finsupp.single_apply, ite_smul, one_smul,
       zero_smul]
     rw [Finset.sum_ite_eq', ← hAk]

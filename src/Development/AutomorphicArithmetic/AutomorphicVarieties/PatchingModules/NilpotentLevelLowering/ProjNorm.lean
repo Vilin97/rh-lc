@@ -27,7 +27,7 @@ private theorem higman (Λ G N : Type) [CommRing Λ] [Group G] [Fintype G] [AddC
     simp only [AddMonoidHom.comp_apply, LinearMap.toAddMonoidHom_coe, ← map_smul, ← map_sum]
   congr 1
   ext1 n
-  rw [Finsupp.finset_sum_apply]
+  rw [Finsupp.finsetSum_apply]
   simp only [map_smul, Finsupp.smul_apply, Finsupp.mapRange.addMonoidHom_apply, Finsupp.mapRange_apply, smul_eq_mul]
   exact coeffSum Λ G (s m n)
 

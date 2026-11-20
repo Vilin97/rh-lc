@@ -394,7 +394,7 @@ theorem itD_co (hi : ∀ p x, IterAt τ p x) (hR : ∀ r : R, IsCst τ (algebraM
   · simp [itD_empty]
   · intro a s ha ih
     have hS : (∑ p ∈ s, Finsupp.single p (β p)) a = 0 := by
-      rw [Finsupp.finset_sum_apply]
+      rw [Finsupp.finsetSum_apply]
       exact Finset.sum_eq_zero fun p hp => by
         rw [Finsupp.single_apply, if_neg]; rintro rfl; exact ha hp
     have hpow : ∀ (n : ℕ) (y : A), ((hs R τ hR (Finsupp.single a 1)) ^ n) y = (dv τ a)^[n] y := by
@@ -418,7 +418,7 @@ theorem itD_apply (h : IsTay τ) (hi : ∀ p x, IterAt τ p x) (hR : ∀ r : R, 
   classical
   have hsum : ∑ p ∈ s, Finsupp.single p (β p) = β := by
     ext q
-    rw [Finsupp.finset_sum_apply]
+    rw [Finsupp.finsetSum_apply]
     simp only [Finsupp.single_apply, Finset.sum_ite_eq', Finset.sum_ite_eq]
     split_ifs with hq
     · rfl

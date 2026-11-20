@@ -116,7 +116,7 @@ private theorem exists_linearEquiv_diagonal_chars_of_eigenbasis {G : Type} [Grou
       rw [this, sub_self]
     have hl0 : l = 0 := linearIndependent_iff.mp hli l hlc
     have hφ := congrArg (fun f => f φ) hl0
-    simp only [hl, Finsupp.sub_apply, Finsupp.finset_sum_apply, Finsupp.single_apply,
+    simp only [hl, Finsupp.sub_apply, Finsupp.finsetSum_apply, Finsupp.single_apply,
       Finsupp.coe_zero, Pi.zero_apply, Finset.sum_boole, sub_eq_zero] at hφ
     rw [Fintype.card_subtype, Fintype.card_subtype]
     exact_mod_cast hφ

@@ -34,7 +34,7 @@ private theorem UpperTheory.KN.basis_change_matrices_algebra_map {O R R' M ι : 
       simp only [map_smul]
     have h3 := congrArg (fun x => bD.repr x k') h2
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul,
+      simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul,
       Module.Basis.repr_self, Finsupp.single_apply] at h3
     simp only [Matrix.mul_apply, Matrix.of_apply, Matrix.one_apply]
     exact h3.symm

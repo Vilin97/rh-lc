@@ -88,7 +88,7 @@ theorem intA_sum {ι : Type} (t : Finset ι) (f : ι → Fv F v ⊗[F] E) (hf : 
 
   intro k
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sum, Finsupp.finset_sum_apply]
+    rw [map_sum, Finsupp.finsetSum_apply]
   exact sum_mem fun i hi => hf i hi k
 
 theorem intA_smul {c : Fv F v} (hc : c ∈ v.adicCompletionIntegers F) {z : Fv F v ⊗[F] E}

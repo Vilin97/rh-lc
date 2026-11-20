@@ -20,7 +20,7 @@ private theorem d_coeff {Γ I : Type} [Group Γ] [MulAction Γ I] (K : Cx Γ I) 
   show (Rep.Hom.hom (K.d p)) (Finsupp.single x 1) y = _
   simp only [Cx.d]
   rw [hom_sum_apply]
-  simp [KH.faceD_single, Finsupp.finset_sum_apply, Finsupp.single_apply]
+  simp [KH.faceD_single, Finsupp.finsetSum_apply, Finsupp.single_apply]
   refine Finset.sum_congr rfl ?_
   intro i _
   rw [Cx.reC_single, Finsupp.single_apply]

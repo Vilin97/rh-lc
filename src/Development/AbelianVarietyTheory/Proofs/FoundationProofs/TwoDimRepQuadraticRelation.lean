@@ -51,7 +51,7 @@ theorem exists_decomp {E : Type} [Field E] {ι : Type} [Fintype ι] [DecidableEq
       set_option synthInstance.maxHeartbeats 100000 in
         simp [LinearMap.sum_apply, map_sum, map_smul, hPa]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [e, map_sum, Finsupp.finset_sum_apply]
+      rw [e, map_sum, Finsupp.finsetSum_apply]
     simp only [map_smul, Finsupp.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, hπ]
   · intro i M
     refine LinearMap.ext fun v => ?_

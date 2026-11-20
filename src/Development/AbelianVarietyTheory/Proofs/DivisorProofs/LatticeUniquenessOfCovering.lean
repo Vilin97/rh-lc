@@ -93,7 +93,7 @@ theorem coef_mul {V : X.Opens} {e : Fin r → Γ(F, V)} {s : Fin r → Γ(F, U)}
   have k := (hs.basis (inf_le_right : V ⊓ U ≤ U)).sum_repr (resM F inf_le_left (e j))
   have k' := congrArg (fun q => (he.basis (inf_le_left : V ⊓ U ≤ V)).repr q l) k
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_smul, GlobalTheory.VB.IsFrame.basis_apply, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul] at k'
+    simp only [map_sum, map_smul, GlobalTheory.VB.IsFrame.basis_apply, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul] at k'
   refine k'.trans ?_
   rw [← he.basis_apply, Module.Basis.repr_self, Finsupp.single_apply]
 

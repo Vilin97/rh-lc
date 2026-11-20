@@ -59,7 +59,7 @@ theorem coeff_map_mul_eR {π : Γ →* G} {ι : G →* Γ} (h : IsSplit π ι) (
     (MonoidAlgebra.mapDomainAlgHom ℂ ℂ ι x * eR π).coeff γ =
       x.coeff (π γ) * (Nat.card π.ker : ℂ)⁻¹ := by
   unfold eR
-  rw [Finset.mul_sum, MonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply]
+  rw [Finset.mul_sum, MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply]
   simp_rw [MonoidAlgebra.mul_single_apply]
   let r0 : π.ker := ⟨(ι (π γ))⁻¹ * γ, inv_mul_mem_ker h γ⟩
   have key : ∀ r : π.ker, (MonoidAlgebra.mapDomainAlgHom ℂ ℂ ι x).coeff (γ * (r : Γ)⁻¹) =

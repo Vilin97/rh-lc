@@ -53,7 +53,7 @@ theorem prod_X_pow (n : Fin d → ℕ) :
       rw [Finset.prod_insert ha, Finset.sum_insert ha, ih, X_pow_eq, monomial_mul_monomial, mul_one]
   have hsum : (∑ j, Finsupp.single j (n j)) = Finsupp.equivFunOnFinite.symm n := by
     ext j
-    rw [Finsupp.finset_sum_apply, Finset.sum_eq_single j]
+    rw [Finsupp.finsetSum_apply, Finset.sum_eq_single j]
     · simp
     · intro b _ hb
       simp [Finsupp.single_apply, hb]

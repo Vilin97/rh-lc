@@ -132,7 +132,7 @@ theorem xi_mono_mem (N t b : ℕ) (γ : Fin r → ℕ) (hb : ∑ c, γ c = b) :
     simpa [xiVar] using h
   have hval : ∀ c', m (xiVar N r t c') = γ c' := by
     intro c'
-    rw [hm, Finsupp.finset_sum_apply]
+    rw [hm, Finsupp.finsetSum_apply]
     simp [Finsupp.single_apply, hinj.eq_iff]
   rw [hmono]
   refine Submodule.mem_inf.mpr ⟨?_, ?_⟩

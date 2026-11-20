@@ -103,7 +103,7 @@ theorem ev_crd_oev {d : ℕ} (b : Module.Basis (Fin d) F E) :
         rw [map_sum] at this
       simpa [map_zsmul] using this.symm
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [ho, map_sum, Finsupp.finset_sum_apply, map_sum]
+      rw [ho, map_sum, Finsupp.finsetSum_apply, map_sum]
     refine Subring.sum_mem _ fun t _ => ?_
     rw [map_zsmul, Finsupp.smul_apply, map_zsmul]
     exact Subring.zsmul_mem _ (hv t l) _

@@ -32,14 +32,14 @@ theorem coeff_allOnes_prod_one_add_mul {σ : Type} {L : ℕ} (m : Fin L → MvPo
     by_cases ht : t = Finset.univ
     · subst ht
       have : (∑ i ∈ (Finset.univ : Finset (Fin L)), Finsupp.single i 1) = e := by
-        ext j; simp [he, Finsupp.finset_sum_apply, Finsupp.single_apply]
+        ext j; simp [he, Finsupp.finsetSum_apply, Finsupp.single_apply]
       simp [this]
     · obtain ⟨j, hj⟩ : ∃ j, j ∉ t := by
         by_contra h; push_neg at h; exact ht (Finset.eq_univ_iff_forall.mpr h)
       have : (∑ i ∈ t, Finsupp.single i 1) ≠ e := by
         intro h
         have := congrArg (fun f => f j) h
-        simp [he, Finsupp.finset_sum_apply, Finsupp.single_apply, hj] at this
+        simp [he, Finsupp.finsetSum_apply, Finsupp.single_apply, hj] at this
       simp [this, ht]
   rw [map_mul, hr, cmC, map_prod]
   simp_rw [map_add, map_one, map_mul, hr, hx]

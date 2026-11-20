@@ -77,11 +77,11 @@ theorem linInd_mapRange_field {F K P ι : Type} [Field F] [Field K] [Algebra F K
   have key : ∑ i ∈ s, (B.repr (c i) j) • v i = 0 := by
     ext m
     have h1 := congrArg (fun z => z m) hsum
-    simp only [Finsupp.finset_sum_apply, Finsupp.smul_apply, Finsupp.mapRange_apply, smul_eq_mul,
+    simp only [Finsupp.finsetSum_apply, Finsupp.smul_apply, Finsupp.mapRange_apply, smul_eq_mul,
       Finsupp.coe_zero, Pi.zero_apply] at h1 ⊢
     have h2 := congrArg (fun x => B.repr x j) h1
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_zero, Finsupp.finset_sum_apply, Finsupp.coe_zero, Pi.zero_apply] at h2
+      simp only [map_sum, map_zero, Finsupp.finsetSum_apply, Finsupp.coe_zero, Pi.zero_apply] at h2
     rw [← h2]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [mul_comm (c i), ← Algebra.smul_def, map_smul, Finsupp.smul_apply, smul_eq_mul, mul_comm]

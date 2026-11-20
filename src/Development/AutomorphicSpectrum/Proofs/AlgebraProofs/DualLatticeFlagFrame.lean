@@ -168,7 +168,7 @@ theorem dual_graded (R : Subalgebra O Ω) (L : AddSubgroup V) (L₁ : AddSubgrou
         have : v = ∑ i, c i • e' i := by simpa [he'] using hc
         rw [this]
         set_option synthInstance.maxHeartbeats 100000 in
-          simp [map_sum, Finsupp.finset_sum_apply, Finsupp.single_apply]
+          simp [map_sum, Finsupp.finsetSum_apply, Finsupp.single_apply]
       rw [hβu, hcoef]
       exact mul_mem haR (hcR r)
     · rw [hcoord, hβu, hlow _ (by simpa [hr] using Fin.rev_lt_rev.2 hl), mul_zero]

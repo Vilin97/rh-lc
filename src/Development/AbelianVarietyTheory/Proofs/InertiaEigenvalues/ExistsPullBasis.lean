@@ -283,7 +283,7 @@ theorem lemmaPsi : GlobalTheory.IndefiniteRowSideFullHecke.OnePlusPowerCharacter
     rw [map_sub, Finsupp.sub_apply]
     congr 1
     set_option synthInstance.maxHeartbeats 100000 in
-      conv_lhs => rw [← c.sum_repr x, map_sum, map_sum, Finsupp.finset_sum_apply]
+      conv_lhs => rw [← c.sum_repr x, map_sum, map_sum, Finsupp.finsetSum_apply]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [hg, map_smul, Finsupp.smul_apply, h3, smul_eq_mul, mul_comm]
   ext z

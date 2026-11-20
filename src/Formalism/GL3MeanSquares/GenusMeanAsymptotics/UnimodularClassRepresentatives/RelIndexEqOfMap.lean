@@ -154,7 +154,7 @@ theorem relIndex_endL (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
       rw [LinearMap.toMatrix_apply, ← smul_smul, ← hab l]
     set_option synthInstance.maxHeartbeats 100000 in
       rw [LinearMap.toMatrix_apply b b, hba j, map_smul, h2, map_smul, Finsupp.smul_apply, map_sum,
-      Finsupp.finset_sum_apply]
+      Finsupp.finsetSum_apply]
     simp only [map_smul, Basis.repr_self, Finsupp.smul_apply, Finsupp.single_apply, smul_eq_mul, mul_ite,
       mul_one, mul_zero, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     field_simp [heK i, hc0K]

@@ -35,6 +35,6 @@ theorem UpperTheory.V.Kum.cardHomQZ :
     simp
   have e2 : (A →+ QZ l) ≃ (∀ i, ZMod (n i) →+ QZ l) :=
     (AddEquiv.addMonoidHomCongrLeftEquiv e).trans (DFinsupp.liftAddHom).toEquiv.symm
-  rw [Nat.card_congr e2, Nat.card_pi, h1, Nat.factorization_prod fun i _ => hn0 i, Finsupp.finset_sum_apply,
+  rw [Nat.card_congr e2, Nat.card_pi, h1, Nat.factorization_prod fun i _ => hn0 i, Finsupp.finsetSum_apply,
     ← Finset.prod_pow_eq_pow_sum]
   exact Finset.prod_congr rfl fun i _ => cardZmod l _ (hn0 i)

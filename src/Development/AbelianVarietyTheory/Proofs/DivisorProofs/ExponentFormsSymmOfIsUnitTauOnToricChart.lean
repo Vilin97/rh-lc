@@ -51,7 +51,7 @@ theorem exps_eq {σ k : Type} [Field k] [IsDomain (MvPowerSeries σ k)] {m : ℕ
   have happ : ∀ (a : Fin m → ℕ) (i : Fin m), (∑ j, Finsupp.single (v j) (a j)) (v i) = a i := by
     classical
     intro a i
-    rw [Finsupp.finset_sum_apply, Finset.sum_eq_single i]
+    rw [Finsupp.finsetSum_apply, Finset.sum_eq_single i]
     · simp
     · intro j _ hj
       rw [Finsupp.single_apply, if_neg]

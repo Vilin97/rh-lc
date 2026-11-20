@@ -14,7 +14,7 @@ theorem repr_sum (e : Module.Basis (Fin N) ℤ Λ) (v : Fin m → Λ) (y : Fin m
     (fun k => e.repr (∑ i, y i • v i) k) = (coords e v)ᵀ *ᵥ y := by
   funext k
   set_option synthInstance.maxHeartbeats 100000 in
-    simp [coords, mulVec, dotProduct, map_sum, Finsupp.finset_sum_apply, mul_comm]
+    simp [coords, mulVec, dotProduct, map_sum, Finsupp.finsetSum_apply, mul_comm]
 
 theorem eq_of_repr (e : Module.Basis (Fin N) ℤ Λ) {x y : Λ}
     (h : (fun k => e.repr x k) = fun k => e.repr y k) : x = y :=

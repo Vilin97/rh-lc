@@ -253,7 +253,7 @@ def fibExp (ι : Type) [Fintype ι] (N j : ℕ) (x : ι × Fin N) : ℕ :=
 theorem sum_sameP (j : ℕ) (hj : j ≤ N) :
     ∑ p ∈ sameP ι N j, Finsupp.single (p.1, p.2.1) 1 = Finsupp.equivFunOnFinite.symm (fibExp ι N j) := by
   ext ⟨τ, a⟩
-  rw [Finsupp.finset_sum_apply]
+  rw [Finsupp.finsetSum_apply]
   simp only [Finsupp.single_apply, Finsupp.equivFunOnFinite_symm_apply_apply]
   rw [← Finset.card_filter]
   have : (sameP ι N j).filter (fun p => (p.1, p.2.1) = (τ, a)) =

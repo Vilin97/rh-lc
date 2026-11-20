@@ -66,7 +66,7 @@ theorem repr_ofValues (α : V n → V n → ℂ) (S : Finset (Fin (n + n))) :
     (bas n).repr (ofValues α : Alt n) S =
       ∑ a, ∑ b, α (coordVec a) (coordVec b) * (bas n).repr (dz a * dzb b) S := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp [ofValues, map_sum, Finsupp.finset_sum_apply, sym]
+    simp [ofValues, map_sum, Finsupp.finsetSum_apply, sym]
 
 theorem dz_mul_dzb (a b : Fin n) : ∃ ε : ℤ, dz a * dzb b =
     (ε : ℂ) • bas n ({finSumFinEquiv (.inl a)} ∪ {finSumFinEquiv (.inr b)}) := by
@@ -114,7 +114,7 @@ theorem isReal_ofValues {α : V n → V n → ℂ} (hα : ∀ ξ η, conj (α ξ
       simp only [ofValues, AddSubmonoidClass.coe_finset_sum, Subalgebra.coe_smul, sym, map_sum, map_smul, h₁]
   rw [repr_ofValues, h₃, Finset.sum_comm]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_smul, map_neg, map_mul, Finsupp.finset_sum_apply, Finsupp.smul_apply, Finsupp.neg_apply,
+    simp only [map_sum, map_smul, map_neg, map_mul, Finsupp.finsetSum_apply, Finsupp.smul_apply, Finsupp.neg_apply,
     smul_eq_mul, h₂, hα, mul_neg, neg_mul]
 
 end Point

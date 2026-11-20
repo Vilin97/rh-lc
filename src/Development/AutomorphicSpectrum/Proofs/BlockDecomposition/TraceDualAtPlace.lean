@@ -22,7 +22,7 @@ theorem repr_mul_mem (O : Subring K) (b : Module.Basis (Fin d) K A)
   have h : b.repr (x * y) k = ∑ i, ∑ j, b.repr x i * b.repr y j * b.repr (b i * b j) k := by
     rw [hxy]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [map_sum, Finsupp.finset_sum_apply]
+      simp [map_sum, Finsupp.finsetSum_apply]
   rw [h]
   exact O.sum_mem fun i _ => O.sum_mem fun j _ => O.mul_mem (O.mul_mem (hx i) (hy j)) (hc i j k)
 

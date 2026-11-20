@@ -80,7 +80,7 @@ theorem res_derivation_eq_zero (k : Fin d)
       split_ifs with h
       · have hmk : m k = 0 := by
           have h' := DFunLike.congr_fun h k
-          simp [Finsupp.finset_sum_apply, Finsupp.single_apply] at h'
+          simp [Finsupp.finsetSum_apply, Finsupp.single_apply] at h'
           omega
         simp [hmk]
       · simp

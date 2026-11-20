@@ -159,7 +159,7 @@ theorem coeff_centralIdem {G : Type} [Group G] [Finite G] (τ : G → ℂ) (x : 
 theorem coeff_sum_centralIdem {G G' : Type} [Group G] [Finite G] [Group G'] [Finite G'] (φ : G' ≃* G)
     {A : Set (G → ℂ)} (hA : A.Finite) {B : Set (G' → ℂ)} (hB : B.Finite) (h : B = (fun τ => τ ∘ φ) '' A) (x : G') :
     (∑ τ ∈ hA.toFinset, LevelCuspCharacters.centralIdem τ).coeff (φ x) = (∑ τ ∈ hB.toFinset, LevelCuspCharacters.centralIdem τ).coeff x := by
-  simp only [MonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply, coeff_centralIdem]
+  simp only [MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply, coeff_centralIdem]
   refine Finset.sum_bij (fun τ _ => τ ∘ φ) ?_ ?_ ?_ ?_
   · intro τ hτ
     rw [Set.Finite.mem_toFinset] at hτ ⊢

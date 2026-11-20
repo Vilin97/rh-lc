@@ -74,7 +74,7 @@ private def wEquiv (c : Fin n → Fin n → Matrix J J ℂ) (η : J → Wt n) (h
 private theorem cf_sum_ex (η : J → Wt n) (μ : Wt n) :
     cf (∑ j, ex (η j)) μ = (Fintype.card {j // η j = μ} : ℂ) := by
   classical
-  simp [cf, ex, Finsupp.finset_sum_apply, Finsupp.single_apply, Fintype.card_subtype]
+  simp [cf, ex, Finsupp.finsetSum_apply, Finsupp.single_apply, Fintype.card_subtype]
 
 private theorem isCh_top (c : Fin n → Fin n → Matrix J J ℂ) (η : J → Wt n) (h : ClifMod c η) :
     IsCh (Fm c) ⊤ 1 (∑ j, ex (η j)) := by

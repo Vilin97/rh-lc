@@ -145,7 +145,7 @@ theorem class_eq_zero_of_orth {G : Type} [Group G] [Fintype G] (f : G → ℂ) (
   have hB : ∀ w : G, ∑ ρ ∈ hS.toFinset, ρ 1 / (Fintype.card G : ℂ) * ρ w⁻¹ = if w = 1 then 1 else 0 := by
     intro w
     have := congrArg (fun a : MonoidAlgebra ℂ G => a.coeff w) hsum
-    simp only [MonoidAlgebra.coeff_sum, zOf, Finsupp.finset_sum_apply, MonoidAlgebra.coeff_single,
+    simp only [MonoidAlgebra.coeff_sum, zOf, Finsupp.finsetSum_apply, MonoidAlgebra.coeff_single,
       Finsupp.single_apply, Finset.sum_ite_eq', Finset.mem_univ, if_true] at this
     rw [this, MonoidAlgebra.one_def, MonoidAlgebra.coeff_single, Finsupp.single_apply]
     simp [eq_comm]

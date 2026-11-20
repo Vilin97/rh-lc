@@ -18,7 +18,7 @@ theorem repr_mul_eq_sum {n : ℕ} (x y : Alt n) (S : Finset (Fin (n + n))) :
   conv_lhs => rw [← (bas n).sum_repr x, ← (bas n).sum_repr y]
   rw [Finset.sum_mul_sum]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, Finsupp.finset_sum_apply, smul_mul_smul_comm, map_smul, Finsupp.smul_apply, smul_eq_mul]
+    simp only [map_sum, Finsupp.finsetSum_apply, smul_mul_smul_comm, map_smul, Finsupp.smul_apply, smul_eq_mul]
 
 theorem ι_eq_sum {m : ℕ} (u : Fin m ⊕ Fin m → ℂ) :
     ExteriorAlgebra.ι ℂ u = ∑ a, u (.inl a) • dz a + ∑ a, u (.inr a) • dzb a := by
@@ -37,7 +37,7 @@ theorem differentiableAt_repr_pull {n m : ℕ} {E : Type*} [NormedAddCommGroup E
     rw [ι_eq_sum]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_add, map_sum, map_smul, (pull_dz _ _).1, (pull_dz _ _).2, Finsupp.add_apply,
-      Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul]
+      Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul]
     refine DifferentiableAt.add ?_ ?_
     · exact DifferentiableAt.fun_sum fun a _ => (DifferentiableAt.fun_sum fun b _ => (hL b a).mul_const _).const_mul _
     · refine DifferentiableAt.fun_sum fun a _ => (DifferentiableAt.fun_sum fun b _ =>

@@ -392,8 +392,8 @@ theorem sum_single_inj {α β : Type} [DecidableEq α] (u : α → β) (hu : Fun
       ∀ x, x ∉ Set.range u → (∑ v ∈ s, Finsupp.single (u v) (e v)) x = 0 := by
   classical
   refine ⟨fun v0 => ?_, fun x hx => ?_⟩
-  · simp [Finsupp.finset_sum_apply, Finsupp.single_apply, hu.eq_iff]
-  · simp only [Finsupp.finset_sum_apply, Finsupp.single_apply]
+  · simp [Finsupp.finsetSum_apply, Finsupp.single_apply, hu.eq_iff]
+  · simp only [Finsupp.finsetSum_apply, Finsupp.single_apply]
     exact Finset.sum_eq_zero fun v _ => if_neg fun h => hx ⟨v, h⟩
 
 theorem liftVar_inj : Function.Injective Dt.liftVar := by

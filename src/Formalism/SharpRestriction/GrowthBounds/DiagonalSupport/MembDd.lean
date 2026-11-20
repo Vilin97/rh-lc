@@ -14,7 +14,7 @@ theorem mapDomain_le {α β : Type} (f : α → β) (mo : α →₀ ℕ) (b : β
     (h : ∀ a, f a = b → a = a0) : Finsupp.mapDomain f mo b ≤ mo a0 := by
   classical
   simp only [Finsupp.mapDomain, Finsupp.sum]
-  rw [Finsupp.finset_sum_apply]
+  rw [Finsupp.finsetSum_apply]
   by_cases ha : a0 ∈ mo.support
   · rw [← Finset.sum_erase_add _ _ ha]
     have hz : ∑ x ∈ mo.support.erase a0, (Finsupp.single (f x) (mo x)) b = 0 := by
@@ -208,7 +208,7 @@ theorem le_multideg (Dt : SignedChainData p O r J) (mo : ML J Dt.nL r × Fin r �
   rw [Finset.mul_sum]
   apply Finset.sum_le_sum
   intro c _
-  rw [Finsupp.finset_sum_apply]
+  rw [Finsupp.finsetSum_apply]
   by_cases hc : (y0, c) ∈ mo.support
   · calc k * mo (y0, c) = (mo (y0, c) • eV Dt (y0, c)) (t, c) := by
           rw [he c, Finsupp.smul_apply, Finsupp.single_eq_same, smul_eq_mul, mul_comm]

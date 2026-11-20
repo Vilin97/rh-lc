@@ -25,7 +25,7 @@ theorem coefwise_sum_of {T : (V n → ℂ) → ℂ} {ι : Type} (t : Finset ι) 
     (h : ∀ S, T (fun x => ∑ i ∈ t, (bas n).repr (F i x) S) = ∑ i ∈ t, T (fun x => (bas n).repr (F i x) S)) :
     coefwise T (fun x => ∑ i ∈ t, F i x) = ∑ i ∈ t, coefwise T (F i) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [coefwise, map_sum, Finsupp.finset_sum_apply, h, Finset.sum_smul]
+    simp only [coefwise, map_sum, Finsupp.finsetSum_apply, h, Finset.sum_smul]
   exact Finset.sum_comm
 
 theorem delAt_dbarAt_linear_local : ∀ (n : ℕ) (v : V n),

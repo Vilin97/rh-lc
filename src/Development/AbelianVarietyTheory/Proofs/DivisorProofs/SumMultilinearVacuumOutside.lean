@@ -63,7 +63,7 @@ theorem tensor_eq_zero {ι Y V P₀ : Type} {X : ι → Type} {P : ι → Type}
   rw [map_zero]
   ext k
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sum, Finsupp.finset_sum_apply, Finsupp.zero_apply]
+    rw [map_sum, Finsupp.finsetSum_apply, Finsupp.zero_apply]
   simp only [TensorProduct.equivFinsuppOfBasisRight_apply_tmul_apply, B, Basis.piTensorProduct_repr_tprod_apply]
   let L : ∀ v, (X v → ℂ) →ₗ[ℂ] ℂ := fun v =>
     if hv : v ∈ T then ((b ⟨v, hv⟩).coord (k ⟨v, hv⟩)).comp (q v) else 0

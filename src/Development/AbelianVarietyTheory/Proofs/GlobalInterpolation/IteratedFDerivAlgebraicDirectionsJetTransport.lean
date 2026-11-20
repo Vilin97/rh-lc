@@ -103,7 +103,7 @@ theorem cnt_toList (α : σ →₀ ℕ) (i : σ) :
 def cntF {m : ℕ} (f : Fin m → σ) : σ →₀ ℕ := ∑ j, Finsupp.single (f j) 1
 
 theorem cntF_apply {m : ℕ} (f : Fin m → σ) (i : σ) : cntF f i = cnt f i := by
-  rw [cntF, cnt, Finsupp.finset_sum_apply, Finset.card_filter]
+  rw [cntF, cnt, Finsupp.finsetSum_apply, Finset.card_filter]
   refine Finset.sum_congr rfl fun j _ => ?_
   by_cases h : f j = i
   · rw [h, if_pos rfl, Finsupp.single_eq_same]

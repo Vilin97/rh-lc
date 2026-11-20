@@ -117,8 +117,8 @@ theorem baseExp_odd (C0 CE1 CE2 : ℝ) (X : Loc) (j : Fin (numSeg X.TT)) (b : Se
     exact hi (hinj (congrArg (fun y => y.1.1) h))
   rw [baseExp, Finsupp.add_apply]
   congr 1
-  · rw [Finsupp.finset_sum_apply, Finset.sum_eq_single i0]
-    · rw [Finsupp.finset_sum_apply, Finset.sum_eq_single c0]
+  · rw [Finsupp.finsetSum_apply, Finset.sum_eq_single i0]
+    · rw [Finsupp.finsetSum_apply, Finset.sum_eq_single c0]
       · rw [Finsupp.add_apply, Finsupp.single_apply, Finsupp.single_apply]
         cases β0 <;> simp
       · intro c _ hc
@@ -131,14 +131,14 @@ theorem baseExp_odd (C0 CE1 CE2 : ℝ) (X : Loc) (j : Fin (numSeg X.TT)) (b : Se
       · intro h
         exact absurd (Finset.mem_univ c0) h
     · intro i _ hi
-      rw [Finsupp.finset_sum_apply]
+      rw [Finsupp.finsetSum_apply]
       refine Finset.sum_eq_zero fun c _ => ?_
       rw [Finsupp.add_apply, Finsupp.single_apply, Finsupp.single_apply, if_neg (hne i true c hi),
         if_neg (hne i false c hi)]
       rfl
     · intro h
       exact absurd (Finset.mem_univ i0) h
-  · rw [Finsupp.finset_sum_apply, Finset.sum_eq_single i0]
+  · rw [Finsupp.finsetSum_apply, Finset.sum_eq_single i0]
     · rw [hite]
       by_cases h1 : (i0 : ℕ) < (X.seg C0 CE1 CE2 j).sigma
       · by_cases hc : c0 = 0
@@ -170,6 +170,6 @@ theorem baseExp_end (C0 CE1 CE2 : ℝ) (X : Loc) (j : Fin (numSeg X.TT)) (b : Se
       (if Q then f else 0) y = if Q then f y else 0 := by
     intro Q _ f y
     split_ifs <;> rfl
-  simp [baseExp, Finsupp.finset_sum_apply, Finsupp.single_apply, topOdd_ne_end, hite]
+  simp [baseExp, Finsupp.finsetSum_apply, Finsupp.single_apply, topOdd_ne_end, hite]
 
 end Formalism.MainNotions.ColumnSystems.Pf

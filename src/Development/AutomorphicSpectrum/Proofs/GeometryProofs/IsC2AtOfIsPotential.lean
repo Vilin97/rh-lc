@@ -190,7 +190,7 @@ theorem geoMono_word (hE : ResExistsStatement) (M : GlobalTheory.CompanionTheory
       rw [map_sum]
     simp [Finsupp.degree_single]
   have hnone : (∑ j, Finsupp.single (some (w j)) (1 : ℕ)) none = 0 := by
-    simp [Finsupp.finset_sum_apply]
+    simp [Finsupp.finsetSum_apply]
   have hms : Finsupp.toMultiset (∑ j, Finsupp.single (some (w j)) (1 : ℕ)) =
       Multiset.map (fun j => some (w j)) Finset.univ.val := by
     rw [Finsupp.toMultiset_sum]

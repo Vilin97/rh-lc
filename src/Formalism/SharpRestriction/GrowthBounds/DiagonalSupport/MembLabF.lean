@@ -84,7 +84,7 @@ theorem labO_apply (hinj : Function.Injective fun x : TL J nL r => posOf n' (pos
     (rho : TL J nL r × Fin (r + K) → ℕ) (y : TL J nL r) (c : Fin (r + K)) :
     labO Fr K nL rho (posOf n' (posTL Fr y), c) = rho (y, c) := by
   classical
-  simp only [labO, Finsupp.finset_sum_apply, Finsupp.single_apply]
+  simp only [labO, Finsupp.finsetSum_apply, Finsupp.single_apply]
   rw [Finset.sum_eq_single y]
   · rw [Finset.sum_eq_single c]
     · simp
@@ -107,7 +107,7 @@ theorem labO_support (rho : TL J nL r × Fin (r + K) → ℕ) (v : Fin n' × Fin
   by_contra hne
   push_neg at hne
   apply Finsupp.mem_support_iff.mp hv
-  simp only [labO, Finsupp.finset_sum_apply, Finsupp.single_apply]
+  simp only [labO, Finsupp.finsetSum_apply, Finsupp.single_apply]
   apply Finset.sum_eq_zero
   intro x _
   apply Finset.sum_eq_zero

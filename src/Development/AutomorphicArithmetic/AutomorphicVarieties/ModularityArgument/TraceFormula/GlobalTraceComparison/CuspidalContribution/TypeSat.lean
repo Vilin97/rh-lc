@@ -42,7 +42,7 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Cusp.typeSat :
     have h4 : ∀ i, b.repr (L k F) i = ∑ j, b.repr F j * c (i, j) k := by
       intro i
       rw [h3]
-      simp [c, Finsupp.finset_sum_apply]
+      simp [c, Finsupp.finsetSum_apply]
     have h5 : f (k * y) = (L k F).1 y := rfl
     have h6 : (L k F).1 y = ∑ i, b.repr (L k F) i * (b i).1 y := by
       have h7 := congrArg (fun v : W0 => (v : G → ℂ) y) (b.sum_repr (L k F))

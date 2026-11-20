@@ -18,7 +18,7 @@ theorem cPoly_coeff {n : ℕ} (s : Finset (Fin n → ℤ)) (c : (Fin n → ℤ) 
     (cPoly s c).coeff μ = if μ ∈ s then c μ else 0 := by
   classical
   unfold cPoly
-  rw [AddMonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply]
+  rw [AddMonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply]
   simp only [AddMonoidAlgebra.coeff_single, Finsupp.single_apply]
   rw [Finset.sum_ite_eq']
 

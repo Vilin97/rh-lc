@@ -142,7 +142,7 @@ theorem chain_coeff (blk : σ → β) (pos : σ → ℕ) (hinj : ∀ a b, blk a 
       rw [chExp, hW, Finset.sum_union hdisj, Finset.sum_map, chExp]
       simp [hg]
     have hE0 : chExp blk pos s z = 0 := by
-      rw [chExp, Finsupp.finset_sum_apply]
+      rw [chExp, Finsupp.finsetSum_apply]
       exact Finset.sum_eq_zero fun p hp => by simp [Finsupp.single_apply, (hmem p hp).1]
     have hdif : ∀ p ∈ chPairs blk pos s, splitAt z (dif p) = Polynomial.C (dif p) := by
       intro p hp
@@ -259,7 +259,7 @@ theorem chExp_eq {j : ℕ} (hj : j < N) (x : ι × Fin N) :
   obtain ⟨s, i⟩ := x
   have h : chExp (blkOf j) (fun x : ι × Fin N => (x.2 : ℕ)) Finset.univ (s, i) =
       ∑ b : Fin N, (if ((i : ℕ) < j ↔ (b : ℕ) < j) ∧ (i : ℕ) < b then 1 else 0 : ℕ) := by
-    rw [chExp, Finsupp.finset_sum_apply, chPairs, Finset.sum_filter, Finset.univ_product_univ, Fintype.sum_prod_type,
+    rw [chExp, Finsupp.finsetSum_apply, chPairs, Finset.sum_filter, Finset.univ_product_univ, Fintype.sum_prod_type,
       Finset.sum_eq_single (s, i), Fintype.sum_prod_type, Finset.sum_eq_single s]
     · simp [blkOf]
     · intro t _ ht

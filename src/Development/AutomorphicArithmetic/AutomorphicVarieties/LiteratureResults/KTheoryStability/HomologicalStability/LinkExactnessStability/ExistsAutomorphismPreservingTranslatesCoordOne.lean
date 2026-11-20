@@ -34,7 +34,7 @@ theorem unimodular_to_coord_one : ∀ (R : Type) [CommRing R] (s : ℕ), StableR
   let t : ℕ →₀ R := ∑ j : Fin n, Finsupp.single (j : ℕ) (t' j)
   have htapp : ∀ k, t k = if hk : k < n then t' ⟨k, hk⟩ else 0 := by
     intro k
-    simp only [t, Finsupp.finset_sum_apply, Finsupp.single_apply]
+    simp only [t, Finsupp.finsetSum_apply, Finsupp.single_apply]
     split_ifs with hk
     · rw [Finset.sum_eq_single ⟨k, hk⟩]
       · simp

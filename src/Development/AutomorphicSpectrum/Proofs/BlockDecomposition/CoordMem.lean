@@ -159,7 +159,7 @@ theorem fl_sum {d : ℕ} {a₀ : ι} {t : T₁ ⟶ T₂} (ht : ∀ m, e (Finsupp
   apply e.symm.injective
   rw [e.symm_apply_apply]
   ext a
-  rw [Finsupp.add_apply, Finsupp.finset_sum_apply]
+  rw [Finsupp.add_apply, Finsupp.finsetSum_apply]
   cases hKa : K a with
   | none =>
     obtain rfl := hK a hKa

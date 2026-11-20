@@ -71,7 +71,7 @@ theorem exists_matrix_of_basis {F L C V : Type} [NormedField F] [Field L] [Norme
       ∑ j, φ (t.repr (b j) i) * algebraMap F C (y j) = φ (t.repr (∑ j, y j • b j) i) := by
     intro y i
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_sum, Finsupp.finset_sum_apply, map_sum]
+      rw [map_sum, Finsupp.finsetSum_apply, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← algebraMap_smul L (y j), map_smul, Finsupp.smul_apply, smul_eq_mul, map_mul,
       AlgHom.commutes, mul_comm]

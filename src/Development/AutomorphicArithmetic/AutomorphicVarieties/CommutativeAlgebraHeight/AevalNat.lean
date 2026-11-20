@@ -38,7 +38,7 @@ private theorem sum_single {S : Type} [CommRing S] (s : Finset G) (y : MonoidAlg
   classical
   rw [Finset.sum_coe_sort s (fun a => MonoidAlgebra.single a (y.coeff a))]
   ext g
-  simp only [MonoidAlgebra.coeff_sum, MonoidAlgebra.coeff_single, Finsupp.finset_sum_apply, Finsupp.single_apply, Finset.sum_ite_eq']
+  simp only [MonoidAlgebra.coeff_sum, MonoidAlgebra.coeff_single, Finsupp.finsetSum_apply, Finsupp.single_apply, Finset.sum_ite_eq']
   split_ifs with h
   · rfl
   · exact (Finsupp.notMem_support_iff.1 fun h' => h (hy h')).symm
@@ -117,7 +117,7 @@ private theorem lift_ex {S : Type} [CommRing S] [Algebra A S] (y : MonoidAlgebra
     by_contra h
     rw [Finsupp.mem_support_iff] at hg
     apply hg
-    simp only [MonoidAlgebra.coeff_sum, MonoidAlgebra.coeff_single, Finsupp.finset_sum_apply]
+    simp only [MonoidAlgebra.coeff_sum, MonoidAlgebra.coeff_single, Finsupp.finsetSum_apply]
     refine Finset.sum_eq_zero fun a _ => Finsupp.single_eq_of_ne ?_
     rintro rfl
     exact h a.2

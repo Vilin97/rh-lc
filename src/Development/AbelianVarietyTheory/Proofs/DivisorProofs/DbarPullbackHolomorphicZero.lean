@@ -29,7 +29,7 @@ theorem _root_.GlobalTheory.CxForm.PullClosed.repr_sum_smul {ι : Type} [Fintype
       fun x => ∑ i, f i x * (_root_.GlobalTheory.CxForm.bas n).repr (e i) S := by
   funext x
   set_option synthInstance.maxHeartbeats 100000 in
-    simp [map_sum, Finsupp.finset_sum_apply]
+    simp [map_sum, Finsupp.finsetSum_apply]
 
 open Set Filter Topology in
 open scoped ComplexConjugate ContDiff in
@@ -53,7 +53,7 @@ theorem _root_.GlobalTheory.CxForm.PullClosed.dbarAt_sum_smul {ι : Type} [Finty
     rw [_root_.GlobalTheory.CxForm.FormMul.repr_coefwise,
       _root_.GlobalTheory.CxForm.PullClosed.repr_sum_smul]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul]
+      simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul]
     rw [_root_.GlobalTheory.dbar_sum fun i _ => (hf i).mul_const _]
     simp [ContinuousLinearMap.sum_apply,
       _root_.GlobalTheory.dbar_mul (hf _) (differentiableAt_const _),

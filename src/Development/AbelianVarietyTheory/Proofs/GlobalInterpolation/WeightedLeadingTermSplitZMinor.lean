@@ -182,7 +182,7 @@ theorem coefLast_xi : ∀ (K : Type) [Field K] (N n : ℕ) (hN : N = n + 1) (lam
   simp only [hsp]
   refine Eq.trans (congrArg (fun e => AddMonoidAlgebra.coeff _ e) ?_) (key.trans ?_)
   · ext ⟨u, s⟩
-    simp [Br.bExp, Finsupp.finset_sum_apply, Finsupp.single_apply]
+    simp [Br.bExp, Finsupp.finsetSum_apply, Finsupp.single_apply]
   · rw [Finset.prod_mul_distrib, prod_shift (lp K n) (lp_zero K) fun s => (Br.bBr hN lam sg s).toNat,
       ← Finset.prod_mul_distrib, extremal, Formalism.GradedWeylDivisibility.hw, map_prod]
     refine Finset.prod_congr rfl fun i _ => ?_

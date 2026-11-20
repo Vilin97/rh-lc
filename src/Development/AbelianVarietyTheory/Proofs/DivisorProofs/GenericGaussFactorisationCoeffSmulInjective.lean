@@ -168,7 +168,7 @@ def leadExp (m : Fin N × Fin N →₀ ℕ) : Fin N × Fin N →₀ ℕ := ∑ v
 
 theorem leadExp_apply (m : Fin N × Fin N →₀ ℕ) (w : Fin N × Fin N) :
     leadExp N m w = ∑ v, m v * lead N v w := by
-  simp [leadExp, Finsupp.finset_sum_apply]
+  simp [leadExp, Finsupp.finsetSum_apply]
 
 theorem image_monomial_lead [Nontrivial O] (m : Fin N × Fin N →₀ ℕ) :
     (ord N).degree (lduHom O N (monomial m 1)) = leadExp N m ∧

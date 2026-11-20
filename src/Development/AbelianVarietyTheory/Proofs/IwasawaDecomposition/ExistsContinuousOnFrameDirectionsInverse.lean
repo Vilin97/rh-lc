@@ -152,7 +152,7 @@ theorem exists_inverse {J : Type} [Fintype J] [DecidableEq J] {g : ℕ} (b : Mod
       simp [Finset.sum_apply, Pi.single_apply]
     have h2 := congrArg (fun w => b.repr w z') h
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_smul, Module.Basis.repr_self, Finsupp.single_apply, Finsupp.finset_sum_apply,
+      simp only [map_sum, map_smul, Module.Basis.repr_self, Finsupp.single_apply, Finsupp.finsetSum_apply,
       Finsupp.smul_apply, smul_eq_mul] at h2
     rw [Matrix.mul_apply, Matrix.one_apply, h2]
     rfl

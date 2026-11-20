@@ -24,7 +24,7 @@ private theorem UpperTheory.V.Fr.single_coeff_mul {K : Type} [CommRing K] (p q :
     · rw [Finsupp.notMem_support_iff.mp hm, mul_zero]
   rw [hc]
   ext k
-  simp only [AddMonoidAlgebra.coeff_sum, AddMonoidAlgebra.coeff_single, Finsupp.finset_sum_apply,
+  simp only [AddMonoidAlgebra.coeff_sum, AddMonoidAlgebra.coeff_single, Finsupp.finsetSum_apply,
     Finsupp.single_apply]
   split_ifs with hk
   · rfl

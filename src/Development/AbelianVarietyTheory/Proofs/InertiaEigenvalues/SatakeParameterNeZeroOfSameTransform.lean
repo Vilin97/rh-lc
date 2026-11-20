@@ -188,7 +188,7 @@ theorem eq_lin (s : (Fin m → ℤ) →₀ ℂ) (h : ∀ κ, s κ ≠ 0 → κ =
   have hinj' : ∀ k l : Fin m, (-Pi.single k 1 : Fin m → ℤ) = -Pi.single l 1 ↔ k = l :=
     fun k l => neg_inj.trans (hinj k l)
   ext κ
-  simp only [lin, Finsupp.add_apply, Finsupp.finset_sum_apply, Finsupp.single_apply]
+  simp only [lin, Finsupp.add_apply, Finsupp.finsetSum_apply, Finsupp.single_apply]
   by_cases h0 : κ = 0
   · subst h0
     simp [single_ne_zero', neg_single_ne_zero']

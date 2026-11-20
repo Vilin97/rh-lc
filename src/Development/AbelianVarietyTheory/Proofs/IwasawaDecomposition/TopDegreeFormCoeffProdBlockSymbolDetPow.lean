@@ -32,7 +32,7 @@ theorem tc_monomial (u : α × α →₀ ℕ) (c : ℂ) : tc (monomial u c) = c 
   split_ifs <;> ring
 
 theorem graph_apply (w : Equiv.Perm α) (a b : α) : graph w (a, b) = if w a = b then 1 else 0 := by
-  rw [graph, Finsupp.finset_sum_apply, Finset.sum_eq_single a (fun c _ hc => by simp [Finsupp.single_apply, hc]) (by simp)]
+  rw [graph, Finsupp.finsetSum_apply, Finset.sum_eq_single a (fun c _ hc => by simp [Finsupp.single_apply, hc]) (by simp)]
   simp [Finsupp.single_apply]
 
 theorem tc_rename_equiv {β : Type} [Fintype β] [DecidableEq β] (e : α ≃ β) (P : MvPolynomial (α × α) ℂ) :
@@ -75,7 +75,7 @@ def glue (D : ι → (γ × γ →₀ ℕ)) : (ι × γ) × (ι × γ) →₀ �
 
 theorem glue_emb (D : ι → (γ × γ →₀ ℕ)) (τ : ι) (v : γ × γ) : glue D (emb τ v) = D τ v := by
   unfold glue
-  rw [Finsupp.finset_sum_apply, Finset.sum_eq_single τ]
+  rw [Finsupp.finsetSum_apply, Finset.sum_eq_single τ]
   · exact Finsupp.mapDomain_apply (emb_injective τ) _ _
   · intro τ' _ hτ'
     apply Finsupp.mapDomain_notin_range
@@ -86,7 +86,7 @@ theorem glue_emb (D : ι → (γ × γ →₀ ℕ)) (τ : ι) (v : γ × γ) : g
 
 theorem glue_off (D : ι → (γ × γ →₀ ℕ)) (a b : ι × γ) (h : a.1 ≠ b.1) : glue D (a, b) = 0 := by
   unfold glue
-  rw [Finsupp.finset_sum_apply]
+  rw [Finsupp.finsetSum_apply]
   refine Finset.sum_eq_zero fun τ _ => Finsupp.mapDomain_notin_range _ _ ?_
   rintro ⟨u, hu⟩
   simp only [emb, Prod.mk.injEq] at hu

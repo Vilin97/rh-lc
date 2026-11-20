@@ -133,7 +133,7 @@ theorem exists_family {G S : Type} [Group G] [Finite G] (c : G → S) (hc : Func
     intro a ha s
     obtain ⟨x, rfl⟩ := hc s
     have := congrArg (fun w : MonoidAlgebra ℂ G => w.coeff x) ha
-    simpa [hz, Finsupp.finset_sum_apply] using this
+    simpa [hz, Finsupp.finsetSum_apply] using this
   have hcard : Fintype.card S ≤ Fintype.card (Fin n) := by
     have := linearIndependent_le_span_aux' z hli (Set.range p) (by rintro _ ⟨s, rfl⟩; exact h6 _ (hzc s))
     exact this.trans (Fintype.card_range_le p)

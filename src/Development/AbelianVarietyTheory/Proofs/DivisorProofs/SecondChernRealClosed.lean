@@ -36,7 +36,7 @@ theorem repr_mul (α β : Alt n) (U : Finset (Fin (n + n))) : (bas n).repr (α *
     ∑ S, ∑ T, (bas n).repr α S * (bas n).repr β T * (bas n).repr (bas n S * bas n T) U := by
   conv_lhs => rw [← (bas n).sum_repr α, ← (bas n).sum_repr β]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [Finset.sum_mul, Finset.mul_sum, smul_mul_smul_comm, map_sum, map_smul, Finsupp.finset_sum_apply,
+    simp only [Finset.sum_mul, Finset.mul_sum, smul_mul_smul_comm, map_sum, map_smul, Finsupp.finsetSum_apply,
     Finsupp.smul_apply, smul_eq_mul]
   exact Finset.sum_comm
 
