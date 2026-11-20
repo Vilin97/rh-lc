@@ -118,7 +118,7 @@ theorem _root_.GlobalTheory.UPel.HT.LieType.finrank_eigSp_add_conj_eq (p : ℕ) 
       right_inv := fun σ => by ext x; simp }
   have key : ∀ c : 𝓞 D.F, ∑ σ : D.F →+* ℂ, (((d σ + d (cj σ) : ℕ) : ℂ) - ((D.m * D.n : ℕ) : ℂ)) * σ (c : D.F) = 0 := by
     intro c
-    let A : D'.La →+ D'.La := DistribMulAction.toAddMonoidHom D'.La (algebraMap (𝓞 D.F) D.O c)
+    let A : D'.La →+ D'.La := DistribSMul.toAddMonoidHom D'.La (algebraMap (𝓞 D.F) D.O c)
     have hA : ∀ x, Q (A x) = φ c *ᵥ Q x := fun x => hlin _ x
     have h1 := trace_int_eq_of_period Q (φ c) A hinj hdisc hspan hA
     have h2 := GlobalTheory.T.trace_ringOfIntegers_action_lattice_eq D.F D.O D'.La (D.m * D.n) hrank c

@@ -213,7 +213,7 @@ theorem pureA_eq_sum (κ : Type) [Fintype κ] (f : SInf F κ) (g : (κ → Finit
     rw [hcdef, ← map_natCast (algebraMap F (FiniteAdeleRing (𝓞 F) F)) N, ← map_mul,
       mul_inv_cancel₀ (Nat.cast_ne_zero.2 hN), map_one]
   let U : AddSubgroup (κ → FiniteAdeleRing (𝓞 F) F) :=
-    (intP F κ).comap (DistribMulAction.toAddMonoidHom (κ → FiniteAdeleRing (𝓞 F) F) c)
+    (intP F κ).comap (DistribSMul.toAddMonoidHom (κ → FiniteAdeleRing (𝓞 F) F) c)
   have hmemU : ∀ y, y ∈ U ↔ c • y ∈ intP F κ := fun y => Iff.rfl
   let h : (κ → FiniteAdeleRing (𝓞 F) F) ≃ₜ (κ → FiniteAdeleRing (𝓞 F) F) :=
     { toFun := fun y => c • y

@@ -21,7 +21,7 @@ def lamA (a : ℕ) : AddSubgroup (TupV (E := E) v n a) where
   neg_mem' := fun hx i => (latLoc (E := E) v Λ).neg_mem (hx i)
 
 def lamP (a : ℕ) (ϖ : Fv F v) : AddSubgroup (TupV (E := E) v n a) :=
-  (lamA v Λ a).map (DistribMulAction.toAddMonoidHom (TupV (E := E) v n a) (sc (E := E) v ϖ))
+  (lamA v Λ a).map (DistribSMul.toAddMonoidHom (TupV (E := E) v n a) (sc (E := E) v ϖ))
 
 def clsU (a : ℕ) (ϖ : Fv F v) (T : Matrix (Fin a) (Fin a) (Fv F v ⊗[F] E)) :
     Set (lamA v Λ a ⧸ (lamP v Λ a ϖ).addSubgroupOf (lamA v Λ a)) :=

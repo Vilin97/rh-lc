@@ -120,7 +120,7 @@ def LL : AddSubgroup (κ → F) := AddSubgroup.pi Set.univ fun _ => (integralClo
 
 variable (κ) in
 
-def aL (a : F) : AddSubgroup (κ → F) := (LL F κ).map (DistribMulAction.toAddMonoidHom (κ → F) a)
+def aL (a : F) : AddSubgroup (κ → F) := (LL F κ).map (DistribSMul.toAddMonoidHom (κ → F) a)
 
 variable (F) in
 

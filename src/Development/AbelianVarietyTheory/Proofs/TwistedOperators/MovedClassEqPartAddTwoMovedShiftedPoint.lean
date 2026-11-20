@@ -53,7 +53,7 @@ theorem tens_two {E : Type} [Field E] [NumberField E] {n r : ℕ} (Λ : Lt E n) 
     {y : Matrix (Fin n) (Fin r) E} (hy : y ∈ tens Λ (Ideal.span {(2 : 𝓞 E)} • N)) :
     ∃ y' ∈ tens Λ N, y = 2 • y' := by
   have key : tens Λ (Ideal.span {(2 : 𝓞 E)} • N) ≤
-      (tens Λ N).map (DistribMulAction.toAddMonoidHom (Matrix (Fin n) (Fin r) E) (2 : ℕ)) := by
+      (tens Λ N).map (DistribSMul.toAddMonoidHom (Matrix (Fin n) (Fin r) E) (2 : ℕ)) := by
     refine (AddSubgroup.closure_le _).2 ?_
     rintro _ ⟨v, hv, u, hu, rfl⟩
     rw [Submodule.ideal_span_singleton_smul] at hu

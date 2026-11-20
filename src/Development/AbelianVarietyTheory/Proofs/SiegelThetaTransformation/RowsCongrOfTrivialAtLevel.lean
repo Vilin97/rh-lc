@@ -115,7 +115,7 @@ omit [NumberField E] in
 theorem tmul_smul_mem {N N' : Set (Fin r → E)} {a : Af F} (ha : a ∈ intAf F) {c : E} (hc : ∀ x ∈ N, c • x ∈ N')
     {u : Fin r → Af F ⊗[F] E} (hu : u ∈ latHat F E N) : (a ⊗ₜ[F] c) • u ∈ latHat F E N' := by
   suffices hsub : latHat F E N ≤ (latHat F E N').comap
-      (DistribMulAction.toAddMonoidHom (Fin r → Af F ⊗[F] E) (a ⊗ₜ[F] c)) from hsub hu
+      (DistribSMul.toAddMonoidHom (Fin r → Af F ⊗[F] E) (a ⊗ₜ[F] c)) from hsub hu
   refine (AddSubgroup.closure_le _).2 ?_
   rintro _ ⟨a', ha', x, hx, rfl⟩
   show (a ⊗ₜ[F] c) • (fun i => a' ⊗ₜ[F] x i) ∈ latHat F E N'

@@ -39,11 +39,11 @@ theorem evFin_half_mem {v : Pl F} (h2 : (2 : 𝓞 F) ∉ v.asIdeal) :
 theorem half_smul_mem {d : ℕ} {W : Spc F E d} {v : Pl F} (h2 : (2 : 𝓞 F) ∉ v.asIdeal) {y : Fin d → AE F E}
     (hy : y ∈ GlobalTheory.InertSph.latAt W v) : (⅟(2 : AF F)) • y ∈ GlobalTheory.InertSph.latAt W v := by
   have hle : GlobalTheory.InertSph.latAt W v ≤ (GlobalTheory.InertSph.latAt W v).comap
-      (DistribMulAction.toAddMonoidHom (Fin d → AE F E) (⅟(2 : AF F))) := by
+      (DistribSMul.toAddMonoidHom (Fin d → AE F E) (⅟(2 : AF F))) := by
     show AddSubgroup.closure _ ≤ _
     rw [AddSubgroup.closure_le]
     rintro z ⟨a, ha, hint, y, hy, rfl⟩
-    rw [SetLike.mem_coe, AddSubgroup.mem_comap, DistribMulAction.toAddMonoidHom_apply, smul_smul]
+    rw [SetLike.mem_coe, AddSubgroup.mem_comap, DistribSMul.toAddMonoidHom_apply, smul_smul]
     refine AddSubgroup.subset_closure ⟨⅟(2 : AF F) * a, fun u hu => ?_, ?_, y, hy, rfl⟩
     · rw [smul_eq_mul, mul_left_comm, ← smul_eq_mul u a, ha u hu, mul_zero]
     · rw [map_mul]; exact mul_mem (evFin_half_mem h2) hint

@@ -79,7 +79,7 @@ theorem card_torsion_pow_log_concave : ∀ (F : Type) [Field F] [NumberField F] 
     have : g.ker = B.addSubgroupOf A := by
       ext x
       simp only [AddMonoidHom.mem_ker, AddSubgroup.mem_addSubgroupOf, g, π,
-        AddMonoidHom.comp_apply, AddSubgroup.coe_subtype, DistribMulAction.toAddMonoidHom_apply,
+        AddMonoidHom.comp_apply, AddSubgroup.coe_subtype, DistribSMul.toAddMonoidHom_apply,
         QuotientAddGroup.mk'_apply, QuotientAddGroup.eq_zero_iff]
       exact hiff x.1 x.2
     rw [this]

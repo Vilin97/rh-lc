@@ -39,7 +39,7 @@ theorem form_placeModel_eq_zero_of_vanish : ∀ (D : D7) (ψ : AddChar (AF D.hos
     exact hℓ y hy _ (hth Ψ hΨ)
   obtain ⟨k, hk, hinv, hden⟩ := hΨ.2
   have hcomm : ∀ (c : AE D) (x : WO S T), c • (k • x) = k • (c • x) := fun c x =>
-    map_nsmul (DistribMulAction.toAddMonoidHom (WO S T) c) k x
+    map_nsmul (DistribSMul.toAddMonoidHom (WO S T) c) k x
   have haa : a * a = a := ha.1
   have hainf : infPart D a = 0 := GlobalTheory.SplitScalar.infPart_splitIdem ha
   obtain ⟨Y, hYne, hY1, -, hY3⟩ := GlobalTheory.T.exists_reps_latticeQuotient_conjugateHalf_orthogonal D ψ S T hψ ΛS ΛT hS hT a haa hainf k hk

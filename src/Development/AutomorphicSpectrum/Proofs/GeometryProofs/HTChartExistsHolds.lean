@@ -95,7 +95,7 @@ theorem charOf_neg (y : Fin N → 𝓞 E) :
       ← powChar_apply m ζ hζ, map_neg, AddMonoidHom.neg_apply, ofAdd_neg, map_inv]
 
 def mulMap (b : 𝓞 E) : T →* T :=
-  liftSurj π hπ (π.comp (DistribMulAction.toAddMonoidHom (Fin N → 𝓞 E) b).toMultiplicative) (fun z hz => by
+  liftSurj π hπ (π.comp (DistribSMul.toAddMonoidHom (Fin N → 𝓞 E) b).toMultiplicative) (fun z hz => by
     obtain ⟨z', hz'⟩ := (hker (Multiplicative.toAdd z)).1 hz
     show π (Multiplicative.ofAdd (b • Multiplicative.toAdd z)) = 1
     rw [hker, hz', smul_comm]

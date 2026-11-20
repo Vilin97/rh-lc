@@ -179,7 +179,7 @@ theorem smul_decompose_of_fixed (h : ∀ (g : G) i, ∀ v ∈ 𝒱 i, g • v �
     (hv : ∀ g : G, g • v = v) (i : ι) (g : G) :
     g • (DirectSum.decompose 𝒱 v i : V) = DirectSum.decompose 𝒱 v i := by
   have := decompose_addMonoidHom 𝒱 𝒱 (DistribSMul.toAddMonoidHom V g) (h g) v i
-  simp only [DistribMulAction.toAddMonoidHom_apply, hv] at this
+  simp only [DistribSMul.toAddMonoidHom_apply, hv] at this
   exact this.symm
 
 end Graded

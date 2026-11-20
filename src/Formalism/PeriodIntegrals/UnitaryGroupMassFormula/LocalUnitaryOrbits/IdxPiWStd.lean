@@ -39,7 +39,7 @@ theorem latIdx (b : Fin (2 * n) → Fin n → Fv F v ⊗[F] E) (hb : LinearIndep
       obtain ⟨d, rfl⟩ := (hmem z).1 hz
       refine ⟨d i, ?_⟩
       have e : ∑ i, (c i : Fv F v) • b i = ∑ i, (ϖ * d i) • b i := by
-        have : (DistribMulAction.toAddMonoidHom (Fin n → Fv F v ⊗[F] E) (sc (E := E) v ϖ))
+        have : (DistribSMul.toAddMonoidHom (Fin n → Fv F v ⊗[F] E) (sc (E := E) v ϖ))
             (∑ i, (d i : Fv F v) • b i) = ∑ i, (ϖ * d i) • b i := by
           show sc (E := E) v ϖ • ∑ i, (d i : Fv F v) • b i = _
           rw [Finset.smul_sum]
@@ -104,9 +104,9 @@ theorem idxPiW_std (a : ℕ) (hS : StdHyp σ J ψ) : IdxPiW v Λ a := by
     rw [mem_smulSub, lamP, AddSubgroup.mem_map]
     constructor
     · rintro ⟨p, hp, rfl⟩
-      exact ⟨p, hp, by rw [DistribMulAction.toAddMonoidHom_apply, smul_tup]⟩
+      exact ⟨p, hp, by rw [DistribSMul.toAddMonoidHom_apply, smul_tup]⟩
     · rintro ⟨p, hp, rfl⟩
-      exact ⟨p, hp, by rw [DistribMulAction.toAddMonoidHom_apply, smul_tup]⟩
+      exact ⟨p, hp, by rw [DistribSMul.toAddMonoidHom_apply, smul_tup]⟩
   have e2 : LW v (L : Set (Fin n → E)) a = lamA v (L : Set (Fin n → E)) a := AddSubgroup.ext fun _ => Iff.rfl
   rw [e, e2, lamIdx v _ a b hb hmem (resIdx_holds v) ϖ hϖ, qv]
   push_cast

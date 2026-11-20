@@ -59,7 +59,7 @@ theorem finLat_of {m n : ℕ} {A : AddSubgroup (Mx D m n)} (fin : ∀ a ∈ A, M
   refine ⟨fin, hC.of_isClosed_subset ?_ h, opn⟩
   obtain ⟨i1, -, -, i4, -⟩ := lattice_Mx D m n
   obtain ⟨U, h1, h2, h3⟩ := opn
-  let e : Mx D m n →+ Mx D m n := DistribMulAction.toAddMonoidHom _ (idem D fun _ => True)
+  let e : Mx D m n →+ Mx D m n := DistribSMul.toAddMonoidHom _ (idem D fun _ => True)
   have he : Continuous e := continuous_id.const_smul (idem D fun _ => True)
   have ho : IsOpen (A.comap e : Set (Mx D m n)) := (A.comap e).isOpen_of_mem_nhds (g := 0)
     (Filter.mem_of_superset ((h1.preimage he).mem_nhds (by rwa [Set.mem_preimage, map_zero])) fun a ha => h3 _ ha (mxAt_idem a))

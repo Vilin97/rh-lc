@@ -152,15 +152,15 @@ theorem vac_eigen (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsStdChar D ψ (-1)) (
   have hsplit : ∀ u ∈ latO S T (LS : Set _) (LT : Set _) (fun _ => True),
       GlobalTheory.DisjComb.idem (· ∈ Q) • u ∈ latO S T (LS : Set _) (LT : Set _) (· ∈ Q) := fun u hu =>
     (GlobalTheory.DisjComb.split_latO ψ hψ hLS hLT (P := (· ∈ Q)) (P' := (· ∉ Q)) (fun p h h' => h' h) (hmono hu)).2.2.1
-  let G : AddSubgroup (WO S T) := H.comap (DistribMulAction.toAddMonoidHom (WO S T) (GlobalTheory.DisjComb.idem (· ∈ Q)))
+  let G : AddSubgroup (WO S T) := H.comap (DistribSMul.toAddMonoidHom (WO S T) (GlobalTheory.DisjComb.idem (· ∈ Q)))
   have hG : ∀ {u : WO S T}, u ∈ latO S T (LS : Set _) (LT : Set _) (fun _ => True) → u ∈ G := by
     intro u hu
     refine GlobalTheory.LatVac.le_of_two_of_half G (fun u hu => ?_) (fun e he u hu hh => ?_) hu
     · refine AddSubgroup.mem_comap.2 ?_
-      rw [DistribMulAction.toAddMonoidHom_apply, smul_comm]
+      rw [DistribSMul.toAddMonoidHom_apply, smul_comm]
       exact hHmem _ ⟨1, fun f hf => by rw [one_smul]; exact hf.2.1 _ (hsplit u hu)⟩
     · refine AddSubgroup.mem_comap.2 ?_
-      rw [DistribMulAction.toAddMonoidHom_apply]
+      rw [DistribSMul.toAddMonoidHom_apply]
       exact hHmem _ ⟨1, fun f hf => by rw [one_smul]; exact hf.2.2 e he _ (hsplit u hu) (GlobalTheory.DisjComb.isHalf_parts hh).1⟩
   have hH : ∀ m ∈ latO S T (LS : Set _) (LT : Set _) (· ∈ Q), m ∈ H := by
     intro m hm

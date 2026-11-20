@@ -192,8 +192,8 @@ theorem mem_latAtV {t : T} {e : Num G i j} {Bs : Base D.host.F D.host.E} {Γ : G
   obtain ⟨hm0, hmi⟩ := inv_nat_mem hm
   set v := w.under (𝓞 D.host.F)
   have key : ∀ y ∈ homLatB G i j, GlobalTheory.LatVac.liftV v 1 • m • (ptE e).symm y ∈ latAtV Γ.V' Γ.W v := fun y hy => by
-    refine GlobalTheory.BigDat.map_mem_of_closure ((DistribMulAction.toAddMonoidHom (PtS G i j) (GlobalTheory.LatVac.liftV v 1)).comp
-      ((DistribMulAction.toAddMonoidHom (PtS G i j) m).comp (ptE e).symm.toLinearMap.toAddMonoidHom)) ?_ hy
+    refine GlobalTheory.BigDat.map_mem_of_closure ((DistribSMul.toAddMonoidHom (PtS G i j) (GlobalTheory.LatVac.liftV v 1)).comp
+      ((DistribSMul.toAddMonoidHom (PtS G i j) m).comp (ptE e).symm.toLinearMap.toAddMonoidHom)) ?_ hy
     rintro _ ⟨α, hα, -, a, ha, s, hs, r, hr, rfl⟩
     have e1 : m • (pairA D.host.F 0 α) • GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F
         (vecMulVec (star s) fun q => a * r (finSumFinEquiv (e.symm q))) = (pairA D.host.F 0 α) • GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F

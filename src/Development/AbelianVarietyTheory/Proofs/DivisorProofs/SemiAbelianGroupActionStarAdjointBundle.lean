@@ -16,7 +16,7 @@ namespace GlobalTheory.MumFam
 theorem gAdj_act_star : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R], Base R → ∀ (D : DegData R (maximalIdeal R)) (A : PolAV (Sp (FractionRing R))) (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G], IsSemiAbelian G → ∀ (U : Unif (maximalIdeal R) D A G) (O : Type) [Ring O] [StarRing O] [Module O D.toPre.X] (o : D.toPre.OAct O) (oA : A.OAct O) (oG : RingAct G O), U.toUnifPre.OLinear O o oA oG → ∀ x : O, GAdj U.LG.L U.LG.L (oG.act x) (oG.act (Star.star x)) := by
   intro R _ _ _ hR D A G _ _ hG U O _ _ _ o oA oG hlin x
   have hL : ∀ a : O, LinHom U.toUnifPre U.toUnifPre (o.onB.act a)
-      (DistribMulAction.toAddMonoidHom D.toPre.X (Star.star a)) (oG.act a) := fun a =>
+      (DistribSMul.toAddMonoidHom D.toPre.X (Star.star a)) (oG.act a) := fun a =>
     ⟨oG.hom a, fun e => hlin.q_lin e a, fun e => by
       obtain ⟨t, ht, hi⟩ := hlin.i_lin e a
       exact ⟨t, ht, hi⟩⟩

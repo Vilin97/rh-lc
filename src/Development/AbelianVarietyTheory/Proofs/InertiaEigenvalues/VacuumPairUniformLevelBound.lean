@@ -183,10 +183,10 @@ theorem smul_mem_trSp : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfF
       rw [GlobalTheory.LatVac.cA_cA, GlobalTheory.PlaceModel.mem_half] at hzh
       obtain ⟨n, u, hu, hzn⟩ := hgen M hMpos z hzΛ
       let ρ : WO V W →+ WO V W :=
-        (DistribMulAction.toAddMonoidHom _ r).comp (DistribMulAction.toAddMonoidHom _ e)
+        (DistribSMul.toAddMonoidHom _ r).comp (DistribSMul.toAddMonoidHom _ e)
       have hρ : r • z = ∑ i, n i • h i + e • u := by
         have e1 : r • z = ρ z := by
-          simp only [ρ, AddMonoidHom.comp_apply, DistribMulAction.toAddMonoidHom_apply, hzh]
+          simp only [ρ, AddMonoidHom.comp_apply, DistribSMul.toAddMonoidHom_apply, hzh]
         set_option synthInstance.maxHeartbeats 100000 in
           rw [e1, hzn, map_add (f := _), map_sum, map_nsmul]
         simp only [map_zsmul]

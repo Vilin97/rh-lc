@@ -42,7 +42,7 @@ theorem int_mul {v : Pl F} {a b : AF F} (ha : evFin F v a ∈ v.adicCompletionIn
   exact mul_mem ha hb
 
 def smulHom (n : ℕ) : AE F E →+ (Fin n → AE F E) →+ (Fin n → AE F E) :=
-  AddMonoidHom.mk' (fun c => DistribMulAction.toAddMonoidHom _ c)
+  AddMonoidHom.mk' (fun c => DistribSMul.toAddMonoidHom _ c)
     (fun c c' => AddMonoidHom.ext fun x => by funext i; simp [add_mul])
 
 theorem smul_mem_latAt {v : Pl F} {n : ℕ} (X : Spc F E n) {c : AE F E} (hc : c ∈ intAt v) {x : Fin n → AE F E}
@@ -52,7 +52,7 @@ theorem smul_mem_latAt {v : Pl F} {n : ℕ} (X : Spc F E n) {c : AE F E} (hc : c
   refine AddSubgroup.subset_closure ⟨b * a, at_mul a hb, int_mul hbi hai, o • y, X.L.smul_mem o hy, ?_⟩
   funext i
   have ho : algebraMap (𝓞 E) E o = (o : E) := rfl
-  simp only [smulHom, AddMonoidHom.mk'_apply, DistribMulAction.toAddMonoidHom_apply, Pi.smul_apply, smul_eq_mul]
+  simp only [smulHom, AddMonoidHom.mk'_apply, DistribSMul.toAddMonoidHom_apply, Pi.smul_apply, smul_eq_mul]
   simp only [Algebra.smul_def, map_mul, ho]
   ring
 
@@ -63,7 +63,7 @@ theorem smul_incl_mem_latAt {v : Pl F} {n : ℕ} (X : Spc F E n) {c : AE F E} (h
   refine AddSubgroup.subset_closure ⟨b, hb, hbi, o • y, X.L.smul_mem o hy, ?_⟩
   funext i
   have ho : algebraMap (𝓞 E) E o = (o : E) := rfl
-  simp only [smulHom, AddMonoidHom.mk'_apply, DistribMulAction.toAddMonoidHom_apply, Pi.smul_apply, smul_eq_mul]
+  simp only [smulHom, AddMonoidHom.mk'_apply, DistribSMul.toAddMonoidHom_apply, Pi.smul_apply, smul_eq_mul]
   simp only [Algebra.smul_def, map_mul, ho]
   ring
 

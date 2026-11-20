@@ -28,9 +28,9 @@ theorem main : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [I
   have hcond : ∀ x : k, (∀ y ∈ 𝒪[k], ψ1 (x * y) = 1) ↔ x ∈ 𝒪[k] := fun x => by
     simp only [hψ1]; exact hc x
   let S : (κ → k) × (κ → k) →+ (κ → k) × (κ → k) :=
-    AddMonoidHom.prodMap (AddMonoidHom.id _) (DistribMulAction.toAddMonoidHom _ c⁻¹)
+    AddMonoidHom.prodMap (AddMonoidHom.id _) (DistribSMul.toAddMonoidHom _ c⁻¹)
   have hS : ∀ w, S w = (w.1, c⁻¹ • w.2) := fun w => rfl
-  let mc : Matrix (Fin n) (Fin d) k →+ Matrix (Fin n) (Fin d) k := DistribMulAction.toAddMonoidHom _ c
+  let mc : Matrix (Fin n) (Fin d) k →+ Matrix (Fin n) (Fin d) k := DistribSMul.toAddMonoidHom _ c
   let wT' := S.comp wT
   let wM' := (S.comp wM).comp mc
   have hT' : ∀ Y, wT' Y = ((wT Y).1, c⁻¹ • (wT Y).2) := fun Y => rfl

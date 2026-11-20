@@ -20,7 +20,7 @@ theorem inLatC_smulC {j : ℕ} {g : ℝ} {L : (X.Pj j).Tup} (b : Y.Kc) (k : ℤ)
     (hb : b * (p : Y.Kc) ^ k ∈ Y.Oc) {y : XspC (X.Pj j) Y.Kc} (h : Y.inLatC j g L y) :
     Y.inLatC j (g - k) L (b • y) := by
   unfold Formalism.MainNotions.FormalGroupSystem.Pend.inLatC at h ⊢
-  have hm := AddSubgroup.mem_map_of_mem (DistribMulAction.toAddMonoidHom (XspC (X.Pj j) Y.Kc) b) h
+  have hm := AddSubgroup.mem_map_of_mem (DistribSMul.toAddMonoidHom (XspC (X.Pj j) Y.Kc) b) h
   rw [AddMonoidHom.map_closure] at hm
   refine AddSubgroup.closure_mono ?_ hm
   rintro _ ⟨_, ⟨a, ha, z, hz, rfl⟩, rfl⟩

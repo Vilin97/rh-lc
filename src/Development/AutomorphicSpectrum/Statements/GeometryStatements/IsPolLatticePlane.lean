@@ -49,7 +49,7 @@ def PointHT : Prop :=
       (EF : La →ₗ[ℤ] La →ₗ[ℤ] ℤ) (N : ℕ) (u : Fin N → La), IsPolLattice c p EF u →
     ∀ (X : TorsTower p G y La) (L : Type) [AddCommGroup L] [Module O L] (M : LieModel G y L)
       (act : 𝓞 E → (G ⟶ G)) (ρL : 𝓞 E →+* Module.End O L), (∀ a, IsMonHom (act a)) → M.IsActOf act ρL →
-      (∀ a : 𝓞 E, X.Induces (act a) (DistribMulAction.toAddMonoidHom La a)) →
+      (∀ a : 𝓞 E, X.Induces (act a) (DistribSMul.toAddMonoidHom La a)) →
       2 * Module.finrank O L = Module.finrank ℤ La →
     ∀ ζ : ℕ → Oˣ, (∀ n, IsPrimitiveRoot (ζ n) (p ^ n)) → (∀ n, ζ (n + 1) ^ p = ζ n) → X.PairingRegular EF ζ →
     ∀ κ : O, IsHTConst v p κ →

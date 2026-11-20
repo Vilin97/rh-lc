@@ -138,8 +138,8 @@ theorem data_of_model : HV → Laws6 → GlobalTheory.LN.UDvrSt → GlobalTheory
     DW, mW, oW, φ, he, w, e, νW, hM, hX, hA, hGeo⟩
   · have key := GlobalTheory.T.degenerationIso_comm_induced_label_maps C _ N' D.La D.EF A.I.ζ I'.ζ lab lab' n hn.one_lt lT lM J hJ'
       (fun j => (GlobalTheory.T.degenerationData_torsion_structure_algClosed C _ n _ hn0 tW j).2.2.1)
-      (A.ν.eX.symm.toAddMonoidHom.comp ((DistribMulAction.toAddMonoidHom _ x).comp A.ν.eX.toAddMonoidHom))
-      (ν'.eX.symm.toAddMonoidHom.comp ((DistribMulAction.toAddMonoidHom _ x).comp ν'.eX.toAddMonoidHom)) (x • ·)
+      (A.ν.eX.symm.toAddMonoidHom.comp ((DistribSMul.toAddMonoidHom _ x).comp A.ν.eX.toAddMonoidHom))
+      (ν'.eX.symm.toAddMonoidHom.comp ((DistribSMul.toAddMonoidHom _ x).comp ν'.eX.toAddMonoidHom)) (x • ·)
       (fun j v => by
         obtain ⟨z, hz⟩ := linA _ (hp j) x v
         refine ⟨A.ν.eX.symm z, ?_⟩

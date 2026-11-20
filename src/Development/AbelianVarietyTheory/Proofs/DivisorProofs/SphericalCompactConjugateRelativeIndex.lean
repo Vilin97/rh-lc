@@ -39,7 +39,7 @@ theorem GlobalTheory.SphLineComm.commensurated : ∀ (F E : Type) [Field F] [Num
     rw [Matrix.mulVec_smul, ← Matrix.smul_mulVec]
     rw [sub_smul, one_smul, sub_eq_zero] at h0
     rw [← h0]
-  let π : (Fin (a + a') → AE F E) →+ (Fin (a + a') → AE F E) := DistribMulAction.toAddMonoidHom _ (unitAt v)
+  let π : (Fin (a + a') → AE F E) →+ (Fin (a + a') → AE F E) := DistribSMul.toAddMonoidHom _ (unitAt v)
   have hπ : ∀ k z, ρ k z - z = ρ k (π z) - π z := by
     intro k z
     simp only [hρ]

@@ -61,7 +61,7 @@ theorem UpperTheory.V.X.So.dualEmb :
     constructor
     · intro hv
       obtain ⟨y, rfl⟩ := (UpperTheory.V.ML.qoCyc l O).2.2.1 a w ha hw v hv
-      refine ⟨(φ₀.toAddMonoidHom.comp (DistribMulAction.toAddMonoidHom M y)).toZModLinearMap (l ^ r), ?_⟩
+      refine ⟨(φ₀.toAddMonoidHom.comp (DistribSMul.toAddMonoidHom M y)).toZModLinearMap (l ^ r), ?_⟩
       show c _ • w = y • w
       apply key
       intro m

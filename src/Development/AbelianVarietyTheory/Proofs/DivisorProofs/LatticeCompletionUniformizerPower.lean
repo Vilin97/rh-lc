@@ -77,7 +77,7 @@ theorem mem_compK_iff (Λ : Submodule (𝓞 E) (Fin n → E)) (v : HeightOneSpec
       y = ((1 : Fv F v) ⊗ₜ[F] algebraMap F E (π : F)) ^ k • z := by
   set I : Ideal (𝓞 E) := (v.asIdeal ^ k).map (algebraMap (𝓞 F) (𝓞 E)) with hI
   set T : AddSubgroup (Fin n → Fv F v ⊗[F] E) := (compLat v (Λ : Set (Fin n → E))).map
-    (DistribMulAction.toAddMonoidHom _ (((1 : Fv F v) ⊗ₜ[F] algebraMap F E (π : F)) ^ k)) with hT
+    (DistribSMul.toAddMonoidHom _ (((1 : Fv F v) ⊗ₜ[F] algebraMap F E (π : F)) ^ k)) with hT
   have memT : ∀ z ∈ compLat v (Λ : Set (Fin n → E)),
       ((1 : Fv F v) ⊗ₜ[F] algebraMap F E (π : F)) ^ k • z ∈ T := fun z hz => ⟨z, hz, rfl⟩
   constructor

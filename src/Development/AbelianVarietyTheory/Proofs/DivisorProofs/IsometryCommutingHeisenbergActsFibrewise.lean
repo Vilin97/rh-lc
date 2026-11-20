@@ -130,7 +130,7 @@ theorem eq_zero_of_vanish_fibre : ∀ {F : Type} [Field F] [NumberField F] {κ :
   haveI : BorelSpace (κ → AF F) := ⟨rfl⟩
   set e := GlobalTheory.LatVac.liftV v (1 : Fv F v) with he_def
   have he0 : evFin F v (1 - e) = 0 := by rw [map_sub, he_def, GlobalTheory.LatVac.evFin_liftV, map_one, sub_self]
-  let P : (κ → AF F) →+ (κ → AF F) := DistribMulAction.toAddMonoidHom _ e
+  let P : (κ → AF F) →+ (κ → AF F) := DistribSMul.toAddMonoidHom _ e
   have hPc : Continuous P := continuous_const_smul e
   have hPP : ∀ x, P (P x) = P x := fun x => by
     show e • e • x = e • x

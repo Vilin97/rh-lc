@@ -14,7 +14,7 @@ private theorem letter_lift {LL U D : Type} [Field LL] [Field U] [AddCommGroup D
   letI : Module F M := Module.compHom M κ
   have hsm : ∀ (c : F) (y : M), c • y = κ c • y := fun _ _ => rfl
   let f₂ : F →+ D →+ M := AddMonoidHom.mk' (fun c =>
-      (DistribMulAction.toAddMonoidHom M (κ c)).comp f)
+      (DistribSMul.toAddMonoidHom M (κ c)).comp f)
     (fun c c' => by
       ext x
       simp [add_smul])

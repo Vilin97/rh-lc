@@ -50,9 +50,9 @@ theorem average : Average := by
         funext s p
         show ∑ᶠ γ, u (G.σ γ⁻¹ s) (G.ρ γ⁻¹ p) • (z • a γ).1 s p =
           z • ∑ᶠ γ, u (G.σ γ⁻¹ s) (G.ρ γ⁻¹ p) • (a γ).1 s p
-        have hm := map_finsum (DistribMulAction.toAddMonoidHom (V [⋀^Fin q]→L[ℝ] (Fin d → ℂ)) z)
+        have hm := map_finsum (DistribSMul.toAddMonoidHom (V [⋀^Fin q]→L[ℝ] (Fin d → ℂ)) z)
           (hfs a s p)
-        simp only [DistribMulAction.toAddMonoidHom_apply] at hm
+        simp only [DistribSMul.toAddMonoidHom_apply] at hm
         rw [hm]
         congr 1
         rw [smul_comm] }

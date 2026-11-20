@@ -145,14 +145,14 @@ theorem latPtS_le {i j : ℕ} (t : T) (e : Num G i j) (X : Spc D.host.F D.host.E
     (Y : Spc D.host.F D.host.E ((spW G i j).rank + (spW₁ G i j).rank)) (hX : X.L = latSmall G i j) (hY : Y.L = latSkew e)
     (v : Pl D.host.F) : ∀ u ∈ latPtS t e v, u ∈ latAtV X Y v := by
   have k1 : ∀ x ∈ latA G t i j, GlobalTheory.LatVac.liftV v 1 • ofMaps t e (x, 0) ∈ latAtV X Y v := fun x hx => by
-    refine GlobalTheory.BigDat.map_mem_of_closure ((DistribMulAction.toAddMonoidHom (PtS G i j) (GlobalTheory.LatVac.liftV v 1)).comp
+    refine GlobalTheory.BigDat.map_mem_of_closure ((DistribSMul.toAddMonoidHom (PtS G i j) (GlobalTheory.LatVac.liftV v 1)).comp
       ((maps t e).symm.toLinearMap.toAddMonoidHom.comp (AddMonoidHom.inl _ _))) ?_ hx
     rintro _ ⟨α, hα, -, a, ha, s, hs, r, hr, rfl⟩
     exact (congrArg (fun z => GlobalTheory.LatVac.liftV v 1 • z ∈ latAtV X Y v) (ofMaps_genA t e (pairA _ 0 α) a s r)).mpr
       (GlobalTheory.BigDat.one_smul_gen_mem _ _ v hα (hX.ge (GlobalTheory.BigDat.star_mem_conjSub hs))
         (hY.ge (GlobalTheory.BigDat.pair_mem e (GlobalTheory.BigDat.smul_mem_scLat_of_mem ha hr) (zero_mem _))))
   have k2 : ∀ x ∈ latB G i j, GlobalTheory.LatVac.liftV v 1 • ofMaps t e (0, x) ∈ latAtV X Y v := fun x hx => by
-    refine GlobalTheory.BigDat.map_mem_of_closure ((DistribMulAction.toAddMonoidHom (PtS G i j) (GlobalTheory.LatVac.liftV v 1)).comp
+    refine GlobalTheory.BigDat.map_mem_of_closure ((DistribSMul.toAddMonoidHom (PtS G i j) (GlobalTheory.LatVac.liftV v 1)).comp
       ((maps t e).symm.toLinearMap.toAddMonoidHom.comp (AddMonoidHom.inr _ _))) ?_ hx
     rintro _ ⟨α, hα, -, a, ha, s, hs, r, hr, rfl⟩
     exact (congrArg (fun z => GlobalTheory.LatVac.liftV v 1 • z ∈ latAtV X Y v) (ofMaps_genB t e (pairA _ 0 α) a s r)).mpr

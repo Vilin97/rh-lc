@@ -217,14 +217,14 @@ theorem coord_frame {O K R' R : Type} [CommRing O] [Field K] [Algebra O K] [Comm
     (N.map ψ)
     (fun w hw => by
       have := hind ((AddSubgroup.pi Set.univ fun _ => S.toAddSubgroup).comap
-        (DistribMulAction.toAddMonoidHom (Fin n → R) (σ (j t)))) (fun a ha s hs i _ => by
+        (DistribSMul.toAddMonoidHom (Fin n → R) (σ (j t)))) (fun a ha s hs i _ => by
           obtain ⟨b, hb⟩ := ht a ha
           show σ (j t) * (σ (j a) * s i) ∈ S
           rw [← mul_assoc, ← map_mul, ← map_mul, hb, ← ho]
           exact S.mul_mem (o b).2 (hs i)) hw
       exact fun i => this i trivial)
     (fun s => hgen a₀ ha₀ _ fun i => (s i).2)
-    (fun b w hw => hind ((N.map ψ).comap (DistribMulAction.toAddMonoidHom (Fin n → R) (o b : R)))
+    (fun b w hw => hind ((N.map ψ).comap (DistribSMul.toAddMonoidHom (Fin n → R) (o b : R)))
       (fun a ha s hs => by
         have := hgen _ (hA b a ha) s hs
         show (fun i => (o b : R) * (σ (j a) * s i)) ∈ N.map ψ

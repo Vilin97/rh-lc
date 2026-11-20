@@ -104,7 +104,7 @@ private theorem index_range_smul_pi {R M ι : Type*} [Monoid R] [AddCommGroup M]
   have h : (DistribSMul.toAddMonoidHom (ι → M) r).range =
       AddSubgroup.pi Set.univ (fun _ => (DistribSMul.toAddMonoidHom M r).range) := by
     ext x
-    simp only [AddMonoidHom.mem_range, DistribMulAction.toAddMonoidHom_apply, AddSubgroup.mem_pi,
+    simp only [AddMonoidHom.mem_range, DistribSMul.toAddMonoidHom_apply, AddSubgroup.mem_pi,
       Set.mem_univ, true_imp_iff]
     constructor
     · rintro ⟨y, rfl⟩ i
@@ -131,7 +131,7 @@ private theorem index_range_smul_pow {R : Type*} [CommRing R] [IsDomain R] {r : 
         (DistribSMul.toAddMonoidHom R (r ^ j)).range.map
           (DistribSMul.toAddMonoidHom R r) := by
       ext x
-      simp only [AddMonoidHom.mem_range, AddSubgroup.mem_map, DistribMulAction.toAddMonoidHom_apply,
+      simp only [AddMonoidHom.mem_range, AddSubgroup.mem_map, DistribSMul.toAddMonoidHom_apply,
         smul_eq_mul]
       constructor
       · rintro ⟨y, rfl⟩
@@ -144,7 +144,7 @@ private theorem index_range_smul_eq_card_quotient {R : Type*} [CommRing R] (r : 
     (DistribSMul.toAddMonoidHom R r).range.index = Nat.card (R ⧸ Ideal.span {r}) := by
   have h : (DistribSMul.toAddMonoidHom R r).range = (Ideal.span {r}).toAddSubgroup := by
     ext x
-    simp only [AddMonoidHom.mem_range, DistribMulAction.toAddMonoidHom_apply, smul_eq_mul,
+    simp only [AddMonoidHom.mem_range, DistribSMul.toAddMonoidHom_apply, smul_eq_mul,
       Submodule.mem_toAddSubgroup, Ideal.mem_span_singleton']
     constructor <;> rintro ⟨y, rfl⟩ <;> exact ⟨y, mul_comm _ _⟩
   rw [h, AddSubgroup.index_eq_card]
@@ -192,7 +192,7 @@ theorem relIndex_tupLat_hermLat : ∀ {F : Type} [Field F] [ValuativeRel F] [Top
       DistribSMul.toAddMonoidHom _ (algebraMap F E ((ϖ : F) ^ j)) (tupOf L b m g) := by
     intro g
     funext a
-    simp only [DistribMulAction.toAddMonoidHom_apply, tupOf_apply, Pi.smul_apply, smul_eq_mul,
+    simp only [DistribSMul.toAddMonoidHom_apply, tupOf_apply, Pi.smul_apply, smul_eq_mul,
       MulMemClass.coe_mul, hsO, mul_smul, Finset.smul_sum]
   have P1 := relIndex_map_of_param (tupOf L b m) hinj1 (tupLat L Λs m) hA1
     (DistribSMul.toAddMonoidHom _ (algebraMap F E ((ϖ : F) ^ j)))
@@ -266,7 +266,7 @@ theorem relIndex_tupLat_hermLat : ∀ {F : Type} [Field F] [ValuativeRel F] [Top
       DistribSMul.toAddMonoidHom _ (algebraMap F E ((ϖ : F) ^ j)) (hermOf L m g) := by
     intro g
     ext a b
-    simp only [DistribMulAction.toAddMonoidHom_apply, Matrix.smul_apply, hermOf_apply,
+    simp only [DistribSMul.toAddMonoidHom_apply, Matrix.smul_apply, hermOf_apply,
       AddMonoidHom.coe_prodMap, Prod.map_fst, Prod.map_snd, Prod.map_apply]
     split_ifs <;> simp [smul_eq_mul, MulMemClass.coe_mul, hsO, cj_alg, map_mul]
   have hR2 : ((DistribSMul.toAddMonoidHom (Fin m → 𝒪[F]) (ϖ ^ j)).prodMap

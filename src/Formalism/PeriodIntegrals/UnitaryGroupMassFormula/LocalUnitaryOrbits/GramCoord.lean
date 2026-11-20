@@ -58,7 +58,7 @@ theorem phi_ker (hSD : IsSDLoc σ J v Λ) {e : Fin n → Fin n → Fv F v ⊗[F]
     have hZ : (fun i => ∑ p, d i p • e p) ∈ lamA v Λ a := fun i => (he _).2 ⟨d i, hd i, rfl⟩
     refine ⟨_, hZ, ?_⟩
     funext i
-    rw [DistribMulAction.toAddMonoidHom_apply, Pi.smul_apply, expand σ J v Λ he he1 (memA v Λ X i), Finset.smul_sum]
+    rw [DistribSMul.toAddMonoidHom_apply, Pi.smul_apply, expand σ J v Λ he he1 (memA v Λ X i), Finset.smul_sum]
     refine Finset.sum_congr rfl fun p _ => ?_
     rw [hde, smul_smul]
 

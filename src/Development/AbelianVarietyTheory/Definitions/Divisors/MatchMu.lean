@@ -59,7 +59,7 @@ def latO (K : IntermediateField ℚ_[p] (PadicAlgCl p)) (n : ℕ) : AddSubgroup 
 def rhoD (K : IntermediateField ℚ_[p] (PadicAlgCl p)) (n : ℕ) (h : Matrix (Fin n) (Fin n) (KQ p K 1)) : ℕ :=
   Nat.log (ReciprocityTheory.DiscreteGroups.LocalClassField.qK p K)
     (((latO p K n).map (Matrix.mulVecLin h).toAddMonoidHom ⊔
-      (latO p K n).map (DistribMulAction.toAddMonoidHom (Fin n → KQ p K 1)
+      (latO p K n).map (DistribSMul.toAddMonoidHom (Fin n → KQ p K 1)
         (inclK p K 1 ((GlobalTheory.LKLoc.unif p K : Kˣ) : K)))).relIndex (latO p K n))
 
 def fW (K : IntermediateField ℚ_[p] (PadicAlgCl p)) (n r c : ℕ) (g : GL (Fin n) (KQ p K 1)) : ℂ :=

@@ -19,7 +19,7 @@ def smulSub {W : Type} [AddCommGroup W] [Module K W] (t : K) (P : AddSubgroup W)
 omit [TopologicalSpace K] in
 theorem mem_smulSub {W : Type} [AddCommGroup W] [Module K W] (t : K) (P : AddSubgroup W) (z : W) :
     z ∈ smulSub t P ↔ ∃ p ∈ P, t • p = z := by
-  simp only [smulSub, AddSubgroup.mem_map, DistribMulAction.toAddMonoidHom_apply]
+  simp only [smulSub, AddSubgroup.mem_map, DistribSMul.toAddMonoidHom_apply]
 
 theorem coe_smulSub {W : Type} [AddCommGroup W] [Module K W] (t : K) (P : AddSubgroup W) :
     (smulSub t P : Set W) = (fun p => t • p) '' (P : Set W) := by

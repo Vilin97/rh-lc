@@ -326,7 +326,7 @@ open CategoryTheory AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory
 
 set_option maxHeartbeats 800000 in
 
-theorem tower_exists : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (S : Scheme.{0}) [IsLocallyNoetherian S] (t : SAB H S) (p : ℕ) [Fact p.Prime] (O : Type) [CommRing O] [IsDomain O] [CharZero O] [IsAlgClosed (FractionRing O)] (y : Sp O ⟶ S) (I : TateIso D (FractionRing O) (Over.mk ((BT.genPt O).hom ≫ y) ⟶ t.G) (fun a g => g ≫ t.act.act a) (fun n g g' c => Out.WeilIs t.G t.PP.L n g g' (unitOn c))), ∃ X : TorsTower p t.G y D.La, (∀ n (a : D.La), ((X.Γ n).pt (lev p n a)).left ≫ X.i n = (I.ev (p ^ n) a).left) ∧ ∀ a : 𝓞 E, X.Induces (t.act.act a) (DistribMulAction.toAddMonoidHom D.La a) := by
+theorem tower_exists : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (S : Scheme.{0}) [IsLocallyNoetherian S] (t : SAB H S) (p : ℕ) [Fact p.Prime] (O : Type) [CommRing O] [IsDomain O] [CharZero O] [IsAlgClosed (FractionRing O)] (y : Sp O ⟶ S) (I : TateIso D (FractionRing O) (Over.mk ((BT.genPt O).hom ≫ y) ⟶ t.G) (fun a g => g ≫ t.act.act a) (fun n g g' c => Out.WeilIs t.G t.PP.L n g g' (unitOn c))), ∃ X : TorsTower p t.G y D.La, (∀ n (a : D.La), ((X.Γ n).pt (lev p n a)).left ≫ X.i n = (I.ev (p ^ n) a).left) ∧ ∀ a : 𝓞 E, X.Induces (t.act.act a) (DistribSMul.toAddMonoidHom D.La a) := by
   intro E _ _ _ H D S _ t p hp O _ _ _ _ y I
   have hp0 : ∀ n : ℕ, 0 < p ^ n := fun n => pow_pos hp.out.pos n
   have hev_pow : ∀ (N : ℕ), 0 < N → ∀ (k : ℕ) (a : D.La), I.ev N (k • a) = I.ev N a ^ k := by
@@ -354,9 +354,9 @@ theorem tower_exists : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
   · intro n a
     rw [hpt, hpt, hev_pow _ (hp0 (n + 1)), pow_succ, I.tower _ _ (hp0 n) hp.out.pos]
   · intro a n b
-    have e1 := hpt n ((DistribMulAction.toAddMonoidHom D.La a) b)
+    have e1 := hpt n ((DistribSMul.toAddMonoidHom D.La a) b)
     have e2 := hpt n b
-    have e3 : I.ev (p ^ n) ((DistribMulAction.toAddMonoidHom D.La a) b) = I.ev (p ^ n) b ≫ t.act.act a :=
+    have e3 : I.ev (p ^ n) ((DistribSMul.toAddMonoidHom D.La a) b) = I.ev (p ^ n) b ≫ t.act.act a :=
       I.lin _ a b
     rw [e1, e3, Over.comp_left, ← e2, Category.assoc]
 

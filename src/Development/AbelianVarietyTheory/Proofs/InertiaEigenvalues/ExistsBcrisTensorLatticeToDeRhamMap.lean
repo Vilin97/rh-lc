@@ -62,8 +62,8 @@ theorem mul_smul_lat (o o' : ↥(OL LL)) (x : ↥T.L.T) :
   rw [coe_smul_lat, smul_smul, Subalgebra.coe_mul, mul_comm]
 
 theorem crisTensorDRLiftFromCoeffBcris_smul_comm (o : ↥(OL LL)) :
-    (f1 Td T).comp (DistribMulAction.toAddMonoidHom (OB l ↥(OL LL)) o) =
-      (AddMonoidHom.compHom' (DistribMulAction.toAddMonoidHom (↥T.L.T) o)).comp (f1 Td T) := by
+    (f1 Td T).comp (DistribSMul.toAddMonoidHom (OB l ↥(OL LL)) o) =
+      (AddMonoidHom.compHom' (DistribSMul.toAddMonoidHom (↥T.L.T) o)).comp (f1 Td T) := by
   refine AddMonoidHom.ext fun u => ?_
   induction u using TensorProduct.induction_on with
   | zero => exact (map_zero _).trans (map_zero _).symm

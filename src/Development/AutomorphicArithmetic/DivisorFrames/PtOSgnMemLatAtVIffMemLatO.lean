@@ -90,7 +90,7 @@ private theorem finiteRing_sq_sub_mul_sq_eq_of_card {D : D7} (S X : HSp D) {d : 
       rwa [one_smul] at h4
     obtain ⟨x', hx', h⟩ := key hx
     rwa [← ptO_inj S e h]
-  · refine GlobalTheory.BigDat.map_mem_of_closure ((DistribMulAction.toAddMonoidHom _ b).comp (ptH S e)) ?_ hx
+  · refine GlobalTheory.BigDat.map_mem_of_closure ((DistribSMul.toAddMonoidHom _ b).comp (ptH S e)) ?_ hx
     rintro _ ⟨α, hα, -, a, ha, s, hs, t, ht, rfl⟩
     refine (congrArg (fun z => b • z ∈ latAtV Vs Ws v) (ptO_gen S e (pairA _ 0 α) a s t)).mpr ?_
     rw [smul_smul]

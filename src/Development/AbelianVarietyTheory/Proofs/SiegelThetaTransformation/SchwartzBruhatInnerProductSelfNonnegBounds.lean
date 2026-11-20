@@ -85,7 +85,7 @@ theorem _root_.GlobalTheory.SW.IpPos.classes_finite_card {R : ℕ} (hR : 0 < R) 
     obtain ⟨y, hy, hzy⟩ :=
       _root_.GlobalTheory.SW.IpPos.exists_of_mem_perSub (AddSubgroup.mem_addSubgroupOf.mp hz)
     simp only [g, AddMonoidHom.comp_apply, AddSubgroup.coe_subtype,
-      DistribMulAction.toAddMonoidHom_apply, QuotientAddGroup.mk'_apply,
+      DistribSMul.toAddMonoidHom_apply, QuotientAddGroup.mk'_apply,
       QuotientAddGroup.eq_zero_iff, hzy, smul_smul]
     rw [show ((R : K))⁻¹ * ((1 * (R * R) : ℕ) : K) = R by push_cast; field_simp]
     exact AddSubgroup.subset_closure ⟨y, hy, rfl⟩
@@ -96,7 +96,7 @@ theorem _root_.GlobalTheory.SW.IpPos.classes_finite_card {R : ℕ} (hR : 0 < R) 
       AddSubgroup.subset_closure ⟨_, hq, by rw [Nat.cast_one, one_smul]⟩
     refine ⟨QuotientAddGroup.mk ⟨_, hL⟩, ?_⟩
     simp only [F, QuotientAddGroup.lift_mk, g, AddMonoidHom.comp_apply, AddSubgroup.coe_subtype,
-      DistribMulAction.toAddMonoidHom_apply, QuotientAddGroup.mk'_apply, smul_smul,
+      DistribSMul.toAddMonoidHom_apply, QuotientAddGroup.mk'_apply, smul_smul,
       inv_mul_cancel₀ hRK, one_smul]
     exact QuotientAddGroup.out_eq' q
   have hfin : Finite (L ⧸ H) := Nat.finite_of_card_ne_zero (by

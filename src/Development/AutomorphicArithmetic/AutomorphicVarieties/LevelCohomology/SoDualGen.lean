@@ -74,7 +74,7 @@ theorem UpperTheory.V.X.So.dualGen :
       rw [hann x hx m, map_zero]
   refine ⟨φ₀, hcond, fun φ => ?_⟩
   let sm : O → (M →ₗ[ZMod (l ^ r)] M) :=
-    fun x => (DistribMulAction.toAddMonoidHom M x).toZModLinearMap (l ^ r)
+    fun x => (DistribSMul.toAddMonoidHom M x).toZModLinearMap (l ^ r)
   let Ψ : O →+ Module.Dual (ZMod (l ^ r)) M :=
     { toFun := fun x => φ₀ ∘ₗ sm x
       map_zero' := by

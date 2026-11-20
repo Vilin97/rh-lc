@@ -49,7 +49,7 @@ theorem cong_on_sdLattice : ∀ {D : D7} (V : HSp D) {β : GL (Fin V.rank) (Lev.
     let s : FiniteAdeleRing (𝓞 D.host.F) D.host.F ⊗[D.host.F] D.host.E :=
       (1 : FiniteAdeleRing (𝓞 D.host.F) D.host.F) ⊗ₜ[D.host.F] b
     let H : AddSubgroup (Fin V.rank → FiniteAdeleRing (𝓞 D.host.F) D.host.F ⊗[D.host.F] D.host.E) :=
-      (latHat V).comap (DistribMulAction.toAddMonoidHom _ s)
+      (latHat V).comap (DistribSMul.toAddMonoidHom _ s)
     suffices hle : latGHat V 1 ≤ H from fun w hw => hle hw
     rw [GlobalTheory.LevelActionPinned.latGHat_one, AddSubgroup.closure_le]
     · rintro _ ⟨_, ⟨a, ha, rfl⟩, z, hz, rfl⟩

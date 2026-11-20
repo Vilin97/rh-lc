@@ -60,7 +60,7 @@ theorem idxVP_of (a : ℕ) (Y : TupV (E := E) v n a) (hB : LatBasOP σ J ψ v Λ
       obtain ⟨d, rfl⟩ := (hmem z).1 hz
       refine ⟨d i, ?_⟩
       have e : ∑ i, (c i : Fv F v) • b i = ∑ i, (ϖ * d i) • b i := by
-        have : (DistribMulAction.toAddMonoidHom (Fin n → Fv F v ⊗[F] E) (sc (E := E) v ϖ))
+        have : (DistribSMul.toAddMonoidHom (Fin n → Fv F v ⊗[F] E) (sc (E := E) v ϖ))
             (∑ i, (d i : Fv F v) • b i) = ∑ i, (ϖ * d i) • b i := by
           show sc (E := E) v ϖ • ∑ i, (d i : Fv F v) • b i = _
           rw [Finset.smul_sum]

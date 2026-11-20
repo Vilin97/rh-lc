@@ -38,7 +38,7 @@ theorem smul_mem_std (R : Subalgebra o C) {m : ℕ} (L : AddSubgroup (Fin m → 
     · exact R.one_mem
     · exact R.zero_mem
   have hwe : w • (Pi.single i (1 : C) : Fin m → C) ∈ L :=
-    h (AddSubgroup.mem_map_of_mem (DistribMulAction.toAddMonoidHom (Fin m → C) w) he)
+    h (AddSubgroup.mem_map_of_mem (DistribSMul.toAddMonoidHom (Fin m → C) w) he)
   have hd := (mem_dual R L v).1 hv _ hwe
   have heq : (w • (Pi.single i (1 : C) : Fin m → C)) ⬝ᵥ v = w * v i := by
     rw [smul_dotProduct, single_dotProduct, one_mul, smul_eq_mul]

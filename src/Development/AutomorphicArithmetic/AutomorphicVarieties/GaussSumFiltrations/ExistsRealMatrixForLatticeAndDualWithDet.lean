@@ -238,7 +238,7 @@ theorem exists_alpha (ω : Module.Basis (InfinitePlace F) ℚ F)
     choose n hn using fun j => (hω (l j)).1 (hl j)
     refine ⟨fun p => n p.2 p.1, ?_⟩
     funext j
-    simp only [g, Pi.smul_apply, smul_eq_mul, DistribMulAction.toAddMonoidHom_apply]
+    simp only [g, Pi.smul_apply, smul_eq_mul, DistribSMul.toAddMonoidHom_apply]
     rw [hn j]
   refine ⟨Equiv.ofBijective _ ⟨hinj, fun y => ?_⟩, fun m => rfl⟩
   obtain ⟨m, hm⟩ := hsurj y

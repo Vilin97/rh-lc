@@ -34,13 +34,13 @@ theorem isBump_conj_smul {D : D7} {m n : ℕ} (c c' : AE D) (hc : c' * c = 1) (h
   · exact Complex.continuous_conj.comp (hβ.cont.comp (continuous_const_smul c))
   · exact (hβ.supp.comp_homeomorph e).comp_left (map_zero (starRingEnd ℂ))
   · obtain ⟨U, hU, hper⟩ := hβ.level
-    refine ⟨U.comap (DistribMulAction.toAddMonoidHom (Mx D m n) c), hU.preimage (continuous_const_smul c), ?_⟩
+    refine ⟨U.comap (DistribSMul.toAddMonoidHom (Mx D m n) c), hU.preimage (continuous_const_smul c), ?_⟩
     intro u hu hu0 x
     simp only [smul_add]
     rw [hper (c • u) hu (hinf u hu0)]
   · intro k l hl hl0 w
-    have h0 : ContDiff ℝ ∞ fun t => β (c • w + ((DistribMulAction.toAddMonoidHom (Mx D m n) c).comp l) t) :=
-      hβ.smooth k ((DistribMulAction.toAddMonoidHom (Mx D m n) c).comp l)
+    have h0 : ContDiff ℝ ∞ fun t => β (c • w + ((DistribSMul.toAddMonoidHom (Mx D m n) c).comp l) t) :=
+      hβ.smooth k ((DistribSMul.toAddMonoidHom (Mx D m n) c).comp l)
         ((continuous_const_smul c).comp hl) (fun t => hfin _ (hl0 t)) (c • w)
     have h := (Complex.conjCLE.contDiff (n := ∞)).comp h0
     convert h using 2 with t

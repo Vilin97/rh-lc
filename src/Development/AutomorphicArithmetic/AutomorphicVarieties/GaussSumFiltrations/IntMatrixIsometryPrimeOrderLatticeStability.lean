@@ -137,7 +137,7 @@ theorem isometry_order_p : ∀ (F : Type) [Field F] [NumberField F] (p : ℕ), p
       simp only [aL, AddSubgroup.mem_map] at hx ⊢
       obtain ⟨y, hy, rfl⟩ := hx
       refine ⟨y, hy, ?_⟩
-      simp only [DistribMulAction.toAddMonoidHom_apply, smul_smul]
+      simp only [DistribSMul.toAddMonoidHom_apply, smul_smul]
       rw [pow_two, mul_assoc, mul_inv_cancel₀ hN0, mul_one]
     obtain ⟨u, v, huv⟩ : IsCoprime (p : ℤ) ((N : ℤ) ^ 2) := by
       have hc : Nat.Coprime p (N ^ 2) := Nat.Coprime.pow_right 2 hcop.symm

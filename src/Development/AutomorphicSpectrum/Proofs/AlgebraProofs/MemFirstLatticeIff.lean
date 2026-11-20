@@ -59,7 +59,7 @@ theorem mem_first_lattice_iff (D : LieLatticeData C F n Sg r s) (p : ℕ) (f : (
     refine ⟨m, hm, _, ⟨fun x => (t x : C), (mem_stdLat RC _).2 fun x => (t x).2, rfl⟩, ?_⟩
     funext x
     have := ht x
-    simp only [Pi.add_apply, DistribMulAction.toAddMonoidHom_apply, Pi.smul_apply, smul_eq_mul]
+    simp only [Pi.add_apply, DistribSMul.toAddMonoidHom_apply, Pi.smul_apply, smul_eq_mul]
     rw [mul_comm, ← this]; ring
 
 theorem mem_xId (D : LieLatticeData C F n Sg r s) (χ : F → C) (i : Fin n) (c : C) :

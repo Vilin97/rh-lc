@@ -33,7 +33,7 @@ theorem hh_le_divLat {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] {F : T
   intro v hv
   change v ∈ dotDual R (D.af R p χ) at hv
   unfold dotDual at hv
-  simp only [divLat, AddSubgroup.mem_comap, DistribMulAction.toAddMonoidHom_apply]
+  simp only [divLat, AddSubgroup.mem_comap, DistribSMul.toAddMonoidHom_apply]
   rw [stdLat, AddSubgroup.mem_pi]
   intro i _
   have he : (Pi.single i (1 : Ω) : Fin n → Ω) ∈ stdLat R (Fin n) := by
@@ -44,7 +44,7 @@ theorem hh_le_divLat {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] {F : T
     · exact R.one_mem
     · exact R.zero_mem
   have hwe : w • (Pi.single i (1 : Ω) : Fin n → Ω) ∈ D.af R p χ :=
-    hw (AddSubgroup.mem_map_of_mem (DistribMulAction.toAddMonoidHom (Fin n → Ω) w) he)
+    hw (AddSubgroup.mem_map_of_mem (DistribSMul.toAddMonoidHom (Fin n → Ω) w) he)
   have h := AddSubgroup.mem_iInf.mp
     (AddSubgroup.mem_iInf.mp hv (w • (Pi.single i (1 : Ω) : Fin n → Ω))) hwe
   have h2 : (w • (Pi.single i (1 : Ω) : Fin n → Ω)) ⬝ᵥ v ∈ R := h

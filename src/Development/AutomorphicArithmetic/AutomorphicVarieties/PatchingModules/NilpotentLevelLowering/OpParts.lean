@@ -665,7 +665,7 @@ theorem spPart {Λ : Type} [CommRing Λ] [IsLocalRing Λ] [IsNoetherianRing Λ] 
     simp only [map_pow]
     rw [hτ, pow_add, mul_comm, ← smul_smul]
     apply nilMap _ φ hφΛ
-    exact nilMap (maximalIdeal Λ ^ k) (DistribMulAction.toAddMonoidHom (MSplitAlg P n ⊗[B] M)
+    exact nilMap (maximalIdeal Λ ^ k) (DistribSMul.toAddMonoidHom (MSplitAlg P n ⊗[B] M)
       ((MSplitAlg.root P n j i - algebraMap B (MSplitAlg P n) (ub j i)) ^ s))
       (fun c w => smul_comm _ c w) ((mem_map_algebraMap_smul_top_iff_mem_smul_top _ _).mp hd)
   · intro v hv

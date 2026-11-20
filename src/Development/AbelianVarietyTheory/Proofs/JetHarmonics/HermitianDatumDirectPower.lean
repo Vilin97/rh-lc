@@ -146,7 +146,7 @@ def powDatum (D : Datum H) (n : ℕ) : Datum H where
       · exact (h3 _ hj).le
     · intro a A t hA ht
       let A0 : ℝ ⊗[ℤ] D.La →ₗ[ℝ] ℝ ⊗[ℤ] D.La :=
-        ((DistribMulAction.toAddMonoidHom D.La a).toIntLinearMap).baseChange ℝ
+        ((DistribSMul.toAddMonoidHom D.La a).toIntLinearMap).baseChange ℝ
       obtain ⟨k1, k2, k3⟩ := h4 a A0 _ (fun x => by simp [A0]) rfl
       have hAA : A = diagEnd e A0 := by
         apply LinearMap.ext

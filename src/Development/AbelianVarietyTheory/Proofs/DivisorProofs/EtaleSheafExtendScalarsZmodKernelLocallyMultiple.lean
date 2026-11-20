@@ -12,7 +12,7 @@ theorem unit_eq_zero_dvd {Q q : ℕ} [NeZero Q] (hq : q ∣ Q) (N : ModuleCat.{1
     (h : ((ModuleCat.extendRestrictScalarsAdj.{1, 1, 1} (uliftHom (ZMod.castHom hq (ZMod q)))).unit.app N).hom y = 0) :
     ∃ z : N, y = q • z := by
   change (1 : ULift.{1} (ZMod q)) ⊗ₜ[ULift.{1} (ZMod Q), uliftHom (ZMod.castHom hq (ZMod q))] y = 0 at h
-  let K : AddSubgroup N := (DistribMulAction.toAddMonoidHom N q).range
+  let K : AddSubgroup N := (DistribSMul.toAddMonoidHom N q).range
   let gZ : ℤ →+ (N →+ N ⧸ K) := zmultiplesHom _ (QuotientAddGroup.mk' K)
   have hgZ : gZ q = 0 := by
     ext m

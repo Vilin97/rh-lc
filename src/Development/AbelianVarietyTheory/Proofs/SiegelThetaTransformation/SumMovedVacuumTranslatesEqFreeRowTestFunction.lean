@@ -41,7 +41,7 @@ theorem tens_smul_le (h : ∀ b ∈ 𝔟, ∀ y ∈ tens Λ₁ N, (b : E) • y 
 omit [IsCMField E] in
 theorem smul_tens_left {b : E} (h : ∀ v ∈ Λ₁, b • v ∈ Λ₂) (hy : y ∈ tens Λ₁ N) :
     b • y ∈ tens Λ₂ N := by
-  refine tens_le (H := (tens Λ₂ N).comap (DistribMulAction.toAddMonoidHom _ b))
+  refine tens_le (H := (tens Λ₂ N).comap (DistribSMul.toAddMonoidHom _ b))
     (fun v hv u hu => ?_) hy
   change b • vecMulVec v u ∈ tens Λ₂ N
   rw [← smul_vecMulVec]

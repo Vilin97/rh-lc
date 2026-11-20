@@ -34,13 +34,13 @@ theorem exists_isometric_ext {K L' : Type} [Field K] [NumberField K] [Field L'] 
         (((B.baseChange L').metric.form σ').inner ((1 : ComplexAt σ') ⊗ₜ[𝓞 L'] x)
           ((1 : ComplexAt σ') ⊗ₜ[𝓞 L'] y) : ℂ) := by
   let f : 𝓞 L' →+ B.carrier →+ B'.carrier :=
-    { toFun := fun a => (DistribMulAction.toAddMonoidHom B'.carrier a).comp io.toAddMonoidHom
+    { toFun := fun a => (DistribSMul.toAddMonoidHom B'.carrier a).comp io.toAddMonoidHom
       map_zero' := by ext e; simp
       map_add' := by intro a b; ext e; simp [add_smul] }
   have hf : ∀ (r : 𝓞 K) (a : 𝓞 L') (e : B.carrier), f (r • a) e = f a (r • e) := by
     intro r a e
     simp only [f, AddMonoidHom.coe_mk, ZeroHom.coe_mk, AddMonoidHom.coe_comp, Function.comp_apply,
-      DistribMulAction.toAddMonoidHom_apply, LinearMap.toAddMonoidHom_coe, LinearMap.map_smulₛₗ,
+      DistribSMul.toAddMonoidHom_apply, LinearMap.toAddMonoidHom_coe, LinearMap.map_smulₛₗ,
       Algebra.smul_def, mul_smul, smul_comm a]
   let Φ0 : 𝓞 L' ⊗[𝓞 K] B.carrier →+ B'.carrier := TensorProduct.liftAddHom f hf
   have hΦ : ∀ (a : 𝓞 L') (e : B.carrier), Φ0 (a ⊗ₜ e) = a • io e := fun a e => by

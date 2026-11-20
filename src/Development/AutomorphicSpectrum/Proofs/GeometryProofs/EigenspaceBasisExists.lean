@@ -14,7 +14,7 @@ variable {E : Type} [Field E] [NumberField E] (X : Type) [AddCommGroup X] [Modul
 
 def pullAct : 𝓞 E →+* Module.End k (X →+ k) where
   toFun a :=
-    { toFun := fun c => c.comp (DistribMulAction.toAddMonoidHom X a)
+    { toFun := fun c => c.comp (DistribSMul.toAddMonoidHom X a)
       map_add' := fun _ _ => rfl
       map_smul' := fun _ _ => rfl }
   map_one' := by ext c x; simp

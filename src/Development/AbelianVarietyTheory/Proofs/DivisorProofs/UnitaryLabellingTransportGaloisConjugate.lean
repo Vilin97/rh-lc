@@ -80,7 +80,7 @@ theorem isLab_conj : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H :
       rwa [show (ee.symm.trans j).toAddMonoidHom (ee pk.y) = j pk.y from
         congrArg j (ee.symm_apply_apply pk.y)] at this
     have c6 : CongMod m (A • j pk.y) (A • (ee.symm.trans j) pk'.y) :=
-      GalTrans.cm_symm (GalTrans.cm_map (DistribMulAction.toAddMonoidHom _ A) c5)
+      GalTrans.cm_symm (GalTrans.cm_map (DistribSMul.toAddMonoidHom _ A) c5)
     exact GalTrans.cm_trans c4 (GalTrans.cm_trans c3 c6)
 
 end GlobalTheory.UPoinc.UGalTrans

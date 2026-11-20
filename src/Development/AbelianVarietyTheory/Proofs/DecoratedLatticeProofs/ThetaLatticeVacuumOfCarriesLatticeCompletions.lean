@@ -35,7 +35,7 @@ theorem smul_latV_mem (S : HSp D) (L : Lat S) (P : Pl D → Prop) (a : D.host.E)
     ∀ y ∈ GlobalTheory.FinPl.latV S L P, ((1 : AF D.host.F) ⊗ₜ[D.host.F] a : AE D) • y ∈ GlobalTheory.FinPl.latA S L P := by
   intro y hy
   have key : GlobalTheory.FinPl.latV S L P ≤ (GlobalTheory.FinPl.latA S L P).comap
-      (DistribMulAction.toAddMonoidHom (Fin S.rank → AE D) ((1 : AF D.host.F) ⊗ₜ[D.host.F] a : AE D)) := by
+      (DistribSMul.toAddMonoidHom (Fin S.rank → AE D) ((1 : AF D.host.F) ⊗ₜ[D.host.F] a : AE D)) := by
     unfold GlobalTheory.FinPl.latV GlobalTheory.FinPl.latMul
     rw [AddSubgroup.closure_le]
     rintro _ ⟨α, hα, hP, b, hb, x, hx, rfl⟩

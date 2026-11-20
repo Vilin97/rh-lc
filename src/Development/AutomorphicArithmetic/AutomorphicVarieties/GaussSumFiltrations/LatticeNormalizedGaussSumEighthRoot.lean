@@ -377,10 +377,10 @@ theorem gaussSum_pow_eight : ∀ (F : Type) [Field F] [NumberField F] (κ : Type
   let f : (κ → F) → ℂ := fun x => et (a / c * QF G x)
   let g : (κ → F) → (κ → F) → ℂ := fun x y => et (a / c * BF G x y)
   let C : AddSubgroup (κ → F) := aL κ (1 : F) ⊓
-    (dualL F G).comap (DistribMulAction.toAddMonoidHom (κ → F) (a / c))
+    (dualL F G).comap (DistribSMul.toAddMonoidHom (κ → F) (a / c))
   have hCmem : ∀ u, u ∈ C ↔ u ∈ LL F κ ∧ (a / c) • u ∈ dualL F G := by
     intro u
-    simp only [C, AddSubgroup.mem_inf, AddSubgroup.mem_comap, DistribMulAction.toAddMonoidHom_apply, hB]
+    simp only [C, AddSubgroup.mem_inf, AddSubgroup.mem_comap, DistribSMul.toAddMonoidHom_apply, hB]
   have h2 : ∀ x y, f (x + y) = f x * f y * g x y := by
     intro x y
     show et (a / c * QF G (x + y)) = et (a / c * QF G x) * et (a / c * QF G y) * et (a / c * BF G x y)
@@ -480,11 +480,11 @@ theorem gaussSum_pow_eight : ∀ (F : Type) [Field F] [NumberField F] (κ : Type
     push_cast
     exact e1.symm
   have hmain := GaussPow.gauss_reps hT hAC hCB f g (T.card ^ 2) (by positivity) h1 h2 h3 h4 h5 h6 h7
-  let φc : (κ → F) →+ (κ → F) := DistribMulAction.toAddMonoidHom (κ → F) c⁻¹
+  let φc : (κ → F) →+ (κ → F) := DistribSMul.toAddMonoidHom (κ → F) c⁻¹
   have hAeq : aL κ c = (LL F κ).comap φc := by
     ext x
     rw [haL, AddSubgroup.mem_comap]
-    simp only [φc, DistribMulAction.toAddMonoidHom_apply]
+    simp only [φc, DistribSMul.toAddMonoidHom_apply]
     constructor
     · rintro ⟨l, hl, rfl⟩
       rwa [smul_smul, inv_mul_cancel₀ hc0, one_smul]
@@ -493,7 +493,7 @@ theorem gaussSum_pow_eight : ∀ (F : Type) [Field F] [NumberField F] (κ : Type
   have hdeq : C.map φc = dualL F G := by
     ext y
     rw [AddSubgroup.mem_map]
-    simp only [φc, DistribMulAction.toAddMonoidHom_apply]
+    simp only [φc, DistribSMul.toAddMonoidHom_apply]
     constructor
     · rintro ⟨u, hu, rfl⟩
       obtain ⟨huL, hud⟩ := (hCmem u).mp hu

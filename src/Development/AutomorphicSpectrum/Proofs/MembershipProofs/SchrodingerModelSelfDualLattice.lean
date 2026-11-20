@@ -52,10 +52,10 @@ theorem indicator_mem_span : ∀ {R : Type} [CommRing R] [TopologicalSpace R] [I
   let Hs : AddSubgroup (κ → R) :=
     L.comap (DistribSMul.toAddMonoidHom (κ → R) (((u⁻¹ : Rˣ)) : R))
   have memG : ∀ y : κ → R, y ∈ Gs ↔ ∀ i, (((u⁻¹ * v : Rˣ)) : R) * y i ∈ O := by
-    intro y; simp only [Gs, AddSubgroup.mem_comap, DistribMulAction.toAddMonoidHom_apply, memL,
+    intro y; simp only [Gs, AddSubgroup.mem_comap, DistribSMul.toAddMonoidHom_apply, memL,
       Pi.smul_apply, smul_eq_mul]
   have memH : ∀ y : κ → R, y ∈ Hs ↔ ∀ i, (((u⁻¹ : Rˣ)) : R) * y i ∈ O := by
-    intro y; simp only [Hs, AddSubgroup.mem_comap, DistribMulAction.toAddMonoidHom_apply, memL,
+    intro y; simp only [Hs, AddSubgroup.mem_comap, DistribSMul.toAddMonoidHom_apply, memL,
       Pi.smul_apply, smul_eq_mul]
   have hLset : (L : Set (κ → R)) = Set.univ.pi (fun _ => (O : Set R)) := by
     ext y; simp [memL]

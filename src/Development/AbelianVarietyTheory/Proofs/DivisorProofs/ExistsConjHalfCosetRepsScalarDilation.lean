@@ -259,7 +259,7 @@ theorem scalar_half_reps : ∀ (D : D7) (S T : HSp D) (ΛS : Submodule (𝓞 D.h
       rw [← mul_assoc, key, mul_comm (cA D e), mul_assoc, hw i j, nsmul_eq_mul]
     rw [heq]
     exact GlobalTheory.LatticeStable.smul_mem_latO D S T _ _ _ _ hint _ hbw
-  let f : WO S T →+ WO S T := DistribMulAction.toAddMonoidHom (WO S T) (cA D (incA D (ϖ : D.host.E)))
+  let f : WO S T →+ WO S T := DistribSMul.toAddMonoidHom (WO S T) (cA D (incA D (ϖ : D.host.E)))
   have hf : ∀ w, f w = cA D (incA D (ϖ : D.host.E)) • w := fun w => rfl
   obtain ⟨R, hR⟩ := half_finite_mod S T ΛS ΛT hS hT (cA D e)
     (by rw [← map_mul, Formalism.IndefR.Fin.LevelGroupLemmas.idemSum_sq he]) N (Nat.pos_of_ne_zero hN)

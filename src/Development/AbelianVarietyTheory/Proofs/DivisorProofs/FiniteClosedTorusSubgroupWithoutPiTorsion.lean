@@ -48,9 +48,9 @@ theorem finite_of_isClosed_torusZariski_of_smul {k : Type} [Field k] [IsAlgClose
     (hπ : ¬ IsUnit π) {H : Subgroup (Multiplicative X →* kˣ)}
     (hH : IsClosed[torusZariski k X] (H : Set (Multiplicative X →* kˣ)))
     (hstab : ∀ (a : O), ∀ s ∈ H,
-      s.comp (AddMonoidHom.toMultiplicative (DistribMulAction.toAddMonoidHom X a)) ∈ H)
+      s.comp (AddMonoidHom.toMultiplicative (DistribSMul.toAddMonoidHom X a)) ∈ H)
     (htors : ∀ s ∈ H,
-      s.comp (AddMonoidHom.toMultiplicative (DistribMulAction.toAddMonoidHom X π)) = 1 → s = 1) :
+      s.comp (AddMonoidHom.toMultiplicative (DistribSMul.toAddMonoidHom X π)) = 1 → s = 1) :
     Finite H := by
   let K : Submodule O X :=
     { carrier := {x | ∀ s ∈ H, s (Multiplicative.ofAdd x) = 1}
@@ -171,7 +171,7 @@ theorem finite_of_isClosed_of_no_pi_torsion :
   have hsmul : ∀ (a : 𝓞 E) (x : X), a • x = φ a x := fun a x => rfl
   let e := splitTorusPointEquiv k X
   have hpt : ∀ (s : Multiplicative X →* kˣ) (a : 𝓞 E), e s ≫ act.act a =
-      e (s.comp (AddMonoidHom.toMultiplicative (DistribMulAction.toAddMonoidHom X a))) := by
+      e (s.comp (AddMonoidHom.toMultiplicative (DistribSMul.toAddMonoidHom X a))) := by
     intro s a
     rw [hφ a]
     exact splitTorusPoint_comp_torusMap s (φ a)

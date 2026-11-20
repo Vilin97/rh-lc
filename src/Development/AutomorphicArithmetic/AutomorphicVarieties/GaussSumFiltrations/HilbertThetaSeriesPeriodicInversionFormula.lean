@@ -63,7 +63,7 @@ theorem thetaSeries_periodic_slash_frickeMatrix : ∀ (F : Type) [Field F] [Numb
         exact hy (by simp [wT, hd])
       have hw := (hN2 _ hd).1
       refine AddSubgroup.mem_map.2 ⟨_, hw, ?_⟩
-      simp only [DistribMulAction.toAddMonoidHom_apply]
+      simp only [DistribSMul.toAddMonoidHom_apply]
       rw [smul_smul, smul_smul]
       rw [show (c:F) / ((N:F) * a) * (N:F) * (a / c) = 1 by field_simp, one_smul]
     · intro y

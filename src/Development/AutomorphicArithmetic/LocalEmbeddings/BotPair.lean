@@ -37,7 +37,7 @@ theorem localLattice_le_latticeAtPlace {S T : HSp D} {ΛS : Submodule (𝓞 D.ho
   have e : u = liftV v (1 : Fv D.host.F v) • (mapO S T).symm (mapO S T u) := by
     rw [LinearEquiv.symm_apply_apply, GlobalTheory.BigDatLat.smul_eq_of_at hu.1]
   rw [e]
-  refine GlobalTheory.BigDat.map_mem_of_closure ((DistribMulAction.toAddMonoidHom _ (liftV v (1 : Fv D.host.F v))).comp
+  refine GlobalTheory.BigDat.map_mem_of_closure ((DistribSMul.toAddMonoidHom _ (liftV v (1 : Fv D.host.F v))).comp
     (mapO S T).symm.toLinearMap.toAddMonoidHom) ?_ hu.2
   rintro _ ⟨α, hα, -, a, ha, s, hs, t, ht, rfl⟩
   have e2 : (mapO S T).symm (Matrix.of fun i j => (pairA D.host.F 0 α) ⊗ₜ[D.host.F] (a * t i * ∑ k, star (s k) * S.gram k j)) =

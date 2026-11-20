@@ -43,7 +43,7 @@ theorem M_sub (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField 
       ext z; simp [← hR]
     rw [this]; exact hOo.preimage (continuous_const_smul c)
   · have : ((R.toAddSubgroup).comap (DistribSMul.toAddMonoidHom A.K c) : Set A.K) = (fun z => c⁻¹ • z) '' A.OK := by
-      ext z; simp only [AddSubgroup.coe_comap, Set.mem_preimage, Set.mem_image, DistribMulAction.toAddMonoidHom_apply]
+      ext z; simp only [AddSubgroup.coe_comap, Set.mem_preimage, Set.mem_image, DistribSMul.toAddMonoidHom_apply]
       constructor
       · intro h; exact ⟨c • z, by simpa [← hR] using h, by simp [smul_smul, inv_mul_cancel₀ hc]⟩
       · rintro ⟨w, hw, rfl⟩; simpa [smul_smul, mul_inv_cancel₀ hc, ← hR] using hw

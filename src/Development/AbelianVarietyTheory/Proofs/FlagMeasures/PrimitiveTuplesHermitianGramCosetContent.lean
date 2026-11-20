@@ -363,7 +363,7 @@ theorem one_add_unit [IsNonarchimedeanLocalField F] [CharZero F] (ϖ : 𝒪[F]) 
 theorem exists_level [IsNonarchimedeanLocalField F] [CharZero F] (ϖ : 𝒪[F]) (hϖ : Irreducible ϖ)
     {m : ℕ} (A : AddSubgroup (Matrix (Fin m) (Fin m) E)) (hA : A.relIndex (hermLat L m) ≠ 0) :
     ∃ j, 1 ≤ j ∧ (hermLat L m).map
-      (DistribMulAction.toAddMonoidHom _ (algebraMap F E ((ϖ : F) ^ j))) ≤ A := by
+      (DistribSMul.toAddMonoidHom _ (algebraMap F E ((ϖ : F) ^ j))) ≤ A := by
   obtain ⟨-, -, -, -, h5, -⟩ := GlobalTheory.UnramOrder.order_facts L ϖ hϖ
   set d := A.relIndex (hermLat L m) with hd
   have hd0 : (d : 𝒪[F]) ≠ 0 := Nat.cast_ne_zero.2 hA
@@ -404,38 +404,38 @@ theorem cont_primitive_tuples : ∀ {F : Type} [Field F] [ValuativeRel F] [Topol
   obtain ⟨R, hR, hR'⟩ := exists_residues L hp (by rw [h6]; exact pow_ne_zero _ hq)
   have hD := fun G hG hG' => GlobalTheory.T.card_primitive_tuples_hermitian_gram_mod_uniformizer L ϖ hϖ n m j hmn hj G hG hG' R hR hR' _ rfl
   generalize algebraMap F E ((ϖ : F) ^ j) = p at *
-  have hHle : (hermLat L m).map (DistribMulAction.toAddMonoidHom _ p) ≤ hermLat L m := by
+  have hHle : (hermLat L m).map (DistribSMul.toAddMonoidHom _ p) ≤ hermLat L m := by
     intro X hX
     obtain ⟨h1, h3⟩ := (mem_mul_herm L hp' hc _).1 hX
     refine (mem_hermLat L _).2 ⟨h1, fun a a' => ?_⟩
     obtain ⟨c, hc, hc'⟩ := h3 a a'
     exact hc' ▸ L.O.mul_mem hp hc
-  have hTle : (tupLat L Λ m).map (DistribMulAction.toAddMonoidHom _ p) ≤ tupLat L Λ m := by
+  have hTle : (tupLat L Λ m).map (DistribSMul.toAddMonoidHom _ p) ≤ tupLat L Λ m := by
     intro t ht
     obtain ⟨w, hw, rfl⟩ := (mem_mul_tup L Λ p _).1 ht
     exact fun a _ => smul_mem_lat L hp (hw a)
-  have hH0 : ((hermLat L m).map (DistribMulAction.toAddMonoidHom _ p)).relIndex (hermLat L m) ≠ 0 := by
+  have hH0 : ((hermLat L m).map (DistribSMul.toAddMonoidHom _ p)).relIndex (hermLat L m) ≠ 0 := by
     rw [hH]; exact pow_ne_zero _ hq
-  have hGH : GoodSub (hermLat L m) ((hermLat L m).map (DistribMulAction.toAddMonoidHom _ p)) B := by
+  have hGH : GoodSub (hermLat L m) ((hermLat L m).map (DistribSMul.toAddMonoidHom _ p)) B := by
     refine (GlobalTheory.T.commensurableCosetUnionContent_independent_nonneg _ B).2.1 A _ hA hjA ?_
     exact AddSubgroup.relIndex_ne_zero_trans hH0 hA.2.1
   have hg : ∀ z z', IsPrimT L Hm Λ z → IsPrimT L Hm Λ z' →
-      z - z' ∈ (tupLat L Λ m).map (DistribMulAction.toAddMonoidHom _ p) →
-      gramT L Hm z - gramT L Hm z' ∈ (hermLat L m).map (DistribMulAction.toAddMonoidHom _ p) := by
+      z - z' ∈ (tupLat L Λ m).map (DistribSMul.toAddMonoidHom _ p) →
+      gramT L Hm z - gramT L Hm z' ∈ (hermLat L m).map (DistribSMul.toAddMonoidHom _ p) := by
     intro z z' _ hz' hzz
     obtain ⟨w, hw, hw'⟩ := (mem_mul_tup L Λ p _).1 hzz
     rw [sub_eq_iff_eq_add'] at hw'
     rw [hw']
     exact gram_add L hHm.1 hΛ hp hp' hc hz'.1 hw
-  obtain ⟨c1, c2, c3⟩ := count_fibres ((tupLat L Λ m).map (DistribMulAction.toAddMonoidHom _ p))
-    ((hermLat L m).map (DistribMulAction.toAddMonoidHom _ p)) (IsPrimT L Hm Λ) (gramT L Hm) B
+  obtain ⟨c1, c2, c3⟩ := count_fibres ((tupLat L Λ m).map (DistribSMul.toAddMonoidHom _ p))
+    ((hermLat L m).map (DistribSMul.toAddMonoidHom _ p)) (IsPrimT L Hm Λ) (gramT L Hm) B
     ((resQ ϖ : ℝ) ^ (j * (2 * n * m - m ^ 2))) hGH.2.2.1 hGH.2.2.2 hg (by
       intro G hG
       obtain ⟨g1, g2⟩ := (mem_hermLat L G).1 (hB G hG)
       obtain ⟨f1, f2⟩ := fibre_card L hHm.1 hΛ hcj hp hp' hc hu b hb hbΛ R hR hR' g1 _ rfl _ rfl
       rw [f2]
       exact ⟨f1, hD G g1 g2⟩)
-  have hGT : GoodSub (tupLat L Λ m) ((tupLat L Λ m).map (DistribMulAction.toAddMonoidHom _ p))
+  have hGT : GoodSub (tupLat L Λ m) ((tupLat L Λ m).map (DistribSMul.toAddMonoidHom _ p))
       {z : Fin m → Fin n → E | IsPrimT L Hm Λ z ∧ gramT L Hm z ∈ B} := by
     refine ⟨by rw [hT]; exact pow_ne_zero _ hq,
       by rw [AddSubgroup.relIndex_eq_one.2 hTle]; exact one_ne_zero, ?_, c1⟩

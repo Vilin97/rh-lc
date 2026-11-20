@@ -57,7 +57,7 @@ theorem mem_stepGraph {τ : Sg} {χ : F → Ω} {i : Fin n} {c : Ω} {m : Fin (r
 
 theorem mem_mulLat {V : Type} [AddCommGroup V] [Module Ω V] {c : Ω} {L : AddSubgroup V} {v : V} :
     v ∈ mulLat c L ↔ ∃ e ∈ L, v = c • e := by
-  simp only [mulLat, AddSubgroup.mem_map, DistribMulAction.toAddMonoidHom_apply]
+  simp only [mulLat, AddSubgroup.mem_map, DistribSMul.toAddMonoidHom_apply]
   constructor
   · rintro ⟨e, he, rfl⟩; exact ⟨e, he, rfl⟩
   · rintro ⟨e, he, rfl⟩; exact ⟨e, he, rfl⟩

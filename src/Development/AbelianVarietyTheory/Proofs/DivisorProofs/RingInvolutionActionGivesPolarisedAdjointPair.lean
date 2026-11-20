@@ -61,7 +61,7 @@ namespace GlobalTheory.MumFam
 
 open ActAdj in
 
-theorem adj_act : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (D : DegData R I) (O : Type) [Ring O] [StarRing O] [Module O D.toPre.X] (o : D.toPre.OAct O) (a : O), Adj (pol D) (pol D) (o.onB.act a) (o.onB.act (Star.star a)) (DistribMulAction.toAddMonoidHom D.toPre.X a) (DistribMulAction.toAddMonoidHom D.toPre.X (Star.star a)) := by
+theorem adj_act : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (D : DegData R I) (O : Type) [Ring O] [StarRing O] [Module O D.toPre.X] (o : D.toPre.OAct O) (a : O), Adj (pol D) (pol D) (o.onB.act a) (o.onB.act (Star.star a)) (DistribSMul.toAddMonoidHom D.toPre.X a) (DistribSMul.toAddMonoidHom D.toPre.X (Star.star a)) := by
   intro R _ _ I D O _ _ _ o a
   have hL := D.toPre.P.isLB
   let B := D.toPre.P.A
@@ -103,8 +103,8 @@ theorem adj_act : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (D : De
   have bal := val_corr hK₁ (o.tau_bal a u hu h0 y y') (𝟙 _)
   rw [val_mul hK₁, val_pull hK₁, Category.id_comp] at bal
   have hut : val t P z J₁ = (val u P z J₁)⁻¹ := (htv _ P z J₁ hK₁).trans (val_inv _ _)
-  let h := DistribMulAction.toAddMonoidHom D.toPre.X a
-  let h' := DistribMulAction.toAddMonoidHom D.toPre.X (star a)
+  let h := DistribSMul.toAddMonoidHom D.toPre.X a
+  let h' := DistribSMul.toAddMonoidHom D.toPre.X (star a)
   have single : val ((pol D).tau (h y) y') (𝟙 _) z J₁ =
       val t P z J₁ * val ((pol D).tau y (h' y')) (𝟙 _) z J₁ := by
     exact (hp _ _ _ hK₁).trans ((eq_inv_mul_of_mul_eq ((mul_comm _ _).trans bal)).trans

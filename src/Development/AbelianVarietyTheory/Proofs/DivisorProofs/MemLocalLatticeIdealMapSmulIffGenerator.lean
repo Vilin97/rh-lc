@@ -26,12 +26,12 @@ theorem tmul_algebraMap_mul {v : HeightOneSpectrum (𝓞 F)} (a : Fv F v) (c : F
 
 noncomputable def smulSet (L : Submodule (𝓞 E) (Fin n → E)) (v : HeightOneSpectrum (𝓞 F)) (z : Fv F v) :
     AddSubgroup (Fin n → Fv F v ⊗[F] E) :=
-  (GlobalTheory.AdelicU.latLoc F L v).toAddSubgroup.map (DistribMulAction.toAddMonoidHom _ z)
+  (GlobalTheory.AdelicU.latLoc F L v).toAddSubgroup.map (DistribSMul.toAddMonoidHom _ z)
 
 omit [NumberField E] in
 theorem mem_smulSet {L : Submodule (𝓞 E) (Fin n → E)} {v : HeightOneSpectrum (𝓞 F)} {z : Fv F v}
     {y : Fin n → Fv F v ⊗[F] E} : y ∈ smulSet L v z ↔ ∃ x ∈ GlobalTheory.AdelicU.latLoc F L v, y = z • x := by
-  simp only [smulSet, AddSubgroup.mem_map, Submodule.mem_toAddSubgroup, DistribMulAction.toAddMonoidHom_apply]
+  simp only [smulSet, AddSubgroup.mem_map, Submodule.mem_toAddSubgroup, DistribSMul.toAddMonoidHom_apply]
   exact ⟨fun ⟨x, hx, e⟩ => ⟨x, hx, e.symm⟩, fun ⟨x, hx, e⟩ => ⟨x, hx, e.symm⟩⟩
 
 theorem mem_latLoc_idealMap_smul_iff (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (n : ℕ)

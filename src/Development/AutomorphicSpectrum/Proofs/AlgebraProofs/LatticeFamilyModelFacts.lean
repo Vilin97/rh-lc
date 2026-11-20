@@ -100,7 +100,7 @@ theorem mulLat_std (c : Ω) (J : Type) [Fintype J] [DecidableEq J] :
     mulLat c (stdLat R J) = spanOver R (Set.range fun j : J => (Pi.single j c : J → Ω)) := by
   apply le_antisymm
   · rintro _ ⟨v, hv, rfl⟩
-    have : (DistribMulAction.toAddMonoidHom (J → Ω) c) v = ∑ j, v j • (Pi.single j c : J → Ω) := by
+    have : (DistribSMul.toAddMonoidHom (J → Ω) c) v = ∑ j, v j • (Pi.single j c : J → Ω) := by
       ext j
       simp [Finset.sum_apply, Pi.single_apply, mul_comm]
     rw [this]

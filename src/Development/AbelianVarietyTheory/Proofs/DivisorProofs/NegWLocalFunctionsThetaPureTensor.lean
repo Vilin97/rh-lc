@@ -369,7 +369,7 @@ theorem mem_latAtV {t : T} {i j : ℕ} {e : Num G i j} {Bs : Base D.host.F D.hos
     rw [sub_smul, one_smul, sub_eq_zero] at this
     exact this.symm
   rw [← e1, ← (ptEquiv e).symm_apply_apply u]
-  refine map_mem_of_closure ((DistribMulAction.toAddMonoidHom (Pt G i j) (GlobalTheory.LatVac.liftV (w.under (𝓞 D.host.F)) 1)).comp
+  refine map_mem_of_closure ((DistribSMul.toAddMonoidHom (Pt G i j) (GlobalTheory.LatVac.liftV (w.under (𝓞 D.host.F)) 1)).comp
     (ptEquiv e).symm.toLinearMap.toAddMonoidHom) ?_ hu
   rintro _ ⟨α, hα, -, a, ha, s, hs, y, hy, rfl⟩
   refine (congrArg (fun z => GlobalTheory.LatVac.liftV (w.under (𝓞 D.host.F)) 1 • z ∈ GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.latAtV Γ.V Γ.W _)

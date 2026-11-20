@@ -12,7 +12,7 @@ open ReciprocityTheory.ChartRestriction.G.Geo.Tor
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
-def pLat (D : Datum H) (p : ℕ) : AddSubgroup D.La := (DistribMulAction.toAddMonoidHom D.La p).range
+def pLat (D : Datum H) (p : ℕ) : AddSubgroup D.La := (DistribSMul.toAddMonoidHom D.La p).range
 
 theorem mem_pLat {D : Datum H} {p : ℕ} {a : D.La} : a ∈ pLat D p ↔ ∃ b, a = p • b := by
   simp [pLat, eq_comm]

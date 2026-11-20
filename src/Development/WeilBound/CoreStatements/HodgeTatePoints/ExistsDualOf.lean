@@ -228,8 +228,8 @@ theorem vecMul_Ma (l : Ix E n → R) (a : 𝓞 E) (x : Fin n → 𝓞 E) :
     ∑ m, (l ᵥ* Ma R n a) m * (cz x m : R) = ∑ m, l m * (cz (a • x) m : R) := by
   have key : ∀ m', (cz (a • x) m' : R) = ∑ m, (cz x m : R) * (cz (a • dl m) m' : R) := by
     intro m'
-    have := hom_eq ((cz (E := E) (n := n)).comp (DistribMulAction.toAddMonoidHom (Fin n → 𝓞 E) a)) x
-    simp only [AddMonoidHom.comp_apply, DistribMulAction.toAddMonoidHom_apply] at this
+    have := hom_eq ((cz (E := E) (n := n)).comp (DistribSMul.toAddMonoidHom (Fin n → 𝓞 E) a)) x
+    simp only [AddMonoidHom.comp_apply, DistribSMul.toAddMonoidHom_apply] at this
     rw [this]
     simp [Finset.sum_apply]
   simp only [key, Matrix.vecMul, dotProduct, Ma, Finset.sum_mul, Finset.mul_sum]

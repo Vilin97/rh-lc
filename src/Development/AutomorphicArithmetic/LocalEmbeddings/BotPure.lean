@@ -60,7 +60,7 @@ theorem cut_mem (v : Pl D.host.F) {x : WO S T} (hx : x ∈ latA ΛS ΛT) :
 theorem localLattice_le_closure_generators (v : Pl D.host.F) : lattice₂ m (latA ΛS ΛT) v ≤ AddSubgroup.closure (genP m (latA ΛS ΛT) v) := by
   intro u hu
   let f : WO S T →+ Matrix (Fin n) (Fin k) (AE D) :=
-    (DistribMulAction.toAddMonoidHom _ (liftV v (1 : Fv D.host.F v))).comp m.symm.toLinearMap.toAddMonoidHom
+    (DistribSMul.toAddMonoidHom _ (liftV v (1 : Fv D.host.F v))).comp m.symm.toLinearMap.toAddMonoidHom
   have hf : ∀ x, f x = liftV v (1 : Fv D.host.F v) • m.symm x := fun _ => rfl
   have e : u = f (m u) := by rw [hf, m.symm_apply_apply, GlobalTheory.BigDatLat.smul_eq_of_at hu.1]
   rw [e]

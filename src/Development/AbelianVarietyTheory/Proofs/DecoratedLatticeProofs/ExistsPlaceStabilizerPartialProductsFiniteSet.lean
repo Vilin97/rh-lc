@@ -183,7 +183,7 @@ theorem latV_le (S : HSp D) (L : Lat S) {P : Pl D → Prop} {v : Pl D} (hv : P v
 
 theorem pe_smul_latV (S : HSp D) (L : Lat S) (P : Pl D → Prop) (v : Pl D) {y : Fin S.rank → AE D}
     (hy : y ∈ latV S L P) : pe D v • y ∈ latV S L (· = v) := by
-  let f : (Fin S.rank → AE D) →+ (Fin S.rank → AE D) := DistribMulAction.toAddMonoidHom _ (pe D v)
+  let f : (Fin S.rank → AE D) →+ (Fin S.rank → AE D) := DistribSMul.toAddMonoidHom _ (pe D v)
   have hle : latV S L P ≤ (latV S L (· = v)).comap f := by
     refine (AddSubgroup.closure_le _).2 ?_
     rintro _ ⟨α, hα, -, a, ha, x, hx, rfl⟩

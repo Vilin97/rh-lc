@@ -78,7 +78,7 @@ theorem _root_.GlobalTheory.TopLevelShare.main : ∀ {F : Type} [Field F] [Valua
     intro b
     rw [hBdef, AddSubgroup.mem_inf]
     refine and_congr_right fun _ => ?_
-    simp only [AddSubgroup.mem_comap, AddSubgroup.mem_map, AddMonoidHom.add_apply, AddMonoidHom.coe_fst, AddMonoidHom.coe_snd, DistribMulAction.toAddMonoidHom_apply, Submodule.mem_toAddSubgroup]
+    simp only [AddSubgroup.mem_comap, AddSubgroup.mem_map, AddMonoidHom.add_apply, AddMonoidHom.coe_fst, AddMonoidHom.coe_snd, DistribSMul.toAddMonoidHom_apply, Submodule.mem_toAddSubgroup]
     constructor
     · rintro ⟨m, hm, hmb⟩
       rw [hπdef]; dsimp only; rw [← hmb, inv_smul_smul₀ hth]; exact hm

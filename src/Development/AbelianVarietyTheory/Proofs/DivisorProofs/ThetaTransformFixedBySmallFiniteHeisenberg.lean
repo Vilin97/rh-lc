@@ -137,7 +137,7 @@ theorem schr_fin_fix (F : Type) [Field F] [NumberField F] [Invertible (2 : AF F)
     obtain ⟨H2, hH2⟩ := char_dot_compact (GlobalTheory.HeisSchA.finChar ψ)
       (hψ.comp (continuous_const.prodMk continuous_id)) κ (tsupport g) hg.2
     let c : Af F := (⅟(2 : AF F)).2
-    let m : (κ → Af F) →+ (κ → Af F) := DistribMulAction.toAddMonoidHom _ c
+    let m : (κ → Af F) →+ (κ → Af F) := DistribSMul.toAddMonoidHom _ c
     have hm : Continuous m := continuous_const_smul c
     refine ⟨H1 ⊓ H2 ⊓ H2.comap m hm, fun a ha b hb => funext fun x => ?_⟩
     obtain ⟨⟨ha1, -⟩, ha3⟩ := ha

@@ -64,7 +64,7 @@ theorem exists_local_vac {F : Type} [Field F] [NumberField F] (v : GlobalTheory.
       _ = 1 := by rw [← AddChar.map_add_eq_mul, neg_add_cancel, AddChar.map_zero_eq_one]
   let L : AddSubgroup (κ → Fv F v) := Λ.comap (AddMonoidHom.inr (κ → Fv F v) (κ → Fv F v))
   let L' : AddSubgroup (κ → Fv F v) := Λ.comap ((AddMonoidHom.inr (κ → Fv F v) (κ → Fv F v)).comp
-    (DistribMulAction.toAddMonoidHom (κ → Fv F v) (⅟(2 : Fv F v))))
+    (DistribSMul.toAddMonoidHom (κ → Fv F v) (⅟(2 : Fv F v))))
   have hL : IsCompact (L : Set (κ → Fv F v)) := by
     have e : (L : Set (κ → Fv F v)) = Prod.snd '' ((Λ : Set ((κ → Fv F v) × (κ → Fv F v))) ∩ {u | u.1 = 0}) := by
       ext y
@@ -89,7 +89,7 @@ theorem exists_local_vac {F : Type} [Field F] [NumberField F] (v : GlobalTheory.
     (fun y hy hy' => by
       have e := h2 _ hy'
       simp only [AddMonoidHom.coe_comp, Function.comp_apply, AddMonoidHom.inr_apply,
-        DistribMulAction.toAddMonoidHom_apply, Prod.mk_add_mk, add_zero] at e
+        DistribSMul.toAddMonoidHom_apply, Prod.mk_add_mk, add_zero] at e
       rwa [← add_smul, invOf_two_add_invOf_two, one_smul] at e)
   have hx : ∀ y : κ → Fv F v, ((0 : κ → Fv F v), y) ∈ Λ → χ (0, y) = ψ₀ (x₀ ⬝ᵥ y) := fun y hy => hx₀ y hy
   refine ⟨vacFn ψ₀ Λ χ x₀, ⟨GlobalTheory.T.isLocallyConstant_heisenberg_lattice_vacuum_function v ψ₀ hc Λ ho χ x₀ hco hx h2, GlobalTheory.T.heisenbergLatticeVacuumFn_hasCompactSupport v ψ₀ Λ χ x₀ hk⟩, ?_,

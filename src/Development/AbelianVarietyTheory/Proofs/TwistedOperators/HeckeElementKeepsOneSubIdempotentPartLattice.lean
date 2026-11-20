@@ -50,7 +50,7 @@ theorem hat_one_mem {D : D7} {e : AE D} (he : IsSplitIdem D e) {V : HSp D} {ϖ :
     ∀ w ∈ latGHat V 1, fm V a₀⁻¹ *ᵥ ((1 - finPart D e) • w) ∈ latGHat V 1 := by
   intro w hw
   let f : (Fin V.rank → RF D) →+ (Fin V.rank → RF D) :=
-    (Matrix.mulVecLin (fm V a₀⁻¹)).toAddMonoidHom.comp (DistribMulAction.toAddMonoidHom _ (1 - finPart D e))
+    (Matrix.mulVecLin (fm V a₀⁻¹)).toAddMonoidHom.comp (DistribSMul.toAddMonoidHom _ (1 - finPart D e))
   change f w ∈ latGHat V 1
   unfold latGHat at hw ⊢
   refine AddSubgroup.mem_comap.1 ((AddSubgroup.closure_le (K := AddSubgroup.comap f _)).2 ?_ hw)

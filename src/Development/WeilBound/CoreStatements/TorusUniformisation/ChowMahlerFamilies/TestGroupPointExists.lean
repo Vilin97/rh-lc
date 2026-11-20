@@ -140,7 +140,7 @@ theorem PositivityTheory.Xgn.test_group_point_exists : GlobalTheory.CompanionThe
   have hWl : ∀ a ∈ ((chartD e b pq sc w P i).bc RC).W τ, algebraMap O C w • a ∈ ((chartD e b pq sc w P i).bc RC).lie τ :=
     fun a ha => spanOver_ind RC _ (divLat (algebraMap O C w) (((chartD e b pq sc w P i).bc RC).lie τ))
       (fun t ht a ha => by
-        simp only [divLat, AddSubgroup.mem_comap, DistribMulAction.toAddMonoidHom_apply] at ha ⊢
+        simp only [divLat, AddSubgroup.mem_comap, DistribSMul.toAddMonoidHom_apply] at ha ⊢
         rw [smul_comm]
         exact smul_mem_spanOver RC _ ht ha)
       (fun a ha => by
@@ -152,7 +152,7 @@ theorem PositivityTheory.Xgn.test_group_point_exists : GlobalTheory.CompanionThe
           change _ = algebraMap Ω C (algebraMap O Ω w * a k)
           rw [map_mul, hOC']
           rfl
-        simp only [divLat, AddSubgroup.mem_comap, DistribMulAction.toAddMonoidHom_apply]
+        simp only [divLat, AddSubgroup.mem_comap, DistribSMul.toAddMonoidHom_apply]
         rw [e]
         exact h2) ha
   have heig : ∀ t a k, 𝔐.ρ a (b t k) = 𝔐.emb t a • b t k := fun t a k => by

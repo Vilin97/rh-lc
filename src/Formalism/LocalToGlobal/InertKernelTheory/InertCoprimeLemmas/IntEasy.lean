@@ -260,11 +260,11 @@ theorem ie_La_scale (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) {M₁ M₂ : Submodu
     {M₁' M₂' : Submodule (𝓞 D.host.E) (Fin N' → D.host.E)} (s s' : ℕ)
     (h1 : ∀ x ∈ M₂, (s : D.host.E) • x ∈ M₁) (h2 : ∀ y ∈ M₁', (s' : D.host.E) • y ∈ M₂') :
     La D (tor0 D cc δ) M₁ M₁' ≤
-      (La D (tor0 D cc δ) M₂ M₂').comap (DistribMulAction.toAddMonoidHom (VC D N N') (s * s')) := by
+      (La D (tor0 D cc δ) M₂ M₂').comap (DistribSMul.toAddMonoidHom (VC D N N') (s * s')) := by
   unfold La
   rw [AddSubgroup.closure_le]
   rintro z ⟨w, hw, A, hA, rfl⟩
-  simp only [SetLike.mem_coe, AddSubgroup.mem_comap, DistribMulAction.toAddMonoidHom_apply]
+  simp only [SetLike.mem_coe, AddSubgroup.mem_comap, DistribSMul.toAddMonoidHom_apply]
   rw [smul_comm, ie_embV_nsmul]
   exact AddSubgroup.subset_closure ⟨w, hw, _, ie_yy_scale s s' h1 h2 hA, rfl⟩
 
@@ -287,7 +287,7 @@ theorem pairing_fact : PairFact := by
     have hs0' : 0 < s' := Nat.pos_of_ne_zero fun h => hp (Nat.coprime_zero_left p |>.1 (h ▸ hs'))
     refine ⟨(s * s') * n, Nat.mul_pos (Nat.mul_pos hs0 hs0') hn, Nat.Coprime.mul_left hss hc, ?_⟩
     have h := ie_La_scale cc δ s s' hs2 hs1' hm
-    rw [AddSubgroup.mem_comap, DistribMulAction.toAddMonoidHom_apply, ← mul_smul] at h
+    rw [AddSubgroup.mem_comap, DistribSMul.toAddMonoidHom_apply, ← mul_smul] at h
     exact h
 
 end Formalism.L2.KerInert

@@ -36,7 +36,7 @@ theorem mem_iSup_range_isModel : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel
       zero_mem' := fun i j => zero_mem _
       neg_mem' := fun ha i j => neg_mem (ha i j) }
   let L : AddSubgroup (Formalism.IndefR.Datum.WO S T) :=
-    I.map ((Witness.upH p FS FT).comp (DistribMulAction.toAddMonoidHom (Matrix Y Y' k) c))
+    I.map ((Witness.upH p FS FT).comp (DistribSMul.toAddMonoidHom (Matrix Y Y' k) c))
   have memL : ∀ t, t ∈ L ↔ ∃ x : Matrix Y Y' k, (∀ i j, x i j ∈ 𝒪[k]) ∧ p.up FS FT (c • x) = t := fun t => Iff.rfl
   let W : Submodule ℂ (Formalism.IndefR.Datum.WO S T → ℂ) :=
     { carrier := {g | Formalism.IndefR.Datum.IsThetaFunO ψ S T g}

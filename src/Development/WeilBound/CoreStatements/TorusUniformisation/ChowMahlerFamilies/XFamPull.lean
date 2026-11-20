@@ -94,7 +94,7 @@ theorem mul_std_le {O Ω : Type} [CommRing O] [Field Ω] [Algebra O Ω] {n : ℕ
     mulLat w (stdLat R' _) ≤ spanOver R' (bcMap Ω Ω _ '' (A : Set (Fin n → Ω))) := by
   rintro _ ⟨y, hy, rfl⟩
   have hy' : ∀ i, y i ∈ R' := fun i => hy i (Set.mem_univ i)
-  have e : (DistribMulAction.toAddMonoidHom (Fin n → Ω) w) y =
+  have e : (DistribSMul.toAddMonoidHom (Fin n → Ω) w) y =
       ∑ i, y i • (w • (Pi.single i (1 : Ω) : Fin n → Ω)) := by
     change w • y = _
     conv_lhs => rw [pi_eq_sum_univ' y]

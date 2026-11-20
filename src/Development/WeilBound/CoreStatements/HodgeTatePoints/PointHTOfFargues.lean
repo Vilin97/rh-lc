@@ -56,7 +56,7 @@ theorem pointHT (hF : FarguesHodgeTate) : PointHT := by
   haveI : IsLocalRing O := (GlobalTheory.T.complete_integers_properties p C v O hv hp hO).2.1.toIsLocalRing
   obtain ⟨hLf, hLfin⟩ := lie_free_finite S G hG.smooth O y L M
   let T := ordTower p C v O hv hp hO S G hG y La X L M
-  have hacts : ∀ a : 𝓞 E, T.Acts (DistribMulAction.toAddMonoidHom La a) (ρL a) := by
+  have hacts : ∀ a : 𝓞 E, T.Acts (DistribSMul.toAddMonoidHom La a) (ρL a) := by
     intro a n f g hfg
     haveI := hmon a
     exact (GlobalTheory.T.semiabelian_adic_torsion_four p C v O hv hp hO S G hG y La X L M).2 (act a) _ (ρL a) (hind a) (hact a) n f g hfg

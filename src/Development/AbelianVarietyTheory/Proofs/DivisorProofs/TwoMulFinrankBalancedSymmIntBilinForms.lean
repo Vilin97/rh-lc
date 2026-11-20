@@ -35,7 +35,7 @@ theorem host_bar_rt (H : Host E) : H.bar H.rt = -H.rt := by
 
 variable (H : Host E) (X : Type) [AddCommGroup X] [Module (𝓞 E) X]
 
-def rtMul : X →ₗ[ℤ] X := (DistribMulAction.toAddMonoidHom X H.rt).toIntLinearMap
+def rtMul : X →ₗ[ℤ] X := (DistribSMul.toAddMonoidHom X H.rt).toIntLinearMap
 
 variable {H X}
 

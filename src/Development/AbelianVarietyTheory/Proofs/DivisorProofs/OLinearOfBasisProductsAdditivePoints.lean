@@ -43,7 +43,7 @@ theorem basisLin_oLinear : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (H : Schem
     have := congrArg (fun L => L c) hFG
     simpa [F, G, U] using this
   intro c
-  let F : D.La →+ Additive (Y ⟶ AH) := U.comp (DistribMulAction.toAddMonoidHom D.La c)
+  let F : D.La →+ Additive (Y ⟶ AH) := U.comp (DistribSMul.toAddMonoidHom D.La c)
   let G : D.La →+ Additive (Y ⟶ AH) :=
     { toFun := fun x => Additive.ofMul (u x ≫ actH.act c)
       map_zero' := by

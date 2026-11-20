@@ -252,12 +252,12 @@ theorem apply_coef_eq_zero_of_col (τ : ι) (w : Fin N → ℕ) (h0 : ∀ v, v �
 theorem apply_proj (τ : ι) (w : Fin N → ℕ) (h0 : ∀ v, v ≠ w → ∀ z, ψ (projA O N lam τ v • z) = 0) (z : Gm) :
     ψ (projA O N lam τ w • z) = ψ z := by
   let θ : MvPolynomial Empty O →ₐ[O] R := aeval fun _ => 0
-  have h1 := sum_unit c hc (ψ.comp (DistribMulAction.toAddMonoidHom Gm (projA O N lam τ w))) (fun r z => by
-    simp only [AddMonoidHom.comp_apply, DistribMulAction.toAddMonoidHom_apply]
+  have h1 := sum_unit c hc (ψ.comp (DistribSMul.toAddMonoidHom Gm (projA O N lam τ w))) (fun r z => by
+    simp only [AddMonoidHom.comp_apply, DistribSMul.toAddMonoidHom_apply]
     rw [smul_smul, ← Algebra.commutes, mul_smul, hψ]) θ τ z
   refine h1.symm.trans ((Finset.sum_congr rfl fun m _ => ?_).trans (sum_unit c hc ψ hψ θ τ z))
   refine congrArg (_ * ·) ?_
-  simp only [AddMonoidHom.comp_apply, DistribMulAction.toAddMonoidHom_apply]
+  simp only [AddMonoidHom.comp_apply, DistribSMul.toAddMonoidHom_apply]
   rw [smul_smul, proj_mul_coef c hc]
   split_ifs with h
   · rfl
