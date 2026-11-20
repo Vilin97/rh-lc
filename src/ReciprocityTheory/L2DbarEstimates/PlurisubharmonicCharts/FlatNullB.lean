@@ -169,7 +169,7 @@ theorem fn_loc (hD : A.D0 L w w0 s) {la : La} {F : ι → Y → ℂ}
     rw [(A.chart i).left_inv hy.1] at h2
     exact ⟨h.2, h2⟩
   have hFW : ContinuousOn (F i) W := by
-    refine (hFS.comp ((A.chart i).continuousOn.mono (fun y hy => hy.1)) (fun y hy => hy.2)).congr ?_
+    refine (hFS.comp ((A.chart i).continuousOn.mono (by exact fun y hy => hy.1)) (by exact fun y hy => hy.2)).congr ?_
     intro y hy
     simp [Function.comp, (A.chart i).left_inv hy.1]
   have hphW : ContinuousOn (A.ph la i) W := (fn_contOn_ph A la i).mono fun y hy => hy.1
@@ -293,8 +293,8 @@ theorem fn_ext (hE : EXTStatement n) (hD : A.D0 L w w0 s) (hF : A.Flat w0 s De)
       have hOt : Metric.ball u (r u) ∩ Metric.ball u₀ (r u₀) ⊆ (A.chart i).target :=
         fun x hx => hball u hu hx.1
       have hcl := fn_sub_closure A hD hF i hO hOt
-      refine Set.EqOn.of_subset_closure ?_ ((hU1 u hu).continuousOn.mono fun x hx => hx.1)
-        ((hU1 u₀ hu₀).continuousOn.mono fun x hx => hx.2) Set.inter_subset_left hcl hw
+      refine Set.EqOn.of_subset_closure ?_ ((hU1 u hu).continuousOn.mono (by exact fun x hx => hx.1))
+        ((hU1 u₀ hu₀).continuousOn.mono (by exact fun x hx => hx.2)) Set.inter_subset_left hcl hw
       intro x hx
       rw [hU2 u hu ⟨hx.1.1, hx.2⟩, hU2 u₀ hu₀ ⟨hx.1.2, hx.2⟩]
     refine ⟨fun u => U u u, ?_, ?_⟩

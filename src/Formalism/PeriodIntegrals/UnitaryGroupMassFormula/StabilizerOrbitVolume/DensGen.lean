@@ -222,7 +222,7 @@ theorem densGen [LocallyCompactSpace X] [IsFiniteMeasureOnCompacts μ] [ν.IsOpe
       hΦs.mul_right
   have hW : B ∩ B' ∩ K ∈ 𝓝 b0 := Filter.inter_mem (Filter.inter_mem hB hB') hK
   have hDc : ContinuousOn (fun b => g b - ∫ v, Φ v * (ψ (f' v) : ℂ) ∂(fib b)) (B ∩ B' ∩ K) :=
-    (hg.1.mono fun x hx => hx.1.2).sub (hHc.mono fun x hx => hx.1.1)
+    (hg.1.mono (by exact fun x hx => hx.1.2)).sub (hHc.mono fun x hx => hx.1.1)
   have h0 : ∀ S, IsCompact S → S ⊆ B ∩ B' ∩ K →
       ∫ b in S, (g b - ∫ v, Φ v * (ψ (f' v) : ℂ) ∂(fib b)) ∂ν = 0 := by
     intro S hS hSW

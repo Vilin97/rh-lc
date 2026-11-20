@@ -408,7 +408,7 @@ theorem sf_diff {Φ : Fn k r E} (h : SmoothFam k r L (UU Dc) Φ) {c : Fin r → 
   Qx3.fam_differentiableAt h (x := (c, g)) ⟨hc, hgD⟩ hg
 
 theorem sf_good_crd (ho : IsOpen (UU Dc)) (a : Fin r) (q : Fin 6) : (sfData E L ho).Good (crd (opL a q)) :=
-  sf_good_of ho (fun _ h => Qx3.sf_opL (fun _ hx => hx.1) a q h)
+  sf_good_of ho (fun _ h => Qx3.sf_opL (by exact fun _ hx => hx.1) a q h)
     (fun Φ Ψ _ _ he c hc g hg hgD => by
       apply opL_germ
       filter_upwards [near_pt ho hc hgD] with c' hc'
@@ -680,7 +680,7 @@ def opB (E : Type*) [NormedAddCommGroup E] [NormedSpace ℂ E] (L : Fin (r + 1))
 
 theorem P_mulB (ho : IsOpen (UU Dc)) (l : Fin r) {a : Fn k r ℂ} (ha : SmoothFam k r L (UU Dc) a) :
     opB E L ho l 0 * mulB E L ho a = mulB E L ho a * opB E L ho l 0 + mulB E L ho (crd (opL l 0) a) := by
-  have ha' : SmoothFam k r L (UU Dc) (crd (opL l 0) a) := Qx3.sf_opL (fun _ hx => hx.1) l 0 ha
+  have ha' : SmoothFam k r L (UU Dc) (crd (opL l 0) a) := Qx3.sf_opL (by exact fun _ hx => hx.1) l 0 ha
   have g1 := sf_good_crd (E := E) (L := L) ho l 0
   have g2 := sf_good_mul (E := E) ho ha
   have g3 := sf_good_mul (E := E) ho ha'
@@ -692,7 +692,7 @@ theorem P_mulB (ho : IsOpen (UU Dc)) (l : Fin r) {a : Fn k r ℂ} (ha : SmoothFa
 
 theorem Pb_mulB (ho : IsOpen (UU Dc)) (l : Fin r) {a : Fn k r ℂ} (ha : SmoothFam k r L (UU Dc) a) :
     opB E L ho l 3 * mulB E L ho a = mulB E L ho a * opB E L ho l 3 + mulB E L ho (crd (opL l 3) a) := by
-  have ha' : SmoothFam k r L (UU Dc) (crd (opL l 3) a) := Qx3.sf_opL (fun _ hx => hx.1) l 3 ha
+  have ha' : SmoothFam k r L (UU Dc) (crd (opL l 3) a) := Qx3.sf_opL (by exact fun _ hx => hx.1) l 3 ha
   have g1 := sf_good_crd (E := E) (L := L) ho l 3
   have g2 := sf_good_mul (E := E) ho ha
   have g3 := sf_good_mul (E := E) ho ha'
@@ -705,7 +705,7 @@ theorem Pb_mulB (ho : IsOpen (UU Dc)) (l : Fin r) {a : Fn k r ℂ} (ha : SmoothF
 theorem P_mulB_of (ho : IsOpen (UU Dc)) (l : Fin r) {a : Fn k r ℂ} (ha : SmoothFam k r L (UU Dc) a) (s : ℂ)
     (h : ∀ c ∈ OmX r, ∀ g, pOp l (fun c' => a c' g) c = s * a c g) :
     opB E L ho l 0 * mulB E L ho a = mulB E L ho a * (opB E L ho l 0 + s • 1) := by
-  rw [P_mulB ho l ha, mulB_congr ho (Qx3.sf_opL (fun _ hx => hx.1) l 0 ha) (Qx3.sf_csmul s ha)
+  rw [P_mulB ho l ha, mulB_congr ho (Qx3.sf_opL (by exact fun _ hx => hx.1) l 0 ha) (Qx3.sf_csmul s ha)
     (fun c hc g _ _ => h c hc g)]
   have : mulB E L ho (fun c g => s • a c g) = s • mulB E L ho a := mulB_smul ho ha s
   rw [this, mul_add, mul_smul_comm, mul_one]
@@ -713,7 +713,7 @@ theorem P_mulB_of (ho : IsOpen (UU Dc)) (l : Fin r) {a : Fn k r ℂ} (ha : Smoot
 theorem Pb_mulB_of (ho : IsOpen (UU Dc)) (l : Fin r) {a : Fn k r ℂ} (ha : SmoothFam k r L (UU Dc) a) (s : ℂ)
     (h : ∀ c ∈ OmX r, ∀ g, pbOp l (fun c' => a c' g) c = s * a c g) :
     opB E L ho l 3 * mulB E L ho a = mulB E L ho a * (opB E L ho l 3 + s • 1) := by
-  rw [Pb_mulB ho l ha, mulB_congr ho (Qx3.sf_opL (fun _ hx => hx.1) l 3 ha) (Qx3.sf_csmul s ha)
+  rw [Pb_mulB ho l ha, mulB_congr ho (Qx3.sf_opL (by exact fun _ hx => hx.1) l 3 ha) (Qx3.sf_csmul s ha)
     (fun c hc g _ _ => h c hc g)]
   have : mulB E L ho (fun c g => s • a c g) = s • mulB E L ho a := mulB_smul ho ha s
   rw [this, mul_add, mul_smul_comm, mul_one]

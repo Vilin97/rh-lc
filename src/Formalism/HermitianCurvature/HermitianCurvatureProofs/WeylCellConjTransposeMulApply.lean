@@ -863,7 +863,7 @@ theorem transfer_joint_smooth : Formalism.FourierDecayAlt.Q.TJointSmooth := by
 theorem family_operators : Formalism.FourierDecayAlt.Q.FamOps := by
   intro Wp Wq _ _ _ _ k r z z' π π' i Dc Φ _ _ hopen hΦ a j
   obtain ⟨hS, hFF⟩ := hΦ
-  have hS' := Qx3.sf_opL (fun x hx => hx.1) a j hS
+  have hS' := Qx3.sf_opL (by exact fun x hx => hx.1) a j hS
   refine ⟨hS', fun c hc => ?_⟩
   have hnear : ∀ g ∈ Dc c, ∀ᶠ c' in nhds c, c' ∈ OmX r ∧ g ∈ Dc c' := by
     intro g hg
