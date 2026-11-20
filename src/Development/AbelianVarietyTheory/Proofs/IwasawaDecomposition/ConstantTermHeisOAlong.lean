@@ -256,7 +256,7 @@ theorem constantTerm_heisO_along : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ)
   have : IsTopologicalGroup (GA D T) := Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.Unfold.topGroupHA _ _
   have : BorelSpace (GA D T) := ⟨rfl⟩
   have : Countable (GQ T) := Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.Unfold.countableGamma D.sp.cm.sig T.gram
-  have : BorelSpace (ZI T ξ) := Subtype.borelSpace (ZI T ξ : Set (GA D T))
+  have : BorelSpace (ZI T ξ) := Subtype.borelSpace (fun x => x ∈ (ZI T ξ : Set (GA D T)))
   have : Countable ((GQ T).subgroupOf (ZI T ξ)) :=
     Function.Injective.countable (f := fun γ : (GQ T).subgroupOf (ZI T ξ) => (⟨γ.1.1, γ.2⟩ : GQ T))
       fun a b h => Subtype.ext (Subtype.ext (congrArg (fun x : GQ T => (x : GA D T)) h))

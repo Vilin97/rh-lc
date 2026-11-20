@@ -98,7 +98,7 @@ theorem GlobalTheory.CompanionTheory.AvgFree.scale_density : ∀ (F E : Type) [F
     rw [h1]
     haveI : BorelSpace (HermR (Fv F v) σ n) := ⟨rfl⟩
     have hbs := (Subtype.borelSpace (α := Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E))
-      ((HermR (Fv F v) σ n : AddSubgroup _) : Set _)).measurable_eq
+      (fun x => x ∈ ((HermR (Fv F v) σ n : AddSubgroup _) : Set _))).measurable_eq
     have hY3 : @MeasurableSet {x // x ∈ ((HermR (Fv F v) σ n : AddSubgroup _) : Set (Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E)))} Subtype.instMeasurableSpace Y' := by
       rw [hbs]
       exact hY'

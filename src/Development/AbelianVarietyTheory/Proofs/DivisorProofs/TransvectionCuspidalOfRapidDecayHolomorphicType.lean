@@ -112,7 +112,7 @@ theorem zCusp_of_rapidDecay : ∀ (D : D7) (θ : InfFam D) (V : HSp D) (S : D.wh
   have : IsTopologicalGroup (GA D V) := Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.Unfold.topGroupHA _ _
   have : BorelSpace (GA D V) := ⟨rfl⟩
   have : Countable (GQ V) := Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.Unfold.countableGamma D.sp.cm.sig V.gram
-  have : BorelSpace (ZI V ξ) := Subtype.borelSpace (ZI V ξ : Set (GA D V))
+  have : BorelSpace (ZI V ξ) := Subtype.borelSpace (fun x => x ∈ (ZI V ξ : Set (GA D V)))
   have : Countable ((GQ V).subgroupOf (ZI V ξ)) :=
     Function.Injective.countable (f := fun γ : (GQ V).subgroupOf (ZI V ξ) => (⟨γ.1.1, γ.2⟩ : GQ V))
       fun a b h => Subtype.ext (Subtype.ext (congrArg (fun x : GQ V => (x : GA D V)) h))

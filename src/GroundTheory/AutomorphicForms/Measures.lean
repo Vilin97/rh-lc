@@ -103,8 +103,8 @@ theorem map_mul_prod_eq_smul [TotallyDisconnectedSpace G] (P K : Subgroup G)
   have : CompactSpace K := isCompact_iff_compactSpace.1 hKc
   have : SecondCountableTopology P := IsEmbedding.subtypeVal.secondCountableTopology
   have : SecondCountableTopology K := IsEmbedding.subtypeVal.secondCountableTopology
-  have : BorelSpace P := Subtype.borelSpace (P : Set G)
-  have : BorelSpace K := Subtype.borelSpace (K : Set G)
+  have : BorelSpace P := Subtype.borelSpace (fun x => x ∈ (P : Set G))
+  have : BorelSpace K := Subtype.borelSpace (fun x => x ∈ (K : Set G))
   set m : P × K → G := fun x => (x.1 : G) * x.2 with hm_def
   have hm : Measurable m :=
     (measurable_subtype_coe.comp measurable_fst).mul
@@ -225,8 +225,8 @@ theorem lintegral_mul_prod_eq [TotallyDisconnectedSpace G] (P K : Subgroup G)
   have : CompactSpace K := isCompact_iff_compactSpace.1 hKc
   have : SecondCountableTopology P := IsEmbedding.subtypeVal.secondCountableTopology
   have : SecondCountableTopology K := IsEmbedding.subtypeVal.secondCountableTopology
-  have : BorelSpace P := Subtype.borelSpace (P : Set G)
-  have : BorelSpace K := Subtype.borelSpace (K : Set G)
+  have : BorelSpace P := Subtype.borelSpace (fun x => x ∈ (P : Set G))
+  have : BorelSpace K := Subtype.borelSpace (fun x => x ∈ (K : Set G))
   have hm : Measurable fun x : P × K => (x.1 : G) * x.2 :=
     (measurable_subtype_coe.comp measurable_fst).mul
       (measurable_subtype_coe.comp measurable_snd)
@@ -250,8 +250,8 @@ theorem integral_mul_prod_eq [TotallyDisconnectedSpace G] (P K : Subgroup G)
   have : CompactSpace K := isCompact_iff_compactSpace.1 hKc
   have : SecondCountableTopology P := IsEmbedding.subtypeVal.secondCountableTopology
   have : SecondCountableTopology K := IsEmbedding.subtypeVal.secondCountableTopology
-  have : BorelSpace P := Subtype.borelSpace (P : Set G)
-  have : BorelSpace K := Subtype.borelSpace (K : Set G)
+  have : BorelSpace P := Subtype.borelSpace (fun x => x ∈ (P : Set G))
+  have : BorelSpace K := Subtype.borelSpace (fun x => x ∈ (K : Set G))
   have hm : Measurable fun x : P × K => (x.1 : G) * x.2 :=
     (measurable_subtype_coe.comp measurable_fst).mul
       (measurable_subtype_coe.comp measurable_snd)

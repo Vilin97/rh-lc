@@ -53,7 +53,7 @@ theorem eq_smul_map (N : Subgroup G) (hN : IsClosed (N : Set G)) {ν : Measure G
   have hemb : MeasurableEmbedding (Subtype.val : N → G) := MeasurableEmbedding.subtype_coe hN.measurableSet
   haveI : LocallyCompactSpace N := hN.locallyCompactSpace
   haveI : SecondCountableTopology N := TopologicalSpace.Subtype.secondCountableTopology (N : Set G)
-  haveI : BorelSpace N := Subtype.borelSpace (N : Set G)
+  haveI : BorelSpace N := Subtype.borelSpace (fun x => x ∈ (N : Set G))
   set ν₀ : Measure N := ν.comap Subtype.val with hν₀
 
   have hback : ν₀.map Subtype.val = ν := by

@@ -51,7 +51,7 @@ theorem RadicalTorusModulus.proof (h : HermitianForm F E W) (v : Basis ι E W) :
     RadicalTorusModulus.Statement h v := by
   intro x₀ w₀ hp g α hga _ hgy μ _ f hf
   have : BorelSpace (unipRadical h v x₀) :=
-    Subtype.borelSpace (unipRadical h v x₀ : Set (archUnitary h v))
+    Subtype.borelSpace (fun x' => x' ∈ (unipRadical h v x₀ : Set (archUnitary h v)))
   set φ := heisHomeo (v := v) hp with hφ
   set lam : Measure (HeisCoord h v x₀ w₀) :=
     (Measure.addHaar : Measure (heisY h v x₀ w₀)).prod volume with hlam

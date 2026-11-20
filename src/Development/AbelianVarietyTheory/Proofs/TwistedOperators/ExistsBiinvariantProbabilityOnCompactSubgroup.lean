@@ -9,7 +9,7 @@ theorem exists_biinvariant_probability_on_compact_subgroup :
     ∀ (G : Type) [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [T2Space G] [SecondCountableTopology G] [MeasurableSpace G] [BorelSpace G] (K : Subgroup G), IsCompact (K : Set G) → ∃ mK : Measure G, IsProbabilityMeasure mK ∧ mK (K : Set G)ᶜ = 0 ∧ (∀ k ∈ K, Measure.map (fun x => k * x) mK = mK) ∧ ∀ k ∈ K, Measure.map (fun x => x * k) mK = mK := by
   intro G _ _ _ _ _ _ _ K hK
   haveI : CompactSpace K := isCompact_iff_compactSpace.mp hK
-  haveI : BorelSpace K := Subtype.borelSpace (K : Set G)
+  haveI : BorelSpace K := Subtype.borelSpace (fun x => x ∈ (K : Set G))
   let μ : Measure K := Measure.haarMeasure ⊤
   haveI hμ : IsProbabilityMeasure μ := ⟨by
     have := Measure.haarMeasure_self (G := K) (K₀ := ⊤)

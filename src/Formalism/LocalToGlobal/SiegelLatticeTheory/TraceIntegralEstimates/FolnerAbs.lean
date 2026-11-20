@@ -80,7 +80,7 @@ theorem haarSub_prop {S : Set G} {μ ν : Measure G} (hμ : LeftHaarSub S μ) (h
   rw [Measure.add_apply] at hAfin
   have hμA : μ' A ≠ ⊤ := (lt_of_le_of_lt le_self_add hAfin).ne
   have hνA : ν' A ≠ ⊤ := (lt_of_le_of_lt le_add_self hAfin).ne
-  haveI : BorelSpace H := Subtype.borelSpace (H : Set G)
+  haveI : BorelSpace H := Subtype.borelSpace (fun x => x ∈ (H : Set G))
   haveI : SecondCountableTopology H := by
     first
       | exact inferInstanceAs (SecondCountableTopology (H : Set G))

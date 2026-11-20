@@ -34,8 +34,8 @@ theorem map_eq_of_split (p : V →+ V) (hp : Continuous p) (hpp : ∀ v, p (p v)
     exact isClosed_eq hp continuous_const
   haveI : LocallyCompactSpace W := hWc.locallyCompactSpace
   haveI : LocallyCompactSpace U := hUc.locallyCompactSpace
-  haveI : BorelSpace W := Subtype.borelSpace (W : Set V)
-  haveI : BorelSpace U := Subtype.borelSpace (U : Set V)
+  haveI : BorelSpace W := Subtype.borelSpace (fun x => x ∈ (W : Set V))
+  haveI : BorelSpace U := Subtype.borelSpace (fun x => x ∈ (U : Set V))
   haveI : SecondCountableTopology W := TopologicalSpace.Subtype.secondCountableTopology (W : Set V)
   haveI : SecondCountableTopology U := TopologicalSpace.Subtype.secondCountableTopology (U : Set V)
   haveI : BorelSpace (W × U) := Prod.borelSpace

@@ -13,8 +13,8 @@ theorem modularCharacterFun_semidirect :
   haveI := hNR
   haveI := hMH
   haveI := hMR
-  haveI : BorelSpace N := Subtype.borelSpace (N : Set Q)
-  haveI : BorelSpace M := Subtype.borelSpace (M : Set Q)
+  haveI : BorelSpace N := Subtype.borelSpace (fun x => x ∈ (N : Set Q))
+  haveI : BorelSpace M := Subtype.borelSpace (fun x => x ∈ (M : Set Q))
   haveI : SecondCountableTopology N :=
     TopologicalSpace.Subtype.secondCountableTopology (N : Set Q)
   haveI : SecondCountableTopology M :=

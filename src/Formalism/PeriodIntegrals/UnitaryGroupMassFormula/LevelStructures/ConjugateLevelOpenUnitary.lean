@@ -112,8 +112,8 @@ theorem haarIdxGlob_of (hO : ConjugateLevelOpenUnitary) : HaarIdxGlob := by
   have hop := hO X hb hK hT hL w
   rw [eA] at hop
   have hBor : BorelSpace (Hsub (Af X.B.I.F) X.B.I.cm.sig X.B.I.J (frameOf X w)) :=
-    Subtype.borelSpace ((Hsub (Af X.B.I.F) X.B.I.cm.sig X.B.I.J (frameOf X w) : Subgroup _) :
-      Set (HA (Af X.B.I.F) X.B.I.cm.sig X.B.I.J))
+    Subtype.borelSpace (fun x => x ∈ ((Hsub (Af X.B.I.F) X.B.I.cm.sig X.B.I.J (frameOf X w) : Subgroup _) :
+      Set (HA (Af X.B.I.F) X.B.I.cm.sig X.B.I.J)))
   have key := toReal_eq_relIndex_mul_of_haar (G := Hsub (Af X.B.I.F) X.B.I.cm.sig X.B.I.J (frameOf X w))
     (contMul_sub _) hBor
     (X.measW w).μHf hH _ _ hle hop
@@ -155,8 +155,8 @@ theorem haarIdxLoc_of (hO : ParabolicLevelOpenLocal) : HaarIdxLoc := by
   have hop := hO X hb hK hT hL w p
   rw [eA] at hop
   have hBor : BorelSpace (Ssub (Fv X.B.I.F p.1) X.B.I.cm.sig X.B.I.J (frameOf X w)) :=
-    Subtype.borelSpace ((Ssub (Fv X.B.I.F p.1) X.B.I.cm.sig X.B.I.J (frameOf X w) : Subgroup _) :
-      Set (HA (Fv X.B.I.F p.1) X.B.I.cm.sig X.B.I.J))
+    Subtype.borelSpace (fun x => x ∈ ((Ssub (Fv X.B.I.F p.1) X.B.I.cm.sig X.B.I.J (frameOf X w) : Subgroup _) :
+      Set (HA (Fv X.B.I.F p.1) X.B.I.cm.sig X.B.I.J)))
   have key := toReal_eq_relIndex_mul_of_haar (G := Ssub (Fv X.B.I.F p.1) X.B.I.cm.sig X.B.I.J (frameOf X w))
     (contMul_sub _) hBor
     ((X.measW w).μSv p.1) hH _ _ hle hop

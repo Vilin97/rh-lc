@@ -33,7 +33,7 @@ theorem cov_split (d : SD σ) (w : InfinitePlace F) (ins : Matrix (Fin d.m) (Fin
   haveI : LocallyCompactSpace (d.restW w) := hcl.isClosedEmbedding_subtypeVal.locallyCompactSpace
   haveI : SecondCountableTopology (d.restW w) :=
     TopologicalSpace.Subtype.secondCountableTopology ((d.restW w : AddSubgroup (Mx F E d.m d.n)) : Set (Mx F E d.m d.n))
-  haveI : BorelSpace (d.restW w) := Subtype.borelSpace ((d.restW w : AddSubgroup (Mx F E d.m d.n)) : Set (Mx F E d.m d.n))
+  haveI : BorelSpace (d.restW w) := Subtype.borelSpace (fun x' => x' ∈ ((d.restW w : AddSubgroup (Mx F E d.m d.n)) : Set (Mx F E d.m d.n)))
   haveI := volume_isAddHaar d.m d.n
   obtain ⟨s, hsc, hs1, hs2, hsa, -⟩ := Place.exists_sec d.cm d.B.emb
   let sW : (Fin d.m → Fin d.n → ℂ) → Mx F E d.m d.n := fun u i j => s fun w' => if w' = w then u i j else 0
