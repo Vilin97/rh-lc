@@ -99,7 +99,7 @@ theorem levi_abs_le_global (A : FinHolAtlas D X) (hX : IsCompact (Set.univ : Set
   have hVo : ∀ p, IsOpen (V p) := fun p =>
     (A.chart _).continuousOn.isOpen_inter_preimage (A.chart _).open_source Metric.isOpen_ball
   obtain ⟨t, ht⟩ := hX.elim_finite_subcover V hVo
-    (fun p _ => Set.mem_iUnion.2 ⟨p, hsrc p, Metric.mem_ball_self (hr p)⟩)
+    (fun p _ => Set.mem_iUnion.2 ⟨p, hsrc p, Set.mem_preimage.mpr (Metric.mem_ball_self (hr p))⟩)
   refine ⟨∑ p ∈ t, |m p|, Finset.sum_nonneg fun _ _ => abs_nonneg _, ?_⟩
   intro x k y hy v
   set C := ∑ p ∈ t, |m p| with hC

@@ -129,7 +129,7 @@ theorem exists_map_cosSq_le (d : ℕ) (T : Set (V (d + 1))) (ρ : V (d + 1) → 
     (((continuousOn_const.mul hfs).sub hρ).isOpen_inter_preimage hT isOpen_Ioi).inter
       (Metric.isOpen_ball.preimage hb)
   have hNT : N ⊆ T := fun z hz => hz.1.1
-  refine ⟨N, hN, ⟨⟨hz₀, ?_⟩, Metric.mem_ball_self one_pos⟩, hNT, c * (ENNReal.ofReal R * volume K),
+  refine ⟨N, hN, ⟨⟨hz₀, ?_⟩, Set.mem_preimage.mpr (Metric.mem_ball_self one_pos)⟩, hNT, c * (ENNReal.ofReal R * volume K),
     ENNReal.mul_ne_top hc (ENNReal.mul_ne_top ENNReal.ofReal_ne_top measure_ball_lt_top.ne), ?_⟩
   · show 0 < R * fsDensity s (G (base z₀)) (fib z₀) - ρ z₀
     rw [hR, div_mul_cancel₀ _ h0.ne']

@@ -66,7 +66,7 @@ theorem IsDens.isFiniteMeasure_part [CompactSpace (CxPts p σ)] [T2Space (CxPts 
       exact (Set.image_congr fun v hv => c.e.right_inv (hBt hv)).trans (Set.image_id' B)
     refine ⟨T, ?_, ?_⟩
     · refine mem_of_superset ((c.e.isOpen_inter_preimage Metric.isOpen_ball).mem_nhds
-        ⟨hy, Metric.mem_ball_self (half_pos hε)⟩) fun z hz => ⟨c.e z, ?_, c.e.left_inv hz.1⟩
+        ⟨hy, Set.mem_preimage.mpr (Metric.mem_ball_self (half_pos hε))⟩) fun z hz => ⟨c.e z, ?_, c.e.left_inv hz.1⟩
       exact Metric.ball_subset_closedBall hz.2
     · rw [h.part_apply c hTc.isClosed.measurableSet hTs, hTB]
       exact (((h.2 c).mono hBt).integrableOn_compact (isCompact_closedBall _ _)).lintegral_lt_top

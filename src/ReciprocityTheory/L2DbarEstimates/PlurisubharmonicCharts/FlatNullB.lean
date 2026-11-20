@@ -33,7 +33,7 @@ theorem fn_mu_compl (hN : EXTNullStatement n) (hD : A.D0 L w w0 s) (hF : A.Flat 
     (A.chart (A.pick x)).continuousOn.isOpen_inter_preimage (A.chart (A.pick x)).open_source hB2
   have hne : ∃ y ∈ Metric.ball ((A.chart (A.pick x)) x) r, fnG A w0 s De (A.pick x) y ≠ 0 := by
     obtain ⟨y, ⟨hys, hyB⟩, hyM⟩ := (fn_dense A hD hF).inter_open_nonempty _ hO1
-      ⟨x, hxs, Metric.mem_ball_self hr⟩
+      ⟨x, hxs, Set.mem_preimage.mpr (Metric.mem_ball_self hr)⟩
     refine ⟨(A.chart (A.pick x)) y, hyB, ?_⟩
     rw [fn_G_ne_iff A hD ((A.chart (A.pick x)).map_source hys), (A.chart (A.pick x)).left_inv hys]
     exact hyM
@@ -57,7 +57,7 @@ theorem fn_mu_compl (hN : EXTNullStatement n) (hD : A.D0 L w w0 s) (hF : A.Flat 
       | simp [Measure.restrict_eq_zero.2 hvol]
   refine ⟨(A.Mset w0 s De)ᶜ ∩ ((A.chart (A.pick x)).source ∩
       (A.chart (A.pick x)) ⁻¹' Metric.ball ((A.chart (A.pick x)) x) r),
-    inter_mem_nhdsWithin _ (hO1.mem_nhds ⟨hxs, Metric.mem_ball_self hr⟩), ?_⟩
+    inter_mem_nhdsWithin _ (hO1.mem_nhds ⟨hxs, Set.mem_preimage.mpr (Metric.mem_ball_self hr)⟩), ?_⟩
   refine measure_mono_null ?_ hTnull
   rintro y ⟨hyM, hys, hyB⟩
   refine ⟨⟨hys, hyB⟩, ?_⟩

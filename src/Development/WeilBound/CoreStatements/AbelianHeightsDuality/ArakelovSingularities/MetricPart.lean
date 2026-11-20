@@ -83,7 +83,7 @@ theorem exists_bump {P : Scheme.{0}} {q : P ⟶ Sp k} {N : ℕ} {σ : k →+* �
     · exact ⟨le_rfl, zero_le_one⟩
   · have ho : IsOpen (e.source ∩ e ⁻¹' Metric.ball (e y) (ε / 4)) :=
       e.isOpen_inter_preimage Metric.isOpen_ball
-    filter_upwards [ho.mem_nhds ⟨hc, Metric.mem_ball_self (by linarith)⟩] with w hw
+    filter_upwards [ho.mem_nhds ⟨hc, Set.mem_preimage.mpr (Metric.mem_ball_self (by linarith))⟩] with w hw
     simp only [β, if_pos hw.1]
     exact β₀.one_of_mem_closedBall (Metric.ball_subset_closedBall hw.2)
 

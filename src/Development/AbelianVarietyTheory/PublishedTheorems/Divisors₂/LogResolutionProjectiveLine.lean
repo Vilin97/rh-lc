@@ -44,7 +44,7 @@ theorem eq_univ_of_interior_nonempty [PreconnectedSpace X] (A : FinHolAtlas d X)
     have hN : IsOpen ((A.chart j).source ∩ A.chart j ⁻¹' Metric.ball (A.chart j x) ε) :=
       (A.chart j).isOpen_inter_preimage Metric.isOpen_ball
     have hxN : x ∈ (A.chart j).source ∩ A.chart j ⁻¹' Metric.ball (A.chart j x) ε :=
-      ⟨hj, Metric.mem_ball_self hε⟩
+      ⟨hj, Set.mem_preimage.mpr (Metric.mem_ball_self hε)⟩
     obtain ⟨p, hpN, hpS⟩ := mem_closure_iff.1 hx _ hN hxN
     have hz : ∀ i, Set.EqOn (f i ∘ (A.chart j).symm) 0 (Metric.ball (A.chart j x) ε) := by
       intro i

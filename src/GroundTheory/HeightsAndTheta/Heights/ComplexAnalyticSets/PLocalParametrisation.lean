@@ -54,7 +54,7 @@ theorem exists_proper_projection_nbhd {σ : Type} [Fintype σ] {X : Set (σ → 
     Metric.mem_nhds_iff.1 ((hSk.image A.continuous).isClosed.isOpen_compl.mem_nhds hAS)
   refine ⟨Metric.ball w r ∩ A ⁻¹' Metric.ball (A w) ε, Metric.ball (A w) ε,
     Metric.isOpen_ball.inter (Metric.isOpen_ball.preimage A.continuous), ?_,
-    ⟨hw, Metric.mem_ball_self hr0, Metric.mem_ball_self hε⟩, Metric.isOpen_ball,
+    ⟨hw, Metric.mem_ball_self hr0, Set.mem_preimage.mpr (Metric.mem_ball_self hε)⟩, Metric.isOpen_ball,
     (convex_ball _ _).isPreconnected, fun x hx => hx.2.2, ?_, ?_⟩
   · exact fun x hx => (hcb (Metric.ball_subset_closedBall hx.1)).1.1
   · intro K hKD hK

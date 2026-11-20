@@ -23,7 +23,7 @@ theorem zeroSet_null_of_dense_nz : ∀ (n : ℕ) (Y : Type) [TopologicalSpace Y]
       Metric.ball (A.chart (A.pick y) y) r) :=
     (A.chart _).continuousOn.isOpen_inter_preimage (A.chart _).open_source Metric.isOpen_ball
   have hyU : y ∈ (A.chart (A.pick y)).source ∩ A.chart (A.pick y) ⁻¹'
-      Metric.ball (A.chart (A.pick y) y) r := ⟨hys, Metric.mem_ball_self hr⟩
+      Metric.ball (A.chart (A.pick y) y) r := ⟨hys, Set.mem_preimage.mpr (Metric.mem_ball_self hr)⟩
   have hF : DifferentiableOn ℂ (τ (A.pick y) ∘ (A.chart (A.pick y)).symm)
       (A.chart (A.pick y)).target := by
     simpa using hτ.1 (A.pick y)

@@ -145,7 +145,7 @@ theorem ProjRegularClosureOpen.proof : ProjRegularClosureOpen.Statement := by
       exact mul_ne_zero (pow_ne_zero _ (inv_ne_zero (pow_ne_zero _ hF0)))
         (right_ne_zero_of_mul hh)
   have hW : (BV.chart j).source ∩ (BV.chart j) ⁻¹' Metric.ball (BV.chart j x) r ∈ 𝓝 x :=
-    ((BV.chart j).isOpen_inter_preimage Metric.isOpen_ball).mem_nhds ⟨hj, Metric.mem_ball_self hr⟩
+    ((BV.chart j).isOpen_inter_preimage Metric.isOpen_ball).mem_nhds ⟨hj, Set.mem_preimage.mpr (Metric.mem_ball_self hr)⟩
   filter_upwards [hW] with y hyW
   obtain ⟨hys, hyb⟩ := hyW
   rw [mem_closure_iff_nhds]

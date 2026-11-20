@@ -18,7 +18,7 @@ theorem loc_weaklyLocallyCompact {M : Type*} [TopologicalSpace M] (n : ℕ) (z :
   · exact (isCompact_closedBall _ _).image_of_continuousOn
       (e.continuousOn_symm.mono ((Metric.closedBall_subset_ball (by linarith)).trans hsub))
   · have h1 : e.source ∩ e ⁻¹' Metric.ball (e x) (r / 2) ∈ 𝓝 x :=
-      (e.isOpen_inter_preimage Metric.isOpen_ball).mem_nhds ⟨hx, Metric.mem_ball_self (by linarith)⟩
+      (e.isOpen_inter_preimage Metric.isOpen_ball).mem_nhds ⟨hx, Set.mem_preimage.mpr (Metric.mem_ball_self (by linarith))⟩
     refine Filter.mem_of_superset h1 ?_
     rintro y ⟨hy1, hy2⟩
     exact ⟨e y, Metric.ball_subset_closedBall hy2, e.left_inv hy1⟩

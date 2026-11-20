@@ -196,7 +196,7 @@ theorem exists_levi_nonneg_chern_bound [CompactSpace X] (A : FinHolAtlas e X) (�
       Metric.isOpen_ball
   obtain ⟨t, ht⟩ := isCompact_univ.elim_finite_subcover
     (fun p => (A.chart (j p)).source ∩ A.chart (j p) ⁻¹' Metric.ball (A.chart (j p) p) (r p))
-    hVo (fun x _ => Set.mem_iUnion.2 ⟨x, hj x, Metric.mem_ball_self (hr x)⟩)
+    hVo (fun x _ => Set.mem_iUnion.2 ⟨x, hj x, Set.mem_preimage.mpr (Metric.mem_ball_self (hr x))⟩)
   obtain ⟨C, hC0, hCm⟩ : ∃ C : ℝ, 0 ≤ C ∧ ∀ i ∈ t, m i ≤ C :=
     ⟨∑ i ∈ t, |m i|, Finset.sum_nonneg fun i _ => abs_nonneg _, fun i hi =>
       (le_abs_self _).trans (Finset.single_le_sum (f := fun i => |m i|)

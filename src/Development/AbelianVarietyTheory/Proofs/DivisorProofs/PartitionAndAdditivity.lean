@@ -74,7 +74,7 @@ theorem exists_bump [T2Space M] (x : M) {U : Set M} (hU : IsOpen U) (hx : x ∈ 
     exacts [⟨β.nonneg, β.le_one⟩, ⟨le_rfl, zero_le_one⟩]
   · have ho : IsOpen (e.source ∩ e ⁻¹' Metric.ball (e x) (ε / 4)) :=
       e.isOpen_inter_preimage Metric.isOpen_ball
-    filter_upwards [ho.mem_nhds ⟨hxe, Metric.mem_ball_self (by linarith)⟩] with w hw
+    filter_upwards [ho.mem_nhds ⟨hxe, Set.mem_preimage.mpr (Metric.mem_ball_self (by linarith))⟩] with w hw
     simp only [ψ, if_pos hw.1]
     exact β.one_of_mem_closedBall (Metric.ball_subset_closedBall hw.2)
 

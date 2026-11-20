@@ -106,7 +106,7 @@ theorem exists_pos_sub_isPsh {e : ℕ} {X : Type} [TopologicalSpace X] [CompactS
   have hVo : ∀ p, IsOpen (V p) := fun p =>
     (A.chart _).continuousOn.isOpen_inter_preimage (A.chart _).open_source Metric.isOpen_ball
   obtain ⟨t, ht⟩ := isCompact_univ.elim_finite_subcover V hVo
-    (fun p _ => Set.mem_iUnion.2 ⟨p, hsrc p, Metric.mem_ball_self (hr p)⟩)
+    (fun p _ => Set.mem_iUnion.2 ⟨p, hsrc p, Set.mem_preimage.mpr (Metric.mem_ball_self (hr p))⟩)
   set C := ∑ p ∈ t, |m p| with hC
   have hC0 : 0 ≤ C := Finset.sum_nonneg (fun i _ => abs_nonneg (m i))
   refine ⟨1 / (1 + C), by positivity, ?_⟩

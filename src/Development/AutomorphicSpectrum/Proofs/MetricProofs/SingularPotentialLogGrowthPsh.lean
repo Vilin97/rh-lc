@@ -275,7 +275,7 @@ theorem localBound {e : ℕ} {X : Type} [TopologicalSpace X] (A : FinHolAtlas e 
   obtain ⟨Bm, hBm⟩ := hbd (Metric.closedBall 0 (1 / 2)) (isCompact_closedBall _ _)
     (Metric.closedBall_subset_ball (by norm_num))
   refine ⟨ψ.source ∩ ψ ⁻¹' Metric.ball a (ρ / 2), ψ.isOpen_inter_preimage Metric.isOpen_ball,
-    ⟨hxψ, Metric.mem_ball_self (half_pos hρ)⟩, Bm + M₁, ?_⟩
+    ⟨hxψ, Set.mem_preimage.mpr (Metric.mem_ball_self (half_pos hρ))⟩, Bm + M₁, ?_⟩
   rintro y ⟨hy1, hy2⟩ hyb
   have hy2' : ‖ψ y - a‖ < ρ / 2 := by
     have : dist (ψ y) a < ρ / 2 := hy2

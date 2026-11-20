@@ -248,7 +248,7 @@ theorem fn_dense (hD : A.D0 L w w0 s) (hF : A.Flat w0 s De) : Dense (A.Mset w0 s
           Metric.ball (A.chart (A.pick y) y) r) :=
         (A.chart _).continuousOn.isOpen_inter_preimage (A.chart _).open_source Metric.isOpen_ball
       have hyN : y ∈ (A.chart (A.pick y)).source ∩ A.chart (A.pick y) ⁻¹'
-          Metric.ball (A.chart (A.pick y) y) r := ⟨hys, Metric.mem_ball_self hr⟩
+          Metric.ball (A.chart (A.pick y) y) r := ⟨hys, Set.mem_preimage.mpr (Metric.mem_ball_self hr)⟩
       obtain ⟨y', hy'N, hy'W⟩ := mem_closure_iff.1 hy _ hNo hyN
       have hv'B := hy'N.2
       have hev : fnG A w0 s De (A.pick y) =ᶠ[𝓝 (A.chart (A.pick y) y')] 0 := by

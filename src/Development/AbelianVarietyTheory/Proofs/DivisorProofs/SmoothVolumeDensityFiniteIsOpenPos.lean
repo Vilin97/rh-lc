@@ -39,7 +39,7 @@ theorem exists_open_lt_top [SecondCountableTopology (CxPts p σ)] (ω : VolDens 
   have h2 : ∀ᶠ v in 𝓝 (c.e y), v ∈ c.e.target := c.e.open_target.mem_nhds hv0
   obtain ⟨ε, hε, hball⟩ := Metric.eventually_nhds_iff_ball.1 (h1.and h2)
   refine ⟨c.e.source ∩ c.e ⁻¹' Metric.ball (c.e y) ε,
-    c.e.isOpen_inter_preimage Metric.isOpen_ball, ⟨hy, Metric.mem_ball_self hε⟩, ?_⟩
+    c.e.isOpen_inter_preimage Metric.isOpen_ball, ⟨hy, Set.mem_preimage.mpr (Metric.mem_ball_self hε)⟩, ?_⟩
   have hO : MeasurableSet (c.e.source ∩ c.e ⁻¹' Metric.ball (c.e y) ε) :=
     (c.e.isOpen_inter_preimage Metric.isOpen_ball).measurableSet
   rw [meas_eq ω c hO Set.inter_subset_left]

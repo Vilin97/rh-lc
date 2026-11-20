@@ -203,7 +203,7 @@ theorem compare_global [CompactSpace X] {A : FinHolAtlas e X} {Ω Q : LocPot X} 
   have hVo : ∀ p, IsOpen (V p) := fun p =>
     (A.chart _).continuousOn.isOpen_inter_preimage (A.chart _).open_source Metric.isOpen_ball
   obtain ⟨t, ht⟩ := isCompact_univ.elim_finite_subcover V hVo
-    (fun p _ => Set.mem_iUnion.2 ⟨p, hsrc p, Metric.mem_ball_self (hr p)⟩)
+    (fun p _ => Set.mem_iUnion.2 ⟨p, hsrc p, Set.mem_preimage.mpr (Metric.mem_ball_self (hr p))⟩)
   have hC0 : 0 ≤ ∑ p ∈ t, |m p| := Finset.sum_nonneg fun _ _ => abs_nonneg _
   refine ⟨(1 + ∑ p ∈ t, |m p|)⁻¹, by positivity, fun k y hy v => ?_⟩
   obtain ⟨p, hpt, hqV⟩ : ∃ p ∈ t, (A.chart k).symm y ∈ V p := by
