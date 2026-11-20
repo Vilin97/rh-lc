@@ -33,7 +33,7 @@ theorem exists_gens {E : Type} [Field E] [NumberField E] (P : HeightOneSpectrum 
     · rw [Submodule.span_span_of_tower, hsp]
   have : Module.Free (locRing P) M := Submodule.IsLattice.free E M
   have hr : Module.finrank (locRing P) M = n := by
-    simpa using Submodule.IsLattice.finrank_of_pi E M
+    simpa using ((Submodule.IsFullLattice.finrank_eq E M).trans (Module.finrank_fintype_fun_eq_card E))
   let b := Module.finBasisOfFinrankEq (locRing P) M hr
   refine ⟨fun i => b i, fun i => (b i).2, fun x hx => ?_⟩
   refine ⟨b.repr ⟨x, Submodule.subset_span hx⟩, fun a => ?_⟩

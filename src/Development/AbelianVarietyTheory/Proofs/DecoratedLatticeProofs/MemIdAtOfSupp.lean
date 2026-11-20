@@ -277,7 +277,7 @@ theorem exists_latFrame (S : HSp D) (L : GlobalTheory.FinPl.Lat S) (hL : IsSelfD
       (fun i => q.sec ((F.β *ᵥ y) i)) ∈ latV S L (· = q.v) := by
   obtain ⟨gl, h1, h2⟩ := GlobalTheory.T.exists_GL_embedding_unitaryAdelic_splitPlace_basis D k q S (Fin S.rank) 1 1 (mul_one _) (mul_one _)
   obtain ⟨Λ, hΛ, hl, -⟩ := (GlobalTheory.T.splitPlaceHermitianFrame_properties D k q S _ ⟨1, 1, mul_one _, mul_one _, gl, h1, h2⟩).2.2.2.1 L hL
-  let b := (Module.finBasisOfFinrankEq 𝒪[k] Λ (Submodule.IsLattice.finrank_of_pi k Λ)).reindex
+  let b := (Module.finBasisOfFinrankEq 𝒪[k] Λ (((Submodule.IsFullLattice.finrank_eq k Λ).trans (Module.finrank_fintype_fun_eq_card k)))).reindex
     ((finCongr (Fintype.card_fin _)).trans e.symm)
   let b' := b.extendOfIsLattice k
   have hkey : ∀ c : Y → 𝒪[k], b'.equivFun.symm (fun i => (c i : k)) = ((∑ i, c i • b i : Λ) : _ → k) := by

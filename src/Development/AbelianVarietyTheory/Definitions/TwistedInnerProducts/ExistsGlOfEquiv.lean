@@ -364,7 +364,7 @@ instance [L.IsLattice k] : Finite (Module.Dual 𝓀[k] (Red L)) := Module.finite
 theorem finrank_eq [Fintype n] [L.IsLattice k] : Module.finrank 𝓀[k] (Red L) = Fintype.card n := by
   let e : TensorProduct 𝒪[k] 𝓀[k] L ≃ₗ[𝒪[k]] Red L := TensorProduct.quotTensorEquivQuotSMul L (maximalIdeal 𝒪[k])
   let e' : TensorProduct 𝒪[k] 𝓀[k] L ≃ₗ[𝓀[k]] Red L := e.extendScalarsOfSurjective residue_surjective
-  rw [← e'.finrank_eq, Module.finrank_baseChange, Submodule.IsLattice.finrank_of_pi k L]
+  rw [← e'.finrank_eq, Module.finrank_baseChange, ((Submodule.IsFullLattice.finrank_eq k L).trans (Module.finrank_fintype_fun_eq_card k))]
 
 theorem card_eq [Fintype n] [L.IsLattice k] : Nat.card (Red L) = SplitWeil.resCard k ^ Fintype.card n := by
   rw [Module.natCard_eq_pow_finrank (K := 𝓀[k]), finrank_eq]

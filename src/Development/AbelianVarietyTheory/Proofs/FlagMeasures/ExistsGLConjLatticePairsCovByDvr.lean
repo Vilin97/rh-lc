@@ -103,7 +103,7 @@ theorem exists_conj_of_covBy : ∀ (O K : Type) [CommRing O] [IsDomain O] [IsDis
   have : B'.IsLattice K :=
     ⟨hB', eq_top_iff.2 (hA' ▸ Submodule.span_mono (show (A' : Set (Fin n → K)) ⊆ B' from h'.le))⟩
   have hr : Module.finrank O B = Module.finrank O B' := by
-    rw [Submodule.IsLattice.finrank_of_pi K B, Submodule.IsLattice.finrank_of_pi K B']
+    rw [((Submodule.IsFullLattice.finrank_eq K B).trans (Module.finrank_fintype_fun_eq_card K)), ((Submodule.IsFullLattice.finrank_eq K B').trans (Module.finrank_fintype_fun_eq_card K))]
   obtain ⟨ψ, hψs, hψ⟩ := exists_form_of_covBy A B h
   obtain ⟨ψ', hψs', hψ'⟩ := exists_form_of_covBy A' B' h'
   obtain ⟨e, he⟩ := exists_equiv_comp_eq_of_surjective hr ψ hψs ψ' hψs'

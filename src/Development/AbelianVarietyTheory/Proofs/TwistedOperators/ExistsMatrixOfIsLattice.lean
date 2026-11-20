@@ -33,7 +33,7 @@ theorem exists_matrix_of_isLattice {O K : Type} [CommRing O] [IsDomain O] [IsPri
       ∀ x : Fin n → K, (∀ i, x i ∈ (1 : Submodule O K)) ↔ b *ᵥ x ∈ Λ := by
   haveI : Module.Free O Λ := Submodule.IsLattice.free K Λ
   haveI : Module.Finite O Λ := Module.Finite.iff_fg.2 hΛ.fg
-  let B := Module.finBasisOfFinrankEq O Λ ((Submodule.IsLattice.finrank_of_pi K Λ).trans (Fintype.card_fin n))
+  let B := Module.finBasisOfFinrankEq O Λ ((((Submodule.IsFullLattice.finrank_eq K Λ).trans (Module.finrank_fintype_fun_eq_card K))).trans (Fintype.card_fin n))
   let B' := B.extendOfIsLattice K
   have hB' : ∀ j, B' j = (B j : Fin n → K) := fun j => Module.Basis.extendOfIsLattice_apply K B j
   let b : Matrix (Fin n) (Fin n) K := Matrix.of fun i j => (B j : Fin n → K) i

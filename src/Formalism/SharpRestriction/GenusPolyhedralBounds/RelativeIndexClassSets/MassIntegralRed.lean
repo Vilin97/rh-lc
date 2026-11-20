@@ -67,7 +67,7 @@ theorem mat_eq_one {R : Type*} [CommRing R] {n : Type*} [Fintype n] [DecidableEq
 theorem red_local {R K : Type*} [CommRing R] [IsDomain R] [IsPrincipalIdealRing R] [IsLocalRing R]
     [Field K] [Algebra R K] [IsFractionRing R K] (k g : ℕ) (hg : g.Prime)
     (φ : R →+* ZMod g) (hφ : ∀ x, φ x ≠ 0 → IsUnit x)
-    (L : Submodule R (Fin k → K)) [Submodule.IsLattice K L]
+    (L : Submodule R (Fin k → K)) [Submodule.IsFullLattice K L]
     (G : Subgroup ((Fin k → K) ≃ₗ[K] (Fin k → K)))
     (hG : ∀ a ∈ G, ∀ x ∈ L, a x ∈ L) :
     ∃ ρ : G →* GL (Fin k) (ZMod g), ∀ a : G, IsOfFinOrder a →
@@ -79,7 +79,7 @@ theorem red_local {R K : Type*} [CommRing R] [IsDomain R] [IsPrincipalIdealRing 
       map_one' := by ext x; rfl
       map_mul' := fun a b => by ext x; rfl }
   have hfin : Module.finrank R L = k := by
-    rw [Submodule.IsLattice.finrank_of_pi K L, Fintype.card_fin]
+    rw [((Submodule.IsFullLattice.finrank_eq K L).trans (Module.finrank_fintype_fun_eq_card K)), Fintype.card_fin]
   let b : Module.Basis (Fin k) R L := Module.finBasisOfFinrankEq R L hfin
   let T : G →* Matrix (Fin k) (Fin k) R :=
     ((LinearMap.toMatrixAlgEquiv b : Module.End R L ≃ₐ[R] Matrix (Fin k) (Fin k) R) :

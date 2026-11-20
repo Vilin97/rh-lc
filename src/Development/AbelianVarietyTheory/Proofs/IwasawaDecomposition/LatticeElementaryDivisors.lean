@@ -24,7 +24,7 @@ theorem exists_frame [IsDomain R] [IsPrincipalIdealRing R] [IsFractionRing R K]
   have := Submodule.IsLattice.finite K Λ
   have := Submodule.IsLattice.free K Λ
   have hr : Module.finrank R Λ = n := by
-    rw [Submodule.IsLattice.finrank_of_pi K Λ, Fintype.card_fin]
+    rw [((Submodule.IsFullLattice.finrank_eq K Λ).trans (Module.finrank_fintype_fun_eq_card K)), Fintype.card_fin]
   let b : Module.Basis (Fin n) R Λ := Module.finBasisOfFinrankEq R Λ hr
   have key : ∀ z : Fin n → R,
       ((Pi.basisFun K (Fin n)).toMatrix (b.extendOfIsFullLattice K)).mulVec

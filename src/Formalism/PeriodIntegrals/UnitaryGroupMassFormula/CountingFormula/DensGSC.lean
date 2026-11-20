@@ -14,7 +14,7 @@ theorem latBasis_exists (F : Type) [Field F] [ValuativeRel F] [TopologicalSpace 
       ∀ v, v ∈ S ↔ ∀ k, b.repr v k ∈ 𝒪[F] := by
   have : S.IsLattice F := ⟨hfg, hsp⟩
   have hr : Module.finrank 𝒪[F] S = n := by
-    simpa using Submodule.IsLattice.finrank_of_pi F S
+    simpa using ((Submodule.IsFullLattice.finrank_eq F S).trans (Module.finrank_fintype_fun_eq_card F))
   let b0 : Module.Basis (Fin n) 𝒪[F] S := Module.finBasisOfFinrankEq 𝒪[F] S hr
   let b := b0.extendOfIsLattice F
   have hb : ∀ k, b k = (b0 k : Fin n → F) := fun k => by simp [b]

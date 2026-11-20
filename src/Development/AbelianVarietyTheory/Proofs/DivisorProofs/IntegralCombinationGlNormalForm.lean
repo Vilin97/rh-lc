@@ -17,8 +17,8 @@ def rowLat {n d : ℕ} (X : Matrix (Fin n) (Fin d) k) (c : k) : Submodule 𝒪[k
   Submodule.span 𝒪[k] (Set.range (gens X c))
 
 theorem rowLat_isLattice {n d : ℕ} (X : Matrix (Fin n) (Fin d) k) (c : k) (hc : c ≠ 0) :
-    (rowLat X c).IsLattice k where
-  fg := Submodule.fg_span (Set.finite_range _)
+    (rowLat X c).IsFullLattice k where
+  toIsLattice := Submodule.IsLattice.of_fg k (Submodule.fg_span (Set.finite_range _))
   span_eq_top := by
     rw [eq_top_iff]
     rw [← (Pi.basisFun k (Fin d)).span_eq, Submodule.span_le]
@@ -52,7 +52,7 @@ theorem exists_iff_rows {n d : ℕ} (X : Matrix (Fin n) (Fin d) k) (c : k) (Y : 
     rw [← hf i, sum_gens]
     simp [Matrix.mul_apply]
 
-theorem mem_iff_repr {d : ℕ} (L : Submodule 𝒪[k] (Fin d → k)) [L.IsLattice k]
+theorem mem_iff_repr {d : ℕ} (L : Submodule 𝒪[k] (Fin d → k)) [L.IsFullLattice k]
     (b : Module.Basis (Fin d) 𝒪[k] L) (y : Fin d → k) :
     y ∈ L ↔ ∀ j, (b.extendOfIsLattice k).repr y j ∈ 𝒪[k] := by
   set bK := b.extendOfIsLattice k
@@ -93,7 +93,8 @@ theorem exists_gl_integral_iff : ∀ (k : Type) [Field k] [ValuativeRel k] [Topo
   haveI := rowLat_isLattice X c hc
   haveI : Module.Free 𝒪[k] (rowLat X c) := Submodule.IsLattice.free k _
   have hr : Module.finrank 𝒪[k] (rowLat X c) = d := by
-    rw [Submodule.IsLattice.finrank_of_pi k (rowLat X c), Fintype.card_fin]
+    rw [((Submodule.IsFullLattice.finrank_eq k (rowLat X c)).trans (Module.finrank_fintype_fun_eq_card k)), Fintype.card_fin]
+  have := Submodule.IsLattice.finite k (rowLat X c)
   let b := Module.finBasisOfFinrankEq 𝒪[k] (rowLat X c) hr
   let bK := b.extendOfIsLattice k
   let e := Pi.basisFun k (Fin d)

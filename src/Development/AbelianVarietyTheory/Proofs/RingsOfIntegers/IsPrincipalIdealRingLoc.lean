@@ -16,14 +16,14 @@ theorem exists_basis_up_to {O A E : Type} [CommRing O] [CommRing A] [IsDomain A]
       ∀ w ∈ L, (s : O) • w ∈ Submodule.span O (Set.range b) := by
   classical
   set M : Submodule A (Fin n → E) := Submodule.span A (L : Set (Fin n → E)) with hM
-  have : Submodule.IsLattice E M :=
-    { fg := by
+  have : Submodule.IsFullLattice E M :=
+    { toIsLattice := Submodule.IsLattice.of_fg E <| by
         obtain ⟨s, hs⟩ := hfg
         refine ⟨s, ?_⟩
         rw [hM, ← hs, Submodule.span_span_of_tower]
       span_eq_top := by rw [hM, Submodule.span_span_of_tower, hsp] }
   have hrk : Module.finrank A M = n := by
-    simpa using Submodule.IsLattice.finrank_of_pi E M
+    simpa using ((Submodule.IsFullLattice.finrank_eq E M).trans (Module.finrank_fintype_fun_eq_card E))
   let c : Basis (Fin n) A M := Module.finBasisOfFinrankEq A M hrk
   have hc : ∀ i, ∃ t : S, (t : O) • (c i : Fin n → E) ∈ L := fun i => by
     obtain ⟨t, ht⟩ := multiple_mem_span_of_mem_localization_span S A (L : Set (Fin n → E)) _ (c i).2

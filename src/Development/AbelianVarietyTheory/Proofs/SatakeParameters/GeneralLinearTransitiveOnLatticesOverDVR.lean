@@ -12,7 +12,7 @@ theorem gl_transitive_lattices : ∀ (O K : Type) [CommRing O] [IsDomain O] [IsD
   haveI : Module.Free O L.1 := Submodule.IsLattice.free K L.1
   haveI : Module.Finite O L.1 := Module.Finite.iff_fg.2 L.2.fg
   have hr : Module.finrank O L.1 = r := by
-    simpa using Submodule.IsLattice.finrank_of_pi K L.1
+    simpa using ((Submodule.IsFullLattice.finrank_eq K L.1).trans (Module.finrank_fintype_fun_eq_card K))
   let b : Module.Basis (Fin r) O L.1 := Module.finBasisOfFinrankEq O L.1 hr
   let c : Module.Basis (Fin r) K (Fin r → K) := b.extendOfIsLattice K
   have hc : ∀ i, c i = (b i : Fin r → K) := fun i => Module.Basis.extendOfIsLattice_apply K b i

@@ -23,7 +23,7 @@ theorem exists_gl_of_lattice (O : Type) [CommRing O] [IsDomain O] [IsPrincipalId
   have := Submodule.IsLattice.finite K Λ
   have := Submodule.IsLattice.free K Λ
   have hr : Module.finrank O Λ = n := by
-    rw [Submodule.IsLattice.finrank_of_pi K Λ, Fintype.card_fin]
+    rw [((Submodule.IsFullLattice.finrank_eq K Λ).trans (Module.finrank_fintype_fun_eq_card K)), Fintype.card_fin]
   let b : Module.Basis (Fin n) O Λ := Module.finBasisOfFinrankEq O Λ hr
   let c : Module.Basis (Fin n) K (Fin n → K) := b.extendOfIsFullLattice K
   let s := Pi.basisFun K (Fin n)

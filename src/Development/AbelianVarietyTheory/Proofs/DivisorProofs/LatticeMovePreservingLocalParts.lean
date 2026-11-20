@@ -102,7 +102,7 @@ theorem exists_basis {R : Type} [CommRing R] [IsDedekindDomain R] (K : Type) [Fi
   haveI : Module.Free A M := Submodule.IsLattice.free K M
   haveI : Module.Finite A M := Module.Finite.iff_fg.2 hM.fg
   have hrk : Module.finrank A M = n := by
-    simpa using Submodule.IsLattice.finrank_of_pi K M
+    simpa using ((Submodule.IsFullLattice.finrank_eq K M).trans (Module.finrank_fintype_fun_eq_card K))
   let b : Module.Basis (Fin n) A M := Module.finBasisOfFinrankEq A M hrk
   have hb : ∀ i, ∃ s ∈ awayFrom SB, s • (b i : Fin n → K) ∈ N := by
     intro i

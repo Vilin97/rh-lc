@@ -10,7 +10,7 @@ variable (O K : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Fie
 
 def Lat (O K : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field K] [Algebra O K]
     [IsFractionRing O K] (r : ℕ) : Type :=
-  {L : Submodule O (Fin r → K) // L.IsLattice K}
+  {L : Submodule O (Fin r → K) // L.IsFullLattice K}
 
 def qRes [Finite (IsLocalRing.ResidueField O)] : ℕ := Nat.card (IsLocalRing.ResidueField O)
 
@@ -18,7 +18,7 @@ variable [IsFractionRing O K] (r : ℕ)
 
 def std : Lat O K r :=
   ⟨Submodule.span O (Set.range (Pi.basisFun K (Fin r))),
-    { fg := Submodule.fg_span (Set.finite_range _)
+    { toIsLattice := Submodule.IsLattice.of_fg K (Submodule.fg_span (Set.finite_range _))
       span_eq_top := by
         rw [Submodule.span_span_of_tower]; exact (Pi.basisFun K (Fin r)).span_eq }⟩
 
@@ -68,8 +68,8 @@ theorem relIndex_glMap (g : GL (Fin r) K) (M L : Submodule O (Fin r → K)) :
   exact AddSubgroup.relIndex_map_map_of_injective (f :=
     (Matrix.toLin' (g : Matrix (Fin r) (Fin r) K)).toAddMonoidHom) M.toAddSubgroup L.toAddSubgroup hinj
 
-theorem glMap_isLattice (g : GL (Fin r) K) (L : Lat O K r) : (glMap g L.1).IsLattice K where
-  fg := L.2.fg.map _
+theorem glMap_isLattice (g : GL (Fin r) K) (L : Lat O K r) : (glMap g L.1).IsFullLattice K where
+  toIsLattice := Submodule.IsLattice.of_fg K (L.2.fg.map _)
   span_eq_top := by
     have : (glMap g L.1 : Set (Fin r → K))
         = Matrix.toLin' (g : Matrix (Fin r) (Fin r) K) '' (L.1 : Set (Fin r → K)) := rfl
@@ -91,7 +91,7 @@ theorem smul_def (g : GL (Fin r) K) (L : Lat O K r) : g • L = glLat g L := rfl
 
 def maxMul (L : Lat O K r) : Lat O K r :=
   ⟨IsLocalRing.maximalIdeal O • L.1,
-    { fg := Submodule.FG.smul (IsNoetherian.noetherian _) L.2.fg
+    { toIsLattice := Submodule.IsLattice.of_fg K (Submodule.FG.smul (IsNoetherian.noetherian _) L.2.fg)
       span_eq_top := by
         obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible O
         have h0 : algebraMap O K ϖ ≠ 0 := by
@@ -148,6 +148,7 @@ def subElem (k : ℕ) (L : Lat O K r) : Set (Lat O K r) :=
 theorem subIdx_finite (n : ℕ) (L : Lat O K r) :
     (subIdx n L).Finite := by
   haveI := L.2
+  have := Submodule.IsLattice.finite K L.1
   have hq : qRes O ^ n ≠ 0 := (pow_pos (lt_of_lt_of_le two_pos two_le_qRes) _).ne'
   set I := IsLocalRing.maximalIdeal O ^ (qRes O ^ n)
   haveI : Finite (O ⧸ IsLocalRing.maximalIdeal O) := ‹Finite (IsLocalRing.ResidueField O)›
@@ -199,6 +200,7 @@ theorem relIndex_maxMul (L : Lat O K r) :
     (maxMul L).1.toAddSubgroup.relIndex L.1.toAddSubgroup = qRes O ^ r := by
   haveI := L.2
   haveI : Module.Free O L.1 := Submodule.IsLattice.free K L.1
+  have := Submodule.IsLattice.finite K L.1
   have hc : (IsLocalRing.maximalIdeal O • L.1).comap L.1.subtype
       = IsLocalRing.maximalIdeal O • (⊤ : Submodule O L.1) := by
     apply Submodule.map_injective_of_injective L.1.injective_subtype
@@ -210,7 +212,7 @@ theorem relIndex_maxMul (L : Lat O K r) :
     (TensorProduct.quotTensorEquivQuotSMul L.1 (IsLocalRing.maximalIdeal O)).toEquiv]
   change Nat.card (IsLocalRing.ResidueField O ⊗[O] L.1) = _
   rw [Module.natCard_eq_pow_finrank (K := IsLocalRing.ResidueField O), Module.finrank_baseChange,
-    Submodule.IsLattice.finrank_of_pi K L.1, Fintype.card_fin]
+    ((Submodule.IsFullLattice.finrank_eq K L.1).trans (Module.finrank_fintype_fun_eq_card K)), Fintype.card_fin]
   rfl
 
 theorem subElem_top (L : Lat O K r) :

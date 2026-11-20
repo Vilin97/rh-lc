@@ -55,7 +55,7 @@ theorem exists_basis_matrix_of_integral_preimage
   have := Submodule.IsLattice.finite k L
   have := Submodule.IsLattice.free k L
   have hr : Module.finrank O L = m := by
-    simpa using Submodule.IsLattice.finrank_of_pi k L
+    simpa using ((Submodule.IsFullLattice.finrank_eq k L).trans (Module.finrank_fintype_fun_eq_card k))
   let b : Module.Basis (Fin m) O L := Module.finBasisOfFinrankEq O L hr
   let M : Matrix (Fin m) (Fin m) k := Matrix.of fun i => (b i : Fin m → k)
   have hv : ∀ x : Fin m → O, Matrix.vecMul (fun i => algebraMap O k (x i)) M

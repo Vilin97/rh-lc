@@ -123,7 +123,7 @@ theorem exists_frame : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topol
       (∀ i, y i ∈ 𝒪[k]) ↔ (fun i => q.sec ((F.β *ᵥ y) i)) ∈ GlobalTheory.FinPl.latV S L (· = q.v) := by
   intro D k _ _ _ _ q S L Y _ _ _ hL hY
   haveI hΛ : (latW q L).IsLattice k := latW_isLattice q L hL
-  let b := (Module.finBasisOfFinrankEq 𝒪[k] (latW q L) (Submodule.IsLattice.finrank_of_pi k (latW q L))).reindex
+  let b := (Module.finBasisOfFinrankEq 𝒪[k] (latW q L) (((Submodule.IsFullLattice.finrank_eq k (latW q L)).trans (Module.finrank_fintype_fun_eq_card k)))).reindex
     ((finCongr (Fintype.card_fin _)).trans (Fintype.equivFinOfCardEq hY).symm)
   let b' := b.extendOfIsLattice k
   have hkey : ∀ c : Y → 𝒪[k], b'.equivFun.symm (fun i => (c i : k)) = ((∑ i, c i • b i : latW q L) : _ → k) := by

@@ -17,7 +17,7 @@ theorem exists_gl_of_lattices {k : Type} [Field k] [ValuativeRel k] [Topological
   have key : ∀ (Λ : Submodule 𝒪[k] (n → k)), Λ.IsLattice k →
       ∃ e : (Fin (Fintype.card n) → k) ≃ₗ[k] (n → k), ∀ y, e y ∈ Λ ↔ ∀ i, y i ∈ 𝒪[k] := by
     intro Λ hΛ
-    let b := Module.finBasisOfFinrankEq 𝒪[k] Λ (Submodule.IsLattice.finrank_of_pi k Λ)
+    let b := Module.finBasisOfFinrankEq 𝒪[k] Λ (((Submodule.IsFullLattice.finrank_eq k Λ).trans (Module.finrank_fintype_fun_eq_card k)))
     let b' := b.extendOfIsLattice k
     have hkey : ∀ c : Fin (Fintype.card n) → 𝒪[k],
         b'.equivFun.symm (fun i => (c i : k)) = ((∑ i, c i • b i : Λ) : n → k) := by
