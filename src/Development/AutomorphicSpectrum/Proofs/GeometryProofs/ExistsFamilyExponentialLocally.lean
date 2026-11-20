@@ -541,7 +541,7 @@ theorem exists_famExp_near : ∀ (R : Type) [CommRing R] (G : Over (Sp R)) [GrpO
     refine eventually_all.2 fun j => ?_
     have hc : ContinuousAt (fun b => valAt' (Ψ b 0).left V (f j)) b₀ :=
       ((hs V (f j)).2.differentiableAt
-        ((hs V (f j)).1.mem_nhds ⟨mem_ball_self hε, hV b₀ (mem_ball_self hε) 0 (mem_ball_self hε)⟩)).continuousAt
+        ((hs V (f j)).1.mem_nhds ⟨mem_ball_self hε, hV b₀ (mem_ball_self hε) 0 (by exact Set.mem_preimage.mpr (mem_ball_self hε))⟩)).continuousAt
     have h2 := (Metric.tendsto_nhds.1 hc.tendsto) δ hδ
     filter_upwards [h2] with b hb
     simpa [dist_eq_norm] using hb

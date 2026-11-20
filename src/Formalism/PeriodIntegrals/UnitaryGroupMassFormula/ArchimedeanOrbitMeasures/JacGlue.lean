@@ -104,7 +104,7 @@ theorem splitAsym_good : SplitAsymFor GoodP := by
   set W : ℕ → Set (HmI X) := fun n => eH ⁻¹' ball (eH T0) (ρ n) with hW
   have hWp : ∀ n, ∀ T ∈ W n, T ∈ Ω₂ ∧ IsUnit (a T) ∧ rmulT X (a T) (Y0 X u') ∈ IndI X := by
     intro n T hTW
-    have h1 := (hAS n (show ((0 : EuclideanSpace ℝ ι), eH T) ∈ A n from ⟨mem_ball_self (hρp n), hTW⟩)).2
+    have h1 := (hAS n (show ((0 : EuclideanSpace ℝ ι), eH T) ∈ A n from ⟨by exact Set.mem_preimage.mpr (mem_ball_self (hρp n)), hTW⟩)).2
     simpa [eH.symm_apply_apply] using h1
   have hΨc : ∀ n, ContinuousOn Ψ (A n) := fun n z hz =>
     ((hΨ' z (hAU n hz)).mono (hAU n)).continuousWithinAt

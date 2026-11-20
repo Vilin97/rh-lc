@@ -41,7 +41,7 @@ theorem nonempty_cover : ∀ (n : ℕ) (Y : Type) [TopologicalSpace Y] [T2Space 
   have hUo : ∀ x, IsOpen (U x) := fun x =>
     (A.chart (A.pick x)).continuousOn.isOpen_inter_preimage (A.chart (A.pick x)).open_source
       isOpen_ball
-  have hUx : ∀ x, x ∈ U x := fun x => ⟨A.mem_pick x, mem_ball_self (by linarith [hε0 x])⟩
+  have hUx : ∀ x, x ∈ U x := fun x => ⟨A.mem_pick x, by exact Set.mem_preimage.mpr (mem_ball_self (by linarith [hε0 x]))⟩
   have hUpos : ∀ x y, y ∈ U x → 0 < β x y := by
     rintro x y ⟨hy, hyb⟩
     show 0 < A.chiC _ _ y

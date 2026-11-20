@@ -53,7 +53,7 @@ theorem exists_primitive_of_simplyConnected : ∀ {V : Type} [NormedAddCommGroup
   have h4 : ∀ x, ∃ O f, x ∈ O ∧ P O f := by
     intro x
     obtain ⟨r, hr, -, g, hg⟩ := exists_ball_primitive w hU hw hsymm x x.2
-    refine ⟨Subtype.val ⁻¹' ball (x : V) r, fun y => g y, mem_ball_self hr,
+    refine ⟨Subtype.val ⁻¹' ball (x : V) r, fun y => g y, by exact Set.mem_preimage.mpr (mem_ball_self hr),
       isOpen_ball.preimage continuous_subtype_val, g, fun _ _ => rfl, fun y hy => hg y hy⟩
   have h5 : ∀ O f g, P O f → P O g → IsOpen {y | y ∈ O ∧ f y = g y} := by
     rintro O f g ⟨hO, gf, hfgf, hgf⟩ ⟨-, gg, hggg, hgg⟩

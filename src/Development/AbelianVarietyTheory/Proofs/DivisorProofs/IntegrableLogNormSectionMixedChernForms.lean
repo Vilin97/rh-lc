@@ -61,7 +61,7 @@ theorem exists_integrableOn {k : Type} [CommRing k] {X : Scheme.{0}} [IsIntegral
     push_cast
     ring
   have hm := measurableSet_image c.e hS.measurableSet hSs
-  refine ⟨O, hO.mem_nhds ⟨hy, mem_ball_self hη⟩, LogNormInt.integrableOn_of_chart c.e
+  refine ⟨O, hO.mem_nhds ⟨hy, by exact Set.mem_preimage.mpr (mem_ball_self hη)⟩, LogNormInt.integrableOn_of_chart c.e
     (fun A hA hAs => GlobalTheory.T.mixedChernFormSignedPartMeasure_chart_apply k X p σ D L ε c A hA hAs) hS.measurableSet hSs
     (C := ENNReal.ofReal C) ENNReal.ofReal_ne_top (fun v hv => ENNReal.ofReal_le_ofReal ?_) ?_ ?_⟩
   · have h := hC v (him hv)

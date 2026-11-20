@@ -172,7 +172,7 @@ theorem exists_local_log_of_commutative_law : ∀ (n g : ℕ) (b₀ : Fin n → 
         show DifferentiableOn ℂ ((2 : ℂ) ^ k • GlobalTheory.CompanionTheory.Ar.Flat.LocalLog.iter h k) _
         exact (hit k).const_smul _)
   have hLan : AnalyticAt ℂ L (b₀, 0) :=
-    GlobalTheory.SCV.analyticOnNhd_of_differentiableOn hDopen hLd _ ⟨mem_ball_self hρ, mem_ball_self hρ⟩
+    GlobalTheory.SCV.analyticOnNhd_of_differentiableOn hDopen hLd _ ⟨mem_ball_self hρ, by exact Set.mem_preimage.mpr (mem_ball_self hρ)⟩
   refine ⟨L, hLan, ?_, ?_⟩
   · filter_upwards [ball_mem_nhds b₀ hρ] with b hb
     have hL0 : L (b, 0) = 0 := by

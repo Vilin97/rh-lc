@@ -109,7 +109,7 @@ theorem proof : ChartTaylorCover.Statement := by
   have hVo : ∀ p, IsOpen (V p) := fun p =>
     (A.chart _).continuousOn.isOpen_inter_preimage (A.chart _).open_source isOpen_ball
   obtain ⟨t, ht⟩ := isCompact_univ.elim_finite_subcover V hVo
-    (fun p _ => mem_iUnion.2 ⟨p, hsrc p, mem_ball_self (hρ p)⟩)
+    (fun p _ => mem_iUnion.2 ⟨p, hsrc p, by exact Set.mem_preimage.mpr (mem_ball_self (hρ p))⟩)
   set Mt := ∑ p ∈ t, (|M W₀ p| + |M W₁ p|) with hMt
   have hMt0 : 0 ≤ Mt := Finset.sum_nonneg fun p _ => by positivity
   refine ⟨(∑ p ∈ t, 1 / ρ p + 1)⁻¹, inv_sum_pos t ρ hρ, Mt, (∑ p ∈ t, 1 / c p + 1)⁻¹,

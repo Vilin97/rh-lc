@@ -109,7 +109,7 @@ theorem exists_integrableOn [SecondCountableTopology (CxPts p σ)] (hσ : Functi
     have := (hηs (him (mem_image_of_mem _ hz))).1.2
     rwa [mem_preimage, c.e.left_inv (hSs hz)] at this
   have hm := measurableSet_image c.e hS.measurableSet hSs
-  refine ⟨O, hO.mem_nhds ⟨hy, mem_ball_self hη⟩, integrableOn_of_chart c.e
+  refine ⟨O, hO.mem_nhds ⟨hy, by exact Set.mem_preimage.mpr (mem_ball_self hη)⟩, integrableOn_of_chart c.e
     (fun A hA hAs => Weight.chernPart_apply hψ ε c hA hAs) hS.measurableSet hSs
     (C := ENNReal.ofReal C) ENNReal.ofReal_ne_top (fun v hv => ENNReal.ofReal_le_ofReal ?_) ?_ ?_⟩
   · have h := hC v (him hv)

@@ -227,7 +227,7 @@ theorem local_ext {Z : Set X} (hZ : IsClosed Z) {r : X → ℝ} {L : LocPot X} {
       linarith)
   have hV : ∀ y ∈ ψ.source ∩ ψ ⁻¹' ball (ψ x) ρ, ψ y ∈ ball (ψ x) (min R₀ 1) := fun y hy =>
     ball_subset_ball hρR hy.2
-  refine ⟨ψ.source ∩ ψ ⁻¹' ball (ψ x) ρ, ψ.isOpen_inter_preimage isOpen_ball, ⟨hx, mem_ball_self hρ⟩,
+  refine ⟨ψ.source ∩ ψ ⁻¹' ball (ψ x) ρ, ψ.isOpen_inter_preimage isOpen_ball, ⟨hx, by exact Set.mem_preimage.mpr (mem_ball_self hρ)⟩,
     fun y => g (ψ y) - Θ.φ x y, fun j => ?_, fun y hy hyZ => ?_⟩
   · refine ContDiffOn.sub (f := g ∘ (ψ ∘ (A.chart j).symm)) (g := Θ.φ x ∘ (A.chart j).symm) ?_ ?_
     · refine hg.comp (fun z hz => ?_) fun z hz => hz.2.2

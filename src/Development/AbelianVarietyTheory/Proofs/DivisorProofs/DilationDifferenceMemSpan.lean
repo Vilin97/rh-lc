@@ -72,7 +72,7 @@ theorem exists_cover (s t : kˣ) (hst : valuation k (s : k) ≤ valuation k (t :
   classical
   obtain ⟨T, hT⟩ := (isCompact_ball (0 : k) t).elim_finite_subcover
     (fun i : ball (0 : k) t => ball (i : k) s) (fun i => isOpen_ball _ _)
-    (fun x hx => Set.mem_iUnion.2 ⟨⟨x, hx⟩, mem_ball_self x s⟩)
+    (fun x hx => Set.mem_iUnion.2 ⟨⟨x, hx⟩, by exact Set.mem_preimage.mpr (mem_ball_self x) s⟩)
   refine ⟨T.image (fun i : ball (0 : k) t => ball (i : k) s), ?_, ?_⟩
   · intro B hB
     obtain ⟨i, -, rfl⟩ := Finset.mem_image.1 hB

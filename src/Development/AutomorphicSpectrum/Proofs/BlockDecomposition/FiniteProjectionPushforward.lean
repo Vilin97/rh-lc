@@ -125,7 +125,7 @@ theorem cover_of_radii (hCount : UnbranchedProperCountConstant.Statement) (σ : 
       exact ⟨O, V, g, hO, hV, hxV, hg.continuousOn, hAg, hYV⟩)
   refine ⟨N, ?_⟩
   unfold IsCentredDiscCover
-  refine ⟨⟨hw, mem_ball_self hr, mem_ball_self hρ⟩, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  refine ⟨⟨hw, mem_ball_self hr, by exact Set.mem_preimage.mpr (mem_ball_self hρ)⟩, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · have hnh := Filter.inter_mem hsurj (ball_mem_nhds (A w) hρ)
     have hnb : (𝓝[≠] (A w)).NeBot := Module.punctured_nhds_neBot ℂ (Fin 1 → ℂ) (A w)
     obtain ⟨y, ⟨⟨x, hx, hxy⟩, hyD⟩, hyne⟩ :=

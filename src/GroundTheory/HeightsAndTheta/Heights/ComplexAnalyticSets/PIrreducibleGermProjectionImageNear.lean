@@ -52,7 +52,7 @@ theorem IrreducibleGermProjectionImageNear.proof (hdim : IrreducibleGermRegularD
   obtain ⟨V, hV, hVo, hxV⟩ := _root_.mem_nhds_iff.1 hvan
   set V1 := V ∩ (interior (N1 ∩ N2) ∩ N3) ∩ A ⁻¹' ball (A x) ε with hV1
   have hV1o : IsOpen V1 := (hVo.inter hBo).inter (isOpen_ball.preimage A.continuous)
-  have hxV1 : x ∈ V1 := ⟨⟨hxV, hxB⟩, mem_ball_self hε⟩
+  have hxV1 : x ∈ V1 := ⟨⟨hxV, hxB⟩, by exact Set.mem_preimage.mpr (mem_ball_self hε)⟩
   have hcl := hdense V1 hV1o (fun z hz => hz.1.2.2) ⟨hxX, hxV1⟩
   obtain ⟨r, hr⟩ : (regLocus (X ∩ V1)).Nonempty := by
     by_contra hemp

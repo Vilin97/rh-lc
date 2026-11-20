@@ -122,7 +122,7 @@ theorem WeierstrassPolynomialDivision.proof (hC : ParametricCircleIntegralAnalyt
     have h2 := mem_ball_zero_iff.1 hx.2
     rw [sub_eq_zero.1 h] at h1
     linarith
-  have h0q : (0 : Option σ → ℂ) ∈ Uq := ⟨mem_ball_self hδ, mem_ball_self hr⟩
+  have h0q : (0 : Option σ → ℂ) ∈ Uq := ⟨by exact Set.mem_preimage.mpr (mem_ball_self hδ), by exact Set.mem_preimage.mpr (mem_ball_self hr)⟩
   have hqan := hC (Option σ) Φq Oq Uq 0 r hr.le hOq hUq hΦq hmemq
 
   let Φa : Fin d → (σ → ℂ) × ℂ → ℂ := fun j p => G p * monicDifferenceCoeff (fun k => c k p.1) p.2 j / F p

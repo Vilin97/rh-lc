@@ -33,7 +33,7 @@ theorem shellBound (n : ℕ) (M : Type u) [TopologicalSpace M] [T2Space M] [Seco
   set ρ1 := min ρ δ0 with hρ1
   have hρ1p : 0 < ρ1 := lt_min hρ hδ0
   refine ⟨e.source ∩ e ⁻¹' ball (e p) ρ1, e.isOpen_inter_preimage isOpen_ball,
-    ⟨hpe, mem_ball_self hρ1p⟩, ?_⟩
+    ⟨hpe, by exact Set.mem_preimage.mpr (mem_ball_self hρ1p)⟩, ?_⟩
   intro τ hτ
   set θ := min (τ / 10) (1 / 4) with hθdef
   have hθ : 0 < θ := lt_min (by positivity) (by norm_num)
