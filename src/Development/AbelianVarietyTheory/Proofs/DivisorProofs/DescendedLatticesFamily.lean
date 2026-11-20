@@ -67,8 +67,6 @@ theorem comap_eq_span_res : ∀ (X X' : Scheme.{0}) [IsIntegral X] (f : X' ⟶ X
       have := hcx fun i => (x i : U.Bp)
       rw [mem_descMod]
       convert this using 1
-      funext i
-      simp
     let ψ : ringOver K' U →+* U'.Bp := (AffOp.res hle).comp (ringOver K' U).subtype
     have hψ : ∀ x, ψ x ∈ ringOver K' U' := fun x => x.2
     have hc' : ψ c ≠ 0 := by

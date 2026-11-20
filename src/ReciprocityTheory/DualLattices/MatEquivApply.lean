@@ -185,8 +185,6 @@ theorem dualLen : DualLenStatement := by
       refine ⟨t ∘ e.symm, ?_⟩
       rw [hmv]
       congr 1
-      funext j
-      simp
   have hz : zSub A' c = zSub A c := by
     ext y
     show (∃ z, A'ᵀ *ᵥ y = c • z) ↔ (∃ z, Aᵀ *ᵥ y = c • z)

@@ -223,8 +223,6 @@ theorem main : ∀ (D : D7) (m n : ℕ) (ε : D.what₂.Tau → Fin m → Bool) 
   · refine isHolFam_of fockL_aniso ?_ (fun a b ha' hb => ?_) (fun a ha' x y => ?_) (fun a z hz da x y => ?_)
     · rw [← h1, factK]
       congr 1
-      funext τ
-      simp
     · rw [factK, factK, factK, ← hm _ _ _ _ (fun τ => invT_mem_KC (ha' τ)) (fun τ => invT_mem_KC (hb τ)) hU hU,
         mul_one]
       congr 1

@@ -186,8 +186,6 @@ theorem Emb.veryAmpleBy {f : X ⟶ Sp K} {H : LB X} {σ : Type} {s : σ → LB.S
   refine ⟨MvPolynomial.rename e.symm p, ?_⟩
   rw [MvPolynomial.coe_eval₂Hom, MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_rename]
   congr 1
-  funext a
-  simp
 
 variable {J : Type} {U : J → X.Opens}
 

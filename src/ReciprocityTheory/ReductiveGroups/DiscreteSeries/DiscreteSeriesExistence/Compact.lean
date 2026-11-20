@@ -141,8 +141,6 @@ theorem cmpt_dS {X : Matrix (Fin n) (Fin n) ℂ} (hX : inK ε X) (u : T.V) :
   unfold dS
   rw [← hD2.deriv]
   congr 1
-  funext t
-  simp only [HW.torepSig, dif_pos (exp_mem_Kset (hK t))]
   try rfl
 
 theorem cmpt_glRep (he : ∀ a b, ε a = ε b) : IsGlRep (HW.kunits T) :=

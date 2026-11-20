@@ -67,8 +67,6 @@ theorem dLine_inlH (G : WO A S → WO S A' → ℂ) (M : ℝ →+ WO A S) :
   funext x
   simp only [dLine, join_apply]
   congr 1
-  funext t
-  simp only [heisO, AddMonoidHom.comp_apply, symplOH_split d, map_add, fst_inl, snd_inl,
     GlobalTheory.WeilVacMove.symplOH_zero_right, add_zero, join_apply]
 
 theorem dLine_inrH (G : WO A S → WO S A' → ℂ) (M : ℝ →+ WO S A') :
@@ -76,8 +74,6 @@ theorem dLine_inrH (G : WO A S → WO S A' → ℂ) (M : ℝ →+ WO S A') :
   funext x
   simp only [dLine, join_apply]
   congr 1
-  funext t
-  simp only [heisO, AddMonoidHom.comp_apply, symplOH_split d, map_add, fst_inr, snd_inr,
     GlobalTheory.WeilVacMove.symplOH_zero_right, zero_add, add_zero, join_apply]
 
 end GlobalTheory.BiJoinDeriv

@@ -570,8 +570,6 @@ theorem absSpec {A O Ω : Type} [CommRing A] [IsCNL A] [CommRing O] [IsDomain O]
     have hw := fnIndep O Ω (Ga × Gp) κ hinj m _ hv
     refine LinearIndependent.of_comp (X.ctrl m W) ?_
     convert hw using 1
-    funext i
-    simp only [Function.comp_apply, (hspec K c le_rfl _ (b i).2).2]
     rw [← hmap2]
     simp only [hj]
     rfl

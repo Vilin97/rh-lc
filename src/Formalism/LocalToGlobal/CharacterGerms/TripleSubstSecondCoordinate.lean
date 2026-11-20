@@ -154,8 +154,6 @@ theorem subst_pair_substitution_comm (f : PS C 2 dd) :
       MvPowerSeries.subst (P2 (fun i => MvPowerSeries.subst A (u i)) (fun i => MvPowerSeries.subst A (v i))) f := by
   rw [MvPowerSeries.subst_comp_subst_apply (hasSubst_of_Z0 (constantCoeff_P2_eq_zero hu hv)) (hasSubst_of_Z0 hA)]
   congr 1
-  funext q
-  simp only [P2]
   split_ifs <;> rfl
 
 include hA hu hv in

@@ -167,8 +167,6 @@ theorem UpperTheory.V.Fr.pr_correct :
       ((1 : Matrix (Fin n) (Fin n) C') + (-Z).map μ).map (Ideal.Quotient.mk (maximalIdeal C' ^ N)))
     have hM := (IsLocallyConstant.comp₂ hA hB (· * ·)).comp (fun M => M i j)
     convert hM using 1
-    funext s
-    simp only [Function.comp_apply]
     rw [← Matrix.map_mul, Matrix.map_apply]
     congr 1
     show (R' s).mat i j = _

@@ -111,8 +111,6 @@ theorem dsig_lin (hK : PI.KFinSmooth) (hR : R.IsDG ε mu) {X : Mx k r} (hX : InL
   have h1 := ((h v hv).2.const_smul a).add (h w hw).2
   refine HasDerivAt.deriv ?_
   convert h1 using 1
-  funext t
-  simp
 
 theorem dsigW_lin (hK : PI.KFinSmooth) (hR : R.IsDG ε mu) (W : List (Mx k r))
     (hW : ∀ X ∈ W, InLieHpk k r X) (a : ℂ) {v w : R.H} (hv : v ∈ R.sm) (hw : w ∈ R.sm) :

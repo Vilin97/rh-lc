@@ -146,8 +146,6 @@ theorem summand_map' (e : G ≃ₜ* H) (θ : G →* G) (θ' : H →* H) (K : Sub
   · let ψ : K ≃* (K.map (e : G →* H)) := e.toMulEquiv.subgroupMap K
     rw [← GlobalTheory.BCT.OrbProd.avg_comp_equiv ψ]
     congr 1
-    funext k
-    simp only [Function.comp_apply]
     rw [← hf]
     congr 1
     show (e y * e k.1)⁻¹ * e δ * θ' (e y * e k.1) = _

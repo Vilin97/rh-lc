@@ -92,8 +92,6 @@ theorem fin (T : Finset ι) :
         ((∏ w ∈ T, ∑' l, ‖F w l‖) * ∑' l, ‖F a l‖) := by
       have := (e.hasSum_iff (f := fun p : {l : ι →₀ L // l.support ⊆ T} × L => ‖Φ F p.1.1‖ * ‖F a p.2‖)).2 hH'
       convert this using 1
-      funext l
-      simp only [Function.comp_apply]
       rw [Φ_split F h0 a T ha l, norm_mul]
     rw [Finset.prod_insert ha, Finset.prod_insert ha, mul_comm (∑' l, F a l), mul_comm (∑' l, ‖F a l‖)]
     exact ⟨k2.summable, k1, k2⟩

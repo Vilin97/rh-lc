@@ -105,8 +105,6 @@ theorem length_chart_map (e : ∀ k, ι k ≃ Fin (n k + 1)) (V : Ideal (MRing �
       (V ⊔ Ideal.span (Set.range fun k => (X ⟨k, c k⟩ : MRing ι) - 1)).map (ren e) := by
     rw [Ideal.map_sup, Ideal.map_span, ← Set.range_comp]
     congr 3
-    funext k
-    simp only [Function.comp_apply, map_sub, map_one, ren_X]
   rw [h]
   exact length_int_quotient_map (ren e) _
 

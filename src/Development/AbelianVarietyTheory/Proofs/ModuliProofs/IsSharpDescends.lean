@@ -85,8 +85,6 @@ theorem prod_descend {S S₁ : Scheme.{0}} {i : S ⟶ S₁} {A C : Over S} {A₁
   have E : preHom U z₁ = preHom U (List.ofFn fun v => pr₁ v ^ e v).prod := by
     rw [key z z₁ hz, h, map_list_prod, map_list_prod, List.map_ofFn, List.map_ofFn]
     congr 2
-    funext v
-    simp only [Function.comp, map_zpow, key _ _ (hc v)]
   exact Over.OverMorphism.ext ((cancel_epi ψ).1 (congrArg (fun w => w.left) E))
 
 theorem iso_pull_cancel {X X₁ X₀ : Scheme.{0}} {L : LB X} {L₁ : LB X₁} {L₀ : LB X₀} (hL : L.IsLB) (hL₁ : L₁.IsLB)

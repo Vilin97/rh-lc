@@ -117,8 +117,6 @@ lemma dτ_of_wt {μ : Fin n → ℝ} {v : H}
     intro t
     rw [toMK_onepCurve, ← Matrix.diagonal_smul, torep_exp_diag]
     congr 1
-    funext b
-    simp only [d, Pi.smul_apply, smul_eq_mul]
     split_ifs <;> simp
   have hval : ∀ t : ℝ, ((τ (γ t) : unitary (H →L[ℂ] H)) : H →L[ℂ] H) v =
       Complex.exp (((μ a * t : ℝ) : ℂ) * Complex.I) • v := by

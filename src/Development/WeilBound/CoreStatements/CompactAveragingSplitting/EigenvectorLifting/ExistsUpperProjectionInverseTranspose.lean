@@ -671,8 +671,6 @@ theorem pRam_inv (H : HidaSetting a a' ϖ α β ν) (hν : ¬ IsUnram ν) {Φ : 
   congr 1
   rw [← h3, ← shellSum_smul]
   congr 1
-  funext X
-  simp only [omA, map_one, map_inv, Units.val_one, apow_one, mul_one, Matrix.mul_one, apow_inv, Matrix.mul_assoc,
     neg_div]
 
 theorem pRam'_inv (Ψ : Matrix (Fin a') (Fin (a + a')) k → ℂ) (g : GL (Fin a') k) :

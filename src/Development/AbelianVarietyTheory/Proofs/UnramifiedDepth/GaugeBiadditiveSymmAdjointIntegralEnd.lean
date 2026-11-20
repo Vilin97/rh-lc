@@ -117,8 +117,6 @@ theorem expMulLog_expMulLog (H : RLaw X V) {τ : Type} {a : κ → MvPowerSeries
   show subst (fun x => ∑ y, M x y • subst (endP X A a) (X.lg y)) (X.ex i) =
     subst (fun x => ∑ y, (M * A) x y • subst a (X.lg y)) (X.ex i)
   congr 1
-  funext x
-  simp only [lg_endP H ha, Matrix.mul_apply, Finset.smul_sum, Finset.sum_smul, smul_smul]
   exact Finset.sum_comm
 
 theorem formalAdd_endP (H : RLaw X V) {τ : Type} {a : κ → MvPowerSeries τ C} (ha : ∀ s, constantCoeff (a s) = 0)
@@ -127,8 +125,6 @@ theorem formalAdd_endP (H : RLaw X V) {τ : Type} {a : κ → MvPowerSeries τ C
   show subst (fun x => subst (endP X A a) (X.lg x) + subst (endP X B a) (X.lg x)) (X.ex i) =
     subst (fun x => ∑ y, (A + B) x y • subst a (X.lg y)) (X.ex i)
   congr 1
-  funext x
-  simp only [lg_endP H ha, Matrix.add_apply, add_smul, Finset.sum_add_distrib]
 
 theorem subst_van {σ τ : Type} [Finite σ] (T : Set σ) {a : σ → MvPowerSeries τ C}
     (ha0 : ∀ s, constantCoeff (a s) = 0) (haT : ∀ s ∈ T, a s = 0) {f : MvPowerSeries σ C} (hf : Van T f) :

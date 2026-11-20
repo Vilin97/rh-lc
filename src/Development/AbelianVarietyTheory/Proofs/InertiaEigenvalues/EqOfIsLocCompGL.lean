@@ -388,8 +388,6 @@ theorem indOp_mem_Sm (H : IsTensorOf T Θ) {φ : Sm E N} (hφ : φ ∈ indForms 
   refine contDiffAt_chart_mul ?_
   rw [← chart_rt_fin]
   convert key (rt_mem_indForms hφ hy) m using 1
-  funext z
-  simp only [chart, H.indOp_rt hφ hy]
   simp only [mul_assoc, H.indOp_left hφ hv, e]
   rw [← infGL_comm (Unitary.toUnits k) g]
 

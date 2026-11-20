@@ -105,8 +105,6 @@ theorem image_wordSet {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) (n
   unfold wordSet
   rw [← Set.range_comp]
   congr 1
-  funext w
-  simp only [Function.comp]
   rw [← Formalism.GradedWeylDivisibility.lclosedeq_applyWord_map, Formalism.GradedWeylDivisibility.lclosedeq_hw_map]
 
 theorem dualWeyl_eq (R : Type) [CommRing R] [IsDomain R] (n : ℕ) (ν : Fin n → ℕ) :

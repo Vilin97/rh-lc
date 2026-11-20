@@ -210,8 +210,6 @@ theorem flat_eq_smul (μ : kˣ →* ℂˣ) (Φ : Matrix (n ⊕ Fin c) (n' ⊕ Fi
   funext x
   rw [Pi.smul_apply, smul_eq_mul, flat, flat, ← OpELevi.opE_const_mul]
   congr 1
-  funext y
-  simp only [om, map_one, MonoidHom.one_apply, inv_one, Units.val_one]
   ring
 
 omit [MeasurableSpace k] [BorelSpace k] in

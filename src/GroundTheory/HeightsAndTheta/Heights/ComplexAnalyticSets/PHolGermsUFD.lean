@@ -48,8 +48,6 @@ theorem uniqueFactorizationMonoid_holGerms_option (hN : AnalyticGermsNoetherian.
       Germ (𝓝 (0 : Option σ → ℂ)) ℂ) = ↑(f ∘ A)
     rw [germPull_coe _ _ _ φ f hfφ]
     congr 1
-    funext z
-    simp
   refine (MulEquiv.prime_iff (germAffineEquiv A (0 : Option σ → ℂ))).1 ?_
   rw [hT]
   have hirrA : Irreducible (mkGerm (f ∘ A) hfA) := by

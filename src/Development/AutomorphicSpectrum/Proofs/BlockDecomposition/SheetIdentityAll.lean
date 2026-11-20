@@ -42,8 +42,6 @@ theorem mdisc_update_const {e : ℕ} (G H : Matrix (Fin (e + 1)) (Fin (e + 1)) �
       mdisc (Fin.cons G (fun _ : Fin e => H) : Fin (e + 1) → _) := by
   rw [← mdisc_comp_perm (Fin.cons G (fun _ : Fin e => H) : Fin (e + 1) → _) (Equiv.swap 0 i)]
   congr 1
-  funext k
-  simp only [Function.comp_apply, cons_const_apply', Function.update_apply]
   by_cases hki : k = i
   · subst hki
     simp

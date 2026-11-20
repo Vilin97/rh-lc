@@ -77,8 +77,6 @@ theorem isPsh_of_levi_algChart : ∀ {F : Type} [Field F] [NumberField F] {Y : V
         κ * levi ((M.Om a).φ x ∘ ((M.A a).chart j).symm) ((M.A a).chart j ((I.pt a).symm p)) w := by
     rw [← levi_add_smul 1 hPs hGc w, ← levi_add_smul κ (hPs.add (contDiffAt_const.mul hGc)) hOs w]
     congr 1
-    funext u
-    simp only [Function.comp_apply, one_mul]
     rfl
   have eP : levi ((P a).φ x ∘ ((M.A a).chart j).symm) ((M.A a).chart j ((I.pt a).symm p)) w =
       ∑ i, t i * (Real.pi / 2 * curvMet (m i (I.ε a)) cj p w) := by

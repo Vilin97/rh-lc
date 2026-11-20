@@ -65,8 +65,6 @@ theorem aestronglyMeasurable_mainD {s : ℕ} (hs : s ≠ 0) (β : ℂ) {ε : ℂ
     exact hp.stronglyMeasurable.smul (hbt.comp_measurable hR)
   have := Finset.stronglyMeasurable_sum (Finset.range s) hk
   convert this using 1
-  funext D
-  simp only [Finset.sum_apply]
 
 theorem aestronglyMeasurable_abar {s : ℕ} (hs : s ≠ 0) {ε : ℂ} (hε : ε ≠ 0) {bt : ℂ → H}
     (hbt : StronglyMeasurable bt) : AEStronglyMeasurable (abar s ε bt) volume := by
@@ -79,8 +77,6 @@ theorem aestronglyMeasurable_abar {s : ℕ} (hs : s ≠ 0) {ε : ℂ} (hε : ε 
     exact (hbt.comp_measurable hR).norm
   have := Finset.stronglyMeasurable_sum (Finset.range s) hk
   convert this using 1
-  funext D
-  simp only [Finset.sum_apply]
 
 theorem card_rootSet_le (s : ℕ) (a : ℂ) : (G.rootSet s a).card ≤ s := by
   unfold G.rootSet

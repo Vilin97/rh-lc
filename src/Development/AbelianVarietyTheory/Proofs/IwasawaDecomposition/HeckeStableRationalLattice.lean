@@ -228,8 +228,6 @@ theorem exists_integral_descent {LL : Type} [Field LL] [NumberField LL] (L0 : In
       exact Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
     have h3 := ((Module.Basis.mk h1 h2).baseChange K).linearIndependent
     convert h3 using 1
-    funext k
-    simp
   have hrel : ∀ a k, ∑ t, algebraMap O K (o t) * rd (α (t, a, k)) = 0 := by
     intro a
     refine Fintype.linearIndependent_iff.mp hli _ ?_

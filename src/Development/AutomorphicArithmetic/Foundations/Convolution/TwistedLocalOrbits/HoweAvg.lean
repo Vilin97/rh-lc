@@ -48,8 +48,6 @@ private theorem avg {ρ : Representation ℂ G V} (hρ : IsSmooth ρ) (C : Subgr
     change ∫ x : C, θ x * l (ρ (x : G)⁻¹ (ρ c w)) ∂μ = θ c * ∫ x : C, θ x * l (ρ (x : G)⁻¹ w) ∂μ
     rw [← integral_const_mul, ← integral_mul_left_eq_self _ (⟨c, hc⟩ : C)]
     congr 1
-    funext x
-    simp only [Subgroup.coe_mul]
     rw [hmul c hc x x.2, ← Module.End.mul_apply, ← map_mul, mul_inv_rev, inv_mul_cancel_right, mul_assoc]
   have hT : IsOpen ((Subtype.val : C → G) ⁻¹' S) := hS.preimage continuous_subtype_val
   have hLv : L v = (μ.real ((Subtype.val : C → G) ⁻¹' S) : ℂ) := by

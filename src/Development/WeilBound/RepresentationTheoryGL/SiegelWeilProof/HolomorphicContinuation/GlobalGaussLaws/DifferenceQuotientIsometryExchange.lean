@@ -41,8 +41,6 @@ theorem dL2 : DifferenceQuotientIsometryExchange := by
     intro h
     have h3 := isSch_sub (isSch_smul ((h : ℂ)⁻¹) (isSch_sub (hG (s + h)) (hG s))) hG'
     convert h3 using 1
-    funext u
-    simp only [Pi.sub_apply]
     try ring
   have hTD : ∀ h : ℝ, T (fun u => (G (s + h) u - G s u) / (h : ℂ) - G' u) =
       fun u => (T (G (s + h)) u - T (G s) u) / (h : ℂ) - T G' u := by

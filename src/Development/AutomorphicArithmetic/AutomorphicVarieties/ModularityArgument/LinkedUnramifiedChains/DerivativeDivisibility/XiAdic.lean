@@ -30,8 +30,6 @@ private theorem xi_adic {Γ R S : Type} [TopologicalSpace Γ] [CommRing R] [Comm
     exact Ideal.pow_right_mono h1 N
   have hc := (h N).comp (Ideal.quotientMap (maximalIdeal S ^ N) φ hle)
   convert hc using 1
-  funext g
-  simp only [Function.comp_apply, Ideal.quotientMap_mk]
 
 private theorem xi_key {O A O₁ : Type} [CommRing O] [IsLocalRing O] [CommRing A] [IsLocalRing A]
     [CommRing O₁] [IsLocalRing O₁] [IsNoetherianRing O₁] [IsAdicComplete (maximalIdeal O₁) O₁]

@@ -156,8 +156,6 @@ theorem eval_idFrame_rowAct {R : Type*} [CommRing R] {n : ℕ} (g : Matrix (Fin 
     unfold rowAct
     rw [comp_aeval]
     congr 1
-    funext v
-    simp only [map_sum, map_mul, aeval_C, aeval_X, idFrame, Fin.val_inj,
       mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     rfl
   exact congrArg (fun φ : MvPolynomial (Fin n × Fin n) R →ₐ[R] R => φ F) h

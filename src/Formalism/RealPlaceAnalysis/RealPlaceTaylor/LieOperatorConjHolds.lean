@@ -36,8 +36,6 @@ private lemma Jm_mul_selfRealPlaceTaylor {n : ℕ} (ε : Fin n → Bool) : Jm ε
 private lemma conjTranspose_Jm {n : ℕ} (ε : Fin n → Bool) : (Jm ε)ᴴ = Jm ε := by
   rw [Jm, Matrix.diagonal_conjTranspose]
   congr 1
-  funext a
-  simp only [Pi.star_apply]
   split_ifs <;> simp
 
 private lemma Jm_mul_conjTranspose_smul_mul_Jm {n : ℕ} (ε : Fin n → Bool) (c : ℂ) (Z : Matrix (Fin n) (Fin n) ℂ) :

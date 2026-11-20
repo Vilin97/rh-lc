@@ -34,19 +34,13 @@ theorem unitChoice_of_isArtinianRing_isReduced :
   · intro i
     rw [← map_mul]
     congr 1
-    funext I
-    simp only [E, Pi.mul_apply]
     split_ifs <;> simp
   · intro i j hij
     rw [← map_mul, ← map_zero φ.symm]
     congr 1
-    funext I
-    simp only [E, Pi.mul_apply, Pi.zero_apply]
     split_ifs with h1 h2 <;> simp_all
   · rw [← map_sum, ← map_one φ.symm]
     congr 1
-    funext I
-    simp only [E, Finset.sum_apply, Pi.one_apply]
     rw [Finset.sum_ite_eq]
     simp
   · rw [← isUnit_map_iff φ, map_sum, Pi.isUnit_iff]

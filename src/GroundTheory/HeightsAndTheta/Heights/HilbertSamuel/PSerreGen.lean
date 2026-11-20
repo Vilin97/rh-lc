@@ -49,12 +49,8 @@ theorem generated_nonneg (d : K → ℕ) : KH.GeneratedV S V (fun k => (d k : �
     fun _ => ?_, ?_⟩
   · refine GenTwistGenerated.mk_mem_locPart _ _ 0 (GenTwistGenerated.isMultiHomog_one _ fun _ => rfl) ?_
     convert hpq using 2
-    funext k
-    simp
   · refine GenTwistGenerated.mk_mem_locPart _ _ d hph ?_
     convert h1q using 2
-    funext k
-    simp
   · have e : Ideal.Quotient.mk V p = (⟨p, hpm⟩ : KH.cellMon S I.1) • (1 : MRingOver S ι ⧸ V) :=
       ((Algebra.smul_def p (1 : MRingOver S ι ⧸ V)).trans (mul_one _)).symm
     refine (Fin.sum_univ_one _).trans ?_

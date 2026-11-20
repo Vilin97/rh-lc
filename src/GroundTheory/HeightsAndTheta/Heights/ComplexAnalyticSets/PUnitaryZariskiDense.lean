@@ -42,8 +42,6 @@ theorem conj_diagonal_mem {n : ℕ} {V : Matrix (Fin n) (Fin n) ℂ} (hV : V ∈
     rw [mem_unitaryGroup_iff, star_eq_conjTranspose, diagonal_conjTranspose, diagonal_mul_diagonal,
       ← diagonal_one]
     congr 1
-    funext k
-    simp only [Pi.star_apply, RCLike.star_def, Complex.mul_conj,
       Complex.normSq_eq_norm_sq, hd k]
     norm_num
   exact Submonoid.mul_mem _ (Submonoid.mul_mem _ hV hD) (Unitary.star_mem hV)

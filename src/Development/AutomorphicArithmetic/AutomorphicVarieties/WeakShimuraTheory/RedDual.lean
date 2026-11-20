@@ -98,8 +98,6 @@ theorem UpperTheory.V.Ws.redDual :
     have h2 := (hl.comp fun X : M4 (DualNumber k) => X.map TrivSqZeroExt.fst).comp_continuous continuous_inv
     have h3 := h1.mul h2
     convert h3 using 1
-    funext g
-    simp only [Pi.mul_apply, Function.comp_apply, er]
   · exact rd_sp (i1 g) (er g ▸ rd_gsp (ha _) (hP.mult g))
   · show _ * _ = _ * _ + _ * (_ * _) * _
     rw [map_mul, rd_snd_mul, er, er, mul_inv_rev, map_mul, add_mul, mul_assoc, ← mul_assoc (c.r h), i1, one_mul]

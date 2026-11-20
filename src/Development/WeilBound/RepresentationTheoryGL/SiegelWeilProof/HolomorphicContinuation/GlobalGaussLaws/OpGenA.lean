@@ -114,12 +114,8 @@ theorem hasTemperateGrowth_phase (ε : Fin m → Bool) (t : ℝ) (b : Matrix (Fi
   have hR : (fun u : EE => t * (b * gramX ε u).trace.re).HasTemperateGrowth := by
     have h1 := ((t • Complex.reCLM : ℂ →L[ℝ] ℝ).hasTemperateGrowth).comp hT
     convert h1 using 1
-    funext u
-    simp
   have h3 := hasTemperateGrowth_expI.comp hR
   convert h3 using 1
-  funext u
-  simp only [Function.comp]
   rw [Complex.ofReal_mul, trace_real ε b hb u]
   ring_nf
 

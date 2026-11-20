@@ -76,8 +76,6 @@ theorem phi_map : ∀ (D : D7) (V V' : HSp D) (r : ℕ) (P : PPol D.sp.cm.sig r)
     _ = orbInt μ (gam h) (centMeas h dt) ((f ∘ j.symm) ∘ j) := (hasOrbInt_map j hγ.symm (f ∘ j.symm) 0).2
     _ = orbInt μ (gam h) (centMeas h dt) f := by
       congr 1
-      funext y
-      simp
     _ = orbCls (J := V.gram) μ dt f ⟨QuotientGroup.mk x, h2⟩ := v1
 
 end GlobalTheory.IsomPhi

@@ -159,8 +159,6 @@ theorem Mplus_mapL (g : ℕ) (Λ : Submodule (𝓞 E) S.V) (F : LFlag S r T) (F'
   rw [Mplus, Mplus, gmap_span', Set.image_union, Set.image_union, ← coe_gmap, XLam_mapL β hβ,
     Set.image_singleton, zt_mapL, ← Set.range_comp, frame_mapL' β hβ, frame_mapL' β hβ]
   congr 3
-  funext b
-  simp only [Function.comp_apply, frameAct_map, map_smul, map_sub]
 
 theorem ModG_map (g : ℕ) (Λ : Submodule (𝓞 E) S.V) (x : S.V) :
     ModG S (Formalism.HermitianLatticesTheory.gmap β Λ) g (β x) ↔ ModG S Λ g x := by

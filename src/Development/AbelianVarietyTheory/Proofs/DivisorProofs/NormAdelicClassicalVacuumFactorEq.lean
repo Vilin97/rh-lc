@@ -167,8 +167,6 @@ theorem exists_meanOne {n : ℕ} (hs : IsSympl X bas) (hn : Even n) {w : E} (hw 
     linear_combination (Real.sqrt t : ℂ) * this
   · rw [← mul_inv_cancel₀ hpos.ne', ← hm, ← mul_div_assoc, ← integral_const_mul]
     congr 2
-    funext z
-    simp only [CanTh.canTh, CanTh.imInv]
     rw [norm_mul, norm_mul, mul_pow, mul_pow, Complex.norm_exp, ← Real.exp_nat_mul,
       Complex.norm_real, Real.norm_eq_abs, sq_abs, Real.sq_sqrt hpos.le, _root_.mul_assoc,
       mul_comm (Real.exp _), _root_.mul_assoc, ← Real.exp_add]

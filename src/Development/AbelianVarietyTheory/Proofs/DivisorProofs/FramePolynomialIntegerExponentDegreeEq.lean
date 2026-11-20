@@ -127,8 +127,6 @@ theorem frPoly_secZ_degree_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
   have p₃ : evalFr G (fun b' => X b' * T b') = MvPolynomial.eval (fun v => 2 * x v) G := by
     unfold evalFr
     congr 2
-    funext v
-    simp only [T, Matrix.mul_diagonal, X, Matrix.of_apply]
     exact mul_comm _ _
   have p₄ : evalFr G X = MvPolynomial.eval x G := rfl
   rw [← p₃, ← e₂, p₂, e₃, p₁, ← p₄, ← e₁, Finset.sum_add_distrib, zpow_add₀ h2]

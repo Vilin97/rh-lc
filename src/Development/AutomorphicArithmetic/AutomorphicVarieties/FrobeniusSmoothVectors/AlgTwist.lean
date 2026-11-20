@@ -48,8 +48,6 @@ private theorem ordProd_tw {H K : Type} [CommRing K] {n : ℕ} (u : Kˣ)
   unfold ordProd
   rw [map_list_prod, List.map_ofFn]
   congr 2
-  funext i
-  simp only [Function.comp_apply, map_sub, map_smul, map_one]
 
 theorem UpperTheory.V.Fr.alg_twist :
     ∀ {l : ℕ} [Fact l.Prime] {k : Type} [Field k] {F : Frame l k} {n : ℕ} {K : Type} [CommRing K] (u : Kˣ) (ρ : NRep F n K), ∃ ρ' : NRep F n K, (∀ g i j, ρ'.r g i j = ((u ^ (w n i - w n j) : Kˣ) : K) * ρ.r g i j) ∧ ρ'.ψ = ρ.ψ := by

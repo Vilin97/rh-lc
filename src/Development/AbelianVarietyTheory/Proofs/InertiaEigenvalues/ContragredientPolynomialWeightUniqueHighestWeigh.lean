@@ -89,13 +89,9 @@ def omegaV : Module.Dual K W →ₛₗ[e] Module.Dual ℂ (VV ℂ lam) where
   map_add' f g := by
     rw [← map_add]
     congr 1
-    funext i
-    simp
   map_smul' c f := by
     rw [← map_smul]
     congr 1
-    funext i
-    simp
 
 theorem omegaV_bC (f : Module.Dual K W) (i : VVIdx lam) :
     omegaV e lam T f (bC e lam i) = e (f (T.symm (bVV K lam i))) := by

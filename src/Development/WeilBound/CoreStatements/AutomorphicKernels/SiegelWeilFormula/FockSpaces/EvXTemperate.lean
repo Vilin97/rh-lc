@@ -23,8 +23,6 @@ private theorem hasTemperateGrowth_evX' {m n : ℕ} (k : Fin m × Fin n × Bool)
       ((ContinuousLinearMap.proj (R := ℝ) (φ := fun _ : Fin n => ℂ) i).comp
         (ContinuousLinearMap.proj (R := ℝ) (φ := fun _ : Fin m => Fin n → ℂ) a))).hasTemperateGrowth
     convert hs using 1
-    funext x
-    simp
 
 theorem evX_temperate {m n : ℕ} (P : PX m n) :
     Function.HasTemperateGrowth (fun x : Fin m → Fin n → ℂ => evX P x) := by

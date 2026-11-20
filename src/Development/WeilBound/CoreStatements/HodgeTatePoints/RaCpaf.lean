@@ -46,8 +46,6 @@ lemma tl_mem_order (hv : v.Integers R) (p : ℕ) [Fact p.Prime] (hp : v (p : C) 
     rw [map_div₀, val_nat_eq v p hp k h1 h2, map_pow, Valuation.map_neg, map_one, one_pow, div_one])
   have h3 := A.carrier.smul_mem r (pow_mem_order A (A.carrier.sub_mem hf A.one_mem) k)
   convert h3 using 1
-  funext x
-  simp only [Pi.smul_apply, Algebra.smul_def, hr, Pi.pow_apply, Pi.sub_apply, Pi.one_apply]
   ring
 
 end

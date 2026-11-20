@@ -86,8 +86,6 @@ theorem selfDualLat_of {D : D7} (V : HSp D) {r : ℕ} (h : V.rank = r)
           Λ.comap (LinearMap.funLeft (𝓞 D.host.E) D.host.E (Fin.cast h)) := by
         rw [Submodule.mem_comap]
         convert hx' using 1
-        funext j
-        simp only [LinearMap.funLeft_apply, Function.comp_apply, Fin.cast_cast, Fin.cast_eq_self]
       have hb := H _ hy
       rw [herm_eq V h] at hb
       have e : (∑ i, ∑ j, star ((LinearMap.funLeft (𝓞 D.host.E) D.host.E (Fin.cast h.symm) x') (Fin.cast h i)) *

@@ -64,8 +64,6 @@ theorem sum_heisO_base_eq : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStd
     rw [← hvac, hM.modul _ hSB u (hRr u hu).2]
   rw [Finset.sum_congr rfl h1, ← map_sum, ← map_smul]
   congr 1
-  funext t
-  simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, actPull, inv_one]
   rw [← Finset.sum_mul]
   set Λ := latAll S T ΛS ΛT with hΛ
   set x := actO S T z⁻¹ 1 t with hx

@@ -91,8 +91,6 @@ theorem onb_selfadjoint {k : ℕ} {G s B : Matrix (Fin k) (Fin k) ℂ} {p : ℕ}
         rw [h2, conjTranspose_mul, diagonal_conjTranspose]
         simp only [Matrix.mul_assoc]
         congr 2
-        funext a
-        simp
       _ = (Bᴴ * G * B) * (Matrix.diagonal fun a => (ε a : ℂ)) := by rw [h1]
       _ = _ := by simp only [Matrix.mul_assoc, h2]
   · refine hu.mul_right_cancel ?_

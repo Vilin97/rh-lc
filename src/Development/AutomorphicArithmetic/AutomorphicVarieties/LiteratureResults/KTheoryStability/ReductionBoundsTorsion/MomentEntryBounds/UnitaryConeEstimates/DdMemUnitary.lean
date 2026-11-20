@@ -38,8 +38,6 @@ theorem star_dd (N : ℕ) (c : ℂ) : star (dd N c) = dd N (star c) := by
   unfold dd
   rw [star_eq_conjTranspose, diagonal_conjTranspose]
   congr 1
-  funext i
-  simp only [Pi.star_apply]
   split_ifs <;> simp
 
 theorem dd_mem_unitary (N : ℕ) {c : ℂ} (hc : c ∈ unitary ℂ) : dd N c ∈ unitaryGroup (Fin N) ℂ := by

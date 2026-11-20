@@ -43,8 +43,6 @@ theorem delDet : DelDet := by
       Matrix.updateCol (Xm R ρ) c (fun a => X (q, c) * X (a, p)) := by
     intro c
     congr 1
-    funext a
-    simp only [Xm, del, mkDerivation_X]
     ring
   simp only [h1]
   have h2 : ∀ c, (Matrix.updateCol (Xm R ρ) c (fun a => X (q, c) * X (a, p))).det =

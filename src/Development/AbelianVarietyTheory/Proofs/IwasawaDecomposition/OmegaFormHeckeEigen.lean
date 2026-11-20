@@ -158,8 +158,6 @@ theorem compare {σ : c.F →+* ℂ} (hA : l.A = 1) {ψ : AddChar (AF D.host.F) 
     · intro τ k
       rw [(g4 w').2]
       congr 1
-      funext a
-      simp only [rePt]
       rw [hsy τ.1 (hX.psi ▸ τ.2) τ.2]
   · have : ((1, δ * a') : GA D S × GA D T) = (1, δ) * (1, a') := by rw [Prod.mk_mul_mk, one_mul]
     rw [this, map_mul, Module.End.mul_apply]

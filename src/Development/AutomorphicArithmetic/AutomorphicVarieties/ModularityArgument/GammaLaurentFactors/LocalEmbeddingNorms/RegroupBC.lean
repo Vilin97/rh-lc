@@ -141,8 +141,6 @@ theorem UpperTheory.V.Z.Gam.regroupBC :
     ?_ (1 - s) ?_]
   · refine Finset.prod_congr rfl fun j _ => ?_
     congr 1
-    funext p
-    simp only [Multiset.map_map]
     refine Multiset.map_congr rfl fun b _ => ?_
     simp only [Function.comp_apply, mul_inv, inv_pow]
   · intro p hp

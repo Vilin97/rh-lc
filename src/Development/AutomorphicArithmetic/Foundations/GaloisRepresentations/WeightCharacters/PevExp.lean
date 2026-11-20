@@ -16,8 +16,6 @@ private theorem tor_entry_mem_expLe_one_expGe_zero (h : ExpBasic) (a k : ℕ) (A
     funext z
     rw [Finset.sum_apply, Units.val_mul, Units.val_mul, Matrix.mul_apply]
     congr 1
-    funext l
-    simp only [tor, dg, Matrix.diagonal_mul]
     split_ifs
     · simp only [Circle.toUnits]
       first

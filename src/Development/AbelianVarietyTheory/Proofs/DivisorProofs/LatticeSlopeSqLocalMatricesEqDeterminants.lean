@@ -65,8 +65,6 @@ theorem relIndex_reindex {ι : Type} [Fintype ι] [DecidableEq ι] {n : ℕ} (e 
       (φ : (ι → K) →ₗ[𝓞 K] (Fin n → K)) = Submodule.span (𝓞 K) (Set.range fun k => t • (Pi.single k 1 : Fin n → K)) := by
     rw [Submodule.map_span, ← Set.range_comp]
     congr 2
-    funext k
-    simp only [Function.comp_apply, LinearEquiv.coe_coe, hφ]
     funext j
     simp [Pi.single_apply, e.symm_apply_eq, eq_comm]
   have h2 : (locLat A).map (φ : (ι → K) →ₗ[𝓞 K] (Fin n → K)) = locLat (fun w => Matrix.reindex e e (A w)) := by

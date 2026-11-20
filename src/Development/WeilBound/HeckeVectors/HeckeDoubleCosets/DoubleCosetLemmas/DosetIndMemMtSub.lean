@@ -157,8 +157,6 @@ theorem dosetInd_mem_mtSub {c t : ℕ} (g : GL (Fin (c + t)) (Cv v)) :
         fun i => by have := ha0 i; push_cast at this; omega)
       rw [← tor_add] at this
       convert this using 3
-      funext i
-      simp
   obtain ⟨a, ha, hg⟩ := cartan h0 hu g
   rw [dosetInd_congr hg]
   refine hall (∑ i, (a i).natAbs) a ha fun i => ?_

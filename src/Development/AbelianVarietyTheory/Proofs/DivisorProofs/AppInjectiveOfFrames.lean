@@ -20,8 +20,6 @@ theorem app_injective_of_frames {X : Scheme.{0}} {F E : X.Modules} (φ : F ⟶ E
   have li : LinearIndependent Γ(X, V) (appLinear φ V ∘ he.basis h) := by
     have := (hb.basis h).linearIndependent.comp Sum.inl Sum.inl_injective
     convert this using 1
-    funext j
-    simp only [Function.comp_apply, IsFrame.basis_apply, appLinear_apply, app_resM, hφ]
   have : Function.Injective (appLinear φ V) := by
     refine (injective_iff_map_eq_zero _).2 fun x hx => ?_
     have h0 := Fintype.linearIndependent_iff.1 li ((he.basis h).repr x) (by

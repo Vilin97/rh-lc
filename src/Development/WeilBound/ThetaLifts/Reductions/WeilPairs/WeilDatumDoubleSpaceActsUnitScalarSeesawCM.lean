@@ -257,8 +257,6 @@ theorem PositivityTheory.ThKW.weil_rep_unitary_pair_equivariant : ∀ (F E : Typ
       (∫ x in 𝓕, f₁ x * star (g₁ x) ∂μ) * ∫ x in 𝓕, conj (f₂ (-x)) * star (conj (g₂ (-x))) ∂μ := fun f₁ f₂ g₁ g₂ => by
     rw [← hprod]
     congr 1
-    funext x
-    simp only [deltaT_apply, star_mul']
     ring
   obtain ⟨c, hc, H⟩ := abstract hψ (GlobalTheory.T.adelicSymplecticTraceForm_alternating_swap F E σ hinv _ _ JS _ hS hT' ξ₀ hσξ)
     (GlobalTheory.T.rational_points_self_annihilator_symplectic_standardChar F E σ B hB _ _ JS _ hS hT' ξ₀ hξ)

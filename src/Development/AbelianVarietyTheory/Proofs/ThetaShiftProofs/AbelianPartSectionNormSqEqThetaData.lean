@@ -510,8 +510,6 @@ theorem norm_eq : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberFie
       have h2 := Fk _ (hG1 _ ((Ha.ker _).2 ⟨_, h1, rfl⟩).1)
       rw [← hP, ← hi1 (Ha.Pw w _), ← hF', hm] at h2
       convert h2 using 2
-      funext i
-      simp only [Pi.add_apply, Matrix.mulVec, dotProduct, Matrix.submatrix_apply]
       congr 1
       · simp [t, (e i).2]
       · rw [← Finset.sum_compl_add_sum Θ.S, Finset.sum_eq_zero (s := Θ.S) fun k hk => by simp [t, hk], add_zero,

@@ -208,8 +208,6 @@ theorem liftInt_hk : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D)
         rw [integral_const_mul, integral_const_mul, (step d).2.2]
     _ = ∫ h in 𝓕, ∑ d ∈ cS.support, cS d * ∑ a ∈ Hk3.rep S P d, thetaKO om (g * a) h f * Φ h ∂ν := by
         congr 1
-        funext h
-        simp only [← mul_assoc, ← Finset.sum_mul]
         rw [hker]
     _ = _ := by
         rw [integral_finsetSum _ fun d _ => (integrable_finsetSum _ fun a _ => hi1 (g * a)).const_mul _]

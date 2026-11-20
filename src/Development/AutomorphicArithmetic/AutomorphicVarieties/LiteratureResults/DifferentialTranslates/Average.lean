@@ -55,8 +55,6 @@ theorem average : Average := by
         simp only [DistribMulAction.toAddMonoidHom_apply] at hm
         rw [hm]
         congr 1
-        funext g
-        simp only [Submodule.coe_smul, Pi.smul_apply]
         rw [smul_comm] }
   refine ⟨A, ?_, ?_⟩
   · intro x

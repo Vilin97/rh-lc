@@ -93,8 +93,6 @@ theorem integral_mul_star_eq (μ : Measure (κ → AF F)) (hμ : μ.IsAddHaarMea
     · exact (hi _).sub (hi _)
     · exact (hi _).const_mul _
     congr 1
-    funext x
-    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, ← Complex.normSq_eq_norm_sq, ← Complex.mul_conj, map_add, map_mul,
       map_neg, map_one, Complex.conj_I, Complex.star_def]
     linear_combination ((f x * (starRingEnd ℂ) (g x)) / 2 - (g x * (starRingEnd ℂ) (f x)) / 2) * Complex.I_mul_I
   rw [pol _ (hp _ h₁) _ (hp _ h₂), pol _ h₁ _ h₂]

@@ -784,8 +784,6 @@ theorem exists_lattice_dual (ω₁ ω₂ : ℂ) (hω : (conj ω₁ * ω₂).im �
     field_simp
     linear_combination (-(σ * (a * ω₁ + b * ω₂))) * Complex.I_mul_I))
   convert h1 using 1
-  funext i
-  simp only [Pi.smul_apply, Complex.real_smul]
   push_cast
   field_simp
 

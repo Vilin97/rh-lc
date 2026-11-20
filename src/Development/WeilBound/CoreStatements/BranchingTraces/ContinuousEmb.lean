@@ -85,8 +85,6 @@ theorem idem_avg {G K : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup
           funext h
           rw [← integral_const_mul, ← integral_mul_left_eq_self (fun g => φ h * φ (h⁻¹ * g) * F g) h]
           congr 1
-          funext k
-          simp only [inv_mul_cancel_left]
           ring
       _ = ∫ g, ∫ h, φ h * φ (h⁻¹ * g) * F g ∂ν ∂ν := integral_integral_swap hI
       _ = ∫ g, κ * φ g * F g ∂ν := by
@@ -96,8 +94,6 @@ theorem idem_avg {G K : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup
       _ = κ * ∫ h, φ h * ⟪b, ρ h b⟫_ℂ ∂ν := by
           rw [← integral_const_mul]
           congr 1
-          funext g
-          simp only [hF]
           ring
   rw [hb'a b', hb'a b]
   exact hmain

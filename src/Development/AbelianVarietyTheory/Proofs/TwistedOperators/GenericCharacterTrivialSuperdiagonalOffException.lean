@@ -148,8 +148,6 @@ theorem uni_off : OnStd fun {D} _ _ {sc} {G} W F => ∀ ρ (h : 2 * ρ + 2 ≤ D
     have hyy : idem D (· = v) • (M *ᵥ y) = M *ᵥ y := by
       rw [← Matrix.mulVec_smul]
       congr 1
-      funext m
-      simp only [hy, Pi.smul_apply, smul_eq_mul, ← mul_assoc, idem_mul_self]
     rw [hyy] at hMy'
     have z1 := (hA _ _ _).1 hMy'
     have z2 := (hA _ _ _).1 hwv

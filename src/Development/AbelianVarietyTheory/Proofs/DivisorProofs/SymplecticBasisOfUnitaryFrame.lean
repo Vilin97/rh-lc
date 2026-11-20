@@ -118,8 +118,6 @@ theorem symp_vecMulVec (σ : E →ₐ[F] E) {n d : ℕ} (J : Matrix (Fin n) (Fin
     symp σ (-1) J K (Matrix.vecMulVec u f) (Matrix.vecMulVec v w) = colTraceBil σ K (form σ J u v • f) w := by
   rw [symp_vecMulVec_right]
   congr 2
-  funext l
-  simp only [form, dotProduct, Matrix.vecMulVec_apply, Pi.smul_apply, smul_eq_mul, Finset.sum_mul]
   exact Finset.sum_congr rfl fun i _ => by ring
 
 theorem form_swap (σ : E →ₐ[F] E) (hσ : ∀ a, σ (σ a) = a) {n : ℕ} {J : Matrix (Fin n) (Fin n) E}

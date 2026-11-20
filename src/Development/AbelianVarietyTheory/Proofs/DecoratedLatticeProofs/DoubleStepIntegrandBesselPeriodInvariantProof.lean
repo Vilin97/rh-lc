@@ -282,8 +282,6 @@ theorem per_flag {ρ : ℕ} (B : BesLev D ρ) (hψ : IsStdChar D ψ (-1)) (φ : 
   have hm := GlobalTheory.CharLaws.embA_conj_mem B.d B.o h hn
   rw [← (GlobalTheory.fundamentalDomain_integral_mul_right B.vN.ν _ _ _ (⟨_, hm⟩ : flagN B.d) u2 hK).2]
   congr 1
-  funext m
-  simp only [besFun, Subgroup.coe_mul, rTrans, Pi.smul_apply, smul_eq_mul]
   rw [psiBes_mul B.d ψ 1 _ m.2 hm, GlobalTheory.CharLaws.psiBes_conj, star_mul', mul_assoc (m : GA D B.V) (_ * _ * _),
     inv_mul_cancel_right, mul_assoc (m : GA D B.V)]
   ring

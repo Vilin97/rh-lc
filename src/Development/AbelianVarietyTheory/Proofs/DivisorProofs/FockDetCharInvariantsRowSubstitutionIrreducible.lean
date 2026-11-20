@@ -89,8 +89,6 @@ theorem lowScal_mem_unitary {d a : ℕ} {t : ℂ} (ht : ‖t‖ = 1) : lowScal d
   rw [lowScal, Matrix.star_eq_conjTranspose, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
     ← Matrix.diagonal_one]
   congr 1
-  funext i
-  simp only [Pi.mul_apply, Pi.star_apply]
   by_cases hi : (i : ℕ) < a
   · simp [hi]
   · simp only [hi, if_false, RCLike.star_def]

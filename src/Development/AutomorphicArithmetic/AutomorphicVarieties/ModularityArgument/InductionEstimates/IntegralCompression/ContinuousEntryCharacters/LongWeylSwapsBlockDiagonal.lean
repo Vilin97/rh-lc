@@ -58,8 +58,6 @@ private theorem dg_mem (θ : Fin (2 + 2) → ℝ) :
   rw [mem_unitaryGroup_iff, star_eq_conjTranspose, diagonal_conjTranspose, diagonal_mul_diagonal]
   rw [← diagonal_one]
   congr 1
-  funext i
-  simp only [Pi.star_apply, RCLike.star_def]
   rw [← Complex.exp_conj, ← Complex.exp_add]
   simp
 

@@ -85,8 +85,6 @@ theorem integral_indicator_shells_eq_prod : ∀ {G : Type} [Group G] [Measurable
       (fun i => by simpa using ha1 i) c).summable
     rw [← Complex.summable_ofReal]
     convert h2 using 1
-    funext k
-    simp only [F, Set.indicator_apply, Set.mem_setOf_eq]
     split_ifs <;> simp [norm_prod, norm_zpow]
   rw [integral_countable hint]
   simp only [measureReal_def, Measure.count_singleton, ENNReal.toReal_one, one_smul]

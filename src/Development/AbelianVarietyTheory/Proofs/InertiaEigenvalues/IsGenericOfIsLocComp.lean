@@ -88,8 +88,6 @@ theorem whit_rt (m : ℕ) (f : GA E a → ℂ) (h g : GA E a) : whit ψ m (fun x
   | succ m ih =>
     rw [whit_succ, whit_succ, ← ih]
     congr 1
-    funext x
-    simp only [colT, coefF, mul_assoc]
 
 def locPsi (hψ : StdPsi ψ) (w : HeightOneSpectrum (𝓞 E)) : AddChar (w.adicCompletion E) Circle where
   toFun y := ⟨ψ (sFin E (sLoc E w y)), by simpa [Submonoid.unitSphere] using hψ.norm _⟩

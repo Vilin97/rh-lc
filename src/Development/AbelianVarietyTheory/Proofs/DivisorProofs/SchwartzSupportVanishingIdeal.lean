@@ -34,8 +34,6 @@ theorem mem_of_sep {G β : Type} [AddCommGroup G] (e : β → G → ℂ) (B : Se
       · exact ⟨p, hp, u, hu, rfl⟩
     have h2 := W.smul_mem (e b s - 1)⁻¹ (add_mem h1 (hW f hf b hbB))
     convert h2 using 1
-    funext t
-    simp only [Pi.smul_apply, Pi.add_apply, Pi.sub_apply, smul_eq_mul]
     field_simp
     ring
 

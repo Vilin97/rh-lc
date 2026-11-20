@@ -44,8 +44,6 @@ theorem thetaInner_add_right (hψ : IsStdChar D ψ (-1)) {μ : Measure (WO S T')
   unfold thetaIP
   rw [← integral_add (integrable_star_mul hψ h1 hf hg) (integrable_star_mul hψ h1 hf hh)]
   congr 1
-  funext w
-  simp only [Pi.add_apply, mul_add]
 
 theorem thetaInner_add_left (hψ : IsStdChar D ψ (-1)) {μ : Measure (WO S T')} {𝓕 : Set (WO S T')} (h1 : μ 𝓕 = 1)
     {f g h : WO S T' → ℂ} (hf : IsThetaFunO ψ S T' f) (hg : IsThetaFunO ψ S T' g) (hh : IsThetaFunO ψ S T' h) :
@@ -53,8 +51,6 @@ theorem thetaInner_add_left (hψ : IsStdChar D ψ (-1)) {μ : Measure (WO S T')}
   unfold thetaIP
   rw [← integral_add (integrable_star_mul hψ h1 hf hh) (integrable_star_mul hψ h1 hg hh)]
   congr 1
-  funext w
-  simp only [Pi.add_apply, star_add, add_mul]
 
 end GlobalTheory.RawLift.RealLowRed
 

@@ -39,8 +39,6 @@ theorem mul_mem_prodSpan {A : Subalgebra R (T → R)} {a b : T → R} (ha : a �
   | zero =>
     have := (prodSpan A).zero_mem
     convert this using 1
-    funext z
-    simp
   | add x y _ _ hx hy =>
     have := (prodSpan A).add_mem hx hy
     convert this using 1
@@ -49,8 +47,6 @@ theorem mul_mem_prodSpan {A : Subalgebra R (T → R)} {a b : T → R} (ha : a �
   | smul r x _ hx =>
     have := (prodSpan A).smul_mem r hx
     convert this using 1
-    funext z
-    simp only [Pi.smul_apply, smul_eq_mul]
     ring
 
 open Classical in
@@ -104,14 +100,10 @@ theorem extZero₂_mem {H : Subgroup T} {A : Subalgebra R (H → R)} (hA : IsHop
   | add x y _ _ hx hy =>
     have := Submodule.add_mem _ hx hy
     convert this using 1
-    funext z
-    simp only [extZero₂, Pi.add_apply]
     split_ifs <;> simp
   | smul r x _ hx =>
     have := Submodule.smul_mem _ r hx
     convert this using 1
-    funext z
-    simp only [extZero₂, Pi.smul_apply]
     split_ifs <;> simp
 
 theorem pair_ind : ∀ (R : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed R] (T : Type) [CommGroup T] [Finite T] (H : Subgroup T) (A : Subalgebra R (H → R)) (β : T →* T →* Rˣ), IsHopfOrder A → (fun z : H × H => ((β z.1 z.2 : Rˣ) : R)) ∈ prodSpan A → (fun z : T × T => ((β z.1 z.2 : Rˣ) : R)) ∈ prodSpan (indOrder H.subtype A) := by
@@ -124,8 +116,6 @@ theorem pair_ind : ∀ (R : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed 
     have hb := char_mem_hopfOrder R H A hA ((β t).comp H.subtype)
     have := Submodule.smul_mem _ ((β t s : Rˣ) : R) (mul_mem_prodSpan ha hb hβ)
     convert this using 1
-    funext w
-    simp
     ring
   have key : ∀ (c : T ⧸ H) (x : T), c.out⁻¹ * x ∈ H ↔ c = (x : T ⧸ H) := by
     intro c x

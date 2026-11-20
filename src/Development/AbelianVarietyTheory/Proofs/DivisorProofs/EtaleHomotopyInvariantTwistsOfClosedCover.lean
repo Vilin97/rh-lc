@@ -118,8 +118,6 @@ theorem succL : âˆ€ (A B : Type) [CommRing A] [CommRing B] [Algebra A B] (k : â„
       LinearEquiv.coe_coe, Algebra.TensorProduct.tmul_mul_tmul, tprod_mul_tprod, consLin_tmul, TensorProduct.AlgebraTensorModule.curry_apply,
       TensorProduct.curry_apply, LinearMap.compMultilinearMap_apply, LinearMap.restrictScalars_apply]
     congr 1
-    funext i
-    simp only [Pi.mul_apply]
     rcases (finSumFinEquiv.trans (finCongr (by omega))).symm i with j | j <;> rfl
 end GlobalTheory.EtC.ClosedCover
 

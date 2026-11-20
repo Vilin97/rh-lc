@@ -12,8 +12,6 @@ private theorem map_qdet_conj {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ} (f :
   simp only [Formalism.REAL.qdet, Formalism.REAL.qminor, map_sum, map_mul, map_intCast, map_list_prod, List.map_ofFn]
   refine Finset.sum_congr rfl fun σ _ => ?_
   congr 3
-  funext k
-  simp only [Function.comp_apply, Formalism.REAL.Tm, map_add, hX, apply_ite f, hf, map_zero, map_sub, map_natCast]
 
 variable {E : Type} [Field E] [NumberField E] [IsTotallyReal E] {a : ℕ}
 

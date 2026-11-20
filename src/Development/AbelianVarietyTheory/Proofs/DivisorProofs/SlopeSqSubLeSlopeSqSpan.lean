@@ -166,8 +166,6 @@ theorem normAt_sum (x : Fin j → K) :
     Formalism.HermitianLatticesTheory.normAt b X v (∑ k, x k • e k) = Formalism.HermitianLatticesTheory.cnorm (cols b X v e *ᵥ fun k => v.embedding (x k)) := by
   unfold Formalism.HermitianLatticesTheory.normAt
   congr 1
-  funext i
-  simp only [Formalism.HermitianLatticesTheory.fcoord, Formalism.HermitianLatticesTheory.vecAt, cols, Matrix.mulVec, dotProduct, map_sum, map_smul, Finsupp.coe_finset_sum,
     Finset.sum_apply, Finsupp.smul_apply, smul_eq_mul, map_mul, Matrix.of_apply, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring

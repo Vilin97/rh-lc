@@ -158,8 +158,6 @@ theorem fderiv_gaussMoment_apply (ys : List (V →L[ℝ] V →L[ℝ] ℂ)) {B : 
     ContinuousLinearMap.integral_apply (integrable_integrandDeriv μ hε hBε ys)]
   unfold gaussMoment
   congr 1
-  funext x
-  simp only [integrandDeriv, diagProd, ContinuousLinearMap.smul_apply, evalDiag_apply, smul_eq_mul,
     List.map_cons, List.prod_cons]
   ring
 

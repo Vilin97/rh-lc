@@ -83,31 +83,23 @@ theorem pr_add_left {a a₁ b : G → ℂ} (ha : MemLp a 2 μ) (ha₁ : MemLp a�
   unfold pr
   rw [← integral_add (pr_int ha hb) (pr_int ha₁ hb)]
   congr 1
-  funext x
-  simp only [Pi.add_apply, star_add, add_mul]
 
 theorem pr_add_right {a b b₁ : G → ℂ} (ha : MemLp a 2 μ) (hb : MemLp b 2 μ) (hb₁ : MemLp b₁ 2 μ) :
     pr μ a (b + b₁) = pr μ a b + pr μ a b₁ := by
   unfold pr
   rw [← integral_add (pr_int ha hb) (pr_int ha hb₁)]
   congr 1
-  funext x
-  simp only [Pi.add_apply, mul_add]
 
 theorem pr_smul_left (c : ℂ) (a b : G → ℂ) : pr μ (c • a) b = star c * pr μ a b := by
   unfold pr
   rw [← integral_const_mul]
   congr 1
-  funext x
-  simp only [Pi.smul_apply, smul_eq_mul, star_mul']
   ring
 
 theorem pr_smul_right (c : ℂ) (a b : G → ℂ) : pr μ a (c • b) = c * pr μ a b := by
   unfold pr
   rw [← integral_const_mul]
   congr 1
-  funext x
-  simp only [Pi.smul_apply, smul_eq_mul]
   ring
 
 theorem pr_self_re {a : G → ℂ} (ha : MemLp a 2 μ) :

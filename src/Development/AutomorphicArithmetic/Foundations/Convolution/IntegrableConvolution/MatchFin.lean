@@ -45,5 +45,3 @@ theorem UpperTheory.ConvolutionTheory.L1.matchFin :
     rw [← hpush]
     unfold UpperTheory.ConvolutionTheory.L1.Split.transfer
     congr 1
-    funext g
-    simp only [UpperTheory.ConvolutionTheory.L1.Split.tens, hcomp]

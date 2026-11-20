@@ -139,8 +139,6 @@ def diagPow : (Fin n → Multiplicative ℤ) →* GL (Fin n) F where
     change (diagonal fun i => ϖ ^ ((1 : Fin n → Multiplicative ℤ) i).toAdd) = 1
     rw [← diagonal_one]
     congr 1
-    funext i
-    simp
   map_mul' a b := by
     refine Units.ext ?_
     change (diagonal fun i => ϖ ^ ((a * b) i).toAdd) =

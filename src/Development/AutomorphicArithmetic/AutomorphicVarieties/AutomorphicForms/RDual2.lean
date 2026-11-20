@@ -231,8 +231,6 @@ theorem HasInfChar.dual {τ : InfinitePlace E} {m : Multiset ℂ} (h : π.HasInf
   congr 1
   rw [← h.1, ← Multiset.prod_replicate, ← Multiset.map_const', ← Multiset.prod_map_mul]
   congr 2
-  funext z
-  simp only [Function.comp_apply]; ring
 
 theorem HasSat.dual {w : HeightOneSpectrum (𝓞 E)} {B : Multiset ℂˣ} (h : π.HasSat w B) :
     π.dual.HasSat w (B.map (·⁻¹)) :=

@@ -161,8 +161,6 @@ theorem map_mul_eq_zero_of_char [FiniteDimensional ℝ V] (T : 𝓢(V, ℂ) →L
         Function.comp_apply, ContinuousLinearEquiv.symm_apply_apply]
     rw [hu, hh, h2, SchwartzMap.fourierInv_coe, Real.fourierInv_eq', ← integral_const_mul]
     congr 1
-    funext ξ
-    simp only [SchwartzMap.smul_apply, hM, e, hL, smul_eq_mul]
     rw [show Complex.I * ((2 * Real.pi : ℝ) : ℂ) * ((inner ℝ ξ (A y) : ℝ) : ℂ) =
       ((2 * Real.pi * inner ℝ ξ (A y) : ℝ) : ℂ) * Complex.I by push_cast; ring]
     ring

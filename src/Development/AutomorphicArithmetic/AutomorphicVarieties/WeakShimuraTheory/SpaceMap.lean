@@ -41,8 +41,6 @@ theorem PD.Cont.map [TopologicalSpace Γ] {P : PD ι Γ R} {I : Ideal R} (h : P.
     (Ideal.pow_right_mono hf N).trans (Ideal.le_comap_pow f N)
   have := (h i j N).comp (Ideal.quotientMap (J ^ N) f hle)
   convert this using 1
-  funext g
-  simp only [Function.comp_apply, Ideal.quotientMap_mk]
   rfl
 
 end

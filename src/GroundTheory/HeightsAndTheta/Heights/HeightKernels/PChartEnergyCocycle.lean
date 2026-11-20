@@ -212,8 +212,6 @@ theorem ChartEnergyCocycle.proof (hS : ChartEnergySymm.Statement) : ChartEnergyC
     intro k _
     rw [chartMixedEnergy_eq, hg]
     congr 1
-    funext s
-    simp only [blocks, zero_add]
     split_ifs <;> first | rfl | omega
   have tele : ∀ k ∈ Finset.range (e + 1),
       pairing M N (blocks M N P k 0) - pairing M N (blocks M N P k (e - k)) =

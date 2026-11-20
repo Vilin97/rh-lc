@@ -64,8 +64,6 @@ private theorem prod_eval_mem_span_prod_of_mem_span {L : Type} [Field L] {ι : T
       | zero =>
         rw [hsplit]
         convert Submodule.zero_mem _ using 1
-        funext y
-        simp
       | add x x' _ _ hx hx' =>
         rw [hsplit] at hx hx' ⊢
         convert Submodule.add_mem _ hx hx' using 1
@@ -148,12 +146,8 @@ theorem weightPolynomial_mem_span_bideterminantProducts : ∀ (K L : Type) [Fiel
     exact Formalism.GradedWeylDivisibility.dualWeylRowStable L N N (ν τ) (M τ) _ (Formalism.GradedWeylDivisibility.dualWeylMap K L φ N N (ν τ) (F τ) (hF τ))
   | zero =>
     convert Submodule.zero_mem _ using 1
-    funext y
-    simp
   | add x x' _ _ hx hx' =>
     convert Submodule.add_mem _ hx hx' using 1
-    funext y
-    simp
   | smul c x _ hx =>
     convert Submodule.smul_mem _ (φ c) hx using 1
     funext y

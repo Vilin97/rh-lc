@@ -289,8 +289,6 @@ theorem pure_update_mem
   | zero =>
     rw [e]
     convert L.zero_mem using 1
-    funext x
-    simp
   | add a b _ _ ha hb =>
     rw [e] at ha hb ⊢
     convert L.add_mem ha hb using 1

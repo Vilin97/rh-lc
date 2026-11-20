@@ -50,8 +50,6 @@ theorem hasDerivAt_diag {r : ℕ} (Φ : (Fin r → ℝ) → ℂ) (hΦ : Differen
   have h3 := h1 fun _ => 1
   simp only [h2, ← map_sum, Finset.univ_sum_single (fun _ : Fin r => (1 : ℝ))]
   convert h3 using 3
-  funext _
-  simp
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 

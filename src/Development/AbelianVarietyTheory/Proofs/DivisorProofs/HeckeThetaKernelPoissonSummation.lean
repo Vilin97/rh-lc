@@ -117,8 +117,6 @@ theorem poisson_coset (L : Submodule ℤ (EuclideanSpace ℂ I)) [DiscreteTopolo
     have h := GlobalTheory.T.fourier_comp_coordDilationByHalfExp I (fun w => gauss n (WithLp.ofLp w)) y l
     rw [hf, h, fourier_gauss, mul_assoc]
     congr 3
-    funext i
-    simp only [dil]
     ring
   obtain ⟨C, a, hC0, ha, hC⟩ := gauss_dil_bound n y
   obtain ⟨C', a', hC0', ha', hC'⟩ := gauss_dil_bound n (-y)

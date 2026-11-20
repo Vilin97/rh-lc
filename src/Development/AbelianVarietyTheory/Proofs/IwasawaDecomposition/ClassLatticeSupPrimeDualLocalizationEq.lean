@@ -67,8 +67,6 @@ theorem nsmul_dual_mem_loc {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (F
   have h4 : (fun a => inclE (F := F) (v.adicCompletion F) ((T • z) a)) ∈
       latS (F := F) (v.adicCompletion F) (intV E v) L := by
     convert h3 using 1
-    funext a
-    simp
   exact GlobalTheory.T.exists_smul_mem_lattice_of_mem_completion F E v n L hL (T • z) h4
 
 set_option maxHeartbeats 1000000 in

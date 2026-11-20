@@ -62,8 +62,6 @@ theorem linPt_pl (ρ : Fin N) (col : Fin 2) (i : Fin dd) :
   simp only [linPt]
   rw [rowOf_eq, rename_subst_linS]
   congr 1
-  funext j
-  simp only [linS, colLin, map_sum, map_smul, MvPowerSeries.rename_X]
   rw [Fintype.sum_prod_type, Finset.sum_eq_single ρ]
   · simp only [MS_pl, if_true]
     rfl

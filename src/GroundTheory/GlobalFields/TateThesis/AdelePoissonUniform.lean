@@ -65,8 +65,6 @@ theorem summable_ite_mem_of_summable_idealLattice (J : (FractionalIdeal (𝓞 K)
     exact hξ ⟨e ⟨ξ, hm⟩, by simp [g]⟩
   rw [← hinj.summable_iff hsupp]
   convert hh using 1
-  funext α
-  simp only [Function.comp_apply, g]
   rw [if_pos (show ((e.symm α : _) : K) ∈ (J : FractionalIdeal (𝓞 K)⁰ K) from (e.symm α).2)]
   have he := coe_idealLatticeEquiv J (e.symm α)
   rw [Equiv.apply_symm_apply] at he

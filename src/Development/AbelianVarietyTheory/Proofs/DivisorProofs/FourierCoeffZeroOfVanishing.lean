@@ -148,8 +148,6 @@ theorem tsum_indicator_eq_zero_of_mean_fin {ι : Type*} [Countable ι] : ∀ (K 
       have hh := tsum_indicator_eq_zero_of_mean a' ha' (fun i => μ i 0) (fun t => by
         rw [← h (Fin.cons t s')]
         congr 1
-        funext i
-        simp only [a', Fin.sum_univ_succ, Fin.cons_zero, Fin.cons_succ]
         rw [mul_assoc, ← Complex.exp_add]
         congr 2
         push_cast

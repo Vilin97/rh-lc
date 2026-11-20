@@ -123,8 +123,6 @@ theorem exists_adapted_majorant {K : Type} [Field K] [NumberField K] {r : ℕ} (
     simp only [diagMet, adMet_conj]
     rw [Matrix.diagonal_map (map_zero _)]
     congr 1
-    funext i
-    simp
   show ((P⁻¹).map ((starRingEnd ℂ).comp σ))ᴴ * diagMet (adMet r m g dd) ((starRingEnd ℂ).comp σ) *
       (P⁻¹).map ((starRingEnd ℂ).comp σ) =
     (((P⁻¹).map σ)ᴴ * diagMet (adMet r m g dd) σ * (P⁻¹).map σ).map (starRingEnd ℂ)

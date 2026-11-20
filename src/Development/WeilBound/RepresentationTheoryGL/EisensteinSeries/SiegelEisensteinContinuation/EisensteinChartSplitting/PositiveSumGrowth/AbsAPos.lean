@@ -191,8 +191,6 @@ theorem tTop : TTop := by
       (g * (p : GA D (dblSp V))) = npow c (s - s₁) * GlobalTheory.Eis.cosetSum (siegel V) (GQ (dblSp V)) (flat V a φ s₁ s) g := by
     rw [← GlobalTheory.Eis.cosetSum_mul_right, ← GlobalTheory.Eis.cosetSum_smul]
     congr 1
-    funext x
-    simp only [hf, Pi.smul_apply, smul_eq_mul, flatH_apply]
     have hh := hηx (x * (p : GA D (dblSp V)))
     rw [show x * (p : GA D (dblSp V)) * (p : GA D (dblSp V))⁻¹ = x by group] at hh
     rw [hh, npow_eq_exp hc, npow_eq_exp (hgtH_pos _), show x * (p : GA D (dblSp V)) * (p : GA D (dblSp V))⁻¹ = x by group]

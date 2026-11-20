@@ -212,8 +212,6 @@ theorem exists_lat_basis {M : Submodule k⟦X⟧ V} (hM : IsLat M) :
   rw [Submodule.map_span, Submodule.map_subtype_top, ← Set.range_comp] at h
   refine h.symm.trans ?_
   congr 2
-  funext i
-  simp
 
 omit [IsScalarTower k k⸨X⸩ V] in
 theorem pull_span {σ : k⸨X⸩ →ₐ[k] k⸨X⸩} (hσ : ∀ a : k⟦X⟧, ∃ b : k⟦X⟧, σ (a : k⸨X⸩) = (b : k⸨X⸩))

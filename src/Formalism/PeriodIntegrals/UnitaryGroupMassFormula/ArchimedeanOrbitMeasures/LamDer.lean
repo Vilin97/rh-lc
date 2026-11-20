@@ -189,8 +189,6 @@ theorem lamDet_of (hB : BetaIso) (hM : MuBridge) (hN : NuBridge) (hD : DKForm) (
       simp only [Matrix.mul_assoc]
     rw [e1, e2, ← reimV_smul, ← reimV_add]
     congr 1
-    funext v
-    simp only [hw, Matrix.mul_add, Matrix.mul_smul, Pi.add_apply]
     congr 1
     · simp only [Matrix.mul_assoc]
     · rw [show ((1 / 2 : ℝ) : ℂ) = (1 / 2 : ℂ) by push_cast; ring]

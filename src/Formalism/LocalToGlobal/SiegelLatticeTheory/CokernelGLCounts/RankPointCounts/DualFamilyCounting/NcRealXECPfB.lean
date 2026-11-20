@@ -178,8 +178,6 @@ theorem shear_change_holds : ShearStep := by
       (fun i y y' h => sJ_shear i y y' h)
     have := mp_toC.comp hS
     convert this using 1
-    funext y
-    simp only [Function.comp, sJ, toC_fromC]
   · intro y
     exact nilpotent_chart_left_inverse (Formalism.MainNotions.BridgeCSB.exp_mem_N (Lm_mem (toC y)))
 

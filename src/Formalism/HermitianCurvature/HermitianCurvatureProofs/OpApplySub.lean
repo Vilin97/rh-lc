@@ -264,7 +264,5 @@ theorem levQ : ∃ Cp : ℝ, 0 ≤ Cp ∧ ∀ Cc : ℝ, 16 * Cp ≤ Cc →
     have hc₂' := Formalism.FourierDecayAlt.P.JCTx6.Link2.ckOn_castF e2 (Formalism.FourierDecayAlt.P.JCTx6.Link2.ckOn_cutF T.base hχ hs₂ ε)
     rw [hU h₁ hs₁ y hyG hDj, hU h₂ hs₂ y hyG hDj, hU _ hs₁₂ y hyG hDj, ← opApply_sub Θ hc₁' hc₂' y hyG]
     congr 1
-    funext x
-    simp only [D.castF, D.cutF, smul_sub]
 
 end Formalism.FourierDecayAlt.P.PBE

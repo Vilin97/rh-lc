@@ -58,12 +58,8 @@ theorem lev_isAut_all : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numb
     | zero => exact isAut_const σ _ K 0
     | add x y _ _ hx hy =>
       convert GlobalTheory.UAut.AutClosed.isAut_add_smul hx hy 1 1 using 1
-      funext g
-      simp
     | smul r x _ hx =>
       convert GlobalTheory.UAut.AutClosed.isAut_add_smul hx (isAut_const σ _ K 0) r 0 using 1
-      funext g
-      simp
   | succ j ih =>
     intro hj f hf K hK
     have hI := hiso j (by omega)
@@ -83,12 +79,8 @@ theorem lev_isAut_all : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numb
     | zero => exact isAut_const σ _ K 0
     | add x y _ _ hx hy =>
       convert GlobalTheory.UAut.AutClosed.isAut_add_smul hx hy 1 1 using 1
-      funext g
-      simp
     | smul r x _ hx =>
       convert GlobalTheory.UAut.AutClosed.isAut_add_smul hx (isAut_const σ _ K 0) r 0 using 1
-      funext g
-      simp
 
 theorem lev_isAut_maxCpt : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (a a' : ℕ)
     (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W) (R : RealMaps F a a') (Rf : FinMaps F a a'),

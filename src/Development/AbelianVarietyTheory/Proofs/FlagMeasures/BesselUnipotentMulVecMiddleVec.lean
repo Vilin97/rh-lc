@@ -330,8 +330,6 @@ theorem Yv_K (z z' : Fin (2 * r + k + 1) → ℂ) (γ x : Mat k r) {κ : Mat k r
   congr 1
   rw [gramProj_unitary (Ppos k r z z' γ x) (Ppos k r z z' γ (x * κ)) _ κ hκ hQ]
   congr 1
-  funext a
-  simp only [Matrix.mul_inv_rev, hinv, Matrix.mulVec_mulVec, ← Matrix.mul_assoc, hu', Matrix.one_mul]
 
 private theorem inv_mul_mul_eq_of_eq_conj {k r : ℕ} {m γ ρ : Mat k r} (um : IsUnit m.det) (uγ : IsUnit γ.det)
     (hm : m = γ * ρ * γ⁻¹) : m⁻¹ * γ * ρ = γ := by

@@ -54,7 +54,5 @@ theorem UpperTheory.V.Pa.BC.sinf_iso :
     rw [Ideal.map_span, ← Set.range_comp]
     congr 1
     congr 1
-    funext p
-    simp only [Function.comp_apply, RingHom.comp_apply]
     erw [key]
     simp [MvPowerSeries.map_X]

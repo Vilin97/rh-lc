@@ -101,8 +101,6 @@ theorem trc_mapDomain {V : HSp D} (e : GA D V →₀ ℂ) (b : GA D V) (f : GA D
     (fun _ _ _ => add_smul _ _ _)]
   refine Finsupp.sum_congr fun g _ => ?_
   congr 1
-  funext x
-  simp only [rTrans, mul_assoc]
 
 theorem contAut_trc {V : HSp D} (e : GA D V →₀ ℂ) {f : GA D V → ℂ} (hf : IsContAut V f) : IsContAut V (trc e f) :=
   TrcProof.contAut_sum e.support e (fun g => rTrans g f) fun g _ => TrcProof.contAut_rTrans g hf

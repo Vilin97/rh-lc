@@ -186,8 +186,6 @@ theorem LocIdxLift_Kg (p : HeightOneSpectrum (𝓞 I.F)) (g : ℕ) (hg : g ≠ 0
         obtain ⟨z, hz, he⟩ := hy.2 _ hwv
         rw [hsame, he]
         convert hz using 1
-        funext i
-        simp only [Pi.smul_apply, smul_eq_mul, c, AlgHom.commutes, Nat.cast_smul_eq_nsmul, nsmul_eq_mul, Pi.mul_apply,
           Pi.natCast_apply]
         rw [← mul_assoc, ← map_natCast (algebraMap I.F (Fv I.F v ⊗[I.F] I.E)) g, ← map_mul,
           inv_mul_cancel₀ hgF, map_one, one_mul]

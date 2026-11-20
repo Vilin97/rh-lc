@@ -397,8 +397,6 @@ theorem partial_zeta_continuation : ∀ (K : Type) [Field K] [NumberField K] [Is
     have hG : HasSum G S := by
       rw [← fL.hasSum_iff]
       convert hsum.hasSum using 1
-      funext p
-      simp only [Function.comp_apply, G, hψL p]
     have hGG := fG.hasSum_iff.2 hG
     have hterm : ∀ p, (G ∘ fG) p = (Ideal.absNorm p.1.1 : ℂ) ^ (-s) *
         (Ideal.absNorm B : ℂ) ^ (-s) := by

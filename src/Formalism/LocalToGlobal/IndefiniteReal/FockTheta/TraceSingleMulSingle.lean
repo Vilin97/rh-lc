@@ -389,8 +389,6 @@ theorem onb_data {k p : ℕ} {G s B : Matrix (Fin k) (Fin k) ℂ} (h : IsONBasis
   have hDh : (diagonal fun a => (ε a : ℂ))ᴴ = diagonal fun a => (ε a : ℂ) := by
     rw [diagonal_conjTranspose]
     congr 1
-    funext a
-    simp
   generalize (diagonal fun a => (ε a : ℂ)) = D at hG hs hD hDh ⊢
   have hB : IsUnit B.det :=
     Matrix.isUnit_det_of_left_inverse (show (D * (Bᴴ * G)) * B = 1 by rw [Matrix.mul_assoc, hG, hD])

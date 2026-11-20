@@ -189,7 +189,5 @@ theorem contDiff_of_func_eq (c : ℝ → ℂ) (E : ℝ → ℝ → ℂ) (U : Set
     simpa using hF0
   have h9 := ContDiffAt.comp (f := fun x : ℝ => x - t₀) t₀ hF0' hsub
   convert h9 using 1
-  funext x
-  simp
 
 end GlobalTheory.FuncEqSmooth

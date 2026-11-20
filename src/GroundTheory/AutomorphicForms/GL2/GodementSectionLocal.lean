@@ -198,8 +198,6 @@ theorem localSection_add {χ₁ χ₂ : Fˣ →* ℂˣ} (h₁ : Continuous χ₁
     rw [← integral_add (integrable_localSectionIntegrand h₁ h₂ hs hΦ g)
       (integrable_localSectionIntegrand h₁ h₂ hs hΨ g)]
     congr 1
-    funext t
-    simp only [slice, Pi.add_apply]
     ring
   simp only [localSection, Pi.add_apply, hZ]
   ring
@@ -212,8 +210,6 @@ theorem localSection_smul (χ₁ χ₂ : Fˣ →* ℂˣ) (s c : ℂ) (Φ : (Fin 
     simp only [localZeta]
     rw [← integral_const_mul]
     congr 1
-    funext t
-    simp only [slice, Pi.smul_apply, smul_eq_mul]
     ring
   simp only [localSection, Pi.smul_apply, smul_eq_mul, hZ]
   ring
@@ -226,8 +222,6 @@ theorem localSection_smul_arg (χ₁ χ₂ : Fˣ →* ℂˣ) (s : ℂ) (Φ : (Fi
     funext t
     simp only [slice, vecMul_zero_cons]
     congr 1
-    funext j
-    simp only [Pi.smul_apply, smul_eq_mul]
     ring
   simp only [localSection, hs, localZeta_mul_right, Pi.smul_apply, smul_eq_mul]
   ring

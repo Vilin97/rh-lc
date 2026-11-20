@@ -109,8 +109,6 @@ theorem hasJumps_prod (hT : LocTied l P AI)
   | empty =>
     rw [Finset.prod_empty]
     convert hasJumps_one AI hT using 1
-    funext τ
-    simp
   | insert a s ha ih =>
     rw [Finset.prod_insert ha]
     convert hasJumps_mul AI hT (hasJumps_zpow AI hT (hψ a) (c a)) ih using 1

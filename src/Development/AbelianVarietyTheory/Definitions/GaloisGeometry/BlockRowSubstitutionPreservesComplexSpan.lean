@@ -1139,8 +1139,6 @@ theorem gen_mem (G : Tau → Matrix (Fin (P.m + 1)) (Fin (P.m + 1)) ℂ) (M : Ta
   have h1 := GlobalTheory.HP.foValC_tr lam (fun τ => (M τ : Matrix (Fin (P.m + 1)) (Fin (P.m + 1)) ℂ)) hu h0
   rw [hX, hM, key, hK]
   convert h1 using 1
-  funext z
-  simp only [fnOf, GlobalTheory.HP.foTr, LinearMap.coe_mk, AddHom.coe_mk, Pi.one_apply, Matrix.one_mul]
 
 end Gen
 

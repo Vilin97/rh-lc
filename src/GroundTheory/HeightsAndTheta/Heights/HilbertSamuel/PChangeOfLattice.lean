@@ -91,8 +91,6 @@ theorem sec_eq_pow (x : J → Ω) (n : ℕ) : sec ℤ x n = Submodule.span ℤ (
       Set.range x := by
     rw [← Set.range_comp]
     congr 1
-    funext i
-    simp
   rw [sec, ← homogeneousSubmodule_one_pow, Submodule.map_pow, homogeneousSubmodule_one_eq_span_X,
     Submodule.map_span, e]
 

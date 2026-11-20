@@ -40,16 +40,12 @@ private theorem quaternaryFourier_add (δ : F) {φ φ' : V4 F → ℂ} (hφ : φ
   unfold ft4
   rw [← integral_add (integrable_ft δ hφ v) (integrable_ft δ hφ' v)]
   congr 1
-  funext y
-  simp only [Pi.add_apply, add_mul]
 
 private theorem quaternaryFourier_smul (δ : F) (c : ℂ) (φ : V4 F → ℂ) (v : V4 F) :
     ft4 δ (c • φ) v = c * ft4 δ φ v := by
   unfold ft4
   rw [← integral_const_mul]
   congr 1
-  funext y
-  simp only [Pi.smul_apply, smul_eq_mul, mul_assoc]
 
 private def opN (δ : F) (b : A F) : Module.End ℂ (S4 F) where
   toFun φ := ⟨fun v => ψ (b * q4 δ v) * φ.1 v, by

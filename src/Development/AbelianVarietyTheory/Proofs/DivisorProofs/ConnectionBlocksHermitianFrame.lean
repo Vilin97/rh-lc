@@ -172,8 +172,6 @@ theorem connBlocks_secondForm {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ
     intro ξ
     rw [covDel]
     congr 1
-    funext a
-    simp only [splitSec, Pi.add_apply]
     rw [del_add (diff_mulVec hI hu' a) (diff_mulVec hL hq' a), ContinuousLinearMap.add_apply,
       del_mulVec hI hu' ξ a, del_mulVec hL hq' ξ a]
     simp [add_assoc]

@@ -35,8 +35,6 @@ theorem exp_smul_eq {n : ℕ} {Y : Matrix (Fin n) (Fin n) ℂ} (hY : Y.IsHermiti
     conv_lhs => rw [hs]
     rw [← Matrix.smul_mul, ← Matrix.mul_smul, ← diagonal_smul]
     congr 3
-    funext j
-    simp
   rw [h3]
   refine (Matrix.exp_units_conj (⟨U, Uᴴ, h1, h2⟩ : (Matrix (Fin n) (Fin n) ℂ)ˣ) _).trans ?_
   rw [Matrix.exp_diagonal]

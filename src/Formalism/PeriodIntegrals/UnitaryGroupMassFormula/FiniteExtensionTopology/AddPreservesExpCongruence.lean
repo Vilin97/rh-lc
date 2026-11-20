@@ -136,8 +136,6 @@ theorem addPreservesExpCongruence : S3 := by
     rw [← nhds_translation_add_neg x, ← nhds_translation_add_neg (algebraMap O' (FractionRing O') x),
       h0, Filter.comap_comap, Filter.comap_comap]
     congr 1
-    funext y
-    simp only [Function.comp, map_add, map_neg]
   have hcont : Continuous (algebraMap O' (FractionRing O')) := hind.continuous
   have hrange : Set.range (algebraMap O' (FractionRing O')) = (fracB ϖ 0 : Set (FractionRing O')) := by
     ext x

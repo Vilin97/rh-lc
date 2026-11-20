@@ -124,13 +124,9 @@ theorem expands_rowSubst (ν : Fin N → ℕ) (g : Matrix (Fin N) (Fin N) ℂ_[p
       rw [← Formalism.GradedWeylDivisibility.lclosedeq_hw_map (Int.castRingHom O), Formalism.GradedWeylDivisibility.lclosedeq_applyWord_map, map_map, hsub]
   | zero =>
     convert expands_zero (p := p) ν using 1
-    funext z
-    simp
   | add x y _ _ hx hy =>
     have := expands_add hx hy
     convert this using 1
-    funext z
-    simp
   | smul c x _ hx =>
     have := expands_smul (c : ℂ_[p]) c.2 hx
     convert this using 1
@@ -204,8 +200,6 @@ theorem subst_mem_iff (p : ℕ) [Fact p.Prime] (T : Type) [Fintype T] (N : ℕ) 
     have := subst_mem (fun τ => (g τ)⁻¹) c⁻¹ (by rw [norm_inv, hc, inv_one])
       (fun τ => inv_entry_le (hg τ) (hd τ)) h
     convert this using 1
-    funext y
-    simp only [← Matrix.mul_assoc, Matrix.mul_nonsing_inv _ (hu _), Matrix.one_mul, inv_mul_cancel_left₀ hc0]
   · exact subst_mem g c hc.le hg
 
 end GlobalTheory.WeylTensorSubst

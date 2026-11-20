@@ -29,8 +29,6 @@ theorem isUnimod_of_equiv {G₁ G₂ : Type*} [Group G₁] [TopologicalSpace G�
       show μ₁ = map (φ.symm : G₂ → G₁) μ₂ from rfl, hme.integral_map,
       integral_map (measurable_mul_const (φ g)).aemeasurable hf₂c.aestronglyMeasurable]
     congr 1
-    funext y
-    simp only [f₂, map_mul, ContinuousMulEquiv.symm_apply_apply]
   have hpos : ∫ x, f x ∂μ₁ ≠ 0 :=
     (f.continuous.integral_pos_of_hasCompactSupport_nonneg_nonzero hfc hf0 hf1).ne'
   have hpos₂ : ∫ y, f₂ y ∂μ₂ ≠ 0 := by

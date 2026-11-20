@@ -34,8 +34,6 @@ theorem kMean_translate {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (M : D
         (ContinuousLinearMap.integral_comp_comm _ (hint i)).symm
     _ = ∫ k, (fun x => c i (k₀⁻¹ * x) • M.σ τ (toMK x) w) (k₀ * k) ∂muK (M.ε τ) := by
         congr 1
-        funext k
-        simp only [inv_mul_cancel_left, ContinuousLinearMap.map_smul, hm k]
         rfl
     _ = ∫ k, c i (k₀⁻¹ * k) • M.σ τ (toMK k) w ∂muK (M.ε τ) :=
         integral_mul_left_eq_self (μ := muK (M.ε τ)) (fun x => c i (k₀⁻¹ * x) • M.σ τ (toMK x) w) k₀

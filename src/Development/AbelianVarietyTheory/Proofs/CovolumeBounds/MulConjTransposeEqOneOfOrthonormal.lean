@@ -33,8 +33,6 @@ theorem alternatingMap_apply_eq_sum_minors {n : Type*} [Fintype n] [LinearOrder 
     exteriorPower.basis_apply, exteriorPower.ιMulti_family,
     exteriorPower.alternatingMapLinearEquiv_apply_ιMulti]
   congr 2
-  funext a
-  simp only [b, Function.comp_apply, Pi.basisFun_apply]
   rfl
 
 theorem det_mul_eq_sum_minors {n : Type*} [Fintype n] [LinearOrder n] {i : ℕ}

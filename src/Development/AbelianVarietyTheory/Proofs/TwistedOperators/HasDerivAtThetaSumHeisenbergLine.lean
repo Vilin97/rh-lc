@@ -180,8 +180,6 @@ theorem pureA_add (f : (κ → mixedEmbedding.mixedSpace F) → ℂ) (g : (κ �
         g (fun i => algebraMap F (FiniteAdeleRing (𝓞 F) F) (ξ i) + Prod.snd (y i)) := by
   unfold pureA
   congr 2
-  funext i
-  simp only [Pi.add_apply]
   rw [show ((algebraMap F (AF F) (ξ i) + y i) : AF F).1 = (algebraMap F (AF F) (ξ i)).1 + (y i).1 from rfl, map_add,
     InfiniteAdeleRing.mixedEmbedding_eq_algebraMap_comp]
   rfl
@@ -327,8 +325,6 @@ theorem GlobalTheory.HeisLineTheta.hasDerivAt_thetaSum_line : ∀ {F : Type} [Fi
     intro Ψ ξ t
     rw [norm_rho hψ, norm_rho hψ, e_smul]
     congr 2
-    funext i
-    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, hy, add_assoc]
     rfl
   obtain ⟨c, hc, hcb⟩ := majorant hΦ' (fun i => Prod.snd (a' i)) R
   obtain ⟨c0, hc0, hcb0⟩ := majorant hΦ (fun i => Prod.snd (a' i)) R

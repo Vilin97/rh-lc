@@ -123,8 +123,6 @@ theorem exists_op_left {π : UnitaryRep G H} {σ : UnitaryRep G K} (hπ : SqInt 
     rw [← inner_conj_symm, ← hA, ← integral_conj]
     unfold pairing
     congr 1
-    funext g
-    simp
   refine ⟨A, fun h w => ?_, key⟩
   refine ext_inner_right ℂ fun w' => ?_
   rw [UnitaryRep.inner_map_left, ← key, ← key, ← pairing_left π σ v w v' _ h]

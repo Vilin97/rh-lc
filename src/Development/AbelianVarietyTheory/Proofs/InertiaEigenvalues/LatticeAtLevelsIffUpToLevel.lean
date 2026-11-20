@@ -192,8 +192,6 @@ theorem spanIsLines_of_graded_onto {N : Type} (E : N → ℤ → M) {r : ℕ} (u
     simp only [he, serAct_lines]
     rw [← lines_sum, ← hf]
     congr 1
-    funext k
-    simp only [Matrix.mulVec, dotProduct, Mx, Matrix.of_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     exact Finset.sum_congr rfl fun s _ => by ring
 
 theorem serSpan_eq_graded (A : ℤ → Submodule L M) (hA : Antitone A) (hfd : FiniteDimensional L ↥(⨆ a, A a))

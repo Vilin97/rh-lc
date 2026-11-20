@@ -49,8 +49,6 @@ theorem UpperTheory.V.Pa.pres :
     refine ⟨c, hc, ?_⟩
     show Lifts S.h S.k _
     convert hL using 1
-    funext j
-    simp only [Finset.sum_apply, Pi.smul_apply, Submodule.coe_sum, Submodule.coe_smul]
     exact hlin _ _ _
   have hB : ∀ (e : ℕ) (α : Fin e → S.Tp), LinearIndependent S.F α →
       (∀ i j, Pi.single j (α i) ∈ U) → e + S.k.g * S.k.g ≤ D0 := by

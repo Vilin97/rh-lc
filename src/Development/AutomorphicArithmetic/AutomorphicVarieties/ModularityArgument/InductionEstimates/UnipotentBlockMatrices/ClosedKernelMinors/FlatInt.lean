@@ -82,8 +82,6 @@ private theorem specW [IsTotallyComplex K] (μ : Measure (G1 K (2 + 2))) [μ.IsH
     fun i => ⟨(hT i).2.1, (hT i).2.2.1, A.spec _ _ _ (hc i) (hcc i) (hU i)⟩
   rw [huU, map_sum]
   convert hR using 1
-  funext x
-  simp only [Finset.sum_apply, th]
   rw [← finsum_sum_comm]
   · refine finsum_congr fun q => ?_
     rw [hsum (HH _), map_sum]

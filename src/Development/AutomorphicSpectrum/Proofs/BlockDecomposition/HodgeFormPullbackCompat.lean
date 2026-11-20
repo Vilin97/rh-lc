@@ -110,8 +110,6 @@ theorem mOm_form (h : SemiHom σ α) {a : ℕ} (g₀ : B) (g : Fin a → B) :
   rw [SemiHom.coe_mOm, exteriorPower.ιMulti_apply_coe, exteriorPower.ιMulti_apply_coe, ExteriorAlgebra.ιMulti_apply,
     ExteriorAlgebra.ιMulti_apply, map_list_prod, List.map_ofFn]
   congr 2
-  funext k
-  simp
 
 end Mom
 

@@ -83,8 +83,6 @@ theorem gauss_cancel : ∀ (F : Type) [Field F] [CharZero F] [ValuativeRel F] [T
       rw [Measure.map_map (hm a) (measurable_const_mul _)]
       simp only [m]
       congr 1
-      funext z
-      simp only [Units.val_mul, Units.coe_map, Function.comp, map_mul]
       ring
     simp only [n]
     rw [h2, h1, Measure.map_smul, smul_smul, map_mul, mul_right_comm,

@@ -39,8 +39,6 @@ theorem eq_of_pairing : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fi
         = ∫ x, f x * starRingEnd ℂ ((f - g) x) ∂μ - ∫ x, g x * starRingEnd ℂ ((f - g) x) ∂μ := by
       rw [← integral_sub (hint f hf _ hd) (hint g hg _ hd)]
       congr 1
-      funext x
-      simp only [Pi.sub_apply, sub_mul]
     rw [e2, e, sub_self]
   have hcont : Continuous (f - g) :=
     (GlobalTheory.ThetaTransformMeas.continuous_of_mem_schA F hf).sub (GlobalTheory.ThetaTransformMeas.continuous_of_mem_schA F hg)

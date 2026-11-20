@@ -31,8 +31,6 @@ theorem split_sub {F E : Type} [Field F] [NumberField F] [Field E] [NumberField 
   refine ⟨_, _, ?_, hasLaw_right (hasLaw_sub k1.2.1 k2.2.1 1) y, hasLaw_right (hasLaw_sub k1.2.2 k2.2.2 1) y⟩
   rw [one_smul, one_smul] at k3
   convert k3 using 1
-  funext x
-  simp only [Pi.add_apply, Pi.sub_apply, one_smul]
   ring
 
 theorem sigSplit_of (hS : SplitEx) (hP : Tow.PlaneSkew) (hI : Iwa) (hC : CTBasic) (hA : IAut) (hR : SigRe) : SigSplit := by

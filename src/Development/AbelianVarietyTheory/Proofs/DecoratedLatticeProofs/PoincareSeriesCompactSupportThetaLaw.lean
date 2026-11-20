@@ -77,8 +77,6 @@ theorem poincare_law : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar 
     rw [vanish U u hu γ (fun h' => hγ (hF.mem_toFinset.2 h')), mul_zero]
   · rw [← (Equiv.subRight γ₀).tsum_eq, ← tsum_mul_left]
     congr 1
-    funext γ
-    simp only [Equiv.subRight_apply]
     rw [ratW_sub]
     have e1 : ratW T A γ - ratW T A γ₀ + (ratW T A γ₀ + u) = ratW T A γ + u := by abel
     have e2 : symplOH A T (ratW T A γ - ratW T A γ₀) (ratW T A γ₀ + u) =

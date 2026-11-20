@@ -455,8 +455,6 @@ theorem truncated_perron_psi : ∃ C : ℝ, 0 < C ∧ ∀ (q : ℕ) [NeZero q] (
   have hsum : LSeriesSummable a σ := by
     have h1 := LSeriesSummable_twist_vonMangoldt χ (s := (σ : ℂ)) (by simpa using hσ1)
     convert h1 using 1
-    funext n
-    simp only [ha, Pi.mul_apply]
     ring
   have hLS : ∀ t : ℝ, -(deriv (LFunction χ) ((σ : ℂ) + t * I) / LFunction χ ((σ : ℂ) + t * I))
       = LSeries a ((σ : ℂ) + t * I) := by
@@ -464,8 +462,6 @@ theorem truncated_perron_psi : ∃ C : ℝ, 0 < C ∧ ∀ (q : ℕ) [NeZero q] (
     rw [LFunction_eq_LSeries χ (hre t), deriv_LFunction_eq_deriv_LSeries χ (hre t), ← neg_div,
       ← LSeries_twist_vonMangoldt_eq χ (hre t)]
     congr 1
-    funext n
-    simp only [ha, Pi.mul_apply]
     ring
   have hJ : ∫ t in (-T)..T, -(deriv (LFunction χ) ((σ : ℂ) + t * I) / LFunction χ ((σ : ℂ) + t * I))
         * (u : ℂ) ^ ((σ : ℂ) + t * I) / ((σ : ℂ) + t * I)

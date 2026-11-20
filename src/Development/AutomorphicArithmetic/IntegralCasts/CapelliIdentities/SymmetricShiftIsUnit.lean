@@ -138,7 +138,5 @@ theorem UpperTheory.symplectic_generation :
         Matrix.mul_assoc, ← h3]
       abel)
   convert hcomp _ _ (hU _ hX.neg) key using 1
-  funext w
-  simp only [hw, Function.comp, add_mulVec, neg_mulVec, mulVec_add, mulVec_mulVec, Matrix.neg_mul,
     Prod.mk.injEq, and_true]
   abel

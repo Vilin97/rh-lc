@@ -30,8 +30,6 @@ theorem lin_update_two_coords {κ : Type} [Fintype κ] [DecidableEq κ] (x y : �
       ((![Pi.single x 1, Pi.single y 1, n'] : Fin 3 → κ → ℤ) j z : ℝ)) =
       lin fun z => ((Function.update (Function.update n x c₀) y c₁ z : ℤ) : ℝ) := by
   congr 1
-  funext z
-  simp only [Fin.sum_univ_three, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.tail_cons,
     Matrix.head_cons, Pi.single_apply, Function.update_apply]
   by_cases h1 : z = x
   · subst h1; simp [hx0, hxy]

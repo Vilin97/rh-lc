@@ -107,15 +107,11 @@ theorem mem_schwartzBruhatPoints_iff (b : Basis ι K X) {f : AdelicPoints K X �
     have h' := comp_mulVec_mem_schwartzBruhatPi (c.toMatrix b) (b.toMatrix c)
       (Basis.toMatrix_mul_toMatrix_flip b c) (Basis.toMatrix_mul_toMatrix_flip c b) h
     convert h' using 1
-    funext x
-    simp only [Function.comp_apply]
     rw [← adelicCoord_adelicCoord_symm b c x, LinearEquiv.symm_apply_apply]
   · intro h
     have h' := comp_mulVec_mem_schwartzBruhatPi (b.toMatrix c) (c.toMatrix b)
       (Basis.toMatrix_mul_toMatrix_flip c b) (Basis.toMatrix_mul_toMatrix_flip b c) h
     convert h' using 1
-    funext x
-    simp only [Function.comp_apply]
     rw [← adelicCoord_adelicCoord_symm c b x, LinearEquiv.symm_apply_apply]
 
 variable (B : LinearMap.BilinForm K X)

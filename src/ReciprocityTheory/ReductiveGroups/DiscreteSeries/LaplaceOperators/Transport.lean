@@ -407,8 +407,6 @@ theorem transport (hIC : IntCoefStatement) {k r : ℕ} (hk : 1 ≤ k) {ε : Fin 
     convert hne2 using 1
     unfold aaFun sInt psiCoef
     congr 1
-    funext p
-    simp only [hU₁, LinearIsometryEquiv.inner_map_map]
 
   set ψ := Formalism.MainNotions.S.psiGen k r z c with hψ
   let F : T.V → T.V → Vp → Mat k r → Mat k r → Mt k r × Mt k r → Vp := fun w₁ w₂ ξ Y₀ Y p =>

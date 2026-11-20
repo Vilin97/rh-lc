@@ -84,8 +84,6 @@ theorem split {m : ℕ} (E : Fin n → Fin n → Module.End ℂ M) (col : Fin m 
     unfold colD
     congr 1
     congr 1
-    funext q
-    simp only [Function.comp_apply, hlist, List.map_ofFn, Function.comp_def]
     congr 1
     congr 1
     funext p

@@ -88,8 +88,6 @@ theorem lintegral_ball_rpow_lt_top {D : ℕ} (hD : 1 ≤ D) (w₀ : Fin D → �
     rw [← lintegral_sub_right_eq_self (fun y => (Metric.ball (0 : Fin D → ℂ) ε).indicator
       (fun y => ENNReal.ofReal (‖y‖ ^ a)) y) w₀]
     congr 1
-    funext w
-    simp only [indicator, Metric.mem_ball, dist_eq_norm, sub_zero]
   rw [h2]; exact h1
 
 end DivisionNearS

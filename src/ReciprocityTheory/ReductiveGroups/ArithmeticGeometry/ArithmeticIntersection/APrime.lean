@@ -47,8 +47,6 @@ theorem symm_consWord_left {V : Type*} [AddCommGroup V] [Module ℝ V] {D : ℕ}
     I (fun j => consWord k i x₁ x₁ x₂ a j) = I (fun j => interp k (i + 1) x₁ x₂ a j) := by
   refine (symm_swap_nat I hI (consWord k i x₁ x₁ x₂ a) 0 2 (by omega) (by omega)).trans ?_
   congr 1
-  funext j
-  simp only [consWord, interp]
   split_ifs <;> first | rfl | omega
 
 theorem symm_consWord_right {V : Type*} [AddCommGroup V] [Module ℝ V] {D : ℕ}
@@ -61,8 +59,6 @@ theorem symm_consWord_right {V : Type*} [AddCommGroup V] [Module ℝ V] {D : ℕ
     (if m = 1 then 2 * i + 1 else if m = 2 * i + 1 then 1 else m)) 2 (2 * i + 2) (by omega)
     (by omega)).trans ?_
   congr 1
-  funext j
-  simp only [consWord, interp]
   split_ifs <;> first | rfl | omega
 
 theorem aPrime_thm : APrimeStatement := by
@@ -87,8 +83,6 @@ theorem aPrime_thm : APrimeStatement := by
       (fun j : Fin (D + 2) => if (j : ℕ) < 1 + 2 * k then S.ξ else S.A)
     refine Eq.trans ?_ h
     congr 1
-    funext j
-    simp only [interp]
     split_ifs <;> first | rfl | exact S.base | omega
   have hfun : (Fin.cons (S.p₂ S.ξ) (fun j => S.p₁ (mix (2 * k) S.ξ S.A j)) :
       Fin (D + 2) → S.VW) =

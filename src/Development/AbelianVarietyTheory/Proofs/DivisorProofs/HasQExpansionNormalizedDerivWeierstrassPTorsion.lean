@@ -14,8 +14,6 @@ theorem tsum_inv_cube : ∑' m : ℤ, 1 / (m : ℂ) ^ 3 = 0 := by
     conv_lhs => rw [← (Equiv.neg ℤ).tsum_eq]
     rw [← tsum_neg]
     congr 1
-    funext m
-    simp only [Equiv.neg_apply, Int.cast_neg]
     ring
   linear_combination h / 2
 

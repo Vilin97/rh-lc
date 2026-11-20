@@ -169,8 +169,6 @@ lemma tor_mem (ε : Fin n → Bool) (θ : Fin n → ℝ) : tor θ ∈ Kset ε :=
   · rw [Matrix.mem_unitaryGroup_iff, Matrix.star_eq_conjTranspose, Matrix.diagonal_conjTranspose,
       Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
     congr 1
-    funext a
-    simp only [Pi.star_apply, RCLike.star_def]
     rw [← Complex.exp_conj, ← Complex.exp_add]
     simp
   · simp only [Formalism.REAL.Jm, Matrix.diagonal_mul_diagonal, mul_comm]

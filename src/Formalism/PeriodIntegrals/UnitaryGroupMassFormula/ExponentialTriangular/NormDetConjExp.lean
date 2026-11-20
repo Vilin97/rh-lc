@@ -34,8 +34,6 @@ lemma conj_herm (W : Matrix (Fin n) (Fin n) ℂ) (r : Fin n → ℝ) :
   rw [conjTranspose_mul, conjTranspose_mul, conjTranspose_conjTranspose, diagonal_conjTranspose,
     Matrix.mul_assoc]
   congr 3
-  funext i
-  simp
 
 lemma exp_conj {W : Matrix (Fin n) (Fin n) ℂ} (hW : W ∈ unitaryGroup (Fin n) ℂ) (d : Fin n → ℝ) :
     NormedSpace.exp (W * diagonal (fun i => (d i : ℂ)) * Wᴴ) =
@@ -54,8 +52,6 @@ lemma sq_conj {W : Matrix (Fin n) (Fin n) ℂ} (hW : W ∈ unitaryGroup (Fin n) 
       W * diagonal (fun i => (Real.exp (2 * d i) : ℂ)) * Wᴴ := by
   rw [conj_mul_conj hW]
   congr 3
-  funext i
-  simp only [two_mul, Real.exp_add, Complex.ofReal_mul]
 
 lemma det_conj {W : Matrix (Fin n) (Fin n) ℂ} (hW : W ∈ unitaryGroup (Fin n) ℂ) (d : Fin n → ℂ) :
     (W * diagonal d * Wᴴ).det = ∏ i, d i := by

@@ -36,8 +36,6 @@ theorem revB_isB : ∀ (D : D7) (S T : HSp D) (C : Ctx S T) (B₀ : C.Bas), C.Is
     unfold sgnM
     rw [Matrix.submatrix_diagonal _ _ σ.injective]
     congr 1
-    funext a
-    simp only [Function.comp, hsg]
   have hD' : ∀ M : Matrix (Fin T.rank) (Fin T.rank) ℂ, M.submatrix id σ * sgnM C.X = (M * sgnM C.X).submatrix id σ := by
     intro M
     ext i j

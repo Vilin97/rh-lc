@@ -50,8 +50,6 @@ theorem dLine_add (hψ : IsStdChar D ψ (-1)) {S T : HSp D} {M : ℝ →+ WO S T
   refine Eq.trans ?_ h.deriv
   unfold dLine
   congr 1
-  funext t
-  simp only [heisO, Pi.add_apply, mul_add]
 
 variable {A S A' : HSp D} {χA χS χS' χA' : (AE D)ˣ →* Circle} {oma : Om A S} {omb : Om S A'}
 
@@ -317,8 +315,6 @@ theorem biComb_avg (ha : IsWeilDatumO ψ A S χA χS oma) (hb : IsWeilDatumO ψ 
   rw [← Finset.sum_congr rfl fun x _ => integral_finset_sum _ fun y _ => hi _ _ _,
     ← integral_finset_sum _ fun x _ => integrable_finset_sum _ fun y _ => hi _ _ _]
   congr 1
-  funext k
-  simp only [biComb, GlobalTheory.FrComb.comb_apply, Finset.mul_sum]
   refine Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ => ?_
   ring
 

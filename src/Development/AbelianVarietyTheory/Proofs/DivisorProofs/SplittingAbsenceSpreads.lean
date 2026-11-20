@@ -91,8 +91,6 @@ theorem eval_eqs_point {k : Type} [CommRing k] (ψ : A →+* k) (z : Var σ D �
   simp only [eqs]
   rw [hom_eval, map_gen]
   congr 2
-  funext i
-  simp
 
 theorem eval_eqs_inv {k : Type} [CommRing k] (ψ : A →+* k) (z : Var σ D → k)
     (f g : MvPolynomial σ A) (b : Bool) :
@@ -102,8 +100,6 @@ theorem eval_eqs_inv {k : Type} [CommRing k] (ψ : A →+* k) (z : Var σ D → 
   simp only [eqs, eval₂_sub, eval₂_mul, eval₂_X, eval₂_one]
   rw [← coe_eval₂Hom, hom_eval, MvPolynomial.map_map, eval₂Hom_comp_C]
   congr 4
-  funext i
-  simp
 end GlobalTheory.SplitSpread
 
 namespace GlobalTheory.SplitSpread

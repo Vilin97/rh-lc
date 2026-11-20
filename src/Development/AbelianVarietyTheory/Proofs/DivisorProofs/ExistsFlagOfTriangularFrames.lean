@@ -53,8 +53,6 @@ theorem exists_isFrame_sub {U : X.Opens} (P : Sub F) (c : Fin r → Γ(F, U)) (h
   · refine LinearIndependent.of_comp (QCoh.appLinear P.incl V) ?_
     have := (hc.basis h).linearIndependent.comp _ (Fin.castLE_injective hl)
     convert this using 1
-    funext j
-    simp only [Function.comp_apply, IsFrame.basis_apply, QCoh.appLinear_apply, app_resM,
       Sub.incl_app_mkSec]
   · have h1 := P.incl_app_mem t
     rw [← (hc.basis h).sum_repr (P.incl.app V t)] at h1

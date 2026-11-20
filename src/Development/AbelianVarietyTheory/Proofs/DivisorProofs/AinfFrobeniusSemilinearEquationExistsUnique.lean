@@ -37,8 +37,6 @@ theorem iter_map {T T' : Type} [CommRing T] [CommRing T'] {ι : Type} [Fintype �
   | succ k ih =>
     rw [Function.iterate_succ_apply, Function.iterate_succ_apply, ← ih]
     congr 1
-    funext i
-    simp only [← hf]
     exact (RingHom.map_mulVec f M _ i).symm
 
 theorem coeff_nil {S : Type} [CommRing S] {p : ℕ} [Fact p.Prime] [CharP S p] (y : Perfection S p)

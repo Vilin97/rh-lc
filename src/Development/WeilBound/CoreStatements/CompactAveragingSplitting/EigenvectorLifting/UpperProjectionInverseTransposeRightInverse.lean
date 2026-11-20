@@ -1069,8 +1069,6 @@ theorem pUnr_eq (a a' : ℕ) (ϖ : kˣ) (ν β : kˣ →* ℂˣ) (Φ : Matrix (F
   rw [← zetaUnr_const_mul]
   unfold pUnr
   congr 1
-  funext g
-  simp only [omA, map_one, inv_one, Units.val_one, apow_one, Matrix.one_mul, Fintype.card_fin, mul_one, one_mul]
   congr 2
   exact Matrix.mul_assoc _ _ _
 
@@ -1215,8 +1213,6 @@ theorem pUnr'_eq (hS : HidaSetting a a' ϖ α β ν) (hν : IsUnram ν) {Ψ : Ma
         ∂haarVol (KO k (Fin a')) := by
     unfold smallF
     congr 1
-    funext g
-    simp only [wt, Fintype.card_fin]
     ring
   show (invL a' (a + a') ϖ ν).eval 1 * smallP _ _ ν α Ψ h = _
   unfold smallP

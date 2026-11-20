@@ -148,8 +148,6 @@ theorem ex_smul (s : 𝓞 E) (z : ℂ) (a : (F.Di i).La) :
     F.ex i P (z • P (s • a)) = F.ex i P (z • P a) ≫ Xo.univ.t.act.act s := by
   rw [← F.ex_lin i P hP]
   congr 1
-  funext k
-  simp only [Pi.smul_apply, smul_eq_mul, hP.1]
   ring
 
 include hP in

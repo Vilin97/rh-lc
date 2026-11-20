@@ -76,8 +76,6 @@ theorem exists_isLieBasis_of_frame {E : Type} [Field E] [NumberField E] [IsCMFie
         refine (Over.OverMorphism.ext ?_)
         rw [← e]
         congr 3
-        funext i
-        simp
   refine ⟨v', fun a => (tan _).2 ?_, fun w hw => ?_⟩
   · rw [hρ, hv']
     exact hv a

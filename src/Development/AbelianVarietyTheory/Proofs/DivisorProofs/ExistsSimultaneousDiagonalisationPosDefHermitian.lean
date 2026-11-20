@@ -35,8 +35,6 @@ theorem simultaneous_diagonalisation :
   have hSH : Sᴴ = S := by
     rw [hS, Matrix.diagonal_conjTranspose]
     congr 1
-    funext i
-    simp
   have h0 : (U * S)ᴴ * G * (U * S) = 1 := by
     have : (U * S)ᴴ * G * (U * S) = S * (Uᴴ * G * U) * S := by
       rw [Matrix.conjTranspose_mul, hSH]; simp only [Matrix.mul_assoc]

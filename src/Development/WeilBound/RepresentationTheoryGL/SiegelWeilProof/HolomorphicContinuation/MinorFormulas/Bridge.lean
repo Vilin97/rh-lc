@@ -76,8 +76,6 @@ theorem cay_fQ (s : ℂ) (hs : s = 1 ∨ s = -1) (z : ℂ) (m : ℕ) (Q : Fm n) 
     have := hc.iteratedFDeriv_comp_perm (fun k => eU k (σ⁻¹ k)) σ
     rw [← this]
     congr 1
-    funext k
-    simp
   simp only [cay, hperm]
   rw [← Equiv.sum_comp (Equiv.inv (Equiv.Perm (Fin n)))]
   simp only [Equiv.inv_apply, inv_inv, Equiv.Perm.sign_inv]

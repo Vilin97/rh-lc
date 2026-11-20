@@ -71,13 +71,9 @@ theorem delta_mul (a b : ZMod N) : delta N a * delta N b = if a = b then delta N
   split_ifs with h
   · subst h
     congr 1
-    funext x
-    simp only [Pi.mul_apply, Pi.single_apply]
     split_ifs <;> simp
   · rw [← map_zero (GlobalTheory.CartierDual.addMonoidAlgebraEquiv ZU.{0} (ZMod N)).symm]
     congr 1
-    funext x
-    simp only [Pi.mul_apply, Pi.single_apply, Pi.zero_apply]
     split_ifs with h1 h2 <;> simp_all
 
 theorem sum_delta : ∑ a : ZMod N, delta N a = 1 := by

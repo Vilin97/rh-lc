@@ -32,8 +32,6 @@ theorem hess_pow {φ : Weight p σ B} (hφ : φ.IsCInf) (c : AlgChart p σ D) {y
   refine Eq.trans ?_ e
   show ReciprocityTheory.L2DbarEstimates.cHess D (fun v => (((φ.pow n).φ j (c.e.symm v) : ℝ) : ℂ)) (c.e y) = _
   congr 1
-  funext v
-  simp only [Function.comp_apply, Weight.zpow_φ]
   push_cast
   rfl
 

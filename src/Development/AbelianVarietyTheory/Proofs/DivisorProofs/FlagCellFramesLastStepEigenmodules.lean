@@ -21,8 +21,6 @@ theorem exists_mulVec_submatrix_mul_iff {R : Type} [CommRing R] {m n : Type} [Fi
     refine ⟨C⁻¹.mulVec (a ∘ e), ?_⟩
     rw [← Matrix.mulVec_mulVec, hC', hs]
     congr 1
-    funext i
-    simp
 
 end GlobalTheory.FlagMod.FieldFlag
 

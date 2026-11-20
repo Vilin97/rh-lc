@@ -159,8 +159,6 @@ theorem exists_local_component : ∀ (D : D7) (n q : ℕ), q.Prime → ∀ s : M
       push_cast at huv' c2
       have := add_mem (zsmul_mem c1 u) (zsmul_mem c2 v)
       convert this using 1
-      funext j
-      simp only [Pi.add_apply, Pi.smul_apply]
       simp only [zsmul_eq_mul, smul_eq_mul]
       linear_combination (-x j) * huv'
 

@@ -1138,8 +1138,6 @@ theorem ioAt_of_conj_ofFive : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0
     rw [map_smul, ← MvPolynomial.C_mul', ← mul_assoc, ← MvPolynomial.C_mul, inv_mul_cancel₀ hka0, MvPolynomial.C_1, one_mul,
       toP, MvPolynomial.aeval_rename, lieFac_eq_pow _ hx, Complex.ofReal_pow, ← aeval_scale _ _ hhom]
     congr 2
-    funext ℓ
-    simp only [Function.comp_apply, lt', two_div_fockScale, heL]
 
 end GlobalTheory.GalOne.IoCmp
 

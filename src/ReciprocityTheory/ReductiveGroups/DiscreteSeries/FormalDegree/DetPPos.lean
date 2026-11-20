@@ -279,8 +279,6 @@ theorem pmat_shcAdCL (y w : PCoord ε → ℂ) : pmat (shcAdCL y w) = shcAd y (p
   have hJJ : J * J = 1 := by
     rw [hJd, Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
     congr 1
-    funext a
-    simp only [hsd]
     split_ifs <;> norm_num
   have hJZ : ∀ z : PCoord ε → ℂ, J * pmat z * J = -pmat z := by
     intro z

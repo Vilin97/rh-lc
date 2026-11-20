@@ -286,8 +286,6 @@ theorem word_comb (hu : IsUnit Hm.det) (hσ : IsURepOn (Formalism.QuantumDetermi
     rw [word_comb hu hσ a hx hy hz l h']
     refine HasDerivAt.deriv ?_
     convert (((hd x hx).sub (hd y hy)).const_smul a).sub (hd z hz) using 1
-    funext t
-    simp
 
 theorem SmFam.hasDerivAt_form (hu : IsUnit Hm.det) (hσ : IsURepOn (Formalism.QuantumDeterminants.UH Hm) σ) {c : ℝ → H} (hc : SmFam Hm σ c)
     {ℓ : H →ₗ[ℂ] ℂ} (hℓ : Sobolev₂ (lieH Hm) σ ℓ) : HasDerivAt (fun t => ℓ (c t)) (ℓ (_root_.deriv c 0)) 0 := by

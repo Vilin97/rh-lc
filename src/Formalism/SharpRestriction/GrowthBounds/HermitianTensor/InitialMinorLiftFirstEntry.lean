@@ -263,8 +263,6 @@ theorem qc_pad (A : Type) [CommRing A] (r : ℕ) : ∀ e : ℕ,
   refine ⟨(initMinor A (qcLiftI (Fin.elim0 : Fin 0 → Fin r)) hs') ^ e, ?_, ?_, ?_, ?_⟩
   · have := qc_pow_mem A (r + 1 + 1) (r + 1 + 1) _ _ hmem e
     convert this using 2
-    funext t
-    simp only [Pi.smul_apply, smul_eq_mul]
     unfold shapeC
     split_ifs
     · simp

@@ -188,8 +188,6 @@ theorem soCont (hP : KP) : SoCont := by
     simp only [Model.I]
     rw [← integral_finset_sum _ fun j _ => hint (t j) (htT j) (w j)]
     congr 1
-    funext x
-    simp only [theta]
     rw [map_sum]
     exact thetaSum_finset_sum _ _ fun j _ => hpres _ _ (hmem _ (htT j).1 (w j))
   rw [hI f hSoLim]

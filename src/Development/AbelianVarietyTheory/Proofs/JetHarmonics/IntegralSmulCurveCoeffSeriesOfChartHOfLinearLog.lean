@@ -570,8 +570,6 @@ theorem intS_invDeriv {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) {γ : κ
         subst_comp_subst_apply hE hS, invM, rename_eq_subst,
         subst_comp_subst_apply (hasSubst_of_constantCoeff_zero axis_const) (HasSubst.X_comp _)]
       congr 1
-      funext p
-      simp only [e]
       split_ifs
       · rw [s1, subst_X (HasSubst.X_comp _)]
         rfl

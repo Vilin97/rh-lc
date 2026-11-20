@@ -80,8 +80,6 @@ lemma mod_auto (e : GN k r ≃* GN k r) (he : Continuous e) (hs : Continuous e.s
     rw [Measure.map_map (measurable_mul_const _) he.measurable,
       Measure.map_map he.measurable (measurable_mul_const _)]
     congr 1
-    funext x
-    simp only [Function.comp_apply, map_mul]
   rw [hE, Measure.map_smul, map_rmul, map_rmul, Measure.map_smul, hE, smul_smul, smul_smul] at key
   have := smul_cancel key
   rw [mul_comm] at this

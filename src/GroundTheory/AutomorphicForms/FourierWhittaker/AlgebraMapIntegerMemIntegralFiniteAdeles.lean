@@ -472,8 +472,6 @@ theorem IsIntegralPeriodic.hasSum_vecCoeff {f : (ι → 𝔸[K]) → ℂ} (hf : 
       (GroundTheory.Global.adelicChar K (pair (dualVec n) x) : ℂ)) (f x) := by
     rw [hfx]
     convert h2 using 1
-    funext n
-    simp only [Function.comp_apply, Equiv.neg_apply, hchar, smul_eq_mul, hcoeff, neg_neg]
   refine (dualVec_injective.hasSum_iff fun ξ hξ => ?_).1 h3
   have hnd : ¬ IsDual ξ := fun hd => hξ (exists_dualVec_eq hd)
   rw [vecCoeff_eq_zero_of_not_isDual hf.periodic hf.finite hnd, zero_mul]

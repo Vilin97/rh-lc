@@ -68,8 +68,6 @@ theorem map_secIdeal {n : ℕ} (e : ℕ) (I : Ideal (MvPolynomial (Fin n) K)) (v
       Ideal.span (Set.range (secForm (parYF K e n))) := by
     rw [Ideal.map_span, ← Set.range_comp]
     congr 2
-    funext i
-    simp only [Function.comp_apply, secForm, map_linForm, parToFrac_parY]
   have h3 : (Ideal.span {chartForm (parY e n v) - 1}).map (MvPolynomial.map (parToFrac e n v)) =
       Ideal.span {chartForm (parYF K e n) - 1} := by
     rw [Ideal.map_span, Set.image_singleton, map_sub, map_one, chartForm, chartForm, map_linForm]

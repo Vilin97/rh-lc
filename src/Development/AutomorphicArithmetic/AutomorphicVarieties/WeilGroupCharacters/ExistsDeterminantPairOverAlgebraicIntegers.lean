@@ -291,8 +291,6 @@ private theorem qb_pair {l : ℕ} [Fact l.Prime] {F : GFrame l} {O : Type} [Comm
     congr 1
     simp only [GFrame.oEl, map_list_prod, List.map_ofFn]
     congr 2
-    funext i
-    simp only [Function.comp_apply, map_sub, MonoidAlgebra.mapRingHom_single, map_one]
     rfl
   · refine qb_tr (hn _ (B.u.I u g hg h)) _ hj D _ hD _ _ ?_
     rw [map_sub, map_sub, map_one, map_one, MonoidAlgebra.mapRingHom_single, map_one, sub_eq_zero]

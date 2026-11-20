@@ -247,8 +247,6 @@ theorem hatL_of_hat (Λ Λ' : Submodule (𝓞 E) (Fin n → E))
   simp only [AlgEquiv.apply_symm_apply] at h3
   refine h3.trans (iff_of_eq ?_)
   congr 1
-  funext i
-  simp only [mulVec, dotProduct, map_sum, map_mul, AlgEquiv.apply_symm_apply]
   rfl
 
 end Lattice

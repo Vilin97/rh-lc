@@ -126,8 +126,6 @@ theorem hasSum_heckeOne (k : ℕ) {p : ℕ} (hp : 0 < p) {f : ℍ → ℂ} {a : 
       rintro ⟨j, rfl⟩
       exact hx ⟨j, rfl⟩
     convert (hinj.hasSum_iff hz).mpr hs using 1
-    funext n
-    simp only [Function.comp_apply, if_pos (dvd_mul_right p n), Nat.mul_div_cancel_left n hp]
   convert hA.add hB using 1
   · funext n
     simp only [smul_eq_mul]

@@ -338,8 +338,6 @@ theorem convolution_operator_sandwich_eq [μ.IsMulLeftInvariant] [SigmaFinite μ
     calc ∫ g, φ g * ⟪π (h * x)⁻¹ u, π g y⟫_ℂ ∂μ
         = ∫ g, (fun g' => φ (x⁻¹ * h⁻¹ * g') * ⟪u, π g' y⟫_ℂ) (h * x * g) ∂μ := by
           congr 1
-          funext g
-          simp only [hinv, ← rep_mul_apply']
           rw [show x⁻¹ * h⁻¹ * (h * x * g) = g by group]
       _ = ∫ g, φ (x⁻¹ * h⁻¹ * g) * ⟪u, π g y⟫_ℂ ∂μ :=
           integral_mul_left_eq_self (fun g' => φ (x⁻¹ * h⁻¹ * g') * ⟪u, π g' y⟫_ℂ) (h * x)

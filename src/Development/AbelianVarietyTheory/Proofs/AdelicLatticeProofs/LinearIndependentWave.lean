@@ -347,8 +347,6 @@ theorem mem_of_finite_cosets {K : AddSubgroup G} (hK : ind K ∈ waveSpan χ X Y
       have htr := trans_mem hK (X.neg_mem hwX)
       have hsum := add_mem hΨ (Submodule.smul_mem _ (Φ (s + u0)) htr)
       convert hsum using 1
-      funext t
-      simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
       ring
     · push Not at hex
       refine ih Φ hΦX hinv fun t ht => ?_

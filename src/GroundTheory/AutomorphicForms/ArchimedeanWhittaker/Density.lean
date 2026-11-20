@@ -151,8 +151,6 @@ theorem map_expG_integrated {f : G → ℂ} (hf : h.IsTestFunction f) (x : E) (Y
   rw [BanachRep.integrated, ← (π (h.expG Y)).integral_comp_comm (h.integrable_smul_orbit π μ hf x)]
   rw [← integral_mul_left_eq_self (fun g => f (h.expG (-Y) * g) • π g x) (h.expG Y)]
   congr 1
-  funext g
-  simp only [map_smul, ← BanachRep.map_mul_apply, expG_neg, inv_mul_cancel_left]
 
 theorem derivOp_integrated (hπ : ∀ g, ‖π g‖ ≤ 1) {f : G → ℂ} (hf : h.IsTestFunction f)
     (x : E) (X : 𝔤) :

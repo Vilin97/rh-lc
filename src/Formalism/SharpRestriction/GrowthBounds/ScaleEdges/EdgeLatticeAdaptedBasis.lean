@@ -61,8 +61,6 @@ theorem pos_basisO (O Kf : Type) [CommRing O] [IsDomain O] [Field Kf] [Algebra O
     change _ = Submodule.map _ (nablaL O Kf (m + 1) (m + 1) (nuOf lam) _)
     rw [← hD, Submodule.map_span, ← Set.range_comp]
     congr 2
-    funext i
-    simp only [Function.comp]
     have hprod : (∏ a, (if a.val < r then c⁻¹ else 1) ^ rowWt i.1 a)⁻¹ = c ^ (∑ a ∈ S, rowWt i.1 a) := by
       simp_rw [ite_pow, one_pow]
       rw [Finset.prod_ite, Finset.prod_const_one, mul_one, Finset.prod_pow_eq_pow_sum, inv_pow, inv_inv]
@@ -144,8 +142,6 @@ theorem ten_basisO (O Kf : Type) [CommRing O] [IsDomain O] [Field Kf] [Algebra O
         rw [H0_eq_twisted_nabla hI m _ (hA s) _ (hdet s), hspan s c hc]
       rw [Hten, e1, ← hT]
       congr 2
-      funext i
-      simp only [hP, MvPolynomial.smul_eq_C_mul, map_mul, blockEmb, MvPolynomial.rename_C,
         Finset.prod_mul_distrib]
       rw [← map_prod, lb_zpow_sum c hc]
     rw [toV, hH, ← comap_span_coe (O := O) (Kf := Kf) (Vsp Kf lam0)

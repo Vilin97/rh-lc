@@ -101,8 +101,6 @@ private lemma linear_form_pow_smul_mem_homF_add {A : Submodule R M} {n : ℕ}
     have h := linear_form_smul_mem_homF_succ ih α β
     show _ ∈ _root_.GlobalTheory.KZ.PolAct.homF A (n + k + 1)
     convert h using 1
-    funext u
-    simp only [pow_succ', mul_smul]
 
 open scoped MatrixGroups TensorProduct in
 open Matrix in
@@ -126,8 +124,6 @@ theorem _root_.GlobalTheory.KZ.PolAct.subst_mem {A : Submodule R M} {w : ℕ} (�
       omega
     rw [hdeg] at h2
     convert h2 using 1
-    funext u
-    simp only [mul_smul]
   have hsum := Submodule.sum_mem (_root_.GlobalTheory.KZ.PolAct.homF A w)
     (t := Finset.univ) (fun i _ => hterm i)
   convert hsum using 1

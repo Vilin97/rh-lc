@@ -49,8 +49,6 @@ theorem eq_coinv_or_eq_top (HB : GlobalTheory.Published.BernsteinUnitaryProductI
     rintro _ ⟨g, Ψ', hΨ', rfl⟩
     refine ⟨invT g, Ψ', hΨ', ?_⟩
     congr 1
-    funext Y
-    simp only [omA, omB, map_one, Units.val_one, Matrix.mul_one, mul_one, apow_one, invT_inv_val, gdet_invT, map_inv,
       inv_inv, apow_inv, neg_div, neg_neg]
   rcases GlobalTheory.T.span_character_translates_coinvariant HB k n d (by omega) ν β hν.1 hν.2 hβ.1 hβ.2 N (hC ▸ hCN) hN hst with h | h
   · left

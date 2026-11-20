@@ -150,8 +150,6 @@ theorem subst_killCompl {τ : Type} {γ : κ → MvPowerSeries τ C} (hγ : ∀ 
   rw [subst_sub hS, sub_eq_zero] at hz
   rw [hz, rename_eq_subst, subst_comp_subst_apply (HasSubst.X_comp _) hS]
   congr 1
-  funext x
-  simp only [Function.comp_apply]
   rw [subst_X hS]
   exact (if_pos rfl).symm
 

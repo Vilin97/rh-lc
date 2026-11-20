@@ -127,8 +127,6 @@ theorem per_add {u : Fin k → ℝ} {h : ℝ} {z : Fin (2 * r + k + 1) → ℂ} 
   unfold per sInt
   rw [← integral_add iF iG]
   congr 1
-  funext p
-  simp only [Pi.add_apply, add_smul]
 
 theorem per_smul (P : Mat k r) (μW μN : Measure (Formalism.QuantumDeterminants.Mt k r)) (ψ : Mat k r → ℂ)
     (π : Mat k r → (Vp →L[ℂ] Vp)) (a : ℂ) (F : Mat k r → ℂ) (ξ : Vp) (x : Mat k r) :
@@ -136,8 +134,6 @@ theorem per_smul (P : Mat k r) (μW μN : Measure (Formalism.QuantumDeterminants
   unfold per sInt
   rw [← integral_smul]
   congr 1
-  funext p
-  simp only [Pi.smul_apply, smul_eq_mul, mul_smul]
 
 end Per
 

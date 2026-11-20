@@ -63,16 +63,10 @@ private theorem rank_kummer_dual_le_clRk {F Ω : Type} [Field F] [NumberField F]
       exact Submodule.subset_span ⟨i, rfl⟩
     | zero =>
       convert Submodule.zero_mem (Submodule.span k (Set.range e)) using 1
-      funext u
-      simp
     | add x y _ _ hx hy =>
       convert Submodule.add_mem _ hx hy using 1
-      funext u
-      simp
     | smul a x _ hx =>
       convert Submodule.smul_mem _ (cst a) hx using 1
-      funext u
-      simp
   have hsp : Kum.XDual 1 K₁ k k ≤ Submodule.span k (Set.range e) := by
     intro φ hφ
     obtain ⟨hlc, hadd, hine, hdec⟩ := hφ

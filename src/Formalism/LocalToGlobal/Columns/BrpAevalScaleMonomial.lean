@@ -237,8 +237,6 @@ theorem chiW_single_eq (lam : DomWeight n) (a b : Fin n) (t : Kˣ) :
     simp only [Units.val_mul, hP, brpGL_coe, brpDiag_coe]
     rw [brp_perm_diag]
     congr 2
-    funext x
-    simp only [Function.comp_apply, Pi.mulSingle_apply, Equiv.swap_apply_eq_iff, Equiv.swap_apply_left]
   have h := congrArg (chiW K lam) hc
   rw [map_mul, map_mul, mul_comm (chiW K lam (brpDiag K (Pi.mulSingle b t)))] at h
   exact mul_left_cancel₀ (chiW_ne_zero K lam P) h

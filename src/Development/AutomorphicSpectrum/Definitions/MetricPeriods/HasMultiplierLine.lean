@@ -131,8 +131,6 @@ def triv : HermLine (GlobalTheory (Fin 2)) := HermLine.ofWeight (fun _ => 0) (fu
 theorem hasMultiplier_line : HasMultiplier (ι := GlobalTheory (Fin 2)) y ℚ triv fsLine1 0 := by
   have hX : IsMultiHomog (X ⟨(), 1⟩ : MRing (GlobalTheory (Fin 2))) (fun _ => 1) := by
     convert isMultiHomog_X (ι := GlobalTheory (Fin 2)) ⟨(), 1⟩ using 1
-    funext k
-    simp
   have key : ∀ {𝕜 : Type} [Field 𝕜] {z : Ix (Fin 2) → 𝕜}, z ∈ ptsOver 𝕜 (mCoordIdeal (ι := GlobalTheory (Fin 2)) y) →
       ∀ w, HasVal (ι := GlobalTheory (Fin 2)) y (fsLine1.a - triv.a) (y ⟨(), 1⟩) z w → w = z ⟨(), 1⟩ := by
     intro 𝕜 _ z hz w hw

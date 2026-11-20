@@ -32,8 +32,6 @@ theorem qminor_exists_poly {A : Type} [Ring A] [Algebra ℂ A] {n t : ℕ} (E : 
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [map_mul, map_intCast, map_list_prod, List.map_ofFn]
   congr 3
-  funext k
-  simp only [Function.comp_apply, Tm, map_add, hC]
   split_ifs
   · rw [map_sub, map_sub, hX, hC]
   · rw [map_zero]

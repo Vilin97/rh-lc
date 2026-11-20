@@ -243,8 +243,6 @@ private theorem diagJ (K0 K : Type) [NormedField K0] [IsUltrametricDist K0] [Cha
           (map j (beMean (d := 2 * i) l σ be0 om (fun r => σ^[i] (om r)) ζ)) := by
       rw [map_mul, MvPowerSeries.map_C, map_inv₀, map_ofNat, MvPowerSeries.map_subst hs0]
       congr 2
-      funext s
-      simp only [hL0, map_logS]
     rw [e1, e2] at hm
     exact hm
 

@@ -242,8 +242,6 @@ theorem memLp_pureA (μ : @Measure (κ → AF F) (borel _)) (hμ : @Measure.IsAd
       (Submodule.subset_span ⟨f, g, hg, rfl⟩)
     have h2 := h1.comp (GlobalTheory.WeilAdm.HaarSplit.continuous_splitE_symm F κ)
     convert h2 using 1
-    funext x
-    simp only [Function.comp_apply, AddEquiv.apply_symm_apply]
   have hf : ∫⁻ z, ‖f z‖ₑ ^ 2 < ⊤ := by
     have := (f.memLp 2 volume).2
     rw [eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top (by norm_num) (by norm_num)] at this

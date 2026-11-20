@@ -73,8 +73,6 @@ theorem glue_holds_var : Glue := by
           ((g : ℕ) : I.E ⊗[I.F] Af I.F) • incl I (s • M • x) := by
         rw [← incl_sub, ← incl_nsmul, ← incl_nsmul]
         congr 1
-        funext i
-        simp only [Pi.sub_apply, Pi.smul_apply, Pi.mul_apply, Pi.natCast_apply, nsmul_eq_mul]
         linear_combination ((M : I.E) * x i) * hNE
       rw [h']
       exact mem_mL I g (incl_mem_Lf I (nsmul_mem hx s))
@@ -208,8 +206,6 @@ theorem glue_holds_var : Glue := by
             ((g : ℕ) : I.E ⊗[I.F] Af I.F) • incl I (s • M • e a) := by
           rw [← incl_nsmul', ← incl_nsmul, ← incl_sub]
           congr 1
-          funext i
-          simp only [Pi.sub_apply, Pi.smul_apply, Pi.mul_apply, Pi.natCast_apply, nsmul_eq_mul]
           linear_combination (-(M : I.E) * e a i) * hNE
         rw [h']
         exact sub_mem (nsmul_mem (hSe a) M)
@@ -219,8 +215,6 @@ theorem glue_holds_var : Glue := by
             ((g : ℕ) : I.E ⊗[I.F] Af I.F) • incl I (s • M • f a) := by
           rw [← incl_nsmul', ← incl_nsmul, ← incl_sub]
           congr 1
-          funext i
-          simp only [Pi.sub_apply, Pi.smul_apply, Pi.mul_apply, Pi.natCast_apply, nsmul_eq_mul]
           linear_combination (-(M : I.E) * f a i) * hNE
         rw [h']
         exact sub_mem (nsmul_mem (hSf a) M)

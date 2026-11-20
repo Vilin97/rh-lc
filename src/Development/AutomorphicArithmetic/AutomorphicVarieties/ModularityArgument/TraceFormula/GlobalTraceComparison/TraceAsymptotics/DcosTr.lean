@@ -209,8 +209,6 @@ private theorem exists_hk_trace {V : Type} [AddCommGroup V] [Module ℂ V] (ρ :
       show _ = hk ρ (iwC k n ⊤) _ * hk ρ (iwC k n ⊤) _
       rw [hmul _ _ (dom_pow hϖ (hsa _ (by omega)).antitone) (dom_pow hϖ hx₀.antitone)]
       congr 2
-      funext i
-      simp only [Pi.mul_apply, Pi.smul_apply, ← _root_.zpow_add]
       congr 1
       simp only [nsmul_eq_mul]
       push_cast

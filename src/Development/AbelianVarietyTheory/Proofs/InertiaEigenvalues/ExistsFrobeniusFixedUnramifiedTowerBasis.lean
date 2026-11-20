@@ -71,15 +71,11 @@ theorem exists_tower_basis (E : IntermediateField F K) {r : ℕ} (bω : Module.B
   · have h1 : LinearIndependent F (f ∘ bt) := bt.linearIndependent.map' f (LinearMap.ker_eq_bot.mpr hf)
     have h2 := h1.comp (Equiv.prodComm n (Fin r)) (Equiv.injective _)
     convert h2 using 1
-    funext jk
-    simp only [Function.comp_apply, Equiv.prodComm_apply, Prod.fst_swap, Prod.snd_swap, bt, Module.Basis.smulTower_apply, f]
     rfl
   · have hli : LinearIndependent F (fun jk : n × Fin r => ((bω jk.2 : E) : K) • (b jk.1 : M)) := by
       have h1 : LinearIndependent F (f ∘ bt) := bt.linearIndependent.map' f (LinearMap.ker_eq_bot.mpr hf)
       have h2 := h1.comp (Equiv.prodComm n (Fin r)) (Equiv.injective _)
       convert h2 using 1
-      funext jk
-      simp only [Function.comp_apply, Equiv.prodComm_apply, Prod.fst_swap, Prod.snd_swap, bt, Module.Basis.smulTower_apply, f]
       rfl
     apply Submodule.eq_of_le_of_finrank_eq
     · rw [Submodule.span_le]

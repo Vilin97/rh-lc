@@ -1696,8 +1696,6 @@ def rvHom (v : InfinitePlace X.B.I.F) : (Fin X.B.I.n → X.B.I.E) →+ (Fin X.B.
     unfold rv
     rw [← mulVec_add]
     congr 1
-    funext i
-    simp
 
 theorem rvHom_apply (v : InfinitePlace X.B.I.F) (x : Fin X.B.I.n → X.B.I.E) : rvHom X v x = rv X.B.I v x := rfl
 

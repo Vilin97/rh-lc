@@ -277,8 +277,6 @@ lemma inv_form (ψ : AddChar K ℂ) (hψ : ψ ≠ 1) (l : ((Unit ⊕ Unit → K)
     simp only [LinearMap.comp_apply, LinearMap.single_apply]
     rw [← this]
     congr 1
-    funext y
-    simp only [LinearMap.funLeft_apply, Pi.single_apply]
     congr 1
     apply propext
     constructor

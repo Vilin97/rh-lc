@@ -84,8 +84,6 @@ theorem proof : PullSectionIntegralInt.Statement := by
   have ha' : ∀ i, IsMultiHomog (a i) (fun k => w * e k) := by
     intro i
     convert ha i using 1
-    funext k
-    simp only [Pi.sub_apply, Pi.smul_apply, smul_eq_mul]
     rw [add_mul, one_mul, Nat.add_sub_cancel]
   have hg : aeval y (xpow c ((w + 1) • e)) = Mc ^ (w + 1) := by
     simp only [xpow, map_prod, map_pow, aeval_X, Mc, ← Finset.prod_pow]

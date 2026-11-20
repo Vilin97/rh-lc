@@ -111,8 +111,6 @@ theorem admissible_of_slice_zero {κ κ' : Type} [Fintype κ] [Fintype κ'] (p�
   refine ⟨T.comp Tsl, fun f => ?_⟩
   rw [LinearMap.comp_apply, ContinuousLinearMap.comp_apply, ← hT]
   congr 1
-  funext t
-  simp only [LinearMap.funLeft_apply, Function.comp_apply, pureA, hTsl]
   congr 2 <;> funext k <;> rcases k with k | k <;> rfl
 
 theorem adm_of_box {κ κ₁ κ' κ₁' : Type} [Fintype κ] [Fintype κ₁] [Fintype κ'] [Fintype κ₁']

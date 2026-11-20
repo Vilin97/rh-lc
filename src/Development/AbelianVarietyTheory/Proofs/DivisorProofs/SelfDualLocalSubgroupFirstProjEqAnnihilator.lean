@@ -182,8 +182,6 @@ theorem exists_pair_of_annihilator : ∀ {F : Type} [Field F] [NumberField F] (v
       refine (hP _).2 ⟨c • (0 : κ → Fv F v), ?_⟩
       have := LB ((c⁻¹ * N) • u) 0 (fun i => O.toSubring.mul_mem hNc (hu' i)) (fun _ => O.zero_mem)
       convert this using 2
-      funext i
-      simp only [Pi.smul_apply, nsmul_eq_mul, smul_eq_mul]
       field_simp
     · intro u hu
       obtain ⟨y, hy⟩ := (hP u).1 hu

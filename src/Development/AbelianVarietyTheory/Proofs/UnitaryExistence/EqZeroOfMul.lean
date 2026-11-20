@@ -71,8 +71,6 @@ theorem scalar_eq {c v f₀ g₀ f₁ g₁ : ℚ → K} {N : ℕ} (hN : N ≠ 0)
       (f := fun i => f₀ ^ i * (fun s => v s * g₀ s) ^ (N - 1 - i))
       fun i _ => mul_mem (pow_mem hf₀ i) (pow_mem hvg _)
     convert this using 1
-    funext s
-    simp
   have a₀ : ∀ s, f₀ s - v s * g₀ s = 0 := by
     refine eq_zero_of_mul (s₀ := 0) (sub_mem hf₀ hvg) hS (fun s => ?_) ?_
     · rw [mul_comm]
@@ -129,8 +127,6 @@ theorem aeval_mem {σ σ' ι : Type} [Fintype ι] (r : ℚ → σ → ι → K) 
     have := Subalgebra.sum_mem (ratFn K) (t := Finset.univ) fun j _ =>
       mul_mem (hr x j) (hp (ℓ ∘ₗ LinearMap.mulRight K (MvPolynomial.X (y x j))))
     convert this using 1
-    funext s
-    simp only [map_mul, MvPolynomial.aeval_X, Finset.mul_sum, map_sum, Finset.sum_apply, Pi.mul_apply,
       LinearMap.comp_apply, LinearMap.mulRight_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [mul_left_comm, ← MvPolynomial.smul_eq_C_mul, map_smul, smul_eq_mul]
@@ -213,8 +209,6 @@ theorem exists_curve (K : Type) [Field K] [CharZero K] (γ : Matrix (Fin n) (Fin
         rw [← RingHom.map_det]; exact (_root_.map_ne_zero σ).2 (hu s).ne_zero) i j
     have := sub_mem (add_mem hm hm) (const_mem (σ ((1 : Matrix (Fin n) (Fin n) E) i j)))
     convert this using 1
-    funext s
-    simp only [Pi.sub_apply, Pi.add_apply, ← e]
     simp only [two_mul, Matrix.sub_apply, Matrix.add_apply, map_sub, map_add]
     rfl
 

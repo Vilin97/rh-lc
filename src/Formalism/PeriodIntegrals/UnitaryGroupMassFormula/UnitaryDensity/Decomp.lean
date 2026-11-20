@@ -41,8 +41,6 @@ private theorem exists_diagonal_unitary_gram_of_posDef {n : ℕ} {G : Matrix (Fi
         diagonal (fun i => ((hG.1.eigenvalues i : ℝ) : ℂ)) := by
       rw [diagonal_conjTranspose, diagonal_mul_diagonal]
       congr 1
-      funext i
-      simp only [Pi.star_apply, Complex.star_def, Complex.conj_ofReal]
       rw [← Complex.ofReal_mul, Real.mul_self_sqrt (hG.eigenvalues_pos i).le]
     rw [conjTranspose_mul, conjTranspose_conjTranspose]
     calc G = V * diagonal (fun i => ((hG.1.eigenvalues i : ℝ) : ℂ)) * Vᴴ := hV

@@ -306,8 +306,6 @@ theorem exists_linear_model (hP : GlobalTheory.FunPr.Hypotheses₂) {B : Base F 
     unfold Model.IsLinW at hι
     rw [GlobalTheory.OppLagr.comp_comp hcm] at hι
     convert hι using 2
-    funext u
-    simp only [inv_inv, hPv, hQv, Units.val_one, Matrix.transpose_one, Matrix.one_mul, Matrix.mul_one, Matrix.neg_mul]
   refine ⟨ι, hι.bij, fun g hg h hh φ hφ => ?_⟩
   obtain ⟨φ₁, ⟨hφ₁, hA⟩, -⟩ := (GlobalTheory.T.theta_action_exists hP F E σ B n d X W M χX χW om r s r' s' hpair v).1 g hg h hh φ hφ
   exact ⟨φ₁, hφ₁, hA, GlobalTheory.T.linear_bar_model_unitary_action hP F E σ B n d X W M χX χW om r s r' s' hpair v t 1 1 ι hbar g hg h hh φ hφ φ₁ hφ₁ hA⟩

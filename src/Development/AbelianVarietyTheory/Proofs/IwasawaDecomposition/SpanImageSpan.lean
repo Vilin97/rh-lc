@@ -35,8 +35,6 @@ theorem span_image_span {n : ℕ} (S : Set (Fin n → K)) :
     | smul a y _ hy =>
       rw [SetLike.mem_coe] at hy ⊢
       convert Submodule.smul_mem _ (RingOfIntegers.mapRingHom φ a) hy using 1
-      funext k
-      simp only [Pi.smul_apply, Algebra.smul_def, map_mul]
       rfl
   · exact Submodule.span_mono (Set.image_mono Submodule.subset_span)
 

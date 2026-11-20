@@ -215,8 +215,6 @@ theorem tdiag_inv (ϖ : (w.adicCompletion E)ˣ) (a : Fin n → ℤ) : (tdiag ϖ 
   unfold tdiag
   rw [← map_inv]
   congr 1
-  funext i
-  simp
 
 theorem tdiag_val (ϖ : (w.adicCompletion E)ˣ) (a : Fin n → ℤ) :
     (tdiag ϖ a : GLw n w).val = Matrix.diagonal fun i => ((ϖ ^ a i : (w.adicCompletion E)ˣ) : w.adicCompletion E) := by

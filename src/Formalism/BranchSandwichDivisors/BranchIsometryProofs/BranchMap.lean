@@ -2351,8 +2351,6 @@ theorem bm_xi_row {R : Type} [CommRing R] {n : ℕ} (lam sg : Fin n → ℕ) (hI
     · rw [← bmG_sumA]; exact bmG_initMinor_rowHom R _ _
     · rw [← bmG_sumB]; exact bmG_initMinor_rowHom R _ _
   convert h1 using 1
-  funext a
-  simp only [bmRho, Finset.sum_apply, Pi.add_apply, Pi.smul_apply, smul_eq_mul, initW, Pi.single_apply]
   by_cases ha : a.val < n
   · rw [dif_pos ha]
     have hne : a ≠ Fin.last n := fun h => by rw [h] at ha; simp at ha

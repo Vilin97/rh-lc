@@ -94,8 +94,6 @@ def coordA {v : HeightOneSpectrum (𝓞 D.host.F)} (π : AE D →+* Fv D.host.F 
   map_add' x y := by
     rw [← Matrix.mulVec_add]
     congr 1
-    funext k
-    simp
 
 def coordB (W : HSp D) {v : HeightOneSpectrum (𝓞 D.host.F)} (π : AE D →+* Fv D.host.F v)
     (β : GL (Fin W.rank) (Fv D.host.F v)) : (Fin W.rank → AE D) →+ (Fin W.rank → Fv D.host.F v) where
@@ -104,8 +102,6 @@ def coordB (W : HSp D) {v : HeightOneSpectrum (𝓞 D.host.F)} (π : AE D →+* 
   map_add' x y := by
     rw [← Matrix.add_vecMul]
     congr 1
-    funext k
-    simp
 
 variable {e : AE D} {v : HeightOneSpectrum (𝓞 D.host.F)} {π : AE D →+* Fv D.host.F v} {W : HSp D}
   {β : GL (Fin W.rank) (Fv D.host.F v)}

@@ -278,8 +278,6 @@ theorem diag_inK (ε : Fin n → Bool) (θ : Fin n → ℝ) :
   · rw [Formalism.REAL.Jm, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
       Matrix.diagonal_mul_diagonal, Matrix.diagonal_add, ← Matrix.diagonal_zero]
     congr 1
-    funext a
-    simp only [Pi.star_apply, star_mul', Complex.star_def, Complex.conj_ofReal, Complex.conj_I, Pi.add_apply,
       Pi.zero_apply]
     ring
   · rw [Formalism.REAL.Jm, Matrix.diagonal_mul_diagonal, Matrix.diagonal_mul_diagonal]

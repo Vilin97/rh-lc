@@ -193,8 +193,6 @@ theorem factor_through_detInd : GlobalTheory.Published.BernsteinUnitaryProductIr
     unfold fibre
     rw [← MeasureTheory.integral_add (hint Φ hΦ x) (hint Ψ hΨ x)]
     congr 1
-    funext g
-    simp only [omA, Pi.add_apply]
     ring
   have hsmul : ∀ (c : ℂ) (Φ : Matrix (Fin a) (Fin (a + a')) k → ℂ),
       fibre ν β a a' (c • Φ) = c • fibre ν β a a' Φ := by
@@ -204,8 +202,6 @@ theorem factor_through_detInd : GlobalTheory.Published.BernsteinUnitaryProductIr
     unfold fibre
     rw [← MeasureTheory.integral_const_mul]
     congr 1
-    funext g
-    simp only [omA, Pi.smul_apply, smul_eq_mul]
     ring
 
   have hind : ∀ Ψ ∈ fullRankSB k a (a + a'), fibre ν β a a' Ψ ∈ indScal ν β a a' := by

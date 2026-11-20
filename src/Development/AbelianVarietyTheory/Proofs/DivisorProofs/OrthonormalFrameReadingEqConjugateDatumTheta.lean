@@ -55,8 +55,6 @@ theorem sg_submatrix {p q : ℕ} (π : Fin r ≃ Fin r) (h : ∀ i, ((π i : ℕ
     (sg r p).submatrix π π = -sg r q := by
   rw [submatrix_diagonal_equiv, diagonal_neg]
   congr 1
-  funext a
-  simp only [Function.comp_apply, sgn, h]
   split_ifs <;> simp
 
 theorem sg_sq (p : ℕ) : sg r p * sg r p = 1 := by

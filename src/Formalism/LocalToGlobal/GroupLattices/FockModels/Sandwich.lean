@@ -78,8 +78,6 @@ theorem top_coord [CharZero (KK O)] (hν : Antitone ν) (y0 : MvPolynomial (Fin 
           algebraMap O (KK O) (eval (idPoint O k k) (b i)) := by
         rw [map_eval]
         congr 2
-        funext v
-        simp only [idPoint, Function.comp]
         split_ifs <;> simp
       rw [h2] at h1
       rw [← h1, sub_self]

@@ -134,8 +134,6 @@ private theorem unitary_pair (hK : KP) {Y : Spc F E n} {Mo : Model σ Y W} {ω :
     have hcont : Continuous (thLift ω Ψ μ 𝓕 f) := by
       have h0 := hsm.cont.comp he
       convert h0 using 1
-      funext g
-      simp only [Function.comp_apply, MulEquiv.symm_apply_apply]
     refine ⟨hcont, fun γ hγ g => ?_, C, fun g => by simpa using hC g⟩
     simp only [thLift_def]
     refine integral_congr_ae (.of_forall fun h => ?_)

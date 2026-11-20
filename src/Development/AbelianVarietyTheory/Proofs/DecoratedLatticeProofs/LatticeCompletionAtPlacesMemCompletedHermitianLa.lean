@@ -27,8 +27,6 @@ theorem gen_mem (D : D7) (S : HSp D) (L : Lat S) (α : Af D.host.F) (hα : α �
     Submodule.subset_span ⟨x, hx, rfl⟩
   have := Submodule.smul_mem _ (⟨_, hint⟩ : Formalism.L2.Herm.intAf D.host.F D.host.E) hgen
   convert this using 1
-  funext i
-  simp only [one_mul, finPart, Formalism.IndefR.Lev.swapAE, Formalism.UG.inclE]
   show _ = ((1 : D.host.E) ⊗ₜ[D.host.F] α) * (x i ⊗ₜ[D.host.F] (1 : Af D.host.F))
   rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one]
   rfl

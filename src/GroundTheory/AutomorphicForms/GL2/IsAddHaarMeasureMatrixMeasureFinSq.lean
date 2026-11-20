@@ -364,8 +364,6 @@ theorem exists_map_val_withDensity [NeZero m] (μ : Measure (GL (Fin m) F)) [μ.
     congr 1
     conv_rhs => rw [← withDensity_one (μ := μ₀.comap C.toFun)]
     congr 1
-    funext g
-    simp only [Pi.mul_apply, Pi.one_apply, detModulusPow_eq_leftModulus]
     rw [← ENNReal.coe_mul, inv_mul_cancel₀ (C.leftModulus_pos g).ne', ENNReal.coe_one]
   refine ⟨c, hc, ?_⟩
   rw [hwd, Measure.map_smul]

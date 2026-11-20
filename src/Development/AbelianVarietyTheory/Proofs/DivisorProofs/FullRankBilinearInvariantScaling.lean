@@ -18,8 +18,6 @@ theorem comp_mem {n d : ℕ} (ν : kˣ →* ℂˣ) (g : GL (Fin n) k) (h : GL (F
     mul_ne_zero (Units.ne_zero _) (apow_ne_zero _ _)
   have h2 := (fullRk k n d).smul_mem ((ν (gdet g) : ℂ) * apow (gdet g) ((d : ℂ) / 2))⁻¹ h1
   convert h2 using 1
-  funext Y
-  simp only [lact, JacReduce.rtr_apply, Pi.smul_apply, smul_eq_mul, Matrix.mul_assoc]
   rw [← mul_assoc, inv_mul_cancel₀ hc, one_mul]
 
 theorem alg_id (X c : ℂ) (m : ℝ) (hm : (m : ℂ) ≠ 0) (hc : c ≠ 0) :
@@ -89,10 +87,6 @@ theorem GlobalTheory.NormalCore.pv_transport : ∀ (k : Type) [Field k] [Valuati
     · have h3 := comp_mem ν g⁻¹ h⁻¹ h₁
       rw [e₁] at h3
       convert h3 using 1
-      funext Y
-      simp only [key]
     · have h3 := JacReduce.fullRk_rtr h⁻¹ h₂
       rw [e₂, JacReduce.rtr_apply] at h3
       convert h3 using 1
-      funext Y
-      simp only [keyh]

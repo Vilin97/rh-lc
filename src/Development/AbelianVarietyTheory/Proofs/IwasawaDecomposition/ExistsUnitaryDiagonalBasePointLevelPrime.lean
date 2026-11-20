@@ -154,8 +154,6 @@ theorem exists_base (hc : Formalism.BasicNotions.CMData F E) {π : 𝓞 E} {T : 
       rw [hk, Matrix.diagonal_map (map_zero _), Matrix.diagonal_transpose, Matrix.diagonal_mul_diagonal,
         ← Matrix.diagonal_one]
       congr 1
-      funext i
-      simp only [d]
       split_ifs
       · rw [hσ, haa]
       · rw [map_one, one_mul]
@@ -188,8 +186,6 @@ theorem exists_base (hc : Formalism.BasicNotions.CMData F E) {π : 𝓞 E} {T : 
     change (Matrix.diagonal d).map (prV (E := E) v) = 1
     rw [Matrix.diagonal_map (map_zero _), ← Matrix.diagonal_one]
     congr 1
-    funext i
-    simp only [d]
     split_ifs
     · exact hpa
     · exact map_one _

@@ -246,8 +246,6 @@ theorem exists_op (hP : IsPair B M χX χW om r s r' s') {g h} (hg : g ∈ UAt �
   have hc' : Continuous T := by
     have := C.S.symm.continuous.comp (hc.comp C.S.continuous)
     convert this using 1
-    funext f
-    simp
   exact ⟨⟨T, hc'⟩, hT, acts_of hT⟩
 
 theorem map_Pol (hP : IsPair B M χX χW om r s r' s') {X₂ : Spc F E n} {W₂ : Spc F E d} (M₂ : Model σ (reS X X₂) (reS W W₂))

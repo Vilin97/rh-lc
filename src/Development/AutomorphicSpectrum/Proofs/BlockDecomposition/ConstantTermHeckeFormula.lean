@@ -34,8 +34,6 @@ theorem ctT_split_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n
   unfold ctT ctMu ct
   congr 2
   congr 1
-  funext X
-  simp only [hv, hc]
   exact avg_const _
 
 end GlobalTheory.CompanionTheory.CtS

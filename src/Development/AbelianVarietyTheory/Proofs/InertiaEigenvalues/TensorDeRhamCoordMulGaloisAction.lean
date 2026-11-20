@@ -25,8 +25,6 @@ theorem PhiS_act : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (K L : FinExt l
     rw [map_add, PhiS_add, hx, hy, PhiS_add]
     rw [← Matrix.mulVec_add]
     congr 1
-    funext i
-    simp only [Pi.add_apply, map_add]
   | tmul v b =>
     rw [GlobalTheory.DRFil.actVdR_tmul, P.PD_actdR, hR, PhiS_tmul, PhiS_tmul]
     funext i

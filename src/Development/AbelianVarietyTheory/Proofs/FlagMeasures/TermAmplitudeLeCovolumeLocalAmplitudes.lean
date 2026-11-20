@@ -45,8 +45,6 @@ theorem factC_of (hP : PullC) (hTn : TensC) (hC : ConstC) : FactC := by
       (fun _ : {Λ // Λ ∈ Y.what₂ u} × {Λ' // Λ' ∈ Y.what₂ u} => Formalism.L2.SG.PackageTie.HS (X.Vpi u) (X.Vpi u))
       ((⟨t.lam, t.mem⟩, ⟨t.lam', t.mem'⟩) : {Λ // Λ ∈ Y.what₂ u} × {Λ' // Λ' ∈ Y.what₂ u}) _)
     congr 2
-    funext q
-    simp only [Pi.single_apply]
   have hs0 : 0 ≤ scl (Y.FN u) (Y.FN u) (X := X) (u := u) (u' := u) * X.volK2 := by
     unfold scl HidaSetting.volK2
     positivity

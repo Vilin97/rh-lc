@@ -152,8 +152,6 @@ theorem exists_prel (f : T ⟶ Sp k) (σ : Fin (N + 1) ≃ (Fin d → Fin (M + 1
     ← ProjSpace.resG_pullRatio (hi := H.le_toHom_preimage f i) hW, H.pullRatio_toHom f, IsFrame.resG_det,
     ← det_update_eq_repr]
   congr 2
-  funext b
-  simp only [resM_resM, Equiv.apply_symm_apply, IsFrame.coe_basis]
   exact (Function.apply_update (fun _ m => resM (homMod L Q) (le_top : W ≤ ⊤) (v m)) (σ i) a m b).symm
 
 variable {φ : T ⟶ PSpace k N} {σ : Fin (N + 1) ≃ (Fin d → Fin (M + 1))} {u : Fin (M + 1) → (L ⟶ Q)}

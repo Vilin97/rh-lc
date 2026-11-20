@@ -197,16 +197,12 @@ theorem pairing_add_left (v₁ v₂ : V) (φ : smoothVectors (Representation.dua
   rw [← integral_add (integrable_coeffProd hπ hσ hc hπs hσs v₁ φ w ψ)
     (integrable_coeffProd hπ hσ hc hπs hσs v₂ φ w ψ)]
   congr 1
-  funext q
-  simp only [coeffProd, map_add, add_mul]
 
 theorem pairing_smul_left (c : ℂ) (v : V) (φ : Module.Dual ℂ V) (w : W) (ψ : Module.Dual ℂ W) :
     pairing Z ν π σ (c • v) φ w ψ = c * pairing Z ν π σ v φ w ψ := by
   unfold pairing
   rw [← integral_const_mul]
   congr 1
-  funext q
-  simp only [coeffProd, map_smul, smul_eq_mul]
   ring
 
 include hπ hσ hc hπs hσs in
@@ -218,8 +214,6 @@ theorem pairing_add_right (v : V) (φ : smoothVectors (Representation.dual π)) 
   rw [← integral_add (integrable_coeffProd hπ hσ hc hπs hσs v φ w ψ₁)
     (integrable_coeffProd hπ hσ hc hπs hσs v φ w ψ₂)]
   congr 1
-  funext q
-  simp only [coeffProd, Submodule.coe_add, LinearMap.add_apply, mul_add]
 
 theorem pairing_smul_right (c : ℂ) (v : V) (φ : Module.Dual ℂ V) (w : W)
     (ψ : smoothVectors (Representation.dual σ)) :
@@ -228,8 +222,6 @@ theorem pairing_smul_right (c : ℂ) (v : V) (φ : Module.Dual ℂ V) (w : W)
   unfold pairing
   rw [← integral_const_mul]
   congr 1
-  funext q
-  simp only [coeffProd, Submodule.coe_smul, LinearMap.smul_apply, smul_eq_mul]
   ring
 
 include hπ hσ hc hπs hσs in
@@ -240,16 +232,12 @@ theorem pairing_add_w (v : V) (φ : smoothVectors (Representation.dual π)) (w�
   rw [← integral_add (integrable_coeffProd hπ hσ hc hπs hσs v φ w₁ ψ)
     (integrable_coeffProd hπ hσ hc hπs hσs v φ w₂ ψ)]
   congr 1
-  funext q
-  simp only [coeffProd, map_add, mul_add]
 
 theorem pairing_smul_w (c : ℂ) (v : V) (φ : Module.Dual ℂ V) (w : W) (ψ : Module.Dual ℂ W) :
     pairing Z ν π σ v φ (c • w) ψ = c * pairing Z ν π σ v φ w ψ := by
   unfold pairing
   rw [← integral_const_mul]
   congr 1
-  funext q
-  simp only [coeffProd, map_smul, smul_eq_mul]
   ring
 
 include hπ hσ hc hπs hσs in
@@ -261,8 +249,6 @@ theorem pairing_add_φ (v : V) (φ₁ φ₂ : smoothVectors (Representation.dual
   rw [← integral_add (integrable_coeffProd hπ hσ hc hπs hσs v φ₁ w ψ)
     (integrable_coeffProd hπ hσ hc hπs hσs v φ₂ w ψ)]
   congr 1
-  funext q
-  simp only [coeffProd, Submodule.coe_add, LinearMap.add_apply, add_mul]
 
 theorem pairing_smul_φ (c : ℂ) (v : V) (φ : smoothVectors (Representation.dual π)) (w : W)
     (ψ : Module.Dual ℂ W) :
@@ -271,8 +257,6 @@ theorem pairing_smul_φ (c : ℂ) (v : V) (φ : smoothVectors (Representation.du
   unfold pairing
   rw [← integral_const_mul]
   congr 1
-  funext q
-  simp only [coeffProd, Submodule.coe_smul, LinearMap.smul_apply, smul_eq_mul]
   ring
 
 omit [ν.IsInvInvariant] in
@@ -286,8 +270,6 @@ theorem pairing_apply_left [ν.IsMulRightInvariant] (h : G) (v : V) (φ : Module
   unfold pairing
   rw [← integral_out_mul (coeffProd_mul_mem hc v φ w _) h]
   congr 1
-  funext q
-  simp only [coeffProd, contragredient_apply_apply, inv_inv, mul_inv_rev, map_mul,
     Module.End.mul_apply, rep_apply_inv_apply]
 
 omit [ν.IsInvInvariant] in
@@ -301,8 +283,6 @@ theorem pairing_apply_w [ν.IsMulLeftInvariant] (h : G) (v : V)
   unfold pairing
   rw [← integral_mul_out (coeffProd_mul_mem hc v _ w ψ) h⁻¹]
   congr 1
-  funext q
-  simp only [coeffProd, contragredient_apply_apply, inv_inv, mul_inv_rev, map_mul,
     Module.End.mul_apply, rep_apply_inv_apply]
 
 end Pairing
@@ -498,16 +478,12 @@ theorem herm_add_left (hπ2 : IsSquareIntegrable Z ν π) (hπs : IsSmooth π)
   unfold herm
   rw [← integral_add (integrable_herm hπ2 hπs φ₀ v₁ w) (integrable_herm hπ2 hπs φ₀ v₂ w)]
   congr 1
-  funext q
-  simp only [map_add, add_mul]
 
 theorem herm_smul_left (φ₀ : Module.Dual ℂ V) (c : ℂ) (v w : V) :
     herm Z ν π φ₀ (c • v) w = c * herm Z ν π φ₀ v w := by
   unfold herm
   rw [← integral_const_mul]
   congr 1
-  funext q
-  simp only [map_smul, smul_eq_mul]
   ring
 
 theorem herm_swap (φ₀ : Module.Dual ℂ V) (v w : V) :
@@ -515,8 +491,6 @@ theorem herm_swap (φ₀ : Module.Dual ℂ V) (v w : V) :
   unfold herm
   rw [← integral_conj]
   congr 1
-  funext q
-  simp only [map_mul, Complex.conj_conj]
   ring
 
 theorem herm_apply [ν.IsMulRightInvariant] (hπ2 : IsSquareIntegrable Z ν π)
@@ -527,8 +501,6 @@ theorem herm_apply [ν.IsMulRightInvariant] (hπ2 : IsSquareIntegrable Z ν π)
     (herm_integrand_mul_mem hπ2 φ₀ v w) h
   rw [← this]
   congr 1
-  funext q
-  simp only [map_mul, Module.End.mul_apply]
 
 theorem integral_pos_of_apply_pos [ν.IsOpenPosMeasure] {F : G → ℝ}
     (hF : ∀ g, ∀ z ∈ Z, F (g * z) = F g) (hFc : Continuous F) (hnn : ∀ g, 0 ≤ F g)

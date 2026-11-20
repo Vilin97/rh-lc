@@ -320,8 +320,6 @@ theorem form_tensor (hL : FormLaws) {K A B C : Type} [CommRing K] [CommRing A] [
   have e₀ : ψ.toAlgHom (g₀ ⊗ₜ k₀) = φ₁ g₀ * φ₂ k₀ := hψ _ _
   rw [e₀]
   congr 1
-  funext j
-  simp only [Function.comp_apply]
   refine Fin.addCases (fun i => ?_) (fun i => ?_) (τ j)
   · rw [Fin.append_left, Fin.append_left]
     change ψ _ = _

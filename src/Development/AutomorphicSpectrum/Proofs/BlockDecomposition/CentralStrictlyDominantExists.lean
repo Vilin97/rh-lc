@@ -40,8 +40,6 @@ theorem diagPow_pow (l : Fin N → ℤ) (j : ℕ) :
   | succ j ih =>
     rw [pow_succ, ih, ← diagPow_add]
     congr 1
-    funext i
-    simp
     ring
 
 theorem conj_apply (l : Fin N → ℤ) (y : GL (Fin N) k) (i j : Fin N) :

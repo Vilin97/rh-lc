@@ -133,8 +133,6 @@ theorem vecV_sub (Bs : B.RealPlaceData k r Wp Wq) (ν' : Fin (2 * r + k + 1) →
         (norm_sub_le _ _).trans (by rw [add_mul]; exact add_le_add (hb₁ g hg) (hb₂ g hg)))
       rw [e12, e1, e2, ← integral_sub i1 i2]
       congr 1
-      funext p
-      simp only [D.orbIntegrand, B.rho, ContinuousLinearMap.sub_comp, ContinuousLinearMap.comp_sub, smul_sub]
     · simp only [dif_neg h', sub_zero]
   · simp only [dif_neg h, sub_zero]
 

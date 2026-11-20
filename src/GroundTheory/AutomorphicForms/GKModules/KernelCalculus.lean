@@ -130,8 +130,6 @@ theorem rightDeriv_integral_mul {Ψ : G → ℂ} (hΨ : Continuous Ψ) {γ : G �
       (fun y => Ψ (g * y) * γ (y⁻¹ * h.expG (t • X))⁻¹) (h.expG (t • X))
     rw [← this]
     congr 1
-    funext y
-    simp only [mul_inv_rev, mul_assoc, inv_mul_cancel_left, inv_inv]
 
   have hderiv : ∀ (y : G) (t : ℝ), HasDerivAt (fun s : ℝ => γ (y⁻¹ * h.expG (s • X))⁻¹)
       (h.rightDeriv X (fun w : G => γ w⁻¹) (y⁻¹ * h.expG (t • X))) t := by
@@ -231,8 +229,6 @@ theorem derivOp_integrated_convDeriv {γ : G → ℂ} (hγ : h.IsTestFunction γ
       (fun y => γ (y⁻¹ * h.expG (t • X))⁻¹ • π y w) (h.expG (t • X))
     rw [← this]
     congr 1
-    funext y
-    simp only [map_smul, ← BanachRep.map_mul_apply, mul_inv_rev, mul_assoc, inv_mul_cancel_left,
       inv_inv]
   have hderiv : ∀ (y : G) (t : ℝ), HasDerivAt (fun s : ℝ => γ (y⁻¹ * h.expG (s • X))⁻¹)
       (h.rightDeriv X (fun w : G => γ w⁻¹) (y⁻¹ * h.expG (t • X))) t := by

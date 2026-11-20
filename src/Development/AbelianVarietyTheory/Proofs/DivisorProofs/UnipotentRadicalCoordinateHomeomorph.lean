@@ -357,8 +357,6 @@ theorem Hyp.unip_iota (h : Hyp σ W.J J₁ H) {n : UA σ W.J} (hn : n ∈ unip �
   have h2 : fA σ W.J (mat n *ᵥ (incM F H.ι *ᵥ z)) (incV F H.y) = z ⬝ᵥ coA σ W.J H n := by
     rw [Matrix.mulVec_mulVec, fA_mulVec_left]
     congr 1
-    funext j
-    simp only [coA, Matrix.mulVec_mulVec]
   rw [he, ← h1, h2]
 
 theorem Hyp.unip_y (h : Hyp σ W.J J₁ H)

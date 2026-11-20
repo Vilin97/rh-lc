@@ -306,8 +306,6 @@ theorem orthSum : cx.OrthSum ⊤ := by
     show ⨆ a : Fin 2, (ℂ ∙ EuclideanSpace.single a (1 : ℂ)) = (⊤ : Submodule ℂ (EuclideanSpace ℂ (Fin 2)))
     rw [← Submodule.span_range_eq_iSup, ← (EuclideanSpace.basisFun (Fin 2) ℂ).toBasis.span_eq]
     congr 2
-    funext a
-    simp
   · show (ℂ ∙ EuclideanSpace.single a (1 : ℂ)) ⟂ (ℂ ∙ EuclideanSpace.single a' (1 : ℂ) :
       Submodule ℂ (EuclideanSpace ℂ (Fin 2)))
     rw [Submodule.isOrtho_span]

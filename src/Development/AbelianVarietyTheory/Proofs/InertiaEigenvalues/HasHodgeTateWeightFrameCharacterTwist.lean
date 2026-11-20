@@ -91,8 +91,6 @@ theorem frame_scal {n : Type} [Fintype n] [DecidableEq n] {K K' : FinExt l} (hK 
         algebraMap ℚ_[l] P.R.BdR ((P.χQ (g : GQ l) ^ v j : ℚ_[l]ˣ) : ℚ_[l]) := by
     rw [hQ, ← Matrix.diagonal_smul]
     congr 1
-    funext j
-    simp only [Pi.smul_apply, smul_eq_mul, zpow_add, Units.val_mul, map_mul, mul_comm]
   rw [hmat, scalGL_mul_val, hmap, hs, hdiag, smul_mul_smul_comm, smul_mul_smul_comm]
   have hUg := hU ⟨g, GK_le hK g.2⟩
   rw [hUg, ← Units.val_mul, ← Units.val_mul]

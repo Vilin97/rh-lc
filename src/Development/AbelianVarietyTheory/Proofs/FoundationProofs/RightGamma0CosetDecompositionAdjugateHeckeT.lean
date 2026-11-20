@@ -34,8 +34,6 @@ theorem rrep_DT_adj_repT : ∀ L q : ℕ, q.Prime → ¬ q ∣ L →
       (fun δ h => adjugate_mem_intMatricesDetLowerLeftDvd h) (fun δ h => adjugate_mem_intMatricesDetLowerLeftDvd h)
   have hc := hA.comp (hL.comp hφ)
   convert hc using 1
-  funext p
-  simp only [Function.comp, φ]
   rw [Matrix.adjugate_mul_distrib]
   congr 1
   rw [Subgroup.coe_inv, ← Matrix.SpecialLinearGroup.coe_inv, inv_inv]

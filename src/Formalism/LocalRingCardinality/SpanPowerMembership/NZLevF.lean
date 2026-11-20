@@ -54,8 +54,6 @@ theorem extension_standardLattice (v : Fin P.nV) (s : ℕ) :
         extO O (P.ι v) (P.σ v) s (L0 P v) :=
       Submodule.subset_span ⟨_, Submodule.subset_span ⟨c, rfl⟩, rfl⟩
     convert h2 using 1
-    funext i
-    simp only [twistVec, Matrix.one_apply]
     split_ifs <;> simp
 
 def intP : Subring P.Xsp := (MvPolynomial.map (algebraMap O Kf)).range

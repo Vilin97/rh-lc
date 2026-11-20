@@ -67,8 +67,6 @@ theorem independent_differentials_ratios_of_trdeg_values {E : Type} [Field E] [N
       Set.range fun k => evC hG Z (w k) / evC hG Z (w kc) := by
     rw [← e.surjective.range_comp]
     congr 1
-    funext k
-    simp only [Function.comp]
     rw [hjc, hwZ, hwZ]
     exact ratio_single _ _ _ hc0
   rw [hrange]

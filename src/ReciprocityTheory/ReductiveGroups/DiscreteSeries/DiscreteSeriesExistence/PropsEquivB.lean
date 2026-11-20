@@ -254,8 +254,6 @@ theorem phi_K (hσ : IsURepOn (UJset ε) σ) (hD : IsDerivedOn ε σ D E) {V : S
   have h4 := orbit_hasSum hσ₂ hD₂ hVf₂ hst₂ hZ (φ v)
   refine h3.unique ?_
   convert h4 using 1
-  funext m
-  simp only [LinearMap.coe_toContinuousLinearMap', map_smul, hZp]
   try rfl
 
 end Orbit

@@ -107,8 +107,6 @@ theorem exists_ample_model : ∀ (F : Type) [Field F] [NumberField F] (Y : Var F
     exact GlobalTheory.T.ample_nsmul_of_pos F Y Δ q q.pos hΔ
   · have := hA.divide q
     convert this using 1
-    funext v
-    simp
   · exact (isKaehlerForm_congr (key σ).2).2 (isKaehlerForm_curvForm (hw σ).1 (hw σ).2)
   · have h₁ := (isPotential_congr (key σ).2).1 hφ
     exact (isPotential_congr (key σ').2).2

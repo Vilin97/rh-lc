@@ -842,8 +842,6 @@ theorem GlobalTheory.SplitLin.OppLagr.act_linBar : GlobalTheory.FunPr.Hypotheses
     unfold Model.IsLinBar at hι
     rw [comp_comp hcm]
     convert hι using 2
-    funext u
-    simp only [inv_inv, hPv, hQv, Matrix.transpose_mul, Matrix.transpose_transpose, Matrix.neg_mul, Matrix.mul_assoc]
   have key := GlobalTheory.SplitLin.om_linW_split hPr F E σ B n d X W M χX χW om r s r' s' hP v (t.comp σ) P⁻¹ Q⁻¹ ι hW2 g hg h hh φ hφ φ₁ hφ₁ hA
   have eg : locMat (t.comp σ) P⁻¹ g = GlobalTheory.SplitFlip.invT (locMat t b g) := by
     change P⁻¹⁻¹ * _ * P⁻¹ = GlobalTheory.SplitFlip.invT (b⁻¹ * _ * b)

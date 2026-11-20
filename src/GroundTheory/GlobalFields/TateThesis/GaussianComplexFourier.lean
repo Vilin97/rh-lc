@@ -38,8 +38,6 @@ theorem complexFourier_mul_self {f : ℂ → ℂ} (hf : Integrable f complexPlac
   rw [← integral_const_mul, ← integral_sub (i1 1) ((i1 I).const_mul I), complexFourier,
     ← integral_const_mul]
   congr 1
-  funext z
-  simp only [Circle.smul_def, smul_eq_mul, Complex.real_smul, mul_one, mul_I_re]
   push_cast
   have hz : (z : ℂ) = z.re + z.im * I := (re_add_im z).symm
   linear_combination (-4 * π * I * (𝐞 (-(2 * (z * w).re)) : ℂ) * f z) * hz
@@ -129,8 +127,6 @@ theorem complexFourier_conj (f : ℂ → ℂ) (w : ℂ) :
     complexFourier (fun z ↦ conj (f z)) w = conj (complexFourier f (-w)) := by
   rw [complexFourier, complexFourier, ← integral_conj]
   congr 1
-  funext z
-  simp only [Circle.smul_def, smul_eq_mul, map_mul, Real.fourierChar_apply, ← exp_conj]
   congr 2
   simp only [conj_ofReal, conj_I]
   push_cast

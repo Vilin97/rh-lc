@@ -72,8 +72,6 @@ theorem fourth_weight_density_of_parts : C2.SliceDensityOfChangeOfVariables := b
   simp only [e1]
   rw [← lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
   congr 1
-  funext z
-  simp only [hg]
   rw [← mul_assoc, ← mul_assoc, ← ENNReal.ofReal_mul (by positivity), ← ENNReal.ofReal_mul (by positivity)]
   congr 2
   have hs2 : ((((p + 1 : ℕ) : ℝ)) ^ 2) ≠ 0 := by positivity

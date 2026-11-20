@@ -151,8 +151,6 @@ private theorem mapRingHom_single_mul_charpoly_of_roots {R S G : Type} [CommRing
       MonoidAlgebra.single g 1 * q1El ph fun i => f (u i) := by
   rw [map_mul, q1El, q1El, map_list_prod, List.map_ofFn, MonoidAlgebra.mapRingHom_single, map_one]
   congr 3
-  funext i
-  simp only [Function.comp_apply, map_sub, MonoidAlgebra.mapRingHom_single, map_one]
 
 private theorem mapRingHom_single_mul_partial_charpoly {R S G : Type} [CommRing R] [CommRing S] [Group G] (f : R →+* S) {n : ℕ} (g ph ta : G) (u : Fin n → R)
     (i : Fin n) (y : R) : MonoidAlgebra.mapRingHom G f (MonoidAlgebra.single g 1 * q2El ph ta u i y) =
@@ -160,8 +158,6 @@ private theorem mapRingHom_single_mul_partial_charpoly {R S G : Type} [CommRing 
   rw [map_mul, q2El, q2El, map_mul, map_list_prod, List.map_ofFn, map_sub, map_sub, MonoidAlgebra.mapRingHom_single,
     MonoidAlgebra.mapRingHom_single, MonoidAlgebra.mapRingHom_single, map_one, map_one]
   congr 4
-  funext k
-  simp only [Function.comp_apply, apply_ite (MonoidAlgebra.mapRingHom G f), map_sub, MonoidAlgebra.mapRingHom_single, map_one]
 
 private theorem kill_ren {R σ τ : Type} [CommRing R] [Finite τ] (z : MvPowerSeries τ R) :
     MvPowerSeries.killCompl (Function.Embedding.inl : σ ↪ σ ⊕ τ) (MvPowerSeries.rename Sum.inr z) =

@@ -83,8 +83,6 @@ theorem gIdil_of_k (hT : _root_.PositivityTheory.SiegelWeilFormula.TAll_k) (hAux
     congr 1
     funext h
     congr 1
-    funext Xr
-    simp only [hFm, _root_.PositivityTheory.SiegelWeilFormula.RD_k.tens, hreal, mul_assoc]
   · intro r
     have key : ∀ y', ((mR (y₀ * y')).toBlocks₂₂).det ≠ 0 →
         iteratedDeriv r (fun z => ∫ h, ∑' k, Fm y' z h k ∂ν) 0 =
@@ -94,8 +92,6 @@ theorem gIdil_of_k (hT : _root_.PositivityTheory.SiegelWeilFormula.TAll_k) (hAux
       congr 1
       funext h
       congr 1
-      funext Xr
-      simp only [hFm, _root_.PositivityTheory.SiegelWeilFormula.RD_k.tens]
       rw [iteratedDeriv_mul_const' (fun z => Gf (y₀ * y') z (R.loc w (mat h⁻¹ * incM F Xr))) _ r]
       beta_reduce
       rw [hder (y₀ * y') hy' r]

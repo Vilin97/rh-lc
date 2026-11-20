@@ -175,8 +175,6 @@ theorem rectIntegral_eq_sum_residue {f : ℂ → ℂ} {z w : ℂ} (S : Finset �
       rectIntegral F z w + ∑ q ∈ S, rectIntegral (principalPart f q) z w := by
     rw [← rectIntegral_finset_sum S hPc, ← rectIntegral_add hFc (continuousOn_finsetSum S hPc)]
     congr 1
-    funext u
-    simp only [hF]
     ring
   rw [hsplit, ← hGF, hG0, zero_add, Finset.mul_sum]
   apply Finset.sum_congr rfl

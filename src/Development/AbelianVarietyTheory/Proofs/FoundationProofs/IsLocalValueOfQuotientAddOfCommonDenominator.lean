@@ -175,8 +175,6 @@ theorem val_add (hclo : IsClo p Ωl) (hreb : IsReb T n ψ) {φ χ : HahnSeries �
   have h := (R.1 C D x x' y y' (hC ▸ hx) (hD ▸ hy)).2.1
   refine ⟨x' + y', ?_⟩
   convert h using 1
-  funext r
-  simp only [HahnSeries.coeff_add, hC, hD, map_add]
 
 theorem val_mul (hclo : IsClo p Ωl) (hreb : IsReb T n ψ) {φ χ : HahnSeries ℚ Ω} {x y : Ωl}
     (hφ : Supp p n φ) (hχ : Supp p n χ)

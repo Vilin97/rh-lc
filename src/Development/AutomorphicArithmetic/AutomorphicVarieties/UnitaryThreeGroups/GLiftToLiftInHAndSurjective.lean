@@ -99,8 +99,6 @@ theorem UpperTheory.gLift_toLift_inH_and_surjective :
       have h1 := r'.cont (Sum.inl a) (Sum.inl b) N
       have h2 := r'.cont (Sum.inl a) (Sum.inr b) N
       convert h1.add h2 using 1
-      funext g
-      simp only [Pi.add_apply, map_add]
     · refine eq_of_emb ?_ ?_
       · rw [GG.map_right, ← baseLift_map_residue, GG.map_right, unitaryThreeReflection_right]
         exact hR g

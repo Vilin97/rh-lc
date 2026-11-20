@@ -99,8 +99,6 @@ theorem mulVec_mem_of {m n : ℕ} (M : Matrix (Fin m) (Fin n) D.host.E) (L : Sub
       smul_mem' := fun c x hx => by
         show M.map inc *ᵥ (c • x) ∈ S
         convert S.smul_mem c hx using 1
-        funext i
-        simp only [Matrix.mulVec, dotProduct, Pi.smul_apply, Finset.smul_sum, Subring.smul_def, smul_eq_mul]
         exact Finset.sum_congr rfl fun j _ => by ring }
   have hle : Formalism.L2.Herm.hatL (F := D.host.F) L ≤ S' := by
     refine Submodule.span_le.2 ?_

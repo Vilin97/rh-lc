@@ -68,8 +68,6 @@ theorem HermFam.log_det_gram_natCast_smul_single {K : Type} [Field K] {g : ℕ} 
   have hli : LinearIndependent K (fun k : Fin g => (Pi.single k 1 : Fin g → K)) := by
     have := (Pi.basisFun K (Fin g)).linearIndependent
     convert this using 1
-    funext k
-    simp
   have hpos : 0 < (h.gram σ (fun k => (Pi.single k 1 : Fin g → K))).det :=
     (h.posDef σ g _ hli).det_pos
   have hre : 0 < (h.gram σ (fun k => (Pi.single k 1 : Fin g → K))).det.re := (Complex.pos_iff.mp hpos).1
@@ -96,8 +94,6 @@ theorem deg_eq_neg_adelSum_div_finrank : ∀ (K : Type) [Field K] [NumberField K
     have h0 : LinearIndependent K (fun k : Fin g => (Pi.single k 1 : Fin g → K)) := by
       have := (Pi.basisFun K (Fin g)).linearIndependent
       convert this using 1
-      funext k
-      simp
     have := h0.units_smul (fun _ => Units.mk0 (D : K) hDK)
     convert this using 1
     funext k

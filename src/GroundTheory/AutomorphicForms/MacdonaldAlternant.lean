@@ -68,8 +68,6 @@ theorem alternant_eq_zero {μ : Fin n → ℤ} {i j : Fin n} (hij : i ≠ j) (h 
   refine antisymm_eq_zero_of_swap hij ?_
   rw [permAct_monomial, Equiv.symm_swap]
   congr 1
-  funext x
-  simp only [Function.comp_apply, Equiv.swap_apply_def]
   split_ifs with h1 h2
   · rw [h1, h]
   · rw [h2, h]
@@ -95,8 +93,6 @@ theorem alternant_eq_det (μ : Fin n → ℤ) :
   simp only [Matrix.of_apply, monomial]
   rw [AddMonoidAlgebra.prod_single, Finset.prod_const_one, permAct_single]
   congr 1
-  funext x
-  simp only [Function.comp_apply, Finset.sum_apply, Pi.single_apply]
   rw [Finset.sum_eq_single (σ.symm x)]
   · simp
   · intro b _ hb
@@ -121,8 +117,6 @@ theorem monomial_single_natCast (a : Fin n) (m : ℕ) :
     monomial (Pi.single a (m : ℤ)) = varL a ^ m := by
   simp only [varL, monomial, single_pow, one_pow]
   congr 1
-  funext x
-  simp only [Pi.smul_apply, Pi.single_apply, nsmul_eq_mul]
   split_ifs <;> simp
 
 open Polynomial in
@@ -395,8 +389,6 @@ theorem altQuot_sub_smul (t : ℂ) (p q : LaurentRing n) :
 theorem permAct_varL (σ : Equiv.Perm (Fin n)) (a : Fin n) : permAct σ (varL a) = varL (σ a) := by
   rw [varL, permAct_monomial]
   congr 1
-  funext x
-  simp only [Function.comp_apply, Pi.single_apply, Equiv.symm_apply_eq]
 
 theorem swap_lt_swap {i j a b : Fin n} (hij : (j : ℕ) = i + 1) (hab : a < b)
     (hne : ¬(a = i ∧ b = j)) : Equiv.swap i j a < Equiv.swap i j b := by
@@ -467,8 +459,6 @@ theorem hlR_swap (t : ℂ) {μ : Fin n → ℤ} {i j : Fin n} (hij : (j : ℕ) =
   have hkey : monomial (μ ∘ s) * varL j = monomial μ * varL i := by
     rw [varL, varL, ← monomial_add, ← monomial_add]
     congr 1
-    funext x
-    simp only [Pi.add_apply, Function.comp_apply, Pi.single_apply, hs, Equiv.swap_apply_def]
     split_ifs with h1 h2 h3 h4 h5 <;> simp_all
   have hss : μ ∘ s ∘ s = μ := by
     funext x

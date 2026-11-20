@@ -76,12 +76,8 @@ theorem isAut_of_mem_thetaSpan_sup : GlobalTheory.ThK.KP → ∀ (F E : Type) [F
   | zero => exact isAut_const σ _ K 0
   | add x y _ _ hx hy =>
     convert GlobalTheory.UAut.AutClosed.isAut_add_smul hx hy 1 1 using 1
-    funext g
-    simp
   | smul r x _ hx =>
     convert GlobalTheory.UAut.AutClosed.isAut_add_smul hx (isAut_const σ _ K 0) r 0 using 1
-    funext g
-    simp
 
 end GlobalTheory.ThKSpanAut
 

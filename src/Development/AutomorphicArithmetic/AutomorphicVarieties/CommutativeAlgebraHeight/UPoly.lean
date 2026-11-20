@@ -25,8 +25,6 @@ theorem UpperTheory.V.CA.u_poly :
     refine Eq.trans ?_ h
     change MvPolynomial.aeval _ P = _
     congr 2
-    funext g
-    simp only [map_sum, map_mul, MvPolynomial.aeval_X, Sum.elim_inl, Sum.elim_inr]
     rw [MonoidAlgebra.coeff_mul_apply_left, Finsupp.sum_fintype]
     simp
   · intro S T _ _ _ _ f x

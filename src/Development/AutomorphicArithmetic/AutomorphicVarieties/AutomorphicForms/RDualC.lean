@@ -222,8 +222,6 @@ theorem hasInfChar_dual {τ : E →+* ℂ} {m : Multiset ℂ} (h : π.HasInfChar
   congr 1
   rw [← h.1, ← Multiset.prod_replicate, ← Multiset.map_const', ← Multiset.prod_map_mul]
   congr 2
-  funext z
-  simp only [Function.comp_apply]; ring
 
 theorem hasSatGL_dual {w : HeightOneSpectrum (𝓞 E)} {B : Multiset ℂˣ} (h : GlobalTheory.LFun.HasSatGL w (π.locRep w) B) :
     GlobalTheory.LFun.HasSatGL w ((dual π).locRep w) (B.map (·⁻¹)) :=

@@ -479,8 +479,6 @@ theorem sqRep_psiG {μ : Measure (Mt k r)} (hμ : IsHaarOn (GV k r) μ) {σ : Ma
     rw [← map_nuG hμ] at h
     have h' := ((measurableEmbedding_psiG k r).memLp_map_measure_iff).mp h
     convert h' using 1
-    funext u
-    simp only [Function.comp_apply, of_psiG]
 
 theorem irr_psiG {σ : Mat k r → (H →L[ℂ] H)} (hI : Formalism.MainNotions.S.IsIrredOn (GV k r) σ) :
     ∀ S : Submodule ℂ H, IsClosed (S : Set H) →

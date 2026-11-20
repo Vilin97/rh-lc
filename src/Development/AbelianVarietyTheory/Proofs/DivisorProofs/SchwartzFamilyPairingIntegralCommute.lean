@@ -179,8 +179,6 @@ theorem clm_integral_exchange {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ
     exact smul_comm _ _ _
   rw [hL h, hI, ← ContinuousLinearMap.integral_comp_comm L hFint]
   congr 1
-  funext w
-  simp only [hF, map_smul, smul_eq_mul, hL]
 
 end
 

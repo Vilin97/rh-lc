@@ -265,8 +265,6 @@ theorem htImage_map_realize (b : Basis ι K V) (X : InfinitePlace K → Matrix �
   rw [Matrix.mul_assoc _ (X v), Matrix.mul_nonsing_inv _ (hX v), Matrix.mul_one,
     ← Matrix.mulVec_mulVec]
   congr 1
-  funext i
-  simp only [Formalism.HermitianLatticesTheory.vecAt]
   rw [← LinearMap.toMatrix_mulVec_repr b b' φ x, RingHom.map_mulVec]
   rfl
 

@@ -146,8 +146,6 @@ theorem ambTrue_ex : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → TC
     have hr : Set.range (fun i => jA a ((MtHL I hX a).b i)) = (e a).toLinearMap '' Set.range (fun i => toCx I hX a ((MtHL I hX a).b i)) := by
       rw [← Set.range_comp]
       congr 1
-      funext i
-      simp only [Function.comp_apply, LinearEquiv.coe_coe]
       exact hjA a _
     rw [hr, Submodule.span_image, h1, Submodule.map_top]
     exact LinearEquiv.range _

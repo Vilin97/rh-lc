@@ -99,8 +99,6 @@ theorem chernOn_of_numOn : GlobalTheory.Published.ArCalc → ∀ (e : ℕ) (M : 
     rw [hlin] at hn
     rw [hn, Calc.top]
     congr 2
-    funext _
-    simp only [g, w, Option.elim, map_add, map_smul]
     module
   have hA := GlobalTheory.T.polarization_symmetric_form_identity e Ψ (MvPolynomial.X none) (rename some (lin fun i => (n i : ℝ))) K.num K.symm ν w
     ((1 / 2 : ℝ) • K.ar f) key

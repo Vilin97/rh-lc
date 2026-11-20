@@ -97,8 +97,6 @@ theorem finite_plancherel_schrodinger_intertwiner :
     intro y hHd hy c
     rw [hg, ← hmod (ind c) (hSBind c) y hHd, ← map_smul]
     congr 1
-    funext t
-    simp only [Pi.smul_apply, smul_eq_mul]
     rw [hind]
     by_cases ht : t ∈ Λc
     · rw [dif_pos ht]

@@ -155,8 +155,6 @@ theorem finP_mul_infGL (g : GA E a) (y : GL (Fin a) (Cinf E)) :
   unfold finP
   refine finsum_congr fun w => ?_
   congr 2
-  funext p
-  simp only [cW, RingHom.comp_apply]
   rw [pFin_mul_infGL]
 
 theorem finP_inv_mul_infGL (g : GA E a) (y : GL (Fin a) (Cinf E)) :
@@ -164,8 +162,6 @@ theorem finP_inv_mul_infGL (g : GA E a) (y : GL (Fin a) (Cinf E)) :
   unfold finP
   refine finsum_congr fun w => ?_
   congr 2
-  funext p
-  simp only [cW, RingHom.comp_apply]
   rw [pFin_inv_mul_infGL]
 
 theorem logSize_mul_infGL (g : GA E a) : ∃ D : ℝ, ∀ y : GL (Fin a) (Cinf E),

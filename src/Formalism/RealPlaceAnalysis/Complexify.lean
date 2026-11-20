@@ -37,8 +37,6 @@ lemma Jm_conjTranspose {n : ℕ} (ε : Fin n → Bool) : (Jm ε)ᴴ = Jm ε := b
   unfold Jm
   rw [Matrix.diagonal_conjTranspose]
   congr 1
-  funext a
-  simp only [Pi.star_apply]
   cases ε a <;> simp
 
 def UJ {n : ℕ} (ε : Fin n → Bool) : Subgroup (Matrix (Fin n) (Fin n) ℂ)ˣ where

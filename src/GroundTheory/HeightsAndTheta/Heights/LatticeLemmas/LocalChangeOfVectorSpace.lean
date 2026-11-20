@@ -303,8 +303,6 @@ theorem aAt_of_bAt (hB : BAt K r) : AAt K V := by
     rw [Submodule.map_coe, ← image_localLattice, ← image_localLattice, hloc v, ← Set.image_comp,
       ← Set.image_comp]
     congr 1
-    funext x
-    simp only [hgB, Function.comp_apply, glMap_glOf, LinearEquiv.trans_apply,
       LinearEquiv.symm_apply_apply]
   have hM₁ := isLattice_map φ L₁
   have hM₂ := isLattice_map φ L₂

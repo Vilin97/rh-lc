@@ -39,8 +39,6 @@ theorem wedge_basis (bΩ : Module.Basis (E n d) (Lr K n d) Ω[Lr K n d⁄K]) (h 
   simp only [Equiv.symm_symm]
   unfold exteriorPower.ιMulti_family wedge
   congr 1
-  funext i
-  simp only [Function.comp_apply, Module.Basis.reindex_apply, h]
   rfl
 
 theorem monW_basis : ∀ {K : Type} [Field K] {n d : ℕ} (a : ℕ), ∃ b : Module.Basis (Gam n d × {D : Finset (E n d) // D.card = a}) K (Om K (Lr K n d) a), ∀ p, b p = monW K p.1 p.2 := by

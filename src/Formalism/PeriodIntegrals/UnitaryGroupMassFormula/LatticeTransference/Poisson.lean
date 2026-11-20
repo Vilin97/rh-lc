@@ -197,8 +197,6 @@ private theorem mFourierCoeff_periodization_eq_integral {ι : Type} [Fintype ι]
     intro s
     rw [hF, smul_eq_mul, ← tsum_mul_left]
     congr 1
-    funext k
-    simp only [ψ, hqper]
   rw [MeasureTheory.integral_congr_ae (Filter.Eventually.of_forall hint)]
   rw [MeasureTheory.integral_tsum]
   · have hEach : ∀ k : ι → ℤ, ∫ s in S 0, ψ (s + fun i => (k i : ℝ)) * h (s + fun i => (k i : ℝ)) =
@@ -434,8 +432,6 @@ theorem poissonGauss : PoissonGauss := by
     simp only [hP]
     rw [← e0]
     congr 1
-    funext x
-    simp only [Equiv.coe_addRight, Submodule.coe_add]
     congr 3
     abel_nf
   set G : (ι → ℝ) → ℂ := fun s => ((P (φ.symm s) : ℝ) : ℂ) with hGdef
@@ -456,8 +452,6 @@ theorem poissonGauss : PoissonGauss := by
     simp only [hGdef, hP]
     rw [Complex.ofReal_tsum, ← B.tsum_eq]
     congr 1
-    funext k
-    simp only [hhdef, map_add, hB k, add_comm]
   have hcoef : ∀ m : ι → ℤ, UnitAddTorus.mFourierCoeff F m =
       ((κ * t ^ (-(finrank ℝ E : ℝ) / 2) *
         Real.exp (-π * ‖((D m : dualLat Λ) : E)‖ ^ 2 / t) : ℝ) : ℂ) := by

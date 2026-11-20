@@ -252,19 +252,13 @@ theorem part3 [Module.Finite R L] [Module.Projective R L] (hκ : ∀ a, κ a ∈
         simp
       rw [Ideal.toCotangent_eq] at e1
       convert res_sq (RC := RC) (κ := κ) hs0 _ e1 using 1
-      funext z
-      simp only [← ha, res_apply]
       simp [hf', hαs, map_sum]
     | zero => convert Q.zero_mem using 1; funext z; simp
     | add a b _ _ ha hb =>
       convert Q.add_mem ha hb using 1
-      funext z
-      simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, mul_add, add_mul, Finset.sum_add_distrib]
       ring
     | smul c a _ ha =>
       convert Q.smul_mem c ha using 1
-      funext z
-      simp only [Prod.smul_fst, Prod.smul_snd, Pi.smul_apply, Subalgebra.smul_def, smul_eq_mul, mul_sub,
         Finset.mul_sum, Finset.sum_mul]
       congr 1
       · exact Finset.sum_congr rfl fun _ _ => by ring

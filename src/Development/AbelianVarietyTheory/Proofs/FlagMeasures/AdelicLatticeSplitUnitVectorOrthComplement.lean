@@ -36,8 +36,6 @@ theorem IsPerp.exists_split {I : AutInst} {D : Sib I} {s : Bool} {x : Fin I.n �
     rw [add_mulVec, ← mulVec_mulVec] at h1
     refine h1.symm.trans ?_
     congr 1
-    funext i
-    simp only [mulVec, dotProduct, vecMulVec_apply, Pi.smul_apply, smul_eq_mul, Finset.sum_mul]
     exact Finset.sum_congr rfl fun j _ => by ring
 
   have hpair : ∀ (c : I.E) (w : Fin D.n → I.E), y = c • x + A *ᵥ w →

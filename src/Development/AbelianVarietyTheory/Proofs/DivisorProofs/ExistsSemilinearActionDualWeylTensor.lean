@@ -132,8 +132,6 @@ theorem onFactor_rep (g : R ≃+* R) (u : GL (Fin N) R)
   unfold Formalism.UG.dwAct Formalism.GradedWeylDivisibility.rowAct
   rw [aeval_eq_bind₁, map_bind₁]
   congr 2
-  funext v
-  simp only [map_sum, map_mul, map_C, map_X]
   refine Finset.sum_congr rfl fun b _ => ?_
   have := fix_inv N g u hu v.1 b
   simp only [RingHom.coe_coe] at this ⊢

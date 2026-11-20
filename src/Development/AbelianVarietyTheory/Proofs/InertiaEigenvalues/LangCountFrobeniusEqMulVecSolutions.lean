@@ -86,8 +86,6 @@ theorem langCount : ∀ (F : Type) [NontriviallyNormedField F] [IsUltrametricDis
     intro a b
     rw [← Matrix.mulVec_add]
     congr 1
-    funext i
-    simp only [Pi.add_apply]
     rw [add_pow_char_pow])
   have hΦ : ∀ (c : F) (v : m → F), Φ (c • v) = c ^ p ^ e • Φ v := by
     intro c v

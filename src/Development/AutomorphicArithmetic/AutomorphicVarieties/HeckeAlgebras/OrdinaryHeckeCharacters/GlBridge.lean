@@ -188,8 +188,6 @@ private theorem iwahori_z_eq_product : (glIwa k n).z = ((List.range n).map (al k
     | zero =>
       rw [upow, List.range_zero, List.map_nil, List.prod_nil, ← (diagT k (Fin n)).map_one]
       congr 1
-      funext i
-      simp
     | succ m ih =>
       rw [List.range_succ, List.map_append, List.prod_append, ih, List.map_singleton, List.prod_singleton, al, upow, upow,
         upow, ← map_mul]

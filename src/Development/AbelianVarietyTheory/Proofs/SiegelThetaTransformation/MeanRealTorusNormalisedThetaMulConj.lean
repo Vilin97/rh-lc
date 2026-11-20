@@ -100,8 +100,6 @@ theorem dblz'_shift (x₁ x₂ : Frame X.Ψ r) (τ : X.Ψ) (h : (aLin X x₁ x�
   congr 2
   conv_rhs => rw [← one_mulVec (w τ k), ← e, ← mulVec_mulVec, ← mulVec_add]
   congr 1
-  funext c
-  simp only [zR, Equiv.apply_symm_apply, Pi.add_apply]
   by_cases hc : (c : ℕ) < X.p0
   · simp only [if_pos hc, hermC, map_sum, map_mul, conj_conj, DblPer.conj_Gm, mulVec, dotProduct,
       aLin, of_apply, Finset.sum_mul, FD.col, mat, Pi.add_apply]
@@ -125,8 +123,6 @@ theorem dblz_shift (x₁ x₂ : Frame X.Ψ r) (τ : X.Ψ) (h : (aAnti X x₁ x�
   congr 2
   conv_rhs => rw [← one_mulVec (star (w τ k)), ← e, ← mulVec_mulVec, ← mulVec_add]
   congr 1
-  funext c
-  simp only [zR, Equiv.apply_symm_apply, Pi.add_apply]
   by_cases hc : (c : ℕ) < X.p0
   · simp only [if_pos hc, hermC, map_add, mulVec, dotProduct,
       aAnti, of_apply, Finset.sum_mul, FD.col, mat, Pi.add_apply, Pi.star_apply, RCLike.star_def]

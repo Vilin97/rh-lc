@@ -112,8 +112,6 @@ theorem polyEmb_rename (σ : Equiv.Perm (Fin n)) (Q : MvPolynomial (Fin n) ℂ) 
     refine MvPolynomial.algHom_ext fun i => ?_
     rw [AlgHom.comp_apply, AlgHom.comp_apply, rename_X, polyEmb_X, polyEmb_X, permAct_single]
     congr 1
-    funext j
-    simp only [Function.comp_apply, Pi.single_apply, Equiv.symm_apply_eq]
   exact AlgHom.congr_fun this Q
 
 theorem mem_range_polyEmb {q : LaurentRing n} (hq : ∀ l ∈ q.coeff.support, ∀ i, 0 ≤ l i) :

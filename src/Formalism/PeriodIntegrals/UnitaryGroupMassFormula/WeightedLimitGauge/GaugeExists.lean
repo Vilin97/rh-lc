@@ -94,8 +94,6 @@ theorem exp_dV (t : ℝ) : NormedSpace.exp ((t : ℂ) • diagonal (dV k r)) = d
   unfold dg
   rw [← Matrix.diagonal_smul, Matrix.exp_diagonal, Pi.exp_def]
   congr 1
-  funext i
-  simp only [Pi.smul_apply, dV, smul_eq_mul]
   split_ifs
   · rw [Complex.exp_eq_exp_ℂ]
   · rw [mul_zero, NormedSpace.exp_zero]

@@ -68,8 +68,6 @@ theorem main : ∀ (N : ℕ) [NeZero N] (e : ℕ) (τ : ℍ) (x : Fin 2 → ZMod
   refine ⟨T₁ + (-1) ^ (e + 1) * T₂, ?_, ?_⟩
   · have h := h₁.add (h₂.mul_left ((-1) ^ (e + 1)))
     convert h using 1
-    funext k
-    simp only [cSum, c₁, c₂]
     rw [show ∀ A B C D : ℂ, A * D + C * (B * D) = (A + C * B) * D from fun A B C D => by ring]
     congr 1
     rw [Finset.mul_sum, ← Finset.sum_add_distrib]

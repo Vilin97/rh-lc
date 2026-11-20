@@ -51,8 +51,6 @@ private theorem Jm_conjTransposeDiscreteSeriesExistence : (Jm ε)ᴴ = Jm ε := 
   unfold Jm
   rw [Matrix.diagonal_conjTranspose]
   congr 1
-  funext a
-  simp only [Pi.star_apply]
   split_ifs <;> simp
 
 private theorem Jm_mul_Jm_conj_conjTranspose (Z : Matrix (Fin n) (Fin n) ℂ) :

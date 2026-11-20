@@ -46,8 +46,6 @@ theorem GlobalTheory.span_D_lift_clear_denominators : ∀ (k K L : Type) [Field 
   have htb : IsTranscendenceBasis k (fun j => IsLocalRing.residue R (algebraMap B R (y j))) := by
     have h2 := hy.algebraMap_comp (A := Q.ResidueField)
     convert h2 using 1
-    funext j
-    simp only [Function.comp_apply, Ideal.algebraMap_quotient_residueField_mk]
     rfl
   have hspan := GlobalTheory.span_D_uniformizer_transcendenceBasis k R (algebraMap B R s) hirr m
     (fun j => algebraMap B R (y j)) htb

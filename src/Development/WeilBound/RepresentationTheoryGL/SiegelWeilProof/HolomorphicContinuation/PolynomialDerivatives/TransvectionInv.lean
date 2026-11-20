@@ -354,8 +354,6 @@ theorem fftSym : FFTSym := by
     Subalgebra.mem_map.mpr ⟨p, hu, rfl⟩
   rw [AlgHom.map_adjoin, ← Set.range_comp] at h2
   convert h2 using 3
-  funext ab
-  simp only [Function.comp_apply, map_sum, map_mul, rename_vec, rename_cov, pairSym]
 
 end PositivityTheory.Rg.Sw.LC.PolynomialWeightAction
 

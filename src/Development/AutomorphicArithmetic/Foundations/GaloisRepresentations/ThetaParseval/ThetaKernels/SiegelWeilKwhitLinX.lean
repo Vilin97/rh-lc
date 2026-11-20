@@ -47,8 +47,6 @@ theorem linRedC_k : _root_.PositivityTheory.SiegelWeilFormula.KWhit.LinRedC_k :=
   refine (Finset.sum_congr rfl fun i _ => (integral_const_mul _ _).symm).trans ?_
   rw [← integral_finsetSum _ fun i _ => (hint i).const_mul (cs i)]
   congr 1
-  funext β
-  simp only [flat, _root_.PositivityTheory.SiegelWeilFormula.KWhit.constantTerm_finsetSum, Finset.mul_sum, Finset.sum_mul]
   exact Finset.sum_congr rfl fun i _ => by ring
 end PositivityTheory.SiegelWeilFormula.KWhit
 end

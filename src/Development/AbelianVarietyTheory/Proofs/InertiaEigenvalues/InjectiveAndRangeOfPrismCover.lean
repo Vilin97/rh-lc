@@ -15,13 +15,9 @@ noncomputable def matCoordMap {A B : Type} [CommRing A] [CommRing B] {d : ℕ} (
   map_add' x y := by
     rw [← Matrix.mulVec_add]
     congr 1
-    funext i
-    simp
   map_smul' a x := by
     rw [← Matrix.mulVec_smul]
     congr 1
-    funext i
-    simp
 
 theorem Eval.effective_of_cover : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (d : ℕ) (S : Strat bk d) (B C : Obj l ↥(OL K)) (N : Type) [AddCommGroup N] [Module B.A N] (V : Eval S B N) (h : Hom B C) (f : Hom bk.prism C), Cover h → Function.Injective (V.v h f) ∧ ∀ z : Fin d → C.A, (∀ (Q : Obj l ↥(OL K)) (p q : Hom C Q), p.comp h = q.comp h → (fun i => p.f (z i)) = (S.ε (p.comp f) (q.comp f)).mulVec fun i => q.f (z i)) → ∃ y, V.v h f y = z := by
   intro l _ K bk d S B C N _ _ V h f hc

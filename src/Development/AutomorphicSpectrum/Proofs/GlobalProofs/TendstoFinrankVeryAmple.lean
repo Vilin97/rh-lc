@@ -450,8 +450,6 @@ theorem lower_of_veryAmple (hS : GroundTheory.Heights₂.Heights.IndefiniteRowSi
           ring
       rw [e0, Kleiman.SectionsOverLocalization.SegreTwist.proof F K ι Ω y hnz]
       congr 1
-      funext k
-      simp
     beta_reduce
     rw [hsec]
     refine le_trans (Nat.cast_le.2 (finrank_secOver_mono hnz (fun k => ?_) (hfd _))) hτ

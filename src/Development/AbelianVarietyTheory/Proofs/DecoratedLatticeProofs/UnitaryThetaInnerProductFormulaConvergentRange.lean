@@ -86,8 +86,6 @@ theorem innerProduct_convergent : GlobalTheory.Published.CuspRapidDecay → Glob
       simp only [GlobalTheory.Eis.petCoef, rcoef, petersson, pet, rTr, GlobalTheory.AutomorphicL2Unitary.descend]
       rw [← integral_conj]
       congr 1
-      funext q
-      simp
     rw [e1, e2]
   have hInt : Integrable (fun g => wcoef om ν 𝓕 Φ₁ Φ₂ g * rcoef m u₁ u₂ g) m := by
     have e : (fun g => wcoef om ν 𝓕 Φ₁ Φ₂ g * rcoef m u₁ u₂ g) = fun g =>

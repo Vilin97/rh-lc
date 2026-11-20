@@ -230,8 +230,6 @@ theorem mapSt : MapSt := by
     refine (hC'.κ n hn _ _).2 ⟨m', ?_, iL' (l y) - (p : S'.R) • z', ?_, ?_⟩
     · rw [hR hx, ← tr_theta (e := e) (e' := e') (M := M) hα h0, hm']
       congr 2
-      funext j
-      simp only [tr_apply, LatticeBaseChange.map_phiInv hα]
       simp only [← RingHom.coe_pow, map_sum, map_mul, map_intCast]
     · rw [map_sub, map_smul, hl', h3, ← map_natCast (algebraMap S.R S'.R), ← map_smulₛₗ, ← map_sub, ← map_smul,
         ← map_sub, hz', sub_sub_cancel, h1, b_eq_tr hα hm']

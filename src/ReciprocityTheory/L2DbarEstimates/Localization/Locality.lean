@@ -51,8 +51,6 @@ theorem locality (n : ℕ) (M : Type*) [TopologicalSpace M] [T2Space M]
     · simp [hfz x hx]
   · unfold wint
     congr 1
-    funext x
-    simp only [tstar]
     simp_rw [hfun]
     by_cases hx : x ∈ U
     · have h1 : w1 ph' ψ x = ph x := by simp [w1, (hph x hx).1, (hph x hx).2]

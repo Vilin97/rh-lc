@@ -115,8 +115,6 @@ theorem Pl_conjT : (Pl r)ᴴ = Pl r := by
   unfold Pl
   rw [Matrix.diagonal_conjTranspose]
   congr 1
-  funext i
-  simp only [Pi.star_apply]
   split_ifs <;> simp
 
 theorem Em_conjT : (Em r)ᴴ = (Em r)ᵀ := by

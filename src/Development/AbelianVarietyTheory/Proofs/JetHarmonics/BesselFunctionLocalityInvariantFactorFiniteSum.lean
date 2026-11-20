@@ -39,7 +39,5 @@ theorem _root_.GlobalTheory.BesselFunctionBasic.JF_basic : ∀ (k r : ℕ) (Wp :
     simp only [hJ]
     rw [← integral_finset_sum _ (fun i _ => hF i)]
     congr 1
-    funext p
-    simp only [_root_.Formalism.FourierDecayAlt.JF.integrand, _root_.Formalism.FourierDecayAlt.P.B6.rho_eq, map_sum, Finset.smul_sum]
 
 end GlobalTheory.BesselFunctionBasic

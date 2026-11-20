@@ -125,16 +125,10 @@ theorem mem_latHat_iff_comm_mem_lamAf (F E : Type) [Field F] [NumberField F] [Fi
       simp [Subring.smul_def, Formalism.UG.inclE, Algebra.TensorProduct.tmul_mul_tmul]
     | zero =>
       convert zero_mem (Formalism.MainNotions.S.lamAf (F := F) L) using 1
-      funext i
-      simp
     | add u w _ _ hu hw =>
       convert add_mem hu hw using 1
-      funext i
-      simp
     | neg u _ hu =>
       convert neg_mem hu using 1
-      funext i
-      simp
   · intro hz
     simpa using symm_mem_of_mem L _ hz
 

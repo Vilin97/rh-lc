@@ -107,8 +107,6 @@ theorem exists_congr_indefJ (hu : IsUnit H.det) :
       _ = _ := by
           rw [star_eigenvectorUnitary_mul_mul, diagonal_mul_diagonal, diagonal_mul_diagonal]
           congr 1
-          funext i
-          simp only [d]
           have hsq : Real.sqrt |lam i| * Real.sqrt |lam i| = |lam i| :=
             Real.mul_self_sqrt (abs_nonneg _)
           rw [← Complex.ofReal_mul, ← Complex.ofReal_mul]
@@ -126,8 +124,6 @@ theorem exists_congr_indefJ (hu : IsUnit H.det) :
     rw [← e1, ← submatrix_mul (P0ᴴ * H) P0 e.symm id e.symm Function.bijective_id, hPHP,
       submatrix_diagonal_equiv, indefJ]
     congr 1
-    funext k
-    simp only [Function.comp_apply]
     rw [sign_eigenvalues_signEquiv_symm hu k]
     rcases k with a | b <;> simp
 

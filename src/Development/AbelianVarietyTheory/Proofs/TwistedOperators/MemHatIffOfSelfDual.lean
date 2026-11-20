@@ -279,8 +279,6 @@ theorem exists_sub_inc_mem_hat (h : Submodule.span D.host.E (Λ : Set (Fin n →
       obtain ⟨t, ht⟩ := exists_sub_inc_mem a
       refine ⟨t • x, ?_⟩
       convert smul_mem_hat ht (inc_mem_hat hx) using 1
-      funext i
-      simp only [Pi.sub_apply, Pi.smul_apply, smul_eq_mul, RingHom.map_mul, sub_mul]
     | zero => exact fun a => ⟨0, by convert zero_mem_hat (Λ := Λ) using 1; funext i; simp⟩
     | add x y _ _ hx hy =>
       intro a
@@ -288,16 +286,12 @@ theorem exists_sub_inc_mem_hat (h : Submodule.span D.host.E (Λ : Set (Fin n →
       obtain ⟨y', hy'⟩ := hy a
       refine ⟨x' + y', ?_⟩
       convert add_mem_hat hx' hy' using 1
-      funext i
-      simp only [Pi.sub_apply, Pi.add_apply, Pi.smul_apply, smul_eq_mul, RingHom.map_add]
       ring
     | smul c x _ hx =>
       intro a
       obtain ⟨x', hx'⟩ := hx (a * inc D c)
       refine ⟨x', ?_⟩
       convert hx' using 2
-      funext i
-      simp only [Pi.smul_apply, smul_eq_mul, RingHom.map_mul, mul_assoc]
   choose x hx using fun j : Fin n => h1 (Pi.single j 1) (h ▸ Submodule.mem_top) (y j)
   refine ⟨∑ j, x j, ?_⟩
   convert (Formalism.L2.Herm.hatL (F := D.host.F) Λ).sum_mem (t := Finset.univ) fun j _ => hx j using 1

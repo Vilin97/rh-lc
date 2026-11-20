@@ -71,8 +71,6 @@ theorem matrices_of_lines {A N : Type} [CommRing A] [AddCommGroup N] [Module A N
     simp only [hL, he, serAct_lines]
     rw [← lines_sum]
     congr 1
-    funext j
-    simp only [Matrix.mulVec, dotProduct, E, Matrix.of_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, mul_comm]
   have hEu : IsUnit E := by
     refine Matrix.mulVec_surjective_iff_isUnit.1 fun c => ?_
     obtain ⟨s, x, f, h⟩ := (hS (lines U d c)).mpr ⟨c, rfl⟩

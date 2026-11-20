@@ -107,8 +107,6 @@ theorem restr_pure (eq : κ ≃ κ' ⊕ κ₁) (f : SInf F κ) (φ : ∀ v : Pl 
   · congr 1
     funext v
     congr 1
-    funext k
-    simp only [glue]
     rcases eq k with i | j
     · exact map_zero _
     · rfl

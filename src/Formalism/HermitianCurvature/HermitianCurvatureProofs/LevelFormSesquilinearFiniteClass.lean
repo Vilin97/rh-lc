@@ -1218,8 +1218,6 @@ theorem bc_JF_smul (c : ℂ) (F : B.Mat k r → (Wq →L[ℂ] Wp)) (h : B.Mat k 
   show ∫ p, JF.xiP Bs p • B.rho Bs p (fun g => c • F g) h ∂Bs.μSS = c • ∫ p, JF.xiP Bs p • B.rho Bs p F h ∂Bs.μSS
   rw [← integral_smul]
   congr 1
-  funext p
-  simp only [B.rho, ContinuousLinearMap.smul_comp, ContinuousLinearMap.comp_smul]
   exact smul_comm _ _ _
 
 theorem bc_JF_sum {ι : Type*} (s : Finset ι) (G : ι → B.Mat k r → (Wq →L[ℂ] Wp))

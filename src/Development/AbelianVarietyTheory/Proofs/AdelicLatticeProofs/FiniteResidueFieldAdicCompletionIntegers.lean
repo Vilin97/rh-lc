@@ -888,8 +888,6 @@ theorem gram_signMatrix (τ : E →+* ℂ) (p : ℕ) :
     Matrix.map_one _ (map_zero _) (map_one _), Matrix.mul_one, signMatrix,
     Matrix.diagonal_map (map_zero _)]
   congr 1
-  funext a
-  simp only [sgn]
   split_ifs <;> simp
 
 omit [IsCMField E] in

@@ -282,8 +282,6 @@ theorem linePt_epsPt {k : ℕ} (c : Fin k → R) (y : epsR R ⟶ G) :
     linePt c ≫ epsPt y k = (List.ofFn fun a => epsScale R (c a) ≫ y).prod := by
   rw [GlobalTheory.SecJet.epsPt, comp_prod, List.map_ofFn]
   congr 2
-  funext a
-  simp only [Function.comp_apply]
   rw [← Category.assoc, linePt_epsIn]
 
 theorem linePt_zero {k : ℕ} {y : epsR R ⟶ G} (hy : IsTangent y) : linePt 0 ≫ epsPt y k = 1 := by

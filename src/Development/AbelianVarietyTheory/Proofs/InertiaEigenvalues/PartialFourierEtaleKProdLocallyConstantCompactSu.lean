@@ -16,8 +16,6 @@ theorem main : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedF
     have h := (GlobalTheory.T.selfDual_measure_exists_unique_fourier_inversion F E ψ hψ A.K (Algebra.traceForm F A.K) (Algebra.traceForm_isSymm F) hnd).2 μK hμ
       (fun b => φ' (b, c)) (GlobalTheory.TestFn.slice_test φ' hφ c)
     convert h using 1
-    funext u
-    simp only [hTdef, Et.tilde, fourB, Algebra.traceForm_apply, Et.psiK]
     congr 1; funext b; rw [mul_comm u b]
   obtain ⟨V, hV, hVf⟩ := GlobalTheory.TestFn.unif_const (A.K × A.K) φ' hφ
   set V₂ : Set A.K := {v | ((0 : A.K), v) ∈ V} with hV₂def

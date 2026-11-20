@@ -45,8 +45,6 @@ theorem mul_mem_pureSpan {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
     ring
   | zero =>
     convert (pureSpan X Y).zero_mem using 1
-    funext p
-    simp
   | add u v _ _ hu hv =>
     convert (pureSpan X Y).add_mem hu hv using 1
     funext p
@@ -78,8 +76,6 @@ theorem mem_pureSpan {X Y : Type*} [TopologicalSpace X] [T2Space X] [LocallyComp
     induction t using Finset.induction_on with
     | empty =>
       convert (pureSpan X Y).zero_mem using 1
-      funext p
-      simp
     | insert q t _ ih =>
       have ha := lcc_indicator (hUc q) (hUo q)
       have hb := lcc_indicator (hVc q) (hVo q)

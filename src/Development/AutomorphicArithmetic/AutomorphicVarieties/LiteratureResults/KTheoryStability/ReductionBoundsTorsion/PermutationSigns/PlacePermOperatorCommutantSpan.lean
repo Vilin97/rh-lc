@@ -123,8 +123,6 @@ theorem herm_of_unit (φ : Matrix (Fin q → Ix W m) (Fin q → Ix W m) ℂ →�
     rw [mem_unitaryGroup_iff, star_eq_conjTranspose, diagonal_conjTranspose, diagonal_mul_diagonal,
       ← diagonal_one]
     congr 1
-    funext a
-    simp only [Pi.star_apply]
     rw [Complex.star_def, Complex.mul_conj', hc (w, a)]
     simp
   have hq : 0 < q + 1 := Nat.succ_pos q

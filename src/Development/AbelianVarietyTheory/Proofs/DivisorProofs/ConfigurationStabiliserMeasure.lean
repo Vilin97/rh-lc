@@ -76,8 +76,6 @@ theorem mem_schA_of_level_gen (F : Type) [Field F] [NumberField F] (κ : Type) [
     funext x
     show Φ ((x ∘ s.symm) ∘ s) = Φ x
     congr 1
-    funext i
-    simp
   rw [← h3]
   exact h2
 

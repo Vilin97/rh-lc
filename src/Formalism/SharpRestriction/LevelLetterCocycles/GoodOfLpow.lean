@@ -64,8 +64,6 @@ theorem good_of_sec (C : Ctx W) (A : ArcP n) (hA : A.OK) (c' : ZMod n) (hc' : c'
   have hS := secIn_add W (Formalism.MainNotions.UnusedSlot80.ArcF.secIn_lE W hD κ₀) (Formalism.MainNotions.UnusedSlot80.ArcF.secIn_lE W hS₀ (t + k))
   refine ⟨κ₀ + (t + k₀), ?_⟩
   convert hS using 1
-  funext m
-  simp only [Pi.add_apply, lE_mul, mul_sub]
   rw [show κ₀ + (t + k₀) = κ₀ + (t + k₀) from rfl]
   unfold lE
   ring
@@ -120,8 +118,6 @@ theorem good_add (C : Ctx W) (A : ArcP n) (hA : A.OK) (c' : ZMod n) (hc' : c' �
   have hS := secIn_add W (Formalism.MainNotions.UnusedSlot80.ArcF.secIn_lE W hS₁ (κ'₂ + κ₂))
     (Formalism.MainNotions.UnusedSlot80.ArcF.secIn_lE W hS₂ (κ'₁ + κ₁))
   convert hS using 1
-  funext m
-  simp only [Pi.add_apply]
   unfold lE
   ring
 

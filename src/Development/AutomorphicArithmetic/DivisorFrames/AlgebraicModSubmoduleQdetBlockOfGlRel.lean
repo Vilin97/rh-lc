@@ -29,8 +29,6 @@ private theorem map_qdet {A B : Type} [Ring A] [Algebra ℂ A] [Ring B] [Algebra
   refine Finset.sum_congr rfl fun s _ => ?_
   rw [map_mul, map_intCast, map_list_prod, List.map_ofFn]
   congr 3
-  funext k
-  simp only [Function.comp, Tm]
   split_ifs <;> simp
 
 private theorem qdet_self_comm {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ}

@@ -78,8 +78,6 @@ theorem lattice_fourier_series (V : Type*) [NormedAddCommGroup V] [InnerProductS
   rw [hgx] at hx
   rw [← E.hasSum_iff]
   convert hx using 1
-  funext m
-  simp only [Function.comp_apply, hE, smul_eq_mul, mFourier_torusProj e,
     ContinuousLinearEquiv.symm_apply_apply]
   have := hcoef m
   simp only [hc] at this

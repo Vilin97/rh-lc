@@ -116,8 +116,6 @@ lemma gram_posDef (W : Weight L) (dV : SmoothVolume A) {n : ℕ}
     simp only [Matrix.conjTranspose_apply, gram, Matrix.of_apply, Complex.star_def]
     rw [← integral_conj]
     congr 1
-    funext x
-    simp only [map_mul, Complex.conj_conj, Complex.conj_ofReal]
     ring
   · set v : V := ∑ a, conj (y a) • e a with hv
     have hv0 : v ≠ 0 := by

@@ -108,8 +108,6 @@ theorem exists_rightKFourier : ∀ (n : ℕ) (ε : Fin n → Bool), ∃ e : ℕ 
       funext t
       rw [one_mul, ← mul_one (expK ε X t), ← rder_left ε l _ (expK ε X t) 1]
       congr 1
-      funext x
-      simp only [avgK]
       rw [toMK_expK_mul ε X hK t x]
       simp only [Matrix.mul_assoc]
     show HasDerivAt (fun t : ℝ => rder ε l (avgK ε (kerE ε i) f (y * NormedSpace.exp (t • X))) 1)

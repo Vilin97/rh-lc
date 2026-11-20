@@ -36,11 +36,7 @@ theorem algebraicIndependent_add_one {E ι : Type} [CommRing E] [Algebra K E] {v
   have h₁ : AlgebraicIndependent K fun i : ι => (X i + 1 : MvPolynomial ι K) := by
     refine AlgebraicIndependent.of_comp (aeval fun i : ι => (X i - 1 : MvPolynomial ι K)) ?_
     convert algebraicIndependent_X ι K using 1
-    funext i
-    simp
   convert h₁.map' (algebraicIndependent_iff_injective_aeval.1 hv) using 1
-  funext i
-  simp
 
 theorem mem_range_of_fixed [IsAlgClosed K] {Ω : Type} [Field Ω] [IsAlgClosed Ω] [Algebra K Ω] (a : Ω)
     (h : ∀ j : Ω →ₐ[K] Ω, j a = a) : a ∈ Set.range (algebraMap K Ω) := by

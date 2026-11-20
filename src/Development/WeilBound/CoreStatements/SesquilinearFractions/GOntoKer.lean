@@ -174,8 +174,6 @@ theorem qC_eq (b : Bool) (z : ℂ) :
 theorem qC_add (b : Bool) (z z' : ℂ) : qC X b (z + z') = qC X b z * qC X b z' := by
   rw [qC_eq, qC_eq, qC_eq, ← map_mul, ← map_mul, ← (Z b).u.ex_add]
   congr 3
-  funext _
-  simp only [Pi.add_apply]
   ring
 
 theorem qC_zero (b : Bool) : qC X b 0 = 1 := by

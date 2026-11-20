@@ -254,6 +254,4 @@ theorem GlobalTheory.invariant_polynomial_eq_aeval_pairings :
   simp only [RingHom.coe_coe]
   rw [← AlgHom.comp_apply, MvPolynomial.comp_aeval]
   congr 2
-  funext v
-  simp only [base]
   split_ifs <;> simp

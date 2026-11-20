@@ -96,8 +96,6 @@ theorem whit_kerInf {F : GA E a → ℂ} (hF : Continuous F)
         funext x
         rw [whit_eq, ← integral_const_mul]
         congr 1
-        funext Y
-        simp only [f, ψ, mul_assoc]
 
 theorem whit_linear_kerInf : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (F G : GA E a → ℂ),
     Continuous F → Continuous G →

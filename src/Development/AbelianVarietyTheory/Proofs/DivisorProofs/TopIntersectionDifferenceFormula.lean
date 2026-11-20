@@ -39,8 +39,6 @@ theorem symm_multilinear_telescope {e : ℕ} {V : Type} [AddCommGroup V] [Module
     rw [hf, ← hs _ (Equiv.swap 0 ⟨i, hi'⟩)]
     simp only [hT]
     congr 1
-    funext k
-    simp only [Function.comp]
     refine if_congr ?_ rfl rfl
     have hk0 : k = 0 ↔ (k : ℕ) = 0 := Fin.ext_iff
     have hki : k = ⟨i, hi'⟩ ↔ (k : ℕ) = i := Fin.ext_iff

@@ -103,8 +103,6 @@ theorem VecOf.smul {Q : Finset (Pl D.host.E)} {Ω : DatFn D i} {φ : WO (Vc D i)
   refine ⟨hv, e, he, hex, fun T hT => ?_⟩
   rw [hall T hT, ← map_smul]
   congr 1
-  funext x
-  simp only [Pi.smul_apply, smul_eq_mul]
   split_ifs <;> simp
 
 end GlobalTheory.OnCmp

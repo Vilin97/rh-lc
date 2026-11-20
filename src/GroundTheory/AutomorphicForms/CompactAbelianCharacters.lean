@@ -195,8 +195,6 @@ theorem inner_convOp_left (f g : Lp ℂ 2 μ) :
   filter_upwards [convOp_ae μ ψ f] with x hx
   rw [RCLike.inner_apply', hx, convFun_apply, ← integral_conj, ← integral_mul_const]
   congr 1
-  funext y
-  simp only [map_mul, Complex.conj_ofReal]
   ring
 
 theorem inner_convOp_right (f g : Lp ℂ 2 μ) :
@@ -519,8 +517,6 @@ theorem integral_conj_mul_eq_zero {χ χ' : C →ₜ* Circle} (h : χ ≠ χ') :
           (integral_mul_left_eq_self (fun x => conj (χ x : ℂ) * χ' x) a).symm
       _ = ∫ x, c * (conj (χ x : ℂ) * χ' x) ∂μ := by
           congr 1
-          funext x
-          simp only [c, map_mul, Circle.coe_mul]
           ring
       _ = c * ∫ x, conj (χ x : ℂ) * χ' x ∂μ := integral_const_mul _ _
   have hc : c ≠ 1 := by

@@ -401,8 +401,6 @@ theorem good_qminor (hD : IsOpen D) {t : ℕ} (a b : Fin t → Fin (mdim k r i))
   have h := good_sum Finset.univ (fun σ : Equiv.Perm (Fin t) => ((Equiv.Perm.sign σ : ℤ) : ℂ)) _
     (fun σ _ => key σ)
   convert h using 2 with f
-  funext x
-  simp only [qminorOp, Finset.sum_apply, Pi.smul_apply]
 
 end Analysis
 
@@ -691,8 +689,6 @@ theorem qminor_poly (hD : IsOpen D) {f : Mx k r → E} (hf : SmoothLev k r i D f
         ((posL k r i ∘ a) (σ l)) ((posL k r i ∘ b) l)) =
         List.ofFn (opF k r i Y ∘ fun l : Fin t => (s - ((l : ℕ) : ℂ), a (σ l), b l)) := by
       congr 1
-      funext l
-      simp only [Function.comp, opF, add_sub_assoc]
     rw [e]
     rfl
   refine (polyAt_sum Finset.univ _ fun σ _ => (key σ).smul ((Equiv.Perm.sign σ : ℤ) : ℂ)).congr fun Y => ?_

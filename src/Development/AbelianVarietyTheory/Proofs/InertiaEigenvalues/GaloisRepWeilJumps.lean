@@ -78,7 +78,5 @@ theorem twist_compatible : ∀ D : D7, SumRepresentations.tie0 D → ∀ (i : D.
       ⟨(hρl w' (mem_placesOver_of_inducesW D i τ w' hw')).1, (hχl w' (mem_placesOver_of_inducesW D i τ w' hw')).1⟩
     rw [hj τ n hall hn, Multiset.map_map, ← (hρl w hw).2 τ hτ, Multiset.map_map, ← hnc]
     congr 1
-    funext x
-    simp
 
 end GlobalTheory

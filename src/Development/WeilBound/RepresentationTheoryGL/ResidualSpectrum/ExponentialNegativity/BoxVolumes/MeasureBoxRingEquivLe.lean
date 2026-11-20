@@ -116,8 +116,6 @@ theorem measure_boxPlace_le (w : InfinitePlace K)
       dsimp only
       rw [coe_diagUnits, diagonal_map (map_zero _)]
       congr 1
-      funext i
-      simp only [posRealToUnits, MonoidHom.coe_mk, OneHom.coe_mk, Units.val_mk0, posRealElem,
         dif_pos hw, RingEquiv.apply_symm_apply, hm, pow_one]
     obtain ⟨C, hC, hCb⟩ := measure_box_ringEquiv_le (𝕜 := ℝ)
       (InfinitePlace.Completion.ringEquivRealOfIsReal hw) hφ
@@ -137,8 +135,6 @@ theorem measure_boxPlace_le (w : InfinitePlace K)
       dsimp only
       rw [coe_diagUnits, diagonal_map (map_zero _)]
       congr 1
-      funext i
-      simp only [posRealToUnits, MonoidHom.coe_mk, OneHom.coe_mk, Units.val_mk0, posRealElem,
         dif_neg hw, RingEquiv.apply_symm_apply, hm]
       rw [Real.sqrt_sq (r.2 i).le]
     obtain ⟨C, hC, hCb⟩ := measure_box_ringEquiv_le (𝕜 := ℂ)

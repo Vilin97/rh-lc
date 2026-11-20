@@ -268,7 +268,5 @@ theorem isValueAt_jetPt : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
   refine (hτ.2 j h).trans (congrArg _ ?_)
   rw [← jetN_one m (hA.pow k)]
   congr 1
-  funext w
-  simp
 
 end GlobalTheory.JetVal

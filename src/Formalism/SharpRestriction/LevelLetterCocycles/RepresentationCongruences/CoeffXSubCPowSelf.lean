@@ -96,8 +96,6 @@ theorem EL_of_mem {u : LetA O n} (hu : u ∈ W.AΔ) :
   refine ⟨F, ?_⟩
   simp only [EL]
   congr 1
-  funext i
-  simp only [Pi.mul_apply, PhiBridge.cst]
   by_cases hi : i = a
   · subst hi
     rw [hF]

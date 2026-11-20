@@ -201,8 +201,6 @@ theorem letter_length_le : Known → ∀ (E : Type) [Field E] [NumberField E] [I
       simp only [(ArchLen.relab_inj c σ).eq_iff, LinearEquiv.coe_coe] at this hz'
       rw [hP, ← this, ← map_smul, hz', hPw t (hy t ht0)]
       congr 1
-      funext j
-      simp
     obtain ⟨τ', hτ'⟩ : ∃ τ' : (U.X k).Ψ, τ'.1 = relab c σ τ ∨ conjEmb τ'.1 = relab c σ τ := by
       by_cases hm : relab c σ τ ∈ (U.X k).Ψ
       · exact ⟨⟨_, hm⟩, Or.inl rfl⟩

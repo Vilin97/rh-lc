@@ -123,8 +123,6 @@ theorem dpb_det {ε : Fin n → Bool} {U : Matrix (Fin n) (Fin n) ℂ} {x : Fin 
   have hJh : (Jm ε)ᴴ = Jm ε := by
     rw [Jm, Matrix.diagonal_conjTranspose]
     congr 1
-    funext a
-    simp only [Pi.star_apply]
     split_ifs <;> simp
   have hJJv : ∀ X : Matrix (Fin n) (Fin n) ℂ, Jm ε * (Jm ε * X) = X := fun X => by
     rw [← Matrix.mul_assoc, hJJ, Matrix.one_mul]

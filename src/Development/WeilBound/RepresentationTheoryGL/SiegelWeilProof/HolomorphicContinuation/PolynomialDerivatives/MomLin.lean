@@ -17,12 +17,8 @@ theorem momLin : MomLin := by
   · unfold mom
     rw [← integral_add hP hQ]
     congr 1
-    funext x
-    simp only [evX, map_add, add_mul]
   · unfold mom
     rw [← integral_const_mul]
     congr 1
-    funext x
-    simp only [evX, MvPolynomial.smul_eval, mul_assoc]
 
 end PositivityTheory.Rg.Sw.LC

@@ -127,8 +127,6 @@ theorem apply_powerSum_mul {N : ℕ} {φ : G → ℤ} (h : DiffVanish (N + 2 + 1
       refine Fin.cases a₂ (fun i => Fin.cases a₂ (fun i => rfl) i) i
     rw [a₃, h.form_apply _ (c (u j) + 0), multiDiff_cons', multiDiff_cons', ← multiDiff_translate]
     congr 4
-    funext y
-    simp only [bwdDiff_apply, add_sub_cancel_left]
     rw [show y - c (u j) = -c (u j) + y by abel]
     ring
   have e₂ : ∑ j, multiDiff g (fun y => φ (c (u j) + y) + φ (-c (u j) + y) - 2 * φ y) 0 = 0 := by

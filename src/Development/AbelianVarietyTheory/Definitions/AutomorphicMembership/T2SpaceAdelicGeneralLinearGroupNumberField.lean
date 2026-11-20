@@ -74,8 +74,6 @@ theorem splitCentre_comm (t : ℝ) (g : GA E a) : splitCentre E a t * g = g * sp
 theorem splitCentre_add (s t : ℝ) : splitCentre E a (s + t) = splitCentre E a s * splitCentre E a t := by
   rw [splitCentre, splitCentre, splitCentre, ← map_mul, ← map_mul, ← expU_add]
   congr 3
-  funext w
-  simp
 
 theorem splitCentre_zero : splitCentre E a 0 = 1 := by
   simpa using splitCentre_add (E := E) (a := a) 0 0

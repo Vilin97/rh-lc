@@ -31,8 +31,6 @@ theorem holSpray_iterate_comp (d : ℕ) (U U' : Set (V d)) (τ : V d → V d)
     have h : AnalyticAt ℂ (fun v => e.symm (e (τ v))) z :=
       ((e.symm : (Fin d → ℂ) →L[ℂ] V d).analyticAt _).comp hp
     convert h using 1
-    funext v
-    simp
   have hO : IsOpen (U ×ˢ (Set.univ : Set (V d))) := hU.prod isOpen_univ
   have hO' : IsOpen (U' ×ˢ (Set.univ : Set (V d))) := hU'.prod isOpen_univ
 

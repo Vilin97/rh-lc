@@ -20,8 +20,6 @@ theorem proj_segre_lift_eq {x y : R.X} (hy : y ∈ R.U x) :
   refine ⟨∏ k, c k, Finset.prod_ne_zero_iff.mpr (fun k _ => hc k), ?_⟩
   rw [← map_smul]
   congr 1
-  funext i
-  simp only [segre, Pi.smul_apply, smul_eq_mul, hz, Finset.prod_mul_distrib]
 
 theorem projCoord_eq {x y : R.X} (hy : y ∈ R.U x) :
     projCoord R Ψ y = fun i => Ψ (segre (R.lift x y)) i.succ / Ψ (segre (R.lift x y)) 0 := by

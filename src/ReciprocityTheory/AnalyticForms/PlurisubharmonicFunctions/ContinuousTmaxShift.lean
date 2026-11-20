@@ -316,8 +316,6 @@ lemma tmax_scale {η : ℝ} (hη : 0 < η) (t h : ι → ℝ) :
     tmax (fun j => t j + η * h j) = η * tmax (fun j => (η⁻¹ • t) j + 1 * h j) := by
   rw [← tmax_smul _ hη.le]
   congr 1
-  funext j
-  simp only [Pi.smul_apply, smul_eq_mul]
   rw [mul_add, ← mul_assoc η η⁻¹, mul_inv_cancel₀ hη.ne']
   ring
 
@@ -345,8 +343,6 @@ lemma regMax_one_eq_conv :
   show tmax (fun j => x j + 1 * (-h) j) * kK (-h) = kK h * tmax (x - h)
   rw [kK_neg, mul_comm (tmax (fun j => x j + 1 * (-h) j)) (kK h)]
   congr 2
-  funext j
-  simp only [Pi.sub_apply, Pi.neg_apply]
   ring
 
 lemma regMax_one_contDiff : ContDiff ℝ ∞ (regMax (ι := ι) 1) := by

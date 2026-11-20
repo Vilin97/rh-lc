@@ -73,8 +73,6 @@ theorem rename_swapPol {κ ι : Type} [Fintype κ] [Fintype ι] (e : κ ≃ ι) 
       lin fun z => if z = e x ∨ z = e y then 0 else (n z : ℝ)
     rw [← rename_lin_comp e]
     congr 2
-    funext z
-    simp only [e.injective.eq_iff]
 
 open GlobalTheory.FlagPoly in
 

@@ -50,8 +50,6 @@ theorem mem_admissibleImaginary_iff (hx : x ∈ X.dom) (hξ : X.IsIso ξ) (y : X
     rw [h1]
     apply iff_of_eq
     congr 1
-    funext τ
-    simp
   have h2 := ((flowDomainCriterion_holds (E := E)) r X (fun τ => Data.emb τ.1 ξ) he x hx
     (fun τ => (y τ : ℂ) * I)).1
   have hfl : X.flow ξ (fun τ => (y τ : ℂ) * I) x =
@@ -133,8 +131,6 @@ theorem slice_fract (P : Frame X.Ψ r → ℂ) (la : Wt X.Ψ r) (hP : X.IsSec la
   have h := hfun_periodic X ω P la hP hx hξ hω _ hmem (fun k => -⌊y k⌋)
   rw [← h]
   congr 1
-  funext k
-  simp only [Pi.add_apply, Int.fract, Complex.ofReal_sub, Complex.ofReal_intCast, Int.cast_neg]
   ring
 
 noncomputable def Bω : ℝ := ∑ τ : X.Ψ, ∑ j, |ω j τ|

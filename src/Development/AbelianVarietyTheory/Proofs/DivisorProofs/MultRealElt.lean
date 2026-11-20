@@ -49,8 +49,6 @@ theorem mult_realElt : ∀ (D : D7) (V : HSp D) (S : D.what₂.Tau → SPar) (θ
     have e := list_equiv hU g hg v w h (Finset.univ : Finset D.what₂.Tau).toList (Finset.nodup_toList _)
     rw [realElt, ← e]
     congr 1
-    funext ρ
-    simp
   | zero => funext x; simp [rTr]
   | add U U' _ _ h1 h2 =>
     funext x

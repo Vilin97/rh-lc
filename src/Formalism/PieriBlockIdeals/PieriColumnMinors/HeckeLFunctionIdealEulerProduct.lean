@@ -1162,8 +1162,6 @@ theorem constantCoeff_conj_diagonal_rescale {L : Type} [Field L] {n : ℕ} (Γ G
       Matrix.diagonal (fun j => C (υ ^ a j) * (X : L⟦X⟧) ^ a j) := by
     rw [Matrix.diagonal_map (map_zero _)]
     congr 1
-    funext j
-    simp only [map_pow, rescale_X, mul_pow]
   rw [Matrix.map_mul, hD, ← Matrix.mul_assoc] at h
   ext i j
   have hij := congrFun (congrFun h i) j

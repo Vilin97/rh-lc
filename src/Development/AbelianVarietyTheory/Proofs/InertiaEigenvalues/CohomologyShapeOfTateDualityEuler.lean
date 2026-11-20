@@ -53,8 +53,6 @@ theorem shapeG_of_localDuality (hT : Formalism.GaloisCohomology.LocalTateDuality
     intro N
     have h := (GlobalTheory.T.cyclotomic_character_isLocallyConstant_mod_pow ε' hcyc' N).comp_continuous i.continuous
     convert h using 1
-    funext g
-    simp only [Function.comp_apply, ε', MonoidHom.comp_apply]
     first
       | rfl
       | (congr 3; exact (i.symm_apply_apply g).symm)

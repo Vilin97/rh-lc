@@ -154,8 +154,6 @@ theorem actP_smul_fun (w : Pl E) (c : ℂ) (u : GLw a w × GLw b w → ℂ) (G :
   show hint _ (fun m => (c • u) m * _) = c * hint _ _
   rw [← PositivityTheory.Rg.BcB.F.FA.Psmall.hint_smul]
   congr 1
-  funext m
-  simp only [Pi.smul_apply, smul_eq_mul, mul_assoc]
 
 theorem actP_smul_vec (w : Pl E) (c : ℂ) (u : GLw a w × GLw b w → ℂ) (G : H E a b → ℂ) :
     actP w u (c • G) = c • actP w u G := by
@@ -163,8 +161,6 @@ theorem actP_smul_vec (w : Pl E) (c : ℂ) (u : GLw a w × GLw b w → ℂ) (G :
   show hint _ (fun m => u m * pairRt a b w m (c • G) z) = c * hint _ _
   rw [← PositivityTheory.Rg.BcB.F.FA.Psmall.hint_smul]
   congr 1
-  funext m
-  simp only [map_smul, Pi.smul_apply, smul_eq_mul]
   ring
 
 theorem actP_zero (w : Pl E) (G : H E a b → ℂ) : actP w (0 : GLw a w × GLw b w → ℂ) G = 0 := by

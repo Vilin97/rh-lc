@@ -249,8 +249,6 @@ theorem coBlock : InjU → GenCOU → COBlock := by
       unfold fb
       rw [map_list_prod, List.map_ofFn]
       congr 2
-      funext i
-      simp only [Function.comp, map_qdet, Xq, s]
     rw [e1]
     refine Submodule.linearMap_qext _ (LinearMap.ext fun z => ?_)
     obtain ⟨hz, e⟩ := hρ (fb (sz lev M) h Y) z

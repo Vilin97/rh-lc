@@ -24,8 +24,6 @@ theorem torusPow_add (l l' : Fin n → ℤ) :
 theorem torusPow_zero : torusPow F n 0 = 1 := by
   rw [torusPow, ← map_one (diagGL F n)]
   congr 1
-  funext i
-  simp
 
 theorem diagGL_mul_comm (a b : Fin n → Fˣ) : diagGL F n a * diagGL F n b = diagGL F n b * diagGL F n a := by
   rw [← map_mul, ← map_mul, mul_comm]

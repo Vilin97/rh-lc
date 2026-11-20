@@ -77,8 +77,6 @@ private theorem map_quadratic_element_one {R R' G : Type} [CommRing R] [CommRing
     (U : Fin n → R) : q1El ph (fun i => f (U i)) = MonoidAlgebra.mapRingHom G f (q1El ph U) := by
   rw [q1El, q1El, map_list_prod, List.map_ofFn]
   congr 2
-  funext i
-  simp
 
 private theorem map_quadratic_element_two {R R' G : Type} [CommRing R] [CommRing R'] [Group G] (f : R →+* R') {n : ℕ} (ph ta : G)
     (U : Fin n → R) (i : Fin n) (y : R) :

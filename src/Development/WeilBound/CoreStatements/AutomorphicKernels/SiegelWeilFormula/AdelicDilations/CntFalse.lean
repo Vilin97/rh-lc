@@ -15,8 +15,6 @@ theorem T_sub (d : SD σ) (Φ Φ' : d.Fn) : d.T (Φ - Φ') = d.T Φ - d.T Φ' :=
   simp only [SD.T, Pi.sub_apply]
   rw [← map_sub]
   congr 1
-  funext x
-  simp only [Darboux.rho, schr, Pi.sub_apply, mul_sub]
 
 theorem vac_tens {d : SD σ} (R : RD d) (w : InfinitePlace F) (f : Mx F E d.m d.n → ℂ) (hf : f ∈ R.vac) :
     ∃ Ψ ∈ R.away w, f = R.tens w (fP 1) Ψ := by

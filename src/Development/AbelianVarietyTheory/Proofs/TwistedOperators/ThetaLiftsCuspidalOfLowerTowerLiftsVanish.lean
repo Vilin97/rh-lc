@@ -51,8 +51,6 @@ theorem liftInt_smul' {G H S : Type*} [MeasurableSpace H] {ν : Measure H} {𝓕
   unfold Lift.liftInt
   rw [← integral_const_mul]
   congr 1
-  funext x
-  simp only [Pi.smul_apply, smul_eq_mul]; ring
 
 theorem liftInt_zero' {G H S : Type*} [MeasurableSpace H] {ν : Measure H} {𝓕 : Set H} {th : G → H → S → ℂ} {s : S}
     (g : G) : Lift.liftInt ν 𝓕 th s (0 : H → ℂ) g = 0 := by

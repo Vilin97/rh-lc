@@ -123,8 +123,6 @@ private theorem swapMat_mulVec' {k r : ℕ} (H : Matrix (Fin (2 * r + k + 1)) (F
       v + (_root_.Formalism.FourierDecayAlt.P.HermitianFormRankFour.colM B' - _root_.Formalism.FourierDecayAlt.P.HermitianFormRankFour.colM B) *ᵥ fun c => _root_.Formalism.QuantumDeterminants.herm H v (B c) := by
   rw [swapMat_eq_one_add_sub_mul, add_mulVec, one_mulVec, ← mulVec_mulVec]
   congr 2
-  funext c
-  simp only [mulVec, dotProduct, _root_.Formalism.QuantumDeterminants.herm, Matrix.mul_apply, _root_.Formalism.FourierDecayAlt.P.HermitianFormRankFour.colM, conjTranspose_apply, Matrix.of_apply,
     Finset.sum_mul, Finset.mul_sum, mul_assoc]
   exact Finset.sum_comm
 

@@ -23,8 +23,6 @@ theorem vec_add (y : I.Ginf) (u w : Fin I.n → I.E) : vec I y (u + w) = vec I y
   simp only [vec, Pi.add_apply]
   rw [← Matrix.mulVec_add, ← Matrix.mulVec_add]
   congr 2
-  funext i
-  simp
 
 def vecHom (y : I.Ginf) : (Fin I.n → I.E) →+ (InfinitePlace I.F → Fin I.n → ℂ) :=
   AddMonoidHom.mk' (vec I y) (vec_add I y)

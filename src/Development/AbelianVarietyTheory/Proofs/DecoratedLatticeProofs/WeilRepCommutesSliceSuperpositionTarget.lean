@@ -132,8 +132,6 @@ theorem weil_comm_sliceSum_target : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ
   have Pa' := Padd _ _ (Padd _ _ (Padd _ _ P1 P2) P3) P4
   have Pa'' : P a' := by
     convert Pa' using 1
-    funext w
-    simp only [Pi.add_apply, Pi.neg_apply]
     first
       | exact (decomp_re_im (a' w)).symm
       | exact decomp_re_im (a' w)

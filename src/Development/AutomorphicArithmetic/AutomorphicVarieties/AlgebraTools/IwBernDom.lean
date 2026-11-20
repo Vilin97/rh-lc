@@ -61,16 +61,12 @@ theorem UpperTheory.V.AlgebraTools.bernDom :
     unfold hk
     rw [← h3, one_mul, mul_assoc, ← map_mul]
     congr 3
-    funext a
-    simp
   · rw [(leviMul A _ M ρ _ F _ _ hH hs hyP (Or.inr hyN)).2, ← mul_assoc, hss, one_mul]
   · rw [(leviMul A _ M ρ _ F _ _ hH hyP hyP (Or.inr hyN)).2]
     unfold pw
     rw [(domMul k n ⊤ A M ρ).1 _ _ (dom_fund hx _) (dom_fund hx _), mul_assoc, ← mul_assoc (diagT k (Fin n) _),
       pm_diagT, mul_assoc, ← mul_assoc, hss, one_mul, ← map_mul]
     congr 2
-    funext a
-    simp only [Pi.mul_apply, ← _root_.zpow_add]
     congr 1
     simp only [fund, Equiv.swap_apply_def, Fin.ext_iff]
     split_ifs <;> omega

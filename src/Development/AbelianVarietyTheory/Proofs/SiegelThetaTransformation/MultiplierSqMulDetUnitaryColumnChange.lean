@@ -24,8 +24,6 @@ theorem thS_smul' {κ ι : Type} [Fintype κ] [Fintype ι] (c : ℂ) (φ : Matri
   unfold thS
   rw [← tsum_mul_left]
   congr 1
-  funext x
-  simp only [Pi.smul_apply, smul_eq_mul, mul_assoc]
 
 theorem isSB_smul' {κ ι : Type} [Fintype κ] [Fintype ι] (c : ℂ) {φ : Matrix κ ι ℚ → ℂ} (h : IsSB φ) :
     IsSB (c • φ) := by

@@ -147,8 +147,6 @@ theorem locMul_mem (hW : W ≤ Module.annihilator (MRingOver S ι) M) {𝓜 : (K
         ?_, rfl⟩
       have := act_mem hW h𝓜 ha hm
       convert this using 2
-      funext k
-      simp only [Pi.add_apply, Nat.cast_add]
       ring
     | zero => rw [map_zero]; exact zero_mem _
     | add y₁ y₂ _ _ h₁ h₂ => rw [map_add]; exact add_mem h₁ h₂
@@ -340,8 +338,6 @@ theorem GenNearMul.proof : GenNearMul.Statement := by
       (GenTwistGenerated.isMultiHomog_mul (GenNearMul.isMultiHomog_pow hf b) (GenNearMul.isMultiHomog_pow hg a))
       (hp (finProdFinEquiv.symm i).1)) (hq (finProdFinEquiv.symm i).2)
     convert h1 using 1
-    funext k
-    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
     ring
   · rw [← hxy]
     have key : ((f * g) ^ (a + b) * (t * t')) • GenNearMul.locMul _ hW

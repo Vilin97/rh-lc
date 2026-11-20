@@ -41,8 +41,6 @@ theorem downInt_add_f (R : RealDat D A Ks) (i : Fin D.R.m) (t : T) (y : (R.HV i 
   unfold downInt
   rw [← integral_add hf hf']
   congr 1
-  funext h
-  simp only [thetaKO, map_add, Pi.add_apply, add_mul]
 
 theorem downInt_smul_f (R : RealDat D A Ks) (i : Fin D.R.m) (t : T) (y : (R.HV i t).H) (c : ℂ)
     (f : WO (Vc D i) (Wc D i) → ℂ) (l : (R.cV i).W →ₗ[ℂ] ℂ) (g : GA D (Wc D i)) :
@@ -50,8 +48,6 @@ theorem downInt_smul_f (R : RealDat D A Ks) (i : Fin D.R.m) (t : T) (y : (R.HV i
   unfold downInt
   rw [← integral_const_mul]
   congr 1
-  funext h
-  simp only [thetaKO, map_smul, Pi.smul_apply, smul_eq_mul, mul_assoc]
 
 theorem downInt_add_l (R : RealDat D A Ks) (i : Fin D.R.m) (t : T) (y : (R.HV i t).H) (f : WO (Vc D i) (Wc D i) → ℂ)
     (l l' : (R.cV i).W →ₗ[ℂ] ℂ) (g : GA D (Wc D i))
@@ -61,8 +57,6 @@ theorem downInt_add_l (R : RealDat D A Ks) (i : Fin D.R.m) (t : T) (y : (R.HV i 
   unfold downInt
   rw [← integral_add hf hf']
   congr 1
-  funext h
-  simp only [LinearMap.add_apply, mul_add]
 
 theorem downInt_smul_l (R : RealDat D A Ks) (i : Fin D.R.m) (t : T) (y : (R.HV i t).H) (c : ℂ)
     (f : WO (Vc D i) (Wc D i) → ℂ) (l : (R.cV i).W →ₗ[ℂ] ℂ) (g : GA D (Wc D i)) :
@@ -70,8 +64,6 @@ theorem downInt_smul_l (R : RealDat D A Ks) (i : Fin D.R.m) (t : T) (y : (R.HV i
   unfold downInt
   rw [← integral_const_mul]
   congr 1
-  funext h
-  simp only [LinearMap.smul_apply, smul_eq_mul]
   ring
 
 theorem exists_bilin (R : RealDat D A Ks) (F : Face D A) (hG : GlobalTheory.LiftRows.Given R F) (hP : R.FullP)

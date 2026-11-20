@@ -23,8 +23,6 @@ theorem coe_qel (π : 𝓞 L) (hπ : π ≠ 0) :
   show (diagonal fun i : Fin N => if (i : ℕ) = 0 then (π : L) else 1) = dg L N π 1
   unfold dg
   congr 1
-  funext i
-  simp
 
 theorem coe_toK_toGL (a : Matrix.SpecialLinearGroup (Fin N) (𝓞 L)) :
     ((toK L N (Matrix.SpecialLinearGroup.toGL a) : GK L N) : Matrix (Fin N) (Fin N) L) =

@@ -209,8 +209,6 @@ theorem muN_fwd (j : ℕ) : D.muN k (j + 0) = ((U.muRC k j 0).prod (volume : Mea
   rw [Measure.map_prod_map _ _ measurable_id hm,
     Measure.map_map (Dx2.SplitF.psi_meas j 0) (measurable_id.prodMap hm)]
   congr 1
-  funext p
-  simp only [Function.comp_apply, Prod.map, id, Dx2.SplitF.Psi, psiF]
   rw [show Matrix.of (Matrix.of.symm (1 : B.Mat k 0)) = (1 : B.Mat k 0) from rfl, embG_one, Matrix.mul_one]
 
 theorem muN_rev (j : ℕ) : D.muN k (j + 0) = ((U.muRC k j 0).prod (volume : Measure (G.UT j → ℂ))).map (psiR k j) := by

@@ -156,8 +156,6 @@ theorem equicontinuous_band : ∀ (E : Type) [Field E] [NumberField E] [IsTotall
     rw [← hrep φ hφ (g * infGL E a y),
       ← integral_mul_left_eq_self (fun z => φ.1 (g * infGL E a z) * α (y⁻¹ * z)) y]
     congr 1
-    funext x
-    simp only [map_mul, mul_assoc, inv_mul_cancel_left]
   have hi1 : Integrable (fun z => φ.1 (g * infGL E a z) * α (y⁻¹ * z)) μ :=
     ((continuous_along φ g).mul (hαc.comp (continuous_const.mul continuous_id))).integrable_of_hasCompactSupport
       (HasCompactSupport.mul_left (hαs.comp_homeomorph (Homeomorph.mulLeft y⁻¹)))

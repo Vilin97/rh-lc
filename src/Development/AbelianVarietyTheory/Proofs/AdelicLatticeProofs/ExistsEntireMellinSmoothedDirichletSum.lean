@@ -132,8 +132,6 @@ lemma mellin_sum {ι : Type} [Countable ι] {a : ι → ℂ} {N : ι → ℝ} {w
   have hM : mellin (fun t : ℝ => ∑' i, a i * wt (t * N i)) s = ∫ t in Ioi (0 : ℝ), ∑' i, G i t := by
     rw [mellin]
     congr 1
-    funext t
-    simp only [hG, smul_eq_mul]
     rw [tsum_mul_left]
   have hGi : ∀ i, ∫ t in Ioi (0 : ℝ), G i t = a i * (N i : ℂ) ^ (-s) * mellin wt s := by
     intro i
@@ -142,8 +140,6 @@ lemma mellin_sum {ι : Type} [Countable ι] {a : ι → ℂ} {N : ι → ℝ} {w
     · have h1 : ∫ t in Ioi (0 : ℝ), G i t = a i * mellin (fun t => wt (t * N i)) s := by
         rw [mellin, ← integral_const_mul]
         congr 1
-        funext t
-        simp only [hG, smul_eq_mul]
         ring
       rw [h1, mellin_comp_mul_right wt s (hI i hai), smul_eq_mul, mul_assoc]
   rw [hM, ← key]

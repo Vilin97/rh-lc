@@ -32,8 +32,6 @@ theorem tMat_single (ϖ : L) (n : ℕ) (k : Fin (n / 2)) :
     tMat ϖ n (n / 2) (Pi.single k 1) = diagonal (dTor ϖ n k) := by
   unfold tMat
   congr 1
-  funext i
-  simp only [dTor, Fin.ext_iff, lo, Fin.val_rev, Pi.single_apply]
   have hk := k.isLt
   have hi := i.isLt
   split_ifs <;> first | rfl | (exfalso; omega) | simp_all | skip

@@ -44,8 +44,6 @@ private theorem oEl_dom {l : ℕ} [Fact l.Prime] {L : Loc} {G G' : Glob l L} (h 
   unfold GFrame.oEl
   rw [map_list_prod, List.map_ofFn]
   congr 2
-  funext i
-  simp only [Function.comp_apply, map_sub, dom_single, map_one]
   congr 2
   exact h.p₀_φ v (g i)
 

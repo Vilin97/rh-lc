@@ -340,8 +340,6 @@ theorem finiteDimensional_range {π : UJ ε →* (U →L[ℂ] U)} (hπ : IsUnita
     rw [← ContinuousLinearMap.integral_comp_comm _ (integrable_avg hπ (hFc ψ ψ.2) u)]
     rw [← integral_mul_left_eq_self (fun k => (ψ : KG ε → ℂ) (k₀⁻¹ * k) • π k u) k₀]
     congr 1
-    funext k
-    simp only [inv_mul_cancel_left, map_smul, Subgroup.coe_mul, map_mul, ContinuousLinearMap.mul_apply]
   haveI := finiteDimensional_iSup_range (s := fun k : KG ε => π (k : UJ ε)) (fun k v => hπ.norm_apply k v) hA
     (Module.finrank ℂ F) F le_rfl ρ U T (fun u k ψ => hT u k ψ)
   refine Submodule.finiteDimensional_of_le (S₂ := ⨆ u, LinearMap.range (T u)) (Submodule.span_le.2 ?_)

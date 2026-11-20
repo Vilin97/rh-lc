@@ -360,15 +360,11 @@ theorem sliceTerm_of (hM : Mahler) : SliceTerm := by
     funext y
     rw [cutTerm, ← quotIntegral_const_mul]
     congr 1
-    funext x
-    simp only [hFdef]
     ring
   · congr 1
     funext x
     rw [cutTerm, ← quotIntegral_const_mul]
     congr 1
-    funext y
-    simp only [hFdef]
     ring
 
 end Main

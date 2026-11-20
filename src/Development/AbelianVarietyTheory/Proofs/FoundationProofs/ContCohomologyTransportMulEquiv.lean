@@ -18,8 +18,6 @@ theorem dn_comp_monoidHom {R Γ Γ' M : Type*} [CommRing R] [Group Γ] [Group Γ
   congr 1
   refine Finset.sum_congr rfl fun j _ => ?_
   congr 2
-  funext i
-  simp only [Fin.contractNth]
   split_ifs <;> simp
 
 theorem contCohomology_transport_mulEquiv :

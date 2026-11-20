@@ -62,14 +62,10 @@ theorem UpperTheory.norm_deriv_orbit_le_of_polynomial_annihilated :
       obtain ⟨db, hdb⟩ := hb
       refine ⟨da + db, ?_⟩
       convert hda.add hdb using 1
-      funext t
-      simp
     | smul c a _ ha =>
       obtain ⟨da, hda⟩ := ha
       refine ⟨c • da, ?_⟩
       convert hda.const_smul c using 1
-      funext t
-      simp
   have hd : ∀ w : E, HasDerivAt (fun t : ℝ => u t (w : H)) (deriv (fun t : ℝ => u t (w : H)) 0) 0 := by
     intro w
     obtain ⟨d, hd⟩ := hder w w.2

@@ -144,8 +144,6 @@ theorem exists_evalAway (c : σ) (p : σ → ℂ) (hp : ∀ F ∈ I, eval p F = 
     simp
   rw [h3, eval₂_id]
   congr 2
-  funext q
-  simp only [Function.comp_apply, map_mul, h1, h2, hψA, div_eq_mul_inv]
 
 attribute [local instance] MvPolynomial.gradedAlgebra in
 theorem ringKrullDim_away_le (hI : I.IsHomogeneous (homogeneousSubmodule σ ℂ)) (hP : I.IsPrime) (c : σ) (g : ℕ)

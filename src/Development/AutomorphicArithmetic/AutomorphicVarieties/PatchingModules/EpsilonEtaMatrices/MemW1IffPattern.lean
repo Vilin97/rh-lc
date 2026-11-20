@@ -117,8 +117,6 @@ private theorem key (wi r ri w : Matrix (Fin n) (Fin n) A) (Y K : Fin g → Matr
           DD.epM fun j => (Y j).map (algebraMap A X))) * w.map (algebraMap A (DD X g)) := by
     rw [mul_epM, epM_mul, ← epM_sub, ← epM_sub, mul_epM, epM_mul]
     congr 1
-    funext j
-    simp only [Matrix.map_mul, Matrix.map_sub _ (map_sub (algebraMap A X))]
   have i1 : w.map (algebraMap A (DD X g)) * wi.map (algebraMap A (DD X g)) = 1 := by
     rw [← Matrix.map_mul, h1]; simp
   have i2 : ri.map (algebraMap A (DD X g)) * r.map (algebraMap A (DD X g)) = 1 := by

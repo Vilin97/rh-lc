@@ -268,14 +268,10 @@ theorem hypType₂ (a : ℤ) (ha : 10 ≤ a) (ha' : a ≤ 40) :
 
 theorem hypType₂_u : HypType P₂.k P₂.r lam₂ P₂.u 41 := by
   convert hypType₂ 20 (by norm_num) (by norm_num) using 1
-  funext i
-  simp only [P₂]
   split_ifs <;> norm_num
 
 theorem hypType₂_u' : HypType P₂.k P₂.r lam₂ P₂.u' 41 := by
   convert hypType₂ 40 (by norm_num) (by norm_num) using 1
-  funext i
-  simp only [P₂]
   split_ifs <;> norm_num
 
 end CompanionTheory.WaveGrid

@@ -55,8 +55,6 @@ theorem charpoly_of_integral [Module.Free O Q] [Module.Finite O Q] (hinj : Funct
   apply Polynomial.map_injective _ hinj
   rw [h1, Polynomial.map_multiset_prod, Multiset.map_map, Multiset.map_map]
   congr 2
-  funext s
-  simp
 
 theorem exists_basis_quot (P' : Submodule O Q) {r : ℕ} (θ : (Fin r → O⟦X⟧) ≃ₗ[O] Q)
     (h : ∀ c, θ c ∈ P' ↔ ∀ k, (X : O⟦X⟧) ∣ c k) :

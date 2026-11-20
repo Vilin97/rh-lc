@@ -157,8 +157,6 @@ theorem hasDualFrames {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Re
       exact (congr($(dualApp_res (hε.coord l) inf_le_left le_rfl) _)).trans (hε.dualApp_coord l _ _)
   have := LineNorm.Chart.comb_comb hte key hv
   convert this using 1
-  funext l
-  simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, w]
 
 theorem linkSt : GlobalTheory.OmegaHT.LinkSt := by
   intro E _ _ _ H Dw Xo p W Y i₀ Z X h r x hx

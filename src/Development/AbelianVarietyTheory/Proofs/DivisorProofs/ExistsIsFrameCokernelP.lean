@@ -70,8 +70,6 @@ theorem exists_isFrame_subP (P : Sub F) (c : κ → Γ(F, U)) (hc : IsFrame c) (
   · refine LinearIndependent.of_comp (QCoh.appLinear P.incl V) ?_
     have := (hc.basis h).linearIndependent.comp _ (Subtype.val_injective (p := Q))
     convert this using 1
-    funext j
-    simp only [Function.comp_apply, IsFrame.basis_apply, QCoh.appLinear_apply, app_resM, Sub.incl_app_mkSec]
   · have h1 := P.incl_app_mem t
     rw [← (hc.basis h).sum_repr (P.incl.app V t)] at h1
     simp only [IsFrame.basis_apply] at h1

@@ -26,8 +26,6 @@ theorem link_smul {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] {S : Thet
   have hc' : algebraMap (FractionRing u.V) (PadicAlgCl p) c ≠ 0 := (map_ne_zero _).2 hc
   have h₁ := CrdCalc.crd_smul (Units.mk0 _ hc') (h a v hv)
   convert h₁ using 1
-  funext j
-  simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, map_mul,
     Units.val_mk0, Finset.mul_sum, _root_.mul_assoc]
 
 theorem hasGeo_of_hasU : GlobalTheory.UT.LL → UTorsSt → ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω] [ArithBase o Ω] (S : ThetaSys o Ω) (ρ : S.Real), S.Big → ρ.HasU → ρ.HasGeo := by

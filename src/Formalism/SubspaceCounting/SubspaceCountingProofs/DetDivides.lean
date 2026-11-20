@@ -677,8 +677,6 @@ theorem dvd_of_red_one (hr : 0 < r) (A : Fin r → ι) (hA : Function.Injective 
       simp [Hp, Polynomial.coe_aeval_eq_eval]
     rw [e2, ← aeval_X_comp]
     congr 2
-    funext p
-    simp only [f, AlgHom.restrictScalars_apply, Polynomial.coe_aeval_eq_eval, Polynomial.eval_sub,
       Polynomial.eval_C]
     split_ifs
     · rw [Polynomial.eval_mul, Polynomial.eval_X, mul_zero, sub_zero]

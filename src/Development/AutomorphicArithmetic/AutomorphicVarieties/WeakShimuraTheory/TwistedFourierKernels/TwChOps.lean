@@ -27,8 +27,6 @@ theorem UpperTheory.V.Ws.H5.twChOps :
   · intro N
     have hc := (hγ.cont N).comp Ring.inverse
     convert hc using 1
-    funext g
-    simp only [Function.comp, MonoidHom.inv_apply]
     have hu : Ideal.Quotient.mk (maximalIdeal R ^ N) (γ g : R) =
         ((Units.map (Ideal.Quotient.mk (maximalIdeal R ^ N) : R →* R ⧸ maximalIdeal R ^ N) (γ g) : _)) := rfl
     rw [hu, Ring.inverse_unit, Units.coe_map_inv]

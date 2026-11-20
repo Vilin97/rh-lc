@@ -152,8 +152,6 @@ theorem hasSum_heckeCusp (f : CuspForm (Gamma0 N : Subgroup (GL (Fin 2) ℝ)) k)
       rintro ⟨c, rfl⟩
       exact hm ⟨c, mul_comm c p⟩)] at h1
     convert h1 using 1
-    funext n
-    simp only [Function.comp_apply, dvd_mul_left, if_true]
     congr 1
     rw [Function.Periodic.qParam, ← Complex.exp_nat_mul]
     congr 1
@@ -176,8 +174,6 @@ theorem hasSum_heckeCusp (f : CuspForm (Gamma0 N : Subgroup (GL (Fin 2) ℝ)) k)
         rintro ⟨c, rfl⟩
         exact hm ⟨c, mul_comm c p⟩)]
       convert h1 using 1
-      funext m
-      simp only [Function.comp_apply, dvd_mul_left, if_true,
         Nat.mul_div_cancel _ (Nat.pos_of_ne_zero (NeZero.ne p))]
       ring
   have e1 : (fun n => heckeCoeff N p k a n * 𝕢₁ (τ : ℂ) ^ n) = fun n => a (n * p) * 𝕢₁ (τ : ℂ) ^ n +

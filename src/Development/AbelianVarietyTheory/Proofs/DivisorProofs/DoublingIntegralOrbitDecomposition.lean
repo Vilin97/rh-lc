@@ -198,8 +198,6 @@ theorem mulVec_mem_latD (hJ : X₂.J = dblGram finSumFinEquiv X.J) (v : Pl F) {k
   · rw [← algebraMap_smul (AE F E) u, ← Matrix.mulVec_smul, algebraMap_smul, hz.1 u hu, Matrix.mulVec_zero]
   · have h1 := ((mem_stabLoc.1 hk) _).1 hz.2
     convert h1 using 1
-    funext j
-    simp only [matD_toUD, Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.submatrix_apply, Equiv.apply_symm_apply,
       GlobalTheory.IwLine.mat_ofGAd, GlobalTheory.ThK.LemF.QuotInv.IwasawaAt.compFin_mat, proj_emb_self]
     rw [← finSumFinEquiv.sum_comp]
     simp only [Equiv.symm_apply_apply]

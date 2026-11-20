@@ -83,7 +83,5 @@ theorem UpperTheory.V.ConeExtensionAcyclic.bd_bd :
     rw [UpperTheory.V.ConeExtensionAcyclic.alt_double_sum n (fun i j => Finsupp.single ((t ∘ i.succAbove) ∘ j.succAbove) (1 : ℤ)), smul_zero]
     intro i j
     congr 1
-    funext k
-    simp only [Function.comp_apply]
     rw [Fin.succAbove_succAbove_succAbove_predAbove]
   exact LinearMap.congr_fun hlin c

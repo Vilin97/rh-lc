@@ -149,8 +149,6 @@ theorem adjOp_M (φ : Mx k r → ℂ)
   adj f _ h _ := by
     unfold pr MOp MOp'
     congr 1
-    funext x
-    simp only [star_mul', star_star]
     ring
 
 theorem yTest (H : Hyp k r z z' i μ) (c : Fin (mdim k r i)) (f : Mx k r → ℂ) (hf : TestF k r i f) :

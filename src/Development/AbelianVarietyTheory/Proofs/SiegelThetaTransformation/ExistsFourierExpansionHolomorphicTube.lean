@@ -94,8 +94,6 @@ theorem _root_.GlobalTheory.exists_fourier_expansion_tube :
     intro z hz w hw s t hs ht hst
     simp only [hT, Set.mem_setOf_eq] at hz hw ⊢
     convert hΩc hz hw hs ht hst using 1
-    funext i
-    simp
   have hcont : ContinuousOn f T := hf.continuousOn
 
   have hmemT : ∀ (x y : ι → ℝ), y ∈ Ω → (fun i ↦ (x i : ℂ) + I * y i) ∈ T := by
@@ -157,8 +155,6 @@ theorem _root_.GlobalTheory.exists_fourier_expansion_tube :
     obtain ⟨g, hg⟩ := exists_unitAddTorus_lift_of_periodic _ hFc (fun x m ↦ by
       have := hper (fun i ↦ (x i : ℂ) + I * y i) (by simpa using hy) m
       convert this using 2
-      funext i
-      simp only [Pi.add_apply]
       push_cast
       ring)
     refine ⟨g, hg, fun ν ↦ ?_⟩

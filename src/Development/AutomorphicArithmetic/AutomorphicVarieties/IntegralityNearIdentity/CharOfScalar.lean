@@ -189,8 +189,6 @@ private theorem al_zero (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace 
     (n : ℕ) : al k n 0 = 1 := by
   rw [al, upow, ← (diagT k (Fin n)).map_one]
   congr 1
-  funext i
-  simp
 
 private theorem local_step (hLit : GlobalTheory.Mem.LiteralAutomorphy.LitN) {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] {n : ℕ} {M : Type} [AddCommGroup M] [Module ℂ M]

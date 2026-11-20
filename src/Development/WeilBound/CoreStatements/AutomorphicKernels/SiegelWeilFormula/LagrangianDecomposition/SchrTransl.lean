@@ -39,8 +39,6 @@ theorem box_transl {κ' κ'' : Type} [Fintype κ'] [Fintype κ''] (ψ : AddChar 
   simp only [boxFun]
   rw [schr_transl]
   congr 2
-  funext i
-  simp
 
 theorem opBox_of (hP : PartCharInv) (hS : SliceFacts) : OpBox := by
   intro F _ _ ψ hψ κ' κ'' _ _ W _ _ B dd G _ act om hsp hw x hfix φ₀ hφ₀ h0

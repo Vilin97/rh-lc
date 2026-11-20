@@ -323,7 +323,5 @@ theorem integrable_absE_pow_div : ∀ (F E : Type) [Field F] [NumberField F] [Fi
   have hme : MeasurableEmbedding e := e.toHomeomorph.measurableEmbedding
   rw [hme.integrable_map_iff] at hI'
   convert hI' using 1
-  funext l
-  simp only [Function.comp, decay, he, absE_of_mem_arch hcm B.emb l.2]
 
 end GlobalTheory.ArchIdeleDecay

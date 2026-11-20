@@ -202,8 +202,6 @@ theorem sd_word_image (ν : Fin n → ℕ) : nbWord K ν = sdQK K _ '' nbWord �
   unfold nbWord
   rw [← Set.range_comp]
   congr 1
-  funext w
-  simp only [Function.comp, sdQK_apply]
   rw [← Formalism.GradedWeylDivisibility.lclosedeq_applyWord_map, Formalism.GradedWeylDivisibility.lclosedeq_hw_map]
 
 theorem sd_bid_image (ν : Fin n → ℕ) : bideterminantsOfShape K ν = sdQK K _ '' bideterminantsOfShape ℚ ν := by

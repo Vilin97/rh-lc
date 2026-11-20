@@ -197,8 +197,6 @@ theorem grNorm_eq_ratio : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     rw [norm_eq_iSup, hprod k hk]
     refine ((Fintype.equivFin _).symm.iSup_comp (g := fun σ => ‖ψ (F k hk σ)‖)).trans ?_
     congr 1
-    funext σ
-    simp only [F, map_sum, map_mul, map_prod, map_minor]
   rw [hnorm, hnorm, Fin.prod_univ_castSucc, mul_comm]
   rfl
 

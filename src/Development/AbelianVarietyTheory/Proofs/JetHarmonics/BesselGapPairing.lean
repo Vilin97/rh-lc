@@ -14,22 +14,14 @@ theorem besselIntegral_sesquilinear : Hyps → ∀ (k r : ℕ) (ε : Fin (2 * r 
   · unfold be
     rw [← integral_add ((hc v hv).1 w hw) ((hc v hv).1 w' hw')]
     congr 1
-    funext p
-    simp only [beInt, map_add, inner_add_right, add_smul, mul_add, add_mul, smul_add]
   · unfold be
     rw [← integral_smul]
     congr 1
-    funext p
-    simp only [beInt, map_smul, inner_smul_right, smul_smul, mul_assoc, mul_left_comm]
   · unfold be
     rw [← integral_add ((hc v hv).1 w hw) ((hc v' hv').1 w hw)]
     congr 1
-    funext p
-    simp only [beInt, inner_add_left, add_smul, mul_add, add_mul, smul_add]
   · unfold be
     rw [← integral_smul]
     congr 1
-    funext p
-    simp only [beInt, inner_smul_left, smul_smul, mul_assoc, mul_left_comm, RCLike.star_def]
 
 end GlobalTheory

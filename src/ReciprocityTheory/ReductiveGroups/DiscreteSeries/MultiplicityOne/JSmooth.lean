@@ -173,8 +173,6 @@ private theorem hs_lemma_0 {𝔸 : Type*} [NormedRing 𝔸] [NormedAlgebra ℂ �
   have hB := NormedSpace.exp_series_hasSum_exp' (𝕂 := ℂ) B
   refine (hA.mul_left H).unique ?_
   convert hB.mul_right H using 1
-  funext n
-  simp only [mul_smul_comm, smul_mul_assoc, (SemiconjBy.pow_right (show SemiconjBy H A B from h) n).eq]
 
 private theorem H_exp_lemma {n : Type*} [Fintype n] [DecidableEq n] {H A B : Matrix n n ℂ}
     (h : H * A = B * H) :

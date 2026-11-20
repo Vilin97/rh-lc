@@ -234,8 +234,6 @@ theorem left (ε : Fin n → Bool) (μ : Measure (UJ ε)) (c : ℝ≥0) (hc : c 
   rw [integral_prod_symm _ hfp, integral_withDensity_eq_integral_smul (continuous_den ε).measurable,
     NNReal.smul_def, ← integral_smul]
   congr 1
-  funext B
-  simp only [NNReal.smul_def, Complex.real_smul, pol]
   push_cast
   ring
 

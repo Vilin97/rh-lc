@@ -103,8 +103,6 @@ theorem mp_mulC (d : U.RC k p ρ) :
     exact ((continuous_const.add ((cont_kap _).comp continuous_fst)).add continuous_snd)
   have := hf.skew_product hg (Filter.Eventually.of_forall fun c => map_add_left_eq_self volume _)
   convert this using 1
-  funext x
-  simp only [StabilizerDisintegration.HC.mulC]
   congr 1
   abel
 

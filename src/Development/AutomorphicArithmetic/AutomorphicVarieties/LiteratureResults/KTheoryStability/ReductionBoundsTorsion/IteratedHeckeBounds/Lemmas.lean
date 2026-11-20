@@ -249,8 +249,6 @@ theorem hecke_iter {k : ℕ} (q : GK L N) {ω : Form (HS L N) (k + 1)} (hω : Co
     simp only [MonoidHom.id_apply]
     rw [intP_pb]
     congr 1
-    funext j
-    simp only [Pi.smul_apply, smul_eq_mul, map_mul, mul_smul]
   have hcont : ∀ n, ContinuousOn ((Hk q)^[n] ω) (Pos L N) := by
     intro n
     induction n with

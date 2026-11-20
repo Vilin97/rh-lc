@@ -92,8 +92,6 @@ theorem exists_sol {F : Type*} [Field F] [IsAlgClosed F] (p : ℕ) [hp : Fact p.
     change A.mulVec _ = c • A.mulVec _
     rw [← Matrix.mulVec_smul]
     congr 1
-    funext i
-    simp only [Pi.smul_apply, smul_eq_mul, map_mul, hr']
   obtain ⟨y, hy⟩ := exists_sub_eq_inv hq ψ hψ b
   refine ⟨fun i => r (y i), fun i => ?_⟩
   rw [hr, ← hy]

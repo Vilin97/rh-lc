@@ -151,16 +151,12 @@ theorem comb_indep {ι : Type} {U : X.Opens} {M : X.Modules} {f : Fin r → Γ(M
       TangentOrigin.evalPt (z ≫ jB) _ (land_inf hj hi) (trCo (hg j) (g i) c b)) _ w hA h
     refine Guard.comb_unique tj h2 ?_
     convert h' using 2
-    funext c
-    simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, cf, cond]
     exact GlobalTheory.T.transition_cocycle_at_point (hg j) (hg i) f (z ≫ jB) (land_inf hj hi) hi1 hj1 c a
   · have hA := fun b => hm i j K z hi hj (land_inf hi hj) b
     have h2 := Formalism.L2.Pj.tanLinG _ tj _ (Matrix.of fun c b =>
       TangentOrigin.evalPt (z ≫ jB) _ (land_inf hi hj) (trCo (hg i) (g j) b c)) _ w hA h
     refine Guard.comb_unique tj h2 ?_
     convert h' using 2
-    funext c
-    simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, cf, cond]
     rw [← GlobalTheory.T.transition_cocycle_at_point hf (hg i) (g j) (z ≫ jB) hi2 (land_inf hi hj) hj2 a c]
     exact Finset.sum_congr rfl fun b _ => mul_comm _ _
 

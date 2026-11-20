@@ -130,8 +130,6 @@ lemma exists_normalizer {S : Matrix (Fin n) (Fin n) ℂ} (hH : S.IsHermitian) (h
   have hTh : (Dm * star U)ᴴ = U * Dm := by
     rw [conjTranspose_mul, star_eq_conjTranspose, conjTranspose_conjTranspose, hDm, diagonal_conjTranspose]
     congr 2
-    funext i
-    simp
   rw [hTh, hspec]
   calc Dm * star U * (U * diagonal (RCLike.ofReal ∘ hH.eigenvalues) * star U) * (U * Dm)
       = Dm * (star U * U) * diagonal (RCLike.ofReal ∘ hH.eigenvalues) * (star U * U) * Dm := by

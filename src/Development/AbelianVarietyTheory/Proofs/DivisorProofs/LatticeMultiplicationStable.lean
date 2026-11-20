@@ -200,8 +200,6 @@ theorem exists_obj_of_polarised_torus : ∀ (F : Type) [Field F] [NumberField F]
   · have hm : (2 : ℂ) • Hc c = Matrix.diagonal fun i ↦ ((2 * (e i (c : F) * r i) : ℝ) : ℂ) := by
       simp only [Hc, ← Matrix.diagonal_smul]
       congr 1
-      funext i
-      simp only [Pi.smul_apply, smul_eq_mul]
       push_cast
       ring
     rw [← hm]

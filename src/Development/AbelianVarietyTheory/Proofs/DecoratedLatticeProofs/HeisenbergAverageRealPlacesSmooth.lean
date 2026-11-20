@@ -34,8 +34,6 @@ theorem contDiff_integral_kernel {R : Type} [NormedAddCommGroup R] [NormedSpace 
     simp only [ContinuousLinearMap.mul_apply', g, neg_sub]
     rw [← integral_sub_right_eq_self (fun x => (φ x : ℂ) * K y x * G (y + x)) y]
     congr 1
-    funext t
-    simp only [add_sub_cancel]
     ring
   have hk : IsCompact (Neg.neg '' tsupport φ) := hφc.isCompact.image continuous_neg
   have hgs : ∀ p, ∀ x, p ∈ (Set.univ : Set R) → x ∉ Neg.neg '' tsupport φ → g p x = 0 := by

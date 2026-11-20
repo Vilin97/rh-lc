@@ -218,8 +218,6 @@ private theorem infOfWeight_inj {n : ℕ} {l l' : DomWeight n} (h : infOfWeight 
     unfold infOfWeight
     rw [Multiset.map_map, Fin.univ_val_map]
     congr 2
-    funext k
-    simp
   have anti : ∀ l : DomWeight n, (List.ofFn fun k : Fin n => (l.w k : ℝ) + (((n : ℝ) - 1) / 2 - (k : ℕ))).Pairwise (· > ·) := by
     intro l
     rw [List.pairwise_ofFn]

@@ -114,16 +114,12 @@ theorem coord_mem_pow (p : GlobalTheory.FinPl.SplitPt D k) {PP : HeightOneSpectr
     push_cast
     rw [e, e', ← Pi.add_apply, ← Matrix.mulVec_add]
     congr 2
-    funext j
-    simp
   | neg Y _ h =>
     obtain ⟨z, hz, e⟩ := h
     refine ⟨-z, neg_mem hz, ?_⟩
     push_cast
     rw [e, ← Pi.neg_apply, ← Matrix.mulVec_neg]
     congr 2
-    funext j
-    simp
 
 theorem pow_mem_pow_fr {I : GlobalTheory.SeeSaw.FI D} {a : D.host.E} (ha : a ∈ I) (n : ℕ) : a ^ n ∈ I ^ n := by
   induction n with

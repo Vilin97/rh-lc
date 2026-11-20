@@ -61,8 +61,6 @@ theorem latIdx_GLint_mul {a b : ℕ} (x : Matrix (Fin a) (Fin b) L) (h : GL (Fin
         (QuotientAddGroup.mk (Matrix.mulVec x (v : Fin b → L)) : (Fin a → L) ⧸ intVec L a) := by
     rw [← Set.range_comp]
     congr 1
-    funext v
-    simp only [Function.comp_apply, quotMul_mk, Matrix.mulVec_mulVec]
   unfold latIdx
   rw [hr, Nat.card_image_of_injective hinj]
 

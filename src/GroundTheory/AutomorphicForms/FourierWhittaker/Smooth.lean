@@ -80,8 +80,6 @@ theorem IsUSmooth.rDeriv_smooth {ϕ : AdelicGLn.AdelicGL K n → ℂ} (hϕ : IsU
   left γ g := by
     simp only [rDeriv]
     congr 1
-    funext x
-    simp only [archSlice_apply, mul_assoc, hϕ.left γ]
 
 def oneParam (Y : archLie K n) (s : ℝ) : AdelicGLn.AdelicGL K n :=
   infEmb K n ((isExpLieAlgebra K n).expG (s • Y))

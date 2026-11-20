@@ -75,8 +75,6 @@ theorem psiE_idem_entry {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (
           pX_xLast_mul_apply dW z N, hii]
       rw [e1] at h4
       convert h4 using 1
-      funext k
-      simp only [Pi.smul_apply, smul_eq_mul, colMul, ← hii, SuppShift.xLast_castSucc]
       ring
     have h5 := (hc i (N i j * a) hb).2 h2
     have e2 : s * a = N i j * a := by

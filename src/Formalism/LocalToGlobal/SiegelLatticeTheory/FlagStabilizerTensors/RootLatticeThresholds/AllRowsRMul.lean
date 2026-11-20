@@ -62,8 +62,6 @@ theorem isRConvF_conv {f g : X.B.I.Gf → ℂ} {T U : X.B.I.L2 X.B.μf X.B.fund 
     simp_rw [e]
     rw [← integral_mul_left_eq_self (fun c => g (a⁻¹ * c) * phi X x y c) a]
     congr 1
-    funext b
-    simp only [inv_mul_cancel_left]
   rw [ContinuousLinearMap.comp_apply, hf.2]
   simp_rw [step, ← integral_const_mul]
   have hF' : Integrable (Function.uncurry fun a c => f a * (g (a⁻¹ * c) * phi X x y c)) (X.B.μf.prod X.B.μf) := by

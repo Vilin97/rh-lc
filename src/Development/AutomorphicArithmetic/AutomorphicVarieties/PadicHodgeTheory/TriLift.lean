@@ -201,8 +201,6 @@ private theorem gamCr : LocalPublishedTheorems → ∀ {l : ℕ} [Fact l.Prime] 
   refine (diff (fun g : H => (γ + b) g + h * (β g).1 * (β g).2) (resH u' H r2) (by fun_prop)
     (fun g => cu'.mat g)).2.2 ?_
   convert hbN using 1
-  funext g
-  simp only [Pi.sub_apply, Pi.add_apply, hz₀]
   ring
 
 private theorem triM_map {B B' : Type} [CommRing B] [CommRing B'] (p : B →+* B') (t : Fin 3 → Bˣ) (t' : Fin 3 → B'ˣ)

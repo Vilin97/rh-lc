@@ -54,15 +54,11 @@ theorem sc_det_lt {m : Type*} [Fintype m] [DecidableEq m] [Nonempty m]
   have hDD : Dh * Dh = diagonal (RCLike.ofReal ∘ d) := by
     rw [hDh, diagonal_mul_diagonal]
     congr 1
-    funext i
-    simp only [Function.comp_apply]
     rw [← Complex.ofReal_mul, Real.mul_self_sqrt (hdpos i).le]
     rfl
   have hDhH : Dhᴴ = Dh := by
     rw [hDh, diagonal_conjTranspose]
     congr 1
-    funext i
-    simp
   obtain ⟨B, hB⟩ : ∃ B : Matrix m m ℂ, B = Dh * star U := ⟨_, rfl⟩
   have hBB : Bᴴ * B = E := by
     rw [hB, conjTranspose_mul, hDhH, hsp, ← hDD]

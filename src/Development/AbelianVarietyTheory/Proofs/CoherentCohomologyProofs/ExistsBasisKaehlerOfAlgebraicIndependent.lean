@@ -310,8 +310,6 @@ omit [IsDomain V] [IsDiscreteValuationRing V] in
 theorem topFormGen_eq : topFormGen F b = exteriorPower.ιMulti F n (fracKaehlerBasis F b) := by
   rw [topFormGen, formMap_ιMulti]
   congr 1
-  funext k
-  simp
 
 omit [IsDomain V] [IsDiscreteValuationRing V] in
 @[simp] theorem topFormCoeff_topFormGen : topFormCoeff F b (topFormGen F b) = 1 := by

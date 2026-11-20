@@ -38,8 +38,6 @@ theorem zeta_prod (s : ℂ) (hs : 1 < s.re) : HasProd (fun 𝔭 : HeightOneSpect
   have h := riemannZeta_eulerProduct_hasProd hs
   rw [← (Rat.HeightOneSpectrum.primesEquiv (R := 𝓞 ℚ)).hasProd_iff] at h
   convert h using 1
-  funext 𝔭
-  simp only [Function.comp_apply, heckeVal_one, one_mul, absNorm_eq]
 
 private theorem algEquiv_self_eq_one {K : Type} [Field K] (σ : K ≃ₐ[K] K) : σ = 1 :=
   AlgEquiv.ext fun x => by simpa using σ.commutes x

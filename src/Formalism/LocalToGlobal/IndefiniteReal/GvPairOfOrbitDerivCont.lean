@@ -135,8 +135,6 @@ theorem gp_sv_contDiff1 {M : DSModel V S} {τ : D.what₂.Tau} {v : M.H τ}
   have h := (hv 1 ![X] (fun i => by rw [Fin.fin_one_eq_zero i]; simpa using hX)).comp
     (contDiff_pi.2 fun _ : Fin 1 => contDiff_id : ContDiff ℝ ∞ fun s : ℝ => fun _ : Fin 1 => s)
   convert h using 1
-  funext s
-  simp
 
 private theorem rep_mul_of_mem_UH (M : DSModel V S) (τ : D.what₂.Tau) {a b : Matrix (Fin V.rank) (Fin V.rank) ℂ}
     (ha : a ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ)) (hb : b ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ)) (x : M.H τ) :

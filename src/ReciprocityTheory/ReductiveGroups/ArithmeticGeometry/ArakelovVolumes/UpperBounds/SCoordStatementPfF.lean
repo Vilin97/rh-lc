@@ -73,8 +73,6 @@ theorem target {Fr : Type*} [NormedAddCommGroup Fr] [NormedSpace ℂ Fr] {n N : 
   refine h1.congr_of_eventuallyEq (hev.mono fun z hz => ?_)
   show (WithLp.toLp 2 fun i => _ : EuclideanSpace ℂ (Fin n)) = WithLp.toLp 2 fun i => _
   congr 1
-  funext i
-  simp only [hNumd, hDend, mul_div_assoc']
   rw [← Finset.sum_div, ← Finset.sum_div, inv_div, div_mul_div_cancel₀ hz]
 
 end

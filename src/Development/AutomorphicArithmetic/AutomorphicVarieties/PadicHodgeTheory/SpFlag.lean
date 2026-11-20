@@ -26,8 +26,6 @@ theorem aeval_red (π : R →+* E) {X : M4 R} {c : Fin 4 → R} (H : X.map π = 
   refine Polynomial.induction_on' p (fun p q hp hq => ?_) (fun n a => ?_)
   · rw [map_add, Matrix.map_add _ (map_add π), hp, hq, Matrix.diagonal_add]
     congr 1
-    funext i
-    simp
   · have H' : π.mapMatrix X = Matrix.diagonal fun a => π (c a) := H
     change π.mapMatrix _ = _
     rw [Polynomial.aeval_monomial, map_mul, map_pow, H', Matrix.diagonal_pow, RingHom.mapMatrix_apply,

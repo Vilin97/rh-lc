@@ -216,8 +216,6 @@ theorem placeJac_holds : PlaceJac := by
   have hDD : Dg * Dg = 1 := by
     rw [hDgdef, Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
     congr 1
-    funext a
-    simp only [sgn]
     split_ifs <;> norm_num
   have hDnorm : ‖Dg.det‖ = 1 := by
     rw [hDgdef, Matrix.det_diagonal, norm_prod]

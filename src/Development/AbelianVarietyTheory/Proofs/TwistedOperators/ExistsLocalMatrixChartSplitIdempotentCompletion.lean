@@ -89,8 +89,6 @@ theorem exists_chart : ∀ (D : D7) (e : AE D) (v : HeightOneSpectrum (𝓞 D.ho
       exact N.smul_mem _ (Submodule.subset_span ⟨⟨x, hx⟩, rfl⟩)
     | zero =>
       convert N.zero_mem using 1
-      funext i
-      simp
     | add x y _ _ hx hy =>
       convert N.add_mem hx hy using 1
       funext i
@@ -110,16 +108,10 @@ theorem exists_chart : ∀ (D : D7) (e : AE D) (v : HeightOneSpectrum (𝓞 D.ho
       exact hL a ha x hx
     | zero =>
       convert N.zero_mem using 1
-      funext i
-      simp
     | add z₁ z₂ _ _ h₁ h₂ =>
       convert N.add_mem h₁ h₂ using 1
-      funext i
-      simp
     | neg z _ h =>
       convert N.neg_mem h using 1
-      funext i
-      simp
   have hgen : ∀ j, gen j ∈ GlobalTheory.AdLat.hat D.host.F (L : Set (Fin n → D.host.E)) := fun j =>
     AddSubgroup.subset_closure ⟨1, hone, j, hg ▸ Submodule.subset_span j.2, rfl⟩
   have hiff : ∀ y : Fin n → GlobalTheory.SplitPlace.RF D,
@@ -149,8 +141,6 @@ theorem exists_chart : ∀ (D : D7) (e : AE D) (v : HeightOneSpectrum (𝓞 D.ho
       | mem x hx => exact Submodule.subset_span (hL 1 hone x hx)
       | zero =>
         convert S.zero_mem using 1
-        funext i
-        simp
       | add x y _ _ hx hy =>
         convert S.add_mem hx hy using 1
         funext i

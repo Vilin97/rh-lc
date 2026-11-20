@@ -35,8 +35,6 @@ private theorem lv_diag {K : Type} [Field K] [NumberField K] (t : ℝ) :
   change Matrix.reindex finSumFinEquiv finSumFinEquiv (Matrix.fromBlocks (zt K t).val 0 0 (zt K (-t)).val) = _
   rw [hz, hz, Matrix.fromBlocks_diagonal, Matrix.reindex_apply, Matrix.submatrix_diagonal_equiv]
   congr 1
-  funext i
-  simp only [Function.comp_apply]
   rcases finSumFinEquiv.symm i with j | j
   · rfl
   · simp only [Sum.elim_inr, neg_mul, mul_neg]

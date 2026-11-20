@@ -177,8 +177,6 @@ theorem colAnti_of : TensorGl → JMComm → Height → ColAnti := by
       have hfix : (Pi.single I v : TV n M (Fin m)) = pm (Equiv.swap p q) (Pi.single I v) := by
         rw [pm_single, Equiv.swap_inv]
         congr 1
-        funext x
-        simp only [Function.comp_apply, Equiv.swap_apply_def]
         split_ifs with h1 h2
         · rw [h1, hIpq]
         · rw [h2, hIpq]

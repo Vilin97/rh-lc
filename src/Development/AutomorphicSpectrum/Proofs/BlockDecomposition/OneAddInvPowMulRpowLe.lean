@@ -593,8 +593,6 @@ theorem clause_two {Ψ : (ι → 𝔸[K]) → ℂ} (hΨ : Ψ ∈ GJMatrix.schwar
     refine h.congr (Eventually.of_forall fun t ↦ ?_)
     simp only [lineFn_mul_diagonal]
     congr 1
-    funext j
-    simp only [ν, Units.val_mk0]
     rw [← mul_assoc, mul_inv_cancel₀ (hix l), one_mul]
   refine le_trans ?_ (mul_le_mul_of_nonneg_left hle hM)
   rw [hlin, lineInt, ← integral_const_mul]

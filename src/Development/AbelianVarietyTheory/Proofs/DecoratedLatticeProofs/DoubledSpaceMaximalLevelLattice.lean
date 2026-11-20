@@ -23,14 +23,10 @@ theorem jX_dblDec_mulVec (V : HSp D) (y : Fin V.rank → AE D) :
   · rw [pairVec_inl]
     simp only [mulVec, HypDec.jX, dblDec, GlobalTheory.Core.Rk.SWLaw.stackRows]
     congr 1
-    funext j
-    simp only [GlobalTheory.MixModel.rat, GlobalTheory.MixModel.giA, map_apply, submatrix_apply, id, Equiv.symm_apply_apply,
       fromRows_apply_inl, fromRows_apply_inr]
   · rw [pairVec_inr]
     simp only [mulVec, HypDec.jX, dblDec, GlobalTheory.Core.Rk.SWLaw.stackRows]
     congr 1
-    funext j
-    simp only [GlobalTheory.MixModel.rat, GlobalTheory.MixModel.giA, map_apply, submatrix_apply, id, Equiv.symm_apply_apply,
       fromRows_apply_inl, fromRows_apply_inr]
 
 theorem mem_siegel_of_mem_stab (V : HSp D) {p : GA D (dblSp V)} (h : p ∈ stab (dblDec V)) : p ∈ siegel V := by

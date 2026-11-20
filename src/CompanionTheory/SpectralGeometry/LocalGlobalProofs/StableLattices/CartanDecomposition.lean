@@ -279,8 +279,6 @@ theorem dg_mul (k r : ℕ) (u : ℝ) (hu : u ≠ 0) : dg (tor k r u⁻¹) * dg (
   have hu' : (u : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hu
   rw [hdg, hdg, Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
   congr 1
-  funext i
-  simp only [GlobalTheory.CompanionTheory.BesselCartan.tor]
   split_ifs <;> push_cast <;> simp [hu']
 
 theorem tor_pair (k r : ℕ) (hk : 1 ≤ k) (u : ℝ) (hu : u ≠ 0) (i j : Fin (2 * r + k + 1))

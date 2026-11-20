@@ -78,8 +78,6 @@ theorem exists_coord {B : Base F E} (hB : B.IsGood σ) {nS nT : ℕ} {JS : Matri
   congr 2
   funext x
   congr 1
-  funext i
-  simp
 
 end
 

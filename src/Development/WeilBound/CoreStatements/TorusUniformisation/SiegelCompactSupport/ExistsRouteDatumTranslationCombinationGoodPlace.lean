@@ -2249,8 +2249,6 @@ theorem schr_tens (ψ : AddChar (AF F) ℂ) (w : (κ → AF F) × (κ → AF F))
   have e1 : r (x + w.1) = r (x + (offP v w).1) := by
     rw [← h (x + (offP v w).1) fun i => evFin F v (w.1 i)]
     congr 1
-    funext i
-    simp only [Pi.add_apply, offP, add_assoc, off_add_at]
   have e2 : ψ (x ⬝ᵥ w.2 + ⅟(2 : AF F) * (w.1 ⬝ᵥ w.2)) =
       psv v ψ ((fun i => evFin F v (x i)) ⬝ᵥ (evP v w).2 + ⅟(2 : Fv F v) * ((evP v w).1 ⬝ᵥ (evP v w).2)) *
       ψ (x ⬝ᵥ (offP v w).2 + ⅟(2 : AF F) * ((offP v w).1 ⬝ᵥ (offP v w).2)) := by
@@ -2713,8 +2711,6 @@ theorem gen [IsTotallyReal F] (ψ : AddChar (AF F) ℂ) (hψ : IsCharAF F ψ) (h
     show ∫ x, Ψ f' x * (starRingEnd ℂ) (Ψ g' x) ∂μ = ∫ x, Ψ f x * (starRingEnd ℂ) (Ψ g x) ∂μ
     rw [k f f' hf, k g g' hg, ← integral_add_right_eq_self (fun x => Ψ f x * (starRingEnd ℂ) (Ψ g x)) w.1]
     congr 1
-    funext x
-    simp only [schr, map_mul]
     rw [mul_mul_mul_comm, Complex.mul_conj', hψ.2.1]
     simp
   intro Φ hΦ

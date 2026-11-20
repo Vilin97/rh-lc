@@ -22,8 +22,6 @@ theorem fr_eq (x : InfinitePlace E × Fin a × Fin a) :
   show frU x + star (frU x) = _
   rw [frU, Matrix.star_eq_conjTranspose, conjTranspose_single]
   congr 2
-  funext w
-  simp only [Pi.star_apply, Pi.single_apply, c0]
   split_ifs <;> simp
 
 theorem fr_apply (x : InfinitePlace E × Fin a × Fin a) (p q : Fin a) (w : InfinitePlace E) :

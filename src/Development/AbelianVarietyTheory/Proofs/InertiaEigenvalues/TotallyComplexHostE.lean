@@ -46,8 +46,6 @@ theorem block_hasInfQ (D : D7) (C : CharFrame D) (nch : NChoice D) (Tp : TupTied
   have h2 : (C.eta⁻¹).HasInfQ (embPsi D.host) (-(fun _ => 1 / 2)) :=
     hasInfQ_inv' ⟨fun _ => 1, fun _ => by norm_num, C.isEta.inf⟩
   convert hasInfQ_mul' h1 h2 using 1
-  funext g
-  simp only [Pi.add_apply, Pi.neg_apply]
   ring
 
 theorem main : ∀ (D : D7) (C : Formalism.L2.Host.CharFrame D) (nch : NChoice D) (Tp : Formalism.L2.Host.TupTied D C nch),

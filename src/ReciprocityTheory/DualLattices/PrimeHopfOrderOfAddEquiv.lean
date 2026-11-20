@@ -68,8 +68,6 @@ def hopfPull (e : X ≃+ Y) (A : HopfOrder (C := C) R Y) : HopfOrder (C := C) R 
   mul_mem := fun f g hf hg => by
     rw [Submodule.mem_map_equiv] at hf hg ⊢
     convert A.mul_mem _ _ hf hg using 1
-    funext y
-    simp only [pbE_symm_apply, Pi.mul_apply]
   comul := by
     intro f hf
     rw [Submodule.mem_map_equiv] at hf
@@ -92,8 +90,6 @@ def hopfPull (e : X ≃+ Y) (A : HopfOrder (C := C) R Y) : HopfOrder (C := C) R 
   antipode := fun f hf => by
     rw [Submodule.mem_map_equiv] at hf ⊢
     convert A.antipode _ hf using 1
-    funext y
-    simp only [pbE_symm_apply, map_neg]
 
 private theorem pbE_symm_pow (e : X ≃+ Y) (f : X → C) (n : ℕ) :
     (pbE (C := C) (R := R) e).symm (f ^ n) = ((pbE (C := C) (R := R) e).symm f) ^ n := by

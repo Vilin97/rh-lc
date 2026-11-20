@@ -100,8 +100,6 @@ theorem _root_.PositivityTheory.SiegelWeilFormula.TBij_k.tBij : _root_.Positivit
     congr 1
     conv_rhs => rw [← _root_.PositivityTheory.SiegelWeilFormula.TBij_k.Adp.cmb_crd d X]
     congr 1
-    funext k
-    simp
   · obtain ⟨Ψ, hΨ, rfl⟩ := hbij.surjOn hΦ
     have hz : Ψ = 0 := by
       funext v

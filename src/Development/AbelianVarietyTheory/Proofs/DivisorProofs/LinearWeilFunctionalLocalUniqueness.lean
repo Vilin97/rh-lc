@@ -112,8 +112,6 @@ theorem proj_schr_at (ψ : AddChar (AF F) ℂ) (v : Pl F) (φ₀ : (κ → Fv F 
   have hs : (fun x => Φ (repl v y x)) ∈ SB (κ → Fv F v) := by
     have := restrict_liftV_mem_SB v _ (GlobalTheory.SchwartzTranslation.schA_add_const (fun i => y i - liftV v (evFin F v (y i))) Φ hΦ)
     convert this using 3
-    funext i
-    simp only [repl, Pi.add_apply]; ring
   have e : (fun x => schr ψ (fun i => liftV v (p i), fun i => liftV v (q i)) Φ (repl v y x)) =
       schr (psiAt ψ v) (p, q) fun x => Φ (repl v y x) := by
     funext x

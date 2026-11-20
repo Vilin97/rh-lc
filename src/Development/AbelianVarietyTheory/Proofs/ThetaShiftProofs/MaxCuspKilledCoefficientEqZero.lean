@@ -33,8 +33,6 @@ theorem coefFn_eq_cubeCoeff {Ω : Type} {N : ℕ} (act : (Fin N → ℝ) → Ω 
   rw [← Set.pi_univ_Icc]
   simp only [h]
   congr 1
-  funext t
-  simp only [integrand, chr, eNeg, dotForm_apply, one_mul, mul_comm (ph _)]
 
 theorem herm_comb {E : Type} [Field E] [NumberField E] [IsCMField E] {r ρ : ℕ} {X : Data E r}
     (cu : CuspFD X ρ) (η : Fin ρ → E) :

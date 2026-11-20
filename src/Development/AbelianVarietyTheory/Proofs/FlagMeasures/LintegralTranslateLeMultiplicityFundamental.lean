@@ -103,8 +103,6 @@ theorem lintegral_le_multiplicity : ∀ (B : RowsAut) (S : Set B.I.Ginf) (y : B.
     rw [← lintegral_indicator hUm,
       ← (GlobalTheory.AdelicUnfold.measurePreserving_left B.I B.μf y).lintegral_comp hH]
     congr 1
-    funext p
-    simp only [inv_mul_cancel_left]
 
   have hfd := GlobalTheory.RatDiscrete.isFundamentalDomain B.I B.μf B.fund B.fund_spec
   have : Countable (GlobalTheory.RatDiscrete.ratSub B.I) :=

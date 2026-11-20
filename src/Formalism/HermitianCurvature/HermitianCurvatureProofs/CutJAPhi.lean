@@ -126,8 +126,6 @@ theorem phi_operator_transfer_holds : JAPhiOp := by
   have hL : trJ S T v e (mulG S T v φ J) ρ = MA.toSm (D.parOf S v) (fun q => p q * u q) := by
     unfold trJ
     congr 1
-    funext q
-    simp only [mulG, GfP]
     rw [Formalism.FourierDecayAlt.P.JCTx2.hsVec_smul', inner_smul_right,
       cutTr_Gf_gq (T v).base q.2.1 (hTT ▸ q.2.2)]
     simp only [hu_def, hp_def, MA.Gq, hTT]

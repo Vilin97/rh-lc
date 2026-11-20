@@ -51,8 +51,6 @@ theorem mulVec_mem_hat (D : D7) {n : ℕ} (β : GL (Fin n) (Formalism.IndefR.Lev
   have h2 := mulVec_mem_hatL β Λ hβ _ hk _ h1
   have h3 := GlobalTheory.PrincInLevel.swap_symm_mem_hat Λ _ h2
   convert h3 using 1
-  funext a
-  simp only [Matrix.mulVec, dotProduct, Formalism.UG.bc, Formalism.IndefR.Lev.swapAE, Units.coe_map, MonoidHom.coe_coe,
     RingHom.mapMatrix_apply, Matrix.map_apply, map_sum, map_mul]
   simp
 

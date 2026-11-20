@@ -53,16 +53,12 @@ theorem whittakerOne_add {ϕ ϕ' : normOneGL K n → ℂ} (hc : Continuous ϕ) (
   unfold whittakerOne
   rw [← integral_add (integrableOn_whittakerOne hc x) (integrableOn_whittakerOne hc' x)]
   congr 1
-  funext X
-  simp only [Pi.add_apply, add_mul]
 
 theorem whittakerOne_smul (c : ℂ) (ϕ : normOneGL K n → ℂ) (x : normOneGL K n) :
     whittakerOne (c • ϕ) x = c * whittakerOne ϕ x := by
   unfold whittakerOne
   rw [← integral_const_mul]
   congr 1
-  funext X
-  simp only [Pi.smul_apply, smul_eq_mul, mul_assoc]
 
 theorem whittakerOne_zero (x : normOneGL K n) : whittakerOne (0 : normOneGL K n → ℂ) x = 0 := by
   simp [whittakerOne]

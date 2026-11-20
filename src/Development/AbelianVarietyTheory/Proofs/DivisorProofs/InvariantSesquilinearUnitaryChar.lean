@@ -64,8 +64,6 @@ theorem GlobalTheory.FullRankCoinv.form_diag_right_invariant : ∀ (k : Type) [F
       rw [hΛ, hΛ] at e1
       rw [← e1]
       congr 2
-      funext Y
-      simp only [F, smallF, Matrix.mul_assoc]
     | zero =>
       show (m : ℂ) * Λ 0 = Λ 0
       simp

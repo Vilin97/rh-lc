@@ -56,18 +56,12 @@ theorem UpperTheory.Gal.Wt.wtBd_of :
       | zero =>
         have h0 := (ExpLe s).zero_mem
         convert h0 using 1
-        funext z
-        simp
       | add x y _ _ hx hy =>
         have := (ExpLe s).add_mem hx hy
         convert this using 1
-        funext z
-        simp
       | smul c x _ hx =>
         have := (ExpLe s).smul_mem c hx
         convert this using 1
-        funext z
-        simp
     have hmem := hall (top κ) (htop.ge Submodule.mem_top)
     have hfun : (fun z => L (sqRep ℂ a κ (tor a k z) (top κ))) = fun z : Circle => L (top κ) * (z : ℂ) ^ psum κ k := by
       funext z

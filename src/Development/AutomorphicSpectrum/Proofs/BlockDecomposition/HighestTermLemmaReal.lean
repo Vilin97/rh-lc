@@ -114,8 +114,6 @@ theorem maj_sort (c x : Fin n → ℝ) (hc : Antitone c) (hx : ∀ g, dot x g �
     simp [domC]
   · intro g
     convert hx g using 2
-    funext a
-    simp
   · intro h i j hij hji hP g
     have hne : i ≠ j := hij.ne
     have h1 := hP g
@@ -476,8 +474,6 @@ theorem spin_le (lam : Fin n → ℤ) (hlam : Antitone lam) {ν : Fin n → ℝ}
       linarith
     have := harm_of_eq lam hlam π hs t4
     convert this using 1
-    funext a
-    simp only [Pi.add_apply, hηr, hr, Function.comp]
 
 theorem lemmaHT : LemmaHT := fun _ lam hlam =>
   ⟨harm_sub lam hlam, fun _ h => spin_le lam hlam h⟩

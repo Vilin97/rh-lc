@@ -199,8 +199,6 @@ theorem exists_cols : ∀ (F A : Type) [Field F] [NumberField F] [AddCommGroup A
   have hJind : LinearIndependent E (fun k : J => v k) := by
     have h1 := hindD.comp f hfinj
     convert h1 using 1
-    funext k
-    simp only [Function.comp]
     rw [← hvD, hf k]
   have hall := GlobalTheory.T.linearIndependent_of_filtration_symbol_det_ne_zero E A' (S.T - S.D) d' (fun a => MonoDeg (Fin S.D) a × Fin δ) Φ.U (fun a => Φ.sym a)
     (fun a ha => Φ.le a ha) (fun a x => Φ.ker a a.2 x) ix'' J v hv hJ hdet hJind

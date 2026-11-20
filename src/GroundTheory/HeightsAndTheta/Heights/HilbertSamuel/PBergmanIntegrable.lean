@@ -53,8 +53,6 @@ def core (hV : V ≤ L.sections n) : InnerProductSpace.Core ℂ (SectionInnerPro
       ∫ x, pairing W n (val V v) (val V w) x ∂dV.μ
     rw [← integral_conj]
     congr 1
-    funext x
-    simp only [pairing, map_mul, Complex.conj_conj, Complex.conj_ofReal]
     ring
   re_inner_nonneg v := by
     show 0 ≤ RCLike.re (∫ x, pairing W n (val V v) (val V v) x ∂dV.μ)
@@ -66,16 +64,12 @@ def core (hV : V ≤ L.sections n) : InnerProductSpace.Core ℂ (SectionInnerPro
     rw [← integral_add (pairing_integrable W dV n (hV (val_mem V u)) (hV (val_mem V w)))
       (pairing_integrable W dV n (hV (val_mem V v)) (hV (val_mem V w))), map_add]
     congr 1
-    funext x
-    simp only [pairing, Pi.add_apply, map_add]
     ring
   smul_left u w r := by
     show ∫ x, pairing W n (val V (r • u)) (val V w) x ∂dV.μ =
       conj r * ∫ x, pairing W n (val V u) (val V w) x ∂dV.μ
     rw [← integral_const_mul, map_smul]
     congr 1
-    funext x
-    simp only [pairing, Pi.smul_apply, smul_eq_mul, map_mul]
     ring
   definite v h := by
     have hs : val V v ∈ L.sections n := hV (val_mem V v)

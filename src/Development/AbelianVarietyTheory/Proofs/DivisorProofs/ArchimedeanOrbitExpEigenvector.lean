@@ -39,8 +39,6 @@ theorem exp_mulVec_of_eigen {n : ℕ} (Z : Matrix (Fin n) (Fin n) ℂ) (v : Fin 
   have h2 := (NormedSpace.exp_series_hasSum_exp' (𝕂 := ℂ) ((t : ℂ) * l)).smul_const v
   refine h1.unique ?_
   convert h2 using 1
-  funext k
-  simp only [Function.comp_apply, f, AddMonoidHom.mk'_apply, smul_mat_mulVec, hpow, smul_smul, smul_eq_mul]
 
 theorem tensNU_mul_one_tmul {F E R R' : Type} [Field F] [Field E] [Algebra F E] [CommRing R] [Algebra F R]
     [CommRing R'] [Algebra F R'] (j : R →ₗ[F] R') (hj : ∀ a b, j (a * b) = j a * j b) (u : R ⊗[F] E) (e : E) :

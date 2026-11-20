@@ -49,8 +49,6 @@ theorem ArithmeticVolumeBigDimensionOne.proof (hP : PackingStatement) (hL : Curv
       limsup (fun n : ℕ => smallSectionCount (IsSmallH (mCoordIdeal y) y A) (chartLat y A.a) n / n) atTop := by
     unfold arVolP
     congr 1
-    funext n
-    simp
   rw [e]
   exact ArithmeticVolumeBigDimensionOne.le_limsup_div hC (fun n => by simpa using hC' n)
 

@@ -196,8 +196,6 @@ theorem exists_basis_lattice_near :
         exact Submodule.subset_span ⟨i', rfl⟩
       | zero =>
         convert Submodule.zero_mem (Submodule.span (M.O z) (Set.range b)) using 1
-        funext j
-        simp
       | add a a' _ _ ha ha' =>
         convert Submodule.add_mem _ ha ha' using 1
         funext j

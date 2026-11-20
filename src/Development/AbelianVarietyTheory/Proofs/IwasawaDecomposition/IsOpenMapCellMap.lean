@@ -17,8 +17,6 @@ theorem exists_pow_mul_eval_mem {k : Type} [Field k] {X J : Type} (R : Subalgebr
   | C a =>
     refine ⟨0, ?_⟩
     convert R.algebraMap_mem a using 1
-    funext x
-    simp
   | add p q hp hq =>
     obtain ⟨N₁, h₁⟩ := hp
     obtain ⟨N₂, h₂⟩ := hq

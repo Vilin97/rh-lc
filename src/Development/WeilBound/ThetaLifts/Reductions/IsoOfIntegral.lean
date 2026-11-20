@@ -51,8 +51,6 @@ theorem ph_apply (S : Eu l →L[ℝ] Eu l) (f : Sch l) (x : Eu l) :
     (Function.HasTemperateGrowth.const _).mul (temperate_quad S)
   have h3 : Function.HasTemperateGrowth fun x : Eu l => exp (((-π * ⟪x, S x⟫ : ℝ) : ℂ) * I) := by
     convert GlobalTheory.Published.Metaplectic.hasTemperateGrowth_eChar.comp h2 using 1
-    funext x
-    simp only [Function.comp, GlobalTheory.Published.Metaplectic.eChar_apply]
     congr 1
     push_cast
     ring

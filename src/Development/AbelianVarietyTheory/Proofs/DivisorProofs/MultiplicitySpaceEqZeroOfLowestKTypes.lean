@@ -239,8 +239,6 @@ theorem dRep_eq_fderiv (hG : IsUnit G) {k : ℕ} {B : Fin k → Matrix (Fin n) (
   refine ⟨_, fun c => Eq.trans ?_ (h4.comp_hasDerivAt_of_eq 0 (h5 c) (by simp)).deriv⟩
   unfold dRep
   congr 1
-  funext s
-  simp only [Function.comp, Finset.smul_sum, Pi.smul_apply, smul_eq_mul, mul_smul]
 
 theorem dRep_sum_all (hG : IsUnit G) {k : ℕ} {B : Fin k → Matrix (Fin n) (Fin n) ℂ} (hB : ∀ i, B i ∈ lie G)
     {y : H} (hy : y ∈ smoothAll G ρ) (c : Fin k → ℝ) :

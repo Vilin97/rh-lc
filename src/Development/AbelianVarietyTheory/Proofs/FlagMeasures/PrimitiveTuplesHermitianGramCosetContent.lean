@@ -275,8 +275,6 @@ theorem fibre_card {n m : ℕ} {Hm : Matrix (Fin n) (Fin n) E} (h : IsHerm L Hm)
         simp only [Pi.add_apply, Pi.smul_apply]
         rw [← hx0z a, ← hφa]
         congr 1
-        funext i
-        simp only [Pi.add_apply, Pi.smul_apply, Pi.neg_apply, smul_eq_mul]
         linear_combination -hxc a i
       have hw : ∀ a, φ (-c a) ∈ Λ := fun a => hφm _ fun i => L.O.neg_mem (hcO a i)
       obtain ⟨-, y, hy, hxy⟩ := hxz ▸ prim_add L hΛ hcj hp hu hz hw

@@ -47,8 +47,6 @@ theorem card_le_finrank {M P Q : Matrix n n K} {D : n → K} [DecidablePred fun 
     have := (Pi.basisFun K n).linearIndependent.comp Subtype.val
       (Subtype.val_injective (p := fun i => D i = 0))
     convert this using 1
-    funext i
-    simp
   have hli : LinearIndependent K (fun i : {i // D i = 0} => (⟨_, hmem i⟩ : V)) := by
     apply LinearIndependent.of_comp V.subtype
     have hmapped := hsingle.map' Q.mulVecLin (ker_eq_bot_of_det hQ)

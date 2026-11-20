@@ -29,8 +29,6 @@ theorem subst_secondBlockZero_twoPointVariables {ι : Type} (Y : Fin d → MvPow
       constantCoeff_subst_eq_zero hA (GlobalTheory.LogJacobian.constantCoeff_substSecondBlockZero d) (cc_twoVars q)
   rw [subst_comp_subst_apply hs_twoVars hA, subst_comp_subst_apply hB hYs]
   congr 1
-  funext q
-  simp only [twoVars]
   rw [subst_X hA]
   split_ifs with h
   · simp [GlobalTheory.LogJacobian.substSecondBlockZero, subst_X hYs]

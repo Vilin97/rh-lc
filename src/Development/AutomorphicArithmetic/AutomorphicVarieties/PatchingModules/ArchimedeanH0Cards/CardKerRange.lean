@@ -125,8 +125,6 @@ private theorem ker_cMap (z : D.H2LocalConditions) (hz : z ∈ LinearMap.ker (cM
     exact zero_sub _
   · show ((p.1.2 w - fun g => D.π w (x (P.φ w g))) - p.1.2 w) - (fun g => D.π w ((-x) (P.φ w g))) ∈ D.abelian₂ w
     convert zero_mem (D.abelian₂ w) using 1
-    funext g
-    simp only [Pi.sub_apply, Pi.neg_apply, Pi.zero_apply, map_neg]
     abel
 
 end UpperTheory.V.Pa.B2

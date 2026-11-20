@@ -26,8 +26,6 @@ private theorem F_coc (u : K → K → A) (v : K → A) (hu : ∀ a b c, u b c -
         u (g 0) (g 1) * F u v n (Fin.contractNth j (· * ·) fun i => g i.succ.succ) := fun j => by
       rw [F]
       congr 2
-      funext i
-      simp only [Fin.contractNth, Fin.val_succ, Nat.add_lt_add_iff_right, Nat.add_right_cancel_iff]
       rfl
     have h0 : F u v (n + 2) (Fin.contractNth 0 (· * ·) g) = u (g 0 * g 1) (g 2) * F u v n fun i => g i.succ.succ.succ := by
       rw [F]; rfl

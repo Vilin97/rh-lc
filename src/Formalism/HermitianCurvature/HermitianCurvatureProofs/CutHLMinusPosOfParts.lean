@@ -38,8 +38,6 @@ theorem map_qminor' {A B : Type} [Ring A] [Algebra ℂ A] [Ring B] [Algebra ℂ 
   rw [map_mul, map_intCast, map_list_prod, List.map_ofFn]
   congr 2
   congr 1
-  funext i
-  simp only [Function.comp_apply, Tm, map_add, apply_ite φ, AlgHom.commutes, map_zero]
 
 theorem map_AAv {A B : Type} [Ring A] [Algebra ℂ A] [Ring B] [Algebra ℂ B] (φ : A →ₐ[ℂ] B) (k r : ℕ)
     (Eu : Fin (2 * r + k + 1) → Fin (2 * r + k + 1) → A) (y : Fin r → Fin (2 * r + k + 1) → ℂ) (n : ℕ)

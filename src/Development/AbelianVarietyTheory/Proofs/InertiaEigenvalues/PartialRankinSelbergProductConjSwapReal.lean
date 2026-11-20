@@ -15,8 +15,6 @@ theorem conj_tprod {β : Type} (f : β → ℂ) :
       apply hf
       have := hg.map (starRingEnd ℂ) Complex.continuous_conj
       convert this using 1
-      funext i
-      simp
     rw [tprod_eq_one_of_not_multipliable hf, tprod_eq_one_of_not_multipliable hg, map_one]
 
 theorem conj_natCast_cpow_neg (q : ℕ) (x : ℝ) :

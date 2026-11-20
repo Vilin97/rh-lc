@@ -30,8 +30,6 @@ noncomputable def unitsDegree : ℤ̂ˣ →* Multiplicative ℤ̂ where
   map_mul' u v := by
     rw [← ofAdd_add, ← map_add]
     congr 2
-    funext q
-    simp
 
 theorem toPadicInt_unitsDegree (u : ℤ̂ˣ) (q : Nat.Primes) :
     toPadicInt q (Multiplicative.toAdd (unitsDegree u)) =

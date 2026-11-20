@@ -89,8 +89,6 @@ theorem dualPair : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuation
       h.flag' v' (fun i j => by rw [dotForm_apply]; exact hv' i j)
   · have := isVerticalDivisor_swap (h.vertical i.rev)
     convert this using 1
-    funext k
-    simp only [Pi.sub_apply, Pi.neg_apply]
     ring
   · show aeval y (g i.rev) = v.repr (v' i) i * aeval y (f i.rev)
     rw [h.generic i.rev, ← mul_assoc, hdiag i, one_mul]

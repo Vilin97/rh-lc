@@ -133,8 +133,6 @@ theorem UpperTheory.V.Pa.Core.ooPt :
     refine Eq.trans ?_ this
     rw [q1El]
     congr 4
-    funext i
-    simp only [Function.comp_apply, map_sub, hp, map_one, hph]
   · obtain ⟨g, rfl⟩ := hsj g
     obtain ⟨ph, hph⟩ := hsj (Λ.ph j)
     obtain ⟨ta, hta⟩ := hsj (Λ.ta j)

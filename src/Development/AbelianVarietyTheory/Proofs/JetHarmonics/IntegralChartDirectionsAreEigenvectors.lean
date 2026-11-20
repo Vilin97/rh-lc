@@ -314,8 +314,6 @@ theorem Tv_add (F : Germ.FGLaw S d)
     unfold jetCopy
     rw [tanV_comp_jetMap]
     congr 1
-    funext p
-    simp only [MvPolynomial.coeff_X]
     rw [Finset.sum_eq_single (i, p.2)]
     · simp
     · intro b _ hb

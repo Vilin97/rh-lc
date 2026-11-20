@@ -54,8 +54,6 @@ private theorem dC_prism_sum_eq_snd_sub_fst {Y : Type} {n : ℕ} (F : (Fin (n + 
     simp only [S, pow_add, mul_assoc]
     congr 2
     congr 1
-    funext p
-    simp only [Function.comp, FP, uu, s]
     split_ifs <;> (congr 2; apply Fin.ext; rw [val_succAbove_eq_ite_lt]; simp only [Fin.val_mk]; split_ifs <;> omega)
   let M : ℕ → Fin (n + 2) → Y := fun i r ↦ if (r : ℕ) < i then (uu r).1 else (uu r).2
   have hstep : ∀ i, i < n + 2 → F (M i) - F (M (i + 1)) =
@@ -70,8 +68,6 @@ private theorem dC_prism_sum_eq_snd_sub_fst {Y : Type} {n : ℕ} (F : (Fin (n + 
       refine Finset.sum_congr rfl fun p _ ↦ ?_
       simp only [c]
       congr 2
-      funext r
-      simp only [s]
       rw [val_succAbove_eq_ite_lt]
     rw [← Finset.sum_range_add_sum_Ico _ (show i ≤ n + 3 by omega),
       Finset.sum_eq_sum_Ico_succ_bot (show i < n + 3 by omega),
@@ -106,8 +102,6 @@ private theorem dC_prism_sum_eq_snd_sub_fst {Y : Type} {n : ℕ} (F : (Fin (n + 
     have hci : c i = (-1 : ℝ) ^ i * F (M i) := by
       simp only [c]
       congr 2
-      funext r
-      simp only [T', s, M]
       split_ifs <;> first | omega | (congr 2 <;> omega)
     have hci1 : c (i + 1) = -((-1 : ℝ) ^ i * F (M (i + 1))) := by
       simp only [c]

@@ -74,8 +74,6 @@ theorem chartRingZ_eq (c' : Unit → κ) :
     chartRingZ (ι := GlobalTheory κ) x c' = (chartRingZ (ι := GlobalTheory κ) y c').map j.toIntAlgHom := by
   rw [chartRingZ, chartRingZ, AlgHom.map_adjoin, ← Set.range_comp]
   congr 2
-  funext p
-  simp only [Function.comp_apply, RingHom.toIntAlgHom_apply, map_div₀, hx, mul_div_mul_left _ _ hμ]
 
 omit [Fintype κ] in
 

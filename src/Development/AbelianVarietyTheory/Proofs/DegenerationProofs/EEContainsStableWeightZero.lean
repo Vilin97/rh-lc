@@ -81,8 +81,6 @@ theorem operator_mem_testLattice (hint : ∀ a : o, ‖y₀ (algebraMap o S.R a)
     exact Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨α, l, k, hα, hl, rfl⟩)
   | zero =>
     convert Submodule.zero_mem τ.E using 1
-    funext j
-    simp
   | add a a' _ _ ha ha' =>
     convert Submodule.add_mem _ ha ha' using 1
     funext j

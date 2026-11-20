@@ -17,8 +17,6 @@ theorem const_mem_of_stable {R κ : Type} [CommRing R] (hR : ∀ n : ℕ, IsUnit
     | zero =>
       refine ⟨fun k => PowerSeries.mk fun n => coeff (n + 1) (v k), ?_⟩
       convert hv using 1
-      funext k
-      simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, zero_add, pow_one, c]
       rw [add_comm]
       exact (PowerSeries.eq_X_mul_shift_add_const (v k)).symm
     | succ m ih =>

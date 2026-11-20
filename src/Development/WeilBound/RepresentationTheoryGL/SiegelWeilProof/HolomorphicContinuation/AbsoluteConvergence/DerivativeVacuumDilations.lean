@@ -24,8 +24,6 @@ theorem bS_herm (X : Fin n → ℝ) (h : ℝ) {b : Matrix (Fin n) (Fin n) ℂ} (
   have hD : (diagonal (fun j => (Real.exp (-(h * X j)) : ℂ)))ᴴ = diagonal (fun j => (Real.exp (-(h * X j)) : ℂ)) := by
     rw [Matrix.diagonal_conjTranspose]
     congr 1
-    funext j
-    simp only [Pi.star_apply]
     exact Complex.conj_ofReal _
   unfold bS Matrix.IsHermitian
   rw [Matrix.conjTranspose_mul, Matrix.conjTranspose_mul, hD, hb.eq, Matrix.mul_assoc]

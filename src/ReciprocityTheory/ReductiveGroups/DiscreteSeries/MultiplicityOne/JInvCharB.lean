@@ -217,8 +217,6 @@ theorem frame_conjugation_fixes_vector (z : Fin (2 * r + k + 1) → ℂ) (hT : 0
   conv_rhs => rw [hz]
   rw [← Matrix.mulVec_smul]
   congr 1
-  funext l
-  simp only [Pi.smul_apply, smul_eq_mul, map_mul, Complex.conj_ofReal]
   congr 1
   simp only [bvec, Pi.single_apply]
   split_ifs <;> simp

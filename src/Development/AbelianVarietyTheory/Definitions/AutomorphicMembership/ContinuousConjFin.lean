@@ -172,8 +172,6 @@ theorem qdet_shift {A : Type} [Ring A] [Algebra ℂ A] (X : Fin a → Fin a → 
   simp only [Formalism.REAL.qdet, Formalism.REAL.qminor]
   refine Finset.sum_congr rfl fun σ _ => ?_
   congr 3
-  funext k
-  simp only [Formalism.REAL.Tm]
   split_ifs
   · simp only [map_sub, map_add]; abel
   · simp

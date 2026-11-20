@@ -74,8 +74,6 @@ theorem slice_germ_points : Formalism.FourierDecayAlt.P.FormNormSumIdentities.YG
     congr 1
     unfold G.OmBlock
     congr 1
-    funext p
-    simp only [G.blockIntegrand]
     congr 1
     have hp := hL _ (hne p) (himg p)
     simp only [G.orbM] at hp

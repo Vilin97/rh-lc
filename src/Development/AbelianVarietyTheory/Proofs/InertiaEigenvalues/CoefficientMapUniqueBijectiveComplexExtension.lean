@@ -55,8 +55,6 @@ theorem li_basis (c' : VV K lam →ₛₗ[σ] W)
   have h1 := h _ (bVV K lam ∘ e.symm) ((bVV K lam).linearIndependent.comp _ e.symm.injective)
   have h2 := h1.comp e e.injective
   convert h2 using 1
-  funext j
-  simp
 
 end General
 

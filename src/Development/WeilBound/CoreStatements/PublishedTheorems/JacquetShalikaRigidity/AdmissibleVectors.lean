@@ -83,8 +83,6 @@ theorem sum_wt_mul_massS_le_inv_pow_mul_total_mass : Q1 → Q2 → N2 → N3 →
   have hsm : μ.withDensity (fun g => β (t * g)) = c • μ.withDensity β' := by
     rw [← withDensity_smul _ hβ'm]
     congr 1
-    funext g
-    simp only [hβ', Pi.smul_apply, smul_eq_mul, ← mul_assoc, ENNReal.mul_inv_cancel hc0 hctop, one_mul]
   have hint0 : Integrable (fun g => Φ (t * g)) (μ.withDensity fun g => β (t * g)) := by
     rw [← hmap, integrable_map_equiv]
     simpa [Function.comp_def] using hint

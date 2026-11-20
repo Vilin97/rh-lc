@@ -106,8 +106,6 @@ private theorem sum_sign_iteratedFDeriv_single_eq_zero_of_not_inj (F : Matrix ι
     intro σ
     rw [← symm_perm F hF (fun k => Matrix.single (r k) (σ (a k)) (1 : ℂ)) (Equiv.swap i j)]
     congr 1
-    funext k
-    simp only [Function.comp, Equiv.Perm.mul_apply]
     by_cases hki : k = i
     · subst hki
       rw [Equiv.swap_apply_left, Equiv.swap_apply_left, hij]

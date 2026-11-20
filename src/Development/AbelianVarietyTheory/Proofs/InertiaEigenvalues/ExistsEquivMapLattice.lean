@@ -38,8 +38,6 @@ theorem exists_equiv_map_lattice {O K U U' : Type} [CommRing O] [IsDomain O] [Is
   refine ⟨a.equiv b (finCongr h), ?_⟩
   rw [← ha, ← hb, Submodule.map_span, ← Set.range_comp, ← (finCongr h).surjective.range_comp b]
   congr 2
-  funext i
-  simp
 
 theorem exists_semilinear {L V O K U : Type} [Field L] [AddCommGroup V] [Module L V] [Module.Finite L V]
     [CommRing O] [IsDomain O] [IsPrincipalIdealRing O] [Field K] [Algebra O K] [IsFractionRing O K]

@@ -21,8 +21,6 @@ lemma diag_mem (n : ℕ) (ε : Fin n → Bool) (θ : Fin n → ℝ) : dg θ ∈ 
     rw [Matrix.star_eq_conjTranspose, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal,
       ← Matrix.diagonal_one]
     congr 1
-    funext a
-    simp only [Pi.star_apply]
     rw [Complex.star_def, ← Complex.exp_conj, ← Complex.exp_add]
     simp [Complex.conj_ofReal]
   · unfold Formalism.REAL.Jm

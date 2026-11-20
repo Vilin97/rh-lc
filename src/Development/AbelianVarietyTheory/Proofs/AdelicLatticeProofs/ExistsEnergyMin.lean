@@ -17,8 +17,6 @@ theorem energy_nonneg {H A : Matrix ι ι ℂ} (h : IsLog H A) : 0 ≤ (Matrix.t
     rw [hH]
     simp only [conjTranspose_mul, conjTranspose_conjTranspose, diagonal_conjTranspose, Matrix.mul_assoc]
     congr 3
-    funext i
-    simp
   have h1 := (Matrix.posSemidef_conjTranspose_mul_self H).trace_nonneg
   rw [hh] at h1
   exact (Complex.le_def.mp h1).1

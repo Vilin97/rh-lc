@@ -177,8 +177,6 @@ theorem exists_start_point {x : T.RobbaExt ρ0} (hx : x ≠ 0) {r : ℝ} (h : 0 
     rw [ptEvalSeq, ptEvalSeq, ptEvalSeq, ← (T.summable_ptTerm hξ0 hcb).tsum_add
       (T.summable_ptTerm hξ0 hcr')]
     congr 1
-    funext n
-    simp only [ptTerm, ablock, arest]
     split_ifs <;> simp
   have hblock : T.ptEvalSeq hξ0 ablock =
       ∑ i ∈ Finset.range (m + 1), T.ptSharp hξ0 (c ^ (lo + i) * a (lo + i)) := by

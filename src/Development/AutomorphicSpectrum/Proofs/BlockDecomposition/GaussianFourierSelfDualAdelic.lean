@@ -210,8 +210,6 @@ theorem fourier_coeff_eis_any : ∀ (F : Type) [Field F] [NumberField F] [Measur
     intro x b
     simp only [eiTerm, hcdef]
     congr 2
-    funext w
-    simp only [Pi.add_apply, hj]
     push_cast
     ring
   have hbd : ∀ x : InfinitePlace F → ℝ, Summable (fun b => ‖Φ (al b) * c (x + j b)‖) ∧

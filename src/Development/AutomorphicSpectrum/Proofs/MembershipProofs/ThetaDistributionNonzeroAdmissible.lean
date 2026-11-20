@@ -158,8 +158,6 @@ theorem schr_mem_and_thetaSum : ∀ (F : Type) [Field F] [NumberField F] [Locall
       have := (schA F κ).smul_mem (ψ (⅟(2 : AdeleRing (𝓞 F) F) * (w.1 ⬝ᵥ w.2)))
         (pure_mem ψ hψ (norm_eq_one ψ hψ hF) w.1 w.2 f g hg)
       convert this using 1
-      funext x
-      simp only [schr, AddChar.map_add_eq_mul, Pi.smul_apply, smul_eq_mul]
       ring
     | zero =>
       convert (schA F κ).zero_mem using 1
@@ -167,13 +165,9 @@ theorem schr_mem_and_thetaSum : ∀ (F : Type) [Field F] [NumberField F] [Locall
       simp [schr]
     | add Φ Ψ _ _ h1 h2 =>
       convert (schA F κ).add_mem h1 h2 using 1
-      funext x
-      simp only [schr, Pi.add_apply]
       ring
     | smul c Φ _ h =>
       convert (schA F κ).smul_mem c h using 1
-      funext x
-      simp only [schr, Pi.smul_apply, smul_eq_mul]
       ring
   · have h2 : ⅟(2 : AdeleRing (𝓞 F) F) = algebraMap F _ 2⁻¹ := by
       apply invOf_eq_right_inv
@@ -186,7 +180,5 @@ theorem schr_mem_and_thetaSum : ∀ (F : Type) [Field F] [NumberField F] [Locall
     simp only [schr, dotProduct, h2]
     rw [this, one_mul]
     congr 1
-    funext i
-    simp
 
 end GlobalTheory.CompanionTheory.AdelicHeis

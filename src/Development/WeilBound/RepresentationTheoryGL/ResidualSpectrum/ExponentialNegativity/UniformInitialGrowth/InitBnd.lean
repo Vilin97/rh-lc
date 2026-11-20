@@ -61,8 +61,6 @@ theorem tor_add (x y : Fin n → ℝ) : An.tor E (x + y) = An.tor E x * An.tor E
   unfold An.tor
   rw [← map_mul]
   congr 1
-  funext i
-  simp only [Pi.mul_apply]
   rw [← GlobalTheory.CuspBoundSiegel.posIdele_mul]
   exact GlobalTheory.CuspBoundSiegel.posIdele_congr _ _ (by rw [Pi.add_apply, Real.exp_add])
 

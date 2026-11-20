@@ -37,8 +37,6 @@ theorem modular_aut (e : G ≃* G) (hc : Continuous e) (hc' : Continuous e.symm)
   rw [← map_mul_right_eq, ← Measure.map_smul, ← map_mul_right_eq,
     Measure.map_map (measurable_mul_const _) hc.measurable, Measure.map_map hc.measurable (measurable_mul_const _)]
   congr 1
-  funext x
-  simp
 
 theorem modular_bdd : ∃ K ∈ nhds (1 : G), ∃ C : ℝ≥0, ∀ g ∈ K, Measure.modularCharacter g ≤ C := by
   let μ : Measure G := Measure.haar

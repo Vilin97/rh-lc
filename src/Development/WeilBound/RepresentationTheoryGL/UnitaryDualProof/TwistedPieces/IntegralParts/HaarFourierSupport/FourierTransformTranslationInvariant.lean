@@ -58,8 +58,6 @@ theorem integrable_slice (hψ : Continuous ψ) {f : Sp k n → ℂ} (hf : f ∈ 
   have h2 : (fun u : Fin (dd Z) → k => f (p.1 - Pr τ Z p.1 + E Z u, p.2)) ∈ SB (Fin (dd Z) → k) := by
     have := GlobalTheory.SplitDict.slice_mem_SB h1 (Hb h p).1
     convert this using 1
-    funext u
-    simp only [real_test_function_apply]
     rfl
   obtain ⟨hl2, hcs2⟩ := h2
   have hc2 : Continuous fun u : Fin (dd Z) → k => (ψ (u ⬝ᵥ D τ Z p.1) : ℂ) :=

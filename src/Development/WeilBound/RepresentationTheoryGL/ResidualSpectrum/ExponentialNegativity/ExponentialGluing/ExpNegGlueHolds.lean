@@ -82,8 +82,6 @@ theorem main : ExpNegGlue := by
       (fun x y _ _ hx hy => dec_add μ ρ a hx hy) (fun b x _ hx => dec_smul μ ρ a b hx) hFspan
     rintro _ ⟨s, rfl⟩
     convert dec_smul μ ρ a c₀ (dec_translate μ ρ a hcomm s hdec_ctn) using 1
-    funext g
-    simp only [Pi.smul_apply, smul_eq_mul]
   obtain ⟨g₀, hg₀⟩ : ∃ g₀, F g₀ ≠ 0 := by
     by_contra h
     push_neg at h

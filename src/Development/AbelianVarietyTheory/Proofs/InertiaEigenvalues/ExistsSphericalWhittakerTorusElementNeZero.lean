@@ -124,8 +124,6 @@ theorem exists_whittaker_ne_zero_induction_bad_places (m : ℕ) (T : Finset (Hei
     have htD : GlobalTheory.IwaCell.tD (ϖ w) (fun i : Fin (m + 1) => e0 * ((m : ℤ) - ((i : ℕ) : ℤ)) + ν i) = d := by
       simp only [d, diagPow_eq_tD]
       congr 1
-      funext i
-      simp only [ν]
       ring
     have h4 : whit φ₁.1 (y * F d0) ≠ 0 := by
       have h3' : whit φ₁.1 (y * finGL E (m + 1) (locGL E (m + 1) w

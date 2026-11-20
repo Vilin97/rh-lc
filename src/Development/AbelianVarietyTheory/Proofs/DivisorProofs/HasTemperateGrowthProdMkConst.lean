@@ -13,8 +13,6 @@ theorem hasTemperateGrowth_prodMk_const (x' : V') : Function.HasTemperateGrowth 
   have h := (ContinuousLinearMap.inl ℝ V V').hasTemperateGrowth.add
     (Function.HasTemperateGrowth.const ((0 : V), x'))
   convert h using 1
-  funext x
-  simp
 
 theorem antilipschitz_prodMk_const (x' : V') : AntilipschitzWith 1 (fun x : V => (x, x')) :=
   AntilipschitzWith.of_le_mul_dist fun x y => by

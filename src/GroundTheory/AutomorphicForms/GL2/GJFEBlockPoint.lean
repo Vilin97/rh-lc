@@ -325,8 +325,6 @@ theorem blockB_indGL_smul (μ : Measure (GL (Fin m) F)) [μ.IsHaarMeasure] {ψ :
   simp only [blockB, localMatrixFourier_indGL_smul]
   rw [← integral_mul_right_eq_self _ x⁻¹, ← integral_const_mul]
   congr 1
-  funext h
-  simp only [LinearMap.comp_apply]
   rw [Units.val_mul, Matrix.mul_assoc, ← Units.val_mul, inv_mul_cancel, Units.val_one,
     Matrix.mul_one, mul_inv_rev, inv_inv, detPow_mul,
     show ((x * h⁻¹, (1 : H)) : GL (Fin m) F × H) = (x, 1) * (h⁻¹, 1) by simp, map_mul,

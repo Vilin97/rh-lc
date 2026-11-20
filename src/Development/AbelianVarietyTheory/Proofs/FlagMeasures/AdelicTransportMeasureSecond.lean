@@ -141,8 +141,6 @@ theorem exists_transport (I : AutInst) (μf : Measure I.Gf) [μf.IsHaarMeasure] 
     conv_rhs => rw [show μ = ((I.muA μf).map (· * T g)).map T.symm by rw [map_mul_right_eq_self]]
     rw [Measure.map_map hemb.measurable (measurable_mul_const _)]
     congr 1
-    funext x
-    simp
   · have hC' : IsCompact (T.symm ⁻¹' C) := E.isCompact_preimage.2 hC
     have hf : ((fun γ : Γ => (γ : I.GA)) ⁻¹' ((T.symm ⁻¹' C) * (T.symm ⁻¹' C)⁻¹ ∩ I.GFset)).Finite :=
       (hfin _ (hC'.mul hC'.inv)).preimage Subtype.val_injective.injOn

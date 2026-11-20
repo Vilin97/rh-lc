@@ -142,8 +142,6 @@ theorem step_mpr (C : Ctx W) (A : ArcP n) (hA : A.OK) (c' : ZMod n) (hc' : c' �
           have := repVV_smul W T c' (e + 1) _ Λ' b sol _ _ (lA_mem W (Tt - t i)) (hzrep i)
           rwa [← lE_eq] at this)
     convert h1 using 1
-    funext m
-    simp only [lE_mul]
     have : ∀ i, Tt - t i + t i = Tt := fun i => Nat.sub_add_cancel (htle i)
     simp only [this]
     rw [← Finset.mul_sum, ← Finset.mul_sum, ← hF m]

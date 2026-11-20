@@ -57,8 +57,6 @@ theorem UpperTheory.V.CA.pair_map :
         MonoidAlgebra.mapRingHom F.G₀ (f : R →+* R') (MonoidAlgebra.single h 1 * F.oEl v (p.ψ v) g) := by
       rw [map_mul, h1, GFrame.oEl, GFrame.oEl, map_list_prod, List.map_ofFn]
       congr 3
-      funext i
-      simp only [Function.comp_apply, map_sub, h1, MonoidAlgebra.mapRingHom_single]
       rfl
     have := p.Ord v g h
     rw [GDet.tr] at this ⊢

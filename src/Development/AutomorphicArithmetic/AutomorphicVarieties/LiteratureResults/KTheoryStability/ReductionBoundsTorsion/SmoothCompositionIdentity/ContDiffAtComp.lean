@@ -97,8 +97,6 @@ theorem core (B : V →L[ℝ] V →L[ℝ] V →L[ℝ] V) (e : V) (h1 : B e e = 1
     ext v
     simp only [ContinuousAlternatingMap.compContinuousLinearMap_apply]
     congr 1
-    funext i
-    simp only [Function.comp_apply]
     rw [← ContinuousLinearMap.mul_apply, Ring.mul_inverse_cancel _ hu]
     rfl
   have hsm : ContDiffAt ℝ ∞ o e := by

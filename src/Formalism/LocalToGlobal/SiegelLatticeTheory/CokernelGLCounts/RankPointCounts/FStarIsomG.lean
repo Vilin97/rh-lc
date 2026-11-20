@@ -47,16 +47,12 @@ theorem pc_add {ι : Type*} [Fintype ι] [DecidableEq ι] (u : ι → S.V) (x y 
   unfold pc
   rw [← Matrix.mulVec_add]
   congr 1
-  funext k
-  simp
 
 theorem pc_smul {ι : Type*} [Fintype ι] [DecidableEq ι] (u : ι → S.V) (t : E) (x : S.V) :
     pc u (t • x) = t • pc u x := by
   unfold pc
   rw [← Matrix.mulVec_smul]
   congr 1
-  funext k
-  simp
 
 theorem hT_u_lin {ι : Type*} [Fintype ι] [DecidableEq ι] (u : ι → S.V) (c : ι → E) (k : ι) :
     S.hT (u k) (lin u c) = (gram S u u *ᵥ c) k := by

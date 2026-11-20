@@ -27,8 +27,6 @@ lemma norm_fourier_comp_dil (c : V → ℂ) (r : ℝ) (hr : 0 < r) (x0 w : V) :
         (r⁻¹ • v) := by
     rw [← MeasureTheory.integral_add_right_eq_self _ x0]
     congr 1
-    funext v
-    simp only [add_sub_cancel_right, smul_inv_smul₀ hr.ne']
   have h2 := MeasureTheory.Measure.integral_comp_inv_smul_of_nonneg (MeasureTheory.volume : MeasureTheory.Measure V)
     (fun y => Complex.exp (↑(-2 * Real.pi * inner ℝ (r • y + x0) w) * Complex.I) • c y) hr.le
   rw [h1.trans h2]

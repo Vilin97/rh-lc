@@ -80,8 +80,6 @@ theorem splitT_inner {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E
   show ∫ a, ⟪F a, G a⟫_ℂ ∂((vol n z).withDensity fun x => ((Real.exp (-ph x)).toNNReal : ℝ≥0∞)) = _
   rw [integral_withDensity_eq_integral_smul hd]
   congr 1
-  funext x
-  simp only [NNReal.smul_def, Real.coe_toNNReal _ (Real.exp_nonneg _), Complex.real_smul]
   ring
 
 theorem splitT_inner2 {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]

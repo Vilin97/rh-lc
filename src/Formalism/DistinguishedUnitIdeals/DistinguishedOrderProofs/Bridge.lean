@@ -323,8 +323,6 @@ lemma FA_add (y y' : Fin r → PowerSeries O) : FA LL lam ρ (y + y') = FA LL la
   unfold FA
   rw [← Fy_add]
   congr 1
-  funext k
-  simp
 
 omit [IsDomain O] [IsDiscreteValuationRing O] in
 lemma FA_smul (a : PowerSeries O) (y : Fin r → PowerSeries O) :
@@ -332,8 +330,6 @@ lemma FA_smul (a : PowerSeries O) (y : Fin r → PowerSeries O) :
   unfold FA
   rw [← Fy_smul]
   congr 1
-  funext k
-  simp
 
 omit [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRing O LL] in
 lemma FA_cst (hρ : ∀ a : O, ρ (PowerSeries.C a) =

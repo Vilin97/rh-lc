@@ -125,8 +125,6 @@ theorem smooth_map : ∀ (D : D7) (θ : InfFam D) (V : HSp D), IsInfFam θ → �
       congr 1
       funext τ
       congr 4
-      funext i
-      simp only [Function.comp]
       split_ifs <;> simp
     rw [e]
     have hΦ : ContDiff ℝ ∞ (Φ : (∀ τ, M.H τ) → K) := (Φ.contDiff (n := ∞)).restrict_scalars ℝ

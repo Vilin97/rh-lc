@@ -234,8 +234,6 @@ private theorem GlobalTheory.VPrimeAct.act_left : GlobalTheory.FunPr.Hypotheses�
     unfold Model.IsLinBar at hι
     rw [comp_comp hcm]
     convert hι using 2
-    funext u
-    simp only [inv_inv, hPv, hQv, Matrix.transpose_mul, Matrix.transpose_transpose, Matrix.neg_mul, Matrix.mul_assoc]
   obtain ⟨κ, hκ⟩ := GlobalTheory.T.linear_model_compact_conjugate_exists hPr F E σ B n d X W M χX χW om r s r' s' hP v (t.comp σ) P⁻¹ Q⁻¹ ι hW2
   have hs := GlobalTheory.T.linear_model_unitary_intertwines hPr F E σ B n d X W M χX χW om r s r' s' hP v (t.comp σ) P⁻¹ Q⁻¹ ι hW2 κ hκ g hg
   have key : ι φ₁ = GlobalTheory.SplitFlip.omA (chrW χW (t.comp σ))⁻¹ (chrW χX t)⁻¹ (locMat (t.comp σ) P⁻¹ g) 1 (ι φ) := by

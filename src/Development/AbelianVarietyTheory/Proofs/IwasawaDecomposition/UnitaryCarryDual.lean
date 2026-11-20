@@ -102,12 +102,8 @@ private lemma prV_mem_latS (w : HeightOneSpectrum (𝓞 F)) {m : ℕ} (L : Submo
     exact (_root_.Formalism.UG.P.afsplit_prV_inclE w (x i)).symm
   | zero =>
     convert Submodule.zero_mem _ using 1
-    funext i
-    simp
   | add a b _ _ ha hb =>
     convert add_mem ha hb using 1
-    funext i
-    simp
   | smul c a _ ha =>
     have hc : _root_.Formalism.UG.prV w (c : E ⊗[F] FiniteAdeleRing (𝓞 F) F) ∈ _root_.Formalism.BasicNotions.intV (F := F) E w :=
       by unfold _root_.Formalism.BasicNotions.intV; exact _root_.Formalism.UG.P.afsplit_prV_int w _ c.2

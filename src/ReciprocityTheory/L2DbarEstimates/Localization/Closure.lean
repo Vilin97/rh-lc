@@ -156,8 +156,6 @@ private lemma continuous_of_smoothR' {M : Type*} [TopologicalSpace M] {n : ℕ} 
     simp [e.left_inv hy]
   have h := Complex.continuous_re.comp hc
   convert h using 1
-  funext x
-  simp
 
 private lemma ofReal_norm_ipV_sq_le_mul_nV {M : Type*} [MeasurableSpace M] {n : ℕ} (z : M → V n) (φ : M → ℝ)
     (hφ : Measurable φ) (v h : M → V n) (hv : AEStronglyMeasurable v (vol n z))
@@ -254,8 +252,6 @@ theorem closureIneq (n : ℕ) (M : Type*) [TopologicalSpace M] [T2Space M]
     unfold ipV
     rw [← integral_add hig hifg]
     congr 1
-    funext x
-    simp only [inner_sub_right]
     ring
   have hwT : wint n z (tstar n z (w1 ph ψ) (w2 ph ψ) g) (w1 ph ψ) ≤
       (1 + ENNReal.ofReal δ) * wint n z w (w1 ph ψ) + 2 * ENNReal.ofReal δ := by

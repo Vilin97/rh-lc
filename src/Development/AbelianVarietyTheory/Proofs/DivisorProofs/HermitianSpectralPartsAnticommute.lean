@@ -32,8 +32,6 @@ theorem spectral_parts_of_diag {n : Type} [Fintype n] [DecidableEq n] (Y J U : M
     simp only [hφ]
     rw [← Matrix.smul_mul, ← Matrix.mul_smul, ← diagonal_smul]
     congr 3
-    funext j
-    simp
   have hherm : ∀ f : ℝ → ℝ, (φ f).IsHermitian := by
     intro f
     simp only [hφ]

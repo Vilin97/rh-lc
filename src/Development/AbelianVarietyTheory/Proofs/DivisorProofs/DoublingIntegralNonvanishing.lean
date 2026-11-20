@@ -392,8 +392,6 @@ theorem integral_eq_zero_of_eigen {κ : Type} [Fintype κ] [MeasurableSpace (κ 
       a * starRingEnd ℂ b * ∫ x, Φ x * starRingEnd ℂ (Φ' x) ∂m := by
     rw [ha, hb, ← integral_const_mul]
     congr 1
-    funext y
-    simp only [Pi.smul_apply, smul_eq_mul, map_mul]
     ring
   have h5 : (a * starRingEnd ℂ b - 1) * ∫ x, Φ x * starRingEnd ℂ (Φ' x) ∂m = 0 := by linear_combination h3 - h4
   exact (mul_eq_zero.1 h5).resolve_left (sub_ne_zero.2 hab)

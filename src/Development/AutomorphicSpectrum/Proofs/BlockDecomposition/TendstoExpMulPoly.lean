@@ -192,8 +192,6 @@ theorem locNonPosGlue_holds : LocNonPosGlue := by
         (fun x y _ _ hx hy => dec_add μ _ a hx hy) (fun b x _ hx => dec_smul μ _ a b hx) hFspan
       rintro _ ⟨s, rfl⟩
       convert dec_smul μ _ a c₀ (dec_translate μ _ a hcomm s hdec_ctn) using 1
-      funext g
-      simp only [Pi.smul_apply, smul_eq_mul]
     exact re_lt_of_dec μ _ a hdecF hF0 hFeq
   have hle : c.re ≤ An.rho E N r := le_of_forall_pos_le_add fun ε hε => (hlt ε hε).le
   have hd : (0 : ℝ) < Module.finrank ℚ E := Nat.cast_pos.2 Module.finrank_pos

@@ -48,8 +48,6 @@ theorem conjK_ne : ∃ x, conjK D x ≠ x := by
 theorem okp_eq : OKp D lam = closure (Set.range fun a : 𝓞 D.host.K => (tauKp D lam (a : D.host.K), tauKp D lam (conjK D (a : D.host.K)))) := by
   unfold OKp
   congr 2
-  funext a
-  simp only [tauKp_apply, conjK_coe]
   first
   | rfl
   | (unfold tauK tauKc; rfl)

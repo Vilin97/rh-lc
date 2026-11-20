@@ -84,8 +84,6 @@ theorem sBd_sh (l : ℕ) (H : ZMod n → ℕ) (i : ZMod n) : sBd l n (sh a H) i 
   unfold sBd
   rw [Hmax_sh]
   congr 1
-  funext k
-  simp only [sh]
   rw [show i + ((k + 1 : ℕ) : ZMod n) - a = i - a + ((k + 1 : ℕ) : ZMod n) by ring]
 
 theorem rF_sh (l : ℕ) (H : ZMod n → ℕ) (i : ZMod n) : rF l n (sh a H) i = rF l n H (i - a) := by
@@ -97,8 +95,6 @@ theorem rrPar_sh (l : ℕ) (H₁ H₂ : ZMod n → ℕ) (cuts : Finset (ZMod n))
   unfold rrPar shC
   rw [Finset.sup_image]
   congr 1
-  funext c
-  simp only [Function.comp_apply, rF_sh, add_sub_cancel_right]
 
 theorem arc_parameters_shift_invariant (l j g h : ℕ) (H₁ H₂ : ZMod n → ℕ) (cuts : Finset (ZMod n)) (arcLen : ZMod n → ℕ) :
     initialExponentBound l n j g h (sh a H₁) (sh a H₂) (shC a cuts) (sh a arcLen) =

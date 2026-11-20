@@ -54,8 +54,6 @@ theorem exists_upper_chg_eq_one {M : Matrix (Fin m) (Fin m) ℂ} (hM : M.PosDef)
       _ = 1 := by
         rw [← hΔ, hdiag, diagonal_mul_diagonal, diagonal_mul_diagonal, ← diagonal_one]
         congr 1
-        funext i
-        simp only [Pi.star_apply, hr, Complex.star_def, Complex.conj_ofReal]
         rw [hdre i]
         have h2 : (d i).re ^ (-(1 / 2 : ℝ)) * (d i).re ^ (-(1 / 2 : ℝ)) * (d i).re = 1 := by
           rw [← Real.rpow_add (hdre_pos i), show -(1 / 2 : ℝ) + -(1 / 2) = -1 by norm_num,

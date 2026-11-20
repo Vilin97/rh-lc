@@ -81,8 +81,6 @@ theorem sum_sheets {X : Type*} [MeasurableSpace X] (μ : Measure X) {np : ℕ}
     intro m
     rw [← integral_norm_eq_lintegral_enorm (hFint m).aestronglyMeasurable, ← integral_indicator (hBm m)]
     congr 1
-    funext t
-    simp only [F, Set.indicator_apply]
     split_ifs <;> simp [Real.norm_eq_abs]
   have hae : ∀ᵐ t ∂μ, ∀ k, t ∈ FF k → {m | pc m = k ∧ t ∈ B m}.encard = d k := ae_all_iff.mpr hc
   have hmeas : ∀ k, AEMeasurable (fun t => (d k : ℝ≥0∞) * (FF k).indicator (fun x => ‖f k x‖ₑ) t) μ := by
@@ -98,8 +96,6 @@ theorem sum_sheets {X : Type*} [MeasurableSpace X] (μ : Measure X) {np : ℕ}
       simp only [nsmul_eq_mul] at h
       rw [← h.tsum_eq]
       congr 1
-      funext m
-      simp only [F, Set.indicator_apply]
       split_ifs <;> simp
     rw [lintegral_congr_ae hae1, lintegral_finset_sum' _ (fun k _ => hmeas k)]
     apply Finset.sum_congr rfl

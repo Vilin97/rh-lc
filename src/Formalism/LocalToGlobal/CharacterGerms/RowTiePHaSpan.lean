@@ -51,8 +51,6 @@ theorem rowShift_map {k k' : Type} [Field k] [Field k'] (φ : k →+* k') (σ0 :
     rowShift r n k' σ0 i i' (φ t) (map φ p) = map φ (rowShift r n k σ0 i i' t p) := by
   simp only [rowShift, aeval_def, algebraMap_eq, map_eval₂]
   congr 1
-  funext ℓ
-  simp only [Function.comp_apply]
   split_ifs <;> simp
 
 end Maps

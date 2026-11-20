@@ -134,8 +134,6 @@ theorem adjoint_functional_holds : AdjFun := by
   have hsg : ContDiffOn ℝ ∞ (fun y => star (g y)) (OmX m) := by
     have h1 := (starL' ℝ : ℂ ≃L[ℝ] ℂ).contDiff.comp_contDiffOn hg1
     convert h1 using 1
-    funext y
-    simp
   have hhc : ContDiffOn ℝ ∞ h (OmX m) := hsg.mul (uW_contDiffOn l)
   have hfd : ∀ x ∈ OmX m, DifferentiableAt ℝ f x := fun x hx =>
     (hf1.differentiableOn (by simp)).differentiableAt (hΩo.mem_nhds hx)

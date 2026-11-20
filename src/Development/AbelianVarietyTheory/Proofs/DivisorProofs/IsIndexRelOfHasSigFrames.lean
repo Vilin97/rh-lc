@@ -49,8 +49,6 @@ theorem exists_hasIndex {n : ℕ} {w x : Fin n → U} (hw : LinearIndependent C 
   have e : algebraMap O C g.det = a.det := by rw [RingHom.map_det, comb_inj hw hx hg]; rfl
   refine ⟨g.det, e, w, g, hw, rfl, ?_, fun h => ha (by rw [← e, h, map_zero]), rfl⟩
   congr 2
-  funext i
-  simp only [hg i, Matrix.map_apply, algebraMap_smul]
 
 theorem exists_block_basis (hv : v.Integers O) {p q : ℕ} {L : Submodule O U} {u : Fin p → U} {u' : Fin q → U}
     {I : Ideal O} (hI : HasIndex C (p + q) L (Submodule.span O (Set.range u) ⊔ Submodule.span O (Set.range u')) I) :

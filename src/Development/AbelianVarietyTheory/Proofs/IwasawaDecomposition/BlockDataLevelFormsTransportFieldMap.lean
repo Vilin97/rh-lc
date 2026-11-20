@@ -142,8 +142,6 @@ theorem map_baseChange (φ : K →+* K') {R R' : Type} [CommRing R] [CommRing R'
         (N.map ((Matrix.mulVecLin L).restrictScalars R) : Set (Fin d → K))) := by
   rw [Submodule.map_span, Submodule.map_coe, Set.image_image, Set.image_image]
   congr 2
-  funext x
-  simp only [LinearMap.restrictScalars_apply, Matrix.mulVecLin_apply]
   rw [Matrix.mulVec_mulVec, hL, ← Matrix.mulVec_mulVec, map_mulVec']
 
 theorem span_range (φ : K →+* K') {n n' : ℕ} (C : Matrix (Fin n') (Fin n) K') :

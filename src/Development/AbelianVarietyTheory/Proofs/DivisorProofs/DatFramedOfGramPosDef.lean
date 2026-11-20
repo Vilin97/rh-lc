@@ -20,8 +20,6 @@ theorem datFramed_of_gram_posDef {K : Type} [Field K] [NumberField K] [StarRing 
       Formalism.HermitianLatticesTheory.normAt (S.hB h) (fun v => frameOf (GlobalTheory.PeriodClassSum.gramAt S h v)) v ((S.hB h).equivFun.symm x) := by
     unfold Formalism.HermitianLatticesTheory.normAt Formalism.HermitianLatticesTheory.fcoord
     congr 2
-    funext i
-    simp only [Formalism.HermitianLatticesTheory.vecAt, Pi.basisFun_repr]
     rw [← Basis.equivFun_apply, LinearEquiv.apply_symm_apply]
   rw [h2]
   exact h1

@@ -32,8 +32,6 @@ theorem exists_enlarge {α : Type} {Q : α → Type} [∀ v, AddCommGroup (Q v)]
   rw [PiTensorProduct.lift.tprod]
   change PiTensorProduct.tprod ℂ (e fun v => y v) = _
   congr 1
-  funext v
-  simp only [e]
   split_ifs with hv
   exacts [rfl, (hy v hv).symm]
 

@@ -375,8 +375,6 @@ theorem good_gen (hS4 : S4) (hβ : ∀ y, (∀ x, β x y = 0) → y = 0)
       rw [← ContinuousLinearMap.integral_comp_comm _
         (integrable_ch μ β (hF η w hη hηO hw).continuous (hFc η w hηc) y)]
       congr 1
-      funext x
-      simp only [map_smul, hΨ, orb_eq, opI_mul]
     rw [e]
     exact hder
 

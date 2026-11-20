@@ -188,8 +188,6 @@ theorem _root_.GlobalTheory.landau_exp_summable : ∀ (ι : Type) (a l : ι → 
     have hrn : r n * (ρ : ℝ) ^ n = ∑' p, T ρ (p, n) := by
       simp only [r, ← tsum_mul_right]
       congr 1
-      funext p
-      simp only [T]
       rw [mul_pow, mul_pow, one_pow]
       ring
     rw [hcn, hrn]

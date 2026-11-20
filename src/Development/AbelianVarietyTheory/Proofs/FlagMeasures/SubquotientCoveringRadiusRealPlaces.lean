@@ -60,8 +60,6 @@ private theorem map_mulVec_mem_span_image_of_mem_span {n : ℕ} (σ : ℂ →+* 
   | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
   | zero =>
     convert Submodule.zero_mem _ using 1
-    funext i
-    simp
   | add y z _ _ hy hz =>
     convert Submodule.add_mem _ hy hz using 1
     funext i

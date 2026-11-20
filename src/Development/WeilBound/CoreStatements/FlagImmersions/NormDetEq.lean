@@ -138,8 +138,6 @@ theorem matStep : MatStep := by
   have hSH : Sᴴ = S := by
     rw [hSd, diagonal_conjTranspose]
     congr 1
-    funext a
-    simp
   rw [hPQ] at h
   obtain ⟨b1, b2, b3⟩ := blocks hCu hS h
   have hqN : q ≤ p + q := by omega

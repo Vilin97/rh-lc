@@ -278,8 +278,6 @@ theorem unfold_eis : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberF
   refine ⟨?_, hint⟩
   rw [heq, GlobalTheory.ConeSmallCT.Bint]
   congr 1
-  funext g
-  simp only [hθ]
   rw [tsum_mul_left, (hasSum_eis hiw hES hTr hs g).tsum_eq]
 
 end GlobalTheory.ConeSmallUnfEis

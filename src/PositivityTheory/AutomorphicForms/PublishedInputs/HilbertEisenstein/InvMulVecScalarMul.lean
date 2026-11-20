@@ -18,8 +18,6 @@ theorem vecMul_scalar_mul (z : IdeleGroup F) (g : GA F 2) (ξ : Fin 2 → F) :
       (fun i => z • algebraMap F (Ad F) (ξ i)) ᵥ* (g : Matrix (Fin 2) (Fin 2) (Ad F)) := by
   rw [Units.val_mul, ← Matrix.vecMul_vecMul, Matrix.GeneralLinearGroup.coe_scalar]
   congr 1
-  funext i
-  simp only [Matrix.scalar_apply, Matrix.vecMul_diagonal, Units.smul_def, rowA]
   exact mul_comm _ _
 
 theorem inv_mulVec_scalar_mul (z : IdeleGroup F) (g : GA F 2) (ξ : Fin 2 → F) :
@@ -27,8 +25,6 @@ theorem inv_mulVec_scalar_mul (z : IdeleGroup F) (g : GA F 2) (ξ : Fin 2 → F)
       ((g⁻¹ : GA F 2) : Matrix (Fin 2) (Fin 2) (Ad F)) *ᵥ (fun i => z⁻¹ • algebraMap F (Ad F) (ξ i)) := by
   rw [mul_inv_rev, ← map_inv, Units.val_mul, ← Matrix.mulVec_mulVec, Matrix.GeneralLinearGroup.coe_scalar]
   congr 1
-  funext i
-  simp only [Matrix.scalar_apply, Matrix.mulVec_diagonal, Units.smul_def, rowA]
   rfl
 
 theorem thetaS_bound {ω : HChar F} {c : HeightOneSpectrum (𝓞 F) → ℕ} (H : Hyp ω c) {K : Set (GA F 2)}

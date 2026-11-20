@@ -49,8 +49,6 @@ theorem exists_card_subgroups_containing_nsmul_le (A : Type) [AddCommGroup A] [M
       intro i
       rw [← map_nsmul, ← map_add]
       congr 1
-      funext j
-      simp only [Pi.add_apply, Pi.smul_apply, ZMod.val_intCast, nsmul_eq_mul]
       exact (Int.emod_add_mul_ediv _ _).symm
     have hsH : ∀ i, π (s i) ∈ H := by
       intro i

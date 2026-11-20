@@ -124,8 +124,6 @@ theorem UnipotentHorizontal.proof (h : HermitianForm F E W) (v : Basis ι E W)
   have huY : ∀ w, u w = Y w + t0 w • vecAt v x₀ w := fun w => by rw [hY, sub_add_cancel]
   rw [Set.mem_neg]
   convert hyK using 1
-  funext w
-  simp only [Pi.neg_apply, Pi.sub_apply, hprod w, hgW w, huY w, mulVec_add, mulVec_smul, hs w,
     (hδw w).1, hdW w, add_smul]
   abel
 

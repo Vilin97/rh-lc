@@ -104,8 +104,6 @@ theorem eulerL_locPoly_ne_zero_far_right : ∀ (K : Type) [Field K] [NumberField
           (1 - b * ((Ideal.absNorm w.1.asIdeal : ℕ) : ℂ) ^ (-s))⁻¹).prod) (Complex.exp (∑' w, g w)) := by
       have h := hsum.hasSum.cexp
       convert h using 1
-      funext w
-      simp only [Function.comp_apply, hg]
       exact prod_inv_one_sub_eq_exp _ _ (fun b hb => (key w.1 w.2 b hb).trans (small w.1))
     have hm : (fun w => ((B w).map fun b => (b : ℂ))) = fun w => Multiset.map (fun b : ℂˣ => (b : ℂ)) (B w) :=
       funext fun w => by simp only [Multiset.bind_def, Multiset.pure_def, Multiset.bind_singleton, Multiset.map_id']

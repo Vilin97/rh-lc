@@ -32,8 +32,6 @@ theorem tens_of_bc {R RC C N : Type} [CommRing R] [CommRing RC] [Field C] [Algeb
     induction x using TensorProduct.induction_on with
     | zero =>
       convert M.zero_mem using 1
-      funext y
-      simp
     | tmul r a =>
       have e1 : r ⊗ₜ[R] a = r • ((1 : RC) ⊗ₜ[R] a) := by
         rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
@@ -67,12 +65,8 @@ theorem tens_of_bc {R RC C N : Type} [CommRing R] [CommRing RC] [Field C] [Algeb
     simp
   | zero =>
     convert (GR.tens M M).zero_mem using 1
-    funext z
-    simp
   | add g₁ g₂ _ _ h₁ h₂ =>
     convert (GR.tens M M).add_mem h₁ h₂ using 1
-    funext z
-    simp
   | smul r g _ h =>
     convert (GR.tens M M).smul_mem r h using 1
     funext z

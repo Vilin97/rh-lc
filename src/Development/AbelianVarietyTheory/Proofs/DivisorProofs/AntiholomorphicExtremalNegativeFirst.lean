@@ -287,8 +287,6 @@ theorem GlobalTheory.HolRead.conj_extVec_isHolFor : ∀ (D : D7) (θ : InfFam D)
         (diagonal fun a => Complex.exp ((t ((flipPerm q).symm a) : ℂ) * Complex.I)).submatrix (flipPerm q) (flipPerm q) := by
       rw [submatrix_diagonal_equiv]
       congr 1
-      funext c
-      simp
     beta_reduce
     rw [h1, perm_conj _ (M.fr_unit ρ), hk, map_mul, ← Complex.exp_conj, map_mul, Complex.conj_ofReal, Complex.conj_I,
       ← Equiv.sum_comp (flipPerm q)]

@@ -94,8 +94,6 @@ theorem Mplus_map {T T' : E} {γ : S.V ≃ₗ[E] S.V} (hγ : γ ∈ Formalism.He
   simp only [Mplus, gmap_span, Set.image_union, Set.image_singleton, XLam_mapL hγ, coe_gmap,
     ← Set.range_comp]
   congr 3
-  funext b
-  simp only [Function.comp_apply, map_smul, map_sub, frame_mapL' hγ, frameAct_map]
 
 theorem IsGeneric_map {T T' : E} {γ : S.V ≃ₗ[E] S.V} (hγ : γ ∈ Formalism.HermitianLatticesTheory.isom S.hT) {Λ : Submodule (𝓞 E) S.V}
     {g : ℕ} {F : LFlag S r T} {F' : LFlag S r T'} (h : IsGeneric Λ g F F') :

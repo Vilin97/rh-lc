@@ -23,8 +23,6 @@ theorem A.sum_mem {U₁ : Submodule ℂ (Sm E r)} {U₂ : Submodule ℂ (Sm E s)
     (f := fun i (m : GA E r × GA E s) => (ψ₁ i).1 m.1 * (ψ₂ i).1 m.2)
     fun i _ => Submodule.subset_span ⟨_, h₁ i, _, h₂ i, rfl⟩
   convert this using 1
-  funext m
-  simp
 
 theorem exists_extOp {a : ℕ} (f : Sm E a →ₗ[ℂ] Sm E a) :
     ∃ T : Module.End ℂ (GA E a → ℂ), ∀ ψ : Sm E a, T ψ.1 = (f ψ).1 := by

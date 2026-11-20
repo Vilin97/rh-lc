@@ -85,8 +85,6 @@ theorem degree_genericFibre_ratSec : ∀ (k : Type) [CommRing k] (B Y : Scheme.{
     rw [hcons] at hcyc
     rw [hcyc]
     congr 1
-    funext w
-    simp only [hF]
     rw [hmult w]
     by_cases hm : (divOfRatSec (hL 0) hr).mult (j w) = 0
     · simp [hm]

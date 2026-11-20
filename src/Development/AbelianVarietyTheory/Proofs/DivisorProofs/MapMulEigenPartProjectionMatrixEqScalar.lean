@@ -65,8 +65,6 @@ theorem map_mul_projMat_eq_smul (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type
     simp only [PS, projMat, map_mul, map_list_prod, List.map_ofFn, hsc, hW]
     congr 2
     congr 1
-    funext j
-    simp only [Function.comp_apply]
     split_ifs
     · rw [map_one, map_one]
     · exact hα j
@@ -81,8 +79,6 @@ theorem map_mul_projMat_eq_smul (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type
     rw [← h0, lieMat, map_mul, map_mul, map_list_prod, map_list_prod, List.map_ofFn, List.map_ofFn, hW]
     congr 2
     congr 1
-    funext j
-    simp only [Function.comp_apply, hN]
   have hkey : N i c * PS = 0 := by
     have hf : ∀ j, (if j = i then N i c else α j) ∈ Ideal.span (Set.range (N j)) := by
       intro j; split_ifs with hj

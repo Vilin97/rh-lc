@@ -13,6 +13,4 @@ theorem UpperTheory.measurable_matrix_inv :
     (hc.matrix_adjugate.matrix_elem i j).measurable
   have h := hdet.inv.mul hadj
   convert h using 1
-  funext x
-  simp only [Matrix.of_symm_apply, Matrix.inv_def, Ring.inverse_eq_inv, Matrix.smul_apply,
     smul_eq_mul, Pi.mul_apply, Pi.inv_apply]

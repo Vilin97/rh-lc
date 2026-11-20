@@ -110,8 +110,6 @@ theorem indL_theta_fock_latVac : ∀ (D : D7) (S T : HSp D) (C : Ctx S T) (B : C
   have hfix_a : ∀ x ∈ L, heisO C.ψ S T x (Tm (GlobalTheory.LiftLevel.indL L)) = Tm (GlobalTheory.LiftLevel.indL L) := fun x hx => by
     rw [← hTm.trans _ hSB x (hL x hx)]
     congr 1
-    funext t
-    simp only [GlobalTheory.LiftLevel.indL, L.add_mem_cancel_right hx]
   have hfix_e : ∀ y, IsHalf e y → (∀ t ∈ L, C.ψ (symplO S T t y) = 1) →
       heisO C.ψ S T y (Tm (GlobalTheory.LiftLevel.indL L)) = Tm (GlobalTheory.LiftLevel.indL L) := fun y hy ht => by
     rw [← hTm.modul _ hSB y (by rw [hcc]; exact hy)]

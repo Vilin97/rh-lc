@@ -289,12 +289,8 @@ theorem generated_diag (n : ℕ) : KH.GeneratedV S V (fun _ => (n : ℤ)) := by
     fun _ => ?_, ?_⟩
   · refine mk_mem_locPart _ _ 0 (isMultiHomog_one _ fun _ => rfl) ?_
     convert hpq using 2
-    funext k
-    simp
   · refine mk_mem_locPart _ _ (fun _ => n) hph ?_
     convert h1q using 2
-    funext k
-    simp
   · have e : Ideal.Quotient.mk V p = (⟨p, hpm⟩ : KH.cellMon S I.1) • (1 : MRingOver S ι ⧸ V) :=
       ((Algebra.smul_def p (1 : MRingOver S ι ⧸ V)).trans (mul_one _)).symm
     refine (Fin.sum_univ_one _).trans ?_

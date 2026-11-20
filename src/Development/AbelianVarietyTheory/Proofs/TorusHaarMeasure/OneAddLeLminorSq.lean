@@ -229,8 +229,6 @@ theorem gram_iff (X : Data E r) (τ : E →+* ℂ) (M : Matrix (Fin r) (Fin r) �
       ReciprocityTheory.MultiplicativeHeights.signMat X.p0 r := by
     rw [Matrix.diagonal_transpose, ReciprocityTheory.MultiplicativeHeights.signMat]
     congr 1
-    funext a
-    simp only [sgn, ReciprocityTheory.MultiplicativeHeights.sgn]
     split_ifs <;> simp
   rw [← e1, ← e2, Matrix.transpose_inj]
 

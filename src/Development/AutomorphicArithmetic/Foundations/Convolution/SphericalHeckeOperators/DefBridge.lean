@@ -70,8 +70,6 @@ theorem UpperTheory.ConvolutionTheory.H.defBridge :
     have : PositivityTheory.Rg.Tf.Loc.diagPow ϖ a = diagGL F n (fun i => ϖ ^ a i) := Units.ext rfl
     rw [this, torusPow, ← map_mul]
     congr 1
-    funext i
-    simp only [Pi.mul_apply, hu, ← mul_zpow]
     simp
   unfold PositivityTheory.Rg.Tf.Loc.iwahoriFn uFn dco
   congr 1

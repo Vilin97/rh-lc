@@ -183,8 +183,6 @@ lemma hs_le_colsV {ε : Fin n → Bool} (s : Bool) {g : Matrix (Fin n) (Fin n) �
   have hJσ : Jm ε = Matrix.diagonal fun a => ((σ a : ℝ) : ℂ) := by
     unfold Jm
     congr 1
-    funext a
-    simp only [σ]
     split_ifs <;> simp
   have hterm : ∀ i j, g i j * ((σ j : ℝ) : ℂ) * star (g i j) = ((σ j * ‖g i j‖ ^ 2 : ℝ) : ℂ) := by
     intro i j

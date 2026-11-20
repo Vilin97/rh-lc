@@ -471,8 +471,6 @@ theorem hom_lower {N N' : ℕ} (L : Submodule (𝓞 D.host.E) (Fin N → D.host.
     exact IsIntegral.sum _ fun k _ => (hA i k).mul (hLi x hx k)
   have h1 := hL'o _ hz
   convert h1 using 1
-  funext i
-  simp only [Matrix.mulVec, dotProduct, Matrix.smul_apply, smul_eq_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   push_cast
   ring

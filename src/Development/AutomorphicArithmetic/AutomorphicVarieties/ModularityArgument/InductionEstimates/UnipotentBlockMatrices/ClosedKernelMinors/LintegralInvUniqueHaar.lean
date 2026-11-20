@@ -52,8 +52,6 @@ private theorem nu_pres {K : Type} [Field K] [NumberField K] {n : ℕ} (D : Type
     rw [Measure.map_map (measurable_const_mul k) hm]
     conv_rhs => rw [← (D.inv _ hk').map_eq, Measure.map_map hm (measurable_const_mul _)]
     congr 1
-    funext x
-    simp
   refine ⟨hm, Measure.ext_of_lintegral _ fun F hF => ?_⟩
   rw [lintegral_inv_unique_haar D.U D.ν _ D.supp hs D.inv hi F hF, lintegral_inv_unique_haar D.U D.ν _ D.supp D.supp D.inv D.inv F hF]
 

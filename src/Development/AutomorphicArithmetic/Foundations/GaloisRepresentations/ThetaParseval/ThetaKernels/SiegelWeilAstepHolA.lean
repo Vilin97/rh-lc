@@ -19,8 +19,6 @@ theorem T_sub_k (d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ) (Φ Φ' 
   simp only [_root_.PositivityTheory.SiegelWeilFormula.SD_k.T, Pi.sub_apply]
   rw [← map_sub]
   congr 1
-  funext x
-  simp only [Darboux.rho, schr, Pi.sub_apply, mul_sub]
 theorem vac_tens_k {d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ} (R : _root_.PositivityTheory.SiegelWeilFormula.RD_k d) (w : InfinitePlace F) (f : Mx F E d.m d.n → ℂ) (hf : f ∈ R.vac) :
     ∃ Ψ ∈ R.away w, f = R.tens w (fP 1) Ψ := by
   induction hf using Submodule.span_induction with

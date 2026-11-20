@@ -74,8 +74,6 @@ theorem GlobalTheory.WeilCont.schA_periodic_finite_cosets : ∀ (F : Type) [Fiel
         have hL : w - y i0 ∈ L := (hmk w (y i0)).1 (hi0.symm.trans (hy i0).symm)
         rw [← hper _ hL (GlobalTheory.WeilCont.adeleJoin F x (y i0))]
         congr 1
-        funext i
-        simp only [GlobalTheory.WeilCont.adeleJoin, Pi.add_apply, Pi.sub_apply, Pi.zero_apply, map_zero]
         exact Prod.ext (add_zero _).symm (add_sub_cancel _ _).symm
       · intro j _ hj
         rw [if_neg (fun h => hj (he (h.symm.trans hi0.symm))), mul_zero]

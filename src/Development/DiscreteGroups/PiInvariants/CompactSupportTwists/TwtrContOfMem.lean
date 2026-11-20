@@ -53,8 +53,6 @@ theorem twTrEx_holds : TwTrEx := by
     refine ⟨ψ', h3, fun x => ?_⟩
     rw [h4 x]
     congr 1
-    funext y
-    simp only [mul_one, h2]
   choose Lf hLfW hLf using hK
   have hLfV : ∀ ψ, Lf ψ ∈ π.V := fun ψ => hWV (hLfW ψ)
   have hext : ∀ a b : π.V, (∀ x, a.1.1 x = b.1.1 x) → a = b := fun a b h =>

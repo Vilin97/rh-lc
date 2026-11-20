@@ -173,8 +173,6 @@ theorem nonOpen_vanish : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Num
     hf.aestronglyMeasurable hfin' hvan
   refine Eq.trans ?_ key
   congr 1
-  funext x
-  simp only [T]
   rw [tsum_mul_right, mul_assoc]
 
 end GlobalTheory.DoublingNonOpen

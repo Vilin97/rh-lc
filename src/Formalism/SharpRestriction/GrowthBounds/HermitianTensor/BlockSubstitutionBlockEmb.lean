@@ -118,8 +118,6 @@ theorem qa_eval_map_block (b : Bool)
     (MvPolynomial.eval₂ (RingHom.id _) (idPoint (MvPolynomial (Fin r × Fin r) K) (r + 1 + 1) (r + 1 + 1)) h)
   rw [MvPolynomial.eval₂_comp_left, RingHom.comp_id]
   congr 1
-  funext i
-  simp only [idPoint, Function.comp_apply]
   split_ifs <;> simp
 
 end S2

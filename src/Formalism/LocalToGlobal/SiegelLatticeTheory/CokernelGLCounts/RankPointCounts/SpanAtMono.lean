@@ -74,8 +74,6 @@ theorem psiV_add (p q : (VS D).V) : psiV X v (p + q) = psiV X v p + psiV X v q :
   simp only [psiV, rv]
   rw [← Matrix.mulVec_add]
   congr 1
-  funext i
-  simp only [HidaSetting.crd, Pi.add_apply]
   rw [← map_add]
   congr 1
   simp [crdOf, map_add]

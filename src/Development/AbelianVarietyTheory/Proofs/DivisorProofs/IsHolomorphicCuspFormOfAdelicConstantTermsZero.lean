@@ -235,8 +235,6 @@ theorem isHolCusp_of_zCusp : ∀ (D : D7) (θ : InfFam D) (V : HSp D) (S : D.wha
         (X k).flow ξ (fun τ => (p τ : ℂ)) ((X k).flow ξ (fun τ => (s τ : ℂ)) x) := by
       rw [flow_flow (X k) hξ.2.1]
       congr 1
-      funext τ
-      simp
     simp only [hf]
     rw [h1]
     exact sec_periodic (X k) (la k) (P k) (hP k).1 hξ.1 hξ.2.1 hp _ (flow_real_mem_dom (X k) hξ.2.1 s x hx)

@@ -40,8 +40,6 @@ theorem altSum_eq_of_eventually (p : MvPolynomial K ℚ) {n : ℕ} (δ : Fin n �
     simp only [q, map_sum, map_mul, eval_C, eval_bind₁_shift]
     refine Finset.sum_congr rfl fun T _ => ?_
     congr 3
-    funext k
-    simp
   obtain ⟨m₀, hm₀⟩ := eventually_atTop.mp h
   let s : K → Set ℚ := fun k => (fun t : ℤ => (t : ℚ)) '' Set.Ici (m₀ k)
   have hs : ∀ k, (s k).Infinite := fun k =>

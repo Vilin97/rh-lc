@@ -248,8 +248,6 @@ theorem hw_prim [IsLocalRing O] (hinj : Function.Injective (algebraMap O K)) (w 
       = eval₂ (RingHom.id O) (fun v : Fin k × Fin k => if v.1 = v.2 then (1 : O) else 0) z from rfl,
       eval₂_comp_left, RingHom.comp_id]
     congr 1
-    funext v
-    simp only [Function.comp_apply]
     split_ifs <;> simp
   rw [h2, ← map_mul] at h1
   have h3 : (1 : O) = w * eval (fun v : Fin k × Fin k => if v.1 = v.2 then (1 : O) else 0) z :=

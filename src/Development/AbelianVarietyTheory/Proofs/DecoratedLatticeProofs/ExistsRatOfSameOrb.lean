@@ -63,7 +63,5 @@ theorem exists_rat_of_sameOrb : ∀ {E k : Type} [Field E] [NumberField E] [Star
     rw [← hr, phi_mulVec e e' he] at h1 a2
     rw [eq_comm, Submodule.Quotient.eq]
     convert add_mem h1 a2 using 1
-    funext a
-    simp
 
 end GlobalTheory.QPl.RatOrb

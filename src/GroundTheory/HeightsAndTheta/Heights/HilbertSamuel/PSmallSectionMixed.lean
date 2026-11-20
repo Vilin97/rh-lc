@@ -302,8 +302,6 @@ theorem isNefBigDatum_zcomb (hD : GroundTheory.Heights₂.Heights.Inter.DegreeGe
     have hnef := nefOnGenericDeg_of_semipos NefOnGenericOfSemipos.proof hD hP0 hs'
     have h := hB K ι (mCoordIdeal y) D _ hP hnef 1
     convert h using 2
-    funext k
-    simp only [HermLine.zcomb, Pi.add_apply, Pi.smul_apply, smul_eq_mul, Pi.one_apply, hHa, Nat.cast_one,
       one_mul]
     rw [Nat.cast_sub hp]
     ring

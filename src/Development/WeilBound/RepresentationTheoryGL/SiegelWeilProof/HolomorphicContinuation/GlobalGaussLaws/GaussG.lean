@@ -22,8 +22,6 @@ theorem exists_sqrt {Y : Matrix (Fin n) (Fin n) ℂ} (hY : Y.PosDef) : ∃ S : M
   have hd : d * dᴴ = diagonal (RCLike.ofReal ∘ hH.eigenvalues) := by
     rw [Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal]
     congr 1
-    funext i
-    simp only [Function.comp_apply, Pi.star_apply, Complex.star_def, Complex.conj_ofReal]
     rw [← Complex.ofReal_mul, Real.mul_self_sqrt (hY.eigenvalues_pos i).le]
     rfl
   have hS : U * d * (U * d)ᴴ = Y := by

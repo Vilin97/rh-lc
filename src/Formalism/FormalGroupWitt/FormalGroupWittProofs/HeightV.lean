@@ -262,8 +262,6 @@ theorem main (hC : Formalism.FG.FunEqCongrV.{0, 0, 0}) : Formalism.FG.ShiftHeigh
     have := congrFun hkey i
     rw [this]
     congr 1
-    funext x
-    simp only [hEK]
     split_ifs
     · rw [map_atXv, he]
     · rw [map_atYv, he]

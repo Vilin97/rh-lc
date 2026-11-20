@@ -103,8 +103,6 @@ theorem basis_push [GrpObj A] [GrpObj Z] (hφ : IsGrpPullback A Z x φ) {r k : �
       pushHom hφ T (Out.linComb (fun i => u ≫ a i) e) := fun e => by
     simp only [Out.linComb, map_list_prod, List.map_ofFn]
     congr 2
-    funext i
-    simp only [Function.comp, map_pow]
     rw [comp_eq_pushPt hφ.1.w (h i) u t]
     rfl
   simp only [key]

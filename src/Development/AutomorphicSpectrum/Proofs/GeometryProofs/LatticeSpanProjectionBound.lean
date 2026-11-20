@@ -20,8 +20,6 @@ theorem linearIndependent_comp_basis (h : IsExtOver i ι) {K : Type} (B : Module
     B.linearIndependent.comp (fun k => (e.symm k : K)) (Subtype.val_injective.comp e.symm.injective)
   have h3 := (h.2 s.card _ hb).comp e e.injective
   convert h3 using 1
-  funext x
-  simp
 
 theorem exists_dual_ext (h : IsExtOver i ι) (hs : Submodule.span Ω (Set.range ι) = ⊤)
     (φ : Module.Dual Ω₀ Li₀) : ∃ φ' : Module.Dual Ω Li, ∀ e, φ' (ι e) = i (φ e) := by

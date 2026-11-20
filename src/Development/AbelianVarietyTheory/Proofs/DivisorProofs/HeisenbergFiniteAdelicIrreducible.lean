@@ -149,8 +149,6 @@ theorem schrodinger_irreducible : ∀ (F : Type) [Field F] [NumberField F] (κ :
       (continuous_id.dotProduct continuous_const), fun g hg => ?_⟩, fun h => hb ?_⟩
     · have := hst 0 b g hg
       convert this using 1
-      funext z
-      simp only [heisFin, add_zero, Pi.mul_apply]
       rfl
     · change GlobalTheory.HeisSchA.finChar ψ ((x - y) ⬝ᵥ b) = 1
       have h' : GlobalTheory.HeisSchA.finChar ψ (x ⬝ᵥ b) = GlobalTheory.HeisSchA.finChar ψ (y ⬝ᵥ b) := h

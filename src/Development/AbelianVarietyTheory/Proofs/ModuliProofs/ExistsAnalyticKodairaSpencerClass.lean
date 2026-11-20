@@ -84,8 +84,6 @@ theorem fderiv_per (l : u.Λ) (W : X.Opens) (f : Γ(X, W)) (z : Fin g → ℂ) :
     fderiv ℂ (fn u m W f) (z + l) = fderiv ℂ (fn u m W f) z := by
   rw [← fderiv_comp_add_right]
   congr 1
-  funext y
-  simp only [fn, ex_per]
 
 theorem ptDer_fderiv (z w : Fin g → ℂ) :
     PtDer ((u.ex z).left ≫ m) (fun W f => fderiv ℂ (fn u m W f) z w) where

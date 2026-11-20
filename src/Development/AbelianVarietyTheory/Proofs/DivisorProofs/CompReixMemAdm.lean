@@ -91,8 +91,6 @@ theorem schr_reix {R : Type} [CommRing R] [Invertible (2 : R)] (ψ : AddChar R �
     simp only [dotProduct]; rw [← e.sum_comp]; simp
   simp only [schr, reix_apply, h1, h2]
   congr 2
-  funext k
-  simp
 
 end Reindex₂
 

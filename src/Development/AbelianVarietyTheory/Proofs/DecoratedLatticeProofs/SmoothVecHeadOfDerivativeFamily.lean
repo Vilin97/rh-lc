@@ -163,8 +163,6 @@ theorem prod_update (Xs : Fin k → Mx n) (t : Fin k → ℝ) (i : Fin k) (s : �
       ((facs Xs).map (· t)).set i (NormedSpace.exp (s • Xs i)) := by
     rw [facs, List.map_ofFn, List.map_ofFn, ← ofFn_update_eq_set]
     congr 1
-    funext j
-    simp only [Function.comp_apply, Function.update_apply]
     split_ifs with hj
     · subst hj; rfl
     · rfl

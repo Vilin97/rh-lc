@@ -141,8 +141,6 @@ private theorem ker_mat (O : Type) [CommRing O] [IsLocalRing O] {R : Type} [Comm
   · ext a b
     simp only [Matrix.mul_apply, hΨ, h4, ← map_sum]
     congr 1
-    funext u
-    simp
   · ext a b
     simp only [Matrix.mul_apply, hΨ, mul_comm (ψ _), h4, ← map_sum]
     congr 1

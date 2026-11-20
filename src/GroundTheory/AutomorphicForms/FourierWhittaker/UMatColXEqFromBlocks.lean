@@ -137,8 +137,6 @@ theorem map_colGL {S : Type*} [CommRing S] (f : R →+* S) (k : ℕ) (x : Fin k 
       (colGL (n := n) k (fun i => f (x i)) : GL (Fin n) S) := by
   rw [colGL, colGL, coe_uGL, coe_uGL, map_uMat]
   congr 1
-  funext p
-  simp only [colX_apply]
   split_ifs <;> simp
 
 section Block

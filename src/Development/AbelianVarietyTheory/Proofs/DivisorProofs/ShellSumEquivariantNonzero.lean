@@ -184,8 +184,6 @@ theorem shellSum_add (hϖ : IsUnif ϖ) (hram : ¬ IsUnram ν) (hcond : CondLE ϖ
   unfold shell
   rw [← integral_add (integrableOn_shell hϖ hram hcond hφ m.1 w) (integrableOn_shell hϖ hram hcond hφ' m.1 w)]
   congr 1
-  funext g
-  simp only [Pi.add_apply]
   ring
 
 theorem shellSum_eqv (hϖ : IsUnif ϖ) (hν : IsSmU ν) (hram : ¬ IsUnram ν) (hcond : CondLE ϖ e ν) {a : ℕ}

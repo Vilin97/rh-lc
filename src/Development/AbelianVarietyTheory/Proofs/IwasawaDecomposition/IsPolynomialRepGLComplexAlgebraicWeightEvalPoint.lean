@@ -42,8 +42,6 @@ theorem eval_evPt (τ : L →+* ℂ) (Q : MvPolynomial ((L →+* ℂ) × Fin n �
   erw [e]
   show MvPolynomial.eval _ Q = MvPolynomial.eval _ Q
   congr 2
-  funext p
-  simp only [evPt, tauSubst]
   split_ifs <;> simp [Matrix.one_apply, *]
 
 theorem isPolyRep_evPt (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ) (a : AlgWt L n) (ι : Type)

@@ -65,8 +65,6 @@ private theorem taylor_cont_lemma {X : Type} [TopologicalSpace X] {U : Set ℂ} 
       (h1.smul (h2.smul h3)) 0 (2 * Real.pi)
     have hI2 := (continuous_const (y := (2 * Real.pi * Complex.I : ℂ)⁻¹)).mul hI
     convert hI2 using 1
-    funext q
-    simp only [Set.restrict_apply, hKdef, circleIntegral, smul_eq_mul, Pi.mul_apply]
   have hat : ContinuousAt (fun p : X × ℂ => deriv (Φ p.1) p.2) (x₀, z₀) := by
     refine (hK.continuousAt (hS.mem_nhds hmem)).congr ?_
     filter_upwards [hS.mem_nhds hmem] with p hp using (heq p hp).symm

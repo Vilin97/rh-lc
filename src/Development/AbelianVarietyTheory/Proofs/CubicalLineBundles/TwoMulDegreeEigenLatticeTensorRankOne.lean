@@ -169,8 +169,6 @@ theorem exists_eigenline {E K O L V I : Type} [Field E] [NumberField E] [IsCMFie
     | smul t u _ hu =>
       rw [map_smul, map_smul, hu, ← map_smul]
       congr 1
-      funext i
-      simp only [Pi.smul_apply, smul_eq_mul]
       ring
   have hmap : Submodule.span (𝓞 K) (Set.range c) =
       (Submodule.span (𝓞 K) (Set.range ev)).map (Φ.restrictScalars (𝓞 K)) := by

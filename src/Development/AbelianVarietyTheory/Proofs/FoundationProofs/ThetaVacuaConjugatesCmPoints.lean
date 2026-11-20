@@ -482,8 +482,6 @@ theorem conj_iop {cc : Ideal (𝓞 D.host.K)} {δ : ℂ} (hc : Crv D cc δ) (ρ 
       Submodule.smul_mem _ (⟨_, hal i⟩ : Qbar)
         (GlobalTheory.T.torsionTranslate_mem_thetaPullbackSpan D cc δ hc N N' r b hb F hF (x i) k hk (hB _ (hx i).1)))
     convert this using 1
-    funext z
-    simp only [Pi.smul_apply, Finset.sum_apply]
     rfl
   · obtain ⟨y, hy, ry⟩ := a2 y' hy'
     have h := a4 _ _ ry hy

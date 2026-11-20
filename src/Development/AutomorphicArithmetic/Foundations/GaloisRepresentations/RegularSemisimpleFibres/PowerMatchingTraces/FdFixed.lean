@@ -195,8 +195,6 @@ theorem UpperTheory.Gal.InertialTypesAlt.G.core :
   have hψs : ∀ y, GM.Split E y → ψ y = (T.J (T.mk' y).1 : Set (Gw n (T.mk' y).1)).indicator 1 := fun y hy => by
     simp only [ψ, T.triv y hy (T.mk' y)]
     congr 1
-    funext x
-    simp
   have hunit := fun y (hy : GM.Split E y) =>
     unitTrace E n μE V hV (T.mk' y).1 (m _) (hm _) (X y).1 (T.J _) (hX y).1 (T.co _) (hfixS y hy _)
   have hbase := fun y (hyS : y ∈ T.S) (hy : ¬ GM.Split E y) =>

@@ -85,8 +85,6 @@ theorem UpperTheory.ConvolutionTheory.R2.Fo.fockEx :
     · rintro _ ⟨p, hp, g, hg, rfl⟩
       have := PF.poly hp _ (hgauss g hg)
       convert this using 1
-      funext v
-      simp only [Pi.mul_apply, mul_assoc]
     · intro a b _ _ ha hb
       exact ha.add hb
     · intro c a _ ha

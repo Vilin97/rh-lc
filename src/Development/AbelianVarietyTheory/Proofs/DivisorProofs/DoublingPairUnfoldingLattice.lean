@@ -427,8 +427,6 @@ theorem dbl_pol : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
       have key := pol_mem M M₂ B.emb e hP.base.cm hP.base.std (fun w => (hP.herm.cartan w).1)
         (fun w => (hP.skew.cartan w).1) hθ (fun Ψ hΨ => hbij.mapsTo hΨ) hadm hint (GlobalTheory.SchwartzBox.sb_box g₁ g₂') hf₁ hf₂
       convert key using 2
-      funext x
-      simp only [boxC, boxFun, pureA, bx_apply, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure, Complex.star_def, map_mul]
       rw [mul_mul_mul_comm]
       rfl
     | zero =>

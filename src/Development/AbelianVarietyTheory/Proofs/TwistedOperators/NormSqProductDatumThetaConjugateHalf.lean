@@ -149,8 +149,6 @@ theorem normSq_thetaAt_halfProd : ∀ {D : D7} {G : Type} [Group G] [Fintype G] 
       rw [one_smul] at this
       rw [← this]
       congr 1
-      funext x
-      simp only [halfInd]
       by_cases hx : x ∈ Λ ∧ IsHalf (cA D e) x
       · rw [if_pos (show x ∈ Λc from hx), if_pos hx]
       · rw [if_neg (show x ∉ Λc from hx), if_neg hx])

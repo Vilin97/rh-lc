@@ -63,8 +63,6 @@ theorem polMatch_onto : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Nu
   · refine Finset.sum_congr rfl fun i _ => ?_
     rw [hf'eq i]
     congr 2
-    funext v
-    simp only [φ', if_pos v.2]
     exact (hφ₀eq i v).symm
 
 end GlobalTheory.SquareAgree

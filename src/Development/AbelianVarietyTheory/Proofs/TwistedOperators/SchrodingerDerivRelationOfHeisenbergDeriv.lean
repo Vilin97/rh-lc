@@ -111,8 +111,6 @@ theorem GlobalTheory.LineDerivTransfer.schr_deriv_of_heisO_deriv : ∀ (D : D7) 
         simp only [GlobalTheory.WeilM.schr, AddMonoidHom.coe_comp, Function.comp_apply, LinearMap.toAddMonoidHom_coe,
           LinearEquiv.coe_coe, e, numCoord_apply, comp_equiv_dotProduct_comp_equiv]
         congr 2
-        funext i
-        simp
       rw [h]
       exact hd _
     · rw [thetaTr_eq co σ]

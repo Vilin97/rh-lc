@@ -73,8 +73,6 @@ theorem euler_finite {E : Type} [Field E] [NumberField E] (f : Ideal (𝓞 E) �
         exact ⟨(k, ⟨⟨b, hb⟩, hbs⟩), rfl⟩
     refine (Equiv.ofBijective e hbij).hasSum_iff.mp ?_
     convert hprod using 1
-    funext p
-    simp only [Function.comp_apply, Equiv.ofBijective_apply, e]
     rw [hmul, euler_fin_pow f hf1 hmul]
 
 end ReciprocityTheory.Cheb

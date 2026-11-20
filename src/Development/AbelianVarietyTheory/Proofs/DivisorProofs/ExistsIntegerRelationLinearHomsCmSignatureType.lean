@@ -66,18 +66,12 @@ theorem exists_prod_act_comp_eq_one_of_pure : ∀ (E : Type) [Field E] [NumberFi
   have hGPA : ∀ s a, GA s (FA (PeA a)) = FA (PeA (s • a)) := fun s a => by
     simp only [GA, LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply]
     congr 1
-    funext k
-    simp only [diagMul, LinearMap.coe_mk, AddHom.coe_mk, hPA.1]
   have hGPB : ∀ s b, GB s (FB (PeB b)) = FB (PeB (s • b)) := fun s b => by
     simp only [GB, LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply]
     congr 1
-    funext k
-    simp only [diagMul, LinearMap.coe_mk, AddHom.coe_mk, hPB.1]
   have hGAc : ∀ r s z, GA r (GA s z) = GA s (GA r z) := fun r s z => by
     simp only [GA, LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply]
     congr 1
-    funext k
-    simp only [diagMul, LinearMap.coe_mk, AddHom.coe_mk]
     ring
   have hGBinj : ∀ r : 𝓞 E, r ≠ 0 → ∀ z, GB r z = 0 → z = 0 := fun r hr z hz => by
     have hr' : (r : E) ≠ 0 := by exact_mod_cast hr

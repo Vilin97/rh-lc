@@ -27,5 +27,3 @@ theorem UpperTheory.RealTr.mSymm :
     (hS w _).symm
   rw [hc, ← hN]
   congr 1
-  funext i
-  simp

@@ -42,8 +42,6 @@ lemma lint_term (hP : Pres G μ) {b b' : Y → ℝ} (u : Y → ℝ≥0∞)
     (fun z => ENNReal.ofReal (b (g⁻¹ • z)) * (ENNReal.ofReal (b' z) * u z))
   rw [← h]
   congr 1
-  funext y
-  simp only [inv_smul_smul, hinv]
   ring
 
 lemma lint_eq [Countable G] (hP : Pres G μ) {b b' : Y → ℝ} (hb : IsCut G b) (hb' : IsCut G b')
@@ -85,8 +83,6 @@ lemma int_term (hP : Pres G μ) {b b' : Y → ℝ} (u : Y → ℂ)
   have h := (hP g).integral_comp (embed hP g) (fun z => b (g⁻¹ • z) • (b' z • u z))
   rw [← h]
   congr 1
-  funext y
-  simp only [inv_smul_smul, hinv]
   rw [smul_comm]
 
 lemma int_eq [Countable G] (hP : Pres G μ) {b b' : Y → ℝ} (hb : IsCut G b) (hb' : IsCut G b')

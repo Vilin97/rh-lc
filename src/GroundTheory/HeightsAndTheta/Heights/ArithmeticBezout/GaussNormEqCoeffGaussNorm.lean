@@ -417,8 +417,6 @@ theorem eval_map_conjugate {K : Type*} [Field K] {ι : Type*} (σ : K →+* ℂ)
       starRingEnd ℂ (eval (star x) (f.map σ)) := by
   rw [eval_map, eval_map, eval₂_comp_left]
   congr 1
-  funext i
-  simp
 
 theorem mahler_conjugate {K : Type*} [Field K] (h h' : HermNorm n)
     (hc : ∀ u, h'.norm (star u) = h.norm u) (σ : K →+* ℂ) (f : MvPolynomial (Fin k × Fin n) K) :

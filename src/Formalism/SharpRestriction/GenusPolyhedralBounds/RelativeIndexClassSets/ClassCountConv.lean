@@ -166,13 +166,9 @@ theorem conv_prV_latS (v : HeightOneSpectrum (𝓞 F)) (Λ : Submodule (𝓞 E) 
   | zero =>
     have := zero_mem (latS (F := F) (v.adicCompletion F) Sv[v] Λ)
     convert this using 1
-    funext i
-    simp
   | add u w _ _ hu hw =>
     have := add_mem hu hw
     convert this using 1
-    funext i
-    simp
   | smul a u _ hu =>
     have := Submodule.smul_mem _ (⟨_, afsplit_prV_int v (a : 𝒜) a.2⟩ : Sv[v]) hu
     convert this using 1
@@ -197,13 +193,9 @@ theorem conv_IE_latS (v : HeightOneSpectrum (𝓞 F)) (Λ : Submodule (𝓞 E) (
   | zero =>
     have := zero_mem (latS (F := F) 𝔸 𝒮 Λ)
     convert this using 1
-    funext i
-    simp
   | add u w _ _ hu hw =>
     have := add_mem hu hw
     convert this using 1
-    funext i
-    simp
   | smul a u _ hu =>
     have := Submodule.smul_mem _ (⟨_, afsplit_IE_int v (a : E ⊗[F] v.adicCompletion F) a.2⟩ : 𝒮) hu
     convert this using 1

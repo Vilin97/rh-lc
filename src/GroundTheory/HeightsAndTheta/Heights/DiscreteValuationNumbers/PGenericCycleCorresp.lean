@@ -80,8 +80,6 @@ theorem length_eq (J W : Ideal S) [W.IsPrime] (hW : Disjoint (M : Set S) W)
         (⟨algebraMap S T s, hnot s s.2⟩ : W'.primeCompl)
       rw [Module.End.isUnit_iff] at hu
       convert hu using 1
-      funext n
-      simp only [Module.algebraMap_end_apply]
       exact (algebraMap_smul T (s : S) n).symm
     · intro n
       induction n using LocalizedModule.induction_on with

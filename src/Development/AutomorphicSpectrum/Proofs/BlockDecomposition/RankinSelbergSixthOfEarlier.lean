@@ -428,8 +428,6 @@ theorem Iker_row (ψ : AddChar F Circle) (ν c : Fˣ →* ℂˣ) (s : ℂ) (φ�
     (fun q => φ₁ q.1 * conj (φ₃ q.2) * Kr ν c s q.1 (![0, 1] ᵥ* (κ : Matrix (Fin 2) (Fin 2) F)) q.2)
   rw [Iker, ← h, ← integral_const_mul]
   congr 1
-  funext q
-  simp only [rowHomeo2_apply, Kr_row s hκ]
   ring
 
 theorem Av_row (h1 : Ad3.R.A1) {ψ : AddChar F Circle} (hψ : IsStd ψ) {μ₁ μ₂ : Fˣ →* ℂˣ} (hμ₂ : IsUnit1 μ₂)

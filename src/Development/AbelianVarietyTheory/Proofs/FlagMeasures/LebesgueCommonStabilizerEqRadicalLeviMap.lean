@@ -264,8 +264,6 @@ theorem range_eq_and_injective_parabolic_unipotent_product : ∀ (k r j : ℕ) (
     conv_rhs => rw [← hΦ.map_eq]
     rw [Measure.map_map hG.measurable hΦ.measurable, lebR0]
     congr 1
-    funext q
-    simp only [Function.comp]
     rw [hr]
   · ext m
     constructor

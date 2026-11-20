@@ -64,8 +64,6 @@ theorem exists_decomp_direction {f : G → ℂ}
     simp_rw [e1]
     rw [integral_tsum_of_summable_integral_norm hTi hsum]
     congr 1
-    funext t
-    simp only [T, hD]
     rw [← tsum_mul_left]
     congr 1
     funext p

@@ -465,8 +465,6 @@ theorem tmat_eq (i : D.ntw.Tw) (s : (tw D).Sig i) (g : GalE D) : Tmat (X := tw D
     Matrix.scalar (Fin D.R.r) ((chiS (X := tw D) i s g : (D.ntw.O0 i)ˣ) : D.ntw.O0 i) = 1
   rw [Matrix.scalar_apply, ← Matrix.diagonal_smul, ← Matrix.diagonal_one]
   congr 1
-  funext a
-  simp
 
 theorem hkFrob (i : D.ntw.Tw) (s : (tw D).Sig i) : HkFrob (X := tw D) i s := by
   intro P hS _ σ hσ k _

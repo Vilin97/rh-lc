@@ -32,8 +32,6 @@ theorem kap_kap (f g : Ty P → ℂ) : Commute (kap P f) (kap P g) := (Commute.a
 theorem star_kap (f : Ty P → ℂ) : star (kap P f) = kap P fun π => star (f π) := by
   rw [kap_eq, kap_eq, Matrix.star_eq_conjTranspose, Matrix.diagonal_conjTranspose]
   congr 1
-  funext π
-  simp only [Pi.star_apply]
   exact (algebraMap_star_comm (f π)).symm
 
 theorem kap_const (c : ℂ) : (kap P fun _ => c) = algebraMap ℂ (A P) c := (kap P).commutes c
@@ -537,8 +535,6 @@ theorem lead_prod (s : Finset ℕ) :
     (fun π => (hd π).le) (fun π => by rw [← hd π]; exact (hm π).coeff_natDegree)
   refine h.congr rfl (map_one (kap P)) fun Y => ?_
   congr 1
-  funext π
-  simp only [Polynomial.eval_prod, Polynomial.eval_add, Polynomial.eval_X, Polynomial.eval_C]
 
 theorem card_I : (Icc 1 (P.k - 1)).card = P.k - 1 := by
   rw [Nat.card_Icc]

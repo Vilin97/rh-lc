@@ -15,7 +15,5 @@ theorem torusElt_pow_eq {k : Type} [Field k] {N : ℕ} (ϖ : kˣ) (ν : Fin N �
   unfold GlobalTheory.GLDoubling.torusElt
   rw [← map_pow]
   congr 1
-  funext a
-  simp only [Pi.pow_apply, ← zpow_natCast, ← _root_.zpow_mul, mul_comm]
 
 end GlobalTheory.TorusElementPower

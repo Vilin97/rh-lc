@@ -12,8 +12,6 @@ theorem row_action_diagonal_weight : RowActDiagWeight := by
   have hX : (rowAct R (n := n) (Matrix.diagonal t)) = aeval fun v : Fin k × Fin n => C (t v.1) * X v := by
     unfold rowAct
     congr 1
-    funext v
-    simp only [Matrix.diagonal_apply]
     rw [Finset.sum_eq_single v.1]
     · simp
     · intro b _ hb

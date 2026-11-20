@@ -207,8 +207,6 @@ theorem intS_pull {V V' : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [Norm
     intS ω (fun j => P (y j) + e) = intS (pullF ω P e) y := by
   unfold intS pullF
   congr 1
-  funext t
-  simp only [ContinuousAlternatingMap.compContinuousLinearMap_apply]
   congr 1
   · simp only [map_add, map_sum, map_sub, map_smul, add_sub_add_right_eq_sub]
     abel

@@ -58,8 +58,6 @@ theorem mem_latS_iff {r : ℕ} (N : Submodule (𝓞 E) (Fin r → E))
     | add x y _ _ hx hy =>
       have := add_mem hx hy
       convert this using 1
-      funext i
-      simp
     | smul c x _ hx =>
       have := smul_mem_locLattice v ((mem_intV_iff v _).1 c.2) hx
       convert this using 1
@@ -78,8 +76,6 @@ theorem mem_latS_iff {r : ℕ} (N : Submodule (𝓞 E) (Fin r → E))
       | add x y _ _ hx hy =>
         have := add_mem hx hy
         convert this using 1
-        funext i
-        simp
       | smul c x _ hx =>
         have hc : (sw v).symm (algebraMap _ (LocAlg v) c) ∈ intV E v :=
           (mem_intV_iff v _).2 (by simpa using (locOrder v).algebraMap_mem c)

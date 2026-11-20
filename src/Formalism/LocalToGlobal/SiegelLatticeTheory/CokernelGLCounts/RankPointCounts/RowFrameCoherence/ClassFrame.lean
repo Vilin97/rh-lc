@@ -157,8 +157,6 @@ theorem classFrameC_of
           Formalism.L2.SG.PackageTie.hsEmb
             (Formalism.L2.SG.RealObj.unscaledOperatorAtPointRepresentative X u u' 1 i0 i0' νq (Formalism.L2.SG.PairVal.ptOf s.1.toTerm))) := by
     congr 1
-    funext s
-    simp only [liftVec]
     rw [hs s]
     simp only [map_smul, ClassFrameOperators.conjL_hsEmb, smul_smul]
     congr 1

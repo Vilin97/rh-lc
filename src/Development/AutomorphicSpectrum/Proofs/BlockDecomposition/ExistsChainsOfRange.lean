@@ -45,8 +45,6 @@ theorem exists_chains_of_range [FiniteDimensional K V] (f : V →ₗ[K] V)
   have ht : LinearIndependent K t := by
     have h2 := hLV.comp idx hidx
     convert h2 using 1
-    funext b
-    simp only [t, Function.comp, idx, chainVec]
     rw [pow_coe_of_restrict f g hg, ← hstep]
     congr 2
     have := he' b

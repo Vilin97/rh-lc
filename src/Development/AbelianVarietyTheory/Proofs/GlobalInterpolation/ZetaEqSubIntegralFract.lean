@@ -15,8 +15,6 @@ lemma zeta_eq_mul_integral_floor {s : ℂ} (hs : 1 < s.re) :
     congr 1
   rw [← e1, key]
   congr 2
-  funext t
-  simp
 
 lemma integrableOn_cpow_neg {s : ℂ} (hs : 1 < s.re) :
     IntegrableOn (fun t : ℝ => (t : ℂ) ^ (-s)) (Set.Ioi 1) := integrableOn_Ioi_cpow_of_lt (by simp only [Complex.neg_re]; linarith) one_pos

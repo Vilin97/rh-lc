@@ -19,8 +19,6 @@ theorem finVal_dedekind (D L : Type) [CommRing D] [IsDedekindDomain D] [Field L]
   · intro x y
     rw [← ofAdd_add]
     congr 1
-    funext i
-    simp only [Units.val_mul, map_mul, Pi.add_apply]
     exact WithZero.log_mul ((Valuation.ne_zero_iff _).mpr x.ne_zero)
       ((Valuation.ne_zero_iff _).mpr y.ne_zero)
   · intro x hx

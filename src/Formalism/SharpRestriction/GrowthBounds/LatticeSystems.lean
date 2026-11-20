@@ -2075,8 +2075,6 @@ theorem lc_snf {W Qq : Type} [CommRing W] [IsDomain W] [IsPrincipalIdealRing W] 
       exact (inf_eq_right.2 hle).symm
     rw [h1, hNs, Submodule.map_span, ← Set.range_comp]
     congr 2
-    funext i
-    simp only [Function.comp_apply, map_smul]
   · obtain ⟨φ', hφ'⟩ : ∃ φ' : (Fin k → W) ≃ₗ[W] e.tgt, ∀ x, ((φ' x : e.tgt) : Fin k → Qq) = φ x :=
       ⟨(LinearEquiv.ofInjective φ hφi).trans (LinearEquiv.ofEq _ _ hφr), fun x => rfl⟩
     have hmap : N.map (φ' : (Fin k → W) →ₗ[W] e.tgt) = Submodule.comap e.tgt.subtype e.src := by

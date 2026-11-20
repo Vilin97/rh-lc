@@ -129,16 +129,12 @@ theorem _root_.GlobalTheory.CoordArch.coord_bound : ∀ (p : ℕ) [Fact p.Prime]
       rw [Matrix.scalar_apply, ← Matrix.smul_eq_diagonal_mul]
     | zero =>
       convert Submodule.zero_mem (Submodule.span ℝ (Set.range Φ)) using 1
-      funext u
-      simp
     | add x y _ _ hx hy =>
       convert Submodule.add_mem _ hx hy using 1
       funext u
       simp [add_smul]
     | smul r x _ hx =>
       convert Submodule.smul_mem _ r hx using 1
-      funext u
-      simp only [Pi.smul_apply]
       exact smul_assoc _ _ _
   have hspan : ∀ y : InfinitePlace G.F → Matrix (Fin G.n) (Fin G.n) ℂ,
       y ∈ Submodule.span ℝ (Set.range Φ) := by

@@ -481,8 +481,6 @@ theorem residue_module_structure : RESModule := by
     rw [show diagonal w * P * Φ * Q = diagonal w * (P * Φ * Q) by simp only [Matrix.mul_assoc], hd,
       diagonal_mul_diagonal]
     congr 1
-    funext i
-    simp only [w]
     rw [hdu i, ← mul_assoc, IsUnit.val_inv_mul, one_mul]
   have hkerL := ker_lower Φ _ Q k hk hP2 hQ hD2
   have hsplit := finrank_split (LinearMap.ker (Matrix.toLin' Φ)) N hN

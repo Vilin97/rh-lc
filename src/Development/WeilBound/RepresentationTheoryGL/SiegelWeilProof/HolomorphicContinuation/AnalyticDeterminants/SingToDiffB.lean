@@ -84,15 +84,11 @@ theorem ibp_dc {U : Set (Vr n)} (hU : IsOpen U) {F φ : Vr n → ℂ} (hF : Cont
       = (∫ x, F x * fderiv ℝ φ x (v1 a.1 a.2)) + Complex.I * ∫ x, F x * fderiv ℝ φ x (v2 a.1 a.2) := by
     rw [← integral_const_mul, ← integral_add (hB _) ((hB _).const_mul _)]
     congr 1
-    funext x
-    simp only [dc]
     ring
   have e2 : ∫ x, dc a F x * φ x
       = (∫ x, fderiv ℝ F x (v1 a.1 a.2) * φ x) + Complex.I * ∫ x, fderiv ℝ F x (v2 a.1 a.2) * φ x := by
     rw [← integral_const_mul, ← integral_add (hA _) ((hA _).const_mul _)]
     congr 1
-    funext x
-    simp only [dc]
     ring
   rw [e1, e2, key, key]
   ring

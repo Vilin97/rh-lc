@@ -144,8 +144,6 @@ theorem act_col {P : Matrix (Fin n) (Fin n) ℂ} (hP : IsUnit P) (d : Fin n → 
   have hPiP : P⁻¹ * P = 1 := nonsing_inv_mul P ((isUnit_iff_isUnit_det P).1 hP)
   rw [mulVec_mulVec, Matrix.mul_assoc, hPiP, Matrix.mul_one, ← mulVec_mulVec, ← mulVec_smul]
   congr 1
-  funext a
-  simp only [mulVec_diagonal, Pi.single_apply, Pi.smul_apply, smul_eq_mul]
   split_ifs with h
   · subst h; ring
   · ring

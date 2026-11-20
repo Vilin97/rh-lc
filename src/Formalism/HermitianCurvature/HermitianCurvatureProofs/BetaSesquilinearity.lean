@@ -561,8 +561,6 @@ lemma Dx_scale (s : ℝ) (b : Bool) (X : Mat k r) (f : Mat k r → E) :
     rw [← Complex.coe_smul] at h
     rw [← h]
     congr 1
-    funext t
-    simp only [smul_smul, Complex.ofReal_mul, mul_comm (t : ℂ)]
   · show deriv (fun t : ℝ => f (NormedSpace.exp (-((t : ℂ) • (s : ℂ) • X)) * g)) 0 =
       (s : ℂ) • deriv (fun t : ℝ => f (NormedSpace.exp (-((t : ℂ) • X)) * g)) 0
     have h := deriv_comp_mul_left s (fun u : ℝ => f (NormedSpace.exp (-((u : ℂ) • X)) * g)) 0
@@ -570,8 +568,6 @@ lemma Dx_scale (s : ℝ) (b : Bool) (X : Mat k r) (f : Mat k r → E) :
     rw [← Complex.coe_smul] at h
     rw [← h]
     congr 1
-    funext t
-    simp only [smul_smul, Complex.ofReal_mul, mul_comm (t : ℂ)]
 
 lemma Rw_scale (v : List (Mat k r)) (f : Mat k r → E) :
     Rw v f = fun g => (((v.map nz).prod : ℝ) : ℂ) • Rw (v.map nrm) f g := by
@@ -1385,8 +1381,6 @@ lemma aDil_one : aDil k r 1 = 1 := by
   unfold aDil
   rw [← Matrix.diagonal_one]
   congr 1
-  funext i
-  simp
 
 lemma dilF_one (F : Mat k r → (Wq →L[ℂ] Wp)) : dilF (1, 1) F = F := by
   funext g

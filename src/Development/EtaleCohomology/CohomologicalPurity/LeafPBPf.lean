@@ -59,8 +59,6 @@ theorem LeafPB_of' (hGeo : LeafGeo) (hCmp : LeafPBCmp) : LeafPB := by
   have hPR : Inv q (PR N 0 R) := hGeo.2.1 q N 0 R hq
   refine (Function.Bijective.of_comp_iff' (h3 i n) _).1 ?_
   convert hD using 1
-  funext a
-  simp only [Function.comp_apply, poly, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [pull_cast', (hA6 q).1, pull_cpow' hA6 q e hPR, ← pull_comp, h1, hyp, (hA6 q).2.2.1 e _ hPR, h2]
 

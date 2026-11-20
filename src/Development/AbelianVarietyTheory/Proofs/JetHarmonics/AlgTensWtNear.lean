@@ -30,8 +30,6 @@ theorem algTens_wtNear : ∀ (M : Type) [NormedAddCommGroup M] [InnerProductSpac
         l1_shift_single_le ω Λ t (-1) (by simp) c hω, fun a => ?_⟩
       rw [← hT.pr_comm, ← map_smul]
       congr 1
-      funext i
-      simp only [dualTens, Pi.smul_apply]
       by_cases hi : i = c
       · subst hi
         by_cases ha : a = i

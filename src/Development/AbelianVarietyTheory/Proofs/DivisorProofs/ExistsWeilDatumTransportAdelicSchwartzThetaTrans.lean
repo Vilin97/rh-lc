@@ -318,8 +318,6 @@ theorem thetaTr_eq {N : ℕ} (σ : κ ≃ Fin N) (Φ : (κ → AF D.host.F) → 
   rw [e]
   simp only [GlobalTheory.WeilM.Darboux.rho, GlobalTheory.WeilM.schr, comp_equiv_dotProduct_comp_equiv]
   congr 2
-  funext i
-  simp
 
 theorem thetaTr_bij (hψ : IsStdChar D ψ (-1)) (hA : JA = T.gramᵀ)
     (hB : ξ • incM D.host.F JB = incM D.host.F (D.host.xi0 • S.gram⁻¹))

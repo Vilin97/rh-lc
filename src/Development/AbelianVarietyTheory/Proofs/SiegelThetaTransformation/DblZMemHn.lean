@@ -104,8 +104,6 @@ theorem re_hermC_invol_neg {x₁ x₂ : Frame X.Ψ r} (h₁ : x₁ ∈ X.dom) (h
       = d₂ - d₁ := by
     rw [← mulVec_mulVec, ← mulVec_mulVec, hd₁, hd₂, ← mulVec_sub, ← hy]
     congr 1
-    funext a
-    simp only [mulVec_diagonal, hyp, hym, Pi.sub_apply, sgn]
     split_ifs <;> simp
   have p₁ : d₁ ≠ 0 → 0 < (hermC τ.1 X.Gm d₁ d₁).re := fun h =>
     pos_of_upper h₁ x₂ τ h fun a ha => by rw [← hA, e₁]; simp only [hyp, if_neg ha]

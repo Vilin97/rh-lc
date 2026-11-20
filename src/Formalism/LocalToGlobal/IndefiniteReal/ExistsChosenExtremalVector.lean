@@ -160,8 +160,6 @@ theorem diag_mem (θ : Fin n → ℝ) : diagonal (fun a => Complex.exp ((θ a : 
   refine ⟨?_, ?_⟩
   · rw [Matrix.mem_unitaryGroup_iff, star_eq_conjTranspose, diagonal_conjTranspose, diagonal_mul_diagonal, ← diagonal_one]
     congr 1
-    funext a
-    simp only [Pi.star_apply, RCLike.star_def]
     rw [Complex.mul_conj, Complex.normSq_eq_norm_sq, Complex.norm_exp_ofReal_mul_I]
     simp
   · unfold Formalism.REAL.Jm

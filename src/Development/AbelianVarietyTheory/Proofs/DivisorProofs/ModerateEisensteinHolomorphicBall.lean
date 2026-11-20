@@ -268,8 +268,6 @@ theorem exists_lines_curve (h : IsCMExt F E σ) (hJ : IsHermND σ J) (w : Infini
     rw [← (hasDerivAt_dir hΦ (Pi.single i 1)).deriv]
     unfold lineDer
     congr 1
-    funext u
-    simp only [Φ]
     rw [prod_ofFn_single _ i fun j hj => by simp [Pi.single_eq_of_ne hj, realLine_zero h (hη j)]]
     simp
   rw [clm_expand] at h2

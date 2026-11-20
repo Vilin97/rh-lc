@@ -22,22 +22,14 @@ theorem besselIntegral_sesquilinear : HypsG → ∀ (k r : ℕ) (ε : Fin (2 * r
   · unfold Formalism.FourierDecayAlt.ThreeDimData.be
     rw [← MeasureTheory.integral_add ((hI v hv).1 w hw) ((hI v hv).1 w' hw')]
     congr 1
-    funext p
-    simp only [Formalism.FourierDecayAlt.ThreeDimData.beInt, map_add, inner_add_right, add_mul, add_smul]
   · unfold Formalism.FourierDecayAlt.ThreeDimData.be
     rw [← MeasureTheory.integral_smul]
     congr 1
-    funext p
-    simp only [Formalism.FourierDecayAlt.ThreeDimData.beInt, map_smul, inner_smul_right, smul_smul, mul_assoc]
   · unfold Formalism.FourierDecayAlt.ThreeDimData.be
     rw [← MeasureTheory.integral_add ((hI v hv).1 w hw) ((hI v' hv').1 w hw)]
     congr 1
-    funext p
-    simp only [Formalism.FourierDecayAlt.ThreeDimData.beInt, inner_add_left, add_mul, add_smul]
   · unfold Formalism.FourierDecayAlt.ThreeDimData.be
     rw [← MeasureTheory.integral_smul]
     congr 1
-    funext p
-    simp only [Formalism.FourierDecayAlt.ThreeDimData.beInt, inner_smul_left, starRingEnd_apply, smul_smul, mul_assoc]
 
 end GlobalTheory

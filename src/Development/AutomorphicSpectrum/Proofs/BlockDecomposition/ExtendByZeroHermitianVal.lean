@@ -165,8 +165,6 @@ theorem ikp_rat {B W : HSp D} {d : HypDec B W t} (I : IkD d n) (Ψ : Mx D B.rank
     intro Z
     unfold projS
     congr 1
-    funext k
-    simp only [mm, Matrix.mul_assoc]
   simp only [key]
   rw [← integral_right_rat I.cov₁ a (fun x => projS I.νK Ψ (d.jX ⬝ x + d.j0 ⬝ mm Y (rat a.1)))]
   congr 1

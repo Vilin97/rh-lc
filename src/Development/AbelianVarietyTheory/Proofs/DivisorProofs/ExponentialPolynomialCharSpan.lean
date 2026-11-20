@@ -89,8 +89,6 @@ lemma spanTr_diff_le (hL : ∀ x y, L (x * y) = L x + L y) (P : ι → ℂ[X]) (
   have h3 := Submodule.sub_mem _ h1 (Submodule.smul_mem _ a h2)
   rw [SetLike.mem_coe]
   convert h3 using 1
-  funext t
-  simp only [Pi.sub_apply, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [mul_assoc s s' t, hL s (s' * t), map_mul (χ i) s]
   simp only [diff, eval_sub, eval_mul, eval_C, taylor_eval, Units.val_mul, Complex.ofReal_add]
@@ -126,8 +124,6 @@ theorem mem_spanTr (hL : ∀ x y, L (x * y) = L x + L y) (h0 : ∃ t, L t ≠ 0)
       have h2 : (fun t : G => ∑ i, (P i).eval ((L (1 * t) : ℝ) : ℂ) *
         ((χ i (1 * t) : ℂˣ) : ℂ)) ∈ spanTr L χ P := Submodule.subset_span ⟨1, rfl⟩
       convert Submodule.smul_mem _ c⁻¹ h2 using 1
-      funext t
-      simp only [Pi.smul_apply, smul_eq_mul, one_mul]
       rw [Finset.sum_eq_single i₀ (fun i _ hi => by simp [hA i hi]) (by simp), hc, eval_C,
         ← mul_assoc, inv_mul_cancel₀ hc0, one_mul]
     · obtain ⟨s, hs⟩ := h0

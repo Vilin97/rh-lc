@@ -369,8 +369,6 @@ theorem map_mul_eq (hLF : LF O ϖ nrm q) (n m : ℕ) (dx : Measure (Matrix (Fin 
       rw [hd]
       change _ = Matrix.diagonal fun i => ((((Units.mk0 ϖ hLF.ne) ^ e i : Fˣ)) : F)
       congr 1
-      funext i
-      simp
     have hmem : k₁ * d * k₂ ∈ stab nrm dx := by
       refine Subgroup.mul_mem _ (Subgroup.mul_mem _ (glint_mem_stab hLF hinv h1 hk₁) ?_)
         (glint_mem_stab hLF hinv h1 hk₂)

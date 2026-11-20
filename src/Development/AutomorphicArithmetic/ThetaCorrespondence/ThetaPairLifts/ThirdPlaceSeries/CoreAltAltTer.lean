@@ -54,8 +54,6 @@ theorem core_data_of_point (D : D7) (cf : CharFrame D) (A : _root_.GlobalTheory.
     have h2' : (cf.eta⁻¹).HasInfQ (embPsi D.host) (-(fun _ => 1 / 2)) :=
       GlobalTheory.BlockCharInf.hasInfQ_inv' ⟨fun _ => 1, fun _ => by norm_num, cf.isEta.inf⟩
     convert GlobalTheory.BlockCharInf.hasInfQ_mul' h1' h2' using 1
-    funext g
-    simp only [Pi.add_apply, Pi.neg_apply]
     ring
   obtain ⟨hg1, hg2⟩ := chr.infG _ _ hI (D.eTau τ)
   have hval : eExp D ⟨k, by omega⟩ (D.eTau τ) = (D.hc τ).e ⟨k, by omega⟩ := by simp [eExp]

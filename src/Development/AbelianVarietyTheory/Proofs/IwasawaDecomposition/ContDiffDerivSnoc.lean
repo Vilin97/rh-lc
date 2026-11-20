@@ -123,8 +123,6 @@ theorem linOn_Rder {τ : D.what₂.Tau} {X : Matrix (Fin V.rank) (Fin V.rank) �
       | cast j => simpa using hXs j
     have hF := hφ (k + 1) (Fin.snoc τs τ) (Fin.snoc Xs X) hX' g
     convert contDiff_deriv_snoc hF using 1
-    funext t
-    simp only [Rder, List.ofFn_succ', Fin.snoc_castSucc, Fin.snoc_last, List.concat_eq_append, List.prod_append,
       List.prod_cons, List.prod_nil, mul_one, mul_assoc]
   · funext g
     simp only [Rder, Pi.add_apply]

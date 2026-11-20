@@ -63,27 +63,19 @@ theorem UpperTheory.exists_nondegenerate_right_invariant_form_of_compact_quotien
       simp only [F, map_add, Submodule.coe_add]
       rw [← integral_add (hI _ (hPN x) _ (hPN y)) (hI _ (hPN x') _ (hPN y))]
       congr 1
-      funext g
-      simp only [Pi.add_apply, star_add, add_mul])
     (fun c x y => by
       simp only [F, map_smul, Submodule.coe_smul]
       rw [smul_eq_mul, ← integral_const_mul]
       congr 1
-      funext g
-      simp only [Pi.smul_apply, smul_eq_mul, star_mul', starRingEnd_apply]
       ring)
     (fun x y y' => by
       simp only [F, map_add, Submodule.coe_add]
       rw [← integral_add (hI _ (hPN x) _ (hPN y)) (hI _ (hPN x) _ (hPN y'))]
       congr 1
-      funext g
-      simp only [Pi.add_apply, mul_add])
     (fun c x y => by
       simp only [F, map_smul, Submodule.coe_smul]
       rw [smul_eq_mul, ← integral_const_mul]
       congr 1
-      funext g
-      simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply]
       ring)
   have hB : ∀ x ∈ N, ∀ y ∈ N, B x y = ∫ g in 𝓕, star (x g) * y g ∂μ := by
     intro x hx y hy

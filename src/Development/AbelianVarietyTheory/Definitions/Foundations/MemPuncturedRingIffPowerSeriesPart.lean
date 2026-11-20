@@ -346,8 +346,6 @@ theorem eventually_sum_eval (P : Polynomial convSeries) (a : convSeries) :
     simp only [map_mul, map_pow, Germ.coe_coeRingHom] at this
     rw [← this]
     congr 1
-    funext v
-    simp
   exact Germ.coe_eq.1 h
 
 theorem exists_isRoot (P : Polynomial convSeries) (z₀ : ℂ)

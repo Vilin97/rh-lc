@@ -18,8 +18,6 @@ theorem pureA_add_algebraMap {κ : Type} (f : (κ → mixedEmbedding.mixedSpace 
       g ((fun j => algebraMap F (FiniteAdeleRing (𝓞 F) F) (ξ j)) + fun j => (x j).2) := by
   unfold GlobalTheory.WeilM.pureA
   congr 2
-  funext j
-  simp only [Pi.add_apply]
   rw [show (algebraMap F (AdeleRing (𝓞 F) F) (ξ j) + x j).1 = (algebraMap F (AdeleRing (𝓞 F) F) (ξ j)).1 + (x j).1 from rfl,
     map_add, InfiniteAdeleRing.mixedEmbedding_eq_algebraMap_comp]
   rfl

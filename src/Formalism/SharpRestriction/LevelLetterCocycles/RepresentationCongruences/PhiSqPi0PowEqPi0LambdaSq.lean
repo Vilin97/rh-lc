@@ -193,8 +193,6 @@ theorem crisMap_dvO (W : LocWach PD LL O v n) {T₁ T₂ : LocLat G Qp LL O} (F 
   rw [← dv_sum W T₂ e b Finset.univ (fun m => algebraMap O LL (c₁ m)) (fun m k => algebraMap O LL (μ m k)),
     ← dv_smul]
   congr 1
-  funext k
-  simp only [← map_mul, ← map_sum, hSig k]
   by_cases hk : k = k₀
   · subst hk; simp
   · simp [hk, Pi.single_apply]

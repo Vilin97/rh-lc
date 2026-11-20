@@ -25,8 +25,6 @@ theorem splitLat_le {n : ℕ} {L : Submodule (𝓞 E) (Fin n → E)}
     (fun y hy => ?_) hy
   · have := N.smul_mem ⟨a, ha⟩ (hN x hx)
     convert this using 1
-    funext i
-    simp only [splitVec, splitProj_tmul]
     rfl
   · have : splitVec τ (0 : Fin n → Fv F v ⊗[F] E) = 0 := funext fun _ => map_zero _
     rw [this]; exact zero_mem _

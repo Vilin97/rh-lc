@@ -340,8 +340,6 @@ theorem Lf_mat {d₁ d₂ : ℕ}
       ((d₁ : I.E ⊗[I.F] Formalism.MainNotions.S.Af I.F) * y j))
     (fun i => sum_mem fun j _ => mul_mem (hM i j) (H₁ y hy j))
   convert hw using 1
-  funext i
-  simp only [Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   push_cast
   ring

@@ -122,8 +122,6 @@ theorem asm (hA : StokesSimplexSubdivision) (hH : SubHyp) (hS : SubSlice) (U : S
       rw [P_cons]
     · simp only [I]
       congr 1
-      funext s
-      simp only [hP]
       rw [P_insertNth, zero_smul, add_zero]
       simp only [Fin.succ_succAbove_zero, Fin.succ_succAbove_succ, hr]
       rfl
@@ -162,8 +160,6 @@ theorem asm (hA : StokesSimplexSubdivision) (hH : SubHyp) (hS : SubSlice) (U : S
       funext s
       rw [← hA V q]
       congr 1
-      funext j
-      simp only [Fin.succ_zero_eq_one, sub_sub_sub_cancel_right]
     rw [e1, integral_finset_sum]
     · congr 1
       funext i

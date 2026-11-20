@@ -71,8 +71,6 @@ theorem FlagBundleChartSection.proof : FlagBundleChartSection.Statement := by
     rw [segreVec_pow, ← chartPow_natCast, ← chartPow_natCast, ← chartPow_natCast]
     simp only [← chartPow_add hY]
     congr 1
-    funext k
-    simp only [Pi.add_apply, δ, γ₁, γ₂]
     omega
   have hevY : ∀ l, eval₂ ((algebraMap Ω Φ).comp (algebraMap F Ω))
       (projCoord y w φ (truncCoord t ((i : ℕ) + 1))) (Y l) =

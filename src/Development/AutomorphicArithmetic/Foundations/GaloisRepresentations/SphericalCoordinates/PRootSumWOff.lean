@@ -22,8 +22,6 @@ private theorem rts_conj {F : Type} [Field F] [NumberField F] (χ : F[X]) (τ : 
   rw [h, Multiset.map_map]
   conv_lhs => rw [← Multiset.map_id (rts χ τ)]
   congr 1
-  funext z
-  simp
 
 private theorem ball_eq {F : Type} [Field F] [NumberField F] {n : ℕ} (t₀ : F →+* ℂ) (χ : F[X])
     (g₀ g₁ : Fin n → ℂ) (y q : ℂ) (hr : rts χ t₀ = Finset.univ.val.map g₀)

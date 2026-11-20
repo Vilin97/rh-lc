@@ -76,8 +76,6 @@ theorem single_mem_schwartzBruhat {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ sch
       exact mem_finiteSchwartzBruhat.2
         ⟨hlc.comp_continuous hcl.continuous, hcs.comp_isClosedEmbedding hcl⟩
     convert schwartzBruhatTensor_mem φ' hg' using 1
-    funext t
-    simp only [schwartzBruhatTensorPi, schwartzBruhatTensor, hφ']
     congr 2
     · funext i
       by_cases h : i = i₀

@@ -27,8 +27,6 @@ theorem scaleAll_mem (P : Ideal (MRing ι)) (hP : IsMultiHomogIdeal P) (c : K �
     | insert k s hk ih =>
       have h := scaleBlock_mem_zeroLocus P hP k (hc k) ih
       convert h using 1
-      funext p
-      simp only [scaleBlock, Finset.mem_insert]
       by_cases hpk : p.1 = k
       · subst hpk
         simp [hk]

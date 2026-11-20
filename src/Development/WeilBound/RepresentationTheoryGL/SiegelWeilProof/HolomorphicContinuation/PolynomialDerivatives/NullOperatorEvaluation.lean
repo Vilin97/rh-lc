@@ -14,30 +14,22 @@ theorem mom_add (c : ℝ) (hc : 0 < c) (P Q : PX m n) : mom c (P + Q) = mom c P 
   unfold mom
   rw [← integral_add (integrable_pg c hc P) (integrable_pg c hc Q)]
   congr 1
-  funext x
-  simp only [evX, map_add, add_mul]
 
 theorem mom_C_mul (c : ℝ) (a : ℂ) (P : PX m n) : mom c (C a * P) = a * mom c P := by
   unfold mom
   rw [← integral_const_mul]
   congr 1
-  funext x
-  simp only [evX, map_mul, eval_C, mul_assoc]
 
 theorem mom_sub (c : ℝ) (hc : 0 < c) (P Q : PX m n) : mom c (P - Q) = mom c P - mom c Q := by
   unfold mom
   rw [← integral_sub (integrable_pg c hc P) (integrable_pg c hc Q)]
   congr 1
-  funext x
-  simp only [evX, map_sub, sub_mul]
 
 theorem mom_sum (c : ℝ) (hc : 0 < c) {ι : Type*} (s : Finset ι) (f : ι → PX m n) :
     mom c (∑ i ∈ s, f i) = ∑ i ∈ s, mom c (f i) := by
   unfold mom
   rw [← MeasureTheory.integral_finsetSum s (fun i _ => integrable_pg c hc (f i))]
   congr 1
-  funext x
-  simp only [evX, map_sum, Finset.sum_mul]
 
 theorem pderiv_Sg (c : ℝ) (k : Fin m × Fin n × Bool) :
     pderiv k (Sg c : PX m n) = C (-(c : ℂ)) * X (k.1, k.2.1, !k.2.2) := by

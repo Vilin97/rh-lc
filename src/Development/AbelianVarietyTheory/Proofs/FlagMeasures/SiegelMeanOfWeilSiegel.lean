@@ -162,8 +162,6 @@ theorem test_eq_term (I : AutInst) (θ : InfinitePlace I.F → (Ainf I.F ⊗[I.F
       Matrix.mul_nonsing_inv_cancel_right _ _ ((Matrix.isUnit_iff_isUnit_det _).1 (I.P_unit v)),
       ← Matrix.mulVec_mulVec]
     congr 1
-    funext i
-    simp only [projInf, e0, map_sum, map_mul, Algebra.TensorProduct.map_tmul, map_one, AlgHom.id_apply, (hθ v).1]
     rfl
   unfold term
   by_cases hx : X 0 ∈ lamX I (T h)

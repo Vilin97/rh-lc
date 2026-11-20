@@ -230,8 +230,6 @@ theorem T_smInt {t : ℕ} (ψ : AddChar k Circle) (hψ : Continuous ψ) (T : W �
   haveI : (muD k (t + 1)).IsAddHaarMeasure := by unfold muD; infer_instance
   rw [← GlobalTheory.CompanionTheory.Rodier.SmIntEl.smInt_linear (muD k (t + 1)) T (chi_smul_lc ψ hψ l) (chi_smul_cs ψ c)]
   congr 1
-  funext d
-  simp
 
 theorem smInt_shift {t : ℕ} (ψ : AddChar k Circle) (hψ : Continuous ψ) {F : (Fin (t + 1) → k) → W}
     (l : IsLocallyConstant F) (c : HasCompactSupport F) (e : Fin (t + 1) → k) :

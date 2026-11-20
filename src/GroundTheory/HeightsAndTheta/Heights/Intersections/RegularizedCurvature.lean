@@ -120,8 +120,6 @@ theorem log_norm_pluriharmonic {T : (J → ℂ) → ℂ} {z : J → ℂ} (hT : A
   have hre : ContDiffAt ℝ 2 (fun y => (Complex.log (T y / T z)).re) z := by
     have h := (Complex.reCLM.contDiff (n := 2)).contDiffAt.comp z (hG.restrictScalars.contDiffAt (n := 2))
     convert h using 1
-    funext y
-    simp
   have hc : ContDiffAt ℝ 2 (fun _ : J → ℂ => (1 : ℝ)) z := contDiffAt_const
   refine ⟨(hre.add (contDiffAt_const.mul hc)).congr_of_eventuallyEq hev, ?_⟩
   rw [ReciprocityTheory.AnForm.levi_congr hev w, ReciprocityTheory.AnForm.levi_add_smul _ hre hc w,

@@ -56,8 +56,6 @@ theorem zeta_eq_integral_integrand_nc : ResidueKilled.DM → ∀ (D : D7) (ψ : 
       simp only [GlobalTheory.Eis.petCoef, rcoef, petersson, pet, rTr, GlobalTheory.AutomorphicL2Unitary.descend]
       rw [← integral_conj]
       congr 1
-      funext q
-      simp
     rw [integrand, ← e1, ← e2]
     rfl
   have hEF := hDM1.1.1

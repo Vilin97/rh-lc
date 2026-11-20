@@ -603,8 +603,6 @@ theorem mat_add_vecMulVec (Z : Matrix (Fin n) (Fin n) K) (m β y : Fin n → K) 
     (Z + vecMulVec m β) *ᵥ y = Z *ᵥ y + (β ⬝ᵥ y) • m := by
   rw [Matrix.add_mulVec]
   congr 1
-  funext a
-  simp only [Matrix.mulVec, dotProduct, vecMulVec_apply, Pi.smul_apply, smul_eq_mul,
     Finset.sum_mul]
   refine Finset.sum_congr rfl fun b _ => ?_
   ring

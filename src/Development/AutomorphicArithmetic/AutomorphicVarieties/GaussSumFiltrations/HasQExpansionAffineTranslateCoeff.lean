@@ -122,8 +122,6 @@ theorem hasQ_aff : ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (k
     rw [weightSlash_hilbertAffine_apply]
     have hc := (Equiv.hasSum_iff (Units.mulRight ε⁻¹)).mpr hs
     convert hc using 1
-    funext ξ
-    simp only [Function.comp_apply, Units.mulRight_apply, Units.val_inv_eq_inv_val]
     rw [← div_eq_mul_inv, div_mul_cancel₀ _ hε0]
     ring
 

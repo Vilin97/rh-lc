@@ -35,8 +35,6 @@ theorem sum_cycWord_eq_trace (M : Matrix (Fin n) (Fin n) R) (k : ℕ) :
   dsimp only [Fin.consEquiv, Equiv.coe_fn_mk]
   rw [cycWord, List.map_ofFn]
   congr 2
-  funext l
-  simp only [Function.comp_apply]
   rw [Fin.cons_snoc_eq_snoc_cons, Fin.snoc_castSucc, ← Fin.cons_snoc_eq_snoc_cons, Fin.cons_succ]
   congr 1
   refine Fin.lastCases ?_ (fun l => ?_) l

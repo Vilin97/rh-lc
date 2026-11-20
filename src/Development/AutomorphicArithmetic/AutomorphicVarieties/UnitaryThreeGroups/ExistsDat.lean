@@ -114,8 +114,6 @@ private theorem dx_cont (Ω : Type) [Field Ω] [CharZero Ω] [IsAlgClosure ℚ �
   have h3 := (dx_dir Ω ψ).comp fun u : Oˣ => Ideal.Quotient.mk (IsLocalRing.maximalIdeal O ^ n) (u : O)
   have h4 := h2.mul h3
   convert h4 using 1
-  funext g
-  simp only [Chr.Psi, MonoidHom.mul_apply, Units.val_mul, map_mul, Pi.mul_apply, Function.comp_apply]
   rfl
 
 private theorem dx_place {Ω : Type} [Field Ω] [CharZero Ω] {l : ℕ} [hl : Fact l.Prime] (j : Ω →+* Om l) :

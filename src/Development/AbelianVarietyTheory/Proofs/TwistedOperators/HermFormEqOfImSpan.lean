@@ -213,8 +213,6 @@ theorem perFr_shift (hMod : R.IsModels) (hTie : TieIn T R κ v₀) (i : Fin D.R.
       perFr ((T.U ((i : ℕ) + 1) σ).X (dictW T i σ hV h).1) (dictW T i σ hV h).2 (fun m => (M *ᵥ v) (Fin.cast (rank_Wc i).symm m)) τ j := by
   rw [(shift_core hMod hTie i σ hσ hV hS h ha hfr hfr' hM).1]
   congr 1
-  funext m
-  simp only [Matrix.reindex_apply, Matrix.mulVec, dotProduct, Matrix.submatrix_apply]
   exact Equiv.sum_comp (finCongr (rank_Wc i)).symm (fun n => M (Fin.cast (rank_Wc i).symm m) n * v n)
 
 end Shift

@@ -113,8 +113,6 @@ theorem linearIndependent_fderiv_eqns : ∀ (k : Type) [Field k] [CharZero k] (Y
   have hli := SncChart.linearIndependent_fderiv_params k Y p n σ c x₀ hx V hyV N F hR''
   have h2 := hli.comp e e.injective
   convert h2 using 1
-  funext i
-  simp only [Function.comp_apply]
   exact fderiv_ev_eq_of_germ_eq k Y p σ n c x₀ hx _ _ (hyU i.1) hyV (f i.1) (F (e i)) ((hr' i).symm.trans (hF (e i)).symm)
 
 theorem isCompatChart_of_holAlong : ∀ (k : Type) [CommRing k] (Y : Scheme.{0}) (p : Y ⟶ Sp k) (σ : k →+* ℂ) (n : ℕ)

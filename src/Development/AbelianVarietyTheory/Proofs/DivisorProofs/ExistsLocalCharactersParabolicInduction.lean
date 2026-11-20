@@ -29,16 +29,12 @@ theorem mapA_add' {a a' : ℕ} {ν β : kˣ →* ℂˣ} {z : ℂ} {l : (Matrix (
   funext x
   rw [Pi.add_apply, mapA, mapA, mapA, ← hl.1 _ (restrict_X0 (omA_mem_SB ν β 1 x h)) _ (restrict_X0 (omA_mem_SB ν β 1 x h'))]
   congr 1
-  funext g
-  simp only [omA, Pi.add_apply, mul_add]
 
 theorem mapA_smul' {a a' : ℕ} {ν β : kˣ →* ℂˣ} {z : ℂ} {l : (Matrix (Fin a) (Fin a) k → ℂ) → ℂ} (hl : IsEqv ν z l) (c : ℂ)
     {Φ : Matrix (Fin a) (Fin (a + a')) k → ℂ} (h : Φ ∈ SB _) : mapA a' l ν β (c • Φ) = c • mapA a' l ν β Φ := by
   funext x
   rw [Pi.smul_apply, smul_eq_mul, mapA, mapA, ← hl.2.1 c _ (restrict_X0 (omA_mem_SB ν β 1 x h))]
   congr 1
-  funext g
-  simp only [omA, Pi.smul_apply, smul_eq_mul]
   ring
 
 theorem mapA_left {a a' : ℕ} {ν β : kˣ →* ℂˣ} {l : (Matrix (Fin a) (Fin a) k → ℂ) → ℂ}
@@ -50,8 +46,6 @@ theorem mapA_left {a a' : ℕ} {ν β : kˣ →* ℂˣ} {l : (Matrix (Fin a) (Fi
     rw [← omA_mul, ← omA_mul, one_mul, mul_one, one_mul, mul_one]
   rw [mapA, mapA, e, ← hl.2.2 g⁻¹ 1 _ hs, ← hl.2.1 _ _ (comp_mul_mem_SB g⁻¹ 1 hs)]
   congr 1
-  funext y
-  simp only [omA, Pi.smul_apply, smul_eq_mul, map_one, map_inv, mul_one, Units.val_one, Matrix.mul_one, apow_one,
     Fintype.card_fin, apow_inv, Matrix.mul_assoc, neg_div, inv_one, Matrix.one_mul, one_mul]
 
 theorem mapA_ne {a a' : ℕ} {ν β : kˣ →* ℂˣ} {l : (Matrix (Fin a) (Fin a) k → ℂ) → ℂ} (hl : ∃ φ ∈ SB _, l φ ≠ 0) :

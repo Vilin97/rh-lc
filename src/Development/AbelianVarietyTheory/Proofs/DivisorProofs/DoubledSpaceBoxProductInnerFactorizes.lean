@@ -137,7 +137,5 @@ theorem GlobalTheory.DblBoxHaar.box_integral : ∀ (D : D7) (ψ : AddChar (AF D.
   · intro a a' b b' _ _ _ _
     rw [← GlobalTheory.DblBoxHaar.setIntegral_blocks eM μ₁ 𝓕₁ (fun u => a u * star (a' u)) (fun v => b v * star (b' v))]
     congr 1
-    funext w
-    simp only [GlobalTheory.DblBox.box, star_mul', star_star]
     show _ = a (GlobalTheory.DblBox.top w) * star (a' (GlobalTheory.DblBox.top w)) * (star (b (GlobalTheory.DblBox.bot w)) * b' (GlobalTheory.DblBox.bot w))
     ring

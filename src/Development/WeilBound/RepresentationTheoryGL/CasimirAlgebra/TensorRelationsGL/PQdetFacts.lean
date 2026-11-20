@@ -33,8 +33,6 @@ theorem capelliC_negT {n : ℕ} (E : Fin n → Fin n → A) (x : ℂ) :
       (List.ofFn fun j : Fin n => capEntry E ((n : ℂ) - 1 - x - (n : ℂ) + 1 + ((j : ℕ) : ℂ)) j (σ j)).map Neg.neg := by
     rw [List.map_ofFn]
     congr 1
-    funext j
-    simp only [Function.comp, capEntry]
     by_cases hj : σ j = j
     · rw [if_pos hj, if_pos hj.symm, neg_add, ← map_neg]
       congr 2

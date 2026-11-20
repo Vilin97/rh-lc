@@ -93,16 +93,12 @@ theorem fin_mul_mem (θ : InfFam D) {h : (Fin a → Fin n → Af D.host.F ⊗[D.
     ring
   | zero =>
     convert (schwartzA θ a n).zero_mem using 1
-    funext x
-    simp
   | add Φ₁ Φ₂ _ _ h₁ h₂ =>
     convert (schwartzA θ a n).add_mem h₁ h₂ using 1
     funext x
     simp [mul_add]
   | smul c Φ _ h₁ =>
     convert (schwartzA θ a n).smul_mem c h₁ using 1
-    funext x
-    simp only [Pi.smul_apply, smul_eq_mul]
     ring
 
 theorem mul_mem (θ : InfFam D) {Φ Φ' : Mx D a n → ℂ} (hΦ : Φ ∈ schwartzA θ a n) (hΦ' : Φ' ∈ schwartzA θ a n) :
@@ -116,8 +112,6 @@ theorem mul_mem (θ : InfFam D) {Φ Φ' : Mx D a n → ℂ} (hΦ : Φ ∈ schwar
     ring
   | zero =>
     convert (schwartzA θ a n).zero_mem using 1
-    funext x
-    simp
   | add Φ₁ Φ₂ _ _ h₁ h₂ =>
     convert (schwartzA θ a n).add_mem h₁ h₂ using 1
     funext x
@@ -138,16 +132,10 @@ theorem conj_mem (θ : InfFam D) {Φ : Mx D a n → ℂ} (hΦ : Φ ∈ schwartzA
     simp
   | zero =>
     convert (schwartzA θ a n).zero_mem using 1
-    funext x
-    simp
   | add Φ₁ Φ₂ _ _ h₁ h₂ =>
     convert (schwartzA θ a n).add_mem h₁ h₂ using 1
-    funext x
-    simp
   | smul c Φ _ h₁ =>
     convert (schwartzA θ a n).smul_mem (conj c) h₁ using 1
-    funext x
-    simp
 
 theorem row_mem (θ : InfFam D) {Φ : Mx D a n → ℂ} {φ : Mx D 1 n → ℂ} (hΦ : Φ ∈ schwartzA θ a n)
     (hφ : φ ∈ schwartzA θ 1 n) :
@@ -180,21 +168,15 @@ theorem row_mem (θ : InfFam D) {Φ : Mx D a n → ℂ} {φ : Mx D 1 n → ℂ} 
         ring
     | zero =>
       convert (schwartzA θ (a + 1) n).zero_mem using 1
-      funext x
-      simp
     | add Φ₁ Φ₂ _ _ h₁ h₂ =>
       convert (schwartzA θ (a + 1) n).add_mem h₁ h₂ using 1
       funext x
       simp [mul_add]
     | smul c Φ _ h₁ =>
       convert (schwartzA θ (a + 1) n).smul_mem c h₁ using 1
-      funext x
-      simp only [Pi.smul_apply, smul_eq_mul]
       ring
   | zero =>
     convert (schwartzA θ (a + 1) n).zero_mem using 1
-    funext x
-    simp
   | add Φ₁ Φ₂ _ _ h₁ h₂ =>
     convert (schwartzA θ (a + 1) n).add_mem h₁ h₂ using 1
     funext x

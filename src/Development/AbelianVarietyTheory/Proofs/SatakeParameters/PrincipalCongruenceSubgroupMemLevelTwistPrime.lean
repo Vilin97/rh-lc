@@ -178,8 +178,6 @@ by
           (fun l => (fun _ => (0 : ℤ)) l + if R.k + j ≤ l ∧ l < R.N j then 1 else 0) := by
       unfold LocE.parL
       congr 1
-      funext l
-      simp
     have hM : ∀ _s : ℕ, LocE.parL P.1 (qOf P.1) (R.k + j) (R.N j) (cOf R j) ≤ stdAt X.E (R.N j + cOf R j) P.1 := by
       intro _
       rw [ep, ← sclLat_zero (P := P.1) (qOf P.1)]

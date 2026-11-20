@@ -12,8 +12,6 @@ private lemma hc_conj_invariant {F : Type} [Field F] (a b n : ℕ) (α : GL (Fin
   congr 1
   rw [← finsum_comp_equiv (Equiv.mulLeft p)]
   congr 1
-  funext y
-  simp only [Equiv.coe_mulLeft, mul_inv_rev, mul_assoc, inv_mul_cancel_left]
 
 private lemma inPar_swap_eq_inPar_aflipG {F : Type} [Field F] (a b : ℕ) (α : GL (Fin a) F → ℂ)
     (β : GL (Fin b) F → ℂ) (hα : IsCl α) (hβ : IsCl β) (z : GL (Fin (a + b)) F) :

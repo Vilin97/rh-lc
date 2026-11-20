@@ -270,13 +270,9 @@ def dieuF (σ : R ≃+* R) (β : Matrix (Fin n) (Fin n) R) :
   map_add' x y := by
     rw [← mulVec_add]
     congr 1
-    funext i
-    simp
   map_smul' c x := by
     rw [← mulVec_smul]
     congr 1
-    funext i
-    simp
 
 def dieuV (σ : R ≃+* R) (γ : Matrix (Fin n) (Fin n) R) :
     (Fin n → R) →ₛₗ[(σ.symm : R →+* R)] (Fin n → R) where

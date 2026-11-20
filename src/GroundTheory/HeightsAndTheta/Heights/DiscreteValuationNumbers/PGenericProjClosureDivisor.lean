@@ -199,8 +199,6 @@ theorem chart_forms_uniform (y : (Σ k, ι k) → Ω) (e : Module.Basis (Fin N) 
     have h : vdeg (K := K) (fun _ => ∑ j, n j) = vdeg (fun _ => n l) + vdeg (fun _ => ∑ j, n j - n l) := by
       rw [← vdeg_add]
       congr 1
-      funext k
-      simp only [Pi.add_apply]
       omega
     rw [h]
     exact IsWeightedHomogeneous.mul (hU l) (chartMonoZ_homog c _)

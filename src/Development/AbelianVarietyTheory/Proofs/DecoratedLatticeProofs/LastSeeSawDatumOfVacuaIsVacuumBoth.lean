@@ -46,8 +46,6 @@ theorem heis_right (ψ : AddChar (AF D.host.F) ℂ) {V₀ A L S X T L'' : HSp D}
   show heisO ψ S X b (o''.boxT S Φ₂ fun w => Ξ ((o.resS S).symm (u, kap τ S w))) = _
   rw [o''.heisO_boxT]
   congr 1
-  funext w
-  simp only [heisO]
   have e : (o.resS S).symm (u, kap τ S (w + (o''.resT S b).2)) =
       (o.resS S).symm (u, kap τ S w) + (o.resS S).symm (0, kap τ S (o''.resT S b).2) := by
     rw [kadd, ← map_add, Prod.mk_add_mk, add_zero]

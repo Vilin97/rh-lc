@@ -317,8 +317,6 @@ theorem det_mul_mem_dual_weyl_shift {r : ℕ} (ν : Fin r → ℕ) {g : MvPolyno
   · rw [mem_weightedHomogeneousSubmodule] at hg1 hd1 ⊢
     have h := hd1.mul hg1
     convert h using 1
-    funext a
-    simp only [Pi.add_apply]
     omega
   · simp only [Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply,
       AlgHom.toLinearMap_apply, sub_eq_zero] at hg2 hd2 ⊢

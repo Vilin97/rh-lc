@@ -156,8 +156,6 @@ theorem mem_ballDom_iff_posDef_bigZe {Ψ : Type} [Fintype Ψ] [DecidableEq Ψ] {
         (1 - (ballMat q t τ)ᵀᴴ * (ballMat q t τ)ᵀ) := by
     rw [bigZ, blockDiagonal_conjTranspose, ← blockDiagonal_mul, ← blockDiagonal_one, ← blockDiagonal_sub]
     congr 1
-    funext τ
-    simp only [Pi.sub_apply, Pi.one_apply]
     rw [fromBlocks_conjTranspose, fromBlocks_multiply]
     simp only [conjTranspose_zero, mul_zero, zero_mul, add_zero, zero_add, ← fromBlocks_one]
     ext (a | a) (c | c) <;> simp [Matrix.one_apply]

@@ -1120,8 +1120,6 @@ theorem kap_Pj (h : M.Ty P → ℂ) (ρ : M.Ty P) : d.κ h * Pj d ρ = h ρ • 
   unfold Pj
   rw [← map_mul, ← map_smul]
   congr 1
-  funext τ
-  simp only [Pi.mul_apply, Pi.smul_apply, smul_eq_mul]
   split_ifs with hτ
   · subst hτ; ring
   · ring
@@ -1145,8 +1143,6 @@ theorem sum_Pj : ∑ ρ, Pj d ρ = 1 := by
   unfold Pj
   rw [← map_sum, ← map_one d.κ]
   congr 1
-  funext τ
-  simp only [Finset.sum_apply, Pi.one_apply]
   rw [Finset.sum_ite_eq]
   simp
 

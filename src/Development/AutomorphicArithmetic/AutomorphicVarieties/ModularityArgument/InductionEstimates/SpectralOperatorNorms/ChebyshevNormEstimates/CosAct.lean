@@ -66,8 +66,6 @@ private theorem coset_fun {G : Type*} [Group G] [TopologicalSpace G] [IsTopologi
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [← integral_mul_left_eq_self _ c.out, coset_pre]
   congr 1
-  funext g
-  simp only [Set.indicator_apply, Set.mem_preimage, inv_mul_cancel_left]
 
 private theorem fin_facts {K : Type} [Field K] [NumberField K] {n : ℕ} {k : AdelicGLn.FiniteAdelicGL K n}
     (hk : k ∈ AdelicGLn.integralFiniteGL K n) :

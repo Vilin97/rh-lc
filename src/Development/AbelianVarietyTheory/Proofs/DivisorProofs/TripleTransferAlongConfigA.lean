@@ -92,8 +92,6 @@ theorem nonzero_coneFin : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Nu
     simp only [GlobalTheory.ConeBump.integ]
     rw [hone, (locOp_rho G.M.co hψ v (shiftA H H' 1) hφ₀).2]
     congr 1
-    funext x
-    simp only [schr, Prod.fst_neg, Prod.snd_neg]
     rw [← mul_assoc, ← AddChar.map_add_eq_mul, add_neg_cancel_right]
     have h2 : x ⬝ᵥ w.2 + ⅟(2 : Fv F v) * (w.1 ⬝ᵥ w.2) + ((x + w.1) ⬝ᵥ -w.2 + ⅟(2 : Fv F v) * (-w.1 ⬝ᵥ -w.2)) = 0 := by
       simp only [add_dotProduct, dotProduct_neg, neg_dotProduct, neg_neg]

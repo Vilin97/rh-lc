@@ -97,8 +97,6 @@ theorem setIntegral_unitCube_add_of_entire_periodic {g : ℕ} {f : (Fin g → �
       congr 1
       funext x
       congr 1
-      funext j
-      simp
       ring) (Set.mem_univ w) (Set.mem_univ 0)
   simpa using h
 

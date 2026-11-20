@@ -112,8 +112,6 @@ private theorem jr_abs {l : ℕ} [Fact l.Prime] {F : GFrame l} {O : Type} [CommR
         unfold GFrame.oEl
         rw [map_list_prod, List.map_ofFn]
         congr 2
-        funext j
-        simp only [Function.comp_apply, map_sub, MonoidAlgebra.mapRingHom_single, map_one]
         rfl
       rw [h1]
       exact UpperTheory.V.AlgebraTools.Det.oElRep F O K n (ρ i) v _ (hflag i v) g

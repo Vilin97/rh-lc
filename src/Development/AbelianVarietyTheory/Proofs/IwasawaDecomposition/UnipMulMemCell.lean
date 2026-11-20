@@ -40,8 +40,6 @@ variable [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 theorem tD_zero (ϖ : kˣ) : tD ϖ (0 : Fin m → ℤ) = 1 := by
   rw [tD, ← map_one (diagT k (Fin m))]
   congr 1
-  funext i
-  simp
 
 theorem tD_neg (ϖ : kˣ) (a : Fin m → ℤ) : tD ϖ (-a) = (tD ϖ a)⁻¹ :=
   eq_inv_of_mul_eq_one_left (by rw [← tD_add, neg_add_cancel, tD_zero])

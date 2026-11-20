@@ -105,8 +105,6 @@ theorem qb_evGL_torus_TMat (mu : Fin n → ℤ) (J I : TIdx mu) :
     simp only [if_true]
     rw [qb_prod_single, AddMonoidAlgebra.single_mul_single, one_mul]
     congr 1
-    funext a
-    simp only [qb_wtT, Pi.add_apply, Pi.smul_apply, Finset.sum_apply, Pi.single_apply, card_filter,
       Nat.cast_sum, smul_eq_mul]
     simp
   · have : ∃ c, (J c).1 ≠ (I c).1 := by

@@ -154,8 +154,6 @@ theorem dualLowestKType_of_standard (hK : EigenspaceWeightConeStandard n) : Eige
     rw [hW] at this
     apply cone_rev
     convert this using 1
-    funext a
-    simp only [Pi.sub_apply]
     ring
   · have h1' := xs_tw (ε := ε) h1
     rw [← hθ, ← hG] at h1'

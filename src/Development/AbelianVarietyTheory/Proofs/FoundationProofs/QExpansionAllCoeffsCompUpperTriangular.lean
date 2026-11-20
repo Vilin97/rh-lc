@@ -30,8 +30,6 @@ theorem qAll_affine : ∀ (E : Subring ℂ) (N a d : ℕ) (b : ℤ) (f : ℍ →
     rw [← hinj.hasSum_iff]
     · show HasSum (fun k => _) (f _)
       convert hτ using 1
-      funext k
-      simp only [Function.comp, dvd_mul_right, if_true, Nat.mul_div_cancel_left k ha, e]
       rw [mul_assoc, ← Complex.exp_add]
       congr 2
       push_cast

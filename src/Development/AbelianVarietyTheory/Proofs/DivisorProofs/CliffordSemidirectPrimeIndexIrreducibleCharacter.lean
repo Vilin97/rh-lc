@@ -67,8 +67,6 @@ theorem clifford_prime_index : ∀ (G Γ : Type) [Group G] [Finite G] [Group Γ]
     intro a
     rw [← hnorm]
     congr 1
-    funext x
-    simp only
     rw [star_mul, star_pow]
     calc χ x * (η x : ℂ) ^ a * (star (η x : ℂ) ^ a * star (χ x))
         = χ x * star (χ x) * ((η x : ℂ) * star (η x : ℂ)) ^ a := by ring

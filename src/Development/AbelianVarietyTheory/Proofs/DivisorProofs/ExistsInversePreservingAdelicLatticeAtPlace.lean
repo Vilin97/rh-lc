@@ -88,13 +88,9 @@ def latV {d : ℕ} (W : Spc F E d) (v : Pl F) : Submodule (v.adicCompletionInteg
     have hb' : (fun i => liftT E v (b i)) ∈ latAt W v := hb
     show (fun i => liftT E v ((a + b) i)) ∈ latAt W v
     convert add_mem ha' hb' using 1
-    funext i
-    simp
   zero_mem' := by
     show (fun i => liftT E v ((0 : Fin d → Fv F v ⊗[F] E) i)) ∈ latAt W v
     convert zero_mem (latAt W v) using 1
-    funext i
-    simp
   smul_mem' := by
     intro r u hu
     show (fun i => liftT E v ((r : Fv F v) • u i)) ∈ latAt W v

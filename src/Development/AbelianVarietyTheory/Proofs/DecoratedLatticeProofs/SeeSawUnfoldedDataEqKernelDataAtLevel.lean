@@ -98,8 +98,6 @@ theorem theta_comb_left {ψ : AddChar (AF D.host.F) ℂ} {A S A' : HSp D} (Y : W
     · intro x s hx ih
       have := Formalism.IndefR.Fock.CCR.theta_add_smul ih (hY (v + x)) (c x * ψ (symplOH S A' v x))
       convert this using 1
-      funext u
-      simp only [Finset.sum_insert hx, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
       ring
   simpa only [comb_apply] using key c.support
 

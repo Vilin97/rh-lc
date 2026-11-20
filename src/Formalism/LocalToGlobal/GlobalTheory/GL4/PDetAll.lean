@@ -53,8 +53,6 @@ theorem glChar_single_eq (a b : Fin n) (t : Kˣ) :
     simp only [P, Units.val_mul, brpGL_coe, brpDiag_coe]
     rw [brp_perm_diag]
     congr 2
-    funext x
-    simp only [Function.comp_apply, Pi.mulSingle_apply]
     by_cases hx : x = b
     · subst hx; simp
     · by_cases hxa : x = a

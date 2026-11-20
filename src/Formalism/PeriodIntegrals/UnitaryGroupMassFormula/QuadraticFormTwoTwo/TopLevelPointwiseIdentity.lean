@@ -119,8 +119,6 @@ theorem ffa_GG_contDiff (z z' : Fin (2 * r + k + 1) → ℂ) :
   have hζ : ContDiff ℝ ∞ (fun x : Mx k r => zetaL k r z z' (Fin.last r) x) := by
     have h1 := (LinearMap.toContinuousLinearMap (ffaZetaLin z z')).contDiff (n := ∞)
     convert h1 using 1
-    funext x
-    simp only [zetaL, ffa_fvec_last]
     rfl
   have hc : ContDiff ℝ ∞ (fun x : Mx k r => Complex.conjCLE (zetaL k r z z' (Fin.last r) x)) :=
     Complex.conjCLE.contDiff.comp hζ

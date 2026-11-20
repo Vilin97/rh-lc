@@ -214,8 +214,6 @@ theorem schwartzBruhatPoints_prodSlice_mem [FiniteDimensional K P₁] [FiniteDim
   rw [mem_schwartzBruhatPoints_iff (Module.finBasis K P₂)]
   have h := schwartzBruhatPi_sumElim_mem hφ (adelicCoord (Module.finBasis K P₁) p₁)
   convert h using 1
-  funext x
-  simp only [Function.comp_apply, adelicCoord_prod_symm_sumElim, LinearEquiv.symm_apply_apply]
 
 theorem FourPieces.adelicFourierInversion_P₂ [FiniteDimensional K P₂] [FiniteDimensional K Q₂]
     (hω : ω.Nondegenerate) (F : FourPieces ω P₁ P₂ Q₁ Q₂) {ψ : AddChar 𝔸[K] Circle} {ξ : K}

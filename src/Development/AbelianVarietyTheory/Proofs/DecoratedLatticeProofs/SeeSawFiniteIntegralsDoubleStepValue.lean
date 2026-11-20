@@ -163,8 +163,6 @@ theorem valX : ∀ (D : D7) (c : Comm D) (v : VCom c) (𝒯 : Type) (t : 𝒯 �
     intro β
     rw [(hF.e (j + 1 + 1) β).1, trc_mapDomain]
     congr 1
-    funext z
-    simp only [rTrans, mul_assoc, hcomm]
   rw [hLs.cv.1 j σ h]
   unfold Tup.perF
   rw [htwo]

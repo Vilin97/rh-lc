@@ -241,8 +241,6 @@ def diagPosSubgroup (n 𝕜 : Type*) [RCLike 𝕜] [Fintype n] [DecidableEq n] :
     have e1 : (diagonal fun i => (a i : 𝕜)) * (diagonal fun i => ((a⁻¹) i : 𝕜)) = 1 := by
       rw [diagonal_mul_diagonal, ← diagonal_one]
       congr 1
-      funext i
-      simp only [Pi.inv_apply, RCLike.ofReal_inv]
       exact mul_inv_cancel₀ (by exact_mod_cast (ha i).ne')
     calc ((g⁻¹ : GL n 𝕜) : Matrix n n 𝕜)
         = ((g⁻¹ : GL n 𝕜) : Matrix n n 𝕜) * ((g : Matrix n n 𝕜) *

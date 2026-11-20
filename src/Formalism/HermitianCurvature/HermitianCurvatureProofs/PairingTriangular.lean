@@ -145,8 +145,6 @@ lemma ψd_sub (m m' : Fin (finrank ℤ La) → ℤ) : ψd La (m - m') = ψd La m
   simp only [ψd]
   rw [← map_sub]
   congr 1
-  funext j
-  simp
 
 lemma pair_ψd_Tl (m : Fin (finrank ℤ La) → ℤ) (y : Fin (finrank ℤ La) → ℝ) :
     pair (ψd La m) (Tl La y) = ∑ j, y j * (m j : ℝ) := by

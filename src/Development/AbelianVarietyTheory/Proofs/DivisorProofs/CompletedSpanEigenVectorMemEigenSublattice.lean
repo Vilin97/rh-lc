@@ -109,8 +109,6 @@ theorem span_eigen_sat : ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (Λ 
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← hlg i, hpq i, ← smul_add, algebraMap_smul]
     congr 1
-    funext t
-    simp
   have hpE : ∀ i a, (r a).mulVec (p i) = τ a • p i := fun i => (hp i).2
   have hx1 : ∀ a, ((r a).map iK).mulVec (∑ i, σ i • fun t => iK (p i t)) =
       iK (τ a) • ∑ i, σ i • fun t => iK (p i t) := by
@@ -119,8 +117,6 @@ theorem span_eigen_sat : ∀ (K : Type) [Field K] [NumberField K] (n : ℕ) (Λ 
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Matrix.mulVec_smul, map_mulVec, hpE i a, smul_comm]
     congr 1
-    funext t
-    simp
   have hx2 : ∑ i, σ i • (fun t => iK (q i t)) = 0 := by
     refine eq_zero_of_eigen iK r τ σ q (fun d hd => ?_) (fun a => ?_)
     · refine hCW _ (Submodule.sum_mem _ fun i _ =>

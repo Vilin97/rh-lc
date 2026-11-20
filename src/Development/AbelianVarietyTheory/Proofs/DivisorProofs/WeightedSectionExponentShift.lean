@@ -253,8 +253,6 @@ theorem exists_isHomogeneous_secZ : ∀ (E : Type) [Field E] [NumberField E] [Is
       have p₂ : evalFr G (fun b' => X b' * T b') = MvPolynomial.eval (fun v => 2 * x v) G := by
         unfold evalFr
         congr 2
-        funext v
-        simp only [T, Matrix.mul_diagonal, X, Matrix.of_apply]
         exact mul_comm _ _
       have p₃ : (∏ b, (X b * T b).det ^ k b) = (∏ b, (X b).det ^ k b) * ∏ b, ∏ i, T b i i ^ k b := by
         rw [← Finset.prod_mul_distrib]

@@ -15,15 +15,11 @@ theorem fcoord_smul' (c : K) (x : V) : fcoord b X v (c • x) = v.embedding c �
   unfold fcoord vecAt
   rw [← Matrix.mulVec_smul]
   congr 1
-  funext i
-  simp
 
 private theorem fcoord_add_projection_lattices (x y : V) : fcoord b X v (x + y) = fcoord b X v x + fcoord b X v y := by
   unfold fcoord vecAt
   rw [← Matrix.mulVec_add]
   congr 1
-  funext i
-  simp
 
 theorem majAt_add_left' (x x' y : V) : majAt b X v (x + x') y = majAt b X v x y + majAt b X v x' y := by
   unfold majAt

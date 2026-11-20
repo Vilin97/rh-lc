@@ -50,8 +50,6 @@ theorem thetaRealTransl_holds : ThetaRealTranslStatement := by
   unfold theta
   rw [← tsum_mul_left]
   congr 1
-  funext l
-  simp only [thetaTerm, shiftVec_add_char, ← eC_add, ofRealVec_add]
   congr 1
   simp only [mulVec_add, dotProduct_add, add_dotProduct,
     dot_mulVec_symm hτ (shiftVec a l) (ofRealVec u)]
@@ -75,8 +73,6 @@ theorem thetaIntChar_holds : ThetaIntCharStatement := by
   rw [← tsum_mul_left]
   conv_rhs => rw [← (Equiv.addRight n).tsum_eq]
   congr 1
-  funext l
-  simp only [Equiv.coe_addRight, thetaTerm, shiftVec_add_int, ofRealVec_add, ofRealVec_intCast]
   have hk : ∀ x : ℂ, eC (x + (((l + n) ⬝ᵥ n' : ℤ) : ℂ)) = eC x := fun x => by
     rw [eC_add, eC_int, mul_one]
   simp only [dotProduct_add, shiftVec_dot_int]

@@ -109,8 +109,6 @@ theorem limit_memLp_and_integral_eq (f : ℕ → X → ℂ) (F g : X → ℂ) (h
   have hF : MemLp F 2 μ := by
     have hadd := hsub0.add (hf2 N₀)
     convert hadd using 1
-    funext x
-    simp
   have hFg : Integrable (fun x => F x * conj (g x)) μ := integrable_mul_conj hF hg
   refine ⟨hF, hFg, ?_⟩
   have hlim : Tendsto (fun n => ∫ x, f n x * conj (g x) ∂μ) atTop (𝓝 (∫ x, F x * conj (g x) ∂μ)) := by

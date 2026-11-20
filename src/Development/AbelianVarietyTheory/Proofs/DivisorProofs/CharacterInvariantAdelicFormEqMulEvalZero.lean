@@ -123,8 +123,6 @@ theorem main : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ
       rw [← hT, ← hT, ← hinv (fun i => pairA F ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (Y i)) 0)
         (pureA F f g) (mem_schA f hg)]
       congr 1
-      funext x
-      simp only [pureA, hff', psi_dot_inf hψ, hY]
       ring)
     exact ⟨α, fun f => (hT f).trans (hα f)⟩
 
@@ -134,14 +132,10 @@ theorem main : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ
       map_add' := fun g g' => by
         rw [← map_add]
         congr 1
-        funext x
-        simp only [pureA, Pi.add_apply]
         ring
       map_smul' := fun s g => by
         rw [RingHom.id_apply, ← map_smul]
         congr 1
-        funext x
-        simp only [pureA, Pi.smul_apply, smul_eq_mul]
         ring }
   obtain ⟨c, hc⟩ := GlobalTheory.CharForm.exists_eq_mul_apply_zero (κ → Af F) {χ | ∃ y : κ → Af F, χ = fun x => ψ (pairA F 0 (x ⬝ᵥ y))}
     (by
@@ -158,8 +152,6 @@ theorem main : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ
       show l (pureA F f₀ _) = l (pureA F f₀ g)
       rw [← hinv (fun i => pairA F 0 (y i)) (pureA F f₀ g) (mem_schA f₀ hg)]
       congr 1
-      funext x
-      simp only [pureA, dot_pairA_fin]
       ring)
   refine ⟨c, fun φ hφ => ?_⟩
   induction hφ using Submodule.span_induction with

@@ -184,8 +184,6 @@ theorem ptEvalSeq_smul (d : L) (a : ℤ → L) (ha : ConvergesAt a (T.ptRad ξ))
     T.ptEvalSeq hξ (fun n => d * a n) = T.ptSharp hξ d * T.ptEvalSeq hξ a := by
   rw [ptEvalSeq, ptEvalSeq, ← (T.summable_ptTerm hξ ha).tsum_mul_left]
   congr 1
-  funext n
-  simp only [ptTerm, map_mul]
   ring
 
 theorem ptEvalSeq_shift (a : ℤ → L) (N : ℤ) :
@@ -320,8 +318,6 @@ theorem ptE_sub_partialSum {X : Γ} (hX : ConvergesAt (T.zcoeff X) (T.ptRad ξ))
   rw [ptE, ptE, ptEvalSeq, ptEvalSeq, ← (T.summable_ptTerm hξ hX).tsum_sub
     (T.summable_ptTerm hξ (T.convergesAt_partialSum' (T.ptRad_pos' hξ) hX N))]
   congr 1
-  funext n
-  simp only [ptTerm, T.zcoeff_partialSum' X N n, T.zcoeff_sub_partialSum X N n]
   split_ifs <;> simp
 
 theorem tendsto_ptE_partialSum {X : Γ} (hX : ConvergesAt (T.zcoeff X) (T.ptRad ξ)) :

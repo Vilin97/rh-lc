@@ -47,8 +47,6 @@ theorem arc_add' (R : RD d) (X Y : Mx F E d.m d.n) : arc R (X + Y) = arc R X + a
   unfold arc
   rw [← map_add]
   congr 1
-  funext i
-  simp only [Pi.add_apply, loc_add]
   split_ifs <;> simp
 
 theorem homeo_symm_eq (x : mixedEmbedding.mixedSpace F) :

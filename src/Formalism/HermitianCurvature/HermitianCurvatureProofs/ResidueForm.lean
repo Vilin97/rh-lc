@@ -128,8 +128,6 @@ lemma mult_single (l : Letter ℂ S) (γ : ℂ) :
       (1 + 1 / (l.pt - γ)) • eU l.intersection_update_fsHerm_neg_one 0 0 + (1 - 1 / (l.pt - γ)) • eU l.intersection_update_fsHerm_neg_one 1 1 := by
   rw [mult_eq, eU_same, eU_same, dg_smul, dg_smul, dg_add]
   congr 1
-  funext e
-  simp only [List.map_cons, List.map_nil, List.prod_cons, List.prod_nil, mul_one]
   generalize e l.intersection_update_fsHerm_neg_one = k
   fin_cases k <;> simp [sg] <;> ring
 

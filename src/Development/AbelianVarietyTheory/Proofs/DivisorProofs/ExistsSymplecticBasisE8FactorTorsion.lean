@@ -63,8 +63,6 @@ theorem exists_family {N g : ℕ} (hN : Odd N) {T R : Type} [CommGroup T] [CommR
     rw [hrel s t (dotProduct s (E.mulVec t) • s₀) t₀ (by rw [smul_dotProduct, h₀, smul_eq_mul, _root_.mul_one]), hh,
       ← MonoidHom.zpow_apply, ← map_zpow]
     congr 2
-    funext u
-    simp only [Pi.smul_apply, smul_eq_mul, Pi.pow_apply]
     rw [← zpow_mul, _root_.mul_comm]
   have eskew : ∀ x y, e x y * e y x = 1 := fun x y => by
     have := halt (x * y)

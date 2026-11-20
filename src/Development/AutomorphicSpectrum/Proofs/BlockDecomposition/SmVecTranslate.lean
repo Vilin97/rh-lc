@@ -256,16 +256,12 @@ theorem tw_tens {V₁ : Submodule ℂ (Sm E r)} {V₂ : Submodule ℂ (Sm E s)} 
     field_simp
   | zero =>
     convert Submodule.zero_mem (tens2 V₁ V₂) using 1
-    funext m
-    simp
   | add a b _ _ ha hb =>
     convert add_mem ha hb using 1
     funext m
     simp [mul_add]
   | smul c a _ ha =>
     convert Submodule.smul_mem _ c ha using 1
-    funext m
-    simp
     ring
 
 theorem node_tens {φ : Sm E (r + s)} (hφ : φ ∈ (Tr.node t₁ t₂).space) (k : Kinf E (r + s)) (y : GL (Fin (r + s)) (Af E)) :

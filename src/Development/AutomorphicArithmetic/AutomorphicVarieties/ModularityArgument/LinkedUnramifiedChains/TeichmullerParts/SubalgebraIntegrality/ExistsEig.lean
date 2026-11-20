@@ -256,8 +256,6 @@ theorem UpperTheory.V.Z.J.D.ord1 :
     · left
       rw [al, upow, ← (diagT k (Fin n)).map_one]
       congr 1
-      funext i
-      simp
     · exact Or.inr ⟨⟨j, by omega⟩, rfl⟩
   by_cases hne : locEig π b φ μ = ⊥
   · rw [hne, rank_bot]; exact zero_le_one

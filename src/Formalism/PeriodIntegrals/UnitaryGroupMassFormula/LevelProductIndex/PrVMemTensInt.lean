@@ -43,8 +43,6 @@ theorem plDown : PLDown := by
     exact ⟨l, hl, rfl⟩
   | zero =>
     convert (latV v Lb).zero_mem using 1
-    funext j
-    simp
   | add x y _ _ hx hy =>
     have h : (fun j => prV (E := E) v ((x + y) j)) =
         (fun j => prV (E := E) v (x j)) + (fun j => prV (E := E) v (y j)) := by

@@ -185,8 +185,6 @@ theorem avg_eq_mul_branch : ∀ (ι : Type) [Fintype ι] (N n : ℕ) (hN : N = n
     show L (∫ k, Ψ (yk k) • e (jU (r' k)) ∂ν) = _
     rw [← L.integral_comp_comm (hint Ψ hΨ)]
     congr 1
-    funext k
-    simp only [L, LinearMap.coe_toContinuousLinearMap', LinearMap.coe_comp, Function.comp_apply, map_smul,
       LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply, Submodule.subtype_apply, smul_eq_mul, hJk']
   have hT : BrEqv rfl G G' lam sg T := by
     refine ⟨fun Ψ _ => Submodule.coe_mem _, ?_⟩

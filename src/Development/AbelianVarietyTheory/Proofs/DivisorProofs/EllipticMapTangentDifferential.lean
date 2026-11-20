@@ -223,8 +223,6 @@ theorem exists_vector_of_additive_curve_hom : ∀ (F : Type) [Field F] [NumberFi
   have hz : z • L (fun _ => 1) = L (fun _ => z) := by
     rw [← map_smul]
     congr 1
-    funext
-    simp
   rw [hz, hL, hef]
 
 end GlobalTheory.CMTorsion

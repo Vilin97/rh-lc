@@ -62,8 +62,6 @@ theorem LineOK.unf [SFinite μ] [SFinite M₀.μ] (h : LineOK B M om M₀ om₀ 
   · convert h.fin μK hΨ hc hd 1 using 3 with k
     rw [← hι]
     congr 1
-    funext l
-    simp only [← hf, enorm_mul]
     rw [lintegral_mul_const' _ _ (by simp)]
     congr 1
     rw [← ofReal_norm_eq_enorm, Complex.norm_real, Real.norm_of_nonneg (Real.rpow_nonneg (NNReal.coe_nonneg _) _)]
@@ -72,8 +70,6 @@ theorem LineOK.unf [SFinite μ] [SFinite M₀.μ] (h : LineOK B M om M₀ om₀ 
     funext k
     rw [← hι']
     congr 1
-    funext l
-    simp only [Model.I, mul_assoc, ← integral_mul_const, hf]
 
 end Core
 

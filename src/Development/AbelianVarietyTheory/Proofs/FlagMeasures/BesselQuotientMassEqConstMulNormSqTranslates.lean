@@ -164,8 +164,6 @@ theorem closable (hσ : IsURepOn (UJset ε) σ) (D : Submodule ℂ H) (a : H →
             _ = c * ‖A w‖ := by rw [integral_mul_const, hcdef, mul_assoc]
         · rw [integral_congr_ae e, ← integral_integral_swap (f := fun g x => K (g, x)) hK]
           congr 1
-          funext g
-          simp only [K]
           rw [integral_smul, ← integral_congr_ae (hae g), ← L2.inner_def, ← h1 g _ (hD g⁻¹ v hv) w hw, hmul]
       have hsub : ∀ w w' x, p (w - w') x = p w x - p w' x := fun w w' x => by
         simp only [p, gard_eq hσ hφ, map_sub, Pi.sub_apply, inner_sub_right]

@@ -30,8 +30,6 @@ theorem schr_adj (ψ₀ : AddChar (Fv F v) ℂ) (hψ : Continuous ψ₀) {κ : T
     simp
   rw [← integral_add_right_eq_self (fun y => f y * conj (schr ψ₀ (-w) g y)) w.1]
   congr 1
-  funext y
-  simp only [schr, Prod.fst_neg, Prod.snd_neg, map_mul, h1, add_neg_cancel_right]
   have h2 : ⅟(2 : Fv F v) * 2 = 1 := invOf_mul_self 2
   have e : -((y + w.1) ⬝ᵥ -w.2 + ⅟(2 : Fv F v) * (-w.1 ⬝ᵥ -w.2)) = y ⬝ᵥ w.2 + ⅟(2 : Fv F v) * (w.1 ⬝ᵥ w.2) := by
     simp only [add_dotProduct, dotProduct_neg, neg_dotProduct, neg_neg]

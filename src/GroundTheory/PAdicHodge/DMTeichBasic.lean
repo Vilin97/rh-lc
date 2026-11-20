@@ -491,8 +491,6 @@ noncomputable def matOp (A : Matrix ι ι Γ) (τ : Γ →+* Γ) : (ι → Γ) �
   map_add' x y := by
     rw [← Matrix.mulVec_add]
     congr 1
-    funext i
-    simp
 
 theorem matOp_apply (A : Matrix ι ι Γ) (τ : Γ →+* Γ) (x : ι → Γ) :
     matOp A τ x = A *ᵥ (fun i => τ (x i)) := rfl

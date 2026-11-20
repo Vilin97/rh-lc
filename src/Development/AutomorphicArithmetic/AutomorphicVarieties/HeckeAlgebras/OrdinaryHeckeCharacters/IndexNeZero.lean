@@ -259,8 +259,6 @@ theorem upow_add (a b : Fin n → ℤ) : upow k n (a + b) = upow k n a * upow k 
 theorem upow_neg (a : Fin n → ℤ) : upow k n (-a) = (upow k n a)⁻¹ := by
   rw [upow, upow, ← map_inv]
   congr 1
-  funext i
-  simp
 
 theorem upow_pow (a : Fin n → ℤ) (m : ℕ) : upow k n a ^ m = upow k n fun i => m * a i := by
   rw [upow, upow, ← map_pow]
@@ -425,5 +423,3 @@ theorem UpperTheory.V.Hi.glAx :
     comm _ (pow_mem (⟨_, rfl⟩ : (glData k n).z ∈ (glData k n).Tf) m) _ ⟨_, rfl⟩
   rw [h, mul_assoc, mul_inv_cancel_right, upow, ← map_mul]
   congr 1
-  funext i
-  simp

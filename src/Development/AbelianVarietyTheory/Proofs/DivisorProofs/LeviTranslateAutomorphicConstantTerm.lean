@@ -142,8 +142,6 @@ theorem isAutOn_levi_comb : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
     exact ⟨m * u * m⁻¹, conj_mem_unip hm hu, by simp⟩)
   have h2 := isAutOn_add (isAutOn_smul a h1) (isAutOn_smul b h)
   convert h2 using 1
-  funext x
-  simp
 
 end GlobalTheory.ThK.LeviShift
 

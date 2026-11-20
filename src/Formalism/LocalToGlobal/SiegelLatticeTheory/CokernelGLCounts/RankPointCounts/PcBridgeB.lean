@@ -189,8 +189,6 @@ theorem Theta_surjective : Function.Surjective (Theta M Y Z be al hY hbe hal u h
       · show Submodule.Quotient.mk (fun a => Fin.snoc (α := fun _ => M.R) x r a.castSucc) =
           Submodule.Quotient.mk x
         congr 1
-        funext a
-        simp
       · show u * _ = e
         linear_combination hs + hr
 

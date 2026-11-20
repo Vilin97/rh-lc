@@ -33,8 +33,6 @@ theorem tv_mulVec (x : Fin n → R) (t : R) (v : Fin n → R) :
     tv σ G x t *ᵥ v = v + (t * hf σ G v x) • x := by
   rw [tv, Matrix.add_mulVec, Matrix.one_mulVec]
   congr 1
-  funext a
-  simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, hf, Pi.smul_apply, smul_eq_mul,
     Finset.mul_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun e _ => ?_
   ring

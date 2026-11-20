@@ -48,8 +48,6 @@ theorem gen_smooth_equiv (φ : M ≃+ N) (h1 : Continuous φ) (h2 : Continuous �
   refine ⟨gen_smooth_comp φ.toAddMonoidHom h1 Z Z' (fun x => (hZ x).2) f, fun h => ?_⟩
   have := gen_smooth_comp φ.symm.toAddMonoidHom h2 Z' Z (fun x hx => (hZ _).1 (by simpa using hx)) _ h
   convert this using 1
-  funext x
-  simp
 
 theorem gen_level (φ : M ≃+ N) (h1 : Continuous φ) (h2 : Continuous φ.symm) (Z Q : M → Prop) (Z' Q' : N → Prop)
     (hZ : ∀ x, Z' (φ x) ↔ Z x) (hQ : ∀ x, Q' (φ x) ↔ Q x) :
@@ -65,8 +63,6 @@ theorem gen_level (φ : M ≃+ N) (h1 : Continuous φ) (h2 : Continuous φ.symm)
 
 theorem gen_cont_equiv (φ : M ≃+ N) (h2 : Continuous φ.symm) (f : N → ℂ) (h : Continuous (f ∘ φ)) : Continuous f := by
   convert h.comp h2 using 1
-  funext x
-  simp
 
 omit [TopologicalSpace M] [TopologicalSpace N] in
 theorem gen_quasi (φ : M ≃+ N) (S : AddSubgroup M) (S' : AddSubgroup N) (hS : ∀ x, φ x ∈ S' ↔ x ∈ S)

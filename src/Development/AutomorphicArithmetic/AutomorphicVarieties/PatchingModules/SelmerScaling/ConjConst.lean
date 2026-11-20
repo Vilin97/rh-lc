@@ -205,8 +205,6 @@ private theorem conj_const {l : ℕ} [Fact l.Prime] (S : Ctx l) (R : Type) [Comm
       rw [map_list_prod, map_zero, List.map_ofFn] at h1
       rw [← h1]
       congr 2
-      funext i
-      simp only [Function.comp_apply, RingHom.comp_apply, map_sub, hφ1, hφ2, AlgHom.toRingHom_eq_coe,
         RingHom.coe_coe, AlgHom.commutes]
       rw [hφ3, Matrix.map_mul, Matrix.map_mul, Ctx.ρ, hp]
   · refine key _ _ ((hU j i).1 ?_)
@@ -214,8 +212,6 @@ private theorem conj_const {l : ℕ} [Fact l.Prime] (S : Ctx l) (R : Type) [Comm
     rw [map_list_prod, map_zero, List.map_ofFn] at h1
     rw [← h1]
     congr 2
-    funext i
-    simp only [Function.comp_apply, map_sub, hφ1, hφ2]
   · refine key _ 0 (((hU j i).2 _ ?_).trans (map_zero _).symm)
     have h1 := congrArg φ (r4 j i)
     have h2 : S.ρ S.F (S.P.ta j) = 1 := by

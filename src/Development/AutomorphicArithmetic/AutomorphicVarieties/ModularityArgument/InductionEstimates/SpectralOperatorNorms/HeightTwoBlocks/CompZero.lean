@@ -60,8 +60,6 @@ private theorem zt_blk (a : ℝ) : blk (InvariantSubmoduleMonicPolynomial.zt K a
     refine Units.ext ?_
     simp only [blk, scalarUnits_apply, coe_diagUnits, Matrix.fromBlocks_diagonal, Matrix.reindex_apply, Matrix.submatrix_diagonal_equiv]
     congr 1
-    funext i
-    simp only [Function.comp]
     cases finSumFinEquiv.symm i <;> rfl
   simp only [InvariantSubmoduleMonicPolynomial.zt, UpperTheory.ConvolutionTheory.BW.zt, centralSection, MonoidHom.comp_apply, h1]
   congr 2

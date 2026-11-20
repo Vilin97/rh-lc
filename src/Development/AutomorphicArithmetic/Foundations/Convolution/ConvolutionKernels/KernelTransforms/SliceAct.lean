@@ -38,8 +38,6 @@ theorem UpperTheory.ConvolutionTheory.Tf.sliceAct :
       ← integral_mul_left_eq_self (μ := ν) (fun a => (fun g : archGroup K n => β g⁻¹) (a⁻¹ * x) *
         Φ (retractOne g * archP K n a)) x]
     congr 1
-    funext a
-    simp only [mul_inv_rev, inv_inv, inv_mul_cancel_left, map_mul, mul_assoc]
   have hD := fun g => UpperTheory.ConvolutionTheory.Tf.derivInt K n ν _ hβ hc _ (hΘ g)
   refine ⟨fun g => by rw [hs g]; exact (hD g).1, fun u g => ?_⟩
   obtain ⟨hF, h⟩ := hD g

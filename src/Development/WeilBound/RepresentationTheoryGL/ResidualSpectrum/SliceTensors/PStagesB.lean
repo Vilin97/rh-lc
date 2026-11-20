@@ -40,8 +40,6 @@ theorem tensorForms_mulChi {c : ℕ} {n : Fin c → ℕ} (π : ∀ i, CuspSub E 
     simp only [mulChi_apply, Finset.prod_mul_distrib]
   | zero =>
     convert zero_mem (tensorForms fun i => (π i).twist χ) using 1
-    funext m
-    simp
   | add F G _ _ hF hG =>
     convert add_mem hF hG using 1
     funext m
@@ -66,29 +64,21 @@ theorem tensorForms_append {d₁ d₂ a : ℕ} (π : Fin (d₁ + d₂) → CuspS
       simp only [Fin.prod_univ_add, Fin.addCases_left, Fin.addCases_right]
     | zero =>
       convert zero_mem (tensorForms (n := fun _ => a) π) using 1
-      funext m
-      simp
     | add F G _ _ hF hG =>
       convert add_mem hF hG using 1
       funext m
       simp [mul_add]
     | smul c F _ hF =>
       convert Submodule.smul_mem _ c hF using 1
-      funext m
-      simp only [Pi.smul_apply, smul_eq_mul]
       ring
   | zero =>
     convert zero_mem (tensorForms (n := fun _ => a) π) using 1
-    funext m
-    simp
   | add F G _ _ hF hG =>
     convert add_mem hF hG using 1
     funext m
     simp [add_mul]
   | smul c F _ hF =>
     convert Submodule.smul_mem _ c hF using 1
-    funext m
-    simp only [Pi.smul_apply, smul_eq_mul]
     ring
 
 end PositivityTheory.Rg.Rs.InductionInStages

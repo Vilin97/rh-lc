@@ -250,8 +250,6 @@ theorem letE_letE (T : LocLat G Qp LL O) (i : ZMod n) (y : W.DD T) :
     (letE i : LetA O n) • ((letE i : LetA O n) • y) = (letE i : LetA O n) • y := by
   rw [smul_smul]
   congr 1
-  funext j
-  simp only [letE, Pi.mul_apply, Pi.single_apply]
   split_ifs <;> simp
 
 theorem wach_frobenius_divisibility_unique_solution [IsDomain O] (hR : RingA W) (hs : W.s = 1) (T : LocLat G Qp LL O)

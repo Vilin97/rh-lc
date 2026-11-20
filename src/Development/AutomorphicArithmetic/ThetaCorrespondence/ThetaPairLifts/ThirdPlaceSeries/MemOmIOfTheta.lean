@@ -65,8 +65,6 @@ theorem mem_omI_of_theta_alt : GlobalTheory.Published.HarishChandraFinite → Gl
       exact hω.om_aut 1 (one_mem _) γ hγ _ (hω.om_pres _ _ (hφ' _))
     have := hR.integrableOn_modGrowth_mul hHW hfdW hgr hinv hct.aestronglyMeasurable
     convert this using 1
-    funext g
-    simp only [Pi.mul_apply, thIn]
     rw [mul_comm]
     rfl
 end GlobalTheory.ThetaTri

@@ -455,8 +455,6 @@ theorem modular_involution (T : G →* G) (hc : Continuous T) (hT : ∀ x, T (T 
   rw [← map_mul_right_eq, ← Measure.map_smul, ← map_mul_right_eq,
     Measure.map_map (measurable_mul_const _) hc.measurable, Measure.map_map hc.measurable (measurable_mul_const _)]
   congr 1
-  funext x
-  simp
 
 theorem modular_compact (K : Subgroup G) (ho : IsOpen (K : Set G)) (hc : IsCompact (K : Set G)) {k : G}
     (hk : k ∈ K) : Measure.modularCharacter k = 1 := by
@@ -628,8 +626,6 @@ theorem mulVec_mem {A : Type} [CommRing A] {n : Type} [Fintype n] [DecidableEq n
   rw [sub_eq_iff_eq_add.1 hk, add_mulVec, one_mulVec]
   refine add_mem ?_ hy
   convert h using 1
-  funext i
-  simp only [mulVec, dotProduct, Finset.mul_sum, Matrix.smul_apply, smul_eq_mul]
   refine Finset.sum_congr rfl fun j _ => ?_
   linear_combination (-c * X i j * y j) * u.mul_inv - (c * X i j * y j * u * ((u⁻¹ : Aˣ) : A)) * v.mul_inv
 

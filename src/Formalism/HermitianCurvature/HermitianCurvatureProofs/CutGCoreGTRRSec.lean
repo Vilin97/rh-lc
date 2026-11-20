@@ -57,8 +57,6 @@ theorem diag_phase_UH (d : Fin (k + 1) → ℂ) (hd : ∀ j, star (d j) * d j = 
   rw [diagonal_conjTranspose]
   simp only [Hb, diagonal_mul_diagonal]
   congr 1
-  funext j
-  simp only [Pi.star_apply]
   rw [mul_comm (star (d j)) _, mul_assoc, hd j, mul_one]
 
 theorem dOne_UH (φ : ℝ) : dOne k φ ∈ UH (Hb k) := by

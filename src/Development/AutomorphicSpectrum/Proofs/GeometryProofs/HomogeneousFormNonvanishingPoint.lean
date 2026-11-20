@@ -215,8 +215,6 @@ theorem aeval_ratios_segForm (y : (Σ k, ι k) → Ω) (x' : Fin (r + 1) → Ω)
       aeval (fun j => (∏ k, y ⟨k, E j k⟩) / ∏ k, y ⟨k, E a k⟩) (map (algebraMap ℤ ℚ) Gz) := by
   rw [aeval_rename, aeval_segForm, aeval_map_algebraMap]
   congr 2
-  funext j
-  simp only [← Finset.prod_div_distrib, hEa]
   rfl
 
 theorem isSncModel_joinPt (y : (Σ k, ι k) → Ω) (x' : Fin (r + 1) → Ω) (e : ℕ) {N : ℕ}

@@ -97,8 +97,6 @@ theorem besselCoreVertexLattice_eq_orthDecSumLattice (F : Frames G) (hF : Std F)
       conv_lhs => rw [← hsplit, hqA, hqB]
       rw [Matrix.mulVec_add, Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, hM, Matrix.mulVec_smul, hz]
       congr 1
-      funext i
-      simp only [Matrix.mulVec_single, Matrix.col_apply, MulOpposite.smul_eq_mul_unop, Pi.smul_apply, smul_eq_mul,
         MulOpposite.unop_op]
       ring
     have ha := add_left_cancel (hx.symm.trans hx2)

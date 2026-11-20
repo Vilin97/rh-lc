@@ -116,8 +116,6 @@ def rvHom (v : InfinitePlace I.F) : (Fin I.n → I.E) →+ (Fin I.n → ℂ) whe
     unfold rv
     rw [← Matrix.mulVec_add]
     congr 1
-    funext i
-    simp
 
 theorem rvHom_apply (v : InfinitePlace I.F) (x : Fin I.n → I.E) : rvHom I v x = rv I v x := rfl
 
@@ -127,8 +125,6 @@ theorem rv_smul' (v : InfinitePlace I.F) (c : I.E) (x : Fin I.n → I.E) :
   unfold rv
   rw [← Matrix.mulVec_smul]
   congr 1
-  funext i
-  simp
 
 theorem rv_span' (v : InfinitePlace I.F) (y : Fin I.n → ℂ) :
     ∃ c : Fin I.n → ℂ, ∃ w : Fin I.n → Fin I.n → I.E, y = ∑ i, c i • rvHom I v (w i) := by

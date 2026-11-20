@@ -268,8 +268,6 @@ theorem fam_lamLine_expand (hI : IsIntersectionFamily I) (hP : IsArithVar P (n +
     split_ifs <;> rfl
   rw [hm, famExt_basis]
   congr 2
-  funext i
-  simp only [mix, Function.comp]
   split_ifs <;> rfl
 
 end Family

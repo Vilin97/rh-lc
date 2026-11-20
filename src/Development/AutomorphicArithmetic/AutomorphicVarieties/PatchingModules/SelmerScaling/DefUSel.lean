@@ -152,8 +152,6 @@ private theorem locDual {F R H : Type} [Field F] [Infinite F] [CommRing R] [Grou
       rw [map_zero, map_list_prod, List.map_ofFn] at this
       rw [← this]
       congr 2
-      funext i
-      simp only [Function.comp, map_sub]
       congr 1
       refine Matrix.ext fun r s => ?_
       simp only [RingHom.mapMatrix_apply, map_apply, Matrix.algebraMap_matrix_apply]

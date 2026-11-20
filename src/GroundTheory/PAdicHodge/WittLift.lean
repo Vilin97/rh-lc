@@ -107,8 +107,6 @@ noncomputable def matOp (A : Matrix ι ι (𝕎 k)) (τ : 𝕎 k →+* 𝕎 k) :
   map_add' x y := by
     rw [← Matrix.mulVec_add]
     congr 1
-    funext i
-    simp
 
 omit [CharP k p] in
 theorem matOp_apply (A : Matrix ι ι (𝕎 k)) (τ : 𝕎 k →+* 𝕎 k) (x : ι → 𝕎 k) :

@@ -23,8 +23,6 @@ theorem pol_eq_multiDiff [DecidableEq ι] (φ : (ι → ℤ) → ℝ) :
   rw [zsmul_eq_mul]
   push_cast
   congr 2
-  funext i
-  simp only [zero_sub, Pi.neg_apply, Finset.sum_apply, Pi.single_apply, Finset.sum_ite_eq]
   split_ifs <;> simp
 
 set_option autoImplicit false in

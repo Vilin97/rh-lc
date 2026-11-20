@@ -44,8 +44,6 @@ theorem SchAntisymmetrizePlace.proof : SchAntisymmetrizePlace.Statement := by
     rfl
   rw [hs]
   congr 3
-  funext x
-  simp only [Function.comp_apply, smallBlockPlace_eq, Equiv.permCongr_apply, Equiv.symm_symm]
   rw [← he]
   simp
 

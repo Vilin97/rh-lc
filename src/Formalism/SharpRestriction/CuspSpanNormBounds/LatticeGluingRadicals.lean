@@ -6822,8 +6822,6 @@ theorem j_exists_basis {A : Submodule (𝓞 E) (Fin e → E)} (hA : j_Lat A) : �
   have hrange : Set.range (b.extendOfIsLattice ℚ) = Az.subtype '' Set.range b := by
     rw [← Set.range_comp]
     congr 1
-    funext i
-    simp
   have hspan : Submodule.span ℤ (Set.range (b.extendOfIsLattice ℚ)) = Az := by
     rw [hrange, ← Submodule.map_span, b.span_eq, Submodule.map_top, Submodule.range_subtype]
   ext x

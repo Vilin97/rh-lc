@@ -157,8 +157,6 @@ def l2InnerCore (W : Weight L) (dV : SmoothVolume A) (n : ℕ) (V : Submodule �
   conj_inner_symm s t := by
     rw [← integral_conj]
     congr 1
-    funext x
-    simp only [ptInner, map_mul, Complex.conj_conj, Complex.conj_ofReal]
     ring
   re_inner_nonneg s := by
     have h : 0 ≤ ∫ x, ptNormSq W n (s : Fin A.n → X → ℂ) x ∂dV.μ :=
@@ -170,14 +168,10 @@ def l2InnerCore (W : Weight L) (dV : SmoothVolume A) (n : ℕ) (V : Submodule �
     rw [← integral_add (integrable_ptInner W dV (hV t.2) (hV s.2))
       (integrable_ptInner W dV (hV t.2) (hV s'.2))]
     congr 1
-    funext x
-    simp only [ptInner, Submodule.coe_add, Pi.add_apply, map_add]
     ring
   smul_left s t r := by
     rw [← integral_const_mul]
     congr 1
-    funext x
-    simp only [ptInner, Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, map_mul]
     ring
   definite s h := by
     simp_rw [ptInner_self] at h

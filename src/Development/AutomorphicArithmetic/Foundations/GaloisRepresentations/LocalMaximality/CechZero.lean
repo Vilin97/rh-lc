@@ -75,8 +75,6 @@ theorem UpperTheory.Gal.productCup_of_system.zId_of :
       exact hne (by rw [hzero k hpq, zero_smul])
   have hfin := add_mem h1 h2
   convert hfin using 1
-  funext J
-  simp only [Pi.add_apply, Pi.sub_apply, Finset.sum_apply, Pi.smul_apply]
   rw [← key J]
   simp only [Finset.sum_apply, map_sub, LinearMap.sub_apply, Finset.sum_sub_distrib, map_sum, LinearMap.sum_apply]
   abel

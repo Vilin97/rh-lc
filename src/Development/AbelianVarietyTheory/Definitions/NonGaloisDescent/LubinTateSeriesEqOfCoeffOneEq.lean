@@ -126,8 +126,6 @@ theorem hasSum_Om {ζ : Om 2} {n : ℕ} (h : ζ ^ 2 ^ n = 1) (c : ℤ_[2]) :
   refine (hf.isEmbedding.isInducing.hasSum_iff _ _).1 ?_
   rw [map_pow]
   convert hs using 1
-  funext k
-  simp only [Function.comp, map_mul, map_pow, map_sub, map_one]
   rfl
 
 theorem exists_roots : ∃ ζ : ℕ → Om 2, ζ 0 = 1 ∧ ζ 1 = -1 ∧ ∀ n, ζ (n + 1) ^ 2 = ζ n := by

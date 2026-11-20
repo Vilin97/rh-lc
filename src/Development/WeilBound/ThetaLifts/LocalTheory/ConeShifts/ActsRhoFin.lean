@@ -75,8 +75,6 @@ theorem acts_rho_fin {W : Type} [AddCommGroup W] [Module (AF F) W] {B : W → W 
       rw [map_smul, Prod.smul_snd, Pi.smul_apply, smul_eq_mul, map_mul, evFin_idem_self, one_mul]
   rw [e] at h
   convert h using 1
-  funext x
-  simp only [schr, invOf_eq_inv]
   rfl
 
 theorem acts_rho_inf {W : Type} [AddCommGroup W] [Module (AF F) W] {B : W → W → AF F} (co : Darboux B κ) {ψ : AddChar (AF F) ℂ}

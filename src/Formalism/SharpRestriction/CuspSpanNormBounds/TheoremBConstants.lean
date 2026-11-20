@@ -229,8 +229,6 @@ theorem OrbInt_smul (L : LocBessel k r) (c : ℂ) (F : Mx k r → (L.Wq →L[ℂ
   unfold OrbInt besselIntg
   rw [← integral_smul]
   congr 1
-  funext p
-  simp only [ContinuousLinearMap.smul_comp, ContinuousLinearMap.comp_smul]
   rw [smul_comm]
 
 def withRep (L : LocBessel k r) (lam' : Fin (2 * r + k + 1) → ℝ) (hlam' : IsHCParam lam') (H : Type)

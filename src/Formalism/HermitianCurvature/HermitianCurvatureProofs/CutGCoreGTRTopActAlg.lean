@@ -98,8 +98,6 @@ theorem quadratic_top_algebra_holds : QTopAlg := by
       have e1 : (List.ofFn fun k : Fin n => Tm E (Y + h - (k : ℂ)) (id (σ k)) (id k)) =
           List.ofFn fun l => (if lin σ l then algebraMap ℂ A Y else 0) + B σ l := by
         congr 1
-        funext l
-        simp only [Tm, id, lin, B]
         split_ifs with hl
         · have : Y + h - ((l : ℕ) : ℂ) = Y + (h - ((l : ℕ) : ℂ)) := by ring
           rw [this, map_add]

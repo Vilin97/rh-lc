@@ -127,8 +127,6 @@ theorem GlobalTheory.PrinTwo.exists_smul_elemDiff_mem_of_radial : ∀ (k : Type)
     exact hy₀
   · have hmem : (fun x => R (x + -y₀)) - R ∈ W := W.sub_mem (hW R hR (-y₀)) hR
     convert hmem using 1
-    funext x
-    simp only [GlobalTheory.PrinTwo.elemDiff, GlobalTheory.PrinTwo.ball, Pi.smul_apply, Pi.sub_apply, Set.indicator_apply,
       Set.mem_setOf_eq, sub_zero, Pi.one_apply, smul_eq_mul]
     simp only [hr]
     by_cases h1 : valuation k x < valuation k y₀

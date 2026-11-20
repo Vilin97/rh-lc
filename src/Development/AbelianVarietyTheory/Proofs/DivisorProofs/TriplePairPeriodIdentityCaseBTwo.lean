@@ -303,8 +303,6 @@ theorem _root_.GlobalTheory.T.triple_pair_period_identity_case_b_two : GlobalThe
       (fun y => by
         rw [← four_shift]
         congr 1
-        funext s
-        simp only [hTf]
         rw [UpperTheory.local_theta_partition_triple_alt hP F E σ B a b G G₁ H H' hC e' he ei ev hL X om om' om₁ om₁' hT hT₁ v k hk φ₀ hφ₀ y s])
     have hiff : dispA v H.x k t ∈ V ↔ ∀ y ∈ L,
         psiAt B.ψ v (Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (pairV σ G.V'.J v (atV v (incV F H.x)) y)) *

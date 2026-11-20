@@ -332,8 +332,6 @@ theorem col_mem {n : ℕ} {Λ : Lt E n} {L L₀ : Lt E r} {𝔪 : Ideal (𝓞 E)
     show (fun a => ((α * α) ⊗ₜ[F] (1 : E)) * HatLat.finG F E (HatLat.fT F β (vecMulVec v u) a k)) ∈
       latHat F E ((𝔪 • L₀ : Lt E r) : Set (Fin r → E))
     convert h1 using 1
-    funext a
-    simp only [Pi.smul_apply, smul_eq_mul, HatLat.fT_apply, finG_pairA_zero_tmul, Algebra.TensorProduct.tmul_mul_tmul,
       Matrix.vecMulVec_apply]
     congr 1 <;> ring
   exact key hy

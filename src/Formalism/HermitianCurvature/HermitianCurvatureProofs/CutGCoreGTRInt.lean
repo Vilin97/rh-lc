@@ -154,8 +154,6 @@ theorem first_weight_half_integral {Wp : Type} [NormedAddCommGroup Wp] [InnerPro
   have hDg : QrCap.Dg θ = QrCap.Dg (0 : Fin P.k → ℝ) := by
     unfold QrCap.Dg
     congr 1
-    funext c
-    simp only [hθ, Pi.zero_apply]
     split_ifs
     · push_cast
       rw [show (2 * (Real.pi : ℂ)) * Complex.I = 2 * Real.pi * Complex.I by ring, Complex.exp_two_pi_mul_I]

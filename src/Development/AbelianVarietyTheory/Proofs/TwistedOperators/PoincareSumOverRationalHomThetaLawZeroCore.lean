@@ -67,8 +67,6 @@ theorem poinX_quasi : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D
   generalize w ⬝ d.jX = x
   generalize w ⬝ d.jY = y
   congr 1
-  funext g
-  simp only [Equiv.subRight_apply]
   rw [rat_sub]
   have e1 : rat δ + x + (rat g - rat δ) = x + rat g := by abel
   have e2 : rat δ + x + 2 • (rat g - rat δ) = x + 2 • rat g - rat δ := by

@@ -36,8 +36,6 @@ theorem modular_aut (φ : H ≃ₜ* H) (g : H) : modularCharacterFun (φ g) = mo
   rw [← map_right_eq, ← Measure.map_smul, ← map_right_eq, map_map (measurable_mul_const _) hφ,
     map_map hφ (measurable_mul_const _)]
   congr 1
-  funext x
-  simp
 
 theorem continuous_modular : Continuous fun g : H => (modularCharacterFun g : ℝ) := by
   let ρ : Measure H := Measure.haar

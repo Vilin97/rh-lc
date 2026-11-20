@@ -137,8 +137,6 @@ theorem frame (n : ℕ) (M θ : Matrix (Fin n) (Fin n) ℂ) (z : ℂ) (hz : star
   have hJ : Formalism.REAL.Jm ε = (σ : ℂ) • diagonal (fun j => (d j : ℂ)) := by
     rw [Formalism.REAL.Jm, ← diagonal_smul]
     congr 1
-    funext j
-    simp only [ε, Pi.smul_apply, smul_eq_mul]
     have hsd : σ * d j = 1 ∨ σ * d j = -1 := by
       rcases hσ1 with h | h <;> rcases hd j with h' | h' <;> simp [h, h']
     by_cases h : σ * d j = 1

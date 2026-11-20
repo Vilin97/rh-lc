@@ -37,8 +37,6 @@ theorem inG_conj {ε : Fin n → Bool} {g X : Matrix (Fin n) (Fin n) ℂ} (hg : 
     delta Jm
     rw [Matrix.diagonal_conjTranspose]
     congr 1
-    funext a
-    simp only [Pi.star_apply]
     split_ifs <;> simp
   have h1 : gᴴ * Jm ε = Jm ε * g⁻¹ := by
     have h : gᴴ * Jm ε * g * g⁻¹ = Jm ε * g⁻¹ := by rw [hg']

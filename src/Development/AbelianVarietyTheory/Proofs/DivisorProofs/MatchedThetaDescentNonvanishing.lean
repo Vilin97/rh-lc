@@ -168,15 +168,11 @@ theorem average_core {n d : ℕ} {Y : Spc F E n} {W : Spc F E d} (B : Base F E) 
       rw [hPx, hIsmul _ (D.sum_mem fun g hg => hmem g hg x), hIsum s _ fun g hg => hmem g hg x,
         ← integral_finsetSum s fun g hg => hint _ (hmem g hg x) _ y.2, ← integral_const_mul]
       congr 1
-      funext t
-      simp only [Pi.smul_apply, Finset.sum_apply, smul_eq_mul, Finset.sum_mul, Finset.mul_sum, mul_assoc]
     have hR : ∫ t in 𝓕, M.I om' x t * starRingEnd ℂ (M.I om' ((P y : D) : Fn F n d) t) ∂μ =
         c * ∑ g ∈ s, ∫ t in 𝓕, M.I om' x t * starRingEnd ℂ (M.I om' (π g (y : Fn F n d)) t) ∂μ := by
       rw [hPy, hIsmul _ (D.sum_mem fun g hg => hmem g hg y), hIsum s _ fun g hg => hmem g hg y,
         ← integral_finsetSum s fun g hg => hint _ x.2 _ (hmem g hg y), ← integral_const_mul]
       congr 1
-      funext t
-      simp only [Pi.smul_apply, Finset.sum_apply, smul_eq_mul, map_mul, map_sum, hcc, Finset.mul_sum]
       refine Finset.sum_congr rfl fun g _ => ?_
       ring
     rw [hL, hR, Finset.sum_congr rfl hterm]

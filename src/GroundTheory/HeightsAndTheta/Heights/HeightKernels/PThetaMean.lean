@@ -30,8 +30,6 @@ theorem ThetaMean.proof (h : ThetaInnerMean.Statement) : ThetaMean.Statement := 
     intro u₁
     rw [h g X Y a b u₁ hY]
     congr 1
-    funext k
-    simp only [hF, add_right_comm]
   simp_rw [hinner]
   have hs : ∀ u : Fin g → ℝ, Summable fun k : Fin g → ℤ => F (intVec k + u) := by
     intro u

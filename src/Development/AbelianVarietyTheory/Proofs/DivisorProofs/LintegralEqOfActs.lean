@@ -84,8 +84,6 @@ theorem lintegral_eq_of_acts {κ : Type} [Fintype κ] (v : Pl F)
     intro ψ' hψ'
     rw [hmint _ (hψ'.1.continuous.measurable.enorm.pow_const 2)]
     congr 1
-    funext x
-    simp only [tens, d, ev, enorm_mul, mul_pow]
     ring
 
   haveI hinv : m.IsAddLeftInvariant := by

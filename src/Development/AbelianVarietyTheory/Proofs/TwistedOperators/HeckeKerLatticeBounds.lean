@@ -17,8 +17,6 @@ theorem ex_smul_act (F : FamilyUnif Xo σ ty) (i : Fin F.n) (P : (F.Di i).La →
     F.ex i P (c • P (r • v)) = F.ex i P (c • P v) ≫ Xo.univ.t.act.act r := by
   rw [← F.ex_lin i P hP]
   congr 1
-  funext k
-  simp only [Pi.smul_apply, smul_eq_mul, hP.1]
   ring
 
 theorem inv_smul_natCast {La : Type} [AddCommGroup La] [Module (𝓞 E) La] (P : La →+ (Fin g → ℂ)) {n : ℕ}

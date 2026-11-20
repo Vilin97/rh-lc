@@ -306,16 +306,12 @@ theorem mem_span_locOp : ∀ {F : Type} [Field F] [NumberField F] (ψ : AddChar 
       exact S.smul_mem _ (Submodule.subset_span ⟨_, rfl⟩)
     | zero =>
       convert S.zero_mem using 1
-      funext x
-      simp
     | add g₁ g₂ _ _ ih₁ ih₂ =>
       convert S.add_mem ih₁ ih₂ using 1
       funext x
       simp [mul_add]
     | smul c g _ ih =>
       convert S.smul_mem c ih using 1
-      funext x
-      simp only [Pi.smul_apply, smul_eq_mul]
       ring
   obtain ⟨z, hz, hzs⟩ := exists_cond ψ v hc hn
   have hB : ∀ N ∈ 𝓝 (0 : κ → Fv F v), ∃ W : AddSubgroup (κ → Fv F v), IsOpen (W : Set (κ → Fv F v)) ∧ (W : Set (κ → Fv F v)) ⊆ N := by

@@ -82,8 +82,6 @@ theorem exists_of_mem_holGermIdeal {w : σ → ℂ} {k : ℕ} (p : Fin k → (σ
     refine ⟨fun j _ => if j = i then 1 else 0, fun j => analyticAt_const, ?_⟩
     rw [hi]
     congr 1
-    funext z
-    simp
   | zero =>
     refine ⟨fun _ _ => 0, fun _ => analyticAt_const, ?_⟩
     rw [show (fun z => ∑ i, (fun (_ : Fin k) (_ : σ → ℂ) => (0 : ℂ)) i z * p i z) = (0 : (σ → ℂ) → ℂ) by

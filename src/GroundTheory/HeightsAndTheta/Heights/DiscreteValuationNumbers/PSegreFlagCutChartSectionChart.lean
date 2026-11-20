@@ -231,8 +231,6 @@ theorem chart_data (y : (Σ k, ι k) → Ω) (B₁ : ChartBundle O (segreVec y) 
       ← FlagBundleSectionForms.chartPow_natCast, ← FlagBundleSectionForms.chartPow_natCast]
     simp only [← FlagBundleSectionForms.chartPow_add hY]
     congr 1
-    funext j
-    simp only [Pi.add_apply, δ, β, γ₁, ρ]
     push_cast
     omega
   have hψv : ∀ l, ∑ i, algebraMap Ω Φ (w.repr v₁ i) * algebraMap Ω Φ (ψ l (w i)) =

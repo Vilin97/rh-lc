@@ -34,8 +34,6 @@ theorem GlobalTheory.AV.AbVar.multilinear_quadratic_isHomogeneous' (P : Type*) [
   refine ⟨F, hF, fun m => ?_⟩
   rw [hFe m, MultilinearMap.compLinearMap_apply]
   congr 1
-  funext _
-  simp only [map_sum, map_zsmul, he]
 
 theorem GlobalTheory.AV.AbVar.deg_isHomogeneousPoly : ∀ (K : Type) [Field K] (A B : AbVar K), A.dim = B.dim → ∀ (n : ℕ) (f : Fin n → (A ⟶ B)), ∃ F : MvPolynomial (Fin n) ℚ, F.IsHomogeneous (2 * A.dim) ∧ ∀ m : Fin n → ℤ, MvPolynomial.eval (fun i => (m i : ℚ)) F = (deg (∑ i, m i • f i) : ℚ) := by
   intro K _ A B hAB n f

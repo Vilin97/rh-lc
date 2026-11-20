@@ -105,8 +105,6 @@ theorem Embeds.reindex {π : Y ⟶ B} {P : LB Y} {I J : Type} {s : I → LB.Sec 
   refine ⟨MvPolynomial.rename e.symm p, ?_⟩
   rw [MvPolynomial.coe_eval₂Hom, MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_rename]
   congr 1
-  funext a
-  simp
 
 theorem gs_finprod {X Z : Scheme.{0}} (r : Z ⟶ X) (z : Z) (U : X.Opens) (h : r z ∈ U) {K : Type}
     [Fintype K] (a : K → Γ(X, U)) : gs r z U (∏ k, a k) = ∏ k, gs r z U (a k) := by

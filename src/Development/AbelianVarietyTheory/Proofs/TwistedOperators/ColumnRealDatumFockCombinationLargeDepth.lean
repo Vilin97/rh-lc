@@ -98,8 +98,6 @@ theorem lift_cen (hθ : IsInfFam θ) {S T : HSp D} {x : DefSp S} {y : DefSp T} (
       refine Finset.sum_congr rfl fun u _ => ?_
       rw [map_smul, hW.om_heis a b u _ hF, h3, hag a ha b hb.1 _ hF, hv, hl, smul_comm]
       congr 1
-      funext w
-      simp only [heisO, Pi.smul_apply, smul_eq_mul]
       ring
     have hpt := (GlobalTheory.SeeSaw.LiftSumProof.liftSum D ψ θ hθ S T x y hx hy k hk P).1
     rw [liftT_apply, liftT_apply, ← GlobalTheory.ChainOnto.setIntegral_fd_mul_right D S v.μ v.𝓕 v.haar v.fund

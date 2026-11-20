@@ -34,8 +34,6 @@ theorem convComm : PI.UMultOne.ConvComm := by
       (fun x => f₁ x * f₂ (x⁻¹ * (h * w * h⁻¹)))
     rw [← e]
     congr 1
-    funext y
-    simp only [Homeomorph.trans_apply, Homeomorph.coe_mulLeft, Homeomorph.coe_mulRight]
     rw [hf₁ h hH]
     have : (h * y * h⁻¹)⁻¹ * (h * w * h⁻¹) = h * (y⁻¹ * w) * h⁻¹ := by group
     rw [this, hf₂ h hH]

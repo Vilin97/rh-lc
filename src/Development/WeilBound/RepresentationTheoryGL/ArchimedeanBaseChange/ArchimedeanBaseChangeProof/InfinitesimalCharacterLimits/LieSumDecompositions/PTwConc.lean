@@ -80,8 +80,6 @@ theorem tensor_span_mul_det_character {W₁ : Submodule ℂ (Sm E r)} {W₂ : Su
     ring
   | zero =>
     convert zero_mem (tens2 (tw W₁ z) (tw W₂ z)) using 1
-    funext m
-    simp
   | add F G _ _ hF hG =>
     convert add_mem hF hG using 1
     funext m
@@ -98,8 +96,6 @@ theorem memInd2_tw {W₁ : Submodule ℂ (Sm E r)} {W₂ : Submodule ℂ (Sm E s
   · set y := infGL E (r + s) (Unitary.toUnits k) * finGL E (r + s) g
     have h1 := Submodule.smul_mem _ ((chiDet (r + s) (Model.absC E z) y : ℂˣ) : ℂ) (tensor_span_mul_det_character z (hφ.2 k g))
     convert h1 using 1
-    funext m
-    simp only [Pi.smul_apply, smul_eq_mul]
     rw [mulChi_apply, map_mul, chiDet_lev, Units.val_mul, Units.val_mul]
     ring
 

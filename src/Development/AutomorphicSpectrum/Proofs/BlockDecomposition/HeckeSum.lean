@@ -83,8 +83,6 @@ theorem hecke_sum (k N : ℕ) [NeZero N] (χ : DirichletCharacter ℂ N)
       a (m / p) * Complex.exp (2 * (Real.pi : ℂ) * Complex.I * (m : ℂ) * (z : ℂ)) else 0) ∘
       (fun n : ℕ => p * n)) ((f : ℍ → ℂ) w') := by
     convert hf.exp w' using 1
-    funext n
-    simp only [Function.comp_apply]
     rw [if_pos (dvd_mul_right p n), Nat.mul_div_cancel_left n hp.pos, hw']
     congr 2
     push_cast

@@ -320,8 +320,6 @@ theorem u3 : PrimeHopfOrderStatement := by
       have h := stab_lemma AA k.val (fun x => BA x j0) hf0
       simpa [ZMod.natCast_zmod_val] using h
     convert hmem using 1
-    funext a
-    simp only [Finset.sum_apply, Pi.smul_apply, Pi.sub_apply, Pi.one_apply, Algebra.smul_def,
       Pi.mul_apply, Pi.algebraMap_apply, hr, hs0, mul_one]
     by_cases ha : a = 0
     · subst ha

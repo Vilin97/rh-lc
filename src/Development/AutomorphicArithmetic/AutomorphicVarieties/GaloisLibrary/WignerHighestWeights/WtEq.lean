@@ -64,8 +64,6 @@ theorem UpperTheory.V.AlgRepEndIrreducible.wtEq :
       intro μ
       rw [Finset.prod_eq_multiset_prod]
       congr 2
-      funext k
-      simp only [Function.comp]
       ring
     rw [e, e]
     exact hp u

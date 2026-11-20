@@ -42,8 +42,6 @@ theorem bh_meas_inv : Measurable (invM (k := k) (r := r)) := by
       ((Matrix.of g : Mat k r).det)⁻¹ • Matrix.of.symm (Matrix.of g : Mat k r).adjugate) :=
     h1.smul h2.measurable
   convert h3 using 1
-  funext g
-  simp only [invM]
   rw [Matrix.inv_def, Ring.inverse_eq_inv']
   rfl
 

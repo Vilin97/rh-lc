@@ -86,15 +86,11 @@ theorem atV_smul (v : InfinitePlace I.F) (a : I.E) (u : Fin I.n → I.E) : atV I
   unfold atV
   rw [← mulVec_smul]
   congr 1
-  funext i
-  simp
 
 theorem atV_add (v : InfinitePlace I.F) (u u' : Fin I.n → I.E) : atV I v (u + u') = atV I v u + atV I v u' := by
   unfold atV
   rw [← mulVec_add]
   congr 1
-  funext i
-  simp
 
 theorem mem_span_int (hs : ∀ v (a : I.E), I.φ v (star a) = star (I.φ v a)) (W : Submodule I.E (Fin I.n → I.E))
     (b : InfinitePlace I.F → Fin I.n → ℂ) (hb : ∀ v, b v ∈ Wv I W v) :

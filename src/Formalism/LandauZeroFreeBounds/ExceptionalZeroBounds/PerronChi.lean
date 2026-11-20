@@ -97,8 +97,6 @@ lemma neg_log_deriv_eq_lseries_re_im {w : ℂ} (hw : 1 < w.re) :
   have h2 := lseries_summable_of_vonMangoldt_bound (vonMangoldtCharIm_bound χ) hw
   rw [neg_log_deriv_eq_lseries_mul_vonMangoldt χ hw, ← LSeries_smul, ← LSeries_add h1 (h2.smul I)]
   congr 1
-  funext n
-  simp only [Pi.add_apply, Pi.smul_apply, Pi.mul_apply, smul_eq_mul, vonMangoldtCharRe, vonMangoldtCharIm]
   push_cast
   conv_lhs => rw [← Complex.re_add_im (χ (n : ZMod q))]
   ring

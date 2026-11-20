@@ -145,8 +145,6 @@ theorem sWhit_of (_hEv : SEv) (hSt : SStokes) : SWhit := by
     beta_reduce
     rw [intS_eq]
     congr 2
-    funext l
-    simp only [MonoidHom.id_apply, smul_eq_mul, mul_one]
     rfl
   ·
     obtain ⟨Cφ, hCφ⟩ := P.deriv

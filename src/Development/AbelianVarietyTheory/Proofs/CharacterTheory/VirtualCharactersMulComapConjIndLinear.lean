@@ -39,8 +39,6 @@ theorem _root_.GlobalTheory.BI.isChar_monoidHom_complex {G : Type} [Group G] (la
     (Algebra.lmul ℂ ℂ).toMonoidHom.comp ((Units.coeHom ℂ).comp lam)
   have key := (_root_.GlobalTheory.BI.isChar_and_isIrrChar_of_rep ℂ ℂ G ℂ ρ).1
   convert key using 1
-  funext g
-  simp only [Algebra.algebraMap_self, RingHom.id_apply, Representation.character]
   exact (trace_mulLeft_complex_lemma _).symm
 
 open Polynomial in

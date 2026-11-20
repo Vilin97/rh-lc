@@ -13,8 +13,6 @@ theorem gsum_sub_of_charP {F : Type*} [NormedField F] (p : ℕ) [Fact p.Prime] [
   refine Finset.sum_congr rfl fun n _ => ?_
   rw [← Matrix.mulVec_sub]
   congr 1
-  funext i
-  simp only [Pi.sub_apply, ← pow_mul]
   exact sub_pow_char_pow _ _ _
 
 theorem norm_gsum_le_of_small {F : Type*} [NormedField F] [IsUltrametricDist F] {m : Type*} [Fintype m]

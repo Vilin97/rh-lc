@@ -275,8 +275,6 @@ theorem map_secIdeal (Q : Ideal (MvPolynomial (Fin n) k)) (e : ℕ) :
       Ideal.span (Set.range (secForm (genPar k e n))) := by
     rw [Ideal.map_span, ← Set.range_comp]
     congr 2
-    funext i
-    simp only [Function.comp_apply, secForm, map_linForm]
     rfl
   have h3 : (Ideal.span {chartForm (X : Par e n → MvPolynomial (Par e n) k) - 1}).map
       (MvPolynomial.map (algebraMap (MvPolynomial (Par e n) k) (GenParField k e n))) =

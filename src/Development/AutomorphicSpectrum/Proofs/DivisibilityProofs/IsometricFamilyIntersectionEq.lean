@@ -98,8 +98,6 @@ theorem link_monomial {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [
       conv_rhs => rw [← List.ofFn_get m]
       rw [List.map_ofFn]
       congr 1
-      funext j
-      simp only [L, Function.comp]
       rcases m.get j with s | s
       · exact (hiso s).1
       · exact (hiso s).2.1

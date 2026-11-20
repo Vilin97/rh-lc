@@ -96,8 +96,6 @@ theorem ipO_smul_smul {D : D7} {m n : ℕ} (μ : Measure (Mx D m n)) (𝓕 : Set
   unfold GlobalTheory.IndefiniteRowSideFullHecke.RestrictedTensorSplitting.ipO
   rw [← MeasureTheory.integral_const_mul]
   congr 1
-  funext w
-  simp only [Pi.smul_apply, smul_eq_mul, map_mul]
   rw [← Complex.mul_conj]
   ring
 

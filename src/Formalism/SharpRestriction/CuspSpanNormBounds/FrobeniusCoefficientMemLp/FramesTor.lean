@@ -105,8 +105,6 @@ theorem conjT_tT (k r : ℕ) : (tT k r)ᴴ = tTi k r := by
 theorem conjT_tTi (k r : ℕ) : (tTi k r)ᴴ = tT k r := by
   rw [tT, tTi, Matrix.diagonal_conjTranspose]
   congr 1
-  funext i
-  simp
 
 theorem tT_mem_UH (k r : ℕ) : tT k r ∈ UH (Hpk k r) := by
   show (tT k r)ᴴ * Hpk k r * tT k r = Hpk k r

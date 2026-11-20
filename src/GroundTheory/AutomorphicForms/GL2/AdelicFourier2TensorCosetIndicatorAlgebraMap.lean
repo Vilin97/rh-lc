@@ -487,8 +487,6 @@ theorem slice_mem_schwartzBruhat {F : (Fin 2 → 𝔸[K]) → ℂ} (hF : F ∈ s
       obtain ⟨hlc, hcs⟩ := (mem_finiteSchwartzBruhat2 K).mp hg
       exact ⟨hlc.comp_continuous hcl.continuous, hcs.comp_isClosedEmbedding hcl⟩
     convert schwartzBruhatTensor_mem φ' hg' using 1
-    funext t
-    simp only [schwartzBruhatTensor2, schwartzBruhatTensor, hφ']
     congr 2
     · funext i
       fin_cases i

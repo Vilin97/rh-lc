@@ -410,8 +410,6 @@ theorem zOp_eq (lam : DomWeight (n + 1)) (sg : DomWeight n) :
   unfold InterlacingNumerators.zOp zList
   rw [List.map_flatten, List.prod_flatten, List.map_ofFn, List.map_ofFn]
   congr 2
-  funext i
-  simp only [Function.comp, List.map_map]
   congr 2
   funext v
   rw [capelli_eq, Function.comp]

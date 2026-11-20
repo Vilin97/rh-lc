@@ -130,8 +130,6 @@ theorem hasTemperateGrowth_evalPoly {m n : ℕ} (p : MvPolynomial (D.what₂.Tau
     simp [evalPoly]
   | add p q hp hq =>
     convert hp.add hq using 1
-    funext z
-    simp only [evalPoly, map_add, Pi.add_apply]
   | mul_X p k hp =>
     have hcoord : (fun z : D.what₂.Tau → Fin m → Fin n → ℂ => z k.1 k.2.1 k.2.2.1).HasTemperateGrowth :=
       ((ContinuousLinearMap.proj (R := ℝ) k.2.2.1).comp ((ContinuousLinearMap.proj (R := ℝ) k.2.1).comp

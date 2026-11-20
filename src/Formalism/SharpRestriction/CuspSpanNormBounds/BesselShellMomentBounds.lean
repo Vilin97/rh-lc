@@ -1353,8 +1353,6 @@ theorem J_smul (L : LocBessel k r) (c : ℂ) (F : Mx k r → (L.Wq →L[ℂ] L.W
   unfold LocBessel.J besselJ
   rw [← integral_smul]
   congr 1
-  funext p
-  simp only [ContinuousLinearMap.smul_comp, ContinuousLinearMap.comp_smul]
   rw [smul_comm]
 
 theorem coef_smul {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H] (L : LocBessel k r)

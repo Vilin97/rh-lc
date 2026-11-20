@@ -85,8 +85,6 @@ theorem SpPhi.smulO (φs : As →+* As) (hφs : ∀ a i, jS (φs a) i = S.φ (jS
       = Phi W ((fun _ => algebraMap O A o : ι → A) • b k) := by
     rw [Phi_smul]
     congr 1
-    funext i
-    simp
   show SpPhi W jS b ((fun _ => algebraMap O A o : ι → A) • Phi W (b k))
   rw [this]
   exact SpPhi.ofN φs hφs hb (inN_smul _ (hb.mem k))

@@ -447,8 +447,6 @@ theorem wh_sub {u : Matrix (Fin d) (Fin j) E} {χ Λ} (hΛ : IsWh (σ := σ) W u
   have a : IsAut (W := W) (f - f') := by simpa using isAut_sub hf hf' 1
   rw [eq_sub_iff_add_eq, ← hΛ.add _ _ (aut_right a g) (aut_right hf' g)]
   congr 1
-  funext x
-  simp
 
 theorem frame_compl {u u' : Matrix (Fin d) (Fin j) E} (hu : IsFrame σ W u u') :
     ∃ (e : Fin j → Fin d) (c : GL (Fin d) E), Function.Injective e ∧ (∀ a i, c.1 a (e i) = u a i) ∧

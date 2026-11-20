@@ -2175,8 +2175,6 @@ theorem Ffull_pol (ρ : Fin r) (n : Fin T.t → ℕ) (f : MvPolynomial (Fin (T.p
   have h3 := isWH_rename (K := ℚ_[p]) (wL N r) _ (inclusion_prodMap_injective (r := r) hK) h2
   rw [Ffull_eq]
   convert h3 using 1
-  funext b
-  simp only [E, AddMonoidHom.coe_mk, ZeroHom.coe_mk, Lz]
   by_cases hb : (b : ℕ) < T.pos i + 1 + 1
   · rw [dif_pos hb, if_pos hb]
     by_cases hb2 : (b : ℕ) < T.pos i + 1
@@ -2589,8 +2587,6 @@ theorem pol_eta (LL : Letters N) (T : TieData) (hadm : T.Admissible LL) (i : Fin
   rw [pol_iff] at hz ⊢
   have := (eta_wL (p := p) (r := r) ⟨T.pos i + 1, by have := hK_of_adm LL T hadm i; omega⟩ ρ (n' - n i)).mul hz
   convert this using 1
-  funext b
-  simp only [Pi.add_apply, Pi.single_apply]
   by_cases hb : (b : ℕ) = T.pos i + 1
   · have hb' : b = ⟨T.pos i + 1, by have := hK_of_adm LL T hadm i; omega⟩ := Fin.ext hb
     rw [if_pos hb', (h1 b hb).1, (h1 b hb).2]; push_cast [Nat.cast_sub hn]; ring
@@ -2690,8 +2686,6 @@ theorem highest_weight_dim_monotone : WeightSpaceDimMonotone := by
     rw [pol_iff] at hgp
     have := ((Submodule.mem_inf.mp hs).2).mul hgp
     convert this using 1
-    funext b
-    simp only [Pi.add_apply, Pi.single_apply]
     by_cases hb : (b : ℕ) = T.pos i + 1
     · have hb' : b = iK := Fin.ext hb
       rw [if_pos hb', (hL01b b hb).1, (hL01b b hb).2, hu]; push_cast [Nat.cast_sub hn]; ring

@@ -137,8 +137,6 @@ theorem diagonal_u_mul_diagonal_u (σ τ : L ≃ₐ[K] L) :
   rw [Matrix.diagonal_mul_diagonal, Matrix.algebraMap_eq_diagonal, Matrix.diagonal_map (map_zero _),
     Matrix.diagonal_mul_diagonal]
   congr 1
-  funext _
-  simp only [Pi.algebraMap_apply, Algebra.algebraMap_self, RingHom.id_apply]
   exact u_mul_u σ τ
 
 theorem inflateU_mul_inflateIncl (σ : L' ≃ₐ[K] L') (a : L') :

@@ -41,8 +41,6 @@ theorem continuousAt_line {R : AnRead p σ d} {a : ChartForm p σ d} (ha : IsKae
   have hl : ContinuousAt (fun t : ℝ => (c.e y, t • ξ)) 0 := by fun_prop
   have := h.comp_of_eq hl (by simp)
   convert this using 1
-  funext t
-  simp only [Function.comp_apply, c.e.left_inv hy]
   rfl
 
 theorem contDiffAt_line {R : AnRead p σ d} {a : ChartForm p σ d} (ha : IsKaehlerForm R a) {E : ChartMap p σ d}
@@ -57,8 +55,6 @@ theorem contDiffAt_line {R : AnRead p σ d} {a : ChartForm p σ d} (ha : IsKaehl
   rw [← e0] at h
   have := h.comp (0 : ℝ) hl
   convert this using 1
-  funext t
-  simp only [Function.comp_apply, c.e.left_inv hy]
   rfl
 
 theorem glue_jets : ∀ (k : Type) [CommRing k] (Y : Scheme.{0}) (p : Y ⟶ Sp k) (σ : k →+* ℂ) (d : ℕ) (R : AnRead p σ d) (a : ChartForm p σ d), IsKaehlerForm R a → ∀ (c : AlgChart p σ d) (E E' : ChartMap p σ d) (ρ : CxPts p σ → ℝ) (W W' W₀ O₁ : Set (CxPts p σ)) (ε ε' : ℝ), 0 < ε → 0 < ε' → ExphOn.IsExphOn a E W ε → ExphOn.IsExphOn a E' W' ε' → W₀ ⊆ W → O₁ ⊆ W' → (∀ y ∈ O₁, ρ y = 1) → (∀ y, ρ y ≠ 0 → y ∈ W') → W' ⊆ c.e.source → ∀ c₀ : AlgChart p σ d, ∀ y ∈ c₀.e.source, y ∈ W₀ ∪ O₁ → ∀ (ξ : ReciprocityTheory.L2DbarEstimates.V d) (n : ℕ), iteratedDeriv n (fun t : ℝ => c₀.e (ExphOn.glue c ρ E E' c₀ y (t • ξ.ofLp))) 0 = jet (matIn a c₀) n (c₀.e y, ξ) := by

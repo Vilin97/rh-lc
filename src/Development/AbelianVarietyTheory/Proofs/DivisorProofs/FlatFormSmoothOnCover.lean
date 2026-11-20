@@ -70,8 +70,6 @@ theorem analyticOnNhd_of_differentiableOn {f : E → ℂ} {U : Set E} (hU : IsOp
   have h3 : AnalyticAt ℂ e v := e.toContinuousLinearMap.analyticAt v
   have h2 := (h1 (e v) (by simpa using hv)).comp h3
   convert h2 using 1
-  funext w
-  simp
 
 theorem isOpen_cov (hτ : IsPeriodMap B τ) : IsOpen (cov B g) := hτ.1.prod isOpen_univ
 

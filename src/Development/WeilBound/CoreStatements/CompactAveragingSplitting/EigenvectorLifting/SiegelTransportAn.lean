@@ -127,13 +127,9 @@ theorem boxL_inv {A : Type} [CommRing A] [Invertible (2 : A)] [TopologicalSpace 
   show star (l (star _)) = star (l (star _))
   rw [← h₂ _ (star_mem (partial_mem hΦ l))]
   congr 2
-  funext y
-  simp only [Pi.star_apply, schr]
   rw [← h₁ _ (slice_mem hΦ (y + w₂.1)), ← star_star (ψ (y ⬝ᵥ w₂.2 + _)), ← star_mul', conj_psi hψ,
     ← smul_eq_mul (ψ (-_)) (l _), ← map_smul]
   congr 2
-  funext x
-  simp only [Pi.smul_apply, smul_eq_mul, schr]
   rw [← mul_assoc, ← AddChar.map_add_eq_mul]
   congr 2
   · simp only [sumElim_dotProduct_sumElim, dotProduct_neg]

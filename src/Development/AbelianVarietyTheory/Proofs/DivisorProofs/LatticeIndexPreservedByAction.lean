@@ -174,8 +174,6 @@ theorem GlobalTheory.ratSp_exists_sublat_same_index : ∀ (g : ℕ) (γ : Global
     unfold latAct rowLat
     rw [Submodule.map_span, ← Set.range_comp]
     congr 2
-    funext i
-    simp only [Function.comp_apply, rowBasis_apply, LinearMap.coe_restrictScalars,
       Matrix.vecMulLinear_apply]
     ext j
     simp [hB1, hB2, Matrix.vecMul, dotProduct, Matrix.one_apply, ite_mul]

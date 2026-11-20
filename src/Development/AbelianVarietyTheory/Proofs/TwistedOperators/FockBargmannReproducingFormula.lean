@@ -18,8 +18,6 @@ theorem expand_real (κ : Type) [Fintype κ] (x : κ → ℝ) :
   rw [← Complex.ofReal_sum, ← Complex.ofReal_exp] at h
   refine Complex.hasSum_ofReal.mp ?_
   convert h using 1
-  funext m
-  simp only [Finsupp.prod, Complex.ofReal_prod, Complex.ofReal_div, Complex.ofReal_pow, Complex.ofReal_natCast]
 
 theorem conjMono_continuous {ι : Type} [Fintype ι] {a b : ℕ} (m : DVar ι a b →₀ ℕ) : Continuous (conjMono m) := by
   unfold conjMono Finsupp.prod; fun_prop

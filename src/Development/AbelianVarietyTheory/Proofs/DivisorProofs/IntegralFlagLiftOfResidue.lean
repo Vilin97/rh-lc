@@ -81,8 +81,6 @@ theorem integral_flag_lift_of_residue : ∀ (O Γ : Type) [CommRing O] [IsDomain
           sub_add_cancel _ _⟩
         rw [hM, map_sub, map_smul, ← hvw]
         convert hv using 1
-        funext i
-        simp only [Pi.sub_apply, Pi.add_apply, Pi.smul_apply, smul_eq_mul, Algebra.smul_def]
         simp [k, f]
       · refine sup_le (hMmono (Fin.castSucc_le_succ _)) ?_
         rw [Submodule.span_le, Set.singleton_subset_iff]
@@ -90,7 +88,5 @@ theorem integral_flag_lift_of_residue : ∀ (O Γ : Type) [CommRing O] [IsDomain
     · intro g
       rw [hM, map_sub, hπmul]
       convert hchi g using 2
-      funext i
-      simp only [Pi.smul_apply, smul_eq_mul, hπ, map_mul, hψk]
 
 end GlobalTheory

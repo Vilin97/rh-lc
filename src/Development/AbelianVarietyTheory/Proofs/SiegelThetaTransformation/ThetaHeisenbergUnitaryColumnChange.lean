@@ -72,8 +72,6 @@ theorem sum_hx_hAct (x : Frame X.Ψ r)
   rw [Finset.sum_comm]
   simp only [← hx_sum_right]
   congr 1
-  funext j
-  simp only [Finset.sum_apply]
   have hj : ∀ b, ∑ k, rowType X (idx j) (cc (h k a) * h k b) * w b j =
       rowType X (idx j) ((1 : Matrix (Fin n) (Fin n) E) a b) * w b j := by
     intro b

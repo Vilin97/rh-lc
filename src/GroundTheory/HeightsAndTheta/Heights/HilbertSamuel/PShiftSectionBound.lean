@@ -34,8 +34,6 @@ theorem pow_mul_mem_chartLatQ (c : ∀ k, ι k) (b : K → ℤ) {s : Ω} (hs : s
   | zero =>
     rw [pow_zero, one_mul]
     convert hs using 2
-    funext k
-    simp
   | succ j ih =>
     rw [← shift_succ_sub_one] at ih
     have h := mul_mem_chartLatQ (c := c) (b + fun _ => ((j + 1 : ℕ) : ℤ)) ih

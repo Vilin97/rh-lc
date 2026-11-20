@@ -41,14 +41,10 @@ theorem baseM_val (t : T) (w : Pl D.host.E) (j : ℕ) : (baseM G t w j).val = di
       rw [Units.val_mul, stair, GlobalTheory.SplitFlip.diagGL_val, GlobalTheory.SplitFlip.diagGL_val, diagonal_mul_diagonal, Units.val_one,
         ← diagonal_one]
       congr 1
-      funext x
-      simp
     have e2 := congrArg Units.val e
     rw [GlobalTheory.SplitFlip.diagGL_val] at e2
     refine e2.trans ?_
     congr 1
-    funext x
-    simp
   · rw [Units.val_one, ← diagonal_one]
 
 theorem mvFr_entries (S : GridChoice W U) {t : T} (ht : t ∈ U) {w : Pl D.host.E} (hw : w ∈ locPl G t) (p : Place D (Kw w))

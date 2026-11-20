@@ -289,8 +289,6 @@ lemma Hb_herm : (Hb k)ᴴ = Hb k := by
   unfold Hb
   rw [Matrix.diagonal_conjTranspose]
   congr 1
-  funext j
-  simp only [Pi.star_apply]
   split_ifs <;> simp
 
 lemma Hb_sq : Hb k * Hb k = 1 := by

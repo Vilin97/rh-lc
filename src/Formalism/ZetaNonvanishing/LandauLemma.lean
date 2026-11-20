@@ -315,8 +315,6 @@ theorem landauLemma_of (hMD : MellinDeriv) : LandauLemma := by
     rw [hΦeq s hs]
     unfold J
     congr 1
-    funext x
-    simp
   obtain ⟨σ', hσ'lt, hσ'⟩ := key hMD hH hpos hσcb hgood hΦ1
     (fun τ h1 h2 => hΦ2 τ (by linarith) h2) hJ0
   have : σc ≤ σ' := csSup_le ⟨σ, hσT⟩ (fun τ hτ => by

@@ -27,8 +27,6 @@ theorem iwaRedC_k : _root_.PositivityTheory.SiegelWeilFormula.KWhit.IwaRedC_k :=
     funext z
     rw [← _root_.PositivityTheory.SiegelWeilFormula.KWhit.int_n_k d nb lam 𝓖 hcd T w n0 m0 β₀ hn]
     congr 1
-    funext β
-    simp only [flat]
     rw [show w * nb β * (n0 * m0 * k) = (w * nb β * (n0 * m0)) * k by simp only [mul_assoc], _root_.PositivityTheory.SiegelWeilFormula.KWhit.a_mul_K_k d _ k hk,
       _root_.PositivityTheory.SiegelWeilFormula.KWhit.constantTerm_mul_right]
   have e2 : d.orb T (d.om (n0 * m0 * k) Φ) = d.B.ψ (d.tt (T.1.1 * β₀)) * d.orb T (d.om m0 (d.om k Φ)) := by

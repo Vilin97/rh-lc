@@ -76,8 +76,6 @@ theorem levi_log_h_torus {J : Type} [Fintype J] {A : HermLine ι} (hA : IsSmooth
       exact Complex.one_mem_slitPlane
     have hs := Finset.analyticAt_sum _ hk
     convert hs using 1
-    funext u
-    simp only [hHdef, Finset.sum_apply]
   have hHre : ∀ u, (∀ k, c k u ≠ 0) → (H u).re = ∑ k, (A.a k : ℝ) * Real.log ‖c k u‖ := by
     intro u hu
     simp only [hHdef, Complex.re_sum, Complex.re_ofReal_mul, Complex.add_re, Complex.log_re, norm_div]

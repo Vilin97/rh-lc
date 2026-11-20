@@ -47,8 +47,6 @@ lemma dgm_split (θ : Fin n → ℝ) (t : ℝ) :
   simp only [dgm]
   rw [← Matrix.diagonal_smul]
   congr 1
-  funext a
-  simp only [Pi.smul_apply, smul_eq_mul, ← Complex.exp_add]
   congr 1
   push_cast
   ring

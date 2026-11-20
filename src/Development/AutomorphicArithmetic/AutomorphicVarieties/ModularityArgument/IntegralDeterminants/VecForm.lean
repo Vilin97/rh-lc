@@ -120,8 +120,6 @@ theorem UpperTheory.V.Z.Int.vecForm :
     rw [h2] at h1
     rw [h1]
     congr 1
-    funext v
-    simp only [Finset.mem_toList, Finset.mem_univ, if_true]
     rw [hcg v]
     rfl
   let Kint : Subgroup (finU E n) :=

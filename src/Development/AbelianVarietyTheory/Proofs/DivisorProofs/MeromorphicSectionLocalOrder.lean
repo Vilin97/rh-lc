@@ -23,8 +23,6 @@ theorem analyticAt_of_differentiableOn_fin_one {u : (Fin 1 → ℂ) → ℂ} {t 
   have hE : AnalyticAt ℂ (E : (Fin 1 → ℂ) → ℂ) v := (E : (Fin 1 → ℂ) →L[ℂ] ℂ).analyticAt v
   have := ha.comp hE
   convert this using 1
-  funext w
-  simp
 
 end GlobalTheory
 

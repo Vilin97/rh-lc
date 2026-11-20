@@ -93,7 +93,5 @@ theorem hasInfCharGL_map {V : Submodule ℂ (Sm E a)} {τ : E →+* ℂ} {m : Mu
   change cap τ u (mulChi a χ φ) = _ • mulChi a χ φ
   rw [cap_mulChi, h.2 _ φ hφ, map_smul, Multiset.map_map]
   congr 3
-  funext z
-  simp only [Function.comp_apply]; ring
 
 end GlobalTheory.BCT.TwistDisc

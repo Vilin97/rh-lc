@@ -77,8 +77,6 @@ theorem exists_poly_coeff {C : Type} [Field C] {d : ℕ} (l : Fin d → MvPowerS
     intro g; ext β; simp [ι]
   rw [← coeff_map, map_subst hL, hm]
   congr 2
-  funext a
-  simp only [L, map_sum, map_mul, hm, map_C, MvPolynomial.eval_X, smul_eq_C_mul]
 
 theorem integral_of_limit :
   (∀ (C : Type) [Field C] [CharZero C] (v : AddValuation C (WithTop ℝ)) (d : ℕ) (G : LogFGL v d) (A : Matrix (Fin d) (Fin d) C),

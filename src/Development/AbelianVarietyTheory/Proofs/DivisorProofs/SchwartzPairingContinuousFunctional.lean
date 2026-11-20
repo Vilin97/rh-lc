@@ -19,7 +19,5 @@ theorem schwartz_pairing_conj_clm_of_borelSpace (V : Type) [NormedAddCommGroup V
   rw [ContinuousLinearMap.comp_apply, SchwartzMap.integralCLM_apply,
     SchwartzMap.smulLeftCLM_apply hg]
   congr 1
-  funext x
-  simp only [smul_eq_mul, mul_comm]
 
 end GlobalTheory

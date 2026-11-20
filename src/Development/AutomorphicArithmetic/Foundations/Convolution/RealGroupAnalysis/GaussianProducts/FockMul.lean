@@ -61,14 +61,10 @@ theorem UpperTheory.ConvolutionTheory.R2.G.fockMul :
     | add x y _ _ hx hy =>
       have := add_mem hx hy
       convert this using 1
-      funext v
-      simp only [Pi.add_apply]
       ring
     | smul a x _ hx =>
       have := Submodule.smul_mem _ a hx
       convert this using 1
-      funext v
-      simp only [Pi.smul_apply, smul_eq_mul]
       ring
   · intro v₀
     refine ⟨_, Submodule.subset_span ⟨1, one_mem _,

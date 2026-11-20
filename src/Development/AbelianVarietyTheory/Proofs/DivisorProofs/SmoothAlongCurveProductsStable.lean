@@ -163,8 +163,6 @@ private theorem jointlySmooth_const' {v : K}
     contDiff_pi.2 fun i => (hl _ (List.getElem_mem _)).2
   have h3 := h1.comp h2
   convert h3 using 1
-  funext x
-  simp only [Function.comp_apply]
   have hlist : (l.map fun a : P × (F → ℝ) => e a.1 (a.2 x)) =
       List.ofFn fun i : Fin l.length => e l[i].1 (l[i].2 x) :=
     List.ext_getElem (by simp) (by simp)

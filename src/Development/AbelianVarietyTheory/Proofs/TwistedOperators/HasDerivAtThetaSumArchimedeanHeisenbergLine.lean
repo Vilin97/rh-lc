@@ -228,8 +228,6 @@ theorem hasDerivAt_thetaSum_heisLine : ∀ {F E : Type} [Field F] [NumberField F
     show ‖h (fun i => evI F ((z + c + realAd F t • (M.co.e u).1) i)) * r (z + c + realAd F t • (M.co.e u).1)‖ = _
     rw [hz, norm_mul]
     congr 3
-    funext i
-    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
     rw [evI_add, evI_mul, evI_realAd, ← Algebra.smul_def]
 
   let R' : (Fin n × Fin d → FiniteAdeleRing (𝓞 F) F) → ℂ := fun y =>

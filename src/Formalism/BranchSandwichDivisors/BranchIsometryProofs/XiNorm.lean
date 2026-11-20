@@ -963,8 +963,6 @@ theorem xi_norm_bound : XiNorm := by
   have hW : weylProd (lamZ lam) = xnW (n + 1) (xnLam lam) := by
     rw [← xnW_weylProd]
     congr 1
-    funext a
-    simp only [lamZ, xnLam]
     split_ifs <;> simp
   have H2 := H.le
   rw [hμ, hx, hh] at H2

@@ -165,8 +165,6 @@ theorem adjB_star_Kset {k : Matrix (Fin n) (Fin n) ℂ} (hk : k ∈ Kset ε) : k
     have hJ : (Jm ε)ᴴ = Jm ε := by
       rw [Jm, Matrix.diagonal_conjTranspose]
       congr 1
-      funext a
-      simp only [Pi.star_apply]
       split_ifs <;> simp
     rw [hJ] at h
     exact h.symm

@@ -43,8 +43,6 @@ theorem UpperTheory.V.Af.Rs.rankSum :
           ((y ^ k * y ^ s : ℝ) : ℂ) := by
       rw [← intervalIntegral.integral_mul_const]
       congr 1
-      funext x
-      simp only [UpperHalfPlane.petersson, him x, zpow_natCast]
       push_cast
       ring
     dsimp only

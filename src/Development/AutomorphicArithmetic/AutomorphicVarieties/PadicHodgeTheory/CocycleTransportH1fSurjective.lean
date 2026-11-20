@@ -86,8 +86,6 @@ private theorem mem_Z1f_transport_iff (he : Continuous e) (he' : Continuous e.sy
   refine and_congr (and_congr ⟨fun h => h.comp he, fun h => ?_⟩ ?_) (exists_congr fun x => ?_)
   · have := h.comp he'
     convert this using 1
-    funext g
-    simp
   · rw [e.surjective.forall₂]
     simp only [tr_apply, map_mul]
   · rw [e.surjective.forall]

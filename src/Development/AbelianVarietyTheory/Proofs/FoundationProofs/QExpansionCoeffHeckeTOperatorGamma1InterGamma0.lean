@@ -32,8 +32,6 @@ theorem coef_heckeT : ∀ (N l q : ℕ) (k : ℤ) (σ : SL(2, ℤ)), 0 < N → q
       rw [hg]; rfl
     rw [e]
     convert h2 using 1
-    funext m
-    simp only [smul_eq_mul]
     ring
   rw [GlobalTheory.T.qExpansionCoeffPeriodOne_eq_of_hasSum _ _ hsum n, ← hg]
 

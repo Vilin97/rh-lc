@@ -257,8 +257,6 @@ theorem qdet_map {A A' : Type} [Ring A] [Algebra ℂ A] [Ring A'] [Algebra ℂ A
   simp only [map_sum, map_mul, map_intCast, map_list_prod, List.map_ofFn]
   refine Finset.sum_congr rfl fun σ _ => ?_
   congr 3
-  funext k
-  simp only [Function.comp_apply, map_add]
   split_ifs <;> simp
 
 variable {M : ℕ} {d : Fin M → ℕ}

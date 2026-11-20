@@ -41,8 +41,6 @@ theorem X_pow_smul_mem (hM : IsMultigrading ι M piece) (v : Σ k, ι k) (n : �
     rw [pow_succ, mul_smul]
     have h := ih _ _ (hM.smul_mem v m x hx)
     convert h using 2
-    funext k
-    simp only [degZ, unitDeg, blockWeight, Pi.add_apply, Pi.smul_apply, smul_eq_mul, Pi.single_apply]
     split_ifs <;> push_cast <;> ring
 
 theorem monomial_smul_mem (hM : IsMultigrading ι M piece) (d : (Σ k, ι k) →₀ ℕ) :

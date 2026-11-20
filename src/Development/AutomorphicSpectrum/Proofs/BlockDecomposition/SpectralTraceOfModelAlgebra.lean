@@ -22,8 +22,6 @@ theorem twTr_unit (hL : LocAlg) {E : Type} [Field E] [NumberField E] [IsCMField 
       (KL n w : Set (UL n w)).indicator 1 := by
     rw [Subgroup.relIndex_self]
     congr 1
-    funext _
-    simp
   rw [e] at h8 h9
   have : FiniteDimensional ℂ (fixed σ.ρ (KL n w)) := Module.finite_of_finrank_pos (by omega)
   rw [h8, h9, LinearMap.trace_one, h1]

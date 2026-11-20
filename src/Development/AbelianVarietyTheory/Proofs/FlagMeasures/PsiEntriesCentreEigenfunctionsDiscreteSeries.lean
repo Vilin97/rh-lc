@@ -635,8 +635,6 @@ theorem inner_ps {ε : Fin n → Bool} (lam : Fin n → ℝ) {abelian₂ : Fin n
   simp only [intK]
   rw [← integral_const_mul]
   congr 1
-  funext k
-  simp only [ContinuousLinearMap.smul_apply, ContinuousLinearMap.smulRight_apply, innerSL_apply_apply,
     inner_smul_right, pk]
   ring
 

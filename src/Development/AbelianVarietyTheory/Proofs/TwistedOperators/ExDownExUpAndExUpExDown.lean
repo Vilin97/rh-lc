@@ -53,8 +53,6 @@ private theorem fourier_fourier_eq_neg {k : Type} [Field k] [ValuativeRel k] [To
     rw [← integral_mul_const,
       ← integral_add_right_eq_self (fun x : n → k => f (x - z) * (ψ (x ⬝ᵥ y) : ℂ)) z]
     congr 1
-    funext x
-    simp only [add_sub_cancel_right, add_dotProduct, AddChar.map_add_eq_mul, Circle.coe_mul,
       dotProduct_comm z y]
     ring
   calc _ = ∫ y : n → k, (∫ x : n → k, f (x - z) * (ψ (x ⬝ᵥ y) : ℂ) ∂(Measure.pi fun _ => ν))

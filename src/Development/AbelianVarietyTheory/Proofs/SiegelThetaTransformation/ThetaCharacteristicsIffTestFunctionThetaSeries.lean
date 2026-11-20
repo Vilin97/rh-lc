@@ -203,8 +203,6 @@ theorem mem_spanChi {φ : TF n g} (hφ : IsSB φ) : φ ∈ spanChi n g := by
   have h := (spanChi n g).sum_mem fun c (_ : c ∈ T) => (spanChi n g).smul_mem
     (φ fun k i => (c k i : ℚ) / R) (ind_mem hR fun k i => (c k i : ℚ) / R)
   convert h using 1
-  funext m
-  simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   by_cases h1 : IntM ((R : ℚ) • m)
   · choose z hzm using fun k i => (isIntegral_iff_int _).1 (h1 k i)
     simp only [Matrix.smul_apply, smul_eq_mul] at hzm

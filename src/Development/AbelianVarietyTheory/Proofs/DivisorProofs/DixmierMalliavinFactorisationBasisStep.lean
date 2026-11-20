@@ -97,8 +97,6 @@ theorem smFn_dixmierMalliavin_step : ∀ (𝔸 : Type) [NormedRing 𝔸] [Normed
     simp_rw [e3]
     rw [integral_tsum_of_summable_integral_norm hTi hsum]
     congr 1
-    funext t
-    simp only [T, hD, List.nil_append]
     rw [← tsum_mul_left]
     congr 1
     funext p

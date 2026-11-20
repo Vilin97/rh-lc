@@ -105,8 +105,6 @@ theorem trAct_one : trAct (1 : ι → GL (Fin n) K) = AlgHom.id K _ := by
   unfold trAct
   rw [← blockAct_one]
   congr 1
-  funext τ
-  simp
 
 theorem detTwK_mul (lam : ι → DomWeight n) (g h : ι → GL (Fin n) K) :
     detTwK lam (g * h) = detTwK lam g * detTwK lam h := by

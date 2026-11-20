@@ -229,8 +229,6 @@ variable {x} (k : Kap x) (κ' : Fin k.g → G'.G₀ → Matrix (Fin n) (Fin n) x
       have := (g.bd_iff _ _ _).2 hc
       rw [e] at this
       convert this using 1
-      funext a
-      simp only [Finset.sum_apply, Pi.smul_apply, hκ])
     gen := fun z hz => by
       have h1 := (g.sel_iff _ _ _ _ _ _).2 hz
       rw [e] at h1
@@ -238,8 +236,6 @@ variable {x} (k : Kap x) (κ' : Fin k.g → G'.G₀ → Matrix (Fin n) (Fin n) x
       refine ⟨s, c, (g.bd_iff _ _ _).1 ?_⟩
       rw [e]
       convert hc using 1
-      funext a
-      simp only [Pi.sub_apply, Finset.sum_apply, Pi.smul_apply, hκ] }
 
 end Desc
 

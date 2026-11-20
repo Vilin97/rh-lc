@@ -118,8 +118,6 @@ private theorem smallF_change (ν : kˣ →* ℂˣ) (a' d : ℕ) (Ψ : Matrix (F
   rw [← integral_mul_left_eq_self (fun y : GL (Fin a') k =>
     Ψ (y.val * (Y * M)) * (ν (gdet y) : ℂ) * apow (gdet y) ((Fintype.card (Fin d) : ℂ) / 2)) g, ← integral_const_mul]
   congr 1
-  funext y
-  simp only [Pi.smul_apply, smul_eq_mul, Units.val_mul, map_mul, apow_mul, Matrix.mul_assoc]
   rw [mul_assoc l, mul_assoc l, mul_assoc l]
   congr 1
   rw [eq_inv_mul_iff_mul_eq₀ hne]

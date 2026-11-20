@@ -128,8 +128,6 @@ theorem moyal_pointwise : ∀ (n : ℕ) (f g g' : Sch (Fin n)) (x : EuclideanSpa
     _ = ∫ p, ∫ q, G (p, q) := integral_prod G hGint
     _ = ∫ p, starRingEnd ℂ (g (x + p)) * g' x * f (x + p) := by
         congr 1
-        funext p
-        simp only [hG]
         rw [integral_mul_const, integral_phase_fourier, ambU_apply]
     _ = ∫ p, (fun y => f y * starRingEnd ℂ (g y)) (x + p) * g' x := by
         congr 1

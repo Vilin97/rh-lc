@@ -29,8 +29,6 @@ theorem ιMulti_sum_smul {K V : Type} [Field K] [AddCommGroup V] [Module K V] {n
         ext i j; simp [Matrix.one_apply, Pi.single_apply, eq_comm], Matrix.det_one]
     rw [AlternatingMap.smulRight_apply, e1, one_smul, AlternatingMap.compLinearMap_apply]
     congr 1
-    funext i
-    simp
   exact AlternatingMap.congr_fun hA M
 
 theorem val_le_of_image_subset {C O W : Type} [Field C] [CommRing O] [Algebra O C]

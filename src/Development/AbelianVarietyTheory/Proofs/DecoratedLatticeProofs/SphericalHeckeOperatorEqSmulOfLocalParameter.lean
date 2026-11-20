@@ -122,8 +122,6 @@ private theorem cell_unif_lemma {L : Type} [Field L] [Valued L (WithZero (Multip
   have hsplit : tMat ϖ n m a = tMat ϖ' n m a * (((D : GU c n) : GL (Fin n) L) : Matrix (Fin n) (Fin n) L) := by
     rw [hD, htm ϖ, htm ϖ', Matrix.diagonal_mul_diagonal]
     congr 1
-    funext i
-    simp only [he_def]
     rw [mul_div_cancel₀ _ (hg0 ϖ' (hne ϖ' hU') i)]
   obtain ⟨hub, hud⟩ := hu
   refine ⟨D * u * D⁻¹, ?_, D * k, Subgroup.mul_mem _ hDK hk, ?_⟩

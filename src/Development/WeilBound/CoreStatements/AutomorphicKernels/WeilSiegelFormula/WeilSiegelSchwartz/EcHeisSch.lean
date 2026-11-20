@@ -65,8 +65,6 @@ theorem heisSch : HeisSch := by
   have h6 := Submodule.smul_mem _ (ψ (halfTr (Matrix.trace (GlobalTheory.StdUnn.inner V (xPart v) (yPart v))) -
     halfTr (Matrix.trace (GlobalTheory.StdUnn.inner V (yPart v) (yPart v))))) h5
   convert h6 using 1
-  funext z
-  simp only [EC.Heisenberg₂, Pi.smul_apply, smul_eq_mul, add_neg_cancel_right]
   rw [← mul_assoc, ← mul_assoc, ← AddChar.map_add_eq_mul, ← AddChar.map_add_eq_mul,
     Unip.quad_shift V adj_one z (yPart v)]
   congr 2

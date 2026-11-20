@@ -31,8 +31,6 @@ theorem redPerp_holds : RedPerp D := by
   simp only [Red, ellI, heisO]
   rw [← integral_const_mul]
   congr 1
-  funext a
-  simp only [Formalism.IndefR.Fin.symplOH_add_left, Formalism.IndefR.Fin.symplOH_add_right, AddChar.map_add_eq_mul, add_assoc]
   ring
 
 theorem star_eq_sig (e : D.host.E) : star e = D.sp.cm.sig e := rfl
@@ -262,8 +260,6 @@ theorem redLeft_holds : RedLeft D := by
   rw [show (∫ b in 𝓕, heisO ψ S T w f (embI S T C b) ∂μ) = ∫ b in 𝓕, g (b + a) ∂μ from hshift.symm,
     ← integral_const_mul]
   congr 1
-  funext b
-  simp only [hg, heisO]
   rw [embI_add, Formalism.IndefR.Fin.symplOH_add_right, Formalism.IndefR.Fin.symplOH_add_left, hiso, zero_add, add_assoc,
     ← mul_assoc, ← AddChar.map_add_eq_mul]
   congr 2

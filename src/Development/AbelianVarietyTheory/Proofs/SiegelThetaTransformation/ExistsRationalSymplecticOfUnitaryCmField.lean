@@ -340,8 +340,6 @@ theorem GlobalTheory.SW.exists_symplectic_of_unitary : ∀ (E : Type) [Field E] 
     (by
       rw [hden, ← blockDiagonal_mul, ← one]
       congr 1
-      funext τ
-      simp only [fromBlocks_multiply, Matrix.mul_zero, Matrix.zero_mul, add_zero, zero_add,
         ← transpose_mul, nonsing_inv_mul _ (Ne.isUnit (hP τ)), mul_nonsing_inv _ (Ne.isUnit (hQ τ)),
         transpose_one, fromBlocks_one])
     (by

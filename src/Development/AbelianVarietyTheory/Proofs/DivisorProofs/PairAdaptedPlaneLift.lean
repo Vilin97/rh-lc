@@ -30,8 +30,6 @@ theorem sliceAdm {F : Type} [Field F] [NumberField F] {κ κa κb : Type} [Finty
   rw [ContinuousLinearMap.comp_apply, ← hU]
   simp only [LinearMap.comp_apply]
   congr 1
-  funext b
-  simp only [LinearMap.funLeft_apply, pureA, hT]
   rw [GlobalTheory.ThK.Adapt.glue_map ε (fun z : AF F => InfiniteAdeleRing.ringEquiv_mixedSpace F z.1),
     GlobalTheory.ThK.Adapt.glue_map ε (fun z : AF F => z.2)]
   simp only [Pi.zero_apply]

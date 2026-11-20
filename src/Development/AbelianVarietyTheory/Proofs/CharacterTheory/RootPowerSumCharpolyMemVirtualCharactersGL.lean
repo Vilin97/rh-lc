@@ -119,8 +119,6 @@ private theorem powerSum_roots_charpoly_complex_mem_virt (G : Type) [Group G] [F
       _root_.GlobalTheory.BI.isChar_mem_virt_complex (_root_.GlobalTheory.BI.isChar_one ℂ ℂ G)
     have := zsmul_mem h1 c
     convert this using 1
-    funext g
-    simp
   induction r using Nat.strong_induction_on with
   | _ r ih =>
     rcases Nat.eq_zero_or_pos r with rfl | hr

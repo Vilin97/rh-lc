@@ -119,5 +119,3 @@ theorem nestedHomeomorph_d_apply (m : ℕ) (a : resolutionX X m) (x : Fin (m + 1
     congr 1
     rw [nestedHomeomorph_succ_apply X m a, Fin.succ_succAbove_zero]
     congr 1
-    funext j
-    simp only [Fin.tail, Fin.succ_succAbove_succ]

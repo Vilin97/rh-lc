@@ -97,8 +97,6 @@ theorem IsSmoothRealFam.deriv_mem_ccAd {u : ℝ → GAd σ J} (hu : IsSmoothReal
   | mem f hf =>
     obtain ⟨a, ha, b, hb, rfl⟩ := hf
     convert infFin_mem_ccAd (hu.deriv_mem_ccInf hc h0 ha) hb using 1
-    funext g
-    simp only [infFin, map_mul, hu.1, mul_one, deriv_mul_const_field]
   | zero =>
     simp only [Pi.zero_apply, deriv_const]
     exact (CcAd σ J).zero_mem
@@ -108,8 +106,6 @@ theorem IsSmoothRealFam.deriv_mem_ccAd {u : ℝ → GAd σ J} (hu : IsSmoothReal
     exact deriv_fun_add ((hu.contDiff hf g).differentiable (by simp) 0) ((hu.contDiff hf' g).differentiable (by simp) 0)
   | smul c f _ h =>
     convert (CcAd σ J).smul_mem c h using 1
-    funext g
-    simp only [Pi.smul_apply, smul_eq_mul, deriv_const_mul_field]
 
 theorem isSmoothRealFam_embArch (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w) {x : P → GArch σ J w}
     (hx : ∀ i j, ContDiff ℝ ∞ fun t => archMat σ J τ (x t) i j) :

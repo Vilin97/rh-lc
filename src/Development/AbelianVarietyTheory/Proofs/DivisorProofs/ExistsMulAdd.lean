@@ -80,8 +80,6 @@ theorem univ_of_mat [Fact p.Prime] (k : ℕ) (R₁ : Matrix (Fin m) (Fin r) A) (
     refine ⟨C₂ *ᵥ Pi.single j 1, ?_⟩
     rw [mulVecLin_apply, mulVec_mulVec, h₂, ← mulVec_mulVec]
     congr 1
-    funext i
-    simp
   have hψ' : ∀ x, ψ (Submodule.Quotient.mk x) = Submodule.Quotient.mk (U *ᵥ fun i => x i ^ p ^ k) := fun x => by
     rw [hψ, mk_mulVec]
   have hq : p ^ k ≠ 0 := pow_ne_zero _ (Fact.out : p.Prime).ne_zero

@@ -36,7 +36,5 @@ theorem PF_conj {ι : Type*} {f : (ι → ℝ) → ℂ} (hf : f ∈ PF ι) : (fu
   show starRingEnd ℂ (MvPolynomial.eval₂ (RingHom.id ℂ) _ p) = _
   rw [MvPolynomial.eval₂_comp_left, RingHom.comp_id]
   congr 1
-  funext i
-  simp
 
 end Formalism.L2.SG.RealObj.InfCut.NilradicalHermitianFrames

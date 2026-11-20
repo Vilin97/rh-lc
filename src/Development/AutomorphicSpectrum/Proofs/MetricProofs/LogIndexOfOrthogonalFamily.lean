@@ -442,8 +442,6 @@ theorem map_familyLat [NumberField L] (hcard : Fintype.card (E →+* L) = Module
   classical
   rw [familyLat, Submodule.map_span, ← Set.range_comp]
   congr 2
-  funext a
-  simp only [Function.comp_apply, phi_apply]
   rw [Finset.sum_eq_single a]
   · simp
   · intro b _ hb

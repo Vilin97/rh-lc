@@ -98,8 +98,6 @@ def scaleCols {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (c : Fin ρ →
       ← Matrix.mul_assoc _ d.e, d.e'e, Matrix.one_mul, Matrix.diagonal_conjTranspose,
       Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
     congr 1
-    funext a
-    simp only [Pi.star_apply, star_inv₀, star_star]
     exact inv_mul_cancel₀ (hc a)
   iso := d.iso
   i₀e := by rw [← Matrix.mul_assoc, d.i₀e, Matrix.zero_mul]

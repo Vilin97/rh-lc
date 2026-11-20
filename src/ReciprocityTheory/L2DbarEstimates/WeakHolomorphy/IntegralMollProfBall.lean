@@ -88,8 +88,6 @@ private theorem integral_moll_mul_eq_of_differentiableOn_ball {n : ℕ} {a : ℝ
     try beta_reduce at e1
     rw [← e1]
     congr 1
-    funext z
-    simp only [sub_add_cancel_left, moll, norm_neg]
   rw [hA]
   have hB : ∀ θ : ℝ, ∫ z, (moll n a z : ℂ) * h (x + circleMap 0 1 θ • z)
       = ∫ z, (moll n a z : ℂ) * h (x + z) := by
@@ -99,8 +97,6 @@ private theorem integral_moll_mul_eq_of_differentiableOn_ball {n : ℕ} {a : ℝ
     try beta_reduce at e2
     rw [← e2]
     congr 1
-    funext z
-    simp only [moll, norm_smul, hc, one_mul]
   obtain ⟨C, hC⟩ := (isCompact_closedBall x (a / 2)).exists_bound_of_continuousOn
     (hh.continuousOn.mono (closedBall_subset_ball (by linarith)))
   have hcont : Continuous (fun p : ℝ × V n => (moll n a p.2 : ℂ) * h (x + circleMap 0 1 p.1 • p.2)) := by

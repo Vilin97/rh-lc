@@ -65,8 +65,6 @@ theorem eigWith_of_diagWith {O F k Q : Type} [CommRing O] [Field F] [Field k] [A
     intro E _ _
     rw [Polynomial.map_multiset_prod, Multiset.map_map, Multiset.map_map]
     congr 2
-    funext s
-    simp
   rw [key, LinearMap.charpoly_baseChange] at h1
   refine ⟨inferInstance, ?_⟩
   rw [key, LinearMap.charpoly_baseChange, Polynomial.map_injective _ hinj h1]

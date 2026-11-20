@@ -482,8 +482,6 @@ theorem isMajorantFrame_dbl (ha : IsMajorantFrame σ J a) : IsMajorantFrame σ Q
   rw [dblGram, cT_blkMat, blkMat_mul, blkMat_mul, Matrix.mul_neg, Matrix.neg_mul, hε, Matrix.diagonal_neg, blkMat,
     Matrix.fromBlocks_diagonal, Matrix.submatrix_diagonal_equiv]
   congr 1
-  funext k
-  simp only [Function.comp_apply]
   obtain ⟨k, rfl⟩ := finSumFinEquiv.surjective k
   simp only [Equiv.symm_apply_apply]
   rcases k with i | i <;> simp <;> split_ifs <;> simp_all

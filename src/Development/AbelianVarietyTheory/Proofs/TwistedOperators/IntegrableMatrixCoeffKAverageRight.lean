@@ -40,8 +40,6 @@ theorem integrable_coeff_avg_right : ∀ (n : ℕ) (ε : Fin n → Bool) (μ : M
     intro g
     rw [← (π g).integral_comp_comm hvi, ← integral_inner ((π g).integrable_comp hvi) u']
     congr 1
-    funext k
-    simp only [hfdef, map_smul, inner_smul_right, map_mul, ContinuousLinearMap.mul_apply]
   set M : ℝ := ‖BoundedContinuousFunction.mkOfCompact (⟨φ, hφ⟩ : C(KG ε, ℂ))‖ with hMdef
   have hM : ∀ k, ‖φ k‖ ≤ M := fun k =>
     (BoundedContinuousFunction.mkOfCompact (⟨φ, hφ⟩ : C(KG ε, ℂ))).norm_coe_le_norm k

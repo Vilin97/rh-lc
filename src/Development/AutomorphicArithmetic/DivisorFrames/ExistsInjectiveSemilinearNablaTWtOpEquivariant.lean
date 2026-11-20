@@ -112,8 +112,6 @@ private theorem onFactor_rep (σ : R →+* S) (u : GL (Fin N) R) (ν : Fin N →
   unfold Formalism.UG.dwAct Formalism.GradedWeylDivisibility.rowAct
   rw [aeval_eq_bind₁, aeval_eq_bind₁, map_bind₁]
   congr 2
-  funext v
-  simp only [map_sum, map_mul, map_C, map_X]
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [← map_inv]
   rfl

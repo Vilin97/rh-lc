@@ -25,8 +25,6 @@ theorem isFrame_gl_smul {X : Scheme.{0}} {V : X.Opens} {F : X.Modules} {r : ℕ}
     · simp [Matrix.vecMul_vecMul]
   have h2 := (he T hT).comp hQ
   convert h2 using 1
-  funext a
-  simp only [Function.comp_apply, Fintype.linearCombination_apply, map_sum, resM_smul, Matrix.vecMulLinear_apply,
     Matrix.vecMul, dotProduct, Finset.sum_smul, Finset.smul_sum, smul_smul]
   rw [Finset.sum_comm]
   rfl

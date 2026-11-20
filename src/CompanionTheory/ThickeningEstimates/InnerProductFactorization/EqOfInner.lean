@@ -84,8 +84,6 @@ theorem exists_rho (w : l ⊕ l → ℝ) (f : Sch l) : ∃ g : Sch l, ⇑g = rho
       (innerSL ℝ (qPart w)).hasTemperateGrowth.add (Function.HasTemperateGrowth.const _)
     have h3 := GlobalTheory.Published.Metaplectic.hasTemperateGrowth_eChar.comp h2
     convert h3 using 1
-    funext x
-    simp only [phase, Function.comp, GlobalTheory.Published.Metaplectic.eChar_apply]
     congr 1
     push_cast
     ring

@@ -74,16 +74,12 @@ theorem mul_coord_mem (R : RD d) (i : Iw d) {h : Mx F E d.m d.n → ℂ} (hh : h
     ring
   | zero =>
     convert Submodule.zero_mem _ using 1
-    funext X
-    simp
   | add h₁ h₂ _ _ i₁ i₂ =>
     convert Submodule.add_mem _ i₁ i₂ using 1
     funext X
     simp [mul_add]
   | smul a h _ i₁ =>
     convert Submodule.smul_mem _ a i₁ using 1
-    funext X
-    simp only [Pi.smul_apply, smul_eq_mul]
     ring
 
 theorem poly_mem (R : RD d) (Q : MvPolynomial (Iw d) ℂ) {g : Yf d → ℂ} (hg : g ∈ SB (Yf d)) :
@@ -100,18 +96,12 @@ theorem poly_mem (R : RD d) (Q : MvPolynomial (Iw d) ℂ) {g : Yf d → ℂ} (hg
   induction Q using MvPolynomial.induction_on with
   | C a =>
     convert Submodule.smul_mem _ a base using 1
-    funext X
-    simp only [MvPolynomial.eval_C, Pi.smul_apply, smul_eq_mul]
     ring
   | add p q hp hq =>
     convert Submodule.add_mem _ hp hq using 1
-    funext X
-    simp only [map_add, Pi.add_apply]
     ring
   | mul_X p i hp =>
     convert mul_coord_mem R i hp using 1
-    funext X
-    simp only [map_mul, MvPolynomial.eval_X]
     ring
 
 end PositivityTheory.SiegelWeilFormula.KFP.OswGen

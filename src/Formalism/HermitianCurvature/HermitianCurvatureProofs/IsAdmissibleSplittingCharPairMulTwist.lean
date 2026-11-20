@@ -3315,8 +3315,6 @@ theorem DnM_diag (hL : IsModelLevel P (DQ P) L) (Y : ℝ) (w : List ℝ)
     funext e
     rw [Pi.smul_apply, ← map_smul, mul_assoc, ← map_mul]
     congr 2
-    funext π
-    simp only [Pi.mul_apply, Pi.smul_apply, smul_eq_mul]
     rw [cs_cons, if_pos rfl, div_eq_mul_inv]
   · simp only [Fin.mk_one, Fin.isValue, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_one, Matrix.head_cons,
       Matrix.empty_val', Matrix.cons_val_fin_one]
@@ -3325,8 +3323,6 @@ theorem DnM_diag (hL : IsModelLevel P (DQ P) L) (Y : ℝ) (w : List ℝ)
     funext e
     rw [mul_assoc, ← map_mul]
     congr 2
-    funext π
-    simp only [Pi.mul_apply]
     rw [cs_cons, if_neg (by decide)]
 
 theorem wtc_diag (hL : IsModelLevel P (DQ P) L) (w : List ℝ)

@@ -100,8 +100,6 @@ theorem lintegral_chartS_of_unitary (F E : Type) [Field F] [NumberField F] [Fiel
           congr 1
           unfold chartS
           congr 1
-          funext j
-          simp only [actW, actTup, hcv, Pi.add_apply, sub_eq_add_neg]
   · have h0 : ∀ Y : Fin n → Fin (M + 2) → R ⊗[F] E, g (Fin.cons (x 0) Y) = 0 := fun Y => hg0 _ (by simpa using hu)
     have h1 : ∀ a s Y, g (chartS R σ J x a s Y) = 0 := fun a s Y => hg0 _ (by simpa [chartS] using hu)
     simp [h0, h1]

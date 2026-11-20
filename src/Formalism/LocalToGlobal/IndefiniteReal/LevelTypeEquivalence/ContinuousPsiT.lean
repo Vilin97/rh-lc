@@ -60,8 +60,6 @@ theorem continuous_psiT (τ : D.what₂.Tau) : Continuous (psiT D τ) := by
   have hc : ∀ k : Fin 2, Continuous fun x : AE D => (basAF D).repr x k := fun k => by
     have := (continuous_apply k).comp (G5.tensCoordH (basE D) (AF D.host.F)).continuous
     convert this using 1
-    funext x
-    simp only [Function.comp_apply, G5.tensCoordH_apply]
     rfl
   have hf : Continuous (fstA D.host.F) := continuous_fst
   exact ((continuous_gW (D := D) _).comp (hf.comp (hc 0))).add

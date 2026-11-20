@@ -64,8 +64,6 @@ theorem mvInner_conj {ε : Fin n → Bool} {m : Fin n → ℤ} (f g : MV ε m) :
   unfold mvInner
   rw [← integral_conj]
   congr 1
-  funext x
-  simp only [map_mul, Complex.conj_conj]
   exact mul_comm _ _
 
 theorem mvInner_re_nonneg {ε : Fin n → Bool} {m : Fin n → ℤ} (f : MV ε m) : 0 ≤ (mvInner f f).re := by

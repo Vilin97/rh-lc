@@ -53,8 +53,6 @@ theorem orth_sum_hasGram : ∀ (K V : Type) [Field K] [NumberField K] [AddCommGr
   have hcoord : ∀ i j, Formalism.HermitianLatticesTheory.fcoord B Xv v x ⟨i, j⟩ = Formalism.HermitianLatticesTheory.fcoord (b i) (X i) v (f i) j := fun i j => by
     simp only [Formalism.HermitianLatticesTheory.fcoord, hinv, blockDiagonal'_mulVec_apply']
     congr 1
-    funext l
-    simp only [Formalism.HermitianLatticesTheory.vecAt, hrep, c]
   have hsq : Formalism.HermitianLatticesTheory.normAt B Xv v x ^ 2 = N v.embedding x ^ 2 := by
     rw [hx, hpy, ← hx]
     simp only [Formalism.HermitianLatticesTheory.normAt, Formalism.HermitianLatticesTheory.cnorm]

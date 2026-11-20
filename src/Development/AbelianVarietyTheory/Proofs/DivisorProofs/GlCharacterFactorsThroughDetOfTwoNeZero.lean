@@ -78,8 +78,6 @@ theorem map_diagGL_eq (c : GL (Fin (m + 1)) k →* ℂˣ) (d : Fin (m + 1) → k
     intro i x
     rw [← map_diagGL_perm c (Equiv.swap 0 i) (Pi.mulSingle i x)]
     congr 2
-    funext a
-    simp only [Function.comp_apply, Pi.mulSingle_apply, Equiv.swap_apply_eq_iff, Equiv.swap_apply_right]
   have e : c (diagGL (m + 1) d) = (c.comp (diagGL (m + 1))) (∏ i, Pi.mulSingle i (d i)) := by
     rw [Finset.univ_prod_mulSingle]; rfl
   rw [e, map_prod, map_prod]

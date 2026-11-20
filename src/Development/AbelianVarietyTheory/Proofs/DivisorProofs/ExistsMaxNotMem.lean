@@ -74,8 +74,6 @@ theorem wStable_sup (B : Base F E) (om : Rep σ Y W) (D : Submodule ℂ (Fn F n 
       refine (hd x).unique ?_
       have := (hy₁ x).add (hz₁ x)
       convert this using 1
-      funext t
-      simp only [map_add, Pi.add_apply]
     rw [e]
     exact Submodule.add_mem_sup (h₁.lie γ hγ y hy y₁ hy₁D hy₁) (h₂.lie γ hγ z hz z₁ hz₁D hz₁)
   · obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hΦ

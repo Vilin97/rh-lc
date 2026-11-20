@@ -226,8 +226,6 @@ theorem exists_hilbertBasis_eigenvectors_hasSum {T : E →L[𝕜] E} (hT : IsCom
   refine ⟨s, b, l, hb, hTb, fun x => ?_, fun ε hε => ?_⟩
   · have h := T.hasSum (b.hasSum_repr x)
     convert h using 1
-    funext i
-    simp only [map_smul, hTb, smul_smul, b.repr_apply_apply, mul_comm]
   · have hF := finite_eigenvalues_norm_ge hT hT' hε
     have hsub : {i | ε ≤ |l i|} ⊆ ⋃ μ ∈ {μ : 𝕜 | HasEigenvalue (T : E →ₗ[𝕜] E) μ ∧ ε ≤ ‖μ‖},
         {i | b i ∈ eigenspace (T : E →ₗ[𝕜] E) μ} := by

@@ -25,8 +25,6 @@ theorem dLine_inl (ψ : AddChar (AF D.host.F) ℂ) (A S A' : HSp D) (G : WO A S 
   funext x
   simp only [GlobalTheory.WeilVacMove.dLine, join_apply]
   congr 1
-  funext t
-  simp only [heisO, AddMonoidHom.comp_apply, symplOH_split (sumDec A (GlobalTheory.ChiGrid.negSp A')), map_add, fst_inl, snd_inl,
     GlobalTheory.WeilVacMove.symplOH_zero_right, add_zero, join_apply]
 
 theorem dLine_inr (ψ : AddChar (AF D.host.F) ℂ) (A S A' : HSp D) (G : WO A S → WO S A' → ℂ) (M : ℝ →+ WO S A') :
@@ -35,8 +33,6 @@ theorem dLine_inr (ψ : AddChar (AF D.host.F) ℂ) (A S A' : HSp D) (G : WO A S 
   funext x
   simp only [GlobalTheory.WeilVacMove.dLine, join_apply]
   congr 1
-  funext t
-  simp only [heisO, AddMonoidHom.comp_apply, symplOH_split (sumDec A (GlobalTheory.ChiGrid.negSp A')), map_add, fst_inr, snd_inr,
     GlobalTheory.WeilVacMove.symplOH_zero_right, zero_add, add_zero, join_apply]
 
 theorem isBiTheta_dLine : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (A S A' : HSp D) (G : WO A S → WO S A' → ℂ), IsBiTheta ψ A S A' G → (∀ M : ℝ →+ WO A S, Continuous M → (∀ s, (M s).map (finPart D) = 0) → IsBiTheta ψ A S A' fun u v => GlobalTheory.WeilVacMove.dLine ψ A S M (fun u' => G u' v) u) ∧ ∀ M' : ℝ →+ WO S A', Continuous M' → (∀ s, (M' s).map (finPart D) = 0) → IsBiTheta ψ A S A' fun u v => GlobalTheory.WeilVacMove.dLine ψ S A' M' (G u) v := by

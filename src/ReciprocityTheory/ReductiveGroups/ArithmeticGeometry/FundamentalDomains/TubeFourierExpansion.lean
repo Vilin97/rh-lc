@@ -221,8 +221,6 @@ theorem tube_expansion (Ω : Set (Fin n → ℝ)) (h : (Fin n → ℂ) → ℂ) 
     intro t ht
     simp only [tube, Set.mem_setOf_eq, Set.mem_preimage] at ht ⊢
     convert ht using 1
-    funext j
-    simp
   have hdg : DifferentiableOn ℂ (fun t => h (t + fun j => (y0 j : ℂ) * I))
       (tube n ((fun b => b + y0) ⁻¹' Ω)) :=
     hd.comp (differentiable_id.add_const _).differentiableOn (fun t ht => hmaps t ht)

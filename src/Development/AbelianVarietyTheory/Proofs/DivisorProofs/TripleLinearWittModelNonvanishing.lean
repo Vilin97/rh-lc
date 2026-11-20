@@ -35,8 +35,6 @@ theorem ip_smul_smul (μ : Measure X) (a b : ℂ) (f g : X → ℂ) :
   unfold ip
   rw [← integral_const_mul]
   congr 1
-  funext y
-  simp only [Pi.smul_apply, smul_eq_mul, map_mul]
   ring
 
 theorem ip_sum_sum (μ : Measure X) [IsFiniteMeasureOnCompacts μ] {V : Type} (F : Finset V) (a : V → ℂ)

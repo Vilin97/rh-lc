@@ -29,8 +29,6 @@ theorem tMat_single (ϖ : L) (n' : ℕ) (k : Fin (n' / 2)) :
     tMat ϖ n' (n' / 2) (Pi.single k 1) = Matrix.diagonal (fun i => ϖ ^ ex n' k i) := by
   unfold tMat
   congr 1
-  funext i
-  simp only [ex, lo, Fin.ext_iff, Fin.val_rev, Pi.single_apply]
   have hk := k.2
   have hi := i.2
   split_ifs <;> first | (exfalso; omega) | simp_all

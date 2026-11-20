@@ -375,8 +375,6 @@ lemma lower_pk {N : (Fin d → ℝ) → ℝ} (hN0 : ∀ z, 0 ≤ N z) (hint : In
       · have hper : pk (z - fun j => z₀ j + (m j : ℝ)) = pk (z - z₀) := by
           rw [← pk_periodic (z - fun j => z₀ j + (m j : ℝ)) m]
           congr 1
-          funext j
-          simp only [Pi.sub_apply]
           ring
         have hz : (fun j => z₀ j + (m j : ℝ) + (z - fun j => z₀ j + (m j : ℝ)) j) = z := by
           funext j

@@ -264,8 +264,6 @@ theorem siegelRule_linOm (hq : IsQuad c δ) (hψ : Continuous ψ) (hψ1 : ψ ≠
     rw [Darboux.rho, hl' _ (HypPair.schr_mem hψ _ hφ), hl' _ hφ,
       ← integral_add_right_eq_self (μ := μ) (fun a => φ (j a)) (ε.equivFun (z 0))]
     congr 1
-    funext a
-    simp only [schr, (hco _).1, hj, (hco _).2, hr, trB_mulVec, h0, map_add, mulVec_add, LinearEquiv.symm_apply_apply]
     simp
   have hN : ∃ φ ∈ SB (κ → k), l φ ≠ 0 := by
     obtain ⟨U, hUo, hUc, hU0⟩ := GlobalTheory.LagrFormLine.exists_compact_open k κ

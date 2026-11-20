@@ -27,8 +27,6 @@ theorem matrixAction_single {M : Type*} [AddCommGroup M] [Module ℂ M] (E : Fin
 theorem signMatrix_conjTranspose (ε : Fin n → Bool) : (Jm ε)ᴴ = Jm ε := by
   rw [Jm, Matrix.diagonal_conjTranspose]
   congr 1
-  funext a
-  simp only [Pi.star_apply]
   split_ifs <;> simp
 
 theorem signMatrix_mul_self (ε : Fin n → Bool) : Jm ε * Jm ε = 1 := by

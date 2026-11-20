@@ -99,8 +99,6 @@ theorem tor_props (hL : Laws) [IsLocallyNoetherian B] (P : PolAV B) (M : ℕ) (z
   obtain rfl : pt = pt' := funext fun a => by
     rw [e, ← e']
     congr 1
-    funext j
-    simp
   exact ⟨h₁, h₂, h₃⟩
 
 end General

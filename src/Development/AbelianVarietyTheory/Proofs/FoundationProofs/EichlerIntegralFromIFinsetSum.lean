@@ -35,7 +35,5 @@ theorem eichler_finset_sum (w : ℕ) {ι : Type} [Fintype ι] (g : ι → ℍ �
   rw [← Finset.sum_mul, ← map_sum, ← Finset.mul_sum,
     ← intervalIntegral.integral_finset_sum fun i _ => eichler_integrand_intervalIntegrable (hg i) τ (w - j)]
   congr 4
-  funext t
-  simp only [Function.comp_apply, Finset.sum_apply, Finset.sum_mul]
 
 end GlobalTheory.EichlerSum

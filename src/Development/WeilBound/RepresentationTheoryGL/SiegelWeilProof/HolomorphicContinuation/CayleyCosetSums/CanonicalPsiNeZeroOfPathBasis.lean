@@ -132,8 +132,6 @@ theorem Fd_kpart (m j : ℕ) (x : M2 n) (hx : x ∈ Dom n)
     simp
   unfold Fd
   congr 1
-  funext z
-  simp only [fz]
   rw [hu, hub, det_mul, det_mul, det_mul, hPd, Matrix.det_nonsing_inv, hPd]
   simp
 

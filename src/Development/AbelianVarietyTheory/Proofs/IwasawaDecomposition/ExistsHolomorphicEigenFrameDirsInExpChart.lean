@@ -199,8 +199,6 @@ theorem GlobalTheory.LieBase.exists_chart_dirs : ∀ (E : Type) [Field E] [Numbe
     have hcomb := ExpDirs.isDerivAt0_of_comb (congrArg (·.left) e0) (fun k => fr.tan τ k) (fun k => hD ⟨τ, k⟩)
       (g'.tan τ i) (fr.co_spec g' τ i)
     convert hcomb using 1
-    funext k
-    simp only [W, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     refine Finset.sum_congr rfl fun q _ => ?_
     congr 1
     rw [hcoM τ, Matrix.map_apply, ← hs τ q i, ratVal_fnOf (hzW τ q i)]

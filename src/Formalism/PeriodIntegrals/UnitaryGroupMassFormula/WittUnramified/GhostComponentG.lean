@@ -64,32 +64,24 @@ theorem G_add (x y : W) : G p Qq F (x + y) = G p Qq F x + G p Qq F y := by
   simp only [G]
   rw [← map_add]
   congr 1
-  funext n
-  simp only [Pi.add_apply, hit, map_add]
 
 theorem G_mul (x y : W) : G p Qq F (x * y) = G p Qq F x * G p Qq F y := by
   have hit : ∀ n, (F^[n]) = ⇑(F ^ n) := fun n => (RingHom.coe_pow F n).symm
   simp only [G]
   rw [← map_mul]
   congr 1
-  funext n
-  simp only [Pi.mul_apply, hit, map_mul]
 
 theorem G_one : G p Qq F (1 : W) = 1 := by
   have hit : ∀ n, (F^[n]) = ⇑(F ^ n) := fun n => (RingHom.coe_pow F n).symm
   simp only [G]
   rw [← map_one (ghostEquiv p Qq).symm]
   congr 1
-  funext n
-  simp only [Pi.one_apply, hit, map_one]
 
 theorem G_zero : G p Qq F (0 : W) = 0 := by
   have hit : ∀ n, (F^[n]) = ⇑(F ^ n) := fun n => (RingHom.coe_pow F n).symm
   simp only [G]
   rw [← map_zero (ghostEquiv p Qq).symm]
   congr 1
-  funext n
-  simp only [Pi.zero_apply, hit, map_zero]
 
 theorem G_frob (x : W) : G p Qq F (F x) = frobenius (G p Qq F x) := by
   apply (ghostEquiv p Qq).injective

@@ -748,8 +748,6 @@ theorem smallF_mul_left (μ : Measure (GL A' k)) [μ.IsHaarMeasure] (ν : kˣ �
   rw [← integral_mul_right_eq_self (fun g : GL A' k =>
     Ψ (g.val * Y) * (ν (gdet g) : ℂ) * apow (gdet g) ((Fintype.card D : ℂ) / 2)) g₀, ← integral_const_mul]
   congr 1
-  funext g
-  simp only [Units.val_mul, map_mul, apow_mul, Matrix.mul_assoc]
   ring
 
 open Classical in

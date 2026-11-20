@@ -207,15 +207,11 @@ theorem decay_ops : ∀ (F : Type) [Field F] [NumberField F] (N : ℕ) (ψ : Add
   · let g : GL (Fin N) (AF F) := Units.map (Matrix.scalar (Fin N) : AF F →+* Matrix (Fin N) (Fin N) (AF F)).toMonoidHom ht.unit
     have h := hGL g
     convert h using 1
-    funext u
-    simp only [Da]
     congr 1
     funext l
     simp [g, Matrix.mulVec_diagonal]
   · have h := decay_of_comp hΦ id continuous_id (fun _ => c) continuous_const ‖c‖ (fun _ => le_rfl)
       (fun K hK => ⟨K, hK, fun u h => h⟩) 1 0 zero_le_one le_rfl (fun u => by simp)
     convert h using 1
-    funext u
-    simp
 
 end GlobalTheory.SWQ

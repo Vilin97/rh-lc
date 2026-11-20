@@ -79,8 +79,6 @@ theorem UpperTheory.Gal.InertialTypesAlt.L.sumCoset :
     intro q
     rw [quotIndep_holds G μ hμ T ν hsf hinv _ (hFm.indicator (hSo q).measurableSet) (hSinv q) ρ hρ]
     congr 1
-    funext g
-    simp only [Set.indicator_apply]
     split_ifs <;> simp
   have hsupp : (Function.support fun q : DoubleCoset.Quotient (T : Set G) (K : Set G) =>
       quotIntegral μ T ν ({g | DoubleCoset.mk T K g = q}.indicator F)) ⊆

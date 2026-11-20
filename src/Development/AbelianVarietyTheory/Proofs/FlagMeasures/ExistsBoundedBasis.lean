@@ -227,8 +227,6 @@ theorem mass_small [StarRing E] (hK : Formalism.HermitianLatticesTheory.IsCMUnra
   have e2 : stdLat E n = Formalism.HermitianLatticesTheory.massTelescope_lat E n := by
     unfold stdLat Formalism.HermitianLatticesTheory.massTelescope_lat
     congr 2
-    funext i
-    simp
   rw [e1, e2, hr, hf] at hm
   refine hm.trans ?_
   have f1 : (1 : ℝ) ≤ Formalism.HermitianLatticesTheory.fDeg E := by exact_mod_cast (Fintype.card_pos : 0 < Formalism.HermitianLatticesTheory.fDeg E)

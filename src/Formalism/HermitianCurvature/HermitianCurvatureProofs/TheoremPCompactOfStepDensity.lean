@@ -219,8 +219,6 @@ theorem stepDensCptAll_of_levT (hT : Formalism.FourierDecayAlt.P.PTie.LevTranspo
   unfold ph RRform
   rw [form_tr μ l.castSucc l.succ l'.succ hjl1 c (Function.update c l t) hupd μi T κ hκ hpair, eX, eY, mul_left_comm]
   congr 3
-  funext m
-  simp only [shiftV, Function.update]
   split_ifs with hA hB hB
   · subst hB
     first | (simp only [eq_rec_constant]; done) | (simp only [eq_rec_constant]; rfl) | rfl | simp

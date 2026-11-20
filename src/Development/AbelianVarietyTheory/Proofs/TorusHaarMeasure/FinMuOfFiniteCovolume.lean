@@ -408,8 +408,6 @@ theorem finMu_of_finite_covolume :
       muF X (x0F X) FF := by
     rw [← lintegral_indicator_one hFF.1]
     congr 1
-    funext z
-    simp only [Set.indicator_apply, cpt_mem_cellOver X hx0, Pi.one_apply]
   have hL : ∫⁻ g, (cellOver X (x0F X) FF).indicator 1 (X.lmulC (fun τ =>
       (((g : X.Ψ → GL (Fin r) ℂ) τ : GL (Fin r) ℂ) : Matrix (Fin r) (Fin r) ℂ)) (x0F X)) ∂ν =
       ν ((fun g : H => X.lmulC (fun τ =>

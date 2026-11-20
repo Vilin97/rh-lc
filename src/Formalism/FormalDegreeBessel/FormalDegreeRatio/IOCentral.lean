@@ -74,8 +74,6 @@ private lemma Jm_conjTranspose_eq_selfFormalDegreeRatio {n : ℕ} (ε : Fin n �
   unfold Jm
   rw [Matrix.diagonal_conjTranspose]
   congr 1
-  funext i
-  simp only [Pi.star_apply]
   split_ifs <;> simp
 
 private lemma inUJ_exp_of_inG_formal_degree_ratio {n : ℕ} {ε : Fin n → Bool} {Y : Matrix (Fin n) (Fin n) ℂ} (hY : inG ε Y) :

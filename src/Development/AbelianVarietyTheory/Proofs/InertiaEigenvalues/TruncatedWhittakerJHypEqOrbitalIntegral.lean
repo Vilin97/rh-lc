@@ -52,8 +52,6 @@ theorem jHyp_wn : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNorm
   simp only [h10, h11]
   refine (integral_neg_eq_self _ μK).symm.trans ?_
   congr 1
-  funext t
-  simp only [mul_neg, mul_one, neg_neg, neg_mul, heta]
   rfl
 
 theorem whittaker_jHyp_eq_orbK : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedField E] [NormedAlgebra F E] [StarRing E] [Unram F E] (A : Et F E) (ψ : AddChar F ℂ), IsStdChar ψ → ∀ (μK : Measure A.K), SelfDual μK (A.kerK ψ) → ∀ φ', IsTest φ' → ∀ a : A.K, IsUnit a → ∀ᶠ c in 𝓝[≠] (0 : F), A.abelian₂ μK ψ a (A.jHyp μK ψ φ') c = A.orbK μK φ' a := by

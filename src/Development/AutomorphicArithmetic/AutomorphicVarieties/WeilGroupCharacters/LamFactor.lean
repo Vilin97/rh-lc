@@ -148,8 +148,6 @@ theorem UpperTheory.V.W.lam_factor :
           (Ideal.Quotient.mk (maximalIdeal R ^ N) ((ψ₀ g : Rˣ) : R))) :=
         (h0.cont N).comp (Ring.inverse : R ⧸ maximalIdeal R ^ N → R ⧸ maximalIdeal R ^ N)
       convert h1.mul h2 using 1
-      funext g
-      simp only [Pi.mul_apply, hinv, δ, MonoidHom.mul_apply, MonoidHom.inv_apply, Units.val_mul, map_mul]
     have hδr : ∀ g, ((δ g : Rˣ) : R) - 1 ∈ maximalIdeal R := by
       intro g
       rw [← res_eq_zero_iff O R, map_sub, map_one]
@@ -182,8 +180,6 @@ theorem UpperTheory.V.W.lam_factor :
       have h2 : IsLocallyConstant (fun g => Ideal.Quotient.mk (maximalIdeal R ^ N)
           ((χ ((A v).a g) : Rˣ) : R)) := (hχc N).comp_continuous (A v).cont
       convert h1.mul h2 using 1
-      funext g
-      simp only [Pi.mul_apply, MonoidHom.mul_apply, MonoidHom.comp_apply, Units.val_mul, map_mul]
     · intro g
       simp only [MonoidHom.mul_apply, MonoidHom.comp_apply, Units.val_mul, map_mul, hχr, mul_one]
       exact h0.red g

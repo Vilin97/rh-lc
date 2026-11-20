@@ -66,8 +66,6 @@ theorem ioExistsOf_holds : IoExistsOf := by
     unfold Lift.liftInt
     rw [← integral_add (hint F1 φ v g) (hint F2 φ v g)]
     congr 1
-    funext h
-    simp only [Pi.add_apply]
     ring
   · intro c F
     symm
@@ -77,8 +75,6 @@ theorem ioExistsOf_holds : IoExistsOf := by
     unfold Lift.liftInt
     rw [← integral_const_mul]
     congr 1
-    funext h
-    simp only [Pi.smul_apply, smul_eq_mul]
     ring
 
 end Formalism.IndefR.Eqv

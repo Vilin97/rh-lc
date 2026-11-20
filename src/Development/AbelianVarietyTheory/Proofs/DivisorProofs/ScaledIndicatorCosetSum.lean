@@ -93,8 +93,6 @@ theorem indicator_scaledInt_eq_sum : ∀ (F : Type) [Field F] [NumberField F] (�
     have hd : ι (fun i => rep c' i - rep c i) ∈ scaledInt F κ (a * m) := by
       have := sub_mem h h'
       convert this using 1
-      funext i
-      simp only [ι, map_sub, Pi.sub_apply]
       abel
     funext i
     obtain ⟨z, hz⟩ := rat_mem ham _ hd i

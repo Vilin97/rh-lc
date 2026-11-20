@@ -40,8 +40,6 @@ theorem exists_equiv_of_finrank_eq {O K J V V' : Type} [CommRing O] [Field K] [F
   simp only [LinearEquiv.trans_apply, LinearEquiv.apply_symm_apply]
   rw [key]
   congr 1
-  funext i
-  simp
 
 variable {E : Type} [Field E] [NumberField E]
 
@@ -239,8 +237,6 @@ theorem exp_div_smul {La : Type} [AddCommGroup La] [Module (𝓞 E) La] {P : La 
     e (c • P (a • x)) = e (c • P x) ≫ act.act a := by
   rw [← hlin]
   congr 1
-  funext j
-  simp only [Pi.smul_apply, smul_eq_mul, hP]
   ring
 
 theorem exp_div_pow {La : Type} [AddCommGroup La] {P : La →+ (Fin g → ℂ)} (he : IsExp e)

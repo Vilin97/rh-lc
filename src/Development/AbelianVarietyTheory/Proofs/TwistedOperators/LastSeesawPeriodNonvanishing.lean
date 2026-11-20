@@ -253,8 +253,6 @@ theorem upLast : ∀ D : D7, UpLast D := by
       simp only [hfx, map_zero]
     rw [per_zero, MeasureTheory.integral_prod _ (hIntg _ (hTT.box_theta _ _ hA hB))]
     congr 1
-    funext g
-    simp only [hpt, liftS_apply]
     rw [mul_comm (φ g) _, mul_assoc, ← integral_mul_const]
     congr 1
     funext h

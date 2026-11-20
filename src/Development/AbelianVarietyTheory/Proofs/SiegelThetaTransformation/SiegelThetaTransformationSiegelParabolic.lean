@@ -218,8 +218,6 @@ theorem _root_.GlobalTheory.SW.Parab.trans_parabolic : ∀ (κ ι : Type) [Finty
       mul_zero, Complex.exp_zero, mul_one, hqD, Pi.smul_apply, smul_eq_mul]
     conv_rhs => rw [← e.tsum_eq, ← tsum_mul_left]
     congr 1
-    funext x
-    simp only [e, Equiv.coe_fn_mk, _root_.GlobalTheory.SW.Parab.qv_row_mul, parabolic_exponent_term_eq,
       Finset.sum_add_distrib]
     unfold _root_.GlobalTheory.SW.Parab.parChar
     rw [Rat.cast_sum, mul_add, Complex.exp_add, Complex.exp_neg]

@@ -74,8 +74,6 @@ def twist (σ : E ≃ₐ[ℚ] E) (C : Set E) {N : ℕ} (L : Submodule (𝓞 E) (
   zero_mem' := by
     intro c hc
     convert L.zero_mem using 1
-    funext i
-    simp
   smul_mem' := by
     intro r v hv c hc
     rw [smul_comm, comp_int_smul]
@@ -90,8 +88,6 @@ theorem smul_mem_twist (σ : E ≃ₐ[ℚ] E) {C : Set E}
   rw [smul_smul, ← hr, algebraMap_smul, comp_int_smul]
   refine L.smul_mem _ ?_
   convert hu using 1
-  funext i
-  simp
 
 theorem isSDLat_twist (σ : E ≃ₐ[ℚ] E) (hs : ∀ x, σ (star x) = star (σ x)) {C : Set E}
     (h1 : ∀ c ∈ C, ∀ d ∈ C, star c * d ∈ (algebraMap (𝓞 E) E).range)

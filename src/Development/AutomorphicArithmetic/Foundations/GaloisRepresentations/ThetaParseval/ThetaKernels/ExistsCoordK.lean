@@ -57,8 +57,6 @@ theorem exists_coord_k {B : Base F E} (hB : _root_.UpperTheory.TP.W.GoodK σ B) 
   congr 2
   funext x
   congr 1
-  funext i
-  simp
 end
 theorem cont_k : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E),
     _root_.UpperTheory.TP.W.GoodK σ B → ∀ (nS nT : ℕ) (JS : Matrix (Fin nS) (Fin nS) E) (JT : Matrix (Fin nT) (Fin nT) E),

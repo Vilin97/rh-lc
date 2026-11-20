@@ -44,16 +44,12 @@ theorem UpperTheory.V.Lit.KT.petHerm :
     refine Finset.sum_congr rfl fun γ _ => ?_
     rw [← integral_add (petHerm_int hF M k f g _) (petHerm_int hF M k f h _)]
     congr 1
-    funext z
-    simp only [petersson, CuspForm.add_apply]
     ring
   · simp only [pet, finsum_eq_sum_of_fintype]
     rw [Finset.mul_sum]
     refine Finset.sum_congr rfl fun γ _ => ?_
     rw [← integral_const_mul]
     congr 1
-    funext z
-    simp only [petersson, CuspForm.IsGLPos.smul_apply, smul_eq_mul]
     ring
   · simp only [pet, finsum_eq_sum_of_fintype]
     rw [map_sum]

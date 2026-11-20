@@ -52,8 +52,6 @@ theorem downInt_add_datum (R : RealDat D A Ks) (i : Fin D.R.m) (t : T) (y : (R.H
   unfold downInt
   rw [← integral_add hf hf']
   congr 1
-  funext h
-  simp only [thetaKO, map_add, Pi.add_apply, add_mul]
 
 theorem downInt_smul_datum (R : RealDat D A Ks) (i : Fin D.R.m) (t : T) (y : (R.HV i t).H) (c : ℂ)
     (f : WO (Vc D i) (Wc D i) → ℂ) (l : (R.cV i).W →ₗ[ℂ] ℂ) (g : GA D (Wc D i)) :
@@ -61,8 +59,6 @@ theorem downInt_smul_datum (R : RealDat D A Ks) (i : Fin D.R.m) (t : T) (y : (R.
   unfold downInt
   rw [← integral_const_mul]
   congr 1
-  funext h
-  simp only [thetaKO, map_smul, Pi.smul_apply, smul_eq_mul, mul_assoc]
 
 theorem integral_expand {H W ι : Type} [MeasurableSpace H] (ν : Measure H) (s : Set H) [AddCommGroup W] [Module ℂ W]
     [Fintype ι] (b : Module.Basis ι ℂ W) (θ : H → ℂ) (F : H → W)

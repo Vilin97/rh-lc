@@ -69,8 +69,6 @@ theorem levi_add_fun {P : LocPot X} (hP : IsPotential A P) (x : X) (j : Fin A.n)
   rw [levi_base hP x j hy hx, one_mul] at h
   rw [← h]
   congr 1
-  funext z
-  simp
 
 theorem leviAt_add_ofFun {P : LocPot X} (hP : IsPotential A P) (j : Fin A.n) {y : Fin e → ℂ}
     (hy : y ∈ (A.chart j).target) {u : X → ℝ}

@@ -149,8 +149,6 @@ theorem main : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [I
   refine ⟨B, fun v w => ?_, fun v hv => ?_, fun h v w => ?_⟩
   · rw [hB, hB, ← integral_conj]
     congr 1
-    funext x
-    simp only [Φ, f, map_mul, Complex.conj_conj]
     ring
   · have hcont : Continuous fun x => F v x ^ 2 := by
       have : (fun x => F v x ^ 2) = fun x => (Φ v v x).re := funext fun x => (hre v x).symm

@@ -186,8 +186,6 @@ theorem fpair_charInd_dualInd_add_cosets : ∀ (k : Type) [Field k] [ValuativeRe
     simp only [fpair]
     rw [← integral_finset_sum _ hint2, ← integral_add hint1 (integrable_finset_sum _ hint2)]
     congr 1
-    funext η
-    simp only [Pi.add_apply, Finset.sum_apply, mul_add, Finset.mul_sum]
   obtain ⟨ε, hε⟩ : ∃ ε : 𝓀[k]ˣ, (e = 1 ∧ ε = 1) ∨ (e = -1 ∧ ε = -1) := by
     rcases he with h | h
     · exact ⟨1, Or.inl ⟨h, rfl⟩⟩

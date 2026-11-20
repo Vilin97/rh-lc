@@ -65,8 +65,6 @@ theorem comp_psh {D : ℕ} (S : PB.AnSys D (Option (Ψ × Fin N))) (k : ℕ) (hk
       exact ⟨h2.1.1, h2.2⟩
     have h3 := hbase x j y hy' w
     convert h3 using 2
-    funext z
-    simp only [Function.comp_apply]
     show (S.th none).φ x _ + S.phT none t _ + -c₀ * S.Θ.φ x _ =
       (S.th none).φ x _ + -c₀ * S.Θ.φ x _
     rw [h0]

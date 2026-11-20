@@ -186,13 +186,9 @@ theorem isMultiHomog_Lc (j : Fin 2) : IsMultiHomog (Lc j) (fun _ : Unit => 2) :=
   have h1 : ∀ i : Fin 2, IsMultiHomog (X ⟨(), i⟩ : MRing (GlobalTheory (Fin 2))) (fun _ : Unit => 1) := by
     intro i
     convert isMultiHomog_X (ι := GlobalTheory (Fin 2)) ⟨(), i⟩ using 1
-    funext k
-    simp
   have h2 : ∀ i i' : Fin 2, IsMultiHomog (X ⟨(), i⟩ * X ⟨(), i'⟩ : MRing (GlobalTheory (Fin 2))) (fun _ : Unit => 2) := by
     intro i i'
     convert mhMul (h1 i) (h1 i') using 1
-    funext k
-    simp
   match j with
   | 0 => rw [Lc_zero]; exact h2 0 1
   | 1 => rw [Lc_one, pow_two, pow_two]; exact mhAdd (h2 0 0) (h2 1 1)

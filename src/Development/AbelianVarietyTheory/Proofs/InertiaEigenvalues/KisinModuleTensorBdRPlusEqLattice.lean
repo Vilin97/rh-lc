@@ -165,8 +165,6 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (O
     | add x y hx hy =>
       rw [map_add, map_add, hx, hy, ← smul_add]
       congr 1
-      funext i
-      simp
     | tmul b x =>
       simp only [ψ, CA, TWincl, LinearMap.smul_apply, TensorProduct.map_tmul, AlgHom.toLinearMap_apply,
         LinearMap.id_apply, LinearMap.liftBaseChange_tmul]

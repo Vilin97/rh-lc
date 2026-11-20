@@ -204,8 +204,6 @@ theorem KoszulCechComplex.hyps_inhabited (j : Fin 2) :
     refine Submodule.subset_span ⟨Ideal.Quotient.mk ⊥ (X ⟨(), j⟩), 1, fun _ => 0, isMultiHomog_one_projectiveLine, ?_, rfl⟩
     refine Submodule.subset_span ⟨X ⟨(), j⟩, ⟨fun _ => by norm_num, ?_⟩, rfl⟩
     convert isMultiHomog_X_projectiveLine j using 1
-    funext k
-    simp
   · show _ ∈ (LinearMap.ker _).restrictScalars ℚ
     rw [Submodule.restrictScalars_mem, LinearMap.mem_ker]
     exact cechD_polyCochain _ _

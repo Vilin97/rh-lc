@@ -61,8 +61,6 @@ theorem GlobalTheory.BKGal.HatVal.Epow_smul_jB_toBcris_eq_sum : ∀ (l : ℕ) [F
   rw [← LinearEquiv.map_smul]
   simp only [← LinearEquiv.map_smul, ← map_sum]
   congr 1
-  funext i
-  simp only [Pi.smul_apply, Finset.sum_apply, smul_eq_mul, toBcris_apply, hE, hcj, hB, ← map_pow, ← map_mul,
     ← map_sum]
   congr 1
   funext τ

@@ -661,8 +661,6 @@ def aut_instStd (cm : CMData F E) {n : ℕ} (ε : Fin n → Bool)
       unfold aut_Jstd Formalism.REAL.Jm
       rw [Matrix.diagonal_map (map_zero _)]
       congr 1
-      funext a
-      simp only [aut_sgn]
       split_ifs <;> simp
     topf := hT.choose
     topf_group := hT.choose_spec.1

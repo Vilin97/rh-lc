@@ -46,8 +46,6 @@ theorem shift_measurePreserving (hSF : HaarUniqueSF) (hCW : ClosedW) (hHW : Haar
       ⟨equivA_measurable_conjM h₀⁻¹, hconj⟩
   have h3 := h1.prod h2
   convert h3 using 1
-  funext p
-  simp only [Prod.map, rmulF, conjM, Matrix.nonsing_inv_nonsing_inv _ hu]
   rfl
 
 open Formalism.QuantumDeterminants.WeylGroupFacts in

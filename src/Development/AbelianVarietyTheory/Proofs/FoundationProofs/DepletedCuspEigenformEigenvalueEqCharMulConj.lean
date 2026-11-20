@@ -33,8 +33,6 @@ theorem pet_smul_left (k : ℕ) (ρ : ℍ → ℝ) (h f : ℍ → ℂ) (c : ℂ)
   unfold pet
   rw [← integral_const_mul]
   congr 1
-  funext τ
-  simp only [map_mul]
   ring
 
 theorem eig_conj : ∀ (k N q : ℕ) (χ : DirichletCharacter ℂ N) (g : ℕ → ℂ), 1 ≤ k → 0 < N → Prim k N χ g →

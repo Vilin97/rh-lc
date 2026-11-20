@@ -199,8 +199,6 @@ theorem godementSection_add (χ₁ χ₂ : HeckeCharacter K) {s : ℂ} (hs : 1 <
     rw [← integral_add (integrable_godementIntegrand χ₁ χ₂ hs hΦ g)
       (integrable_godementIntegrand χ₁ χ₂ hs hΨ g)]
     congr 1
-    funext t
-    simp only [slice, Pi.add_apply]
     ring
   simp only [godementSection, Pi.add_apply, hZ]
   ring
@@ -214,8 +212,6 @@ theorem godementSection_smul (χ₁ χ₂ : HeckeCharacter K) (s : ℂ) (c : ℂ
     simp only [globalZeta]
     rw [← integral_const_mul]
     congr 1
-    funext t
-    simp only [slice, Pi.smul_apply, smul_eq_mul]
     ring
   simp only [godementSection, Pi.smul_apply, smul_eq_mul, hZ]
   ring

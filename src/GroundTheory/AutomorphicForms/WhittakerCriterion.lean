@@ -209,8 +209,6 @@ theorem coeffL_rtransL [μ.IsMulRightInvariant] (ℓ : Module.Dual ℂ V) (g : G
   rw [coeffL_apply, contragredient_apply_apply, coeffL_apply,
     heckeAct_apply_act μ f.2 (hρ v) g⁻¹]
   congr 2
-  funext x
-  simp
 
 theorem coeffL_ltransL [μ.IsMulRightInvariant] (ℓ : Module.Dual ℂ V) (a : G) (f : locallyConstantCompactSupport G ℂ ℂ) :
     coeffL μ hρ ℓ (ltransL a f) = coeffL μ hρ (ℓ ∘ₗ ρ a) f := by
@@ -289,8 +287,6 @@ theorem compHomeoL_convS [LocallyCompactSpace G] [T2Space G] [TotallyDisconnecte
     rw [← integral_inv_eq_self (fun z => (f₂ : G → ℂ) z * (f₁ : G → ℂ) (σ x * z⁻¹)) μ,
       ← integral_mul_left_eq_self (fun y => (f₁ : G → ℂ) y * (f₂ : G → ℂ) (y⁻¹ * σ x)) (σ x)]
     congr 1
-    funext y
-    simp only [inv_inv, mul_inv_rev, mul_assoc, inv_mul_cancel, mul_one]
     ring
   rw [eL, eR]
 

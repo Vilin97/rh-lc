@@ -162,8 +162,6 @@ theorem locPart_exact (h𝓜' : KH.IsMGraded S ι 𝓜') (h𝓜 : KH.IsMGraded S
   refine ⟨LocalizedModule.mk m' (v * t), ?_, ?_⟩
   · refine GenSESStep.mk_mem_locPart m' (v * t) (e + a) (GenSESStep.isMultiHomog_mul he ht) ?_
     convert hm'deg using 2
-    funext k
-    simp only [Pi.add_apply, Nat.cast_add]
     ring
   · rw [KHTheoremS.lmap_mk, hm', ← Submonoid.smul_def, LocalizedModule.mk_cancel_common_left]
 

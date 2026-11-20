@@ -54,8 +54,6 @@ theorem diag_of_upper {r : ℕ} (s : Fin r → ℂ) (hs : ∀ a, s a * s a = 1) 
   refine ⟨fun a => Complex.arg (b a a), ?_⟩
   rw [hd]
   congr 1
-  funext a
-  simp only [diagonal_apply_eq]
   have := Complex.norm_mul_exp_arg_mul_I (b a a)
   rw [hn a] at this
   simpa using this.symm

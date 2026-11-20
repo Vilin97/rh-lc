@@ -95,8 +95,6 @@ theorem exists_entry_bound {n : ℕ} (W : Spc F E n) (hL : W.L.IsLattice E) (v :
     · rw [he1]; exact one_mem _
     · rw [bas_eq]
       congr 1
-      funext i
-      simp only [Pi.smul_apply, map_zsmul]
   have h1 := hC _ (ht _ hmem) x
   rw [Matrix.mulVec_smul, Matrix.mulVec_smul, map_smul, map_zsmul, Finsupp.smul_apply, Finsupp.smul_apply, smul_eq_mul,
     map_mul, he1, one_mul, map_zsmul, zsmul_eq_mul, norm_mul, ← big_apply] at h1

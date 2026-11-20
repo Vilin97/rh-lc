@@ -53,16 +53,10 @@ theorem schA_conj_neg : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fi
     congr 1
   | zero =>
     convert Submodule.zero_mem _ using 1
-    funext x
-    simp
   | add a b _ _ ha hb =>
     convert Submodule.add_mem _ ha hb using 1
-    funext x
-    simp
   | smul c a _ ha =>
     convert Submodule.smul_mem _ (starRingEnd ℂ c) ha using 1
-    funext x
-    simp
 
 end GlobalTheory.CompanionTheory.AdelicReflect
 

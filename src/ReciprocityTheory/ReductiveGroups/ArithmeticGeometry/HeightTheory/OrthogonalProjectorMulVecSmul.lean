@@ -52,8 +52,6 @@ theorem projectedVector_add (b : Fin k → Fin r → K) (q q' : Fin r → K) :
     funext σ
     rw [Pi.add_apply, ← mulVec_add]
     congr 1
-    funext l
-    simp
   simp only [hpv, hRe, e, realCoordsFun_add, WithLp.toLp_add]
 
 theorem projectedVector_zero (b : Fin k → Fin r → K) : hpv b 0 = 0 := by
@@ -103,8 +101,6 @@ theorem orthogonalProjector_mulVec_smul (σ : K →+* ℂ) (b : Fin k → Fin r 
     (hPm σ b *ᵥ fun l => σ ((a • x) l)) = σ a • (hPm σ b *ᵥ fun l => σ (x l)) := by
   rw [← mulVec_smul]
   congr 1
-  funext l
-  simp
 
 theorem inner_projectedVector_smul (b : Fin k → Fin r → K) (a a' : K) (x y : Fin r → K) :
     inner ℝ (hpv b (a • x)) (hpv b (a' • y)) =

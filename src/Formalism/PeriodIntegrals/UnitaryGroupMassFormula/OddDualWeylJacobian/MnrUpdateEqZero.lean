@@ -143,8 +143,6 @@ lemma stepA (s : Fin (n + 1)) (hs : s.val < i.val) :
     exact castLE_ne_of_lt _ p _ (by simp; omega) (σ.injective hp)
   · rw [pMinor_eq, pMinor_eq]
     congr 1
-    funext p
-    simp only [Function.comp, Equiv.Perm.mul_apply]
     rw [Equiv.swap_apply_of_ne_of_ne (castLE_ne_of_lt _ p _ (by simp; omega))
       (castLE_ne_of_lt _ p _ (by simp; omega))]
 

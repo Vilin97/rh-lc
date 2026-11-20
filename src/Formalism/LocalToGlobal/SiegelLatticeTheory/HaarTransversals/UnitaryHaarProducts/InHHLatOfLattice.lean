@@ -63,8 +63,6 @@ def gvO : (Fin X.B.I.n → X.B.I.E) →ₛₗ[sO' X] (VS D).V where
       (algebraMap_smul D.host.E (sO' X c) _).symm
     rw [hc, ← map_smul]
     congr 1
-    funext i
-    simp only [Pi.smul_apply, smul_eq_mul]
     rw [Algebra.smul_def, map_mul]
     rfl
 
@@ -81,8 +79,6 @@ def gvE : (Fin X.B.I.n → X.B.I.E) →ₛₗ[sE X] (VS D).V where
     show X.bas.equivFun.symm (fun i => X.ιE ((c • v) i)) = (sE X c) • X.bas.equivFun.symm (fun i => X.ιE (v i))
     rw [← map_smul]
     congr 1
-    funext i
-    simp only [Pi.smul_apply, smul_eq_mul, map_mul]
     rfl
 
 end LatticeCoordinateLemmas

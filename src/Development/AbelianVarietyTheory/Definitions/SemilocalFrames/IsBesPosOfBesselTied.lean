@@ -464,8 +464,6 @@ theorem coefH_smul (ψ : AddChar (AF D.host.F) ℂ) (V W : HSp D) (m) (c : ℂ) 
   unfold coefH
   rw [← integral_const_mul]
   congr 1
-  funext w
-  simp only [Heisenberg₂, Pi.smul_apply, smul_eq_mul, star_mul']
   ring
 
 theorem IsFact.smul {ψ : AddChar (AF D.host.F) ℂ} {V W : HSp D} {f : WA V W → ℂ} (h : IsFact ψ V W f) (c : ℂ) :
@@ -575,8 +573,6 @@ theorem IsFJPos.isLinearMap {L : HSp D} {k : X.FJd A B ι ≃ₗ[ℂ] X.Sch L A}
     funext g
     rw [← integral_add ((hc _).1 g) ((hc _).1 g)]
     congr 1
-    funext n
-    simp only [FJDat.perFun, FJDat.theta_eq, omZ, map_add, Pi.add_apply]
     ring
   · simp only [h μ 𝓕 hv ν 𝓝 hN s hs _ φ F hφ, FJDat.per, smul_eq_mul]
     rw [mul_left_comm, ← integral_const_mul c]
@@ -584,8 +580,6 @@ theorem IsFJPos.isLinearMap {L : HSp D} {k : X.FJd A B ι ≃ₗ[ℂ] X.Sch L A}
     funext g
     rw [← integral_const_mul c]
     congr 1
-    funext n
-    simp only [FJDat.perFun, FJDat.theta_eq, omZ, map_smul, Pi.smul_apply, smul_eq_mul]
     ring
 
 theorem FJTied.isLinearMap (J : FJTied Wl) (hI : FJInt D)

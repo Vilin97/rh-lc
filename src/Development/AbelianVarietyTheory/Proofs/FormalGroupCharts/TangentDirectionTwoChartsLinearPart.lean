@@ -62,13 +62,9 @@ theorem tanPt_add (hx : IsChartG t (𝟙 (Sp V)) d G.F act tg uv x) (g g' : Fin 
   have h0 : tp (fun q : Fin 1 × Fin d =>
       (![fun j => g (0, j), fun j => g' (0, j)] : Fin 2 → Fin d → V) 0 q.2) = tp g := by
     congr 1
-    funext q
-    simp only [Matrix.cons_val_zero, fin_one_pair_eq]
   have h1 : tp (fun q : Fin 1 × Fin d =>
       (![fun j => g (0, j), fun j => g' (0, j)] : Fin 2 → Fin d → V) 1 q.2) = tp g' := by
     congr 1
-    funext q
-    simp only [Matrix.cons_val_one, Matrix.cons_val_zero, fin_one_pair_eq]
   have hF : T.comp (jetSubstPS (m := 0 + 1) (fun p : Fin 1 × Fin d => G.F p.2)) = tp (g + g') := by
     apply jet_hom_ext
     intro q

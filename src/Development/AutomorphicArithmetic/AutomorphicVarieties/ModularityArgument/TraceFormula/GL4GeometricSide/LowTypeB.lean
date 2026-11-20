@@ -223,8 +223,6 @@ theorem low_abs {ι Γ : Type} [Fintype ι] [DecidableEq ι] [Group Γ] [Topolog
     simp only [Fin.rev_eq_iff]
     exact_mod_cast (add_right_cancel e).symm
   convert (c1.add c2).add c3 using 1
-  funext a
-  simp only [split, hK.invol, sum_sub_distrib, Pi.add_apply, Pi.sub_apply, s1, s2, m0]
   ring
 
 end UpperTheory.V.Z.GSp4Splitting.Low

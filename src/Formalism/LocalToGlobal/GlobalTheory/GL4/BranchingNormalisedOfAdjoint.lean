@@ -288,8 +288,6 @@ theorem scaleMat_conjTranspose (n : ℕ) (T : ℝ) : (scaleMat n T).conjTranspos
   unfold scaleMat
   rw [Matrix.diagonal_conjTranspose]
   congr 1
-  funext i
-  simp only [Pi.star_apply]
   split_ifs <;> simp
 
 theorem scale_cancel (n d T : ℕ) (hT : 0 < T) (x : MvPolynomial (Fin (n + 1) × Fin n) ℂ)

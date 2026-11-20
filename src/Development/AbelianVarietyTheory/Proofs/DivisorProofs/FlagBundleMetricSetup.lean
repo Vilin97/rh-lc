@@ -93,8 +93,6 @@ theorem isFrame_pullCol {B Y : Scheme.{0}} (π : Y ⟶ B) {E : B.Modules} {U : B
       fun c => by rw [Matrix.mulVec_mulVec, Matrix.nonsing_inv_mul _ hN, Matrix.one_mulVec],
       fun c => by rw [Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hN, Matrix.one_mulVec]⟩
   convert hb.comp hc using 1
-  funext c
-  simp only [Function.comp_apply, Fintype.linearCombination_apply, res_pullCol, resM_self]
   simp only [pullCol, Finset.smul_sum, smul_smul, Matrix.mulVec, dotProduct, Finset.sum_smul]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun k _ => by rw [mul_comm]

@@ -150,8 +150,6 @@ noncomputable def familyUnifTateIso (hP : IsPeriod (U.Di i) ty P) :
   lin n c a := by
     rw [← U.ex_lin i P hP]
     congr 1
-    funext j
-    simp only [Pi.smul_apply, smul_eq_mul, hP.1]
     ring
   ker n hn a := by
     have hn' : (n : ℂ) ≠ 0 := Nat.cast_ne_zero.2 hn.ne'

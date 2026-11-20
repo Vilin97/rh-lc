@@ -62,8 +62,6 @@ theorem map_qminor {B : Type} [Ring B] [Algebra ℂ B] (f : B →+* A)
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [map_mul, map_intCast, map_list_prod, List.map_ofFn]
   congr 3
-  funext k
-  simp only [Function.comp, Tm, map_add, hE']
   split_ifs
   · rw [hf]
   · rw [map_zero]

@@ -269,8 +269,6 @@ theorem siegel_measure_definition : SMeas := by
           (μN.map (fun x => x⁻¹)).map (fun x => k⁻¹ * x * k⁻¹⁻¹) := by
         rw [Measure.map_map hcj measurable_inv]
         congr 1
-        funext x
-        simp
       show μN.map (fun n => k⁻¹ * n⁻¹ * k) = μN
       rw [e, hIN, hconj _ (hH.2.2 k hk)]
     rw [hM]

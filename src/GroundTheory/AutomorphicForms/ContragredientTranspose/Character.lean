@@ -280,8 +280,6 @@ theorem heckeAct_comp (α : G ≃* G) (hα : Continuous α) (hα' : Continuous �
   beta_reduce at key
   rw [← key]
   congr 1
-  funext g
-  simp
 
 theorem distChar_comp (α : G ≃* G) (hα : Continuous α) (hα' : Continuous α.symm)
     (hμ : μ.map α = μ) (hρ : IsAdmissible ρ) (f : locallyConstantCompactSupport G ℂ ℂ) :

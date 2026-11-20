@@ -48,8 +48,6 @@ theorem dH_perM (ψ : AddChar (AF F) ℂ) {w : (κ → AF F) × (κ → AF F)} (
   intro x a' ha
   unfold dH
   congr 1
-  funext t
-  simp only [schr]
   have h0 : ((m : AF F) • a') ⬝ᵥ (realAd F t • w).2 = 0 := by
     simp only [dotProduct, Prod.smul_snd, Pi.smul_apply, smul_eq_mul]
     refine Finset.sum_eq_zero fun i _ => ?_

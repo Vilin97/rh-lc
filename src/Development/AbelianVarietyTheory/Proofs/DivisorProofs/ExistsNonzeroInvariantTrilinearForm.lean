@@ -44,16 +44,12 @@ private theorem mapB_add' {z : ℂ} {l : (Matrix (Fin a') (Fin a') k → ℂ) �
   funext x
   rw [Pi.add_apply, mapB, mapB, mapB, ← hl.1 _ (restrict_Y0 (omB_mem_SB ν α 1 x h)) _ (restrict_Y0 (omB_mem_SB ν α 1 x h'))]
   congr 1
-  funext g
-  simp only [omB, Pi.add_apply, mul_add]
 
 private theorem mapB_smul' {z : ℂ} {l : (Matrix (Fin a') (Fin a') k → ℂ) → ℂ} (hl : IsEqv ν z l) (c : ℂ)
     {Φ : Matrix (Fin a') (Fin (a + a')) k → ℂ} (h : Φ ∈ SB _) : mapB a l ν α (c • Φ) = c • mapB a l ν α Φ := by
   funext x
   rw [Pi.smul_apply, smul_eq_mul, mapB, mapB, ← hl.2.1 c _ (restrict_Y0 (omB_mem_SB ν α 1 x h))]
   congr 1
-  funext g
-  simp only [omB, Pi.smul_apply, smul_eq_mul]
   ring
 
 private theorem mapB_omB_left' {l : (Matrix (Fin a') (Fin a') k → ℂ) → ℂ} (hl : IsEqv ν (((a + a' : ℕ) : ℂ) / 2) l) (g : GL (Fin a') k)
@@ -65,8 +61,6 @@ private theorem mapB_omB_left' {l : (Matrix (Fin a') (Fin a') k → ℂ) → ℂ
   have hd : gdet (invT g)⁻¹ = gdet g := by rw [gdet, map_inv, ← gdet, gdet_invT, inv_inv]
   rw [mapB, mapB, e, ← hl.2.2 (invT g)⁻¹ 1 _ hs, ← hl.2.1 _ _ (comp_mul_mem_SB (invT g)⁻¹ 1 hs), hd]
   congr 1
-  funext y
-  simp only [omB, Pi.smul_apply, smul_eq_mul, map_one, mul_one, Units.val_one, Matrix.mul_one, apow_one,
     Fintype.card_fin, Matrix.mul_assoc, invT_inv_val, transpose_one, Matrix.one_mul, one_mul]
 
 private theorem mapB_ne_zero' {l : (Matrix (Fin a') (Fin a') k → ℂ) → ℂ} (hl : ∃ φ ∈ SB _, l φ ≠ 0) :

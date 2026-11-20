@@ -166,8 +166,6 @@ theorem tsum_norm_translate_le : ∀ (F : Type) [Field F] [NumberField F] (ι : 
     intro ξ
     show _ = ‖Φ _‖
     congr 2
-    funext i
-    simp only [Equiv.subRight_apply, Pi.add_apply, Pi.sub_apply, map_sub]
     abel
   calc ∑' ξ : ι → F, ‖Φ ((fun i => algebraMap F (AF F) (ξ i)) + z)‖ = ∑' ξ, G (Equiv.subRight η ξ) := tsum_congr hG
     _ = ∑' ξ, G ξ := (Equiv.subRight η).tsum_eq G

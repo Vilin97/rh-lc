@@ -182,8 +182,6 @@ theorem anX_act (m : ℕ) (a : 𝓞 E) :
     show anE F i P 0 ≫ (Xo.univ.t.act.act a).left = anE F i P 0
     rw [hc]
     congr 1
-    funext k
-    simp
   have hloc : IsLocalHom ((jetSubstP m fun p : Fin 1 × Fin g => psTrunc m (anAct ty a p.2) :
       Jet ℂ (Fin 1 × Fin g) m →ₐ[ℂ] Jet ℂ (Fin 1 × Fin g) m) : Jet ℂ (Fin 1 × Fin g) m →+* Jet ℂ (Fin 1 × Fin g) m) := by
     unfold jetSubstP

@@ -297,8 +297,6 @@ private theorem filter_map_cast {n : ℕ} (T : Finset (Fin n)) :
     simp
   rw [h1, List.append_nil]
   congr 2
-  funext i
-  simp
 
 private theorem filter_insert_cast {n : ℕ} (T : Finset (Fin n)) :
     (List.finRange (n + 1)).filter (· ∈ insert (Fin.last n) (T.map Fin.castSuccEmb)) =

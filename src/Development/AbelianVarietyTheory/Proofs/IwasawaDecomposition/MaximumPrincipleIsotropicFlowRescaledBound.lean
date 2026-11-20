@@ -96,8 +96,6 @@ theorem stepBound (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (
         X.flow ξ (fun τ => (((y * I : ℂ) * -b τ).re : ℂ) + b τ) x := by
       rw [hx'def, EmbeddingHermitianPairs.flow_flow X hξ.2.1]
       congr 1
-      funext τ
-      simp only [Pi.add_apply]
       congr 1
       exact Complex.ext (by simp) (by rw [hs]; simp)
     rw [he]

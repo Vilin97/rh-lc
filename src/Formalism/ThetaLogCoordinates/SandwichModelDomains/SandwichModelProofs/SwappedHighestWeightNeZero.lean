@@ -158,8 +158,6 @@ theorem cor_eval_map (f0 : MvPolynomial (Fin r × Fin n) ℤ_[p]) :
       algebraMap ℤ_[p] ℚ_[p] (eval (idPoint ℤ_[p] r n) f0) := by
   rw [eval_map, eval, coe_eval₂Hom, eval₂_comp_left]
   congr 1
-  funext v
-  simp only [idPoint, Function.comp_apply]
   split_ifs <;> simp
 
 theorem cor_gen (hk : RowGlDiv) (hI : SwpInt) (hn : n ≤ r) (ν : Fin n → ℕ) (hν : Antitone ν) (μ : Fin r → ℤ)

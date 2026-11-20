@@ -169,8 +169,6 @@ theorem exists_isModel : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
     intro c y
     rw [hψ, hψ, ← map_smul]
     congr 1
-    funext i
-    simp
 
   have hP1 : ∀ p : K.E[X], p.degree < n → ψ (aeval u p) = aeval γ.val (p.map e.toRingHom) *ᵥ v := by
     intro p hp

@@ -36,8 +36,6 @@ theorem coboundary_cols (l : ℕ) [Fact l.Prime] (P : LocPrime l) (K : FinExt l)
     | add y z hy hz =>
       rw [map_add, map_add, hy, hz, ← Matrix.mulVec_add]
       congr 1
-      funext x
-      simp
   refine ⟨Φ b, fun g => ?_⟩
   have := congrArg Φ (h g)
   rw [map_sub, hst, hΦ] at this

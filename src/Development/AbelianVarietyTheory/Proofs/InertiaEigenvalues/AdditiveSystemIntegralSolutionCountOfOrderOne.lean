@@ -112,8 +112,6 @@ theorem gsum_lin_last (q K E : ℕ) (M : ℕ → Matrix m m F) (x : m → F) (a 
   · refine Finset.sum_congr rfl fun k _ => ?_
     rw [lin_succ_last, show k + 1 + K = K + 1 + k by ring]
     congr 1
-    funext b
-    simp only [Fin.val_last]
     rw [← pow_mul, ← pow_add, show K + (k + 1) = K + 1 + k by ring]
 
 theorem card_lin (q K E : ℕ) (M : ℕ → Matrix m m F) :

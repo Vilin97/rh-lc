@@ -49,8 +49,6 @@ theorem exists_quasiReflection {S : Type} [CommRing S] (s : S →+* S) (hs : ∀
       Matrix.mul_one]
   · rw [sub_mulVec, one_mulVec, smul_mulVec, ← hr, ← smul_smul]
     congr 2
-    funext i
-    simp only [P, mulVec, dotProduct, vecMulVec_apply, Pi.smul_apply, smul_eq_mul, Finset.sum_mul]
     exact Finset.sum_congr rfl fun k _ => by ring
 
 theorem exists_unitary {S : Type} [CommRing S] (s : S →+* S) (hs : ∀ a, s (s a) = a) {n : ℕ}

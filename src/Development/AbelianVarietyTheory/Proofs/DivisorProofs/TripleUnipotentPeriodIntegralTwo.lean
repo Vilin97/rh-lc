@@ -32,8 +32,6 @@ theorem _root_.GlobalTheory.T.triple_unipotent_period_integral_two : GlobalTheor
     intro γ hγ y
     unfold Model.I
     congr 1
-    funext x
-    simp only [theta]
     have e : om' (x, γ * y) Φ = om' (1, γ) (om' (x, y) Φ) := by
       rw [← Module.End.mul_apply, ← map_mul, Prod.mk_mul_mk, one_mul]
     rw [e]

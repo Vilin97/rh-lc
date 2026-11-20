@@ -55,8 +55,6 @@ theorem hv_rId [IsTotallyReal F] (c : ℝ) (ξ : Fin n → AF F ⊗[F] E) :
   unfold hv
   rw [← adelicNorm_rId]
   congr 1
-  funext p
-  simp only [Pi.smul_apply, smul_eq_mul, ← Algebra.smul_def, map_smul, Finsupp.smul_apply]
 
 theorem matHom_mul_val (g h : GAd σ J) :
     (matHom _ σ J (g * h)).1 = (matHom _ σ J g).1 * (matHom _ σ J h).1 := by

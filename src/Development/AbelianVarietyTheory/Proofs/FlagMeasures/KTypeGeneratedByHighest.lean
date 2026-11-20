@@ -166,8 +166,6 @@ theorem inK_diag (θ : Fin n → ℝ) : inK ε (Matrix.diagonal fun a => (θ a :
   refine ⟨?_, fun a b hab => ?_⟩
   · rw [Matrix.diagonal_conjTranspose, Matrix.diagonal_neg]
     congr 1
-    funext a
-    simp
   · have hne : a ≠ b := fun h => hab (h ▸ rfl)
     exact Matrix.diagonal_apply_ne _ hne
 

@@ -109,8 +109,6 @@ lemma sum_cycWord {A : Type} [Ring A] (E : Fin n → Fin n → A) (m : ℕ) :
   refine Finset.sum_congr rfl fun b _ => ?_
   simp only [Fin.consEquiv_apply, cycWord, List.map_ofFn]
   congr 2
-  funext i
-  simp only [Function.comp]
   congr 1
   refine Fin.lastCases ?_ (fun j => ?_) i
   · rw [finRotate_last, Fin.snoc_last, Fin.cons_zero]

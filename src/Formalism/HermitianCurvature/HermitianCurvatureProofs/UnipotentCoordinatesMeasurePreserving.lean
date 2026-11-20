@@ -2843,8 +2843,6 @@ theorem unipotent_coordinates_measure_preserving (b : Bs k j ρ) : MeasurePreser
       norm_one, one_pow, one_mul, norm_det_w]
   have h := (mp_vec (-Mxᵀ) hdet).comp vconj_mp
   convert h using 1
-  funext s
-  simp only [unipotentTranslateCoord, Mx, Function.comp, Matrix.neg_mulVec]
   rw [Matrix.mulVec_transpose]
 
 theorem measurePreserving_first_level_map (b : Bs k j ρ) : MeasurePreserving (lev1 b) volume volume := by
@@ -4928,8 +4926,6 @@ theorem muR_conj (hz : C2.StdZ k r S.z) (hhA : hA ∈ UWset k r S.z) (hnA : nA �
   unfold Formalism.FourierDecayAlt.D.muR
   rw [Measure.map_map (cont_conjA hA nA).measurable hm]
   congr 1
-  funext x
-  simp only [Function.comp, conjA, Equiv.apply_symm_apply]
   rw [rhoOfU_conj S hz hhA hnA hhB hnB hsfix uγ hinj]
 
 end muRconj2

@@ -58,7 +58,5 @@ theorem isInducing_GU_val {σ : L →+* L} (hσ : Continuous σ) (n : ℕ) :
     (Units.continuous_val.comp continuous_subtype_val)
     (continuous_id.prodMk (MulOpposite.continuous_op.comp (continuous_adjJ hσ n))) ?_
   convert h1 using 1
-  funext g
-  simp only [Function.comp_apply, Units.embedProduct_apply, (mem_GU_iff_adjJ σ _).1 g.2]
 
 end GlobalTheory.BorelUMod

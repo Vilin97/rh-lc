@@ -65,8 +65,6 @@ theorem goodR_char {D : D7} (h0 : SumRepresentations.tie0 D) {i : D.nd.Loc} {a :
     beta_reduce
     rw [← j τ hτ, Multiset.map_map, ← hnc]
     congr 1
-    funext x
-    simp
 
 theorem goodR_cusp {D : D7} (h2 : AutomorphicGaloisAdmissible D.nd D.naut) (i : D.nd.Loc) {a : ℕ} (ha : 1 ≤ a) (π : D.naut.CG a)
     (hc : D.naut.csd π) (hr : D.naut.ralg π) :
@@ -251,8 +249,6 @@ theorem goodR_part (D : D7) (h0 : SumRepresentations.tie0 D) (h2 : AutomorphicGa
     refine List.map_congr_left fun k _ => ?_
     simp only [Function.comp_apply, Multiset.map_map]
     congr 1
-    funext z
-    simp only [Function.comp_apply, he]
     push_cast; ring
 
 theorem goodR_iso : ∀ D : D7, SumRepresentations.tie0 D → AutomorphicGaloisAdmissible D.nd D.naut → ∀ (i : D.nd.Loc) (P : D.naut.AV i)

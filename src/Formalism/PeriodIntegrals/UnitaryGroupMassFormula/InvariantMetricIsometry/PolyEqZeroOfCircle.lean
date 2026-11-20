@@ -86,8 +86,6 @@ theorem torus_unitary {z : ℂ} (hz : ‖z‖ = 1) (s : Lt) :
   rw [Matrix.mem_unitaryGroup_iff', Matrix.star_eq_conjTranspose, Matrix.diagonal_conjTranspose,
     Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
   congr 1
-  funext a
-  simp only [dz, Pi.star_apply, star_pow]
   rw [← mul_pow, star_mul_self_of_norm hz, one_pow]
 
 end

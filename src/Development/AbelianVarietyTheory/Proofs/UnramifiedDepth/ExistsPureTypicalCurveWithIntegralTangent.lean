@@ -223,8 +223,6 @@ theorem pure_mem (hR : RLaw X V) {g : Fin 2} (hT : HasTeich X V g) (a : ZMod d) 
     · simp only [emb, ← tyS_rescale hl, ← tyS_smul hl]
       rw [← tyS_sum hl]
       congr 1
-      funext s
-      simp only [inv_pow, hζs, Finset.mul_sum]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun c _ => ?_
       have := congrFun (hM c) i

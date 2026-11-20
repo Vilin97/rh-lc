@@ -172,8 +172,6 @@ theorem DD_mul {ε : ℝ} (h : ε ≠ 0) : DD k r ε * DD k r ε⁻¹ = 1 := by
   unfold DD
   rw [Matrix.diagonal_mul_diagonal, ← Matrix.diagonal_one]
   congr 1
-  funext i
-  simp only [Complex.ofReal_inv, _root_.inv_zpow]
   exact mul_inv_cancel₀ (zpow_ne_zero _ hc)
 
 theorem DD_unit {ε : ℝ} (h : ε ≠ 0) : IsUnit (DD k r ε).det := Matrix.isUnit_det_of_right_inverse (DD_mul h)

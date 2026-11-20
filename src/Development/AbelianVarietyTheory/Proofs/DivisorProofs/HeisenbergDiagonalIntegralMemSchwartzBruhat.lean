@@ -34,8 +34,6 @@ theorem diagW_eq (ψ : AddChar (Fv F v) ℂ) (μ : @Measure (κ → Fv F v) (bor
   unfold diagW diagG
   rw [← integral_const_mul]
   congr 1
-  funext x
-  simp only [schr, elim_dot_elim, dotProduct_zero, zero_dotProduct, add_zero, elim_add_elim]
   rw [AddChar.map_add_eq_mul]
   ring
 
@@ -90,8 +88,6 @@ theorem diagG_schr (ψ : AddChar (Fv F v) ℂ) (μ : @Measure (κ → Fv F v) (b
   unfold diagG
   rw [← integral_sub_right_eq_self _ p₂, ← integral_const_mul]
   congr 1
-  funext x
-  simp only [schr, elim_dot_elim, elim_add_elim, Prod.fst_add, Prod.snd_add]
   have e : Sum.elim (x - p₂ + w.1 + p₁) (x - p₂ + p₂) = Sum.elim (x + (w.1 + (p₁ - p₂))) x := by
     congr 1 <;> abel
   rw [e, ← mul_assoc, ← mul_assoc, ← AddChar.map_add_eq_mul, ← AddChar.map_add_eq_mul]

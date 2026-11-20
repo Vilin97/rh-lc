@@ -176,8 +176,6 @@ theorem limit_average_translate_eq (hG : GermData Y U P Q hat) (κ : H → H →
   simp only [A0]
   rw [← ht]
   congr 1
-  funext x
-  simp only [AddSubgroup.coe_add, AddSubgroup.coe_mk]
   rw [show (x : crystallineComparison.V f) + σ' + (σ - σ') = (x : crystallineComparison.V f) + σ by abel]
 
 private lemma bdd_finset_sum {β ι : Type} (s : Finset ι) (g : ι → β → ℂ) (hg : ∀ i ∈ s, crystallineComparison.Bdd (g i)) :
@@ -237,8 +235,6 @@ theorem limit_average_positive_definite (hG : GermData Y U P Q hat) (κ : H → 
       ⟨CR, fun _ => hCR _ _⟩
     rw [limit_average_translate_eq Λ LIM hG κ hL (hS σ' hσ'), mul_assoc, mul_comm, ← hL.2.1 _ _ hb0]
     congr 1
-    funext x
-    simp only [Pi.smul_apply, smul_eq_mul]
     ring
   rw [Finset.sum_congr rfl fun σ hσ => Finset.sum_congr rfl (e1 σ hσ)]
   rw [Finset.sum_congr rfl fun σ _ => (lim_finset_sum_of_isMean Λ LIM hL S _ fun σ' _ => hb σ σ').symm]

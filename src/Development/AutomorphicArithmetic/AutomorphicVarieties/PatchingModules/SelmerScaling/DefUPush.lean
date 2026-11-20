@@ -216,8 +216,6 @@ theorem UpperTheory.V.Pa.defUPush :
     rw [← conj_prod _ _ w1 w2 (fun m => k.ρ1 x.Fr (G0.φ v (t m))) (fun m => algebraMap x.A _ (x.ψ v m (t m) : x.A))
       (fun m => (w3 (t m)).1) (fun m => (w3 (t m)).2 m), map_list_prod, map_list_prod, List.map_ofFn, List.map_ofFn]
     congr 2
-    funext m
-    simp only [Function.comp_apply]
     rw [map_sub, map_sub, hT, p4, Algebra.algebraMap_eq_smul_one]
     congr 1
     ext1 i j

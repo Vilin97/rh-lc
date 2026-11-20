@@ -128,8 +128,6 @@ theorem sum_coef_mul_translate : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), 
     intro γ
     rw [thPair, hb γ, hIdef, ← integral_const_mul]
     congr 1
-    funext z
-    simp only [chiR, AddSubgroup.coe_neg, hFdef]
     rw [star_mul, star_mul, star_psi hn, neg_neg, star_chi hn]
     ring
   have hJ : ∀ γ : ratL T S, J (-γ) = chi ψ S T γ x * I γ := by

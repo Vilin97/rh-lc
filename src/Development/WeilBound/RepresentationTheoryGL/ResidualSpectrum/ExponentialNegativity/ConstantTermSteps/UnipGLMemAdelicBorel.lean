@@ -76,8 +76,6 @@ theorem tor_add (x y : Fin n → ℝ) : tor K (x + y) = tor K x * tor K y := by
   unfold tor
   rw [← map_mul]
   congr 1
-  funext i
-  simp only [Pi.add_apply, Pi.mul_apply]
   rw [posIdele_mul]
   congr 1
   exact Real.exp_add _ _
@@ -86,8 +84,6 @@ theorem aR_mul (r : ℕ) (s t : ℝ) : aR K n r s * aR K n r t = aR K n r (s + t
   unfold aR
   rw [← tor_add]
   congr 1
-  funext i
-  simp only [Pi.add_apply]
   split_ifs <;> ring
 
 theorem borel_aR {r : ℕ} {b : AdelicGLn.AdelicGL K n} (hb : b ∈ (adelicBorel (K := K) (n := n)))
@@ -128,8 +124,6 @@ theorem tor_shift (r : ℕ) (x : Fin n → ℝ) (s : ℝ) : tor K (shift r x s) 
   unfold aR
   rw [← tor_add]
   congr 1
-  funext i
-  simp only [shift, Pi.add_apply]
   split_ifs <;> ring
 
 end PositivityTheory.Rg.Rs.ctstepglue

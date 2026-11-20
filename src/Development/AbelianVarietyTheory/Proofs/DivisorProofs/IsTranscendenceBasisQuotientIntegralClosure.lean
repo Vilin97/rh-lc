@@ -71,8 +71,6 @@ theorem isTranscendenceBasis_quotient_integralClosure
     rw [hfg, ← Polynomial.hom_eval₂, h0, map_zero]
   have key := hy.algebraMap_comp (A := B ⧸ Q)
   convert key using 1
-  funext j
-  simp only [Function.comp_apply, RingHom.algebraMap_toAlgebra, hf]
   congr 1
   exact Subtype.ext ((hy' j).trans (hι (y j)).symm)
 

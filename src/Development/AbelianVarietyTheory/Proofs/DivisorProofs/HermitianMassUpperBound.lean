@@ -38,8 +38,6 @@ omit [StarRing E] in
 theorem stdLat_eq : Examples₂.stdLat (E := E) n = stdLat E n := by
   unfold Examples₂.stdLat stdLat
   congr 2
-  funext i
-  simp
 
 omit [StarRing E] in
 theorem mem_one_iff (a : E) : a ∈ (1 : Submodule (𝓞 E) E) ↔ IsIntegral ℤ a := by

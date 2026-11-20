@@ -127,8 +127,6 @@ theorem coord (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ) (h�
       ring
     rw [← hinv _ hv _ (GlobalTheory.CharInvForm.mem_schA f hq1)]
     congr 1
-    funext x
-    simp only [pureA, hfg, hchar]
     ring
   ·
     obtain ⟨y, hyU, hy⟩ := hsep _ hq

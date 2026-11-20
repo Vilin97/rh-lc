@@ -56,8 +56,6 @@ theorem thetaSum_schr_rat (F : Type) [Field F] [NumberField F] [Invertible (2 : 
   congr 1
   funext ξ
   congr 1
-  funext i
-  simp
 
 end GlobalTheory.ThetaQuasiRat
 

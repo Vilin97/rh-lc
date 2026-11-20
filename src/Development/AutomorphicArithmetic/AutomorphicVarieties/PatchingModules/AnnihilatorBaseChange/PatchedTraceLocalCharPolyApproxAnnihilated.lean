@@ -73,8 +73,6 @@ theorem UpperTheory.V.Pa.Core.patched_trace_local_charPoly_approx_annihilated :
       MonoidAlgebra.mapDomain_single]
     congr 2
     congr 1
-    funext i
-    simp only [Function.comp_apply, MonoidAlgebra.mapDomainRingHom_apply, map_sub, MonoidAlgebra.mapDomain_single]
     congr 2
     rw [QuotientGroup.mk'_apply, QuotientGroup.mk'_apply, QuotientGroup.eq, Subgroup.mem_subgroupOf]
     exact hx2 i
@@ -88,8 +86,6 @@ theorem UpperTheory.V.Pa.Core.patched_trace_local_charPoly_approx_annihilated :
     rw [map_one]
     congr 2
     congr 1
-    funext i
-    simp only [Function.comp_apply, map_sub, MonoidAlgebra.mapRingHom_single,
       MonoidAlgebra.mapDomainRingHom_apply, MonoidAlgebra.mapDomain_single, map_one]
     rw [← (m.ρ_maps N).2.1 v i]
     congr 2

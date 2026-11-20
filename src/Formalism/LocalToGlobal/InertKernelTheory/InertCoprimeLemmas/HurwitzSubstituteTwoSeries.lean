@@ -916,8 +916,6 @@ theorem inParamK_rename {σ ι : Type} [Finite σ] (f : σ → ι) [Filter.Tends
     subst_comp_subst_apply (HasSubst.X_comp f) (hasSubst_aL_any p K1),
     subst_comp_subst_apply (Formalism.MainNotions.FormalGroupSystem.Pf.en_aL_hs p K1) (HasSubst.X_comp f)]
   congr 1
-  funext i
-  simp only [Function.comp_apply, subst_X (hasSubst_aL_any p K1)]
   rw [aL_eq_rename, aL_eq_rename, ← rename_eq_subst, rename_rename]
   rfl
 

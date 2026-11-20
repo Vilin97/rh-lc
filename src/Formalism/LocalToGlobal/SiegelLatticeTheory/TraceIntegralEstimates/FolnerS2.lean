@@ -120,8 +120,6 @@ theorem dS_pow (s : ℝ) (m : ℕ) : (dS k r s) ^ m = dS k r (s ^ m) := by
   unfold dS
   rw [Matrix.diagonal_pow]
   congr 1
-  funext i
-  simp only [Pi.pow_apply]
   push_cast
   rw [← zpow_natCast ((s : ℂ) ^ fexp k r i) m, ← zpow_natCast (s : ℂ) m, ← _root_.zpow_mul, ← _root_.zpow_mul,
     mul_comm]

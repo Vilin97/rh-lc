@@ -99,16 +99,12 @@ theorem rvc_add (v : InfinitePlace X.B.I.F) (p p' : (VS D).V) : rvc X v (p + p')
   simp only [rvc, crd_add, Formalism.L2.SG.HidaSetting.rv]
   rw [← mulVec_add]
   congr 1
-  funext i
-  simp only [Pi.add_apply, map_add]
 
 theorem rvc_smul (v : InfinitePlace X.B.I.F) (c : D.host.E) (p : (VS D).V) :
     rvc X v (c • p) = X.B.I.φ v (X.ιE.symm c) • rvc X v p := by
   simp only [rvc, crd_smul, Formalism.L2.SG.HidaSetting.rv]
   rw [← mulVec_smul]
   congr 1
-  funext i
-  simp only [Pi.smul_apply, smul_eq_mul, map_mul]
 
 theorem rvc_zero (v : InfinitePlace X.B.I.F) : rvc X v 0 = 0 := by
   simpa using rvc_smul X v (0 : D.host.E) 0

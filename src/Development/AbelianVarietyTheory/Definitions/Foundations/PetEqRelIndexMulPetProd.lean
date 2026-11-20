@@ -92,8 +92,6 @@ theorem petProd_smul_left (Γ : Subgroup SL(2, ℤ)) [Γ.FiniteIndex] (k : ℤ) 
   refine Finset.sum_congr rfl fun γ _ => ?_
   rw [← integral_const_mul]
   congr 1
-  funext z
-  simp only [petersson, Pi.smul_apply, smul_eq_mul]
   ring
 
 theorem petProd_smul_right (Γ : Subgroup SL(2, ℤ)) [Γ.FiniteIndex] (k : ℤ) (c : ℂ) (f g : ℍ → ℂ) :
@@ -104,8 +102,6 @@ theorem petProd_smul_right (Γ : Subgroup SL(2, ℤ)) [Γ.FiniteIndex] (k : ℤ)
   refine Finset.sum_congr rfl fun γ _ => ?_
   rw [← integral_const_mul]
   congr 1
-  funext z
-  simp only [petersson, Pi.smul_apply, smul_eq_mul, map_mul]
   ring
 
 theorem petProd_level_one (Γ : Subgroup SL(2, ℤ)) [Γ.FiniteIndex] (k : ℤ) {f g : ℍ → ℂ}

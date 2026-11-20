@@ -205,8 +205,6 @@ theorem chart_step {o : Type} [CommRing o] {Ω : Type} [Field Ω] [Algebra o Ω]
     simp only [chRing]
     rw [AlgHom.map_adjoin, ← Set.range_comp]
     congr 2
-    funext j
-    simp
   refine finite_of_values (o := o) (f.app U).hom (secVal M.ξ U hg) (secVal M'.ξ _ hg') (algebraMap Ω Ω')
     (secVal_injective M'.all M'.tie.gen.inj _ hg') (secVal_app hd U hg hg')
     (chRing o (fun k => algebraMap Ω Ω' (x k)) c) ?_ s ?_ ?_

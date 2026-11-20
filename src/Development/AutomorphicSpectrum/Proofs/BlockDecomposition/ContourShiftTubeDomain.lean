@@ -198,8 +198,6 @@ theorem tubeShift_local {ι : Type} [Fintype ι] (Ω : Set (ι → ℝ)) (H : (�
       intro y
       simp only [F]
       congr 1
-      funext i
-      simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
       push_cast
       ring
     simp only [h1]

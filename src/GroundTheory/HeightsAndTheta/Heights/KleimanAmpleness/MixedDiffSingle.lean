@@ -31,8 +31,6 @@ theorem SegreLiftIntNum.proof : SegreLiftIntNum.Statement := by
     rw [mixedDiff_single, mixedDiff_single, hilbFn_segreLift F W M h0,
       hilbFn_segreLift F W _ h1]
     congr 2
-    funext k
-    simp only [IndefiniteRowSideFullHecke.Kleiman2.pullDeg, Pi.sub_apply, Sum.elim_inl, Sum.elim_inr, Pi.zero_apply]
     ring
   rw [Filter.eventually_atTop, Filter.eventually_atTop]
   constructor

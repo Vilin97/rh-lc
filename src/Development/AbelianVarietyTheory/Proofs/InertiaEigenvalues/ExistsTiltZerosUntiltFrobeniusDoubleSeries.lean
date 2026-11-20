@@ -44,8 +44,6 @@ theorem exists_zeros (l : ℕ) [Fact l.Prime] (h : ℕ) (μ : Fin h → ℂ_[l])
     have hsum' : HasSum (fun k : ℕ => (l : ℂ_[l]) ^ k * η (y a k) ())
         (∑ i : Fin h, μ i * abelian₂ h i (y a)) := by
       convert hsum using 1
-      funext k
-      simp only [η, Finset.mul_sum]
       refine Finset.sum_congr rfl fun i _ => by ring
     exact hsum'.unique (hysum a ())
   · refine GlobalTheory.T.untiltFrobeniusSeries_linearIndependent_of_firstTerms l h h ‖(l : ℂ_[l])‖ y hh (norm_nonneg _) hr hyS' ?_

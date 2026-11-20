@@ -70,8 +70,6 @@ theorem cpV_cmV_ιMulti (u w : Fin n × Fin n → ℂ) : ∀ (p : ℕ) (v : Fin 
       rw [mul_smul_comm, ExteriorAlgebra.ιMulti_succ_apply,
         Function.update_of_ne (Fin.succ_ne_zero i).symm]
       congr 3
-      funext j
-      simp only [Matrix.vecTail, Function.comp_apply, Function.update_apply, Fin.succ_inj]
 
 theorem isDer_cpV_cmV (u w : Fin n × Fin n → ℂ) :
     IsDer (cpV u * cmV w) (LinearMap.smulRight (dualV w) u) := by

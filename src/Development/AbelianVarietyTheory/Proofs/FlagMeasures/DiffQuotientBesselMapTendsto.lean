@@ -87,16 +87,12 @@ theorem sm_add {σ : Mat k r → (H →L[ℂ] H)} {v w : H} (hv : IsSmoothVec σ
   have h := GlobalTheory.EquivariantSubspace.smoothOnH_add hv hw
   show SmoothOnH _ (fun g => σ g (v + w))
   convert h using 1
-  funext g
-  simp
 
 theorem sm_smul {σ : Mat k r → (H →L[ℂ] H)} (a : ℂ) {v : H} (hv : IsSmoothVec σ v) :
     IsSmoothVec σ (a • v) := by
   have h := GlobalTheory.EquivariantSubspace.smoothOnH_smul a hv
   show SmoothOnH _ (fun g => σ g (a • v))
   convert h using 1
-  funext g
-  simp
 
 theorem sm_sub {σ : Mat k r → (H →L[ℂ] H)} {v w : H} (hv : IsSmoothVec σ v) (hw : IsSmoothVec σ w) :
     IsSmoothVec σ (v - w) := by
@@ -107,8 +103,6 @@ theorem sm_zero (σ : Mat k r → (H →L[ℂ] H)) : IsSmoothVec σ (0 : H) := b
   have h := GlobalTheory.EquivariantSubspace.smoothOnH_zero (E := H) (Hpk k r)
   show SmoothOnH _ (fun g => σ g 0)
   convert h using 1
-  funext g
-  simp
 
 theorem hasDerivAt_dsig {σ : Mat k r → (H →L[ℂ] H)} {v : H} {X : Mat k r} (hv : IsSmoothVec σ v)
     (hX : InLieHpk k r X) :

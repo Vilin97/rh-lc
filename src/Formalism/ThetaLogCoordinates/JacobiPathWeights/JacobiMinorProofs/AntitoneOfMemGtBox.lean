@@ -265,8 +265,6 @@ lemma toggle_sum {n : ℕ} (μ : Fin (n + 1) → ℤ) (b : ℕ) (f : (Fin n → 
   · rintro ⟨κ, l⟩ _
     show (⟨fw μ l (bw μ l b κ), l⟩ : Σ _ : Fin n → ℤ, Fin n → ℤ) = ⟨κ, l⟩
     congr 1
-    funext i
-    simp only [fw, bw, Fin.cons_succ]
     ring
   · intro x _
     rfl

@@ -68,8 +68,6 @@ theorem stOrthOf : StOrthOf := by
     show ∫ g, cf π (π h v) w g * star (cf π v' w' g) ∂μ = ∫ g, cf π v w g * star (cf π (π h⁻¹ v') w' g) ∂μ
     conv_rhs => rw [← integral_mul_right_eq_self _ h]
     congr 1
-    funext g
-    simp only [cf]
     rw [pi_mul_inv, map_mul, ContinuousLinearMap.mul_apply]
   have hcomm : ∀ w w' (h : G), ((T w').adjoint ∘L T w) ∘L π h = π h ∘L ((T w').adjoint ∘L T w) := by
     intro w w' h
@@ -120,8 +118,6 @@ theorem stOrthOf : StOrthOf := by
     show ∫ g, cf π e e g * star (cf π e e g) ∂μ = _
     rw [← integral_complex_ofReal]
     congr 1
-    funext g
-    simp only [φ, RCLike.star_def, Complex.mul_conj]
   have hφi : Integrable φ μ := by
     have h2 := (memLp_two_iff_integrable_sq_norm (hL2 e e).1).mp (hL2 e e)
     refine h2.congr (Filter.Eventually.of_forall fun g => ?_)

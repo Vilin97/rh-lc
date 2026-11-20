@@ -144,8 +144,6 @@ theorem valuation_psEval_lt_one {σ : Type*} [Finite σ] {f : MvPowerSeries σ �
     rw [HasSum] at h
     rw [(Topology.IsInducing.subtypeVal).tendsto_nhds_iff]
     convert h using 1
-    funext s
-    simp
   · refine Ideal.sum_mem _ fun d _ => ?_
     have he : (⟨psTerm f (fun i => (a i : L)) d, by
         rw [← coe_psTerm_integer]; exact SetLike.coe_mem _⟩ : 𝒪[L]) =

@@ -188,8 +188,6 @@ theorem good_add {L₁ L₂ : (Mat n → V) → (Mat n → V)} (h₁ : Good L₁
     unfold av
     rw [← integral_add (av_integrable (h₁.1 U hU) hg t hx) (av_integrable (h₂.1 U hU) hg t hx)]
     congr 1
-    funext s
-    simp only [Pi.add_apply, smul_add]
 
 theorem good_smul (c : ℂ) {L : (Mat n → V) → (Mat n → V)} (h : Good L) :
     Good (fun f => c • L f) := by
@@ -202,8 +200,6 @@ theorem good_smul (c : ℂ) {L : (Mat n → V) → (Mat n → V)} (h : Good L) :
     unfold av
     rw [← integral_smul]
     congr 1
-    funext s
-    simp only [Pi.smul_apply]
     rw [smul_comm]
 
 theorem good_comp {L₁ L₂ : (Mat n → V) → (Mat n → V)} (h₁ : Good L₁) (h₂ : Good L₂) :

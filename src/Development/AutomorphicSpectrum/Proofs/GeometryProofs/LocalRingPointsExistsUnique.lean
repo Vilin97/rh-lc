@@ -139,8 +139,6 @@ theorem aeval_eq_zero_of_ratio {K : Type} [Fintype K] {J : K → Type} (y : (Σ 
       change inc (aeval _ g) = σ (aeval _ g)
       rw [map_aeval_int, map_aeval_int]
       congr 2
-      funext p
-      simp only [inc, σ, map_mul, map_C, map_X, eval₂Hom_C, eval₂Hom_X']
       simp only [Subring.subtype_apply, hb, RingHom.id_apply]
       rw [← mul_assoc, ← C_mul]
       congr 2
@@ -154,8 +152,6 @@ theorem aeval_eq_zero_of_ratio {K : Type} [Fintype K] {J : K → Type} (y : (Σ 
     change _ = th (aeval _ g)
     rw [map_aeval_int]
     congr 2
-    funext p
-    simp only [th, map_mul, eval₂Hom_C, eval₂Hom_X']
     exact hw p
   rw [h2, h1, map_zero]
 

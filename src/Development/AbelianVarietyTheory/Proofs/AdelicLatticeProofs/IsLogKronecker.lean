@@ -18,8 +18,6 @@ theorem isLog_kronecker {ι : Type} [Fintype ι] [DecidableEq ι] {κ : Type} [F
       rw [← diagonal_one, ← diagonal_one, diagonal_kronecker_diagonal, diagonal_kronecker_diagonal,
         diagonal_add]
       congr 1
-      funext p
-      simp
     rw [e, conjTranspose_kronecker, Matrix.mul_add, Matrix.add_mul, ← mul_kronecker_mul,
       ← mul_kronecker_mul, ← mul_kronecker_mul, ← mul_kronecker_mul, Matrix.mul_one, Matrix.mul_one,
       hU, hU']

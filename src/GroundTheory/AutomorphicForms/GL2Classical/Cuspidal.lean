@@ -49,8 +49,6 @@ theorem unipFin_inv (y : 𝔸f) : (unipFin y)⁻¹ = unipFin (-y) := by
   refine inv_eq_of_mul_eq_one_right ?_
   rw [unipFin, unipFin, ← unipGL_add]
   convert unipGL_zero (n := 2) (r := 1) (R := 𝔸f) using 2
-  funext _
-  simp
 
 variable (N) in
 

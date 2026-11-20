@@ -218,8 +218,6 @@ def ideleFixedEquiv : IdeleGroup K ≃ₜ* FixedPoints.subgroup (L ≃ₐ[K] L) 
   continuous_invFun := by
     rw [(isClosedEmbedding_ideleEmbedding (K := K) (L := L)).isInducing.continuous_iff]
     convert continuous_subtype_val using 1
-    funext y
-    simp only [Function.comp_apply]
     exact MonoidHom.apply_ofInjective_symm _ _
 
 end Galois

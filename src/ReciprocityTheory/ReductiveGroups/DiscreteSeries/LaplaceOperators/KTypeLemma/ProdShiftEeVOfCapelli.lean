@@ -263,8 +263,6 @@ theorem shiftPoly_aeval (E : Fin (m + 1) → Fin (m + 1) → Module.End ℂ M) (
   unfold prodShift
   rw [← key (m + 1) (fun t => eeV E - ((θ t : ℝ) : ℂ) • (1 : Module.End ℂ (Fin (m + 1) → M)))]
   congr 2
-  funext t
-  simp only [Function.comp, map_add, Polynomial.aeval_X, Polynomial.aeval_C,
     Algebra.algebraMap_eq_smul_one]
   abel
 

@@ -32,8 +32,6 @@ theorem UpperTheory.ConvolutionTheory.L1.archBasic :
     simp only [glueA_apply]
     rw [← map_mul, ← h3]
     congr 2
-    funext i
-    simp
   have c4 : Continuous (UpperTheory.ConvolutionTheory.L1.glueA D n) := by
     have : Continuous fun g : Fin (m + 1) → archGroup F n =>
         archEquiv E n (D.glue n fun i => (archEquiv F n).symm (g i)) :=

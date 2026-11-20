@@ -56,8 +56,6 @@ theorem poly_id (q r t : ℕ) (u v : ℂ) (a : ℕ → ℂ) :
   rw [h1] at key
   rw [← key]
   congr 1
-  funext k
-  simp only [ite_mul, mul_ite, zero_mul, mul_zero]
   rw [← Finset.sum_filter, ← Finset.sum_filter]
   refine Finset.sum_congr (by ext j; simp [Nat.lt_succ_iff, and_comm]) fun j hj => ?_
   have hjk : j ≤ k := by simpa [Nat.lt_succ_iff] using (Finset.mem_filter.1 hj).1

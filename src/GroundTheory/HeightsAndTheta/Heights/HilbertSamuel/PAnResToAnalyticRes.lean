@@ -200,8 +200,6 @@ theorem measurable_liftF : Measurable (liftF d) := by
   have h := Measurable.find (p := fun n y => y ∈ d.R.U (seq d n)) hg
     (fun n => (d.R.isOpen_U _).measurableSet) (seq_cover d)
   convert h using 1
-  funext y
-  simp only [liftF, idx]
   rw [Set.piecewise_eq_of_mem _ _ _ (Nat.find_spec (seq_cover d y))]
 
 end Datum

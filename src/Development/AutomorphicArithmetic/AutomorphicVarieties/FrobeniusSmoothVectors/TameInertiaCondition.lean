@@ -159,8 +159,6 @@ private theorem lam_le (hF : F.Ok C₀) (hn : n = 2 ∨ n = 3) (S : Space O F n)
       exact this (Ideal.mem_map_of_mem _ ha)
     have h2 := hN.comp (Ideal.Quotient.lift (S.mB ^ N) _ hle)
     convert h2 using 1
-    funext g
-    simp only [Function.comp_apply, Ideal.Quotient.lift_mk, RingHom.comp_apply]
     rfl
   have key := char_triv ψQ hcont (Nat.card (ResidueField O)ˣ) natCard_units_residueField_coprime
     (fun g => by

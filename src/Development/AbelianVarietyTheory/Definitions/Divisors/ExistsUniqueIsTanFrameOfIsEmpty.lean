@@ -580,8 +580,6 @@ theorem IsWedgeVal.reorder {o : ι ≃ TIx Dw Φ} {φ : K₀ →ₐ[c.F] K} {y :
   refine ⟨h0, v, hv, ?_⟩
   rw [← wedge_perm]
   congr 1
-  funext i
-  simp
 
 theorem IsJacVal.reorder {o : ι ≃ TIx Dw Φ} {φ : K₀ →ₐ[c.F] K} {y : FrPt Xo c K} {s₀ : RulK Xo c K₀}
     {s : ι → RulK Xo c K₀} {d : K} (h : IsJacVal Φ o φ y s₀ s d) (o' : ι ≃ TIx Dw Φ) :
@@ -590,8 +588,6 @@ theorem IsJacVal.reorder {o : ι ≃ TIx Dw Φ} {φ : K₀ →ₐ[c.F] K} {y : F
   refine ⟨v, hv, ?_⟩
   rw [← jac_perm]
   congr 1
-  funext i
-  simp
 
 theorem IsWedgeVal.comb {o : ι ≃ TIx Dw Φ} {φ : K₀ →ₐ[c.F] K} {y : FrPt Xo c K} {s : ι → RulK Xo c K₀} {d : K}
     (h : IsWedgeVal Φ o φ y s d) (a : Matrix ι ι K₀) :
