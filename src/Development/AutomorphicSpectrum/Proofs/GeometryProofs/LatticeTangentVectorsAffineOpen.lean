@@ -75,7 +75,7 @@ theorem exists_frame {X : Scheme.{0}} {G : Over X} [GrpObj G] {U : X.Opens} (hU 
           (∀ j, (v' j).left ≫ φ = spMap (ReciprocityTheory.ChartRestriction.G.Chart.dualMapR f) ≫ v₀ j) ∧ IsLieBasis v')
     {R : Type} [CommRing R] (f : Γ(X, U) →+* R) {x : Sp R ⟶ X} (hx : spMap f ≫ hU.fromSpec = x)
     {E : Type} [AddCommGroup E] [Module R E] (M : LieModel G x E) :
-    ∃ e : Fin n → E, (∀ j, (M.pt (e j)).left = spMap (dualMap f) ≫ v₀ j) ∧
+    ∃ e : Fin n → E, (∀ j, (M.pt (e j)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ v₀ j) ∧
       ∀ y, ∃ c : Fin n → R, y = ∑ j, c j • e j := by
   have hz : 𝟙 (Sp R) ≫ (spMap f ≫ hU.fromSpec) = x := by rw [Category.id_comp, hx]
   subst hz
@@ -85,7 +85,7 @@ theorem exists_frame {X : Scheme.{0}} {G : Over X} [GrpObj G] {U : X.Opens} (hU 
   obtain ⟨e, he1, he2⟩ := exists_coords_of_isLieBasis v' hv2 M'
   refine ⟨e, fun j => ?_, he2⟩
   rw [← hM' (e j), he1 j, hv1 j]
-  have : ReciprocityTheory.ChartRestriction.G.Chart.dualMapR f = dualMap f := by
+  have : ReciprocityTheory.ChartRestriction.G.Chart.dualMapR f = GlobalTheory.CompanionTheory.Ar.dualMap f := by
     ext a <;> simp [ReciprocityTheory.ChartRestriction.G.Chart.dualMapR]
   rw [this]
 
@@ -95,8 +95,8 @@ theorem fromSpec_ringHom_ext {X : Scheme.{0}} {W : X.Opens} (hW : IsAffineOpen W
   exact congrArg CommRingCat.Hom.hom h1
 
 theorem spec_dual_comp {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (φ : R →+* R') (φ' : R' →+* R'') :
-    Spec.map (CommRingCat.ofHom (dualMap φ')) ≫ Spec.map (CommRingCat.ofHom (dualMap φ)) =
-      Spec.map (CommRingCat.ofHom (dualMap (φ'.comp φ))) := by
+    Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ')) ≫ Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap φ)) =
+      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (φ'.comp φ))) := by
   rw [spec_comp]
   congr 2
   refine RingHom.ext fun a => ?_
@@ -106,7 +106,7 @@ theorem germ_fromSpec {X : Scheme.{0}} {W : X.Opens} (hW : IsAffineOpen W) {p : 
     Spec.map (CommRingCat.ofHom (X.presheaf.germ W p hp).hom) ≫ hW.fromSpec = X.fromSpecStalk p :=
   hW.fromSpecStalk_eq_fromSpecStalk hp
 
-theorem exists_affine_frame : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsCommMonObj G] [Smooth G.hom] (Ω : Type) [Field Ω] (ξ : Spec (CommRingCat.of Ω) ⟶ X) (Li : Type) [AddCommGroup Li] [Module Ω Li] (M : LieModel G ξ Li) (q : Cpt ξ) (N : ℕ) (b : Fin N → Li), IsCptGen ξ → (∀ k, b k ∈ M.lat q) → ∃ (W : X.Opens) (hW : IsAffineOpen W) (v : Fin N → (epsAt (R := Γ(X, W)) hW.fromSpec ⟶ G)), q.1 ∈ W ∧ (∀ k, IsTanAt G hW.fromSpec (v k)) ∧ ∀ (ψ : Γ(X, W) →+* ℂ) (z : Sp ℂ ⟶ X), spMap ψ ≫ hW.fromSpec = z → genPt ξ ⤳ centre z → ∀ k, ∃ w : epsAt z ⟶ G, M.ValAt z (b k) w ∧ w.left = spMap (dualMap ψ) ≫ (v k).left := by
+theorem exists_affine_frame : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsCommMonObj G] [Smooth G.hom] (Ω : Type) [Field Ω] (ξ : Spec (CommRingCat.of Ω) ⟶ X) (Li : Type) [AddCommGroup Li] [Module Ω Li] (M : LieModel G ξ Li) (q : Cpt ξ) (N : ℕ) (b : Fin N → Li), IsCptGen ξ → (∀ k, b k ∈ M.lat q) → ∃ (W : X.Opens) (hW : IsAffineOpen W) (v : Fin N → (epsAt (R := Γ(X, W)) hW.fromSpec ⟶ G)), q.1 ∈ W ∧ (∀ k, IsTanAt G hW.fromSpec (v k)) ∧ ∀ (ψ : Γ(X, W) →+* ℂ) (z : Sp ℂ ⟶ X), spMap ψ ≫ hW.fromSpec = z → genPt ξ ⤳ centre z → ∀ k, ∃ w : epsAt z ⟶ G, M.ValAt z (b k) w ∧ w.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ (v k).left := by
   intro X G _ _ _ Ω _ ξ Li _ _ M q N b hξ hb
   obtain ⟨W₀, hW₀, hq, -, n, v₀, hv₀⟩ := GlobalTheory.exists_affine_lieBasis_baseChange X G q.1 ⊤ trivial
   let f : Γ(X, W₀) →+* X.presheaf.stalk q.1 := (X.presheaf.germ W₀ q.1 hq).hom
@@ -148,7 +148,7 @@ theorem exists_affine_frame : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsCo
         _ = c k j := by rw [h2, _root_.one_mul]
     have := pt_sum_base θ hθ M' (stalkLie hξ M q) Finset.univ (d k) e' e (fun j => Over.OverMorphism.ext (by
       rw [he1 j]
-      change _ = Spec.map (CommRingCat.ofHom (dualMap θ)) ≫ (M'.pt (e' j)).left
+      change _ = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap θ)) ≫ (M'.pt (e' j)).left
       rw [he'1 j, ← Category.assoc, spec_dual_comp, hθg]))
     rw [hc k]
     simpa only [hd] using this
@@ -169,14 +169,14 @@ theorem exists_affine_frame : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsCo
     rw [← spec_comp, Category.assoc, hθp]
     exact (spec_centre _).symm)
   refine ⟨epsBase ψ rfl ≫ v k, ⟨h, epsBase θp hθp ≫ v k, ⟨isTanAt_base _ _ (M'.tan _), ?_⟩, ?_⟩, rfl⟩
-  · have t : (M.pt (b k)).left = Spec.map (CommRingCat.ofHom (dualMap (genMap ξ q))) ≫
+  · have t : (M.pt (b k)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (genMap ξ q))) ≫
         ((stalkLie hξ M q).pt ⟨b k, hb k⟩).left := (Stalk.tan_spec (⟨b k, hb k⟩ : Stalk M q)).2
     rw [t, key k]
-    change Spec.map _ ≫ Spec.map (CommRingCat.ofHom (dualMap θ)) ≫ (v k).left =
-      Spec.map _ ≫ Spec.map (CommRingCat.ofHom (dualMap θp)) ≫ (v k).left
+    change Spec.map _ ≫ Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap θ)) ≫ (v k).left =
+      Spec.map _ ≫ Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap θp)) ≫ (v k).left
     rw [← Category.assoc, ← Category.assoc, spec_dual_comp, spec_dual_comp, e1]
-  · change Spec.map (CommRingCat.ofHom (dualMap ψ)) ≫ (v k).left =
-      Spec.map _ ≫ Spec.map (CommRingCat.ofHom (dualMap θp)) ≫ (v k).left
+  · change Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap ψ)) ≫ (v k).left =
+      Spec.map _ ≫ Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap θp)) ≫ (v k).left
     rw [← Category.assoc, spec_dual_comp, ← e2]
 
 end GlobalTheory.CompanionTheory.Ar.HodgeMetric.FrameExt

@@ -86,17 +86,17 @@ theorem spMap_comp {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (φ : S
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
 
 theorem spMap_dual_comp {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (φ : S →+* T) (ψ : T →+* U) :
-    spMap (dualMap (ψ.comp φ)) = spMap (dualMap ψ) ≫ spMap (dualMap φ) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) := by
   rw [← spMap_comp]
   congr 1
-  exact RingHom.ext fun x => by ext <;> simp [dualMap]
+  exact RingHom.ext fun x => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {X : Scheme.{0}}
   (t : SAB H X)
 
 theorem isTanBasis_map {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {x : Sp R ⟶ X} {g : ℕ}
     {e : Fin g → (Sp (DualNumber R) ⟶ t.G.left)} (he : IsTanBasis t x e) :
-    IsTanBasis t (spMap φ ≫ x) fun i => spMap (dualMap φ) ≫ e i := by
+    IsTanBasis t (spMap φ ≫ x) fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ e i := by
   refine ⟨fun i => GlobalTheory.LieMet.isTan_map φ rfl (he.1 i), fun T _ ψ w => ?_⟩
   have := he.2 T (ψ.comp φ) w
   simpa only [spMap_comp, spMap_dual_comp, Category.assoc] using this
@@ -148,13 +148,13 @@ theorem ext_intO (hX : X.IsSeparated) (x x' : Sp ↥(intO C) ⟶ X)
 theorem mem_latDR (hX : X.IsSeparated) {x : Sp ↥(intO C) ⟶ X} {g : ℕ}
     {e : Fin g → (Sp (DualNumber ↥(intO C)) ⟶ t.G.left)} (he : IsTanBasis t x e) (b : Fin g → C)
     (w : Sp (DualNumber C) ⟶ t.G.left)
-    (hw : IsCombAtG t (spMap (intO C).subtype ≫ x) (fun i => spMap (dualMap (intO C).subtype) ≫ e i) b w) :
+    (hw : IsCombAtG t (spMap (intO C).subtype ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO C).subtype) ≫ e i) b w) :
     w ∈ latDR t (spMap (intO C).subtype ≫ x) ↔ ∀ i, ‖b i‖ ≤ 1 := by
   have h1 : spMap (RingHom.id ↥(intO C)) = 𝟙 _ := Spec.map_id _
-  have h2 : dualMap (RingHom.id ↥(intO C)) = RingHom.id _ := by
+  have h2 : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id ↥(intO C)) = RingHom.id _ := by
     refine RingHom.ext fun z => ?_
-    ext <;> simp [dualMap]
-  have h3 : spMap (dualMap (RingHom.id ↥(intO C))) = 𝟙 _ := by rw [h2]; exact Spec.map_id _
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  have h3 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id ↥(intO C))) = 𝟙 _ := by rw [h2]; exact Spec.map_id _
   have hD0 := he.2 _ (RingHom.id ↥(intO C))
   simp only [h1, h3, Category.id_comp] at hD0
   have hDk := (isTanBasis_map t (intO C).subtype he).1
@@ -187,11 +187,11 @@ theorem of_covectors {A : Type} [CommRing A] [IsDomain A] [IsIntegrallyClosed A]
     (hΛ : ∀ (p : ℕ) [Fact p.Prime] (y : A' →+* ↥(intO ℂ_[p])) (b : Fin g → ℂ_[p])
       (w : Sp (DualNumber ℂ_[p]) ⟶ t.G.left),
       IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ spMap y ≫ spMap (algebraMap A A') ≫ x₀)
-        (fun i => spMap (dualMap (intO ℂ_[p]).subtype) ≫ spMap (dualMap y) ≫ spMap (dualMap (algebraMap A A')) ≫ e i)
+        (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap y) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A A')) ≫ e i)
         b w →
       (w ∈ lat t p (spMap (intO ℂ_[p]).subtype ≫ spMap y ≫ spMap (algebraMap A A') ≫ x₀) (decide (p = q)) ↔
         ∀ j, ‖∑ i, (y (h j i) : ℂ_[p]) * b i‖ ≤ 1)) :
-    ∃ (d : ℕ+) (n : ℕ) (B : Fin n → MvPolynomial (Fin k → Fin g) A), (∀ i, (B i).IsHomogeneous d) ∧ (∀ s, ∃ (i : Fin n) (c : ℕ), c ≠ 0 ∧ B i = MvPolynomial.C (c : A) * (MvPolynomial.X s : MvPolynomial (Fin k → Fin g) A) ^ (d : ℕ)) ∧ ∀ (p : ℕ) [Fact p.Prime] (x : A →+* ℂ_[p]), (∀ a, ‖x a‖ ≤ 1) → ∀ (m : ℕ) (hk : k ≤ m) (u : Fin m → (Sp (DualNumber ℂ_[p]) ⟶ t.G.left)) (a : Fin m → Fin g → ℂ_[p]), LinearIndependent ℂ_[p] a → (∀ l, IsCombAtG t (spMap x ≫ x₀) (fun i => spMap (dualMap x) ≫ e i) (a l) (u l)) → ((d : ℕ) : ℝ) * ∑ l : Fin k, Real.log (GlobalTheory.ShFam.Pad.grNorm t (spMap x ≫ x₀) (lat t p (spMap x ≫ x₀) (decide (p = q))) u (Fin.castLE hk l)) = Real.log (⨆ i, ‖MvPolynomial.eval₂ x (minor a hk) (B i)‖) := by
+    ∃ (d : ℕ+) (n : ℕ) (B : Fin n → MvPolynomial (Fin k → Fin g) A), (∀ i, (B i).IsHomogeneous d) ∧ (∀ s, ∃ (i : Fin n) (c : ℕ), c ≠ 0 ∧ B i = MvPolynomial.C (c : A) * (MvPolynomial.X s : MvPolynomial (Fin k → Fin g) A) ^ (d : ℕ)) ∧ ∀ (p : ℕ) [Fact p.Prime] (x : A →+* ℂ_[p]), (∀ a, ‖x a‖ ≤ 1) → ∀ (m : ℕ) (hk : k ≤ m) (u : Fin m → (Sp (DualNumber ℂ_[p]) ⟶ t.G.left)) (a : Fin m → Fin g → ℂ_[p]), LinearIndependent ℂ_[p] a → (∀ l, IsCombAtG t (spMap x ≫ x₀) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap x) ≫ e i) (a l) (u l)) → ((d : ℕ) : ℝ) * ∑ l : Fin k, Real.log (GlobalTheory.ShFam.Pad.grNorm t (spMap x ≫ x₀) (lat t p (spMap x ≫ x₀) (decide (p = q))) u (Fin.castLE hk l)) = Real.log (⨆ i, ‖MvPolynomial.eval₂ x (minor a hk) (B i)‖) := by
   obtain ⟨d, n, B, h1, h2, h3⟩ := exists_poly A A' hinj g k J h c hc hh
   refine ⟨d, n, B, h1, h2, fun p _ x hx m hk u a ha hu => h3 ℂ_[p] x m hk a ha _ fun x' hx' l => ?_⟩
   subst hx'
@@ -207,7 +207,7 @@ theorem norm_sum_single {g : ℕ} {A' : Type} [CommRing A'] (y : A' →+* ↥(in
   rw [Finset.sum_eq_single i (fun i' _ hi => by simp [Pi.single_eq_of_ne hi]) (by simp)]
   simp
 
-theorem wedge_norm_max : HTBoundSt → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) [IsLocallyNoetherian X] (t : SAB H X), X.IsSeparated → ∀ (A : Type) [CommRing A] [IsDomain A] [IsNoetherianRing A] [IsIntegrallyClosed A] [CharZero A] (x₀ : Sp A ⟶ X) (g : ℕ) (e : Fin g → (Sp (DualNumber A) ⟶ t.G.left)), IsTanBasis t x₀ e → ∀ q k : ℕ, ∃ (d : ℕ+) (n : ℕ) (B : Fin n → MvPolynomial (Fin k → Fin g) A), (∀ i, (B i).IsHomogeneous d) ∧ (∀ s, ∃ (i : Fin n) (c : ℕ), c ≠ 0 ∧ B i = MvPolynomial.C (c : A) * (MvPolynomial.X s : MvPolynomial (Fin k → Fin g) A) ^ (d : ℕ)) ∧ ∀ (p : ℕ) [Fact p.Prime] (x : A →+* ℂ_[p]), (∀ a, ‖x a‖ ≤ 1) → ∀ (m : ℕ) (hk : k ≤ m) (u : Fin m → (Sp (DualNumber ℂ_[p]) ⟶ t.G.left)) (a : Fin m → Fin g → ℂ_[p]), LinearIndependent ℂ_[p] a → (∀ l, IsCombAtG t (spMap x ≫ x₀) (fun i => spMap (dualMap x) ≫ e i) (a l) (u l)) → ((d : ℕ) : ℝ) * ∑ l : Fin k, Real.log (GlobalTheory.ShFam.Pad.grNorm t (spMap x ≫ x₀) (lat t p (spMap x ≫ x₀) (decide (p = q))) u (Fin.castLE hk l)) = Real.log (⨆ i, ‖MvPolynomial.eval₂ x (minor a hk) (B i)‖) := by
+theorem wedge_norm_max : HTBoundSt → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) [IsLocallyNoetherian X] (t : SAB H X), X.IsSeparated → ∀ (A : Type) [CommRing A] [IsDomain A] [IsNoetherianRing A] [IsIntegrallyClosed A] [CharZero A] (x₀ : Sp A ⟶ X) (g : ℕ) (e : Fin g → (Sp (DualNumber A) ⟶ t.G.left)), IsTanBasis t x₀ e → ∀ q k : ℕ, ∃ (d : ℕ+) (n : ℕ) (B : Fin n → MvPolynomial (Fin k → Fin g) A), (∀ i, (B i).IsHomogeneous d) ∧ (∀ s, ∃ (i : Fin n) (c : ℕ), c ≠ 0 ∧ B i = MvPolynomial.C (c : A) * (MvPolynomial.X s : MvPolynomial (Fin k → Fin g) A) ^ (d : ℕ)) ∧ ∀ (p : ℕ) [Fact p.Prime] (x : A →+* ℂ_[p]), (∀ a, ‖x a‖ ≤ 1) → ∀ (m : ℕ) (hk : k ≤ m) (u : Fin m → (Sp (DualNumber ℂ_[p]) ⟶ t.G.left)) (a : Fin m → Fin g → ℂ_[p]), LinearIndependent ℂ_[p] a → (∀ l, IsCombAtG t (spMap x ≫ x₀) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap x) ≫ e i) (a l) (u l)) → ((d : ℕ) : ℝ) * ∑ l : Fin k, Real.log (GlobalTheory.ShFam.Pad.grNorm t (spMap x ≫ x₀) (lat t p (spMap x ≫ x₀) (decide (p = q))) u (Fin.castLE hk l)) = Real.log (⨆ i, ‖MvPolynomial.eval₂ x (minor a hk) (B i)‖) := by
   intro hHT E _ _ _ H X _ t hX A _ _ _ _ _ x₀ g e he q k
   by_cases hq : q.Prime
   · obtain ⟨A', _, _, _, _, hinj, _, hζ, hsp⟩ := GlobalTheory.T.exists_finite_extension_splitting_torsion E H X t A x₀ q hq.ne_zero

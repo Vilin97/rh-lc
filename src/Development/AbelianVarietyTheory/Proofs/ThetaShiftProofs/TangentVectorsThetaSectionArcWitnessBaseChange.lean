@@ -190,11 +190,11 @@ theorem dual_hom_ext {ρ ρ' : DualNumber R →+* R'} (h : ∀ r, ρ (TrivSqZero
   have e : a = TrivSqZeroExt.inl a.fst + TrivSqZeroExt.inl a.snd * DualNumber.eps := by ext <;> simp
   rw [e, map_add (f := _), map_add (f := _), map_mul, map_mul, h, h, he]
 
-theorem dualMap_inl (φ : R →+* R') (a : R) : dualMap φ (TrivSqZeroExt.inl a) = TrivSqZeroExt.inl (φ a) := by
-  ext <;> simp [dualMap]
+theorem dualMap_inl (φ : R →+* R') (a : R) : GlobalTheory.CompanionTheory.Ar.dualMap φ (TrivSqZeroExt.inl a) = TrivSqZeroExt.inl (φ a) := by
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
-theorem dualMap_eps' (φ : R →+* R') : dualMap φ DualNumber.eps = DualNumber.eps := by
-  ext <;> simp [dualMap]
+theorem dualMap_eps' (φ : R →+* R') : GlobalTheory.CompanionTheory.Ar.dualMap φ DualNumber.eps = DualNumber.eps := by
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem spMap_comp' {R'' : Type} [CommRing R''] (f : R →+* R') (g : R' →+* R'') :
     spMap g ≫ spMap f = spMap (g.comp f) := (Spec.map_comp _ _).symm
@@ -232,7 +232,7 @@ theorem lieImg_baseChange [IsLocalRing A] [IsLocalRing A']
     {ν : Out.GtPt a.D₀ (epsR A)} {ν' : Out.GtPt a'.D₀ (epsR A')} {v : epsR (PowerSeries A) ⟶ W.t.G}
     {v' : epsR (PowerSeries A') ⟶ W'.t.G} (hν : LetBC p ν ν') (hv : LieImg W ν v)
     (hv' : v'.left ≫ bc.hom.left ≫ pullback.fst W.t.G.hom (Out.specOf (PowerSeries.map f)) =
-      spMap (dualMap (PowerSeries.map f)) ≫ v.left) : LieImg W' ν' v' := by
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (PowerSeries.map f)) ≫ v.left) : LieImg W' ν' v' := by
   intro n ρ' κ' vn' hρ₁ hρ₂ hκ₁ hκ₂ hb hf x
   obtain ⟨wL, -, -, -, lev⟩ := (isPullUnif_iff_stalks _ _ _ _ _ _ _ hD _ _ _ _ bc _ _).1 hU
   obtain ⟨h, hh, ⟨-, ht⟩, -⟩ := lev n
@@ -245,9 +245,9 @@ theorem lieImg_baseChange [IsLocalRing A] [IsLocalRing A']
   have := ConstTan.isLocalRing_dual (PowerSeries A ⧸ Ideal.span {(PowerSeries.X : PowerSeries A)} ^ (n + 1))
   have := ConstTan.isLocalRing_dual (PowerSeries A' ⧸ Ideal.span {(PowerSeries.X : PowerSeries A')} ^ (n + 1))
   let I : Ideal (PowerSeries A) := Ideal.span {PowerSeries.X}
-  let ρ : DualNumber (PowerSeries A) →+* DualNumber (PowerSeries A ⧸ I ^ (n + 1)) := dualMap (Ideal.Quotient.mk _)
+  let ρ : DualNumber (PowerSeries A) →+* DualNumber (PowerSeries A ⧸ I ^ (n + 1)) := GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk _)
   let κ : DualNumber A →+* DualNumber (PowerSeries A ⧸ I ^ (n + 1)) :=
-    dualMap ((Ideal.Quotient.mk _).comp (PowerSeries.C (R := A)))
+    GlobalTheory.CompanionTheory.Ar.dualMap ((Ideal.Quotient.mk _).comp (PowerSeries.C (R := A)))
   let s : Sp (DualNumber (PowerSeries A ⧸ I ^ (n + 1))) ⟶ Sp (PowerSeries A ⧸ I ^ (n + 1)) := spMap (algebraMap _ _)
   have hs₀ : s ≫ Out.thick (PowerSeries A) I n = spMap ρ ≫ (epsR (PowerSeries A)).hom :=
     ((spMap_comp' _ _).trans (congrArg spMap (RingHom.ext fun r =>
@@ -258,14 +258,14 @@ theorem lieImg_baseChange [IsLocalRing A] [IsLocalRing A']
   have hx : vn ≫ (Out.fstG I n W.t.G).left = spMap ρ ≫ v.left := pullback.lift_fst _ _ _
   have G := hv n ρ κ vn (dualMap_inl _) (dualMap_eps' _) (dualMap_inl _) (dualMap_eps' _)
     (pullback.lift_snd _ _ _) hx (p.xe x)
-  let q := spMap (dualMap (truncMap f n))
-  have hρ : spMap ρ' ≫ spMap (dualMap (PowerSeries.map f)) = q ≫ spMap ρ := by
+  let q := spMap (GlobalTheory.CompanionTheory.Ar.dualMap (truncMap f n))
+  have hρ : spMap ρ' ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (PowerSeries.map f)) = q ≫ spMap ρ := by
     rw [spMap_comp', spMap_comp']
     refine congrArg spMap (dual_hom_ext (fun r => ?_) ?_)
     · simp only [RingHom.comp_apply, ρ, dualMap_inl, hρ₁]
       rfl
     · simp only [RingHom.comp_apply, ρ, dualMap_eps', hρ₂]
-  have hκ : spMap κ' ≫ spMap (dualMap f) = q ≫ spMap κ := by
+  have hκ : spMap κ' ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) = q ≫ spMap κ := by
     rw [spMap_comp', spMap_comp']
     refine congrArg spMap (dual_hom_ext (fun r => ?_) ?_)
     · simp only [RingHom.comp_apply, κ, dualMap_inl, hκ₁]
@@ -321,7 +321,7 @@ theorem thetaOf_baseChange (hG : Out.GlobalFnsSt)
     rw [map_zero] at a₁ a₂
     exact isPullTerm_baseChange hs S a.D₀.P.isLB (srel_of t₁ t₂) a₂ a₁ hT
 
-theorem main : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (A : Type) [CommRing A] [IsDomain A] [IsLocalRing A] [IsNoetherianRing A] (b : O →+* A) (a : ArcIn Dw l β A b) (χ : Sp (PowerSeries A) ⟶ Y.X) (W : Wit Y a χ) (A' : Type) [CommRing A'] [IsDomain A'] [IsLocalRing A'] [IsNoetherianRing A'] (b' : O →+* A') (a' : ArcIn Dw l β A' b') (f : A →+* A') (p : Out.IsPullDeg f a.D₀ a'.D₀) (W' : Wit Y a' (spMap (PowerSeries.map f) ≫ χ)), InBC f a a' p → WitBC f p W W' → ∃ m : SABMap W'.t W.t (spMap (PowerSeries.map f)), W'.m.φ = m.φ ≫ W.m.φ ∧ (∀ ν ν' v (v' : epsR (PowerSeries A') ⟶ W'.t.G), LetBC p ν ν' → LieImg W ν v → v'.left ≫ m.φ = spMap (dualMap (PowerSeries.map f)) ≫ v.left → LieImg W' ν' v') ∧ ∀ (w : LB.Iso W'.t.PP.L (W.t.PP.L.pull m.φ)) th th' θ (θ' : LB.Sec W'.t.PP.L) θ₂, RigIso m w → ThBC p th th' → ThetaOf W th θ → PullSec m.φ θ θ₂ → IsoMaps w θ' θ₂ → ThetaOf W' th' θ' := by
+theorem main : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (A : Type) [CommRing A] [IsDomain A] [IsLocalRing A] [IsNoetherianRing A] (b : O →+* A) (a : ArcIn Dw l β A b) (χ : Sp (PowerSeries A) ⟶ Y.X) (W : Wit Y a χ) (A' : Type) [CommRing A'] [IsDomain A'] [IsLocalRing A'] [IsNoetherianRing A'] (b' : O →+* A') (a' : ArcIn Dw l β A' b') (f : A →+* A') (p : Out.IsPullDeg f a.D₀ a'.D₀) (W' : Wit Y a' (spMap (PowerSeries.map f) ≫ χ)), InBC f a a' p → WitBC f p W W' → ∃ m : SABMap W'.t W.t (spMap (PowerSeries.map f)), W'.m.φ = m.φ ≫ W.m.φ ∧ (∀ ν ν' v (v' : epsR (PowerSeries A') ⟶ W'.t.G), LetBC p ν ν' → LieImg W ν v → v'.left ≫ m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (PowerSeries.map f)) ≫ v.left → LieImg W' ν' v') ∧ ∀ (w : LB.Iso W'.t.PP.L (W.t.PP.L.pull m.φ)) th th' θ (θ' : LB.Sec W'.t.PP.L) θ₂, RigIso m w → ThBC p th th' → ThetaOf W th θ → PullSec m.φ θ θ₂ → IsoMaps w θ' θ₂ → ThetaOf W' th' θ' := by
   intro hL _ E _ _ _ H Dw l Xo c O _ β Y A _ _ _ _ b a χ W A' _ _ _ _ b' a' f p W' _
     ⟨hD, bc, _, hU, hφ, he, hs, w₁, w₂, e, T₁, T₂⟩
   obtain ⟨m, hm⟩ := sabCancel pullCubCancel E H _ _ _ _ _ _ _ _ W.m W'.m

@@ -82,7 +82,7 @@ theorem om_pull {X X' : Scheme.{0}} {Ω Ω' : Type} [Field Ω] [Field Ω'] {ξ :
     [IsCommMonObj G'] {φ : G'.left ⟶ G.left} (hp : IsGrpPullback G' G f φ) (hs : Smooth G.hom)
     {E : Type} [AddCommGroup E] [Module Ω E] (M : LieModel G ξ E) {E' : Type} [AddCommGroup E'] [Module Ω' E']
     (M' : LieModel G' ξ' E') (j : E →+ E') (jd : Module.Dual Ω E →+ Module.Dual Ω' E')
-    (hj : ∀ v, (M'.pt (j v)).left ≫ φ = spMap (dualMap i) ≫ (M.pt v).left)
+    (hj : ∀ v, (M'.pt (j v)).left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap i) ≫ (M.pt v).left)
     (hjd : ∀ w v, jd w (j v) = i (w v)) : M'.omLat = M.omLat.pull ξ' f jd := by
   funext q'
   obtain ⟨r, B, B', v, v', hBB, hl, hl', hv, hv', hvv⟩ :=
@@ -155,7 +155,7 @@ theorem ht_pull {X X' : Scheme.{0}} {Ω Ω' : Type} [Field Ω] [Field Ω'] {ξ :
     (t2 : ∀ (g' : Over.mk ξ' ⟶ G'), g' ^ n = 1 → ∃ g : Over.mk ξ ⟶ G, g ^ n = 1 ∧ g'.left ≫ φ = spMap i ≫ g.left)
     {E : Type} [AddCommGroup E] [Module Ω E] (M : LieModel G ξ E) {E' : Type} [AddCommGroup E'] [Module Ω' E']
     (M' : LieModel G' ξ' E') (j : E →+ E') (jd : Module.Dual Ω E →+ Module.Dual Ω' E')
-    (hj : ∀ v, (M'.pt (j v)).left ≫ φ = spMap (dualMap i) ≫ (M.pt v).left)
+    (hj : ∀ v, (M'.pt (j v)).left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap i) ≫ (M.pt v).left)
     (hjd : ∀ w v, jd w (j v) = i (w v)) (q' : Cpt ξ') {y : Over.mk ξ ⟶ G} {y' : Over.mk ξ' ⟶ G'}
     (hy : y ^ n = 1) (hy' : y' ^ n = 1)
     (hc : ∀ (g : Over.mk ξ ⟶ G) (g' : Over.mk ξ' ⟶ G'), g ^ n = 1 → g' ^ n = 1 → g'.left ≫ φ = spMap i ≫ g.left →
@@ -185,7 +185,7 @@ theorem ht_pull {X X' : Scheme.{0}} {Ω Ω' : Type} [Field Ω] [Field Ω'] {ξ :
     have hcomp : ∀ k, (secVal (B := DualNumber (X'.presheaf.stalk q'.1)) (v' k).left (φ ⁻¹ᵁ W) (hk k) (φ.app W s)).snd =
         (f.stalkMap q'.1).hom (secVal (B := DualNumber (X.presheaf.stalk (f q'.1))) (v k).left W (hk₀ k) s).snd := by
       intro k
-      exact (congrArg TrivSqZeroExt.snd (comp_ring (dualMap (f.stalkMap q'.1).hom) (v' k).left (v k).left φ (hvv k) W (hk k) (hk₀ k) s)).trans (dualMap_snd _ _)
+      exact (congrArg TrivSqZeroExt.snd (comp_ring (GlobalTheory.CompanionTheory.Ar.dualMap (f.stalkMap q'.1).hom) (v' k).left (v k).left φ (hvv k) W (hk k) (hk₀ k) s)).trans (dualMap_snd _ _)
     choose ρ hρ hρe using fun k => hD (B k) (v k) (hv k) (hk₀ k)
     have hρ' := fun k => hreg _ (hρ k)
     have hρe' : ∀ k, w (B k) = genMap ξ ⟨f q'.1, hd.specializes q'⟩
@@ -201,7 +201,7 @@ theorem ht_pull {X X' : Scheme.{0}} {Ω Ω' : Type} [Field Ω] [Field Ω'] {ξ :
     rw [map_smul, smul_eq_mul, hBB k, hjd, hρe' k, map_add (f := _), map_mul, map_mul, hcomp k, hg, map_natCast]
     ring
 
-theorem main : ∀ (X : Scheme.{0}) [IsLocallyNoetherian X] (Ω : Type) [Field Ω] [CharZero Ω] (ξ : Spec (CommRingCat.of Ω) ⟶ X), IsCptGen ξ → Flat.NormalCpt ξ → ∀ (G : Over X) [GrpObj G], IsSemiAbelian G → ∀ (L : LB G.left) (n : ℕ), 1 ≤ n → FullTorsion G ξ n → ∀ e, GenWeil G L ξ n e → ∀ (E : Type) [AddCommGroup E] [Module Ω E] (M : LieModel G ξ E) (X' : Scheme.{0}) [IsLocallyNoetherian X'] (Ω' : Type) [Field Ω'] (ξ' : Spec (CommRingCat.of Ω') ⟶ X'), IsCptGen ξ' → Flat.NormalCpt ξ' → ∀ (f : X' ⟶ X) (i : Ω →+* Ω'), GlobalTheory.CompanionTheory.Ar.Dominates ξ' ξ f i → ∀ (G' : Over X') [GrpObj G'] [IsCommMonObj G'] (φ : G'.left ⟶ G.left), IsGrpPullback G' G f φ → ∀ (L' : LB G'.left) (e' : (Over.mk ξ' ⟶ G') → (Over.mk ξ' ⟶ G') → Ω'ˣ), GenWeil G' L' ξ' n e' → ∀ (E' : Type) [AddCommGroup E'] [Module Ω' E'] (M' : LieModel G' ξ' E') (j : E →+ E') (jd : Module.Dual Ω E →+ Module.Dual Ω' E'), (∀ v, (M'.pt (j v)).left ≫ φ = spMap (dualMap i) ≫ (M.pt v).left) → (∀ w v, jd w (j v) = i (w v)) → M'.htOm L' n = (M.htOm L n).pull ξ' f jd ∧ M'.omLat = M.omLat.pull ξ' f jd := by
+theorem main : ∀ (X : Scheme.{0}) [IsLocallyNoetherian X] (Ω : Type) [Field Ω] [CharZero Ω] (ξ : Spec (CommRingCat.of Ω) ⟶ X), IsCptGen ξ → Flat.NormalCpt ξ → ∀ (G : Over X) [GrpObj G], IsSemiAbelian G → ∀ (L : LB G.left) (n : ℕ), 1 ≤ n → FullTorsion G ξ n → ∀ e, GenWeil G L ξ n e → ∀ (E : Type) [AddCommGroup E] [Module Ω E] (M : LieModel G ξ E) (X' : Scheme.{0}) [IsLocallyNoetherian X'] (Ω' : Type) [Field Ω'] (ξ' : Spec (CommRingCat.of Ω') ⟶ X'), IsCptGen ξ' → Flat.NormalCpt ξ' → ∀ (f : X' ⟶ X) (i : Ω →+* Ω'), GlobalTheory.CompanionTheory.Ar.Dominates ξ' ξ f i → ∀ (G' : Over X') [GrpObj G'] [IsCommMonObj G'] (φ : G'.left ⟶ G.left), IsGrpPullback G' G f φ → ∀ (L' : LB G'.left) (e' : (Over.mk ξ' ⟶ G') → (Over.mk ξ' ⟶ G') → Ω'ˣ), GenWeil G' L' ξ' n e' → ∀ (E' : Type) [AddCommGroup E'] [Module Ω' E'] (M' : LieModel G' ξ' E') (j : E →+ E') (jd : Module.Dual Ω E →+ Module.Dual Ω' E'), (∀ v, (M'.pt (j v)).left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap i) ≫ (M.pt v).left) → (∀ w v, jd w (j v) = i (w v)) → M'.htOm L' n = (M.htOm L n).pull ξ' f jd ∧ M'.omLat = M.omLat.pull ξ' f jd := by
   intro X _ Ω _ _ ξ hξ hN G _ hG L n hn hF e he E _ _ M X' _ Ω' _ ξ' hξ' hN' f i hd G' _ _ φ hp L' e' he' E' _ _ M' j jd hj hjd
   haveI : IsCommMonObj G := hG.comm
   haveI : CharZero Ω' := charZero_of_injective_ringHom i.injective

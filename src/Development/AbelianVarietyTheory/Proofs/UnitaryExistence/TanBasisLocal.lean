@@ -14,10 +14,10 @@ namespace GlobalTheory.TanBasisLocal
 
 theorem dual_ext {S : Type} [CommRing S] {Y : Scheme.{0}} {n : ℕ} {h : Fin n → S}
     (hs : Ideal.span (Set.range h) = ⊤) {w w' : Sp (DualNumber S) ⟶ Y}
-    (e : ∀ i, spMap (dualMap (algebraMap S (Localization.Away (h i)))) ≫ w =
-      spMap (dualMap (algebraMap S (Localization.Away (h i)))) ≫ w') : w = w' := by
+    (e : ∀ i, spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap S (Localization.Away (h i)))) ≫ w =
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap S (Localization.Away (h i)))) ≫ w') : w = w' := by
   have key := GlobalTheory.Frames.existsUnique_glue_dual S Y n h hs
-    (fun i => spMap (dualMap (algebraMap S (Localization.Away (h i)))) ≫ w') (by
+    (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap S (Localization.Away (h i)))) ≫ w') (by
       intro i j α β hα hβ
       rw [← Category.assoc, ← Category.assoc, spMap_comp_ring, spMap_comp_ring, ← dualMap_comp, ← dualMap_comp,
         hα, hβ])
@@ -30,9 +30,9 @@ theorem base_ext {S : Type} [CommRing S] {Y : Scheme.{0}} {n : ℕ} {h : Fin n �
   (Scheme.affineOpenCoverOfSpanRangeEqTop (R := CommRingCat.of S) h hs).openCover.hom_ext _ _ e
 
 theorem fst_dual {S T : Type} [CommRing S] [CommRing T] (ψ : S →+* T) :
-    (TrivSqZeroExt.fstHom T T T).toRingHom.comp (dualMap ψ) =
+    (TrivSqZeroExt.fstHom T T T).toRingHom.comp (GlobalTheory.CompanionTheory.Ar.dualMap ψ) =
       ψ.comp (TrivSqZeroExt.fstHom S S S).toRingHom :=
-  RingHom.ext fun x => by simp [dualMap]
+  RingHom.ext fun x => by simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem eps_alg {S : Type} [CommRing S] (a : S) :
     (epsMul a).comp (algebraMap S (DualNumber S)) = algebraMap S (DualNumber S) :=
@@ -52,7 +52,7 @@ theorem one_pull {S T : Type} [CommRing S] [CommRing T] (ψ : S →+* T) (x : Sp
 
 theorem tan_pull {S T : Type} [CommRing S] [CommRing T] (ψ : S →+* T) {x : Sp S ⟶ Xo.X}
     {v : Sp (DualNumber S) ⟶ Xo.univ.t.G.left} (hv : IsTanAt x v) :
-    IsTanAt (spMap ψ ≫ x) (spMap (dualMap ψ) ≫ v) := by
+    IsTanAt (spMap ψ ≫ x) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ v) := by
   obtain ⟨h1, h2⟩ := hv
   refine ⟨?_, ?_⟩
   · rw [Category.assoc, h1, ← Category.assoc, spMap_comp_ring, dualMap_alg, ← spMap_comp_ring,
@@ -62,7 +62,7 @@ theorem tan_pull {S T : Type} [CommRing S] [CommRing T] (ψ : S →+* T) {x : Sp
 theorem tan_local {S : Type} [CommRing S] {x : Sp S ⟶ Xo.X} {n : ℕ} {h : Fin n → S}
     (hs : Ideal.span (Set.range h) = ⊤) {v : Sp (DualNumber S) ⟶ Xo.univ.t.G.left}
     (hv : ∀ i, IsTanAt (spMap (algebraMap S (Localization.Away (h i))) ≫ x)
-      (spMap (dualMap (algebraMap S (Localization.Away (h i)))) ≫ v)) : IsTanAt x v := by
+      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap S (Localization.Away (h i)))) ≫ v)) : IsTanAt x v := by
   refine ⟨dual_ext hs fun i => ?_, base_ext hs fun i => ?_⟩
   · rw [← Category.assoc, (hv i).1, ← Category.assoc, ← Category.assoc, spMap_comp_ring, spMap_comp_ring,
       dualMap_alg]
@@ -87,8 +87,8 @@ theorem comb_pull_comp {S A C : Type} [CommRing S] [CommRing A] [CommRing C] {φ
     (α : A →+* C) (hα : α.comp φ = χ) {x : Sp S ⟶ Xo.X} {m : ℕ}
     {v : Fin m → (Sp (DualNumber S) ⟶ Xo.univ.t.G.left)} {w : Sp (DualNumber S) ⟶ Xo.univ.t.G.left}
     {a : Fin m → A}
-    (ha : IsCombAt (spMap φ ≫ x) (fun k => spMap (dualMap φ) ≫ v k) a (spMap (dualMap φ) ≫ w)) :
-    IsCombAt (spMap χ ≫ x) (fun k => spMap (dualMap χ) ≫ v k) (fun j => α (a j)) (spMap (dualMap χ) ≫ w) :=
+    (ha : IsCombAt (spMap φ ≫ x) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v k) a (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ w)) :
+    IsCombAt (spMap χ ≫ x) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ v k) (fun j => α (a j)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ w) :=
   isCombAt_pull α (by rw [← Category.assoc, spMap_comp_ring, hα])
     (fun j => by rw [← Category.assoc, spMap_comp_ring, ← dualMap_comp, hα])
     (by rw [← Category.assoc, spMap_comp_ring, ← dualMap_comp, hα]) ha
@@ -97,25 +97,25 @@ theorem coeff_compat {S A B C : Type} [CommRing S] [CommRing A] [CommRing B] [Co
     {ψ : S →+* B} {χ : S →+* C} (α : A →+* C) (β : B →+* C) (hα : α.comp φ = χ) (hβ : β.comp ψ = χ)
     {x : Sp S ⟶ Xo.X} {m : ℕ}
     {v : Fin m → (Sp (DualNumber S) ⟶ Xo.univ.t.G.left)} {w : Sp (DualNumber S) ⟶ Xo.univ.t.G.left}
-    (hw : IsTanAt x w) (hb : TanBasis (spMap φ ≫ x) (fun k => spMap (dualMap φ) ≫ v k))
+    (hw : IsTanAt x w) (hb : TanBasis (spMap φ ≫ x) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v k))
     {a : Fin m → A} {b : Fin m → B}
-    (ha : IsCombAt (spMap φ ≫ x) (fun k => spMap (dualMap φ) ≫ v k) a (spMap (dualMap φ) ≫ w))
-    (hb' : IsCombAt (spMap ψ ≫ x) (fun k => spMap (dualMap ψ) ≫ v k) b (spMap (dualMap ψ) ≫ w)) :
+    (ha : IsCombAt (spMap φ ≫ x) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v k) a (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ w))
+    (hb' : IsCombAt (spMap ψ ≫ x) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ v k) b (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ w)) :
     (fun j => α (a j)) = fun j => β (b j) := by
-  have hB : TanBasis (spMap χ ≫ x) (fun k => spMap (dualMap χ) ≫ v k) := by
+  have hB : TanBasis (spMap χ ≫ x) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ v k) := by
     have := GlobalTheory.Frames.tanBasis_baseChange E H Dw l Xo _ _ α _ m _ hb
     have e1 : spMap α ≫ spMap φ ≫ x = spMap χ ≫ x := by rw [← Category.assoc, spMap_comp_ring, hα]
-    have e2 : (fun k => spMap (dualMap α) ≫ spMap (dualMap φ) ≫ v k) = fun k => spMap (dualMap χ) ≫ v k :=
+    have e2 : (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v k) = fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ v k :=
       funext fun k => by rw [← Category.assoc, spMap_comp_ring, ← dualMap_comp, hα]
     rw [e1, e2] at this
     exact this
   exact (hB.2 _ (tan_pull χ hw)).unique (comb_pull_comp α hα ha) (comb_pull_comp β hβ hb')
 
-theorem tanBasis_local : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (S : Type) [CommRing S] (x : Sp S ⟶ Xo.X) (n : ℕ) (h : Fin n → S), Ideal.span (Set.range h) = ⊤ → ∀ (m : ℕ) (v : Fin m → (Sp (DualNumber S) ⟶ Xo.univ.t.G.left)), (∀ i, TanBasis (spMap (algebraMap S (Localization.Away (h i))) ≫ x) (fun k => spMap (dualMap (algebraMap S (Localization.Away (h i)))) ≫ v k)) → TanBasis x v := by
+theorem tanBasis_local : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (S : Type) [CommRing S] (x : Sp S ⟶ Xo.X) (n : ℕ) (h : Fin n → S), Ideal.span (Set.range h) = ⊤ → ∀ (m : ℕ) (v : Fin m → (Sp (DualNumber S) ⟶ Xo.univ.t.G.left)), (∀ i, TanBasis (spMap (algebraMap S (Localization.Away (h i))) ≫ x) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap S (Localization.Away (h i)))) ≫ v k)) → TanBasis x v := by
   intro E _ _ _ H Dw l Xo S _ x n h hs m v hb
   have hv : ∀ k, IsTanAt x (v k) := fun k => tan_local hs fun i => (hb i).1 k
   have hb' : ∀ f : Set.range h, TanBasis (spMap (algebraMap S (Localization.Away f.1)) ≫ x)
-      (fun k => spMap (dualMap (algebraMap S (Localization.Away f.1))) ≫ v k) := by
+      (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap S (Localization.Away f.1))) ≫ v k) := by
     rintro ⟨_, i, rfl⟩
     exact hb i
   refine ⟨hv, fun w hw => ?_⟩

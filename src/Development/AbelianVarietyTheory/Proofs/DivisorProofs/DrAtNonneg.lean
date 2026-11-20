@@ -19,7 +19,7 @@ def drAt (la : AllWt.Weight S.Dw) {C : Type} [NontriviallyNormedField C] [IsUltr
                expo S.Dw (drSym la) z : (Φ.C k).Y.Fnˣ) : (Φ.C k).Y.Fn))‖ *
     Real.exp ((drSym la).sum fun a n => (n : ℝ) * lnStep s.T.Z.t
       (spMap (Scheme.stalkClosedPointTo x).hom ≫ stalkPt (Φ.C k).Y (below x) ≫ (Φ.C k).π ≫ genι s.T.Z)
-      (fun τ i => spMap (dualMap (Scheme.stalkClosedPointTo x).hom) ≫
+      (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo x).hom) ≫
         ((Φ.C k).gr_spec (below x)).choose_spec.choose.v τ i) p (a.1 p) a.2.2)
 
 theorem drAt_nonneg (la : AllWt.Weight S.Dw) {C : Type} [NontriviallyNormedField C] [IsUltrametricDist C] (p : ℕ)

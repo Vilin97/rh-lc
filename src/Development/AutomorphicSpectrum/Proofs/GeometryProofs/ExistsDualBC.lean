@@ -127,10 +127,10 @@ variable {G : Over X} [GrpObj G] [IsCommMonObj G] [Smooth G.hom] {Li : Type} [Ad
 omit [IsCommMonObj G] in
 theorem exists_lieBC (hx : Spec.map (CommRingCat.ofHom (algebraMap A Ω)) ≫ x = ξ) [Module A Li]
     [IsScalarTower A Ω Li] : ∃ j₀ : L₀ →ₗ[A] Li, IsBaseChange Ω j₀ ∧ ∀ v, (M.pt (j₀ v)).left =
-      Spec.map (CommRingCat.ofHom (dualMap (algebraMap A Ω))) ≫ (M₀.pt v).left := by
+      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A Ω))) ≫ (M₀.pt v).left := by
   subst hx
   obtain ⟨j, hj, -⟩ := GlobalTheory.T.lie_model_existsUnique_semilinear X G A Ω (algebraMap A Ω) x L₀ Li M₀ M
-  have hj' : ∀ v, (M.pt (j v)).left = Spec.map (CommRingCat.ofHom (dualMap (algebraMap A Ω))) ≫ (M₀.pt v).left :=
+  have hj' : ∀ v, (M.pt (j v)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A Ω))) ≫ (M₀.pt v).left :=
     fun v => (Category.comp_id _).symm.trans (hj v)
   let j₀ : L₀ →ₗ[A] Li :=
     { toFun := j
@@ -142,12 +142,12 @@ omit [IsCommMonObj G] [Smooth G.hom] in
 theorem tan_ext {O : Type} [CommRing O] [Algebra A O] {z : Spec (CommRingCat.of O) ⟶ X}
     (hzs : Spec.map (CommRingCat.ofHom (algebraMap A O)) ≫ x = z) (g : O →+* Ω)
     (hg : g.comp (algebraMap A O) = algebraMap A Ω) (j₀ : L₀ → Li)
-    (hj : ∀ v, (M.pt (j₀ v)).left = Spec.map (CommRingCat.ofHom (dualMap (algebraMap A Ω))) ≫ (M₀.pt v).left)
+    (hj : ∀ v, (M.pt (j₀ v)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A Ω))) ≫ (M₀.pt v).left)
     (b : L₀) : ∃ v : epsAt z ⟶ G, IsTanAt G z v ∧
-      (M.pt (j₀ b)).left = Spec.map (CommRingCat.ofHom (dualMap g)) ≫ v.left := by
+      (M.pt (j₀ b)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap g)) ≫ v.left := by
   let ψ := LieCarrier.epsHom (algebraMap A O) x _ hzs
   have hleft : (ψ ≫ M₀.pt b).left =
-      Spec.map (CommRingCat.ofHom (dualMap (algebraMap A O))) ≫ (M₀.pt b).left := rfl
+      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A O))) ≫ (M₀.pt b).left := rfl
   refine ⟨ψ ≫ M₀.pt b, ?_, ?_⟩
   · have t : _ ≫ (M₀.pt b).left = _ := M₀.tan b
     rw [one_left] at t
@@ -161,9 +161,9 @@ theorem tan_denom {O : Type} [CommRing O] [Algebra A O] (S : Submonoid A) [IsLoc
     {z : Spec (CommRingCat.of O) ⟶ X}
     (hzs : Spec.map (CommRingCat.ofHom (algebraMap A O)) ≫ x = z) (g : O →+* Ω)
     (hg : g.comp (algebraMap A O) = algebraMap A Ω) (j₀ : L₀ → Li)
-    (hj : ∀ v, (M.pt (j₀ v)).left = Spec.map (CommRingCat.ofHom (dualMap (algebraMap A Ω))) ≫ (M₀.pt v).left)
+    (hj : ∀ v, (M.pt (j₀ v)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A Ω))) ≫ (M₀.pt v).left)
     (e : Li) (v : epsAt z ⟶ G) (hv : IsTanAt G z v)
-    (he' : (M.pt e).left = Spec.map (CommRingCat.ofHom (dualMap g)) ≫ v.left) :
+    (he' : (M.pt e).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap g)) ≫ v.left) :
     ∃ u ∈ S, ∃ b, algebraMap A Ω u • e = j₀ b := by
   obtain ⟨u, hu, b, hub⟩ := exists_denom lie_proj G S x M₀ hzs v hv
   have hgu : g (algebraMap A O u) = algebraMap A Ω u := RingHom.congr_fun hg u
@@ -173,7 +173,7 @@ theorem tan_denom {O : Type} [CommRing O] [Algebra A O] (S : Submonoid A) [IsLoc
 
 theorem mem_omLat_iff (hξ : IsCptGen ξ) (hk : Function.Injective (algebraMap A Ω))
     (hx : Spec.map (CommRingCat.ofHom (algebraMap A Ω)) ≫ x = ξ) (j₀ : L₀ → Li)
-    (hj : ∀ v, (M.pt (j₀ v)).left = Spec.map (CommRingCat.ofHom (dualMap (algebraMap A Ω))) ≫ (M₀.pt v).left)
+    (hj : ∀ v, (M.pt (j₀ v)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A Ω))) ≫ (M₀.pt v).left)
     (q : Cpt ξ) (hq : q.1 ∈ Set.range x) (hsub : ∀ a, algebraMap A Ω a ∈ regAt ξ q) (w : Module.Dual Ω Li) :
     w ∈ M.omLat q ↔ ∀ b, w (j₀ b) ∈ regAt ξ q := by
   obtain ⟨p, hp⟩ : ∃ p : PrimeSpectrum A, x p = q.1 := hq

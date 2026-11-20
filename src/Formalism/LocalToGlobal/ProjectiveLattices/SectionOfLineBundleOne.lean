@@ -57,7 +57,7 @@ def IsArcPointPowerSeries (Y : Model Xo c β) {K₁ : Type} [Field K₁] [Algebr
     (∀ τ k, IsLieImage W (e τ k) (v τ k)) ∧
     ∀ τ i, ∃ vS : Fin (Dw.mult τ) → (Sp (DualNumber (ArcS Dw K₁)) ⟶ Xo.univ.t.G.left),
       (∀ k, ∃ v'' : Sp (DualNumber (ArcS Dw K₁)) ⟶ Y.oF.t.G.left,
-        v'' ≫ Y.m.φ = spMap (dualMap (arcι Dw K₁)) ≫ (v τ k).left ≫ W.m.φ ∧ vS k = v'' ≫ Y.m0.toSABMap.φ) ∧
+        v'' ≫ Y.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (arcι Dw K₁)) ≫ (v τ k).left ≫ W.m.φ ∧ vS k = v'' ≫ Y.m0.toSABMap.φ) ∧
       IsCombAt yF.x vS (fun k => arcX Dw K₁ τ i k) (yF.u τ i)
 
 def SectionOfLineBundleOne {X : Scheme.{0}} {L : LB X} (σ : ReciprocityTheory.ChartRestriction.G.Out.H0 L 1) (θ : LB.Sec L) : Prop :=

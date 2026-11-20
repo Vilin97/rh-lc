@@ -17,9 +17,9 @@ theorem spMap_conj_conj' : spMap (starRingEnd ℂ) ≫ spMap (starRingEnd ℂ) =
   exact congrArg Spec.map (CommRingCat.hom_ext (RingHom.ext fun a => by simp))
 
 theorem spMap_dual_conj_conj' :
-    spMap (dualMap (starRingEnd ℂ)) ≫ spMap (dualMap (starRingEnd ℂ)) = 𝟙 _ := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) = 𝟙 _ := by
   rw [← Spec.map_comp, ← Spec.map_id]
-  exact congrArg Spec.map (CommRingCat.hom_ext (RingHom.ext fun a => by ext <;> simp [dualMap]))
+  exact congrArg Spec.map (CommRingCat.hom_ext (RingHom.ext fun a => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]))
 
 theorem smul_gram_map_conj {n : ℕ} (c : ℝ) (M : Matrix (Fin n) (Fin n) ℂ) (a b : Fin n) :
     ((c : ℂ) • (Mᴴ * M)) a b = starRingEnd ℂ (((c : ℂ) • ((M.map (starRingEnd ℂ))ᴴ * M.map (starRingEnd ℂ))) a b) := by
@@ -57,7 +57,7 @@ theorem smoothOn_hodge_of_conj : ∀ (D : D7) (A : Amb D) (N j : ℕ) (S : Sig A
     rw [← ev_eq, ev_conj' (y := y) (y' := jm y) rfl, ev_eq hyV]
     rfl
   have hF' : F.IsMap (evHom hjy) f' := fun τ i => by
-    refine (hf' τ i).trans ((congrArg (spMap (dualMap (starRingEnd ℂ)) ≫ ·) (hf τ i)).trans ?_)
+    refine (hf' τ i).trans ((congrArg (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ ·) (hf τ i)).trans ?_)
     refine (GlobalTheory.GradedPieces.dual_comp (evHom hyV) (starRingEnd ℂ) (F.v τ i)).trans ?_
     rw [e]
   have k3 := h3 (jm y) hjnb hjy f' hF'

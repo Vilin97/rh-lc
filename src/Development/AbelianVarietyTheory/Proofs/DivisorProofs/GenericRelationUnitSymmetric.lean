@@ -18,11 +18,11 @@ theorem spMap_comp' {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (φ : 
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
 
 theorem dualMap_comp' {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (φ : S →+* T) (ψ : T →+* U) :
-    dualMap (ψ.comp φ) = (dualMap ψ).comp (dualMap φ) :=
-  RingHom.ext fun x => by ext <;> simp [dualMap]
+    GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ) = (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) :=
+  RingHom.ext fun x => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem spMap_dualMap_comp {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (φ : S →+* T) (ψ : T →+* U) :
-    spMap (dualMap (ψ.comp φ)) = spMap (dualMap ψ) ≫ spMap (dualMap φ) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) := by
   rw [dualMap_comp', spMap_comp']
 
 theorem tri_trans {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] {φ : c.F →+* R} {φ' : c.F →+* R'}
@@ -61,7 +61,7 @@ theorem tri_trans {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] {�
     by_cases hb : b < k
     · simp [Matrix.map_apply, hB.1 k b hb]
     · simp [hC.1 b i (lt_of_lt_of_le hk (not_lt.1 hb))]
-  · have e : (fun k => spMap (dualMap (ψ'.comp ψ)) ≫ f.v τ k) = f2.v τ := funext fun k => by
+  · have e : (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ'.comp ψ)) ≫ f.v τ k) = f2.v τ := funext fun k => by
       rw [hf2 τ k, hf1 τ k, spMap_dualMap_comp, Category.assoc]
     rw [e]
     exact f2.co_spec h τ i
@@ -74,7 +74,7 @@ theorem tri_of_isMap {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R'']
   refine ⟨by rw [h.1, spMap_comp', Category.assoc, hx], by rw [h.2.1, hφ]; rfl, fun τ i => ?_⟩
   obtain ⟨cf, h1, h2, h3⟩ := h.2.2 τ i
   refine ⟨cf, h1, h2, ?_⟩
-  have e : (fun j => spMap (dualMap b) ≫ k.v τ j) = fun j => spMap (dualMap (b.comp a)) ≫ f.v τ j :=
+  have e : (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap b) ≫ k.v τ j) = fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (b.comp a)) ≫ f.v τ j :=
     funext fun j => by rw [hk τ j, spMap_dualMap_comp, Category.assoc]
   rw [e]
   exact h3

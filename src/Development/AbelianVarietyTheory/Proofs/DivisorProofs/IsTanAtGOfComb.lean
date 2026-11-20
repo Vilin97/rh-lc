@@ -74,13 +74,13 @@ theorem iTie_act (hact : ∀ a, (Q.oG.act a).left ≫ π = π ≫ (t.act.act a).
   change (xG.1 ≫ Q.oG.act a).left ≫ π = _
   rw [Over.comp_left, Category.assoc, hact, ← Category.assoc, hu]
 
-theorem sum_al₀_actT : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (p : ℕ) [Fact p.Prime] [StarRing (𝓞 E)] (Q : GlobalTheory.FlatModel.PtP E p) (yb : Sp 𝓞_ℂ_[p] ⟶ X) (π : Q.G.left ⟶ t.G.left), IsGrpPullback Q.G t.G yb π → (∀ a, (Q.oG.act a).left ≫ π = π ≫ (t.act.act a).left) → ∀ (ε : 𝓞_ℂ_[p] ≃+* ↥(intO ℂ_[p])), (intO ℂ_[p]).subtype.comp ε.toRingHom = algebraMap 𝓞_ℂ_[p] ℂ_[p] → ∀ (x : Sp ↥(intO ℂ_[p]) ⟶ X), spMap ε.toRingHom ≫ yb = x → ∀ (g : ℕ) (e : Fin g → (Sp (DualNumber ↥(intO ℂ_[p])) ⟶ t.G.left)) (v : Fin g → LieG Q.Gt) (u : Fin g → (Sp (DualNumber 𝓞_ℂ_[p]) ⟶ t.G.left)), (∀ i, GlobalTheory.FlatModel.ITie Q π (v i) (u i)) → (∀ i, spMap (dualMap ε.toRingHom) ≫ u i = e i) → IsTanBasis t x e → ∀ (cf : Fin g → ℂ_[p]) (w : Sp (DualNumber ℂ_[p]) ⟶ t.G.left) (σ : 𝓞 E →+* ℂ_[p]), IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (dualMap (intO ℂ_[p]).subtype) ≫ e i) cf w → GlobalTheory.FlatModel.IsEigG t σ w → ∀ (o : 𝓞 E) (s : Q.T), ∑ i, cf i * algebraMap 𝓞_ℂ_[p] ℂ_[p] ((Q.al₀ (Q.actT (star o) s)).1 (v i)) = σ o * ∑ i, cf i * algebraMap 𝓞_ℂ_[p] ℂ_[p] ((Q.al₀ s).1 (v i)) := by
+theorem sum_al₀_actT : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (p : ℕ) [Fact p.Prime] [StarRing (𝓞 E)] (Q : GlobalTheory.FlatModel.PtP E p) (yb : Sp 𝓞_ℂ_[p] ⟶ X) (π : Q.G.left ⟶ t.G.left), IsGrpPullback Q.G t.G yb π → (∀ a, (Q.oG.act a).left ≫ π = π ≫ (t.act.act a).left) → ∀ (ε : 𝓞_ℂ_[p] ≃+* ↥(intO ℂ_[p])), (intO ℂ_[p]).subtype.comp ε.toRingHom = algebraMap 𝓞_ℂ_[p] ℂ_[p] → ∀ (x : Sp ↥(intO ℂ_[p]) ⟶ X), spMap ε.toRingHom ≫ yb = x → ∀ (g : ℕ) (e : Fin g → (Sp (DualNumber ↥(intO ℂ_[p])) ⟶ t.G.left)) (v : Fin g → LieG Q.Gt) (u : Fin g → (Sp (DualNumber 𝓞_ℂ_[p]) ⟶ t.G.left)), (∀ i, GlobalTheory.FlatModel.ITie Q π (v i) (u i)) → (∀ i, spMap (GlobalTheory.CompanionTheory.Ar.dualMap ε.toRingHom) ≫ u i = e i) → IsTanBasis t x e → ∀ (cf : Fin g → ℂ_[p]) (w : Sp (DualNumber ℂ_[p]) ⟶ t.G.left) (σ : 𝓞 E →+* ℂ_[p]), IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ e i) cf w → GlobalTheory.FlatModel.IsEigG t σ w → ∀ (o : 𝓞 E) (s : Q.T), ∑ i, cf i * algebraMap 𝓞_ℂ_[p] ℂ_[p] ((Q.al₀ (Q.actT (star o) s)).1 (v i)) = σ o * ∑ i, cf i * algebraMap 𝓞_ℂ_[p] ℂ_[p] ((Q.al₀ s).1 (v i)) := by
   intro E _ _ _ H X t p _ _ Q yb π hπ hact ε hε x hx g e v u hvu hue he cf w σ hw hσ o s
   have e₁ : spMap (intO ℂ_[p]).subtype ≫ x = spMap (algebraMap 𝓞_ℂ_[p] ℂ_[p]) ≫ yb := by
     rw [← hx, GlobalTheory.FlatModel.sp_sp, hε]
   obtain rfl : bcV t ε.toRingHom u = e := funext hue
-  have e₂ : (fun i => spMap (dualMap (intO ℂ_[p]).subtype) ≫ bcV t ε.toRingHom u i) =
-      fun i => spMap (dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p])) ≫ u i := by
+  have e₂ : (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ bcV t ε.toRingHom u i) =
+      fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p])) ≫ u i := by
     have := GlobalTheory.FlatModel.bcV_bcV (t := t) ε.toRingHom (intO ℂ_[p]).subtype u
     rw [hε] at this
     exact this
@@ -89,10 +89,10 @@ theorem sum_al₀_actT : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
     ext1 s
     simp
   have h1 : spMap (RingHom.id 𝓞_ℂ_[p]) = 𝟙 _ := Spec.map_id _
-  have h2 : dualMap (RingHom.id 𝓞_ℂ_[p]) = RingHom.id _ := by
+  have h2 : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id 𝓞_ℂ_[p]) = RingHom.id _ := by
     refine RingHom.ext fun z => ?_
-    ext <;> simp [dualMap]
-  have h3 : spMap (dualMap (RingHom.id 𝓞_ℂ_[p])) = 𝟙 _ := by rw [h2]; exact Spec.map_id _
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  have h3 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id 𝓞_ℂ_[p])) = 𝟙 _ := by rw [h2]; exact Spec.map_id _
   have hu : IsTanBasis t yb u := by
     have h := isTanBasis_bc he ε.symm.toRingHom
     have h4 : bcV t (RingHom.id 𝓞_ℂ_[p]) u = u := funext fun i => by rw [bcV, h3, Category.id_comp]

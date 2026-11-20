@@ -38,9 +38,9 @@ theorem flagStep_self {r : ℕ} (b : Fin r → Li) : flagStep Ω b r = Submodule
     simp [k.2]
   rw [flagStep, this]
 
-theorem spMap_dualMap_id : spMap (dualMap (RingHom.id Ω)) = 𝟙 (Sp (DualNumber Ω)) := by
-  have : dualMap (RingHom.id Ω) = RingHom.id (DualNumber Ω) := by
-    ext a <;> simp [dualMap]
+theorem spMap_dualMap_id : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id Ω)) = 𝟙 (Sp (DualNumber Ω)) := by
+  have : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id Ω) = RingHom.id (DualNumber Ω) := by
+    ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   rw [this]
   simp
 
@@ -249,7 +249,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 theorem exists_lieModel_pull {X' : Scheme.{0}} (t : SAB H X) (t' : SAB H X') (g : X' ⟶ X) (m : SABMap t' t g)
     (ξ' : Spec (CommRingCat.of Ω) ⟶ X') (M : LieModel t.G ξ Li) (ρ : 𝓞 E →+* Module.End Ω Li) (hg : IsCptGen ξ)
     (hg' : IsCptGen ξ') (hd : GlobalTheory.CompanionTheory.Ar.Dominates ξ' ξ g (RingHom.id Ω)) (ha : M.IsActOf t.act.act ρ) :
-    ∃ M' : LieModel t'.G ξ' Li, (∀ e, (M'.pt e).left ≫ m.φ = spMap (dualMap (RingHom.id Ω)) ≫ (M.pt e).left) ∧
+    ∃ M' : LieModel t'.G ξ' Li, (∀ e, (M'.pt e).left ≫ m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id Ω)) ≫ (M.pt e).left) ∧
       M'.lat = M.lat.pull ξ' g (AddMonoidHom.id Li) ∧ M'.IsActOf t'.act.act ρ := by
   obtain ⟨E', _, _, ⟨M₁⟩⟩ := lieModel_exists X' t'.G Ω ξ'
   obtain ⟨j, hj₁, hj₂, hj₃, hj₄, -⟩ := GlobalTheory.T.lie_model_dominant_hodge E H X t X' t' g m Ω Ω ξ ξ' (RingHom.id Ω) Li E' M M₁ hg hg' hd
@@ -346,7 +346,7 @@ theorem SatModel.exists_flagged_model (E : Type) [Field E] [NumberField E] [IsCM
     (hint : ∀ q : Cpt ξ, (∀ r : ℕ, r.Prime → ¬ InFibre ξ r q) → IsIntegrallyClosed (regAt ξ q))
     (hgen₀ : IsCptGen ξ₀) (hdom : GlobalTheory.CompanionTheory.Ar.Dominates ξ ξ₀ f (algebraMap Ω₀ Ω))
     (hcst : ξ ≫ f ≫ Y.s = spMap (cst.comp (algebraMap (𝓞 c.F) c.F))) (hact : M.IsActOf t.act.act ρ)
-    (hj : ∀ e, (M.pt (j e)).left ≫ m.φ = spMap (dualMap (algebraMap Ω₀ Ω)) ≫ (M₀.pt e).left)
+    (hj : ∀ e, (M.pt (j e)).left ≫ m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap Ω₀ Ω)) ≫ (M₀.pt e).left)
     (hV₀ : ∀ s e, e ∈ V₀ s ↔ j e ∈ eigSp ρ (cst.comp (labelEmb c s)))
     (hgf : IsGenericFlag (Ω' := Ω) j V₀ b d)
     (hfl : ∀ s, (M.eigLat ρ (cst.comp (labelEmb c s))).IsFlagVBOn {q | ∀ r : ℕ, r.Prime → ¬ InFibre ξ r q} (b s)) :
@@ -434,7 +434,7 @@ theorem SatModel.exists_flagged_model (E : Type) [Field E] [NumberField E] [IsCM
       M₀ := M₀
       j := j
       j_pt := fun e => by
-        show (Ml.pt (j e)).left ≫ n.φ = spMap (dualMap (algebraMap Ω₀ Ω)) ≫ (M₀.pt e).left
+        show (Ml.pt (j e)).left ≫ n.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap Ω₀ Ω)) ≫ (M₀.pt e).left
         rw [hn, ← Category.assoc, hMl, spMap_dualMap_id, Category.id_comp]
         exact hj e
       V₀ := V₀
@@ -469,7 +469,7 @@ end GlobalTheory.CompanionTheory.Ar
 
 namespace GlobalTheory.CompanionTheory.Ar
 
-theorem exists_sat_model : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Tor.Level H) (Xo : Moduli D l) (c : Coeff l) (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)) (Ω : Type) [Field Ω] [CharZero Ω] (K : Type) [Fintype K] (J : K → Type) [∀ k, Fintype (J k)] (y : (Σ k, J k) → Ω) (X : Scheme.{0}) (ξ : Spec (CommRingCat.of Ω) ⟶ X) (f : X ⟶ Y.X) (Ω₀ : Type) [Field Ω₀] [Algebra Ω₀ Ω] (ξ₀ : Spec (CommRingCat.of Ω₀) ⟶ Y.X) (cst : c.F →+* Ω) (t : SAB H X) (m : SABMap t Y.t f) (Li : Type) [AddCommGroup Li] [Module Ω Li] (M : LieModel t.G ξ Li) (ρ : 𝓞 E →+* Module.End Ω Li) (Li₀ : Type) [AddCommGroup Li₀] [Module Ω₀ Li₀] (M₀ : LieModel Y.t.G ξ₀ Li₀) (j : Li₀ →+ Li) (V₀ : CMType H ⊕ CMType H → Submodule Ω₀ Li₀) (b : ∀ s, Fin (labelRk D s) → Li) (d : ℕ), (∀ q : X, genPt ξ ⤳ q) → CoordTie ℤ ξ (fun c' : (k : K) → J k => ∏ k, y ⟨k, c' k⟩) → (∀ q : Cpt ξ, (∀ r : ℕ, r.Prime → ¬ InFibre ξ r q) → IsIntegrallyClosed (regAt ξ q)) → IsCptGen ξ₀ → GlobalTheory.CompanionTheory.Ar.Dominates ξ ξ₀ f (algebraMap Ω₀ Ω) → ξ ≫ f ≫ Y.s = spMap (cst.comp (algebraMap (𝓞 c.F) c.F)) → M.IsActOf t.act.act ρ → (∀ e, (M.pt (j e)).left ≫ m.φ = spMap (dualMap (algebraMap Ω₀ Ω)) ≫ (M₀.pt e).left) → (∀ s e, e ∈ V₀ s ↔ j e ∈ eigSp ρ (cst.comp (labelEmb c s))) → IsGenericFlag (Ω' := Ω) j V₀ b d → (∀ s, (M.eigLat ρ (cst.comp (labelEmb c s))).IsFlagVBOn {q | ∀ r : ℕ, r.Prime → ¬ InFibre ξ r q} (b s)) → ∃ (K' : Type) (_ : Fintype K') (J' : K' → Type) (_ : ∀ k, Fintype (J' k)) (y' : (Σ k, J' k) → Ω) (bk : K → K') (bx : ∀ k, J k ≃ J' (bk k)) (𝔐 : HodgeCpt Y ∅ y') (g : 𝔐.X ⟶ X) (Fl : 𝔐.Flag) (xdeg : RootIx D → K' → ℤ) (e : RootIx D → Ω), Function.Injective bk ∧ (∀ k a, y' ⟨bk k, bx k a⟩ = y ⟨k, a⟩) ∧ 𝔐.ξ ≫ g = ξ ∧ 𝔐.f = g ≫ f ∧ genPt 𝔐.ξ₀ = genPt ξ₀ ∧ Fl.deg = d ∧ Fl.RootLines xdeg e ∧ (∀ s i, (𝔐.M.pt (Fl.b s i)).left ≫ 𝔐.m.φ = (M.pt (b s i)).left ≫ m.φ) ∧ (∀ q' : Cpt 𝔐.ξ, (∀ r : ℕ, r.Prime → ¬ InFibre 𝔐.ξ r q') → ∀ h : genPt ξ ⤳ g q'.1, regAt 𝔐.ξ q' = regAt ξ ⟨g q'.1, h⟩) ∧ ∀ q₁ q₂ : Cpt 𝔐.ξ, (∀ r : ℕ, r.Prime → ¬ InFibre 𝔐.ξ r q₁) → g q₁.1 = g q₂.1 → q₁ = q₂ := by
+theorem exists_sat_model : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Tor.Level H) (Xo : Moduli D l) (c : Coeff l) (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)) (Ω : Type) [Field Ω] [CharZero Ω] (K : Type) [Fintype K] (J : K → Type) [∀ k, Fintype (J k)] (y : (Σ k, J k) → Ω) (X : Scheme.{0}) (ξ : Spec (CommRingCat.of Ω) ⟶ X) (f : X ⟶ Y.X) (Ω₀ : Type) [Field Ω₀] [Algebra Ω₀ Ω] (ξ₀ : Spec (CommRingCat.of Ω₀) ⟶ Y.X) (cst : c.F →+* Ω) (t : SAB H X) (m : SABMap t Y.t f) (Li : Type) [AddCommGroup Li] [Module Ω Li] (M : LieModel t.G ξ Li) (ρ : 𝓞 E →+* Module.End Ω Li) (Li₀ : Type) [AddCommGroup Li₀] [Module Ω₀ Li₀] (M₀ : LieModel Y.t.G ξ₀ Li₀) (j : Li₀ →+ Li) (V₀ : CMType H ⊕ CMType H → Submodule Ω₀ Li₀) (b : ∀ s, Fin (labelRk D s) → Li) (d : ℕ), (∀ q : X, genPt ξ ⤳ q) → CoordTie ℤ ξ (fun c' : (k : K) → J k => ∏ k, y ⟨k, c' k⟩) → (∀ q : Cpt ξ, (∀ r : ℕ, r.Prime → ¬ InFibre ξ r q) → IsIntegrallyClosed (regAt ξ q)) → IsCptGen ξ₀ → GlobalTheory.CompanionTheory.Ar.Dominates ξ ξ₀ f (algebraMap Ω₀ Ω) → ξ ≫ f ≫ Y.s = spMap (cst.comp (algebraMap (𝓞 c.F) c.F)) → M.IsActOf t.act.act ρ → (∀ e, (M.pt (j e)).left ≫ m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap Ω₀ Ω)) ≫ (M₀.pt e).left) → (∀ s e, e ∈ V₀ s ↔ j e ∈ eigSp ρ (cst.comp (labelEmb c s))) → IsGenericFlag (Ω' := Ω) j V₀ b d → (∀ s, (M.eigLat ρ (cst.comp (labelEmb c s))).IsFlagVBOn {q | ∀ r : ℕ, r.Prime → ¬ InFibre ξ r q} (b s)) → ∃ (K' : Type) (_ : Fintype K') (J' : K' → Type) (_ : ∀ k, Fintype (J' k)) (y' : (Σ k, J' k) → Ω) (bk : K → K') (bx : ∀ k, J k ≃ J' (bk k)) (𝔐 : HodgeCpt Y ∅ y') (g : 𝔐.X ⟶ X) (Fl : 𝔐.Flag) (xdeg : RootIx D → K' → ℤ) (e : RootIx D → Ω), Function.Injective bk ∧ (∀ k a, y' ⟨bk k, bx k a⟩ = y ⟨k, a⟩) ∧ 𝔐.ξ ≫ g = ξ ∧ 𝔐.f = g ≫ f ∧ genPt 𝔐.ξ₀ = genPt ξ₀ ∧ Fl.deg = d ∧ Fl.RootLines xdeg e ∧ (∀ s i, (𝔐.M.pt (Fl.b s i)).left ≫ 𝔐.m.φ = (M.pt (b s i)).left ≫ m.φ) ∧ (∀ q' : Cpt 𝔐.ξ, (∀ r : ℕ, r.Prime → ¬ InFibre 𝔐.ξ r q') → ∀ h : genPt ξ ⤳ g q'.1, regAt 𝔐.ξ q' = regAt ξ ⟨g q'.1, h⟩) ∧ ∀ q₁ q₂ : Cpt 𝔐.ξ, (∀ r : ℕ, r.Prime → ¬ InFibre 𝔐.ξ r q₁) → g q₁.1 = g q₂.1 → q₁ = q₂ := by
   intro E _ _ _ H D l Xo c Y Ω _ _ K _ J _ y X ξ f Ω₀ _ _ ξ₀ cst t m Li _ _ M ρ Li₀ _ _ M₀ j V₀ b d hall htie hint
     hgen₀ hdom hcst hact hj hV₀ hgf hfl
   obtain ⟨K₁, _, J₁, _, y₁, bk, bx, 𝔐, g, Fl, hbk, hy₁, hξ, hf, hξ₀, hdeg, hpt, hreg, huniq⟩ :=

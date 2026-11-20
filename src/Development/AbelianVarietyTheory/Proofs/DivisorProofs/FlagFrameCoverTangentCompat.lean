@@ -54,7 +54,7 @@ end GlobalTheory.HtGen.CoverChart
 
 open GlobalTheory.HtGen.CoverChart GlobalTheory.LineNorm.Chart GlobalTheory.LieMet in
 
-theorem GlobalTheory.HtGen.CoverChart.pairDet_div_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (F : Type) [Field F] [NumberField F] (Y : Var F) (V : Cover Y) (ρ' : V.X ⟶ X) (ρ : Y.X ⟶ X), V.j ≫ ρ' = V.π ≫ ρ → ∀ (m : ℕ) (u₀ : Fin m → (Sp (DualNumber Y.Fn) ⟶ t.G.left)) (f : ∀ y : Y.X, Fin m → (Sp (DualNumber (Y.X.presheaf.stalk y)) ⟶ t.G.left)) (d : Y.X → Fin m → Y.Fnˣ), IsFlagFrame t ρ u₀ f d → ∀ (U : V.X.Opens) (hU : IsAffineOpen U) (g : ℕ) (e : Fin g → (Sp (DualNumber Γ(V.X, U)) ⟶ t.G.left)), IsTanBasis t (hU.fromSpec ≫ ρ') e → ∀ (J : Type) (h : J → Fin g → Γ(V.X, U)) (k : ℕ) (hk : k ≤ m), ∃ s : (Fin k → J) → V.G.functionField, ∀ z : V.G, V.j z ∈ U → ∃ (α : Γ(V.X, U) →+* V.G.presheaf.stalk z) (a : Fin m → Fin g → V.G.presheaf.stalk z), spMap α ≫ hU.fromSpec = V.G.fromSpecStalk z ≫ V.j ∧ (∀ l, IsCombAtG t (spMap α ≫ hU.fromSpec ≫ ρ') (fun i => spMap (dualMap α) ≫ e i) (a l) (spMap (dualMap (V.π.stalkMap z).hom) ≫ f (V.π z) l)) ∧ ∀ σ, s σ / V.φ ((∏ l : Fin k, d (V.π z) (Fin.castLE hk l) : Y.Fnˣ) : Y.Fn) = algebraMap (V.G.presheaf.stalk z) V.G.functionField (pairDet (fun j i => α (h j i)) a hk σ) := by
+theorem GlobalTheory.HtGen.CoverChart.pairDet_div_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (F : Type) [Field F] [NumberField F] (Y : Var F) (V : Cover Y) (ρ' : V.X ⟶ X) (ρ : Y.X ⟶ X), V.j ≫ ρ' = V.π ≫ ρ → ∀ (m : ℕ) (u₀ : Fin m → (Sp (DualNumber Y.Fn) ⟶ t.G.left)) (f : ∀ y : Y.X, Fin m → (Sp (DualNumber (Y.X.presheaf.stalk y)) ⟶ t.G.left)) (d : Y.X → Fin m → Y.Fnˣ), IsFlagFrame t ρ u₀ f d → ∀ (U : V.X.Opens) (hU : IsAffineOpen U) (g : ℕ) (e : Fin g → (Sp (DualNumber Γ(V.X, U)) ⟶ t.G.left)), IsTanBasis t (hU.fromSpec ≫ ρ') e → ∀ (J : Type) (h : J → Fin g → Γ(V.X, U)) (k : ℕ) (hk : k ≤ m), ∃ s : (Fin k → J) → V.G.functionField, ∀ z : V.G, V.j z ∈ U → ∃ (α : Γ(V.X, U) →+* V.G.presheaf.stalk z) (a : Fin m → Fin g → V.G.presheaf.stalk z), spMap α ≫ hU.fromSpec = V.G.fromSpecStalk z ≫ V.j ∧ (∀ l, IsCombAtG t (spMap α ≫ hU.fromSpec ≫ ρ') (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ e i) (a l) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (V.π.stalkMap z).hom) ≫ f (V.π z) l)) ∧ ∀ σ, s σ / V.φ ((∏ l : Fin k, d (V.π z) (Fin.castLE hk l) : Y.Fnˣ) : Y.Fn) = algebraMap (V.G.presheaf.stalk z) V.G.functionField (pairDet (fun j i => α (h j i)) a hk σ) := by
   intro E _ _ _ H X t F _ _ Y V ρ' ρ hρ m u₀ f d hf U hU g e he J h k hk
   by_cases hgen : V.j (genericPoint V.G) ∈ U
   swap
@@ -71,14 +71,14 @@ theorem GlobalTheory.HtGen.CoverChart.pairDet_div_eq : ∀ (E : Type) [Field E] 
       rw [sp_comp, Category.assoc, hα, ← Category.assoc, gen_eq']
       exact (hα _ hgen).symm)
   have ha : ∀ z (hz : V.j z ∈ U) l, ∃ a, IsCombAtG t (spMap (α z hz) ≫ hU.fromSpec ≫ ρ')
-      (fun i => spMap (dualMap (α z hz)) ≫ e i) a (spMap (dualMap (V.π.stalkMap z).hom) ≫ f (V.π z) l) := fun z hz l =>
+      (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (α z hz)) ≫ e i) a (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (V.π.stalkMap z).hom) ≫ f (V.π z) l) := fun z hz l =>
     (he.2 _ (α z hz) _ (isTan_map _ (by
       rw [hα', ← Category.assoc, ← Category.assoc, ← stalk_eq]; rfl) (hf.tan (V.π z) l))).exists
   choose a ha using ha
   have key : ∀ z (hz : V.j z ∈ U) i, ∃ cf : Fin m → Y.Fn, cf i = d (V.π z) i ∧ (∀ k, i < k → cf k = 0) ∧
-      IsCombAtG t (spMap ι₀ ≫ hU.fromSpec ≫ ρ') (fun i => spMap (dualMap ι₀) ≫ e i)
+      IsCombAtG t (spMap ι₀ ≫ hU.fromSpec ≫ ρ') (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ι₀) ≫ e i)
         (∑ l, V.φ (cf l) • fun j => algebraMap (V.G.presheaf.stalk z) V.G.functionField (a z hz l j))
-        (spMap (dualMap V.φ) ≫ u₀ i) := by
+        (spMap (GlobalTheory.CompanionTheory.Ar.dualMap V.φ) ≫ u₀ i) := by
     intro z hz i
     obtain ⟨cf, h1, h2, h3⟩ := hf.tri (V.π z) i
     have h4 := GlobalTheory.LatDRFree.comb_map t V.φ h3
@@ -88,8 +88,8 @@ theorem GlobalTheory.HtGen.CoverChart.pairDet_div_eq : ∀ (E : Type) [Field E] 
     rw [dual_comp]
     exact this
   choose T hT1 hT2 hT3 using key
-  have hA₀ : ∀ i, ∃ b, IsCombAtG t (spMap ι₀ ≫ hU.fromSpec ≫ ρ') (fun i => spMap (dualMap ι₀) ≫ e i) b
-      (spMap (dualMap V.φ) ≫ u₀ i) := fun i => ⟨_, hT3 _ hgen i⟩
+  have hA₀ : ∀ i, ∃ b, IsCombAtG t (spMap ι₀ ≫ hU.fromSpec ≫ ρ') (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ι₀) ≫ e i) b
+      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap V.φ) ≫ u₀ i) := fun i => ⟨_, hT3 _ hgen i⟩
   choose A₀ hA₀ using hA₀
   have hA : ∀ z hz i, A₀ i = ∑ l, V.φ (T z hz i l) • fun j => algebraMap _ V.G.functionField (a z hz l j) := fun z hz i =>
     (he.2 _ ι₀ _ (comb_tan (fun j => isTan_map _ rfl (he.1 j)) (hT3 z hz i))).unique (hA₀ i) (hT3 z hz i)

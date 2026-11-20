@@ -87,7 +87,7 @@ def IsModelAt {K : Type} [Field K] [NumberField K] (A : PolAV (Sp (𝓞 K))) (x 
     (algebraMap R K).comp ρ = algebraMap (𝓞 K) K ∧ (∀ y : K, y ∈ Set.range (algebraMap R K) ↔ p.valuation K y ≤ 1) ∧
     IsFibreOf A xR (specOf ρ) φR ∧ M.det ≠ 0 ∧
     ∀ k, ∃ wK : epsR K ⟶ x.P.A, IsLieComb (M k) x.v wK ∧
-      wK.left ≫ φ = spMap (dualMap (algebraMap R K)) ≫ (xR.v (k.cast hg.symm)).left ≫ φR
+      wK.left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R K)) ≫ (xR.v (k.cast hg.symm)).left ≫ φR
 
 def IsVecLine {K : Type} [Field K] [NumberField K] (A : PolAV (Sp (𝓞 K))) (x : KeyIn K) (φ : x.P.A.left ⟶ A.A.left)
     (i : Fin x.P.g) (ℓ : MLine K) : Prop :=

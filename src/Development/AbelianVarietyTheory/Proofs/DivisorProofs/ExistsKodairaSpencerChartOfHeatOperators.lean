@@ -38,7 +38,7 @@ theorem exists_isKS_of_heat : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
   obtain ⟨ρ, hρ⟩ := GlobalTheory.TorusModel.exists_ringAct GlobalTheory.allSixLaws.1.globalFns P.oD (Φ := Y.Φ) Y.rep
   let Y' : Ray P.oD := { H := Y.H, Φ := Y.Φ, isGt := Y.isGt, rep := Y.rep, ρ := ρ, smul := hρ }
   choose v' hv' using fun a => tanPt E H (ChartRing k m d) t P Y' (vY a)
-  refine ⟨fun a => spMap (dualMap (Scheme.ΓSpecIso (CommRingCat.of (ChartRing k m d))).inv.hom) ≫ (tv (v' a)).left,
+  refine ⟨fun a => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.ΓSpecIso (CommRingCat.of (ChartRing k m d))).inv.hom) ≫ (tv (v' a)).left,
     fun a => isTanAtG_tv E H _ t (v' a), ?_⟩
   obtain ⟨D', hD'⟩ := exists_derivation_intAlgebra' _ D
   have key := GlobalTheory.T.kodairaSpencer_of_commuting_heat_operators_raynaud E H (ChartRing k m d) t P m (bdParam k m d) gam hmon hne hab Y' n vY dd hdd v' hv' D'

@@ -14,10 +14,10 @@ private theorem sp_comp {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (�
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
 
 private theorem sp_dual_comp {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (φ : S →+* T) (ψ : T →+* U) :
-    spMap (dualMap (ψ.comp φ)) = spMap (dualMap ψ) ≫ spMap (dualMap φ) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) := by
   rw [← sp_comp]
   congr 1
-  exact RingHom.ext fun x => by ext <;> simp [dualMap]
+  exact RingHom.ext fun x => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 private theorem sp_inj {S T : Type} [CommRing S] [CommRing T] {φ ψ : S →+* T} (h : spMap φ = spMap ψ) : φ = ψ :=
   congrArg CommRingCat.Hom.hom (Spec.map_injective h)
@@ -49,11 +49,11 @@ private theorem core {X : Scheme.{0}} {t : SAB H X} {R S K B L : Type} [CommRing
     {e : Fin g → (Sp (DualNumber R) ⟶ t.G.left)} (he : IsTanBasis t x e)
     {f : Fin m → (Sp (DualNumber B) ⟶ t.G.left)} (hf : ∀ i, IsTanAtG t y (f i))
     {u : Fin m → (Sp (DualNumber L) ⟶ t.G.left)} (T : Matrix (Fin m) (Fin m) L)
-    (hu : ∀ i, IsCombAtG t (spMap κ ≫ y) (fun k => spMap (dualMap κ) ≫ f k) (fun k => T k i) (u i)) :
+    (hu : ∀ i, IsCombAtG t (spMap κ ≫ y) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap κ) ≫ f k) (fun k => T k i) (u i)) :
     ∃ a : Fin m → Fin g → S,
-      (∀ i, IsCombAtG t (spMap α ≫ x) (fun k => spMap (dualMap α) ≫ e k) (a i) (spMap (dualMap s) ≫ f i)) ∧
-      ∀ i, IsCombAtG t (spMap (io.comp α) ≫ x) (fun k => spMap (dualMap (io.comp α)) ≫ e k)
-        (fun k => ∑ l, io (a l k) * φ (T l i)) (spMap (dualMap φ) ≫ u i) := by
+      (∀ i, IsCombAtG t (spMap α ≫ x) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ e k) (a i) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap s) ≫ f i)) ∧
+      ∀ i, IsCombAtG t (spMap (io.comp α) ≫ x) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (io.comp α)) ≫ e k)
+        (fun k => ∑ l, io (a l k) * φ (T l i)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ u i) := by
   choose a ha using fun i => (he.2 S α _ (GlobalTheory.LieMet.isTan_map s hy (hf i))).exists
   refine ⟨a, ha, fun i => ?_⟩
   have h1 := fun l => GlobalTheory.LatDRFree.comb_map t io (ha l)
@@ -84,11 +84,11 @@ theorem UpperTheory.local_frames_over_cover :
   have key : ∀ z : V.G, V.j z ∈ U → ∃ (α : Γ(V.X, U) →+* V.G.presheaf.stalk z)
       (a : Fin m → Fin g → V.G.presheaf.stalk z), spMap α ≫ hU.fromSpec = V.G.fromSpecStalk z ≫ V.j ∧
       (algebraMap (V.G.presheaf.stalk z) V.G.functionField).comp α = α₀ ∧
-      (∀ i, IsCombAtG t (spMap α ≫ hU.fromSpec ≫ ρ') (fun k => spMap (dualMap α) ≫ e k) (a i)
-        (spMap (dualMap (V.π.stalkMap z).hom) ≫ f (V.π z) i)) ∧
-      ∀ i, IsCombAtG t (spMap α₀ ≫ hU.fromSpec ≫ ρ') (fun k => spMap (dualMap α₀) ≫ e k)
+      (∀ i, IsCombAtG t (spMap α ≫ hU.fromSpec ≫ ρ') (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ e k) (a i)
+        (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (V.π.stalkMap z).hom) ≫ f (V.π z) i)) ∧
+      ∀ i, IsCombAtG t (spMap α₀ ≫ hU.fromSpec ≫ ρ') (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α₀) ≫ e k)
         (fun k => ∑ l, algebraMap (V.G.presheaf.stalk z) V.G.functionField (a l k) * V.φ (T (V.π z) l i))
-        (spMap (dualMap V.φ) ≫ u₀ i) := by
+        (spMap (GlobalTheory.CompanionTheory.Ar.dualMap V.φ) ≫ u₀ i) := by
     intro z hz
     obtain ⟨α, hα⟩ := exists_germ V.j hU z hz
     have e0 : (algebraMap (V.G.presheaf.stalk z) V.G.functionField).comp α = α₀ := by
@@ -112,7 +112,7 @@ theorem UpperTheory.local_frames_over_cover :
     rw [e0] at hb
     exact ⟨α, a, hα, e0, ha, hb⟩
   obtain ⟨A₀, hA₀⟩ : ∃ A₀ : Fin m → Fin g → V.G.functionField, ∀ i, IsCombAtG t (spMap α₀ ≫ hU.fromSpec ≫ ρ')
-      (fun k => spMap (dualMap α₀) ≫ e k) (A₀ i) (spMap (dualMap V.φ) ≫ u₀ i) := by
+      (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α₀) ≫ e k) (A₀ i) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap V.φ) ≫ u₀ i) := by
     obtain ⟨α, a, -, -, -, hb⟩ := key z₀ hz₀
     exact ⟨_, hb⟩
   refine ⟨Matrix.of fun j i => ∑ k, α₀ (h j k) * A₀ i k, fun z hz => ?_⟩

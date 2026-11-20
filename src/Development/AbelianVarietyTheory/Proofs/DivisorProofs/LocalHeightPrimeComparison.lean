@@ -154,7 +154,7 @@ theorem ball [IsLocallyNoetherian X] (hX : X.IsSeparated) {p : ℕ} [hp : Fact p
   obtain ⟨N', c', nn, kk, hall, hkk, hF⟩ := GlobalTheory.HalfGeo.fullSt E H X t p x N χ₂ hχ₂
   have hlat := GlobalTheory.HTLevelSq.mem_latHT_iff_sq E H X t hX p x g' e he N' c' _ hall (hF g' e _ he.1 hD₂)
   have hco : ∀ cf w, IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) u cf w → ∃ a,
-      IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (dualMap (intO ℂ_[p]).subtype) ≫ e i) a w ∧
+      IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ e i) a w ∧
         cf = ∑ i, a i • b i := fun cf w hw => by
     obtain ⟨a, ha, -⟩ := he.2 _ (intO ℂ_[p]).subtype w (GlobalTheory.LineNorm.Chart.comb_tan hu hw)
     exact ⟨a, ha, hind _ _ w hw (GlobalTheory.LineNorm.Chart.comb_comb hu hb ha)⟩
@@ -356,7 +356,7 @@ theorem lgOf_eig [IsLocallyNoetherian Z.X] (hX : Z.X.IsSeparated) {v : HeightOne
     (hψ : ψ = (ioOf (resP v) e).comp (Scheme.stalkClosedPointTo y.1).hom)
     (hx : spMap (intO ℂ_[resP v]).subtype ≫ x = spMap ψ ≫ stalkPt Y.Y (below y.1) ≫ Y.π ≫ GlobalTheory.Toroidal.genι Z)
     (L : Fin g → Letter Dw) (hL : ∀ i, L i = (letters Dw).get (Fin.cast hg.symm i))
-    (hM : DlogVals Z.t x χ (fun i => spMap (dualMap ψ) ≫ (Y.gr_spec (below y.1)).choose_spec.choose.v (L i).1 (L i).2)
+    (hM : DlogVals Z.t x χ (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ (Y.gr_spec (below y.1)).choose_spec.choose.v (L i).1 (L i).2)
       (M.map (ioOf (resP v) e)))
     {J : Type} (β : Fin g → J) (hβ : ∀ i j, β i = β j ↔ (L i).1 = (L j).1) (a : ℕ → Bool) (ha : a (resP v) = true)
     (R : Option ℝ) (i : Fin g) :

@@ -128,8 +128,8 @@ theorem exists_chi (hφ : IsGrpPullback t.G tX.G x φ) {n : ℕ} (u : GG.A n) (h
 theorem dlogIs {n : ℕ} {c : TorsChar tX (spMap (algebraMap A O) ≫ x) (p ^ n)} {u : GG.A n} (hc : IsChi φ θ c u)
     {c₁ : Pdiv.omega t.G →ₗ[A] Cot A (GG.A n)} (h₁ : θ.IsOmegaAt n c₁) (om : Pdiv.omega t.G) (hom₁ : dUnit A u = c₁ om)
     {g : ℕ} (v : Fin g → Pdiv.LieG t.G)
-    (he : ∀ i, IsTanAtG tX (spMap (algebraMap A O) ≫ x) (spMap (dualMap (algebraMap A O)) ≫ (v i).1.left ≫ φ)) :
-    DlogIs tX p n c (fun i => spMap (dualMap (algebraMap A O)) ≫ (v i).1.left ≫ φ)
+    (he : ∀ i, IsTanAtG tX (spMap (algebraMap A O) ≫ x) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A O)) ≫ (v i).1.left ≫ φ)) :
+    DlogIs tX p n c (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A O)) ≫ (v i).1.left ≫ φ)
       fun i => algebraMap A O (om.1 (v i)) := by
   obtain ⟨⟨D, hD⟩, -⟩ := GlobalTheory.T.exists_dlog_unique_modulo_p E H X tX _ _ p n c g _ he
   have key : ∀ i, Ideal.Quotient.mk (Ideal.span {(p : O) ^ n}) (D i) =
@@ -140,13 +140,13 @@ theorem dlogIs {n : ℕ} {c : TorsChar tX (spMap (algebraMap A O) ≫ x) (p ^ n)
       rw [Ideal.span_singleton_le_iff_mem, Ideal.mem_comap, map_pow, map_natCast]
       exact Ideal.mem_span_singleton_self _
     let ψ : DualNumber (ModPow p A n) →ₐ[A] DualNumber (O ⧸ Ideal.span {(p : O) ^ n}) :=
-      { dualMap (Ideal.quotientMap _ (algebraMap A O) hle) with
+      { GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.quotientMap _ (algebraMap A O) hle) with
         commutes' := fun r => by
-          ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl'] }
+          ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl'] }
     have h' : (spOver ψ ≫ (tanTors p n (v i)).1) ^ p ^ n = 1 :=
       GlobalTheory.HTMap.tors_of (g := spMap ψ.toRingHom) (w := (tanTors p n (v i)).1) rfl (tanTors p n (v i)).2
     rw [hc _ w ⟨_, h'⟩ ?_, θ.nat n _ _ ψ (tanTors p n (v i)) ⟨_, h'⟩ rfl] at h2
-    · have h3 : ∀ z, (ψ z).snd = Ideal.quotientMap _ (algebraMap A O) hle z.snd := fun z => by simp [ψ, dualMap]
+    · have h3 : ∀ z, (ψ z).snd = Ideal.quotientMap _ (algebraMap A O) hle z.snd := fun z => by simp [ψ, GlobalTheory.CompanionTheory.Ar.dualMap]
       rw [AlgHom.comp_apply, h3, h₁.2.2 _ om u hom₁, Ideal.quotientMap_mk] at h2
       rw [h2, Finset.sum_eq_single i (fun k _ hk => by simp [hk]) (by simp)]
       simp
@@ -156,8 +156,8 @@ theorem dlogIs {n : ℕ} {c : TorsChar tX (spMap (algebraMap A O) ≫ x) (p ^ n)
       congr 2
       refine RingHom.ext fun r => ?_
       ext
-      · simp [dualMap, ψ]
-      · simp [dualMap, ψ, snd_epsTo]
+      · simp [GlobalTheory.CompanionTheory.Ar.dualMap, ψ]
+      · simp [GlobalTheory.CompanionTheory.Ar.dualMap, ψ, snd_epsTo]
         rfl
   intro a w hw w' hw'
   rw [hD a w hw w' hw']
@@ -265,7 +265,7 @@ theorem htSt : HTSt := by
   let s := (Fintype.equivFin (Fin GG.height → Fin p)).symm
   have hd : ∀ (k : Fin GG.height → Fin p) (χ : TorsChar tX (spMap κ ≫ x) (p ^ 1)),
       IsChi (O := ↥(intO ↥C.S)) φ θ χ (charElem (∑ j, (k j : ℕ) • T.t' j) 1) →
-      DlogIs tX p 1 χ (fun i => spMap (dualMap κ) ≫ (u i).1.left ≫ φ)
+      DlogIs tX p 1 χ (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap κ) ≫ (u i).1.left ≫ φ)
         fun i => κ ((∑ j, (k j : ℕ) • om j).1 (u i)) := fun k χ h =>
     dlogIs θ h (hc 1) _ (by
       set_option synthInstance.maxHeartbeats 100000 in

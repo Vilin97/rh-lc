@@ -56,7 +56,7 @@ def transFst (P : GPt A) : transSrc P ⟶ A :=
     rw [Category.assoc, hx, ← Cris.spMap_comp])
 
 def transSnd (P : GPt A) (v : epsR K ⟶ A) : transSrc P ⟶ A :=
-  Over.homMk (spMap (dualMap (algebraMap K P.B)) ≫ v.left) (by
+  Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K P.B)) ≫ v.left) (by
     change (spMap _ ≫ v.left) ≫ A.hom = spMap _
     rw [Category.assoc, Over.w v]
     change spMap _ ≫ spMap _ = spMap _
@@ -77,12 +77,12 @@ theorem transPair_fst (P : GPt A) (v : epsR K ⟶ A) :
   rw [transPair, ← Over.comp_left, lift_fst]; rfl
 
 theorem transPair_snd (P : GPt A) (v : epsR K ⟶ A) :
-    transPair P v ≫ (snd A A).left = spMap (dualMap (algebraMap K P.B)) ≫ v.left := by
+    transPair P v ≫ (snd A A).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K P.B)) ≫ v.left := by
   rw [transPair, ← Over.comp_left, lift_snd]; rfl
 
 theorem transPair_map {P Q : GPt A} (φ : P.Hom Q) (v : epsR K ⟶ A) :
-    spMap (dualMap (φ.ρ : P.B →+* Q.B)) ≫ transPair P v = transPair Q v := by
-  let j : transSrc Q ⟶ transSrc P := Over.homMk (spMap (dualMap (φ.ρ : P.B →+* Q.B))) (by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (φ.ρ : P.B →+* Q.B)) ≫ transPair P v = transPair Q v := by
+  let j : transSrc Q ⟶ transSrc P := Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (φ.ρ : P.B →+* Q.B))) (by
     change spMap _ ≫ spMap _ = spMap _
     rw [← Cris.spMap_comp, ← RingHom.comp_assoc, dualMap_comp_algebraMap, RingHom.comp_assoc,
       φ.ρ.comp_algebraMap])
@@ -136,8 +136,8 @@ theorem transPair_in (V : J → A.left.Opens) (P : GPt A) {v : epsR K ⟶ A} (hv
 
 @[reducible] def tanPt (P : GPt A) (v : epsR K ⟶ A) : GPt A where
   B := DualNumber P.B
-  x := spMap (dualMap (algebraMap K P.B)) ≫ v.left
-  w := (congrArg ((spMap (dualMap (algebraMap K P.B)) ≫ v.left) ≫ ·) (Category.comp_id A.hom)).trans
+  x := spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K P.B)) ≫ v.left
+  w := (congrArg ((spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K P.B)) ≫ v.left) ≫ ·) (Category.comp_id A.hom)).trans
     (Over.w (transSnd P v))
 
 theorem valR_sub {C : Type} [CommRing C] {X : Scheme.{0}} (x : Sp C ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U)
@@ -314,7 +314,7 @@ theorem deriv_cocycle_isCoboundary : ∀ (K : Type) [Field K] (A : Over (Sp K)) 
     fun a b P ha hb ↦ ?_⟩
   · change (valR (transPair Q v) _ _).snd = f.ρ (valR (transPair P v) _ _).snd
     rw [← transPair_map f v, GlobalTheory.Points.valR_spMap_comp _ _ _ (transPair_in V P hv hP hvc)]
-    simp [dualMap]
+    simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   · have hz := transPair_in V P hv ha hvc
     have hz' := transPair_in V P hv hb hvc
     have hzz : ⊤ ≤ transPair P v ⁻¹ᵁ (pairOpen V (a, a, c₀) ⊓ pairOpen V (b, b, c₀)) :=
@@ -326,7 +326,7 @@ theorem deriv_cocycle_isCoboundary : ∀ (K : Type) [Field K] (A : Over (Sp K)) 
       GlobalTheory.Points.valR_spMap_comp _ _ _ (ha.inf hb)] at e
     have hv' : (tanPt P v).In (V c₀) := fun p _ ↦ hvc (Set.mem_univ _)
     have h0 := hφ c₀ c₀ c₀ (tanPt P v) hv' hv' hv'
-    have h0' : valR (spMap (dualMap (algebraMap K P.B)) ≫ v.left) (V c₀ ⊓ V c₀) (φ c₀ c₀) = 0 := by
+    have h0' : valR (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K P.B)) ≫ v.left) (V c₀ ⊓ V c₀) (φ c₀ c₀) = 0 := by
       have : ∀ x : DualNumber P.B, x + x = x → x = 0 := fun x hx ↦ by linear_combination hx
       exact this _ h0
     rw [h0'] at e

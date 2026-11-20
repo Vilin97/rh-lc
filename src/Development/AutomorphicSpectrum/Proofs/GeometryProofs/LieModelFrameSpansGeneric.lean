@@ -56,10 +56,10 @@ theorem lieModel_transport {X : Scheme.{0}} {Ω : Type} [Field Ω] {G : Over X} 
     [AddCommGroup Li] [Module Ω Li] (M : LieModel G ξ Li) {L : Type} [Field L] {z z' : Sp L ⟶ X} (hz : z' = z)
     {T : Type} [AddCommGroup T] [Module L T] (TL : LieModel G z T) :
     ∃ MC : LieModel G z' T,
-      (∀ t, (MC.pt t).left = Spec.map (CommRingCat.ofHom (dualMap (algebraMap L L))) ≫ (TL.pt t).left) ∧
+      (∀ t, (MC.pt t).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap L L))) ≫ (TL.pt t).left) ∧
       ∀ e t, M.ValAt z' e (MC.pt t) → M.ValAt z e (TL.pt t) := by
   subst hz
-  have hd : dualMap (algebraMap L L) = RingHom.id _ := RingHom.ext fun a =>
+  have hd : GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap L L) = RingHom.id _ := RingHom.ext fun a =>
     TrivSqZeroExt.ext (LieTangent.dualMap_fst _ a) (LieTangent.dualMap_snd _ a)
   exact ⟨TL, fun t => by rw [hd, CommRingCat.ofHom_id, Spec.map_id, Category.id_comp], fun _ _ h => h⟩
 

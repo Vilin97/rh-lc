@@ -11,7 +11,7 @@ namespace GlobalTheory.IndefiniteRowSideFullHecke.SectionsThroughEpsilonPoints
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open Formalism.L2.Pj (dualMap FrPt Gx PPx IsCombAt embK)
+open Formalism.L2.Pj (GlobalTheory.CompanionTheory.Ar.dualMap FrPt Gx PPx IsCombAt embK)
 open scoped CategoryTheory.Obj
 
 section Bundles
@@ -81,8 +81,8 @@ abbrev prOf (pd : Out.IsPullDeg g D₀ D₁) : D₁.P.A.left ⟶ D₀.P.A.left :
   pd.e.hom.left ≫ pullback.fst D₀.P.A.hom (Out.specOf g)
 
 def LetterBC (pd : Out.IsPullDeg g D₀ D₁) (ν : EpsPt D₀) (ν' : EpsPt D₁) : Prop :=
-  ν'.b.left ≫ prOf pd = spMap (dualMap g) ≫ ν.b.left ∧
-    ∀ x, GenThrough pd.w Out.DegPre.gtε (ν'.s x) (ν.s (pd.xe x)) (spMap (dualMap g))
+  ν'.b.left ≫ prOf pd = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ ν.b.left ∧
+    ∀ x, GenThrough pd.w Out.DegPre.gtε (ν'.s x) (ν.s (pd.xe x)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap g))
 
 def SecBC (pd : Out.IsPullDeg g D₀ D₁) (th : D₀.P.L.Sec) (th' : D₁.P.L.Sec) : Prop := SecThrough pd.w th th'
 
@@ -148,11 +148,11 @@ abbrev Trunc (A : Type) [CommRing A] (n : ℕ) : Type :=
 def LieId (W : Wit Y a χ) (ν : EpsPt a.D₀) (v : epsR (PowerSeries A) ⟶ W.t.G) : Prop :=
   IsTanGt ν ∧ ∀ n : ℕ, ∃ vn : Sp (DualNumber (Trunc A n)) ⟶
       (Out.thickObj (PowerSeries A) (Ideal.span {PowerSeries.X}) n W.t.G).left,
-    vn ≫ (Out.fstG (Ideal.span {PowerSeries.X}) n W.t.G).left = spMap (dualMap (Ideal.Quotient.mk _)) ≫ v.left ∧
-    vn ≫ (W.P.U.gt n).pG.left ≫ W.φ = spMap (dualMap ((Ideal.Quotient.mk _).comp (PowerSeries.C (R := A)))) ≫ ν.b.left ∧
+    vn ≫ (Out.fstG (Ideal.span {PowerSeries.X}) n W.t.G).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk _)) ≫ v.left ∧
+    vn ≫ (W.P.U.gt n).pG.left ≫ W.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((Ideal.Quotient.mk _).comp (PowerSeries.C (R := A)))) ≫ ν.b.left ∧
     ∀ x, GenThrough W.w Out.Oinvε (LB.pullGen _ _ _ ((W.P.U.gt n).t (W.e x)) vn)
       (show LB.Gen (LB.LinComb a.D₀.P.L (Out.DegPre.gtφT a.D₀ (epsR A) ν.b x) Out.Oinvε) from ν.s x)
-      (spMap (dualMap ((Ideal.Quotient.mk _).comp (PowerSeries.C (R := A)))))
+      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((Ideal.Quotient.mk _).comp (PowerSeries.C (R := A)))))
 
 def ThetaId (W : Wit Y a χ) (th : a.D₀.P.L.Sec) (σ : Out.H0 W.P.U.LG.L 1) : Prop :=
   ∃ fam : ∀ x, W.P.D.toPre.SecB 1 x, (∀ n, W.P.U.toUnifPre.ExpandsAt n 1 (show _ from σ) fam) ∧
@@ -172,7 +172,7 @@ def VecAlong (W : Wit Y a χ) (ρ : PowerSeries A →+* S) (yF : Sp S ⟶ Xo.XF 
     (u : Sp (DualNumber S) ⟶ Xo.univ.t.G.left) : Prop :=
   ∃ (v : epsR (PowerSeries A) ⟶ W.t.G) (uF : Sp (DualNumber S) ⟶ Y.oF.t.G.left), LieId W ν v ∧
     uF ≫ Y.oF.t.G.hom = spMap (algebraMap S (DualNumber S)) ≫ yF ∧ uF ≫ Y.m0.toSABMap.φ = u ∧
-    uF ≫ Y.m.φ = spMap (dualMap ρ) ≫ v.left ≫ W.m.φ
+    uF ≫ Y.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρ) ≫ v.left ≫ W.m.φ
 
 def ThetaAlong (W : Wit Y a χ) (ρ : PowerSeries A →+* S) {x : Sp S ⟶ Xo.X} (yF : Sp S ⟶ Xo.XF c)
     (th : a.D₀.P.L.Sec) (s : LB.Sec (PPx x)) : Prop :=

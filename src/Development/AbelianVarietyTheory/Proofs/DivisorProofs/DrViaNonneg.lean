@@ -19,7 +19,7 @@ def drVia (la : AllWt.Weight S.Dw) (p : ℕ) [Fact p.Prime] {K : Type} [Field K]
       expo S.Dw (drSym la) z : (Φ.C k).Y.Fnˣ) : (Φ.C k).Y.Fn)))‖ *
     Real.exp ((drSym la).sum fun a n => (n : ℝ) * lnStep s.T.Z.t
       (spMap (φ.comp (Scheme.stalkClosedPointTo y).hom) ≫ stalkPt (Φ.C k).Y (below y) ≫ (Φ.C k).π ≫ genι s.T.Z)
-      (fun τ i => spMap (dualMap (φ.comp (Scheme.stalkClosedPointTo y).hom)) ≫
+      (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (φ.comp (Scheme.stalkClosedPointTo y).hom)) ≫
         ((Φ.C k).gr_spec (below y)).choose_spec.choose.v τ i) p (a.1 p) a.2.2)
 
 theorem drVia_nonneg (la : AllWt.Weight S.Dw) (p : ℕ) [Fact p.Prime] {K : Type} [Field K] (y : Sp K ⟶ (Φ.C k).Y.X)

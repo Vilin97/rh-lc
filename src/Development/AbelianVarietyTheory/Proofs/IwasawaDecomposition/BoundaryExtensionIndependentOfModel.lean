@@ -88,20 +88,20 @@ theorem exists_lift_frameVec (hψ : a.φ ≫ ψ.φ = a'.φ) (hF0 : mF.φ ≫ Z.m
     {u' : Sp (DualNumber K) ⟶ Xo.univ.t.G.left} (hu' : u' ≫ Xo.univ.t.G.hom = spMap (algebraMap K (DualNumber K)) ≫ y.x)
     {w' : Sp (DualNumber K) ⟶ Z'.oF.t.G.left}
     (hw1 : w' ≫ Z'.oF.t.G.hom = spMap (algebraMap K (DualNumber K)) ≫ GlobalTheory.AllWt.ptF y)
-    (hw2 : w' ≫ Z'.m0.toSABMap.φ = u') (hw3 : w' ≫ Z'.m.φ = spMap (dualMap (algebraMap V K)) ≫ (v ≫ ψ.φ) ≫ m'.φ) :
+    (hw2 : w' ≫ Z'.m0.toSABMap.φ = u') (hw3 : w' ≫ Z'.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ (v ≫ ψ.φ) ≫ m'.φ) :
     ∃ w : Sp (DualNumber K) ⟶ Z.oF.t.G.left,
       w ≫ Z.oF.t.G.hom = spMap (algebraMap K (DualNumber K)) ≫ GlobalTheory.AllWt.ptF y ∧
-      w ≫ Z.m0.toSABMap.φ = u' ∧ w ≫ Z.m.φ = spMap (dualMap (algebraMap V K)) ≫ v ≫ m.φ := by
+      w ≫ Z.m0.toSABMap.φ = u' ∧ w ≫ Z.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ v ≫ m.φ := by
   have hx : GlobalTheory.AllWt.ptF y ≫ pullback.fst _ _ = y.x := pullback.lift_fst _ _ _
   obtain ⟨u, hu1, hu2⟩ := exists_lift mK (spMap (algebraMap K (DualNumber K))) u' (by rw [hu', ← hx])
   have hbase : spMap (algebraMap K (DualNumber K)) ≫ spMap (algebraMap V K) =
-      spMap (dualMap (algebraMap V K)) ≫ spMap (algebraMap V (DualNumber V)) := by
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ spMap (algebraMap V (DualNumber V)) := by
     rw [OpenReg.spMap_comp, OpenReg.spMap_comp, PullbackSections.dualMap_comp_alg]
   have e1 : u ≫ mF'.φ = w' := by
     apply Z'.m0.toSABMap.cart.1.hom_ext
     · rw [Category.assoc, hF0', hu2, hw2]
     · rw [Category.assoc, mF'.cart.1.w, ← Category.assoc, hu1, hw1]
-  have e2 : u ≫ a.φ = spMap (dualMap (algebraMap V K)) ≫ v := by
+  have e2 : u ≫ a.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ v := by
     apply ψ.cart.1.hom_ext
     · rw [Category.assoc, hψ]
       apply m'.cart.1.hom_ext

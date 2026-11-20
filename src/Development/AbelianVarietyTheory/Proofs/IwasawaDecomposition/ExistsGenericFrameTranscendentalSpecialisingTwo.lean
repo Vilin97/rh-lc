@@ -93,10 +93,10 @@ theorem tri_of_co_eq_one {R R' : Type} [CommRing R] [CommRing R'] {φ : c.F →+
 
 theorem isMap_id {R : Type} [CommRing R] {φ : c.F →+* R} {x : Sp R ⟶ Z.X} (f : EigFrame Z φ x) :
     f.IsMap (RingHom.id R) f := fun τ i => by
-  have h1 : spMap (dualMap (RingHom.id R)) = 𝟙 _ := by
+  have h1 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R)) = 𝟙 _ := by
     rw [← Spec.map_id]
     congr 1
-    ext r <;> simp [dualMap]
+    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   rw [h1, Category.id_comp]
 
 theorem spMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :

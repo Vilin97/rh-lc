@@ -33,7 +33,7 @@ theorem lift_unique {S S' : Scheme.{0}} {G' : Over S'} {G : Over S} {f : S' ⟶ 
   Over.OverMorphism.ext (h.hom_ext e (by rw [Over.w, Over.w]))
 
 theorem spMap_dual_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    spMap (dualMap (g.comp f)) = spMap (dualMap g) ≫ spMap (dualMap f) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
   rw [← spMap_comp]
   congr 1
   refine RingHom.ext fun a => ?_
@@ -82,11 +82,11 @@ theorem tan_compare : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H 
       u.left ≫ mP.φ = (v ≫ Pσ.τ.q ≫ Pσ.e.hom).left ≫ mBσ.φ := by
     intro e
     obtain ⟨vL, hvL⟩ := exists_lift P₂.m.cart.1 (spMap (algebraMap L (DualNumber L)) ≫ 𝟙 _)
-      (spMap (dualMap (algebraMap (𝓞 L) L)) ≫ (MB.pt e).left) (by
+      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) ≫ (MB.pt e).left) (by
         have hMe : (MB.pt e).left ≫ t.G.hom = spMap (algebraMap (𝓞 L) (DualNumber (𝓞 L))) ≫ z := Over.w (MB.pt e)
         rw [Category.assoc, hMe, ← Category.assoc, LieTangent.spec_dual_alg, Category.assoc, hz, Category.comp_id])
     have hfe : (vL ≫ P₂.τ.q).left ≫ P₂.e.hom.left ≫ w ≫ m'.φ =
-        spMap (dualMap (algebraMap (𝓞 L) L)) ≫ (MB'.pt (f e)).left := hf e vL hvL
+        spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) ≫ (MB'.pt (f e)).left := hf e vL hvL
     obtain ⟨v, hv⟩ := exists_lift Pσ.m.cart.1 (spMap (algebraMap ℂ (DualNumber ℂ)) ≫ 𝟙 _)
       (Mσ.pt ((1 : GroundTheory.Heights₂.Heights.ComplexAt σ) ⊗ₜ[𝓞 L] e)).left
       ((Over.w (Mσ.pt ((1 : GroundTheory.Heights₂.Heights.ComplexAt σ) ⊗ₜ[𝓞 L] e))).trans hb1)
@@ -94,34 +94,34 @@ theorem tan_compare : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H 
       (Mσ'.pt ((1 : GroundTheory.Heights₂.Heights.ComplexAt σ) ⊗ₜ[𝓞 L] f e)).left
       ((Over.w (Mσ'.pt ((1 : GroundTheory.Heights₂.Heights.ComplexAt σ) ⊗ₜ[𝓞 L] f e))).trans hb2)
     refine ⟨v, u, hv, hu, ?_⟩
-    have hde : spMap (dualMap (σ.comp (algebraMap (𝓞 L) L))) =
-        spMap (dualMap σ) ≫ spMap (dualMap (algebraMap (𝓞 L) L)) := spMap_dual_comp _ _
-    have hd : spMap (dualMap σ) ≫ spMap (algebraMap L (DualNumber L)) =
+    have hde : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (σ.comp (algebraMap (𝓞 L) L))) =
+        spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) := spMap_dual_comp _ _
+    have hd : spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) ≫ spMap (algebraMap L (DualNumber L)) =
         spMap (algebraMap ℂ (DualNumber ℂ)) ≫ spMap σ := LieTangent.spec_dual_alg σ
     have h1 : (Mσ.pt ((1 : GroundTheory.Heights₂.Heights.ComplexAt σ) ⊗ₜ[𝓞 L] e)).left =
-        spMap (dualMap (σ.comp (algebraMap (𝓞 L) L))) ≫ (MB.pt e).left :=
+        spMap (GlobalTheory.CompanionTheory.Ar.dualMap (σ.comp (algebraMap (𝓞 L) L))) ≫ (MB.pt e).left :=
       (Category.comp_id _).symm.trans (hMσ e)
     have h1' : (Mσ'.pt ((1 : GroundTheory.Heights₂.Heights.ComplexAt σ) ⊗ₜ[𝓞 L] f e)).left =
-        spMap (dualMap (σ.comp (algebraMap (𝓞 L) L))) ≫ (MB'.pt (f e)).left :=
+        spMap (GlobalTheory.CompanionTheory.Ar.dualMap (σ.comp (algebraMap (𝓞 L) L))) ≫ (MB'.pt (f e)).left :=
       (Category.comp_id _).symm.trans (hMσ' (f e))
-    have hvd : v.left ≫ Pσ.m.φ = spMap (dualMap σ) ≫ vL.left ≫ P₂.m.φ := by
+    have hvd : v.left ≫ Pσ.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) ≫ vL.left ≫ P₂.m.φ := by
       rw [hv, h1, hde, Category.assoc, hvL]
     have wv : v.left ≫ Pσ.tK.G.hom = spMap (algebraMap ℂ (DualNumber ℂ)) ≫ 𝟙 _ := Over.w v
     have wvL : vL.left ≫ P₂.tK.G.hom = spMap (algebraMap L (DualNumber L)) ≫ 𝟙 _ := Over.w vL
-    have star : v.left ≫ mKσ.φ = spMap (dualMap σ) ≫ vL.left ≫ mK2.φ := by
+    have star : v.left ≫ mKσ.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) ≫ vL.left ≫ mK2.φ := by
       refine P₁.m.cart.1.hom_ext ?_ ?_
       · rw [Category.assoc, d1, hvd, Category.assoc, Category.assoc, c1]
       · rw [Category.assoc, mKσ.cart.1.w, ← Category.assoc, wv, hb3]
         simp only [Category.assoc]
         rw [mK2.cart.1.w, ← Category.assoc vL.left, wvL, Category.comp_id]
         have hd2 : spMap (algebraMap ℂ (DualNumber ℂ)) ≫ spMap σ ≫ spMap e₂ =
-            spMap (dualMap σ) ≫ spMap (algebraMap L (DualNumber L)) ≫ spMap e₂ := by
+            spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) ≫ spMap (algebraMap L (DualNumber L)) ≫ spMap e₂ := by
           rw [← Category.assoc, ← hd, Category.assoc]
         exact hd2
     have wu : u.left ≫ tK.G.hom = spMap (algebraMap ℂ (DualNumber ℂ)) ≫ spMap σ := Over.w u
     have wq : (vL ≫ P₂.τ.q).left ≫ P₂.τ.B.hom = spMap (algebraMap L (DualNumber L)) ≫ 𝟙 _ := Over.w (vL ≫ P₂.τ.q)
     have we : P₂.e.hom.left ≫ P₂.tB.G.hom = P₂.τ.B.hom := Over.w P₂.e.hom
-    have hu2 : u.left = spMap (dualMap σ) ≫ (vL ≫ P₂.τ.q).left ≫ P₂.e.hom.left ≫ w := by
+    have hu2 : u.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) ≫ (vL ≫ P₂.τ.q).left ≫ P₂.e.hom.left ≫ w := by
       refine m'.cart.1.hom_ext ?_ ?_
       · rw [hu, h1', hde]
         simp only [Category.assoc]

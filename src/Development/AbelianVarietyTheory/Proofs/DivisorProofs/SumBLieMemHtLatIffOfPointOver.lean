@@ -155,10 +155,10 @@ theorem exists_corr {Y S : Scheme.{0}} {ψ : P.A.A.left ⟶ Y} {ψ' : P'.A.A.lef
   obtain ⟨xG', w', h1', h2', h3'⟩ := h'
   have e1 : w.left ≫ α.left = w'.left := hψ.hom_ext (by rw [Category.assoc, hα, h2, h2'])
     ((Over.w (w ≫ α)).trans (Over.w w').symm)
-  have : IsSchemeTheoreticallyDominant (spMap (dualMap (algebraMap O C))) :=
+  have : IsSchemeTheoreticallyDominant (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O C))) :=
     (schemeDominant_specMap_iff _).2 fun a b hab => TrivSqZeroExt.ext
-      (P.integers.hom_inj (by simpa [dualMap] using congrArg TrivSqZeroExt.fst hab))
-      (P.integers.hom_inj (by simpa [dualMap, Algebra.algebraMap_eq_smul_one] using congrArg TrivSqZeroExt.snd hab))
+      (P.integers.hom_inj (by simpa [GlobalTheory.CompanionTheory.Ar.dualMap] using congrArg TrivSqZeroExt.fst hab))
+      (P.integers.hom_inj (by simpa [GlobalTheory.CompanionTheory.Ar.dualMap, Algebra.algebraMap_eq_smul_one] using congrArg TrivSqZeroExt.snd hab))
   have := P'.semi.separated
   have e2 : xG.1 ≫ g = xG'.1 := Over.OverMorphism.ext (ext_of_schDom P'.G.hom
     ((Over.w (xG.1 ≫ g)).trans (Over.w xG'.1).symm) _ (by

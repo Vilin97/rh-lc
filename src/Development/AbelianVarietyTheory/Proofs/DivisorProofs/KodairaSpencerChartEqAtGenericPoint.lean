@@ -65,7 +65,7 @@ theorem isKS_restrict {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Ho
     (DW : Derivation ℤ Γ(X, W.1) Γ(X, W.1)) (Θ : Matrix (Fin n) (Fin n) Γ(X, U.1))
     (hD : ∀ r, DW ((X.presheaf.map (homOfLE hW).op).hom r) = (X.presheaf.map (homOfLE hW).op).hom (D r))
     (hKS : IsKS t V U v D Θ) :
-    IsKS t V W (fun i => spMap (dualMap (X.presheaf.map (homOfLE hW).op).hom) ≫ v i) DW
+    IsKS t V W (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (X.presheaf.map (homOfLE hW).op).hom) ≫ v i) DW
       ((X.presheaf.map (homOfLE hW).op).hom.mapMatrix Θ) := by
   obtain ⟨J, Wc, j, d, hsup, hj, hfld, hcomp, htest⟩ := hKS
   have hWU : ∀ i, Wc i ≤ t.G.hom ⁻¹ᵁ U.1 := fun i =>
@@ -92,7 +92,7 @@ theorem isKS_restrict {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Ho
       refine ⟨g', v', h₁, ?_, h₃⟩
       rw [h₂, ← Category.assoc, GlobalTheory.LogKSLoc.spMap_comp', GlobalTheory.LogKSLoc.dualMap_comp']
 
-theorem ks_chart_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Geo.Tor.Level H) (Xo : Moduli Dw l) (c : Coeff l) (Y : Model Xo c (RingHom.id c.F)), 1 ≤ Dw.p + Dw.q → SmoothOfRelativeDimension Dw.dim (genStr Y) → ∀ (U W : Y.X.affineOpens) (hW : W.1 = U.1 ⊓ interior Y) (n : ℕ) (v : Fin n → (Sp (DualNumber Γ(Y.X, U.1)) ⟶ Y.t.G.left)), (∀ i, IsTanAtG Y.t (chart U) (v i)) → (∀ w, IsTanAtG Y.t (chart U) w → ∃! cf : Fin n → Γ(Y.X, U.1), IsCombAtG Y.t (chart U) v cf w) → ∀ (D : logDer Y.s (Scheme.IdealSheafData.vanishingIdeal (interior Y).compl) U) (DW : Derivation ℤ Γ(Y.X, W.1) Γ(Y.X, W.1)) (Θ : Matrix (Fin n) (Fin n) Γ(Y.X, W.1)), (∀ r, DW ((Y.X.presheaf.map (homOfLE (hW.le.trans inf_le_left)).op).hom r) = (Y.X.presheaf.map (homOfLE (hW.le.trans inf_le_left)).op).hom (D.1 r)) → IsKS Y.t (interior Y) W (fun i => spMap (dualMap (Y.X.presheaf.map (homOfLE (hW.le.trans inf_le_left)).op).hom) ≫ v i) DW Θ → ∀ (k : Type) [Field k] [CharZero k] (m d : ℕ) (ξ : Sp (ChartRing k m d) ⟶ gen Y) (hx : ξ (closedPoint _) ∈ genι Y ⁻¹ᵁ U.1) (t : SAB H (Sp (ChartRing k m d))) (φ : SABMap t Y.t (ξ ≫ genι Y)), IsEtaleCompletion (Scheme.stalkClosedPointTo ξ).hom → (∀ p : Sp (ChartRing k m d), ξ p ∈ genBd Y ↔ ∏ i, bdParam k m d i ∈ p.asIdeal) → ∀ vR : Fin n → (Sp (DualNumber Γ(Sp (ChartRing k m d), ⊤)) ⟶ t.G.left), (∀ i, IsTanAtG t (chart (⟨⊤, isAffineOpen_top _⟩ : (Sp (ChartRing k m d)).affineOpens)) (vR i)) → (∀ i, vR i ≫ φ.φ = spMap (dualMap ((Scheme.ΓSpecIso (CommRingCat.of (ChartRing k m d))).inv.hom.comp (GlobalTheory.LocReg.chartHom Y U ξ hx))) ≫ v i) → ∀ D' : Derivation ℤ (ChartRing k m d) (ChartRing k m d), (∀ r, D' (GlobalTheory.LocReg.chartHom Y U ξ hx r) = GlobalTheory.LocReg.chartHom Y U ξ hx (D.1 r)) → ∀ ΘR : Matrix (Fin n) (Fin n) Γ(Sp (ChartRing k m d), ⊤), IsKS t ((Sp (ChartRing k m d)).basicOpen ((Scheme.ΓSpecIso (CommRingCat.of (ChartRing k m d))).inv.hom (∏ i, bdParam k m d i))) (⟨⊤, isAffineOpen_top _⟩ : (Sp (ChartRing k m d)).affineOpens) vR (fun r => (Scheme.ΓSpecIso (CommRingCat.of (ChartRing k m d))).inv.hom (D' ((Scheme.ΓSpecIso (CommRingCat.of (ChartRing k m d))).hom.hom r))) ΘR → ∀ (h : Γ(Y.X, U.1)) (hh : Y.X.basicOpen h ≤ W.1), GlobalTheory.LocReg.chartHom Y U ξ hx h ≠ 0 → ∀ (a b : Fin n) (s : Γ(Y.X, U.1)) (N : ℕ), (Y.X.presheaf.map (homOfLE (Y.X.basicOpen_le h)).op).hom s = (Y.X.presheaf.map (homOfLE (Y.X.basicOpen_le h)).op).hom (h ^ N) * (Y.X.presheaf.map (homOfLE hh).op).hom (Θ a b) → GlobalTheory.LocReg.chartHom Y U ξ hx s = GlobalTheory.LocReg.chartHom Y U ξ hx h ^ N * (Scheme.ΓSpecIso (CommRingCat.of (ChartRing k m d))).hom.hom (ΘR a b) := by
+theorem ks_chart_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Geo.Tor.Level H) (Xo : Moduli Dw l) (c : Coeff l) (Y : Model Xo c (RingHom.id c.F)), 1 ≤ Dw.p + Dw.q → SmoothOfRelativeDimension Dw.dim (genStr Y) → ∀ (U W : Y.X.affineOpens) (hW : W.1 = U.1 ⊓ interior Y) (n : ℕ) (v : Fin n → (Sp (DualNumber Γ(Y.X, U.1)) ⟶ Y.t.G.left)), (∀ i, IsTanAtG Y.t (chart U) (v i)) → (∀ w, IsTanAtG Y.t (chart U) w → ∃! cf : Fin n → Γ(Y.X, U.1), IsCombAtG Y.t (chart U) v cf w) → ∀ (D : logDer Y.s (Scheme.IdealSheafData.vanishingIdeal (interior Y).compl) U) (DW : Derivation ℤ Γ(Y.X, W.1) Γ(Y.X, W.1)) (Θ : Matrix (Fin n) (Fin n) Γ(Y.X, W.1)), (∀ r, DW ((Y.X.presheaf.map (homOfLE (hW.le.trans inf_le_left)).op).hom r) = (Y.X.presheaf.map (homOfLE (hW.le.trans inf_le_left)).op).hom (D.1 r)) → IsKS Y.t (interior Y) W (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Y.X.presheaf.map (homOfLE (hW.le.trans inf_le_left)).op).hom) ≫ v i) DW Θ → ∀ (k : Type) [Field k] [CharZero k] (m d : ℕ) (ξ : Sp (ChartRing k m d) ⟶ gen Y) (hx : ξ (closedPoint _) ∈ genι Y ⁻¹ᵁ U.1) (t : SAB H (Sp (ChartRing k m d))) (φ : SABMap t Y.t (ξ ≫ genι Y)), IsEtaleCompletion (Scheme.stalkClosedPointTo ξ).hom → (∀ p : Sp (ChartRing k m d), ξ p ∈ genBd Y ↔ ∏ i, bdParam k m d i ∈ p.asIdeal) → ∀ vR : Fin n → (Sp (DualNumber Γ(Sp (ChartRing k m d), ⊤)) ⟶ t.G.left), (∀ i, IsTanAtG t (chart (⟨⊤, isAffineOpen_top _⟩ : (Sp (ChartRing k m d)).affineOpens)) (vR i)) → (∀ i, vR i ≫ φ.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((Scheme.ΓSpecIso (CommRingCat.of (ChartRing k m d))).inv.hom.comp (GlobalTheory.LocReg.chartHom Y U ξ hx))) ≫ v i) → ∀ D' : Derivation ℤ (ChartRing k m d) (ChartRing k m d), (∀ r, D' (GlobalTheory.LocReg.chartHom Y U ξ hx r) = GlobalTheory.LocReg.chartHom Y U ξ hx (D.1 r)) → ∀ ΘR : Matrix (Fin n) (Fin n) Γ(Sp (ChartRing k m d), ⊤), IsKS t ((Sp (ChartRing k m d)).basicOpen ((Scheme.ΓSpecIso (CommRingCat.of (ChartRing k m d))).inv.hom (∏ i, bdParam k m d i))) (⟨⊤, isAffineOpen_top _⟩ : (Sp (ChartRing k m d)).affineOpens) vR (fun r => (Scheme.ΓSpecIso (CommRingCat.of (ChartRing k m d))).inv.hom (D' ((Scheme.ΓSpecIso (CommRingCat.of (ChartRing k m d))).hom.hom r))) ΘR → ∀ (h : Γ(Y.X, U.1)) (hh : Y.X.basicOpen h ≤ W.1), GlobalTheory.LocReg.chartHom Y U ξ hx h ≠ 0 → ∀ (a b : Fin n) (s : Γ(Y.X, U.1)) (N : ℕ), (Y.X.presheaf.map (homOfLE (Y.X.basicOpen_le h)).op).hom s = (Y.X.presheaf.map (homOfLE (Y.X.basicOpen_le h)).op).hom (h ^ N) * (Y.X.presheaf.map (homOfLE hh).op).hom (Θ a b) → GlobalTheory.LocReg.chartHom Y U ξ hx s = GlobalTheory.LocReg.chartHom Y U ξ hx h ^ N * (Scheme.ΓSpecIso (CommRingCat.of (ChartRing k m d))).hom.hom (ΘR a b) := by
   intro E _ _ _ H Dw l Xo c Y hpq hsm U W hW n v hv hb D DW Θ hDW hKS k _ _ m d ξ hx t φ hEt hbd vR hvR hvRφ D' hD' ΘR hKSR h hh hρh a b s N hs
   let ι0 : ChartRing k m d →+* FractionRing (ChartRing k m d) := algebraMap _ _
   let g : Sp (ChartRing k m d) ⟶ Y.X := ξ ≫ genι Y
@@ -112,16 +112,16 @@ theorem ks_chart_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H 
     (Sp (ChartRing k m d)).affineBasicOpen (U := ⟨⊤, isAffineOpen_top _⟩) ((g.appLE U.1 ⊤ hg).hom h)
   have hU'U : U'.1 ≤ g ⁻¹ᵁ U.1 := hUW.trans (g.preimage_mono (hW.le.trans inf_le_left))
   let v' : Fin n → (Sp (DualNumber Γ(Sp (ChartRing k m d), U'.1)) ⟶ t.G.left) := fun i =>
-    spMap (dualMap ((Sp (ChartRing k m d)).presheaf.map (homOfLE (le_top : U'.1 ≤ ⊤)).op).hom) ≫ vR i
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((Sp (ChartRing k m d)).presheaf.map (homOfLE (le_top : U'.1 ≤ ⊤)).op).hom) ≫ vR i
   have hv' : ∀ i, IsTanAtG t (chart U') (v' i) := fun i =>
     GlobalTheory.KSAgree.tan_res E H _ t ⟨⊤, isAffineOpen_top _⟩ U' le_top (vR i) (hvR i)
-  have hcompU : ∀ i, v' i ≫ φ.φ = spMap (dualMap (g.appLE U.1 U'.1 hU'U).hom) ≫ v i := by
+  have hcompU : ∀ i, v' i ≫ φ.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.appLE U.1 U'.1 hU'U).hom) ≫ v i := by
     intro i
     show (spMap _ ≫ vR i) ≫ φ.φ = _
     rw [Category.assoc, hvRφ i, ← Category.assoc, ← GlobalTheory.Cris.spMap_comp, GlobalTheory.CechKS.dualMap_comp_dualMap, ← hgρ,
       ← CommRingCat.hom_comp, Scheme.Hom.appLE_map]
-  have hcompW : ∀ i, v' i ≫ φ.φ = spMap (dualMap (g.appLE W.1 U'.1 hUW).hom) ≫
-      (spMap (dualMap (Y.X.presheaf.map (homOfLE (hW.le.trans inf_le_left)).op).hom) ≫ v i) := by
+  have hcompW : ∀ i, v' i ≫ φ.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.appLE W.1 U'.1 hUW).hom) ≫
+      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Y.X.presheaf.map (homOfLE (hW.le.trans inf_le_left)).op).hom) ≫ v i) := by
     intro i
     rw [hcompU i, ← Category.assoc, ← GlobalTheory.Cris.spMap_comp, GlobalTheory.CechKS.dualMap_comp_dualMap,
       ← CommRingCat.hom_comp, Scheme.Hom.map_appLE]
@@ -178,7 +178,7 @@ theorem ks_chart_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H 
   obtain ⟨mm, hmm, hiso'⟩ := GlobalTheory.PolAVPull.polAV_pull E H Y.X _ Y.t t g φ _ (spMap ι0) P₀ θ0 hpb hiso
   let φK := ev (spMap ι0) U'.1 hKU'
   have hpt : spMap φK ≫ chart U' = spMap ι0 := GlobalTheory.FlagMod.spMap_ev (spMap ι0) U'.2 hKU'
-  have hvW : ∀ i, IsTanAtG Y.t (chart W) (spMap (dualMap (Y.X.presheaf.map (homOfLE (hW.le.trans inf_le_left)).op).hom) ≫ v i) :=
+  have hvW : ∀ i, IsTanAtG Y.t (chart W) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Y.X.presheaf.map (homOfLE (hW.le.trans inf_le_left)).op).hom) ≫ v i) :=
     fun i => GlobalTheory.KSAgree.tan_res E H Y.X Y.t U W _ (v i) (hv i)
   have hks1 := GlobalTheory.KSBaseChange.isKS_pull E H Y.X _ Y.t t g φ (interior Y) V' W U' hUW hUV' n _ v' hvW hv' hcompW DW D'' hDW' Θ hKS
   have hks2 := isKS_restrict t V' ⟨⊤, isAffineOpen_top _⟩ U' le_top vR _ D'' ΘR hDtop hKSR

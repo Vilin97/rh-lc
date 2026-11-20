@@ -32,8 +32,8 @@ theorem exists_bc {R R' : Type} [CommRing R] [CommRing R'] {x : Spec (CommRingCa
     rw [M'.pt_smul, hj, hj, M.pt_smul, ← Category.assoc, base_scale, Category.assoc]
 
 theorem dual_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (g : B →+* C) (f : A →+* B) :
-    Spec.map (CommRingCat.ofHom (dualMap g)) ≫ Spec.map (CommRingCat.ofHom (dualMap f)) =
-      Spec.map (CommRingCat.ofHom (dualMap (g.comp f))) := by
+    Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap g)) ≫ Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap f)) =
+      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f))) := by
   rw [spec_comp]
   congr 2
   refine RingHom.ext fun a => ?_
@@ -45,7 +45,7 @@ theorem valAt_of_extends (M : LieModel G ξ Em) (hall : ∀ q : X, genPt ξ ⤳ 
     [CommRing L] [IsLocalRing L] (φ : V →+* L) (z : Spec (CommRingCat.of V) ⟶ X) {e : Em}
     {v : epsAt (R := X.presheaf.stalk (centre z)) (X.fromSpecStalk (centre z)) ⟶ G}
     (hv : M.Extends ⟨centre z, hall _⟩ e v) {w : epsAt (Spec.map (CommRingCat.ofHom φ) ≫ z) ⟶ G}
-    (hw : w.left = Spec.map (CommRingCat.ofHom (dualMap
+    (hw : w.left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap
       (RingHom.comp (α := X.presheaf.stalk (centre z)) φ (Scheme.stalkClosedPointTo z).hom))) ≫ v.left) :
     M.ValAt (Spec.map (CommRingCat.ofHom φ) ≫ z) e w := by
   have hs := centre_specializes φ z
@@ -56,12 +56,12 @@ theorem valAt_of_extends (M : LieModel G ξ Em) (hall : ∀ q : X, genPt ξ ⤳ 
     Scheme.SpecMap_stalkSpecializes_fromSpecStalk hs
   refine ⟨hall _, epsBase s h1 ≫ v, ⟨isTanAt_base s h1 hv.1, ?_⟩, ?_⟩
   · refine hv.2.trans ?_
-    change _ = _ ≫ Spec.map (CommRingCat.ofHom (dualMap s)) ≫ v.left
+    change _ = _ ≫ Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap s)) ≫ v.left
     rw [← Category.assoc, dual_comp]
     congr 4
     exact RingHom.ext fun a => (genMap_specializes ⟨centre z, hall _⟩ (hall _) hs a).symm
   · refine hw.trans ?_
-    change _ = _ ≫ Spec.map (CommRingCat.ofHom (dualMap s)) ≫ v.left
+    change _ = _ ≫ Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap s)) ≫ v.left
     rw [← Category.assoc, dual_comp]
     congr 4
     exact (congrArg (fun t => t.hom) (stalk_base φ z)).symm
@@ -77,7 +77,7 @@ theorem exists_coords {X : Scheme.{0}} (t : SAB H X) {Ω : Type} [Field Ω] {ξ 
     ∃ (g : ℕ) (MV : LieModel t.G z (Fin g → V)) (ρV : 𝓞 E →+* Module.End V (Fin g → V))
       (MC : LieModel t.G (Spec.map (CommRingCat.ofHom (algebraMap V L)) ≫ z) (Fin g → L))
       (ρC : 𝓞 E →+* Module.End L (Fin g → L)), MV.IsActOf t.act.act ρV ∧ MC.IsActOf t.act.act ρC ∧
-      (∀ u, (MC.pt (algebraMap V L ∘ u)).left = spMap (dualMap (algebraMap V L)) ≫ (MV.pt u).left) ∧
+      (∀ u, (MC.pt (algebraMap V L ∘ u)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V L)) ≫ (MV.pt u).left) ∧
       (∀ a u, ρC a (algebraMap V L ∘ u) = algebraMap V L ∘ ρV a u) ∧
       ∀ x, x ∈ M.fibAt M.lat z MC ↔ ∀ k, x k ∈ (algebraMap V L).range := by
   classical
@@ -96,7 +96,7 @@ theorem exists_coords {X : Scheme.{0}} (t : SAB H X) {Ω : Type} [Field Ω] {ξ 
     ext k; by_cases h : k = i <;> simp [Pi.single_apply, h]
   have hj1 : ∀ i : Fin g, j (Pi.single i 1) = Pi.single i 1 := fun i => MC.inj (Over.OverMorphism.ext (by
     rw [hj, ← sC, hC, ← sV]
-    refine (congrArg (Spec.map (CommRingCat.ofHom (dualMap (algebraMap V L))) ≫ ·) (hV (Pi.single i 1))).trans ?_
+    refine (congrArg (Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V L))) ≫ ·) (hV (Pi.single i 1))).trans ?_
     exact (Category.assoc _ _ _).symm.trans (congrArg (· ≫ (MR.pt (Pi.single i 1)).left) (dual_comp _ _))))
   have hju : ∀ u, j u = algebraMap V L ∘ u := fun u => by
     have e : u = ∑ i, u i • (Pi.single i 1 : Fin g → V) := by

@@ -68,14 +68,14 @@ theorem loc {V : Type} [AddCommGroup V] [Module L V] [Module (𝓞 L) V] [IsScal
     (hc : cc.comp (algebraMap (𝓞 L) _) = algebraMap (𝓞 L) L) :
     (∀ x ∈ eigSp ρ ((algebraMap (𝓞 L) L).comp (σ₀ s)),
       (∃ v : epsAt z ⟶ 𝔐.t.G, IsTanAt 𝔐.t.G z v ∧
-        (ML.pt x).left = spMap (dualMap (algebraMap (𝓞 L) L)) ≫ v.left) →
+        (ML.pt x).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) ≫ v.left) →
       ∃ t ∉ P, t • x ∈ Submodule.span (𝓞 L) {x' | ∃ e ∈ 𝔐.V s ⟨z (⟨P, hP⟩ : PrimeSpectrum (𝓞 L)), 𝔐.all _⟩,
         𝔐.M.ValAt (spMap (algebraMap (𝓞 L) L) ≫ z) e (ML.pt x')}) ∧
     ∀ x, (∃ t ∉ P, t • x ∈ Submodule.span (𝓞 L) {x' | ∃ e ∈ 𝔐.V s ⟨z (⟨P, hP⟩ : PrimeSpectrum (𝓞 L)), 𝔐.all _⟩,
         𝔐.M.ValAt (spMap (algebraMap (𝓞 L) L) ≫ z) e (ML.pt x')}) → ∀ d ∈ differentIdeal ℤ (𝓞 E),
       (∏ p ∈ S, k p) • σ₀ s d • x ∈ eigSp ρ ((algebraMap (𝓞 L) L).comp (σ₀ s)) ∧
       ∃ w : epsAt (spMap (algebraMap (𝓞 L) (Localization.AtPrime P)) ≫ z) ⟶ 𝔐.t.G, IsTanAt 𝔐.t.G _ w ∧
-        (ML.pt ((∏ p ∈ S, k p) • σ₀ s d • x)).left = spMap (dualMap cc) ≫ w.left := by
+        (ML.pt ((∏ p ∈ S, k p) • σ₀ s d • x)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap cc) ≫ w.left := by
   classical
   have hξ := 𝔐.tie.gen
   let A := Localization.AtPrime P

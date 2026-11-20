@@ -79,10 +79,10 @@ theorem rel_unique : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H :
       GlobalTheory.FlagMod.xF_ext (Y := Y) (GlobalTheory.FlagMod.frX_snd Q') (GlobalTheory.FlagMod.frX_snd Q) (hx'.trans hx.symm)]
   obtain ⟨u0, hu0⟩ := exists_gen_unit Q Q' eQ
   choose cf hcf1 hcf2 hcf3 using ht.2.2
-  have h1 : spMap (dualMap (RingHom.id K)) = 𝟙 _ := by
+  have h1 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id K)) = 𝟙 _ := by
     rw [← Spec.map_id]
     congr 1
-    ext r <;> simp [dualMap]
+    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   let T : Ix Dw → Kˣ := fun ix => match ix with | none => u0 | some q => t q.1 q.2
   have hB : FrBor T Q Q' := by
     refine GlobalTheory.FlagMod.frBor_of_frVec (X.F.inM hk rfl) hx hx' T (fun σ j i => cf σ i j)

@@ -80,11 +80,11 @@ theorem valF_eq_valAt' {X : Scheme.{0}} (x : Sp ℂ ⟶ X) (U : X.Opens) (f : Γ
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 
 theorem spMap_dualMap_comp {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (f : R →+* R') (f' : R' →+* R'') :
-    spMap (dualMap (f'.comp f)) = spMap (Chart.dualMapR f') ≫ spMap (dualMap f) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (f'.comp f)) = spMap (Chart.dualMapR f') ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
   show Spec.map _ = Spec.map _ ≫ Spec.map _
   rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
   congr 2
-  ext a <;> simp [Chart.dualMapR, dualMap]
+  ext a <;> simp [Chart.dualMapR, GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem keyPB_of_keyOver {R R' R'' : Type} [CommRing R] [Field R'] [Field R''] (f : R →+* R') (f' : R' →+* R'')
     (t : SAB H (Sp R)) (th : t.PP.L.Sec) (x' : KeyIn R') (x'' : KeyIn R'') (v' : Fin x'.P.g → (epsR R ⟶ t.G))
@@ -197,7 +197,7 @@ theorem norm_key_of_frame : ∀ κ : GlobalTheory.KeyCl.Rule, GlobalTheory.KeyCl
     rw [← hthe j y hj]
     exact u₂
   have hvv : ∀ i : Fin D.g, ∃ v' : epsR ℂ ⟶ a.A,
-      v'.left ≫ a.φ = spMap (dualMap (σ.comp (algebraMap (𝓞 L) L))) ≫ (D.MB.pt (e i)).left ∧ a.u.IsDiff (W i) v' := by
+      v'.left ≫ a.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (σ.comp (algebraMap (𝓞 L) L))) ≫ (D.MB.pt (e i)).left ∧ a.u.IsDiff (W i) v' := by
     intro i
     obtain ⟨v₀, hl, v', h1, h2⟩ := hW i
     refine ⟨v', h1.trans ?_, h2⟩

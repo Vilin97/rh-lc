@@ -64,7 +64,7 @@ theorem der_compare {R R' : Type} [CommRing R] [IsDomain R] [CommRing R'] [IsDom
     {F : Γ'.G.left ⟶ Γ.G.left} (hF : Γ'.IsBaseChange Γ (algebraMap R R') F)
     (hi' : Γ'.IsTorsionAlong G x' N (F ≫ i)) {L L' : Type} [AddCommGroup L] [Module R L] [AddCommGroup L']
     [Module R' L'] (M : LieModel G x L) (M' : LieModel G x' L') (β : L → L')
-    (hβ : ∀ e, (M'.pt (β e)).left = Spec.map (CommRingCat.ofHom (dualMap (algebraMap R R'))) ≫ (M.pt e).left)
+    (hβ : ∀ e, (M'.pt (β e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R R'))) ≫ (M.pt e).left)
     {f : T → R} {f' : T → R'} {w : Module.Dual R L} {w' : Module.Dual R' L'} (hf : ∀ t, f' t = algebraMap R R' (f t))
     (h : Γ.IsDerAtOne i M N f w) (h' : Γ'.IsDerAtOne (F ≫ i) M' N f' w') (e : L) :
     ∃ r : R', w' (β e) = algebraMap R R' (w e) + (N : R') * r := by
@@ -85,29 +85,29 @@ theorem der_compare {R R' : Type} [CommRing R] [IsDomain R] [CommRing R'] [IsDom
   have hss : s' = F.appTop.hom s := sub_eq_zero.1 hz
   obtain ⟨v, hv1, hv2, hv3⟩ := hv e
   obtain ⟨v', hv'1, hv'2, hv'3⟩ := hv' (β e)
-  have hc : (Spec.map (CommRingCat.ofHom (dualMap (HTBaseChange.qmap (R := R) (R' := R') N))) ≫ v) ≫ Γ.G.hom =
+  have hc : (Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (HTBaseChange.qmap (R := R) (R' := R') N))) ≫ v) ≫ Γ.G.hom =
       Spec.map (CommRingCat.ofHom ((algebraMap (R' ⧸ Ideal.span {(N : R')})
         (DualNumber (R' ⧸ Ideal.span {(N : R')}))).comp (Ideal.Quotient.mk _))) ≫
         Spec.map (CommRingCat.ofHom (algebraMap R R')) := by
     rw [Category.assoc, hv1, ← Spec.map_comp, ← Spec.map_comp]
     congr 1
     ext r
-    all_goals simp [dualMap, HTBaseChange.qmap, Ideal.quotientMap_mk, TrivSqZeroExt.algebraMap_eq_inl]
+    all_goals simp [GlobalTheory.CompanionTheory.Ar.dualMap, HTBaseChange.qmap, Ideal.quotientMap_mk, TrivSqZeroExt.algebraMap_eq_inl]
   set v'' := hF.cart.lift _ _ hc with hv''
   have h1 := hF.cart.lift_fst _ _ hc
   have h2 := hF.cart.lift_snd _ _ hc
   rw [← hv''] at h1 h2
-  have h3 : v'' ≫ F ≫ i = Spec.map (CommRingCat.ofHom (dualMap (Ideal.Quotient.mk (Ideal.span {(N : R')})))) ≫
+  have h3 : v'' ≫ F ≫ i = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(N : R')})))) ≫
       (M'.pt (β e)).left := by
     rw [← Category.assoc, h1, Category.assoc, hv2, hβ e, ← Category.assoc, ← Category.assoc, ← Spec.map_comp,
       ← Spec.map_comp]
     congr 2
     ext a
-    all_goals simp [dualMap, HTBaseChange.qmap, Ideal.quotientMap_mk, TrivSqZeroExt.algebraMap_eq_inl]
+    all_goals simp [GlobalTheory.CompanionTheory.Ar.dualMap, HTBaseChange.qmap, Ideal.quotientMap_mk, TrivSqZeroExt.algebraMap_eq_inl]
   have huniq := (GlobalTheory.T.existsUnique_tangent_dual_number R' T Γ' S G _ N (F ≫ i) hi' L' M' (β e)).unique ⟨h2, h3⟩ ⟨hv'1, hv'2⟩
   rw [← huniq, hss, ← HTBaseChange.valAt_comp_top, h1, HTBaseChange.valAt_spec_map, hv3] at hv'3
   have h5 := congrArg TrivSqZeroExt.snd hv'3
-  simp only [dualMap, HTBaseChange.qmap, RingHom.coe_mk, MonoidHom.coe_mk, OneHom.coe_mk, TrivSqZeroExt.snd_add,
+  simp only [GlobalTheory.CompanionTheory.Ar.dualMap, HTBaseChange.qmap, RingHom.coe_mk, MonoidHom.coe_mk, OneHom.coe_mk, TrivSqZeroExt.snd_add,
     TrivSqZeroExt.snd_inl, TrivSqZeroExt.snd_inr, TrivSqZeroExt.fst_add, TrivSqZeroExt.fst_inl,
     TrivSqZeroExt.fst_inr, zero_add, add_zero, Ideal.quotientMap_mk] at h5
   have h6 := (Ideal.Quotient.eq (I := Ideal.span {(N : R')})).1 h5.symm
@@ -171,8 +171,8 @@ theorem der_overlap {R₁ R₂ R' : Type} [CommRing R₁] [IsDomain R₁] [CommR
     {L₁ L₂ L' : Type} [AddCommGroup L₁] [Module R₁ L₁] [AddCommGroup L₂] [Module R₂ L₂] [AddCommGroup L'] [Module R' L']
     (M₁ : LieModel G x₁ L₁) (M₂ : LieModel G x₂ L₂) (M' : LieModel G x' L') (β₁ : L₁ → L')
     (β₂ : L₂ →ₛₗ[algebraMap R₂ R'] L')
-    (hβ₁ : ∀ e, (M'.pt (β₁ e)).left = Spec.map (CommRingCat.ofHom (dualMap (algebraMap R₁ R'))) ≫ (M₁.pt e).left)
-    (hβ₂ : ∀ e, (M'.pt (β₂ e)).left = Spec.map (CommRingCat.ofHom (dualMap (algebraMap R₂ R'))) ≫ (M₂.pt e).left)
+    (hβ₁ : ∀ e, (M'.pt (β₁ e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R₁ R'))) ≫ (M₁.pt e).left)
+    (hβ₂ : ∀ e, (M'.pt (β₂ e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R₂ R'))) ≫ (M₂.pt e).left)
     (hspan : Submodule.span R' (Set.range β₁) = ⊤) (hfin : Module.Finite R₂ L₂)
     {f₁ : T → R₁} (hf₁ : f₁ ∈ Γ₁.btOrder ⊤) (h1 : f₁ 1 = 0) {u₁ : Module.Dual R₁ L₁}
     (hu : Γ₁.IsDerAtOne i₁ M₁ N f₁ u₁) (v' : Module.Dual R' L') (hv' : ∀ e, v' (β₁ e) = algebraMap R₁ R' (u₁ e)) :
@@ -565,8 +565,8 @@ theorem tr_toLi (P : ChartPack G O s) (R' : Subalgebra O Ω) [Algebra (CR O y s)
     (hal : ∀ r : CR O y s, ((algebraMap (CR O y s) R' r : R') : Ω) = r)
     {x' : Spec (CommRingCat.of R') ⟶ 𝔐.X} {L' : Type} [AddCommGroup L'] [Module R' L'] (M' : LieModel 𝔐.t.G x' L')
     (β₁ : P.L → L')
-    (hβ : ∀ e, (M'.pt (β₁ e)).left = spMap (dualMap (algebraMap (CR O y s) R')) ≫ (P.M.pt e).left)
-    (τ : L' → 𝔐.Li) (hτ : ∀ e, (𝔐.M.pt (τ e)).left = spMap (dualMap (algebraMap R' Ω)) ≫ (M'.pt e).left) (e : P.L) :
+    (hβ : ∀ e, (M'.pt (β₁ e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (CR O y s) R')) ≫ (P.M.pt e).left)
+    (τ : L' → 𝔐.Li) (hτ : ∀ e, (𝔐.M.pt (τ e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R' Ω)) ≫ (M'.pt e).left) (e : P.L) :
     τ (β₁ e) = P.toLi e := by
   have e1 : (algebraMap R' Ω).comp (algebraMap (CR O y s) R') = algebraMap (CR O y s) Ω :=
     RingHom.ext fun r => hal r

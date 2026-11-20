@@ -61,10 +61,10 @@ theorem split_basis {R : Type} [CommRing R] (x : Sp R ⟶ Z.X) (τ : E →+* ℂ
     {Hi : Matrix (Fin r) (Fin g) K} {Nk dk nk : K} (hd : dk * (D : K) = 1) (hn : nk * Nk = 1)
     (S1 : P.map ψ₁ * V = (D : K) • V) (S2 : Hi * V = Nk • 1) (S3 : V * Hi * P.map ψ₁ = Nk • P.map ψ₁)
     {v : Fin r → (Sp (DualNumber K) ⟶ Z.t.G.left)}
-    (hv : ∀ i, IsCombAtG Z.t (spMap ψ₁ ≫ x) (fun k => spMap (dualMap ψ₁) ≫ e k) (fun k => V k i) (v i)) :
+    (hv : ∀ i, IsCombAtG Z.t (spMap ψ₁ ≫ x) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ₁) ≫ e k) (fun k => V k i) (v i)) :
     (∀ i, IsEigTan Z φ (spMap ψ₁ ≫ x) τ (v i)) ∧
     ∀ w, IsEigTan Z φ (spMap ψ₁ ≫ x) τ w → ∃ cf : Fin g → K,
-      IsCombAtG Z.t (spMap ψ₁ ≫ x) (fun k => spMap (dualMap ψ₁) ≫ e k) cf w ∧
+      IsCombAtG Z.t (spMap ψ₁ ≫ x) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ₁) ≫ e k) cf w ∧
       (P.map ψ₁).mulVec cf = (D : K) • cf ∧
       ∀ a, IsCombAtG Z.t (spMap ψ₁ ≫ x) v a w ↔ a = nk • Hi.mulVec cf := by
   have he₁ := GlobalTheory.HTPres.isTanBasis_map Z.t he ψ₁
@@ -93,13 +93,13 @@ theorem ringBasis_of_split : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
       simpa using ((Nat.cast_ne_zero.2 hn : ((n : ℕ) : c.F) ≠ 0).isUnit).map φ
     obtain ⟨k, hk⟩ := hu.exists_left_inv
     exact ⟨k, hk⟩
-  have hv0 : ∀ k, IsTanAtG Z.t (spMap ψ ≫ x) (spMap (dualMap ψ) ≫ e k) :=
+  have hv0 : ∀ k, IsTanAtG Z.t (spMap ψ ≫ x) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ e k) :=
     fun k => GlobalTheory.FactorDepth.isTanAtG_map Z.t ψ (he.1 k)
   choose u hu using fun i => GlobalTheory.ShFam.Pad.Guard.exists_comb hv0 (fun k => U k i)
   have hbc : ∀ {K : Type} [CommRing K] (ψ₂ : R' →+* K),
       spMap ψ₂ ≫ spMap ψ ≫ x = spMap (ψ₂.comp ψ) ≫ x ∧
-      (∀ i, IsCombAtG Z.t (spMap (ψ₂.comp ψ) ≫ x) (fun k => spMap (dualMap (ψ₂.comp ψ)) ≫ e k)
-        (fun k => (U.map ψ₂) k i) (spMap (dualMap ψ₂) ≫ u i)) ∧
+      (∀ i, IsCombAtG Z.t (spMap (ψ₂.comp ψ) ≫ x) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ₂.comp ψ)) ≫ e k)
+        (fun k => (U.map ψ₂) k i) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ₂) ≫ u i)) ∧
       P.map (ψ₂.comp ψ) * U.map ψ₂ = (D : K) • U.map ψ₂ ∧
       (Matrix.of fun i k => ψ₂ (ψ (h (I i) k))) * U.map ψ₂ = (N : K) • 1 ∧
       U.map ψ₂ * (Matrix.of fun i k => ψ₂ (ψ (h (I i) k))) * P.map (ψ₂.comp ψ) =

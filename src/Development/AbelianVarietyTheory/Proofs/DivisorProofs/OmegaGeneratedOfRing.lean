@@ -45,7 +45,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 
 theorem CutsHT.of_integral {R A : Type} [CommRing R] [CommRing A] (γ : R →+* A) (hi : Function.Injective γ)
     (hγ : γ.IsIntegral) {x : Sp R ⟶ X} {g n : ℕ} {e : Fin g → (Sp (DualNumber R) ⟶ t.G.left)} {η : Fin n → Fin g → R}
-    (h : CutsHT t p (spMap γ ≫ x) (fun i => spMap (dualMap γ) ≫ e i) fun j i => γ (η j i)) : CutsHT t p x e η := by
+    (h : CutsHT t p (spMap γ ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap γ) ≫ e i) fun j i => γ (η j i)) : CutsHT t p x e η := by
   intro C κ a v hv
   obtain ⟨κ', rfl⟩ := exists_extend_intO γ hi hγ κ
   have e1 : spMap ((intO ↥C.S).subtype.comp κ') ≫ spMap γ ≫ x = spMap ((intO ↥C.S).subtype.comp (κ'.comp γ)) ≫ x := by
@@ -77,7 +77,7 @@ theorem genSt_of_ringSt : RingSt → GenSt := by
   let U : B.X → AffOp B.X := fun z => ⟨(V z).1, (V z).2, ⟨⟨z, hz z⟩⟩⟩
   have key : ∀ z, ∃ (n : ℕ) (η : Fin n → Fin (g z) → (U z).Bp), SpansP p η ∧
       CutsHT t p (spMap (algebraMap Γ(B.X, (U z).1) (U z).Bp) ≫ (V z).2.fromSpec ≫ ρ)
-        (fun i => spMap (dualMap (algebraMap Γ(B.X, (U z).1) (U z).Bp)) ≫ e z i) η := fun z => by
+        (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap Γ(B.X, (U z).1) (U z).Bp)) ≫ e z i) η := fun z => by
     haveI : IsAlgClosed (FractionRing (U z).Bp) :=
       IsAlgClosed.of_ringEquiv (Kbar B.X) _ (FractionRing.algEquiv (U z).Bp (Kbar B.X)).symm.toRingEquiv
     haveI : CharZero (U z).Bp := (algebraMap (U z).Bp (Kbar B.X)).charZero
@@ -113,7 +113,7 @@ theorem genSt_of_ringSt : RingSt → GenSt := by
       ← Scheme.Hom.app_eq_appLE]
     rfl
   have hc : (γ (U z)).comp (f.f.app (U z).1).hom = algebraMap Γ(B.X, (U z).1) (U z).Bp := RingHom.ext (hγ (U z))
-  refine ⟨⟨_, hA⟩, g z, n z, fun i => spMap (dualMap (f.f.app (U z).1).hom) ≫ e z i, η', hy, ?_, ⟨M', fun i k => ?_⟩, ?_⟩
+  refine ⟨⟨_, hA⟩, g z, n z, fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (f.f.app (U z).1).hom) ≫ e z i, η', hy, ?_, ⟨M', fun i k => ?_⟩, ?_⟩
   · change IsTanBasis t (hA.fromSpec ≫ f.f ≫ ρ) _
     rw [hsq]
     exact GlobalTheory.HTPres.isTanBasis_map t (he z) _

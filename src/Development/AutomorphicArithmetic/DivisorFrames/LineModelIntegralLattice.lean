@@ -17,11 +17,11 @@ private theorem UpperTheory.spMap_comp_spMap_divisor_frames {A B C : Type} [Comm
     spMap g ≫ spMap f = spMap (g.comp f) := (Spec.map_comp _ _).symm
 
 private theorem UpperTheory.spMap_dualMap_comp_eq_spMap_dualMap_ringHom_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    spMap (dualMap g) ≫ spMap (dualMap f) = spMap (dualMap (g.comp f)) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f)) := by
   rw [UpperTheory.spMap_comp_spMap_divisor_frames]
   congr 1
   refine RingHom.ext fun z => ?_
-  ext <;> simp [dualMap]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 private theorem UpperTheory.spherical_completion_integral {p : ℕ} (hp : p.Prime) {B K : Type} [CommRing B] [IsNoetherianRing B] [Field K]
     [CharZero K] [Countable K] [Algebra B K] [Algebra.EssFiniteType B K] (A : ValuationSubring K)
@@ -140,9 +140,9 @@ private theorem UpperTheory.integral_tangent_lattice {C : Type} [NontriviallyNor
     {n : ℕ} {D : Fin n → (Sp (DualNumber ↥(intO C)) ⟶ t.G.left)} (hD : ∀ e, IsTanAtG t xO (D e))
     (hD0 : ∀ w, IsTanAtG t xO w → ∃! a : Fin n → ↥(intO C), IsCombAtG t xO D a w)
     (hD1 : ∀ w, IsTanAtG t (spMap (intO C).subtype ≫ xO) w → ∃! a : Fin n → C,
-      IsCombAtG t (spMap (intO C).subtype ≫ xO) (fun e => spMap (dualMap (intO C).subtype) ≫ D e) a w)
+      IsCombAtG t (spMap (intO C).subtype ≫ xO) (fun e => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO C).subtype) ≫ D e) a w)
     (cf : Fin n → C) (w : Sp (DualNumber C) ⟶ t.G.left)
-    (hw : IsCombAtG t (spMap (intO C).subtype ≫ xO) (fun e => spMap (dualMap (intO C).subtype) ≫ D e) cf w) :
+    (hw : IsCombAtG t (spMap (intO C).subtype ≫ xO) (fun e => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO C).subtype) ≫ D e) cf w) :
     w ∈ latDR t (spMap (intO C).subtype ≫ xO) ↔ ∀ i, ‖cf i‖ ≤ 1 := by
   have hDk := fun j => GlobalTheory.FactorDepth.isTanAtG_map t (intO C).subtype (hD j)
   refine ⟨?_, fun hc => ?_⟩
@@ -171,7 +171,7 @@ private theorem UpperTheory.tangent_finite_coordinates {Dw : Datum H} {l : Level
   choose a ha using fun k => (hDb R β _ (hf.1 τ k).1).exists
   let A : Matrix (Fin n) (Fin (Dw.mult τ)) R := fun j k => a k j
   have hA (T : Type) [CommRing T] (θ : R →+* T) (k) : IsCombAtG t (spMap (θ.comp β) ≫ x)
-      (fun e => spMap (dualMap (θ.comp β)) ≫ D e) (fun j => A.map θ j k) (f.bc θ τ k) := by
+      (fun e => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (θ.comp β)) ≫ D e) (fun j => A.map θ j k) (f.bc θ τ k) := by
     have := GlobalTheory.LatDRFree.comb_map t θ (ha k)
     simp only [← Category.assoc, UpperTheory.spMap_comp_spMap_divisor_frames β θ, UpperTheory.spMap_dualMap_comp_eq_spMap_dualMap_ringHom_comp β θ] at this
     exact this
@@ -285,10 +285,10 @@ theorem UpperTheory.line_model_integral_lattice :
     have e1 : spMap (θ.comp R.subtype) ≫ spMap β ≫ ι ≫ Z.π = spMap θ ≫ spMap R.subtype ≫ a ≫ Z.π := by
       rw [← UpperTheory.spMap_comp_spMap_divisor_frames, Category.assoc, reassoc_of% hβ]
     rw [e1] at b1 b2
-    have e2 : f.bc (θ.comp R.subtype) x.1 = fun k => spMap (dualMap θ) ≫ f.bc R.subtype x.1 k := by
+    have e2 : f.bc (θ.comp R.subtype) x.1 = fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap θ) ≫ f.bc R.subtype x.1 k := by
       funext k
       simp only [Vecs.bc, ← Category.assoc, UpperTheory.spMap_dualMap_comp_eq_spMap_dualMap_ringHom_comp]
-    have e3 : (Z.fr a₀).bc (θ.comp φ) x.1 = fun k => spMap (dualMap θ) ≫ (Z.fr a₀).bc φ x.1 k := by
+    have e3 : (Z.fr a₀).bc (θ.comp φ) x.1 = fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap θ) ≫ (Z.fr a₀).bc φ x.1 k := by
       funext k
       simp only [Vecs.bc, ← Category.assoc, UpperTheory.spMap_dualMap_comp_eq_spMap_dualMap_ringHom_comp]
     rw [e2] at b1 b2

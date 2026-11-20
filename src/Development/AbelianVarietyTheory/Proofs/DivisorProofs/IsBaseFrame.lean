@@ -40,7 +40,7 @@ def IsCell (TF : TorFlag Xo c) (Z : Comp Xo c) (U : TF.Y.X.affineOpens) {n : ℕ
       (hk : ⊤ ≤ (z ≫ inc₀ TF.X Z) ⁻¹ᵁ TF.X.F.U k) (hx : (z ≫ inc₀ TF.X Z) ≫ TF.X.π = z ≫ toBase TF Z)
       (σ : E →+* ℂ) (i : Fin (Dw.mult σ)),
       IsCombAtG TF.Y.t (z ≫ toBase TF Z)
-        (fun j => spMap (dualMap (ev (z ≫ toBase TF Z) U.1 hU)) ≫ v (e ⟨σ, j⟩))
+        (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev (z ≫ toBase TF Z) U.1 hU)) ≫ v (e ⟨σ, j⟩))
         (fun j => ev z W hz ((L σ * N σ) i j)) (tv (TF.X.F.vecAt k (z ≫ inc₀ TF.X Z) hk hx σ i)).left
 
 def cellCoord {R : Type} (N : ∀ σ : E →+* ℂ, Matrix (Fin (Dw.mult σ)) (Fin (Dw.mult σ)) R) (a : VIx Dw) : R :=
@@ -49,7 +49,7 @@ def cellCoord {R : Type} (N : ∀ σ : E →+* ℂ, Matrix (Fin (Dw.mult σ)) (F
 def IsBaseFrame (TF : TorFlag Xo c) (U : TF.Y.X.affineOpens) {n : ℕ} (e : (Σ τ : E →+* ℂ, Fin (Dw.mult τ)) ≃ Fin n)
     (v : Fin n → (Sp (DualNumber Γ(TF.Y.X, U.1)) ⟶ TF.Y.t.G.left)) {K : Type} [CommRing K] [Algebra c.F K]
     (P : FrPt Xo c K) (hU : ⊤ ≤ (frX P ≫ TF.Y.j) ⁻¹ᵁ U.1) : Prop :=
-  ∀ σ i, (tv (frVec TF.Y P rfl σ i)).left = spMap (dualMap (ev (frX P ≫ TF.Y.j) U.1 hU)) ≫ v (e ⟨σ, i⟩)
+  ∀ σ i, (tv (frVec TF.Y P rfl σ i)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev (frX P ≫ TF.Y.j) U.1 hU)) ≫ v (e ⟨σ, i⟩)
 
 def KSCompare (TF : TorFlag Xo c) (s : ℚ) : Prop :=
   ∀ (U : TF.Y.X.affineOpens) (n : ℕ) (e : (Σ τ : E →+* ℂ, Fin (Dw.mult τ)) ≃ Fin n)

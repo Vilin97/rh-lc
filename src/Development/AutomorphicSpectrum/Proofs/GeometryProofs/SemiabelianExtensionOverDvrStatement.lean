@@ -23,6 +23,6 @@ theorem _root_.GlobalTheory.T.semiabelian_extension_over_dvr : ∀ (V K : Type) 
     (GK : Over (Sp K)) [GrpObj GK] (z : Sp V ⟶ X) (φ₀ : GK.left ⟶ T.left) (φ₁ : GK.left ⟶ Gx.left),
     IsSemiAbelian Gx → IsSemiAbelian T → IsGrpPullback GK T (spMap (algebraMap V K)) φ₀ →
     IsGrpPullback GK Gx (spMap (algebraMap V K) ≫ z) φ₁ → ∀ u : epsAt (𝟙 (Sp K)) ⟶ GK, IsTanAt GK (𝟙 _) u →
-    ((∃ a : epsAt (𝟙 (Sp V)) ⟶ T, IsTanAt T (𝟙 _) a ∧ u.left ≫ φ₀ = spMap (dualMap (algebraMap V K)) ≫ a.left) ↔
-      ∃ a : epsAt z ⟶ Gx, IsTanAt Gx z a ∧ u.left ≫ φ₁ = spMap (dualMap (algebraMap V K)) ≫ a.left) := by
+    ((∃ a : epsAt (𝟙 (Sp V)) ⟶ T, IsTanAt T (𝟙 _) a ∧ u.left ≫ φ₀ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ a.left) ↔
+      ∃ a : epsAt z ⟶ Gx, IsTanAt Gx z a ∧ u.left ≫ φ₁ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ a.left) := by
   first | exact @GlobalTheory.CompanionTheory.Ar.Flat.CPoint.tan_iff_of_generic | exact GlobalTheory.CompanionTheory.Ar.Flat.CPoint.tan_iff_of_generic | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.CPoint.tan_iff_of_generic <;> assumption)

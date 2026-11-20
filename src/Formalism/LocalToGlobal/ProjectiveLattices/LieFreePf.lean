@@ -96,7 +96,7 @@ theorem lieFree : LieFreeSt Xo c := by
       (∀ i, IsTan (ub i)) ∧ (∀ i, IsEigV c io G τ (ub i)) ∧
       (∀ (w : epsOver T.V T.V ⟶ G.G), IsTan w → IsEigV c io G τ w → ∃! a : Fin (Dw.mult τ) → T.V, IsComb ub a w) ∧
       (∀ i, ∃ u' : Sp (DualNumber T.Fr) ⟶ t'.G.left, u' ≫ m1.φ = u i ∧
-        u' ≫ m2.φ = spMap (dualMap (algebraMap T.V T.Fr)) ≫ (ub i).left) ∧
+        u' ≫ m2.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ (ub i).left) ∧
       (∀ i, IsTanAt x (u i)) ∧ (∀ i, IsEigAt c τ (u i)) ∧
       (∀ w, IsTanAt x w → IsEigAt c τ w → ∃! a : Fin (Dw.mult τ) → T.Fr, IsCombAt x u a w) ∧
       ∀ i, ∃ cf : Fin (Dw.mult τ) → T.Fr, IsUnit (cf i) ∧ (∀ j, i < j → cf j = 0) ∧ IsCombAt x (u₀ τ) cf (u i) := by

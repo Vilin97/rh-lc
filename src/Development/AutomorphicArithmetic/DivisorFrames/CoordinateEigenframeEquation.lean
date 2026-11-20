@@ -47,14 +47,14 @@ private theorem UpperTheory.padic_grading_norm_log {Z : Model Xo c (algebraMap (
     {s : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → kˣ} (b : f.Tri ψ y.frame s) (p : ℕ) [Fact p.Prime] (io : k →+* ℂ_[p])
     (τ : E →+* ℂ) (i : ℕ) (hi : i < Dw.mult τ) :
     Real.log (GlobalTheory.ShFam.Pad.grNorm Z.t (spMap (io.comp ψ) ≫ x) (lat Z.t p (spMap (io.comp ψ) ≫ x) false)
-      (fun j => spMap (dualMap (io.comp ψ)) ≫ f.v τ j) ⟨i, hi⟩) =
+      (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (io.comp ψ)) ≫ f.v τ j) ⟨i, hi⟩) =
       y.lnLie io p false τ i - Real.log ‖io (s τ ⟨i, hi⟩)‖ := by
   have hx : spMap io ≫ y.y ≫ genι Z = spMap (io.comp ψ) ≫ x := by
     rw [← Guard.sp_comp, Category.assoc, ← b.1]
   have h0 := Guard.grNorm_lat_pos Z y p io false (by simp) τ ⟨i, hi⟩
   have hd (j) : io (s τ j) ≠ 0 := (map_ne_zero io).2 (s τ j).ne_zero
   have h1 := Guard.grNorm_tri (t := Z.t) (x := spMap (io.comp ψ) ≫ x) (Λ := lat Z.t p (spMap (io.comp ψ) ≫ x) false)
-    (u := fun j => spMap (dualMap (io.comp ψ)) ≫ f.v τ j) (u' := fun j => spMap (dualMap io) ≫ y.u τ j)
+    (u := fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (io.comp ψ)) ≫ f.v τ j) (u' := fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) ≫ y.u τ j)
     (fun j => GlobalTheory.FactorDepth.isTanAtG_map _ _ (f.tan τ j)) hd (fun j => by
       obtain ⟨cf, e1, e2, e3⟩ := b.2.2 τ j
       refine ⟨fun a => io (cf a), congrArg io e1, fun a ha => (congrArg io (e2 a ha)).trans (map_zero io), ?_⟩
@@ -96,7 +96,7 @@ private noncomputable def UpperTheory.finiteEigenFrameNorm {O : Type} [CommRing 
       (eqn (divOf Y (expo Dw w)) (below y.1))⁻¹ : Y.Y.Fnˣ) : Y.Y.Fn))) +
     (-Real.log (ε.w (resP v)) / Real.log (resP v)) *
       w.sum fun a n => (n : ℝ) * lnStep Z.t (spMap ψ ≫ stalkPt Y.Y (below y.1) ≫ Y.π ≫ genι Z)
-        (fun τ i => spMap (dualMap ψ) ≫ f.v τ i) (resP v) (a.1 (resP v)) a.2.2
+        (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f.v τ i) (resP v) (a.1 (resP v)) a.2.2
 
 private theorem UpperTheory.lgOf_eq_finiteNormInFrame {O : Type} [CommRing O] {β : O →+* c.F} {Z : Model Xo c β} {F : Type} [Field F]
     [NumberField F] {e : F ≃+* c.F} (Y : FlagCpt Z e) (w : Sym E →₀ ℤ) (v : HeightOneSpectrum (𝓞 F))

@@ -100,14 +100,14 @@ theorem isLieEigen_of_gen (𝔐 : HodgeCpt Y S y) {L : Type} [Field L] [NumberFi
   have hσ : spMap σ ≫ spMap (algebraMap (𝓞 L) L) ≫ z = spMap (σ.comp (algebraMap (𝓞 L) L)) ≫ z := by
     rw [← Category.assoc]
     exact congrArg (· ≫ z) (spec_comp _ _)
-  have hd : dualMap (σ.comp (algebraMap (𝓞 L) L)) = (dualMap σ).comp (dualMap (algebraMap (𝓞 L) L)) := by
+  have hd : GlobalTheory.CompanionTheory.Ar.dualMap (σ.comp (algebraMap (𝓞 L) L)) = (GlobalTheory.CompanionTheory.Ar.dualMap σ).comp (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) := by
     refine RingHom.ext fun a => ?_
     ext <;> simp
   have hw' : w = epsBase σ hσ ≫ v := by
     refine (left_eq_iff σ hσ w v).1 ?_
-    have h1 : w.left = spMap (dualMap (σ.comp (algebraMap (𝓞 L) L))) ≫ (MB.pt x).left := by
+    have h1 : w.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (σ.comp (algebraMap (𝓞 L) L))) ≫ (MB.pt x).left := by
       simpa [LieModel.Lifts] using hw
-    have h2 : v.left = spMap (dualMap (algebraMap (𝓞 L) L)) ≫ (MB.pt x).left := by
+    have h2 : v.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) ≫ (MB.pt x).left := by
       simpa [LieModel.Lifts] using hl
     rw [h1, h2, hd, ← Category.assoc]
     exact congrArg (· ≫ (MB.pt x).left) (spec_comp _ _).symm
@@ -115,7 +115,7 @@ theorem isLieEigen_of_gen (𝔐 : HodgeCpt Y S y) {L : Type} [Field L] [NumberFi
   refine ⟨isTanAt_base σ hσ hval.isTanAt, fun a => ?_⟩
   have ev := GlobalTheory.CompanionTheory.Ar.FlagFib.valAt_eigen E H D l Xo c Y S Ω K J y 𝔐 L _ hp g₀ hg s e v a (hU he) hval
   have e1 : ((epsBase σ hσ ≫ v) ≫ 𝔐.t.act.act a).left =
-      Spec.map (CommRingCat.ofHom (dualMap σ)) ≫ (v ≫ 𝔐.t.act.act a).left := rfl
+      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap σ)) ≫ (v ≫ 𝔐.t.act.act a).left := rfl
   rw [e1, ev, ← Category.assoc, spec_dual_eps, Category.assoc]
   rfl
 

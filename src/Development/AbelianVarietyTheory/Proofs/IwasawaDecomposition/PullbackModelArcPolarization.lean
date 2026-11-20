@@ -60,15 +60,15 @@ theorem exists_basis_extends {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R
   refine ⟨b', fun i => tan_ext_left ?_⟩
   simp only [basPull_apply, tanPull_left] at hbu hbw
   rw [tanPull_left, tanPull_left, hb, hb']
-  have w : (spMap (dualMap gam) ≫ (tv (bu i)).left) ≫ u.G.hom =
+  have w : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap gam) ≫ (tv (bu i)).left) ≫ u.G.hom =
       spMap (algebraMap _ (DualNumber (FractionRing V))) ≫ spMap gam := by
     rw [Category.assoc, tv_hom, Category.comp_id, spMap_comp', spMap_comp', PullbackSections.dualMap_comp_alg]
   obtain ⟨ρ, ρ₁, ρ₂⟩ : ∃ ρ : Sp (DualNumber (FractionRing V)) ⟶ Dd.G.left,
-      ρ ≫ c0.φ = spMap (dualMap gam) ≫ (tv (bu i)).left ∧
+      ρ ≫ c0.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap gam) ≫ (tv (bu i)).left ∧
       ρ ≫ Dd.G.hom = spMap (algebraMap _ (DualNumber (FractionRing V))) :=
     ⟨c0.cart.1.lift _ _ w, c0.cart.1.lift_fst _ _ w, c0.cart.1.lift_snd _ _ w⟩
   have hc : gam.comp (algebraMap R _) = (algebraMap V _).comp ψ := RingHom.ext hg
-  have k : ρ ≫ mm.φ = spMap (dualMap (algebraMap V (FractionRing V))) ≫ (tv (bw i)).left := by
+  have k : ρ ≫ mm.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V (FractionRing V))) ≫ (tv (bw i)).left := by
     apply a1.cart.1.hom_ext
     · rw [Category.assoc, ← e₁, reassoc_of% ρ₁, hbu, Category.assoc, hbw, ← Category.assoc, ← Category.assoc,
         spMap_comp', spMap_comp', ← FlagMod.dualMap_comp, ← FlagMod.dualMap_comp, hc]

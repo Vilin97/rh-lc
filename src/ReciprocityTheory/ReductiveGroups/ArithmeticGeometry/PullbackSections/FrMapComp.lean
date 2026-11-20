@@ -16,15 +16,15 @@ theorem spMap_comp {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (φ : S
   simp only [spMap, CommRingCat.ofHom_comp, Spec.map_comp]
 
 theorem dualMap_comp {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (φ : S →+* T) (ψ : T →+* U) :
-    dualMap (ψ.comp φ) = (dualMap ψ).comp (dualMap φ) := RingHom.ext fun x => by ext <;> simp [dualMap]
+    GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ) = (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) := RingHom.ext fun x => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
   {Xo : Moduli Dw l} {c : Coeff l}
 
 theorem frMap_refl {S : Type} [CommRing S] [Algebra c.F S] (y : FrPt Xo c S) :
     FrMap (AlgHom.id c.F S) y y := by
-  have e : dualMap (AlgHom.id c.F S).toRingHom = RingHom.id _ :=
-    RingHom.ext fun x => by ext <;> simp [dualMap]
+  have e : GlobalTheory.CompanionTheory.Ar.dualMap (AlgHom.id c.F S).toRingHom = RingHom.id _ :=
+    RingHom.ext fun x => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   refine ⟨?_, ?_, 𝟙 _, ?_, ?_, ?_⟩
   · rw [spMap_algHom_id, Category.id_comp]
   · intro τ i

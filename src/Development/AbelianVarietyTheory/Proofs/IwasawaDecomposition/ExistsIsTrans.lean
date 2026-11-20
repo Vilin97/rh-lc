@@ -24,10 +24,10 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem comb_bc (φ : R →+* S) {x : Sp R ⟶ X} {m : ℕ} {v : Fin m → (Sp (DualNumber R) ⟶ t.G.left)} {cf : Fin m → R}
     {w : Sp (DualNumber R) ⟶ t.G.left} (h : IsCombAtG t x v cf w) :
-    IsCombAtG t (spMap φ ≫ x) (fun i => spMap (dualMap φ) ≫ v i) (fun i => φ (cf i)) (spMap (dualMap φ) ≫ w) := by
+    IsCombAtG t (spMap φ ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v i) (fun i => φ (cf i)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ w) := by
   obtain ⟨u, hu, rfl⟩ := h
-  let δ : tEpsG (spMap φ ≫ x) ⟶ tEpsG x := Over.homMk (spMap (dualMap φ)) (by
-    show spMap (dualMap φ) ≫ spMap (algebraMap R (DualNumber R)) ≫ x =
+  let δ : tEpsG (spMap φ ≫ x) ⟶ tEpsG x := Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ)) (by
+    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ spMap (algebraMap R (DualNumber R)) ≫ x =
       spMap (algebraMap S (DualNumber S)) ≫ spMap φ ≫ x
     rw [← Category.assoc, ← Category.assoc, spMap_comp', spMap_comp', Formalism.L2.Pj.dualMap_comp_alg])
   refine ⟨fun i => δ ≫ u i, fun i => ?_, ?_⟩
@@ -48,7 +48,7 @@ theorem comb_push_iff {f : X' ⟶ X} (mu : SABMap t' t f) {x : Sp R ⟶ X'} {m :
 
 theorem Vecs.bc_bc (φ : R →+* S) (ψ : S →+* T) (u : Vecs Dw t R) : (u.bc φ).bc ψ = u.bc (ψ.comp φ) := by
   funext τ i
-  have e : (dualMap ψ).comp (dualMap φ) = dualMap (ψ.comp φ) := RingHom.ext fun z => by ext <;> simp [dualMap]
+  have e : (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) = GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ) := RingHom.ext fun z => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   simp only [Vecs.bc]
   rw [← Category.assoc, spMap_comp', e]
 

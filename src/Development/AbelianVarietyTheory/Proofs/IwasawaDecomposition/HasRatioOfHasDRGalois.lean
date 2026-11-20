@@ -156,13 +156,13 @@ theorem exists_ratio (hB : HTBoundSt) (hp : p.Prime) (Z : Mdl Y i₀) (hty : ∀
     (hst : ∀ (y : Z.Pt) (b : Bool) (ψ : Γ(Z.X, U) →+* ↥y.C.S),
       lnStep (Y Z.i).t (y.gen ≫ Z.π) (w.bc ψ) p b st =
         Real.log (grNorm (Y Z.i).t (y.gen ≫ Z.π) (lat (Y Z.i).t p (y.gen ≫ Z.π) b)
-          (fun j => spMap (dualMap ψ) ≫ fam j) i) - (if b then c else 0))
+          (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ fam j) i) - (if b then c else 0))
     (hg : ∀ b : Bool, ∃ (a₁ a₂ : ℕ) (A : Fin a₁ → Γ(Z.X, U)) (B : Fin a₂ → Γ(Z.X, U)),
       (p : Γ(Z.X, U)) ∈ (Ideal.span (Set.range A)).radical ∧ (p : Γ(Z.X, U)) ∈ (Ideal.span (Set.range B)).radical ∧
       ∀ (C : SCF p) (φ : Γ(Z.X, U) →+* ↥(intO ↥C.S)),
         grNorm (Y Z.i).t (spMap (intO ↥C.S).subtype ≫ spMap φ ≫ hU.fromSpec ≫ Z.π)
           (lat (Y Z.i).t p (spMap (intO ↥C.S).subtype ≫ spMap φ ≫ hU.fromSpec ≫ Z.π) b)
-          (fun j => spMap (dualMap ((intO ↥C.S).subtype.comp φ)) ≫ fam j) i *
+          (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((intO ↥C.S).subtype.comp φ)) ≫ fam j) i *
             ‖fun j => ((φ (B j) : ↥(intO ↥C.S)) : ↥C.S)‖ = ‖fun j => ((φ (A j) : ↥(intO ↥C.S)) : ↥C.S)‖) :
     ∃ (m m' : ℕ) (A : Fin m → Γ(Z.X, U)) (B : Fin m' → Γ(Z.X, U)), RatioAt Z st U A B := by
   obtain ⟨m₁, m₁', A₁, B₁, hA₁, hB₁, h₁⟩ := hg true
@@ -231,13 +231,13 @@ theorem hasRatio : HTBoundSt → ∀ (E : Type) [Field E] [NumberField E] [IsCMF
   have hgn : ∀ {n : ℕ} (fam : Fin n → (Sp (DualNumber Γ(Z.X, U)) ⟶ (Y Z.i).t.G.left)),
       (∀ j, IsTanAtG (Y Z.i).t (hU.fromSpec ≫ Z.π) (fam j)) →
       (∀ (k : Type) [Field k] (ψ : Γ(Z.X, U) →+* k), (p : k) ≠ 0 →
-        GlobalTheory.ShFam.Pad.Pull.Ind (Y Z.i).t (spMap ψ ≫ hU.fromSpec ≫ Z.π) (fun j => spMap (dualMap ψ) ≫ fam j)) →
+        GlobalTheory.ShFam.Pad.Pull.Ind (Y Z.i).t (spMap ψ ≫ hU.fromSpec ≫ Z.π) (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ fam j)) →
       ∀ (i : Fin n) (b : Bool), ∃ (a₁ a₂ : ℕ) (A : Fin a₁ → Γ(Z.X, U)) (B : Fin a₂ → Γ(Z.X, U)),
       (p : Γ(Z.X, U)) ∈ (Ideal.span (Set.range A)).radical ∧ (p : Γ(Z.X, U)) ∈ (Ideal.span (Set.range B)).radical ∧
       ∀ (C : SCF p) (φ : Γ(Z.X, U) →+* ↥(intO ↥C.S)),
         grNorm (Y Z.i).t (spMap (intO ↥C.S).subtype ≫ spMap φ ≫ hU.fromSpec ≫ Z.π)
           (lat (Y Z.i).t p (spMap (intO ↥C.S).subtype ≫ spMap φ ≫ hU.fromSpec ≫ Z.π) b)
-          (fun j => spMap (dualMap ((intO ↥C.S).subtype.comp φ)) ≫ fam j) i *
+          (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((intO ↥C.S).subtype.comp φ)) ≫ fam j) i *
             ‖fun j => ((φ (B j) : ↥(intO ↥C.S)) : ↥C.S)‖ = ‖fun j => ((φ (A j) : ↥(intO ↥C.S)) : ↥C.S)‖ :=
     fun {n} fam h₁ h₂ i b => by
       obtain ⟨M, h, hP⟩ := hpres b

@@ -69,7 +69,7 @@ private theorem exists_label {E : Type} [Field E] [NumberField E] [IsCMField E] 
   exact Subtype.ext hb'
 
 theorem UpperTheory.torsion_character_integral_point :
-    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c (algebraMap (𝓞 c.F) c.F)) [IsLocallyNoetherian Z.X], Z.X.IsSeparated → ∀ (p : ℕ) [Fact p.Prime] (n : ℕ) (x : Sp ↥(intO ℂ_[p]) ⟶ Z.X) (y : Sp ℂ_[p] ⟶ Xo.XF c), 2 ≤ n → spMap (intO ℂ_[p]).subtype ≫ x = y ≫ Z.j → ∀ ch : Dw.La → TorsChar Z.t x (p ^ n), WeilLab Z (intO ℂ_[p]).subtype x y (p ^ n) ch → ∀ (g : ℕ) (e : Fin g → (Sp (DualNumber ↥(intO ℂ_[p])) ⟶ Z.t.G.left)) (h : Dw.La → Fin g → ↥(intO ℂ_[p])), IsTanBasis Z.t x e → (∀ a, DlogIs Z.t p n (ch a) e (h a)) → ∀ cf : Fin g → ℂ_[p], (cf ∈ latCo Z.t p (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (dualMap (intO ℂ_[p]).subtype) ≫ e i) ↔ ∀ a, ‖∑ i, (h a i : ℂ_[p]) * cf i‖ ≤ 1) ∧ (cf ∈ latCo Z.t p (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (dualMap (intO ℂ_[p]).subtype) ≫ e i) → ∀ i, ‖(p : ℂ_[p]) * cf i‖ ≤ 1) := by
+    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c (algebraMap (𝓞 c.F) c.F)) [IsLocallyNoetherian Z.X], Z.X.IsSeparated → ∀ (p : ℕ) [Fact p.Prime] (n : ℕ) (x : Sp ↥(intO ℂ_[p]) ⟶ Z.X) (y : Sp ℂ_[p] ⟶ Xo.XF c), 2 ≤ n → spMap (intO ℂ_[p]).subtype ≫ x = y ≫ Z.j → ∀ ch : Dw.La → TorsChar Z.t x (p ^ n), WeilLab Z (intO ℂ_[p]).subtype x y (p ^ n) ch → ∀ (g : ℕ) (e : Fin g → (Sp (DualNumber ↥(intO ℂ_[p])) ⟶ Z.t.G.left)) (h : Dw.La → Fin g → ↥(intO ℂ_[p])), IsTanBasis Z.t x e → (∀ a, DlogIs Z.t p n (ch a) e (h a)) → ∀ cf : Fin g → ℂ_[p], (cf ∈ latCo Z.t p (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ e i) ↔ ∀ a, ‖∑ i, (h a i : ℂ_[p]) * cf i‖ ≤ 1) ∧ (cf ∈ latCo Z.t p (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ e i) → ∀ i, ‖(p : ℂ_[p]) * cf i‖ ≤ 1) := by
   intro E _ _ _ H Dw l Xo c Z _ hX p hp n x y hn hxy ch hW g e h he hD cf
   classical
   have hq : p ^ n ≠ 0 := pow_ne_zero _ hp.out.ne_zero
@@ -88,7 +88,7 @@ theorem UpperTheory.torsion_character_integral_point :
   obtain ⟨N, ⟨eqv⟩⟩ := Finite.exists_equiv_fin (GlobalTheory.HtGen.TorsK Z.t (y ≫ Z.j) (p ^ n) →* ℂ_[p]ˣ)
   have heC := fun i => GlobalTheory.FactorDepth.isTanAtG_map Z.t (intO ℂ_[p]).subtype (he.1 i)
   obtain ⟨w, -, hw⟩ := Guard.exists_comb heC cf
-  have hmem : cf ∈ latCo Z.t p (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (dualMap (intO ℂ_[p]).subtype) ≫ e i) ↔
+  have hmem : cf ∈ latCo Z.t p (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ e i) ↔
       w ∈ latHT Z.t p (spMap (intO ℂ_[p]).subtype ≫ x) :=
     ⟨fun ⟨w', h1, h2⟩ => Guard.comb_unique heC h2 hw ▸ h1, fun h1 => ⟨w, h1, hw⟩⟩
   have key := fun a₀ : Dw.La =>

@@ -21,7 +21,7 @@ namespace GlobalTheory.CompanionTheory.Ar.OrVert.LieCmp
 theorem exists_ext {S : Scheme.{0}} {G : Over S} [GrpObj G] (hs : Smooth G.hom) {R R' : Type} [Field R] [Field R']
     (i : R →+* R') (x : Sp R ⟶ S) (y : Sp R' ⟶ S) (hy : spMap i ≫ x = y) {E E' : Type} [AddCommGroup E] [Module R E]
     [AddCommGroup E'] [Module R' E'] (M : LieModel G x E) (M' : LieModel G y E') :
-    ∃ j : E →+ E', (∀ e, (M'.pt (j e)).left = spMap (dualMap i) ≫ (M.pt e).left) ∧ IsExtOver i j ∧
+    ∃ j : E →+ E', (∀ e, (M'.pt (j e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap i) ≫ (M.pt e).left) ∧ IsExtOver i j ∧
       Submodule.span R' (Set.range j) = ⊤ := by
   subst hy
   letI := i.toAlgebra
@@ -49,18 +49,18 @@ theorem span_image_span (i : Ω₀ →+* Ω) (ι : F₀ →+ F) (hι : ∀ (a : 
     Submodule.span W (ι '' ((Submodule.span A T : Submodule A F₀) : Set F₀)) = Submodule.span W (ι '' T) :=
   _root_.UpperTheory.Reformulated.B.DYha5.main i ι hι W A h T
 
-theorem lie_cmp : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)) (S S₀ : Finset ℕ) (Ω Ω₀ : Type) [Field Ω] [Field Ω₀] (K K₀ : Type) [Fintype K] [Fintype K₀] (J : K → Type) (J₀ : K₀ → Type) (y : (Σ k, J k) → Ω) (y₀ : (Σ k, J₀ k) → Ω₀) (𝔐 : HodgeCpt Y S y) (𝔐₀ : HodgeCpt Y S₀ y₀) (Fl₀ : 𝔐₀.Flag) (i : Ω₀ →+* Ω), 𝔐.ξ ≫ 𝔐.f = spMap i ≫ 𝔐₀.ξ ≫ 𝔐₀.f → ∃ ι : 𝔐₀.Li →+ 𝔐.Li, IsExtOver i ι ∧ Submodule.span Ω (Set.range ι) = ⊤ ∧ (∀ (e : 𝔐₀.Li) (e' : 𝔐.Li), (𝔐.M.pt e').left ≫ 𝔐.m.φ = spMap (dualMap i) ≫ (𝔐₀.M.pt e).left ≫ 𝔐₀.m.φ ↔ e' = ι e) ∧ ∀ (W : Subring Ω) (q : Cpt 𝔐.ξ) (q₀ : Cpt 𝔐₀.ξ), (∀ a ∈ regAt 𝔐.ξ q, a ∈ W) → (∀ a ∈ regAt 𝔐₀.ξ q₀, i a ∈ W) → 𝔐.f q.1 = 𝔐₀.f q₀.1 → Submodule.span W ((𝔐.M.lat q : Set 𝔐.Li)) = Submodule.span W (ι '' (𝔐₀.M.lat q₀ : Set 𝔐₀.Li)) := by
+theorem lie_cmp : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (Y : Model Xo c (algebraMap (𝓞 c.F) c.F)) (S S₀ : Finset ℕ) (Ω Ω₀ : Type) [Field Ω] [Field Ω₀] (K K₀ : Type) [Fintype K] [Fintype K₀] (J : K → Type) (J₀ : K₀ → Type) (y : (Σ k, J k) → Ω) (y₀ : (Σ k, J₀ k) → Ω₀) (𝔐 : HodgeCpt Y S y) (𝔐₀ : HodgeCpt Y S₀ y₀) (Fl₀ : 𝔐₀.Flag) (i : Ω₀ →+* Ω), 𝔐.ξ ≫ 𝔐.f = spMap i ≫ 𝔐₀.ξ ≫ 𝔐₀.f → ∃ ι : 𝔐₀.Li →+ 𝔐.Li, IsExtOver i ι ∧ Submodule.span Ω (Set.range ι) = ⊤ ∧ (∀ (e : 𝔐₀.Li) (e' : 𝔐.Li), (𝔐.M.pt e').left ≫ 𝔐.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap i) ≫ (𝔐₀.M.pt e).left ≫ 𝔐₀.m.φ ↔ e' = ι e) ∧ ∀ (W : Subring Ω) (q : Cpt 𝔐.ξ) (q₀ : Cpt 𝔐₀.ξ), (∀ a ∈ regAt 𝔐.ξ q, a ∈ W) → (∀ a ∈ regAt 𝔐₀.ξ q₀, i a ∈ W) → 𝔐.f q.1 = 𝔐₀.f q₀.1 → Submodule.span W ((𝔐.M.lat q : Set 𝔐.Li)) = Submodule.span W (ι '' (𝔐₀.M.lat q₀ : Set 𝔐₀.Li)) := by
   intro E _ _ _ H D l Xo c Y S S₀ Ω Ω₀ _ _ K K₀ _ _ J J₀ y y₀ 𝔐 𝔐₀ Fl₀ i hh
   have hs : Smooth Y.t.G.hom := Y.t.semi.smooth
   obtain ⟨ι, hpt, hext, hspan⟩ := exists_ext hs i (𝔐₀.ξ ≫ 𝔐₀.f) (𝔐.ξ ≫ 𝔐.f) hh.symm
     (LieMove.pushModel 𝔐₀.m.cart 𝔐₀.M) (LieMove.pushModel 𝔐.m.cart 𝔐.M)
-  have hpt' : ∀ e, (𝔐.M.pt (ι e)).left ≫ 𝔐.m.φ = spMap (dualMap i) ≫ (𝔐₀.M.pt e).left ≫ 𝔐₀.m.φ := hpt
+  have hpt' : ∀ e, (𝔐.M.pt (ι e)).left ≫ 𝔐.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap i) ≫ (𝔐₀.M.pt e).left ≫ 𝔐₀.m.φ := hpt
   have hd : GlobalTheory.CompanionTheory.Ar.Dominates 𝔐.ξ 𝔐₀.ξ₀ 𝔐.f (i.comp 𝔐₀.fn) := by
     have h₀ : 𝔐₀.ξ ≫ 𝔐₀.f = Spec.map (CommRingCat.ofHom 𝔐₀.fn) ≫ 𝔐₀.ξ₀ := 𝔐₀.fn_over
     show 𝔐.ξ ≫ 𝔐.f = _
     rw [hh, h₀, CommRingCat.ofHom_comp, Spec.map_comp, Category.assoc]
   have hj' : ∀ e, (𝔐.M.pt ((ι.comp Fl₀.j) e)).left ≫ 𝔐.m.φ =
-      Spec.map (CommRingCat.ofHom (dualMap (i.comp 𝔐₀.fn))) ≫ (Fl₀.M₀.pt e).left := by
+      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (i.comp 𝔐₀.fn))) ≫ (Fl₀.M₀.pt e).left := by
     intro e
     rw [AddMonoidHom.comp_apply, hpt', Fl₀.j_pt, ← LiePull.dualMap_comp, CommRingCat.ofHom_comp, Spec.map_comp,
       Category.assoc]

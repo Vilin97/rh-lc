@@ -98,7 +98,7 @@ theorem grLat_at {F : Type} [Field F] [NumberField F] {e : F ≃+* c.F} {X W : S
         (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z) τ w →
       ((∃ a : Fin r → ℂ_[resP v], (∀ i, ‖a i‖ ≤ 1) ∧
           IsCombAtG Z.t (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z)
-            (fun i => spMap (dualMap (ioOf (resP v) ε)) ≫ u U f hf _ xg hx i) a w) ↔
+            (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ioOf (resP v) ε)) ≫ u U f hf _ xg hx i) a w) ↔
         InGr Z (((ioOf (resP v) ε).comp (algebraMap F (AlgebraicClosure F))).comp e.symm.toRingHom)
           (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z)
           (latDR Z.t (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z)) τ w) :=
@@ -120,7 +120,7 @@ theorem lieLat_at {F : Type} [Field F] [NumberField F] {e : F ≃+* c.F} {X W : 
         (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z) τ w →
       ((∃ a : Fin r → ℂ_[resP v], (∀ i, ‖a i‖ ≤ 1) ∧
           IsCombAtG Z.t (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z)
-            (fun i => spMap (dualMap (ioOf (resP v) ε)) ≫ u U f hf _ xg hx i) a w) ↔
+            (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ioOf (resP v) ε)) ≫ u U f hf _ xg hx i) a w) ↔
         spMap (epsMul δ) ≫ w ∈ lat Z.t (resP v) (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z) (kind (resP v))) :=
   h v trivial hp ε xg xt h1 h2 U f hf h3 hx
 

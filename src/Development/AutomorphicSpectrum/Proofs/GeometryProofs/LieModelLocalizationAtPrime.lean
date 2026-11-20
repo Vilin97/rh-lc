@@ -21,11 +21,11 @@ open LieTangent
 section SlopeTestRemainingChoices
 
 theorem dualMap_comp {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (φ : R →+* R') (ψ : R' →+* R'') :
-    (dualMap ψ).comp (dualMap φ) = dualMap (ψ.comp φ) := by
+    (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) = GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ) := by
   refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_ <;> simp
 
 theorem spec_dualMap {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (φ : R →+* R') (ψ : R' →+* R'') :
-    spMap (dualMap ψ) ≫ spMap (dualMap φ) = spMap (dualMap (ψ.comp φ)) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ)) := by
   rw [← dualMap_comp]
   exact spec_comp _ _
 
@@ -34,7 +34,7 @@ variable {X : Scheme.{0}} {Ω : Type} [Field Ω] {G : Over X} [GrpObj G] {ξ : S
 
 theorem lieValAt_base (M : LieModel G ξ E) (hξ : IsCptGen ξ) {R R' : Type} [CommRing R] [IsLocalRing R] [CommRing R']
     [IsLocalRing R'] (φ : R →+* R') {z : Sp R ⟶ X} {z' : Sp R' ⟶ X} (hz : spMap φ ≫ z = z') {e : E}
-    {w : epsAt z ⟶ G} {w' : epsAt z' ⟶ G} (h : M.ValAt z e w) (hw : w'.left = spMap (dualMap φ) ≫ w.left) :
+    {w : epsAt z ⟶ G} {w' : epsAt z' ⟶ G} (h : M.ValAt z e w) (hw : w'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ w.left) :
     M.ValAt z' e w' := by
   subst hz
   obtain ⟨h1, v, hv, hw0⟩ := h
@@ -43,11 +43,11 @@ theorem lieValAt_base (M : LieModel G ξ E) (hξ : IsCptGen ξ) {R R' : Type} [C
   have hσ : Spec.map (CommRingCat.ofHom (X.presheaf.stalkSpecializes c).hom) ≫ X.fromSpecStalk (centre z) =
       X.fromSpecStalk (centre (spMap φ ≫ z)) := Scheme.SpecMap_stalkSpecializes_fromSpecStalk c
   refine ⟨h2, epsBase (X.presheaf.stalkSpecializes c).hom hσ ≫ v, ⟨isTanAt_base _ hσ hv.1, ?_⟩, ?_⟩
-  · change _ = _ ≫ spMap (dualMap (X.presheaf.stalkSpecializes c).hom) ≫ v.left
+  · change _ = _ ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (X.presheaf.stalkSpecializes c).hom) ≫ v.left
     have e : (genMap ξ ⟨_, h2⟩).comp (X.presheaf.stalkSpecializes c).hom = genMap ξ ⟨_, h1⟩ :=
       RingHom.ext fun s => genMap_specializes ⟨_, h1⟩ h2 c s
     rw [hv.2, ← Category.assoc, spec_dualMap, e]
-  · change _ = _ ≫ spMap (dualMap (X.presheaf.stalkSpecializes c).hom) ≫ v.left
+  · change _ = _ ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (X.presheaf.stalkSpecializes c).hom) ≫ v.left
     have e : (Scheme.stalkClosedPointTo (spMap φ ≫ z)).hom.comp (X.presheaf.stalkSpecializes c).hom =
         φ.comp (Scheme.stalkClosedPointTo z).hom :=
       RingHom.ext fun s => congrArg (fun g => g.hom s) (stalk_base φ z)

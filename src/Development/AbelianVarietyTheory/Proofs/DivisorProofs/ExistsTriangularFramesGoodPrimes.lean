@@ -58,7 +58,7 @@ private theorem gen_eq {X : Scheme.{0}} [IsIntegral X] {U : X.Opens} (hU : IsAff
     spMap (fnOf U h) ≫ hU.fromSpec = GlobalTheory.CurveRootGeometry.genPt X :=
   hU.fromSpecStalk_eq_fromSpecStalk h
 
-private theorem minors : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β), Z.X.IsSeparated → ∀ (F : Type) [Field F] [NumberField F] (e : F ≃+* c.F) (C : FlagCpt Z e) (V : Cover C.Y) (b : V.X ⟶ Z.X), V.j ≫ b = V.π ≫ C.π ≫ genι Z → ∀ (hη : V.j (genericPoint V.G) ⤳ genericPoint V.X) (q : ℕ), q.Prime → ∀ (kind : ℕ → Bool) (R : Option ℝ), kind q = false → ∀ (τ : E →+* ℂ) (U : V.X.Opens) (hU : IsAffineOpen U) (h : genericPoint V.X ∈ U) (ρ : Fin (Dw.mult τ) → V.X.functionFieldˣ), (∀ (m : Fin (Dw.mult τ)) (z : V.G), V.j z ∈ U → UnitAt z (V.φ (genAt (divOf C (expo Dw (Finsupp.single (kind, R, .inl (τ, m)) 1))) (V.π z)) * SmallSec.fnMap V.j hη (ρ m))) → (∀ (m : Fin (Dw.mult τ)) (v : HeightOneSpectrum (𝓞 F)) (ε : Ext v) (y : AlgPt C.Y) (z : Sp (AlgebraicClosure F) ⟶ V.G) (yt : Sp ε.O ⟶ V.X), z ≫ V.π = y.1 → spMap ε.O.subtype ≫ yt = z ≫ V.j → ⊤ ≤ yt ⁻¹ᵁ U → lgOf C (Finsupp.single (kind, R, .inl (τ, m)) 1) v ε y = Real.log (ε.w (valAt z (V.φ (genAt (divOf C (expo Dw (Finsupp.single (kind, R, .inl (τ, m)) 1))) (below y.1)) * SmallSec.fnMap V.j hη (ρ m))))) → ∀ (g : ℕ) (eb : Fin g → (Sp (DualNumber Γ(V.X, U)) ⟶ Z.t.G.left)), IsTanBasis Z.t (R := Γ(V.X, U)) (hU.fromSpec ≫ b) eb → ∀ (A₀ : Fin (Dw.mult τ) → Fin g → V.X.functionField), (∀ m, IsCombAtG Z.t (spMap ((SmallSec.fnMap V.j hη).comp (fnOf U h)) ≫ hU.fromSpec ≫ b) (fun i => spMap (dualMap ((SmallSec.fnMap V.j hη).comp (fnOf U h))) ≫ eb i) (fun i => SmallSec.fnMap V.j hη (A₀ m i)) (spMap (dualMap V.φ) ≫ C.f0.v τ m)) → ∀ x ∈ U, ¬ IsUnit (q : V.X.presheaf.stalk x) → ∀ (k : ℕ) (hk : k ≤ Dw.mult τ), (∀ s, RegAt x (minor (fun m => (((ρ m)⁻¹ : V.X.functionFieldˣ) : V.X.functionField) • A₀ m) hk s)) ∧ ∃ s, UnitAt x (minor (fun m => (((ρ m)⁻¹ : V.X.functionFieldˣ) : V.X.functionField) • A₀ m) hk s) := by
+private theorem minors : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β), Z.X.IsSeparated → ∀ (F : Type) [Field F] [NumberField F] (e : F ≃+* c.F) (C : FlagCpt Z e) (V : Cover C.Y) (b : V.X ⟶ Z.X), V.j ≫ b = V.π ≫ C.π ≫ genι Z → ∀ (hη : V.j (genericPoint V.G) ⤳ genericPoint V.X) (q : ℕ), q.Prime → ∀ (kind : ℕ → Bool) (R : Option ℝ), kind q = false → ∀ (τ : E →+* ℂ) (U : V.X.Opens) (hU : IsAffineOpen U) (h : genericPoint V.X ∈ U) (ρ : Fin (Dw.mult τ) → V.X.functionFieldˣ), (∀ (m : Fin (Dw.mult τ)) (z : V.G), V.j z ∈ U → UnitAt z (V.φ (genAt (divOf C (expo Dw (Finsupp.single (kind, R, .inl (τ, m)) 1))) (V.π z)) * SmallSec.fnMap V.j hη (ρ m))) → (∀ (m : Fin (Dw.mult τ)) (v : HeightOneSpectrum (𝓞 F)) (ε : Ext v) (y : AlgPt C.Y) (z : Sp (AlgebraicClosure F) ⟶ V.G) (yt : Sp ε.O ⟶ V.X), z ≫ V.π = y.1 → spMap ε.O.subtype ≫ yt = z ≫ V.j → ⊤ ≤ yt ⁻¹ᵁ U → lgOf C (Finsupp.single (kind, R, .inl (τ, m)) 1) v ε y = Real.log (ε.w (valAt z (V.φ (genAt (divOf C (expo Dw (Finsupp.single (kind, R, .inl (τ, m)) 1))) (below y.1)) * SmallSec.fnMap V.j hη (ρ m))))) → ∀ (g : ℕ) (eb : Fin g → (Sp (DualNumber Γ(V.X, U)) ⟶ Z.t.G.left)), IsTanBasis Z.t (R := Γ(V.X, U)) (hU.fromSpec ≫ b) eb → ∀ (A₀ : Fin (Dw.mult τ) → Fin g → V.X.functionField), (∀ m, IsCombAtG Z.t (spMap ((SmallSec.fnMap V.j hη).comp (fnOf U h)) ≫ hU.fromSpec ≫ b) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((SmallSec.fnMap V.j hη).comp (fnOf U h))) ≫ eb i) (fun i => SmallSec.fnMap V.j hη (A₀ m i)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap V.φ) ≫ C.f0.v τ m)) → ∀ x ∈ U, ¬ IsUnit (q : V.X.presheaf.stalk x) → ∀ (k : ℕ) (hk : k ≤ Dw.mult τ), (∀ s, RegAt x (minor (fun m => (((ρ m)⁻¹ : V.X.functionFieldˣ) : V.X.functionField) • A₀ m) hk s)) ∧ ∃ s, UnitAt x (minor (fun m => (((ρ m)⁻¹ : V.X.functionFieldˣ) : V.X.functionField) • A₀ m) hk s) := by
   intro E _ _ _ H Dw l Xo c O _ β Z hZ F _ _ e C V b hb hη q hq kind R hk τ U hU h ρ h1 h2 g eb he A₀ hA x hx hxq k hkn
   obtain ⟨hreg, hval⟩ := UpperTheory.flag_component_cover_frame_norm E H Dw l Xo c O β Z hZ F e C V b hb hη q hq kind R hk τ U hU h ρ h1 h2 g eb he A₀ hA k hkn
   have hR : ∀ s, ∀ x ∈ U, ¬ IsUnit (q : V.X.presheaf.stalk x) → RegAt x (minor (fun m => (((ρ m)⁻¹ : V.X.functionFieldˣ) : V.X.functionField) • A₀ m) hkn s) := fun s =>
@@ -93,13 +93,13 @@ private theorem loc {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Reci
       (∀ c : 𝓞 E, w ≫ (t.act.act c).left = spMap (epsMul (κ (ε τ c))) ≫ w) →
       ∃ cf : Fin n → W.functionField, IsCombAtG t (GlobalTheory.CurveRootGeometry.genPt W ≫ b) u₀ cf w)
     (A₀ : Fin n → Fin g → W.functionField)
-    (hA : ∀ l, IsCombAtG t (GlobalTheory.CurveRootGeometry.genPt W ≫ b) (fun i => spMap (dualMap (fnOf U (gen_mem hx))) ≫ eb i) (A₀ l) (u₀ l))
+    (hA : ∀ l, IsCombAtG t (GlobalTheory.CurveRootGeometry.genPt W ≫ b) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (fnOf U (gen_mem hx))) ≫ eb i) (A₀ l) (u₀ l))
     (d : Fin n → W.functionField)
     (hm : ∀ (k : ℕ) (hk : k ≤ n), (∀ s, RegAt x (minor (fun m => d m • A₀ m) hk s)) ∧
       ∃ s, UnitAt x (minor (fun m => d m • A₀ m) hk s)) :
     ∃ (T : W.Opens) (hT : IsAffineOpen T) (hxT : x ∈ T) (w : Fin n → (Sp (DualNumber Γ(W, T)) ⟶ t.G.left)), T ≤ U ∧
       IsLocFr t s (ε τ) (R := Γ(W, T)) (hT.fromSpec ≫ b) w ∧
-      IsTriOf t (GlobalTheory.CurveRootGeometry.genPt W ≫ b) u₀ d (fun m => spMap (dualMap (fnOf T (gen_mem hxT))) ≫ w m) := by
+      IsTriOf t (GlobalTheory.CurveRootGeometry.genPt W ≫ b) u₀ d (fun m => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (fnOf T (gen_mem hxT))) ≫ w m) := by
   classical
   choose cs hcs using hsep
   choose s₀ hs₀ using fun (k : ℕ) (hk : k ≤ n) => (hm k hk).2
@@ -119,14 +119,14 @@ private theorem loc {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Reci
   have hιr : ι.comp r = fnOf U (gen_mem hx) := RingHom.ext fun a => fnOf_resG _ _ _
   have hg : spMap ι ≫ hT.fromSpec ≫ b = GlobalTheory.CurveRootGeometry.genPt W ≫ b := by
     rw [← Category.assoc, gen_eq]
-  have he' : IsTanBasis t (R := Γ(W, T)) (hT.fromSpec ≫ b) fun i => spMap (dualMap r) ≫ eb i := by
+  have he' : IsTanBasis t (R := Γ(W, T)) (hT.fromSpec ≫ b) fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap r) ≫ eb i := by
     have := GlobalTheory.LineNorm.WedgeMax.isTanBasis_map t r he
     rwa [← Category.assoc, hr] at this
   let κ' : A →+* Γ(W, T) := (Spec.preimage ((hT.fromSpec ≫ b) ≫ s)).hom
   have hκ' : (hT.fromSpec ≫ b) ≫ s = spMap κ' := (Spec.map_preimage _).symm
   have hικ : ι.comp κ' = κ := sp_inj (by rw [sp_comp, ← hκ', ← hκ, ← hg]; simp only [Category.assoc])
   have hικ' : ∀ a, ι (κ' a) = κ a := fun a => congrArg (fun f => f a) hικ
-  have hA' : ∀ l, IsCombAtG t (spMap ι ≫ hT.fromSpec ≫ b) (fun i => spMap (dualMap ι) ≫ spMap (dualMap r) ≫ eb i)
+  have hA' : ∀ l, IsCombAtG t (spMap ι ≫ hT.fromSpec ≫ b) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ι) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap r) ≫ eb i)
       (A₀ l) (u₀ l) := fun l => by
     simp only [GlobalTheory.LineNorm.Chart.dual_comp, hιr, hg]
     exact hA l
@@ -143,7 +143,7 @@ private theorem loc {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Reci
   refine ⟨T, hT, hxT, w, hle, hL, fun m => ⟨fun l => Tm m l * d l, by simp only [hT1, one_mul],
     fun m' h => by simp only [hT2 m m' h, zero_mul], ?_⟩⟩
   obtain ⟨w', -, hw'⟩ := GlobalTheory.LineNorm.WedgeMax.exists_comb t h0 fun l => Tm m l * d l
-  have htan : ∀ i, IsTanAtG t (spMap ι ≫ hT.fromSpec ≫ b) (spMap (dualMap ι) ≫ spMap (dualMap r) ≫ eb i) := fun i =>
+  have htan : ∀ i, IsTanAtG t (spMap ι ≫ hT.fromSpec ≫ b) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ι) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap r) ≫ eb i) := fun i =>
     GlobalTheory.LieMet.isTan_map _ rfl (he'.1 i)
   have a1 := GlobalTheory.LineNorm.Chart.comb_comb htan hA' (hg ▸ hw')
   have a2 := GlobalTheory.LatDRFree.comb_map t ι (hw m)

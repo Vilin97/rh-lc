@@ -31,8 +31,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Da
 theorem exists_lift_vec (Y : Model Xo c β) {A : Type} [CommRing A] (f : Sp A ⟶ Xo.XF c)
     (t : epsAt (f ≫ Y.j) ⟶ Y.t.G) :
     ∃ vR : epsAt (under f) ⟶ Xo.univ.t.G, ∀ (χ : A →+* ℂ) (v : epsAt (under (spMap χ ≫ f)) ⟶ Xo.univ.t.G)
-      (v' : epsAt ((spMap χ ≫ f) ≫ Y.j) ⟶ Y.t.G), v.left = spMap (dualMap χ) ≫ vR.left →
-      v'.left = spMap (dualMap χ) ≫ t.left → SameVec Y (spMap χ ≫ f) v v' := by
+      (v' : epsAt ((spMap χ ≫ f) ≫ Y.j) ⟶ Y.t.G), v.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ vR.left →
+      v'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ t.left → SameVec Y (spMap χ ≫ f) v v' := by
   have hp : IsPullback Y.m0.toSABMap.φ Y.oF.t.G.hom Xo.univ.t.G.hom (pullback.fst _ _) := Y.m0.cart.1
   have hq : IsPullback Y.m.φ Y.oF.t.G.hom Y.t.G.hom Y.j := Y.m.cart.1
   have ht : t.left ≫ Y.t.G.hom = (spMap (algebraMap A (DualNumber A)) ≫ f) ≫ Y.j := by
@@ -42,7 +42,7 @@ theorem exists_lift_vec (Y : Model Xo c β) {A : Type} [CommRing A] (f : Sp A �
   refine ⟨Over.homMk (u ≫ Y.m0.toSABMap.φ) ?_, fun χ v v' hv hv' => ?_⟩
   · change (u ≫ Y.m0.toSABMap.φ) ≫ Xo.univ.t.G.hom = spMap (algebraMap A (DualNumber A)) ≫ f ≫ pullback.fst _ _
     rw [Category.assoc, hp.w, ← Category.assoc, hu, Category.assoc]
-  refine ⟨spMap (dualMap χ) ≫ u, ?_, ?_, ?_⟩
+  refine ⟨spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ u, ?_, ?_, ?_⟩
   · rw [Category.assoc, hu, ← Category.assoc, ← Category.assoc]
     congr 1
     exact spec_dual_alg χ
@@ -121,7 +121,7 @@ theorem lieMult_at (y : Sp ℂ ⟶ Xo.XF c) (σ : c.F →+* ℂ) (τ : E →+* �
     have h5 : ((H.d : ℕ) : ℂ) = 0 := by simpa using h4.symm
     exact H.d_prime.ne_zero (Nat.cast_eq_zero.mp h5)
 
-theorem exists_local_eigenframes : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (U : Set (Xo.XF c)) (Z : CptOver Y U) (τ : E →+* ℂ) (σ : c.F →+* ℂ) (y₀ : Sp ℂ ⟶ Xo.XF c), (Function.Injective β ∧ IsNoetherianRing O ∧ ∀ x : c.F, ∃ a b : O, β b ≠ 0 ∧ x * β b = β a) → τ (H.rt : E) = H.rt0 → y₀ ≫ pullback.snd _ _ = spMap σ → Set.range y₀ ⊆ U → ∃ (V₀ : (Xo.XF c).Opens) (hV₀ : IsAffineOpen V₀) (c₁ : Fin D.p → Z.V) (c₂ : Fin D.q → Z.V) (vR : Fin D.p → (epsAt (under hV₀.fromSpec) ⟶ Xo.univ.t.G)) (wR : Fin D.q → (epsAt (under hV₀.fromSpec) ⟶ Xo.univ.t.G)), ⊤ ≤ y₀ ⁻¹ᵁ V₀ ∧ LinearIndependent Z.Ω c₁ ∧ Submodule.span Z.Ω (Set.range c₁) = eigSp Z.ρ (Z.inc.comp (tauIn c τ)) ∧ LinearIndependent Z.Ω c₂ ∧ Submodule.span Z.Ω (Set.range c₂) = eigSp Z.ρ (Z.inc.comp (tauIn c (ComplexEmbedding.conjugate τ))) ∧ ∀ (χ : Γ(Xo.XF c, V₀) →+* ℂ) (v : Vecs (spMap χ ≫ hV₀.fromSpec) D.p) (w : Vecs (spMap χ ≫ hV₀.fromSpec) D.q), (spMap χ ≫ hV₀.fromSpec) ≫ pullback.snd _ _ = spMap σ → Set.range (spMap χ ≫ hV₀.fromSpec) ⊆ U → (∀ a, (v a).left = spMap (dualMap χ) ≫ (vR a).left) → (∀ j, (w j).left = spMap (dualMap χ) ≫ (wR j).left) → IsFramed U τ σ (spMap χ ≫ hV₀.fromSpec) v w ∧ (∀ i, ∃ v', Z.M.ValAt ((spMap χ ≫ hV₀.fromSpec) ≫ Y.j) (c₁ i) v' ∧ SameVec Y (spMap χ ≫ hV₀.fromSpec) (v i) v') ∧ ∀ j, ∃ w', Z.M.ValAt ((spMap χ ≫ hV₀.fromSpec) ≫ Y.j) (c₂ j) w' ∧ SameVec Y (spMap χ ≫ hV₀.fromSpec) (w j) w' := by
+theorem exists_local_eigenframes : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (U : Set (Xo.XF c)) (Z : CptOver Y U) (τ : E →+* ℂ) (σ : c.F →+* ℂ) (y₀ : Sp ℂ ⟶ Xo.XF c), (Function.Injective β ∧ IsNoetherianRing O ∧ ∀ x : c.F, ∃ a b : O, β b ≠ 0 ∧ x * β b = β a) → τ (H.rt : E) = H.rt0 → y₀ ≫ pullback.snd _ _ = spMap σ → Set.range y₀ ⊆ U → ∃ (V₀ : (Xo.XF c).Opens) (hV₀ : IsAffineOpen V₀) (c₁ : Fin D.p → Z.V) (c₂ : Fin D.q → Z.V) (vR : Fin D.p → (epsAt (under hV₀.fromSpec) ⟶ Xo.univ.t.G)) (wR : Fin D.q → (epsAt (under hV₀.fromSpec) ⟶ Xo.univ.t.G)), ⊤ ≤ y₀ ⁻¹ᵁ V₀ ∧ LinearIndependent Z.Ω c₁ ∧ Submodule.span Z.Ω (Set.range c₁) = eigSp Z.ρ (Z.inc.comp (tauIn c τ)) ∧ LinearIndependent Z.Ω c₂ ∧ Submodule.span Z.Ω (Set.range c₂) = eigSp Z.ρ (Z.inc.comp (tauIn c (ComplexEmbedding.conjugate τ))) ∧ ∀ (χ : Γ(Xo.XF c, V₀) →+* ℂ) (v : Vecs (spMap χ ≫ hV₀.fromSpec) D.p) (w : Vecs (spMap χ ≫ hV₀.fromSpec) D.q), (spMap χ ≫ hV₀.fromSpec) ≫ pullback.snd _ _ = spMap σ → Set.range (spMap χ ≫ hV₀.fromSpec) ⊆ U → (∀ a, (v a).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ (vR a).left) → (∀ j, (w j).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ (wR j).left) → IsFramed U τ σ (spMap χ ≫ hV₀.fromSpec) v w ∧ (∀ i, ∃ v', Z.M.ValAt ((spMap χ ≫ hV₀.fromSpec) ≫ Y.j) (c₁ i) v' ∧ SameVec Y (spMap χ ≫ hV₀.fromSpec) (v i) v') ∧ ∀ j, ∃ w', Z.M.ValAt ((spMap χ ≫ hV₀.fromSpec) ≫ Y.j) (c₂ j) w' ∧ SameVec Y (spMap χ ≫ hV₀.fromSpec) (w j) w' := by
   intro E _ _ _ H D l Xo c O _ β Y U Z τ σ y₀ hO hτ hy₀ hr₀
   obtain ⟨hv1, hv2, h3, -⟩ := GlobalTheory.T.eigen_lattice_vector_bundle E H D l Xo c O β Y U Z τ hO hτ
   haveI : Smooth Y.t.G.hom := Y.t.semi.smooth
@@ -194,14 +194,14 @@ theorem exists_local_eigenframes : ∀ (E : Type) [Field E] [NumberField E] [IsC
     let vq : epsAt (R := Y.X.presheaf.stalk q.1) (Y.X.fromSpecStalk q.1) ⟶ Y.t.G :=
       epsBase ψ hψ ≫ MR.pt (e i)
     refine ⟨h, vq, hext q ψ hψ i vq rfl, ?_⟩
-    change spMap (dualMap χ) ≫ spMap (dualMap a) ≫ (MR.pt (e i)).left =
-      spMap (dualMap (Scheme.stalkClosedPointTo (y ≫ Y.j)).hom) ≫ spMap (dualMap ψ) ≫ (MR.pt (e i)).left
+    change spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap a) ≫ (MR.pt (e i)).left =
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo (y ≫ Y.j)).hom) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ (MR.pt (e i)).left
     rw [← Category.assoc, ← Category.assoc, spMap_dual_comp, spMap_dual_comp, hring]
   obtain ⟨hL₁, hL₂⟩ := lieMult_at y σ τ hσ hτ
   obtain ⟨g, b, hb, hS⟩ := h3 q (hfib y h)
   have hin : q.1 ∈ N₁ ⊓ N₂ := hxN hqr
   have same : ∀ (i : Fin D.p ⊕ Fin D.q) (u : epsAt (under y) ⟶ Xo.univ.t.G),
-      u.left = spMap (dualMap χ) ≫ (vR i).left → SameVec Y y u (T i) := fun i u hu =>
+      u.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ (vR i).left → SameVec Y y u (T i) := fun i u hu =>
     hvR i χ u (T i) hu rfl
   refine ⟨⟨hσ, hr, ?_, ?_⟩, fun i => ⟨T (Sum.inl i), hval (Sum.inl i), same _ _ (hv i)⟩,
     fun i => ⟨T (Sum.inr i), hval (Sum.inr i), same _ _ (hw i)⟩⟩

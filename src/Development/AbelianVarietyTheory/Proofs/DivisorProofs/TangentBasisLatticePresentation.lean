@@ -67,7 +67,7 @@ theorem latPres_scale : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
     · rw [norm_mul, hδ₀, neg_zero, Real.rpow_zero, one_mul]
       exact hk₀.trans (hn p φ)
     · have htan : ∀ i, IsTanAtG t (spMap ((intO ℂ_[p]).subtype.comp φ) ≫ x)
-          (spMap (dualMap ((intO ℂ_[p]).subtype.comp φ)) ≫ e i) := fun i =>
+          (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((intO ℂ_[p]).subtype.comp φ)) ≫ e i) := fun i =>
         GlobalTheory.FactorDepth.isTanAtG_map t _ (hT.1 i)
       have hw' := GlobalTheory.ShFam.Pad.Guard.comb_smul htan hw ((φ (d k₀) : ↥(intO ℂ_[p])) : ℂ_[p])
       rw [← sp_epsMul_mul, Category.assoc, hL _ _ hw']

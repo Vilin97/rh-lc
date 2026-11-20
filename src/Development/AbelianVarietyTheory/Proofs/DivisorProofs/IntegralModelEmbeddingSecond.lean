@@ -60,12 +60,12 @@ theorem det_isUnit : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H :
     have h2 := congrFun ((he.2 T.V α (u k) (hut k)).unique (hu k) h1) b
     rw [h2]
     simp [Matrix.mulVec, dotProduct, mul_comm]
-  have hwu : ∀ k, w k ≫ Y.m.φ = spMap (dualMap (algebraMap T.V T.Fr)) ≫ u k := by
+  have hwu : ∀ k, w k ≫ Y.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ u k := by
     intro k
     have h2 := GlobalTheory.LocM.Cht.FlagBase.isCombAtG_bc Y.t (algebraMap T.V T.Fr) (hu k)
     have h3 := hw k
     rw [hyV] at h3
-    have e1 : (fun j => spMap (dualMap (algebraMap T.V T.Fr)) ≫ bcV Y.t α e j) =
+    have e1 : (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ bcV Y.t α e j) =
         bcV Y.t ((algebraMap T.V T.Fr).comp α) e := bcV_bcV (t := Y.t) α (algebraMap T.V T.Fr) e
     rw [e1] at h2
     exact GlobalTheory.FlatModel.LiftBC.isCombAtG_unique Y.t h3 h2

@@ -47,10 +47,10 @@ private theorem isMap_comp {f : EigFrame Z φ x} {ψ : R →+* R'} {χ : R' →+
   rw [h' τ i, h τ i, ← Category.assoc, Descent.dual_comp]
 
 private theorem isMap_id (f : EigFrame Z φ x) : f.IsMap (RingHom.id R) f := fun τ i => by
-  have h1 : spMap (dualMap (RingHom.id R)) = 𝟙 _ := by
+  have h1 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R)) = 𝟙 _ := by
     rw [← Spec.map_id]
     congr 1
-    ext r <;> simp [dualMap]
+    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   rw [h1, Category.id_comp]
 
 private theorem sp_comp' (f : R →+* R') (g : R' →+* R'') : spMap g ≫ spMap f = spMap (g.comp f) := by

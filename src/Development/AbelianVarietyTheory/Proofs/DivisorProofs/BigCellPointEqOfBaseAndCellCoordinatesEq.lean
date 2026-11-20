@@ -94,10 +94,10 @@ theorem eq_of_cellCoord_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
     · exact (hN ⟨σ, ⟨(i, j), h⟩⟩).symm
     · rw [hN1, map_one, map_one]
     · rw [hNz σ i j h, map_zero, map_zero]
-  have hvT : ∀ m, IsTanAtG TF.Y.t (z₁ ≫ toBase TF Z) (spMap (dualMap (ev (z₁ ≫ toBase TF Z) U.1 (hU h₁))) ≫ v m) :=
+  have hvT : ∀ m, IsTanAtG TF.Y.t (z₁ ≫ toBase TF Z) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev (z₁ ≫ toBase TF Z) U.1 (hU h₁))) ≫ v m) :=
     fun m => GlobalTheory.LieMet.isTan_map _ (spMap_ev _ U.2 (hU h₁)) (hv.1 m)
   have key : ∀ (z : Sp S ⟶ Y₀ TF.X Z) (hz : ⊤ ≤ z ⁻¹ᵁ W) (hk : ⊤ ≤ (z ≫ inc₀ TF.X Z) ⁻¹ᵁ TF.X.F.U k)
-      (x : Sp S ⟶ TF.Y.X) (hxU : ⊤ ≤ x ⁻¹ᵁ U.1) (hT : ∀ m, IsTanAtG TF.Y.t x (spMap (dualMap (ev x U.1 hxU)) ≫ v m))
+      (x : Sp S ⟶ TF.Y.X) (hxU : ⊤ ≤ x ⁻¹ᵁ U.1) (hT : ∀ m, IsTanAtG TF.Y.t x (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev x U.1 hxU)) ≫ v m))
       (_ : z ≫ toBase TF Z = x) (hx : (z ≫ inc₀ TF.X Z) ≫ TF.X.π = x) σ i,
       initSpan S (TF.X.F.vecAt k _ hk hx σ) i = initSpan S
         (fun a => ∑ j, ev z W hz (N σ a j) • GlobalTheory.LieMet.tanOf (hT (e ⟨σ, j⟩))) i := by

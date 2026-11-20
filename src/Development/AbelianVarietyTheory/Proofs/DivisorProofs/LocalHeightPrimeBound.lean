@@ -85,7 +85,7 @@ theorem exists_covectors {p : ℕ} [Fact p.Prime] {x : Sp ↥(intO ℂ_[p]) ⟶ 
     (hs : ∀ w, IsTanAtG t (spMap (intO ℂ_[p]).subtype ≫ x) w → ∃ cf, IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) u cf w)
     (hD : DlogVals t x χ u Mc) {k : ℕ} {e : Fin k → (Sp (DualNumber ↥(intO ℂ_[p])) ⟶ t.G.left)} (he : IsTanBasis t x e) :
     ∃ (h : Fin N → Fin k → ↥(intO ℂ_[p])) (a : Fin g → Fin k → ℂ_[p]), (∀ m, DlogIs t p n (χ m) e (h m)) ∧
-      (∀ l, IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (dualMap (intO ℂ_[p]).subtype) ≫ e i) (a l) (u l)) ∧
+      (∀ l, IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ e i) (a l) (u l)) ∧
       Mc = Matrix.of fun r l => ∑ i, (h r i : ℂ_[p]) * a l i := by
   have heC := fun i => GlobalTheory.FactorDepth.isTanAtG_map t (intO ℂ_[p]).subtype (he.1 i)
   choose a ha using fun l => (he.2 _ (intO ℂ_[p]).subtype _ (hu l)).exists
@@ -183,7 +183,7 @@ theorem lg_whole [IsLocallyNoetherian Z.X] (hX : Z.X.IsSeparated) {g : ℕ} (hg 
     (hψ : ψ = (ioOf (resP v) e).comp (Scheme.stalkClosedPointTo y.1).hom)
     (hx : spMap (intO ℂ_[resP v]).subtype ≫ xO = spMap ψ ≫ stalkPt C.Y (below y.1) ≫ C.π ≫ genι Z) (hχ : Gens χ)
     (M : Matrix (Fin (g + g)) (Fin g) (AlgebraicClosure F))
-    (hD : DlogVals Z.t xO χ (fun i => spMap (dualMap ψ) ≫ (fr C (below y.1)).v ((letters Dw).get (Fin.cast hg.symm i)).1
+    (hD : DlogVals Z.t xO χ (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ (fr C (below y.1)).v ((letters Dw).get (Fin.cast hg.symm i)).1
       ((letters Dw).get (Fin.cast hg.symm i)).2) (M.map (ioOf (resP v) e))) :
     0 < colMinor e.w M Finset.univ ∧ ∀ i : Fin g,
       (adlOf C hm (wholeSym a R (Sum.inl i : Fin g ⊕ Fin g))).lg v e y =

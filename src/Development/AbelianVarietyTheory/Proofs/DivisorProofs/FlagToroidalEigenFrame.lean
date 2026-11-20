@@ -105,13 +105,13 @@ theorem tri_bc {R S T : Type} [CommRing R] [CommRing S] [CommRing T] {φ : c.F �
     {k : EigFrame Z φ'' x''} {t : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → Tˣ} (h : f.Tri ω k t) : g.Tri χ k t := by
   subst hφ hx hω
   refine ⟨by rw [h.1, ← Category.assoc, spMap_comp_spMap], h.2.1, fun τ i => ?_⟩
-  have e : (fun j => spMap (dualMap (χ.comp ψ)) ≫ f.v τ j) = fun j => spMap (dualMap χ) ≫ g.v τ j :=
+  have e : (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (χ.comp ψ)) ≫ f.v τ j) = fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ g.v τ j :=
     funext fun j => by
-      have e₁ : g.v τ j = spMap (dualMap ψ) ≫ f.v τ j :=
+      have e₁ : g.v τ j = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f.v τ j :=
         congrArg (fun v => (ReciprocityTheory.ChartRestriction.G.PullbackSections.tv v).left) (hg τ j)
       rw [e₁, ← Category.assoc, spMap_comp_spMap]
       congr 2
-      exact RingHom.ext fun a => by ext <;> simp [dualMap]
+      exact RingHom.ext fun a => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   rw [← e]
   exact h.2.2 τ i
 

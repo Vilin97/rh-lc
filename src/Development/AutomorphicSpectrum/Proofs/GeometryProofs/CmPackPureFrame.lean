@@ -61,7 +61,7 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.cm_pack_pure_frame : ∀ (E : 
   have key : ∀ (b : Bool) (σ : E →+* ℂ) (n : ℕ) (T : Fin n → Fin g → ℂ) (v : Fin n → (epsAt (under X.y) ⟶ Xo.univ.t.G)),
       LinearIndependent ℂ T → (∀ w, w ∈ Submodule.span ℂ (Set.range T) ↔ tyPart ty σ w = w) →
       (∀ a, IsDerivAt0 (fun s => (FU.ex i P s).left) ((Z b).z • T a)
-        (spMap (dualMap (algebraMap X.K ℂ)) ≫ (v a).left)) →
+        (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap X.K ℂ)) ≫ (v a).left)) →
       IsEigFrame Xo.univ.t.act (under X.y) (X.β.comp (tauIn c σ)) v := by
     intro b σ n T v hT hspan hd
     obtain ⟨⟨v', hv'⟩, hiff⟩ := GlobalTheory.CompanionTheory.Relay.tangent_vectors_base_change E H _ Xo.univ.t X.K ℂ (algebraMap X.K ℂ) (under X.y) (FU.u i P)

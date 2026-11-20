@@ -41,16 +41,16 @@ theorem grNorm_eq_one_of_comb {C : Type} [NontriviallyNormedField C] {x : Sp C �
 
 end Comb
 
-theorem grNorm_latDR_eq_one_of_saturated : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (V Fr : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [Field Fr] [Algebra V Fr] [IsFractionRing V Fr] (xV : Sp V ⟶ X) (m : ℕ) (v : Fin m → (Sp (DualNumber V) ⟶ t.G.left)), (∀ i, IsTanAtG t xV (v i)) → (∀ (cf : Fin m → Fr) (u : Sp (DualNumber V) ⟶ t.G.left), IsTanAtG t xV u → IsCombAtG t (spMap (algebraMap V Fr) ≫ xV) (fun i => spMap (dualMap (algebraMap V Fr)) ≫ v i) cf (spMap (dualMap (algebraMap V Fr)) ≫ u) → ∀ i, ∃ a : V, algebraMap V Fr a = cf i) → ∀ (C : Type) [NontriviallyNormedField C] [IsUltrametricDist C] (ψ : V →+* C), (∀ z, ‖ψ z‖ ≤ 1) → (∃! xO : Sp ↥(intO C) ⟶ X, spMap (intO C).subtype ≫ xO = spMap ψ ≫ xV) → ∀ i, grNorm t (spMap ψ ≫ xV) (latDR t (spMap ψ ≫ xV)) (fun k => spMap (dualMap ψ) ≫ v k) i = 1 := by
+theorem grNorm_latDR_eq_one_of_saturated : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (V Fr : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [Field Fr] [Algebra V Fr] [IsFractionRing V Fr] (xV : Sp V ⟶ X) (m : ℕ) (v : Fin m → (Sp (DualNumber V) ⟶ t.G.left)), (∀ i, IsTanAtG t xV (v i)) → (∀ (cf : Fin m → Fr) (u : Sp (DualNumber V) ⟶ t.G.left), IsTanAtG t xV u → IsCombAtG t (spMap (algebraMap V Fr) ≫ xV) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V Fr)) ≫ v i) cf (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V Fr)) ≫ u) → ∀ i, ∃ a : V, algebraMap V Fr a = cf i) → ∀ (C : Type) [NontriviallyNormedField C] [IsUltrametricDist C] (ψ : V →+* C), (∀ z, ‖ψ z‖ ≤ 1) → (∃! xO : Sp ↥(intO C) ⟶ X, spMap (intO C).subtype ≫ xO = spMap ψ ≫ xV) → ∀ i, grNorm t (spMap ψ ≫ xV) (latDR t (spMap ψ ≫ xV)) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ v k) i = 1 := by
   intro E _ _ _ H X t V Fr _ _ _ _ _ _ xV m v hv hsat C _ _ ψ hψ huniq
   classical
   obtain ⟨xO, hxO, huO⟩ := huniq
   obtain ⟨n, D, hD, hDb⟩ := GlobalTheory.LieLocBasis.exists_lie_basis_stable E H X t V xV
   have h1 : spMap (RingHom.id V) = 𝟙 _ := Spec.map_id _
-  have h2 : dualMap (RingHom.id V) = RingHom.id _ := by
+  have h2 : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id V) = RingHom.id _ := by
     refine RingHom.ext fun z => ?_
-    ext <;> simp [dualMap]
-  have h3 : spMap (dualMap (RingHom.id V)) = 𝟙 _ := by rw [h2]; exact Spec.map_id _
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  have h3 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id V)) = 𝟙 _ := by rw [h2]; exact Spec.map_id _
   have hD0 : ∀ w, IsTanAtG t xV w → ∃! a : Fin n → V, IsCombAtG t xV D a w := by
     have h := hDb _ (RingHom.id V)
     simp only [h1, h3, Category.id_comp] at h
@@ -63,7 +63,7 @@ theorem grNorm_latDR_eq_one_of_saturated : ∀ (E : Type) [Field E] [NumberField
     obtain ⟨u, hu, hub⟩ := Guard.exists_comb hD b
     obtain ⟨w, -, hw⟩ := Guard.exists_comb (fun i => GlobalTheory.FactorDepth.isTanAtG_map t α (hv i)) cf
     have hDα := fun j => GlobalTheory.FactorDepth.isTanAtG_map t α (hD j)
-    have hl := tanLinG (fun j => spMap (dualMap α) ≫ D j) hDα (fun i => spMap (dualMap α) ≫ v i) (A.map α) cf w
+    have hl := tanLinG (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ D j) hDα (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ v i) (A.map α) cf w
       (fun i => GlobalTheory.LatDRFree.comb_map t α (ha i)) hw
     rw [hb] at hl
     have e := Guard.comb_unique hDα hl (GlobalTheory.LatDRFree.comb_map t α hub)
@@ -74,7 +74,7 @@ theorem grNorm_latDR_eq_one_of_saturated : ∀ (E : Type) [Field E] [NumberField
   have hsub : (intO C).subtype.comp ψ' = ψ := RingHom.ext fun _ => rfl
   have e1 : spMap (intO C).subtype ≫ spMap ψ' ≫ xV = spMap ψ ≫ xV := by
     rw [← Category.assoc, spMap_comp', hsub]
-  have e2 : ∀ j, spMap (dualMap (intO C).subtype) ≫ spMap (dualMap ψ') ≫ D j = spMap (dualMap ψ) ≫ D j := by
+  have e2 : ∀ j, spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO C).subtype) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ') ≫ D j = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ D j := by
     intro j
     rw [← Category.assoc, spMap_comp', GlobalTheory.ShFam.ChartValue.dualMap_comp', hsub]
   have hx0 : spMap ψ' ≫ xV = xO := huO _ e1
@@ -85,7 +85,7 @@ theorem grNorm_latDR_eq_one_of_saturated : ∀ (E : Type) [Field E] [NumberField
   have mem : ∀ z : C, z ∈ intO C ↔ ‖z‖ ≤ 1 := fun _ => Iff.rfl
   intro i
   refine grNorm_eq_one_of_comb t (fun k => GlobalTheory.FactorDepth.isTanAtG_map t ψ (hv k)) (fun cf w hc => ?_) i
-  have hl := tanLinG (fun j => spMap (dualMap ψ) ≫ D j) hDC (fun i => spMap (dualMap ψ) ≫ v i) (A.map ψ) cf w
+  have hl := tanLinG (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ D j) hDC (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ v i) (A.map ψ) cf w
     (fun i => GlobalTheory.LatDRFree.comb_map t ψ (ha i)) hc
   constructor
   · rintro ⟨xO', hx', vO, hvO, rfl⟩

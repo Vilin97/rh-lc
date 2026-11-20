@@ -50,10 +50,10 @@ theorem interior_range {E : Type} [Field E] [NumberField E] [IsCMField E] {H : H
   rwa [Y.ab_gen] at this
 
 theorem dualMap_comp' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    spMap (dualMap (g.comp f)) = spMap (dualMap g) ≫ spMap (dualMap f) := by
-  rw [show dualMap (g.comp f) = (dualMap g).comp (dualMap f) from RingHom.ext fun a => by
-    ext <;> simp [dualMap]]
-  exact Spec.map_comp (CommRingCat.ofHom (dualMap f)) (CommRingCat.ofHom (dualMap g))
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
+  rw [show GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) = (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) from RingHom.ext fun a => by
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]]
+  exact Spec.map_comp (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap f)) (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap g))
 
 theorem smul_mem_ball' {n : ℕ} {ρ : ℝ} (h0 : 0 < ρ) (h1 : ρ ≤ 1) {u : Fin n → ℂ}
     (hu : u ∈ Metric.ball (0 : Fin n → ℂ) 1) : (ρ : ℂ) • u ∈ Metric.ball (0 : Fin n → ℂ) 1 := by
@@ -110,7 +110,7 @@ theorem core {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D 
 
   have hw : ∀ z : Fin n → ℂ, ∃ w : Fin N → (epsAt (spMap (C.ψ z) ≫ spMap θ ≫ hW.fromSpec) ⟶ 𝔐.t.G),
       (∀ k, 𝔐.M.ValAt _ ((bb k : ↥(𝔐.Vgen a ⊔ 𝔐.Vgen b)) : 𝔐.Li) (w k)) ∧
-      ∀ k, (w k).left = spMap (dualMap (C.ψ z)) ≫ (C.M.pt (x k)).left ≫ mX.φ := fun z => by
+      ∀ k, (w k).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ (C.M.pt (x k)).left ≫ mX.φ := fun z => by
     have e : spMap ((C.ψ z).comp θ) ≫ hW.fromSpec = spMap (C.ψ z) ≫ spMap θ ≫ hW.fromSpec := by
       rw [← Category.assoc]; congr 1; exact Spec.map_comp _ _
     choose w hw1 hw2 using hval ((C.ψ z).comp θ) _ e (𝔐.all _)

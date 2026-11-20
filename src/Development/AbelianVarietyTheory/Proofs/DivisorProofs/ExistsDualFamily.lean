@@ -94,9 +94,9 @@ def modMap : ModPow p A n →+* ModPow p A' n := Ideal.quotientMap _ (algebraMap
 variable (A A') in
 
 def dualMod : DualNumber (ModPow p A n) →ₐ[A] DualNumber (ModPow p A' n) :=
-  { dualMap (modMap A A' p n) with
+  { GlobalTheory.CompanionTheory.Ar.dualMap (modMap A A' p n) with
     commutes' := fun r => by
-      ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl', modMap] }
+      ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl', modMap] }
 
 theorem fst_dualMod (z : DualNumber (ModPow p A n)) : (dualMod A A' p n z).fst = modMap A A' p n z.fst := add_zero _
 
@@ -105,13 +105,13 @@ theorem snd_dualMod (z : DualNumber (ModPow p A n)) : (dualMod A A' p n z).snd =
 variable (A A') in
 
 theorem dualMod_square : (spOver (dualMod A A' p n)).left ≫ (spOver (epsTo A (ModPow p A n))).left =
-    (spOver (epsTo A' (ModPow p A' n))).left ≫ spMap (dualMap (algebraMap A A')) := by
+    (spOver (epsTo A' (ModPow p A' n))).left ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A A')) := by
   refine (Cris.spMap_comp _ _).symm.trans (.trans (congrArg spMap ?_) (Cris.spMap_comp _ _))
   refine RingHom.ext fun y => TrivSqZeroExt.ext ?_ ?_
   · exact (fst_dualMod ..).trans ((congrArg _ (fst_epsTo _ y)).trans
-      ((fst_epsTo _ (dualMap (algebraMap A A') y)).trans (congrArg (algebraMap A' _) (add_zero _))).symm)
+      ((fst_epsTo _ (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A A') y)).trans (congrArg (algebraMap A' _) (add_zero _))).symm)
   · exact (snd_dualMod ..).trans ((congrArg _ (snd_epsTo _ y)).trans
-      ((snd_epsTo _ (dualMap (algebraMap A A') y)).trans (congrArg (algebraMap A' _) (zero_add _))).symm)
+      ((snd_epsTo _ (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A A') y)).trans (congrArg (algebraMap A' _) (zero_add _))).symm)
 
 theorem omegaResSt : OmegaResSt := by
   intro E _ _ _ H p _ X tX A A' _ _ _ x t t' φ φ' hφ hφ' GG GG' θ θ' c c' f hc hc' hθ w w' hw
@@ -128,7 +128,7 @@ theorem omegaResSt : OmegaResSt := by
   have key (i : Fin m) : ∃ q : A', (w' - u).1 (v' i) = (p : A') ^ n * q := by
     let z : Tors t.G (p ^ n) (DualNumber (ModPow p A' n)) := ⟨spOver (dualMod A A' p n) ≫ (tanTors p n (v i)).1, by
       rw [← MonObj.comp_pow, (tanTors p n (v i)).2, MonObj.comp_one]⟩
-    have h3 : (v' i).1.left ≫ ψ ≫ φ = spMap (dualMap (algebraMap A A')) ≫ (v i).1.left ≫ φ :=
+    have h3 : (v' i).1.left ≫ ψ ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A A')) ≫ (v i).1.left ≫ φ :=
       (Category.assoc ..).symm.trans ((congrArg (· ≫ φ) (hv i)).trans (Category.assoc ..))
     have hz : z.1.left ≫ φ = (tanTors p n (v' i)).1.left ≫ ψ ≫ φ := by
       refine .trans ?_ ((Category.assoc (spOver (epsTo A' (ModPow p A' n))).left (v' i).1.left _).trans

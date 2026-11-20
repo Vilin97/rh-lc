@@ -61,7 +61,7 @@ theorem grNorm_eq {X : Scheme.{0}} [X.IsSeparated] (t : SAB H X) {K : Type} [Fie
     {xO : Sp (𝓞 K) ⟶ X} {xK : Sp K ⟶ X} (hx : spMap (algebraMap (𝓞 K) K) ≫ xO = xK) {n : ℕ} (b : Fin n → TanM xK t.G)
     (hb : TanBasis t b) {C : Type} [NontriviallyNormedField C] [IsUltrametricDist C] (j : K →+* C) {xC : Sp C ⟶ X}
     (hC : spMap j ≫ xK = xC) {r : ℕ} (s : Fin r → Fin n) (hs : Function.Injective s)
-    (u : Fin r → (Sp (DualNumber C) ⟶ t.G.left)) (hu : ∀ k, u k = spMap (dualMap j) ≫ (tv (b (s k))).left) (i : Fin r) :
+    (u : Fin r → (Sp (DualNumber C) ⟶ t.G.left)) (hu : ∀ k, u k = spMap (GlobalTheory.CompanionTheory.Ar.dualMap j) ≫ (tv (b (s k))).left) (i : Fin r) :
     0 < (⨆ a : grIdeal (lieCoordLat t hx b) (fun k => Pi.single (s k) (1 : K)) i, ‖j a‖) ∧
       grNorm t xC (latDR t xC) u i = (⨆ a : grIdeal (lieCoordLat t hx b) (fun k => Pi.single (s k) (1 : K)) i, ‖j a‖)⁻¹ := by
   have hv : LinearIndependent K (fun k => (Pi.single (s k) (1 : K) : Fin n → K)) := by
@@ -106,7 +106,7 @@ theorem ht_core (G : ∀ σ : F →+* ℂ, EigMet Z (embOf e σ)) {K : Type} [Fi
     (h𝔞 : ∀ s ∈ w.support, (𝔞 s.2.2).FG ∧ 𝔞 s.2.2 ≠ ⊥)
     (hfin : ∀ s ∈ w.support, ∀ (q : ℕ) [Fact q.Prime] (j : K →+* ℂ_[q]) (xC : Sp ℂ_[q] ⟶ Z.X)
       (u : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (Sp (DualNumber ℂ_[q]) ⟶ Z.t.G.left)), spMap j ≫ xK = xC →
-      (∀ τ i, u τ i = spMap (dualMap j) ≫ g.v τ i) →
+      (∀ τ i, u τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap j) ≫ g.v τ i) →
       0 < (⨆ a : 𝔞 s.2.2, ‖j a‖) ∧ stepNorm Z.t xC u s.2.2 = (⨆ a : 𝔞 s.2.2, ‖j a‖)⁻¹)
     (q : (K →+* ℂ) → Letter Dw → ℝ)
     (hq : ∀ (σ : K →+* ℂ) (g' : Y.FrameAt (σ := σ.comp φ) (cxPtOf p hp σ)), g.IsMap σ g' →
@@ -138,7 +138,7 @@ theorem ht_core (G : ∀ σ : F →+* ℂ, EigMet Z (embOf e σ)) {K : Type} [Fi
     haveI := Fact.mk (residueCharacteristic_prime v)
     obtain ⟨g', hg'⟩ := g.exists_isMap θ.1 (φ' := θ.1.comp fK) (x' := spMap θ.1 ≫ xK) rfl rfl
     have h1 := fun s hs => hfin s hs (resP v) ((ioOf (resP v) (extOf v)).comp θ.1)
-      (spMap (ioOf (resP v) (extOf v)) ≫ spMap θ.1 ≫ xK) (fun τ i => spMap (dualMap (ioOf (resP v) (extOf v))) ≫ g'.v τ i)
+      (spMap (ioOf (resP v) (extOf v)) ≫ spMap θ.1 ≫ xK) (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ioOf (resP v) (extOf v))) ≫ g'.v τ i)
       (by rw [← Category.assoc, ← Spec.map_comp]; rfl) (fun τ i => by simp only [hg' τ i, GlobalTheory.GradedPieces.dual_comp])
     have h2 : below (algPtOf p hp θ).1 = below p := by
       change p (spMap θ.1 _) = p _
@@ -258,7 +258,7 @@ theorem stepNorm_eq {X : Scheme.{0}} [X.IsSeparated] (t : SAB H X)
     {xO : Sp (𝓞 K) ⟶ X} {xK : Sp K ⟶ X} (hx : spMap (algebraMap (𝓞 K) K) ≫ xO = xK) (b : Fin n → TanM xK t.G)
     (hb : TanBasis t b) {C : Type} [NontriviallyNormedField C] [IsUltrametricDist C] (j : K →+* C) {xC : Sp C ⟶ X}
     (hC : spMap j ≫ xK = xC) (u : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (Sp (DualNumber C) ⟶ t.G.left))
-    (hu : ∀ z : Letter Dw, u z.1 z.2 = spMap (dualMap j) ≫ (tv (b (e.symm z))).left) {s : ((E →+* ℂ) × ℕ) ⊕ ℕ}
+    (hu : ∀ z : Letter Dw, u z.1 z.2 = spMap (GlobalTheory.CompanionTheory.Ar.dualMap j) ≫ (tv (b (e.symm z))).left) {s : ((E →+* ℂ) × ℕ) ⊕ ℕ}
     (hs : (letterOf Dw s).isSome) : 0 < (⨆ a : stepId e (lieCoordLat t hx b) s, ‖j a‖) ∧
       stepNorm t xC u s = (⨆ a : stepId e (lieCoordLat t hx b) s, ‖j a‖)⁻¹ := by
   rcases s with ⟨τ, k⟩ | k

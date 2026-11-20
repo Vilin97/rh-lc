@@ -50,24 +50,24 @@ theorem bmap_spMap {R C : Type} [CommRing R] [CommRing C] (β : R →+* C) : bma
   simp [spMap, bmap]
 
 theorem dualMap_sq {R C : Type} [CommRing R] [CommRing C] (β : R →+* C) :
-    spMap (dualMap β) ≫ spMap (algebraMap R (DualNumber R)) = spMap (algebraMap C (DualNumber C)) ≫ spMap β := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap β) ≫ spMap (algebraMap R (DualNumber R)) = spMap (algebraMap C (DualNumber C)) ≫ spMap β := by
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
   congr 2
   refine RingHom.ext fun r => ?_
-  ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem dualMap_fst_sq {R C : Type} [CommRing R] [CommRing C] (β : R →+* C) :
-    spMap (TrivSqZeroExt.fstHom C C C).toRingHom ≫ spMap (dualMap β) =
+    spMap (TrivSqZeroExt.fstHom C C C).toRingHom ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap β) =
       spMap β ≫ spMap (TrivSqZeroExt.fstHom R R R).toRingHom := by
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
   congr 2
   refine RingHom.ext fun r => ?_
-  simp [dualMap]
+  simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem dualMap_comp {R C C' : Type} [CommRing R] [CommRing C] [CommRing C'] (β : R →+* C) (ψ : C →+* C') :
-    dualMap (ψ.comp β) = (dualMap ψ).comp (dualMap β) := by
+    GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp β) = (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (GlobalTheory.CompanionTheory.Ar.dualMap β) := by
   refine RingHom.ext fun r => ?_
-  ext <;> simp [dualMap]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 variable {R : Type} [CommRing R] {G : Over (Sp R)} [GrpObj G]
 
@@ -75,7 +75,7 @@ def piE {C : Type} [CommRing C] (b : Sp C ⟶ Sp R) : epsAt b ⟶ Over.mk b :=
   Over.homMk (spMap (algebraMap C (DualNumber C))) rfl
 
 def rhoE {C : Type} [CommRing C] (b : Sp C ⟶ Sp R) : epsAt b ⟶ epsAt (𝟙 (Sp R)) :=
-  Over.homMk (spMap (dualMap (bmap b))) (by
+  Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (bmap b))) (by
     show spMap _ ≫ spMap (algebraMap R _) ≫ 𝟙 _ = spMap _ ≫ b
     rw [Category.comp_id, dualMap_sq, spMap_bmap])
 
@@ -83,7 +83,7 @@ def tr (v : epsAt (𝟙 (Sp R)) ⟶ G) {C : Type} [CommRing C] (y : Sp C ⟶ G.l
   ((piE (y ≫ G.hom) ≫ (Over.homMk y rfl : Over.mk (y ≫ G.hom) ⟶ G)) * (rhoE (y ≫ G.hom) ≫ v)).left
 
 theorem tr_comp (v : epsAt (𝟙 (Sp R)) ⟶ G) {C C' : Type} [CommRing C] [CommRing C'] (ψ : C →+* C') (y : Sp C ⟶ G.left) :
-    tr v (spMap ψ ≫ y) = spMap (dualMap ψ) ≫ tr v y := by
+    tr v (spMap ψ ≫ y) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ tr v y := by
   have hb : bmap ((spMap ψ ≫ y) ≫ G.hom) = ψ.comp (bmap (y ≫ G.hom)) := by
     have : (spMap ψ ≫ y) ≫ G.hom = spMap (ψ.comp (bmap (y ≫ G.hom))) := by
       rw [Category.assoc]
@@ -91,18 +91,18 @@ theorem tr_comp (v : epsAt (𝟙 (Sp R)) ⟶ G) {C C' : Type} [CommRing C] [Comm
       simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
     rw [this, bmap_spMap]
   let Ψ : epsAt ((spMap ψ ≫ y) ≫ G.hom) ⟶ epsAt (y ≫ G.hom) :=
-    Over.homMk (spMap (dualMap ψ)) (by
-      show spMap (dualMap ψ) ≫ spMap (algebraMap C _) ≫ y ≫ G.hom = spMap (algebraMap C' _) ≫ (spMap ψ ≫ y) ≫ G.hom
+    Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ)) (by
+      show spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (algebraMap C _) ≫ y ≫ G.hom = spMap (algebraMap C' _) ≫ (spMap ψ ≫ y) ≫ G.hom
       rw [← Category.assoc, dualMap_sq]
       simp only [Category.assoc])
   have h1 : piE ((spMap ψ ≫ y) ≫ G.hom) ≫ (Over.homMk (spMap ψ ≫ y) rfl : Over.mk ((spMap ψ ≫ y) ≫ G.hom) ⟶ G) =
       Ψ ≫ piE (y ≫ G.hom) ≫ (Over.homMk y rfl : Over.mk (y ≫ G.hom) ⟶ G) := by
     apply Over.OverMorphism.ext
-    show spMap (algebraMap C' _) ≫ spMap ψ ≫ y = spMap (dualMap ψ) ≫ spMap (algebraMap C _) ≫ y
+    show spMap (algebraMap C' _) ≫ spMap ψ ≫ y = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (algebraMap C _) ≫ y
     rw [← Category.assoc, ← Category.assoc, dualMap_sq]
   have h2 : rhoE ((spMap ψ ≫ y) ≫ G.hom) = Ψ ≫ rhoE (y ≫ G.hom) := by
     apply Over.OverMorphism.ext
-    show spMap (dualMap (bmap ((spMap ψ ≫ y) ≫ G.hom))) = spMap (dualMap ψ) ≫ spMap (dualMap (bmap (y ≫ G.hom)))
+    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap (bmap ((spMap ψ ≫ y) ≫ G.hom))) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (bmap (y ≫ G.hom)))
     rw [hb, dualMap_comp]
     simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
   have h2' : rhoE ((spMap ψ ≫ y) ≫ G.hom) ≫ v = Ψ ≫ rhoE (y ≫ G.hom) ≫ v := by
@@ -136,7 +136,7 @@ theorem tr_fst (v : epsAt (𝟙 (Sp R)) ⟶ G) (hv : IsTanAt G (𝟙 (Sp R)) v) 
     let τ : Over.mk (y ≫ G.hom) ⟶ Over.mk (𝟙 (Sp R)) := Over.homMk (y ≫ G.hom) (by simp)
     have : δ ≫ rhoE (y ≫ G.hom) ≫ v = τ ≫ (1 : Over.mk (𝟙 (Sp R)) ⟶ G) := by
       apply Over.OverMorphism.ext
-      show spMap (TrivSqZeroExt.fstHom C C C).toRingHom ≫ spMap (dualMap (bmap (y ≫ G.hom))) ≫ v.left =
+      show spMap (TrivSqZeroExt.fstHom C C C).toRingHom ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (bmap (y ≫ G.hom))) ≫ v.left =
         (y ≫ G.hom) ≫ (1 : Over.mk (𝟙 (Sp R)) ⟶ G).left
       rw [← Category.assoc, dualMap_fst_sq, Category.assoc, hv, spMap_bmap]
     rw [this, MonObj.comp_one]
@@ -253,8 +253,8 @@ theorem der_mul (a b : Γ(G.left, V)) : der v hv hV (a * b) = a * der v hv hV b 
   ring
 
 theorem ev_tr {C : Type} [CommRing C] (y : Sp C ⟶ G.left) (h : ⊤ ≤ y ⁻¹ᵁ V) (h' : ⊤ ≤ (tr v y) ⁻¹ᵁ V) (g : Γ(G.left, V)) :
-    ev (tr v y) V h' g = dualMap (ev y V h) (trV v hv hV g) := by
-  have e : tr v y = spMap (dualMap (ev y V h)) ≫ tr v (C := Γ(G.left, V)) hV.fromSpec := by
+    ev (tr v y) V h' g = GlobalTheory.CompanionTheory.Ar.dualMap (ev y V h) (trV v hv hV g) := by
+  have e : tr v y = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev y V h)) ≫ tr v (C := Γ(G.left, V)) hV.fromSpec := by
     rw [← tr_comp, point_fac hV y h]
   rw [ev_congr e V h' (by rw [← e]; exact h')]
   exact ev_comp _ _ V (tr_top v hv _ V (from_top hV)) _ g
@@ -262,7 +262,7 @@ theorem ev_tr {C : Type} [CommRing C] (y : Sp C ⟶ G.left) (h : ⊤ ≤ y ⁻¹
 theorem snd_ev_tr {C : Type} [CommRing C] (y : Sp C ⟶ G.left) (h : ⊤ ≤ y ⁻¹ᵁ V) (h' : ⊤ ≤ (tr v y) ⁻¹ᵁ V)
     (g : Γ(G.left, V)) : (ev (tr v y) V h' g).snd = ev y V h (der v hv hV g) := by
   rw [ev_tr v hv hV y h h' g]
-  simp [dualMap, der_apply]
+  simp [GlobalTheory.CompanionTheory.Ar.dualMap, der_apply]
 
 theorem der_res {V' : G.left.Opens} (hV' : IsAffineOpen V') (le : V' ≤ V) (g : Γ(G.left, V)) :
     der v hv hV' ((G.left.presheaf.map (homOfLE le).op).hom g) =

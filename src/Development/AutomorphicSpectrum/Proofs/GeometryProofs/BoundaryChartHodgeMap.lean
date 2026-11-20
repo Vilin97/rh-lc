@@ -348,17 +348,17 @@ theorem exists_unif_of_interior : Top.Given → ∀ (E : Type) [Field E] [Number
     obtain ⟨v', e1, e2⟩ := hder (h.symm x) v (by rw [h.apply_symm_apply]; exact H)
     exact ⟨v', e1, hud x v' e2⟩
 
-  have hsq : spMap (dualMap (C.ψ b)) ≫ spMap (algebraMap C.R (DualNumber C.R)) =
+  have hsq : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ b)) ≫ spMap (algebraMap C.R (DualNumber C.R)) =
       spMap (algebraMap ℂ (DualNumber ℂ)) ≫ spMap (C.ψ b) := by
     simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
     congr 2
     refine RingHom.ext fun r => ?_
-    ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
   have hT : ∀ u : Fin C.g → C.R, ∃ v : epsAt (spMap (C.ψ b)) ⟶ C.t.G,
-      v.left = spMap (dualMap (C.ψ b)) ≫ (C.M.pt u).left := fun u =>
-    ⟨Over.homMk (spMap (dualMap (C.ψ b)) ≫ (C.M.pt u).left) (by
+      v.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ b)) ≫ (C.M.pt u).left := fun u =>
+    ⟨Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ b)) ≫ (C.M.pt u).left) (by
       have hw := Over.w (C.M.pt u)
-      show (spMap (dualMap (C.ψ b)) ≫ (C.M.pt u).left) ≫ C.t.G.hom =
+      show (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ b)) ≫ (C.M.pt u).left) ≫ C.t.G.hom =
         spMap (algebraMap ℂ (DualNumber ℂ)) ≫ spMap (C.ψ b)
       rw [Category.assoc, hw, ← hsq]
       simp), rfl⟩

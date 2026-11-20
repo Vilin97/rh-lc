@@ -59,8 +59,8 @@ theorem spMap_spMap' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : 
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
 
 theorem dualMap_comp' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    dualMap (g.comp f) = (dualMap g).comp (dualMap f) := by
-  ext a <;> simp [dualMap]
+    GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) = (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
+  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem exists_fibreLift {L : Type} [Field L] {E : Type} [AddCommGroup E] [Module (𝓞 L) E] (σ : L →+* ℂ)
     {Q : Type} [AddCommGroup Q] [Module ℂ Q] (j : E →ₛₗ[σ.comp (algebraMap (𝓞 L) L)] Q) :
@@ -192,7 +192,7 @@ theorem ip_conj (h : LieMetric M y) (MB : LieModel G z E) (σ : L →+* ℂ) (e 
     (hw' : MB.Lifts ((NumberField.ComplexEmbedding.conjugate σ).comp (algebraMap (𝓞 L) L)) (𝟙 G.left) f w') :
     h.ip _ v' w' = starRingEnd ℂ (h.ip _ v w) := by
   have key : ∀ (z₁ z₂ : Sp ℂ ⟶ X) (_ : z₂ = spMap (starRingEnd ℂ) ≫ z₁) (v w : epsAt z₁ ⟶ G) (v' w' : epsAt z₂ ⟶ G),
-      v'.left = spMap (dualMap (starRingEnd ℂ)) ≫ v.left → w'.left = spMap (dualMap (starRingEnd ℂ)) ≫ w.left →
+      v'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ v.left → w'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ w.left →
       h.ip z₂ v' w' = starRingEnd ℂ (h.ip z₁ v w) := by
     intro z₁ z₂ hz v w v' w' h1 h2
     subst hz

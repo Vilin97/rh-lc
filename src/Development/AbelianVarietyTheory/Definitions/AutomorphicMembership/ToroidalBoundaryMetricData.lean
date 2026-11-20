@@ -296,8 +296,8 @@ structure OddPrimesWithRootsOfUnity : Type where
   met_smooth : ∀ σ, IsLieMetric Z.t (genι Z) (manifold Z σ) (met σ)
   met_conj : ∀ σ σ' (y : CxPts (genStr Z) σ) (y' : CxPts (genStr Z) σ') (v w : TanM (y.1 ≫ genι Z) Z.t.G)
     (v' w' : TanM (y'.1 ≫ genι Z) Z.t.G), y'.1 = spMap (starRingEnd ℂ) ≫ y.1 →
-    (tv v').left = spMap (dualMap (starRingEnd ℂ)) ≫ (tv v).left →
-    (tv w').left = spMap (dualMap (starRingEnd ℂ)) ≫ (tv w).left →
+    (tv v').left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ (tv v).left →
+    (tv w').left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ (tv w).left →
     met σ' y' v' w' = starRingEnd ℂ (met σ y v w)
 
 namespace OddPrimesWithRootsOfUnity
@@ -345,7 +345,7 @@ theorem gram_smooth (V : (gen Z).affineOpens) {φ : c.F →+* Γ(gen Z, V.1)} (F
       (manifold Z σ).SmoothOn (ptsIn _ σ V.1) (fun y => (g y).re) ∧
       (manifold Z σ).SmoothOn (ptsIn _ σ V.1) (fun y => (g y).im) ∧
       ∀ y (hy : y ∈ ptsIn _ σ V.1) (f : EigFrame Z σ (y.1 ≫ genι Z)),
-        (∀ i, f.v τ i = spMap (dualMap (evHom hy)) ≫ F.v τ i) → x.gram y f τ a b = g y := by
+        (∀ i, f.v τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (evHom hy)) ≫ F.v τ i) → x.gram y f τ a b = g y := by
   obtain ⟨g, h1, h2, h3⟩ := (x.met_smooth σ).2 V (F.vec τ b) (F.vec τ a)
   refine ⟨g, h1, h2, fun y hy f hf => ?_⟩
   rw [h3 y hy]
@@ -353,7 +353,7 @@ theorem gram_smooth (V : (gen Z).affineOpens) {φ : c.F →+* Γ(gen Z, V.1)} (F
 
 theorem gram_conj {y' : CxPts (genStr Z) σ'} (e : y'.1 = spMap (starRingEnd ℂ) ≫ y.1)
     (f : EigFrame Z σ (y.1 ≫ genι Z)) (f' : EigFrame Z σ' (y'.1 ≫ genι Z)) (τ : E →+* ℂ)
-    (h : ∀ i, f'.v τ i = spMap (dualMap (starRingEnd ℂ)) ≫ f.v τ i) :
+    (h : ∀ i, f'.v τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ f.v τ i) :
     x.gram y' f' τ = (x.gram y f τ).map (starRingEnd ℂ) :=
   Matrix.ext fun a b => x.met_conj σ σ' y y' _ _ _ _ e (h b) (h a)
 

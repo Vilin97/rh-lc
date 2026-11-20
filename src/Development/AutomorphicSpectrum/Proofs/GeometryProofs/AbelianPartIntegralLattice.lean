@@ -24,8 +24,8 @@ noncomputable section
 namespace GlobalTheory.CompanionTheory.Ar.Cusp.PtHt.Arch
 
 theorem dualMap_comp {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (f : R →+* R') (g : R' →+* R'') :
-    dualMap (g.comp f) = (dualMap g).comp (dualMap f) := by
-  refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_ <;> simp [dualMap]
+    GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) = (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
+  refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_ <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem isTan_comp {S : Scheme.{0}} {G G' : Over S} [GrpObj G] [GrpObj G'] (f : G ⟶ G') [IsMonHom f] {R : Type}
     [CommRing R] {x : Sp R ⟶ S} {v : epsAt x ⟶ G} (h : IsTanAt G x v) : IsTanAt G' x (v ≫ f) := by
@@ -53,12 +53,12 @@ theorem geo_height_arch : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
   obtain ⟨hbF, hbI, hbv⟩ := GlobalTheory.T.hermitian_bundle_fibre_tangent E H L t' P.tB P'.tB e m' mB A.Bq MB hfib V'
     (fun x => MV'.pt x ≫ P'.τ.q ≫ P'.e.hom) (fun x => isTan_comp _ (MV'.tan x))
   have hover : ∀ x : A.Λ, (MV'.pt (j x) ≫ P'.τ.q ≫ P'.e.hom).left ≫ mB.φ ≫ m'.φ =
-      spMap (dualMap (e.comp (algebraMap (𝓞 L) L))) ≫ (MB.pt (A.f x)).left := fun x => by
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (e.comp (algebraMap (𝓞 L) L))) ≫ (MB.pt (A.f x)).left := fun x => by
     have e1 := hlift x
     unfold LieModel.Lifts at e1
     rw [dualMap_comp]
-    have e3 : spMap ((dualMap e).comp (dualMap (algebraMap (𝓞 L) L))) =
-        spMap (dualMap e) ≫ spMap (dualMap (algebraMap (𝓞 L) L)) := by
+    have e3 : spMap ((GlobalTheory.CompanionTheory.Ar.dualMap e).comp (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L))) =
+        spMap (GlobalTheory.CompanionTheory.Ar.dualMap e) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) := by
       simp [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
     rw [e3, Category.assoc, ← e1, Over.comp_left, Category.assoc]
     rw [← Category.assoc (P'.τ.q ≫ P'.e.hom).left, ← h2, Category.assoc, ← Category.assoc _ mK.φ, hjpt]

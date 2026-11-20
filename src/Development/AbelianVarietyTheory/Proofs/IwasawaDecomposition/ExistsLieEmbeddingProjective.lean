@@ -77,23 +77,23 @@ theorem Bas.mat_mul (h : Bas x u) {m : ℕ} {w : Fin m → Tn t R} (hw : Bas x w
   exact (congrFun (h.co_comb hw.1 (hw.co_spec (hz b))) a).symm
 
 theorem Bas.co_map {R' : Type} [CommRing R'] (ψ : R →+* R') (h : Bas x u)
-    (h' : Bas (spMap ψ ≫ x) fun j => spMap (dualMap ψ) ≫ u j) {w : Tn t R} (hw : IsTanAtG t x w) :
-    co (spMap ψ ≫ x) (fun j => spMap (dualMap ψ) ≫ u j) (spMap (dualMap ψ) ≫ w) = ψ ∘ co x u w :=
+    (h' : Bas (spMap ψ ≫ x) fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ u j) {w : Tn t R} (hw : IsTanAtG t x w) :
+    co (spMap ψ ≫ x) (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ u j) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ w) = ψ ∘ co x u w :=
   h'.co_eq (GlobalTheory.LatDRFree.comb_map t ψ (h.co_spec hw))
 
 theorem bc_bc {R' R'' : Type} [CommRing R'] [CommRing R''] (φ : R →+* R') (ψ : R' →+* R'') (w : Tn t R) :
-    spMap (dualMap ψ) ≫ spMap (dualMap φ) ≫ w = spMap (dualMap (ψ.comp φ)) ≫ w := by
-  have e : (dualMap ψ).comp (dualMap φ) = dualMap (ψ.comp φ) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ w = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ)) ≫ w := by
+  have e : (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) = GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ) := by
     refine RingHom.ext fun z => ?_
-    ext <;> simp [dualMap]
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   rw [← Category.assoc, spMap_comp', e]
 
 theorem stab_bas (h : StabBasis t x u) {R' : Type} [CommRing R'] (φ : R →+* R') :
-    Bas (spMap φ ≫ x) fun j => spMap (dualMap φ) ≫ u j :=
+    Bas (spMap φ ≫ x) fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ u j :=
   ⟨fun j => isTanAtG_map t φ (h.1 j), h.2 R' φ⟩
 
 theorem stab_map (h : StabBasis t x u) {R' : Type} [CommRing R'] (φ : R →+* R') :
-    StabBasis t (spMap φ ≫ x) fun j => spMap (dualMap φ) ≫ u j := by
+    StabBasis t (spMap φ ≫ x) fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ u j := by
   refine ⟨fun j => isTanAtG_map t φ (h.1 j), fun R'' _ ψ => ?_⟩
   simp only [bc_bc]
   rw [← Category.assoc, spMap_comp']
@@ -105,13 +105,13 @@ section At
 
 variable {U : X.Opens} {n : ℕ} (v : Fin n → Tn t Γ(X, U)) {R : Type} [CommRing R]
 
-def vAt (x : Sp R ⟶ X) (h : ⊤ ≤ x ⁻¹ᵁ U) : Fin n → Tn t R := fun j => spMap (dualMap (valMap x U h).hom) ≫ v j
+def vAt (x : Sp R ⟶ X) (h : ⊤ ≤ x ⁻¹ᵁ U) : Fin n → Tn t R := fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (valMap x U h).hom) ≫ v j
 
 theorem le_comp {R' : Type} [CommRing R'] (ψ : R →+* R') {x : Sp R ⟶ X} (h : ⊤ ≤ x ⁻¹ᵁ U) :
     ⊤ ≤ (spMap ψ ≫ x) ⁻¹ᵁ U := le_preimage_comp _ x h (le_preimage_top _)
 
 theorem vAt_comp {R' : Type} [CommRing R'] (ψ : R →+* R') (x : Sp R ⟶ X) (h : ⊤ ≤ x ⁻¹ᵁ U)
-    (h' : ⊤ ≤ (spMap ψ ≫ x) ⁻¹ᵁ U) : vAt v (spMap ψ ≫ x) h' = fun j => spMap (dualMap ψ) ≫ vAt v x h j := by
+    (h' : ⊤ ≤ (spMap ψ ≫ x) ⁻¹ᵁ U) : vAt v (spMap ψ ≫ x) h' = fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ vAt v x h j := by
   funext j
   have e : (valMap (spMap ψ ≫ x) U h').hom = ψ.comp (valMap x U h).hom := RingHom.ext fun f => by
     rw [← valR_eq, valR_spMap_comp ψ x U h, valR_eq x U h]; rfl
@@ -136,7 +136,7 @@ theorem bas_vAt (hU : IsAffineOpen U) (hv : StabBasis t hU.fromSpec v) (x : Sp R
 
 theorem co_vAt_map (hU : IsAffineOpen U) (hv : StabBasis t hU.fromSpec v) {R' : Type} [CommRing R'] (ψ : R →+* R')
     (x : Sp R ⟶ X) (h : ⊤ ≤ x ⁻¹ᵁ U) (h' : ⊤ ≤ (spMap ψ ≫ x) ⁻¹ᵁ U) {w : Tn t R} (hw : IsTanAtG t x w) :
-    co (spMap ψ ≫ x) (vAt v _ h') (spMap (dualMap ψ) ≫ w) = ψ ∘ co x (vAt v x h) w := by
+    co (spMap ψ ≫ x) (vAt v _ h') (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ w) = ψ ∘ co x (vAt v x h) w := by
   rw [vAt_comp v ψ x h h']
   exact (bas_vAt hU hv x h).co_map ψ (stab_bas (stab_vAt hU hv x h) ψ) hw
 
@@ -221,7 +221,7 @@ theorem exists_isLieEmb : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     have e : spMap (ψ.comp φ) ≫ (aff i).fromSpec = spMap ψ ≫ spMap φ ≫ (aff i).fromSpec := by
       rw [← Category.assoc, spMap_comp']
     have k2 : ∀ (y : Sp R' ⟶ X) (hy : ⊤ ≤ y ⁻¹ᵁ (U (σ i)).1), y = spMap ψ ≫ spMap φ ≫ (aff i).fromSpec →
-        co y (vAt (v (σ i)) y hy) (spMap (dualMap ψ) ≫ w) =
+        co y (vAt (v (σ i)) y hy) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ w) =
           ψ ∘ co (spMap φ ≫ (aff i).fromSpec) (vAt (v (σ i)) _ (le_fromSpec (aff i) (hle i) φ)) w := by
       rintro _ hy rfl
       exact k

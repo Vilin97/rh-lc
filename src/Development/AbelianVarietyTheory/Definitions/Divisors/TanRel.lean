@@ -16,10 +16,10 @@ variable {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} {D : DegData R I} {A
 
 def TanRel (U : UnifPre I D A G) (y : epsR R ⟶ G) (gm : GtPt D.toPre (epsR R)) : Prop :=
   ∀ e : ℕ, ∃ ye : Sp (DualNumber (R ⧸ I ^ (e + 1))) ⟶ (thickObj R I e G).left,
-    ye ≫ (fstG I e G).left = spMap (dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) ≫ y.left ∧
-    ye ≫ (U.gt e).pG.left = spMap (dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) ≫ gm.b.left ∧
+    ye ≫ (fstG I e G).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) ≫ y.left ∧
+    ye ≫ (U.gt e).pG.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) ≫ gm.b.left ∧
     ∀ χ, LB.Gen.Corr D.toPre.P.L _ _ _ _ (LB.pullGen D.toPre.P.L _ _ ((U.gt e).t χ) ye)
-      (LB.pullGen D.toPre.P.L _ _ (gm.s χ) (spMap (dualMap (Ideal.Quotient.mk (I ^ (e + 1))))))
+      (LB.pullGen D.toPre.P.L _ _ (gm.s χ) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (I ^ (e + 1))))))
 
 def GtTan {D₀ : DegPre R} (gm : GtPt D₀ (epsR R)) : Prop :=
   ∃ o : GtPt D₀ (baseOver (Sp R)), o.IsZero ∧ GtPt.IsPull (redE R) gm o
@@ -30,7 +30,7 @@ abbrev toF (R : Type) [CommRing R] [IsDomain R] (F : Type) [Field F] [Algebra (F
 def VecAt (U : UnifPre I D A G) (F : Type) [Field F] [Algebra (FractionRing R) F] (y : epsR R ⟶ G)
     (yA : Sp (DualNumber F) ⟶ (TFK (R := R) F ⊗ A.A).left) : Prop :=
   yA ≫ (fst (TFK (R := R) F) A.A).left = spMap (algebraMap F (DualNumber F)) ∧
-  yA ≫ (snd (TFK (R := R) F) A.A).left ≫ U.gen.inv.left ≫ pullback.fst G.hom (jK R) = spMap (dualMap (toF R F)) ≫ y.left
+  yA ≫ (snd (TFK (R := R) F) A.A).left ≫ U.gen.inv.left ≫ pullback.fst G.hom (jK R) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF R F)) ≫ y.left
 
 def ArchF (κ : Rule) : Prop :=
   ∀ (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] [IsLocalRing R] (D : DegPre R), D.PsiEven → D.TauBimult →

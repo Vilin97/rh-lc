@@ -113,10 +113,10 @@ theorem coords {R : Type} [CommRing R] {x : Sp R ⟶ X} {g : ℕ} {e : Fin g →
     (he : IsTanBasis t x e) {m : ℕ} {w : Fin m → (Sp (DualNumber R) ⟶ t.G.left)} (hw : ∀ j, IsTanAtG t x (w j)) :
     ∃ a : Fin m → Fin g → R, ∀ j, IsCombAtG t x e (a j) (w j) := by
   have h1 : spMap (RingHom.id R) = 𝟙 _ := Spec.map_id _
-  have h2 : dualMap (RingHom.id R) = RingHom.id _ := by
+  have h2 : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R) = RingHom.id _ := by
     refine RingHom.ext fun z => ?_
-    ext <;> simp [dualMap]
-  have h3 : spMap (dualMap (RingHom.id R)) = 𝟙 _ := by rw [h2]; exact Spec.map_id _
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  have h3 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R)) = 𝟙 _ := by rw [h2]; exact Spec.map_id _
   have h := he.2 R (RingHom.id R)
   simp only [h1, h3, Category.id_comp] at h
   choose a ha using fun j => (h (w j) (hw j)).exists
@@ -128,7 +128,7 @@ namespace GlobalTheory.HTLine.GrMinor
 
 open GlobalTheory.LineNorm GlobalTheory.LieMet
 
-theorem grNorm_eq_ratio : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (R : Type) [CommRing R] (x : Sp R ⟶ X) (p : ℕ) (b : Bool) (g M : ℕ) (e : Fin g → (Sp (DualNumber R) ⟶ t.G.left)) (h : Fin (M + 1) → Fin g → R), p.Prime → GlobalTheory.LineNorm.IsTanBasis t x e → Pres t x p b e h → ∀ (m : ℕ) (w : Fin m → (Sp (DualNumber R) ⟶ t.G.left)), (∀ j, IsTanAtG t x (w j)) → (∀ (k : Type) [Field k] (ψ : R →+* k), (p : k) ≠ 0 → Pull.Ind t (spMap ψ ≫ x) (fun j => spMap (dualMap ψ) ≫ w j)) → ∀ i : Fin m, ∃ (a a' : ℕ) (A : Fin a → R) (B : Fin a' → R), (p : R) ∈ (Ideal.span (Set.range A)).radical ∧ (p : R) ∈ (Ideal.span (Set.range B)).radical ∧ ∀ (C : SCF p) (φ : R →+* ↥(intO ↥C.S)), GlobalTheory.ShFam.Pad.grNorm t (spMap (intO ↥C.S).subtype ≫ spMap φ ≫ x) (lat t p (spMap (intO ↥C.S).subtype ≫ spMap φ ≫ x) b) (fun j => spMap (dualMap ((intO ↥C.S).subtype.comp φ)) ≫ w j) i * ‖fun j => ((φ (B j) : ↥(intO ↥C.S)) : ↥C.S)‖ = ‖fun j => ((φ (A j) : ↥(intO ↥C.S)) : ↥C.S)‖ := by
+theorem grNorm_eq_ratio : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (R : Type) [CommRing R] (x : Sp R ⟶ X) (p : ℕ) (b : Bool) (g M : ℕ) (e : Fin g → (Sp (DualNumber R) ⟶ t.G.left)) (h : Fin (M + 1) → Fin g → R), p.Prime → GlobalTheory.LineNorm.IsTanBasis t x e → Pres t x p b e h → ∀ (m : ℕ) (w : Fin m → (Sp (DualNumber R) ⟶ t.G.left)), (∀ j, IsTanAtG t x (w j)) → (∀ (k : Type) [Field k] (ψ : R →+* k), (p : k) ≠ 0 → Pull.Ind t (spMap ψ ≫ x) (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ w j)) → ∀ i : Fin m, ∃ (a a' : ℕ) (A : Fin a → R) (B : Fin a' → R), (p : R) ∈ (Ideal.span (Set.range A)).radical ∧ (p : R) ∈ (Ideal.span (Set.range B)).radical ∧ ∀ (C : SCF p) (φ : R →+* ↥(intO ↥C.S)), GlobalTheory.ShFam.Pad.grNorm t (spMap (intO ↥C.S).subtype ≫ spMap φ ≫ x) (lat t p (spMap (intO ↥C.S).subtype ≫ spMap φ ≫ x) b) (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((intO ↥C.S).subtype.comp φ)) ≫ w j) i * ‖fun j => ((φ (B j) : ↥(intO ↥C.S)) : ↥C.S)‖ = ‖fun j => ((φ (A j) : ↥(intO ↥C.S)) : ↥C.S)‖ := by
   intro E _ _ _ H X t R _ x p b g M e h hp he hP m w hw hind i
   obtain ⟨a, ha⟩ := coords he hw
   obtain ⟨N, hN⟩ := hP.1
@@ -146,7 +146,7 @@ theorem grNorm_eq_ratio : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
       exact fun h0 => hpP (Ideal.algebraMap_residueField_eq_zero.1 h0)
     have hI := hind P.ResidueField (algebraMap R P.ResidueField) hp0
     have he' : ∀ r, IsTanAtG t (spMap (algebraMap R P.ResidueField) ≫ x)
-        (spMap (dualMap (algebraMap R P.ResidueField)) ≫ e r) := fun r => isTan_map _ rfl (he.1 r)
+        (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R P.ResidueField)) ≫ e r) := fun r => isTan_map _ rfl (he.1 r)
     have ha' := fun j => GlobalTheory.LatDRFree.comb_map t (algebraMap R P.ResidueField) (ha j)
     have hli := linIndep_of_ind he' hI _ ha'
     obtain ⟨σ, hσ⟩ := exists_ne (fun j r => algebraMap R P.ResidueField (h j r))
@@ -164,18 +164,18 @@ theorem grNorm_eq_ratio : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     rw [← Category.assoc, ← Spec.map_comp]
     rfl
   have hp0 : ((p : ℕ) : ↥C.S) ≠ 0 := Nat.cast_ne_zero.2 hp.ne_zero
-  have he' : ∀ r, IsTanAtG t (spMap (intO ↥C.S).subtype ≫ spMap φ ≫ x) (spMap (dualMap ψ) ≫ e r) :=
+  have he' : ∀ r, IsTanAtG t (spMap (intO ↥C.S).subtype ≫ spMap φ ≫ x) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ e r) :=
     fun r => isTan_map ψ hx (he.1 r)
-  have hw' : ∀ l, IsTanAtG t (spMap (intO ↥C.S).subtype ≫ spMap φ ≫ x) (spMap (dualMap ψ) ≫ w l) :=
+  have hw' : ∀ l, IsTanAtG t (spMap (intO ↥C.S).subtype ≫ spMap φ ≫ x) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ w l) :=
     fun l => isTan_map ψ hx (hw l)
-  have ha' : ∀ l, IsCombAtG t (spMap (intO ↥C.S).subtype ≫ spMap φ ≫ x) (fun r => spMap (dualMap ψ) ≫ e r)
-      (fun r => ψ (a l r)) (spMap (dualMap ψ) ≫ w l) := fun l => hx ▸ GlobalTheory.LatDRFree.comb_map t ψ (ha l)
+  have ha' : ∀ l, IsCombAtG t (spMap (intO ↥C.S).subtype ≫ spMap φ ≫ x) (fun r => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ e r)
+      (fun r => ψ (a l r)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ w l) := fun l => hx ▸ GlobalTheory.LatDRFree.comb_map t ψ (ha l)
   have hI := hind ↥C.S ψ hp0
   rw [hx] at hI
   have hli := linIndep_of_ind he' hI _ ha'
   have hsep := sep_of_span ψ p hp0 h N hN
   let Nf : Fin m → ℝ := fun l => grNorm t (spMap (intO ↥C.S).subtype ≫ spMap φ ≫ x)
-    (lat t p (spMap (intO ↥C.S).subtype ≫ spMap φ ≫ x) b) (fun j => spMap (dualMap ψ) ≫ w j) l
+    (lat t p (spMap (intO ↥C.S).subtype ≫ spMap φ ≫ x) b) (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ w j) l
   have hset : ∀ l, Nf l = sInf {r | ∃ cf : Fin m → ↥C.S, cf l ≠ 0 ∧ (∀ l', l < l' → cf l' = 0) ∧
       (∀ j, ‖∑ i, ψ (h j i) * ∑ l', cf l' * ψ (a l' i)‖ ≤ 1) ∧ r = ‖cf l‖⁻¹} := by
     intro l

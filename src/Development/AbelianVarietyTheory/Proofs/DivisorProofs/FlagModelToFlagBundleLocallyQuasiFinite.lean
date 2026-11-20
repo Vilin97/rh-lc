@@ -91,15 +91,15 @@ theorem initSpan_le_of_frameTri {Y : Model Xo c (RingHom.id c.F)} {Z : Scheme.{0
     (g' : EigFrame Y φ' (z' ≫ π)) (hg : IsFrameAt F z k hz g) (hg' : IsFrameAt F z' k' hz' g')
     (t : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → Kˣ) (ht : g.Tri (RingHom.id K) g' t) (σ : E →+* ℂ) (i : ℕ) :
     initSpan K (F.vecAt k' z' hz' hx' σ) i ≤ initSpan K (F.vecAt k z hz hx σ) i := by
-  have h1 : spMap (dualMap (RingHom.id K)) = 𝟙 _ := by
+  have h1 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id K)) = 𝟙 _ := by
     rw [← Spec.map_id]
     congr 1
-    ext r <;> simp [dualMap]
+    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   have ex : ∀ j : Fin (Dw.mult σ), ∃ cf : Fin (Dw.mult σ) → K, (∀ k, j < k → cf k = 0) ∧
       F.vecAt k' z' hz' hx' σ j = ∑ a, cf a • F.vecAt k z hz hx σ a := fun j => by
     obtain ⟨cf, -, hcf, hc⟩ := ht.2.2 σ j
     refine ⟨cf, hcf, eq_sum_of_isCombAtG hx' _ cf _ ?_⟩
-    have e1 : (fun a => spMap (dualMap (RingHom.id K)) ≫ g.v σ a) =
+    have e1 : (fun a => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id K)) ≫ g.v σ a) =
         fun a => (tv (F.vecAt k z hz hx σ a)).left := funext fun a => by
       rw [h1, Category.id_comp, hg σ a, vecAt_left F k z hz hx σ a]
     rw [e1, hg' σ j, ← vecAt_left F k' z' hz' hx' σ j] at hc

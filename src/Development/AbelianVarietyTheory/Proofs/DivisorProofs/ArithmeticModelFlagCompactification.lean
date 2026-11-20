@@ -23,7 +23,7 @@ private theorem eps_eps {K : Type} [CommRing K] (a b : K) {Y : Scheme.{0}} (v : 
 
 private theorem dual_eps {K K' : Type} [CommRing K] [CommRing K'] (ψ : K →+* K') (a : K) {Y : Scheme.{0}}
     (v : Sp (DualNumber K) ⟶ Y) :
-    spMap (dualMap ψ) ≫ spMap (epsMul a) ≫ v = spMap (epsMul (ψ a)) ≫ spMap (dualMap ψ) ≫ v := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (epsMul a) ≫ v = spMap (epsMul (ψ a)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ v := by
   rw [← Category.assoc, ← Category.assoc, sp_sp, sp_sp]
   congr 2
   refine RingHom.ext fun z => ?_
@@ -114,7 +114,7 @@ private theorem lat_part {R : Type} [CommRing R] {x : Sp R ⟶ Z.X} {τ : E →+
         ∀ w, IsEigTan Z φ (spMap ((intO ℂ_[p]).subtype.comp ψ) ≫ x) τ w →
           ((∃ a : Fin r → ℂ_[p], (∀ i, ‖(N : ℂ_[p]) * a i‖ ≤ 1) ∧
               IsCombAtG Z.t (spMap ((intO ℂ_[p]).subtype.comp ψ) ≫ x)
-                (fun i => spMap (dualMap ((intO ℂ_[p]).subtype.comp ψ)) ≫ u₀ i) a w) ↔
+                (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((intO ℂ_[p]).subtype.comp ψ)) ≫ u₀ i) a w) ↔
             spMap (epsMul δ) ≫ w ∈ lat Z.t p (spMap ((intO ℂ_[p]).subtype.comp ψ) ≫ x) k))
     {Ω : Type} [CommRing Ω] (hu : IsUnit (N : Ω)) (io : Ω →+* ℂ_[p]) (ψ : R →+* Ω) (hψ : ∀ a, ‖io (ψ a)‖ ≤ 1)
     (φ : c.F →+* ℂ_[p]) (y : Sp Ω ⟶ Z.X) (hy : spMap ψ ≫ x = y) (hφ : spMap io ≫ y ≫ Z.s = spMap (φ.comp β)) :
@@ -122,7 +122,7 @@ private theorem lat_part {R : Type} [CommRing R] {x : Sp R ⟶ Z.X} {τ : E →+
       ∀ w, IsEigTan Z φ (spMap io ≫ y) τ w →
         ((∃ a : Fin r → ℂ_[p], (∀ i, ‖a i‖ ≤ 1) ∧
             IsCombAtG Z.t (spMap io ≫ y)
-              (fun i => spMap (dualMap io) ≫ spMap (epsMul (Ring.inverse (N : Ω))) ≫ spMap (dualMap ψ) ≫ u₀ i) a w) ↔
+              (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) ≫ spMap (epsMul (Ring.inverse (N : Ω))) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ u₀ i) a w) ↔
           spMap (epsMul δ) ≫ w ∈ lat Z.t p (spMap io ≫ y) k) := by
   obtain ⟨j, hj⟩ := exists_int (io.comp ψ) hψ
   have h2 : spMap (io.comp ψ) ≫ x = spMap io ≫ y := by rw [← sp_sp, Category.assoc, hy]
@@ -145,7 +145,7 @@ theorem _root_.GlobalTheory.T.arithmetic_model_flag_compactification : ∀ (E : 
     rw [← hρ, ← Category.assoc, ← Category.assoc]
     exact congrArg (· ≫ ρ) (TangentOrigin.eq_spec_fromSpec hU (x ≫ jB) hx).symm
   refine ⟨fun K _ x hx i => spMap (epsMul (Ring.inverse (N : K))) ≫
-    spMap (dualMap (TangentOrigin.evalPt (x ≫ jB) U hx)) ≫ u₀ i, ⟨fun K _ x hx ψ hψ => ?_, ?_⟩, ?_⟩
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (TangentOrigin.evalPt (x ≫ jB) U hx)) ≫ u₀ i, ⟨fun K _ x hx ψ hψ => ?_, ?_⟩, ?_⟩
   · have h := hb K (TangentOrigin.evalPt (x ≫ jB) U hx) (ψ.comp e.symm.toRingHom) (by
       rw [← Category.assoc, hpt K x hx, ← over_base Z e (x ≫ πB) ψ (by rw [Category.assoc]; exact hψ)]
       simp only [Category.assoc])
@@ -154,7 +154,7 @@ theorem _root_.GlobalTheory.T.arithmetic_model_flag_compactification : ∀ (E : 
   · intro K K' _ _ ψ x hx hx' i
     have h : TangentOrigin.evalPt ((spMap ψ ≫ x) ≫ jB) U hx' = ψ.comp (TangentOrigin.evalPt (x ≫ jB) U hx) :=
       ev_comp ψ (x ≫ jB) hx _ hx' (Category.assoc _ _ _).symm
-    show _ ≫ spMap (dualMap (TangentOrigin.evalPt ((spMap ψ ≫ x) ≫ jB) U hx')) ≫ u₀ i = _
+    show _ ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (TangentOrigin.evalPt ((spMap ψ ≫ x) ≫ jB) U hx')) ≫ u₀ i = _
     rw [h, dual_eps, GlobalTheory.HTPres.bc_bc, map_inv_nat ψ N (hu K x)]
   · intro v hp ε xg xt hg ht hxt hx
     haveI : Fact (resP v).Prime := ⟨hp⟩

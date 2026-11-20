@@ -56,7 +56,7 @@ private theorem bLie_of_comb {p : ℕ} [Fact p.Prime] [StarRing (𝓞 E)] {P : P
 end SlopeTestRemainingChoices
 
 theorem UpperTheory.tangent_basis_lie_coordinates :
-    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (p : ℕ) [Fact p.Prime] [StarRing (𝓞 E)] (P : PtP E p) (yb : Sp 𝓞_ℂ_[p] ⟶ X) (π : P.G.left ⟶ t.G.left), IsGrpPullback P.G t.G yb π → (∀ a, (P.oG.act a).left ≫ π = π ≫ (t.act.act a).left) → ∀ (g : ℕ) (e : Fin g → (Sp (DualNumber 𝓞_ℂ_[p]) ⟶ t.G.left)), IsTanBasis t yb e → ∃ x : Fin g → LieG P.Gt, (∀ k, ITie P π (x k) (e k)) ∧ ∀ (cf : Fin g → ℂ_[p]) (w : (Sp (DualNumber ℂ_[p]) ⟶ t.G.left)), IsCombAtG t (spMap (algebraMap 𝓞_ℂ_[p] ℂ_[p]) ≫ yb) (fun i => spMap (dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p])) ≫ e i) cf w → ∀ σ : 𝓞 E →+* ℂ_[p], IsEigG t σ w → ∀ o, P.actV o (∑ k, cf k • P.bLie (x k)) = σ o • ∑ k, cf k • P.bLie (x k) := by
+    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (p : ℕ) [Fact p.Prime] [StarRing (𝓞 E)] (P : PtP E p) (yb : Sp 𝓞_ℂ_[p] ⟶ X) (π : P.G.left ⟶ t.G.left), IsGrpPullback P.G t.G yb π → (∀ a, (P.oG.act a).left ≫ π = π ≫ (t.act.act a).left) → ∀ (g : ℕ) (e : Fin g → (Sp (DualNumber 𝓞_ℂ_[p]) ⟶ t.G.left)), IsTanBasis t yb e → ∃ x : Fin g → LieG P.Gt, (∀ k, ITie P π (x k) (e k)) ∧ ∀ (cf : Fin g → ℂ_[p]) (w : (Sp (DualNumber ℂ_[p]) ⟶ t.G.left)), IsCombAtG t (spMap (algebraMap 𝓞_ℂ_[p] ℂ_[p]) ≫ yb) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p])) ≫ e i) cf w → ∀ σ : 𝓞 E →+* ℂ_[p], IsEigG t σ w → ∀ o, P.actV o (∑ k, cf k • P.bLie (x k)) = σ o • ∑ k, cf k • P.bLie (x k) := by
   intro E _ _ _ H X t p _ _ P yb π hπ hact g e he
   have hex : ∀ k, ∃ x : LieG P.Gt, ITie P π x (e k) := fun k => by
     obtain ⟨xG, hxG⟩ := RetractionModules.tan_lift hπ (he.1 k)
@@ -65,10 +65,10 @@ theorem UpperTheory.tangent_basis_lie_coordinates :
   choose x hx using hex
   refine ⟨x, hx, fun cf w hw σ hσ o => ?_⟩
   have h1 : spMap (RingHom.id 𝓞_ℂ_[p]) = 𝟙 _ := Spec.map_id _
-  have h3 : spMap (dualMap (RingHom.id 𝓞_ℂ_[p])) = 𝟙 _ := by
+  have h3 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id 𝓞_ℂ_[p])) = 𝟙 _ := by
     rw [← Spec.map_id]
     congr 1
-    ext r <;> simp [dualMap]
+    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   have hb0 := he.2 𝓞_ℂ_[p] (RingHom.id _)
   simp only [h1, h3, Category.id_comp] at hb0
   choose α hα using fun k => (hb0 _ (tan_act' (he.1 k) o)).exists
@@ -81,7 +81,7 @@ theorem UpperTheory.tangent_basis_lie_coordinates :
     rw [← P.bLie_act]
     exact bLie_of_comb hπ hx (hα k) (hT k)
   have he' := fun k => GlobalTheory.FactorDepth.isTanAtG_map t (algebraMap 𝓞_ℂ_[p] ℂ_[p]) (he.1 k)
-  have c1 := tanLinG _ he' (fun k => (spMap (dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p])) ≫ e k) ≫ (t.act.act o).left)
+  have c1 := tanLinG _ he' (fun k => (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p])) ≫ e k) ≫ (t.act.act o).left)
     (Matrix.of fun j k => algebraMap 𝓞_ℂ_[p] ℂ_[p] (α k j)) cf _
     (fun k => by
       rw [Category.assoc]

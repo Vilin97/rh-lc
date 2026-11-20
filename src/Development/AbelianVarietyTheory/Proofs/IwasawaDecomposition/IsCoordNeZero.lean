@@ -23,10 +23,10 @@ theorem tri_trans {R k : Type} [CommRing R] [Field k] {φ : c.F →+* R} {φ' φ
     {t d : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → kˣ} (h : f.Tri ψ g t) (h' : g.Tri (RingHom.id k) g' d) :
     f.Tri ψ g' (fun τ i => t τ i * d τ i) := by
   have h1 : spMap (RingHom.id k) = 𝟙 _ := Spec.map_id _
-  have h3 : spMap (dualMap (RingHom.id k)) = 𝟙 _ := by
+  have h3 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id k)) = 𝟙 _ := by
     rw [← Spec.map_id]
     congr 1
-    ext r <;> simp [dualMap]
+    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   obtain ⟨rfl, rfl, h⟩ := h
   obtain ⟨e1, e2, h'⟩ := h'
   rw [h1, Category.id_comp] at e1

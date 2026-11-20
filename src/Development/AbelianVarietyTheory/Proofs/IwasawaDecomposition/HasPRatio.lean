@@ -24,7 +24,7 @@ def Pres (p : ℕ) (b : Bool) {g M : ℕ} (e : Fin g → (Sp (DualNumber R) ⟶ 
   (∃ N : ℕ, ∀ i, Pi.single i ((p : R) ^ N) ∈ Submodule.span R (Set.range h)) ∧
   ∀ (C : SCF p) (φ : R →+* ↥(intO ↥C.S)) (cf : Fin g → ↥C.S) (w : Sp (DualNumber ↥C.S) ⟶ t.G.left),
     IsCombAtG t (spMap (intO ↥C.S).subtype ≫ spMap φ ≫ x)
-      (fun i => spMap (dualMap ((intO ↥C.S).subtype.comp φ)) ≫ e i) cf w →
+      (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((intO ↥C.S).subtype.comp φ)) ≫ e i) cf w →
     (w ∈ lat t p (spMap (intO ↥C.S).subtype ≫ spMap φ ≫ x) b ↔ ∀ j, ‖∑ i, ((φ (h j i) : ↥(intO ↥C.S)) : ↥C.S) * cf i‖ ≤ 1)
 
 end Lattice

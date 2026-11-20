@@ -23,11 +23,11 @@ open GlobalTheory.CompanionTheory.Ar.Flat.CPoint
 namespace GlobalTheory.CompanionTheory.Ar.Flat.CPoint
 
 theorem spMap_dualMap_comp_alg (V K : Type) [CommRing V] [Field K] [Algebra V K] :
-    spMap (dualMap (algebraMap V K)) ≫ spMap (algebraMap V (DualNumber V)) =
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ spMap (algebraMap V (DualNumber V)) =
       spMap (algebraMap K (DualNumber K)) ≫ spMap (algebraMap V K) := by
-  have e : (dualMap (algebraMap V K)).comp (algebraMap V (DualNumber V)) =
+  have e : (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)).comp (algebraMap V (DualNumber V)) =
       (algebraMap K (DualNumber K)).comp (algebraMap V K) := by
-    ext r <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp, e]
 
 theorem tan_iff_of_generic : ∀ (V K : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [Field K] [Algebra V K] [IsFractionRing V K]
@@ -35,8 +35,8 @@ theorem tan_iff_of_generic : ∀ (V K : Type) [CommRing V] [IsDomain V] [IsDiscr
     (GK : Over (Sp K)) [GrpObj GK] (z : Sp V ⟶ X) (φ₀ : GK.left ⟶ T.left) (φ₁ : GK.left ⟶ Gx.left),
     IsSemiAbelian Gx → IsSemiAbelian T → IsGrpPullback GK T (spMap (algebraMap V K)) φ₀ →
     IsGrpPullback GK Gx (spMap (algebraMap V K) ≫ z) φ₁ → ∀ u : epsAt (𝟙 (Sp K)) ⟶ GK, IsTanAt GK (𝟙 _) u →
-    ((∃ a : epsAt (𝟙 (Sp V)) ⟶ T, IsTanAt T (𝟙 _) a ∧ u.left ≫ φ₀ = spMap (dualMap (algebraMap V K)) ≫ a.left) ↔
-      ∃ a : epsAt z ⟶ Gx, IsTanAt Gx z a ∧ u.left ≫ φ₁ = spMap (dualMap (algebraMap V K)) ≫ a.left) := by
+    ((∃ a : epsAt (𝟙 (Sp V)) ⟶ T, IsTanAt T (𝟙 _) a ∧ u.left ≫ φ₀ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ a.left) ↔
+      ∃ a : epsAt z ⟶ Gx, IsTanAt Gx z a ∧ u.left ≫ φ₁ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ a.left) := by
   intro V K _ _ _ _ _ _ X Gx _ _ T _ _ GK _ z φ₀ φ₁ hG hT h₀ h₁ u hu
   have hp := isGrpPullback_pullback Gx z
   have hS : IsSemiAbelian ((Over.pullback z).obj Gx) := IsSemiAbelian.pullback z Gx hG
@@ -57,7 +57,7 @@ theorem tan_iff_of_generic : ∀ (V K : Type) [CommRing V] [IsDomain V] [IsDiscr
     obtain ⟨x, rfl⟩ := MT.onto a ha
     have l := hf x u e
     refine ⟨MG.pt (f x), MG.tan _, ?_⟩
-    have l' : u.left ≫ φ' = spMap (dualMap (algebraMap V K)) ≫ (M₀.pt (f x)).left := by
+    have l' : u.left ≫ φ' = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ (M₀.pt (f x)).left := by
       simpa [LieModel.Lifts] using l
     rw [← eφ, ← Category.assoc, l', Category.assoc, hM₀]
   · rintro ⟨a, ha, e⟩
@@ -67,7 +67,7 @@ theorem tan_iff_of_generic : ∀ (V K : Type) [CommRing V] [IsDomain V] [IsDiscr
       · rw [Category.assoc, eφ, e, Category.assoc, hM₀]
       · rw [Category.assoc, eσ, ← Category.assoc, Over.w u, Category.assoc, Over.w (M₀.pt x)]
         show (spMap (algebraMap K (DualNumber K)) ≫ 𝟙 _) ≫ spMap (algebraMap V K) =
-          spMap (dualMap (algebraMap V K)) ≫ spMap (algebraMap V (DualNumber V)) ≫ 𝟙 _
+          spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ spMap (algebraMap V (DualNumber V)) ≫ 𝟙 _
         rw [Category.comp_id, Category.comp_id, spMap_dualMap_comp_alg]
     have l₂ := hg x u l
     refine ⟨MT.pt (g x), MT.tan _, ?_⟩

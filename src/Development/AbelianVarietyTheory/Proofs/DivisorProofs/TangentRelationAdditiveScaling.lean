@@ -56,18 +56,18 @@ theorem spMap_comp₂ {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f :
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
 
 theorem dual_over {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) :
-    spMap (dualMap f) ≫ (epsR A).hom = (epsR B).hom ≫ spMap f := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (epsR A).hom = (epsR B).hom ≫ spMap f := by
   change spMap _ ≫ spMap _ = spMap _ ≫ spMap _
   rw [spMap_comp₂, spMap_comp₂]
   congr 1
-  ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem dual_scale {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (c : A) :
-    spMap (epsScaleR (f c)) ≫ spMap (dualMap f) = spMap (dualMap f) ≫ spMap (epsScaleR c) := by
+    spMap (epsScaleR (f c)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ spMap (epsScaleR c) := by
   rw [spMap_comp₂, spMap_comp₂]
   congr 1
   refine RingHom.ext fun a => ?_
-  ext <;> simp [dualMap, epsScaleR, mul_comm]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsScaleR, mul_comm]
 
 variable {R : Type} [CommRing R] [IsDomain R] {I : Ideal R} {D : DegData R I} {A : PolAV (Sp (FractionRing R))}
   {G : Over (Sp R)} [GrpObj G] [IsCommMonObj G] (U : UnifPre I D A G)
@@ -80,9 +80,9 @@ theorem tanRel_mul (y y' : epsR R ⟶ G) (gm gm' gm'' : GtPt D.toPre (epsR R)) (
   have hci : IsClosedImmersion (thick R I e) := IsClosedImmersion.spec_of_surjective _ Ideal.Quotient.mk_surjective
   have hw := dual_over (Ideal.Quotient.mk (I ^ (e + 1)))
   let ρ : (Over.map (thick R I e)).obj (epsR (R ⧸ I ^ (e + 1))) ⟶ epsR R :=
-    Over.homMk (spMap (dualMap (Ideal.Quotient.mk (I ^ (e + 1))))) hw
+    Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (I ^ (e + 1))))) hw
   have key : ∀ (w : epsR R ⟶ G) (we : Sp (DualNumber (R ⧸ I ^ (e + 1))) ⟶ (thickObj R I e G).left),
-      we ≫ (fstG I e G).left = spMap (dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) ≫ w.left →
+      we ≫ (fstG I e G).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) ≫ w.left →
       we ≫ (thickObj R I e G).hom = (epsR (R ⧸ I ^ (e + 1))).hom := by
     intro w we hh
     have h0 := congrArg (· ≫ G.hom) hh
@@ -108,8 +108,8 @@ theorem tanRel_scale (c : R) (y : epsR R ⟶ G) (gm gm' : GtPt D.toPre (epsR R))
     (hp : GtPt.IsPull (epsScale R c).left gm gm') : TanRel U (epsScale R c ≫ y) gm' := by
   intro e
   obtain ⟨ye, h₁, h₂, h₃⟩ := h e
-  have hc : spMap (epsScaleR (Ideal.Quotient.mk (I ^ (e + 1)) c)) ≫ spMap (dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) =
-      spMap (dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) ≫ (epsScale R c).left := dual_scale _ c
+  have hc : spMap (epsScaleR (Ideal.Quotient.mk (I ^ (e + 1)) c)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) =
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (I ^ (e + 1)))) ≫ (epsScale R c).left := dual_scale _ c
   refine ⟨spMap (epsScaleR (Ideal.Quotient.mk (I ^ (e + 1)) c)) ≫ ye, ?_, ?_, fun χ => ?_⟩
   · refine (Category.assoc _ _ _).trans ((congrArg (_ ≫ ·) h₁).trans ?_)
     exact (Category.assoc _ _ _).symm.trans ((congrArg (· ≫ y.left) hc).trans (Category.assoc _ _ _))
@@ -119,7 +119,7 @@ theorem tanRel_scale (c : R) (y : epsR R ⟶ G) (gm gm' : GtPt D.toPre (epsR R))
   · refine corr_of_val D.toPre.P.isLB fun z J hJ => ?_
     have s := ((val_pull hJ _ _ _).symm.trans
       (val_corr hJ (h₃ χ) (spMap (epsScaleR (Ideal.Quotient.mk (I ^ (e + 1)) c))))).trans (val_pull hJ _ _ _)
-    have t := (val_corr hJ (hp.2 χ) (spMap (dualMap (Ideal.Quotient.mk (I ^ (e + 1)))))).trans (val_pull hJ _ _ _)
+    have t := (val_corr hJ (hp.2 χ) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (I ^ (e + 1)))))).trans (val_pull hJ _ _ _)
     refine (val_pull hJ _ _ _).trans (Eq.trans ?_ (val_pull hJ _ _ _).symm)
     simp only [Category.id_comp]
     exact s.trans ((congrArg (fun q => val (gm.s χ) q z J) hc).trans t.symm)

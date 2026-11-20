@@ -21,7 +21,7 @@ namespace GlobalTheory.MBLow.TanPull
 open ReciprocityTheory.ChartRestriction.G.DVR GlobalTheory.TorusModel in
 set_option maxHeartbeats 1000000 in
 
-theorem main : ∀ (V : Type) [CommRing V] [IsDomain V] (D : DegPre V) (C : Type) [Field C] [Algebra (FractionRing V) C] (N : NumD C) (ν : NumOf D C N) (gm₀ : GtPt D (epsR V)), GtTan gm₀ → ∃ gm : GtPt D (TE V C), GtPt.IsPull (spMap (dualMap (toF V C))) gm₀ gm ∧ (∃ o : GtPtF D C, o.IsZero ∧ GtPt.IsPullF C (redE C) gm o) ∧ (gm₀.b = DegPre.zeroT D (epsR V) → gm.b = DegPre.zeroT D (TE V C)) ∧ ∀ (a : V) (χ : D.X), (∀ (Z : Scheme.{0}) (q : Z ⟶ (epsR V).left) (z : Z) (J : (Z ⟶ D.P.A.left) → D.P.L.ι), ReciprocityTheory.ChartRestriction.G.Geo.Tor.Good D.P.L z J → (ReciprocityTheory.ChartRestriction.G.Geo.Tor.val (gm₀.s χ) q z J).val = ReciprocityTheory.ChartRestriction.G.Geo.Tor.gs q z ⊤ ((Scheme.ΓSpecIso (CommRingCat.of (DualNumber V))).inv.hom (1 + TrivSqZeroExt.inr a))) → vE (gm.s χ) (𝟙 _) ν.J = 1 + TrivSqZeroExt.inr (toF V C a) := by
+theorem main : ∀ (V : Type) [CommRing V] [IsDomain V] (D : DegPre V) (C : Type) [Field C] [Algebra (FractionRing V) C] (N : NumD C) (ν : NumOf D C N) (gm₀ : GtPt D (epsR V)), GtTan gm₀ → ∃ gm : GtPt D (TE V C), GtPt.IsPull (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF V C))) gm₀ gm ∧ (∃ o : GtPtF D C, o.IsZero ∧ GtPt.IsPullF C (redE C) gm o) ∧ (gm₀.b = DegPre.zeroT D (epsR V) → gm.b = DegPre.zeroT D (TE V C)) ∧ ∀ (a : V) (χ : D.X), (∀ (Z : Scheme.{0}) (q : Z ⟶ (epsR V).left) (z : Z) (J : (Z ⟶ D.P.A.left) → D.P.L.ι), ReciprocityTheory.ChartRestriction.G.Geo.Tor.Good D.P.L z J → (ReciprocityTheory.ChartRestriction.G.Geo.Tor.val (gm₀.s χ) q z J).val = ReciprocityTheory.ChartRestriction.G.Geo.Tor.gs q z ⊤ ((Scheme.ΓSpecIso (CommRingCat.of (DualNumber V))).inv.hom (1 + TrivSqZeroExt.inr a))) → vE (gm.s χ) (𝟙 _) ν.J = 1 + TrivSqZeroExt.inr (toF V C a) := by
   intro V _ _ D C _ _ N ν gm₀ htan
   have hG : GlobalFnsSt := GlobalTheory.SemiRigid.globalFns
   obtain ⟨H, _, _, hH⟩ := exists_isGt hG (splitExt D)
@@ -29,9 +29,9 @@ theorem main : ∀ (V : Type) [CommRing V] [IsDomain V] (D : DegPre V) (C : Type
   have hz : ∀ T, (Φ T 1).IsZero := fun T => GtVec.isZero_of_isAdd (by simpa using ha T 1 1)
   have hTF : spMap (toF V C) = (TF (R := V) C).hom := by
     simp [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
-  have hTE : spMap (dualMap (toF V C)) ≫ (epsR V).hom = (TE V C).hom := by
+  have hTE : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF V C)) ≫ (epsR V).hom = (TE V C).hom := by
     rw [TanLift.dualMap_over, hTF]; rfl
-  let hh : TE V C ⟶ epsR V := Over.homMk (spMap (dualMap (toF V C))) hTE
+  let hh : TE V C ⟶ epsR V := Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF V C))) hTE
   obtain ⟨x₀, rfl⟩ := (Φ (epsR V)).surjective gm₀
   refine ⟨Φ _ (hh ≫ x₀), hp _ _ hh x₀, ?_, ?_, ?_⟩
   · obtain ⟨o₀, ho₀, hpo⟩ := htan
@@ -44,11 +44,11 @@ theorem main : ∀ (V : Type) [CommRing V] [IsDomain V] (D : DegPre V) (C : Type
     let tf : TF (R := V) C ⟶ baseOver (Sp V) := Over.homMk (TF (R := V) C).hom (Category.comp_id _)
     have e₂ : k ≫ hh = tf ≫ r := by
       ext
-      show redE C ≫ spMap (dualMap (toF V C)) = (TF (R := V) C).hom ≫ redE V
+      show redE C ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF V C)) = (TF (R := V) C).hom ≫ redE V
       rw [← hTF]
       simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
       congr 2
-      ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+      ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
     have e₃ : k ≫ hh ≫ x₀ = 1 := by
       rw [← Category.assoc, e₂, Category.assoc, e₁, MonObj.comp_one]
     have hpk := hp _ _ k (hh ≫ x₀)
@@ -84,11 +84,11 @@ theorem main : ∀ (V : Type) [CommRing V] [IsDomain V] (D : DegPre V) (C : Type
       simp only [Scheme.Hom.appLE, Scheme.Hom.id_app]
       erw [show (homOfLE h0) = 𝟙 (⊤ : (Sp (DualNumber V)).Opens) from rfl]
       simp
-    have l4 := FormalValue.toStkA_map_valR (dualMap (toF V C)) (𝟙 (Sp (DualNumber V))) ⊤ (cpt (DualNumber C))
+    have l4 := FormalValue.toStkA_map_valR (GlobalTheory.CompanionTheory.Ar.dualMap (toF V C)) (𝟙 (Sp (DualNumber V))) ⊤ (cpt (DualNumber C))
       (fun _ _ => trivial) ((Scheme.ΓSpecIso (CommRingCat.of (DualNumber V))).inv.hom (1 + TrivSqZeroExt.inr a))
     rw [hv1, Category.comp_id] at l4
-    have hd : dualMap (toF V C) (1 + TrivSqZeroExt.inr a) = 1 + TrivSqZeroExt.inr (toF V C a) := by
-      ext <;> simp [dualMap]
+    have hd : GlobalTheory.CompanionTheory.Ar.dualMap (toF V C) (1 + TrivSqZeroExt.inr a) = 1 + TrivSqZeroExt.inr (toF V C a) := by
+      ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
     rw [hd] at l4
     rw [l4]
     refine l1.trans ?_

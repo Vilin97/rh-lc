@@ -45,7 +45,7 @@ theorem dlogDvd_of_gens [IsLocallyNoetherian X] {x : Sp ↥(intO ℂ_[p]) ⟶ X}
     (hb : IsCombAtG t x e b vO) (s : Fin N → ↥(intO ℂ_[p]))
     (hs : ∀ m, ∀ w : Over.mk (spMap (algebraMap ↥(intO ℂ_[p])
         (DualNumber (↥(intO ℂ_[p]) ⧸ Ideal.span {(p : ↥(intO ℂ_[p])) ^ n}))) ≫ x) ⟶ t.G,
-      w.left = spMap (dualMap (Ideal.Quotient.mk (Ideal.span {(p : ↥(intO ℂ_[p])) ^ n}))) ≫ vO →
+      w.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(p : ↥(intO ℂ_[p])) ^ n}))) ≫ vO →
         ((χ m).χ _ w : DualNumber (↥(intO ℂ_[p]) ⧸ Ideal.span {(p : ↥(intO ℂ_[p])) ^ n})).snd =
           Ideal.Quotient.mk (Ideal.span {(p : ↥(intO ℂ_[p])) ^ n}) (s m * (p : ↥(intO ℂ_[p])) ^ 2)) :
     DlogDvd t x p 2 vO := by
@@ -96,13 +96,13 @@ theorem exists_integral [IsLocallyNoetherian X] (hX : X.IsSeparated) {x : Sp ↥
     (hu : ∀ l, IsTanAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (u l)) {Mc : Matrix (Fin N) (Fin m) ℂ_[p]}
     (hM : DlogVals t x χ u Mc) (y : Fin m → ℂ_[p]) (hy : ∀ r, ‖∑ l, Mc r l * y l‖ ≤ 1) :
     ∃ vO, IsTanAtG t x vO ∧ IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) u (fun l => (p : ℂ_[p]) ^ 2 * y l)
-      (spMap (dualMap (intO ℂ_[p]).subtype) ≫ vO) := by
+      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ vO) := by
   obtain ⟨g, e, he⟩ := exists_tanBasis (t := t) x
   have heC := fun i => GlobalTheory.FactorDepth.isTanAtG_map t (intO ℂ_[p]).subtype (he.1 i)
   obtain ⟨w, hwt, hw⟩ := Guard.exists_comb hu y
   obtain ⟨a, ha, -⟩ := he.2 _ _ w hwt
   have lift : ∀ s : ℂ_[p], ∀ hs : ∀ i, ‖s * a i‖ ≤ 1, ∃ vO, IsCombAtG t x e (fun i => ⟨s * a i, hs i⟩) vO ∧
-      spMap (dualMap (intO ℂ_[p]).subtype) ≫ vO = spMap (epsMul s) ≫ w := fun s hs => by
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ vO = spMap (epsMul s) ≫ w := fun s hs => by
     obtain ⟨vO, -, hbv⟩ := Guard.exists_comb he.1 (fun i => (⟨s * a i, hs i⟩ : ↥(intO ℂ_[p])))
     exact ⟨vO, hbv, Guard.comb_unique heC (GlobalTheory.LatDRFree.comb_map t (intO ℂ_[p]).subtype hbv) (Guard.comb_smul heC ha _)⟩
   by_cases hbig : ∀ i, ‖(p : ℂ_[p]) ^ 2 * a i‖ ≤ 1

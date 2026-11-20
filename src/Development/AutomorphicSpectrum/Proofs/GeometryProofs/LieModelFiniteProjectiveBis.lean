@@ -18,15 +18,15 @@ noncomputable section
 namespace GlobalTheory.CompanionTheory.Ar.LieFin
 
 theorem spMap_dual_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (c : A →+* B) (d : B →+* C) :
-    spMap (dualMap d) ≫ spMap (dualMap c) = spMap (dualMap (d.comp c)) := by
-  have : dualMap (d.comp c) = (dualMap d).comp (dualMap c) := by
-    ext a <;> simp [dualMap]
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap d) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (d.comp c)) := by
+  have : GlobalTheory.CompanionTheory.Ar.dualMap (d.comp c) = (GlobalTheory.CompanionTheory.Ar.dualMap d).comp (GlobalTheory.CompanionTheory.Ar.dualMap c) := by
+    ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   simp only [this, spMap, ← Spec.map_comp]
   rfl
 
-theorem spMap_dual_id {A : Type} [CommRing A] : spMap (dualMap (RingHom.id A)) = 𝟙 _ := by
-  have : dualMap (RingHom.id A) = RingHom.id _ := by
-    ext a <;> simp [dualMap]
+theorem spMap_dual_id {A : Type} [CommRing A] : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id A)) = 𝟙 _ := by
+  have : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id A) = RingHom.id _ := by
+    ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   simp only [this, spMap]
   exact Spec.map_id _
 
@@ -39,7 +39,7 @@ theorem pt_left_inj {A : Type} [CommRing A] {a : Sp A ⟶ S} {E : Type} [AddComm
 theorem exists_tr {A B : Type} [CommRing A] [CommRing B] (a : Sp A ⟶ S) (b : Sp B ⟶ S) (c : A →+* B)
     (h : spMap c ≫ a = b) {E E' : Type} [AddCommGroup E] [AddCommGroup E'] [Module A E] [Module B E']
     (M : LieModel G a E) (M' : LieModel G b E') :
-    ∃ j : E →ₛₗ[c] E', ∀ e, (M'.pt (j e)).left = spMap (dualMap c) ≫ (M.pt e).left := by
+    ∃ j : E →ₛₗ[c] E', ∀ e, (M'.pt (j e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ (M.pt e).left := by
   subst h
   obtain ⟨j, hj, -⟩ := GlobalTheory.T.lie_model_existsUnique_semilinear S G A B c a E E' M M'
   refine ⟨j, fun e => ?_⟩
@@ -51,7 +51,7 @@ theorem exists_trL {R A B : Type} [CommRing R] [CommRing A] [CommRing B] [Algebr
     (h : spMap c ≫ a = b) {E E' : Type} [AddCommGroup E] [AddCommGroup E'] [Module A E] [Module B E']
     [Module R E] [Module R E'] [IsScalarTower R A E] [IsScalarTower R B E']
     (M : LieModel G a E) (M' : LieModel G b E') :
-    ∃ j : E →ₗ[R] E', ∀ e, (M'.pt (j e)).left = spMap (dualMap c) ≫ (M.pt e).left := by
+    ∃ j : E →ₗ[R] E', ∀ e, (M'.pt (j e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ (M.pt e).left := by
   obtain ⟨j, hj⟩ := exists_tr a b c h M M'
   refine ⟨{ toFun := j, map_add' := j.map_add, map_smul' := fun r e => ?_ }, hj⟩
   have h1 : r • e = algebraMap R A r • e := (algebraMap_smul A r e).symm
@@ -95,18 +95,18 @@ theorem spMap_comp' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (d : A
   rfl
 
 theorem spMap_dual_alg {A B : Type} [CommRing A] [CommRing B] (c : A →+* B) :
-    spMap (dualMap c) ≫ spMap (algebraMap A (DualNumber A)) =
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ spMap (algebraMap A (DualNumber A)) =
       spMap (algebraMap B (DualNumber B)) ≫ spMap c := by
   rw [spMap_comp', spMap_comp']
   congr 1
-  ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem spMap_fst_dual {A B : Type} [CommRing A] [CommRing B] (c : A →+* B) :
     spMap c ≫ spMap (TrivSqZeroExt.fstHom A A A).toRingHom =
-      spMap (TrivSqZeroExt.fstHom B B B).toRingHom ≫ spMap (dualMap c) := by
+      spMap (TrivSqZeroExt.fstHom B B B).toRingHom ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) := by
   rw [spMap_comp', spMap_comp']
   congr 1
-  ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 abbrev Idx {R J : Type} [CommRing R] (f : J → R) : Type := {g : R // ∃ i, f i ∣ g}
 
@@ -135,17 +135,17 @@ theorem loc_of_family {R : Type} [CommRing R] (x : Sp R ⟶ S) {J : Type} [Finit
     [∀ g : Idx f, IsScalarTower R (Localization.Away g.1) (F g)]
     (mg : ∀ g : Idx f, LieModel G (ptAt x g.1) (F g))
     (hqc : ∀ (g g' : Idx f) (h : g.1 ∣ g'.1) (t : R), g'.1 = g.1 * t → ∀ r : F g →ₗ[R] F g',
-      (∀ y, ((mg g').pt (r y)).left = spMap (dualMap (cmap h).toRingHom) ≫ ((mg g).pt y).left) →
+      (∀ y, ((mg g').pt (r y)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (cmap h).toRingHom) ≫ ((mg g).pt y).left) →
       IsLocalizedModule (Submonoid.powers t) r) :
     ∃ ρ : ∀ g, E →ₗ[R] F g,
-      (∀ g e, ((mg g).pt (ρ g e)).left = spMap (dualMap (algebraMap R (Localization.Away g.1))) ≫ (M.pt e).left) ∧
+      (∀ g e, ((mg g).pt (ρ g e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R (Localization.Away g.1))) ≫ (M.pt e).left) ∧
       ∀ i, IsLocalizedModule (Submonoid.powers (f i)) (ρ ⟨f i, i, dvd_rfl⟩) := by
   have hres : ∀ (g g' : Idx f) (h : g.1 ∣ g'.1), ∃ r : F g →ₗ[R] F g', ∀ y,
-      ((mg g').pt (r y)).left = spMap (dualMap (cmap h).toRingHom) ≫ ((mg g).pt y).left :=
+      ((mg g').pt (r y)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (cmap h).toRingHom) ≫ ((mg g).pt y).left :=
     fun g g' h => exists_trL (R := R) _ _ (cmap h).toRingHom (cmap h).commutes (pt_cmap x h) (mg g) (mg g')
   choose res hres using hres
   have hρ : ∀ g : Idx f, ∃ r : E →ₗ[R] F g, ∀ e,
-      ((mg g).pt (r e)).left = spMap (dualMap (algebraMap R (Localization.Away g.1))) ≫ (M.pt e).left :=
+      ((mg g).pt (r e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R (Localization.Away g.1))) ≫ (M.pt e).left :=
     fun g => exists_trL (R := R) x (ptAt x g.1) (algebraMap R _) (fun _ => rfl) rfl M (mg g)
   choose ρ hρ using hρ
   have hglue := fun X => GlobalTheory.T.dual_number_points_glue X R J f hf
@@ -287,14 +287,14 @@ theorem fin_of_charts {R : Type} [CommRing R] (x : Sp R ⟶ S) {J : Type} [Finit
     (nat : ∀ i (C C' : Type) [CommRing C] [CommRing C'] [Algebra R C] [Algebra R C']
       (hC : IsUnit (algebraMap R C (f i))) (hC' : IsUnit (algebraMap R C' (f i))) (c : C →ₐ[R] C')
       (w : P i →ₗ[R] C),
-      ((m i C' hC').pt (c.toLinearMap ∘ₗ w)).left = spMap (dualMap c.toRingHom) ≫ ((m i C hC).pt w).left)
+      ((m i C' hC').pt (c.toLinearMap ∘ₗ w)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap c.toRingHom) ≫ ((m i C hC).pt w).left)
     (M : LieModel G x E) : Module.Finite R E ∧ Module.Projective R E := by
   have hix : ∀ g : Idx f, ∃ i, f i ∣ g.1 := fun g => g.2
   choose ix hix using hix
   have hqc : ∀ (g g' : Idx f) (h : g.1 ∣ g'.1) (t : R), g'.1 = g.1 * t →
       ∀ r : (P (ix g) →ₗ[R] Localization.Away g.1) →ₗ[R] (P (ix g') →ₗ[R] Localization.Away g'.1),
       (∀ y, ((m (ix g') _ (unit_of_dvd (hix g'))).pt (r y)).left =
-        spMap (dualMap (cmap h).toRingHom) ≫ ((m (ix g) _ (unit_of_dvd (hix g))).pt y).left) →
+        spMap (GlobalTheory.CompanionTheory.Ar.dualMap (cmap h).toRingHom) ≫ ((m (ix g) _ (unit_of_dvd (hix g))).pt y).left) →
       IsLocalizedModule (Submonoid.powers t) r := by
     intro g g' h t ht r hr
     have hu' : IsUnit (algebraMap R (Localization.Away g'.1) (f (ix g))) :=

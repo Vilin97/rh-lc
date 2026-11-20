@@ -152,7 +152,7 @@ theorem half {D : Datum H} {l : Level H} {Xo : Moduli D l} {c : Coeff l} {K : Ty
     (hlink : ∀ k, ∃ s : Sp (DualNumber K) ⟶ tK.G.left,
       s ≫ m.φ = (M.pt (Sum.elim (fun q : Fin r × Fin f => ρ (b q.2) (u q.1))
         (fun q : Fin r' × Fin f => ρ (b q.2) (u' q.1)) (e k))).left ∧
-      s ≫ m'.φ = spMap (dualMap (algebraMap V K)) ≫ (uV k).left) :
+      s ≫ m'.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ (uV k).left) :
     IsIntFrame m m' (σ.comp (algebraMap (𝓞 E) E)) (fun a => M.pt (δ • HT.eigProj ρ σ (u a))) := by
   obtain ⟨h1, h2⟩ := GlobalTheory.T.eigen_local_basis_log_norm E H ℓ K j V U ρ σ (Fin r) (Fin r') u u' f b δ hj hcard hb hu hu' hind hδ hlog
   exact (GlobalTheory.T.lie_model_extends_over_dvr E H D l Xo c K V y T tK m m' U M ρ σ _ n r e uV _ _ hact hσ htan hbas hlink h1 h2).2
@@ -234,12 +234,12 @@ theorem intFrames_fin : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
   obtain ⟨T, m'', uV, htan, hbas, hlink⟩ := GlobalTheory.T.cm_pack_product_frame E H D l Xo c g ty FU i Z P hP X N
     (fun k => bI (e k)) (fun k => aI (e k)) V hN0 hspan' hOK' hNu
   have hlink1 : ∀ k, ∃ s : Sp (DualNumber X.K) ⟶ X.t.G.left, s ≫ X.m.φ = (M.pt (fam (e k))).left ∧
-      s ≫ m''.φ = spMap (dualMap (algebraMap V X.K)) ≫ (uV k).left := fun k => by
+      s ≫ m''.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V X.K)) ≫ (uV k).left := fun k => by
     rw [← hfam]
     exact hlink k _ ((hIm _ _ _).2 rfl)
   have hlink2 : ∀ k, ∃ s : Sp (DualNumber X.K) ⟶ X.t.G.left,
       s ≫ X.m.φ = (M.pt (fam' ((e.trans (Equiv.sumComm _ _)) k))).left ∧
-      s ≫ m''.φ = spMap (dualMap (algebraMap V X.K)) ≫ (uV k).left := fun k => by
+      s ≫ m''.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V X.K)) ≫ (uV k).left := fun k => by
     rw [Equiv.trans_apply, hswap]
     exact hlink1 k
   have hint : ∀ (φ : E →+* X.K) (a : 𝓞 E), φ (a : E) ∈ V := fun φ a =>

@@ -53,7 +53,7 @@ theorem exists_carried_frame_coord : ∀ (D : D7) (A : Amb D) (N j : ℕ) (S : S
   have hB' : ∀ τ, gF.co (Φ.C k).f0 τ = (B τ)ᵀ := fun τ =>
     GlobalTheory.ShFam.EigFrame.co_eq fun i => by
       have h := hB.2.2 τ i
-      have hv : gF.v τ = fun k' => spMap (dualMap (baseFn (Φ.C k) V hne)) ≫ g.v τ k' := by
+      have hv : gF.v τ = fun k' => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (baseFn (Φ.C k) V hne)) ≫ g.v τ k' := by
         funext k'
         rw [hgF τ k', hgy τ k', h1]
         exact GradedPieces.dual_comp ρ _ _
@@ -76,7 +76,7 @@ theorem exists_carried_frame_coord : ∀ (D : D7) (A : Amb D) (N j : ℕ) (S : S
   refine ⟨y, ψ, fun τ => (gy.co fy τ)ᵀ, fun τ => (fF.co (Φ.C k).f0 τ)ᵀ, hpt.symm,
     ⟨h, ⟨y, ψ, φy, fy, t, 1, hpt.symm, hT, hh.tri hcφ hxK⟩, ⟨Category.assoc _ _ _, rfl, fun τ i => ?_⟩⟩,
     fun τ => ?_, ?_, fun τ i l hil => (hT.co τ hfF).1 l i hil, fun τ i => ⟨t τ i, (hT.co τ hfF).2 i, hE τ i⟩⟩
-  · have hv : gK.v τ = fun k' => spMap (dualMap c) ≫ g.v τ k' := by
+  · have hv : gK.v τ = fun k' => spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ g.v τ k' := by
       funext k'
       rw [hgK τ k', hgy τ k', hc]
       exact GradedPieces.dual_comp ρ _ _

@@ -126,8 +126,8 @@ theorem spMap_comp' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (a : A
   rfl
 
 theorem dualMap_comp' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (a : A →+* B) (b : B →+* C) :
-    dualMap (b.comp a) = (dualMap b).comp (dualMap a) := by
-  ext x <;> simp [dualMap]
+    GlobalTheory.CompanionTheory.Ar.dualMap (b.comp a) = (GlobalTheory.CompanionTheory.Ar.dualMap b).comp (GlobalTheory.CompanionTheory.Ar.dualMap a) := by
+  ext x <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 set_option maxHeartbeats 1000000 in
 theorem core (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l)

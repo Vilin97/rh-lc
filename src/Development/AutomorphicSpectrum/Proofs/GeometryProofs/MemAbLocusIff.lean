@@ -58,8 +58,8 @@ theorem spMap_comp' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A
   simp [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
 
 theorem dualMap_comp' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    dualMap (g.comp f) = (dualMap g).comp (dualMap f) := by
-  ext x <;> simp [dualMap]
+    GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) = (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
+  ext x <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem finrank_comp' {A B C : Type} [Field A] [Field B] [Field C] (f : A →+* B) (g : B →+* C) :
     (letI := (g.comp f).toAlgebra; Module.finrank A C) =

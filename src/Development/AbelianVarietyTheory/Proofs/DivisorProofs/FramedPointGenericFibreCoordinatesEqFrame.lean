@@ -26,18 +26,18 @@ end GlobalTheory.PtDeg.FrameGen
 namespace GlobalTheory.PtDeg.FrameGen
 
 theorem spMap_dualMap_algebraMap {S R : Type} [CommRing S] [CommRing R] (f : S →+* R) :
-    spMap (dualMap f) ≫ spMap (algebraMap S (DualNumber S)) = spMap (algebraMap R (DualNumber R)) ≫ spMap f := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ spMap (algebraMap S (DualNumber S)) = spMap (algebraMap R (DualNumber R)) ≫ spMap f := by
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
   congr 2
   ext x
-  · simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
-  · simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  · simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  · simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
-theorem spMap_dualMap_id {S : Type} [CommRing S] : spMap (dualMap (RingHom.id S)) = 𝟙 _ := by
-  have : dualMap (RingHom.id S) = RingHom.id _ := by
+theorem spMap_dualMap_id {S : Type} [CommRing S] : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id S)) = 𝟙 _ := by
+  have : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id S) = RingHom.id _ := by
     apply RingHom.ext
     intro x
-    apply TrivSqZeroExt.ext <;> simp [dualMap]
+    apply TrivSqZeroExt.ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   simp only [spMap, this]
   exact Spec.map_id _
 
@@ -50,17 +50,17 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 theorem exists_lift_eps {K Tf : Type} [CommRing K] [CommRing Tf] {G' : Over (Sp Tf)} {G : Over (Sp K)}
     (f : K →+* Tf) {φ : G'.left ⟶ G.left} (hp : IsPullback φ G'.hom G.hom (spMap f))
     (u₀ : Sp (DualNumber K) ⟶ G.left) (hu : u₀ ≫ G.hom = spMap (algebraMap K (DualNumber K))) :
-    ∃ g : epsR Tf ⟶ G', g.left ≫ φ = spMap (dualMap f) ≫ u₀ :=
-  ⟨Over.homMk (hp.lift (spMap (dualMap f) ≫ u₀) (spMap (algebraMap Tf (DualNumber Tf)))
+    ∃ g : epsR Tf ⟶ G', g.left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ u₀ :=
+  ⟨Over.homMk (hp.lift (spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ u₀) (spMap (algebraMap Tf (DualNumber Tf)))
       (by rw [Category.assoc, hu, spMap_dualMap_algebraMap])) (hp.lift_snd _ _ _), hp.lift_fst _ _ _⟩
 
 theorem isLieComb_of_match {K : Type} [Field K] [NumberField K] {B : GlobalTheory.CM.PAT H (Sp (𝓞 K))} {t₀ : SAB H (Sp K)}
     (m2 : SABMap t₀ B.t (spMap (algebraMap (𝓞 K) K))) (F : GlobalTheory.CM.GenFib B.pol) {T : CDVR} (iK : K →+* T.Fr)
     {t' : SAB H (Sp T.Fr)} (n' : SABMap t' t₀ (spMap iK)) {v' : Fin F.P₀.g → (epsR T.Fr ⟶ t'.G)}
     (hv' : IsLieBasis v')
-    (hv'φ : ∀ k, (v' k).left ≫ n'.φ ≫ m2.φ = spMap (dualMap iK) ≫ (F.v k).left ≫ F.φ)
+    (hv'φ : ∀ k, (v' k).left ≫ n'.φ ≫ m2.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap iK) ≫ (F.v k).left ≫ F.φ)
     (c : Fin F.P₀.g → K) (w : epsR K ⟶ F.P₀.A) (hw : IsLieComb c F.v w) (g : epsR T.Fr ⟶ t'.G)
-    (hg : g.left ≫ n'.φ ≫ m2.φ = spMap (dualMap iK) ≫ w.left ≫ F.φ) :
+    (hg : g.left ≫ n'.φ ≫ m2.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap iK) ≫ w.left ≫ F.φ) :
     IsLieComb (fun k => iK (c k)) v' g := by
   obtain ⟨w', hw'⟩ := ((GlobalTheory.LieComb.lieComb_algebra T.Fr t'.G _ v' hv'.1).1 (fun k => iK (c k))).exists
   have hpb := IsGrpPullback.comp n'.cart m2.cart

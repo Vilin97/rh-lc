@@ -22,22 +22,22 @@ private theorem sp_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f
   rw [← Spec.map_comp]; rfl
 
 private theorem dual_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    spMap (dualMap g) ≫ spMap (dualMap f) = spMap (dualMap (g.comp f)) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f)) := by
   rw [sp_comp]
   congr 1
   refine RingHom.ext fun z => ?_
-  ext <;> simp [dualMap]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 private theorem eps_dual {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (a : A) :
-    spMap (dualMap f) ≫ spMap (epsMul a) = spMap (epsMul (f a)) ≫ spMap (dualMap f) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ spMap (epsMul a) = spMap (epsMul (f a)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
   rw [sp_comp, sp_comp]
   congr 1
   refine RingHom.ext fun z => ?_
-  ext <;> simp [dualMap, epsMul, _root_.mul_comm]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, _root_.mul_comm]
 
 private theorem dlogDvd_iso {O O' : Type} [CommRing O] [CommRing O'] (φ : O ≃+* O') {x : Sp O ⟶ X} {p m : ℕ}
     {v : Sp (DualNumber O) ⟶ t.G.left} (hv : IsTanAtG t x v) (h : DlogDvd t x p m v) :
-    DlogDvd t (spMap φ.toRingHom ≫ x) p m (spMap (dualMap φ.toRingHom) ≫ v) := by
+    DlogDvd t (spMap φ.toRingHom ≫ x) p m (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ.toRingHom) ≫ v) := by
   intro n c g hg
   let alg : ∀ (B : Type) [CommRing B] [Algebra O B], Algebra O' B := fun B _ _ =>
     ((algebraMap O B).comp φ.symm.toRingHom).toAlgebra
@@ -84,17 +84,17 @@ private theorem dlogDvd_iso {O O' : Type} [CommRing O] [CommRing O'] (φ : O ≃
   letI := alg (DualNumber (O ⧸ Ideal.span {(p : O) ^ n}))
   haveI := fin (DualNumber (O ⧸ Ideal.span {(p : O) ^ n}))
   let ψ : DualNumber (O ⧸ Ideal.span {(p : O) ^ n}) →ₐ[O'] DualNumber (O' ⧸ Ideal.span {(p : O') ^ n}) :=
-    { dualMap ρ with
+    { GlobalTheory.CompanionTheory.Ar.dualMap ρ with
       commutes' := fun r => by
-        show dualMap ρ (algebraMap O _ (φ.symm r)) = _
-        ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl', ρ] }
+        show GlobalTheory.CompanionTheory.Ar.dualMap ρ (algebraMap O _ (φ.symm r)) = _
+        ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl', ρ] }
   have h2 := c.nat _ _ ψ (δ _ ≫ w) g (hpow _ w hwt) (by
     rw [hδ, hg, hw]
     have a1 := dual_comp φ.toRingHom (Ideal.Quotient.mk (Ideal.span {(p : O') ^ n}))
     have a2 := dual_comp (Ideal.Quotient.mk (Ideal.span {(p : O) ^ n})) ρ
     exact ((Category.assoc _ _ _).symm.trans (congrArg (· ≫ v) (a1.trans a2.symm))).trans (Category.assoc _ _ _))
   rw [h2]
-  have h3 : ∀ z, (ψ z).snd = ρ z.snd := fun z => by simp [ψ, dualMap]
+  have h3 : ∀ z, (ψ z).snd = ρ z.snd := fun z => by simp [ψ, GlobalTheory.CompanionTheory.Ar.dualMap]
   rw [h3]
   obtain ⟨a, ha⟩ := Ideal.mem_span_singleton.1 h1
   refine Ideal.mem_span_singleton.2 ⟨ρ a, ?_⟩
@@ -113,14 +113,14 @@ private def intEquiv : ↥(intO C) ≃+* ↥(intO C') where
 
 include hj in
 private theorem lat_map {x : Sp C ⟶ X} {p : ℕ} {b : Bool} {v : Sp (DualNumber C) ⟶ t.G.left}
-    (hv : v ∈ lat t p x b) : spMap (dualMap j.toRingHom) ≫ v ∈ lat t p (spMap j.toRingHom ≫ x) b := by
+    (hv : v ∈ lat t p x b) : spMap (GlobalTheory.CompanionTheory.Ar.dualMap j.toRingHom) ≫ v ∈ lat t p (spMap j.toRingHom ≫ x) b := by
   have e : (intO C').subtype.comp (intEquiv j hj).toRingHom = j.toRingHom.comp (intO C).subtype := rfl
   have e1 : ∀ xO : Sp ↥(intO C) ⟶ X, spMap (intO C').subtype ≫ spMap (intEquiv j hj).toRingHom ≫ xO =
       spMap j.toRingHom ≫ spMap (intO C).subtype ≫ xO := fun xO => by
     rw [← Category.assoc, ← Category.assoc, sp_comp, sp_comp, e]
   have e2 : ∀ vO : Sp (DualNumber ↥(intO C)) ⟶ t.G.left,
-      spMap (dualMap (intO C').subtype) ≫ spMap (dualMap (intEquiv j hj).toRingHom) ≫ vO =
-      spMap (dualMap j.toRingHom) ≫ spMap (dualMap (intO C).subtype) ≫ vO := fun vO => by
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO C').subtype) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intEquiv j hj).toRingHom) ≫ vO =
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap j.toRingHom) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO C).subtype) ≫ vO := fun vO => by
     rw [← Category.assoc, ← Category.assoc, dual_comp, dual_comp, e]
   cases b
   · obtain ⟨xO, rfl, vO, h1, rfl⟩ := hv
@@ -132,7 +132,7 @@ private theorem lat_map {x : Sp C ⟶ X} {p : ℕ} {b : Bool} {v : Sp (DualNumbe
 include hj in
 private theorem grSet_sub {x : Sp C ⟶ X} {p : ℕ} {b : Bool} {m : ℕ} (u : Fin m → (Sp (DualNumber C) ⟶ t.G.left))
     (i : Fin m) {x' : Sp C' ⟶ X} (hx : spMap j.toRingHom ≫ x = x')
-    {u' : Fin m → (Sp (DualNumber C') ⟶ t.G.left)} (hu : (fun k => spMap (dualMap j.toRingHom) ≫ u k) = u') :
+    {u' : Fin m → (Sp (DualNumber C') ⟶ t.G.left)} (hu : (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap j.toRingHom) ≫ u k) = u') :
     {r : ℝ | ∃ cf : Fin m → C, cf i ≠ 0 ∧ (∀ k, i < k → cf k = 0) ∧ (∃ w ∈ lat t p x b, IsCombAtG t x u cf w) ∧
       r = ‖cf i‖⁻¹} ⊆
     {r : ℝ | ∃ cf : Fin m → C', cf i ≠ 0 ∧ (∀ k, i < k → cf k = 0) ∧ (∃ w ∈ lat t p x' b, IsCombAtG t x' u' cf w) ∧
@@ -145,13 +145,13 @@ private theorem grSet_sub {x : Sp C ⟶ X} {p : ℕ} {b : Bool} {m : ℕ} (u : F
 include hj in
 private theorem grNorm_iso (x : Sp C ⟶ X) (p : ℕ) (b : Bool) {m : ℕ} (u : Fin m → (Sp (DualNumber C) ⟶ t.G.left))
     (i : Fin m) : grNorm t (spMap j.toRingHom ≫ x) (lat t p (spMap j.toRingHom ≫ x) b)
-      (fun k => spMap (dualMap j.toRingHom) ≫ u k) i = grNorm t x (lat t p x b) u i := by
+      (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap j.toRingHom) ≫ u k) i = grNorm t x (lat t p x b) u i := by
   have e : j.symm.toRingHom.comp j.toRingHom = RingHom.id C := by ext a; simp
   have h1 : spMap (RingHom.id C) = 𝟙 _ := Spec.map_id _
-  have h3 : spMap (dualMap (RingHom.id C)) = 𝟙 _ := by
+  have h3 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id C)) = 𝟙 _ := by
     rw [← Spec.map_id]
     congr 1
-    ext r <;> simp [dualMap]
+    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   unfold grNorm
   congr 1
   refine Set.Subset.antisymm (grSet_sub j.symm (fun a => by rw [← hj, j.apply_symm_apply]) _ i ?_ ?_)

@@ -40,21 +40,21 @@ theorem liftW : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Reci
     (π : P.G.left ⟶ Y.t.G.left) (ψ : P.A.A.left ⟶ Y.oF.t.G.left), PtOn Y yb yy P π ψ →
     ∀ (X : LieG P.Gt) (u0 : Sp (DualNumber 𝓞_ℂ_[p]) ⟶ Y.t.G.left), ITie P π X u0 →
     ∃ w : Sp (DualNumber ℂ_[p]) ⟶ Y.oF.t.G.left,
-      w ≫ Y.m.φ = spMap (dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p])) ≫ u0 ∧
+      w ≫ Y.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p])) ≫ u0 ∧
       w ≫ Y.oF.t.G.hom = spMap (algebraMap ℂ_[p] (DualNumber ℂ_[p])) ≫ yy ∧
       spMap (TrivSqZeroExt.fstHom ℂ_[p] ℂ_[p] ℂ_[p]).toRingHom ≫ w = (1 : Over.mk yy ⟶ Y.oF.t.G).left ∧
       LieTie P ψ X w := by
   intro E _ _ _ H Dw l' Xo' c' W Y p _ _ yb yy P π ψ hP X u0 hI
   obtain ⟨xG, hC, hπ⟩ := hI
   obtain ⟨-, -, -, hψ, hφ, -⟩ := hP
-  have w0 : (spMap (dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p])) ≫ xG.1.left) ≫ P.G.hom =
+  have w0 : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p])) ≫ xG.1.left) ≫ P.G.hom =
       spMap (algebraMap ℂ_[p] (DualNumber ℂ_[p])) ≫ spMap (algebraMap 𝓞_ℂ_[p] ℂ_[p]) := by
     rw [Category.assoc, Over.w xG.1, spMap_spMap]
     refine (spMap_spMap _ _).trans (congrArg _ ?_)
-    ext s <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    ext s <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
   let u' : specO ℂ_[p] (DualNumber ℂ_[p]) ⟶ P.A.A :=
     Over.homMk (P.gen_pull.1.lift _ _ w0) (P.gen_pull.1.lift_snd _ _ w0)
-  have hfst : u'.left ≫ P.gen = spMap (dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p])) ≫ xG.1.left :=
+  have hfst : u'.left ≫ P.gen = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p])) ≫ xG.1.left :=
     P.gen_pull.1.lift_fst _ _ w0
   have hsnd : u'.left ≫ P.A.A.hom = spMap (algebraMap ℂ_[p] (DualNumber ℂ_[p])) :=
     P.gen_pull.1.lift_snd _ _ w0
@@ -70,9 +70,9 @@ theorem liftW : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Reci
             (specO 𝓞_ℂ_[p] 𝓞_ℂ_[p]).hom ≫ η[P.G].left := by
           have := congrArg Over.Hom.left xG.2
           rwa [Over.comp_left, Over.comp_left, Over.toUnit_left] at this
-        have e1 : (TrivSqZeroExt.fstHom ℂ_[p] ℂ_[p] ℂ_[p]).toRingHom.comp (dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p])) =
+        have e1 : (TrivSqZeroExt.fstHom ℂ_[p] ℂ_[p] ℂ_[p]).toRingHom.comp (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p])) =
             (algebraMap 𝓞_ℂ_[p] ℂ_[p]).comp (TrivSqZeroExt.fstHom 𝓞_ℂ_[p] 𝓞_ℂ_[p] 𝓞_ℂ_[p]).toRingHom := by
-          ext s <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+          ext s <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
         have e2 : spMap (algebraMap 𝓞_ℂ_[p] ℂ_[p]) ≫ (specO 𝓞_ℂ_[p] 𝓞_ℂ_[p]).hom =
             spMap (algebraMap 𝓞_ℂ_[p] ℂ_[p]) := by
           refine (spMap_spMap _ _).trans (congrArg _ ?_)

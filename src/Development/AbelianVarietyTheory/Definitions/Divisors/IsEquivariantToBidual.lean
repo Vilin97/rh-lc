@@ -91,17 +91,17 @@ def eigenQuotConjIso {c : O →+* O} (hc : Function.Involutive c) :
 theorem smul_eq_smulHom_comp (a : Γ(X, ⊤)) (φ : F ⟶ G) : a • φ = smulHom F a ≫ φ :=
   (smulHom_comp φ a).symm
 
-theorem dualMap_smul (a : Γ(X, ⊤)) (φ : F ⟶ G) : dualMap (a • φ) = a • dualMap φ := by
+theorem dualMap_smul (a : Γ(X, ⊤)) (φ : F ⟶ G) : GlobalTheory.CompanionTheory.Ar.dualMap (a • φ) = a • GlobalTheory.CompanionTheory.Ar.dualMap φ := by
   rw [smul_eq_smulHom_comp, dualMap_comp, dualMap_smulHom]
   rfl
 
 def dualQuotHom : dual (eigenQuot ρ σ) ⟶ eigen (dualAct ρ) σ :=
-  eigenLift (dualMap (eigenπ ρ σ)) fun a => by
+  eigenLift (GlobalTheory.CompanionTheory.Ar.dualMap (eigenπ ρ σ)) fun a => by
     rw [act_dualAct, ← dualMap_comp, act_eigenπ, dualMap_smul]
 
 instance isIso_dualQuotHom : IsIso (dualQuotHom ρ σ) := by
   refine Twist.isIso_of_bijective _ fun V => ⟨Function.Injective.of_comp
-    (f := (eigenι (dualAct ρ) σ).app V) (QCoh.injective_app_of_mono (dualMap (eigenπ ρ σ)) V),
+    (f := (eigenι (dualAct ρ) σ).app V) (QCoh.injective_app_of_mono (GlobalTheory.CompanionTheory.Ar.dualMap (eigenπ ρ σ)) V),
     fun s => ?_⟩
   let l := (eigenι (dualAct ρ) σ).app V s
   have hl (a : O) : act ρ a ≫ toCut l = σ a • toCut l := by
@@ -124,7 +124,7 @@ instance isIso_dualQuotHom : IsIso (dualQuotHom ρ σ) := by
 def dualQuotIso : dual (eigenQuot ρ σ) ≅ eigen (dualAct ρ) σ := asIso (dualQuotHom ρ σ)
 
 @[reassoc (attr := simp)] theorem dualQuotIso_hom_ι :
-    (dualQuotIso ρ σ).hom ≫ eigenι _ _ = dualMap (eigenπ ρ σ) := by
+    (dualQuotIso ρ σ).hom ≫ eigenι _ _ = GlobalTheory.CompanionTheory.Ar.dualMap (eigenπ ρ σ) := by
   simp only [dualQuotIso, asIso_hom, dualQuotHom, eigenLift_ι]
 
 theorem isEquivariant_toBidual : IsEquivariant ρ (dualAct (dualAct ρ)) (cartierDualToBidual F) := fun a =>

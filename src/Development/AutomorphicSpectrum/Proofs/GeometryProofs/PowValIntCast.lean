@@ -91,7 +91,7 @@ theorem exists_chart (h876 : type_of% @GlobalTheory.T.section_eq_zero_of_values)
   have hfin : Module.Finite A L₀ := (lie_proj X t.G A x L₀ M₀).1
   obtain ⟨j₀, j, hj, hjj, hj₀, hspan, hrk₀⟩ : ∃ (j₀ : L₀ →+ Li) (j : Module.Dual A L₀ →ₗ[A] Module.Dual Ω Li),
       IsBaseChange Ω j ∧ (∀ w b, j w (j₀ b) = algebraMap A Ω (w b)) ∧
-      (∀ v, (M.pt (j₀ v)).left = Spec.map (CommRingCat.ofHom (dualMap (algebraMap A Ω))) ≫ (M₀.pt v).left) ∧
+      (∀ v, (M.pt (j₀ v)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A Ω))) ≫ (M₀.pt v).left) ∧
       ((∀ w w' : Module.Dual Ω Li, (∀ b, w (j₀ b) = w' (j₀ b)) → w = w') ∧
         ∀ w : Module.Dual Ω Li, ∃ w' : L₀ →ₗ[A] Ω, ∀ b, w' b = w (j₀ b)) ∧
       Module.finrank Ω Li = Module.finrank A L₀ := by

@@ -30,11 +30,11 @@ theorem tanPull_frac_injective {E : Type} [Field E] [NumberField E] [IsCMField E
   intro D hD
   obtain ⟨n, Dv, hDt, hst⟩ := GlobalTheory.LieLocBasis.exists_lie_basis_stable E H X t T.V xV
   have hid : spMap (algebraMap T.V T.V) = 𝟙 _ := Spec.map_id _
-  have hdid : spMap (dualMap (algebraMap T.V T.V)) = 𝟙 _ := by
-    have : dualMap (algebraMap T.V T.V) = RingHom.id _ := by
+  have hdid : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.V)) = 𝟙 _ := by
+    have : GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.V) = RingHom.id _ := by
       apply RingHom.ext
       intro z
-      ext <;> simp [dualMap]
+      ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
     rw [this]
     exact Spec.map_id _
   have h1 := hst T.V (algebraMap T.V T.V) (ReciprocityTheory.ChartRestriction.G.PullbackSections.tv D).left (by rw [hid, Category.id_comp]; exact isTan_tv D)
@@ -66,7 +66,7 @@ namespace GlobalTheory.IntFrameSat
 
 set_option maxHeartbeats 1000000 in
 
-theorem intFrame_model_sat : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β) (T : CDVR) (io : c.F →+* T.Fr) (y : IntFr Xo c T io) (xV : Sp T.V ⟶ Z.X), letI := io.toAlgebra; spMap (algebraMap T.V T.Fr) ≫ xV = AllWt.ptF y.1 ≫ Z.jQ ≫ genι Z → ∀ τ : E →+* ℂ, ∃ v : Fin (Dw.mult τ) → (Sp (DualNumber T.V) ⟶ Z.t.G.left), (∀ i, IsTanAtG Z.t xV (v i)) ∧ (∀ i, ∃ w : Sp (DualNumber T.Fr) ⟶ Z.oF.t.G.left, w ≫ Z.oF.t.G.hom = spMap (algebraMap T.Fr (DualNumber T.Fr)) ≫ AllWt.ptF y.1 ∧ w ≫ Z.m0.toSABMap.φ = y.1.u τ i ∧ w ≫ Z.m.φ = spMap (dualMap (algebraMap T.V T.Fr)) ≫ v i) ∧ ∀ (cf : Fin (Dw.mult τ) → T.Fr) (u : Sp (DualNumber T.V) ⟶ Z.t.G.left), IsTanAtG Z.t xV u → IsCombAtG Z.t (spMap (algebraMap T.V T.Fr) ≫ xV) (fun i => spMap (dualMap (algebraMap T.V T.Fr)) ≫ v i) cf (spMap (dualMap (algebraMap T.V T.Fr)) ≫ u) → ∀ i, ∃ a : T.V, algebraMap T.V T.Fr a = cf i := by
+theorem intFrame_model_sat : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β) (T : CDVR) (io : c.F →+* T.Fr) (y : IntFr Xo c T io) (xV : Sp T.V ⟶ Z.X), letI := io.toAlgebra; spMap (algebraMap T.V T.Fr) ≫ xV = AllWt.ptF y.1 ≫ Z.jQ ≫ genι Z → ∀ τ : E →+* ℂ, ∃ v : Fin (Dw.mult τ) → (Sp (DualNumber T.V) ⟶ Z.t.G.left), (∀ i, IsTanAtG Z.t xV (v i)) ∧ (∀ i, ∃ w : Sp (DualNumber T.Fr) ⟶ Z.oF.t.G.left, w ≫ Z.oF.t.G.hom = spMap (algebraMap T.Fr (DualNumber T.Fr)) ≫ AllWt.ptF y.1 ∧ w ≫ Z.m0.toSABMap.φ = y.1.u τ i ∧ w ≫ Z.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ v i) ∧ ∀ (cf : Fin (Dw.mult τ) → T.Fr) (u : Sp (DualNumber T.V) ⟶ Z.t.G.left), IsTanAtG Z.t xV u → IsCombAtG Z.t (spMap (algebraMap T.V T.Fr) ≫ xV) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ v i) cf (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ u) → ∀ i, ∃ a : T.V, algebraMap T.V T.Fr a = cf i := by
   intro E _ _ _ H Dw l Xo c O _ β Z T io y xV
   letI := io.toAlgebra
   intro hxV τ
@@ -75,17 +75,17 @@ theorem intFrame_model_sat : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
   have hmono : Mono (spMap (algebraMap T.V T.Fr)) := by
     have : Epi (CommRingCat.ofHom (algebraMap T.V T.Fr)) := IsLocalization.epi (nonZeroDivisors T.V) T.Fr
     exact Scheme.Spec.map_mono (CommRingCat.ofHom _).op
-  have hbase : spMap (dualMap (algebraMap T.V T.Fr)) ≫ (epsOver T.V T.V).hom =
+  have hbase : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ (epsOver T.V T.V).hom =
       spMap (algebraMap T.Fr (DualNumber T.Fr)) ≫ spMap (algebraMap T.V T.Fr) := by
-    show spMap (dualMap (algebraMap T.V T.Fr)) ≫ spMap ((algebraMap T.V (DualNumber T.V)).comp (algebraMap T.V T.V)) = _
+    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ spMap ((algebraMap T.V (DualNumber T.V)).comp (algebraMap T.V T.V)) = _
     rw [GlobalTheory.ShFam.OpenReg.spMap_comp, GlobalTheory.ShFam.OpenReg.spMap_comp]
     congr 1
-    ext x <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    ext x <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
   have hw : ∀ i, ∃ w : Sp (DualNumber T.Fr) ⟶ Z.oF.t.G.left,
       w ≫ Z.oF.t.G.hom = spMap (algebraMap T.Fr (DualNumber T.Fr)) ≫ AllWt.ptF y.1 ∧
       w ≫ Z.m0.toSABMap.φ = y.1.u τ i ∧
-      w ≫ Z.m.φ = spMap (dualMap (algebraMap T.V T.Fr)) ≫ ((ub τ i).left ≫ ψ.φ) := by
+      w ≫ Z.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ ((ub τ i).left ≫ ψ.φ) := by
     intro i
     obtain ⟨u', hu1, hu2⟩ := hu τ i
     have hut : u' ≫ t'.G.hom = spMap (algebraMap T.Fr (DualNumber T.Fr)) := by
@@ -98,7 +98,7 @@ theorem intFrame_model_sat : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
     · rw [Category.assoc, h3, ← Category.assoc, hu2, Category.assoc]
 
   let f := GlobalTheory.ShFam.EigFrame.ofFrPt Z y.1 hxV.symm
-  have hfv : ∀ i, f.v τ i = spMap (dualMap (algebraMap T.V T.Fr)) ≫ ((ub τ i).left ≫ ψ.φ) := by
+  have hfv : ∀ i, f.v τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ ((ub τ i).left ≫ ψ.φ) := by
     intro i
     obtain ⟨w0, hw0t, hw0a, hw0b⟩ := GlobalTheory.ShFam.EigFrame.ofFrPt_v Z y.1 hxV.symm τ i
     obtain ⟨w, hwa, hwb, hwc⟩ := hw i
@@ -124,7 +124,7 @@ theorem intFrame_model_sat : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
       exact (hfv i).symm
     have hU : GlobalTheory.FlagMod.tanPull (G := Z.t.G) (algebraMap T.V T.Fr) rfl U = ∑ i, cf i • f.vec τ i := by
       refine (GlobalTheory.LieMet.isComb_iff (f.vec τ) cf _).1 ?_
-      have e1 : (fun i => (tv (f.vec τ i)).left) = fun i => spMap (dualMap (algebraMap T.V T.Fr)) ≫ ((ub τ i).left ≫ ψ.φ) :=
+      have e1 : (fun i => (tv (f.vec τ i)).left) = fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ ((ub τ i).left ≫ ψ.φ) :=
         funext hfv
       rw [e1]
       exact hc

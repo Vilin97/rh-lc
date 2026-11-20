@@ -25,7 +25,7 @@ variable {X Y : Scheme.{0}} {F G H : X.Modules} {O : Type} [CommRing O]
 variable (F) in
 
 @[reassoc (attr := simp)] theorem toBidual_dual_comp_dualMap :
-    cartierDualToBidual (dual F) ≫ dualMap (cartierDualToBidual F) = 𝟙 _ := by
+    cartierDualToBidual (dual F) ≫ GlobalTheory.CompanionTheory.Ar.dualMap (cartierDualToBidual F) = 𝟙 _ := by
   ext V l : 3
   exact dual_ext fun W h s => congrArg (dualApp l h) (resM_self _ s)
 
@@ -85,14 +85,14 @@ section Im
 
 variable (ρ : O →+* End F) (σ : O →+* Γ(X, ⊤))
 
-def eigenEval : F ⟶ dual (eigen (dualAct ρ) σ) := cartierDualToBidual F ≫ dualMap (eigenι (dualAct ρ) σ)
+def eigenEval : F ⟶ dual (eigen (dualAct ρ) σ) := cartierDualToBidual F ≫ GlobalTheory.CompanionTheory.Ar.dualMap (eigenι (dualAct ρ) σ)
 
 theorem dualApp_eigenEval {V W : X.Opens} (s : Γ(F, V)) (h : W ≤ V)
     (l : Γ(eigen (dualAct ρ) σ, W)) : dualApp ((eigenEval ρ σ).app V s) h l =
       dualApp ((eigenι (dualAct ρ) σ).app W l) le_rfl (resM F h s) := rfl
 
 theorem eigenEval_eq : eigenEval ρ σ =
-    eigenπ ρ σ ≫ cartierDualToBidual _ ≫ dualMap (dualQuotIso ρ σ).inv := by
+    eigenπ ρ σ ≫ cartierDualToBidual _ ≫ GlobalTheory.CompanionTheory.Ar.dualMap (dualQuotIso ρ σ).inv := by
   rw [toBidual_naturality_dualSheafTranspose_assoc, ← dualMap_comp, ← dualQuotIso_hom_ι, Iso.inv_hom_id_assoc,
     eigenEval]
 
@@ -139,14 +139,14 @@ def quotToIm : eigenQuot ρ σ ⟶ eigenIm ρ σ := eigenDesc (eigenImπ ρ σ) 
 instance epi_quotToIm : Epi (quotToIm ρ σ) := epi_of_epi_fac (eigenπ_quotToIm ρ σ)
 
 @[reassoc] theorem quotToIm_ι : quotToIm ρ σ ≫ eigenImι ρ σ =
-    cartierDualToBidual _ ≫ dualMap (dualQuotIso ρ σ).inv := by
+    cartierDualToBidual _ ≫ GlobalTheory.CompanionTheory.Ar.dualMap (dualQuotIso ρ σ).inv := by
   rw [← cancel_epi (eigenπ ρ σ), eigenπ_quotToIm_assoc, eigenImπ_ι, eigenEval_eq]
 
 variable {ρ σ}
 
 theorem comp_eq_zero_of_comp_eigenImπ [Mono (cartierDualToBidual G)] {φ : F ⟶ G}
     (h : ∀ a, act ρ a ≫ φ = σ a • φ) {k : H ⟶ F} (hk : k ≫ eigenImπ ρ σ = 0) : k ≫ φ = 0 := by
-  have h' (a : O) : dualMap φ ≫ act (dualAct ρ) a = σ a • dualMap φ := by
+  have h' (a : O) : GlobalTheory.CompanionTheory.Ar.dualMap φ ≫ act (dualAct ρ) a = σ a • GlobalTheory.CompanionTheory.Ar.dualMap φ := by
     rw [act_dualAct, ← dualMap_comp, h, dualMap_smul]
   rw [← cancel_mono (cartierDualToBidual G), Category.assoc, toBidual_naturality_dualSheafTranspose, ← eigenLift_ι _ _ _ h',
     dualMap_comp, zero_comp, ← Category.assoc (cartierDualToBidual F), ← eigenEval, ← eigenImπ_ι,
@@ -174,7 +174,7 @@ def eigenImMap {φ : F ⟶ G} (h : IsEquivariant ρ ρ' φ) : eigenIm ρ σ ⟶ 
   rw [← cancel_epi (eigenπ ρ σ)]; simp
 
 @[reassoc] theorem eigenImMap_ι {φ : F ⟶ G} (h : IsEquivariant ρ ρ' φ) :
-    eigenImMap σ h ≫ eigenImι ρ' σ = eigenImι ρ σ ≫ dualMap (eigenMap σ h.dual) := by
+    eigenImMap σ h ≫ eigenImι ρ' σ = eigenImι ρ σ ≫ GlobalTheory.CompanionTheory.Ar.dualMap (eigenMap σ h.dual) := by
   rw [← cancel_epi (eigenImπ ρ σ), eigenImπ_eigenImMap_assoc, eigenImπ_ι, eigenImπ_ι_assoc,
     eigenEval, eigenEval, toBidual_naturality_dualSheafTranspose_assoc, Category.assoc, ← dualMap_comp, ← dualMap_comp,
     eigenMap_ι]
@@ -206,26 +206,26 @@ def eigenImConjIso {c : O →+* O} (hc : Function.Involutive c) :
     (hc : Function.Involutive c) : eigenImπ _ _ ≫ (eigenImConjIso ρ σ hc).hom = eigenImπ _ _ := by
   simp only [eigenImConjIso, eigenImπ_desc]
 
-theorem toBidual_dualMap_eigenImage_inclusion : (cartierDualToBidual _ ≫ dualMap (eigenImι ρ σ)) ≫
-    dualMap (eigenImπ ρ σ) = eigenι (dualAct ρ) σ := by
+theorem toBidual_dualMap_eigenImage_inclusion : (cartierDualToBidual _ ≫ GlobalTheory.CompanionTheory.Ar.dualMap (eigenImι ρ σ)) ≫
+    GlobalTheory.CompanionTheory.Ar.dualMap (eigenImπ ρ σ) = eigenι (dualAct ρ) σ := by
   rw [Category.assoc, ← dualMap_comp, eigenImπ_ι, eigenEval, dualMap_comp,
     ← toBidual_naturality_dualSheafTranspose_assoc, toBidual_dual_comp_dualMap, Category.comp_id]
 
 def dualImIso : dual (eigenIm ρ σ) ≅ eigen (dualAct ρ) σ where
-  hom := eigenLift (dualMap (eigenImπ ρ σ)) fun a => by
+  hom := eigenLift (GlobalTheory.CompanionTheory.Ar.dualMap (eigenImπ ρ σ)) fun a => by
     rw [act_dualAct, ← dualMap_comp, act_eigenImπ, dualMap_smul]
-  inv := cartierDualToBidual _ ≫ dualMap (eigenImι ρ σ)
+  inv := cartierDualToBidual _ ≫ GlobalTheory.CompanionTheory.Ar.dualMap (eigenImι ρ σ)
   hom_inv_id := by
-    rw [← cancel_mono (dualMap (eigenImπ ρ σ)), Category.assoc, toBidual_dualMap_eigenImage_inclusion,
+    rw [← cancel_mono (GlobalTheory.CompanionTheory.Ar.dualMap (eigenImπ ρ σ)), Category.assoc, toBidual_dualMap_eigenImage_inclusion,
       eigenLift_ι, Category.id_comp]
   inv_hom_id := by
     rw [← cancel_mono (eigenι _ _), Category.assoc, eigenLift_ι, toBidual_dualMap_eigenImage_inclusion,
       Category.id_comp]
 
 @[reassoc (attr := simp)] theorem dualImIso_hom_ι :
-    (dualImIso ρ σ).hom ≫ eigenι _ _ = dualMap (eigenImπ ρ σ) := rfl
+    (dualImIso ρ σ).hom ≫ eigenι _ _ = GlobalTheory.CompanionTheory.Ar.dualMap (eigenImπ ρ σ) := rfl
 
-theorem eigenImι_eq : eigenImι ρ σ = cartierDualToBidual _ ≫ dualMap (dualImIso ρ σ).inv := by
+theorem eigenImι_eq : eigenImι ρ σ = cartierDualToBidual _ ≫ GlobalTheory.CompanionTheory.Ar.dualMap (dualImIso ρ σ).inv := by
   rw [← cancel_epi (eigenImπ ρ σ), eigenImπ_ι, toBidual_naturality_dualSheafTranspose_assoc, ← dualMap_comp,
     ← dualImIso_hom_ι, Iso.inv_hom_id_assoc, eigenEval]
 
@@ -237,7 +237,7 @@ theorem isIso_eigenImι {r : ℕ} (h : IsVB (eigenIm ρ σ) r) : IsIso (eigenIm�
 theorem isVB_eigen_dualAct {r : ℕ} (h : IsVB (eigenIm ρ σ) r) : IsVB (eigen (dualAct ρ) σ) r :=
   h.dual.of_iso (dualImIso ρ σ)
 
-theorem isIso_eigenImι_of_epi {r : ℕ} (h : IsVB F r) [Epi (dualMap (eigenι (dualAct ρ) σ))] :
+theorem isIso_eigenImι_of_epi {r : ℕ} (h : IsVB F r) [Epi (GlobalTheory.CompanionTheory.Ar.dualMap (eigenι (dualAct ρ) σ))] :
     IsIso (eigenImι ρ σ) :=
   have := h.isIso_toBidual_of_local_frames
   have : Epi (eigenEval ρ σ) := epi_comp _ _
@@ -246,7 +246,7 @@ theorem isIso_eigenImι_of_epi {r : ℕ} (h : IsVB F r) [Epi (dualMap (eigenι (
 
 theorem isIso_quotToIm_iff : IsIso (quotToIm ρ σ) ↔ Mono (cartierDualToBidual (eigenQuot ρ σ)) := by
   refine ⟨fun _ => mono_toBidual_of_mono (quotToIm ρ σ), fun _ => ?_⟩
-  have : Mono (cartierDualToBidual _ ≫ dualMap (dualQuotIso ρ σ).inv) := mono_comp _ _
+  have : Mono (cartierDualToBidual _ ≫ GlobalTheory.CompanionTheory.Ar.dualMap (dualQuotIso ρ σ).inv) := mono_comp _ _
   have := mono_of_mono_fac (quotToIm_ι ρ σ)
   exact isIso_of_mono_of_epi _
 
@@ -362,11 +362,11 @@ theorem comp_act (a : O) : ε ≫ act ρ a = σ a • ε := (h.isEquivariant a).
 
 theorem comp_self : ε ≫ ε = D • ε := h.comp_eq_smul h.act_comp
 
-theorem dual : IsEigenProj (dualAct ρ) σ (dualMap ε) D where
+theorem dual : IsEigenProj (dualAct ρ) σ (GlobalTheory.CompanionTheory.Ar.dualMap ε) D where
   act_comp a := by rw [act_dualAct, ← dualMap_comp, h.comp_act, dualMap_smul]
   exists_sum := by
     obtain ⟨n, c, b, rfl, e⟩ := h.exists_sum
-    refine ⟨n, c, b, (map_sum (AddMonoidHom.mk' (fun φ : F ⟶ F => dualMap φ) dualMap_add) _ _).trans
+    refine ⟨n, c, b, (map_sum (AddMonoidHom.mk' (fun φ : F ⟶ F => GlobalTheory.CompanionTheory.Ar.dualMap φ) dualMap_add) _ _).trans
       (Finset.sum_congr rfl fun i _ => dualMap_smul _ _), e⟩
 
 theorem pullback (f : Y ⟶ X) : IsEigenProj (pullAct ρ f) (f.appTop.hom.comp σ)

@@ -9,14 +9,14 @@ attribute [local instance] Over.cartesianMonoidalCategory
 open GlobalTheory.RootFrame
 
 theorem UpperTheory.tangent_basis_change_torsion_character :
-    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (p : ℕ) [Fact p.Prime] (n : ℕ) (x : Sp ↥(intO ℂ_[p]) ⟶ X) (g g' : ℕ) (e : Fin g → (Sp (DualNumber ↥(intO ℂ_[p])) ⟶ t.G.left)) (e' : Fin g' → (Sp (DualNumber ↥(intO ℂ_[p])) ⟶ t.G.left)), IsTanBasis t x e → IsTanBasis t x e' → ∀ (χ : TorsChar t x (p ^ n)) (h : Fin g → ↥(intO ℂ_[p])) (h' : Fin g' → ↥(intO ℂ_[p])), DlogIs t p n χ e h → DlogIs t p n χ e' h' → ∀ (a : Fin g → ℂ_[p]) (a' : Fin g' → ℂ_[p]) (w : (Sp (DualNumber ℂ_[p]) ⟶ t.G.left)), IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (dualMap (intO ℂ_[p]).subtype) ≫ e i) a w → IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (dualMap (intO ℂ_[p]).subtype) ≫ e' i) a' w → ∀ s : ℂ_[p], (∀ i, ‖s * a i‖ ≤ 1) → ‖s * (∑ i, (h i : ℂ_[p]) * a i - ∑ i, (h' i : ℂ_[p]) * a' i)‖ ≤ (p : ℝ)⁻¹ ^ n := by
+    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (p : ℕ) [Fact p.Prime] (n : ℕ) (x : Sp ↥(intO ℂ_[p]) ⟶ X) (g g' : ℕ) (e : Fin g → (Sp (DualNumber ↥(intO ℂ_[p])) ⟶ t.G.left)) (e' : Fin g' → (Sp (DualNumber ↥(intO ℂ_[p])) ⟶ t.G.left)), IsTanBasis t x e → IsTanBasis t x e' → ∀ (χ : TorsChar t x (p ^ n)) (h : Fin g → ↥(intO ℂ_[p])) (h' : Fin g' → ↥(intO ℂ_[p])), DlogIs t p n χ e h → DlogIs t p n χ e' h' → ∀ (a : Fin g → ℂ_[p]) (a' : Fin g' → ℂ_[p]) (w : (Sp (DualNumber ℂ_[p]) ⟶ t.G.left)), IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ e i) a w → IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ e' i) a' w → ∀ s : ℂ_[p], (∀ i, ‖s * a i‖ ≤ 1) → ‖s * (∑ i, (h i : ℂ_[p]) * a i - ∑ i, (h' i : ℂ_[p]) * a' i)‖ ≤ (p : ℝ)⁻¹ ^ n := by
   intro E _ _ _ H X t p hp n x g g' e e' he he' c h h' hD hD' a a' w hw hw' s hsa
   have hn : ‖(p : ℂ_[p])‖ = (p : ℝ)⁻¹ := by
     rw [← map_natCast (algebraMap ℚ_[p] ℂ_[p]), norm_algebraMap', Padic.norm_p]
   let b₀ : Fin g → ↥(intO ℂ_[p]) := fun i => ⟨s * a i, hsa i⟩
   obtain ⟨vO, hv, hbv₀⟩ := Guard.exists_comb he.1 b₀
   have heC := fun j => GlobalTheory.FactorDepth.isTanAtG_map t (intO ℂ_[p]).subtype (he.1 j)
-  have hs : spMap (dualMap (intO ℂ_[p]).subtype) ≫ vO = spMap (epsMul s) ≫ w :=
+  have hs : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ vO = spMap (epsMul s) ≫ w :=
     Guard.comb_unique heC (GlobalTheory.LatDRFree.comb_map t (intO ℂ_[p]).subtype hbv₀) (Guard.comb_smul heC hw s)
   obtain ⟨b, hbv, hb⟩ := GlobalTheory.HTLevel.coords he hw _ hv hs
   obtain ⟨b', hbv', hb'⟩ := GlobalTheory.HTLevel.coords he' hw' _ hv hs

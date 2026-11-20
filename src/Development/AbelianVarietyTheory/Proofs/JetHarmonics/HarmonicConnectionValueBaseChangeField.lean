@@ -34,7 +34,7 @@ theorem sum_map_of_harmA {E : Type} [Field E] [NumberField E] [IsCMField E] {H :
   obtain ⟨hx, hu, -⟩ := hm
   obtain ⟨x', xo', u', tan', eig', basis', s', gen'⟩ := y'
   dsimp only at hx hu h hh F' hF'
-  have hu' : u' = fun τ i => spMap (dualMap (ψ : S →+* S')) ≫ y.u τ i := funext fun τ => funext fun i => hu τ i
+  have hu' : u' = fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ : S →+* S')) ≫ y.u τ i := funext fun τ => funext fun i => hu τ i
   have hx' : x' = spMap (ψ : S →+* S') ≫ y.x := hx
   subst hx'
   subst hu'

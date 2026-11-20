@@ -80,16 +80,16 @@ theorem spMap_frac_cancel {V K A : Type} [CommRing V] [CommRing K] [Algebra V K]
   exact congrArg CommRingCat.Hom.hom e1
 
 theorem dualMap_alg {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) :
-    (dualMap f).comp (algebraMap A (DualNumber A)) = (algebraMap B (DualNumber B)).comp f := by
+    (GlobalTheory.CompanionTheory.Ar.dualMap f).comp (algebraMap A (DualNumber A)) = (algebraMap B (DualNumber B)).comp f := by
   apply RingHom.ext
   intro r
-  ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem dualMap_epsMul {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (a : A) :
-    (dualMap f).comp (epsMul a) = (epsMul (f a)).comp (dualMap f) := by
+    (GlobalTheory.CompanionTheory.Ar.dualMap f).comp (epsMul a) = (epsMul (f a)).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
   apply RingHom.ext
   intro r
-  ext <;> simp [dualMap, epsMul, _root_.mul_comm]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, _root_.mul_comm]
 
 theorem epsMul_alg {A : Type} [CommRing A] (a : A) :
     (epsMul a).comp (algebraMap A (DualNumber A)) = algebraMap A (DualNumber A) := by
@@ -102,19 +102,19 @@ theorem comb_generic {V K : Type} [CommRing V] [CommRing K] [Algebra V K] [IsFra
     {x : Sp K ⟶ Xo.X} {G : SAB H (Sp V)} {t : SAB H (Sp K)} (m₁ : SABMap t Xo.univ.t x)
     (m₂ : SABMap t G (spMap (algebraMap V K))) {m : ℕ} (ub : Fin m → (epsOver V V ⟶ G.G))
     (u' : Fin m → (Sp (DualNumber K) ⟶ t.G.left))
-    (hu : ∀ j, u' j ≫ m₂.φ = spMap (dualMap (algebraMap V K)) ≫ (ub j).left)
+    (hu : ∀ j, u' j ≫ m₂.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ (ub j).left)
     (w : epsOver V V ⟶ G.G) (w' : Sp (DualNumber K) ⟶ t.G.left)
-    (hw : w' ≫ m₂.φ = spMap (dualMap (algebraMap V K)) ≫ w.left) (a : Fin m → V) (ha : IsComb ub a w) :
+    (hw : w' ≫ m₂.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ w.left) (a : Fin m → V) (ha : IsComb ub a w) :
     IsCombAt x (fun j => u' j ≫ m₁.φ) (fun j => algebraMap V K (a j)) (w' ≫ m₁.φ) := by
   obtain ⟨U, hU, hwU⟩ := ha
-  have hδ : spMap (dualMap (algebraMap V K)) ≫
+  have hδ : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫
       spMap ((algebraMap V (DualNumber V)).comp (algebraMap V V)) =
       spMap (algebraMap K (DualNumber K)) ≫ spMap (algebraMap V K) := by
     rw [spMap_comp₂, spMap_comp₂]
-    show spMap ((dualMap (algebraMap V K)).comp (algebraMap V (DualNumber V))) = _
+    show spMap ((GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)).comp (algebraMap V (DualNumber V))) = _
     rw [dualMap_alg]
   have hov : ∀ (z : epsOver V V ⟶ G.G) (z' : Sp (DualNumber K) ⟶ t.G.left),
-      z' ≫ m₂.φ = spMap (dualMap (algebraMap V K)) ≫ z.left →
+      z' ≫ m₂.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ z.left →
       z' ≫ t.G.hom = spMap (algebraMap K (DualNumber K)) := by
     intro z z' hz
     apply spMap_frac_cancel (V := V)
@@ -124,7 +124,7 @@ theorem comb_generic {V K : Type} [CommRing V] [CommRing K] [Algebra V K] [IsFra
   let Y : Fin m → (T' ⟶ t.G) := fun j => Over.homMk (spMap (epsMul (algebraMap V K (a j))) ≫ u' j) (by
     show (spMap (epsMul (algebraMap V K (a j))) ≫ u' j) ≫ t.G.hom = spMap (algebraMap K (DualNumber K))
     rw [Category.assoc, hov _ _ (hu j), spMap_comp₂, epsMul_alg])
-  have hB := prod_push m₂.cart T' (epsOver V V) (spMap (dualMap (algebraMap V K))) hδ Y U (fun j => by
+  have hB := prod_push m₂.cart T' (epsOver V V) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K))) hδ Y U (fun j => by
     show (spMap (epsMul (algebraMap V K (a j))) ≫ u' j) ≫ m₂.φ = _
     rw [Category.assoc, hu j, hU j, ← Category.assoc, ← Category.assoc, spMap_comp₂, spMap_comp₂,
       dualMap_epsMul])
@@ -178,7 +178,7 @@ theorem mul_eq_one_of_comb {S : Type} [CommRing S] (x : Sp S ⟶ Xo.X) {m : ℕ}
     simp [Matrix.one_apply]
   exact congrFun ((huniq i).unique h2 h3) k
 
-theorem integral_frames_differ_by_unit : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (T : CDVR) (io : c.F →+* T.Fr), letI := io.toAlgebra; ∀ (y y' : FrPt Xo c T.Fr) (G G₂ : SAB H (Sp T.V)) (t t₂ : SAB H (Sp T.Fr)) (m₁ : SABMap t Xo.univ.t y.x) (m₂ : SABMap t G (spMap (algebraMap T.V T.Fr))) (n₁ : SABMap t₂ Xo.univ.t y'.x) (n₂ : SABMap t₂ G₂ (spMap (algebraMap T.V T.Fr))) (k : SABMap t t₂ (𝟙 _)) (n : SABMap G G₂ (𝟙 _)), y'.x = y.x → k.φ ≫ n₁.φ = m₁.φ → m₂.φ ≫ n.φ = k.φ ≫ n₂.φ → ∀ (ub : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (epsOver T.V T.V ⟶ G.G)) (ub₂ : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (epsOver T.V T.V ⟶ G₂.G)), ((∀ τ i, IsTan (ub τ i)) ∧ (∀ τ i, IsEigV c io G τ (ub τ i)) ∧ (∀ τ (w : epsOver T.V T.V ⟶ G.G), IsTan w → IsEigV c io G τ w → ∃! a : Fin (Dw.mult τ) → T.V, IsComb (ub τ) a w) ∧ ∀ τ i, ∃ u' : Sp (DualNumber T.Fr) ⟶ t.G.left, u' ≫ m₁.φ = y.u τ i ∧ u' ≫ m₂.φ = spMap (dualMap (algebraMap T.V T.Fr)) ≫ (ub τ i).left) → ((∀ τ i, IsTan (ub₂ τ i)) ∧ (∀ τ i, IsEigV c io G₂ τ (ub₂ τ i)) ∧ (∀ τ (w : epsOver T.V T.V ⟶ G₂.G), IsTan w → IsEigV c io G₂ τ w → ∃! a : Fin (Dw.mult τ) → T.V, IsComb (ub₂ τ) a w) ∧ ∀ τ i, ∃ u' : Sp (DualNumber T.Fr) ⟶ t₂.G.left, u' ≫ n₁.φ = y'.u τ i ∧ u' ≫ n₂.φ = spMap (dualMap (algebraMap T.V T.Fr)) ≫ (ub₂ τ i).left) → ∀ τ : E →+* ℂ, ∃ A : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) T.V, IsUnit A.det ∧ ∀ i, IsCombAt y.x (y.u τ) (fun j => algebraMap T.V T.Fr (A i j)) (y'.u τ i) := by
+theorem integral_frames_differ_by_unit : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (T : CDVR) (io : c.F →+* T.Fr), letI := io.toAlgebra; ∀ (y y' : FrPt Xo c T.Fr) (G G₂ : SAB H (Sp T.V)) (t t₂ : SAB H (Sp T.Fr)) (m₁ : SABMap t Xo.univ.t y.x) (m₂ : SABMap t G (spMap (algebraMap T.V T.Fr))) (n₁ : SABMap t₂ Xo.univ.t y'.x) (n₂ : SABMap t₂ G₂ (spMap (algebraMap T.V T.Fr))) (k : SABMap t t₂ (𝟙 _)) (n : SABMap G G₂ (𝟙 _)), y'.x = y.x → k.φ ≫ n₁.φ = m₁.φ → m₂.φ ≫ n.φ = k.φ ≫ n₂.φ → ∀ (ub : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (epsOver T.V T.V ⟶ G.G)) (ub₂ : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (epsOver T.V T.V ⟶ G₂.G)), ((∀ τ i, IsTan (ub τ i)) ∧ (∀ τ i, IsEigV c io G τ (ub τ i)) ∧ (∀ τ (w : epsOver T.V T.V ⟶ G.G), IsTan w → IsEigV c io G τ w → ∃! a : Fin (Dw.mult τ) → T.V, IsComb (ub τ) a w) ∧ ∀ τ i, ∃ u' : Sp (DualNumber T.Fr) ⟶ t.G.left, u' ≫ m₁.φ = y.u τ i ∧ u' ≫ m₂.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ (ub τ i).left) → ((∀ τ i, IsTan (ub₂ τ i)) ∧ (∀ τ i, IsEigV c io G₂ τ (ub₂ τ i)) ∧ (∀ τ (w : epsOver T.V T.V ⟶ G₂.G), IsTan w → IsEigV c io G₂ τ w → ∃! a : Fin (Dw.mult τ) → T.V, IsComb (ub₂ τ) a w) ∧ ∀ τ i, ∃ u' : Sp (DualNumber T.Fr) ⟶ t₂.G.left, u' ≫ n₁.φ = y'.u τ i ∧ u' ≫ n₂.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ (ub₂ τ i).left) → ∀ τ : E →+* ℂ, ∃ A : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) T.V, IsUnit A.det ∧ ∀ i, IsCombAt y.x (y.u τ) (fun j => algebraMap T.V T.Fr (A i j)) (y'.u τ i) := by
   intro E _ _ _ H Dw l Xo c T io
   let _ := io.toAlgebra
   intro y y' G G₂ t t₂ m₁ m₂ n₁ n₂ k n hx hk hn ub ub₂ ⟨ht, he, hb, hl⟩ ⟨ht₂, he₂, hb₂, hl₂⟩ τ

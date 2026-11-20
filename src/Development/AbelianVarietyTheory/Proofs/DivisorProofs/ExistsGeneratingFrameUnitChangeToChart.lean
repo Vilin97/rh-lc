@@ -82,13 +82,13 @@ theorem exists_keyAt_units : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
   obtain ⟨w'', T⟩ := exists_comp t.PP.isLB w₁ w' g g' Y.t.PP.isLB P.isLB
   have he'' : eSec P.A ≫ φ' ≫ m.φ = (spMap (algebraMap V K) ≫ yt) ≫ eSec Y.t.G := by
     rw [← Category.assoc, he', Category.assoc, he, Category.assoc]
-  have hF : F' = dualMap (algebraMap V K) := KeyCancel.dualNumber_ringHom_ext
+  have hF : F' = GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K) := KeyCancel.dualNumber_ringHom_ext
     (fun a => by
       rw [hF']
-      ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl])
+      ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl])
     (by
       rw [hε']
-      ext <;> simp [dualMap])
+      ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap])
   have hq := hp'.comp m.cart
   refine ⟨φ' ≫ m.φ, he'', w'', hn, hq, (isGen_iff w'').2 (T.pgen_comp t.PP.isLB g g'), ?_, ?_, fun i => ?_⟩
   · have r₀ := (maps_iff w₁ _ (fun _ => eSec Y.t.G) _ t.PP.rig Y.t.PP.rig yt _

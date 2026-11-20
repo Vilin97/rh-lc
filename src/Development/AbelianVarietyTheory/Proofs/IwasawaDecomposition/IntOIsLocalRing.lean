@@ -38,10 +38,10 @@ open MonObj in
 theorem comb_map {S S' : Type} [CommRing S] [CommRing S'] (φ : S →+* S') {x : Sp S ⟶ X} {m : ℕ}
     {v : Fin m → (Sp (DualNumber S) ⟶ t.G.left)} {cf : Fin m → S} {w : Sp (DualNumber S) ⟶ t.G.left}
     (h : IsCombAtG t x v cf w) :
-    IsCombAtG t (spMap φ ≫ x) (fun i => spMap (dualMap φ) ≫ v i) (fun i => φ (cf i)) (spMap (dualMap φ) ≫ w) := by
+    IsCombAtG t (spMap φ ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v i) (fun i => φ (cf i)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ w) := by
   obtain ⟨u, hu, rfl⟩ := h
-  let δ : tEpsG (spMap φ ≫ x) ⟶ tEpsG x := Over.homMk (spMap (dualMap φ)) (by
-    show spMap (dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) ≫ x =
+  let δ : tEpsG (spMap φ ≫ x) ⟶ tEpsG x := Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ)) (by
+    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) ≫ x =
       spMap (algebraMap S' (DualNumber S')) ≫ spMap φ ≫ x
     rw [← Category.assoc, ← Category.assoc, spMap_comp', spMap_comp', dualMap_comp_alg])
   refine ⟨fun i => δ ≫ u i, fun i => ?_, ?_⟩
@@ -55,16 +55,16 @@ theorem latDR_free : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H :
   have := intO_isLocalRing C
   obtain ⟨n, D, hD, hDb⟩ := GlobalTheory.LieLocBasis.exists_lie_basis_stable E H X t (↥(intO C)) xO
   have h1 : spMap (RingHom.id ↥(intO C)) = 𝟙 _ := Spec.map_id _
-  have h2 : dualMap (RingHom.id ↥(intO C)) = RingHom.id _ := by
+  have h2 : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id ↥(intO C)) = RingHom.id _ := by
     refine RingHom.ext fun z => ?_
-    ext <;> simp [dualMap]
-  have h3 : spMap (dualMap (RingHom.id ↥(intO C))) = 𝟙 _ := by rw [h2]; exact Spec.map_id _
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  have h3 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id ↥(intO C))) = 𝟙 _ := by rw [h2]; exact Spec.map_id _
   have hD0 : ∀ w, IsTanAtG t xO w → ∃! a : Fin n → ↥(intO C), IsCombAtG t xO D a w := by
     have h := hDb _ (RingHom.id ↥(intO C))
     simp only [h1, h3, Category.id_comp] at h
     exact h
   have hDk := fun j => isTanAtG_map t (intO C).subtype (hD j)
-  refine ⟨n, fun e => spMap (dualMap (intO C).subtype) ≫ D e, hDk, hDb C _, fun cf w hw => ⟨?_, fun hc => ?_⟩⟩
+  refine ⟨n, fun e => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO C).subtype) ≫ D e, hDk, hDb C _, fun cf w hw => ⟨?_, fun hc => ?_⟩⟩
   · rintro ⟨xO', hx, vO, hv, rfl⟩
     obtain rfl := huniq xO' hx
     obtain ⟨a, ha, -⟩ := hD0 vO hv

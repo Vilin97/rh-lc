@@ -137,7 +137,7 @@ theorem reads_of_frames [DecidableEq I] (hs : (ShortComplex.mk a b z).ShortExact
     (hβ : ∀ s t, β (E (pullbackSections ξ D hξ s)) (E (pullbackSections ξ D hξ t)) =
       ofFn K (ξ.appLE V ⊤ hξ (dualApp (β₀.app V s) le_rfl t)))
     {p : (Scheme.Modules.pullback f₀).obj B ⟶ dual ((Scheme.Modules.pullback f₀).obj A)}
-    (hp : b ≫ p = β₀ ≫ dualMap a)
+    (hp : b ≫ p = β₀ ≫ GlobalTheory.CompanionTheory.Ar.dualMap a)
     (hδ : ∀ i j, dualApp (p.app V (pullbackSections f₀ B hVU (θ j))) le_rfl (pullbackSections f₀ A hVU (ε i)) =
       if i = j then 1 else 0)
     (x : I → H) (hx : ∀ i, x i = E (pullbackSections ξ D hξ (a.app V (pullbackSections f₀ A hVU (ε i))))) :
@@ -584,8 +584,8 @@ theorem main : GlobalTheory.Published.AbelianDeRham → ∀ (O : Type) [CommRing
     have := hε.dualApp_coord_frame j i le_rfl
     rw [Twist.resM_self] at this
     rw [dualApp_theta f₀ _ le_rfl, this, apply_ite (f₀.appLE U V hVU), map_one, map_zero]
-  have p₁ : d₀.b ≫ theta f₀ (omega G) = β₀ ≫ dualMap d₀.a := by
-    have := congrArg (· ≫ dualMap (omegaBase h)) eb
+  have p₁ : d₀.b ≫ theta f₀ (omega G) = β₀ ≫ GlobalTheory.CompanionTheory.Ar.dualMap d₀.a := by
+    have := congrArg (· ≫ GlobalTheory.CompanionTheory.Ar.dualMap (omegaBase h)) eb
     simpa only [lieRes, omegaRes, lieBase, asIso_hom, asIso_inv, Category.assoc, ← dualMap_comp, IsIso.hom_inv_id,
       IsIso.hom_inv_id_assoc, dualMap_id, Category.comp_id] using this
   obtain ⟨r₁, s, hs, hs₁, hs₂⟩ := reads_of_frames (R := R) w hU hVU hξ d₀.exact₁ hV hε hε.dual E hE β hβ₃ p₁ δ₁ _
@@ -617,12 +617,12 @@ theorem main : GlobalTheory.Published.AbelianDeRham → ∀ (O : Type) [CommRing
     rw [hE', hE', frobDR_pull q (SS.FrobField.cast_zero hT V) hK hφ, ← hΨ V hV t, ← eu, ← QCoh.app_app,
       QCoh.pullback_map_app_pullbackSections]
     rfl
-  have p₂ : d₀.v ≫ iω.hom ≫ (frobPull q hT).map (cartierDualToBidual (omega A)) ≫ theta (frob T q hT) (Lie A) ≫ dualMap iL.hom =
-      β₀ ≫ dualMap d₀.u := by
-    have := congrArg (· ≫ dualMap iL.hom) ev
+  have p₂ : d₀.v ≫ iω.hom ≫ (frobPull q hT).map (cartierDualToBidual (omega A)) ≫ theta (frob T q hT) (Lie A) ≫ GlobalTheory.CompanionTheory.Ar.dualMap iL.hom =
+      β₀ ≫ GlobalTheory.CompanionTheory.Ar.dualMap d₀.u := by
+    have := congrArg (· ≫ GlobalTheory.CompanionTheory.Ar.dualMap iL.hom) ev
     simpa only [iL, Category.assoc, ← dualMap_comp, Iso.hom_inv_id_assoc] using this
   have δ₂ (i j : Fin g) : dualApp ((iω.hom ≫ (frobPull q hT).map (cartierDualToBidual (omega A)) ≫ theta (frob T q hT) (Lie A) ≫
-      dualMap iL.hom).app V (pullbackSections f₀ _ hVU (pullbackSections (frob C q hC) _ (le_refl U) (ε j)))) le_rfl
+      GlobalTheory.CompanionTheory.Ar.dualMap iL.hom).app V (pullbackSections f₀ _ hVU (pullbackSections (frob C q hC) _ (le_refl U) (ε j)))) le_rfl
       (pullbackSections f₀ _ hVU (pullbackSections (frob C q hC) _ (le_refl U) (hε.coord i))) =
       if i = j then 1 else 0 := by
     rw [← QCoh.app_app, ← QCoh.app_app, ← QCoh.app_app, dualApp_dualMap, eL, eω,

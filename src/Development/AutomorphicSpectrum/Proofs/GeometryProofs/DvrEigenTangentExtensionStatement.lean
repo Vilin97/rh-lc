@@ -24,8 +24,8 @@ theorem _root_.GlobalTheory.T.dvr_eigen_tangent_extension : ∀ (V K : Type) [Co
     (ρK : Oe →+* Module.End K (Fin g → K)) (σV : Oe →+* V) (vV : Fin n → (epsAt (𝟙 (Sp V)) ⟶ T)) (b : Fin n → Fin g → K),
     IsGrpPullback GK T (spMap (algebraMap V K)) φ₀ → (∀ a, (actK.act a).left ≫ φ₀ = φ₀ ≫ (actT.act a).left) →
     ML.IsActOf actK.act ρK → IsEigFrame actT (𝟙 _) σV vV →
-    (∀ i, (ML.pt (b i)).left ≫ φ₀ = spMap (dualMap (algebraMap V K)) ≫ (vV i).left) →
+    (∀ i, (ML.pt (b i)).left ≫ φ₀ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ (vV i).left) →
     ∀ w, w ∈ Submodule.span V (Set.range b) ↔
-      (∃ a : epsAt (𝟙 (Sp V)) ⟶ T, IsTanAt T (𝟙 _) a ∧ (ML.pt w).left ≫ φ₀ = spMap (dualMap (algebraMap V K)) ≫ a.left) ∧
+      (∃ a : epsAt (𝟙 (Sp V)) ⟶ T, IsTanAt T (𝟙 _) a ∧ (ML.pt w).left ≫ φ₀ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ a.left) ∧
         ∀ r, ρK r w = algebraMap V K (σV r) • w := by
   first | exact @GlobalTheory.CompanionTheory.Ar.Flat.EigLin.mem_span_iff | exact GlobalTheory.CompanionTheory.Ar.Flat.EigLin.mem_span_iff | (intros; apply GlobalTheory.CompanionTheory.Ar.Flat.EigLin.mem_span_iff <;> assumption)

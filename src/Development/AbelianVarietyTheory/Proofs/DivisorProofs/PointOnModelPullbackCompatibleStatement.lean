@@ -22,7 +22,7 @@ theorem _root_.GlobalTheory.T.point_on_model_pullback_compatible : ∀ (E : Type
     (π : P.G.left ⟶ Y.t.G.left) (ψ : P.A.A.left ⟶ Y.oF.t.G.left), PtOn Y yb yy P π ψ →
     ∀ (X : LieG P.Gt) (u0 : Sp (DualNumber 𝓞_ℂ_[p]) ⟶ Y.t.G.left), ITie P π X u0 →
     ∃ w : Sp (DualNumber ℂ_[p]) ⟶ Y.oF.t.G.left,
-      w ≫ Y.m.φ = spMap (dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p])) ≫ u0 ∧
+      w ≫ Y.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p])) ≫ u0 ∧
       w ≫ Y.oF.t.G.hom = spMap (algebraMap ℂ_[p] (DualNumber ℂ_[p])) ≫ yy ∧
       spMap (TrivSqZeroExt.fstHom ℂ_[p] ℂ_[p] ℂ_[p]).toRingHom ≫ w = (1 : Over.mk yy ⟶ Y.oF.t.G).left ∧
       LieTie P ψ X w := by

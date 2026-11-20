@@ -31,16 +31,16 @@ theorem genRelR_iff_genThrough {A : Type} [CommRing A] [IsLocalRing A] {B B₀ Y
     rw [gm_pullGen', Category.id_comp, e]
 
 theorem dualMap_inl {R R' : Type} [CommRing R] [CommRing R'] (f : R →+* R') (r : R) :
-    dualMap f (TrivSqZeroExt.inl r) = TrivSqZeroExt.inl (f r) := by
-  ext <;> simp [dualMap]
+    GlobalTheory.CompanionTheory.Ar.dualMap f (TrivSqZeroExt.inl r) = TrivSqZeroExt.inl (f r) := by
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem dualMap_eps {R R' : Type} [CommRing R] [CommRing R'] (f : R →+* R') :
-    dualMap f DualNumber.eps = DualNumber.eps := by
-  ext <;> simp [dualMap]
+    GlobalTheory.CompanionTheory.Ar.dualMap f DualNumber.eps = DualNumber.eps := by
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem eq_dualMap {R R' : Type} [CommRing R] [CommRing R'] (f : R →+* R') (ρ : DualNumber R →+* DualNumber R')
     (h : ∀ r, ρ (TrivSqZeroExt.inl r) = TrivSqZeroExt.inl (f r)) (h' : ρ DualNumber.eps = DualNumber.eps) :
-    ρ = dualMap f :=
+    ρ = GlobalTheory.CompanionTheory.Ar.dualMap f :=
   (ConstTan.eq_dualMapR f ρ h h').trans (ConstTan.eq_dualMapR f _ (dualMap_inl f) (dualMap_eps f)).symm
 
 theorem lieId_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (A : Type) [CommRing A] [IsDomain A] [IsLocalRing A] (b : O →+* A) (a : ArcIn Dw l β A b) (χ : Sp (PowerSeries A) ⟶ Y.X) (W : Wit Y a χ) (ν : Out.GtPt a.D₀ (epsR A)) (v : epsR (PowerSeries A) ⟶ W.t.G), GlobalTheory.IndefiniteRowSideFullHecke.SectionsThroughEpsilonPoints.LieId W ν v ↔ (GlobalTheory.IndefiniteRowSideFullHecke.SectionsThroughEpsilonPoints.IsTanGt ν ∧ LieImg W ν v) := by
@@ -53,7 +53,7 @@ theorem lieId_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : 
     ConstTan.isLocalRing_dual _
   have hs : ∀ n, spMap (algebraMap (PowerSeries A ⧸ I ^ (n + 1)) (DualNumber (PowerSeries A ⧸ I ^ (n + 1)))) ≫
       Out.thick (PowerSeries A) I n =
-      spMap (dualMap (Ideal.Quotient.mk (I ^ (n + 1)))) ≫ (epsR (PowerSeries A)).hom := fun n =>
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (I ^ (n + 1)))) ≫ (epsR (PowerSeries A)).hom := fun n =>
     (ConstLie.spMap_comp' _ _).trans ((congrArg spMap
       (RingHom.ext fun r => (dualMap_inl (Ideal.Quotient.mk (I ^ (n + 1))) r).symm)).trans
         (ConstLie.spMap_comp' _ _).symm)
@@ -71,7 +71,7 @@ theorem lieId_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : 
   · intro h n
     have := hloc n
     let vn : Sp (DualNumber (PowerSeries A ⧸ I ^ (n + 1))) ⟶ (Out.thickObj (PowerSeries A) I n W.t.G).left :=
-      pullback.lift (spMap (dualMap (Ideal.Quotient.mk (I ^ (n + 1)))) ≫ v.left) (spMap (algebraMap _ _))
+      pullback.lift (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (I ^ (n + 1)))) ≫ v.left) (spMap (algebraMap _ _))
         (by rw [Category.assoc, Over.w v, hs])
     have h' := h n _ _ vn (dualMap_inl _) (dualMap_eps _)
       (dualMap_inl ((Ideal.Quotient.mk _).comp (PowerSeries.C (R := A)))) (dualMap_eps _)

@@ -28,11 +28,11 @@ theorem sp_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →
   simp only [spMap, CommRingCat.ofHom_comp, Spec.map_comp]
 
 theorem dualMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    (dualMap g).comp (dualMap f) = dualMap (g.comp f) :=
-  RingHom.ext fun z => by ext <;> simp [dualMap]
+    (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) = GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) :=
+  RingHom.ext fun z => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
-theorem dualMapR_eq {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) : Chart.dualMapR f = dualMap f :=
-  RingHom.ext fun z => by ext <;> simp [dualMap, Chart.dualMapR]
+theorem dualMapR_eq {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) : Chart.dualMapR f = GlobalTheory.CompanionTheory.Ar.dualMap f :=
+  RingHom.ext fun z => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, Chart.dualMapR]
 
 theorem one_left {S : Scheme.{0}} (X G : Over S) [GrpObj G] : (1 : X ⟶ G).left = X.hom ≫ η[G].left := by
   rw [Hom.one_def]; rfl
@@ -51,14 +51,14 @@ theorem red_of_isTr {R : Type} [CommRing R] {G : Over (Sp R)} [GrpObj G] [IsComm
     Over.homMk (spMap (TrivSqZeroExt.fstHom S S S).toRingHom) (by
       change _ ≫ spMap (algebraMap S (DualNumber S)) ≫ g ≫ G.hom = g ≫ G.hom
       rw [← Category.assoc, e0, Category.id_comp])
-  have ef : (TrivSqZeroExt.fstHom S S S).toRingHom.comp (dualMap φ) = φ.comp (TrivSqZeroExt.fstHom R R R).toRingHom := by
-    exact RingHom.ext fun z => by simp [dualMap]
+  have ef : (TrivSqZeroExt.fstHom S S S).toRingHom.comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) = φ.comp (TrivSqZeroExt.fstHom R R R).toRingHom := by
+    exact RingHom.ext fun z => by simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   have hv : red ≫ v' = 1 := by
     apply Over.OverMorphism.ext
     have hr := congrArg (fun q => q.left) (GlobalTheory.InvFieldBase.redPt_tv G v)
     simp only [Over.comp_left] at hr
     rw [Over.comp_left, one_left, h₂, ← Category.assoc]
-    change (spMap (TrivSqZeroExt.fstHom S S S).toRingHom ≫ spMap (dualMap φ)) ≫ _ = _
+    change (spMap (TrivSqZeroExt.fstHom S S S).toRingHom ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ)) ≫ _ = _
     rw [sp_comp, ef, ← sp_comp, Category.assoc]
     change spMap φ ≫ ((GlobalTheory.InvFieldBase.redPt R).left ≫ (tv v).left) = _
     rw [hr, one_left]
@@ -74,7 +74,7 @@ theorem red_of_isTr {R : Type} [CommRing R] {G : Over (Sp R)} [GrpObj G] [IsComm
 theorem isTr_push {R K : Type} [CommRing R] [CommRing K] (x₀ : R →+* K) {G : Over (Sp R)} [GrpObj G]
     [IsCommMonObj G] {A : Over (Sp K)} [GrpObj A] [IsCommMonObj A] (m : A.left ⟶ G.left)
     (hm : IsGrpPullback A G (spMap x₀) m) (w₀ : TanM (𝟙 (Sp R)) G) (v : TanM (𝟙 (Sp K)) A)
-    (hv : (tv v).left ≫ m = spMap (dualMap x₀) ≫ (tv w₀).left) {B : Type} [CommRing B] (φ : K →+* B)
+    (hv : (tv v).left ≫ m = spMap (GlobalTheory.CompanionTheory.Ar.dualMap x₀) ≫ (tv w₀).left) {B : Type} [CommRing B] (φ : K →+* B)
     (x : Sp B ⟶ A.left) (y : Sp (DualNumber B) ⟶ A.left) (hy : IsTr A φ x v y) :
     IsTr G (φ.comp x₀) (x ≫ m) w₀ (y ≫ m) := by
   obtain ⟨g', v', h₁, h₂, rfl⟩ := hy
@@ -85,7 +85,7 @@ theorem isTr_push {R K : Type} [CommRing R] [CommRing K] (x₀ : R →+* K) {G :
       simp only [Category.assoc])
   refine ⟨p, q, ?_, ?_, hpq⟩
   · simp only [hp, h₁, Category.assoc]
-  · rw [hq, h₂, Category.assoc (spMap (dualMap φ)), hv, ← Category.assoc, sp_comp, dualMap_comp]
+  · rw [hq, h₂, Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ)), hv, ← Category.assoc, sp_comp, dualMap_comp]
 
 def epsOf {L : Type} [CommRing L] (D : L → L) (h1 : D 1 = 0) (ha : ∀ x y, D (x + y) = D x + D y)
     (hm : ∀ x y, D (x * y) = x * D y + y * D x) : L →+* DualNumber L where
@@ -132,7 +132,7 @@ theorem exists_basis_bc {R K : Type} [CommRing R] [CommRing K] (x₀ : R →+* K
     (hm : IsGrpPullback A G (spMap x₀) m) (hs : Smooth G.hom) {n : ℕ}
     (v' : Module.Basis (Fin n) R (TanM (𝟙 (Sp R)) G)) :
     ∃ v : Module.Basis (Fin n) K (TanM (𝟙 (Sp K)) A),
-      ∀ a, (tv (v a)).left ≫ m = spMap (dualMap x₀) ≫ (tv (v' a)).left := by
+      ∀ a, (tv (v a)).left ≫ m = spMap (GlobalTheory.CompanionTheory.Ar.dualMap x₀) ≫ (tv (v' a)).left := by
   obtain ⟨u', hu', hu'l⟩ := GlobalTheory.Heat.CoeffWt.exists_isLieBasis v'
   obtain ⟨u, hu, hul⟩ := GlobalTheory.exists_isLieBasis_baseChange R K x₀ G A m hm hs n u' hu'
   have h := GlobalTheory.Heat.CoeffWt.isGrpPullback_self A
@@ -194,15 +194,15 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host 
     intro f
     rw [hξ, GlobalTheory.Points.valR_spMap_comp _ _ _ hxU, GlobalTheory.Points.valR_spMap_comp _ _ _ hxU, hval a U _ hxU, hδL]
   have hc : ∀ k, δL a (ψ k) = 0 := der_frac ψ (δL a) hl fun r => by rw [hψ, hδL, hδ, map_zero]
-  have hdual : (dualMap ψ).comp (algebraMap (FractionRing R) (DualNumber (FractionRing R))) =
+  have hdual : (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (algebraMap (FractionRing R) (DualNumber (FractionRing R))) =
       (algebraMap (FractionRing Ω) (DualNumber (FractionRing Ω))).comp ψ := by
-    ext k <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    ext k <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
   let g' : tEpsG (ξ ≫ P.A.A.hom) ⟶ P.A.A :=
     Over.homMk (spMap (algebraMap (FractionRing Ω) (DualNumber (FractionRing Ω))) ≫ ξ) (Category.assoc _ _ _)
   let w' : tEpsG (ξ ≫ P.A.A.hom) ⟶ P.A.A :=
-    Over.homMk (spMap (dualMap ψ) ≫ (tv (v a)).left) (by
+    Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ (tv (v a)).left) (by
       rw [Category.assoc, Over.w (tv (v a)), hξA]
-      change spMap (dualMap ψ) ≫ spMap (algebraMap _ _) ≫ 𝟙 _ = spMap _ ≫ spMap ψ
+      change spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (algebraMap _ _) ≫ 𝟙 _ = spMap _ ≫ spMap ψ
       rw [Category.comp_id, sp_comp, sp_comp, hdual])
   have htr : IsTr P.A.A ψ ξ (v a) (g' * w').left := ⟨g', w', rfl, rfl, rfl⟩
   have key : (g' * w').left = spMap (epsOf (δL a) (δL a).map_one_eq_zero (map_add _) hl) ≫ ξ := by

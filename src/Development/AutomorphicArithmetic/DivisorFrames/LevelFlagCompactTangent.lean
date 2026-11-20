@@ -114,10 +114,10 @@ theorem UpperTheory.level_flag_compact_tangent :
     refine flagAt_tri Z hty h1 h1' h4 h4' fun τ j => ?_
     obtain ⟨t, -, -, ht⟩ := ((hc φ' _ g' h5').2.2 φ _ g).1 h5
     obtain ⟨cf, -, c1, c2⟩ := ht τ j
-    have hid : spMap (dualMap (RingHom.id k)) = 𝟙 _ := by
+    have hid : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id k)) = 𝟙 _ := by
       rw [← Spec.map_id]
       congr 1
-      ext r <;> simp [dualMap]
+      ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
     simp only [hid, Category.id_comp, h6, h6', ← Category.assoc] at c2
     refine ⟨cf, c1, (comb_push (Y Z.i).m rfl (h3' τ) (h3 τ j) cf).2 ((comb_push L.ν rfl (h3' τ) (h3 τ j) cf).1
       ((comb_push T.m hx (fun i => isTan_push L.ν _ rfl (h3' τ i)) (isTan_push L.ν _ rfl (h3 τ j)) cf).1 ?_))⟩

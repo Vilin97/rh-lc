@@ -24,9 +24,9 @@ theorem fst_eq_of_tangent : ∀ (K C : Type) [Field K] [Field C] [Algebra K C] (
     ∀ (v w : epsR K ⟶ P.A), IsTangent v → IsTangent w →
     ∀ (yv yw : Sp (DualNumber C) ⟶ (Over.mk (spMap (algebraMap K C)) ⊗ P.A).left),
       yv ≫ (fst (Over.mk (spMap (algebraMap K C))) P.A).left = spMap (algebraMap C (DualNumber C)) →
-      yv ≫ (snd (Over.mk (spMap (algebraMap K C))) P.A).left = spMap (dualMap (algebraMap K C)) ≫ v.left →
+      yv ≫ (snd (Over.mk (spMap (algebraMap K C))) P.A).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K C)) ≫ v.left →
       yw ≫ (fst (Over.mk (spMap (algebraMap K C))) P.A).left = spMap (algebraMap C (DualNumber C)) →
-      yw ≫ (snd (Over.mk (spMap (algebraMap K C))) P.A).left = spMap (dualMap (algebraMap K C)) ≫ w.left →
+      yw ≫ (snd (Over.mk (spMap (algebraMap K C))) P.A).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K C)) ≫ w.left →
     ∀ (a b a' b' : C),
       valR yv ((LPow P.A P.L (k : ℤ) (Over.mk (spMap (algebraMap K C)))).U fun _ => i₀) (t.f fun _ => i₀) =
         TrivSqZeroExt.inl (valR (spMap (algebraMap K C)) ((P.L.pull (eSec P.A)).U fun _ => i₀) (ρ.s fun _ => i₀).val ^ k) *
@@ -45,12 +45,12 @@ theorem fst_eq_of_tangent : ∀ (K C : Type) [Field K] [Field C] [Algebra K C] (
       unfold valR
       rw [dif_neg h, dif_neg h']
       rfl
-  have sq : spMap (TrivSqZeroExt.fstHom C C C).toRingHom ≫ spMap (dualMap (algebraMap K C)) =
+  have sq : spMap (TrivSqZeroExt.fstHom C C C).toRingHom ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K C)) =
       spMap (algebraMap K C) ≫ spMap (TrivSqZeroExt.fstHom K K K).toRingHom := by
     simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
     congr 2
     refine RingHom.ext fun x => ?_
-    simp [dualMap]
+    simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   have e0 : spMap (TrivSqZeroExt.fstHom C C C).toRingHom ≫ yv = spMap (TrivSqZeroExt.fstHom C C C).toRingHom ≫ yw := by
     apply GlobalTheory.AbDual.left_ext
     · rw [Category.assoc, hv1, Category.assoc, hw1]

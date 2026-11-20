@@ -25,16 +25,16 @@ theorem sp_comp {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (f : R →
   rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
 
 theorem dual_alg {S T : Type} [CommRing S] [CommRing T] (φ : S →+* T) :
-    spMap (dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) = spMap (algebraMap T (DualNumber T)) ≫ spMap φ := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) = spMap (algebraMap T (DualNumber T)) ≫ spMap φ := by
   rw [← sp_comp, ← sp_comp]
   congr 1
-  exact RingHom.ext fun a => by ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  exact RingHom.ext fun a => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem dual_comp {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (io : R →+* S) (φ : S →+* T) :
-    spMap (dualMap (φ.comp io)) = spMap (dualMap φ) ≫ spMap (dualMap io) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (φ.comp io)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) := by
   rw [← sp_comp]
   congr 1
-  exact RingHom.ext fun a => by ext <;> simp [dualMap]
+  exact RingHom.ext fun a => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem flat_of_injective {A V : Type} [CommRing A] [IsDomain A] [IsPrincipalIdealRing A] [CommRing V] [IsDomain V]
     (f : A →+* V) (hf : Function.Injective f) : f.Flat := by

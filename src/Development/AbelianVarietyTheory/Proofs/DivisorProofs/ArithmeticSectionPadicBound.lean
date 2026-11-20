@@ -79,10 +79,10 @@ theorem grNorm_eq_one (Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo
   obtain ⟨v, hv, hw, hsat⟩ := GlobalTheory.T.integral_point_complex_tangent_vector _ _ _ _ _ _ _ _ Z T io y xV hxV τ
   have hx : (AllWt.ptF yC ≫ Z.jQ) ≫ genι Z = spMap (jm.comp (algebraMap T.V T.Fr)) ≫ xV := by
     rw [← OpenReg.spMap_comp, Category.assoc, Category.assoc, hxV, hpt, Category.assoc]
-  have hvec : u τ = fun a => spMap (dualMap (jm.comp (algebraMap T.V T.Fr))) ≫ v a := funext fun a => by
+  have hvec : u τ = fun a => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (jm.comp (algebraMap T.V T.Fr))) ≫ v a := funext fun a => by
     obtain ⟨w, w1, w2, w3⟩ := hw a
     obtain ⟨w', w1', w2', w3'⟩ := hu τ a
-    have : w' = spMap (dualMap jm) ≫ w := by
+    have : w' = spMap (GlobalTheory.CompanionTheory.Ar.dualMap jm) ≫ w := by
       apply Z.m0.toSABMap.cart.1.hom_ext
       · rw [w2', Category.assoc, w2]
         exact hmap.2.1 τ a

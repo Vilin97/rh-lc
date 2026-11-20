@@ -17,7 +17,7 @@ def IsTanAt (G : Over S) [GrpObj G] (x : Spec (CommRingCat.of R) ⟶ S) (v : eps
 def epsMul (c : R) : DualNumber R →+* DualNumber R :=
   (TrivSqZeroExt.map (c • (LinearMap.id : R →ₗ[R] R))).toRingHom
 
-def dualMap (φ : R →+* R') : DualNumber R →+* DualNumber R' where
+def GlobalTheory.CompanionTheory.Ar.dualMap (φ : R →+* R') : DualNumber R →+* DualNumber R' where
   toFun a := TrivSqZeroExt.inl (φ a.fst) + TrivSqZeroExt.inr (φ a.snd)
   map_one' := by ext <;> simp
   map_mul' a b := by ext <;> simp [TrivSqZeroExt.fst_mul, TrivSqZeroExt.snd_mul]

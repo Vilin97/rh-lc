@@ -26,24 +26,24 @@ theorem comp_listProd {B : Scheme.{0}} {G : Over B} [GrpObj G] {X Y : Over B} (e
 theorem isCombAtG_bc {X : Scheme.{0}} (t : SAB H X) {S S' : Type} [CommRing S] [CommRing S'] (ψ : S →+* S')
     {x : Sp S ⟶ X} {m : ℕ} {v : Fin m → (Sp (DualNumber S) ⟶ t.G.left)} {a : Fin m → S}
     {w : Sp (DualNumber S) ⟶ t.G.left} (h : IsCombAtG t x v a w) :
-    IsCombAtG t (spMap ψ ≫ x) (fun j => spMap (dualMap ψ) ≫ v j) (fun j => ψ (a j)) (spMap (dualMap ψ) ≫ w) := by
+    IsCombAtG t (spMap ψ ≫ x) (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ v j) (fun j => ψ (a j)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ w) := by
   obtain ⟨u, hu, hw⟩ := h
-  have he : spMap (dualMap ψ) ≫ (tEpsG x).hom = (tEpsG (spMap ψ ≫ x)).hom := by
-    show spMap (dualMap ψ) ≫ spMap (algebraMap S (DualNumber S)) ≫ x =
+  have he : spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ (tEpsG x).hom = (tEpsG (spMap ψ ≫ x)).hom := by
+    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (algebraMap S (DualNumber S)) ≫ x =
       spMap (algebraMap S' (DualNumber S')) ≫ spMap ψ ≫ x
     rw [← Category.assoc, ← Category.assoc, ← spMap_comp, ← spMap_comp]
     congr 2
     apply RingHom.ext
     intro r
-    ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
-  let e : tEpsG (spMap ψ ≫ x) ⟶ tEpsG x := Over.homMk (spMap (dualMap ψ)) he
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  let e : tEpsG (spMap ψ ≫ x) ⟶ tEpsG x := Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ)) he
   refine ⟨fun i => e ≫ u i, fun i => ?_, ?_⟩
-  · show spMap (dualMap ψ) ≫ (u i).left = spMap (epsMul (ψ (a i))) ≫ spMap (dualMap ψ) ≫ v i
+  · show spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ (u i).left = spMap (epsMul (ψ (a i))) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ v i
     rw [hu i, ← Category.assoc, ← Category.assoc, ← spMap_comp, ← spMap_comp]
     congr 2
     apply RingHom.ext
     intro r
-    ext <;> simp [dualMap, epsMul, _root_.mul_comm]
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, _root_.mul_comm]
   · have hl : (List.ofFn fun i => e ≫ u i) = (List.ofFn u).map (e ≫ ·) := by
       rw [List.map_ofFn]
       rfl
@@ -53,12 +53,12 @@ theorem isCombAtG_bc {X : Scheme.{0}} (t : SAB H X) {S S' : Type} [CommRing S] [
 theorem bc_bc {Dw : Datum H} {X : Scheme.{0}} {t : SAB H X} {R S T : Type} [CommRing R] [CommRing S] [CommRing T]
     (φ : R →+* S) (ψ : S →+* T) (u : Vecs Dw t R) : (u.bc φ).bc ψ = u.bc (ψ.comp φ) := by
   funext τ i
-  show spMap (dualMap ψ) ≫ spMap (dualMap φ) ≫ u τ i = spMap (dualMap (ψ.comp φ)) ≫ u τ i
+  show spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ u τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ)) ≫ u τ i
   rw [← Category.assoc, ← spMap_comp]
   congr 2
   apply RingHom.ext
   intro r
-  ext <;> simp [dualMap]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem exists_spMap_fromSpec {X : Scheme.{0}} {U : X.Opens} (hU : IsAffineOpen U) {k : Type} [CommRing k]
     (w : Sp k ⟶ X) (h : Set.range w ⊆ (U : Set X)) : ∃ φ : Γ(X, U) →+* k, spMap φ ≫ hU.fromSpec = w := by

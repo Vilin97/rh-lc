@@ -36,18 +36,18 @@ theorem isTr_comp {R : Type} [CommRing R] {K : Type} [Field K] (x₀ : R →+* K
     (x : Sp B ⟶ A.left) (hx : x ≫ A.hom = spMap φ) (y : Sp (DualNumber B) ⟶ A.left) (hy : IsTransl φ x v y) :
     IsTr G (φ.comp x₀) (x ≫ m) w (y ≫ m) := by
   obtain ⟨x₁, v₁, a, b, rfl⟩ := hy
-  have dc : (dualMap φ).comp (ReciprocityTheory.ChartRestriction.G.Chart.dualMapR x₀) = dualMap (φ.comp x₀) :=
-    RingHom.ext fun c ↦ by ext <;> simp [dualMap, ReciprocityTheory.ChartRestriction.G.Chart.dualMapR]
+  have dc : (GlobalTheory.CompanionTheory.Ar.dualMap φ).comp (ReciprocityTheory.ChartRestriction.G.Chart.dualMapR x₀) = GlobalTheory.CompanionTheory.Ar.dualMap (φ.comp x₀) :=
+    RingHom.ext fun c ↦ by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, ReciprocityTheory.ChartRestriction.G.Chart.dualMapR]
   obtain ⟨p, q, h₁, h₂, h₃⟩ := exists_mul_of_isGrpPullback hm _ x₁ v₁
     (spMap (algebraMap B (DualNumber B)) ≫ (x ≫ m) ≫ G.hom) (by
       change _ = spMap ((algebraMap B (DualNumber B)).comp φ) ≫ spMap x₀
       rw [Category.assoc, hm.1.w, ← Category.assoc x, hx, ← Category.assoc, GlobalTheory.LogKSLoc.spMap_comp'])
   refine ⟨p, q, ?_, ?_, h₃⟩
   · rw [h₁, a]; exact Category.assoc _ _ _
-  · rw [h₂, b, ← dc, ← GlobalTheory.LogKSLoc.spMap_comp' (ReciprocityTheory.ChartRestriction.G.Chart.dualMapR x₀) (dualMap φ)]
+  · rw [h₂, b, ← dc, ← GlobalTheory.LogKSLoc.spMap_comp' (ReciprocityTheory.ChartRestriction.G.Chart.dualMapR x₀) (GlobalTheory.CompanionTheory.Ar.dualMap φ)]
     refine (Category.assoc _ _ _).trans ?_
     rw [hv]
-    exact (Category.assoc (spMap (dualMap φ)) (spMap (ReciprocityTheory.ChartRestriction.G.Chart.dualMapR x₀)) _).symm
+    exact (Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ)) (spMap (ReciprocityTheory.ChartRestriction.G.Chart.dualMapR x₀)) _).symm
 
 theorem invField_baseChange : ∀ {R : Type} [CommRing R] {K : Type} [Field K] (x₀ : R →+* K) {G : Over (Sp R)} [GrpObj G] [IsCommMonObj G] {A : Over (Sp K)} [GrpObj A] [IsCommMonObj A] (m : A.left ⟶ G.left), IsGrpPullback A G (spMap x₀) m → ∀ (w : TanM (𝟙 (Sp R)) G) (e : Fld G.left), IsInv G w e → ∀ (v : epsR K ⟶ A), IsTangent v → v.left ≫ m = spMap (ReciprocityTheory.ChartRestriction.G.Chart.dualMapR x₀) ≫ (tv w).left → ∀ (dd : ∀ O : A.left.Opens, Γ(A.left, O) → Γ(A.left, O)), GlobalTheory.KS.IsInvDer v dd → ∀ (O : G.left.Opens) (f : Γ(G.left, O)), dd (m ⁻¹ᵁ O) ((m.app O).hom f) = pbT m (e O f) (m ⁻¹ᵁ O) := by
   intro R _ K _ x₀ G _ _ A _ _ m hm w e he v hvt hv dd hdd O f

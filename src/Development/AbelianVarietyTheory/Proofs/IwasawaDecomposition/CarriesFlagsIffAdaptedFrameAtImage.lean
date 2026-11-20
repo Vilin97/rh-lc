@@ -40,16 +40,16 @@ theorem exists_cast {R : Type} [CommRing R] {φ : c.F →+* R} {x x' : Sp R ⟶ 
   exact ⟨g, fun _ _ => rfl⟩
 
 theorem spMap_dualMap_comp {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (ρ : R →+* R') (ψ : R' →+* R'') :
-    spMap (dualMap (ψ.comp ρ)) = spMap (dualMap ψ) ≫ spMap (dualMap ρ) := by
-  have e : dualMap (ψ.comp ρ) = (dualMap ψ).comp (dualMap ρ) := by
-    ext r <;> simp [dualMap]
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp ρ)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρ) := by
+  have e : GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp ρ) = (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (GlobalTheory.CompanionTheory.Ar.dualMap ρ) := by
+    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   rw [e]
   simp [spMap, Spec.map_comp]
 
 theorem coord_of_bc {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] {φ : c.F →+* R} {φ' : c.F →+* R'}
     {φ'' : c.F →+* R''} {x : Sp R ⟶ Z.X} {x' : Sp R' ⟶ Z.X} {x'' : Sp R'' ⟶ Z.X} {f : EigFrame Z φ x}
     {f' : EigFrame Z φ' x'} {g : EigFrame Z φ'' x''} {ρ : R →+* R'} {ψ : R' →+* R''} {A : Mat Dw.mult R''}
-    (hx : x' = spMap ρ ≫ x) (hφ : φ' = ρ.comp φ) (hv : ∀ τ i, f'.v τ i = spMap (dualMap ρ) ≫ f.v τ i)
+    (hx : x' = spMap ρ ≫ x) (hφ : φ' = ρ.comp φ) (hv : ∀ τ i, f'.v τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρ) ≫ f.v τ i)
     (h : f.Coord (ψ.comp ρ) g A) : f'.Coord ψ g A := by
   obtain ⟨h1, h2, h3⟩ := h
   refine ⟨?_, ?_, fun τ i => ?_⟩
@@ -57,7 +57,7 @@ theorem coord_of_bc {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] 
     congr 1
     simp [spMap, Spec.map_comp]
   · rw [h2, hφ, RingHom.comp_assoc]
-  · have e : (fun k => spMap (dualMap ψ) ≫ f'.v τ k) = fun k => spMap (dualMap (ψ.comp ρ)) ≫ f.v τ k := by
+  · have e : (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f'.v τ k) = fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp ρ)) ≫ f.v τ k := by
       funext k
       rw [hv, spMap_dualMap_comp, Category.assoc]
     rw [e]
@@ -92,7 +92,7 @@ theorem exists_adapted {F : Type} [Field F] {e : F ≃+* c.F} (C : FlagCpt Z e) 
   have hx' : spMap ρ ≫ stalkPt C.Y y ≫ C.π ≫ genι Z = stalkPt C.Y y' ≫ C.π ≫ genι Z := by
     rw [← Category.assoc, hρ]
   obtain ⟨f', hf'⟩ := exists_cast hx' f₀
-  have hv : ∀ τ i, f'.v τ i = spMap (dualMap ρ) ≫ f.v τ i := fun τ i => (hf' τ i).trans (hf₀ τ i)
+  have hv : ∀ τ i, f'.v τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρ) ≫ f.v τ i := fun τ i => (hf' τ i).trans (hf₀ τ i)
   have hT1' : f'.Coord alg C.f0 T :=
     coord_of_bc hx'.symm rfl hv (algebraMap_eq_comp_specializes hsp ▸ hT1)
   have hh1' : f'.Coord ψ' g h := coord_of_bc hx'.symm rfl hv hh1

@@ -122,7 +122,7 @@ theorem vecAt_of_goodExp (HC : HolCoord) {E : Type} [Field E] [NumberField E] [I
   have hψz : ∀ t ∈ B, spMap (ψ t) ≫ hW.fromSpec = z t := fun t ht => by
     simp only [ψ, dif_pos ht.2]
     exact Flat.BdryModel.spMap_evalHom _ _ _ _
-  have hco : ∀ a, ∀ t ∈ B, ∃ w, IsDerivAt0 (e₂ t) w (spMap (dualMap (ψ t)) ≫ (v a).left) := fun a t ht => by
+  have hco : ∀ a, ∀ t ∈ B, ∃ w, IsDerivAt0 (e₂ t) w (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ t)) ≫ (v a).left) := fun a t ht => by
     obtain ⟨u, hu, e⟩ := hval (ψ t) (z t) (hψz t ht) (𝔐.all _) a
     rw [← e]
     exact (G₂ t ht.1).onto u.left (Over.w u) (hu.isTanAt.trans (G₂ t ht.1).zero.symm)

@@ -118,10 +118,10 @@ theorem sub_al_mem {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Recip
     h i - (P.al₀ s).1 x ∈ Ideal.span {(p : O) ^ n} := by
   classical
   let w : Over.mk (spMap (algebraMap O (DualNumber (O ⧸ Ideal.span {(p : O) ^ n}))) ≫ z) ⟶ t.G :=
-    Over.homMk (spMap (dualMap (Ideal.Quotient.mk (Ideal.span {(p : O) ^ n}))) ≫ e i) (by
+    Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(p : O) ^ n}))) ≫ e i) (by
       rw [Category.assoc, (he i).1, ← Category.assoc, ← Spec.map_comp]
       congr 2
-      ext r <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl, TrivSqZeroExt.algebraMap_eq_inl'])
+      ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl, TrivSqZeroExt.algebraMap_eq_inl'])
   have h1 := hh _ _ (GlobalTheory.ShFam.isCombAtG_single t z he i) w rfl
   have h2 := GlobalTheory.TorsCharDlog.snd_chi_eq t P z π hπ n c s (fun w' y hw' hy => hc w' y
     (pow_eq_one_of_push (P.gen_pull.comp hπ) (T₀ := Over.mk (spMap (algebraMap O O) ≫ z))

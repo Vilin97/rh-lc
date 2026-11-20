@@ -69,7 +69,7 @@ structure IntData (T : CDVR) (io : c.F →+* T.Fr) (y : letI := io.toAlgebra; Fr
   basis : ∀ τ (w : epsOver T.V T.V ⟶ G.G), IsTan w → IsEigV c io G τ w →
     ∃! a : Fin (Dw.mult τ) → T.V, IsComb (ub τ) a w
   lift : letI := io.toAlgebra; ∀ τ i, ∃ u' : Sp (DualNumber T.Fr) ⟶ t'.G.left, u' ≫ m1.φ = y.u τ i ∧
-    u' ≫ m2.φ = spMap (dualMap (algebraMap T.V T.Fr)) ≫ (ub τ i).left
+    u' ≫ m2.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ (ub τ i).left
   θ : LB.Sec G.PP.L
   θgen : ∀ σ : LB.Sec G.PP.L, ∃! a : T.V, ∀ i,
     σ.f i = resG G.G.left le_top ((G.G.hom).appTop.hom (toΓ T.V a)) * θ.f i

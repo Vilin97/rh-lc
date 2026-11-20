@@ -25,9 +25,9 @@ theorem thetaRule_mem_sec : Laws → ChartIndepSt2 → ∀ (E : Type) [Field E] 
     have hid : FrMap (AlgHom.id c.F p.R) y' y' := by
       have hs : spMap (AlgHom.id c.F p.R).toRingHom = 𝟙 _ := by
         simp [spMap]
-      have hd : spMap (dualMap (AlgHom.id c.F p.R).toRingHom) = 𝟙 _ := by
-        have : dualMap (AlgHom.id c.F p.R).toRingHom = RingHom.id _ := by
-          ext z <;> simp [dualMap]
+      have hd : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (AlgHom.id c.F p.R).toRingHom) = 𝟙 _ := by
+        have : GlobalTheory.CompanionTheory.Ar.dualMap (AlgHom.id c.F p.R).toRingHom = RingHom.id _ := by
+          ext z <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
         rw [this]
         simp [spMap]
       refine ⟨?_, ?_, 𝟙 _, ?_, ?_, ?_⟩

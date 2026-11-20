@@ -42,7 +42,7 @@ theorem ringHom_eq {R A : Type} [CommRing R] [CommRing A] {X : Scheme.{0}} (x : 
 theorem span_tr {X : Scheme.{0}} {G : Over X} [GrpObj G] [Smooth G.hom] {R R' : Type} [CommRing R] [CommRing R']
     {E E' : Type} [AddCommGroup E] [Module R E] [AddCommGroup E'] [Module R' E'] (c : R →+* R') {x : Sp R ⟶ X}
     {y : Sp R' ⟶ X} (h : spMap c ≫ x = y) (M : LieModel G x E) (M' : LieModel G y E') (j : E →ₛₗ[c] E')
-    (hj : ∀ e, (M'.pt (j e)).left = spMap (dualMap c) ≫ (M.pt e).left) {n : ℕ} (s : Fin n → E)
+    (hj : ∀ e, (M'.pt (j e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ (M.pt e).left) {n : ℕ} (s : Fin n → E)
     (hs : Submodule.span R (Set.range s) = ⊤) (e' : E') : ∃ a : Fin n → R', ∑ i, a i • j (s i) = e' := by
   rw [← Submodule.mem_span_range_iff_exists_fun]
   refine RootHt.lie_transport_induction c h M M' j hj
@@ -65,25 +65,25 @@ theorem torus_tr {S : Scheme.{0}} {Xc : Type} [AddCommGroup Xc] {A B : Type} [Co
     (g : A →+* B) {a : Sp A ⟶ S} {b : Sp B ⟶ S} (h : spMap g ≫ a = b)
     (M : LieModel (splitTorus S Xc) a (Xc →+ A)) (hM : IsCocharLie M)
     (M' : LieModel (splitTorus S Xc) b (Xc →+ B)) (hM' : IsCocharLie M') (δ : Xc →+ ℤ) :
-    (M'.pt ((Int.castAddHom B).comp δ)).left = spMap (dualMap g) ≫ (M.pt ((Int.castAddHom A).comp δ)).left := by
+    (M'.pt ((Int.castAddHom B).comp δ)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ (M.pt ((Int.castAddHom A).comp δ)).left := by
   obtain ⟨j, hj⟩ := exists_tr a b g h M M'
-  have hb : (epsAt b).hom = spMap (dualMap g) ≫ (epsAt a).hom := by
+  have hb : (epsAt b).hom = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ (epsAt a).hom := by
     have h1 := Over.w (M'.pt (j 0))
     have h2 := Over.w (M.pt 0)
     rw [← h1, hj, Category.assoc, h2]
   have e : M'.pt ((Int.castAddHom B).comp δ) =
-      TorusLie.pullPt (dualMap g) hb (M.pt ((Int.castAddHom A).comp δ)) := by
+      TorusLie.pullPt (GlobalTheory.CompanionTheory.Ar.dualMap g) hb (M.pt ((Int.castAddHom A).comp δ)) := by
     refine TorusLie.ptOf_ext b _ _ fun χ => ?_
     rw [TorusLie.charVal_pullPt, hM, hM']
-    ext <;> simp [dualMap]
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   exact congrArg (fun t => t.left) e
 
 theorem lie_valAt {X : Scheme.{0}} {Ω : Type} [Field Ω] {ξ : Sp Ω ⟶ X} (hall : ∀ q : X, genPt ξ ⤳ q)
     {G : Over X} [GrpObj G] [IsCommMonObj G] {Li : Type} [AddCommGroup Li] [Module Ω Li] (M : LieModel G ξ Li)
     {R : Type} [CommRing R] (x : Sp R ⟶ X) [IsOpenImmersion x] {E : Type} [AddCommGroup E] [Module R E]
     (MR : LieModel G x E) (ψ : R →+* Ω) (hψ : spMap ψ ≫ x = ξ) (e : E) (f : Li)
-    (hf : (M.pt f).left = spMap (dualMap ψ) ≫ (MR.pt e).left) (z : Sp ℂ ⟶ X) (g : R →+* ℂ)
-    (hg : spMap g ≫ x = z) (v : epsAt z ⟶ G) (hv : v.left = spMap (dualMap g) ≫ (MR.pt e).left) :
+    (hf : (M.pt f).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ (MR.pt e).left) (z : Sp ℂ ⟶ X) (g : R →+* ℂ)
+    (hg : spMap g ≫ x = z) (v : epsAt z ⟶ G) (hv : v.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ (MR.pt e).left) :
     M.ValAt z f v := by
   have hq : (X.fromSpecStalk (centre z)) (IsLocalRing.closedPoint (X.presheaf.stalk (centre z))) ∈ x.opensRange := by
     rw [Scheme.fromSpecStalk_closedPoint, ← hg]
@@ -116,7 +116,7 @@ theorem local_formula {X : Scheme.{0}} {Ω : Type} [Field Ω] {K : Type} {J : K 
     (hφ : spMap φ ≫ x = xV ≫ ρ) {E : Type} [AddCommGroup E] [Module R E] (MR : LieModel G x E) {n : ℕ}
     (s : Fin n → E) (hs : Submodule.span R (Set.range s) = ⊤) :
     ∃ c : Fin r → Fin n → B, ∀ (g : B →+* ℂ) (z : Sp ℂ ⟶ Z'), spMap g ≫ xV = z →
-      ∃ sv : Fin n → (epsAt (z ≫ ρ) ⟶ G), (∀ i, (sv i).left = spMap (dualMap (g.comp φ)) ≫ (MR.pt (s i)).left) ∧
+      ∃ sv : Fin n → (epsAt (z ≫ ρ) ⟶ G), (∀ i, (sv i).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.comp φ)) ≫ (MR.pt (s i)).left) ∧
         ∀ a b, H z a b = ∑ i, ∑ j, starRingEnd ℂ (g (c a i)) * g (c b j) * h.ip (z ≫ ρ) (sv i) (sv j) := by
   obtain ⟨E', _, _, ⟨M'⟩⟩ := lieModel_exists X G B (xV ≫ ρ)
   obtain ⟨j, hj⟩ := exists_tr x (xV ≫ ρ) φ hφ MR M'
@@ -135,7 +135,7 @@ theorem local_formula {X : Scheme.{0}} {Ω : Type} [Field Ω] {K : Type} {J : K 
     have e : (M'.pt (D a)).left = ((MT.pt ((Int.castAddHom B).comp (β a))).left ≫ u.left) ≫ Φ :=
       congrArg (fun t => t.left) (hD a)
     have e2 : (Mz.pt ((Int.castAddHom ℂ).comp (β a)) ≫ u).left =
-        (spMap (dualMap g) ≫ (MT.pt ((Int.castAddHom B).comp (β a))).left) ≫ u.left :=
+        (spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ (MT.pt ((Int.castAddHom B).comp (β a))).left) ≫ u.left :=
       congrArg (· ≫ u.left) (torus_tr g hz MT hMT Mz hMz (β a))
     rw [hj', e, e2]
     simp only [Category.assoc])

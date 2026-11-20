@@ -44,9 +44,9 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {X0 : S
 include hv in
 
 theorem exists_vecBasis (x : Sp S ⟶ X0) (h : ⊤ ≤ x ⁻¹ᵁ U) :
-    ∃ b : Module.Basis (Fin n) S (TanM x t.G), ∀ j, (tv (b j)).left = spMap (dualMap (ev x U h)) ≫ v₀ j := by
+    ∃ b : Module.Basis (Fin n) S (TanM x t.G), ∀ j, (tv (b j)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev x U h)) ≫ v₀ j := by
   have key : ∀ (f : Γ(X0, U) →+* S) (x : Sp S ⟶ X0), spMap f ≫ hU.fromSpec = x →
-      ∃ b : Module.Basis (Fin n) S (TanM x t.G), ∀ j, (tv (b j)).left = spMap (dualMap f) ≫ v₀ j := by
+      ∃ b : Module.Basis (Fin n) S (TanM x t.G), ∀ j, (tv (b j)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ v₀ j := by
     rintro f _ rfl
     have hp : ∃ t' : SAB H (Sp S), Nonempty (SABMap t' t (spMap f ≫ hU.fromSpec)) := by
       obtain ⟨PP', cub, sym, adj, prim, m, -⟩ :=
@@ -78,7 +78,7 @@ def vecBasis (x : Sp S ⟶ X0) (h : ⊤ ≤ x ⁻¹ᵁ U) : Module.Basis (Fin n)
   (exists_vecBasis t hU v₀ hv x h).choose
 
 theorem vecBasis_left (x : Sp S ⟶ X0) (h : ⊤ ≤ x ⁻¹ᵁ U) (j : Fin n) :
-    (tv (vecBasis t hU v₀ hv x h j)).left = spMap (dualMap (ev x U h)) ≫ v₀ j :=
+    (tv (vecBasis t hU v₀ hv x h j)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev x U h)) ≫ v₀ j :=
   (exists_vecBasis t hU v₀ hv x h).choose_spec j
 
 theorem tanPull_vecBasis (φ : S →+* S') {x : Sp S ⟶ X0} {x' : Sp S' ⟶ X0} (e : spMap φ ≫ x = x')

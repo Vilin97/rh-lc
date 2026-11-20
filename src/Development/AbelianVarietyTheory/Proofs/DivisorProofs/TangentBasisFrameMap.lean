@@ -43,9 +43,9 @@ theorem levelHT_at_point : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
     ∀ hvec : Fin g → 𝓞_ℂ_[p],
       (∀ (k : Fin g) (β : P'.B →+* DualNumber (𝓞_ℂ_[p] ⧸ Ideal.span {(p : 𝓞_ℂ_[p]) ^ n})),
         P'.At ((algebraMap 𝓞_ℂ_[p] (DualNumber (𝓞_ℂ_[p] ⧸ Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}))).comp x0)
-          (spMap (dualMap (Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}))) ≫ spMap (dualMap x0) ≫ e k) β →
+          (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}))) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap x0) ≫ e k) β →
         (β b).snd = Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}) (hvec k)) →
-    ∀ (k : Fin g) (x : LieG P.Gt), ITie P π x (spMap (dualMap x0) ≫ e k) →
+    ∀ (k : Fin g) (x : LieG P.Gt), ITie P π x (spMap (GlobalTheory.CompanionTheory.Ar.dualMap x0) ≫ e k) →
       hvec k + (P.al₀ tt).1 x ∈ Ideal.span {(p : 𝓞_ℂ_[p]) ^ n} := by
   intro E _ _ _ H Dw l' Xo' c' W Y p _ n _ R _ _ ξ g e he P' κ b hb x0 hF yy P π ψ hOn hLR tt hW hvec hD k x hI
   have hu : IsUnit (x0 P'.f) := by
@@ -91,7 +91,7 @@ theorem levelHT_at_point : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
     exact Ideal.mem_span_singleton_self _
   obtain ⟨xG, hC, hxG⟩ := hI
   have hv0 : IsTanAtG Y.t (spMap ((Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n})).comp x0) ≫ ξ)
-      (spMap (dualMap ((Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n})).comp x0)) ≫ e k) :=
+      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n})).comp x0)) ≫ e k) :=
     GlobalTheory.FactorDepth.isTanAtG_map Y.t _ (he.1 k)
   have hq : ((p ^ n : ℕ) : 𝓞_ℂ_[p] ⧸ Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}) = 0 := GlobalTheory.HTMap.cast_quot _ p n
   have hu' : IsUnit ((RingHom.id (DualNumber (𝓞_ℂ_[p] ⧸ Ideal.span {(p : 𝓞_ℂ_[p]) ^ n})))
@@ -106,10 +106,10 @@ theorem levelHT_at_point : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
       (algebraMap 𝓞_ℂ_[p] (DualNumber (𝓞_ℂ_[p] ⧸ Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}))).comp x0 :=
     by rw [RingHom.id_comp, ← RingHom.comp_assoc]; exact congrArg (fun f => RingHom.comp f x0) (alg_dual_mk _)
   have e2 : spMap (RingHom.id (DualNumber (𝓞_ℂ_[p] ⧸ Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}))) ≫
-      spMap (dualMap ((Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n})).comp x0)) ≫ e k =
-      spMap (dualMap (Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}))) ≫ spMap (dualMap x0) ≫ e k := by
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n})).comp x0)) ≫ e k =
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}))) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap x0) ≫ e k := by
     rw [show spMap (RingHom.id (DualNumber (𝓞_ℂ_[p] ⧸ Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}))) = 𝟙 _ from Spec.map_id _,
-      Category.id_comp, GlobalTheory.HTMap.spc_assoc (dualMap x0) (dualMap (Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}))) (e k),
+      Category.id_comp, GlobalTheory.HTMap.spc_assoc (GlobalTheory.CompanionTheory.Ar.dualMap x0) (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}))) (e k),
       GlobalTheory.HTMap.dual_comp]
   rw [e1, e2] at hβ
   have h2 := hD k β hβ

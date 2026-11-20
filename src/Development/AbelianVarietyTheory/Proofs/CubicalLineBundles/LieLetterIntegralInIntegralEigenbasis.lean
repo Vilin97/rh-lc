@@ -45,29 +45,29 @@ theorem comb_match {V K F : Type} [CommRing V] [CommRing K] [CommRing F] {X : Sc
     {φ₁ : G₁.left ⟶ B.left} {φ₂ : G₂.left ⟶ B.left} (h₁ : IsGrpPullback G₁ B f₁ φ₁) (h₂ : IsGrpPullback G₂ B f₂ φ₂)
     (α : V →+* F) (β : K →+* F) (hf : spMap α ≫ f₁ = spMap β ≫ f₂) {m : ℕ} {v₁ : Fin m → (epsR V ⟶ G₁)}
     {v₂ : Fin m → (epsR K ⟶ G₂)}
-    (hv : ∀ i, spMap (dualMap α) ≫ (v₁ i).left ≫ φ₁ = spMap (dualMap β) ≫ (v₂ i).left ≫ φ₂)
+    (hv : ∀ i, spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ (v₁ i).left ≫ φ₁ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap β) ≫ (v₂ i).left ≫ φ₂)
     {c₁ : Fin m → V} {c₂ : Fin m → K} (hc : ∀ i, α (c₁ i) = β (c₂ i)) {w₁ : epsR V ⟶ G₁} {w₂ : epsR K ⟶ G₂}
     (hw₁ : IsLieComb c₁ v₁ w₁) (hw₂ : IsLieComb c₂ v₂ w₂) :
-    spMap (dualMap α) ≫ w₁.left ≫ φ₁ = spMap (dualMap β) ≫ w₂.left ≫ φ₂ := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ w₁.left ≫ φ₁ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap β) ≫ w₂.left ≫ φ₂ := by
   obtain ⟨u₁, hu₁, rfl⟩ := hw₁
   obtain ⟨u₂, hu₂, rfl⟩ := hw₂
   let T : Over X := Over.mk (spMap (algebraMap F (DualNumber F)) ≫ spMap α ≫ f₁)
-  have e₁ : spMap (dualMap α) ≫ spMap (algebraMap V (DualNumber V)) ≫ f₁ =
+  have e₁ : spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ spMap (algebraMap V (DualNumber V)) ≫ f₁ =
       spMap (algebraMap F (DualNumber F)) ≫ spMap α ≫ f₁ := by
     rw [← Category.assoc, ← Category.assoc, spMap_comp₂, spMap_comp₂, dualMap_alg]
-  have e₂ : spMap (dualMap β) ≫ spMap (algebraMap K (DualNumber K)) ≫ f₂ =
+  have e₂ : spMap (GlobalTheory.CompanionTheory.Ar.dualMap β) ≫ spMap (algebraMap K (DualNumber K)) ≫ f₂ =
       spMap (algebraMap F (DualNumber F)) ≫ spMap α ≫ f₁ := by
     rw [hf, ← Category.assoc, ← Category.assoc, spMap_comp₂, spMap_comp₂, dualMap_alg]
-  let Z : Fin m → (T ⟶ B) := fun i => Over.homMk (spMap (dualMap α) ≫ (u₁ i).left ≫ φ₁) (by
-    show (spMap (dualMap α) ≫ (u₁ i).left ≫ φ₁) ≫ B.hom = spMap (algebraMap F (DualNumber F)) ≫ spMap α ≫ f₁
+  let Z : Fin m → (T ⟶ B) := fun i => Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ (u₁ i).left ≫ φ₁) (by
+    show (spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ (u₁ i).left ≫ φ₁) ≫ B.hom = spMap (algebraMap F (DualNumber F)) ≫ spMap α ≫ f₁
     rw [Category.assoc, Category.assoc, h₁.1.w, ← Category.assoc (u₁ i).left, Over.w (u₁ i)]
     exact e₁)
-  have k₁ := prod_pull h₁ (epsR V) T (spMap (dualMap α)) e₁ u₁ Z (fun _ => rfl)
-  have k₂ := prod_pull h₂ (epsR K) T (spMap (dualMap β)) e₂ u₂ Z (fun i => by
-    show spMap (dualMap α) ≫ (u₁ i).left ≫ φ₁ = _
-    have a₁ : spMap (dualMap α) ≫ spMap (epsScaleR (c₁ i)) = spMap (epsMul (α (c₁ i))) ≫ spMap (dualMap α) := by
+  have k₁ := prod_pull h₁ (epsR V) T (spMap (GlobalTheory.CompanionTheory.Ar.dualMap α)) e₁ u₁ Z (fun _ => rfl)
+  have k₂ := prod_pull h₂ (epsR K) T (spMap (GlobalTheory.CompanionTheory.Ar.dualMap β)) e₂ u₂ Z (fun i => by
+    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ (u₁ i).left ≫ φ₁ = _
+    have a₁ : spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ spMap (epsScaleR (c₁ i)) = spMap (epsMul (α (c₁ i))) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) := by
       rw [spMap_comp₂, spMap_comp₂, ← dualMap_epsMul]; rfl
-    have a₂ : spMap (dualMap β) ≫ spMap (epsScaleR (c₂ i)) = spMap (epsMul (β (c₂ i))) ≫ spMap (dualMap β) := by
+    have a₂ : spMap (GlobalTheory.CompanionTheory.Ar.dualMap β) ≫ spMap (epsScaleR (c₂ i)) = spMap (epsMul (β (c₂ i))) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap β) := by
       rw [spMap_comp₂, spMap_comp₂, ← dualMap_epsMul]; rfl
     rw [hu₁ i, hu₂ i, Category.assoc, Category.assoc, reassoc_of% a₁, reassoc_of% a₂, hv i, hc i])
   exact k₁.symm.trans k₂
@@ -100,11 +100,11 @@ theorem epsMul_comm {R : Type} [CommRing R] (a b : R) :
   ext <;> simp [epsMul, mul_left_comm]
 
 theorem dualMap_inj {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (hf : Function.Injective f) :
-    Function.Injective (dualMap f) := by
+    Function.Injective (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
   intro a b h
   have h₁ := congrArg TrivSqZeroExt.fst h
   have h₂ := congrArg TrivSqZeroExt.snd h
-  simp [dualMap] at h₁ h₂
+  simp [GlobalTheory.CompanionTheory.Ar.dualMap] at h₁ h₂
   exact TrivSqZeroExt.ext (hf h₁) (hf h₂)
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
@@ -143,7 +143,7 @@ theorem coord_eq {S : Type} [CommRing S] [Algebra c.F S] (y : FrPt Xo c S) (b : 
 theorem isEigV_of_generic {V K : Type} [CommRing V] [Field K] [Algebra V K] [IsFractionRing V K] [Algebra c.F K]
     {x : Sp K ⟶ Xo.X} {G : SAB H (Sp V)} [IsSeparated G.G.hom] {t : SAB H (Sp K)} (m₁ : SABMap t Xo.univ.t x)
     (m₂ : SABMap t G (spMap (algebraMap V K))) (b : E →+* ℂ) (w : epsOver V V ⟶ G.G)
-    (w' : Sp (DualNumber K) ⟶ t.G.left) (hw : w' ≫ m₂.φ = spMap (dualMap (algebraMap V K)) ≫ w.left)
+    (w' : Sp (DualNumber K) ⟶ t.G.left) (hw : w' ≫ m₂.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ w.left)
     (ho : w' ≫ t.G.hom = spMap (algebraMap K (DualNumber K))) (he : IsEigAt c b (w' ≫ m₁.φ)) :
     IsEigV c (algebraMap c.F K) G b w := by
   intro a z hz
@@ -151,13 +151,13 @@ theorem isEigV_of_generic {V K : Type} [CommRing V] [Field K] [Algebra V K] [IsF
     apply m₁.cart.1.hom_ext
     · rw [Category.assoc, m₁.act a, ← Category.assoc, he a, hz, Category.assoc]
     · rw [Category.assoc, Over.w, Category.assoc, ho, spMap_comp₂, epsMul_alg]
-  have := ExtUnique.isSchemeTheoreticallyDominant_spec_of_injective (CommRingCat.ofHom (dualMap (algebraMap V K)))
+  have := ExtUnique.isSchemeTheoreticallyDominant_spec_of_injective (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)))
     (dualMap_inj _ (IsFractionRing.injective V K))
-  refine ExtUnique.hom_ext_of_dominant G.G.hom ?_ (spMap (dualMap (algebraMap V K))) ?_
+  refine ExtUnique.hom_ext_of_dominant G.G.hom ?_ (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K))) ?_
   · rw [Over.w, Category.assoc, Over.w]
     exact ((spMap_comp₂ _ _).trans (congrArg spMap (epsMul_alg z))).symm
-  · have a₁ : spMap (dualMap (algebraMap V K)) ≫ spMap (epsMul z) =
-        spMap (epsMul (algebraMap V K z)) ≫ spMap (dualMap (algebraMap V K)) := by
+  · have a₁ : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ spMap (epsMul z) =
+        spMap (epsMul (algebraMap V K z)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) := by
       rw [spMap_comp₂, spMap_comp₂, ← dualMap_epsMul]
     rw [Over.comp_left, ← reassoc_of% hw, ← m₂.act a, reassoc_of% h1, reassoc_of% a₁, ← hw]
 
@@ -195,15 +195,15 @@ theorem letter_integral_in_eigenbasis : ∀ (E : Type) [Field E] [NumberField E]
     rw [spMap_comp₂, spMap_comp₂, M.hρ]
   have hmatch := comb_match M.n.cart z.m'.cart (algebraMap T.V T.Fr) iK hbase hwV hcV hW hs
   have hsl := comb_eq_scale z.Φ.basis.1 hdet hwK hU cl hs
-  have hsq : (spMap (dualMap iK) ≫ s.left) ≫ z.Φ.T.t.G.hom =
+  have hsq : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap iK) ≫ s.left) ≫ z.Φ.T.t.G.hom =
       spMap (algebraMap T.Fr (DualNumber T.Fr)) ≫ spMap iK := by
     rw [Category.assoc, Over.w s]
     exact (spMap_comp₂ _ _).trans ((congrArg spMap (dualMap_alg iK)).trans (spMap_comp₂ _ _).symm)
   let s' : Sp (DualNumber T.Fr) ⟶ M.t'.t.G.left := M.n'.cart.1.lift _ _ hsq
-  have hs1 : s' ≫ M.n'.φ = spMap (dualMap iK) ≫ s.left := M.n'.cart.1.lift_fst _ _ _
+  have hs1 : s' ≫ M.n'.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap iK) ≫ s.left := M.n'.cart.1.lift_fst _ _ _
   have hs2 : s' ≫ M.t'.t.G.hom = spMap (algebraMap T.Fr (DualNumber T.Fr)) := M.n'.cart.1.lift_snd _ _ _
   let W' : epsOver T.V T.V ⟶ M.G.t.G := Over.homMk W.left (Over.w W)
-  have hm2 : s' ≫ M.m2.φ = spMap (dualMap (algebraMap T.V T.Fr)) ≫ W'.left := by
+  have hm2 : s' ≫ M.m2.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ W'.left := by
     apply M.n.cart.1.hom_ext
     · rw [Category.assoc, Category.assoc]
       refine Eq.trans ?_ hmatch.symm
@@ -211,7 +211,7 @@ theorem letter_integral_in_eigenbasis : ∀ (E : Type) [Field E] [NumberField E]
     · rw [Category.assoc, M.m2.cart.1.w, reassoc_of% hs2, Category.assoc, Over.w W']
       exact (spMap_comp₂ _ _).trans ((congrArg spMap (dualMap_alg _).symm).trans (spMap_comp₂ _ _).symm)
   have hm1 : s' ≫ M.m1.φ = spMap (epsMul (iK cl)) ≫ yT.u b j := by
-    have a₁ : spMap (dualMap iK) ≫ spMap (epsMul cl) = spMap (epsMul (iK cl)) ≫ spMap (dualMap iK) := by
+    have a₁ : spMap (GlobalTheory.CompanionTheory.Ar.dualMap iK) ≫ spMap (epsMul cl) = spMap (epsMul (iK cl)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap iK) := by
       rw [spMap_comp₂, spMap_comp₂, ← dualMap_epsMul]
     rw [M.h1, reassoc_of% hs1, hsl, Category.assoc, reassoc_of% a₁, hmap.2.1 b j, hφ, hwu]
   have hW't : IsTan W' := by

@@ -610,7 +610,7 @@ theorem exists_orth_isEigProj (Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.
     exact Spec.map_comp _ _
   have heig : ∀ (τ : E →+* ℂ) (K : Type) [CommRing K] (ψ : R →+* K) (φ : c.F →+* K),
       spMap ψ ≫ x ≫ Z.s = spMap (φ.comp (algebraMap (𝓞 c.F) c.F)) → ∀ (cf : Fin g → K) w,
-      IsCombAtG Z.t (spMap ψ ≫ x) (fun i => spMap (dualMap ψ) ≫ e i) cf w →
+      IsCombAtG Z.t (spMap ψ ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ e i) cf w →
       (IsEigTan Z φ (spMap ψ ≫ x) τ w ↔ ((P τ).map ψ).mulVec cf = (D : K) • cf) := by
     intro τ K _ ψ φ hφ cf w hw
     rw [← hP τ K ψ φ (hcomp K ψ φ hφ) cf]
@@ -674,18 +674,18 @@ theorem inGr_iff {R : Type} [CommRing R] (x : Sp R ⟶ Z.X) {g : ℕ} {e : Fin g
     (hP : ∀ τ, IsEigProj Z x τ e D (P τ)) (hO : ∀ σ τ, σ ≠ τ → P σ * P τ = 0) {K : Type} [Field K] [CharZero K]
     (ψ : R →+* K) (φ : c.F →+* K) (hφ : spMap ψ ≫ x ≫ Z.s = spMap (φ.comp β))
     {Λ : Set (Sp (DualNumber K) ⟶ Z.t.G.left)} {L : (Fin g → K) → Prop}
-    (hΛ : ∀ cf w, IsCombAtG Z.t (spMap ψ ≫ x) (fun i => spMap (dualMap ψ) ≫ e i) cf w → (w ∈ Λ ↔ L cf))
+    (hΛ : ∀ cf w, IsCombAtG Z.t (spMap ψ ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ e i) cf w → (w ∈ Λ ↔ L cf))
     (τ : E →+* ℂ) {cf : Fin g → K} {w : Sp (DualNumber K) ⟶ Z.t.G.left}
-    (hw : IsCombAtG Z.t (spMap ψ ≫ x) (fun i => spMap (dualMap ψ) ≫ e i) cf w) :
+    (hw : IsCombAtG Z.t (spMap ψ ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ e i) cf w) :
     InGr Z φ (spMap ψ ≫ x) Λ τ w ↔ ∃ v, (∑ σ ∈ before τ, P σ).map ψ *ᵥ v = (D : K) • v ∧ L (cf + v) := by
   classical
   have hu := (GlobalTheory.HTPres.isTanBasis_map Z.t he ψ).1
   have hDK : (D : K) ≠ 0 := Nat.cast_ne_zero.2 hD
   have hsm : ∀ σ, ((D : R) • P σ).map ψ = (D : K) • (P σ).map ψ := fun σ => by ext i j; simp
   have hlin : ∀ {m : ℕ} (v : Fin m → (Sp (DualNumber K) ⟶ Z.t.G.left)) (cv : Fin m → Fin g → K),
-      (∀ i, IsCombAtG Z.t (spMap ψ ≫ x) (fun i => spMap (dualMap ψ) ≫ e i) (cv i) (v i)) → ∀ w',
+      (∀ i, IsCombAtG Z.t (spMap ψ ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ e i) (cv i) (v i)) → ∀ w',
       IsCombAtG Z.t (spMap ψ ≫ x) (Fin.cons w v : Fin (m + 1) → _) (fun _ => 1) w' →
-      IsCombAtG Z.t (spMap ψ ≫ x) (fun i => spMap (dualMap ψ) ≫ e i) (cf + ∑ i, cv i) w' := by
+      IsCombAtG Z.t (spMap ψ ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ e i) (cf + ∑ i, cv i) w' := by
     intro m v cv hv w' hw'
     have := Formalism.L2.Pj.tanLinG _ hu (Fin.cons w v : Fin (m + 1) → _)
       (Matrix.of fun j i => (Fin.cons cf cv : Fin (m + 1) → Fin g → K) i j) (fun _ => 1) w'
@@ -745,13 +745,13 @@ theorem grBasis_of_split {R R' : Type} [CommRing R] [CommRing R'] (ψ : R →+* 
       simpa using ((Nat.cast_ne_zero.2 hn : ((n : ℕ) : c.F) ≠ 0).isUnit).map φ
     obtain ⟨k, hk⟩ := hu.exists_left_inv
     exact ⟨k, hk⟩
-  have hv0 : ∀ k, IsTanAtG Z.t (spMap ψ ≫ x) (spMap (dualMap ψ) ≫ e k) :=
+  have hv0 : ∀ k, IsTanAtG Z.t (spMap ψ ≫ x) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ e k) :=
     fun k => GlobalTheory.FactorDepth.isTanAtG_map Z.t ψ (he.1 k)
   choose u hu using fun i => exists_comb hv0 (fun k => U k i)
   have hbc : ∀ {K : Type} [CommRing K] (ψ₂ : R' →+* K),
       spMap ψ₂ ≫ spMap ψ ≫ x = spMap (ψ₂.comp ψ) ≫ x ∧
-      (∀ i, IsCombAtG Z.t (spMap (ψ₂.comp ψ) ≫ x) (fun k => spMap (dualMap (ψ₂.comp ψ)) ≫ e k)
-        (fun k => (U.map ψ₂) k i) (spMap (dualMap ψ₂) ≫ u i)) ∧
+      (∀ i, IsCombAtG Z.t (spMap (ψ₂.comp ψ) ≫ x) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ₂.comp ψ)) ≫ e k)
+        (fun k => (U.map ψ₂) k i) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ₂) ≫ u i)) ∧
       (P τ).map (ψ₂.comp ψ) * U.map ψ₂ = (D : K) • U.map ψ₂ ∧
       Hi.map ψ₂ * U.map ψ₂ = (N : K) • 1 ∧
       U.map ψ₂ * Hi.map ψ₂ * (P τ).map (ψ₂.comp ψ) = (N : K) • (P τ).map (ψ₂.comp ψ) := by

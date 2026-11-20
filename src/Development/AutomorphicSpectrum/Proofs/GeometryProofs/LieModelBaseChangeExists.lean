@@ -34,7 +34,7 @@ theorem span_range_of_isBaseChange {K K' : Type} [CommRing K] [CommRing K'] [Alg
 
 end GlobalTheory.CompanionTheory.Ar.LieBc
 
-theorem GlobalTheory.CompanionTheory.Ar.LieBc.main : ∀ (L L' : Type) [Field L] [Field L'] (e : L →+* L') (G : Over (Sp L)) (G' : Over (Sp L')) [GrpObj G] [IsCommMonObj G] [Smooth G.hom] [GrpObj G'] (φ : G'.left ⟶ G.left), IsGrpPullback G' G (spMap e) φ → ∀ (V : Type) [AddCommGroup V] [Module L V] (MV : LieModel G (𝟙 (Sp L)) V), ∃ (V' : Type) (_ : AddCommGroup V') (_ : Module L' V') (MV' : LieModel G' (𝟙 (Sp L')) V') (j : V →+ V'), (∀ (c : L) x, j (c • x) = e c • j x) ∧ Function.Injective j ∧ (∀ x, (MV'.pt (j x)).left ≫ φ = spMap (dualMap e) ≫ (MV.pt x).left) ∧ Submodule.span L' (Set.range j) = ⊤ := by
+theorem GlobalTheory.CompanionTheory.Ar.LieBc.main : ∀ (L L' : Type) [Field L] [Field L'] (e : L →+* L') (G : Over (Sp L)) (G' : Over (Sp L')) [GrpObj G] [IsCommMonObj G] [Smooth G.hom] [GrpObj G'] (φ : G'.left ⟶ G.left), IsGrpPullback G' G (spMap e) φ → ∀ (V : Type) [AddCommGroup V] [Module L V] (MV : LieModel G (𝟙 (Sp L)) V), ∃ (V' : Type) (_ : AddCommGroup V') (_ : Module L' V') (MV' : LieModel G' (𝟙 (Sp L')) V') (j : V →+ V'), (∀ (c : L) x, j (c • x) = e c • j x) ∧ Function.Injective j ∧ (∀ x, (MV'.pt (j x)).left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap e) ≫ (MV.pt x).left) ∧ Submodule.span L' (Set.range j) = ⊤ := by
   intro L L' _ _ e G G' _ _ _ _ φ h V _ _ MV
   letI : Algebra L L' := e.toAlgebra
   obtain ⟨T, iT, mT, mR, tower, M', j, hl, hbc⟩ :=
@@ -51,7 +51,7 @@ theorem GlobalTheory.CompanionTheory.Ar.LieBc.main : ∀ (L L' : Type) [Field L]
   · exact GlobalTheory.CompanionTheory.Ar.LieBc.injective_of_isBaseChange hbc
   · intro x
     have e₁ := hl x
-    have e₂ : (M'.pt (j x)).left ≫ 𝟙 G.left = spMap (dualMap (algebraMap L L')) ≫ (MV.pt x).left := e₁
+    have e₂ : (M'.pt (j x)).left ≫ 𝟙 G.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap L L')) ≫ (MV.pt x).left := e₁
     change (GlobalTheory.CompanionTheory.Ar.LieMove.liftEps h (M₂.pt (j x))).left ≫ φ = _
     rw [GlobalTheory.CompanionTheory.Ar.LieMove.liftEps_left, hM₂]
     exact (Category.comp_id _).symm.trans e₂

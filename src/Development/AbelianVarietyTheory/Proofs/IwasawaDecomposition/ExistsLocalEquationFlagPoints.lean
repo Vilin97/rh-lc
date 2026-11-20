@@ -43,7 +43,7 @@ theorem exists_tri_chg {A L : Type} [CommRing A] [CommRing L] [IsLocalRing L] {�
     (f : EigFrame Z φ x) (ψ : A →+* L) {φ' : c.F →+* L} {x' : Sp L ⟶ Z.X} (g a : EigFrame Z φ' x')
     {t : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → Lˣ} (h : f.Tri ψ g t) (τ : E →+* ℂ)
     {P : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) L}
-    (hP : ∀ i, IsCombAtG Z.t x' (a.v τ) (P i) (spMap (dualMap ψ) ≫ f.v τ i)) :
+    (hP : ∀ i, IsCombAtG Z.t x' (a.v τ) (P i) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f.v τ i)) :
     ∃ M : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) L, (∀ i, IsCombAtG Z.t x' (a.v τ) (M i) (g.v τ i)) ∧
       M.det = (∏ i, t τ i : Lˣ) * P.det := by
   obtain ⟨rfl, rfl, h⟩ := h
@@ -61,7 +61,7 @@ theorem exists_coord_chg {F : Type} [Field F] [NumberField F] {e : F ≃+* c.F} 
     {t₀ : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → C.Y.Fnˣ} (hT : fr₀.Tri (fnOf U₀ hgen) C.f0 t₀)
     {τ : E →+* ℂ} (hτ : τ (H.rt : E) = H.rt0) (p : CxPts C.Y.str (σ.comp e.toRingHom))
     (h₀ : p ∈ CxPts.ptsIn C.Y.str (σ.comp e.toRingHom) U₀) (a : EigFrame Z σ ((p.1 ≫ C.π) ≫ genι Z))
-    (ha : ∀ ρ i, a.v ρ i = spMap (dualMap (CxPts.evHom h₀)) ≫ fr₀.v ρ i)
+    (ha : ∀ ρ i, a.v ρ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (CxPts.evHom h₀)) ≫ fr₀.v ρ i)
     {W : C.Y.X.Opens} (hW : genericPoint C.Y.X ∈ W) (r : Γ(C.Y.X, W))
     (hpW : p ∈ CxPts.ptsIn C.Y.str (σ.comp e.toRingHom) W) (s : C.Y.Fn)
     (hr : fnOf W hW r = s * ((∏ z : Pad.Letter Dw, t₀ z.1 z.2 ^ expo Dw (detSym Dw (fun _ => false) none τ) z : C.Y.Fnˣ) : C.Y.Fn))
@@ -155,7 +155,7 @@ theorem exists_holFrames_coord : ∀ (E : Type) [Field E] [NumberField E] [IsCMF
     rw [← hp y p h]
     simp only [Category.assoc]
   have ex : ∀ y (p : CxPts C.Y.str (σ.comp e.toRingHom)), ∃ g : EigFrame Z σ ((p.1 ≫ C.π) ≫ genι Z),
-      ∀ h : p ∈ CxPts.ptsIn _ _ (U y), ∀ ρ i, g.v ρ i = spMap (dualMap (CxPts.evHom h)) ≫ (fr y).v ρ i := fun y p => by
+      ∀ h : p ∈ CxPts.ptsIn _ _ (U y), ∀ ρ i, g.v ρ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (CxPts.evHom h)) ≫ (fr y).v ρ i := fun y p => by
     by_cases h : p ∈ CxPts.ptsIn _ _ (U y)
     · obtain ⟨g, hg⟩ := exists_bc (fr y) (CxPts.evHom h) (φ' := σ) (spMap_inj (by
         rw [spMap_comp₂, ← hφ y, ← hov p, ← hp y p h]
@@ -202,8 +202,8 @@ theorem exists_holFrames_coord : ∀ (E : Type) [Field E] [NumberField E] [IsCMF
     simp only [hχ] at tr
     have chg : ∀ ρ (M : Matrix (Fin (Dw.mult ρ)) (Fin (Dw.mult ρ)) ℂ), (∀ i, IsCombAtG Z.t
         (spMap (CxPts.evHom h₁) ≫ ((show Sp Γ(C.Y.X, U y) ⟶ C.Y.X from (hU y).fromSpec) ≫ C.π) ≫ genι Z)
-        (fun j => spMap (dualMap (CxPts.evHom h₂)) ≫ (fr y').v ρ j) (M i)
-        (spMap (dualMap (CxPts.evHom h₁)) ≫ (fr y).v ρ i)) →
+        (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (CxPts.evHom h₂)) ≫ (fr y').v ρ j) (M i)
+        (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (CxPts.evHom h₁)) ≫ (fr y).v ρ i)) →
         Chg (Z := Z) (σ := σ) ⟨⟨p.1 ≫ C.π, hov p⟩, g y' p⟩ ⟨⟨p.1 ≫ C.π, hov p⟩, g y p⟩ ρ M := fun ρ M hM =>
       ⟨rfl, fun i => by
         have := hM i

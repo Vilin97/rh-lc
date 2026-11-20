@@ -78,7 +78,7 @@ def IsLinPtOf [IsScalarTower (𝓞 L) L V] (z : Sp (𝓞 L) ⟶ 𝔐.X) (P : AbP
     (MV : LieModel P.tK.G (𝟙 (Sp L)) V) (A : LinPt E L (CMType H) V) : Prop :=
   MV.IsActOf P.tK.act.act A.ρ ∧ 𝔐.LabVal (spMap (algebraMap (𝓞 L) L) ≫ z) id A.σ ∧
     (∀ x, x ∈ A.Λ ↔ ∃ v : epsAt z ⟶ 𝔐.t.G, IsTanAt 𝔐.t.G z v ∧
-      (MV.pt x).left ≫ P.m.φ = spMap (dualMap (algebraMap (𝓞 L) L)) ≫ v.left) ∧
+      (MV.pt x).left ≫ P.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 L) L)) ≫ v.left) ∧
     P.IsCochars MV A.I ∧ IsPrincipal P.tB ∧
     ∃ (t' : SAB H (Sp (𝓞 L))) (m' : SABMap P.tB t' (spMap (algebraMap (𝓞 L) L)))
       (MB : LieModel t'.G (𝟙 _) A.Bq.carrier), IsFibre (HodgeIP t'.G t'.PP.L) (𝟙 _) A.Bq MB ∧

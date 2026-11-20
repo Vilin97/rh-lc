@@ -58,7 +58,7 @@ theorem isEigBasis_scale {K : Type} [CommRing K] {φ : c.F →+* K} {x : Sp K �
     rw [← this, ← mul_assoc, mul_comm n k, hk, one_mul]
 
 theorem dual_eps {S T : Type} [CommRing S] [CommRing T] (ψ : S →+* T) (a : S) :
-    spMap (dualMap ψ) ≫ spMap (epsMul a) = spMap (epsMul (ψ a)) ≫ spMap (dualMap ψ) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (epsMul a) = spMap (epsMul (ψ a)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) := by
   rw [sp_comp, sp_comp]
   congr 1
   refine RingHom.ext fun z => TrivSqZeroExt.ext ?_ ?_ <;> simp [Formalism.L2.Pj.dualMap, epsMul, mul_comm]
@@ -112,11 +112,11 @@ theorem GrSpan.scale {p : ℕ} [Fact p.Prime] {φ : c.F →+* ℂ_[p]} {y : Sp �
 theorem grSpan_of_grBasis {R : Type} [CommRing R] {x : Sp R ⟶ Z.X} {τ : E →+* ℂ} {r : ℕ} (h : GrBasis Z x τ r) :
     ∃ (N : ℕ) (u : Fin r → (Sp (DualNumber R) ⟶ Z.t.G.left)), N ≠ 0 ∧
       (∀ (K : Type) [CommRing K] (ψ : R →+* K) (φ : c.F →+* K), spMap ψ ≫ x ≫ Z.s = spMap (φ.comp β) →
-        IsEigBasis Z φ (spMap ψ ≫ x) τ (fun i => spMap (dualMap ψ) ≫ u i)) ∧
+        IsEigBasis Z φ (spMap ψ ≫ x) τ (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ u i)) ∧
       ∀ (p : ℕ) [Fact p.Prime] (ψ : R →+* ↥(intO ℂ_[p])) (φ : c.F →+* ℂ_[p]),
         spMap ((intO ℂ_[p]).subtype.comp ψ) ≫ x ≫ Z.s = spMap (φ.comp β) →
           GrSpan Z p φ (spMap ((intO ℂ_[p]).subtype.comp ψ) ≫ x) τ
-            (fun i => spMap (dualMap ((intO ℂ_[p]).subtype.comp ψ)) ≫ u i) fun a => ‖(N : ℂ_[p]) * a‖ ≤ 1 :=
+            (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((intO ℂ_[p]).subtype.comp ψ)) ≫ u i) fun a => ‖(N : ℂ_[p]) * a‖ ≤ 1 :=
   h
 
 theorem isLocGrLat_of_forall {F : Type} [Field F] [NumberField F] (e : F ≃+* c.F) {X W : Scheme.{0}} (jB : W ⟶ X)
@@ -129,7 +129,7 @@ theorem isLocGrLat_of_forall {F : Type} [Field F] [NumberField F] (e : F ≃+* c
         ∀ w, IsEigTan Z (((ioOf (resP v) ε).comp (algebraMap F (AlgebraicClosure F))).comp e.symm.toRingHom)
           (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z) τ w →
         ((∃ a : Fin r → ℂ_[resP v], (∀ i, ‖a i‖ ≤ 1) ∧ IsCombAtG Z.t (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z)
-            (fun i => spMap (dualMap (ioOf (resP v) ε)) ≫ u _ xg hx i) a w) ↔
+            (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ioOf (resP v) ε)) ≫ u _ xg hx i) a w) ↔
           InGr Z (((ioOf (resP v) ε).comp (algebraMap F (AlgebraicClosure F))).comp e.symm.toRingHom)
             (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z)
             (latDR Z.t (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z)) τ w)) :
@@ -144,7 +144,7 @@ theorem isLocGrLat_of_grSpan {F : Type} [Field F] [NumberField F] (e : F ≃+* c
       spMap ε.O.subtype ≫ xt = xg ≫ jB → ⊤ ≤ xt ⁻¹ᵁ U → ∀ (hx : ⊤ ≤ (xg ≫ jB) ⁻¹ᵁ U),
         GrSpan Z (resP v) (((ioOf (resP v) ε).comp (algebraMap F (AlgebraicClosure F))).comp e.symm.toRingHom)
           (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z) τ
-          (fun i => spMap (dualMap (ioOf (resP v) ε)) ≫ u _ xg hx i) fun a => ‖a‖ ≤ 1) :
+          (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ioOf (resP v) ε)) ≫ u _ xg hx i) fun a => ‖a‖ ≤ 1) :
     IsLocGrLat Z e jB πB r τ U u :=
   isLocGrLat_of_forall Z e jB πB r τ U u fun v hp => @h v ⟨hp⟩
 
@@ -172,9 +172,9 @@ theorem exists_locFrame_of_grBasis : ∀ {E : Type} [Field E] [NumberField E] [I
   have hun : ∀ {K : Type} [CommRing K] (x : Sp K ⟶ W), IsUnit (N : K) := fun x =>
     GrLoc.isUnit_nat (Spec.preimage (x ≫ πB ≫ genStr Z)).hom hN
   have hnat : ∀ (K K' : Type) [CommRing K] [CommRing K'] (ψ : K →+* K') (x : Sp K ⟶ W) (hx : ⊤ ≤ (x ≫ jB) ⁻¹ᵁ U)
-      (i : Fin r), spMap (dualMap ψ) ≫ spMap (epsMul (Ring.inverse (N : K))) ≫
-        spMap (dualMap (evalPt (x ≫ jB) U hx)) ≫ u i =
-      spMap (epsMul (Ring.inverse (N : K'))) ≫ spMap (dualMap (ψ.comp (evalPt (x ≫ jB) U hx))) ≫ u i := by
+      (i : Fin r), spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (epsMul (Ring.inverse (N : K))) ≫
+        spMap (GlobalTheory.CompanionTheory.Ar.dualMap (evalPt (x ≫ jB) U hx)) ≫ u i =
+      spMap (epsMul (Ring.inverse (N : K'))) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp (evalPt (x ≫ jB) U hx))) ≫ u i := by
     intro K K' _ _ ψ x hx i
     have h1 : ψ (Ring.inverse (N : K)) = Ring.inverse (N : K') := by
       have h2 : ψ (Ring.inverse (N : K)) * (N : K') = 1 := by
@@ -187,7 +187,7 @@ theorem exists_locFrame_of_grBasis : ∀ {E : Type} [Field E] [NumberField E] [I
     intro K _ x hx ψ h
     rw [← Category.assoc, hpt x hx, ← GrLoc.over_struct Z e (x ≫ πB) ψ (by simpa only [Category.assoc] using h)]
     simp only [Category.assoc]
-  refine ⟨fun K _ x hx i => spMap (epsMul (Ring.inverse (N : K))) ≫ spMap (dualMap (evalPt (x ≫ jB) U hx)) ≫ u i,
+  refine ⟨fun K _ x hx i => spMap (epsMul (Ring.inverse (N : K))) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (evalPt (x ≫ jB) U hx)) ≫ u i,
     ⟨fun K _ x hx ψ h => ?_, fun K K' _ _ ψ x hx hx' i => ?_⟩,
     GrLoc.isLocGrLat_of_grSpan Z e jB πB r τ U _ fun v _ ε xg xt h1 h2 h3 hx => ?_⟩
   · have h4 := hg K _ _ (hstr x hx ψ h)

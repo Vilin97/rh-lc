@@ -143,7 +143,7 @@ theorem exists_eigenbasis_pullback {V V' : Type} [CommRing V] [IsLocalRing V] [I
       (∀ w : epsOver V' V' ⟶ (Over.pullback (fB V V')).obj G, IsTan w →
         (∀ a, (w ≫ (Over.pullback (fB V V')).map (act a)).left = spMap (epsMul (algebraMap V V' (χ a))) ≫ w.left) →
         ∃! c : Fin m → V', IsComb u' c w) ∧
-      ∀ i, (u' i).left ≫ pullback.fst G.hom (fB V V') = spMap (dualMap (algebraMap V V')) ≫ (u i).left := by
+      ∀ i, (u' i).left ≫ pullback.fst G.hom (fB V V') = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V V')) ≫ (u i).left := by
   obtain ⟨n, xc, hxc⟩ := univChartLoc G
   obtain ⟨x', hx', hcomp⟩ := tanBC_alg (R := V) (R' := V') G n xc hxc
   have hpt : ∀ cc : Fin n → V, pushR G (tvec (x := x') (algebraMap V V' ∘ cc)) =
@@ -292,14 +292,14 @@ theorem integral_of_frMap (T T' : CDVR) (io : c.F →+* T.Fr) (iT : T.Fr →+* T
       have k : (ub τ i).left ≫ G.G.hom = spMap (algebraMap T.V (DualNumber T.V)) := Over.w (ub τ i)
       rw [Category.assoc, ← m2.cart.1.w, ← Category.assoc, b₂]
       exact (Category.assoc _ _ _).trans ((congrArg (_ ≫ ·) k).trans (FrBC.dual_alg _))
-    have sq : (spMap (dualMap ψ.toRingHom) ≫ u') ≫ t.G.hom =
+    have sq : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) ≫ u') ≫ t.G.hom =
         spMap (algebraMap T'.Fr (DualNumber T'.Fr)) ≫ spMap ψ.toRingHom := by
       rw [Category.assoc, b₃, FrBC.dual_alg]
     have l₁ : n.cart.1.lift _ _ sq ≫ n.φ = _ := n.cart.1.lift_fst _ _ _
     have l₂ := n.cart.1.lift_snd _ _ sq
-    have fin : ∀ v : Sp (DualNumber T'.V) ⟶ G'.G.left, v ≫ m.φ = spMap (dualMap φ) ≫ (ub τ i).left →
+    have fin : ∀ v : Sp (DualNumber T'.V) ⟶ G'.G.left, v ≫ m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ (ub τ i).left →
         v ≫ G'.G.hom = spMap (algebraMap T'.V (DualNumber T'.V)) →
-        n.cart.1.lift _ _ sq ≫ m'.φ = spMap (dualMap (algebraMap T'.V T'.Fr)) ≫ v := by
+        n.cart.1.lift _ _ sq ≫ m'.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T'.V T'.Fr)) ≫ v := by
       intro v k₁ k₂
       have e₄ : m'.φ ≫ m.φ = n.φ ≫ m2.φ := e₃.symm.trans e₂
       have e₅ : m'.φ ≫ G'.G.hom = _ := m'.cart.1.w

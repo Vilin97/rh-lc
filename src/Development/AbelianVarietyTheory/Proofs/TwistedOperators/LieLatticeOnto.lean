@@ -123,7 +123,7 @@ theorem lie_lattice_onto : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
       rw [Category.assoc, ← I.m2.cart.1.w, ← Category.assoc, hu2, Category.assoc, Over.w (I.ub τ i)]
       show spMap _ ≫ spMap _ = _
       rw [GlobalTheory.IntLie.spMap_comp₂, GlobalTheory.IntLie.spMap_comp₂]
-      show spMap ((dualMap (algebraMap T.V T.Fr)).comp (algebraMap T.V (DualNumber T.V))) = _
+      show spMap ((GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)).comp (algebraMap T.V (DualNumber T.V))) = _
       rw [GlobalTheory.IntLie.dualMap_alg]
     have h := GlobalTheory.IntLie.comb_generic I'.m1 I'.m2 (I'.ub τ) u' hu2' _
       (spMap (epsMul (algebraMap T.V T.Fr q)) ≫ u ≫ ψ.left) (by

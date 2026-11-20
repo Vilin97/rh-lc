@@ -61,7 +61,7 @@ namespace GlobalTheory.LogPole
 
 attribute [local instance] Over.cartesianMonoidalCategory
 
-theorem frVec_isVert_isCombAtG : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (TF : TorFlag Xo c) (U : TF.Y.X.affineOpens) (n : ℕ) (e : (Σ τ : E →+* ℂ, Fin (Dw.mult τ)) ≃ Fin n) (v : Fin n → (Sp (DualNumber Γ(TF.Y.X, U.1)) ⟶ TF.Y.t.G.left)), IsEigBasis TF U e v → ∀ (K : Type) [Field K] [Algebra c.F K] (P₀ P : FrPt Xo c K) (hU : ⊤ ≤ (frX P₀ ≫ TF.Y.j) ⁻¹ᵁ U.1) (G : ∀ σ : E →+* ℂ, Matrix (Fin (Dw.mult σ)) (Fin (Dw.mult σ)) K), GlobalTheory.Frames.FrChg G 1 P₀ P → IsBaseFrame TF U e v P₀ hU → ∀ (N' : GlobalTheory.FlagTan.FIx Dw → K) (w : FrPt Xo c (DualNumber K)) (x : Sp (DualNumber K) ⟶ TF.Y.X) (hx : frX w ≫ TF.Y.j = x) (hUx : ⊤ ≤ x ⁻¹ᵁ U.1) (M : GlobalTheory.Reg.MChart TF.Y) (hM : ⊤ ≤ x ⁻¹ᵁ M.U), IsVert P N' w → ∀ σ i, IsCombAtG TF.Y.t x (fun j => spMap (dualMap (ev x U.1 hUx)) ≫ v (e ⟨σ, j⟩)) (fun j => (GlobalTheory.FlagTan.unip K N' σ * (G σ).map (fun r => (TrivSqZeroExt.inl r : DualNumber K))) i j) (tv (frVec TF.Y w hx σ i)).left := by
+theorem frVec_isVert_isCombAtG : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (TF : TorFlag Xo c) (U : TF.Y.X.affineOpens) (n : ℕ) (e : (Σ τ : E →+* ℂ, Fin (Dw.mult τ)) ≃ Fin n) (v : Fin n → (Sp (DualNumber Γ(TF.Y.X, U.1)) ⟶ TF.Y.t.G.left)), IsEigBasis TF U e v → ∀ (K : Type) [Field K] [Algebra c.F K] (P₀ P : FrPt Xo c K) (hU : ⊤ ≤ (frX P₀ ≫ TF.Y.j) ⁻¹ᵁ U.1) (G : ∀ σ : E →+* ℂ, Matrix (Fin (Dw.mult σ)) (Fin (Dw.mult σ)) K), GlobalTheory.Frames.FrChg G 1 P₀ P → IsBaseFrame TF U e v P₀ hU → ∀ (N' : GlobalTheory.FlagTan.FIx Dw → K) (w : FrPt Xo c (DualNumber K)) (x : Sp (DualNumber K) ⟶ TF.Y.X) (hx : frX w ≫ TF.Y.j = x) (hUx : ⊤ ≤ x ⁻¹ᵁ U.1) (M : GlobalTheory.Reg.MChart TF.Y) (hM : ⊤ ≤ x ⁻¹ᵁ M.U), IsVert P N' w → ∀ σ i, IsCombAtG TF.Y.t x (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev x U.1 hUx)) ≫ v (e ⟨σ, j⟩)) (fun j => (GlobalTheory.FlagTan.unip K N' σ * (G σ).map (fun r => (TrivSqZeroExt.inl r : DualNumber K))) i j) (tv (frVec TF.Y w hx σ i)).left := by
   intro E _ _ _ H Dw l Xo c TF U n e v _hv K _ _ P₀ P hU G hG hB N' w x hx hUx M hM hV σ i
   obtain ⟨y₀, hy₀, hS⟩ := hV
   obtain ⟨P₀', h0⟩ := GlobalTheory.FlagTan.exists_frMap (GlobalTheory.FlagTan.cst c K) P₀
@@ -76,7 +76,7 @@ theorem frVec_isVert_isCombAtG : ∀ (E : Type) [Field E] [NumberField E] [IsCMF
     rw [← Category.assoc, FlagMod.frX_frMap h0, hx']
   have eev : ev x U.1 hUx = (GlobalTheory.FlagTan.cst c K).toRingHom.comp (ev (frX P₀ ≫ TF.Y.j) U.1 hU) := by
     rw [FlagMod.ev_congr ecst.symm U.1 hUx (ecst ▸ hUx), FlagMod.ev_spMap]
-  have e3 : ∀ k, (tv (frVec TF.Y P₀' hx' σ k)).left = spMap (dualMap (ev x U.1 hUx)) ≫ v (e ⟨σ, k⟩) := by
+  have e3 : ∀ k, (tv (frVec TF.Y P₀' hx' σ k)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev x U.1 hUx)) ≫ v (e ⟨σ, k⟩) := by
     intro k
     rw [← FlagMod.tanPull_frVec h0 rfl hx' ecst, FlagMod.tanPull_left, hB σ k, ← Category.assoc, spMap_comp',
       ← dualMap_comp, eev]
@@ -89,7 +89,7 @@ theorem frVec_isVert_isCombAtG : ∀ (E : Type) [Field E] [NumberField E] [IsCMF
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [Matrix.mul_apply, Finset.sum_smul]
     rfl
-  have hv' : (fun j => spMap (dualMap (ev x U.1 hUx)) ≫ v (e ⟨σ, j⟩)) =
+  have hv' : (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev x U.1 hUx)) ≫ v (e ⟨σ, j⟩)) =
       fun j => (tv (frVec TF.Y P₀' hx' σ j)).left := funext fun j => (e3 j).symm
   rw [hv', GlobalTheory.LieMet.isComb_iff]
   exact key

@@ -54,7 +54,7 @@ theorem exists_family : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
       (∀ (U : S.Opens) (hU : IsAffineOpen U) (g : ℕ) (e : Fin g → (Sp (DualNumber Γ(S, U)) ⟶ Z.t.G.left)),
         IsTanBasis Z.t (R := Γ(S, U)) (hU.fromSpec ≫ ρ) e → ∃ h : Fin N → Fin g → Γ(S, U),
           ∀ (x : Γ(S, U) →+* ↥(intO ℂ_[p])) (y : Sp ↥(intO ℂ_[p]) ⟶ S), spMap x ≫ hU.fromSpec = y →
-            ∀ j, DlogIs Z.t p n (ch j y) (fun i => spMap (dualMap x) ≫ e i) (fun i => x (h j i))) ∧
+            ∀ j, DlogIs Z.t p n (ch j y) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap x) ≫ e i) (fun i => x (h j i))) ∧
       ∀ (y : Sp ↥(intO ℂ_[p]) ⟶ S) (K : Type) [Field K] (k : K →+* ℂ_[p]) (z₀ : Sp K ⟶ Xo.XF c),
         (∀ a : K, IsAlgebraic ℤ a) → spMap (intO ℂ_[p]).subtype ≫ y ≫ ρ = spMap k ≫ z₀ ≫ Z.j →
         ∃ (yy : Sp ℂ_[p] ⟶ Xo.XF c) (s : Fin N → (Over.mk yy ⟶ Z.oF.t.G)) (ζ : ℂ_[p]ˣ), IsPrimitiveRoot ζ (p ^ n) ∧
@@ -143,7 +143,7 @@ theorem exists_family : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
       show _ ≫ hU.fromSpecStalk hs = y
       rw [hU.fromSpecStalk_eq_fromSpecStalk hs]
       exact Scheme.Spec_stalkClosedPointTo_fromSpecStalk y
-    have k : DlogIs Z.t p n (ch j y) (fun i => spMap (dualMap ((Scheme.stalkClosedPointTo y).hom.comp φ)) ≫ e i)
+    have k : DlogIs Z.t p n (ch j y) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((Scheme.stalkClosedPointTo y).hom.comp φ)) ≫ e i)
         (fun i => ((Scheme.stalkClosedPointTo y).hom.comp φ) (hh j i)) :=
       hhs j _ φ _ _ _ _ (ch j y) hu hx0 inferInstance (hz y) (hc j y)
     rw [heq] at k

@@ -170,7 +170,7 @@ namespace Chart
 variable (c : Chart t V)
 
 def HasImage (h : HdR c.A) (v : Sp (DualNumber Γ(X, c.U.1)) ⟶ t.G.left) : Prop :=
-  ∃ w : epsR c.S ⟶ c.A, w.left ≫ c.φ = spMap (dualMap (algebraMap Γ(X, c.U.1) c.S)) ≫ v ∧ IsLieImage h w
+  ∃ w : epsR c.S ⟶ c.A, w.left ≫ c.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap Γ(X, c.U.1) c.S)) ≫ v ∧ IsLieImage h w
 
 variable {c} in
 

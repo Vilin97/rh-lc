@@ -108,8 +108,8 @@ theorem dlogDvd_iff [IsLocallyNoetherian X] [IsDomain O] [IsFractionRing O C] [I
 omit [IsAlgClosed C] [CharZero C] in
 
 theorem lieTie_iff {Y : Scheme.{0}} (π : P.G.left ⟶ Y) (x : LieG P.Gt) (u : Sp (DualNumber C) ⟶ Y) :
-    LieTie P (P.gen ≫ π) x u ↔ spMap (dualMap (algebraMap O C)) ≫ (P.lieCmp x).1.left ≫ π = u := by
-  have key : ∀ u, LieTie P (P.gen ≫ π) x u → spMap (dualMap (algebraMap O C)) ≫ (P.lieCmp x).1.left ≫ π = u := by
+    LieTie P (P.gen ≫ π) x u ↔ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O C)) ≫ (P.lieCmp x).1.left ≫ π = u := by
+  have key : ∀ u, LieTie P (P.gen ≫ π) x u → spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O C)) ≫ (P.lieCmp x).1.left ≫ π = u := by
     rintro u ⟨xG, u', h1, h2, h3⟩
     rw [← (P.eq_lieCmp_iff x _).2 h1, ← Category.assoc, ← h3, Category.assoc, h2]
   refine ⟨key u, fun h => ?_⟩
@@ -145,7 +145,7 @@ theorem isCombAtG_scale {E : Type} [Field E] [NumberField E] [IsCMField E] {H : 
 def latOf {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {X : Scheme.{0}}
     (t : SAB H X) {C : Type} [Field C] (S : Subring C) (p : ℕ) (x : Sp C ⟶ X) : Set (Sp (DualNumber C) ⟶ t.G.left) :=
   {v | ∃ xO : Sp ↥S ⟶ X, spMap S.subtype ≫ xO = x ∧ ∃ (m : ℕ) (vO : Sp (DualNumber ↥S) ⟶ t.G.left),
-    IsTanAtG t xO vO ∧ spMap (dualMap S.subtype) ≫ vO = spMap (epsMul ((p : C) ^ m)) ≫ v ∧ DlogDvd t xO p m vO}
+    IsTanAtG t xO vO ∧ spMap (GlobalTheory.CompanionTheory.Ar.dualMap S.subtype) ≫ vO = spMap (epsMul ((p : C) ^ m)) ≫ v ∧ DlogDvd t xO p m vO}
 
 attribute [local instance] algPadicInt algPadicField towerPadic factPadic GlobalTheory.PadicComplexHost.isAdicComplete
 
@@ -153,7 +153,7 @@ theorem mem_latHT_iff {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Re
     {X : Scheme.{0}} (t : SAB H X) (p : ℕ) [Fact p.Prime] (x : Sp ℂ_[p] ⟶ X) (w : Sp (DualNumber ℂ_[p]) ⟶ t.G.left) :
     w ∈ latHT t p x ↔ ∃ xO : Sp 𝓞_ℂ_[p] ⟶ X, spMap (algebraMap 𝓞_ℂ_[p] ℂ_[p]) ≫ xO = x ∧
       ∃ (m : ℕ) (vO : Sp (DualNumber 𝓞_ℂ_[p]) ⟶ t.G.left), IsTanAtG t xO vO ∧
-        spMap (dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p])) ≫ vO = spMap (epsMul ((p : ℂ_[p]) ^ m)) ≫ w ∧ DlogDvd t xO p m vO := by
+        spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p])) ≫ vO = spMap (epsMul ((p : ℂ_[p]) ^ m)) ≫ w ∧ DlogDvd t xO p m vO := by
   have e : intO ℂ_[p] = (𝓞_ℂ_[p]).toSubring := Subring.ext fun a => (GlobalTheory.PadicComplexHost.mem_iff_norm p a).symm
   change w ∈ latOf t (intO ℂ_[p]) p x ↔ _
   rw [e]

@@ -33,9 +33,9 @@ theorem frMapUniq_refl {E : Type} [Field E] [NumberField E] [IsCMField E] {H : H
     {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {S : Type} [CommRing S] [Algebra c.F S] (y : FrPt Xo c S) :
     FrMap (AlgHom.id c.F S) y y := by
   have eid : spMap (AlgHom.id c.F S).toRingHom = 𝟙 _ := Spec.map_id _
-  have did : spMap (dualMap (AlgHom.id c.F S).toRingHom) = 𝟙 _ := by
-    have hd : dualMap (RingHom.id S) = RingHom.id _ := RingHom.ext fun x => by ext <;> simp [dualMap]
-    show spMap (dualMap (RingHom.id S)) = _
+  have did : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (AlgHom.id c.F S).toRingHom) = 𝟙 _ := by
+    have hd : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id S) = RingHom.id _ := RingHom.ext fun x => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id S)) = _
     rw [hd]
     exact Spec.map_id _
   refine ⟨by rw [eid, Category.id_comp], fun τ i => by rw [did, Category.id_comp], 𝟙 _, by simp,
@@ -48,7 +48,7 @@ theorem frMapUniq_refl {E : Type} [Field E] [NumberField E] [IsCMField E] {H : H
     rfl
   rw [e, CommRingCat.hom_id, RingHom.id_apply]
 
-theorem frMap_unique_refl_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (S : Type) [CommRing S] [Algebra c.F S] (T : Type) [CommRing T] [Algebra c.F T] (φ : S →ₐ[c.F] T) (y : FrPt Xo c S), (∀ z z' : FrPt Xo c T, FrMap φ y z → FrMap φ y z' → z = z') ∧ FrMap (AlgHom.id c.F S) y y ∧ ∀ z : FrPt Xo c T, FrMap φ y z ↔ (z.x = spMap φ.toRingHom ≫ y.x ∧ (∀ τ i, z.u τ i = spMap (dualMap φ.toRingHom) ≫ y.u τ i) ∧ SecBC φ.toRingHom 1 y.x z.x y.s z.s) := by
+theorem frMap_unique_refl_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (S : Type) [CommRing S] [Algebra c.F S] (T : Type) [CommRing T] [Algebra c.F T] (φ : S →ₐ[c.F] T) (y : FrPt Xo c S), (∀ z z' : FrPt Xo c T, FrMap φ y z → FrMap φ y z' → z = z') ∧ FrMap (AlgHom.id c.F S) y y ∧ ∀ z : FrPt Xo c T, FrMap φ y z ↔ (z.x = spMap φ.toRingHom ≫ y.x ∧ (∀ τ i, z.u τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ.toRingHom) ≫ y.u τ i) ∧ SecBC φ.toRingHom 1 y.x z.x y.s z.s) := by
   intro E _ _ _ H Dw l Xo c S _ _ T _ _ φ y
   refine ⟨?_, frMapUniq_refl y, fun z => ?_⟩
   · rintro ⟨x, xo, u, t, e, b, s, g⟩ ⟨x', xo', u', t', e', b', s', g'⟩ ⟨hx, hu, pm, hs, hf, ha⟩

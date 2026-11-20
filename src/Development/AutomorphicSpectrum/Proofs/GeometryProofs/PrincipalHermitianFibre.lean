@@ -122,12 +122,12 @@ theorem spectrumMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (
   rw [spMap, spMap, spMap, CommRingCat.ofHom_comp, Spec.map_comp]
 
 theorem dualMap_comp_alt {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    dualMap (g.comp f) = (dualMap g).comp (dualMap f) :=
-  RingHom.ext fun a => TrivSqZeroExt.ext (by simp [dualMap]) (by simp [dualMap])
+    GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) = (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) :=
+  RingHom.ext fun a => TrivSqZeroExt.ext (by simp [GlobalTheory.CompanionTheory.Ar.dualMap]) (by simp [GlobalTheory.CompanionTheory.Ar.dualMap])
 
 theorem lifts_left {S : Scheme.{0}} {G : Over S} [GrpObj G] {R R' : Type} [CommRing R] [CommRing R'] {x : Sp R ⟶ S}
     {V : Type} [AddCommGroup V] [Module R V] (M : LieModel G x V) {c : R →+* R'} {x' : Sp R' ⟶ S} {a : V}
-    {v : epsAt x' ⟶ G} (h : M.Lifts c (𝟙 G.left) a v) : v.left = spMap (dualMap c) ≫ (M.pt a).left :=
+    {v : epsAt x' ⟶ G} (h : M.Lifts c (𝟙 G.left) a v) : v.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ (M.pt a).left :=
   (Category.comp_id _).symm.trans h
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
@@ -149,8 +149,8 @@ theorem polarised_at {L : Type} [Field L] [NumberField L] (t : SAB H (Sp (𝓞 L
 
 theorem hodgeInnerProduct_conj_of_eq {X : Scheme.{0}} (t : SAB H X) {z z' : Sp ℂ ⟶ X}
     (hz : z' = spMap (starRingEnd ℂ) ≫ z) {v w : epsAt z ⟶ t.G} {v' w' : epsAt z' ⟶ t.G} {c : ℂ}
-    (hv : v'.left = spMap (dualMap (starRingEnd ℂ)) ≫ v.left)
-    (hw : w'.left = spMap (dualMap (starRingEnd ℂ)) ≫ w.left) (h : HodgeIP t.G t.PP.L z v w c) :
+    (hv : v'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ v.left)
+    (hw : w'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ w.left) (h : HodgeIP t.G t.PP.L z v w c) :
     HodgeIP t.G t.PP.L z' v' w' (starRingEnd ℂ c) := by
   subst hz
   exact GlobalTheory.T.hodge_inner_product_conjugate E H X t z v w v' w' c hv hw h
@@ -173,12 +173,12 @@ theorem exists_hermitianBundle : ∀ (E : Type) [Field E] [NumberField E] [IsCMF
   have hcs : ∀ σ : L →+* ℂ, (conjugate σ).comp (algebraMap (𝓞 L) L) =
       (starRingEnd ℂ).comp (σ.comp (algebraMap (𝓞 L) L)) := fun σ => RingHom.ext fun a => rfl
   have hl : ∀ (σ : L →+* ℂ) (x : V), ((Mσ (conjugate σ)).pt (j _ x)).left =
-      spMap (dualMap (starRingEnd ℂ)) ≫ ((Mσ σ).pt (j σ x)).left := fun σ x => by
-    have e₁ : spMap (dualMap ((conjugate σ).comp (algebraMap (𝓞 L) L))) =
-        spMap (dualMap (starRingEnd ℂ)) ≫ spMap (dualMap (σ.comp (algebraMap (𝓞 L) L))) := by
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ ((Mσ σ).pt (j σ x)).left := fun σ x => by
+    have e₁ : spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((conjugate σ).comp (algebraMap (𝓞 L) L))) =
+        spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (σ.comp (algebraMap (𝓞 L) L))) := by
       rw [hcs, dualMap_comp_alt, spectrumMap_comp]
     exact (lifts_left M (hj _ x)).trans ((congrArg (· ≫ (M.pt x).left) e₁).trans ((Category.assoc _ _ _).trans
-      (congrArg (spMap (dualMap (starRingEnd ℂ)) ≫ ·) (lifts_left M (hj σ x)).symm)))
+      (congrArg (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ ·) (lifts_left M (hj σ x)).symm)))
   have hz : ∀ σ : L →+* ℂ, spMap ((conjugate σ).comp (algebraMap (𝓞 L) L)) ≫ 𝟙 _ =
       spMap (starRingEnd ℂ) ≫ spMap (σ.comp (algebraMap (𝓞 L) L)) ≫ 𝟙 _ := fun σ => by
     rw [Category.comp_id, Category.comp_id, hcs, spectrumMap_comp]

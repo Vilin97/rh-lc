@@ -28,7 +28,7 @@ def EigFrame.Tri {Z : Model Xo c β} {R R' : Type} [CommRing R] [CommRing R'] {�
     {x : Sp R ⟶ Z.X} {x' : Sp R' ⟶ Z.X} (f : EigFrame Z φ x) (ψ : R →+* R') (g : EigFrame Z φ' x')
     (t : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → R'ˣ) : Prop :=
   x' = spMap ψ ≫ x ∧ φ' = ψ.comp φ ∧ ∀ τ i, ∃ cf : Fin (Dw.mult τ) → R', cf i = t τ i ∧ (∀ k, i < k → cf k = 0) ∧
-    IsCombAtG Z.t x' (fun k => spMap (dualMap ψ) ≫ f.v τ k) cf (g.v τ i)
+    IsCombAtG Z.t x' (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f.v τ k) cf (g.v τ i)
 
 attribute [local instance] Over.cartesianMonoidalCategory in
 open MonObj in
@@ -71,10 +71,10 @@ theorem isCombAtG_single {X0 : Scheme.{0}} (t : SAB H X0) {R : Type} [CommRing R
 
 theorem EigFrame.tri_refl {Z : Model Xo c β} {R : Type} [CommRing R] {φ : c.F →+* R} {x : Sp R ⟶ Z.X}
     (f : EigFrame Z φ x) : f.Tri (RingHom.id R) f 1 := by
-  have h1 : spMap (dualMap (RingHom.id R)) = 𝟙 _ := by
+  have h1 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R)) = 𝟙 _ := by
     rw [← Spec.map_id]
     congr 1
-    ext r <;> simp [dualMap]
+    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   have h2 : spMap (RingHom.id R) = 𝟙 _ := Spec.map_id _
   refine ⟨by rw [h2, Category.id_comp], rfl, fun τ i => ⟨Pi.single i 1, by simp,
     fun k hk => Pi.single_eq_of_ne hk.ne' _, ?_⟩⟩

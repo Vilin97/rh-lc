@@ -38,7 +38,7 @@ private theorem UpperTheory.tangent_coordinates_norm_le {E : Type} [Field E] [Nu
     {x₀ : Sp A ⟶ X} {g m : ℕ} {e : Fin g → (Sp (DualNumber A) ⟶ t.G.left)} (he : IsTanBasis t x₀ e)
     {C : Type} [NontriviallyNormedField C] [IsUltrametricDist C] (x : A →+* C) (hx : ∀ a, ‖x a‖ ≤ 1)
     {u : Fin m → (Sp (DualNumber C) ⟶ t.G.left)} {a : Fin m → Fin g → C} (ha : LinearIndependent C a)
-    (hu : ∀ l, IsCombAtG t (spMap x ≫ x₀) (fun i => spMap (dualMap x) ≫ e i) (a l) (u l)) :
+    (hu : ∀ l, IsCombAtG t (spMap x ≫ x₀) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap x) ≫ e i) (a l) (u l)) :
     (∀ l, 0 < GlobalTheory.ShFam.Pad.grNorm t (spMap x ≫ x₀) (latDR t (spMap x ≫ x₀)) u l) ∧ ∀ (k : ℕ) (hk : k ≤ m),
       ∏ l : Fin k, GlobalTheory.ShFam.Pad.grNorm t (spMap x ≫ x₀) (latDR t (spMap x ≫ x₀)) u (Fin.castLE hk l) =
         ⨆ s, ‖minor a hk s‖ := by
@@ -104,14 +104,14 @@ private theorem UpperTheory.tangent_coordinates_naturality {E : Type} [Field E] 
     {f : Fin m → (Sp (DualNumber R) ⟶ t.G.left)} (hf : ∀ l, IsTanAtG t x (f l))
     {u : Fin m → (Sp (DualNumber K) ⟶ t.G.left)} {d : Fin m → K}
     (hT : ∀ i, ∃ cf : Fin m → K, cf i = d i ∧ (∀ k, i < k → cf k = 0) ∧
-      IsCombAtG t (spMap ι ≫ x) (fun k => spMap (dualMap ι) ≫ f k) cf (u i))
+      IsCombAtG t (spMap ι ≫ x) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ι) ≫ f k) cf (u i))
     {A₁ : Fin m → Fin g → L}
-    (hA : ∀ i, IsCombAtG t (spMap (ι'.comp α) ≫ x₀) (fun i => spMap (dualMap (ι'.comp α)) ≫ e i) (A₁ i)
-      (spMap (dualMap φ) ≫ u i)) :
-    ∃ a : Fin m → Fin g → S, (∀ l, IsCombAtG t (spMap α ≫ x₀) (fun i => spMap (dualMap α) ≫ e i) (a l)
-      (spMap (dualMap θ) ≫ f l)) ∧ ∀ (r : Fin m → L) (k : ℕ) (hk : k ≤ m) s, minor (fun l => r l • A₁ l) hk s =
+    (hA : ∀ i, IsCombAtG t (spMap (ι'.comp α) ≫ x₀) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ι'.comp α)) ≫ e i) (A₁ i)
+      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ u i)) :
+    ∃ a : Fin m → Fin g → S, (∀ l, IsCombAtG t (spMap α ≫ x₀) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ e i) (a l)
+      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap θ) ≫ f l)) ∧ ∀ (r : Fin m → L) (k : ℕ) (hk : k ≤ m) s, minor (fun l => r l • A₁ l) hk s =
         (∏ l : Fin k, r (Fin.castLE hk l) * φ (d (Fin.castLE hk l))) * ι' (minor a hk s) := by
-  have ha : ∀ l, ∃ a, IsCombAtG t (spMap α ≫ x₀) (fun i => spMap (dualMap α) ≫ e i) a (spMap (dualMap θ) ≫ f l) :=
+  have ha : ∀ l, ∃ a, IsCombAtG t (spMap α ≫ x₀) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ e i) a (spMap (GlobalTheory.CompanionTheory.Ar.dualMap θ) ≫ f l) :=
     fun l => (he.2 _ α _ (isTan_map θ hx.symm (hf l))).exists
   choose a ha using ha
   choose T hT1 hT2 hT3 using hT
@@ -150,7 +150,7 @@ private noncomputable def UpperTheory.eigenFrameNorm (Y : FlagCpt Z e) (w : Sym 
       (eqn (divOf Y (expo Dw w)) (below y.1))⁻¹ : Y.Y.Fnˣ) : Y.Y.Fn))) +
     (-Real.log (ε.w (resP v)) / Real.log (resP v)) *
       w.sum fun a n => (n : ℝ) * lnStep Z.t (spMap ψ ≫ stalkPt Y.Y (below y.1) ≫ Y.π ≫ genι Z)
-        (fun τ i => spMap (dualMap ψ) ≫ f.v τ i) (resP v) (a.1 (resP v)) a.2.2
+        (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f.v τ i) (resP v) (a.1 (resP v)) a.2.2
 
 private theorem UpperTheory.lgOf_eq_frame_norm (Y : FlagCpt Z e) (w : Sym E →₀ ℤ) (v : HeightOneSpectrum (𝓞 F))
     (ε : GlobalTheory.TrueGeo.Ext v) (y : AlgPt Y.Y) (hp : (resP v).Prime) :
@@ -174,7 +174,7 @@ private theorem UpperTheory.frame_norm_single (Y : FlagCpt Z e) (a : ℕ → Boo
       (-Real.log (ε.w (resP v)) / Real.log (resP v)) * Real.log (GlobalTheory.ShFam.Pad.grNorm Z.t
         (spMap ψ ≫ stalkPt Y.Y (below y.1) ≫ Y.π ≫ genι Z)
         (latDR Z.t (spMap ψ ≫ stalkPt Y.Y (below y.1) ≫ Y.π ≫ genι Z))
-        (fun i => spMap (dualMap ψ) ≫ f.v τ i) i) := by
+        (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f.v τ i) i) := by
   rw [UpperTheory.eigenFrameNorm, ← hψ, Finsupp.sum_single_index (by simp), UpperTheory.prod_pow_expo_single]
   dsimp only
   rw [ha, lnStep, dif_pos i.2]
@@ -218,7 +218,7 @@ end SlopeTestRemainingChoices
 
 open GlobalTheory.LineNorm.Chart GlobalTheory.LieMet ReciprocityTheory.ChartRestriction.G.PullbackSections in
 theorem UpperTheory.flag_component_cover_frame_norm :
-    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β), Z.X.IsSeparated → ∀ (F : Type) [Field F] [NumberField F] (e : F ≃+* c.F) (C : FlagCpt Z e) (V : Cover C.Y) (b : V.X ⟶ Z.X), V.j ≫ b = V.π ≫ C.π ≫ genι Z → ∀ (hη : V.j (genericPoint V.G) ⤳ genericPoint V.X) (q : ℕ), q.Prime → ∀ (kind : ℕ → Bool) (R : Option ℝ), kind q = false → ∀ (τ : E →+* ℂ) (U : V.X.Opens) (hU : IsAffineOpen U) (h : genericPoint V.X ∈ U) (ρ : Fin (Dw.mult τ) → V.X.functionFieldˣ), (∀ (m : Fin (Dw.mult τ)) (z : V.G), V.j z ∈ U → UnitAt z (V.φ (genAt (divOf C (expo Dw (Finsupp.single (kind, R, .inl (τ, m)) 1))) (V.π z)) * SmallSec.fnMap V.j hη (ρ m))) → (∀ (m : Fin (Dw.mult τ)) (v : HeightOneSpectrum (𝓞 F)) (ε : Ext v) (y : AlgPt C.Y) (z : Sp (AlgebraicClosure F) ⟶ V.G) (yt : Sp ε.O ⟶ V.X), z ≫ V.π = y.1 → spMap ε.O.subtype ≫ yt = z ≫ V.j → ⊤ ≤ yt ⁻¹ᵁ U → lgOf C (Finsupp.single (kind, R, .inl (τ, m)) 1) v ε y = Real.log (ε.w (valAt z (V.φ (genAt (divOf C (expo Dw (Finsupp.single (kind, R, .inl (τ, m)) 1))) (below y.1)) * SmallSec.fnMap V.j hη (ρ m))))) → ∀ (g : ℕ) (eb : Fin g → (Sp (DualNumber Γ(V.X, U)) ⟶ Z.t.G.left)), IsTanBasis Z.t (R := Γ(V.X, U)) (hU.fromSpec ≫ b) eb → ∀ (A₀ : Fin (Dw.mult τ) → Fin g → V.X.functionField), (∀ m, IsCombAtG Z.t (spMap ((SmallSec.fnMap V.j hη).comp (fnOf U h)) ≫ hU.fromSpec ≫ b) (fun i => spMap (dualMap ((SmallSec.fnMap V.j hη).comp (fnOf U h))) ≫ eb i) (fun i => SmallSec.fnMap V.j hη (A₀ m i)) (spMap (dualMap V.φ) ≫ C.f0.v τ m)) → ∀ (k : ℕ) (hk : k ≤ Dw.mult τ), (∀ z : V.G, V.j z ∈ U → ∀ s, RegAt (V.j z) (minor (fun m => (((ρ m)⁻¹ : V.X.functionFieldˣ) : V.X.functionField) • A₀ m) hk s)) ∧ ∀ (v : HeightOneSpectrum (𝓞 F)), resP v = q → ∀ (ε : Ext v) (y : AlgPt C.Y) (z : Sp (AlgebraicClosure F) ⟶ V.G) (yt : Sp ε.O ⟶ V.X), z ≫ V.π = y.1 → spMap ε.O.subtype ≫ yt = z ≫ V.j → ⊤ ≤ yt ⁻¹ᵁ U → (∀ s, ε.w (valAt (z ≫ V.j) (minor (fun m => (((ρ m)⁻¹ : V.X.functionFieldˣ) : V.X.functionField) • A₀ m) hk s)) ≤ 1) ∧ ∃ s, ε.w (valAt (z ≫ V.j) (minor (fun m => (((ρ m)⁻¹ : V.X.functionFieldˣ) : V.X.functionField) • A₀ m) hk s)) = 1 := by
+    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β), Z.X.IsSeparated → ∀ (F : Type) [Field F] [NumberField F] (e : F ≃+* c.F) (C : FlagCpt Z e) (V : Cover C.Y) (b : V.X ⟶ Z.X), V.j ≫ b = V.π ≫ C.π ≫ genι Z → ∀ (hη : V.j (genericPoint V.G) ⤳ genericPoint V.X) (q : ℕ), q.Prime → ∀ (kind : ℕ → Bool) (R : Option ℝ), kind q = false → ∀ (τ : E →+* ℂ) (U : V.X.Opens) (hU : IsAffineOpen U) (h : genericPoint V.X ∈ U) (ρ : Fin (Dw.mult τ) → V.X.functionFieldˣ), (∀ (m : Fin (Dw.mult τ)) (z : V.G), V.j z ∈ U → UnitAt z (V.φ (genAt (divOf C (expo Dw (Finsupp.single (kind, R, .inl (τ, m)) 1))) (V.π z)) * SmallSec.fnMap V.j hη (ρ m))) → (∀ (m : Fin (Dw.mult τ)) (v : HeightOneSpectrum (𝓞 F)) (ε : Ext v) (y : AlgPt C.Y) (z : Sp (AlgebraicClosure F) ⟶ V.G) (yt : Sp ε.O ⟶ V.X), z ≫ V.π = y.1 → spMap ε.O.subtype ≫ yt = z ≫ V.j → ⊤ ≤ yt ⁻¹ᵁ U → lgOf C (Finsupp.single (kind, R, .inl (τ, m)) 1) v ε y = Real.log (ε.w (valAt z (V.φ (genAt (divOf C (expo Dw (Finsupp.single (kind, R, .inl (τ, m)) 1))) (below y.1)) * SmallSec.fnMap V.j hη (ρ m))))) → ∀ (g : ℕ) (eb : Fin g → (Sp (DualNumber Γ(V.X, U)) ⟶ Z.t.G.left)), IsTanBasis Z.t (R := Γ(V.X, U)) (hU.fromSpec ≫ b) eb → ∀ (A₀ : Fin (Dw.mult τ) → Fin g → V.X.functionField), (∀ m, IsCombAtG Z.t (spMap ((SmallSec.fnMap V.j hη).comp (fnOf U h)) ≫ hU.fromSpec ≫ b) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((SmallSec.fnMap V.j hη).comp (fnOf U h))) ≫ eb i) (fun i => SmallSec.fnMap V.j hη (A₀ m i)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap V.φ) ≫ C.f0.v τ m)) → ∀ (k : ℕ) (hk : k ≤ Dw.mult τ), (∀ z : V.G, V.j z ∈ U → ∀ s, RegAt (V.j z) (minor (fun m => (((ρ m)⁻¹ : V.X.functionFieldˣ) : V.X.functionField) • A₀ m) hk s)) ∧ ∀ (v : HeightOneSpectrum (𝓞 F)), resP v = q → ∀ (ε : Ext v) (y : AlgPt C.Y) (z : Sp (AlgebraicClosure F) ⟶ V.G) (yt : Sp ε.O ⟶ V.X), z ≫ V.π = y.1 → spMap ε.O.subtype ≫ yt = z ≫ V.j → ⊤ ≤ yt ⁻¹ᵁ U → (∀ s, ε.w (valAt (z ≫ V.j) (minor (fun m => (((ρ m)⁻¹ : V.X.functionFieldˣ) : V.X.functionField) • A₀ m) hk s)) ≤ 1) ∧ ∃ s, ε.w (valAt (z ≫ V.j) (minor (fun m => (((ρ m)⁻¹ : V.X.functionFieldˣ) : V.X.functionField) • A₀ m) hk s)) = 1 := by
   intro E _ _ _ H Dw l Xo c O _ β Z hZ F _ _ e C V b hb hη q _ kind R hkind τ U hU h ρ h1 h2 g eb he A₀ hA k hk
   have : IsPreimmersion V.j :=
     have := IsPreimmersion.of_isLocalization (R := 𝓞 F) (S := F) (nonZeroDivisors (𝓞 F))
@@ -232,8 +232,8 @@ theorem UpperTheory.flag_component_cover_frame_norm :
         spMap θ ≫ C.Y.X.fromSpecStalk y = V.G.fromSpecStalk z ≫ V.π ∧
         spMap α ≫ hU.fromSpec = V.G.fromSpecStalk z ≫ V.j ∧
         spMap α ≫ hU.fromSpec ≫ b = spMap θ ≫ stalkPt C.Y y ≫ C.π ≫ genι Z ∧
-        (∀ m, IsCombAtG Z.t (spMap α ≫ hU.fromSpec ≫ b) (fun i => spMap (dualMap α) ≫ eb i) (a m)
-          (spMap (dualMap θ) ≫ f.v τ m)) ∧
+        (∀ m, IsCombAtG Z.t (spMap α ≫ hU.fromSpec ≫ b) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ eb i) (a m)
+          (spMap (GlobalTheory.CompanionTheory.Ar.dualMap θ) ≫ f.v τ m)) ∧
         (∀ m, algebraMap _ C.Y.X.functionField (r m : C.Y.X.presheaf.stalk y) = (t τ m : C.Y.Fn) *
           genAt (divOf C (expo Dw (Finsupp.single (kind, R, .inl (τ, m)) 1))) y) ∧
         (∀ m, algebraMap _ V.G.functionField (w m : V.G.presheaf.stalk z) =

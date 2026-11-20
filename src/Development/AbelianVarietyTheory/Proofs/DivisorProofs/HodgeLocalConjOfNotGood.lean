@@ -116,13 +116,13 @@ theorem isHolTo_conj {e : ℕ} {X : Scheme.{0}} {B : Set (Fin e → ℂ)} {y : (
     (GlobalTheory.ZH.CrdCalc.valR_spMap (starRingEnd ℂ) _ U hb.2).2 f
 
 theorem holTan_conj {e : ℕ} {X : Scheme.{0}} {B : Set (Fin e → ℂ)} {v : (Fin e → ℂ) → (Sp (DualNumber ℂ) ⟶ X)}
-    (h : HolTan B v) : HolTan (star ⁻¹' B) fun w => spMap (dualMap (starRingEnd ℂ)) ≫ v (star w) := by
+    (h : HolTan B v) : HolTan (star ⁻¹' B) fun w => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ v (star w) := by
   intro U f
-  have k : ∀ b : Fin e → ℂ, ⊤ ≤ (spMap (dualMap (starRingEnd ℂ)) ≫ v (star b)) ⁻¹ᵁ U → ⊤ ≤ v (star b) ⁻¹ᵁ U :=
+  have k : ∀ b : Fin e → ℂ, ⊤ ≤ (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ v (star b)) ⁻¹ᵁ U → ⊤ ≤ v (star b) ⁻¹ᵁ U :=
     fun b => (le_spMap_iff _ GlobalTheory.ShFam.HodgeConj.spMap_dual_conj_conj' _ _).1
   refine (differentiableOn_star_star (h U f) fun z hz => ⟨hz.1, k z hz.2⟩).congr fun b hb => ?_
-  rw [(GlobalTheory.ZH.CrdCalc.valR_spMap (dualMap (starRingEnd ℂ)) _ U (k b hb.2)).2 f]
-  simp [dualMap]
+  rw [(GlobalTheory.ZH.CrdCalc.valR_spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) _ U (k b hb.2)).2 f]
+  simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem hodge_gram_conj {D : D7} {A : Amb D} {N j : ℕ} {S : Sig A N j} {κ : Lv A} {s : FinalTheorems S κ} (x : ToroidalCompactificationData s)
     {σ : κ.c.F →+* ℂ} {y : CxPts (genStr s.T.Z) σ} {y' : CxPts (genStr s.T.Z) ((starRingEnd ℂ).comp σ)}
@@ -160,7 +160,7 @@ theorem hodgeLocal_of_conj : ∀ (D : D7) (A : Amb D) (N j : ℕ) (S : Sig A N j
     rw [e1]
     exact isHolTo_conj (y := fun b => (a b).1.1) ha.1
   have h2 : ∀ τ i, HolTan (star ⁻¹' B) fun w => (a' w).2.v τ i := fun τ i => by
-    have e1 : (fun w => (a' w).2.v τ i) = fun w => spMap (dualMap (starRingEnd ℂ)) ≫ (a (star w)).2.v τ i :=
+    have e1 : (fun w => (a' w).2.v τ i) = fun w => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ (a (star w)).2.v τ i :=
       funext fun w => hg' w τ i
     rw [e1]
     exact holTan_conj (v := fun b => (a b).2.v τ i) (ha.2 τ i)

@@ -757,16 +757,16 @@ theorem isEigV_kapI_iff {Fr : Type} [Field Fr] [Algebra V Fr] (io : c.F →+* Fr
 end KapMore
 
 theorem dualMap_comp_alg {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) :
-    (dualMap f).comp (algebraMap A (DualNumber A)) = (algebraMap B (DualNumber B)).comp f := by
+    (GlobalTheory.CompanionTheory.Ar.dualMap f).comp (algebraMap A (DualNumber A)) = (algebraMap B (DualNumber B)).comp f := by
   apply RingHom.ext
   intro r
-  ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem dualMap_comp_epsMul {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (a : A) :
-    (dualMap f).comp (epsMul a) = (epsMul (f a)).comp (dualMap f) := by
+    (GlobalTheory.CompanionTheory.Ar.dualMap f).comp (epsMul a) = (epsMul (f a)).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
   apply RingHom.ext
   intro r
-  ext <;> simp [dualMap, epsMul, _root_.mul_comm]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, _root_.mul_comm]
 
 theorem integral_reb (T : CDVR) (io : c.F →+* T.Fr) : letI := io.toAlgebra
     ∀ (y : FrPt Xo c T.Fr), Integral T io y →
@@ -809,11 +809,11 @@ theorem integral_reb (T : CDVR) (io : c.F →+* T.Fr) : letI := io.toAlgebra
       exact h2
   · intro τ i
     choose u' hu1 hu2 using hlift τ
-    have hδ : spMap (dualMap (algebraMap T.V T.Fr)) ≫
+    have hδ : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫
         spMap ((algebraMap T.V (DualNumber T.V)).comp (algebraMap T.V T.V)) =
         spMap (algebraMap T.Fr (DualNumber T.Fr)) ≫ spMap (algebraMap T.V T.Fr) := by
       rw [spMap_comp', spMap_comp']
-      show spMap ((dualMap (algebraMap T.V T.Fr)).comp (algebraMap T.V (DualNumber T.V))) = _
+      show spMap ((GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)).comp (algebraMap T.V (DualNumber T.V))) = _
       rw [dualMap_comp_alg]
     have hov : ∀ j, u' j ≫ t'.G.hom = spMap (algebraMap T.Fr (DualNumber T.Fr)) := by
       intro j
@@ -832,7 +832,7 @@ theorem integral_reb (T : CDVR) (io : c.F →+* T.Fr) : letI := io.toAlgebra
           rw [Category.assoc, hu1])
       exact hA.symm
     · let δ : Over.mk (T'.hom ≫ spMap (algebraMap T.V T.Fr)) ⟶ epsOver T.V T.V :=
-        Over.homMk (spMap (dualMap (algebraMap T.V T.Fr))) hδ
+        Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr))) hδ
       have hB := grpPull_prod m2.cart T' Finset.univ Y
         (fun j => δ ≫ kapI ≫ smT (𝟙 (Sp T.V)) (k τ j i) (Ub τ j)) (fun j => by
           simp only [Over.comp_left, δ, kapI, kapSat, Ub, smT_left, Over.homMk_left, Category.id_comp, Y,

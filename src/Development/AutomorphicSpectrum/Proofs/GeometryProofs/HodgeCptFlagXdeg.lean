@@ -137,24 +137,24 @@ theorem coordsAt_conj {K : Type} {J : K → Type} {y : (Σ k, J k) → Ω} {w : 
       rw [e, map_mul]⟩
 
 theorem dualMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : B →+* C) (g : A →+* B) :
-    dualMap (f.comp g) = (dualMap f).comp (dualMap g) := by
-  ext a <;> simp [dualMap]
+    GlobalTheory.CompanionTheory.Ar.dualMap (f.comp g) = (GlobalTheory.CompanionTheory.Ar.dualMap f).comp (GlobalTheory.CompanionTheory.Ar.dualMap g) := by
+  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem specMap_dual_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : B →+* C) (g : A →+* B) :
-    Spec.map (CommRingCat.ofHom (dualMap (f.comp g))) =
-      spMap (dualMap f) ≫ Spec.map (CommRingCat.ofHom (dualMap g)) := by
+    Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (f.comp g))) =
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap g)) := by
   rw [dualMap_comp, CommRingCat.ofHom_comp, Spec.map_comp]
 
 def cjTan {G : Over X} (v : epsAt z ⟶ G) : epsAt (cj z) ⟶ G :=
-  Over.homMk (spMap (dualMap (starRingEnd ℂ)) ≫ v.left) (by
+  Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ v.left) (by
     have hv : v.left ≫ G.hom = Spec.map (CommRingCat.ofHom (algebraMap ℂ (DualNumber ℂ))) ≫ z := Over.w v
-    have hc : (dualMap (starRingEnd ℂ)).comp (algebraMap ℂ (DualNumber ℂ)) =
+    have hc : (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)).comp (algebraMap ℂ (DualNumber ℂ)) =
         (algebraMap ℂ (DualNumber ℂ)).comp (starRingEnd ℂ) := by
-      ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
-    have h2 : spMap (dualMap (starRingEnd ℂ)) ≫ spMap (algebraMap ℂ (DualNumber ℂ)) =
+      ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    have h2 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ spMap (algebraMap ℂ (DualNumber ℂ)) =
         spMap (algebraMap ℂ (DualNumber ℂ)) ≫ spMap (starRingEnd ℂ) := by
       simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp, hc]
-    show (spMap (dualMap (starRingEnd ℂ)) ≫ v.left) ≫ G.hom =
+    show (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ v.left) ≫ G.hom =
       spMap (algebraMap ℂ (DualNumber ℂ)) ≫ spMap (starRingEnd ℂ) ≫ z
     rw [Category.assoc, hv, ← Category.assoc, ← Category.assoc]
     exact congrArg (· ≫ z) h2)
@@ -166,13 +166,13 @@ theorem lieVal_conj {G : Over X} [GrpObj G] (M : LieModel G ξ Li) {e : Li} {v :
   obtain ⟨h1, v0, hv0, hv⟩ := h
   refine conj_transport z (fun q f => ∃ (h : genPt ξ ⤳ q)
     (v1 : epsAt (R := X.presheaf.stalk q) (X.fromSpecStalk q) ⟶ G), M.Extends ⟨q, h⟩ e v1 ∧
-      (cjTan v).left = Spec.map (CommRingCat.ofHom (dualMap f.hom)) ≫ v1.left) ⟨h1, v0, hv0, ?_⟩
-  have e2 : Spec.map (CommRingCat.ofHom (dualMap
+      (cjTan v).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap f.hom)) ≫ v1.left) ⟨h1, v0, hv0, ?_⟩
+  have e2 : Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap
       (Scheme.stalkClosedPointTo z ≫ CommRingCat.ofHom (starRingEnd ℂ)).hom)) =
-      spMap (dualMap (starRingEnd ℂ)) ≫
-        Spec.map (CommRingCat.ofHom (dualMap (Scheme.stalkClosedPointTo z).hom)) :=
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫
+        Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo z).hom)) :=
     specMap_dual_comp (starRingEnd ℂ) (Scheme.stalkClosedPointTo z).hom
-  exact (congrArg (fun t => spMap (dualMap (starRingEnd ℂ)) ≫ t) hv).trans
+  exact (congrArg (fun t => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ t) hv).trans
     ((Category.assoc _ _ _).symm.trans (congrArg (· ≫ v0.left) e2.symm))
 
 theorem leadMinor_conj {r : ℕ} (Γ : Matrix (Fin r) (Fin r) ℂ) (s : ℕ) :

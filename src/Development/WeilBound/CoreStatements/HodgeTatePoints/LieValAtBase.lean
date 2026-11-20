@@ -45,7 +45,7 @@ theorem lieValAt_base (hξ : IsCptGen ξ) {M : LieModel G ξ V} {R R' : Type} [C
       X.fromSpecStalk (centre (Spec.map (CommRingCat.ofHom φ) ≫ x)) :=
     Scheme.SpecMap_stalkSpecializes_fromSpecStalk hsp
   have hd : ∀ {A B D : Type} [CommRing A] [CommRing B] [CommRing D] (f : A →+* B) (g : B →+* D),
-      (dualMap g).comp (dualMap f) = dualMap (g.comp f) := by
+      (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) = GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) := by
     intro A B D _ _ _ f g
     refine RingHom.ext fun a => ?_
     ext <;> simp

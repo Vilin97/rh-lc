@@ -47,10 +47,10 @@ theorem htLocSt_of_hodgeTateKernel (hK : GlobalTheory.IndefiniteRowSideFullHecke
   obtain ⟨b, hb⟩ := P'.ex_gl (hκ m)
   obtain ⟨c, hc⟩ := GlobalTheory.HTMap.ex_char hP' hb
   have hd := hh' m 𝓞_ℂ_[p] x0 P' b hP' hb c hc
-  have htan : ∀ i, IsTanAtG Y.t (spMap x0 ≫ ξ) (spMap (dualMap x0) ≫ e i) := (isTanBasis_bc he x0).1
+  have htan : ∀ i, IsTanAtG Y.t (spMap x0 ≫ ξ) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap x0) ≫ e i) := (isTanBasis_bc he x0).1
   have hD : ∀ (k : Fin g) (β : P'.B →+* DualNumber (𝓞_ℂ_[p] ⧸ Ideal.span {(p : 𝓞_ℂ_[p]) ^ n})),
       P'.At ((algebraMap 𝓞_ℂ_[p] (DualNumber (𝓞_ℂ_[p] ⧸ Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}))).comp x0)
-        (spMap (dualMap (Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}))) ≫ spMap (dualMap x0) ≫ e k) β →
+        (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}))) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap x0) ≫ e k) β →
       (β b).snd = Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}) (x0 (h' m k)) := by
     intro k β hβ
     let w := GlobalTheory.HTMap.mkPt (G := Y.t.G) _ (hβ.over.trans (GlobalTheory.HTMap.spc_assoc _ _ _).symm)

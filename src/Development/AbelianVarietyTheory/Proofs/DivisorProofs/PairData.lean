@@ -114,7 +114,7 @@ def LabFam (Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β) {S :
     ∀ (U : S.Opens) (hU : IsAffineOpen U) (g : ℕ) (e : Fin g → (Sp (DualNumber Γ(S, U)) ⟶ Z.t.G.left)),
       IsTanBasis Z.t (R := Γ(S, U)) (hU.fromSpec ≫ ρ) e → ∃ h : Dw.La → Fin g → Γ(S, U),
         ∀ (φ : Γ(S, U) →+* ↥(intO ℂ_[p])) (x : Sp ↥(intO ℂ_[p]) ⟶ S), spMap φ ≫ hU.fromSpec = x →
-          ∀ a, DlogIs Z.t p n (ch a x) (fun i => spMap (dualMap φ) ≫ e i) (fun i => φ (h a i))
+          ∀ a, DlogIs Z.t p n (ch a x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ e i) (fun i => φ (h a i))
 
 variable (Dw) in
 
@@ -132,7 +132,7 @@ def HTLin {X : Scheme.{0}} (t : SAB H X) (p : ℕ) [Fact p.Prime] (n : ℕ) (x :
     (b : (Fin g → ℂ_[p]) →ₗ[ℂ_[p]] ℂ_[p] ⊗[ℤ] Dw.La) : Prop :=
   (∀ a (h : Fin g → ↥(intO ℂ_[p])), DlogIs t p n (ch a) e h →
     ∀ i, ‖(h i : ℂ_[p]) - pr Dw (b (Pi.single i 1)) a‖ ≤ (p : ℝ)⁻¹ ^ n) ∧
-  (∀ cf w, IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (dualMap (intO ℂ_[p]).subtype) ≫ e i) cf w →
+  (∀ cf w, IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ e i) cf w →
     (w ∈ latHT t p (spMap (intO ℂ_[p]).subtype ≫ x) ↔ ∀ a, ‖pr Dw (b cf) a‖ ≤ 1) ∧
     ∀ σ : 𝓞 E →+* ℂ_[p], GlobalTheory.FlatModel.IsEigG t σ w → IsEigL Dw σ (b cf)) ∧
   ∀ cf cf', (∀ a, ‖pr Dw (b cf) a‖ ≤ 1) → (∀ a, ‖pr Dw (b cf') a‖ ≤ 1) →
@@ -170,7 +170,7 @@ def CutAt (V : Cover Y) (W : Y.X.Opens) (p : ℕ) (ρ : Y.X ⟶ X) {J : Type} (U
       CutBy t (spMap ((ioOf (resP v) e).comp (Scheme.stalkClosedPointTo y.1).hom) ≫ stalkPt Y (below y.1) ≫ ρ)
         (latHT t (resP v)
           (spMap ((ioOf (resP v) e).comp (Scheme.stalkClosedPointTo y.1).hom) ≫ stalkPt Y (below y.1) ≫ ρ))
-        (fun i => spMap (dualMap ((ioOf (resP v) e).comp (Scheme.stalkClosedPointTo y.1).hom)) ≫ f (below y.1) i)
+        (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((ioOf (resP v) e).comp (Scheme.stalkClosedPointTo y.1).hom)) ≫ f (below y.1) i)
         ((vals V (P a) T z (below y.1)).map (ioOf (resP v) e)) δ ∧
       ∀ b, ⊤ ≤ yt ⁻¹ᵁ U b → ∀ u : Fin r → ℂ_[resP v],
         (∀ k, ‖((vals V (P a) T z (below y.1)).map (ioOf (resP v) e) *ᵥ u) k‖ ≤ 1) →

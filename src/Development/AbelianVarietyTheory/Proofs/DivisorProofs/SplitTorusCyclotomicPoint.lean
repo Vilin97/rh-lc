@@ -137,7 +137,7 @@ theorem latPres_of_splitK : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
   by_cases hpS : p ∈ S
   · have hlat : ArIn.ind S p = true := by simp [ArIn.ind, hpS]
     have hw' : IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ spMap φ ≫ x)
-        (fun i ↦ spMap (dualMap (intO ℂ_[p]).subtype) ≫ spMap (dualMap φ) ≫ e i) cf w := by
+        (fun i ↦ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ e i) cf w := by
       rw [hxC]; simpa only [GlobalTheory.HTPres.bc_bc] using hw
     rw [hlat]
     change w ∈ latHT t p _ ↔ _

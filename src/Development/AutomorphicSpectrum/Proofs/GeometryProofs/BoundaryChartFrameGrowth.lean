@@ -23,14 +23,14 @@ theorem spMap_comp' {A B C' : Type} [CommRing A] [CommRing B] [CommRing C'] (f :
   rfl
 
 theorem dualMap_comp' {A B C' : Type} [CommRing A] [CommRing B] [CommRing C'] (f : A →+* B) (g : B →+* C') :
-    (dualMap g).comp (dualMap f) = dualMap (g.comp f) := by
+    (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) = GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) := by
   refine RingHom.ext fun a => ?_
-  ext <;> simp [dualMap]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem dualMap_comp_algebraMap {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) :
-    (dualMap f).comp (algebraMap A (DualNumber A)) = (algebraMap B (DualNumber B)).comp f := by
+    (GlobalTheory.CompanionTheory.Ar.dualMap f).comp (algebraMap A (DualNumber A)) = (algebraMap B (DualNumber B)).comp f := by
   refine RingHom.ext fun a => ?_
-  ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem eq_of_cart {P Q A B T : Scheme.{0}} {φ : P ⟶ Q} {p : P ⟶ A} {q : Q ⟶ B} {j : A ⟶ B} [Mono j]
     (hp : IsPullback φ p q j) {x y : T ⟶ P} (h : x ≫ φ = y ≫ φ) : x = y := by
@@ -115,20 +115,20 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Da
   {Xo : Moduli D l} {σK : KA l →+* ℂ} {n a : ℕ}
 
 theorem BdryChart.pt_w (C : BdryChart Xo σK n a) {R' : Type} [CommRing R'] (f : C.R →+* R') (e : Fin C.g → C.R) :
-    (spMap (dualMap f) ≫ (C.M.pt e).left) ≫ C.t.G.hom =
+    (spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (C.M.pt e).left) ≫ C.t.G.hom =
       spMap (algebraMap R' (DualNumber R')) ≫ spMap f := by
   have h : (C.M.pt e).left ≫ C.t.G.hom = spMap (algebraMap C.R (DualNumber C.R)) ≫ 𝟙 _ := Over.w (C.M.pt e)
   rw [Category.assoc, h, Category.comp_id, spMap_comp', spMap_comp', dualMap_comp_algebraMap]
 
 def BdryChart.val (C : BdryChart Xo σK n a) (z : Fin n → ℂ) (e : Fin C.g → C.R) :
     epsAt (spMap (C.ψ z)) ⟶ C.t.G :=
-  Over.homMk (spMap (dualMap (C.ψ z)) ≫ (C.M.pt e).left) (C.pt_w _ e)
+  Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ (C.M.pt e).left) (C.pt_w _ e)
 
 theorem BdryChart.isVal_val (C : BdryChart Xo σK n a) (z : Fin n → ℂ) {m : ℕ} (u : Fin m → Fin C.g → C.R) :
     C.IsVal z u (fun i => C.val z (u i)) := fun _ => rfl
 
 theorem BdryChart.tan_w (C : BdryChart Xo σK n a) {z : Fin n → ℂ} (hz : z ∈ punct n a 1) {e : Fin C.g → C.R}
-    {uu : Sp (DualNumber ℂ) ⟶ C.tV.G.left} (h : uu ≫ C.m₁.φ = spMap (dualMap (C.ψ z)) ≫ (C.M.pt e).left) :
+    {uu : Sp (DualNumber ℂ) ⟶ C.tV.G.left} (h : uu ≫ C.m₁.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ (C.M.pt e).left) :
     uu ≫ C.tV.G.hom = spMap (algebraMap ℂ (DualNumber ℂ)) ≫ C.pt z := by
   haveI := C.j_open
   rw [← cancel_mono C.j, Category.assoc, Category.assoc, (C.pt_eq z hz).1]
@@ -140,7 +140,7 @@ theorem BdryChart.hodgeGram_iff (C : BdryChart Xo σK n a) {z : Fin n → ℂ} (
     {x : Sp ℂ ⟶ Xo.X} (hx : x = C.pt z ≫ C.k) {m : ℕ} (u : Fin m → Fin C.g → C.R)
     (v : Fin m → (epsAt x ⟶ Xo.univ.t.G))
     (hv : ∀ i, ∃ uu : Sp (DualNumber ℂ) ⟶ C.tV.G.left, uu ≫ C.m₂.φ = (v i).left ∧
-      uu ≫ C.m₁.φ = spMap (dualMap (C.ψ z)) ≫ (C.M.pt (u i)).left)
+      uu ≫ C.m₁.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ (C.M.pt (u i)).left)
     (v' : Fin m → (epsAt (spMap (C.ψ z)) ⟶ C.t.G)) (hv' : C.IsVal z u v') (Γ : Matrix (Fin m) (Fin m) ℂ) :
     IsHodgeGram C.t.G C.t.PP.L (spMap (C.ψ z)) v' Γ ↔
       IsHodgeGram Xo.univ.t.G Xo.univ.t.PP.L x v Γ := by
@@ -153,12 +153,12 @@ theorem BdryChart.hodgeGram_iff (C : BdryChart Xo σK n a) {z : Fin n → ℂ} (
 
 def BdryChart.liftVec (C : BdryChart Xo σK n a) {R' : Type} [CommRing R'] (f : C.R →+* R') (i : Sp R' ⟶ C.V)
     (hi : i ≫ C.j = spMap f) (e : Fin C.g → C.R) : Sp (DualNumber R') ⟶ C.tV.G.left :=
-  C.m₁.cart.1.lift (spMap (dualMap f) ≫ (C.M.pt e).left) (spMap (algebraMap R' (DualNumber R')) ≫ i)
+  C.m₁.cart.1.lift (spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (C.M.pt e).left) (spMap (algebraMap R' (DualNumber R')) ≫ i)
     (by rw [C.pt_w f e, Category.assoc, hi])
 
 theorem BdryChart.liftVec_fst (C : BdryChart Xo σK n a) {R' : Type} [CommRing R'] (f : C.R →+* R') (i : Sp R' ⟶ C.V)
     (hi : i ≫ C.j = spMap f) (e : Fin C.g → C.R) :
-    C.liftVec f i hi e ≫ C.m₁.φ = spMap (dualMap f) ≫ (C.M.pt e).left :=
+    C.liftVec f i hi e ≫ C.m₁.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (C.M.pt e).left :=
   C.m₁.cart.1.lift_fst _ _ _
 
 theorem BdryChart.liftVec_snd (C : BdryChart Xo σK n a) {R' : Type} [CommRing R'] (f : C.R →+* R') (i : Sp R' ⟶ C.V)
@@ -234,9 +234,9 @@ theorem differentiableAt_of_chart {τ : E →+* ℂ} {σ : c.F →+* ℂ} {Φ : 
     (hz : ∀ z ∈ punct n a 1, ∃ (v : Vecs (C.pt z ≫ k') D.p) (w : Vecs (C.pt z ≫ k') D.q),
       IsFramed Set.univ τ σ (C.pt z ≫ k') v w ∧
       (∀ i, ∃ uu : Sp (DualNumber ℂ) ⟶ C.tV.G.left, uu ≫ C.m₂.φ = (v i).left ∧
-        uu ≫ C.m₁.φ = spMap (dualMap (C.ψ z)) ≫ (C.M.pt (u₁ i)).left) ∧
+        uu ≫ C.m₁.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ (C.M.pt (u₁ i)).left) ∧
       (∀ j, ∃ uu : Sp (DualNumber ℂ) ⟶ C.tV.G.left, uu ≫ C.m₂.φ = (w j).left ∧
-        uu ≫ C.m₁.φ = spMap (dualMap (C.ψ z)) ≫ (C.M.pt (u₂ j)).left) ∧ φ z = Φ (C.pt z ≫ k') v w)
+        uu ≫ C.m₁.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ (C.M.pt (u₂ j)).left) ∧ φ z = Φ (C.pt z ≫ k') v w)
     {z₀ : Fin n → ℂ} (hz₀ : z₀ ∈ punct n a 1) : DifferentiableAt ℂ φ z₀ := by
   haveI := C.j_open
   obtain ⟨r, hr, i, hi⟩ := C.exists_away hz₀
@@ -256,7 +256,7 @@ theorem differentiableAt_of_chart {τ : E →+* ℂ} {σ : c.F →+* ℂ} {Φ : 
     have hw := C.m₂.cart.1.w
     rw [Category.assoc, hw, ← Category.assoc, C.liftVec_snd f i hi e]
     simp only [under, x, Category.assoc, hk]
-  have hvb : ∀ b e, (spMap (dualMap (ψ' b)) ≫ lv e ≫ C.m₂.φ) ≫ Xo.univ.t.G.hom =
+  have hvb : ∀ b e, (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ' b)) ≫ lv e ≫ C.m₂.φ) ≫ Xo.univ.t.G.hom =
       spMap (algebraMap ℂ (DualNumber ℂ)) ≫ under (spMap (ψ' b) ≫ x) := by
     intro b e
     rw [Category.assoc, hvw e, ← Category.assoc, spMap_comp', dualMap_comp_algebraMap, ← spMap_comp']
@@ -264,19 +264,19 @@ theorem differentiableAt_of_chart {τ : E →+* ℂ} {σ : c.F →+* ℂ} {Φ : 
   let vR : Fin D.p → (epsAt (under x) ⟶ Xo.univ.t.G) := fun a => Over.homMk (lv (u₁ a) ≫ C.m₂.φ) (hvw _)
   let wR : Fin D.q → (epsAt (under x) ⟶ Xo.univ.t.G) := fun a => Over.homMk (lv (u₂ a) ≫ C.m₂.φ) (hvw _)
   let v : ∀ b, Vecs (spMap (ψ' b) ≫ x) D.p := fun b a =>
-    Over.homMk (spMap (dualMap (ψ' b)) ≫ lv (u₁ a) ≫ C.m₂.φ) (hvb b _)
+    Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ' b)) ≫ lv (u₁ a) ≫ C.m₂.φ) (hvb b _)
   let w : ∀ b, Vecs (spMap (ψ' b) ≫ x) D.q := fun b a =>
-    Over.homMk (spMap (dualMap (ψ' b)) ≫ lv (u₂ a) ≫ C.m₂.φ) (hvb b _)
+    Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ' b)) ≫ lv (u₂ a) ≫ C.m₂.φ) (hvb b _)
   have hy : ∀ b ∈ B, C.pt b ≫ k' = spMap (ψ' b) ≫ x := by
     intro b hb
     have : C.pt b = spMap (ψ' b) ≫ i := by
       rw [← cancel_mono C.j, (C.pt_eq b hb.1).1, Category.assoc, hi, spMap_comp', hψ' b hb]
     rw [this, Category.assoc]
   have huu : ∀ b ∈ B, ∀ (e : Fin C.g → C.R) (uu : Sp (DualNumber ℂ) ⟶ C.tV.G.left),
-      uu ≫ C.m₁.φ = spMap (dualMap (C.ψ b)) ≫ (C.M.pt e).left →
-      uu ≫ C.m₂.φ = spMap (dualMap (ψ' b)) ≫ lv e ≫ C.m₂.φ := by
+      uu ≫ C.m₁.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ b)) ≫ (C.M.pt e).left →
+      uu ≫ C.m₂.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ' b)) ≫ lv e ≫ C.m₂.φ := by
     intro b hb e uu h
-    have : uu = spMap (dualMap (ψ' b)) ≫ lv e := by
+    have : uu = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ' b)) ≫ lv e := by
       refine eq_of_cart C.m₁.cart.1 ?_
       rw [h, Category.assoc, C.liftVec_fst f i hi e, ← Category.assoc, spMap_comp', dualMap_comp', hψ' b hb]
     rw [this, Category.assoc]
@@ -300,7 +300,7 @@ theorem differentiableAt_of_chart {τ : E →+* ℂ} {σ : c.F →+* ℂ} {Φ : 
 
 end Hol
 
-theorem exists_unit_extension_of_bdryChart : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (τ : E →+* ℂ) (σ : c.F →+* ℂ) (Φ : CFn Xo c) (n a : ℕ) (C : BdryChart Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom) n a) (k' : C.V ⟶ Xo.XF c) (u₁ : Fin D.p → Fin C.g → C.R) (u₂ : Fin D.q → Fin C.g → C.R) (φ : (Fin n → ℂ) → ℂ), 1 ≤ D.p + D.q → σ (tauIn c τ H.rt) = H.rt0 → τ (H.rt : E) = H.rt0 → IsUnitAn τ σ Φ → k' ≫ pullback.fst _ _ = C.k → LinearIndependent ℂ (fun i b => C.ψ 0 (u₁ i b)) → LinearIndependent ℂ (fun i b => C.ψ 0 (u₂ i b)) → (∀ z ∈ punct n a 1, ∃ (v : Vecs (C.pt z ≫ k') D.p) (w : Vecs (C.pt z ≫ k') D.q), IsFramed Set.univ τ σ (C.pt z ≫ k') v w ∧ (∀ i, ∃ uu : Sp (DualNumber ℂ) ⟶ C.tV.G.left, uu ≫ C.m₂.φ = (v i).left ∧ uu ≫ C.m₁.φ = spMap (dualMap (C.ψ z)) ≫ (C.M.pt (u₁ i)).left) ∧ (∀ j, ∃ uu : Sp (DualNumber ℂ) ⟶ C.tV.G.left, uu ≫ C.m₂.φ = (w j).left ∧ uu ≫ C.m₁.φ = spMap (dualMap (C.ψ z)) ≫ (C.M.pt (u₂ j)).left) ∧ φ z = Φ (C.pt z ≫ k') v w) → ∃ (ρ : ℝ) (h : (Fin n → ℂ) → ℂ), 0 < ρ ∧ ρ ≤ 1 ∧ DifferentiableOn ℂ h (ball 0 ρ) ∧ (∀ z ∈ ball (0 : Fin n → ℂ) ρ, h z ≠ 0) ∧ ∀ z ∈ punct n a ρ, h z = φ z := by
+theorem exists_unit_extension_of_bdryChart : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (τ : E →+* ℂ) (σ : c.F →+* ℂ) (Φ : CFn Xo c) (n a : ℕ) (C : BdryChart Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom) n a) (k' : C.V ⟶ Xo.XF c) (u₁ : Fin D.p → Fin C.g → C.R) (u₂ : Fin D.q → Fin C.g → C.R) (φ : (Fin n → ℂ) → ℂ), 1 ≤ D.p + D.q → σ (tauIn c τ H.rt) = H.rt0 → τ (H.rt : E) = H.rt0 → IsUnitAn τ σ Φ → k' ≫ pullback.fst _ _ = C.k → LinearIndependent ℂ (fun i b => C.ψ 0 (u₁ i b)) → LinearIndependent ℂ (fun i b => C.ψ 0 (u₂ i b)) → (∀ z ∈ punct n a 1, ∃ (v : Vecs (C.pt z ≫ k') D.p) (w : Vecs (C.pt z ≫ k') D.q), IsFramed Set.univ τ σ (C.pt z ≫ k') v w ∧ (∀ i, ∃ uu : Sp (DualNumber ℂ) ⟶ C.tV.G.left, uu ≫ C.m₂.φ = (v i).left ∧ uu ≫ C.m₁.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ (C.M.pt (u₁ i)).left) ∧ (∀ j, ∃ uu : Sp (DualNumber ℂ) ⟶ C.tV.G.left, uu ≫ C.m₂.φ = (w j).left ∧ uu ≫ C.m₁.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ (C.M.pt (u₂ j)).left) ∧ φ z = Φ (C.pt z ≫ k') v w) → ∃ (ρ : ℝ) (h : (Fin n → ℂ) → ℂ), 0 < ρ ∧ ρ ≤ 1 ∧ DifferentiableOn ℂ h (ball 0 ρ) ∧ (∀ z ∈ ball (0 : Fin n → ℂ) ρ, h z ≠ 0) ∧ ∀ z ∈ punct n a ρ, h z = φ z := by
   intro E _ _ _ H D l Xo c τ σ Φ n a C k' u₁ u₂ φ hpq hσ hτ hU hk h1 h2 hz
   have hρ : (σ.comp (IntermediateField.inclusion c.le).toRingHom) (baseKA l).ρ = H.rt0 := by
     have e : (IntermediateField.inclusion c.le).toRingHom (baseKA l).ρ = tauIn c τ H.rt :=

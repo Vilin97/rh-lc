@@ -139,15 +139,15 @@ variable {X0 : Scheme.{0}} {G : Over X0} [GrpObj G] [IsCommMonObj G] {S S' : Typ
 
 def epsHom (φ : S →+* S') {x : Sp S ⟶ X0} {x' : Sp S' ⟶ X0} (h : spMap φ ≫ x = x') :
     overAt x' (DualNumber S') ⟶ overAt x (DualNumber S) :=
-  Over.homMk (spMap (dualMap φ)) (by
-    show spMap (dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) ≫ x = spMap (algebraMap S' (DualNumber S')) ≫ x'
+  Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ)) (by
+    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) ≫ x = spMap (algebraMap S' (DualNumber S')) ≫ x'
     rw [← h, ← Category.assoc, ← Category.assoc, spMap_comp', spMap_comp', dualMap_comp_alg])
 
 omit [IsCommMonObj G] in
 theorem smT_epsHom (φ : S →+* S') {x : Sp S ⟶ X0} {x' : Sp S' ⟶ X0} (h : spMap φ ≫ x = x') (a : S)
     (v : overAt x (DualNumber S) ⟶ G) : smT x' (φ a) (epsHom φ h ≫ v) = epsHom φ h ≫ smT x a v := by
   apply Over.OverMorphism.ext
-  show spMap (epsMul (φ a)) ≫ spMap (dualMap φ) ≫ v.left = spMap (dualMap φ) ≫ spMap (epsMul a) ≫ v.left
+  show spMap (epsMul (φ a)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ spMap (epsMul a) ≫ v.left
   rw [← Category.assoc, ← Category.assoc, spMap_comp', spMap_comp', dualMap_comp_epsMul]
 
 def tanPull (φ : S →+* S') {x : Sp S ⟶ X0} {x' : Sp S' ⟶ X0} (h : spMap φ ≫ x = x') :
@@ -158,7 +158,7 @@ def tanPull (φ : S →+* S') {x : Sp S ⟶ X0} {x' : Sp S' ⟶ X0} (h : spMap �
   map_smul' a v := tanM_ext (smT_epsHom φ h a (tv v)).symm
 
 theorem tanPull_left (φ : S →+* S') {x : Sp S ⟶ X0} {x' : Sp S' ⟶ X0} (h : spMap φ ≫ x = x') (v : TanM x G) :
-    (tv (tanPull φ h v)).left = spMap (dualMap φ) ≫ (tv v).left := rfl
+    (tv (tanPull φ h v)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ (tv v).left := rfl
 
 theorem tan_ext_left {x : Sp S ⟶ X0} {u v : TanM x G} (h : (tv u).left = (tv v).left) : u = v :=
   tanM_ext (Over.OverMorphism.ext h)
@@ -172,10 +172,10 @@ theorem tv_sum' {x : Sp S ⟶ X0} {κ : Type} (s : Finset κ) (f : κ → TanM x
   simp only [tv, toMul_sum, Subgroup.val_finsetProd]
 
 theorem dualMap_comp {S'' : Type} [CommRing S''] (φ : S →+* S') (ψ : S' →+* S'') :
-    dualMap (ψ.comp φ) = (dualMap ψ).comp (dualMap φ) := by
+    GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ) = (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) := by
   apply RingHom.ext
   intro r
-  ext <;> simp [dualMap]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 end Pull
 
@@ -188,10 +188,10 @@ variable {S S' : Type} [CommRing S] [CommRing S']
 
 theorem exists_lieBasis (M : MChart Y) (x : Sp S ⟶ Y.X) (h : ⊤ ≤ x ⁻¹ᵁ M.U) :
     ∃ b : Module.Basis (Fin M.n) S (TanM x Y.t.G),
-      (∀ j, (tv (b j)).left = spMap (dualMap (ev x M.U h)) ≫ M.v₀ j) ∧
+      (∀ j, (tv (b j)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev x M.U h)) ≫ M.v₀ j) ∧
       ∀ a j, actR Y.t.act a (b j) = ∑ i, ev x M.U h (M.ρ a i j) • b i := by
   have key : ∀ (f : Γ(Y.X, M.U) →+* S) (x : Sp S ⟶ Y.X), spMap f ≫ M.hU.fromSpec = x →
-      ∃ b : Module.Basis (Fin M.n) S (TanM x Y.t.G), (∀ j, (tv (b j)).left = spMap (dualMap f) ≫ M.v₀ j) ∧
+      ∃ b : Module.Basis (Fin M.n) S (TanM x Y.t.G), (∀ j, (tv (b j)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ M.v₀ j) ∧
       ∀ a j, actR Y.t.act a (b j) = ∑ i, f (M.ρ a i j) • b i := by
     rintro f _ rfl
     have hp : ∃ t' : SAB H (Sp S), Nonempty (SABMap t' Y.t (spMap f ≫ M.hU.fromSpec)) := by
@@ -230,7 +230,7 @@ def lieBasis (M : MChart Y) (x : Sp S ⟶ Y.X) (h : ⊤ ≤ x ⁻¹ᵁ M.U) : Mo
   (exists_lieBasis M x h).choose
 
 theorem lieBasis_left (M : MChart Y) (x : Sp S ⟶ Y.X) (h : ⊤ ≤ x ⁻¹ᵁ M.U) (j : Fin M.n) :
-    (tv (lieBasis M x h j)).left = spMap (dualMap (ev x M.U h)) ≫ M.v₀ j :=
+    (tv (lieBasis M x h j)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev x M.U h)) ≫ M.v₀ j :=
   (exists_lieBasis M x h).choose_spec.1 j
 
 theorem actR_lieBasis (M : MChart Y) (x : Sp S ⟶ Y.X) (h : ⊤ ≤ x ⁻¹ᵁ M.U) (a : 𝓞 E) (j : Fin M.n) :
@@ -390,7 +390,7 @@ theorem exists_gChart [IsNoetherianRing O] (hP : PushInvertible Y.t.G Y.t.PP.L) 
   have hr : spMap r ≫ M.hU.fromSpec = hU.fromSpec := spMap_ev (tau hU) M.hU _
   refine ⟨⟨⟨U, hU, hW U hxU fun q hq => (hle hq).2.1, _,
     GlobalTheory.ModelChart.res_mem_secOn _ (Y.t.G.hom.preimage_mono hUV) hθ, fun y hy => ?_, M.n,
-    fun j => spMap (dualMap r) ≫ M.v₀ j, fun a => (M.ρ a).map r, fun R' _ f t' m => ?_⟩, fun W' hW' s hs => ?_⟩, hxU⟩
+    fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap r) ≫ M.v₀ j, fun a => (M.ρ a).map r, fun R' _ f t' m => ?_⟩, fun W' hW' s hs => ?_⟩, hxU⟩
   · obtain ⟨g, i, rfl, hg⟩ := nz y (hUV hy)
     refine ⟨g, i, rfl, ?_⟩
     show g ∈ Y.t.G.left.basicOpen (Y.t.G.left.presheaf.map (homOfLE _).op (θ i))
@@ -404,7 +404,7 @@ theorem exists_gChart [IsNoetherianRing O] (hP : PushInvertible Y.t.G Y.t.PP.L) 
     obtain ⟨v', hv', hb, ha⟩ := M.lie R' (f.comp r) t' m'
     refine ⟨v', fun j => ?_, hb, ha⟩
     rw [← hm', hv']
-    show spMap (dualMap (f.comp r)) ≫ _ = spMap (dualMap f) ≫ _
+    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap (f.comp r)) ≫ _ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ _
     rw [dualMap_comp, ← spMap_comp', Category.assoc]
   · simp only [resG_resG]
     exact hg W' (hW'.trans hUV) s hs

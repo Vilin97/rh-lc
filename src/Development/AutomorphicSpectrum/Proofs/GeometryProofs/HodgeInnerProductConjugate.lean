@@ -284,21 +284,21 @@ theorem isAH_cjU (u : HolUnif A L g) {Hm : Matrix (Fin g) (Fin g) ℂ} {χ : u.�
       star_star]
 
 def cjV (v : epsR ℂ ⟶ A) : epsR ℂ ⟶ tw A :=
-  Over.homMk (spMap (dualMap (starRingEnd ℂ)) ≫ v.left) (by
+  Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ v.left) (by
     have hv := Over.w v
     simp only [Over.mk_hom] at hv ⊢
     rw [Category.assoc, ← Category.assoc v.left, hv, ← Spec.map_comp, ← Spec.map_comp]
     exact congrArg Spec.map (CommRingCat.hom_ext (RingHom.ext fun a => by
-      ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl])))
+      ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl])))
 
 theorem snd_val_cj (v : epsR ℂ ⟶ A) (U : A.left.Opens) (h0 : ⊤ ≤ v.left ⁻¹ᵁ U)
-    (hU : ⊤ ≤ (spMap (dualMap (starRingEnd ℂ)) ≫ v.left) ⁻¹ᵁ U) (f : Γ(A.left, U)) :
+    (hU : ⊤ ≤ (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ v.left) ⁻¹ᵁ U) (f : Γ(A.left, U)) :
     TrivSqZeroExt.snd (show DualNumber ℂ from (Scheme.ΓSpecIso (CommRingCat.of (DualNumber ℂ))).hom.hom
-        (((spMap (dualMap (starRingEnd ℂ)) ≫ v.left).appLE U ⊤ hU).hom f)) =
+        (((spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ v.left).appLE U ⊤ hU).hom f)) =
       starRingEnd ℂ (TrivSqZeroExt.snd (show DualNumber ℂ from
         (Scheme.ΓSpecIso (CommRingCat.of (DualNumber ℂ))).hom.hom ((v.left.appLE U ⊤ h0).hom f))) := by
-  have e := val_spMap (dualMap (starRingEnd ℂ)) v.left U h0 hU f
-  exact (congrArg TrivSqZeroExt.snd e).trans (by simp [dualMap])
+  have e := val_spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) v.left U h0 hU f
+  exact (congrArg TrivSqZeroExt.snd e).trans (by simp [GlobalTheory.CompanionTheory.Ar.dualMap])
 
 theorem fderiv_cj (u : HolUnif A L g) (U : A.left.Opens) (f : Γ(A.left, U)) (a : Fin g → ℂ) :
     fderiv ℂ (fun z => valAt' (pc (u.ex (star z))).left U f) 0 (star a) =
@@ -313,22 +313,22 @@ theorem fderiv_cj (u : HolUnif A L g) (U : A.left.Opens) (f : Γ(A.left, U)) (a 
 theorem isDiff_cj (u : HolUnif A L g) {a : Fin g → ℂ} {v : epsR ℂ ⟶ A} (h : u.IsDiff a v) :
     (cjU u).IsDiff (star a) (cjV v) := by
   intro U hU f
-  have hi : ∀ b : DualNumber ℂ, dualMap (starRingEnd ℂ) (dualMap (starRingEnd ℂ) b) = b := fun b => by
-    ext <;> simp [dualMap]
+  have hi : ∀ b : DualNumber ℂ, GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ) (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ) b) = b := fun b => by
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   have h0 : ⊤ ≤ v.left ⁻¹ᵁ U := (top_le_inv _ hi).1 hU
   exact (snd_val_cj v U h0 hU f).trans ((congrArg _ (h U h0 f)).trans (fderiv_cj u U f a).symm)
 
 end Unif
 
 theorem isTan_conj {X : Scheme.{0}} {G : Over X} [GrpObj G] {z : Sp ℂ ⟶ X} {v : epsAt z ⟶ G}
-    {v' : epsAt (cc ≫ z) ⟶ G} (e : v'.left = spMap (dualMap (starRingEnd ℂ)) ≫ v.left) (h : IsTanAt G z v) :
+    {v' : epsAt (cc ≫ z) ⟶ G} (e : v'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ v.left) (h : IsTanAt G z v) :
     IsTanAt G (cc ≫ z) v' := by
   unfold IsTanAt at *
   have e1 : Spec.map (CommRingCat.ofHom (TrivSqZeroExt.fstHom ℂ ℂ ℂ).toRingHom) ≫
-      spMap (dualMap (starRingEnd ℂ)) =
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) =
       cc ≫ Spec.map (CommRingCat.ofHom (TrivSqZeroExt.fstHom ℂ ℂ ℂ).toRingHom) := by
     rw [← Spec.map_comp, ← Spec.map_comp]
-    exact congrArg Spec.map (CommRingCat.hom_ext (RingHom.ext fun a => by simp [dualMap]))
+    exact congrArg Spec.map (CommRingCat.hom_ext (RingHom.ext fun a => by simp [GlobalTheory.CompanionTheory.Ar.dualMap]))
   let k : Over.mk (cc ≫ z) ⟶ Over.mk z := Over.homMk cc rfl
   have e2 : (1 : Over.mk (cc ≫ z) ⟶ G).left = cc ≫ (1 : Over.mk z ⟶ G).left := by
     rw [← comp_one k]
@@ -337,22 +337,22 @@ theorem isTan_conj {X : Scheme.{0}} {G : Over X} [GrpObj G] {z : Sp ℂ ⟶ X} {
 
 theorem hodgeInnerProduct_conj {X : Scheme.{0}} {G : Over X} [GrpObj G] {L : LB G.left} {z : Sp ℂ ⟶ X}
     {v w : epsAt z ⟶ G} {v' w' : epsAt (cc ≫ z) ⟶ G} {c : ℂ}
-    (hv : v'.left = spMap (dualMap (starRingEnd ℂ)) ≫ v.left)
-    (hw : w'.left = spMap (dualMap (starRingEnd ℂ)) ≫ w.left) (h : HodgeIP G L z v w c) :
+    (hv : v'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ v.left)
+    (hw : w'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ w.left) (h : HodgeIP G L z v w c) :
     HodgeIP G L (cc ≫ z) v' w' (starRingEnd ℂ c) := by
   obtain ⟨hL, tv, tw', A, _, φ, g, u, Hm, χ, a', b', a, b, h1, h2, h3, h4, h5, h6, rfl⟩ := h
   refine ⟨hL, isTan_conj hv tv, isTan_conj hw tw', tw A, inferInstance, φ, g, cjU u, Hm.map (starRingEnd ℂ), _,
     cjV a', cjV b', star a, star b, isGrpPullback_tw h1, isAH_cjU u h2, ?_, ?_, isDiff_cj u h5, isDiff_cj u h6, ?_⟩
   · rw [hv, ← h3]
-    show (spMap (dualMap (starRingEnd ℂ)) ≫ a'.left) ≫ φ = _
+    show (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ a'.left) ≫ φ = _
     rw [Category.assoc]
   · rw [hw, ← h4]
-    show (spMap (dualMap (starRingEnd ℂ)) ≫ b'.left) ≫ φ = _
+    show (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ b'.left) ≫ φ = _
     rw [Category.assoc]
   · rw [form_conj]
     simp
 
-theorem hodgeInnerProduct_conj_abelianScheme : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (X : Scheme.{0}) (t : SAB H X) (z : Spec (CommRingCat.of ℂ) ⟶ X) (v w : epsAt z ⟶ t.G) (v' w' : epsAt (spMap (starRingEnd ℂ) ≫ z) ⟶ t.G) (c : ℂ), v'.left = spMap (dualMap (starRingEnd ℂ)) ≫ v.left → w'.left = spMap (dualMap (starRingEnd ℂ)) ≫ w.left → HodgeIP t.G t.PP.L z v w c → HodgeIP t.G t.PP.L (spMap (starRingEnd ℂ) ≫ z) v' w' (starRingEnd ℂ c) :=
+theorem hodgeInnerProduct_conj_abelianScheme : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (X : Scheme.{0}) (t : SAB H X) (z : Spec (CommRingCat.of ℂ) ⟶ X) (v w : epsAt z ⟶ t.G) (v' w' : epsAt (spMap (starRingEnd ℂ) ≫ z) ⟶ t.G) (c : ℂ), v'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ v.left → w'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ w.left → HodgeIP t.G t.PP.L z v w c → HodgeIP t.G t.PP.L (spMap (starRingEnd ℂ) ≫ z) v' w' (starRingEnd ℂ c) :=
   fun _ _ _ _ _ _ _ _ _ _ _ _ _ hv hw h => hodgeInnerProduct_conj hv hw h
 
 end GlobalTheory.CompanionTheory.Ar.HodgeConj

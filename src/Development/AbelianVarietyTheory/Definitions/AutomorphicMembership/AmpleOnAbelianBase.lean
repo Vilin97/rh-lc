@@ -35,7 +35,7 @@ instance finiteDual {O : Type} [CommRing O] (I : Ideal O) : Module.Finite O (Dua
 def DlogDvd {O : Type} [CommRing O] (x : Sp O ⟶ X) (p m : ℕ) (v : Sp (DualNumber O) ⟶ t.G.left) : Prop :=
   ∀ (n : ℕ) (c : TorsChar t x (p ^ n))
     (g : Over.mk (spMap (algebraMap O (DualNumber (O ⧸ Ideal.span {(p : O) ^ n}))) ≫ x) ⟶ t.G),
-    g.left = spMap (dualMap (Ideal.Quotient.mk (Ideal.span {(p : O) ^ n}))) ≫ v →
+    g.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(p : O) ^ n}))) ≫ v →
       (c.χ _ g : DualNumber (O ⧸ Ideal.span {(p : O) ^ n})).snd ∈
         Ideal.span {(p : O ⧸ Ideal.span {(p : O) ^ n}) ^ m}
 
@@ -43,11 +43,11 @@ variable {C : Type} [NontriviallyNormedField C] [IsUltrametricDist C]
 
 def latDR (x : Sp C ⟶ X) : Set (Sp (DualNumber C) ⟶ t.G.left) :=
   {v | ∃ xO : Sp ↥(intO C) ⟶ X, spMap (intO C).subtype ≫ xO = x ∧
-    ∃ vO, IsTanAtG t xO vO ∧ spMap (dualMap (intO C).subtype) ≫ vO = v}
+    ∃ vO, IsTanAtG t xO vO ∧ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO C).subtype) ≫ vO = v}
 
 def latHT (p : ℕ) (x : Sp C ⟶ X) : Set (Sp (DualNumber C) ⟶ t.G.left) :=
   {v | ∃ xO : Sp ↥(intO C) ⟶ X, spMap (intO C).subtype ≫ xO = x ∧ ∃ (m : ℕ) (vO : Sp (DualNumber ↥(intO C)) ⟶ t.G.left),
-    IsTanAtG t xO vO ∧ spMap (dualMap (intO C).subtype) ≫ vO = spMap (epsMul ((p : C) ^ m)) ≫ v ∧ DlogDvd t xO p m vO}
+    IsTanAtG t xO vO ∧ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO C).subtype) ≫ vO = spMap (epsMul ((p : C) ^ m)) ≫ v ∧ DlogDvd t xO p m vO}
 
 def lat (p : ℕ) (x : Sp C ⟶ X) : Bool → Set (Sp (DualNumber C) ⟶ t.G.left)
   | true => latHT t p x
@@ -81,7 +81,7 @@ variable {Z : Model Xo c β} {Ω : Type} [Field Ω] (y : FlagPt Z Ω) {C : Type}
 def FlagPt.lnLie (p : ℕ) (b : Bool) (τ : E →+* ℂ) (k : ℕ) : ℝ :=
   if h : k < Dw.mult τ then
     Real.log (grNorm Z.t (spMap io ≫ y.y ≫ genι Z) (lat Z.t p (spMap io ≫ y.y ≫ genι Z) b)
-      (fun i => spMap (dualMap io) ≫ y.u τ i) ⟨k, h⟩)
+      (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) ≫ y.u τ i) ⟨k, h⟩)
   else 0
 
 def vDiff (E : Type) [Field E] [NumberField E] (p : ℕ) : ℝ :=

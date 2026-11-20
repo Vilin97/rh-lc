@@ -16,7 +16,7 @@ namespace LieModel
 
 def Extends (M : LieModel G ξ E) (p : Cpt ξ) (e : E)
     (v : epsAt (R := X.presheaf.stalk p.1) (X.fromSpecStalk p.1) ⟶ G) : Prop :=
-  IsTanAt G _ v ∧ (M.pt e).left = Spec.map (CommRingCat.ofHom (dualMap (genMap ξ p))) ≫ v.left
+  IsTanAt G _ v ∧ (M.pt e).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (genMap ξ p))) ≫ v.left
 
 def lat (M : LieModel G ξ E) : Lat ξ E := fun p =>
   Submodule.span (regAt ξ p) {e | ∃ v, M.Extends p e v}
@@ -31,7 +31,7 @@ variable {R : Type} [CommRing R] [IsLocalRing R]
 def ValAt (M : LieModel G ξ E) (z : Spec (CommRingCat.of R) ⟶ X) (e : E) (w : epsAt z ⟶ G) : Prop :=
   ∃ (h : genPt ξ ⤳ centre z) (v : epsAt (R := X.presheaf.stalk (centre z)) (X.fromSpecStalk (centre z)) ⟶ G),
     M.Extends ⟨centre z, h⟩ e v ∧
-      w.left = Spec.map (CommRingCat.ofHom (dualMap (Scheme.stalkClosedPointTo z).hom)) ≫ v.left
+      w.left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo z).hom)) ≫ v.left
 
 def fibAt (M : LieModel G ξ E) (L : Lat ξ E) (z : Spec (CommRingCat.of R) ⟶ X) {C : Type} [Field C] [Algebra R C]
     {EC : Type} [AddCommGroup EC] [Module C EC] [Module R EC]

@@ -211,7 +211,7 @@ variable {G H K : Over S} [GrpObj G] [GrpObj H] [GrpObj K]
 
 def omegaMap (φ : G ⟶ H) [IsMonHom φ] : omega H ⟶ omega G := cotMap φ (IsMonHom.one_hom φ)
 
-def lieMap (φ : G ⟶ H) [IsMonHom φ] : Lie G ⟶ Lie H := dualMap (omegaMap φ)
+def lieMap (φ : G ⟶ H) [IsMonHom φ] : Lie G ⟶ Lie H := GlobalTheory.CompanionTheory.Ar.dualMap (omegaMap φ)
 
 theorem omegaMap_dUnit (φ : G ⟶ H) [IsMonHom φ] {V : S.Opens} {W : H.left.Opens}
     {W' : G.left.Opens} (h : V ≤ unitSec H ⁻¹ᵁ W) (h' : V ≤ unitSec G ⁻¹ᵁ W')
@@ -305,7 +305,7 @@ theorem omegaBase_naturality (h : IsGrpPullback G' G f φ) (h' : IsGrpPullback H
 variable [QuasiSeparated G.hom] [QuasiSeparated H.hom]
 
 def lieBase (h : IsGrpPullback G' G f φ) : (Scheme.Modules.pullback f).obj (Lie G) ⟶ Lie G' :=
-  theta f (omega G) ≫ dualMap (inv (omegaBase h))
+  theta f (omega G) ≫ GlobalTheory.CompanionTheory.Ar.dualMap (inv (omegaBase h))
 
 theorem isIso_lieBase (h : IsGrpPullback G' G f φ) {g : ℕ} (hg : IsVB (omega G) g) :
     IsIso (lieBase h) :=
@@ -319,7 +319,7 @@ theorem lieBase_naturality (h : IsGrpPullback G' G f φ) (h' : IsGrpPullback H' 
       omegaMap a' ≫ inv (omegaBase h) := by
     rw [IsIso.inv_comp_eq, ← Category.assoc, ← omegaBase_naturality h h' a a' w, Category.assoc,
       IsIso.hom_inv_id, Category.comp_id]
-  have := congrArg (theta f (omega G) ≫ dualMap ·) e
+  have := congrArg (theta f (omega G) ≫ GlobalTheory.CompanionTheory.Ar.dualMap ·) e
   simp only [dualMap_comp] at this
   rw [← Category.assoc, ← DualPull.theta_naturality] at this
   exact this
@@ -334,10 +334,10 @@ section DualIm
 variable {O : Type} [CommRing O] {F : S.Modules} (ρ : O →+* End F) (σ : O →+* Γ(S, ⊤)) {g r : ℕ}
 
 def dualImι : eigenIm (dualAct ρ) σ ⟶ dual (eigen ρ σ) :=
-  eigenImι (dualAct ρ) σ ≫ dualMap (eigenMap σ (isEquivariant_toBidual ρ))
+  eigenImι (dualAct ρ) σ ≫ GlobalTheory.CompanionTheory.Ar.dualMap (eigenMap σ (isEquivariant_toBidual ρ))
 
 @[reassoc] theorem eigenImπ_dualImι :
-    eigenImπ (dualAct ρ) σ ≫ dualImι ρ σ = dualMap (eigenι ρ σ) := by
+    eigenImπ (dualAct ρ) σ ≫ dualImι ρ σ = GlobalTheory.CompanionTheory.Ar.dualMap (eigenι ρ σ) := by
   rw [dualImι, eigenImπ_ι_assoc, eigenEval, Category.assoc, ← dualMap_comp, eigenMap_ι,
     dualMap_comp, toBidual_dual_comp_dualMap_assoc]
 
@@ -411,7 +411,7 @@ def omegaSubIsoDualLieSub {g : ℕ} (h : IsVB (omega G) g)
 
 theorem omegaSubIsoDualLieSub_hom {g : ℕ} (h : IsVB (omega G) g)
     [IsIso (eigenι (lieAct i) σ ≫ eigenπ (lieAct i) σ)] : (omegaSubIsoDualLieSub i σ h).hom =
-      eigenι (omegaAct i) σ ≫ (omegaIsoDualLie h).hom ≫ dualMap (eigenι (lieAct i) σ) := by
+      eigenι (omegaAct i) σ ≫ (omegaIsoDualLie h).hom ≫ GlobalTheory.CompanionTheory.Ar.dualMap (eigenι (lieAct i) σ) := by
   rw [omegaSubIsoDualLieSub, omegaSubIso, Iso.trans_hom, Iso.trans_hom, dualIso_hom, asIso_hom,
     dualMap_comp, ← dualQuotIso_hom_ι, Iso.symm_hom, Category.assoc, Category.assoc,
     Iso.inv_hom_id_assoc, eigenIso_hom, eigenMap_ι_assoc]
@@ -446,7 +446,7 @@ def omegaImι : omegaIm i σ ⟶ dual (lieSub i σ) := eigenImι (omegaAct i) σ
 instance mono_omegaImι : Mono (omegaImι i σ) := mono_eigenImι _ _
 
 @[reassoc] theorem eigenImπ_omegaImι : eigenImπ (omegaAct i) σ ≫ omegaImι i σ =
-    cartierDualToBidual (omega G) ≫ dualMap (eigenι (lieAct i) σ) := by
+    cartierDualToBidual (omega G) ≫ GlobalTheory.CompanionTheory.Ar.dualMap (eigenι (lieAct i) σ) := by
   have h := eigenImπ_ι (omegaAct i) σ
   rw [eigenEval] at h
   exact eq_of_heq (.trans (heq_comp (by rfl) (by rfl) (by rfl) (by rfl) (by rfl))
@@ -456,13 +456,13 @@ def omegaImIso {r : ℕ} (h : IsVB (omegaIm i σ) r) : omegaIm i σ ≅ dual (li
   @asIso _ _ _ _ (omegaImι i σ) (isIso_eigenImι _ _ h)
 
 theorem isIso_omegaImι_of_epi {g : ℕ} (h : IsVB (omega G) g)
-    [e : Epi (dualMap (eigenι (lieAct i) σ))] : IsIso (omegaImι i σ) :=
+    [e : Epi (GlobalTheory.CompanionTheory.Ar.dualMap (eigenι (lieAct i) σ))] : IsIso (omegaImι i σ) :=
   @isIso_eigenImι_of_epi _ _ _ _ _ _ _ h e
 
 def dualOmegaImIso : dual (omegaIm i σ) ≅ lieSub i σ := dualImIso (omegaAct i) σ
 
 @[reassoc] theorem dualOmegaImIso_hom_ι :
-    (dualOmegaImIso i σ).hom ≫ eigenι (lieAct i) σ = dualMap (eigenImπ (omegaAct i) σ) :=
+    (dualOmegaImIso i σ).hom ≫ eigenι (lieAct i) σ = GlobalTheory.CompanionTheory.Ar.dualMap (eigenImπ (omegaAct i) σ) :=
   dualImIso_hom_ι (omegaAct i) σ
 
 theorem isVB_lieSub {r : ℕ} (h : IsVB (omegaIm i σ) r) : IsVB (lieSub i σ) r :=
@@ -474,7 +474,7 @@ def omegaSubIsoDualLieIm {g : ℕ} (h : IsVB (omega G) g) : omegaSub i σ ≅ du
 def lieImι : lieIm i σ ⟶ dual (omegaSub i σ) := dualImι (omegaAct i) σ
 
 @[reassoc] theorem eigenImπ_lieImι :
-    eigenImπ (lieAct i) σ ≫ lieImι i σ = dualMap (eigenι (omegaAct i) σ) :=
+    eigenImπ (lieAct i) σ ≫ lieImι i σ = GlobalTheory.CompanionTheory.Ar.dualMap (eigenι (omegaAct i) σ) :=
   eigenImπ_dualImι (omegaAct i) σ
 
 theorem mono_lieImι {g : ℕ} (h : IsVB (omega G) g) : Mono (lieImι i σ) :=

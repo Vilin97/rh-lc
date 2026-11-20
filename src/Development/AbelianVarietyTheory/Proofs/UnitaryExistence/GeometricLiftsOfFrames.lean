@@ -246,8 +246,8 @@ theorem extraClauses_coverDat : ExtraClauses (coverDat C n nab₂ f φ) :=
 
 theorem spMap_id (S : Type) [CommRing S] : spMap (RingHom.id S) = 𝟙 _ := Spec.map_id _
 
-theorem spMap_dual_id (S : Type) [CommRing S] : spMap (dualMap (RingHom.id S)) = 𝟙 _ := by
-  have : dualMap (RingHom.id S) = RingHom.id _ := RingHom.ext fun z => TrivSqZeroExt.inl_fst_add_inr_snd_eq z
+theorem spMap_dual_id (S : Type) [CommRing S] : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id S)) = 𝟙 _ := by
+  have : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id S) = RingHom.id _ := RingHom.ext fun z => TrivSqZeroExt.inl_fst_add_inr_snd_eq z
   rw [this]; exact Spec.map_id _
 
 theorem liesOver_iff {S : Type} [CommRing S] [Algebra c.F S] [Algebra C.c₂.F S] (y₂ : FrPt C.Xo₂ C.c₂ S)

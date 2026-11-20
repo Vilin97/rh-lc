@@ -17,8 +17,8 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
   {Z : Model Xo c β}
 
 theorem dualMap_comp' {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (g : B →+* C) (f : A →+* B) :
-    (dualMap g).comp (dualMap f) = dualMap (g.comp f) :=
-  RingHom.ext fun z => by ext <;> simp [dualMap]
+    (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) = GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) :=
+  RingHom.ext fun z => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem exists_evR_eq_of_tri {R : Type} [CommRing R] [IsLocalRing R] [Algebra c.F R] (xF : Sp R ⟶ Xo.XF c)
     (hs : xF ≫ pullback.snd _ _ = spMap (algebraMap c.F R)) {x : Sp R ⟶ Z.X} (hx : xF ≫ Z.jQ ≫ pullback.fst _ _ = x)
@@ -28,7 +28,7 @@ theorem exists_evR_eq_of_tri {R : Type} [CommRing R] [IsLocalRing R] [Algebra c.
       (v0 : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (Sp (DualNumber K) ⟶ Z.t.G.left))
       (t : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → Kˣ) (y0 : FrPt Xo c K),
       (∀ τ i, ∃ cf : Fin (Dw.mult τ) → K, cf i = t τ i ∧ (∀ k, i < k → cf k = 0) ∧
-        IsCombAtG Z.t (spMap ψ.toRingHom ≫ x) (fun k => spMap (dualMap ψ.toRingHom) ≫ f.v τ k) cf (v0 τ i)) →
+        IsCombAtG Z.t (spMap ψ.toRingHom ≫ x) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) ≫ f.v τ k) cf (v0 τ i)) →
       GlobalTheory.AllWt.ptF y0 = spMap ψ.toRingHom ≫ xF →
       (∀ τ i, ∃ w : Sp (DualNumber K) ⟶ Z.oF.t.G.left,
         w ≫ Z.oF.t.G.hom = spMap (algebraMap K (DualNumber K)) ≫ GlobalTheory.AllWt.ptF y0 ∧
@@ -44,14 +44,14 @@ theorem exists_evR_eq_of_tri {R : Type} [CommRing R] [IsLocalRing R] [Algebra c.
   choose cf hcf1 hcf2 hcf3 using hT
   have hcomb : ∀ τ i, IsCombAt z.x (z.u τ) (cf τ i) (y0.u τ i) := fun τ i => by
     obtain ⟨w0, a1, a2, a3⟩ := hu τ i
-    have hv : ∀ k, (spMap (dualMap ψ.toRingHom) ≫ w τ k) ≫ Z.oF.t.G.hom =
+    have hv : ∀ k, (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) ≫ w τ k) ≫ Z.oF.t.G.hom =
         spMap (algebraMap K (DualNumber K)) ≫ GlobalTheory.AllWt.ptF y0 := fun k => by
       rw [Category.assoc, (hw τ k).1, hy, ← Category.assoc, ← Category.assoc, OpenReg.spMap_comp, OpenReg.spMap_comp,
         GlobalTheory.Frames.FramedBaseChange.dualMap_comp_alg]
-    have e1 : z.u τ = fun k => (spMap (dualMap ψ.toRingHom) ≫ w τ k) ≫ Z.m0.toSABMap.φ := funext fun k => by
+    have e1 : z.u τ = fun k => (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) ≫ w τ k) ≫ Z.m0.toSABMap.φ := funext fun k => by
       rw [hz.2.1, Category.assoc, (hw τ k).2.1]
-    have e2 : (fun k => spMap (dualMap ψ.toRingHom) ≫ f.v τ k) =
-        fun k => (spMap (dualMap ψ.toRingHom) ≫ w τ k) ≫ Z.m.φ := funext fun k => by
+    have e2 : (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) ≫ f.v τ k) =
+        fun k => (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) ≫ w τ k) ≫ Z.m.φ := funext fun k => by
       rw [Category.assoc, (hw τ k).2.2]
     have b := hcf3 τ i
     rw [e2, ← a3] at b
@@ -76,7 +76,7 @@ theorem exists_value_local {A R K L : Type} [CommRing A] [CommRing R] [IsLocalRi
     (hy : GlobalTheory.AllWt.ptF y ≫ Z.jQ = spMap (ψ.comp j) ≫ x)
     (hu : ∀ τ i, ∃ w : Sp (DualNumber L) ⟶ Z.oF.t.G.left,
       w ≫ Z.oF.t.G.hom = spMap (algebraMap L (DualNumber L)) ≫ GlobalTheory.AllWt.ptF y ∧
-        w ≫ Z.m0.toSABMap.φ = y.u τ i ∧ w ≫ Z.m.φ = spMap (dualMap (ψ.comp j)) ≫ fr.v τ i)
+        w ≫ Z.m0.toSABMap.φ = y.u τ i ∧ w ≫ Z.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp j)) ≫ fr.v τ i)
     {ex : Ix Dw → ℤ} (hex : ex none = 0) {g : Rul Xo c} (hg : g ∈ GlobalTheory.AllWt.secZ Xo c ex) :
     ∃ a : R, evR Xo c g y0 = ((∏ k : (Σ τ : E →+* ℂ, Fin (Dw.mult τ)), t k.1 k.2 ^ ex (some k) : Kˣ) : K) * ι a ∧
       evR Xo c g y = ψ a := by
@@ -115,7 +115,7 @@ theorem exists_value_local {A R K L : Type} [CommRing A] [CommRing R] [IsLocalRi
     rfl
   obtain ⟨a, ha⟩ := exists_evR_eq_of_tri xF hs (by rw [← Category.assoc, hxF, Category.assoc]) f hex hg
   have e0 : ∀ {M : Type} [CommRing M] (χ : R →+* M) (τ : E →+* ℂ),
-      (fun k => spMap (dualMap χ) ≫ f.v τ k) = fun k => spMap (dualMap (χ.comp j)) ≫ fr.v τ k := fun χ τ =>
+      (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ f.v τ k) = fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (χ.comp j)) ≫ fr.v τ k := fun χ τ =>
     funext fun k => by rw [hf, ← Category.assoc, OpenReg.spMap_comp, dualMap_comp']
   refine ⟨a, ha K ι' f0.v t y0 (fun τ i => ?_) hpt0 hu0, ?_⟩
   · obtain ⟨cf, h1, h2, h3⟩ := hT.2.2 τ i
@@ -124,7 +124,7 @@ theorem exists_value_local {A R K L : Type} [CommRing A] [CommRing R] [IsLocalRi
     subst e1
     rw [← e0 ι τ] at h3
     exact h3
-  · have := ha L ψ' (fun τ i => spMap (dualMap (ψ.comp j)) ≫ fr.v τ i) 1 y (fun τ i => ?_) hpt hu
+  · have := ha L ψ' (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp j)) ≫ fr.v τ i) 1 y (fun τ i => ?_) hpt hu
     · exact this.trans (by simp; rfl)
     · refine ⟨Pi.single i 1, by simp, fun k hk => Pi.single_eq_of_ne hk.ne' _, ?_⟩
       obtain ⟨f', hf'⟩ := GlobalTheory.ShFam.EigFrame.exists_baseChange E H Dw l Xo c O β Z R L _ _ f ψ

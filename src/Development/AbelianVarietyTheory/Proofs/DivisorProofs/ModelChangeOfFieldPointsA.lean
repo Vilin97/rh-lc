@@ -96,9 +96,9 @@ theorem frame_span_le {F : Type} [Field F] [NumberField F] (e : F ≃+* c.F) {X 
     (hx : ⊤ ≤ (xg ≫ jB) ⁻¹ᵁ U) (hx' : ⊤ ≤ (xg ≫ jB) ⁻¹ᵁ U') {w : Sp (DualNumber ℂ_[resP v]) ⟶ Z.t.G.left}
     (hw : IsTanAtG Z.t (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z) w)
     (hb : ∃ a : Fin r → ℂ_[resP v], (∀ i, ‖a i‖ ≤ 1) ∧ IsCombAtG Z.t (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z)
-      (fun i => spMap (dualMap (ioOf (resP v) ε)) ≫ uu U' f' hf' _ xg hx' i) a w) :
+      (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ioOf (resP v) ε)) ≫ uu U' f' hf' _ xg hx' i) a w) :
     ∃ a : Fin r → ℂ_[resP v], (∀ i, ‖a i‖ ≤ 1) ∧ IsCombAtG Z.t (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z)
-      (fun i => spMap (dualMap (ioOf (resP v) ε)) ≫ uu U f hf _ xg hx i) a w := by
+      (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ioOf (resP v) ε)) ≫ uu U f hf _ xg hx i) a w := by
   obtain ⟨hp, hio, -⟩ := ioOf_spec F v ε
   have h4 : (spMap (ioOf (resP v) ε) ≫ xg) ≫ πB ≫ genStr Z ≫ spMap e.toRingHom =
       spMap ((ioOf (resP v) ε).comp (algebraMap F (AlgebraicClosure F))) := by

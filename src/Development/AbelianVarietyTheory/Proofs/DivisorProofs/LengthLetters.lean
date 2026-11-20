@@ -31,10 +31,10 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 def DlogVals {p : ℕ} [Fact p.Prime] (xO : Sp ↥(intO ℂ_[p]) ⟶ X) {n N g : ℕ} (χ : Fin N → TorsChar t xO (p ^ n))
     (u : Fin g → (Sp (DualNumber ℂ_[p]) ⟶ t.G.left)) (Mc : Matrix (Fin N) (Fin g) ℂ_[p]) : Prop :=
   ∀ (vO : Sp (DualNumber ↥(intO ℂ_[p])) ⟶ t.G.left) (cf : Fin g → ℂ_[p]), IsTanAtG t xO vO →
-    IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ xO) u cf (spMap (dualMap (intO ℂ_[p]).subtype) ≫ vO) →
+    IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ xO) u cf (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ vO) →
     ∀ m, ∃ r : ↥(intO ℂ_[p]), (r : ℂ_[p]) = ∑ l, Mc m l * cf l ∧
       ∀ w : Over.mk (spMap (algebraMap ↥(intO ℂ_[p]) (DualNumber (↥(intO ℂ_[p]) ⧸ Ideal.span {(p : ↥(intO ℂ_[p])) ^ n}))) ≫ xO) ⟶ t.G,
-        w.left = spMap (dualMap (Ideal.Quotient.mk (Ideal.span {(p : ↥(intO ℂ_[p])) ^ n}))) ≫ vO →
+        w.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(p : ↥(intO ℂ_[p])) ^ n}))) ≫ vO →
           ((χ m).χ _ w : DualNumber (↥(intO ℂ_[p]) ⧸ Ideal.span {(p : ↥(intO ℂ_[p])) ^ n})).snd =
             Ideal.Quotient.mk (Ideal.span {(p : ↥(intO ℂ_[p])) ^ n}) r
 
@@ -70,7 +70,7 @@ def ptAt : Sp ℂ_[resP v] ⟶ O.s.T.Z.X :=
   spMap (psiAt O c e y) ≫ stalkPt (O.Φ.C c).Y (below y.1) ≫ (O.Φ.C c).π ≫ genι O.s.T.Z
 
 def uAt (l : Fin (D.R.f * O.N)) : Sp (DualNumber ℂ_[resP v]) ⟶ O.s.T.Z.t.G.left :=
-  spMap (dualMap (psiAt O c e y)) ≫ (frAt O c (below y.1)).v (letterAt O l).1 (letterAt O l).2
+  spMap (GlobalTheory.CompanionTheory.Ar.dualMap (psiAt O c e y)) ≫ (frAt O c (below y.1)).v (letterAt O l).1 (letterAt O l).2
 
 def WeilData {n : ℕ} (xO : Sp ↥(intO ℂ_[resP v]) ⟶ O.s.T.Z.X)
     (χ : Fin (D.R.f * O.N + D.R.f * O.N) → TorsChar O.s.T.Z.t xO (resP v ^ n))

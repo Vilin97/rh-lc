@@ -22,9 +22,9 @@ theorem spMap_conj_conj : spMap (starRingEnd ℂ) ≫ spMap (starRingEnd ℂ) = 
   exact congrArg Spec.map (CommRingCat.hom_ext (RingHom.ext fun a => by simp))
 
 theorem spMap_dual_conj_conj :
-    spMap (dualMap (starRingEnd ℂ)) ≫ spMap (dualMap (starRingEnd ℂ)) = 𝟙 _ := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) = 𝟙 _ := by
   rw [← Spec.map_comp, ← Spec.map_id]
-  exact congrArg Spec.map (CommRingCat.hom_ext (RingHom.ext fun a => by ext <;> simp [dualMap]))
+  exact congrArg Spec.map (CommRingCat.hom_ext (RingHom.ext fun a => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]))
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {X : Scheme.{0}}
   {t : SAB H X}
@@ -45,7 +45,7 @@ theorem cjForm_apply (h : TanM x' t.G →ₗ[ℂ] TanM x' t.G →ₗ⋆[ℂ] ℂ
     cjForm e h v w = starRingEnd ℂ (h (tanPull (starRingEnd ℂ) e v) (tanPull (starRingEnd ℂ) e w)) := rfl
 
 theorem tanPull_conj_injective : Function.Injective (tanPull (G := t.G) (starRingEnd ℂ) e) := fun v w h => by
-  have h1 := congrArg (fun z => spMap (dualMap (starRingEnd ℂ)) ≫ (tv z).left) h
+  have h1 := congrArg (fun z => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ (tv z).left) h
   simp only [tanPull_left] at h1
   rw [← Category.assoc, ← Category.assoc, spMap_dual_conj_conj, Category.id_comp, Category.id_comp] at h1
   exact tan_ext h1
@@ -116,8 +116,8 @@ theorem valAt_cjPt {V : Y.affineOpens} (v : TanM (LogKS.chart V ≫ f) t.G) {y :
     rw [← ev_eq, CxPts.ev_conj (y := y) rfl hy, ev_eq hy]
     rfl
   refine tan_ext ?_
-  show spMap (dualMap (evHom hy')) ≫ (tv v).left =
-    spMap (dualMap (starRingEnd ℂ)) ≫ spMap (dualMap (evHom hy)) ≫ (tv v).left
+  show spMap (GlobalTheory.CompanionTheory.Ar.dualMap (evHom hy')) ≫ (tv v).left =
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (evHom hy)) ≫ (tv v).left
   rw [e, ← Category.assoc, ← Spec.map_comp]
   congr 2
   exact FlagMod.dualMap_comp _ _
@@ -147,14 +147,14 @@ theorem isLieMetric_cj {k : Type} [Field k] {Y : Scheme.{0}} {p : Y ⟶ Sp k} {d
   beta_reduce
   rw [cjForm_apply, h3 _ (hs hy), valAt_cjPt v hy, valAt_cjPt w hy]
 
-theorem exists_conj_family : ∀ (k : Type) [Field k] (Y : Scheme.{0}) (p : Y ⟶ Sp k) (d : ℕ) [SmoothOfRelativeDimension d p] (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (f : Y ⟶ X), IsProjOver p → (∀ σ : k →+* ℂ, (starRingEnd ℂ).comp σ ≠ σ) → ∃ h : ∀ (σ : k →+* ℂ) (y : CxPts p σ), TanM (y.1 ≫ f) t.G →ₗ[ℂ] TanM (y.1 ≫ f) t.G →ₗ⋆[ℂ] ℂ, (∀ σ, IsLieMetric t f (AnRead.all p σ d) (h σ)) ∧ ∀ σ σ' (y : CxPts p σ) (y' : CxPts p σ') (v w : TanM (y.1 ≫ f) t.G) (v' w' : TanM (y'.1 ≫ f) t.G), y'.1 = spMap (starRingEnd ℂ) ≫ y.1 → (tv v').left = spMap (dualMap (starRingEnd ℂ)) ≫ (tv v).left → (tv w').left = spMap (dualMap (starRingEnd ℂ)) ≫ (tv w).left → h σ' y' v' w' = starRingEnd ℂ (h σ y v w) := by
+theorem exists_conj_family : ∀ (k : Type) [Field k] (Y : Scheme.{0}) (p : Y ⟶ Sp k) (d : ℕ) [SmoothOfRelativeDimension d p] (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (f : Y ⟶ X), IsProjOver p → (∀ σ : k →+* ℂ, (starRingEnd ℂ).comp σ ≠ σ) → ∃ h : ∀ (σ : k →+* ℂ) (y : CxPts p σ), TanM (y.1 ≫ f) t.G →ₗ[ℂ] TanM (y.1 ≫ f) t.G →ₗ⋆[ℂ] ℂ, (∀ σ, IsLieMetric t f (AnRead.all p σ d) (h σ)) ∧ ∀ σ σ' (y : CxPts p σ) (y' : CxPts p σ') (v w : TanM (y.1 ≫ f) t.G) (v' w' : TanM (y'.1 ≫ f) t.G), y'.1 = spMap (starRingEnd ℂ) ≫ y.1 → (tv v').left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ (tv v).left → (tv w').left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ (tv w).left → h σ' y' v' w' = starRingEnd ℂ (h σ y v w) := by
   intro k _ Y p d _ E _ _ _ H X t f hp _
   choose h hh using fun σ => LieMetExist.exists_isLieMetric k Y p d σ E H X t f hp
   refine ⟨fun σ y => h σ y + cjForm (cjPt_comp f y) (h _ (cjPt y)),
     fun σ => isLieMetric_add (hh σ) (isLieMetric_cj (hh _)), fun σ σ' y y' v w v' w' ey ev ew => ?_⟩
   have es := eq_conj ey
   have key : ∀ {a : Sp (DualNumber ℂ) ⟶ t.G.left},
-      spMap (dualMap (starRingEnd ℂ)) ≫ spMap (dualMap (starRingEnd ℂ)) ≫ a = a := fun {a} => by
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ a = a := fun {a} => by
     rw [← Category.assoc, spMap_dual_conj_conj, Category.id_comp]
   beta_reduce
   rw [LinearMap.add_apply, LinearMap.add_apply, LinearMap.add_apply, LinearMap.add_apply, cjForm_apply, cjForm_apply,

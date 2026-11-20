@@ -22,15 +22,15 @@ theorem dlogVals_of_basis {E : Type} [Field E] [NumberField E] [IsCMField E] {H 
     (χ : Fin N → TorsChar t xO (p ^ n)) (e : Fin k → (Sp (DualNumber ↥(intO ℂ_[p])) ⟶ t.G.left))
     (he : IsTanBasis t xO e) (h : Fin N → Fin k → ↥(intO ℂ_[p])) (hd : ∀ j, DlogIs t p n (χ j) e (h j))
     (u : Fin g → (Sp (DualNumber ℂ_[p]) ⟶ t.G.left)) (a : Fin g → Fin k → ℂ_[p])
-    (ha : ∀ l, IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ xO) (fun i => spMap (dualMap (intO ℂ_[p]).subtype) ≫ e i)
+    (ha : ∀ l, IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ xO) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ e i)
       (a l) (u l)) :
     GlobalTheory.EqHalf.DlogVals t xO χ u (Matrix.of fun r l => ∑ i, (h r i : ℂ_[p]) * a l i) := by
   intro vO cf hv hcf m
   have hid : spMap (RingHom.id ↥(intO ℂ_[p])) = 𝟙 _ := Spec.map_id _
-  have hid' : spMap (dualMap (RingHom.id ↥(intO ℂ_[p]))) = 𝟙 _ := by
-    have : dualMap (RingHom.id ↥(intO ℂ_[p])) = RingHom.id _ := by
+  have hid' : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id ↥(intO ℂ_[p]))) = 𝟙 _ := by
+    have : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id ↥(intO ℂ_[p])) = RingHom.id _ := by
       refine RingHom.ext fun z => ?_
-      ext <;> simp [dualMap]
+      ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
     rw [this]
     exact Spec.map_id _
   have h0 := he.2 _ (RingHom.id _) vO (by rwa [hid, Category.id_comp])
@@ -64,8 +64,8 @@ theorem dlogVals_valMat : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
         (M : Matrix (Fin (g + g)) (Fin g) V.G.functionField),
         IsTanBasis t (hU.fromSpec ≫ ρ') e → ChartVal V ρ' f T hU e h M → ⊤ ≤ yt ⁻¹ᵁ U →
         (∀ x : Γ(V.X, U) →+* ↥(intO ℂ_[resP v]), spMap x ≫ hU.fromSpec = yO →
-          ∀ j, DlogIs t (resP v) n (χ j) (fun i => spMap (dualMap x) ≫ e i) (fun i => x (h j i))) →
-        GlobalTheory.EqHalf.DlogVals t (yO ≫ ρ') χ (fun l => spMap (dualMap ψ) ≫ f (below y.1) l)
+          ∀ j, DlogIs t (resP v) n (χ j) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap x) ≫ e i) (fun i => x (h j i))) →
+        GlobalTheory.EqHalf.DlogVals t (yO ≫ ρ') χ (fun l => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f (below y.1) l)
           ((valMat V M (T (below y.1)) z).map (ioOf (resP v) ε)) := by
   intro E _ _ _ H X t F _ _ Y V ρ' ρ hρ g f T v hp n ε y z yt hz hyt ψ₀ hψ₀
   obtain ⟨y, hy⟩ := y

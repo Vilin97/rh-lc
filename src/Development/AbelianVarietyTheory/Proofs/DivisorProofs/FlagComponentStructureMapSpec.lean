@@ -98,10 +98,10 @@ theorem eq_mul_of_carries (C : FlagCpt Z e) {V : (gen Z).Opens} (hV : IsAffineOp
   obtain ⟨t, htri⟩ := GlobalTheory.VarFlag.tri_of_carries C hh hg
   obtain ⟨T, ⟨-, -, hT⟩, hTd, hTl⟩ := (h.tri_iff (RingHom.id Ω) g t).1 htri
   obtain ⟨f₁, hf₁⟩ := Spread.exists_bc f₀ ψ rfl hx
-  have hid : spMap (dualMap (RingHom.id Ω)) = 𝟙 _ := by
+  have hid : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id Ω)) = 𝟙 _ := by
     rw [← Spec.map_id]
     congr 1
-    ext r <;> simp [dualMap]
+    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   refine ⟨T, hTl, fun τ i => by rw [hTd]; exact Units.ne_zero _, fun τ => ?_⟩
   ext i k
   have e1 : g.vec τ i = ∑ j, T τ i j • h.vec τ j := by

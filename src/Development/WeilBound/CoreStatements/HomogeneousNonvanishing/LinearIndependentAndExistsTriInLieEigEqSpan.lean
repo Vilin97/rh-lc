@@ -53,13 +53,13 @@ theorem lieEig_basis_rf : Top.Given → ∀ (E : Type) [Field E] [NumberField E]
     rw [← hcst _ h1]
     exact LieTangent.valAt_unique hξ h3 h2
   have hinj : Function.Injective (algebraMap T.V T.Fr) := IsFractionRing.injective _ _
-  have hyb : ∀ i, ∃ w : EC, (MC.pt w).left = Spec.map (CommRingCat.ofHom (dualMap (algebraMap T.V T.Fr))) ≫
+  have hyb : ∀ i, ∃ w : EC, (MC.pt w).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr))) ≫
       (ub (Small.labelC s) (Small.labelFin Dw s i)).left ≫ Ψ := fun i =>
     GlobalTheory.T.tangent_vector_lie_model_lift E H Or.𝔐.X Or.𝔐.t T zV G Ψ hΨ EC MC _ (htan _ _)
   choose yb hyb using hyb
   have hybT : ∀ i, (MC.pt (yb i)).left ≫ Or.𝔐.m.φ = Small.tanY Y y.1 (Small.labelC s) (Small.labelFin Dw s i) := fun i => by
     obtain ⟨u', hu1, hu2⟩ := hlift (Small.labelC s) (Small.labelFin Dw s i)
-    have hu2' : u' ≫ m2.φ = Spec.map (CommRingCat.ofHom (dualMap (algebraMap T.V T.Fr))) ≫
+    have hu2' : u' ≫ m2.φ = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr))) ≫
         (ub (Small.labelC s) (Small.labelFin Dw s i)).left := hu2
     have hbase : u' ≫ t'.G.hom = Spec.map (CommRingCat.ofHom (algebraMap T.Fr (DualNumber T.Fr))) :=
       base_eq T G t' m2 _ u' hu2'

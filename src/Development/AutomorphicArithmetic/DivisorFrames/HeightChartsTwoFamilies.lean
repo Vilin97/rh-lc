@@ -33,7 +33,7 @@ theorem UpperTheory.height_charts_two_families :
   let k : F →+* ℂ_[p] := (ioOf p e).comp (algebraMap F (AlgebraicClosure F))
   obtain ⟨δ, hδ0, hδ, hc⟩ := hS k
   obtain ⟨δ', hδ0', hδ', hc'⟩ := hS' k
-  have htan : ∀ i, IsTanAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (spMap (dualMap (intO ℂ_[p]).subtype) ≫ ex i) :=
+  have htan : ∀ i, IsTanAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ ex i) :=
     fun i => GlobalTheory.LieMet.isTan_map _ rfl (hex.1 i)
   have hp1 : (1 : ℝ) < p := by exact_mod_cast hp.out.one_lt
   have hp0 : (0 : ℝ) < p := by linarith

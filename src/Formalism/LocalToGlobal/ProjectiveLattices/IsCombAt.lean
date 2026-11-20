@@ -16,7 +16,7 @@ section Dual
 
 variable {S T : Type} [CommRing S] [CommRing T]
 
-def dualMap (φ : S →+* T) : DualNumber S →+* DualNumber T where
+def GlobalTheory.CompanionTheory.Ar.dualMap (φ : S →+* T) : DualNumber S →+* DualNumber T where
   toFun x := TrivSqZeroExt.inl (φ x.fst) + TrivSqZeroExt.inr (φ x.snd)
   map_one' := by ext <;> simp
   map_mul' x y := by
@@ -79,7 +79,7 @@ variable {Xo c}
 def FrMap {S T : Type} [CommRing S] [Algebra c.F S] [CommRing T] [Algebra c.F T] (φ : S →ₐ[c.F] T)
     (y : FrPt Xo c S) (z : FrPt Xo c T) : Prop :=
   z.x = spMap φ.toRingHom ≫ y.x ∧
-    (∀ τ i, z.u τ i = spMap (dualMap φ.toRingHom) ≫ y.u τ i) ∧
+    (∀ τ i, z.u τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ.toRingHom) ≫ y.u τ i) ∧
     ∃ pm : Gx z.x ⟶ Gx y.x, pm ≫ (snd (Over.mk y.x) Xo.univ.t.G).left = (snd (Over.mk z.x) Xo.univ.t.G).left ∧
       pm ≫ (fst (Over.mk y.x) Xo.univ.t.G).left = (fst (Over.mk z.x) Xo.univ.t.G).left ≫ spMap φ.toRingHom ∧
       ∀ (i : Fin 1 → Xo.univ.t.PP.L.ι) (h : (PPx z.x).U i ≤ pm ⁻¹ᵁ (PPx y.x).U i), (pm.appLE _ _ h).hom (y.s.f i) = z.s.f i

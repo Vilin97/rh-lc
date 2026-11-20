@@ -190,7 +190,7 @@ def LiesOver {S S' : Type} [CommRing S] [Algebra c.F S] [CommRing S'] [Algebra C
     (y₂ : FrPt C.Xo₂ C.c₂ S') (y : FrPt Xo c S) : Prop :=
   φ.comp (algebraMap c.F S) = (algebraMap C.c₂.F S').comp C.incl ∧
     y₂.x ≫ C.r = spMap φ ≫ y.x ∧
-    (∀ τ i, y₂.u τ i ≫ C.m.φ = spMap (dualMap φ) ≫ y.u τ i) ∧
+    (∀ τ i, y₂.u τ i ≫ C.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ y.u τ i) ∧
     ∃ pm : Gx y₂.x ⟶ Gx y.x, C.IsGroupMap φ y₂.x y.x pm ∧ C.SecOver pm 1 y₂.s y.s
 
 def NabOver (nab : NabV Xo c) (nab₂ : NabV C.Xo₂ C.c₂) : Prop :=
@@ -411,8 +411,8 @@ theorem Cover.triv_nabOver (Xo : Moduli D l) (c : Coeff l) (nab : NabV Xo c) :
   obtain ⟨x, hx, u, t, e, b, s, g⟩ := y
   obtain ⟨-, h1, h2, pm', h3, h4⟩ := h
   have e : spMap (RingHom.id S) = 𝟙 _ := Spec.map_id _
-  have e' : spMap (dualMap (RingHom.id S)) = 𝟙 _ := by
-    have : dualMap (RingHom.id S) = RingHom.id _ := RingHom.ext fun z => TrivSqZeroExt.inl_fst_add_inr_snd_eq z
+  have e' : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id S)) = 𝟙 _ := by
+    have : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id S) = RingHom.id _ := RingHom.ext fun z => TrivSqZeroExt.inl_fst_add_inr_snd_eq z
     rw [this]; exact Spec.map_id _
   obtain rfl : x₂ = x := by
     rw [e] at h1

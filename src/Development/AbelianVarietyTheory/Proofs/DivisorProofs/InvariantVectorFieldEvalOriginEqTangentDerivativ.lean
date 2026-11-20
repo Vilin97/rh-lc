@@ -43,8 +43,8 @@ theorem isTr_eta_tv (v : TanM (𝟙 (Sp R)) G) :
     rw [this, hη, Category.comp_id]
   · rw [one_left]
     simp [hη]
-  · have hd : dualMap (RingHom.id R) = RingHom.id (DualNumber R) := by
-      ext x <;> simp [dualMap]
+  · have hd : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R) = RingHom.id (DualNumber R) := by
+      ext x <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
     simp [hd, spMap]
   · rw [_root_.one_mul]
     rfl

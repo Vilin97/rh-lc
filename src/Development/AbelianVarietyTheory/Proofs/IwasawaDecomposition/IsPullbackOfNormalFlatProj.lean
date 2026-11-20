@@ -88,9 +88,9 @@ theorem spMap_comp_eq {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (p :
   rw [← Spec.map_comp]; rfl
 
 theorem dualMap_comp_eq {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (p : A →+* B) (q : B →+* C) :
-    (dualMap q).comp (dualMap p) = dualMap (q.comp p) := by
+    (GlobalTheory.CompanionTheory.Ar.dualMap q).comp (GlobalTheory.CompanionTheory.Ar.dualMap p) = GlobalTheory.CompanionTheory.Ar.dualMap (q.comp p) := by
   refine RingHom.ext fun x => ?_
-  ext <;> simp [dualMap]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H}
 

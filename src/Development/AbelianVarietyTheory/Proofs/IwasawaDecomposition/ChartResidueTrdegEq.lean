@@ -87,8 +87,8 @@ theorem exists_gen (Z : Mdl Y i₀) (a : Fin Z.m) {K : Type} [Field K] (L₀ : S
     have e2 : ((Z.fr a).bc ψ₁).bc g = (Z.fr a).bc (g.comp ψ₁) := by
       funext τ i
       simp only [Vecs.bc, spMap, ← Category.assoc, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
-      rw [show (dualMap g).comp (dualMap ψ₁) = dualMap (g.comp ψ₁) from
-        RingHom.ext fun x => by ext <;> simp [dualMap]]
+      rw [show (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap ψ₁) = GlobalTheory.CompanionTheory.Ar.dualMap (g.comp ψ₁) from
+        RingHom.ext fun x => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]]
     rw [e1] at h
     rw [e2]
     exact h

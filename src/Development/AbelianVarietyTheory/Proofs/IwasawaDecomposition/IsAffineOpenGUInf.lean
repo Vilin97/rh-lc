@@ -74,7 +74,7 @@ def gBasis (M : MChart Y) (z : Sp S ⟶ A) (h : ⊤ ≤ z ⁻¹ᵁ (f ''ᵁ M.U)
 
 theorem gBasis_left (M : MChart Y) (z : Sp S ⟶ A) (h : ⊤ ≤ z ⁻¹ᵁ (f ''ᵁ M.U)) (j : Fin M.n) :
     (tv (gBasis hF M z h j)).left =
-      spMap (dualMap (ev (liftPt f M.U z h) M.U (liftPt_le f M.U z h))) ≫ M.v₀ j ≫ F := by
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev (liftPt f M.U z h) M.U (liftPt_le f M.U z h))) ≫ M.v₀ j ≫ F := by
   simp only [gBasis, Module.Basis.map_apply]
   rw [tanCast_left]
   show (tv (lieBasis M _ _ j)).left ≫ F = _

@@ -129,7 +129,7 @@ theorem deg_le_of_mono_dual [Infinite k] (hC : IsSmoothProjCurve k C) {L K : C.M
   have := hQ.dual.isFiniteQC
   have h₁ := hC'.deg_le_deg_sat j
   have h₂ := hC'.deg_cokernel (satι j)
-  have h₃ := hP.deg_le (dualMap (cokernel.π (satι j)) ≫ inv (cartierDualToBidual L))
+  have h₃ := hP.deg_le (GlobalTheory.CompanionTheory.Ar.dualMap (cokernel.π (satι j)) ≫ inv (cartierDualToBidual L))
   rw [deg_dual hC hQ] at h₃
   rw [deg_dual hC hL] at h₂
   omega

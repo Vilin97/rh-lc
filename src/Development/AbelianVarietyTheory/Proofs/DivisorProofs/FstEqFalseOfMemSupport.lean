@@ -26,9 +26,9 @@ private theorem spMap_id_ (A : Type) [CommRing A] : spMap (RingHom.id A) = 𝟙 
   show Spec.map (𝟙 (CommRingCat.of A)) = _
   exact Spec.map_id _
 
-private theorem dualMap_id_ (A : Type) [CommRing A] : dualMap (RingHom.id A) = RingHom.id _ := by
+private theorem dualMap_id_ (A : Type) [CommRing A] : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id A) = RingHom.id _ := by
   refine RingHom.ext fun z => ?_
-  ext <;> simp [dualMap]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 section Field
 
@@ -39,7 +39,7 @@ private theorem spMap_symm_cancel (σ : C ≃+* C) {Y : Scheme.{0}} (y : Sp C �
   rw [← Category.assoc, ← spMap_comp_, RingEquiv.symm_toRingHom_comp_toRingHom, spMap_id_, Category.id_comp]
 
 private theorem spMap_dualMap_symm_cancel (σ : C ≃+* C) {Y : Scheme.{0}} (y : Sp (DualNumber C) ⟶ Y) :
-    spMap (dualMap σ.symm.toRingHom) ≫ spMap (dualMap σ.toRingHom) ≫ y = y := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ.symm.toRingHom) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ.toRingHom) ≫ y = y := by
   rw [← Category.assoc, ← spMap_comp_, ← dualMap_comp, RingEquiv.symm_toRingHom_comp_toRingHom, dualMap_id_,
     spMap_id_, Category.id_comp]
 
@@ -64,14 +64,14 @@ variable {C : Type} [NontriviallyNormedField C] [IsUltrametricDist C]
 
 private theorem mem_lat_transport (σ : C ≃+* C) (hσ : ∀ z, ‖σ z‖ = ‖z‖) (p : ℕ) (x : Sp C ⟶ X)
     (v : Sp (DualNumber C) ⟶ t.G.left) (hv : v ∈ lat t p x false) :
-    spMap (dualMap σ.toRingHom) ≫ v ∈ lat t p (spMap σ.toRingHom ≫ x) false := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ.toRingHom) ≫ v ∈ lat t p (spMap σ.toRingHom ≫ x) false := by
   have hx : ∀ xO : Sp ↥(intO C) ⟶ X, spMap (intO C).subtype ≫ xO = x →
       spMap (intO C).subtype ≫ spMap (restrO σ hσ).toRingHom ≫ xO = spMap σ.toRingHom ≫ x := by
     intro xO hxO
     rw [← hxO, ← Category.assoc, ← Category.assoc, ← spMap_comp_, ← spMap_comp_, subtype_comp_restrO]
   have hd : ∀ vO : Sp (DualNumber ↥(intO C)) ⟶ t.G.left,
-      spMap (dualMap (intO C).subtype) ≫ spMap (dualMap (restrO σ hσ).toRingHom) ≫ vO =
-        spMap (dualMap σ.toRingHom) ≫ spMap (dualMap (intO C).subtype) ≫ vO := by
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO C).subtype) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (restrO σ hσ).toRingHom) ≫ vO =
+        spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ.toRingHom) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO C).subtype) ≫ vO := by
     intro vO
     rw [← Category.assoc, ← Category.assoc, ← spMap_comp_, ← spMap_comp_, ← dualMap_comp, ← dualMap_comp,
       subtype_comp_restrO]
@@ -80,10 +80,10 @@ private theorem mem_lat_transport (σ : C ≃+* C) (hσ : ∀ z, ‖σ z‖ = �
 
 private theorem grNorm_transport (σ : C ≃+* C) (hσ : ∀ z, ‖σ z‖ = ‖z‖) (x : Sp C ⟶ X)
     (Λ Λ' : Set (Sp (DualNumber C) ⟶ t.G.left))
-    (h1 : ∀ v ∈ Λ, spMap (dualMap σ.toRingHom) ≫ v ∈ Λ')
-    (h2 : ∀ v ∈ Λ', spMap (dualMap σ.symm.toRingHom) ≫ v ∈ Λ) {m : ℕ}
+    (h1 : ∀ v ∈ Λ, spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ.toRingHom) ≫ v ∈ Λ')
+    (h2 : ∀ v ∈ Λ', spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ.symm.toRingHom) ≫ v ∈ Λ) {m : ℕ}
     (u : Fin m → (Sp (DualNumber C) ⟶ t.G.left)) (i : Fin m) :
-    grNorm t (spMap σ.toRingHom ≫ x) Λ' (fun j => spMap (dualMap σ.toRingHom) ≫ u j) i = grNorm t x Λ u i := by
+    grNorm t (spMap σ.toRingHom ≫ x) Λ' (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ.toRingHom) ≫ u j) i = grNorm t x Λ u i := by
   unfold grNorm
   congr 1
   ext r
@@ -104,10 +104,10 @@ private theorem grNorm_transport (σ : C ≃+* C) (hσ : ∀ z, ‖σ z‖ = ‖
 private theorem lnStep_transport {Dw : Datum H} (σ : C ≃+* C) (hσ : ∀ z, ‖σ z‖ = ‖z‖) (x : Sp C ⟶ X)
     (u : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (Sp (DualNumber C) ⟶ t.G.left)) (p : ℕ)
     (s : ((E →+* ℂ) × ℕ) ⊕ ℕ) :
-    lnStep t (spMap σ.toRingHom ≫ x) (fun τ i => spMap (dualMap σ.toRingHom) ≫ u τ i) p false s = lnStep t x u p false s := by
+    lnStep t (spMap σ.toRingHom ≫ x) (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ.toRingHom) ≫ u τ i) p false s = lnStep t x u p false s := by
   have key : ∀ {m : ℕ} (w : Fin m → (Sp (DualNumber C) ⟶ t.G.left)) (i : Fin m),
       grNorm t (spMap σ.toRingHom ≫ x) (lat t p (spMap σ.toRingHom ≫ x) false)
-        (fun j => spMap (dualMap σ.toRingHom) ≫ w j) i = grNorm t x (lat t p x false) w i := by
+        (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ.toRingHom) ≫ w j) i = grNorm t x (lat t p x false) w i := by
     intro m w i
     refine grNorm_transport t σ hσ x _ _ (fun v hv => mem_lat_transport t σ hσ p x v hv) (fun v hv => ?_) w i
     have hσ' : ∀ z, ‖σ.symm z‖ = ‖z‖ := fun z => by rw [← hσ, RingEquiv.apply_symm_apply]
@@ -125,9 +125,9 @@ private theorem lnStep_transport_comp {Dw : Datum H} (σ : C ≃+* C) (hσ : ∀
     (ψ : R →+* C) (x : Sp R ⟶ X)
     (u : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (Sp (DualNumber R) ⟶ t.G.left)) (p : ℕ)
     (s : ((E →+* ℂ) × ℕ) ⊕ ℕ) :
-    lnStep t (spMap (σ.toRingHom.comp ψ) ≫ x) (fun τ i => spMap (dualMap (σ.toRingHom.comp ψ)) ≫ u τ i) p false s =
-      lnStep t (spMap ψ ≫ x) (fun τ i => spMap (dualMap ψ) ≫ u τ i) p false s := by
-  rw [← lnStep_transport t σ hσ (spMap ψ ≫ x) (fun τ i => spMap (dualMap ψ) ≫ u τ i) p s]
+    lnStep t (spMap (σ.toRingHom.comp ψ) ≫ x) (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (σ.toRingHom.comp ψ)) ≫ u τ i) p false s =
+      lnStep t (spMap ψ ≫ x) (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ u τ i) p false s := by
+  rw [← lnStep_transport t σ hσ (spMap ψ ≫ x) (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ u τ i) p s]
   simp only [spMap_comp_, dualMap_comp, Category.assoc]
 
 private theorem fst_eq_false_of_mem_support {D : D7} {A : Amb D} {N j : ℕ} {S : Sig A N j} (la : AllWt.Weight S.Dw)
@@ -149,7 +149,7 @@ private def drViaAny (la : AllWt.Weight S.Dw) (p : ℕ) {K : Type} [Field K] (y 
       expo S.Dw (drSym la) z : (Φ.C k).Y.Fnˣ) : (Φ.C k).Y.Fn)))‖ *
     Real.exp ((drSym la).sum fun a n => (n : ℝ) * lnStep s.T.Z.t
       (spMap (φ.comp (Scheme.stalkClosedPointTo y).hom) ≫ stalkPt (Φ.C k).Y (below y) ≫ (Φ.C k).π ≫ genι s.T.Z)
-      (fun τ i => spMap (dualMap (φ.comp (Scheme.stalkClosedPointTo y).hom)) ≫
+      (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (φ.comp (Scheme.stalkClosedPointTo y).hom)) ≫
         ((Φ.C k).gr_spec (below y)).choose_spec.choose.v τ i) p (a.1 p) a.2.2)
 
 private theorem drVia_eq_drViaAny (la : AllWt.Weight S.Dw) (p : ℕ) [Fact p.Prime] {K : Type} [Field K]

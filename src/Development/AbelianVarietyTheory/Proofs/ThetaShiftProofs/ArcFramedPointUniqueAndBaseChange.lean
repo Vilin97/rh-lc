@@ -154,16 +154,16 @@ theorem tie_pull {V' : Type} [CommRing V'] {x' : Sp V' ⟶ Xo.X} {G' : SAB H (Sp
 end Comparison₂
 
 theorem dual_alg {S T : Type} [CommRing S] [CommRing T] (φ : S →+* T) :
-    spMap (dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) = spMap (algebraMap T (DualNumber T)) ≫ spMap φ := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) = spMap (algebraMap T (DualNumber T)) ≫ spMap φ := by
   rw [← FramedBaseChange.spec_comp, ← FramedBaseChange.spec_comp]
   congr 1
-  exact RingHom.ext fun a => by ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  exact RingHom.ext fun a => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem dual_comp {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (io : R →+* S) (φ : S →+* T) :
-    spMap (dualMap (φ.comp io)) = spMap (dualMap φ) ≫ spMap (dualMap io) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (φ.comp io)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) := by
   rw [← FramedBaseChange.spec_comp]
   congr 1
-  exact RingHom.ext fun a => by ext <;> simp [dualMap]
+  exact RingHom.ext fun a => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 variable {c : Coeff l} {O : Type} [CommRing O] {β : O →+* c.F} {Y : Model Xo c β} {A : Type} [CommRing A] [IsDomain A]
   {b : O →+* A} {a : ArcIn Dw l β A b} {χ : Sp (PowerSeries A) ⟶ Y.X}
@@ -239,7 +239,7 @@ theorem baseChange (W : Wit Y a χ) (e : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) 
   · rw [Category.assoc, φ1, e₁]
   · rw [Category.assoc, φ2, e₂, Category.assoc]
   · obtain ⟨v, p, h1, h2, h3, h4⟩ := hu τ k
-    have cond : (spMap (dualMap ψ.toRingHom) ≫ p) ≫ G.G.hom =
+    have cond : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) ≫ p) ≫ G.G.hom =
         spMap (algebraMap T (DualNumber T)) ≫ spMap ψ.toRingHom := by
       rw [Category.assoc, h4, dual_alg]
     refine ⟨v, n.cart.1.lift _ _ cond, h1, ?_, ?_, n.cart.1.lift_snd _ _ cond⟩

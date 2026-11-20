@@ -10,21 +10,21 @@ namespace GlobalTheory.DualCover
 
 variable {A B : Type} [CommRing A] [CommRing B]
 
-def dualMap (g : A →+* B) : DualNumber A →+* DualNumber B :=
+def GlobalTheory.CompanionTheory.Ar.dualMap (g : A →+* B) : DualNumber A →+* DualNumber B :=
   letI : Algebra A B := g.toAlgebra
   (DualNumber.lift ⟨(Algebra.ofId A (DualNumber B), DualNumber.eps), by simp, fun _ ↦ Commute.all _ _⟩).toRingHom
 
 theorem dualMap_apply (g : A →+* B) (x : DualNumber A) :
-    dualMap g x = TrivSqZeroExt.inl (g x.fst) + TrivSqZeroExt.inr (g x.snd) := by
+    GlobalTheory.CompanionTheory.Ar.dualMap g x = TrivSqZeroExt.inl (g x.fst) + TrivSqZeroExt.inr (g x.snd) := by
   letI : Algebra A B := g.toAlgebra
   show (DualNumber.lift _ : DualNumber A →ₐ[A] DualNumber B) x = _
   rw [DualNumber.lift_apply_apply]
   ext <;> simp [Algebra.ofId_apply, TrivSqZeroExt.algebraMap_eq_inl', RingHom.algebraMap_toAlgebra]
 
-@[simp] theorem dualMap_fst (g : A →+* B) (x : DualNumber A) : (dualMap g x).fst = g x.fst := by
+@[simp] theorem dualMap_fst (g : A →+* B) (x : DualNumber A) : (GlobalTheory.CompanionTheory.Ar.dualMap g x).fst = g x.fst := by
   simp [dualMap_apply]
 
-@[simp] theorem dualMap_snd (g : A →+* B) (x : DualNumber A) : (dualMap g x).snd = g x.snd := by
+@[simp] theorem dualMap_snd (g : A →+* B) (x : DualNumber A) : (GlobalTheory.CompanionTheory.Ar.dualMap g x).snd = g x.snd := by
   simp [dualMap_apply]
 
 end GlobalTheory.DualCover
@@ -34,13 +34,13 @@ variable {A B : Type} [CommRing A] [CommRing B]
 
 theorem isPushout_dualMap (g : A →+* B) :
     IsPushout (CommRingCat.ofHom (algebraMap A (DualNumber A))) (CommRingCat.ofHom g)
-      (CommRingCat.ofHom (dualMap g)) (CommRingCat.ofHom (algebraMap B (DualNumber B))) := by
+      (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap g)) (CommRingCat.ofHom (algebraMap B (DualNumber B))) := by
   letI : Algebra A B := g.toAlgebra
-  have hc : ∀ a : A, dualMap g (algebraMap A (DualNumber A) a) = algebraMap A (DualNumber B) a := by
+  have hc : ∀ a : A, GlobalTheory.CompanionTheory.Ar.dualMap g (algebraMap A (DualNumber A) a) = algebraMap A (DualNumber B) a := by
     intro a
     ext <;> simp [dualMap_apply, TrivSqZeroExt.algebraMap_eq_inl', RingHom.algebraMap_toAlgebra]
-  let ψ₀ : DualNumber A →ₐ[A] DualNumber B := AlgHom.mk (dualMap g) hc
-  have hψ₀ : ∀ x, ψ₀ x = dualMap g x := fun _ ↦ rfl
+  let ψ₀ : DualNumber A →ₐ[A] DualNumber B := AlgHom.mk (GlobalTheory.CompanionTheory.Ar.dualMap g) hc
+  have hψ₀ : ∀ x, ψ₀ x = GlobalTheory.CompanionTheory.Ar.dualMap g x := fun _ ↦ rfl
   let j : B →ₐ[A] DualNumber B := TrivSqZeroExt.inlAlgHom A B B
   let G : TensorProduct A (DualNumber A) B →ₐ[A] DualNumber B :=
     Algebra.TensorProduct.lift ψ₀ j (fun _ _ ↦ Commute.all _ _)
@@ -74,7 +74,7 @@ theorem isPushout_dualMap (g : A →+* B) :
   refine (CommRingCat.isPushout_tensorProduct A (DualNumber A) B).of_iso (Iso.refl _) (Iso.refl _) (Iso.refl _)
     eR.toCommRingCatIso (by simp) (by ext; simp [RingHom.algebraMap_toAlgebra]) ?_ ?_
   · refine CommRingCat.hom_ext (RingHom.ext fun x ↦ ?_)
-    show G (x ⊗ₜ[A] 1) = dualMap g x
+    show G (x ⊗ₜ[A] 1) = GlobalTheory.CompanionTheory.Ar.dualMap g x
     simp [G, hψ₀]
   · refine CommRingCat.hom_ext (RingHom.ext fun x ↦ ?_)
     show G (1 ⊗ₜ[A] x) = algebraMap B (DualNumber B) x
@@ -86,9 +86,9 @@ namespace GlobalTheory.DualCover
 
 theorem epi_spMap_dualMap {X Y : Scheme.{0}} {π : X ⟶ Y} {Ga : Type} [Group Ga] {ρ : Ga → (X ⟶ X)}
     (hG : GlobalTheory.ZM.IsGaloisCover Ga ρ π) {A B : Type} [CommRing A] [CommRing B] (g : A →+* B)
-    (x : Sp A ⟶ Y) (x' : Sp B ⟶ X) (hsq : IsPullback (spMap g) x' x π) : Epi (spMap (dualMap g)) := by
+    (x : Sp A ⟶ Y) (x' : Sp B ⟶ X) (hsq : IsPullback (spMap g) x' x π) : Epi (spMap (GlobalTheory.CompanionTheory.Ar.dualMap g)) := by
   have h2 := isPullback_SpecMap_of_isPushout _ _ _ _ (isPushout_dualMap g)
-  have h3 : IsPullback (spMap (dualMap g)) (spMap (algebraMap B (DualNumber B)) ≫ x')
+  have h3 : IsPullback (spMap (GlobalTheory.CompanionTheory.Ar.dualMap g)) (spMap (algebraMap B (DualNumber B)) ≫ x')
       (spMap (algebraMap A (DualNumber A)) ≫ x) π :=
     (IsPullback.paste_horiz h2.flip hsq.flip).flip
   have he := GlobalTheory.GaloisCartDesc.epi_pullback_fst hG (spMap (algebraMap A (DualNumber A)) ≫ x)
@@ -106,7 +106,7 @@ theorem exists_dualCover : ∀ (X Y : Scheme.{0}) (π : X ⟶ Y) (Ga : Type) [Gr
   have hsq : IsPullback (spMap g₁) x'' x π := by
     rw [hg₁]
     exact IsPullback.of_iso_pullback ⟨by simp [x'', pullback.condition]⟩ X'.isoSpec.symm (by simp) (by simp [x''])
-  refine ⟨Γ(X', ⊤), inferInstance, g₁, x'', dualMap g₁, hsq.w.symm, ?_, ?_, ?_, epi_spMap_dualMap hG g₁ x x'' hsq⟩
+  refine ⟨Γ(X', ⊤), inferInstance, g₁, x'', GlobalTheory.CompanionTheory.Ar.dualMap g₁, hsq.w.symm, ?_, ?_, ?_, epi_spMap_dualMap hG g₁ x x'' hsq⟩
   · refine RingHom.ext fun a ↦ ?_
     ext <;> simp [dualMap_apply, TrivSqZeroExt.algebraMap_eq_inl']
   · refine RingHom.ext fun a ↦ ?_

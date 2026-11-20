@@ -63,10 +63,10 @@ private theorem comp_eq_of_tri {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {O
     (a₂ := CommRingCat.ofHom _) (b2.symm.trans a2))
   have I : ∀ (g : EigFrame Z f' x') τ, Pull.Ind Z.t x' (g.v τ) := fun g τ =>
     Pull.frame_ind (f := f') (u := g.v) ⟨fun τ i => ⟨g.tan τ i, g.eig τ i⟩, g.basis⟩ τ
-  have h1 : spMap (dualMap (RingHom.id K)) = 𝟙 _ := by
+  have h1 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id K)) = 𝟙 _ := by
     rw [← Spec.map_id]
     congr 1
-    ext r <;> simp [dualMap]
+    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   choose cf c1 c2 using h
   have c3 : ∀ τ i, cf τ i i ≠ 0 := fun τ i =>
     (Pull.Tri.diag (I g τ) (I g' τ) (fun i => ⟨_, c1 τ i, c2 τ i⟩) (c2 τ i)).1

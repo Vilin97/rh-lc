@@ -169,11 +169,11 @@ theorem charOf_eq_iff (A : AddSubgroup K) {L : AddSubgroup K} {z z' : K} (hz : z
       rw [sub_mul, AddChar.map_sub_eq_div, div_eq_one_iff_eq (AddChar.val_isUnit _ _).ne_zero] at this
       exact this
 
-def dualMap (ψ : AddChar K ℂ) (A L : AddSubgroup K) (q : perp ψ L ⧸ A.addSubgroupOf (perp ψ L)) :
+def GlobalTheory.CompanionTheory.Ar.dualMap (ψ : AddChar K ℂ) (A L : AddSubgroup K) (q : perp ψ L ⧸ A.addSubgroupOf (perp ψ L)) :
     AddChar (A ⧸ L.addSubgroupOf A) ℂ := charOf A (Quotient.out q : perp ψ L).2
 
 theorem dualMap_injective {A : AddSubgroup K} (hA : perp ψ A = A) (L : AddSubgroup K) :
-    Function.Injective (dualMap ψ A L) := by
+    Function.Injective (GlobalTheory.CompanionTheory.Ar.dualMap ψ A L) := by
   intro q q' h
   have h1 := (charOf_eq_iff A _ _).1 h
   rw [hA] at h1
@@ -184,9 +184,9 @@ theorem dualMap_injective {A : AddSubgroup K} (hA : perp ψ A = A) (L : AddSubgr
 
 theorem dualMap_mk {A : AddSubgroup K} (hA : perp ψ A = A) {L : AddSubgroup K} {z : K}
     (hz : z ∈ perp ψ L) :
-    dualMap ψ A L ((⟨z, hz⟩ : perp ψ L) : perp ψ L ⧸ A.addSubgroupOf (perp ψ L)) = charOf A hz := by
+    GlobalTheory.CompanionTheory.Ar.dualMap ψ A L ((⟨z, hz⟩ : perp ψ L) : perp ψ L ⧸ A.addSubgroupOf (perp ψ L)) = charOf A hz := by
   obtain ⟨l, hl⟩ := QuotientAddGroup.mk_out_eq_add (A.addSubgroupOf (perp ψ L)) (⟨z, hz⟩ : perp ψ L)
-  rw [dualMap, charOf_eq_iff, hA, hl]
+  rw [GlobalTheory.CompanionTheory.Ar.dualMap, charOf_eq_iff, hA, hl]
   have : ((l : perp ψ L) : K) ∈ A := AddSubgroup.mem_addSubgroupOf.1 l.2
   simpa using this
 
@@ -197,7 +197,7 @@ theorem card_addChar (G : Type) [AddCommGroup G] [Finite G] : Nat.card (AddChar 
 
 theorem dualMap_bijective_mul {A : AddSubgroup K} (hA : perp ψ A = A) (b : Kˣ)
     (hfin : (mulLat (b : K) A).relIndex A ≠ 0) :
-    Function.Bijective (dualMap ψ A (mulLat (b : K) A)) := by
+    Function.Bijective (GlobalTheory.CompanionTheory.Ar.dualMap ψ A (mulLat (b : K) A)) := by
   have : Finite (A ⧸ (mulLat (b : K) A).addSubgroupOf A) := Nat.finite_of_card_ne_zero hfin
   refine (dualMap_injective hA _).bijective_of_nat_card_le ?_
   rw [card_addChar]
@@ -222,7 +222,7 @@ theorem exists_charOf {A L : AddSubgroup K} (hA : perp ψ A = A) (b : Kˣ)
   have hr : ∀ r : A, χ (r : A ⧸ L.addSubgroupOf A) = ψ (((Quotient.out q : perp ψ _) : K) * r) := by
     intro r
     have := DFunLike.congr_fun hq (r : A ⧸ (mulLat (b : K) A).addSubgroupOf A)
-    rw [dualMap, charOf_mk] at this
+    rw [GlobalTheory.CompanionTheory.Ar.dualMap, charOf_mk] at this
     rw [this]
     rfl
   have hz : ((Quotient.out q : perp ψ _) : K) ∈ perp ψ L := by
@@ -239,7 +239,7 @@ theorem exists_charOf {A L : AddSubgroup K} (hA : perp ψ A = A) (b : Kˣ)
 
 theorem dualMap_bijective {A L : AddSubgroup K} (hA : perp ψ A = A) (b : Kˣ)
     (hfin : (mulLat (b : K) A).relIndex A ≠ 0) (hbL : mulLat (b : K) A ≤ L) (hLA : L ≤ A) :
-    Function.Bijective (dualMap ψ A L) := by
+    Function.Bijective (GlobalTheory.CompanionTheory.Ar.dualMap ψ A L) := by
   refine ⟨dualMap_injective hA L, fun χ => ?_⟩
   obtain ⟨z, hz, rfl⟩ := exists_charOf hA b hfin hbL hLA χ
   exact ⟨_, dualMap_mk hA hz⟩

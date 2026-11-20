@@ -79,7 +79,7 @@ theorem isCoord_val : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H 
     { ι with commutes' := fun r => (RingHom.congr_fun a1.2.1 r).symm }
   have hv1 := ha C.Y.Fn ι' C.f0.v t C.y0 (fun τ i => by
       obtain ⟨cf, c1, c2, c3⟩ := a1.2.2 τ i
-      exact ⟨cf, c1, c2, (congrArg (fun X => IsCombAtG Z.t X (fun k => spMap (dualMap ι) ≫ f.v τ k) cf (C.f0.v τ i))
+      exact ⟨cf, c1, c2, (congrArg (fun X => IsCombAtG Z.t X (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ι) ≫ f.v τ k) cf (C.f0.v τ i))
         a1.1).mp c3⟩) hpt0 C.flagComponentFramedPoint_frame
   let ψC : ℂ →+* CAt σ' := ψ
   have hχc : ∀ r, χ (algebraMap c.F _ r) = algebraMap c.F (CAt σ') r := fun r => by
@@ -96,11 +96,11 @@ theorem isCoord_val : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H 
         rfl
       have c4 := GlobalTheory.GradedPieces.comb_map ψC hx' c3
       simp only [GlobalTheory.GradedPieces.dual_comp] at c4
-      have hid : spMap (dualMap (RingHom.id ℂ)) = 𝟙 _ := by
+      have hid : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id ℂ)) = 𝟙 _ := by
         rw [← Spec.map_id]
         congr 1
-        ext r <;> simp [dualMap]
-      have hv : (cxFrame Z y).v τ i = spMap (dualMap ψ) ≫ g.v τ i := by
+        ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+      have hv : (cxFrame Z y).v τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ g.v τ i := by
         rw [hmap τ i, GlobalTheory.GradedPieces.dual_comp, hψ, hid, Category.id_comp]
       rw [hv]
       exact c4) hpt (fun τ i => by

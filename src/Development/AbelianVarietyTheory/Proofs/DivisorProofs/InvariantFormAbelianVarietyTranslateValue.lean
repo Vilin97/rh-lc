@@ -39,8 +39,8 @@ theorem ev_sec_sub_ev_tan_eq_val (P : GPt A) {v : epsR K ⟶ A} (hv : IsTangent 
     ev f P.sec - ev f (P.tan hv) = (SqExt.ofModule K P.B P.B).val (P.trx v) (P.tr v).w f :=
   sec_sub_id_eq_val (SqExt.ofModule K P.B P.B) P.w (P.trx v) (P.tr v).w ((P.isTransl_trx v).red hv) f
 
-theorem dualMap_id (B : Type) [CommRing B] : dualMap (RingHom.id B) = RingHom.id (DualNumber B) :=
-  RingHom.ext fun c ↦ by ext <;> simp [dualMap]
+theorem dualMap_id (B : Type) [CommRing B] : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id B) = RingHom.id (DualNumber B) :=
+  RingHom.ext fun c ↦ by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 @[reducible] def Pt.origin (A : Over (Sp K)) [GrpObj A] : GPt A where
   B := K
@@ -50,12 +50,12 @@ theorem dualMap_id (B : Type) [CommRing B] : dualMap (RingHom.id B) = RingHom.id
     exact (Cris.spMap_id K).symm
 
 theorem isTransl_origin (v : epsR K ⟶ A) : IsTransl (algebraMap K K) η[A].left v v.left := by
-  refine ⟨1, Over.homMk (spMap (dualMap (algebraMap K K)) ≫ v.left) (by
+  refine ⟨1, Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K K)) ≫ v.left) (by
       rw [Category.assoc, Over.w v]
       change spMap _ ≫ spMap _ = spMap _
       rw [← Cris.spMap_comp, dualMap_comp_algebraMap]), rfl, rfl, ?_⟩
   rw [_root_.one_mul]
-  change spMap (dualMap (RingHom.id K)) ≫ v.left = v.left
+  change spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id K)) ≫ v.left = v.left
   rw [dualMap_id, Cris.spMap_id, Category.id_comp]
 
 theorem origin_trx (v : epsR K ⟶ A) : (Pt.origin A).trx v = v.left :=

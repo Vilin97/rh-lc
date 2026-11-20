@@ -39,7 +39,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 
 private theorem isTanBasis_map {X : Scheme.{0}} {t : SAB H X} {R S : Type} [CommRing R] [CommRing S] {x : Sp R ⟶ X}
     {g : ℕ} {b : Fin g → (Sp (DualNumber R) ⟶ t.G.left)} (h : IsTanBasis t x b) (β : R →+* S) :
-    IsTanBasis t (spMap β ≫ x) fun i => spMap (dualMap β) ≫ b i := by
+    IsTanBasis t (spMap β ≫ x) fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap β) ≫ b i := by
   refine ⟨fun i => GlobalTheory.LieMet.isTan_map _ rfl (h.1 i), fun T _ φ w hw => ?_⟩
   rw [← Category.assoc, spMap_comp'] at hw ⊢
   simp only [GlobalTheory.LineNorm.Chart.dual_comp]
@@ -56,7 +56,7 @@ private theorem pull_split (g₀ : GenFrame e ρ) (τ : E →+* ℂ) {X M N : Sc
     (hξ : ⊤ ≤ (genericPt Y ≫ j) ⁻¹ᵁ U) (hξV : ⊤ ≤ (genericPt Y ≫ j ≫ p) ⁻¹ᵁ V)
     (hξW : ⊤ ≤ (genericPt Y ≫ j ≫ q) ⁻¹ᵁ W) {g : ℕ} {b : Fin g → (Sp (DualNumber Γ(M, V)) ⟶ Z.t.G.left)}
     (hb : IsTanBasis Z.t (R := Γ(M, V)) (hV.fromSpec ≫ ρ') b) (A₀ : Matrix (Fin g) (Fin (Dw.mult τ)) Y.Fn)
-    (hA : ∀ i, IsCombAtG Z.t (genericPt Y ≫ ρ ≫ genι Z) (fun k => spMap (dualMap (evalPt _ V hξV)) ≫ b k)
+    (hA : ∀ i, IsCombAtG Z.t (genericPt Y ≫ ρ ≫ genι Z) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (evalPt _ V hξV)) ≫ b k)
       (fun k => A₀ k i) (g₀.v τ i))
     (S : Matrix (Fin g) (Fin (Dw.mult τ)) Γ(N, W)) (S' : Matrix (Fin (Dw.mult τ)) (Fin g) Γ(N, W))
     (T : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) Y.Fn) (hS : S' * S = 1) (hT : IsUnit T.det)
@@ -70,7 +70,7 @@ private theorem pull_split (g₀ : GenFrame e ρ) (τ : E →+* ℂ) {X M N : Sc
     evalPt_appLE (genericPt Y ≫ j) q hUW hξ hξW s
   have hx : spMap (evalPt _ V hξV) ≫ hV.fromSpec ≫ ρ' = genericPt Y ≫ ρ ≫ genι Z := by
     rw [ev_from, Category.assoc, hρ]
-  refine ⟨hU, hξ, g, fun i => spMap (dualMap γ) ≫ b i, S.map δ, S'.map δ, ?_, ?_, isUnit_nonsing_inv_det T hT,
+  refine ⟨hU, hξ, g, fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap γ) ≫ b i, S.map δ, S'.map δ, ?_, ?_, isUnit_nonsing_inv_det T hT,
     fun i => ⟨_, (GlobalTheory.LineNorm.Chart.comb_iff (g₀.tan τ) _ _).2 rfl, ?_⟩⟩
   · have := isTanBasis_map hb γ
     rwa [← Category.assoc, hγ, Category.assoc] at this
@@ -93,7 +93,7 @@ private theorem local_coord (g₀ : GenFrame e ρ) (τ : E →+* ℂ) {M : Schem
     (hξV : ⊤ ≤ (genericPt Y ≫ j) ⁻¹ᵁ V) {g : ℕ} {b : Fin g → (Sp (DualNumber Γ(M, V)) ⟶ Z.t.G.left)}
     (hb : IsTanBasis Z.t (R := Γ(M, V)) (hV.fromSpec ≫ ρ') b) :
     ∃ A₀ : Matrix (Fin g) (Fin (Dw.mult τ)) Y.Fn,
-      (∀ i, IsCombAtG Z.t (genericPt Y ≫ ρ ≫ genι Z) (fun k => spMap (dualMap (evalPt _ V hξV)) ≫ b k)
+      (∀ i, IsCombAtG Z.t (genericPt Y ≫ ρ ≫ genι Z) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (evalPt _ V hξV)) ≫ b k)
         (fun k => A₀ k i) (g₀.v τ i)) ∧
       ∀ (y : Y.X) (_ : j y ∈ V) φ f P, Fits g₀ τ y φ f P →
         ∃ (a : Matrix (Fin g) (Fin (Dw.mult τ)) (Y.X.presheaf.stalk y))

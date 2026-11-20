@@ -33,7 +33,7 @@ variable (g₀ : GenFrame e ρ) (τ : E →+* ℂ)
 def Fits (y : Y.X) (φ : c.F →+* Y.X.presheaf.stalk y) (f : StalkFrame ρ y φ)
     (P : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) Y.Fn) : Prop :=
   constF e Y = (toFn y).comp φ ∧ ∀ i, IsCombAtG Z.t (genericPt Y ≫ ρ ≫ genι Z) (g₀.v τ) (fun a => P a i)
-    (spMap (dualMap (toFn y)) ≫ f.v τ i)
+    (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toFn y)) ≫ f.v τ i)
 
 variable {X : Scheme.{0}} (j : Y.X ⟶ X)
 
@@ -48,7 +48,7 @@ def LatOn (U : X.Opens) (P : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) Y.Fn) 
     spMap ε.O.subtype ≫ yt = y.1 ≫ j → ⊤ ≤ yt ⁻¹ᵁ U → ∀ φ f, Fits g₀ τ (below y.1) φ f P →
     ∀ (a : Fin (Dw.mult τ) → ℂ_[resP v]) (w : Sp (DualNumber ℂ_[resP v]) ⟶ Z.t.G.left),
       IsCombAtG Z.t (spMap (valP ε y) ≫ stalkPt Y (below y.1) ≫ ρ ≫ genι Z)
-        (fun i => spMap (dualMap (valP ε y)) ≫ f.v τ i) a w →
+        (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (valP ε y)) ≫ f.v τ i) a w →
       (w ∈ latDR Z.t (spMap (valP ε y) ≫ stalkPt Y (below y.1) ≫ ρ ≫ genι Z) ↔ ∀ i, ‖a i‖ ≤ 1)
 
 variable {M : X.Modules} (dual : Bool) (A : Chart M (Dw.mult τ) → Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) Y.Fn)
@@ -85,7 +85,7 @@ def SplitOn (ρ' : X ⟶ Z.X) (V : X.Opens) (P : Matrix (Fin (Dw.mult τ)) (Fin 
     (S' : Matrix (Fin (Dw.mult τ)) (Fin g) Γ(X, V)),
     IsTanBasis Z.t (R := Γ(X, V)) (hV.fromSpec ≫ ρ') b ∧ S' * S = 1 ∧ IsUnit P.det ∧
     ∀ i, ∃ w, IsCombAtG Z.t (genericPt Y ≫ ρ ≫ genι Z) (g₀.v τ) (fun a => P a i) w ∧
-      IsCombAtG Z.t (genericPt Y ≫ ρ ≫ genι Z) (fun k => spMap (dualMap (evalPt _ V hξ)) ≫ b k)
+      IsCombAtG Z.t (genericPt Y ≫ ρ ≫ genι Z) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (evalPt _ V hξ)) ≫ b k)
         (fun k => evalPt _ V hξ (S k i)) w
 
 def ValAt {K : Type} [Field K] (x : Sp K ⟶ Y.X) (P : Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) Y.Fn)

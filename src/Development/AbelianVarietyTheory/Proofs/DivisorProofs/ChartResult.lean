@@ -34,14 +34,14 @@ theorem GlobalTheory.HalfGeo.chartSt_holds : ChartSt := by
       rw [sp_comp, Category.assoc, hα, ← Category.assoc, gen_eq']
       exact (hα _ hgen).symm)
   have ha : ∀ z (hz : V.j z ∈ U) l, ∃ a, IsCombAtG t (spMap (α z hz) ≫ hU.fromSpec ≫ ρ')
-      (fun i => spMap (dualMap (α z hz)) ≫ e i) a (spMap (dualMap (V.π.stalkMap z).hom) ≫ f (V.π z) l) := fun z hz l =>
+      (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (α z hz)) ≫ e i) a (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (V.π.stalkMap z).hom) ≫ f (V.π z) l) := fun z hz l =>
     (he.2 _ (α z hz) _ (isTan_map _ (by
       rw [hα', ← Category.assoc, ← Category.assoc, ← stalk_eq]; rfl) (hf (V.π z) l))).exists
   choose a ha using ha
   have key : ∀ z (hz : V.j z ∈ U) i,
-      IsCombAtG t (spMap ι₀ ≫ hU.fromSpec ≫ ρ') (fun i => spMap (dualMap ι₀) ≫ e i)
+      IsCombAtG t (spMap ι₀ ≫ hU.fromSpec ≫ ρ') (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ι₀) ≫ e i)
         (∑ l, V.φ (T (V.π z) l i) • fun j => algebraMap (V.G.presheaf.stalk z) V.G.functionField (a z hz l j))
-        (spMap (dualMap V.φ) ≫ u₀ i) := by
+        (spMap (GlobalTheory.CompanionTheory.Ar.dualMap V.φ) ≫ u₀ i) := by
     intro z hz i
     have h4 := GlobalTheory.LatDRFree.comb_map t V.φ (hc (V.π z) i)
     refine comb_comb (fun j => isTan_map _ rfl (he.1 j)) (fun l => ?_) (hι ▸ h4)
@@ -49,8 +49,8 @@ theorem GlobalTheory.HalfGeo.chartSt_holds : ChartSt := by
     rw [hαι, dual_comp, alg_comp_stalkMap] at this
     rw [dual_comp]
     exact this
-  have hA₀ : ∀ i, ∃ b, IsCombAtG t (spMap ι₀ ≫ hU.fromSpec ≫ ρ') (fun i => spMap (dualMap ι₀) ≫ e i) b
-      (spMap (dualMap V.φ) ≫ u₀ i) := fun i => ⟨_, key _ hgen i⟩
+  have hA₀ : ∀ i, ∃ b, IsCombAtG t (spMap ι₀ ≫ hU.fromSpec ≫ ρ') (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ι₀) ≫ e i) b
+      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap V.φ) ≫ u₀ i) := fun i => ⟨_, key _ hgen i⟩
   choose A₀ hA₀ using hA₀
   have hA : ∀ z hz i, A₀ i =
       ∑ l, V.φ (T (V.π z) l i) • fun j => algebraMap (V.G.presheaf.stalk z) V.G.functionField (a z hz l j) :=

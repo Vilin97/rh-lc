@@ -32,7 +32,7 @@ theorem cast_left {R : Type} [CommRing R] {x y : Sp R ⟶ X} (h : x = y) {F : Ty
 theorem exists_tr {A B : Type} [CommRing A] [CommRing B] (a : Sp A ⟶ X) (b : Sp B ⟶ X) (c : A →+* B)
     (h : spMap c ≫ a = b) {E E' : Type} [AddCommGroup E] [AddCommGroup E'] [Module A E] [Module B E']
     (M : LieModel G a E) (M' : LieModel G b E') :
-    ∃ j : E →ₛₗ[c] E', ∀ e, (M'.pt (j e)).left = spMap (dualMap c) ≫ (M.pt e).left := by
+    ∃ j : E →ₛₗ[c] E', ∀ e, (M'.pt (j e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ (M.pt e).left := by
   subst h
   obtain ⟨j, hj, -⟩ := GlobalTheory.T.lie_model_existsUnique_semilinear X G A B c a E E' M M'
   refine ⟨j, fun e => ?_⟩
@@ -40,9 +40,9 @@ theorem exists_tr {A B : Type} [CommRing A] [CommRing B] (a : Sp A ⟶ X) (b : S
   simpa [LieModel.Lifts] using this
 
 theorem spMap_dual_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (c : A →+* B) (d : B →+* C) :
-    spMap (dualMap d) ≫ spMap (dualMap c) = spMap (dualMap (d.comp c)) := by
-  have : dualMap (d.comp c) = (dualMap d).comp (dualMap c) := by
-    ext a <;> simp [dualMap]
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap d) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (d.comp c)) := by
+  have : GlobalTheory.CompanionTheory.Ar.dualMap (d.comp c) = (GlobalTheory.CompanionTheory.Ar.dualMap d).comp (GlobalTheory.CompanionTheory.Ar.dualMap c) := by
+    ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   simp only [this, spMap, ← Spec.map_comp]
   rfl
 
@@ -66,7 +66,7 @@ theorem basis_tr {R A : Type} [CommRing R] [CommRing A] (ψ : R →+* A) (x : Sp
     (hψ : spMap ψ ≫ x = y) {F Fy : Type} [AddCommGroup F] [Module R F] [AddCommGroup Fy] [Module A Fy]
     (MR : LieModel G x F) (My : LieModel G y Fy) {n : ℕ} (b : Module.Basis (Fin n) R F) :
     ∃ (β : F →ₛₗ[ψ] Fy) (B : Module.Basis (Fin n) A Fy), (∀ k, B k = β (b k)) ∧
-      ∀ e, (My.pt (β e)).left = spMap (dualMap ψ) ≫ (MR.pt e).left := by
+      ∀ e, (My.pt (β e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ (MR.pt e).left := by
   obtain ⟨j, hj⟩ := exists_tr x y ψ hψ MR My
   letI : Algebra R A := ψ.toAlgebra
   letI : Module R Fy := Module.compHom Fy ψ

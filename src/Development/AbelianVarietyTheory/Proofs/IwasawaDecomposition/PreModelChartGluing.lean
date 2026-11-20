@@ -26,10 +26,10 @@ theorem top_le_pre {A : Type} [CommRing A] {X : Scheme.{0}} {U : X.Opens} (hU : 
   have h := (spMap φ).preimage_mono hU.fromSpec_preimage_self.ge
   exact h
 
-theorem spMap_dualMap_id' (R : Type) [CommRing R] : spMap (dualMap (RingHom.id R)) = 𝟙 _ := by
-  have : dualMap (RingHom.id R) = RingHom.id _ := by
+theorem spMap_dualMap_id' (R : Type) [CommRing R] : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R)) = 𝟙 _ := by
+  have : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R) = RingHom.id _ := by
     refine RingHom.ext fun x => ?_
-    ext <;> simp [dualMap]
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   rw [this]
   exact Spec.map_id _
 

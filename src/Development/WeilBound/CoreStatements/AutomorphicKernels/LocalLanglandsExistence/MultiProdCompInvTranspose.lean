@@ -69,7 +69,7 @@ theorem isCusp_dual (x : IrrGL k) (h : x.IsCusp) : (GlobalTheory.DualityMap.dual
 
 end Dual
 
-theorem dualMap (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
+theorem GlobalTheory.CompanionTheory.Ar.dualMap (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
     (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) : ∃ D : IrrGL k → IrrGL k, (∀ x y, DualCl x y ↔ y = D x) ∧
       (∀ x, D (D x) = x) ∧ (∀ (x : IrrGL k) (s : ℂ), D (x.nu s) = (D x).nu (-s)) ∧
       (∀ x, x.IsCusp → (D x).IsCusp) ∧ (∀ x, (D x).1 = x.1) :=
@@ -139,7 +139,7 @@ theorem isL_dual_of_admissible : ∀ (k : Type) [Field k] [ValuativeRel k] [Topo
     IsL (l : Multiset (Segment k)) x.rep → DualCl x y →
     ∃ l' : List (Segment k), List.Forall₂ SegDual l l' ∧ IsL (l' : Multiset (Segment k)) y.rep := by
   intro k _ _ _ _ hA l x y hL hxy
-  obtain ⟨D, hD, hDD, hnu, hcusp, hdeg⟩ := dualMap k hA
+  obtain ⟨D, hD, hDD, hnu, hcusp, hdeg⟩ := GlobalTheory.CompanionTheory.Ar.dualMap k hA
   choose f hf using fun Δ : Segment k => (GlobalTheory.SegDualProof.segDual_exists_terms k D hD hDD hnu hcusp hdeg Δ).1
   refine ⟨l.map f, ?_, ?_⟩
   · rw [List.forall₂_map_right_iff]

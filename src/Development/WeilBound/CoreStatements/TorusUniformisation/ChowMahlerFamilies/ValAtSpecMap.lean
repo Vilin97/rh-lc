@@ -254,37 +254,37 @@ theorem isHT_res {R : Type} [CommRing R] [IsDomain R] {T₁ T₂ : Type} [CommGr
   · obtain ⟨v₂, hv₂a, hv₂b, hv₂c⟩ := hv₂ e
     have hle : Ideal.span {(N₂ : R)} ≤ Ideal.span {(N₁ : R)} :=
       Ideal.span_singleton_le_span_singleton.2 (Nat.cast_dvd_cast hN)
-    have hr1 : (dualMap (Ideal.Quotient.mk (Ideal.span {(N₁ : R)}))).comp (algebraMap R (DualNumber R)) =
+    have hr1 : (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(N₁ : R)}))).comp (algebraMap R (DualNumber R)) =
         (algebraMap (R ⧸ Ideal.span {(N₁ : R)}) (DualNumber (R ⧸ Ideal.span {(N₁ : R)}))).comp
           (Ideal.Quotient.mk (Ideal.span {(N₁ : R)})) :=
-      RingHom.ext fun a => TrivSqZeroExt.ext (by simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl])
-        (by simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl])
-    have hr2 : (dualMap (Ideal.Quotient.mk (Ideal.span {(N₁ : R)}))).comp (epsMul (N₁ : R)) =
-        (dualMap (Ideal.Quotient.mk (Ideal.span {(N₁ : R)}))).comp (epsMul 0) :=
-      RingHom.ext fun a => TrivSqZeroExt.ext (by simp [dualMap, epsMul])
+      RingHom.ext fun a => TrivSqZeroExt.ext (by simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl])
+        (by simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl])
+    have hr2 : (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(N₁ : R)}))).comp (epsMul (N₁ : R)) =
+        (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(N₁ : R)}))).comp (epsMul 0) :=
+      RingHom.ext fun a => TrivSqZeroExt.ext (by simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul])
         (by
-          simp [dualMap, epsMul]
+          simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul]
           rw [← map_natCast (Ideal.Quotient.mk (Ideal.span {(N₁ : R)})) N₁, ← map_mul,
             Ideal.Quotient.eq_zero_iff_mem, Ideal.mem_span_singleton]
           exact dvd_mul_right _ _)
-    have hr3 : (dualMap (Ideal.Quotient.factor hle)).comp
+    have hr3 : (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.factor hle)).comp
         ((algebraMap (R ⧸ Ideal.span {(N₂ : R)}) (DualNumber (R ⧸ Ideal.span {(N₂ : R)}))).comp
           (Ideal.Quotient.mk (Ideal.span {(N₂ : R)}))) =
         (algebraMap (R ⧸ Ideal.span {(N₁ : R)}) (DualNumber (R ⧸ Ideal.span {(N₁ : R)}))).comp
           (Ideal.Quotient.mk (Ideal.span {(N₁ : R)})) :=
       RingHom.ext fun a => TrivSqZeroExt.ext
-        (by simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl, Ideal.Quotient.factor_mk])
-        (by simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl, Ideal.Quotient.factor_mk])
-    have hr4 : (dualMap (Ideal.Quotient.factor hle)).comp
-        (dualMap (Ideal.Quotient.mk (Ideal.span {(N₂ : R)}))) =
-        dualMap (Ideal.Quotient.mk (Ideal.span {(N₁ : R)})) :=
-      RingHom.ext fun a => TrivSqZeroExt.ext (by simp [dualMap, Ideal.Quotient.factor_mk])
-        (by simp [dualMap, Ideal.Quotient.factor_mk])
+        (by simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl, Ideal.Quotient.factor_mk])
+        (by simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl, Ideal.Quotient.factor_mk])
+    have hr4 : (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.factor hle)).comp
+        (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(N₂ : R)}))) =
+        GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(N₁ : R)})) :=
+      RingHom.ext fun a => TrivSqZeroExt.ext (by simp [GlobalTheory.CompanionTheory.Ar.dualMap, Ideal.Quotient.factor_mk])
+        (by simp [GlobalTheory.CompanionTheory.Ar.dualMap, Ideal.Quotient.factor_mk])
     let Y : Over (Spec (CommRingCat.of R)) := Over.mk (Spec.map (CommRingCat.ofHom
       ((algebraMap (R ⧸ Ideal.span {(N₁ : R)}) (DualNumber (R ⧸ Ideal.span {(N₁ : R)}))).comp
         (Ideal.Quotient.mk (Ideal.span {(N₁ : R)})))))
     let f : Over.mk (Y.hom ≫ x) ⟶ epsAt x :=
-      Over.homMk (Spec.map (CommRingCat.ofHom (dualMap (Ideal.Quotient.mk (Ideal.span {(N₁ : R)})))))
+      Over.homMk (Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(N₁ : R)})))))
         (by
           show _ ≫ Spec.map _ ≫ x = Spec.map _ ≫ x
           rw [← Category.assoc, ← Spec.map_comp, ← CommRingCat.ofHom_comp, hr1])
@@ -306,8 +306,8 @@ theorem isHT_res {R : Type} [CommRing R] [IsDomain R] {T₁ T₂ : Type} [CommGr
       rw [← comp_pow, ← hptn, ← Nat.cast_smul_eq_nsmul R, hfz, zero_smul, hpt0, comp_one]
     obtain ⟨y, hy⟩ := (h₁.kernel Y (f ≫ M.pt e)).1 hg
     have hy' : y.left ≫ i₁ =
-        Spec.map (CommRingCat.ofHom (dualMap (Ideal.Quotient.mk (Ideal.span {(N₁ : R)})))) ≫ (M.pt e).left := hy
-    let z : Y ⟶ Γ₂.G := Over.homMk (Spec.map (CommRingCat.ofHom (dualMap (Ideal.Quotient.factor hle))) ≫ v₂)
+        Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(N₁ : R)})))) ≫ (M.pt e).left := hy
+    let z : Y ⟶ Γ₂.G := Over.homMk (Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.factor hle))) ≫ v₂)
       (by
         show _ = Spec.map _
         rw [Category.assoc, hv₂a, ← Spec.map_comp, ← CommRingCat.ofHom_comp, hr3])
@@ -317,10 +317,10 @@ theorem isHT_res {R : Type} [CommRing R] [IsDomain R] {T₁ T₂ : Type} [CommGr
       rw [Category.assoc, hv₂b, ← Category.assoc, ← Spec.map_comp, ← CommRingCat.ofHom_comp, hr4])
     refine ⟨y.left, Over.w y, hy', ?_⟩
     refine (valAt_comp_lemma_2 y.left φ.left le_top _ s₂).symm.trans ?_
-    have e2 : y.left ≫ φ.left = Spec.map (CommRingCat.ofHom (dualMap (Ideal.Quotient.factor hle))) ≫ v₂ :=
+    have e2 : y.left ≫ φ.left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.factor hle))) ≫ v₂ :=
       congrArg Over.Hom.left hyz
     rw [e2, valAt_spec_map', hv₂c]
-    simp [dualMap, Ideal.Quotient.factor_mk]
+    simp [GlobalTheory.CompanionTheory.Ar.dualMap, Ideal.Quotient.factor_mk]
 
 theorem char_mem {R : Type} [CommRing R] [IsDomain R] {T : Type} [CommGroup T] (Γ : QFGroup R T) (χ : T →* Rˣ)
     (s : Γ(Γ.G.left, ⊤)) (hs : Γ.HasValues s fun t => ((χ t : Rˣ) : R)) :

@@ -92,7 +92,7 @@ theorem eq_of_frBor {T : Type} [CommRing T] [Nontrivial T] [Algebra c.F T] (h : 
   have hψ : resKap φ = resKap φ' := emb_eq _ _ hxx
   obtain ⟨y₀, hy₀, hc⟩ := (isGenFr_genFr h Z).2
   have pull : ∀ (χ : Om Z →ₐ[c.F] T) (w : FrPt Xo c T), FrMap χ (genFr h Z) w → ∀ τ i,
-      IsCombAt w.x (fun j => spMap (dualMap (resKap χ).toRingHom) ≫ y₀.u τ j) (fun j => χ (genCoef Z τ i j))
+      IsCombAt w.x (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (resKap χ).toRingHom) ≫ y₀.u τ j) (fun j => χ (genCoef Z τ i j))
         (w.u τ i) := by
     intro χ w hw τ i
     refine isCombAt_pull χ.toRingHom hw.1 (fun j => ?_) (hw.2.1 τ i) (hc τ i)
@@ -114,7 +114,7 @@ theorem eq_of_frBor {T : Type} [CommRing T] [Nontrivial T] [Algebra c.F T] (h : 
       have h1 := pull φ' y' hy' τ i
       rw [← hψ, hb.1] at h1
       have h2 := GlobalTheory.TangentLinear.isCombAt_mulVec E H Dw l Xo T y.x
-        (fun j => spMap (dualMap (resKap φ).toRingHom) ≫ y₀.u τ j)
+        (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (resKap φ).toRingHom) ≫ y₀.u τ j)
         (fun j => hyx ▸ GlobalTheory.Frames.FramedBaseChange.tan_bc (resKap φ).toRingHom (y₀.tan τ j)) (y.u τ)
         (Matrix.of fun j i => φ (genCoef Z τ i j)) (cf i) (y'.u τ i) (pull φ y hy τ) (hcf i)
       have ht : IsTanAt y.x (y'.u τ i) := hb.1 ▸ y'.tan τ i

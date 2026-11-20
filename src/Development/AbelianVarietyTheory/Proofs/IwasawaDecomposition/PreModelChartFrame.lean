@@ -213,10 +213,10 @@ theorem plk_scale {S ι : Type} [CommRing S] {M k : ℕ} (γ : S) (c : ι → Fi
   rw [Fintype.card_fin] at h
   exact h
 
-theorem spMap_dual_id (R : Type) [CommRing R] : spMap (dualMap (RingHom.id R)) = 𝟙 _ := by
-  have : dualMap (RingHom.id R) = RingHom.id _ := by
+theorem spMap_dual_id (R : Type) [CommRing R] : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R)) = 𝟙 _ := by
+  have : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R) = RingHom.id _ := by
     refine RingHom.ext fun x => ?_
-    ext <;> simp [dualMap]
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   rw [this]
   exact Spec.map_id _
 

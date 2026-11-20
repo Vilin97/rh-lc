@@ -27,15 +27,15 @@ theorem res_res (ψ : S →+* T) (hx : spMap ψ ≫ x = x') (χ : T →+* U) (hx
     res χ hx' (res ψ hx v) = res ω hx'' v := by
   subst e
   refine tan_ext ?_
-  show spMap (dualMap χ) ≫ spMap (dualMap ψ) ≫ _ = spMap (dualMap (χ.comp ψ)) ≫ _
+  show spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ _ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (χ.comp ψ)) ≫ _
   rw [← Category.assoc, spMap_comp_spMap]
   congr 2
-  exact RingHom.ext fun a => by ext <;> simp [dualMap]
+  exact RingHom.ext fun a => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem res_sum (ψ : S →+* T) (hx : spMap ψ ≫ x = x') {κ : Type} [Fintype κ] (a : κ → S) (n : κ → TanM x t.G) :
     res ψ hx (∑ k, a k • n k) = ∑ k, ψ (a k) • res ψ hx (n k) := by
   subst hx
-  let ρ : overAt (spMap ψ ≫ x) (DualNumber T) ⟶ overAt x (DualNumber S) := Over.homMk (spMap (dualMap ψ)) (by
+  let ρ : overAt (spMap ψ ≫ x) (DualNumber T) ⟶ overAt x (DualNumber S) := Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ)) (by
     show spMap _ ≫ spMap _ ≫ x = spMap _ ≫ spMap _ ≫ x
     rw [← Category.assoc, ← Category.assoc, spMap_comp_spMap, spMap_comp_spMap, PullbackSections.dualMap_comp_alg])
   let f : TanM x t.G →+ TanM (spMap ψ ≫ x) t.G :=

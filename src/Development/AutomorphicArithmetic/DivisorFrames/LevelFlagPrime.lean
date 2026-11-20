@@ -137,24 +137,24 @@ private theorem DT.push {X' : Scheme.{0}} {t' : SAB H X'} {g : X' ⟶ X} (mu : S
 
 private theorem DT.map {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {x : Sp R ⟶ X}
     {u u' : Fin m → (Sp (DualNumber R) ⟶ t.G.left)} {d : Fin m → R} (h : DT t x u u' d) :
-    DT t (spMap φ ≫ x) (fun i => spMap (dualMap φ) ≫ u i) (fun i => spMap (dualMap φ) ≫ u' i) fun i => φ (d i) :=
+    DT t (spMap φ ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ u i) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ u' i) fun i => φ (d i) :=
   fun i => by
     obtain ⟨a, a0, a1, a2⟩ := h i
     exact ⟨fun j => φ (a j), congrArg φ a0, fun j hj => (congrArg φ (a1 j hj)).trans (map_zero φ), GlobalTheory.LatDRFree.comb_map t φ a2⟩
 
 private theorem dual_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (ρ : A →+* B) (χ : B →+* C)
     {Z : Scheme.{0}} (u : Sp (DualNumber A) ⟶ Z) :
-    spMap (dualMap χ) ≫ spMap (dualMap ρ) ≫ u = spMap (dualMap (χ.comp ρ)) ≫ u := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρ) ≫ u = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (χ.comp ρ)) ≫ u := by
   rw [← Category.assoc, ModelRelProbe.spMap_comp]
   congr 2
-  ext z <;> simp [dualMap]
+  ext z <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 private theorem dual_id {A : Type} [CommRing A] {Z : Scheme.{0}} (u : Sp (DualNumber A) ⟶ Z) :
-    spMap (dualMap (RingHom.id A)) ≫ u = u := by
-  have h1 : spMap (dualMap (RingHom.id A)) = 𝟙 _ := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id A)) ≫ u = u := by
+  have h1 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id A)) = 𝟙 _ := by
     rw [← Spec.map_id]
     congr 1
-    ext r <;> simp [dualMap]
+    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   rw [h1, Category.id_comp]
 
 private theorem ind_congr {x' : Sp k ⟶ X} (e : x = x') (h : Ind t x u) : Ind t x' u := e ▸ h

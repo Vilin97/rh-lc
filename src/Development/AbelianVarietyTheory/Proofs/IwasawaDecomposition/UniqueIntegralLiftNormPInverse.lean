@@ -27,13 +27,13 @@ theorem base_eq (x : Sp O ⟶ X) (I : Ideal O) : spMap (algebraMap O (DualNumber
 
 theorem red_ex (I : Ideal O) {v : Sp (DualNumber O) ⟶ t.G.left} (hv : IsTanAtG t x v) :
     ∃ w : Over.mk (spMap (algebraMap O (DualNumber (O ⧸ I))) ≫ x) ⟶ t.G,
-      w.left = spMap (dualMap (Ideal.Quotient.mk I)) ≫ v :=
-  ⟨Over.homMk (spMap (dualMap (Ideal.Quotient.mk I)) ≫ v)
+      w.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk I)) ≫ v :=
+  ⟨Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk I)) ≫ v)
     ((GlobalTheory.FactorDepth.isTanAtG_map t (Ideal.Quotient.mk I) hv).1.trans (base_eq x I).symm), rfl⟩
 
 theorem red_tors (I : Ideal O) {q : ℕ} (hq : (q : O) ∈ I) {v : Sp (DualNumber O) ⟶ t.G.left} (hv : IsTanAtG t x v)
     (w : Over.mk (spMap (algebraMap O (DualNumber (O ⧸ I))) ≫ x) ⟶ t.G)
-    (hw : w.left = spMap (dualMap (Ideal.Quotient.mk I)) ≫ v) : w ^ q = 1 := by
+    (hw : w.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk I)) ≫ v) : w ^ q = 1 := by
   have hv' := GlobalTheory.FactorDepth.isTanAtG_map t (Ideal.Quotient.mk I) hv
   have h0 := smT_zero_ovT hv'
   have key : ∀ n : ℕ, smT _ (n : O ⧸ I) (ovT hv') = ovT hv' ^ n := fun n => by
@@ -69,17 +69,17 @@ theorem dlog_down {p k n : ℕ} (hk : k ≤ n) (c : TorsChar t x (p ^ n)) (c₁ 
   have hle : Ideal.span {(p : O) ^ n} ≤ Ideal.span {(p : O) ^ k} :=
     Ideal.span_singleton_le_span_singleton.2 (pow_dvd_pow _ hk)
   let φ : DualNumber (O ⧸ Ideal.span {(p : O) ^ n}) →ₐ[O] DualNumber (O ⧸ Ideal.span {(p : O) ^ k}) :=
-    { dualMap (Ideal.Quotient.factor hle) with
+    { GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.factor hle) with
       commutes' := fun r => by
-        ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl'] }
+        ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl'] }
   have h1 := c.nat _ _ φ w' w (red_tors _ (by rw [Nat.cast_pow]; exact Ideal.mem_span_singleton_self _) hv w' hw') (by
     rw [hw, hw', ← Category.assoc, Guard.sp_comp]
     congr 2
     refine RingHom.ext fun r => ?_
-    ext <;> simp [dualMap, φ])
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, φ])
   rw [← hc _ w (red_tors _ (by rw [Nat.cast_pow]; exact Ideal.mem_span_singleton_self _) hv w hw), h1]
   have h2 := hD a v hav w' hw'
-  have h3 : ∀ z, (φ z).snd = Ideal.Quotient.factor hle z.snd := fun z => by simp [φ, dualMap]
+  have h3 : ∀ z, (φ z).snd = Ideal.Quotient.factor hle z.snd := fun z => by simp [φ, GlobalTheory.CompanionTheory.Ar.dualMap]
   rw [h3, h2, Ideal.Quotient.factor_mk]
 
 end Ring
@@ -88,15 +88,15 @@ variable {C : Type} [NontriviallyNormedField C] [IsUltrametricDist C] {x : Sp �
 
 theorem coords {g : ℕ} {e : Fin g → (Sp (DualNumber ↥(intO C)) ⟶ t.G.left)} (he : IsTanBasis t x e) {a : Fin g → C}
     {w : Sp (DualNumber C) ⟶ t.G.left}
-    (hw : IsCombAtG t (spMap (intO C).subtype ≫ x) (fun i => spMap (dualMap (intO C).subtype) ≫ e i) a w) (s : C)
+    (hw : IsCombAtG t (spMap (intO C).subtype ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO C).subtype) ≫ e i) a w) (s : C)
     {vO : Sp (DualNumber ↥(intO C)) ⟶ t.G.left} (hv : IsTanAtG t x vO)
-    (hs : spMap (dualMap (intO C).subtype) ≫ vO = spMap (epsMul s) ≫ w) :
+    (hs : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO C).subtype) ≫ vO = spMap (epsMul s) ≫ w) :
     ∃ b : Fin g → ↥(intO C), IsCombAtG t x e b vO ∧ ∀ i, (b i : C) = s * a i := by
   have h1 : spMap (RingHom.id ↥(intO C)) = 𝟙 _ := Spec.map_id _
-  have h2 : dualMap (RingHom.id ↥(intO C)) = RingHom.id _ := by
+  have h2 : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id ↥(intO C)) = RingHom.id _ := by
     refine RingHom.ext fun z => ?_
-    ext <;> simp [dualMap]
-  have h3 : spMap (dualMap (RingHom.id ↥(intO C))) = 𝟙 _ := by rw [h2]; exact Spec.map_id _
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  have h3 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id ↥(intO C))) = 𝟙 _ := by rw [h2]; exact Spec.map_id _
   have h := he.2 _ (RingHom.id ↥(intO C)) vO
   simp only [h1, h3, Category.id_comp] at h
   obtain ⟨b, hb, -⟩ := h hv
@@ -106,7 +106,7 @@ theorem coords {g : ℕ} {e : Fin g → (Sp (DualNumber ↥(intO C)) ⟶ t.G.lef
   exact ⟨b, hb, congrFun ((he.2 C _ _ (GlobalTheory.FactorDepth.isTanAtG_map t (intO C).subtype hv)).unique
     (GlobalTheory.LatDRFree.comb_map t (intO C).subtype hb) h4)⟩
 
-theorem mem_latHT_iff : HTBoundSt → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) [IsLocallyNoetherian X] (t : SAB H X) (p : ℕ) [Fact p.Prime] (C : Type) [NontriviallyNormedField C] [IsUltrametricDist C] [IsAlgClosed C] [CharZero C] [CompleteSpace C], ‖(p : C)‖ = (p : ℝ)⁻¹ → ∀ (x : Sp ↥(intO C) ⟶ X), (∀ x' : Sp ↥(intO C) ⟶ X, spMap (intO C).subtype ≫ x' = spMap (intO C).subtype ≫ x → x' = x) → ∀ (g : ℕ) (e : Fin g → (Sp (DualNumber ↥(intO C)) ⟶ t.G.left)), IsTanBasis t x e → ∀ (n : ℕ) (h : Fin n → Fin g → ↥(intO C)), (∀ c : TorsChar t x (p ^ 1), ∃ j, DlogIs t p 1 c e (h j)) → (∀ j, ∃ c : TorsChar t x (p ^ 1), DlogIs t p 1 c e (h j)) → ∀ (a : Fin g → C) (w : Sp (DualNumber C) ⟶ t.G.left), IsCombAtG t (spMap (intO C).subtype ≫ x) (fun i => spMap (dualMap (intO C).subtype) ≫ e i) a w → (w ∈ latHT t p (spMap (intO C).subtype ≫ x) ↔ (∀ j, ‖∑ i, (h j i : C) * a i‖ ≤ 1) ∧ ∀ i, ‖(p : C) * a i‖ ≤ 1) := by
+theorem mem_latHT_iff : HTBoundSt → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) [IsLocallyNoetherian X] (t : SAB H X) (p : ℕ) [Fact p.Prime] (C : Type) [NontriviallyNormedField C] [IsUltrametricDist C] [IsAlgClosed C] [CharZero C] [CompleteSpace C], ‖(p : C)‖ = (p : ℝ)⁻¹ → ∀ (x : Sp ↥(intO C) ⟶ X), (∀ x' : Sp ↥(intO C) ⟶ X, spMap (intO C).subtype ≫ x' = spMap (intO C).subtype ≫ x → x' = x) → ∀ (g : ℕ) (e : Fin g → (Sp (DualNumber ↥(intO C)) ⟶ t.G.left)), IsTanBasis t x e → ∀ (n : ℕ) (h : Fin n → Fin g → ↥(intO C)), (∀ c : TorsChar t x (p ^ 1), ∃ j, DlogIs t p 1 c e (h j)) → (∀ j, ∃ c : TorsChar t x (p ^ 1), DlogIs t p 1 c e (h j)) → ∀ (a : Fin g → C) (w : Sp (DualNumber C) ⟶ t.G.left), IsCombAtG t (spMap (intO C).subtype ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO C).subtype) ≫ e i) a w → (w ∈ latHT t p (spMap (intO C).subtype ≫ x) ↔ (∀ j, ‖∑ i, (h j i : C) * a i‖ ≤ 1) ∧ ∀ i, ‖(p : C) * a i‖ ≤ 1) := by
   intro hB E _ _ _ H X _ t p hp C _ _ _ _ _ hn x hx g e he n h hc hj a w hw
   have hp0 : (p : C) ≠ 0 := Nat.cast_ne_zero.2 hp.out.ne_zero
   constructor

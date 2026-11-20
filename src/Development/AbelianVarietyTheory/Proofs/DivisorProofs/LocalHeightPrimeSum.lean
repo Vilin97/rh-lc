@@ -92,7 +92,7 @@ theorem exists_integral [IsLocallyNoetherian X] (hX : X.IsSeparated) {p : ℕ} [
     {Mc : Matrix (Fin N) (Fin g) ℂ_[p]} (hM : DlogVals t x χ u Mc) (cf : Fin g → ℂ_[p])
     (hcf : ∀ m, ‖∑ l, Mc m l * cf l‖ ≤ 1) :
     ∃ vO, IsTanAtG t x vO ∧ IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) u (fun l => (p : ℂ_[p]) ^ 2 * cf l)
-      (spMap (dualMap (intO ℂ_[p]).subtype) ≫ vO) := by
+      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ vO) := by
   have hnp : ‖(p : ℂ_[p])‖ = (p : ℝ)⁻¹ := by
     rw [← map_natCast (algebraMap ℚ_[p] ℂ_[p]), norm_algebraMap', Padic.norm_p]
   have hp2 : (2 : ℝ) ≤ p := by exact_mod_cast hp.out.two_le
@@ -108,7 +108,7 @@ theorem exists_integral [IsLocallyNoetherian X] (hX : X.IsSeparated) {p : ℕ} [
   obtain ⟨a, ha, -⟩ := he.2 _ (intO ℂ_[p]).subtype w hw
   have lift : ∀ s : ℂ_[p], (∀ i, ‖s * a i‖ ≤ 1) → ∃ (b : Fin d → ↥(intO ℂ_[p])) (vO : _), (∀ i, (b i : ℂ_[p]) = s * a i) ∧
       IsTanAtG t x vO ∧ IsCombAtG t x e b vO ∧ IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) u (fun l => s * cf l)
-        (spMap (dualMap (intO ℂ_[p]).subtype) ≫ vO) := by
+        (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ vO) := by
     intro s hs
     let b : Fin d → ↥(intO ℂ_[p]) := fun i => ⟨s * a i, hs i⟩
     obtain ⟨vO, hv, hbv⟩ := Guard.exists_comb he.1 b
@@ -191,11 +191,11 @@ theorem comb_act {R : Type} [CommRing R] {x : Sp R ⟶ X} {g : ℕ} {u : Fin g �
 
 theorem eig_map {R S : Type} [CommRing R] [CommRing S] (ψ : R →+* S) {Y : Scheme.{0}} {w : Sp (DualNumber R) ⟶ Y}
     {A : Y ⟶ Y} {a : R} (h : w ≫ A = spMap (epsMul a) ≫ w) :
-    (spMap (dualMap ψ) ≫ w) ≫ A = spMap (epsMul (ψ a)) ≫ spMap (dualMap ψ) ≫ w := by
+    (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ w) ≫ A = spMap (epsMul (ψ a)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ w := by
   rw [Category.assoc, h, ← Category.assoc, ← Category.assoc, Guard.sp_comp, Guard.sp_comp]
   congr 2
   refine RingHom.ext fun r => ?_
-  ext <;> simp [epsMul, dualMap, _root_.mul_comm]
+  ext <;> simp [epsMul, GlobalTheory.CompanionTheory.Ar.dualMap, _root_.mul_comm]
 
 theorem tan_act {R : Type} [CommRing R] {x : Sp R ⟶ X} {v : Sp (DualNumber R) ⟶ t.G.left} (hv : IsTanAtG t x v)
     (α : 𝓞 E) : IsTanAtG t x (v ≫ (t.act.act α).left) := by

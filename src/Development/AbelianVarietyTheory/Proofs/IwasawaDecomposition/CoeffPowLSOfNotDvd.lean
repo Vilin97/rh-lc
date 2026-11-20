@@ -86,8 +86,8 @@ theorem powLS_comp_toLaurent {p : ℕ} (F : DVF p) : (powLS ha).comp F.toLaurent
 end Subst
 
 theorem dualMap_comp {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (f : R →+* S) (g : S →+* T) :
-    dualMap (g.comp f) = (dualMap g).comp (dualMap f) :=
-  RingHom.ext fun x => TrivSqZeroExt.ext (by simp [dualMap]) (by simp [dualMap])
+    GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) = (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) :=
+  RingHom.ext fun x => TrivSqZeroExt.ext (by simp [GlobalTheory.CompanionTheory.Ar.dualMap]) (by simp [GlobalTheory.CompanionTheory.Ar.dualMap])
 
 theorem coe_nsmul_apply {N : ℕ} {X : Type} [AddCommGroup X] [Module (𝓞 E) X] (n : ℕ) (γ : levelForms H N X) (y z : X) :
     ((n • γ : levelForms H N X) : LinearMap.BilinForm ℤ X) y z = n * (γ : LinearMap.BilinForm ℤ X) y z := by
@@ -170,8 +170,8 @@ theorem isArcChart_pow {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {O : Type}
 
 theorem exists_lift_bc {R R' : Type} [CommRing R] [CommRing R'] (g : R →+* R') {G : Over (Sp R)} {G' : Over (Sp R')}
     (bc : G' ≅ (Over.pullback (Out.specOf g)).obj G) (w : epsR R ⟶ G) :
-    ∃ v : epsR R' ⟶ G', v.left ≫ bc.hom.left ≫ pullback.fst G.hom (Out.specOf g) = spMap (dualMap g) ≫ w.left := by
-  have cond : (spMap (dualMap g) ≫ w.left) ≫ G.hom = (epsR R').hom ≫ Out.specOf g := by
+    ∃ v : epsR R' ⟶ G', v.left ≫ bc.hom.left ≫ pullback.fst G.hom (Out.specOf g) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ w.left := by
+  have cond : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ w.left) ≫ G.hom = (epsR R').hom ≫ Out.specOf g := by
     rw [Category.assoc, Over.w w]
     exact GlobalTheory.ArcCompare.dual_over g
   refine ⟨Over.homMk (pullback.lift _ _ cond ≫ bc.inv.left) ?_, ?_⟩
@@ -218,10 +218,10 @@ theorem IsArc.pow {a : ℕ} (ha : 1 ≤ a) {γ : t.Forms} {x : Sp (LaurentSeries
   · exact GlobalTheory.T.admissible_forms_arc_compare E H Dw _ _ _ _ _ (Y Z.i) F.O _ t.a γ (a • γ) h h' χ (powPS (R := F.O) ha) Wt W' hD bc w₁
       (powPS_comp_C ha) hX hU he hφ hw₁ T (t.e τ k) (w τ k) (w' τ k) (hw τ k) (hw' τ k)
   · rw [Category.assoc, hxχ, ← Category.assoc, ← Category.assoc, ← spMap_comp, ← spMap_comp, powLS_comp_toLaurent]
-  · change spMap (dualMap (powLS ha)) ≫ v τ k = spMap (dualMap F.toLaurent) ≫ (w' τ k).left ≫ W₁.m.φ
+  · change spMap (GlobalTheory.CompanionTheory.Ar.dualMap (powLS ha)) ≫ v τ k = spMap (GlobalTheory.CompanionTheory.Ar.dualMap F.toLaurent) ≫ (w' τ k).left ≫ W₁.m.φ
     rw [hv, hm]
     simp only [Category.assoc]
-    rw [reassoc_of% (hw' τ k), ← Category.assoc, ← Category.assoc (spMap (dualMap F.toLaurent)), ← spMap_comp,
+    rw [reassoc_of% (hw' τ k), ← Category.assoc, ← Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap F.toLaurent)), ← spMap_comp,
       ← spMap_comp, ← dualMap_comp, ← dualMap_comp, powLS_comp_toLaurent]
 
 end GlobalTheory.LocM.FJ

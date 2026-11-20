@@ -38,8 +38,8 @@ theorem rule_frChg {κ : KeyRule} (hκ : IsKeyRule κ) {g : ℕ} (e : Fin g ≃ 
   obtain ⟨h1', hg', hv'⟩ := hT'
   subst hg'
   have hid : x' = spMap (RingHom.id K) ≫ x' := by rw [GlobalTheory.Frames.SecCalc.spMap_id', Category.id_comp]
-  have did : spMap (dualMap (RingHom.id K)) = 𝟙 _ := by
-    have hd : dualMap (RingHom.id K) = RingHom.id _ := RingHom.ext fun x => by ext <;> simp [dualMap]
+  have did : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id K)) = 𝟙 _ := by
+    have hd : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id K) = RingHom.id _ := RingHom.ext fun x => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
     rw [hd]
     exact Spec.map_id _
   obtain ⟨th, hth⟩ := (GlobalTheory.SecTieEx.secTie_exists_unique E H Dw l Xo K x' Φ'.T.t Φ'.m).2.1 s

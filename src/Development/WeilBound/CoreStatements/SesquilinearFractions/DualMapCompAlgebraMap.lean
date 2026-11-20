@@ -19,21 +19,21 @@ theorem spMap_comp_spMap_sesquilinear_fractions (f : R →+* R') (f' : R' →+* 
   rw [← Spec.map_comp]; rfl
 
 theorem dualMap_comp_algebraMap_sesquilinear_fractions (f : R →+* R') :
-    (dualMap f).comp (algebraMap R (DualNumber R)) = (algebraMap R' (DualNumber R')).comp f :=
-  RingHom.ext fun x => TrivSqZeroExt.ext (by simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl])
-    (by simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl])
+    (GlobalTheory.CompanionTheory.Ar.dualMap f).comp (algebraMap R (DualNumber R)) = (algebraMap R' (DualNumber R')).comp f :=
+  RingHom.ext fun x => TrivSqZeroExt.ext (by simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl])
+    (by simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl])
 
 theorem fstHom_comp_dualMap' (f : R →+* R') :
-    (TrivSqZeroExt.fstHom R' R' R').toRingHom.comp (dualMap f) = f.comp (TrivSqZeroExt.fstHom R R R).toRingHom :=
-  RingHom.ext fun x => by simp [dualMap]
+    (TrivSqZeroExt.fstHom R' R' R').toRingHom.comp (GlobalTheory.CompanionTheory.Ar.dualMap f) = f.comp (TrivSqZeroExt.fstHom R R R).toRingHom :=
+  RingHom.ext fun x => by simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem fst_comp_algebraMap_dual : (TrivSqZeroExt.fstHom R R R).toRingHom.comp (algebraMap R (DualNumber R)) = RingHom.id R :=
   RingHom.ext fun x => by simp [TrivSqZeroExt.algebraMap_eq_inl]
 
-theorem dualMap_comp_dualMap_ring (f : R →+* R') (f' : R' →+* R'') : (dualMap f').comp (dualMap f) = dualMap (f'.comp f) := by
-  ext x <;> simp [dualMap]
+theorem dualMap_comp_dualMap_ring (f : R →+* R') (f' : R' →+* R'') : (GlobalTheory.CompanionTheory.Ar.dualMap f').comp (GlobalTheory.CompanionTheory.Ar.dualMap f) = GlobalTheory.CompanionTheory.Ar.dualMap (f'.comp f) := by
+  ext x <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
-theorem dualMap_eq_dualMapR' (f : R →+* R') : dualMap f = ReciprocityTheory.ChartRestriction.G.Chart.dualMapR f := RingHom.ext fun _ => rfl
+theorem dualMap_eq_dualMapR' (f : R →+* R') : GlobalTheory.CompanionTheory.Ar.dualMap f = ReciprocityTheory.ChartRestriction.G.Chart.dualMapR f := RingHom.ext fun _ => rfl
 
 end Rings
 
@@ -43,13 +43,13 @@ theorem mono_spec_fraction_field (K : Type) [Field K] [NumberField K] : Mono (sp
   infer_instance
 
 set_option maxHeartbeats 1000000 in
-theorem cm_image_unique_lattice : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (g : ℕ) (ty : Fin g → (E →+* ℂ)) (FU : FamilyUnif Xo (algebraMap (KA l) ℂ) ty) (i : Fin FU.n) (Z : ∀ b : Bool, Curve0 H (sgnRt H b)) (P : (FU.Di i).La →+ (Fin g → ℂ)) (hP : IsPeriod (FU.Di i) ty P) (X : CMPack Z c FU i hP) (b : Bool) (a : PureType.lat hP (sgnRt H b)), (∃! u, X.IsImage b a u) ∧ ∀ u, X.IsImage b a u → IsTanAt Xo.univ.t.G _ u ∧ IsDerivAt0 (fun s => (FU.ex i P s).left) ((Z b).z • P a) (spMap (dualMap (algebraMap X.K ℂ)) ≫ u.left) := by
+theorem cm_image_unique_lattice : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H) (l : Level H) (Xo : Moduli D l) (c : Coeff l) (g : ℕ) (ty : Fin g → (E →+* ℂ)) (FU : FamilyUnif Xo (algebraMap (KA l) ℂ) ty) (i : Fin FU.n) (Z : ∀ b : Bool, Curve0 H (sgnRt H b)) (P : (FU.Di i).La →+ (Fin g → ℂ)) (hP : IsPeriod (FU.Di i) ty P) (X : CMPack Z c FU i hP) (b : Bool) (a : PureType.lat hP (sgnRt H b)), (∃! u, X.IsImage b a u) ∧ ∀ u, X.IsImage b a u → IsTanAt Xo.univ.t.G _ u ∧ IsDerivAt0 (fun s => (FU.ex i P s).left) ((Z b).z • P a) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap X.K ℂ)) ≫ u.left) := by
   intro E _ _ _ H D l Xo c g ty FU i Z P hP X b a
   have hmono := mono_spec_fraction_field X.K
   set φ : 𝓞 X.K →+* X.K := algebraMap (𝓞 X.K) X.K with hφ
   have hA : (X.C b).v.left ≫ (X.C b).P.A.hom = spMap (algebraMap (𝓞 X.K) (DualNumber (𝓞 X.K))) := Over.w (X.C b).v
   have hψ : (X.ψ b a).left ≫ X.B.t.G.hom = (X.C b).P.A.hom := Over.w (X.ψ b a)
-  set F : Sp (DualNumber X.K) ⟶ X.B.t.G.left := spMap (dualMap φ) ≫ (X.C b).v.left ≫ (X.ψ b a).left with hFdef
+  set F : Sp (DualNumber X.K) ⟶ X.B.t.G.left := spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ (X.C b).v.left ≫ (X.ψ b a).left with hFdef
   have hF : F ≫ X.B.t.G.hom = spMap (algebraMap X.K (DualNumber X.K)) ≫ spMap φ := by
     rw [hFdef, Category.assoc, Category.assoc, hψ, hA, spMap_comp_spMap_sesquilinear_fractions, spMap_comp_spMap_sesquilinear_fractions, dualMap_comp_algebraMap_sesquilinear_fractions]
   have m'c := X.m'.cart.1
@@ -115,8 +115,8 @@ theorem cm_image_unique_lattice : ∀ (E : Type) [Field E] [NumberField E] [IsCM
           rw [Category.assoc, hΦ₁]
         rw [← Category.assoc]
         exact X.tie b a s _ hx1 hx2
-      have claim2 : spMap (dualMap (algebraMap X.K ℂ)) ≫ u.left = (Z b).C'.v.left ≫ Φ₀ ≫ X.m.φ := by
-        have key : spMap (dualMap (algebraMap X.K ℂ)) ≫ r = (Z b).C'.v.left ≫ Φ₀ := by
+      have claim2 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap X.K ℂ)) ≫ u.left = (Z b).C'.v.left ≫ Φ₀ ≫ X.m.φ := by
+        have key : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap X.K ℂ)) ≫ r = (Z b).C'.v.left ≫ Φ₀ := by
           refine m'c.hom_ext ?_ ?_
           · rw [Category.assoc, hr2, Category.assoc, hΦ₁, reassoc_of% hvo, ← dualMap_eq_dualMapR', ← Category.assoc,
               spMap_comp_spMap_sesquilinear_fractions, dualMap_comp_dualMap_ring]

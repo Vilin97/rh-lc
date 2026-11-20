@@ -275,18 +275,18 @@ theorem lower_mul {k : Type} [CommRing k] {n : ℕ} {A M : Matrix (Fin n) (Fin n
   · rw [hA i m h, zero_mul]
 
 theorem dual_comp {A B D : Type} [CommRing A] [CommRing B] [CommRing D] (f : A →+* B) (g : B →+* D) :
-    spMap (dualMap g) ≫ spMap (dualMap f) = spMap (dualMap (g.comp f)) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f)) := by
   rw [sp_comp]
   congr 1
   refine RingHom.ext fun z => ?_
-  ext <;> simp [dualMap]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem dual_eps {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (a : A) :
-    spMap (dualMap f) ≫ spMap (epsMul a) = spMap (epsMul (f a)) ≫ spMap (dualMap f) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ spMap (epsMul a) = spMap (epsMul (f a)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
   rw [sp_comp, sp_comp]
   congr 1
   refine RingHom.ext fun z => ?_
-  ext <;> simp [dualMap, epsMul, mul_comm]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, mul_comm]
 
 theorem wit_of_carries {k : Type} [Field k] [Algebra c.F k] {p : Sp k ⟶ C.Y.X} {z : FrPt Xo c k}
     (hp : GlobalTheory.AllWt.ptF z ≫ Z.jQ = p ≫ C.π) {φ : c.F →+* k} {x : Sp k ⟶ Z.X} {g : EigFrame Z φ x} (hg : Comparison₂ z g)
@@ -303,7 +303,7 @@ theorem wit_of_carries {k : Type} [Field k] [Algebra c.F k] {p : Sp k ⟶ C.Y.X}
   have e1 : χ.toRingHom.comp sp.toRingHom = ψ := hom_eq (by rw [← sp_comp, Category.assoc, s1, hχ, e0])
   have e2 : (toFk C y').toRingHom.comp sp.toRingHom = (toFk C y).toRingHom := RingHom.ext s2
   have hM : ∀ τ i, ∃ a, IsCombAtG Z.t (pt C y' ≫ C.π ≫ genι Z) (f'.v τ) a
-      (spMap (dualMap sp.toRingHom) ≫ f.v τ i) := fun τ i => by
+      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap sp.toRingHom) ≫ f.v τ i) := fun τ i => by
     refine (f'.basis τ _ ?_ fun a => ?_).exists
     · have := GlobalTheory.FactorDepth.isTanAtG_map Z.t sp.toRingHom (f.tan τ i)
       rwa [← Category.assoc, s1] at this

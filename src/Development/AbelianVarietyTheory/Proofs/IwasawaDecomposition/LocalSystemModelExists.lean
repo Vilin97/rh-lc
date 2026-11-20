@@ -34,13 +34,13 @@ theorem sp_id {A : Type} [CommRing A] {Z : Scheme.{0}} (h : Sp A ⟶ Z) : spMap 
   (congrArg (· ≫ h) (Spec.map_id _)).trans (Category.id_comp _)
 
 theorem dual_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    (dualMap g).comp (dualMap f) = dualMap (g.comp f) := by
+    (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) = GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) := by
   refine RingHom.ext fun z => ?_
-  ext <;> simp [dualMap]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
-theorem dual_id {A : Type} [CommRing A] : dualMap (RingHom.id A) = RingHom.id _ := by
+theorem dual_id {A : Type} [CommRing A] : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id A) = RingHom.id _ := by
   refine RingHom.ext fun z => ?_
-  ext <;> simp [dualMap]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem pt_congr {R A : Type} [CommRing R] [CommRing A] {N : ℕ} {c c' : R →+* A} {v v' : Fin (N + 1) → A} {h h'}
     (e : c = c') (e' : v = v') : pt c v h = pt c' v' h' := by

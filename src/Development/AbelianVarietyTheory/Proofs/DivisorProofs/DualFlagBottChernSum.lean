@@ -142,7 +142,7 @@ theorem spans_dualFlag (H : Spans fl U v) (hv : IsFrame v) :
   intro l
   obtain ⟨s, hs, es⟩ := H l.rev
   have hex (V : X.Opens) := QCoh.exact_app_of_exact_of_mono (DualFlag.annSeq_shortExact fl l.rev).exact V
-  have hz (j : Fin l) : (dualMap (fl.ι l.rev)).app U (hv.coord (Fin.castLE l.is_le j).rev) = 0 := by
+  have hz (j : Fin l) : (GlobalTheory.CompanionTheory.Ar.dualMap (fl.ι l.rev)).app U (hv.coord (Fin.castLE l.is_le j).rev) = 0 := by
     refine hs.dual_ext le_rfl fun a => ?_
     rw [dualApp_dualMap, app_resM, es, hv.dualApp_coord_frame, if_neg]
     · have := dualApp_smul (0 : Γ(X, U)) (0 : Γ(dual (fl.F l.rev), U)) le_rfl
@@ -156,9 +156,9 @@ theorem spans_dualFlag (H : Spans fl U v) (hv : IsFrame v) :
       simp only [Fin.val_rev, Fin.val_castLE] at h₁ h₂
       omega
   choose s' hs' using fun j => (hex U _).1 (hz j)
-  have inj (V : X.Opens) := QCoh.injective_app_of_mono (Limits.kernel.ι (dualMap (fl.ι l.rev))) V
+  have inj (V : X.Opens) := QCoh.injective_app_of_mono (Limits.kernel.ι (GlobalTheory.CompanionTheory.Ar.dualMap (fl.ι l.rev))) V
   have hc (V : X.Opens) (h : V ≤ U) (a : Fin l → Γ(X, V)) :
-      (Limits.kernel.ι (dualMap (fl.ι l.rev))).app V (Fintype.linearCombination Γ(X, V) (fun i => resM _ h (s' i)) a) =
+      (Limits.kernel.ι (GlobalTheory.CompanionTheory.Ar.dualMap (fl.ι l.rev))).app V (Fintype.linearCombination Γ(X, V) (fun i => resM _ h (s' i)) a) =
         ∑ j, a j • resM _ h (hv.coord (Fin.castLE l.is_le j).rev) := by
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [Fintype.linearCombination_apply, map_sum, Scheme.Modules.Hom.app_smul, app_resM]
@@ -180,7 +180,7 @@ theorem spans_dualFlag (H : Spans fl U v) (hv : IsFrame v) :
     rw [zero_smul] at this
     rw [← h₀, this] at h₁
     simpa using h₁.symm
-  · refine ⟨fun j => dualApp ((Limits.kernel.ι (dualMap (fl.ι l.rev))).app V w) le_rfl
+  · refine ⟨fun j => dualApp ((Limits.kernel.ι (GlobalTheory.CompanionTheory.Ar.dualMap (fl.ι l.rev))).app V w) le_rfl
       (resM F h (v (Fin.castLE l.is_le j).rev)), inj V ((hc V h _).trans (hv.dual_ext h fun b => ?_))⟩
     rw [hev]
     split_ifs with hb
@@ -189,9 +189,9 @@ theorem spans_dualFlag (H : Spans fl U v) (hv : IsFrame v) :
         have := b.isLt
         simp only [Fin.val_rev] at hb ⊢
         omega
-      have h₀ : (dualMap (fl.ι l.rev)).app V ((Limits.kernel.ι (dualMap (fl.ι l.rev))).app V w) = 0 :=
+      have h₀ : (GlobalTheory.CompanionTheory.Ar.dualMap (fl.ι l.rev)).app V ((Limits.kernel.ι (GlobalTheory.CompanionTheory.Ar.dualMap (fl.ι l.rev))).app V w) = 0 :=
         (hex V _).2 ⟨w, rfl⟩
-      have h₁ := dualApp_dualMap (fl.ι l.rev) ((Limits.kernel.ι (dualMap (fl.ι l.rev))).app V w) le_rfl
+      have h₁ := dualApp_dualMap (fl.ι l.rev) ((Limits.kernel.ι (GlobalTheory.CompanionTheory.Ar.dualMap (fl.ι l.rev))).app V w) le_rfl
         (resM _ h (s ⟨b, hb'⟩))
       have := dualApp_smul (0 : Γ(X, V)) (0 : Γ(dual (fl.F l.rev), V)) le_rfl
       rw [zero_smul] at this

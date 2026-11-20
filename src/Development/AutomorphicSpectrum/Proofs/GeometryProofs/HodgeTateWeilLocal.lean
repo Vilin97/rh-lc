@@ -144,7 +144,7 @@ theorem exists_form [IsIntegrallyClosed R] [IsNoetherianRing R] (G : Over X) [Gr
     (hi : Γ.IsTorsionAlong G x n i) (χ : T →* Rˣ) :
     ∃ (L₀ : Type) (_ : AddCommGroup L₀) (_ : Module R L₀) (M₀ : LieModel G x L₀) (j : L₀ → E)
       (w₀ : Module.Dual R L₀) (w : Module.Dual Ω E),
-      (∀ v, (M.pt (j v)).left = spMap (dualMap (κ.toRingHom.comp (algebraMap R _))) ≫ (M₀.pt v).left) ∧
+      (∀ v, (M.pt (j v)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (κ.toRingHom.comp (algebraMap R _))) ≫ (M₀.pt v).left) ∧
         Γ.IsHT i M₀ n χ w₀ ∧ ∀ v, w (j v) = κ (algebraMap R _ (w₀ v)) := by
   obtain ⟨L₀, _, _, ⟨M₀⟩⟩ := lieModel_exists X G R x
   obtain ⟨w₀, hw₀⟩ := GlobalTheory.T.exists_hodge_tate_functional R T Γ X G x n i hi hsm L₀ M₀ χ

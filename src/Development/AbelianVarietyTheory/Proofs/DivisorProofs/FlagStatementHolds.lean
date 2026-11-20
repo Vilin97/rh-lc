@@ -85,7 +85,7 @@ theorem exists_point {K k : Type} [Field K] [Field k] [Algebra F K] [Algebra c.F
     ∃ (P : FrPt Xo c k) (z : Sp K ⟶ Xo.XF c) (r : Y.Y.X.presheaf.stalk y₀),
       GlobalTheory.AllWt.ptF P = spMap io ≫ z ∧ GlobalTheory.AllWt.LiesOn Zc P ∧
       GlobalTheory.AllWt.ptF P ≫ Z.j = spMap (io.comp sc) ≫ stalkPt Y.Y y₀ ≫ Y.π ≫ genι Z ∧
-      ((frameOf Z P).v = fun τ i => spMap (dualMap (io.comp sc)) ≫ fr.v τ i) ∧
+      ((frameOf Z P).v = fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (io.comp sc)) ≫ fr.v τ i) ∧
       algebraMap _ Y.Y.X.functionField r = Y.val f * ((∏ z : Letter Dw, t z.1 z.2 ^ (-ex (some z)) : Y.Y.Fnˣ) : Y.Y.Fn) ∧
       evR Xo c f P = io (sc r) := by
   classical
@@ -216,7 +216,7 @@ theorem lgOf_eq (w : Pad.Sym E →₀ ℤ) (v : HeightOneSpectrum (𝓞 F)) (hp 
         (eqn (divOf Y (expo Dw w)) (below y.1))⁻¹ : Y.Y.Fnˣ) : Y.Y.Fn))) +
       (-Real.log (ε.w (resP v)) / Real.log (resP v)) * w.sum fun b n => (n : ℝ) * lnStep Z.t
           (spMap ((ioOf (resP v) ε).comp (Scheme.stalkClosedPointTo y.1).hom) ≫ stalkPt Y.Y (below y.1) ≫ Y.π ≫ genι Z)
-          (fun τ i => spMap (dualMap ((ioOf (resP v) ε).comp (Scheme.stalkClosedPointTo y.1).hom)) ≫
+          (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((ioOf (resP v) ε).comp (Scheme.stalkClosedPointTo y.1).hom)) ≫
             (Y.gr_spec (below y.1)).choose_spec.choose.v τ i) (resP v) (b.1 (resP v)) b.2.2 :=
   dif_pos hp
 
@@ -229,7 +229,7 @@ theorem sum_lgOf (τ : Psi H) (a : ℕ → Bool) (R : Option ℝ) (v : HeightOne
       (-Real.log (ε.w (resP v)) / Real.log (resP v)) *
         (lnDet Z.t (resP v)
           (spMap ((ioOf (resP v) ε).comp (Scheme.stalkClosedPointTo y.1).hom) ≫ stalkPt Y.Y (below y.1) ≫ Y.π ≫ genι Z)
-          (fun τ i => spMap (dualMap ((ioOf (resP v) ε).comp (Scheme.stalkClosedPointTo y.1).hom)) ≫
+          (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((ioOf (resP v) ε).comp (Scheme.stalkClosedPointTo y.1).hom)) ≫
             (Y.gr_spec (below y.1)).choose_spec.choose.v τ i) τ.1 - Dw.p * (vDiff E (resP v) * Real.log (resP v))) := by
   letI := Fact.mk hp
   rw [← sum_lnStep _ _ _ _ τ a ha R, Finset.mul_sum, ← Finset.sum_add_distrib]
@@ -247,7 +247,7 @@ theorem exists_coord {Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo 
             Y.Y.Fnˣ) : Y.Y.Fn) ∧
         Real.log ‖io ((Scheme.stalkClosedPointTo y.1).hom r)‖ + lnDet Z.t p
           (spMap (io.comp (Scheme.stalkClosedPointTo y.1).hom) ≫ stalkPt Y.Y (below y.1) ≫ Y.π ≫ genι Z)
-          (fun τ i => spMap (dualMap (io.comp (Scheme.stalkClosedPointTo y.1).hom)) ≫
+          (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (io.comp (Scheme.stalkClosedPointTo y.1).hom)) ≫
             (Y.gr_spec (below y.1)).choose_spec.choose.v τ i) τ.1 = ρ := by
   obtain ⟨ρ₀, hρ⟩ := hD la p
   refine ⟨ρ₀, fun io hind y hb => ?_⟩

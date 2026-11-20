@@ -140,14 +140,14 @@ theorem pt_transl [IsCommMonObj A] (v : epsR K ⟶ A) (P : Pt (epsR K ⊗ A).hom
   obtain ⟨x', v', hx', hv', hw⟩ := (sndPt P).isTransl_trx v
   have i1 : (evEps _ (fstHomPt_sq P)).comp (algebraMap P.B (DualNumber P.B)) = RingHom.id _ :=
     RingHom.ext fun b ↦ by simp [evEps, TrivSqZeroExt.algebraMap_eq_inl]
-  have i2 : (evEps _ (fstHomPt_sq P)).comp (dualMap (algebraMap K P.B)) = fstHomPt P :=
+  have i2 : (evEps _ (fstHomPt_sq P)).comp (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K P.B)) = fstHomPt P :=
     RingHom.ext fun c ↦ by
       have h1 : ∀ k, algebraMap K P.B k = fstHomPt P (algebraMap K _ k) := fun k ↦
         (RingHom.congr_fun (fstHomPt_comp P) k).symm
       have h2 : c = algebraMap K _ c.fst + algebraMap K _ c.snd * DualNumber.eps := by
         ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl]
       conv_rhs => rw [h2, map_add (f := _), map_mul, ← h1, ← h1]
-      simp [evEps, dualMap, Algebra.smul_def, TrivSqZeroExt.algebraMap_eq_inl]
+      simp [evEps, GlobalTheory.CompanionTheory.Ar.dualMap, Algebra.smul_def, TrivSqZeroExt.algebraMap_eq_inl]
   let y : Over.mk (spMap (algebraMap K P.B)) ⟶ epsR K ⊗ A := Over.homMk P.x P.w
   let j : Over.mk (spMap (algebraMap K P.B)) ⟶
       Over.mk (spMap ((algebraMap P.B (DualNumber P.B)).comp (algebraMap K P.B))) :=

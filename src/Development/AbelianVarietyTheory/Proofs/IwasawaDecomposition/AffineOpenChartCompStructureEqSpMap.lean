@@ -267,7 +267,7 @@ def basAt (b : Module.Basis κ Γ(Z, U) (TanM (tau hU ≫ π) t.G)) (w : Sp S �
   basPull (ev w U hw) (by rw [← Category.assoc, tau, spMap_ev]) b
 
 theorem basAt_left (b : Module.Basis κ Γ(Z, U) (TanM (tau hU ≫ π) t.G)) (w : Sp S ⟶ Z) (hw : ⊤ ≤ w ⁻¹ᵁ U) (i : κ) :
-    (tv (basAt b w hw i)).left = spMap (dualMap (ev w U hw)) ≫ (tv (b i)).left := by
+    (tv (basAt b w hw i)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev w U hw)) ≫ (tv (b i)).left := by
   rw [basAt, basPull_apply]; rfl
 
 theorem tanPull_basAt (b : Module.Basis κ Γ(Z, U) (TanM (tau hU ≫ π) t.G)) (φ : S →+* S') (w : Sp S ⟶ Z)

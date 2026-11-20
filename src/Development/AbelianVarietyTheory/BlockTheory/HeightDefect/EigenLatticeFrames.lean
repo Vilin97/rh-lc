@@ -26,7 +26,7 @@ def IsGenericFibre {Xo : Moduli Dw l} {T : CDVR} {G : SAB H (Sp T.V)} {t' : SAB 
     (m₁ : SABMap t' Xo.univ.t x) (m₂ : SABMap t' G (spMap (algebraMap T.V T.Fr)))
     (w : epsOver T.V T.V ⟶ G.G) (v : Sp (DualNumber T.Fr) ⟶ Xo.univ.t.G.left) : Prop :=
   ∃ u' : Sp (DualNumber T.Fr) ⟶ t'.G.left, u' ≫ m₁.φ = v ∧
-    u' ≫ m₂.φ = spMap (dualMap (algebraMap T.V T.Fr)) ≫ w.left
+    u' ≫ m₂.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ w.left
 
 def IntegralUpToTriangular (Xo : Moduli Dw l) (c : Coeff l) : Prop :=
   ∀ (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β), PushInvertible Y.t.G Y.t.PP.L →

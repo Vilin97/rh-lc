@@ -191,14 +191,14 @@ theorem eig_lf {K : Type} [Field K] [Algebra K R] (χ : 𝓞 E →+* K) (m : Tan
     (∀ a, lf m ≫ (t.act.act a).left = spMap (epsMul (algebraMap K R (χ a))) ≫ lf m) ↔ IsEigV (actL t.act) χ m :=
   ⟨fun h a => lf_inj (h a), fun h a => congrArg lf (h a)⟩
 
-def dl (φ : R →+* S) (h : spMap φ ≫ x = x') : tEpsG x' ⟶ tEpsG x := Over.homMk (spMap (dualMap φ)) (by
-  show spMap (dualMap φ) ≫ spMap (algebraMap R (DualNumber R)) ≫ x = spMap (algebraMap S (DualNumber S)) ≫ x'
+def dl (φ : R →+* S) (h : spMap φ ≫ x = x') : tEpsG x' ⟶ tEpsG x := Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ)) (by
+  show spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ spMap (algebraMap R (DualNumber R)) ≫ x = spMap (algebraMap S (DualNumber S)) ≫ x'
   rw [← h, ← Category.assoc, ← Category.assoc, FrameTangent.spMap_comp', FrameTangent.spMap_comp', ReciprocityTheory.ChartRestriction.G.PullbackSections.dualMap_comp_alg])
 
 theorem dl_smT (φ : R →+* S) (h : spMap φ ≫ x = x') (a : R) (w : tEpsG x ⟶ t.G) :
     dl φ h ≫ FrameTangent.smT x a w = FrameTangent.smT x' (φ a) (dl φ h ≫ w) := by
   apply Over.OverMorphism.ext
-  show spMap (dualMap φ) ≫ spMap (epsMul a) ≫ w.left = spMap (epsMul (φ a)) ≫ spMap (dualMap φ) ≫ w.left
+  show spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ spMap (epsMul a) ≫ w.left = spMap (epsMul (φ a)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ w.left
   rw [← Category.assoc, ← Category.assoc, FrameTangent.spMap_comp', FrameTangent.spMap_comp', ReciprocityTheory.ChartRestriction.G.PullbackSections.dualMap_comp_epsMul]
 
 variable (t) in
@@ -211,7 +211,7 @@ def bcT (φ : R →+* S) (h : spMap φ ≫ x = x') : TanM x t.G →ₛₗ[φ] Ta
   map_smul' a m := tv_injective (dl_smT φ h a (tv m))
 
 theorem lf_bcT (φ : R →+* S) (h : spMap φ ≫ x = x') (m : TanM x t.G) :
-    lf (bcT t φ h m) = spMap (dualMap φ) ≫ lf m := rfl
+    lf (bcT t φ h m) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ lf m := rfl
 
 theorem bcT_act (φ : R →+* S) (h : spMap φ ≫ x = x') (a : 𝓞 E) (m : TanM x t.G) :
     bcT t φ h (actL t.act a m) = actL t.act a (bcT t φ h m) :=
@@ -224,14 +224,14 @@ theorem exists_basis {n : ℕ} {v : Fin n → TanM x t.G} (hv : StabBasis t x fu
   exact ⟨Module.Basis.mk h1 h2.ge, fun i => (Module.Basis.mk_apply h1 h2.ge i).symm⟩
 
 theorem bcT_id (h : spMap (RingHom.id R) ≫ x = x) (m : TanM x t.G) : bcT t (RingHom.id R) h m = m := by
-  have h2 : dualMap (RingHom.id R) = RingHom.id _ := by
+  have h2 : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R) = RingHom.id _ := by
     refine RingHom.ext fun z => ?_
-    ext <;> simp [dualMap]
-  have h3 : spMap (dualMap (RingHom.id R)) = 𝟙 _ := by rw [h2]; exact Spec.map_id _
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  have h3 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R)) = 𝟙 _ := by rw [h2]; exact Spec.map_id _
   exact lf_inj (by rw [lf_bcT, h3, Category.id_comp])
 
 theorem stab_bc {n : ℕ} {v : Fin n → Tn t R} (hv : StabBasis t x v) (φ : R →+* S) (h : spMap φ ≫ x = x') :
-    StabBasis t x' fun j => spMap (dualMap φ) ≫ v j := by
+    StabBasis t x' fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v j := by
   subst h
   refine ⟨fun j => GlobalTheory.FactorDepth.isTanAtG_map t φ (hv.1 j), fun S' _ ψ => ?_⟩
   have := hv.2 S' (ψ.comp φ)

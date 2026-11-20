@@ -67,10 +67,10 @@ theorem lie_torus_saturated : ∀ (R K : Type) [CommRing R] [IsDomain R] [IsDisc
     have h2 : jT δ = 0 := GlobalTheory.T.torus_injective_lie_map R K S b G X u hgen Mk hMk _ h1
     have h3 : ∀ χ, IsLocalRing.residue R (δ χ) = 0 := by
       intro χ
-      have e := GlobalTheory.CompanionTheory.Ar.TorusModel.charVal_comp (dualMap (IsLocalRing.residue R)) (MT.pt δ) (Mk.pt (jT δ)) a2 χ
+      have e := GlobalTheory.CompanionTheory.Ar.TorusModel.charVal_comp (GlobalTheory.CompanionTheory.Ar.dualMap (IsLocalRing.residue R)) (MT.pt δ) (Mk.pt (jT δ)) a2 χ
       rw [hMk, hMT, h2] at e
       have e2 := congrArg TrivSqZeroExt.snd e
-      simpa [dualMap] using e2.symm
+      simpa [GlobalTheory.CompanionTheory.Ar.dualMap] using e2.symm
     obtain ⟨δ', rfl⟩ := exists_div hπ δ h3
     exact (GlobalTheory.CompanionTheory.CommAlg.SatOfInj.mem_max_smul_top_iff hπ _).mpr ⟨δ', rfl⟩
   have e := addMonoidHomLequivInt (A := X) (B := R) R

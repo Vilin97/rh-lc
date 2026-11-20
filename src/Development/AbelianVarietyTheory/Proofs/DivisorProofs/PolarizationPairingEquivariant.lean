@@ -64,7 +64,7 @@ theorem main : GlobalTheory.CovTop.Hypotheses2 → ∀ (O : Type) [CommRing O] (
     ∀ (H : T.Modules)
     (e : ∀ (V : T.Opens) (hV : IsAffineOpen V), Γ(H, V) ≃ₗ[Γ(T, V)] primDR (onAff A hV))
     (ρ : O →+* End H) (β : H ⟶ dual H), IsDRAct e i ρ → IsPolPairing e P β →
-    ∀ x : O, VB.act ρ x ≫ β = β ≫ dualMap (VB.act ρ (c x)) := by
+    ∀ x : O, VB.act ρ x ≫ β = β ≫ GlobalTheory.CompanionTheory.Ar.dualMap (VB.act ρ (c x)) := by
   intro hP O _ c T A _ g hA hg i P hS H e ρ β hρ hβ x
   refine hom_dual_ext_affine fun V hV s t ↦ ?_
   obtain ⟨m, φ, m₁, m₂, hφ, pφ, k⟩ := hβ V hV

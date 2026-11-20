@@ -27,17 +27,17 @@ theorem sp_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →
 variable (x) in
 
 def redEps : Over.mk (spMap (algebraMap O (DualNumber R)) ≫ x) ⟶ overAt x (DualNumber O) :=
-  Over.homMk (spMap (dualMap (algebraMap O R))) (by
-    show spMap (dualMap (algebraMap O R)) ≫ spMap (algebraMap O (DualNumber O)) ≫ x =
+  Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O R))) (by
+    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O R)) ≫ spMap (algebraMap O (DualNumber O)) ≫ x =
       spMap (algebraMap O (DualNumber R)) ≫ x
     rw [← Category.assoc, sp_comp]
     congr 2
     refine RingHom.ext fun a => ?_
-    ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl'])
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl'])
 
 def red (v : TanM x t.G) : Over.mk (spMap (algebraMap O (DualNumber R)) ≫ x) ⟶ t.G := redEps x R ≫ tv v
 
-theorem red_left (v : TanM x t.G) : (red R v).left = spMap (dualMap (algebraMap O R)) ≫ (tv v).left := rfl
+theorem red_left (v : TanM x t.G) : (red R v).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O R)) ≫ (tv v).left := rfl
 
 theorem red_add (v w : TanM x t.G) : red R (v + w) = red R v * red R w := MonObj.comp_mul _ _ _
 
@@ -48,12 +48,12 @@ def epsAlg (a : R) : DualNumber R →ₐ[O] DualNumber R :=
 
 theorem red_smul (a : O) (v : TanM x t.G) :
     (red R (a • v)).left = spMap (epsAlg (O := O) R (algebraMap O R a)).toRingHom ≫ (red R v).left := by
-  show spMap (dualMap (algebraMap O R)) ≫ spMap (epsMul a) ≫ (tv v).left =
-    spMap _ ≫ spMap (dualMap (algebraMap O R)) ≫ (tv v).left
+  show spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O R)) ≫ spMap (epsMul a) ≫ (tv v).left =
+    spMap _ ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O R)) ≫ (tv v).left
   rw [← Category.assoc, ← Category.assoc, sp_comp, sp_comp]
   congr 2
   refine RingHom.ext fun z => ?_
-  ext <;> simp [dualMap, epsMul, epsAlg, -Algebra.smul_def, mul_smul]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, epsAlg, -Algebra.smul_def, mul_smul]
 
 theorem red_nsmul (k : ℕ) (v : TanM x t.G) : red R (k • v) = red R v ^ k := by
   induction k with

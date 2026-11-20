@@ -27,13 +27,13 @@ theorem cellAt_restrict : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E]
     · rw [hT.2.1, ← hfn]; rfl
     · obtain ⟨cf, h1, h2, h3⟩ := hT.2.2 τ i
       refine ⟨cf, h1, h2, ?_⟩
-      have ee : (fun j => spMap (dualMap (fnOf U' hg')) ≫ fr'.v τ j) = fun j => spMap (dualMap (fnOf U hg)) ≫ fr.v τ j :=
+      have ee : (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (fnOf U' hg')) ≫ fr'.v τ j) = fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (fnOf U hg)) ≫ fr.v τ j :=
         funext fun j => by
-          have e₁ : fr'.v τ j = spMap (dualMap r) ≫ fr.v τ j :=
+          have e₁ : fr'.v τ j = spMap (GlobalTheory.CompanionTheory.Ar.dualMap r) ≫ fr.v τ j :=
             congrArg (fun v => (ReciprocityTheory.ChartRestriction.G.PullbackSections.tv v).left) (hfr' τ j)
           rw [e₁, ← Category.assoc, ReciprocityTheory.ChartRestriction.G.PullbackSections.spMap_comp_spMap, ← hfn]
           congr 2
-          exact RingHom.ext fun z => by ext <;> simp [dualMap]
+          exact RingHom.ext fun z => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
       rw [ee]
       exact h3
   · intro τ i

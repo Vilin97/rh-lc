@@ -48,7 +48,7 @@ theorem UpperTheory.eigenvariety_over_frame :
   have key := hL ch v ε yB (yt ≫ π) hytB hinB φ₀ k hk a w
   rw [hx] at key
   refine key ?_
-  have : (fun i => spMap (dualMap (valP ε yB)) ≫ k.v τ i) = fun i => spMap (dualMap (valP ε y)) ≫ f'.v τ i := by
+  have : (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (valP ε yB)) ≫ k.v τ i) = fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (valP ε y)) ≫ f'.v τ i := by
     funext i
     rw [hv, hm, GlobalTheory.GradedPieces.dual_comp, hval]
     rfl

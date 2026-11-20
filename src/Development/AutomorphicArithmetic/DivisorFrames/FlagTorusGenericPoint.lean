@@ -13,10 +13,10 @@ private theorem sp_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f
   rw [← Spec.map_comp]; rfl
 
 private theorem dual_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :
-    spMap (dualMap (g.comp f)) = spMap (dualMap g) ≫ spMap (dualMap f) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
   rw [← sp_comp]
   congr 1
-  ext r <;> simp [dualMap]
+  ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 private theorem epi_sp {k K : Type} [Field k] [Field K] (a : k →+* K) : Epi (spMap a) := by
   letI := a.toAlgebra

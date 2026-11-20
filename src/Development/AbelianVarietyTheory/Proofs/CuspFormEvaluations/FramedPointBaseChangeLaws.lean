@@ -19,14 +19,14 @@ theorem spec_comp {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (φ : S 
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
 
 theorem dual_comp {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (φ : S →+* T) (ψ : T →+* U) :
-    dualMap (ψ.comp φ) = (dualMap ψ).comp (dualMap φ) :=
-  RingHom.ext fun x => by ext <;> simp [dualMap]
+    GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ) = (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) :=
+  RingHom.ext fun x => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem spec_algHom_id (K : Type) [Field K] (T : Type) [CommRing T] [Algebra K T] :
     spMap (AlgHom.id K T).toRingHom = 𝟙 _ := by
   simp [spMap]
 
-theorem dual_id (T : Type) [CommRing T] : dualMap (RingHom.id T) = RingHom.id _ :=
+theorem dual_id (T : Type) [CommRing T] : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id T) = RingHom.id _ :=
   RingHom.ext fun x => by
     show TrivSqZeroExt.inl x.fst + TrivSqZeroExt.inr x.snd = x
     exact TrivSqZeroExt.inl_fst_add_inr_snd_eq x
@@ -70,8 +70,8 @@ theorem pulledGroup_hom_ext {S : Type} [CommRing S] {x : Sp S ⟶ Xo.X} {W : Sch
 theorem refl {S : Type} [CommRing S] [Algebra c.F S] (y : FrPt Xo c S) :
     FrMap (AlgHom.id c.F S) y y := by
   have eid := spec_algHom_id c.F S
-  have did : spMap (dualMap (AlgHom.id c.F S).toRingHom) = 𝟙 _ := by
-    show spMap (dualMap (RingHom.id S)) = _
+  have did : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (AlgHom.id c.F S).toRingHom) = 𝟙 _ := by
+    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id S)) = _
     rw [dual_id]
     simp [spMap]
   refine ⟨by rw [eid, Category.id_comp], fun τ i => by rw [did, Category.id_comp], 𝟙 _,
@@ -91,9 +91,9 @@ theorem trans {S T U : Type} [CommRing S] [Algebra c.F S] [CommRing T] [Algebra 
   obtain ⟨hx2, hu2, pm2, hs2, hf2, ha2⟩ := h₂
   have esp : spMap (ψ.comp φ).toRingHom = spMap ψ.toRingHom ≫ spMap φ.toRingHom := by
     exact spec_comp φ.toRingHom ψ.toRingHom
-  have edsp : spMap (dualMap (ψ.comp φ).toRingHom) =
-      spMap (dualMap ψ.toRingHom) ≫ spMap (dualMap φ.toRingHom) := by
-    show spMap (dualMap (ψ.toRingHom.comp φ.toRingHom)) = _
+  have edsp : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ).toRingHom) =
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ.toRingHom) := by
+    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.toRingHom.comp φ.toRingHom)) = _
     rw [dual_comp, spec_comp]
   refine ⟨?_, ?_, pm2 ≫ pm1, ?_, ?_, ?_⟩
   · rw [hx2, hx1, esp, Category.assoc]
@@ -115,9 +115,9 @@ theorem cancel {S T U : Type} [CommRing S] [Algebra c.F S] [CommRing T] [Algebra
   obtain ⟨hx2, hu2, pm2, hs2, hf2, ha2⟩ := h₂
   have esp : spMap (κ.comp φ).toRingHom = spMap κ.toRingHom ≫ spMap φ.toRingHom :=
     spec_comp φ.toRingHom κ.toRingHom
-  have edsp : spMap (dualMap (κ.comp φ).toRingHom) =
-      spMap (dualMap κ.toRingHom) ≫ spMap (dualMap φ.toRingHom) := by
-    show spMap (dualMap (κ.toRingHom.comp φ.toRingHom)) = _
+  have edsp : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (κ.comp φ).toRingHom) =
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap κ.toRingHom) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ.toRingHom) := by
+    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap (κ.toRingHom.comp φ.toRingHom)) = _
     rw [dual_comp, spec_comp]
   have hx : spMap κ.toRingHom ≫ y.x = z.x := by rw [hx2, hx1, esp, Category.assoc]
   let pm : Gx z.x ⟶ Gx y.x :=

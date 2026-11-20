@@ -59,7 +59,7 @@ def ChartDlog {S : Scheme.{0}} {ρ : S ⟶ X} {p : ℕ} [Fact p.Prime] {N : ℕ}
     (c : Fin N → ∀ y : Sp ↥(intO ℂ_[p]) ⟶ S, TorsChar t (y ≫ ρ) (p ^ 2)) {U : S.Opens} (hU : IsAffineOpen U) {g : ℕ}
     (e : Fin g → (Sp (DualNumber Γ(S, U)) ⟶ t.G.left)) (h : Fin N → Fin g → Γ(S, U)) : Prop :=
   ∀ (x : Γ(S, U) →+* ↥(intO ℂ_[p])) (y : Sp ↥(intO ℂ_[p]) ⟶ S), spMap x ≫ hU.fromSpec = y →
-    ∀ j, DlogIs t p 2 (c j y) (fun i => spMap (dualMap x) ≫ e i) (fun i => x (h j i))
+    ∀ j, DlogIs t p 2 (c j y) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap x) ≫ e i) (fun i => x (h j i))
 
 variable {F : Type} [Field F] [NumberField F] {Y : Var F}
 
@@ -69,8 +69,8 @@ def ChartVal (V : Cover Y) (ρ' : V.X ⟶ X) {m N : ℕ}
     (h : Fin N → Fin g → Γ(V.X, U)) (M : Matrix (Fin N) (Fin m) V.G.functionField) : Prop :=
   ∀ z : V.G, V.j z ∈ U → ∃ (α : Γ(V.X, U) →+* V.G.presheaf.stalk z) (a : Fin m → Fin g → V.G.presheaf.stalk z),
     spMap α ≫ hU.fromSpec = V.G.fromSpecStalk z ≫ V.j ∧
-    (∀ l, IsCombAtG t (spMap α ≫ hU.fromSpec ≫ ρ') (fun i => spMap (dualMap α) ≫ e i) (a l)
-      (spMap (dualMap (V.π.stalkMap z).hom) ≫ f (V.π z) l)) ∧
+    (∀ l, IsCombAtG t (spMap α ≫ hU.fromSpec ≫ ρ') (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ e i) (a l)
+      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (V.π.stalkMap z).hom) ≫ f (V.π z) l)) ∧
     ∀ r l, (M * ((T (V.π z)).map V.φ)⁻¹) r l =
       algebraMap (V.G.presheaf.stalk z) V.G.functionField (∑ i, α (h r i) * a l i)
 
@@ -205,8 +205,8 @@ def PtSt : Prop :=
     (h' : Fin (g + g) → Fin n' → ↥(intO ℂ_[p])), Gens c → Isotropic c J → (∀ j, DlogIs t p 2 (c j) e (h j)) →
     (∀ j, DlogIs t p 2 (c j) e' (h' j)) → ∀ (u : Fin g → (Sp (DualNumber ℂ_[p]) ⟶ t.G.left)) (a : Fin g → Fin n → ℂ_[p])
     (a' : Fin g → Fin n' → ℂ_[p]), LinearIndependent ℂ_[p] a →
-    (∀ l, IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (dualMap (intO ℂ_[p]).subtype) ≫ e i) (a l) (u l)) →
-    (∀ l, IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (dualMap (intO ℂ_[p]).subtype) ≫ e' i) (a' l) (u l)) →
+    (∀ l, IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ e i) (a l) (u l)) →
+    (∀ l, IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ e' i) (a' l) (u l)) →
     (∀ k, 0 < wedgeNorm t (spMap (intO ℂ_[p]).subtype ≫ x) u k) ∧
     Clauses (fun b : ℂ_[p] => ‖b‖) J (wedgeNorm t (spMap (intO ℂ_[p]).subtype ≫ x) u)
       (Matrix.of fun r l => ∑ i, (h r i : ℂ_[p]) * a l i) (Matrix.of fun r l => ∑ i, (h' r i : ℂ_[p]) * a' l i)
@@ -224,7 +224,7 @@ def ChartSt : Prop :=
     (f : ∀ y : Y.X, Fin m → (Sp (DualNumber (Y.X.presheaf.stalk y)) ⟶ t.G.left)) (T : Y.X → Matrix (Fin m) (Fin m) Y.Fn),
     (∀ y l, IsTanAtG t (GlobalTheory.ShFam.stalkPt Y y ≫ ρ) (f y l)) → (∀ y, IsUnit (T y).det) →
     (∀ y i, IsCombAtG t (GlobalTheory.ShFam.genericPt Y ≫ ρ)
-      (fun k => spMap (dualMap (algebraMap (Y.X.presheaf.stalk y) Y.X.functionField)) ≫ f y k) (fun k => T y k i) (u₀ i)) →
+      (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (Y.X.presheaf.stalk y) Y.X.functionField)) ≫ f y k) (fun k => T y k i) (u₀ i)) →
     ∀ (U : V.X.Opens) (hU : IsAffineOpen U) (g : ℕ) (e : Fin g → (Sp (DualNumber Γ(V.X, U)) ⟶ t.G.left)),
     IsTanBasis t (hU.fromSpec ≫ ρ') e → ∀ (N : ℕ) (h : Fin N → Fin g → Γ(V.X, U)),
     ∃ M : Matrix (Fin N) (Fin m) V.G.functionField, ChartVal V ρ' f T hU e h M
@@ -235,7 +235,7 @@ def TestSt : Prop :=
     V.j ≫ ρ' = V.π ≫ ρ → ∀ (g : ℕ) (f : ∀ y : Y.X, Fin g → (Sp (DualNumber (Y.X.presheaf.stalk y)) ⟶ t.G.left))
     (T : Y.X → Matrix (Fin g) (Fin g) Y.Fn),
     (∀ y (K : Type) [Field K] (ψ : Y.X.presheaf.stalk y →+* K),
-      IsIndep t (spMap ψ ≫ GlobalTheory.ShFam.stalkPt Y y ≫ ρ) (fun l => spMap (dualMap ψ) ≫ f y l)) →
+      IsIndep t (spMap ψ ≫ GlobalTheory.ShFam.stalkPt Y y ≫ ρ) (fun l => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f y l)) →
     ∀ (v : HeightOneSpectrum (𝓞 F)) [Fact (resP v).Prime]
     (c : Fin (g + g) → ∀ y : Sp ↥(intO ℂ_[resP v]) ⟶ V.X, TorsChar t (y ≫ ρ') (resP v ^ 2))
     (J : Matrix (Fin (g + g)) (Fin (g + g)) ℤ), (∀ y, Gens fun m => c m y) →
@@ -250,9 +250,9 @@ def TestSt : Prop :=
     (∀ yO : Sp ↥(intO ℂ_[resP v]) ⟶ V.X, spMap (intO ℂ_[resP v]).subtype ≫ yO = spMap (ioOf (resP v) ε) ≫ z ≫ V.j →
       Isotropic (fun m => c m yO) J) →
     ∀ ψ : Y.X.presheaf.stalk (below y.1) →+* ℂ_[resP v], ψ = (ioOf (resP v) ε).comp (Scheme.stalkClosedPointTo y.1).hom →
-    (∀ k, 0 < wedgeNorm t (spMap ψ ≫ GlobalTheory.ShFam.stalkPt Y (below y.1) ≫ ρ) (fun l => spMap (dualMap ψ) ≫ f (below y.1) l) k) ∧
+    (∀ k, 0 < wedgeNorm t (spMap ψ ≫ GlobalTheory.ShFam.stalkPt Y (below y.1) ≫ ρ) (fun l => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f (below y.1) l) k) ∧
     Clauses (fun b : ℂ_[resP v] => ‖b‖) J
-      (wedgeNorm t (spMap ψ ≫ GlobalTheory.ShFam.stalkPt Y (below y.1) ≫ ρ) fun l => spMap (dualMap ψ) ≫ f (below y.1) l)
+      (wedgeNorm t (spMap ψ ≫ GlobalTheory.ShFam.stalkPt Y (below y.1) ≫ ρ) fun l => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f (below y.1) l)
       ((valMat V M (T (below y.1)) z).map (ioOf (resP v) ε)) ((valMat V M' (T (below y.1)) z).map (ioOf (resP v) ε))
 
 def BundleSt : Prop :=

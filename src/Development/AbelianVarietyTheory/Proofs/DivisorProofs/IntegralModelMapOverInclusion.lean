@@ -41,9 +41,9 @@ theorem htAt_discr_smul_eigen_mem_span_rows : ∀ (E : Type) [Field E] [NumberFi
     exact (h4 _ x' u' hu'T hu'X).2 hx'
   have hid : spMap (RingHom.id 𝓞_ℂ_[p]) ≫ yb = yb := by
     rw [show spMap (RingHom.id 𝓞_ℂ_[p]) = 𝟙 _ from Spec.map_id _, Category.id_comp]
-  have hdual : (fun i => spMap (dualMap (RingHom.id 𝓞_ℂ_[p])) ≫ e i) = e := by
-    have : dualMap (RingHom.id 𝓞_ℂ_[p]) = RingHom.id _ := by
-      ext s <;> simp [dualMap]
+  have hdual : (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id 𝓞_ℂ_[p])) ≫ e i) = e := by
+    have : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id 𝓞_ℂ_[p]) = RingHom.id _ := by
+      ext s <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
     funext i
     rw [this, show spMap (RingHom.id (DualNumber 𝓞_ℂ_[p])) = 𝟙 _ from Spec.map_id _, Category.id_comp]
   obtain ⟨w, hw, -⟩ := hB.2 𝓞_ℂ_[p] (RingHom.id _) u' (by rw [hid]; exact hu'T)

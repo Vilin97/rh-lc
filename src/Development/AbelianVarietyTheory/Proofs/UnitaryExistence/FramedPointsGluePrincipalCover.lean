@@ -25,19 +25,19 @@ theorem sp_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : B →
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
 
 theorem dual_comp {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (φ : S →+* T) (ψ : T →+* U) :
-    (dualMap ψ).comp (dualMap φ) = dualMap (ψ.comp φ) :=
-  RingHom.ext fun x => by ext <;> simp [dualMap]
+    (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) = GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ) :=
+  RingHom.ext fun x => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem dual_eps {S T : Type} [CommRing S] [CommRing T] (φ : S →+* T) (a : S) :
-    (dualMap φ).comp (epsMul a) = (epsMul (φ a)).comp (dualMap φ) :=
+    (GlobalTheory.CompanionTheory.Ar.dualMap φ).comp (epsMul a) = (epsMul (φ a)).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) :=
   RingHom.ext fun x => by
-    ext <;> simp [dualMap, epsMul, mul_comm]
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, mul_comm]
 
 theorem dual_ext {S : Type} [CommRing S] {Y : Scheme.{0}} {n : ℕ} {h : Fin n → S}
     (hh : Ideal.span (Set.range h) = ⊤) (f g : Sp (DualNumber S) ⟶ Y)
-    (e : ∀ i, spMap (dualMap (algebraMap S (Localization.Away (h i)))) ≫ f =
-      spMap (dualMap (algebraMap S (Localization.Away (h i)))) ≫ g) : f = g := by
-  have := GlobalTheory.T.existsUnique_glue_dualNumber S Y n h hh (fun i => spMap (dualMap (algebraMap S (Localization.Away (h i)))) ≫ g) (by
+    (e : ∀ i, spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap S (Localization.Away (h i)))) ≫ f =
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap S (Localization.Away (h i)))) ≫ g) : f = g := by
+  have := GlobalTheory.T.existsUnique_glue_dualNumber S Y n h hh (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap S (Localization.Away (h i)))) ≫ g) (by
     intro i j α β hα hβ
     rw [← Category.assoc, ← Category.assoc, sp_comp, sp_comp, dual_comp, dual_comp, hα, hβ])
   exact this.unique e fun _ => rfl
@@ -122,7 +122,7 @@ theorem GlobalTheory.Frames.frPt_glue : Out.SecBaseChangeSt → ∀ (E : Type) [
       β.comp (algebraMap S (Localization.Away (h j))) = (algebraMap S (Localization.Away (h i * h j))) →
       ∃ z : FrPt Xo c (Localization.Away (h i * h j)),
         z.x = spMap (algebraMap S (Localization.Away (h i * h j))) ≫ x ∧
-        (∀ τ k, z.u τ k = spMap (dualMap α) ≫ (y i).u τ k) ∧ (∀ τ k, z.u τ k = spMap (dualMap β) ≫ (y j).u τ k) ∧
+        (∀ τ k, z.u τ k = spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ (y i).u τ k) ∧ (∀ τ k, z.u τ k = spMap (GlobalTheory.CompanionTheory.Ar.dualMap β) ≫ (y j).u τ k) ∧
         SecBC α 1 _ _ (y i).s z.s ∧ SecBC β 1 _ _ (y j).s z.s := by
     intro i j α β hα hβ
     obtain ⟨z, hz⟩ := GlobalTheory.T.exists_framedPoint_baseChange_algebraMap hB E H Dw l Xo c _ _ (algOf (K := c.F) α hα) (y i)
@@ -147,7 +147,7 @@ theorem GlobalTheory.Frames.frPt_glue : Out.SecBaseChangeSt → ∀ (E : Type) [
   dsimp only at ovl
 
   have hu : ∀ τ k, ∃ w₀ : Sp (DualNumber S) ⟶ Xo.univ.t.G.left,
-      ∀ i, spMap (dualMap (algebraMap S (Localization.Away (h i)))) ≫ w₀ = u i τ k := by
+      ∀ i, spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap S (Localization.Away (h i)))) ≫ w₀ = u i τ k := by
     intro τ k
     refine (GlobalTheory.T.existsUnique_glue_dualNumber S _ n h hh (fun i => u i τ k) ?_).exists
     intro i j α β hα hβ

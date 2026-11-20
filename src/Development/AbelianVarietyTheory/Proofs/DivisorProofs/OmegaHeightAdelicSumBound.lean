@@ -88,10 +88,10 @@ private theorem sp_comp {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (f
   rw [spMap, CommRingCat.ofHom_comp, Spec.map_comp]
 
 private theorem dual_comp {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (f : R →+* S) (g : S →+* T) :
-    spMap (dualMap (g.comp f)) = spMap (dualMap g) ≫ spMap (dualMap f) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) := by
   rw [← sp_comp]
   congr 1
-  ext r <;> simp [dualMap]
+  ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 private theorem coord_ex {φ : c.F →+* Qb} {x : Sp Qb ⟶ Z.X} {g : EigFrame Z φ x} {q : Sp Qb ⟶ Y.Y.X}
     (h : Y.Carries q g) (n : Pad.Letter Dw → ℤ) :
@@ -241,7 +241,7 @@ private theorem inf_loc {D : D7} (O : Setup D) (x : ToroidalCompactificationData
 
 private theorem step_eq {D : D7} (O : Setup D) (y : Pad.Pt O.s) {K : Type} [Field K] [NumberField K] (F : SemiFib K)
     (ι : K →+* Qb) (hT : FibTie O y F ι) (p : ℕ) [Fact p.Prime] (io : Qb →+* ℂ_[p]) (k : Fin F.P₀.g) :
-    lnStep O.s.T.Z.t (spMap io ≫ y.y ≫ genι O.s.T.Z) (fun τ i => spMap (dualMap io) ≫ y.u τ i) p false (.inr k) =
+    lnStep O.s.T.Z.t (spMap io ≫ y.y ≫ genι O.s.T.Z) (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) ≫ y.u τ i) p false (.inr k) =
       lnGrP p (io.comp ι) F.lieLat k := by
   have h5 : F.P₀.g = (letters O.S.Dw).length := by
     obtain ⟨_, _, _, -, -, -, -, h5, -⟩ := hT
@@ -255,7 +255,7 @@ private theorem step_eq {D : D7} (O : Setup D) (y : Pad.Pt O.s) {K : Type} [Fiel
     subst e
     rfl
   refine (congrArg Real.log (hu _ h5 _ k)).trans ?_
-  have key := UpperTheory.dual_number_tangent_coordinates D O y K F ι hT p io (fun a : Fin F.P₀.g => spMap (dualMap io) ≫
+  have key := UpperTheory.dual_number_tangent_coordinates D O y K F ι hT p io (fun a : Fin F.P₀.g => spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) ≫
     y.u ((letters O.S.Dw).get (Fin.cast h5 a)).1 ((letters O.S.Dw).get (Fin.cast h5 a)).2) fun a x hx => by
       obtain rfl : (letters O.S.Dw).get (Fin.cast h5 a) = x :=
         Option.some.inj ((List.getElem?_eq_getElem (Fin.cast h5 a).2).symm.trans hx)

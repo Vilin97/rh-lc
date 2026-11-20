@@ -83,7 +83,7 @@ theorem charFam_of_normal : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
       show _ ≫ hU.fromSpecStalk hs = y
       rw [hU.fromSpecStalk_eq_fromSpecStalk hs]
       exact Scheme.Spec_stalkClosedPointTo_fromSpecStalk y
-    have k : DlogIs t p n (c j y) (fun i => spMap (dualMap ((Scheme.stalkClosedPointTo y).hom.comp φ)) ≫ e i)
+    have k : DlogIs t p n (c j y) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((Scheme.stalkClosedPointTo y).hom.comp φ)) ≫ e i)
         (fun i => ((Scheme.stalkClosedPointTo y).hom.comp φ) (hh j i)) :=
       hhs j _ φ _ _ _ _ (c j y) hu hx0 inferInstance (hz y) (hc j y)
     rw [heq] at k

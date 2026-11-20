@@ -142,7 +142,7 @@ theorem exists_family (hGram : GramSt) (hHom : HomSt) (hExt : ExtSt) (hSpec : Sp
       show _ ≫ hU.fromSpecStalk hs = y
       rw [hU.fromSpecStalk_eq_fromSpecStalk hs]
       exact Scheme.Spec_stalkClosedPointTo_fromSpecStalk y
-    have k : DlogIs Z.t p 2 (ch j y) (fun i => spMap (dualMap ((Scheme.stalkClosedPointTo y).hom.comp φ)) ≫ e i)
+    have k : DlogIs Z.t p 2 (ch j y) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((Scheme.stalkClosedPointTo y).hom.comp φ)) ≫ e i)
         (fun i => ((Scheme.stalkClosedPointTo y).hom.comp φ) (hh j i)) :=
       hhs j _ φ _ _ _ _ (ch j y) hu hx0 inferInstance (hz y) (hc j y)
     rw [heq] at k

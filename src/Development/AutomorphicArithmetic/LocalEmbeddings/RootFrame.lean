@@ -144,7 +144,7 @@ def LabFam (Z : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Model Xo c β) {S :
     ∀ (U : S.Opens) (hU : IsAffineOpen U) (g : ℕ) (e : Fin g → (Sp (DualNumber Γ(S, U)) ⟶ Z.t.G.left)),
       IsTanBasis Z.t (R := Γ(S, U)) (hU.fromSpec ≫ ρ) e → ∃ h : Dw.La → Fin g → Γ(S, U),
         ∀ (φ : Γ(S, U) →+* ↥(intO ℂ_[p])) (x : Sp ↥(intO ℂ_[p]) ⟶ S), spMap φ ≫ hU.fromSpec = x →
-          ∀ a, DlogIs Z.t p n (ch a x) (fun i => spMap (dualMap φ) ≫ e i) (fun i => φ (h a i))
+          ∀ a, DlogIs Z.t p n (ch a x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ e i) (fun i => φ (h a i))
 
 variable (Dw) in
 
@@ -173,7 +173,7 @@ def HTLin {X : Scheme.{0}} (t : SAB H X) (p : ℕ) [Fact p.Prime] (n : ℕ) {R :
     (x : Sp R ⟶ X) (ch : Dw.La → TorsChar t x (p ^ n)) {g : ℕ} (e : Fin g → (Sp (DualNumber R) ⟶ t.G.left))
     (b : (Fin g → ℂ_[p]) →ₗ[ℂ_[p]] ℂ_[p] ⊗[ℤ] Dw.La) : Prop :=
   (∀ a (h : Fin g → R), DlogIs t p n (ch a) e h → ∀ i, ‖io (h i) - pr Dw (b (Pi.single i 1)) a‖ ≤ (p : ℝ)⁻¹ ^ n) ∧
-  EigTo Dw t (spMap io ≫ x) (fun i => spMap (dualMap io) ≫ e i) b ∧ Isot Dw p n b
+  EigTo Dw t (spMap io ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) ≫ e i) b ∧ Isot Dw p n b
 
 variable (Dw) in
 
@@ -226,7 +226,7 @@ def TriOf (ρ : Y.X ⟶ X) {m : ℕ} (u₀ : Fin m → (Sp (DualNumber Y.Fn) ⟶
     (f : ∀ y : Y.X, Fin m → (Sp (DualNumber (Y.X.presheaf.stalk y)) ⟶ t.G.left)) (d : Y.X → Fin m → Y.Fnˣ)
     (T : Y.X → Matrix (Fin m) (Fin m) Y.Fn) : Prop :=
   ∀ y, (T y).BlockTriangular id ∧ ∀ i, T y i i = d y i ∧ IsCombAtG t (genericPt Y ≫ ρ)
-    (fun k => spMap (dualMap (algebraMap (Y.X.presheaf.stalk y) Y.X.functionField)) ≫ f y k) (fun k => T y k i) (u₀ i)
+    (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (Y.X.presheaf.stalk y) Y.X.functionField)) ≫ f y k) (fun k => T y k i) (u₀ i)
 
 def ChartCo (V : Cover Y) (ρ' : V.X ⟶ X) {U : V.X.Opens} (hU : IsAffineOpen U) {g : ℕ}
     (e : Fin g → (Sp (DualNumber Γ(V.X, U)) ⟶ t.G.left)) {n m : ℕ} (h : Fin n → Fin g → Γ(V.X, U))
@@ -234,8 +234,8 @@ def ChartCo (V : Cover Y) (ρ' : V.X ⟶ X) {U : V.X.Opens} (hU : IsAffineOpen U
     (T : Y.X → Matrix (Fin m) (Fin m) Y.Fn) (P : Matrix (Fin n) (Fin m) V.G.functionField) : Prop :=
   ∀ z : V.G, V.j z ∈ U → ∃ (α : Γ(V.X, U) →+* V.G.presheaf.stalk z) (a : Fin m → Fin g → V.G.presheaf.stalk z),
     spMap α ≫ hU.fromSpec = V.G.fromSpecStalk z ≫ V.j ∧
-    (∀ i, IsCombAtG t (spMap α ≫ hU.fromSpec ≫ ρ') (fun k => spMap (dualMap α) ≫ e k) (a i)
-      (spMap (dualMap (V.π.stalkMap z).hom) ≫ f (V.π z) i)) ∧
+    (∀ i, IsCombAtG t (spMap α ≫ hU.fromSpec ≫ ρ') (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ e k) (a i)
+      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (V.π.stalkMap z).hom) ≫ f (V.π z) i)) ∧
     ∀ j i, locM V P T (V.π z) j i = algebraMap (V.G.presheaf.stalk z) V.G.functionField (∑ k, α (h j k) * a i k)
 
 def CutAt (V : Cover Y) (W : Y.X.Opens) (p : ℕ) [Fact p.Prime] (ρ : Y.X ⟶ X) {J : Type} (U : J → V.X.Opens) {n r : ℕ}
@@ -245,7 +245,7 @@ def CutAt (V : Cover Y) (W : Y.X.Opens) (p : ℕ) [Fact p.Prime] (ρ : Y.X ⟶ X
     (∃ δ : ℂ_[p], δ ≠ 0 ∧ Real.log ‖δ‖ = -(κ * Real.log p) ∧
       (∀ cf, (vals V (P a) T z (below y.1)).map (ioOf p e) *ᵥ cf = 0 → cf = 0) ∧
       ∀ cf, cf ∈ latCo t p (spMap (psi p e y) ≫ stalkPt Y (below y.1) ≫ ρ)
-          (fun i => spMap (dualMap (psi p e y)) ≫ f (below y.1) i) ↔
+          (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (psi p e y)) ≫ f (below y.1) i) ↔
         ∀ k, ‖((vals V (P a) T z (below y.1)).map (ioOf p e) *ᵥ cf) k‖ ≤ ‖δ‖) ∧
     ∀ b, ⊤ ≤ yt ⁻¹ᵁ U b → ∀ u : Fin r → ℂ_[p],
       (∀ k, ‖((vals V (P a) T z (below y.1)).map (ioOf p e) *ᵥ u) k‖ ≤ 1) →
@@ -255,10 +255,10 @@ def CutAt (V : Cover Y) (W : Y.X.Opens) (p : ℕ) [Fact p.Prime] (ρ : Y.X ⟶ X
 def EigFr (p : ℕ) [Fact p.Prime] (ρ : Y.X ⟶ X) {r : ℕ}
     (f : ∀ y : Y.X, Fin r → (Sp (DualNumber (Y.X.presheaf.stalk y)) ⟶ t.G.left)) (σ : 𝓞 E →+* F) : Prop :=
   ∀ (v : HeightOneSpectrum (𝓞 F)) (e : TrueGeo.Ext v) (y : AlgPt Y),
-    IsIndep t (spMap (psi p e y) ≫ stalkPt Y (below y.1) ≫ ρ) (fun i => spMap (dualMap (psi p e y)) ≫ f (below y.1) i) ∧
-    ∀ i, IsTanAtG t (spMap (psi p e y) ≫ stalkPt Y (below y.1) ≫ ρ) (spMap (dualMap (psi p e y)) ≫ f (below y.1) i) ∧
+    IsIndep t (spMap (psi p e y) ≫ stalkPt Y (below y.1) ≫ ρ) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (psi p e y)) ≫ f (below y.1) i) ∧
+    ∀ i, IsTanAtG t (spMap (psi p e y) ≫ stalkPt Y (below y.1) ≫ ρ) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (psi p e y)) ≫ f (below y.1) i) ∧
       GlobalTheory.FlatModel.IsEigG t (((ioOf p e).comp (algebraMap F (AlgebraicClosure F))).comp σ)
-        (spMap (dualMap (psi p e y)) ≫ f (below y.1) i)
+        (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (psi p e y)) ≫ f (below y.1) i)
 
 end Cut
 
@@ -285,13 +285,13 @@ def Charts.HTAt {t : SAB H X} {V : Cover Y} {ρ' : V.X ⟶ X} {J : Type} (K : Ch
       (hx : Dw.La → Fin (K.g a) → ↥(intO ℂ_[p])) (b : (Fin (K.g a) → ℂ_[p]) →ₗ[ℂ_[p]] ℂ_[p] ⊗[ℤ] Dw.La),
       IsTanBasis t x ex ∧ (∀ o, DlogIs t p n (ch o) ex (hx o)) ∧
       PtData Dw p n (fun o i => (hx o i : ℂ_[p])) b (latCo t p (spMap (intO ℂ_[p]).subtype ≫ x)
-        fun i => spMap (dualMap (intO ℂ_[p]).subtype) ≫ ex i) ∧
-      EigTo Dw t (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (dualMap (intO ℂ_[p]).subtype) ≫ ex i) b ∧
+        fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ ex i) ∧
+      EigTo Dw t (spMap (intO ℂ_[p]).subtype ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ ex i) b ∧
       ∀ (M m : ℕ) (o : Fin M → Dw.La) (f : ∀ y : Y.X, Fin m → (Sp (DualNumber (Y.X.presheaf.stalk y)) ⟶ t.G.left))
         (T : Y.X → Matrix (Fin m) (Fin m) Y.Fn) (P : Matrix (Fin M) (Fin m) V.G.functionField),
         ChartCo t V ρ' (K.aff a) (K.e a) (fun j => K.h a (o j)) f T P → ∃ A : Fin m → Fin (K.g a) → ℂ_[p],
-          (∀ i, IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (fun k => spMap (dualMap (intO ℂ_[p]).subtype) ≫ ex k) (A i)
-            (spMap (dualMap (psi p e y)) ≫ f (below y.1) i)) ∧
+          (∀ i, IsCombAtG t (spMap (intO ℂ_[p]).subtype ≫ x) (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ ex k) (A i)
+            (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (psi p e y)) ≫ f (below y.1) i)) ∧
           ∀ (N : ℕ) (S : Fin N → Fin M → F), (vals V (constM V S * P) T z (below y.1)).map (ioOf p e) =
             covMat (fun j k => ioOf p e (algebraMap F (AlgebraicClosure F) (S j k))) (fun j k => (hx (o j) k : ℂ_[p])) A
 

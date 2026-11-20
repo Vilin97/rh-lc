@@ -133,9 +133,9 @@ theorem over_id : 𝟙 (epsR A).left ≫ (epsR A).hom = (epsR A).hom ≫ spMap (
 variable {p}
 
 theorem cor_of_letBC {ν' : GtPt D₁ (epsR A)} {ν : GtPt D₀ (epsR A)} (h : LetBC p ν ν') : Cor p ν' ν := by
-  have e : spMap (dualMap (RingHom.id A)) = 𝟙 (epsR A).left := by
+  have e : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id A)) = 𝟙 (epsR A).left := by
     refine Eq.trans (congrArg spMap (RingHom.ext fun x => ?_)) (Spec.map_id _)
-    ext <;> simp [dualMap]
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   unfold Cor
   rw [← e]
   intro x

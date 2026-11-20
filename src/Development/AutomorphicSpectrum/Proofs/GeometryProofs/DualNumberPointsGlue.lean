@@ -15,14 +15,14 @@ namespace GlobalTheory.CompanionTheory.Ar.LieFinGlue
 
 variable {R : Type} [CommRing R]
 
-theorem dualMap_algebraMap_eq_dAway (s : R) : dualMap (algebraMap R (Localization.Away s)) = dAway s := by
+theorem dualMap_algebraMap_eq_dAway (s : R) : GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R (Localization.Away s)) = dAway s := by
   refine RingHom.ext fun x => ?_
-  ext <;> simp [dualMap, ReciprocityTheory.ChartRestriction.G.Chart.dualMapR]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, ReciprocityTheory.ChartRestriction.G.Chart.dualMapR]
 
 theorem dualMap_comp_dualMap {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (p : B →+* C) (q : A →+* B) :
-    (dualMap p).comp (dualMap q) = dualMap (p.comp q) := by
+    (GlobalTheory.CompanionTheory.Ar.dualMap p).comp (GlobalTheory.CompanionTheory.Ar.dualMap q) = GlobalTheory.CompanionTheory.Ar.dualMap (p.comp q) := by
   refine RingHom.ext fun x => ?_
-  ext <;> simp [dualMap]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem span_range_inl {J : Type} (f : J → R) (hf : Ideal.span (Set.range f) = ⊤) :
     Ideal.span (Set.range fun k => (TrivSqZeroExt.inl (f k) : DualNumber R)) = ⊤ := by
@@ -43,8 +43,8 @@ theorem sep_base {X : Scheme.{0}} {J : Type} (f : J → R) (hf : Ideal.span (Set
 
 theorem sep_dual {X : Scheme.{0}} {J : Type} (f : J → R) (hf : Ideal.span (Set.range f) = ⊤)
     (a b : Sp (DualNumber R) ⟶ X)
-    (h : ∀ i, spMap (dualMap (algebraMap R (Localization.Away (f i)))) ≫ a =
-      spMap (dualMap (algebraMap R (Localization.Away (f i)))) ≫ b) : a = b := by
+    (h : ∀ i, spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R (Localization.Away (f i)))) ≫ a =
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R (Localization.Away (f i)))) ≫ b) : a = b := by
   refine Scheme.Cover.hom_ext
     (Scheme.affineOpenCoverOfSpanRangeEqTop (R := CommRingCat.of (DualNumber R)) _ (span_range_inl f hf)).openCover
     _ _ fun (k : J) => ?_
@@ -58,7 +58,7 @@ theorem compat_of_pair {X : Scheme.{0}} {J : Type} (f : J → R)
     (hw : ∀ i j (a : Localization.Away (f i) →+* Localization.Away (f i * f j))
       (b : Localization.Away (f j) →+* Localization.Away (f i * f j)),
       a.comp (algebraMap R _) = algebraMap R _ → b.comp (algebraMap R _) = algebraMap R _ →
-      spMap (dualMap a) ≫ w i = spMap (dualMap b) ≫ w j)
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap a) ≫ w i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap b) ≫ w j)
     (i j : J) (T : CommRingCat.{0}) (α : DualNumber (Localization.Away (f i)) →+* T)
     (β : DualNumber (Localization.Away (f j)) →+* T) (h : α.comp (dAway (f i)) = β.comp (dAway (f j))) :
     Spec.map (CommRingCat.ofHom α) ≫ w i = Spec.map (CommRingCat.ofHom β) ≫ w j := by
@@ -79,10 +79,10 @@ theorem compat_of_pair {X : Scheme.{0}} {J : Type} (f : J → R)
   let b : Localization.Away (f j) →+* Localization.Away (f i * f j) := IsLocalization.Away.lift (f j) uj
   have ha : a.comp (algebraMap R _) = algebraMap R _ := IsLocalization.Away.lift_comp _ ui
   have hb : b.comp (algebraMap R _) = algebraMap R _ := IsLocalization.Away.lift_comp _ uj
-  have hα : χ.comp (dualMap a) = α := dAway_ext (f i) (by
+  have hα : χ.comp (GlobalTheory.CompanionTheory.Ar.dualMap a) = α := dAway_ext (f i) (by
     rw [RingHom.comp_assoc, ← dualMap_algebraMap_eq_dAway (f i), dualMap_comp_dualMap, ha,
       dualMap_algebraMap_eq_dAway, hχ, dualMap_algebraMap_eq_dAway])
-  have hβ : χ.comp (dualMap b) = β := dAway_ext (f j) (by
+  have hβ : χ.comp (GlobalTheory.CompanionTheory.Ar.dualMap b) = β := dAway_ext (f j) (by
     rw [RingHom.comp_assoc, ← dualMap_algebraMap_eq_dAway (f j), dualMap_comp_dualMap, hb,
       dualMap_algebraMap_eq_dAway, hχ, dualMap_algebraMap_eq_dAway, h])
   have e := hw i j a b ha hb
@@ -142,12 +142,12 @@ theorem dual_glue : ∀ (X : Scheme.{0}) (R : Type) [CommRing R] (J : Type) [Fin
     Ideal.span (Set.range f) = ⊤ →
   (∀ a b : Sp R ⟶ X, (∀ i, spMap (algebraMap R (Localization.Away (f i))) ≫ a = spMap (algebraMap R (Localization.Away (f i))) ≫ b) → a = b) ∧
   (∀ a b : Sp (DualNumber R) ⟶ X,
-    (∀ i, spMap (dualMap (algebraMap R (Localization.Away (f i)))) ≫ a = spMap (dualMap (algebraMap R (Localization.Away (f i)))) ≫ b) → a = b) ∧
+    (∀ i, spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R (Localization.Away (f i)))) ≫ a = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R (Localization.Away (f i)))) ≫ b) → a = b) ∧
   ∀ w : ∀ i, Sp (DualNumber (Localization.Away (f i))) ⟶ X,
     (∀ i j (a : Localization.Away (f i) →+* Localization.Away (f i * f j)) (b : Localization.Away (f j) →+* Localization.Away (f i * f j)),
       a.comp (algebraMap R _) = algebraMap R _ → b.comp (algebraMap R _) = algebraMap R _ →
-      spMap (dualMap a) ≫ w i = spMap (dualMap b) ≫ w j) →
-    ∃ v : Sp (DualNumber R) ⟶ X, ∀ i, spMap (dualMap (algebraMap R (Localization.Away (f i)))) ≫ v = w i := by
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap a) ≫ w i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap b) ≫ w j) →
+    ∃ v : Sp (DualNumber R) ⟶ X, ∀ i, spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R (Localization.Away (f i)))) ≫ v = w i := by
   intro X R _ J _ f hf
   refine ⟨sep_base f hf, sep_dual f hf, fun w hw => ?_⟩
   obtain ⟨v, hv⟩ := glue_of_compat f hf w (compat_of_pair f w hw)

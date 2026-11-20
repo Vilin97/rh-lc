@@ -178,12 +178,12 @@ def IsValA (s : SecAt A) (v : ↥C.S) : Prop :=
   ∃ u : Q.Row → (Over.mk ((epsR ↥(intO ↥C.S)).hom ≫ spMap A.f) ⟶ A.t.G),
     (∀ r, FormalPoint.IsPointOf A.U.U.toUnifPre ((ray A).Φ _ (tanPt A.f (Q.vec r))) (u r)) ∧
     IsVal A.t.act (xC A) Q.chr H.bar A.U.U.LG.L A.U.U.LG.rig
-      (fun r => spMap (dualMap (intO ↥C.S).subtype) ≫ (u r).left) Q.col Q.P (s.s Q.n) v
+      (fun r => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ↥C.S).subtype) ≫ (u r).left) Q.col Q.P (s.s Q.n) v
 
 def IsValG (s : SecAt A) (v : ↥C.S) : Prop :=
   letI := H.starRing
   IsValGt A.U.U.toUnifPre (ray A) (xC A) Q.chr
-    (fun r => spMap (dualMap (intO ↥C.S).subtype) ≫ (tanPt A.f (Q.vec r)).left) Q.col Q.P (s.s Q.n) v
+    (fun r => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ↥C.S).subtype) ≫ (tanPt A.f (Q.vec r)).left) Q.col Q.P (s.s Q.n) v
 
 open Classical in
 

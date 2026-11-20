@@ -199,9 +199,9 @@ theorem coef_unique {τ : E →+* ℂ} {u : Fin (Dw.mult τ) → (epsR K ⟶ B)}
 
 end Frame
 
-theorem spMap_dualMap_id : spMap (dualMap (algebraMap K K)) = 𝟙 (Sp (DualNumber K)) := by
-  have e : dualMap (algebraMap K K) = RingHom.id (DualNumber K) := by
-    ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+theorem spMap_dualMap_id : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K K)) = 𝟙 (Sp (DualNumber K)) := by
+  have e : GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K K) = RingHom.id (DualNumber K) := by
+    ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
   rw [e]
   exact Spec.map_id _
 
@@ -238,7 +238,7 @@ theorem IsKS.unique (P : AbelianDeRham) {Φ : Finset (E →+* ℂ)} {y : FrPt Xo
   have sq : j ≫ φ' = φ ≫ i := by
     apply hπ'.1.hom_ext
     · rw [Category.assoc, Category.assoc, eφ', e₂, e, eφ]
-    · have w1 : φ' ≫ A'.hom = B'.hom ≫ spMap (dualMap (algebraMap K K)) := hφ'.1.w
+    · have w1 : φ' ≫ A'.hom = B'.hom ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K K)) := hφ'.1.w
       have w2 : i ≫ A'.hom = A.hom ≫ DeRham.epsRed K := hi.1.w
       have w3 : j ≫ B'.hom = B.hom ≫ DeRham.epsRed K := hj.1.w
       have w4 : φ ≫ A.hom = B.hom ≫ spMap (algebraMap K K) := hφ.1.w

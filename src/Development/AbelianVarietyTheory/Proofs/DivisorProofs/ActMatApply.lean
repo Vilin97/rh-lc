@@ -76,7 +76,7 @@ def FormLink (Z : LocM.Mdl Y i₀) {X : Scheme.{0}} [IsIntegral X] (h : X ⟶ Z.
   ∀ (σ : Γ(F, U.1)) (v : Pdiv.LieG t.G) (k : Type) [Field k] (κ : U.Bp →+* k) (a : Fin Z.m) (φ : Γ(Z.X, (Z.U a).1) →+* k),
     spMap φ ≫ Z.chart a = spMap κ ≫ U.toX ≫ h → ∀ cf : Fin r → k,
       IsCombAtG (Y Z.i).t (spMap κ ≫ U.toX ≫ h ≫ Z.π) (fun i => (Z.fr a).bc φ (x i).1 (x i).2) cf
-        (spMap (dualMap κ) ≫ v.1.left ≫ φt) →
+        (spMap (GlobalTheory.CompanionTheory.Ar.dualMap κ) ≫ v.1.left ≫ φt) →
       κ ((lam (1 ⊗ₜ σ)).1 v) = ∑ i, cf i * valF (spMap κ ≫ U.toX) _ (crd (hs a) σ i)
 
 end Form
@@ -161,7 +161,7 @@ def OmegaResSt : Prop :=
         (z : Tors t.G (p ^ n) B) (z' : Tors t'.G (p ^ n) B), z.1.left ≫ φ = z'.1.left ≫ φ' →
           ∀ a, θ.pt n B z a = θ'.pt n B z' (f.hom.app n (1 ⊗ₜ a))) →
       ∀ (w : Pdiv.omega t.G) (w' : Pdiv.omega t'.G),
-        (∀ (v : Pdiv.LieG t.G) (v' : Pdiv.LieG t'.G), v'.1.left ≫ φ' = spMap (dualMap (algebraMap A A')) ≫ v.1.left ≫ φ →
+        (∀ (v : Pdiv.LieG t.G) (v' : Pdiv.LieG t'.G), v'.1.left ≫ φ' = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A A')) ≫ v.1.left ≫ φ →
           w'.1 v' = algebraMap A A' (w.1 v)) →
         c' w' = omegaMap _ _ f.hom ((GG.toBase A').omega (c w))
 
@@ -177,7 +177,7 @@ def HTSt : Prop :=
     Set.range (spMap ((intO ↥C.S).subtype.comp κ) ≫ x) ⊆ abLocus tX.G →
     ∀ (a : Fin g → ↥C.S) (v : Sp (DualNumber ↥C.S) ⟶ tX.G.left),
       IsCombAtG tX (spMap ((intO ↥C.S).subtype.comp κ) ≫ x)
-        (fun i => spMap (dualMap ((intO ↥C.S).subtype.comp κ)) ≫ (u i).1.left ≫ φ) a v →
+        (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((intO ↥C.S).subtype.comp κ)) ≫ (u i).1.left ≫ φ) a v →
       (v ∈ latHT tX p (spMap ((intO ↥C.S).subtype.comp κ) ≫ x) ↔
         (∀ j, ‖∑ i, (κ ((η j).1 (u i)) : ↥C.S) * a i‖ ≤ 1) ∧ ∀ i, ‖(p : ↥C.S) * a i‖ ≤ 1)
 
@@ -221,7 +221,7 @@ def FormResSt : Prop :=
       (φt : t.G.left ⟶ (Y Z.i).t.G.left) (φt' : t'.G.left ⟶ (Y Z.i).t.G.left),
       IsGrpPullback t.G (Y Z.i).t.G (U.toX ≫ h ≫ Z.π) φt → ∀ lam lam', FormLink Z h x hs U φt lam →
       FormLink Z h x hs U' φt' lam' → ∀ (σ : Γ(F, U.1)) (v : Pdiv.LieG t.G) (v' : Pdiv.LieG t'.G),
-        v'.1.left ≫ φt' = spMap (dualMap (AffOp.res hle)) ≫ v.1.left ≫ φt →
+        v'.1.left ≫ φt' = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (AffOp.res hle)) ≫ v.1.left ≫ φt →
           (lam' (1 ⊗ₜ resM F hle σ)).1 v' = AffOp.res hle ((lam (1 ⊗ₜ σ)).1 v)
 
 def FormActSt : Prop :=
@@ -249,7 +249,7 @@ def TanSt : Prop :=
         ∀ (k : Type) [Field k] (κ : U.Bp →+* k) (a : Fin Z.m) (φ : Γ(Z.X, (Z.U a).1) →+* k),
           spMap φ ≫ Z.chart a = spMap κ ≫ U.toX ≫ h → ∀ (cf : Fin r → k) (v : Sp (DualNumber k) ⟶ (Y Z.i).t.G.left),
             IsCombAtG (Y Z.i).t (spMap κ ≫ U.toX ≫ h ≫ Z.π) (fun i => (Z.fr a).bc φ (x i).1 (x i).2) cf v →
-            IsCombAtG (Y Z.i).t (spMap κ ≫ U.toX ≫ h ≫ Z.π) (fun l => spMap (dualMap κ) ≫ (u l).1.left ≫ φt)
+            IsCombAtG (Y Z.i).t (spMap κ ≫ U.toX ≫ h ≫ Z.π) (fun l => spMap (GlobalTheory.CompanionTheory.Ar.dualMap κ) ≫ (u l).1.left ≫ φt)
               (fun l => ∑ i, cf i * valF (spMap κ ≫ U.toX) _ (crd (hs a) (f l) i)) v
 
 end GlobalTheory.ChainPts.SysB

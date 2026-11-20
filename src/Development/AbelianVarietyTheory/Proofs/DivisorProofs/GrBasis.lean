@@ -20,13 +20,13 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 def GrBasis {R : Type} [CommRing R] (x : Sp R ⟶ Z.X) (τ : E →+* ℂ) (r : ℕ) : Prop :=
   ∃ (N : ℕ) (u : Fin r → (Sp (DualNumber R) ⟶ Z.t.G.left)), N ≠ 0 ∧
     (∀ (K : Type) [CommRing K] (ψ : R →+* K) (φ : c.F →+* K), spMap ψ ≫ x ≫ Z.s = spMap (φ.comp β) →
-      IsEigBasis Z φ (spMap ψ ≫ x) τ (fun i => spMap (dualMap ψ) ≫ u i)) ∧
+      IsEigBasis Z φ (spMap ψ ≫ x) τ (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ u i)) ∧
     ∀ (p : ℕ) [Fact p.Prime] (ψ : R →+* ↥(intO ℂ_[p])) (φ : c.F →+* ℂ_[p]),
       spMap ((intO ℂ_[p]).subtype.comp ψ) ≫ x ≫ Z.s = spMap (φ.comp β) →
         ∀ w, IsEigTan Z φ (spMap ((intO ℂ_[p]).subtype.comp ψ) ≫ x) τ w →
           ((∃ a : Fin r → ℂ_[p], (∀ i, ‖(N : ℂ_[p]) * a i‖ ≤ 1) ∧
               IsCombAtG Z.t (spMap ((intO ℂ_[p]).subtype.comp ψ) ≫ x)
-                (fun i => spMap (dualMap ((intO ℂ_[p]).subtype.comp ψ)) ≫ u i) a w) ↔
+                (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((intO ℂ_[p]).subtype.comp ψ)) ≫ u i) a w) ↔
             InGr Z φ (spMap ((intO ℂ_[p]).subtype.comp ψ) ≫ x)
               (latDR Z.t (spMap ((intO ℂ_[p]).subtype.comp ψ) ≫ x)) τ w)
 

@@ -76,7 +76,7 @@ theorem alg_descend {O K T : Type} [CommRing O] [Field K] [AddCommGroup T] [Modu
 theorem lie_lift {S : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G] [Smooth G.hom] {R R' : Type} [CommRing R]
     [CommRing R'] (g : R →+* R') {x : Sp R ⟶ S} {x' : Sp R' ⟶ S} (hx : x' = spMap g ≫ x) {V V' : Type}
     [AddCommGroup V] [Module R V] [AddCommGroup V'] [Module R' V'] (M : LieModel G x V) (M' : LieModel G x' V') :
-    ∃ b : V →+ V', (∀ e, (M'.pt (b e)).left = spMap (dualMap g) ≫ (M.pt e).left) ∧
+    ∃ b : V →+ V', (∀ e, (M'.pt (b e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ (M.pt e).left) ∧
       (∀ c e, b (c • e) = g c • b e) ∧ Submodule.span R' (Set.range b) = ⊤ ∧
       (Function.Injective g → Function.Injective b) := by
   letI := g.toAlgebra
@@ -123,7 +123,7 @@ theorem frame_descend {S : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G] 
     ∃ Z : Set K, Z.Finite ∧ ∀ (V : Type) [CommRing V] (g : V →+* K) (r : R →+* V) (σV : O →+* V) (xV : Sp V ⟶ S),
       Function.Injective g → Z ⊆ Set.range g → g.comp r = f → g.comp σV = σ → xV = spMap r ≫ x →
       ∃ v' : Fin n → (epsAt xV ⟶ G), IsEigFrame act xV σV v' ∧
-        ∀ i, (v i).left = spMap (dualMap g) ≫ (v' i).left := by
+        ∀ i, (v i).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ (v' i).left := by
   obtain ⟨MR, _, _, ⟨M⟩⟩ := lieModel_exists S G R x
   obtain ⟨T, _, _, ⟨MK⟩⟩ := lieModel_exists S G K xK
   obtain ⟨ρ, hρ, -⟩ := lieModel_exists_unique_act S G K xK T MK O act.act act.hom act.one act.mul act.add
@@ -141,11 +141,11 @@ theorem frame_descend {S : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G] 
   have hxK : xK = spMap g ≫ xV := by
     rw [hx, hxV, ← hr, ← Category.assoc, ← Spec.map_comp]; rfl
   obtain ⟨b, hb, hsb, -, hinj⟩ := lie_lift g hxK MV MK
-  have hd : spMap (dualMap f) = spMap (dualMap g) ≫ spMap (dualMap r) := by
+  have hd : spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap r) := by
     rw [← Spec.map_comp, ← hr]
     refine congrArg Spec.map (CommRingCat.hom_ext (RingHom.ext fun a => ?_))
-    show dualMap (g.comp r) a = dualMap g (dualMap r a)
-    ext <;> simp [dualMap]
+    show GlobalTheory.CompanionTheory.Ar.dualMap (g.comp r) a = GlobalTheory.CompanionTheory.Ar.dualMap g (GlobalTheory.CompanionTheory.Ar.dualMap r a)
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   obtain ⟨u', e1, e2, e3⟩ := H V g W b (fun i => jV (s i)) ρV σV hg hZg (hinj hg) hsb
     (fun i => MK.inj (Over.OverMorphism.ext (by rw [hb, hjV, hjK, hd, Category.assoc])))
     (span_map r jV hsV hspV hs)
@@ -318,8 +318,8 @@ theorem intFrame {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
       Category.id_comp, ← Spec.map_comp, ← Spec.map_comp]
     congr 1
     refine CommRingCat.hom_ext (RingHom.ext fun z => ?_)
-    show algebraMap K (DualNumber K) (algebraMap V K z) = dualMap (algebraMap V K) (algebraMap V (DualNumber V) z)
-    ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    show algebraMap K (DualNumber K) (algebraMap V K z) = GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K) (algebraMap V (DualNumber V) z)
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem exists_cancel {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {S S' S'' : Scheme.{0}}
     {t : SAB H S} {t' : SAB H S'} {t'' : SAB H S''} {f : S' ⟶ S} (g : S'' ⟶ S') {h : S'' ⟶ S} (e : h = g ≫ f)

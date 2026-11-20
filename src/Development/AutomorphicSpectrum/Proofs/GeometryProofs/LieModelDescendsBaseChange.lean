@@ -14,26 +14,26 @@ open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestrictio
 variable {S : Scheme.{0}} {R R' : Type} [CommRing R] [CommRing R']
 
 theorem dualMap_comp_algebraMap (c : R →+* R') :
-    (dualMap c).comp (algebraMap R (DualNumber R)) = (algebraMap R' (DualNumber R')).comp c := by
+    (GlobalTheory.CompanionTheory.Ar.dualMap c).comp (algebraMap R (DualNumber R)) = (algebraMap R' (DualNumber R')).comp c := by
   refine RingHom.ext fun r => TrivSqZeroExt.ext ?_ ?_
-  · simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
-  · simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  · simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  · simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem fst_comp_dualMap (c : R →+* R') :
-    (TrivSqZeroExt.fstHom R' R' R').toRingHom.comp (dualMap c) =
+    (TrivSqZeroExt.fstHom R' R' R').toRingHom.comp (GlobalTheory.CompanionTheory.Ar.dualMap c) =
       c.comp (TrivSqZeroExt.fstHom R R R).toRingHom := by
   refine RingHom.ext fun a => ?_
-  simp [dualMap]
+  simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem dualMap_comp_epsMul (c : R →+* R') (r : R) :
-    (dualMap c).comp (epsMul r) = (epsMul (c r)).comp (dualMap c) := by
+    (GlobalTheory.CompanionTheory.Ar.dualMap c).comp (epsMul r) = (epsMul (c r)).comp (GlobalTheory.CompanionTheory.Ar.dualMap c) := by
   refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_
-  · simp [dualMap, epsMul]
-  · simp [dualMap, epsMul, mul_comm]
+  · simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul]
+  · simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, mul_comm]
 
 def epsBase (c : R →+* R') (x : Sp R ⟶ S) : epsAt (spMap c ≫ x) ⟶ epsAt x :=
-  Over.homMk (spMap (dualMap c)) (by
-    change spMap (dualMap c) ≫ Spec.map _ ≫ x = Spec.map _ ≫ spMap c ≫ x
+  Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap c)) (by
+    change spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ Spec.map _ ≫ x = Spec.map _ ≫ spMap c ≫ x
     simp only [spMap]
     rw [← Category.assoc, ← Category.assoc, ← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp,
       ← CommRingCat.ofHom_comp, dualMap_comp_algebraMap])
@@ -48,7 +48,7 @@ theorem isTanAt_base (G : Over S) [GrpObj G] (c : R →+* R') (x : Sp R ⟶ S) (
     rw [← h1]; rfl
   unfold IsTanAt at hv ⊢
   rw [← h2, ← hv]
-  change Spec.map _ ≫ spMap (dualMap c) ≫ v.left = spMap c ≫ Spec.map _ ≫ v.left
+  change Spec.map _ ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap c) ≫ v.left = spMap c ≫ Spec.map _ ≫ v.left
   simp only [spMap]
   rw [← Category.assoc, ← Category.assoc, ← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp,
       ← CommRingCat.ofHom_comp, fst_comp_dualMap]
@@ -57,12 +57,12 @@ theorem exists_isBaseChange (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonO
     [CommRing R] [CommRing R'] [Algebra R R'] (x : Sp R ⟶ S) (E' : Type) [AddCommGroup E'] [Module R' E']
     [Module R E'] [IsScalarTower R R' E'] (M' : LieModel G (spMap (algebraMap R R') ≫ x) E') :
     ∃ (E : Type) (_ : AddCommGroup E) (_ : Module R E) (M : LieModel G x E) (j : E →ₗ[R] E'),
-      IsBaseChange R' j ∧ ∀ e, (M'.pt (j e)).left = spMap (dualMap (algebraMap R R')) ≫ (M.pt e).left := by
+      IsBaseChange R' j ∧ ∀ e, (M'.pt (j e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R R')) ≫ (M.pt e).left := by
   obtain ⟨E, iA, iM, ⟨M⟩⟩ := lieModel_exists S G R x
   have hex : ∀ e, ∃ e', M'.pt e' = epsBase (algebraMap R R') x ≫ M.pt e :=
     fun e => M'.onto _ (isTanAt_base G _ x _ (M.tan e))
   choose f hf using hex
-  have hleft : ∀ e, (M'.pt (f e)).left = spMap (dualMap (algebraMap R R')) ≫ (M.pt e).left := fun e => by
+  have hleft : ∀ e, (M'.pt (f e)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R R')) ≫ (M.pt e).left := fun e => by
     rw [hf e]; rfl
   let j : E →ₗ[R] E' :=
     { toFun := f

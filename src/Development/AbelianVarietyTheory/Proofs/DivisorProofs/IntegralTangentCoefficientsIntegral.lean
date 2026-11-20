@@ -51,16 +51,16 @@ theorem bcTan_injective {E : Type} [Field E] [NumberField E] [IsCMField E] {H : 
     {x : Sp S ⟶ X} {x' : Sp T ⟶ X} (hx : spMap φ ≫ x = x') :
     Function.Injective (bcTan φ hx : TanM x t.G → TanM x' t.G) := by
   intro v w h
-  have h1 : spMap (dualMap φ) ≫ (tv v).left = spMap (dualMap φ) ≫ (tv w).left := by
+  have h1 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ (tv v).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ (tv w).left := by
     have := congrArg (fun z : TanM x' t.G => (tv z).left) h
     simpa only [left_bcTan] using this
   haveI : IsSeparated t.G.hom := t.semi.separated
-  have hd : Function.Injective (dualMap φ) := fun a b hab => by
+  have hd : Function.Injective (GlobalTheory.CompanionTheory.Ar.dualMap φ) := fun a b hab => by
     have h1 := congrArg TrivSqZeroExt.fst hab
     have h2 := congrArg TrivSqZeroExt.snd hab
-    simp [dualMap] at h1 h2
+    simp [GlobalTheory.CompanionTheory.Ar.dualMap] at h1 h2
     exact TrivSqZeroExt.ext (hφ h1) (hφ h2)
-  exact tan_ext (ext_of_injective_of_isSeparated (dualMap φ) hd t.G.hom _ _
+  exact tan_ext (ext_of_injective_of_isSeparated (GlobalTheory.CompanionTheory.Ar.dualMap φ) hd t.G.hom _ _
     ((isTan_tv v).1.trans (isTan_tv w).1.symm) h1)
 
 theorem tanOf_lieAdd {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
@@ -213,7 +213,7 @@ theorem mem_range_of_dvr (hTS : TorusSaturated) {E : Type} [Field E] [NumberFiel
     have e1 : ∀ j, algebraMap R K (c j) = lieCoord xK' j := fun j => by rw [hxK']
     simp only [e1]
     rw [left_bcTan, left_tanOf, tv_sum_lieCoord t xK u ε hεe xK']
-    show spMap (dualMap (algebraMap R K)) ≫ (xc.1 ≫ uR).left ≫ pullback.fst t.G.hom xR = _
+    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R K)) ≫ (xc.1 ≫ uR).left ≫ pullback.fst t.G.hom xR = _
     rw [Over.comp_left, ← Category.assoc, ← Category.assoc, ← hb, Category.assoc, Category.assoc, ← hrel]
   have h2 : bcTan (algebraMap R K) hx ((s : R) • w) = ∑ j, algebraMap R K (c j) • ε j := by
     rw [LinearMap.map_smulₛₗ, hw, Finset.smul_sum]
@@ -242,7 +242,7 @@ theorem bcTan_comp {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Recip
   congr 1
   rw [spMap, spMap, spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
   congr 2
-  ext a <;> simp [dualMap]
+  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem cochar_saturated : GlobalTheory.IndefiniteRowSideFullHecke.LieAlgebraMaps.TorusSaturated → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (K : Type) [Field K] [NumberField K] (xO : Sp (𝓞 K) ⟶ X) (xK : Sp K ⟶ X) (hx : spMap (algebraMap (𝓞 K) K) ≫ xO = xK) (r : ℕ) (ε : Fin r → TanM xK t.G), IsCochFrame t xK ε → ∀ (a : Fin r → K) (w : TanM xO t.G), bcTan (algebraMap (𝓞 K) K) hx w = ∑ i, a i • ε i → ∀ i, a i ∈ Set.range (algebraMap (𝓞 K) K) := by
   intro hTS E _ _ _ H X t K _ _ xO xK hx r ε hε a w hw i

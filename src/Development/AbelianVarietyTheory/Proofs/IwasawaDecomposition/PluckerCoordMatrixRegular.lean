@@ -54,7 +54,7 @@ theorem exists_tri_mul_unit_of_coord : ∀ (D : D7) (A : Amb D) (N j : ℕ) (S :
   have hB' : ∀ τ, gF.co (Φ.C k).f0 τ = (B τ)ᵀ := fun τ =>
     GlobalTheory.ShFam.EigFrame.co_eq fun i => by
       have h := hB.2.2 τ i
-      have hv : gF.v τ = fun k' => spMap (dualMap (baseFn (Φ.C k) V hne)) ≫ g.v τ k' := by
+      have hv : gF.v τ = fun k' => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (baseFn (Φ.C k) V hne)) ≫ g.v τ k' := by
         funext k'
         rw [hgF τ k', hgy τ k', h1]
         exact GradedPieces.dual_comp ψ _ _

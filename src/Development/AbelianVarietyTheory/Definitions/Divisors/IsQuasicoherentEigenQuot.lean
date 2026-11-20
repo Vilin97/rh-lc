@@ -108,13 +108,13 @@ instance isFiniteQC_eigenQuot [IsFiniteQC F] : IsFiniteQC (eigenQuot ρ σ) :=
   QCoh.isFiniteQC_cokernel _
 
 def dualAct : O →+* End (dual F) where
-  toFun a := dualMap (act ρ a)
+  toFun a := GlobalTheory.CompanionTheory.Ar.dualMap (act ρ a)
   map_one' := by rw [act, map_one]; exact dualMap_id
   map_mul' a b := by rw [act, mul_comm, map_mul]; exact dualMap_comp _ _
   map_zero' := by rw [act, map_zero]; exact dualMap_zero
   map_add' a b := by rw [act, map_add (f := _)]; exact dualMap_add _ _
 
-@[simp] theorem act_dualAct (a : O) : act (dualAct ρ) a = dualMap (act ρ a) := rfl
+@[simp] theorem act_dualAct (a : O) : act (dualAct ρ) a = GlobalTheory.CompanionTheory.Ar.dualMap (act ρ a) := rfl
 
 variable {ρ σ} in
 
@@ -124,7 +124,7 @@ theorem ActsThrough.dual (h : ActsThrough ρ σ) : ActsThrough (dualAct ρ) σ :
 variable {ρ ρ'} in
 
 theorem IsEquivariant.dual {φ : F ⟶ G} (h : IsEquivariant ρ ρ' φ) :
-    IsEquivariant (dualAct ρ') (dualAct ρ) (dualMap φ) := fun a => by
+    IsEquivariant (dualAct ρ') (dualAct ρ) (GlobalTheory.CompanionTheory.Ar.dualMap φ) := fun a => by
   rw [act_dualAct, act_dualAct, ← dualMap_comp, ← dualMap_comp, h a]
 
 theorem pullback_map_smulHom (f : Y ⟶ X) (a : Γ(X, ⊤)) :

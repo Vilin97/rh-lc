@@ -22,7 +22,7 @@ noncomputable def stepSumVia (w : Sym E →₀ ℤ) (p : ℕ) [Fact p.Prime] {K 
     (φ : K →+* ℂ_[p]) : ℝ :=
   w.sum fun a n => (n : ℝ) * lnStep Z.t
       (spMap (φ.comp (Scheme.stalkClosedPointTo y).hom) ≫ stalkPt Y.Y (below y) ≫ Y.π ≫ genι Z)
-      (fun τ i => spMap (dualMap (φ.comp (Scheme.stalkClosedPointTo y).hom)) ≫
+      (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (φ.comp (Scheme.stalkClosedPointTo y).hom)) ≫
         (Y.gr_spec (below y)).choose_spec.choose.v τ i) p (a.1 p) a.2.2
 
 theorem lgOf_eq_stepSumVia (w : Sym E →₀ ℤ) (v : HeightOneSpectrum (𝓞 F)) [hp : Fact (resP v).Prime] (ε : Ext v)

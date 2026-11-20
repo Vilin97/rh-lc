@@ -47,7 +47,7 @@ theorem sameStep_of_le (a b : Vert.Flag P N) (i : Fin (N + 1)) (t : a.F i ⟶ b.
   · rw [← cancel_mono (b.ι i), Category.assoc, ht, hs, Category.id_comp]
 
 theorem comp_dualMap_eq_zero_iff {A B : T.Modules} (a : A ⟶ P) (b : B ⟶ VB.dual P) :
-    b ≫ dualMap a = 0 ↔ (a ≫ cartierDualToBidual P) ≫ dualMap b = 0 := by
+    b ≫ GlobalTheory.CompanionTheory.Ar.dualMap a = 0 ↔ (a ≫ cartierDualToBidual P) ≫ GlobalTheory.CompanionTheory.Ar.dualMap b = 0 := by
   constructor
   · intro h
     rw [toBidual_naturality_dualSheafTranspose, Category.assoc, ← dualMap_comp, h, dualMap_zero, comp_zero]
@@ -55,7 +55,7 @@ theorem comp_dualMap_eq_zero_iff {A B : T.Modules} (a : A ⟶ P) (b : B ⟶ VB.d
     rw [← Category.comp_id b, ← LieVB.toBidual_dual_comp_dualMap, ← Category.assoc b, toBidual_naturality_dualSheafTranspose, Category.assoc,
       Category.assoc, ← dualMap_comp, ← dualMap_comp, h, dualMap_zero, comp_zero]
 
-def Orth (n : Vert.Flag P N) (m : Vert.Flag (VB.dual P) N) : Prop := ∀ i, m.ι i ≫ dualMap (n.ι i.rev) = 0
+def Orth (n : Vert.Flag P N) (m : Vert.Flag (VB.dual P) N) : Prop := ∀ i, m.ι i ≫ GlobalTheory.CompanionTheory.Ar.dualMap (n.ι i.rev) = 0
 
 theorem Orth.sameStep {n : Vert.Flag P N} {m : Vert.Flag (VB.dual P) N} (h : Orth n m) (i : Fin (N + 1)) :
     m.SameStep (dualFlag n) i :=
@@ -103,7 +103,7 @@ end Flags
 
 theorem theta_pullbackComp {B Y T : Scheme.{0}} (π : Y ⟶ B) (g : T ⟶ Y) (E : B.Modules) :
     (Scheme.Modules.pullbackComp g π).inv.app (VB.dual E) ≫ (Scheme.Modules.pullback g).map (theta π E) ≫
-      theta g ((Scheme.Modules.pullback π).obj E) ≫ dualMap ((Scheme.Modules.pullbackComp g π).inv.app E) =
+      theta g ((Scheme.Modules.pullback π).obj E) ≫ GlobalTheory.CompanionTheory.Ar.dualMap ((Scheme.Modules.pullbackComp g π).inv.app E) =
         theta (g ≫ π) E := by
   refine pull_ext (g ≫ π) fun V l => dual_pull_ext (g ≫ π) le_rfl fun W h S hS e s => ?_
   rw [dualApp_theta (g ≫ π) _ h, ← QCoh.app_app, ← QCoh.app_app, ← QCoh.app_app, dualApp_dualMap,
@@ -135,12 +135,12 @@ theorem orth_carried (π : Y ⟶ B) (fl : Vert.Flag ((Scheme.Modules.pullback π
   intro i
   change ((((Scheme.Modules.pullback g').map ((dualFlag fl).ι i ≫ (thetaIso hE π).inv)) ≫
     (Scheme.Modules.pullbackComp g' π).hom.app _ ≫ 𝟙 _) ≫ theta (g' ≫ π) E) ≫
-      dualMap ((Scheme.Modules.pullback g').map (fl.ι i.rev) ≫ (Scheme.Modules.pullbackComp g' π).hom.app _ ≫ 𝟙 _) = 0
+      GlobalTheory.CompanionTheory.Ar.dualMap ((Scheme.Modules.pullback g').map (fl.ι i.rev) ≫ (Scheme.Modules.pullbackComp g' π).hom.app _ ≫ 𝟙 _) = 0
   have e₁ : (Scheme.Modules.pullback g').map (thetaIso hE π).inv ≫ (Scheme.Modules.pullback g').map (theta π E) = 𝟙 _ := by
     rw [← Functor.map_comp, ← CategoryTheory.Functor.map_id]
     exact congrArg _ (thetaIso hE π).inv_hom_id
-  have e₂ : dualMap ((Scheme.Modules.pullbackComp g' π).inv.app E) ≫
-      dualMap ((Scheme.Modules.pullbackComp g' π).hom.app E) = 𝟙 _ := by
+  have e₂ : GlobalTheory.CompanionTheory.Ar.dualMap ((Scheme.Modules.pullbackComp g' π).inv.app E) ≫
+      GlobalTheory.CompanionTheory.Ar.dualMap ((Scheme.Modules.pullbackComp g' π).hom.app E) = 𝟙 _ := by
     rw [← dualMap_comp, Iso.hom_inv_id_app]
     rfl
   rw [← theta_pullbackComp, Category.comp_id, Category.comp_id, dualMap_comp, Functor.map_comp]

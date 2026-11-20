@@ -92,8 +92,8 @@ theorem valAt_pushSec (V : (gen Z).affineOpens) (v : TanM (GlobalTheory.LogKS.ch
     {y : CxPts (genStr Z) σ} (hy : y ∈ ptsIn _ σ V.1) :
     valAt (genι Z) (T.pushSec V v) ((T.pt_mem_iff V).2 hy) = T.lie (T.pt_ι y).symm (valAt (genι Z) v hy) := by
   apply tan_ext
-  show spMap (dualMap (evHom ((T.pt_mem_iff V).2 hy))) ≫ spMap (dualMap (T.imRing V)) ≫ (tv v).left ≫ T.mu.cm.F =
-    (spMap (dualMap (evHom hy)) ≫ (tv v).left) ≫ T.mu.cm.F
+  show spMap (GlobalTheory.CompanionTheory.Ar.dualMap (evHom ((T.pt_mem_iff V).2 hy))) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (T.imRing V)) ≫ (tv v).left ≫ T.mu.cm.F =
+    (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (evHom hy)) ≫ (tv v).left) ≫ T.mu.cm.F
   rw [← Category.assoc, spMap_comp', ← Formalism.L2.Pj.dualMap_comp, T.ev_imRing, Category.assoc]
 
 def auxiliary_data_pullback (x : OddPrimesWithRootsOfUnity Z) : OddPrimesWithRootsOfUnity Z :=

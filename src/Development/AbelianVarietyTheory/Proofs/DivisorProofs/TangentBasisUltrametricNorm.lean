@@ -110,9 +110,9 @@ theorem exists_smul_mem_lieCoordLat (hb : TanBasis t b) (P : Ideal (𝓞 K)) [hP
         (IsLocalization.map_units _ (⟨r i, hi⟩ : P.primeCompl)) K κ (RingHom.id K) hκ xK h1 _ (isTan_tv v)
       have hid : (fun q => bcTan (RingHom.id K) h1 (b q)) = b := funext fun q => tan_ext (by
         rw [left_bcTan]
-        have : dualMap (RingHom.id K) = RingHom.id _ := by
+        have : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id K) = RingHom.id _ := by
           refine RingHom.ext fun z => ?_
-          ext <;> simp [dualMap]
+          ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
         rw [this, show spMap (RingHom.id (DualNumber K)) = 𝟙 _ from Spec.map_id _, Category.id_comp])
       rw [hid] at ha
       have h5 := hc.symm.trans (tan_ext (v := bcTan κ e v) ha)
@@ -170,7 +170,7 @@ theorem mem_of_latC {d : Fin n → C} (hd : d ∈ latC j (lieCoordLat t hx b)) :
       rw [map_smulₛₗ, hv, Finset.smul_sum]
       exact Finset.sum_congr rfl fun i _ => (mul_smul (a : C) _ _).symm
   obtain ⟨v, hv⟩ := key
-  have h : spMap (dualMap (intO C).subtype) ≫ (tv v).left = combLeft t (fun i => bcTan j hC (b i)) d :=
+  have h : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO C).subtype) ≫ (tv v).left = combLeft t (fun i => bcTan j hC (b i)) d :=
     (left_bcTan _ e v).symm.trans (congrArg (fun z => (tv z).left) hv)
   exact ⟨spMap ψ ≫ xO, e, (tv v).left, isTan_tv v, h⟩
 

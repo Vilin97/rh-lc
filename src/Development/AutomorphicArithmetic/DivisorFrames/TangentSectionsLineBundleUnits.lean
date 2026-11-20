@@ -40,7 +40,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 
 private theorem locFr_tan {R S : Type} [CommRing R] [CommRing S] {x₀ : Sp R ⟶ X}
     {w : Fin n → (Sp (DualNumber R) ⟶ t.G.left)} (h : GlobalTheory.TriFlag.IsLocFr t s ε x₀ w) (α : R →+* S) (m : Fin n) :
-    IsTanAtG t (spMap α ≫ x₀) (spMap (dualMap α) ≫ w m) := by
+    IsTanAtG t (spMap α ≫ x₀) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ w m) := by
   obtain ⟨⟨N, e, u, hu, hb⟩, -⟩ := h
   rw [← hu]
   exact GlobalTheory.LieMet.isTan_map _ rfl (hb.1 _)
@@ -49,15 +49,15 @@ private theorem locFr_comb {R R' S : Type} [CommRing R] [CommRing R'] [CommRing 
     {w : Fin n → (Sp (DualNumber R) ⟶ t.G.left)} {w' : Fin n → (Sp (DualNumber R') ⟶ t.G.left)}
     (h : GlobalTheory.TriFlag.IsLocFr t s ε x₀ w) (h' : GlobalTheory.TriFlag.IsLocFr t s ε x₀' w') (α : R →+* S) (α' : R' →+* S)
     (e : spMap α' ≫ x₀' = spMap α ≫ x₀) (m : Fin n) :
-    ∃ C : Fin n → S, IsCombAtG t (spMap α ≫ x₀) (fun l => spMap (dualMap α) ≫ w l) C (spMap (dualMap α') ≫ w' m) := by
+    ∃ C : Fin n → S, IsCombAtG t (spMap α ≫ x₀) (fun l => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ w l) C (spMap (GlobalTheory.CompanionTheory.Ar.dualMap α') ≫ w' m) := by
   have hψ : (spMap α ≫ x₀) ≫ s = spMap (Spec.preimage ((spMap α ≫ x₀) ≫ s)).hom := (Spec.map_preimage _).symm
   exact ((h.2 S α _ hψ).2 _ (e ▸ locFr_tan h' α' m) ((h'.2 S α' _ (e ▸ hψ)).1 m)).exists
 
 private theorem tri_comb {S K : Type} [CommRing S] [Field K] {y : Sp S ⟶ X} (φ : S →+* K) (hφ : Function.Injective φ)
     {u : Fin n → (Sp (DualNumber K) ⟶ t.G.left)} (hu : ∀ m, IsTanAtG t (spMap φ ≫ y) (u m))
     (hi : IsIndep t (spMap φ ≫ y) u) {w w' : Fin n → (Sp (DualNumber S) ⟶ t.G.left)} {d d' : Fin n → K}
-    (hd : ∀ l, d l ≠ 0) (h : GlobalTheory.TriFlag.IsTriOf t (spMap φ ≫ y) u d fun l => spMap (dualMap φ) ≫ w l)
-    (h' : GlobalTheory.TriFlag.IsTriOf t (spMap φ ≫ y) u d' fun l => spMap (dualMap φ) ≫ w' l) {m : Fin n} {C : Fin n → S}
+    (hd : ∀ l, d l ≠ 0) (h : GlobalTheory.TriFlag.IsTriOf t (spMap φ ≫ y) u d fun l => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ w l)
+    (h' : GlobalTheory.TriFlag.IsTriOf t (spMap φ ≫ y) u d' fun l => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ w' l) {m : Fin n} {C : Fin n → S}
     (hC : IsCombAtG t y w C (w' m)) {g : S} (hg : φ g * d m = d' m) : C m = g ∧ ∀ l, m < l → C l = 0 := by
   choose T hT1 hT2 hT3 using h
   obtain ⟨v, hv1, hv2, hv3⟩ := h' m
@@ -69,7 +69,7 @@ private theorem tri_comb {S K : Type} [CommRing S] [Field K] {y : Sp S ⟶ X} (�
 end
 
 theorem UpperTheory.tangent_sections_line_bundle_units :
-    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (A : Type) [CommRing A] (s : X ⟶ Sp A) (ε : 𝓞 E →+* A) (q : ℕ) (W Y : Scheme.{0}) [IsIntegral W], W.IsSeparated → ∀ (b : W ⟶ X) (a : W ⟶ Y) (n : ℕ) (L : ℕ → LB Y) (u₀ : Fin n → (Sp (DualNumber W.functionField) ⟶ t.G.left)) (ρ : ∀ m : Fin n, (L m).ι → W.functionFieldˣ), (∀ m, IsTanAtG t (GlobalTheory.CurveRootGeometry.genPt W ≫ b) (u₀ m)) → IsIndep t (GlobalTheory.CurveRootGeometry.genPt W ≫ b) u₀ → (∀ (m : Fin n) (i j : (L m).ι), ⊤ ≤ (GlobalTheory.CurveRootGeometry.genPt W ≫ a) ⁻¹ᵁ ((L m).U i ⊓ (L m).U j) → (ρ m i : W.functionField) = valR (GlobalTheory.CurveRootGeometry.genPt W ≫ a) _ ((L m).g i j).val * ρ m j) → (∀ x : W, ((q : ℕ) : W.residueField x) = 0 → ∃ (T : W.Opens) (hT : IsAffineOpen T) (hx : x ∈ T) (idx : ∀ m : Fin n, (L m).ι) (w : Fin n → (Sp (DualNumber Γ(W, T)) ⟶ t.G.left)), (∀ m : Fin n, T ≤ a ⁻¹ᵁ (L m).U (idx m)) ∧ GlobalTheory.TriFlag.IsLocFr t s ε (R := Γ(W, T)) (hT.fromSpec ≫ b) w ∧ GlobalTheory.TriFlag.IsTriOf t (GlobalTheory.CurveRootGeometry.genPt W ≫ b) u₀ (fun m => (((ρ m (idx m))⁻¹ : W.functionFieldˣ) : W.functionField)) (fun m => spMap (dualMap (fnOf T (gen_mem hx))) ≫ w m)) → GlobalTheory.TriFlag.TriFrames t s ε q b a n L := by
+    ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (A : Type) [CommRing A] (s : X ⟶ Sp A) (ε : 𝓞 E →+* A) (q : ℕ) (W Y : Scheme.{0}) [IsIntegral W], W.IsSeparated → ∀ (b : W ⟶ X) (a : W ⟶ Y) (n : ℕ) (L : ℕ → LB Y) (u₀ : Fin n → (Sp (DualNumber W.functionField) ⟶ t.G.left)) (ρ : ∀ m : Fin n, (L m).ι → W.functionFieldˣ), (∀ m, IsTanAtG t (GlobalTheory.CurveRootGeometry.genPt W ≫ b) (u₀ m)) → IsIndep t (GlobalTheory.CurveRootGeometry.genPt W ≫ b) u₀ → (∀ (m : Fin n) (i j : (L m).ι), ⊤ ≤ (GlobalTheory.CurveRootGeometry.genPt W ≫ a) ⁻¹ᵁ ((L m).U i ⊓ (L m).U j) → (ρ m i : W.functionField) = valR (GlobalTheory.CurveRootGeometry.genPt W ≫ a) _ ((L m).g i j).val * ρ m j) → (∀ x : W, ((q : ℕ) : W.residueField x) = 0 → ∃ (T : W.Opens) (hT : IsAffineOpen T) (hx : x ∈ T) (idx : ∀ m : Fin n, (L m).ι) (w : Fin n → (Sp (DualNumber Γ(W, T)) ⟶ t.G.left)), (∀ m : Fin n, T ≤ a ⁻¹ᵁ (L m).U (idx m)) ∧ GlobalTheory.TriFlag.IsLocFr t s ε (R := Γ(W, T)) (hT.fromSpec ≫ b) w ∧ GlobalTheory.TriFlag.IsTriOf t (GlobalTheory.CurveRootGeometry.genPt W ≫ b) u₀ (fun m => (((ρ m (idx m))⁻¹ : W.functionFieldˣ) : W.functionField)) (fun m => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (fnOf T (gen_mem hx))) ≫ w m)) → GlobalTheory.TriFlag.TriFrames t s ε q b a n L := by
   intro E _ _ _ H X t A _ s ε q W Y _ hW b a n L u₀ ρ hu hi hρ hloc
   choose T hT hx idx w hidx hfr htri using fun j : {x : W // ((q : ℕ) : W.residueField x) = 0} => hloc j.1 j.2
   have hev : ∀ {U : W.Opens} (hU : IsAffineOpen U) {R : Type} [CommRing R] (x : Sp R ⟶ W) (h : ⊤ ≤ x ⁻¹ᵁ U),
@@ -78,7 +78,7 @@ theorem UpperTheory.tangent_sections_line_bundle_units :
   have hevb : ∀ j {R : Type} [CommRing R] (x : Sp R ⟶ W) (h : ⊤ ≤ x ⁻¹ᵁ T j),
       x ≫ b = spMap (GlobalTheory.Points.valMap x (T j) h).hom ≫ (hT j).fromSpec ≫ b :=
     fun j R _ x h => (congrArg (· ≫ b) (hev (hT j) x h).symm).trans (Category.assoc _ _ _)
-  refine ⟨_, T, fun m j => idx j m, fun j R _ x h m => spMap (dualMap (GlobalTheory.Points.valMap x (T j) h).hom) ≫ w j m,
+  refine ⟨_, T, fun m j => idx j m, fun j R _ x h m => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (GlobalTheory.Points.valMap x (T j) h).hom) ≫ w j m,
     fun x h => ⟨⟨x, h⟩, hx _⟩, fun m j => hidx j m, fun j R _ x h m => ?_, fun j R R' _ _ ψ x h h' m => ?_,
     fun j R _ x h => ?_, fun j R _ x h ψ hψ => ?_, fun j j' R _ x h h' m => ?_⟩
   · rw [hevb j x h]
@@ -90,7 +90,7 @@ theorem UpperTheory.tangent_sections_line_bundle_units :
     rw [e, GlobalTheory.LineNorm.Chart.dual_comp]
   · obtain ⟨N, e, u, he, hb⟩ := (hfr j).1
     rw [hevb j x h]
-    exact ⟨N, e, fun i => spMap (dualMap (GlobalTheory.Points.valMap x (T j) h).hom) ≫ u i, fun m => by simp only [he],
+    exact ⟨N, e, fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (GlobalTheory.Points.valMap x (T j) h).hom) ≫ u i, fun m => by simp only [he],
       fun i => GlobalTheory.LieMet.isTan_map _ rfl (hb.1 i), hb.2 R _⟩
   · rw [← Category.assoc] at hψ
     rw [hevb j x h] at hψ ⊢
@@ -121,7 +121,7 @@ theorem UpperTheory.tangent_sections_line_bundle_units :
     have hval := fun (S : Type) [CommRing S] (σ : Γ(W, T j ⊓ T j') →+* S) =>
       GlobalTheory.Points.valR_spMap_comp (C := Γ(W, T j ⊓ T j')) σ (hU.fromSpec ≫ a) _ ha ((L m).g (idx j m) (idx j' m)).val
     have key := tri_comb (y := hU.fromSpec ≫ b) (fnOf _ hg) (fnOf_injective _ hg) (u := u₀) (eg b ▸ hu) (eg b ▸ hi)
-      (w := fun l => spMap (dualMap α) ≫ w j l) (w' := fun l => spMap (dualMap α') ≫ w j' l)
+      (w := fun l => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ w j l) (w' := fun l => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α') ≫ w j' l)
       (fun l => (ρ l (idx j l))⁻¹.ne_zero)
       (by simp only [GlobalTheory.LineNorm.Chart.dual_comp, h2]; exact eg b ▸ htri j)
       (by simp only [GlobalTheory.LineNorm.Chart.dual_comp, h2']; exact eg b ▸ htri j') hC

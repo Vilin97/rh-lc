@@ -180,20 +180,20 @@ theorem gl_TF : ∀ (R : Type) [CommRing R] [IsDomain R] (C : Type) [Field C] [A
   simp only [TF, jFK, jK, Over.mk_hom, spMap, toF, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
 
 theorem gl_redE : ∀ (R : Type) [CommRing R] [IsDomain R] (C : Type) [Field C] [Algebra (FractionRing R) C],
-    redE C ≫ spMap (dualMap (toF R C)) = spMap (toF R C) ≫ redE R := by
+    redE C ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF R C)) = spMap (toF R C) ≫ redE R := by
   intro R _ _ C _ _
   simp only [redE, spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
   congr 2
   refine RingHom.ext fun z => ?_
-  simp [dualMap, toF]
+  simp [GlobalTheory.CompanionTheory.Ar.dualMap, toF]
 
 theorem gl_hom : ∀ (R : Type) [CommRing R] [IsDomain R] (C : Type) [Field C] [Algebra (FractionRing R) C],
-    spMap (dualMap (toF R C)) ≫ (epsR R).hom = (TE R C).hom := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF R C)) ≫ (epsR R).hom = (TE R C).hom := by
   intro R _ _ C _ _
   simp only [TE, epsR, Over.mk_hom, gl_TF, spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
   congr 2
   refine RingHom.ext fun z => ?_
-  refine TrivSqZeroExt.ext ?_ ?_ <;> simp [dualMap, toF, TrivSqZeroExt.algebraMap_eq_inl]
+  refine TrivSqZeroExt.ext ?_ ?_ <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, toF, TrivSqZeroExt.algebraMap_eq_inl]
 
 end GlobalTheory.MBLow.TanGauge
 

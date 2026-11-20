@@ -74,12 +74,12 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 
 theorem bc_bc {R R' R'' : Type} [CommRing R] [CommRing R'] [CommRing R''] (φ : R →+* R') (ψ : R' →+* R'')
     (w : Sp (DualNumber R) ⟶ t.G.left) :
-    spMap (dualMap ψ) ≫ spMap (dualMap φ) ≫ w = spMap (dualMap (ψ.comp φ)) ≫ w := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ w = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ)) ≫ w := by
   rw [← Category.assoc, ReciprocityTheory.ChartRestriction.G.PullbackSections.spMap_comp_spMap, ← Formalism.L2.Pj.dualMap_comp]
 
 theorem isTanBasis_map {R S : Type} [CommRing R] [CommRing S] {x : Sp R ⟶ X} {g : ℕ}
     {e : Fin g → (Sp (DualNumber R) ⟶ t.G.left)} (h : IsTanBasis t x e) (φ : R →+* S) :
-    IsTanBasis t (spMap φ ≫ x) (fun i => spMap (dualMap φ) ≫ e i) := by
+    IsTanBasis t (spMap φ ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ e i) := by
   refine ⟨fun i => GlobalTheory.FactorDepth.isTanAtG_map t φ (h.1 i), fun T _ ψ w hw => ?_⟩
   simp only [bc_bc]
   rw [← Category.assoc, ReciprocityTheory.ChartRestriction.G.PullbackSections.spMap_comp_spMap] at hw ⊢
@@ -95,7 +95,7 @@ theorem spansP_map {R S : Type} [CommRing R] [CommRing S] {g n : ℕ} {η : Fin 
 
 theorem cutsHT_map {R S : Type} [CommRing R] [CommRing S] {x : Sp R ⟶ X} {g n : ℕ}
     {e : Fin g → (Sp (DualNumber R) ⟶ t.G.left)} {η : Fin n → Fin g → R} (h : CutsHT t p x e η) (φ : R →+* S) :
-    CutsHT t p (spMap φ ≫ x) (fun i => spMap (dualMap φ) ≫ e i) fun j i => φ (η j i) := by
+    CutsHT t p (spMap φ ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ e i) fun j i => φ (η j i) := by
   intro C κ a v hv
   simp only [bc_bc] at hv
   rw [← Category.assoc, ReciprocityTheory.ChartRestriction.G.PullbackSections.spMap_comp_spMap] at hv ⊢
@@ -179,7 +179,7 @@ theorem chart {S S' : Scheme.{0}} [IsIntegral S] [IsIntegral S'] (φ : S' ⟶ S)
     rw [h0, map_zero] at e
     exact hJ ((map_eq_zero_iff _ (fnMap φ hη).injective).1 e.symm)) fun K =>
       ⟨resG S' hle' (s K), fnOf_injective _ hgU (by rw [map_mul, hfn, hfn, fnOf_resG, hsu, mul_comm, huJ])⟩
-  refine ⟨⟨U, hU⟩, g, fun i => spMap (dualMap ψ) ≫ e i, fun l i => ψ (η (J l) i), hyU, ?_,
+  refine ⟨⟨U, hU⟩, g, fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ e i, fun l i => ψ (η (J l) i), hyU, ?_,
     spansP_rows p (spansP_map p hs ψ) hN, ?_⟩
   · exact hx ▸ isTanBasis_map t he ψ
   · exact hx ▸ cutsHT_rows t p (cutsHT_map t p hc ψ) hN

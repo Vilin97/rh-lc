@@ -622,8 +622,8 @@ theorem ex_chi [IsDomain A] [Finite (Gam t x₀ q)] (hq : q.Prime) {ζ : A} (hζ
   exact (h₀ d).symm.trans (congrArg x' (P.toK_inj h3)).symm
 
 theorem dual_comp {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (f : R →+* S) (g : S →+* T) :
-    (dualMap g).comp (dualMap f) = dualMap (g.comp f) :=
-  RingHom.ext fun z => by ext <;> simp [dualMap]
+    (GlobalTheory.CompanionTheory.Ar.dualMap g).comp (GlobalTheory.CompanionTheory.Ar.dualMap f) = GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) :=
+  RingHom.ext fun z => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem cast_quot (R : Type) [CommRing R] (p n : ℕ) : ((p ^ n : ℕ) : R ⧸ Ideal.span {(p : R) ^ n}) = 0 := by
   rw [← map_natCast (Ideal.Quotient.mk _), Ideal.Quotient.eq_zero_iff_mem, Nat.cast_pow]
@@ -638,10 +638,10 @@ theorem ex_dlog [IsDomain A] [IsIntegrallyClosed A] {p n : ℕ}
       (∀ (B : Type) [CommRing B] [Algebra O B] [Module.Finite O B]
         (w : Over.mk (spMap (algebraMap O B) ≫ spMap x ≫ x₀) ⟶ t.G) (β : P.B →+* B),
         P.At ((algebraMap O B).comp x) w.left β → (c.χ B w : B) = β b) →
-      DlogIs t p n c (fun i => spMap (dualMap x) ≫ e i) (fun i => x (h i)) := by
+      DlogIs t p n c (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap x) ≫ e i) (fun i => x (h i)) := by
   let I : Ideal A := Ideal.span {(p : A) ^ n}
   have h1 := fun i => glue hF hκ ((algebraMap (A ⧸ I) (DualNumber (A ⧸ I))).comp (Ideal.Quotient.mk I))
-    (spMap (dualMap (Ideal.Quotient.mk I)) ≫ e i) fun P S' _ ψ hu =>
+    (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk I)) ≫ e i) fun P S' _ ψ hu =>
       tan_at P (GlobalTheory.FactorDepth.isTanAtG_map t _ (he i)) (cast_quot A p n) ψ hu
   choose s hs using h1
   choose h hh using fun i => Ideal.Quotient.mk_surjective (s i).snd
@@ -660,24 +660,24 @@ theorem ex_dlog [IsDomain A] [IsIntegrallyClosed A] {p n : ℕ}
       mkPt _ (hv.1.trans (spc_assoc _ _ _))
     have h2 := hd _ _ (comb_single hex i) w rfl
     obtain ⟨β, hβ⟩ := hP.at_fin _ w (tan_tors hv (cast_quot O p n) w rfl)
-    have e₁ : (dualMap x').comp ((algebraMap (A ⧸ I) (DualNumber (A ⧸ I))).comp (Ideal.Quotient.mk I)) =
+    have e₁ : (GlobalTheory.CompanionTheory.Ar.dualMap x').comp ((algebraMap (A ⧸ I) (DualNumber (A ⧸ I))).comp (Ideal.Quotient.mk I)) =
         (algebraMap O (DualNumber (O ⧸ J))).comp x := by
       rw [← RingHom.comp_assoc, dualMap_comp_alg, RingHom.comp_assoc, hx']; rfl
-    have e₂ : spMap (dualMap x') ≫ spMap (dualMap (Ideal.Quotient.mk I)) ≫ e i = w.left := by
+    have e₂ : spMap (GlobalTheory.CompanionTheory.Ar.dualMap x') ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk I)) ≫ e i = w.left := by
       rw [mkPt_left, spc_assoc, spc_assoc, dual_comp, dual_comp, hx']
-    have h3 := hs i P _ (dualMap x') (by rw [← RingHom.comp_apply, e₁]; exact hβ.unit)
+    have h3 := hs i P _ (GlobalTheory.CompanionTheory.Ar.dualMap x') (by rw [← RingHom.comp_apply, e₁]; exact hβ.unit)
     rw [e₁, e₂] at h3
     have h4 := h3.uniq hF hκ ⟨P, b, β, hb, hβ, rfl⟩
     rw [hc _ w β hβ, ← h4] at h2
     have h5 : Ideal.Quotient.mk J (x (h i)) = x' (s i).snd := by rw [← hh]; exact (RingHom.congr_fun hx' _).symm
     rw [h5]
-    simpa [dualMap, Pi.single_apply] using h2.symm
+    simpa [GlobalTheory.CompanionTheory.Ar.dualMap, Pi.single_apply] using h2.symm
   intro a v hv w hw
   set_option synthInstance.maxHeartbeats 100000 in
     rw [hd a v hv w hw, map_sum, map_sum]
   exact Finset.sum_congr rfl fun i _ => by rw [map_mul, map_mul, key]
 
-theorem hodgeTate_map : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) [IsLocallyNoetherian X] (t : SAB H X) (A : Type) [CommRing A] [IsDomain A] [IsIntegrallyClosed A] [CharZero A] (x₀ : Sp A ⟶ X) (g : ℕ) (e : Fin g → (Sp (DualNumber A) ⟶ t.G.left)), IsTanBasis t x₀ e → ∀ p : ℕ, p.Prime → (∃ ζ : A, IsPrimitiveRoot ζ p) → SplitTors t x₀ p → ∃ (n : ℕ) (h : Fin n → Fin g → A), ∀ (C : Type) [NontriviallyNormedField C] [IsUltrametricDist C] [IsAlgClosed C] [CharZero C] (x : A →+* ↥(intO C)), (∀ c : TorsChar t (spMap x ≫ x₀) (p ^ 1), ∃ j, DlogIs t p 1 c (fun i => spMap (dualMap x) ≫ e i) (fun i => x (h j i))) ∧ ∀ j, ∃ c : TorsChar t (spMap x ≫ x₀) (p ^ 1), DlogIs t p 1 c (fun i => spMap (dualMap x) ≫ e i) (fun i => x (h j i)) := by
+theorem hodgeTate_map : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) [IsLocallyNoetherian X] (t : SAB H X) (A : Type) [CommRing A] [IsDomain A] [IsIntegrallyClosed A] [CharZero A] (x₀ : Sp A ⟶ X) (g : ℕ) (e : Fin g → (Sp (DualNumber A) ⟶ t.G.left)), IsTanBasis t x₀ e → ∀ p : ℕ, p.Prime → (∃ ζ : A, IsPrimitiveRoot ζ p) → SplitTors t x₀ p → ∃ (n : ℕ) (h : Fin n → Fin g → A), ∀ (C : Type) [NontriviallyNormedField C] [IsUltrametricDist C] [IsAlgClosed C] [CharZero C] (x : A →+* ↥(intO C)), (∀ c : TorsChar t (spMap x ≫ x₀) (p ^ 1), ∃ j, DlogIs t p 1 c (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap x) ≫ e i) (fun i => x (h j i))) ∧ ∀ j, ∃ c : TorsChar t (spMap x ≫ x₀) (p ^ 1), DlogIs t p 1 c (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap x) ≫ e i) (fun i => x (h j i)) := by
   intro E _ _ _ H X _ t A _ _ _ _ x₀ g e he p hp ⟨ζ, hζ⟩ hs
   have hq : (p ^ 1).Prime := by rwa [pow_one]
   have hζ' : IsPrimitiveRoot ζ (p ^ 1) := by rwa [pow_one]

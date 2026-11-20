@@ -88,7 +88,7 @@ theorem CoordOpen.exists_equiv (h : CoordOpen t T) :
 
 theorem IsSecOf.eq_resM (h : CoordOpen t T) {hT' : IsAffineOpen T'} (e : T' ≤ T) {v : TanM (affPt h.1) t.G}
     {v' : TanM (affPt hT') t.G} {l : Γ(Lie t.G, T)} {l' : Γ(Lie t.G, T')} (hl : IsSecOf h.1 v l) (hl' : IsSecOf hT' v' l')
-    (hv : (tv v').left = spMap (dualMap (resG X e)) ≫ (tv v).left) : l' = resM _ e l := by
+    (hv : (tv v').left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (resG X e)) ≫ (tv v).left) : l' = resM _ e l := by
   obtain ⟨hT, W, hW, n, f, hf⟩ := h
   refine hf.dual_ext e fun b => ?_
   obtain ⟨h₁, h₂⟩ := tanEv_dUnit_eq (isTan_tv v) (le_preimage_affPt hT) hW (f b)
@@ -99,7 +99,7 @@ theorem IsSecOf.eq_resM (h : CoordOpen t T) {hT' : IsAffineOpen T'} (e : T' ≤ 
 theorem exists_tangent_equiv {C : Scheme.{0}} {t' : SAB H C} {g : C ⟶ X} (m : SABMap t' t g) :
     ∃ Ψ : ∀ (T : C.Opens) (h : CoordOpen t' T) (x : Sp Γ(C, T) ⟶ X), affPt h.1 ≫ g = x →
       (TanM x t.G ≃ₗ[Γ(C, T)] Γ(Lie t'.G, T)),
-      ∀ T h x hx T' h' x' hx' (e : T' ≤ T) u u', (tv u').left = spMap (dualMap (resG C e)) ≫ (tv u).left →
+      ∀ T h x hx T' h' x' hx' (e : T' ≤ T) u u', (tv u').left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (resG C e)) ≫ (tv u).left →
         Ψ T' h' x' hx' u' = resM _ e (Ψ T h x hx u) := by
   choose Θ hΘ using fun T (h : CoordOpen t' T) => h.exists_equiv
   refine ⟨fun T h x hx => (pushE m _ hx).symm ≪≫ₗ Θ T h, fun T h x hx T' h' x' hx' e u u' hu => ?_⟩
@@ -177,7 +177,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : D
 
 theorem IntChart.left_vec_map (q : IntChart Z) {R R' : Type} [CommRing R] [CommRing R'] (ψ : R →+* R') {x : Sp R ⟶ Z.X}
     {x' : Sp R' ⟶ Z.X} (hx : spMap ψ ≫ x = x') (h : ⊤ ≤ x ⁻¹ᵁ q.U) (h' : ⊤ ≤ x' ⁻¹ᵁ q.U) (σ : E →+* ℂ)
-    (a : Fin (Dw.mult σ)) : (tv (q.vec x' h' σ a)).left = spMap (dualMap ψ) ≫ (tv (q.vec x h σ a)).left := by
+    (a : Fin (Dw.mult σ)) : (tv (q.vec x' h' σ a)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ (tv (q.vec x h σ a)).left := by
   have e : spMap (ψ.comp (valMap x _ h).hom) ≫ q.aff.fromSpec = x' := by
     rw [← hx, ← spMap_comp_spMap, Category.assoc, spMap_valMap]
   rw [q.vec_eq _ e, IntChart.vec, left_tanOf, left_tanOf, Vecs.bc, Vecs.bc, dual_comp]

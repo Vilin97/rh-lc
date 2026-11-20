@@ -96,11 +96,11 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 
 theorem dual_comp {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (φ : R →+* S) (ψ : S →+* T) {Z : Scheme.{0}}
     (v : Sp (DualNumber R) ⟶ Z) :
-    spMap (dualMap ψ) ≫ spMap (dualMap φ) ≫ v = spMap (dualMap (ψ.comp φ)) ≫ v := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ)) ≫ v := by
   rw [← Category.assoc, spMap_comp']
   congr 2
   refine RingHom.ext fun z => ?_
-  ext <;> simp [dualMap]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 variable {R : Type} [CommRing R] {x : Sp R ⟶ X} {m g : ℕ}
 
@@ -191,17 +191,17 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 
 theorem coord_map {R S : Type} [CommRing R] [CommRing S] (α : A →+* R) (ψ : R →+* S) {a : Fin g → R}
     {w : Sp (DualNumber R) ⟶ t.G.left}
-    (h : IsCombAtG t (spMap α ≫ x₀) (fun i => spMap (dualMap α) ≫ e i) a w) :
-    IsCombAtG t (spMap (ψ.comp α) ≫ x₀) (fun i => spMap (dualMap (ψ.comp α)) ≫ e i) (fun i => ψ (a i))
-      (spMap (dualMap ψ) ≫ w) := by
+    (h : IsCombAtG t (spMap α ≫ x₀) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ e i) a w) :
+    IsCombAtG t (spMap (ψ.comp α) ≫ x₀) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp α)) ≫ e i) (fun i => ψ (a i))
+      (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ w) := by
   have := GlobalTheory.LatDRFree.comb_map t ψ h
   simp only [dual_comp] at this
   rwa [← Category.assoc, spMap_comp'] at this
 
 theorem coord_linInd (he : IsTanBasis t x₀ e) {R S : Type} [CommRing R] [CommRing S] (α : A →+* R) (ψ : R →+* S)
     {a : Fin m → Fin g → R} {u : Fin m → (Sp (DualNumber R) ⟶ t.G.left)}
-    (h : ∀ l, IsCombAtG t (spMap α ≫ x₀) (fun i => spMap (dualMap α) ≫ e i) (a l) (u l))
-    (hi : IsIndep t (spMap ψ ≫ spMap α ≫ x₀) fun l => spMap (dualMap ψ) ≫ u l) :
+    (h : ∀ l, IsCombAtG t (spMap α ≫ x₀) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ e i) (a l) (u l))
+    (hi : IsIndep t (spMap ψ ≫ spMap α ≫ x₀) fun l => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ u l) :
     LinearIndependent S fun l i => ψ (a l i) := by
   rw [← Category.assoc, spMap_comp'] at hi
   exact linInd (fun i => isTan_map _ rfl (he.1 i)) (fun l => coord_map α ψ (h l)) hi
@@ -214,7 +214,7 @@ theorem stepLog_eq {F : Type} [Field F] [NumberField F] {Y : Var F} (ρ : Y.X �
     stepLog t ρ f q i v ε y = (-Real.log (ε.w (resP v)) / Real.log (resP v)) *
       Real.log (GlobalTheory.ShFam.Pad.grNorm t (spMap ψ ≫ stalkPt Y (below y.1) ≫ ρ)
         (lat t (resP v) (spMap ψ ≫ stalkPt Y (below y.1) ≫ ρ) (decide (resP v = q)))
-        (fun l => spMap (dualMap ψ) ≫ f (below y.1) l) i) := by
+        (fun l => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f (below y.1) l) i) := by
   obtain rfl : hp = stepLog._proof_2 v hp' := rfl
   subst hψ
   exact dif_pos hp'
@@ -254,11 +254,11 @@ theorem _root_.GlobalTheory.LineNorm.Chart.locMax_flag : HTBoundSt → ∀ (E : 
   obtain ⟨D, n, B, hB1, hB2, hB3⟩ := GlobalTheory.T.exists_homogeneous_polys_tangent_basis hB E H X t hX Γ(M.X, V) _ g e he q k
 
   have ha : ∀ y (hy : M.j y ∈ V) l, ∃ a, IsCombAtG t (spMap (α y hy) ≫ hV.fromSpec ≫ ρ')
-      (fun i => spMap (dualMap (α y hy)) ≫ e i) a (f y l) := fun y hy l =>
+      (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (α y hy)) ≫ e i) a (f y l) := fun y hy l =>
     (he.2 _ (α y hy) (f y l) (by rw [hα']; exact hf.tan y l)).exists
   choose a ha using ha
   have key : ∀ y (hy : M.j y ∈ V) i, ∃ cf : Fin m → Y.Fn, cf i = d y i ∧ (∀ k, i < k → cf k = 0) ∧
-      IsCombAtG t (spMap ι₀ ≫ hV.fromSpec ≫ ρ') (fun i => spMap (dualMap ι₀) ≫ e i)
+      IsCombAtG t (spMap ι₀ ≫ hV.fromSpec ≫ ρ') (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ι₀) ≫ e i)
         (∑ l, cf l • fun j => algebraMap (Y.X.presheaf.stalk y) Y.X.functionField (a y hy l j)) (u₀ i) := by
     intro y hy i
     obtain ⟨cf, h1, h2, h3⟩ := hf.tri y i
@@ -266,7 +266,7 @@ theorem _root_.GlobalTheory.LineNorm.Chart.locMax_flag : HTBoundSt → ∀ (E : 
     have := coord_map _ (algebraMap (Y.X.presheaf.stalk y) Y.X.functionField) (ha y hy l)
     rwa [hαι] at this
   choose T hT1 hT2 hT3 using key
-  have hA₀ : ∀ i, ∃ b, IsCombAtG t (spMap ι₀ ≫ hV.fromSpec ≫ ρ') (fun i => spMap (dualMap ι₀) ≫ e i) b (u₀ i) :=
+  have hA₀ : ∀ i, ∃ b, IsCombAtG t (spMap ι₀ ≫ hV.fromSpec ≫ ρ') (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ι₀) ≫ e i) b (u₀ i) :=
     fun i => ⟨_, hT3 _ hgen i⟩
   choose A₀ hA₀ using hA₀
   have hA : ∀ y hy i, A₀ i = ∑ l, T y hy i l • fun j => algebraMap _ Y.X.functionField (a y hy l j) := fun y hy i =>

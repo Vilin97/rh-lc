@@ -109,7 +109,7 @@ theorem vec_bc [IsLocalRing S] {S' : Type} [CommRing S'] [Algebra S S'] (hx : Is
     ∃ (xc' : ∀ m : ℕ, sp (R₀ := S') (ReciprocityTheory.ChartRestriction.G.Chart.JetR S' (Fin n) m) ⟶
         (Over.pullback (spMap (algebraMap S S') ≫ x)).obj t.G), IsUnivChart _ n xc' ∧
       ∀ cc : Fin n → S, vec t (spMap (algebraMap S S') ≫ x) xc' (algebraMap S S' ∘ cc) =
-        spMap (dualMap (algebraMap S S')) ≫ vec t x xc cc := by
+        spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap S S')) ≫ vec t x xc cc := by
   obtain ⟨x₁, hx₁, hcomp⟩ := ReciprocityTheory.ChartRestriction.G.Chart.tanBC_alg (R := S) (R' := S') _ n xc hx
   have h₁ := IsGrpPullback.comp
     (isGrpPullback_pullback ((Over.pullback x).obj t.G) (ReciprocityTheory.ChartRestriction.G.Chart.fB S S'))
@@ -132,7 +132,7 @@ theorem exists_lie_basis_stable (E : Type) [Field E] [NumberField E] [IsCMField 
     ∃ (n : ℕ) (D : Fin n → (Sp (DualNumber S) ⟶ t.G.left)), (∀ e, IsTanAtG t x (D e)) ∧
       ∀ (S' : Type) [CommRing S'] (φ : S →+* S') (w : Sp (DualNumber S') ⟶ t.G.left),
         IsTanAtG t (spMap φ ≫ x) w →
-          ∃! a : Fin n → S', IsCombAtG t (spMap φ ≫ x) (fun e => spMap (dualMap φ) ≫ D e) a w := by
+          ∃! a : Fin n → S', IsCombAtG t (spMap φ ≫ x) (fun e => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ D e) a w := by
   have : Smooth ((Over.pullback x).obj t.G).hom := by
     have := t.semi.smooth
     show Smooth (pullback.snd t.G.hom x)
@@ -142,7 +142,7 @@ theorem exists_lie_basis_stable (E : Type) [Field E] [NumberField E] [IsCMField 
   letI : Algebra S S' := φ.toAlgebra
   obtain ⟨xc', hx', hv⟩ := vec_bc (S' := S') hx
   obtain ⟨cc, rfl⟩ := vec_exists hx' w hw
-  have hD : (fun e => spMap (dualMap φ) ≫ vec t x xc (Pi.single e 1)) =
+  have hD : (fun e => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ vec t x xc (Pi.single e 1)) =
       fun e => vec t (spMap (algebraMap S S') ≫ x) xc' (Pi.single e 1) := by
     funext e
     have h1 : (Pi.single e 1 : Fin n → S') = algebraMap S S' ∘ (Pi.single e 1 : Fin n → S) := by

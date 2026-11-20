@@ -55,7 +55,7 @@ def IsLieFrames {F : Type} [Field F] (e : F ≃+* c.F) {X W : Scheme.{0}} (jB : 
           (fun b => TangentOrigin.evalPt (x ≫ jB) (U ⊓ U') hxx (trCo hf f' b i)) (u U' f' hf' K x hx' i))) ∧
   ∀ (U : X.Opens) (f : Fin r → Γ(M, U)) (hf : VB.IsFrame f) (K K' : Type) [CommRing K] [CommRing K'] (ψ : K →+* K')
       (x : Sp K ⟶ W) (hx : ⊤ ≤ (x ≫ jB) ⁻¹ᵁ U) (hx' : ⊤ ≤ ((spMap ψ ≫ x) ≫ jB) ⁻¹ᵁ U) (i : Fin r),
-      u U f hf K' (spMap ψ ≫ x) hx' i = spMap (dualMap ψ) ≫ u U f hf K x hx i
+      u U f hf K' (spMap ψ ≫ x) hx' i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ u U f hf K x hx i
 
 open Classical in
 
@@ -74,7 +74,7 @@ def IsLieLat {F : Type} [Field F] [NumberField F] (e : F ≃+* c.F) {X W : Schem
             (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z) τ w →
           ((∃ a : Fin r → ℂ_[resP v], (∀ i, ‖a i‖ ≤ 1) ∧
               IsCombAtG Z.t (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z)
-                (fun i => spMap (dualMap (ioOf (resP v) ε)) ≫ u U f hf _ xg hx i) a w) ↔
+                (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ioOf (resP v) ε)) ≫ u U f hf _ xg hx i) a w) ↔
             spMap (epsMul δ) ≫ w ∈ lat Z.t (resP v) (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z) (kind (resP v)))
 
 def IsLieMet {F : Type} [Field F] [NumberField F] (e : F ≃+* c.F) {X W : Scheme.{0}} (q : X ⟶ Sp (𝓞 F)) (jB : W ⟶ X)

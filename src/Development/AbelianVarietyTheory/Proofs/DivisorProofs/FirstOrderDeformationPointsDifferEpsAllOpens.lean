@@ -141,17 +141,17 @@ theorem valR_sub_eq_eps_mul_of_affine : ∀ {K : Type} [Field K] {A : Over (Sp K
   have hfst : ∀ g, (ev (S ≫ m) Ω.1 hSm g).fst = ev (x ≫ m) Ω.1 hxm g := fun g => by
     rw [GlobalTheory.FlagMod.ev_congr hSxm.symm Ω.1 hxm (le_preimage_comp _ hSm), ev_spMap _ _ _ hSm]
     rfl
-  obtain ⟨q, hqa, hqb⟩ := exists_liftFR (ev (l₂ ≫ m') Ω.1 hΩ₂) ((dualMap (mkE ε)).comp (ev (S ≫ m) Ω.1 hSm))
+  obtain ⟨q, hqa, hqb⟩ := exists_liftFR (ev (l₂ ≫ m') Ω.1 hΩ₂) ((GlobalTheory.CompanionTheory.Ar.dualMap (mkE ε)).comp (ev (S ≫ m) Ω.1 hSm))
     (fun g => by
       obtain ⟨c, hc⟩ := h₂ g
       rw [valR_eq_ev _ _ hΩ₂, valR_eq_ev _ _ hxm] at hc
       rw [hc, map_add (f := _), map_mul, hmkε, MulZeroClass.zero_mul, add_zero, ← hfst]
-      simp [dualMap])
+      simp [GlobalTheory.CompanionTheory.Ar.dualMap])
   let j2 : DualNumber K →+* DualNumber (B ⧸ Ideal.span {ε}) :=
-    ((dualMap (mkE ε)).comp ((algebraMap B (DualNumber B)).comp (baseMap K B))).comp
+    ((GlobalTheory.CompanionTheory.Ar.dualMap (mkE ε)).comp ((algebraMap B (DualNumber B)).comp (baseMap K B))).comp
       (TrivSqZeroExt.fstHom K K K).toRingHom
   have hj2 : ∀ a, j2 a = TrivSqZeroExt.inl (mkE ε (baseMap K B a.fst)) := fun a => by
-    ext <;> simp [j2, dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    ext <;> simp [j2, GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
   obtain ⟨j, hja, hjb⟩ := exists_liftFR (algebraMap (DualNumber K) B) j2 (fun a => by
     have ha : a = algebraMap K (DualNumber K) a.fst + DualNumber.eps * algebraMap K (DualNumber K) a.snd := by
       ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl]
@@ -160,11 +160,11 @@ theorem valR_sub_eq_eps_mul_of_affine : ∀ {K : Type} [Field K] {A : Over (Sp K
     rw [map_add (f := _), map_mul, ← hεd, map_add (f := _), map_mul, hmkε, MulZeroClass.zero_mul, add_zero]
     rfl)
   have b1 : spMap (p1 ε) ≫ spMap j = l₂ ≫ A'.hom := by rw [spc, hl₂, hja]
-  have b2 : spMap (p2 ε) ≫ spMap j = (spMap (dualMap (mkE ε)) ≫ S ≫ i) ≫ A'.hom := by
+  have b2 : spMap (p2 ε) ≫ spMap j = (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (mkE ε)) ≫ S ≫ i) ≫ A'.hom := by
     rw [Category.assoc, Category.assoc, hi, ← Category.assoc S, hS, ← Category.assoc, spc, spc]
     rw [hjb]
     exact (spc (TrivSqZeroExt.fstHom K K K).toRingHom
-      ((dualMap (mkE ε)).comp ((algebraMap B (DualNumber B)).comp (baseMap K B)))).symm
+      ((GlobalTheory.CompanionTheory.Ar.dualMap (mkE ε)).comp ((algebraMap B (DualNumber B)).comp (baseMap K B)))).symm
   have b3 : spMap (sg hε) ≫ spMap j = l₁ ≫ A'.hom := by
     rw [spc, hl₁]
     refine congrArg spMap (RingHom.ext fun a => ?_)
@@ -174,7 +174,7 @@ theorem valR_sub_eq_eps_mul_of_affine : ∀ {K : Type} [Field K] {A : Over (Sp K
   have z1 : spMap (p1 ε) ≫ spMap q ≫ tau Ω.2 = l₂ ≫ m' := by
     rw [← Category.assoc, spc, hqa]
     exact spMap_ev _ Ω.2 hΩ₂
-  have z2 : spMap (p2 ε) ≫ spMap q ≫ tau Ω.2 = (spMap (dualMap (mkE ε)) ≫ S ≫ i) ≫ m' := by
+  have z2 : spMap (p2 ε) ≫ spMap q ≫ tau Ω.2 = (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (mkE ε)) ≫ S ≫ i) ≫ m' := by
     rw [Category.assoc, Category.assoc, him, ← Category.assoc, spc, hqb, ← spc, Category.assoc]
     exact congrArg _ (spMap_ev (S ≫ m) Ω.2 hSm)
   have z3 : spMap (sg hε) ≫ spMap q ≫ tau Ω.2 = l₁ ≫ m' := by
@@ -183,10 +183,10 @@ theorem valR_sub_eq_eps_mul_of_affine : ∀ {K : Type} [Field K] {A : Over (Sp K
       refine RingHom.ext fun g => ?_
       have e := h₁₂ g
       rw [valR_eq_ev _ _ hΩ₂, valR_eq_ev _ _ hΩ₁, valR_eq_ev _ _ hSm] at e
-      have e' : (dualMap (mkE ε) (ev (S ≫ m) Ω.1 hSm g)).snd = mkE ε (ev (S ≫ m) Ω.1 hSm g).snd := by
-        simp [dualMap]
+      have e' : (GlobalTheory.CompanionTheory.Ar.dualMap (mkE ε) (ev (S ≫ m) Ω.1 hSm g)).snd = mkE ε (ev (S ≫ m) Ω.1 hSm g).snd := by
+        simp [GlobalTheory.CompanionTheory.Ar.dualMap]
       have e1 : p1 ε (q g) = ev (l₂ ≫ m') Ω.1 hΩ₂ g := RingHom.congr_fun hqa g
-      have e2 : p2 ε (q g) = dualMap (mkE ε) (ev (S ≫ m) Ω.1 hSm g) := RingHom.congr_fun hqb g
+      have e2 : p2 ε (q g) = GlobalTheory.CompanionTheory.Ar.dualMap (mkE ε) (ev (S ≫ m) Ω.1 hSm g) := RingHom.congr_fun hqb g
       rw [RingHom.comp_apply, sg_apply, e1, e2, e', mulE_mk, ← e]
       ring
     rw [this]
@@ -200,7 +200,7 @@ theorem valR_sub_eq_eps_mul_of_affine : ∀ {K : Type} [Field K] {A : Over (Sp K
     ⟨hm'.lift _ _ hw, hm'.lift_fst _ _ hw, hm'.lift_snd _ _ hw⟩
   have t1 : spMap (p1 ε) ≫ T = l₂ :=
     hm'.hom_ext (by rw [Category.assoc, T1, z1]) (by rw [Category.assoc, T2, b1])
-  have t2 : spMap (p2 ε) ≫ T = spMap (dualMap (mkE ε)) ≫ S ≫ i :=
+  have t2 : spMap (p2 ε) ≫ T = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (mkE ε)) ≫ S ≫ i :=
     hm'.hom_ext (by rw [Category.assoc, T1, z2]) (by rw [Category.assoc, T2, b2])
   have t3 : spMap (sg hε) ≫ T = l₁ :=
     hm'.hom_ext (by rw [Category.assoc, T1, z3]) (by rw [Category.assoc, T2, b3])
@@ -208,9 +208,9 @@ theorem valR_sub_eq_eps_mul_of_affine : ∀ {K : Type} [Field K] {A : Over (Sp K
   have hT : ⊤ ≤ T ⁻¹ᵁ O := top_le_preimage_of_epsFibreSnd_comp hε (by rw [t2]; exact le_preimage_comp _ hSi)
   have v2 := GlobalTheory.FlagMod.ev_congr t2 O (le_preimage_comp _ hT) (le_preimage_comp _ hSi)
   rw [ev_spMap _ _ _ hT, ev_spMap _ _ _ hSi] at v2
-  have v2' : p2 ε (ev T O hT f) = dualMap (mkE ε) (ev (S ≫ i) O hSi f) := RingHom.congr_fun v2 f
-  have e' : (dualMap (mkE ε) (ev (S ≫ i) O hSi f)).snd = mkE ε (ev (S ≫ i) O hSi f).snd := by
-    simp [dualMap]
+  have v2' : p2 ε (ev T O hT f) = GlobalTheory.CompanionTheory.Ar.dualMap (mkE ε) (ev (S ≫ i) O hSi f) := RingHom.congr_fun v2 f
+  have e' : (GlobalTheory.CompanionTheory.Ar.dualMap (mkE ε) (ev (S ≫ i) O hSi f)).snd = mkE ε (ev (S ≫ i) O hSi f).snd := by
+    simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   rw [← valR_comp_app, valR_eq_ev _ _ hSi, ← t1, ← t3, valR_eq_ev _ _ (le_preimage_comp _ hT),
     valR_eq_ev _ _ (le_preimage_comp _ hT), ev_spMap _ _ _ hT, ev_spMap _ _ _ hT, RingHom.comp_apply,
     RingHom.comp_apply, sg_apply, v2', e', mulE_mk]

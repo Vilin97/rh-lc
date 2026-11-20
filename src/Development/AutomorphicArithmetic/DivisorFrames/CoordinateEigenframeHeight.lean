@@ -132,9 +132,9 @@ private theorem core {Z : Model Xo c (algebraMap (𝓞 c.F) c.F)} {R k C : Type}
     (b₂ : f₂.Tri ψ g s) (J : k →+* C) (χ : R →+* C) (hχ : χ = J.comp ψ) (p : ℕ) (w : Pad.Sym E →₀ ℤ)
     (hw : ∀ a ∈ w.support, a.1 p = false) {r : k} (hr : r ≠ 0) :
     Real.log ‖J r‖ + (w.sum fun a n => (n : ℝ) * lnStep Z.t (spMap χ ≫ x₀)
-        (fun τ i => spMap (dualMap χ) ≫ f₂.v τ i) p (a.1 p) a.2.2) =
+        (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ) ≫ f₂.v τ i) p (a.1 p) a.2.2) =
       Real.log ‖J (r * ((∏ z : Letter Dw, s z.1 z.2 ^ (-expo Dw w z) : kˣ) : k))‖ +
-        w.sum fun a n => (n : ℝ) * lnStep Z.t (spMap J ≫ x) (fun τ i => spMap (dualMap J) ≫ g.v τ i) p false a.2.2 := by
+        w.sum fun a n => (n : ℝ) * lnStep Z.t (spMap J ≫ x) (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap J) ≫ g.v τ i) p false a.2.2 := by
   subst hχ
   have hx : spMap J ≫ x = spMap (J.comp ψ) ≫ x₀ := by
     rw [b₂.1, ← Category.assoc, sp_comp]
@@ -148,9 +148,9 @@ private theorem core {Z : Model Xo c (algebraMap (𝓞 c.F) c.F)} {R k C : Type}
       simp only [GlobalTheory.GradedPieces.dual_comp] at this
       rw [hg' τ i, funext (hf' τ)]
       exact this)
-  have ef : (fun τ i => spMap (dualMap (J.comp ψ)) ≫ f₂.v τ i) = f'.v :=
+  have ef : (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (J.comp ψ)) ≫ f₂.v τ i) = f'.v :=
     funext fun τ => funext fun i => (hf' τ i).symm
-  have eg : (fun τ i => spMap (dualMap J) ≫ g.v τ i) = g'.v :=
+  have eg : (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap J) ≫ g.v τ i) = g'.v :=
     funext fun τ => funext fun i => (hg' τ i).symm
   rw [← hx, ef, eg, Finsupp.sum, Finsupp.sum, Finset.sum_congr rfl fun a ha => by rw [hw a ha]]
   simp only [key, mul_add, Finset.sum_add_distrib, sum_letters]
@@ -195,14 +195,14 @@ private theorem lg_eq {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Re
         (eqn (divOf Y (expo Dw w)) (below y.1))⁻¹ : Y.Y.Fnˣ) : Y.Y.Fn))) +
       (-Real.log (ε.w (resP v)) / Real.log (resP v)) *
         w.sum fun a n => (n : ℝ) * lnStep Z.t (spMap ((ioOf (resP v) ε).comp (Scheme.stalkClosedPointTo y.1).hom) ≫ stalkPt Y.Y (below y.1) ≫ Y.π ≫ genι Z)
-          (fun τ i => spMap (dualMap ((ioOf (resP v) ε).comp (Scheme.stalkClosedPointTo y.1).hom)) ≫ (Y.gr_spec (below y.1)).choose_spec.choose.v τ i) (resP v) (a.1 (resP v)) a.2.2 := dif_pos hp.out
+          (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((ioOf (resP v) ε).comp (Scheme.stalkClosedPointTo y.1).hom)) ≫ (Y.gr_spec (below y.1)).choose_spec.choose.v τ i) (resP v) (a.1 (resP v)) a.2.2 := dif_pos hp.out
 
 private theorem pullback_fin_relation {A A' B d lr lb S S' : ℝ} (h0 : A = A') (h1 : A' = d * lr) (h2 : B = d * lb)
     (h3 : lr + S = lb + S') : A + d * S = B + d * S' := by
   rw [h0, h1, h2, ← mul_add, h3, mul_add]
 
 theorem UpperTheory.coordinate_eigenframe_height :
-    ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {Z : Model Xo c (algebraMap (𝓞 c.F) c.F)} {F : Type} [Field F] [NumberField F] {e : F ≃+* c.F} (Y : FlagCpt Z e) (φ : c.F →+* Qb) (x : Sp Qb ⟶ Z.X) (g : EigFrame Z φ x) (q : Sp Qb ⟶ Y.Y.X) (w : Pad.Sym E →₀ ℤ) (b : Qb), b ≠ 0 → IsCoord Y q g (expo Dw w) ((eqn (divOf Y (expo Dw w)) (below q))⁻¹ : Y.Y.Fnˣ) b → ∀ (v : HeightOneSpectrum (𝓞 F)) [Fact (resP v).Prime] (ε : GlobalTheory.TrueGeo.Ext v) (θ : Qb →+* AlgebraicClosure F) (y : AlgPt Y.Y), (∀ a ∈ w.support, a.1 (resP v) = false) → y.1 = spMap θ ≫ q → lgOf Y w v ε y = Real.log (ε.w (θ b)) + (-Real.log (ε.w (resP v)) / Real.log (resP v)) * w.sum fun a n => (n : ℝ) * lnStep Z.t (spMap ((ioOf (resP v) ε).comp θ) ≫ x) (fun τ i => spMap (dualMap ((ioOf (resP v) ε).comp θ)) ≫ g.v τ i) (resP v) false a.2.2 := by
+    ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {Z : Model Xo c (algebraMap (𝓞 c.F) c.F)} {F : Type} [Field F] [NumberField F] {e : F ≃+* c.F} (Y : FlagCpt Z e) (φ : c.F →+* Qb) (x : Sp Qb ⟶ Z.X) (g : EigFrame Z φ x) (q : Sp Qb ⟶ Y.Y.X) (w : Pad.Sym E →₀ ℤ) (b : Qb), b ≠ 0 → IsCoord Y q g (expo Dw w) ((eqn (divOf Y (expo Dw w)) (below q))⁻¹ : Y.Y.Fnˣ) b → ∀ (v : HeightOneSpectrum (𝓞 F)) [Fact (resP v).Prime] (ε : GlobalTheory.TrueGeo.Ext v) (θ : Qb →+* AlgebraicClosure F) (y : AlgPt Y.Y), (∀ a ∈ w.support, a.1 (resP v) = false) → y.1 = spMap θ ≫ q → lgOf Y w v ε y = Real.log (ε.w (θ b)) + (-Real.log (ε.w (resP v)) / Real.log (resP v)) * w.sum fun a n => (n : ℝ) * lnStep Z.t (spMap ((ioOf (resP v) ε).comp θ) ≫ x) (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((ioOf (resP v) ε).comp θ)) ≫ g.v τ i) (resP v) false a.2.2 := by
   intro E _ _ _ H Dw l Xo c Z F _ _ e Y φ x g q w b hb hco v hp ε θ y hw hy
   have : Algebra.IsAlgebraic ℚ (AlgebraicClosure F) := Algebra.IsAlgebraic.trans ℚ F _
   rw [← Res.below_comp q θ, ← hy] at hco

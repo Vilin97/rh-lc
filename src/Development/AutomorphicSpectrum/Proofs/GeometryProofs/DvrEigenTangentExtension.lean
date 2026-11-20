@@ -32,9 +32,9 @@ theorem mem_span_iff : ∀ (V K : Type) [CommRing V] [IsDomain V] [IsDiscreteVal
     (ρK : Oe →+* Module.End K (Fin g → K)) (σV : Oe →+* V) (vV : Fin n → (epsAt (𝟙 (Sp V)) ⟶ T)) (b : Fin n → Fin g → K),
     IsGrpPullback GK T (spMap (algebraMap V K)) φ₀ → (∀ a, (actK.act a).left ≫ φ₀ = φ₀ ≫ (actT.act a).left) →
     ML.IsActOf actK.act ρK → IsEigFrame actT (𝟙 _) σV vV →
-    (∀ i, (ML.pt (b i)).left ≫ φ₀ = spMap (dualMap (algebraMap V K)) ≫ (vV i).left) →
+    (∀ i, (ML.pt (b i)).left ≫ φ₀ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ (vV i).left) →
     ∀ w, w ∈ Submodule.span V (Set.range b) ↔
-      (∃ a : epsAt (𝟙 (Sp V)) ⟶ T, IsTanAt T (𝟙 _) a ∧ (ML.pt w).left ≫ φ₀ = spMap (dualMap (algebraMap V K)) ≫ a.left) ∧
+      (∃ a : epsAt (𝟙 (Sp V)) ⟶ T, IsTanAt T (𝟙 _) a ∧ (ML.pt w).left ≫ φ₀ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ a.left) ∧
         ∀ r, ρK r w = algebraMap V K (σV r) • w := by
   intro V K _ _ _ _ _ _ T _ _ GK _ φ₀ Oe _ actT actK g n ML ρK σV vV b hpull hact hML hF hb w
   have halg : Function.Injective (algebraMap V K) := IsFractionRing.injective V K
@@ -43,7 +43,7 @@ theorem mem_span_iff : ∀ (V K : Type) [CommRing V] [IsDomain V] [IsDiscreteVal
       Spec.map (CommRingCat.ofHom (algebraMap V K)) ≫ 𝟙 (Sp V) := by simp
   obtain ⟨M', hM'⟩ := model_cast hpt (LieMove.pushModel hpull ML)
   obtain ⟨j, hj1, hj2, -⟩ := GlobalTheory.T.lie_model_base_change_map (Sp V) T V K (𝟙 _) ET (Fin g → K) MT M'
-  have key1 : ∀ e, (ML.pt (j e)).left ≫ φ₀ = spMap (dualMap (algebraMap V K)) ≫ (MT.pt e).left := fun e =>
+  have key1 : ∀ e, (ML.pt (j e)).left ≫ φ₀ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ (MT.pt e).left := fun e =>
     (hM' (j e)).symm.trans (hj1 e)
   have uniq : ∀ u u' : Fin g → K, (ML.pt u).left ≫ φ₀ = (ML.pt u').left ≫ φ₀ → u = u' := fun u u' h =>
     ML.inj (LieMove.pushEps_inj hpull (Over.OverMorphism.ext h))

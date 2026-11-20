@@ -49,11 +49,11 @@ theorem exists_frameMat {E : Type} [Field E] [NumberField E] [IsCMField E] {H : 
     rw [← Category.assoc, hzφ]
   have hb := (GlobalTheory.TanBaseChange.tan_comb_baseChange E H TF.Y.X TF.Y.t _ S (ev z W₀ hz)
     (FlagMod.tau hW₀ ≫ toBase TF Z) (z ≫ toBase TF Z) eb).2 _
-    (fun j => spMap (dualMap (ev (FlagMod.tau hW₀ ≫ toBase TF Z) U.1 hU0)) ≫ v (e ⟨σ, j⟩)) (C σ i) _ (hC σ i)
-  have e1 : ∀ j, spMap (dualMap (ev (z ≫ toBase TF Z) U.1 hU)) ≫ v j =
-      spMap (dualMap (ev z W₀ hz)) ≫ spMap (dualMap (ev (FlagMod.tau hW₀ ≫ toBase TF Z) U.1 hU0)) ≫ v j := by
+    (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev (FlagMod.tau hW₀ ≫ toBase TF Z) U.1 hU0)) ≫ v (e ⟨σ, j⟩)) (C σ i) _ (hC σ i)
+  have e1 : ∀ j, spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev (z ≫ toBase TF Z) U.1 hU)) ≫ v j =
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev z W₀ hz)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev (FlagMod.tau hW₀ ≫ toBase TF Z) U.1 hU0)) ≫ v j := by
     intro j
-    rw [← Category.assoc (spMap (dualMap (ev z W₀ hz))), TanBaseChange.spMap_comp_spMap', ← FlagMod.dualMap_comp,
+    rw [← Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev z W₀ hz))), TanBaseChange.spMap_comp_spMap', ← FlagMod.dualMap_comp,
       ← FlagMod.ev_spMap (ev z W₀ hz) (FlagMod.tau hW₀ ≫ toBase TF Z) U.1 hU0 (FlagMod.le_preimage_comp _ hU0),
       FlagMod.ev_congr eb U.1 (FlagMod.le_preimage_comp _ hU0) hU]
   have hz' : ⊤ ≤ (spMap (ev z W₀ hz) ≫ FlagMod.tau hW₀ ≫ inc₀ TF.X Z) ⁻¹ᵁ TF.X.F.U k :=
@@ -61,7 +61,7 @@ theorem exists_frameMat {E : Type} [Field E] [NumberField E] [IsCMField E] {H : 
   have hx' : (spMap (ev z W₀ hz) ≫ FlagMod.tau hW₀ ≫ inc₀ TF.X Z) ≫ TF.X.π = z ≫ toBase TF Z := by
     rw [← eb]; simp only [toBase, Category.assoc]
   have e2 : (tv (TF.X.F.vecAt k (z ≫ inc₀ TF.X Z) hk hx σ i)).left =
-      spMap (dualMap (ev z W₀ hz)) ≫ (tv (TF.X.F.vecAt k (FlagMod.tau hW₀ ≫ inc₀ TF.X Z) hk0 hx0 σ i)).left := by
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev z W₀ hz)) ≫ (tv (TF.X.F.vecAt k (FlagMod.tau hW₀ ≫ inc₀ TF.X Z) hk0 hx0 σ i)).left := by
     rw [← FlagMod.tanPull_left (ev z W₀ hz) eb, FlagMod.Frames.tanPull_vecAt TF.X.F k (ev z W₀ hz) _ hk0 hz' hx0 hx' eb,
       vecAt_congr TF k (by rw [← Category.assoc, hzφ]) hz' hk hx' hx]
   rw [funext fun j => e1 (e ⟨σ, j⟩), e2]

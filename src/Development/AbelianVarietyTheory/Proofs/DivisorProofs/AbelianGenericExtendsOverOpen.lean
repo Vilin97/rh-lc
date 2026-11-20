@@ -265,8 +265,8 @@ theorem IsHodgeIncl.split (hP : CovTop.Hypotheses2) (hA : IsAbelianScheme A) (hg
 theorem hodge_shortExact (hP : CovTop.Hypotheses2) (hA : IsAbelianScheme A) (hg : SmoothOfRelativeDimension g A.hom)
     {P : LB (A ⊗ A).left} (hd : IsDual A A P) (hH : IsVB H (2 * g)) {a : omega A ⟶ H} (ha : IsHodgeIncl e a)
     {β : H ⟶ dual H} (hβ : IsPolPairing e P β) :
-    ∃ w : a ≫ β ≫ dualMap a = 0, (ShortComplex.mk a (β ≫ dualMap a) w).ShortExact := by
-  have w : a ≫ β ≫ dualMap a = 0 := hom_dual_ext_affine fun V hV s t ↦ by
+    ∃ w : a ≫ β ≫ GlobalTheory.CompanionTheory.Ar.dualMap a = 0, (ShortComplex.mk a (β ≫ GlobalTheory.CompanionTheory.Ar.dualMap a) w).ShortExact := by
+  have w : a ≫ β ≫ GlobalTheory.CompanionTheory.Ar.dualMap a = 0 := hom_dual_ext_affine fun V hV s t ↦ by
     have hAV := DeRhamSheaf.VB.isAbelianScheme_onAff A hA hV
     have hgV := DeRhamSheaf.VB.smooth_onAff A hg hV
     obtain ⟨-, hc, -, -, hrk⟩ := hP.p5.2.1 Γ(T, V) (onAff A hV) g hAV hgV
@@ -289,7 +289,7 @@ theorem exists_conj (hC : ConjugateFiltration) (hP : CovTop.Hypotheses2) (hA : I
     {L : T.Modules} (hL : IsVB L g) {b : H ⟶ L} {w : a ≫ b = 0} (hs : (ShortComplex.mk a b w).ShortExact)
     {Ψ : (frobPull p h0).obj H ⟶ H} (hΨ : IsLinFrob e p h0 Ψ) :
     ∃ u : (frobPull p h0).obj L ⟶ H, (frobPull p h0).map b ≫ u = Ψ ∧
-      ∃ w' : u ≫ β ≫ dualMap u = 0, (ShortComplex.mk u (β ≫ dualMap u) w').ShortExact := by
+      ∃ w' : u ≫ β ≫ GlobalTheory.CompanionTheory.Ar.dualMap u = 0, (ShortComplex.mk u (β ≫ GlobalTheory.CompanionTheory.Ar.dualMap u) w').ShortExact := by
   letI : Algebra (ZMod p) Γ(T, ⊤) := ((Ideal.Quotient.lift (Ideal.span {(p : ℤ)}) (Int.castRingHom Γ(T, ⊤))
     (fun x hx ↦ by
       obtain ⟨y, rfl⟩ := Ideal.mem_span_singleton'.1 hx
@@ -327,7 +327,7 @@ theorem exists_conj (hC : ConjugateFiltration) (hP : CovTop.Hypotheses2) (hA : I
       exact C.incl_app_mem _
     · obtain ⟨t, rfl⟩ := C.mem_sec_iff.1 h
       exact ⟨(inv π).app V t, congr(($(IsIso.inv_hom_id_assoc π C.incl)).app V t)⟩
-  have w' : (π ≫ C.incl) ≫ β ≫ dualMap (π ≫ C.incl) = 0 := hom_dual_ext_affine fun V hV s t ↦ by
+  have w' : (π ≫ C.incl) ≫ β ≫ GlobalTheory.CompanionTheory.Ar.dualMap (π ≫ C.incl) = 0 := hom_dual_ext_affine fun V hV s t ↦ by
     obtain ⟨-, hc, hrk, hd'⟩ := hCV V hV
     exact hβ.isotropic hP.p5 hA hg hd hV _ hc hrk (fun Q hQ φ hφ x y hx hy ↦
       hd' (onAff A hV) (hAV V hV) (hgV V hV) _ _ Q hQ φ hφ x y (fun c ↦ hx _ (Submodule.subset_span ⟨c, rfl⟩))
@@ -383,26 +383,26 @@ theorem exists_datum [QuasiSeparated A.hom] (hC : ConjugateFiltration) (hP : Cov
   have ea : IsEquivariant (omegaAct i) ρ a := GlobalTheory.T.hodge_inclusion_equivariant hP O T A g hA hg i H e ρ a hρ ha
   have eβ := GlobalTheory.T.polarization_pairing_equivariant hP O c T A g hA hg i P h H e ρ β hρ hβ
   have eΨ := GlobalTheory.T.frobenius_equivariant_de_rham O T A i H e p h0 ρ Ψ hρ hΨ
-  have eb : IsEquivariant ρ ((lieAct i).comp c) (β ≫ dualMap a) := fun x ↦ by
+  have eb : IsEquivariant ρ ((lieAct i).comp c) (β ≫ GlobalTheory.CompanionTheory.Ar.dualMap a) := fun x ↦ by
     rw [← Category.assoc, eβ, Category.assoc, Category.assoc, ← dualMap_comp, ← ea (c x), dualMap_comp]
     rfl
   have := s₁.epi_g
   have eu : IsEquivariant (pullAct ((lieAct i).comp c) (frob T p h0)) ρ u := fun x ↦ by
-    rw [← cancel_epi ((frobPull p h0).map (β ≫ dualMap a)), ← Category.assoc, ← eb.pullback (frob T p h0) x,
+    rw [← cancel_epi ((frobPull p h0).map (β ≫ GlobalTheory.CompanionTheory.Ar.dualMap a)), ← Category.assoc, ← eb.pullback (frob T p h0) x,
       Category.assoc, ← Category.assoc _ u, hu, eΨ x]
   have eθ (x : O) : act (pullAct (omegaAct i) (frob T p h0)) x ≫ θ =
-      θ ≫ dualMap (act (pullAct ((lieAct i).comp c) (frob T p h0)) (c x)) := by
-    have k : act ((lieAct i).comp c) (c x) = dualMap (act (omegaAct i) x) :=
-      congrArg dualMap (@omegaMap_congr _ _ _ _ _ _ _ (i.hom _) (i.hom _) (h.act_conj_conj x))
+      θ ≫ GlobalTheory.CompanionTheory.Ar.dualMap (act (pullAct ((lieAct i).comp c) (frob T p h0)) (c x)) := by
+    have k : act ((lieAct i).comp c) (c x) = GlobalTheory.CompanionTheory.Ar.dualMap (act (omegaAct i) x) :=
+      congrArg GlobalTheory.CompanionTheory.Ar.dualMap (@omegaMap_congr _ _ _ _ _ _ _ (i.hom _) (i.hom _) (h.act_conj_conj x))
     rw [act_pullAct, act_pullAct, k, ← Category.assoc, ← Functor.map_comp, toBidual_naturality_dualSheafTranspose, Functor.map_comp,
       Category.assoc, Category.assoc, DualPull.theta_naturality]
-  have ev : IsEquivariant ρ (pullAct (omegaAct i) (frob T p h0)) ((β ≫ dualMap u) ≫ inv θ) := fun x ↦ by
+  have ev : IsEquivariant ρ (pullAct (omegaAct i) (frob T p h0)) ((β ≫ GlobalTheory.CompanionTheory.Ar.dualMap u) ≫ inv θ) := fun x ↦ by
     rw [← cancel_mono θ, Category.assoc, Category.assoc, IsIso.inv_hom_id, Category.comp_id, Category.assoc, eθ,
       Category.assoc, IsIso.inv_hom_id_assoc, ← Category.assoc, eβ, Category.assoc, Category.assoc, ← dualMap_comp,
       ← eu (c x), dualMap_comp]
-  have w₂' : u ≫ (β ≫ dualMap u) ≫ inv θ = 0 := by rw [← Category.assoc, w₂, zero_comp]
-  have s₂' : (ShortComplex.mk u ((β ≫ dualMap u) ≫ inv θ) w₂').ShortExact :=
-    ShortComplex.shortExact_of_iso (S₁ := ShortComplex.mk u (β ≫ dualMap u) w₂)
+  have w₂' : u ≫ (β ≫ GlobalTheory.CompanionTheory.Ar.dualMap u) ≫ inv θ = 0 := by rw [← Category.assoc, w₂, zero_comp]
+  have s₂' : (ShortComplex.mk u ((β ≫ GlobalTheory.CompanionTheory.Ar.dualMap u) ≫ inv θ) w₂').ShortExact :=
+    ShortComplex.shortExact_of_iso (S₁ := ShortComplex.mk u (β ≫ GlobalTheory.CompanionTheory.Ar.dualMap u) w₂)
       (ShortComplex.isoMk (Iso.refl _) (Iso.refl _) (asIso θ).symm (by simp) (by simp)) s₂
   exact ⟨⟨H, ρ, a, _, u, _, w₁, w₂', hH, s₁, s₂', ea, eb, eu, ev⟩, e, β, Ψ, he, hρ, ha, hβ, hΨ, rfl, hu,
     (Category.assoc _ _ _).trans ((congrArg (_ ≫ ·) (IsIso.inv_hom_id θ)).trans (Category.comp_id _))⟩

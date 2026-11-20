@@ -19,14 +19,14 @@ open GlobalTheory.CompanionTheory.Ar.Num.FamEx GlobalTheory.CompanionTheory.Ar.B
 namespace PositivityTheory.Xgn.SequenceFamilyOverlap
 
 theorem dualMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (c : A →+* B) (d : B →+* C) :
-    (dualMap d).comp (dualMap c) = dualMap (d.comp c) := by
-  ext r <;> simp [dualMap]
+    (GlobalTheory.CompanionTheory.Ar.dualMap d).comp (GlobalTheory.CompanionTheory.Ar.dualMap c) = GlobalTheory.CompanionTheory.Ar.dualMap (d.comp c) := by
+  ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem lieBC {S : Scheme.{0}} {G : Over S} [GrpObj G] {A B : Type} [CommRing A] [CommRing B] (c : A →+* B)
     (x : Sp A ⟶ S) (y : Sp B ⟶ S) (hy : y = Spec.map (CommRingCat.ofHom c) ≫ x) (hsm : Smooth G.hom)
     {E E' : Type} [AddCommGroup E] [Module A E] [AddCommGroup E'] [Module B E']
     (M : LieModel G x E) (M' : LieModel G y E') :
-    ∃ j : E →+ E', (∀ e, (M'.pt (j e)).left = Spec.map (CommRingCat.ofHom (dualMap c)) ≫ (M.pt e).left) ∧
+    ∃ j : E →+ E', (∀ e, (M'.pt (j e)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap c)) ≫ (M.pt e).left) ∧
       (∀ (a : A) e, j (a • e) = c a • j e) ∧ Submodule.span B (Set.range j) = ⊤ ∧
       ∀ l : Module.Dual A E, ∃ l' : Module.Dual B E', ∀ e, l' (j e) = c (l e) := by
   subst hy
@@ -106,8 +106,8 @@ theorem step {R B Ω : Type} [CommRing R] [IsDomain R] [CommRing B] [IsDomain B]
     (i : Γ.G.left ⟶ G.left) (hi : Γ.IsTorsionAlong G x N i)
     {L L' Li : Type} [AddCommGroup L] [Module R L] [AddCommGroup L'] [Module B L'] [AddCommGroup Li] [Module Ω Li]
     (M : LieModel G x L) (M' : LieModel G x' L') (M₀ : LieModel G ξ Li) (tl : L → Li)
-    (htl : ∀ v, (M₀.pt (tl v)).left = spMap (dualMap k) ≫ (M.pt v).left) (jj : L' →+ Li)
-    (hjj : ∀ v, (M₀.pt (jj v)).left = spMap (dualMap k') ≫ (M'.pt v).left)
+    (htl : ∀ v, (M₀.pt (tl v)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap k) ≫ (M.pt v).left) (jj : L' →+ Li)
+    (hjj : ∀ v, (M₀.pt (jj v)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap k') ≫ (M'.pt v).left)
     (hjs : ∀ (b : B) e, jj (b • e) = k' b • jj e) :
     (∀ l, tl l ∈ Set.range jj) ∧
     ∃ (Γ' : QFGroup B T) (i' : Γ'.G.left ⟶ G.left), Γ'.IsTorsionAlong G x' N i' ∧

@@ -34,8 +34,8 @@ theorem IsLieEmb.exists_leftInv (h : IsLieEmb t L aff crd) (i : Fin L.n) {R : Ty
     (hu : ∀ j, IsTanAtG t x (u j)) (hb : ∀ w, IsTanAtG t x w → ∃! a : Fin n → R, IsCombAtG t x u a w) :
     ∃ D : Fin n → Fin (M + 1) → R, LeftInv D fun z => crd i R φ (u z) := by
   obtain ⟨m, v, D, ⟨hv, hs⟩, hD⟩ := h.split i
-  have hv' : ∀ j, IsTanAtG t x (spMap (dualMap φ) ≫ v j) := fun j => hx ▸ GlobalTheory.FactorDepth.isTanAtG_map t φ (hv j)
-  have hC : ∀ j, crd i R φ (spMap (dualMap φ) ≫ v j) = φ ∘ crd i _ (RingHom.id _) (v j) := fun j =>
+  have hv' : ∀ j, IsTanAtG t x (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v j) := fun j => hx ▸ GlobalTheory.FactorDepth.isTanAtG_map t φ (hv j)
+  have hC : ∀ j, crd i R φ (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v j) = φ ∘ crd i _ (RingHom.id _) (v j) := fun j =>
     h.nat i _ R (RingHom.id _) φ (v j) (by simpa [spMap] using hv j)
   choose a ha using fun j => (hb _ (hv' j)).exists
   choose b hb' using fun z => (hs R φ (u z) (hx ▸ hu z)).exists
@@ -66,7 +66,7 @@ theorem IsLieEmb.exists_leftInv_let (h : IsLieEmb t L aff crd) (i : Fin L.n) {R 
 theorem tan_of_frame {Dw : Datum H} {l : Level H} {c : Coeff l} {R : Type} [CommRing R] {α : c.F →+* R} {x : Sp R ⟶ X}
     {e : Vecs Dw t R} (he : GlobalTheory.LocM.IsFrame t ((RingHom.id R).comp α) (spMap (RingHom.id R) ≫ x) (e.bc (RingHom.id R))) (τ) (j) :
     IsTanAtG t x (e τ j) := by
-  have h1 : dualMap (RingHom.id R) = RingHom.id _ := RingHom.ext fun y => TrivSqZeroExt.inl_fst_add_inr_snd_eq y
+  have h1 : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R) = RingHom.id _ := RingHom.ext fun y => TrivSqZeroExt.inl_fst_add_inr_snd_eq y
   simpa [Vecs.bc, h1, spMap] using (he.1 τ j).1
 
 theorem IsLieEmb.inBlock (h : IsLieEmb t L aff crd) {Dw : Datum H} {l : Level H} {c : Coeff l} {k : Type} [Field k]

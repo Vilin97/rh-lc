@@ -554,8 +554,8 @@ theorem finsum_block {K S Q J J₁ J₂ : Type} [Field K] [CommRing S] [Algebra 
   ring
 
 private theorem dualMap_comp_jet_harmonics {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (φ : S →+* T) (ψ : T →+* U) :
-    dualMap (ψ.comp φ) = (dualMap ψ).comp (dualMap φ) := by
-  unfold dualMap
+    GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ) = (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) := by
+  unfold GlobalTheory.CompanionTheory.Ar.dualMap
   ext x <;> simp
 
 private theorem PPx_le_preimage {S T : Type} [CommRing S] [CommRing T] (x : Sp S ⟶ Xo.X) (x' : Sp T ⟶ Xo.X)

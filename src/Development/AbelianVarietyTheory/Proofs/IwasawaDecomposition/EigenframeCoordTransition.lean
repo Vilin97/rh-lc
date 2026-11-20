@@ -38,10 +38,10 @@ theorem tri_of_coord_lowerTriangular : ∀ (D : D7) (A : Amb D) (N j : ℕ) (S :
       exact isUnit_of_mul_isUnit_left this
     rw [det_of_lowerTriangular (L τ) (fun a b hab => hLt τ a b (OrderDual.toDual_lt_toDual.1 hab))] at h1
     exact isUnit_of_dvd_unit (Finset.dvd_prod_of_mem (fun a => L τ a a) (Finset.mem_univ i)) h1
-  have h1 : spMap (dualMap (RingHom.id K)) = 𝟙 _ := by
+  have h1 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id K)) = 𝟙 _ := by
     rw [← Spec.map_id]
     congr 1
-    ext r <;> simp [dualMap]
+    ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   have h2 : spMap (RingHom.id K) = 𝟙 _ := Spec.map_id _
   refine ⟨fun τ i => (hdiag τ i).unit, by rw [h2, Category.id_comp], rfl, fun τ i => ⟨fun a => L τ i a, by simp,
     fun k hk => hLt τ i k hk, ?_⟩⟩

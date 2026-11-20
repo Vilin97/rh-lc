@@ -23,7 +23,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Da
 def HodgeOver (A' : HodgeCpt Y S' x') (A : HodgeCpt Y S x) (h : A'.X ⟶ A.X) (i : Ω →+* Ω') (j : A.Li →+ A'.Li) :
     Prop :=
   GlobalTheory.CompanionTheory.Ar.Dominates A'.ξ A.ξ h i ∧ A'.f = h ≫ A.f ∧ A'.cst = i.comp A.cst ∧ IsExtOver i j ∧
-    ∀ w, (A'.M.pt (j w)).left ≫ A'.m.φ = spMap (dualMap i) ≫ (A.M.pt w).left ≫ A.m.φ
+    ∀ w, (A'.M.pt (j w)).left ≫ A'.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap i) ≫ (A.M.pt w).left ≫ A.m.φ
 
 abbrev WBases (A : HodgeCpt Y S x) : Type := ∀ τ : CMType H, Module.Basis (Fin D.p) Ω (A.Vgen (.inl τ))
 
@@ -115,7 +115,7 @@ theorem card_mul_eq_dim (D : Datum H) : Fintype.card (CMType H) * D.p * D.q = D.
   exact congrArg (· * D.p * D.q) (GlobalTheory.PeriodCoord.card_cmType H)
 
 theorem HodgeOver.refl (A : HodgeCpt Y S x) : HodgeOver A A (𝟙 _) (RingHom.id Ω) (AddMonoidHom.id _) := by
-  have e : dualMap (RingHom.id Ω) = RingHom.id _ := RingHom.ext fun a => TrivSqZeroExt.inl_fst_add_inr_snd_eq a
+  have e : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id Ω) = RingHom.id _ := RingHom.ext fun a => TrivSqZeroExt.inl_fst_add_inr_snd_eq a
   refine ⟨?_, (Category.id_comp _).symm, rfl, ⟨fun _ _ => rfl, fun _ _ h => h⟩, fun w => ?_⟩
   · show A.ξ ≫ 𝟙 _ = Spec.map (𝟙 _) ≫ A.ξ
     rw [Spec.map_id, Category.id_comp, Category.comp_id]
@@ -128,8 +128,8 @@ theorem HodgeOver.trans {A'' : HodgeCpt Y S'' x''} {A' : HodgeCpt Y S' x'} {A : 
     {h : A'.X ⟶ A.X} {i' : Ω' →+* Ω''} {i : Ω →+* Ω'} {j' : A'.Li →+ A''.Li} {j : A.Li →+ A'.Li}
     (a : HodgeOver A'' A' h' i' j') (b : HodgeOver A' A h i j) :
     HodgeOver A'' A (h' ≫ h) (i'.comp i) (j'.comp j) := by
-  have e : dualMap (i'.comp i) = (dualMap i').comp (dualMap i) := RingHom.ext fun a => by
-    ext <;> simp [dualMap]
+  have e : GlobalTheory.CompanionTheory.Ar.dualMap (i'.comp i) = (GlobalTheory.CompanionTheory.Ar.dualMap i').comp (GlobalTheory.CompanionTheory.Ar.dualMap i) := RingHom.ext fun a => by
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   refine ⟨?_, by rw [a.2.1, b.2.1, Category.assoc], by rw [a.2.2.1, b.2.2.1, RingHom.comp_assoc],
     ⟨fun t w => ?_, fun n v hv => a.2.2.2.1.2 n _ (b.2.2.2.1.2 n v hv)⟩, fun w => ?_⟩
   · show _ = Spec.map (CommRingCat.ofHom i ≫ CommRingCat.ofHom i') ≫ _
@@ -138,7 +138,7 @@ theorem HodgeOver.trans {A'' : HodgeCpt Y S'' x''} {A' : HodgeCpt Y S' x'} {A : 
     rw [b.2.2.2.1.1, a.2.2.2.1.1]
   · show (A''.M.pt (j' (j w))).left ≫ _ = _
     rw [a.2.2.2.2, b.2.2.2.2, e]
-    show _ = Spec.map (CommRingCat.ofHom (dualMap i) ≫ CommRingCat.ofHom (dualMap i')) ≫ _
+    show _ = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap i) ≫ CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap i')) ≫ _
     rw [Spec.map_comp, Category.assoc]
 
 variable {A' : HodgeCpt Y S' x'} {A : HodgeCpt Y S x} {h : A'.X ⟶ A.X} {i : Ω →+* Ω'} {j : A.Li →+ A'.Li}

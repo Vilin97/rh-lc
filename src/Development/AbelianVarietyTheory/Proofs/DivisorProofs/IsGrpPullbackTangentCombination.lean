@@ -45,9 +45,9 @@ theorem lieTie_lieComb : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
       exact congrArg (fun z => z.left) e
     · let d : Over.mk ((specO ℂ_[p] (DualNumber ℂ_[p])).hom ≫ spMap (algebraMap 𝓞_ℂ_[p] ℂ_[p])) ⟶
           specO 𝓞_ℂ_[p] (DualNumber 𝓞_ℂ_[p]) :=
-        Over.homMk (spMap (dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p]))) (by
+        Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap 𝓞_ℂ_[p] ℂ_[p]))) (by
           refine (spMap_spMap _ _).trans (Eq.trans (congrArg _ ?_) (spMap_spMap _ _).symm)
-          ext s <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl])
+          ext s <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl])
       have e2 := eq_one_of_isGrpPullback P.gen_pull
         (pushPt P.gen_pull.1.w (1 : specO ℂ_[p] (DualNumber ℂ_[p]) ⟶ P.A.A)) rfl
       have e3 : d ≫ (1 : specO 𝓞_ℂ_[p] (DualNumber 𝓞_ℂ_[p]) ⟶ P.G) =

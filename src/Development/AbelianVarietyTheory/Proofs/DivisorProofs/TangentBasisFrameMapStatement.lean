@@ -32,8 +32,8 @@ theorem _root_.GlobalTheory.T.tangent_basis_frame_map : ∀ (E : Type) [Field E]
     ∀ hvec : Fin g → 𝓞_ℂ_[p],
       (∀ (k : Fin g) (β : P'.B →+* DualNumber (𝓞_ℂ_[p] ⧸ Ideal.span {(p : 𝓞_ℂ_[p]) ^ n})),
         P'.At ((algebraMap 𝓞_ℂ_[p] (DualNumber (𝓞_ℂ_[p] ⧸ Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}))).comp x0)
-          (spMap (dualMap (Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}))) ≫ spMap (dualMap x0) ≫ e k) β →
+          (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}))) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap x0) ≫ e k) β →
         (β b).snd = Ideal.Quotient.mk (Ideal.span {(p : 𝓞_ℂ_[p]) ^ n}) (hvec k)) →
-    ∀ (k : Fin g) (x : LieG P.Gt), ITie P π x (spMap (dualMap x0) ≫ e k) →
+    ∀ (k : Fin g) (x : LieG P.Gt), ITie P π x (spMap (GlobalTheory.CompanionTheory.Ar.dualMap x0) ≫ e k) →
       hvec k + (P.al₀ tt).1 x ∈ Ideal.span {(p : 𝓞_ℂ_[p]) ^ n} := by
   first | exact @GlobalTheory.FinPartAt.levelHT_at_point | exact GlobalTheory.FinPartAt.levelHT_at_point | (intros; apply GlobalTheory.FinPartAt.levelHT_at_point <;> assumption)

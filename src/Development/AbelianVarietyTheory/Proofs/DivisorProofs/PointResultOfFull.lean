@@ -101,8 +101,8 @@ theorem ptSt_of_fullSt : FullSt → PtSt := by
     ext r l
     simp [hkk, Pi.single_apply]
   have hball : ∀ y : Fin g → ℂ_[p], (∀ r, ‖(Matrix.of fun r l => ∑ i, (h r i : ℂ_[p]) * a l i).mulVec y r‖ ≤ 1) →
-      ∃ w, IsCombAtG t xC (fun i => spMap (dualMap (intO ℂ_[p]).subtype) ≫ e i) (∑ l, y l • a l) w ∧
-        IsCombAtG t xC (fun i => spMap (dualMap (intO ℂ_[p]).subtype) ≫ e' i) (∑ l, y l • a' l) w ∧
+      ∃ w, IsCombAtG t xC (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ e i) (∑ l, y l • a l) w ∧
+        IsCombAtG t xC (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ℂ_[p]).subtype) ≫ e' i) (∑ l, y l • a' l) w ∧
         w ∈ latHT t p xC ∧ ∀ i, ‖(p : ℂ_[p]) * (∑ l, y l • a l) i‖ ≤ 1 := by
     intro y hy
     obtain ⟨w, -, hw⟩ := GlobalTheory.LineNorm.WedgeMax.exists_comb t hut y

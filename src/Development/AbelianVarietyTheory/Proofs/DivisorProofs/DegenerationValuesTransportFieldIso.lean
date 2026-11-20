@@ -77,16 +77,16 @@ theorem good_dual {J : (Sp F ⟶ X) → L.ι} (hJ : ∀ ψ : Sp F ⟶ X, ⊤ ≤
   rw [← redE_cpt]
   exact good_field hJ (redE F ≫ ψ)
 
-theorem redE_dualMap (f : F →+* F') : redE F' ≫ spMap (dualMap f) = spMap f ≫ redE F := by
+theorem redE_dualMap (f : F →+* F') : redE F' ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) = spMap f ≫ redE F := by
   rw [← spMap_comp', ← spMap_comp']
   refine congrArg spMap ?_
-  ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
-theorem inl_dualMap (f : F →+* F') : spMap (dualMap f) ≫ spMap (algebraMap F (DualNumber F)) =
+theorem inl_dualMap (f : F →+* F') : spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ spMap (algebraMap F (DualNumber F)) =
     spMap (algebraMap F' (DualNumber F')) ≫ spMap f := by
   rw [← spMap_comp', ← spMap_comp']
   refine congrArg spMap ?_
-  ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 end Dual
 
@@ -130,13 +130,13 @@ include hJ hg hJ'
 
 omit hJ hg in
 theorem gauge_dual (ψ : Sp (DualNumber F) ⟶ D.P.A.left) :
-    J' (redE F' ≫ spMap (dualMap f) ≫ ψ) = J (redE F ≫ ψ) := by
+    J' (redE F' ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ ψ) = J (redE F ≫ ψ) := by
   rw [← Category.assoc, redE_dualMap, Category.assoc, hJ']
 
-theorem vE_pull {gm : GtPt D (TE R F)} {gm' : GtPt D (TE R F')} (h : GtPt.IsPull (spMap (dualMap f)) gm gm') (χ : D.X) :
-    vE (gm'.s χ) (𝟙 _) J' = dualMap f (vE (gm.s χ) (𝟙 _) J) := by
+theorem vE_pull {gm : GtPt D (TE R F)} {gm' : GtPt D (TE R F')} (h : GtPt.IsPull (spMap (GlobalTheory.CompanionTheory.Ar.dualMap f)) gm gm') (χ : D.X) :
+    vE (gm'.s χ) (𝟙 _) J' = GlobalTheory.CompanionTheory.Ar.dualMap f (vE (gm.s χ) (𝟙 _) J) := by
   have g' := good_dual hg
-  refine Eq.trans ?_ (vL_ext (good_dual hJ) (dualMap f) (J' := fun ψ => J' (redE F' ≫ ψ))
+  refine Eq.trans ?_ (vL_ext (good_dual hJ) (GlobalTheory.CompanionTheory.Ar.dualMap f) (J' := fun ψ => J' (redE F' ≫ ψ))
     (gauge_dual f hJ') (gm.s χ) (𝟙 _))
   refine toStkA_injective ((stalk_vL g' _ _).trans (Eq.trans ?_ (stalk_vL g' _ _).symm))
   rw [val_corr g' (h.2 χ), val_pull g', Category.id_comp, Category.comp_id]
@@ -144,9 +144,9 @@ theorem vE_pull {gm : GtPt D (TE R F)} {gm' : GtPt D (TE R F')} (h : GtPt.IsPull
 theorem exists_fam (k : ℕ) (s : Fam D F k) : ∃ s' : Fam D F' k,
     (∀ α (x : TF (R := R) F ⟶ D.P.A), sF (s'.s α) (lift (𝟙 (TF (R := R) F')) (extMap f hf ≫ x)).left J' =
       f (sF (s.s α) (lift (𝟙 (TF (R := R) F)) x).left J)) ∧
-    ∀ α (b : TE R F ⟶ D.P.A) (b' : TE R F' ⟶ D.P.A), b'.left = spMap (dualMap f) ≫ b.left →
+    ∀ α (b : TE R F ⟶ D.P.A) (b' : TE R F' ⟶ D.P.A), b'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ b.left →
       sE (s'.s α) (lift (Over.homMk (spMap (algebraMap F' (DualNumber F'))) rfl : TE R F' ⟶ TF (R := R) F') b').left J' =
-      dualMap f (sE (s.s α)
+      GlobalTheory.CompanionTheory.Ar.dualMap f (sE (s.s α)
         (lift (Over.homMk (spMap (algebraMap F (DualNumber F))) rfl : TE R F ⟶ TF (R := R) F) b).left J) := by
   obtain ⟨s', hs⟩ := exists_famPull (extMap (R := R) f hf) D ((extMap_jFK f hf).trans (Category.id_comp _)) k s
   refine ⟨s', fun α x => ?_, fun α b b' hb => ?_⟩
@@ -158,12 +158,12 @@ theorem exists_fam (k : ℕ) (s : Fam D F k) : ∃ s' : Fam D F' k,
       (show lift (𝟙 _) (extMap f hf ≫ x) ≫ toBK (extMap f hf) D = extMap f hf ≫ lift (𝟙 _) x from ?_)
     apply CartesianMonoidalCategory.hom_ext <;> simp [toBK]
   · have g' := good_dual hg
-    refine Eq.trans ?_ (sL_ext (good_dual hJ) (dualMap f) (J' := fun ψ => J' (redE F' ≫ ψ))
+    refine Eq.trans ?_ (sL_ext (good_dual hJ) (GlobalTheory.CompanionTheory.Ar.dualMap f) (J' := fun ψ => J' (redE F' ≫ ψ))
       (gauge_dual f hJ') (s.s α) _)
     refine toStkA_injective ((stalk_sL g' _ _).trans (Eq.trans ?_ (stalk_sL g' _ _).symm))
     refine (hs α _ _ _ _ g').trans (congrArg (fun r => sval (s.s α) r (cpt _) fun ψ => J' (redE F' ≫ ψ)) ?_)
-    let u : TE R F' ⟶ TE R F := Over.homMk (spMap (dualMap f)) (by
-      change spMap (dualMap f) ≫ spMap (algebraMap F (DualNumber F)) ≫ (TF (R := R) F).hom =
+    let u : TE R F' ⟶ TE R F := Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap f)) (by
+      change spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ spMap (algebraMap F (DualNumber F)) ≫ (TF (R := R) F).hom =
         spMap (algebraMap F' (DualNumber F')) ≫ (TF (R := R) F').hom
       rw [← Category.assoc, inl_dualMap, Category.assoc]
       exact congrArg (_ ≫ ·) (Over.w (extMap (R := R) f hf)))
@@ -244,7 +244,7 @@ def mapNumOf : NumOf D F' (mapNum (e : F →+* F') N) where
 
 end Iso
 
-theorem transport_iso : ∀ (R : Type) [CommRing R] [IsDomain R] (D : DegPre R) (F F' : Type) [Field F] [Field F'] [Algebra (FractionRing R) F] [Algebra (FractionRing R) F'] (e : F ≃+* F'), (∀ x, e (algebraMap (FractionRing R) F x) = algebraMap (FractionRing R) F' x) → ∀ (N : NumD F) (ν : NumOf D F N), ∃ (N' : NumD F') (ν' : NumOf D F' N') (I : NumD.Hom (e : F →+* F') N N'), Function.Bijective I.φ ∧ (∀ x, I.h x = 1) ∧ I.lam = 1 ∧ (∀ χ, ν'.eX (I.e χ) = ν.eX χ) ∧ ν'.th = ν.th ∧ ν'.rg = e ν.rg ∧ (∀ (gm : GtPt D (TE R F)) (gm' : GtPt D (TE R F')), GtPt.IsPull (spMap (dualMap (e : F →+* F'))) gm gm' → ∀ χ, vE (gm'.s χ) (𝟙 _) ν'.J = dualMap (e : F →+* F') (vE (gm.s χ) (𝟙 _) ν.J)) ∧ ∀ (k : ℕ) (s : Fam D F k), ∃ s' : Fam D F' k, (∀ f, ν.FamV s f → ∃ f', ν'.FamV s' f' ∧ ∀ α x, f' (I.e α) (I.φ x) = e (f α x)) ∧ ∀ (gm : GtPt D (TE R F)) (gm' : GtPt D (TE R F')), GtPt.IsPull (spMap (dualMap (e : F →+* F'))) gm gm' → ∀ α, jc ν' s' gm' (I.e α) = dualMap (e : F →+* F') (jc ν s gm α) := by
+theorem transport_iso : ∀ (R : Type) [CommRing R] [IsDomain R] (D : DegPre R) (F F' : Type) [Field F] [Field F'] [Algebra (FractionRing R) F] [Algebra (FractionRing R) F'] (e : F ≃+* F'), (∀ x, e (algebraMap (FractionRing R) F x) = algebraMap (FractionRing R) F' x) → ∀ (N : NumD F) (ν : NumOf D F N), ∃ (N' : NumD F') (ν' : NumOf D F' N') (I : NumD.Hom (e : F →+* F') N N'), Function.Bijective I.φ ∧ (∀ x, I.h x = 1) ∧ I.lam = 1 ∧ (∀ χ, ν'.eX (I.e χ) = ν.eX χ) ∧ ν'.th = ν.th ∧ ν'.rg = e ν.rg ∧ (∀ (gm : GtPt D (TE R F)) (gm' : GtPt D (TE R F')), GtPt.IsPull (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (e : F →+* F'))) gm gm' → ∀ χ, vE (gm'.s χ) (𝟙 _) ν'.J = GlobalTheory.CompanionTheory.Ar.dualMap (e : F →+* F') (vE (gm.s χ) (𝟙 _) ν.J)) ∧ ∀ (k : ℕ) (s : Fam D F k), ∃ s' : Fam D F' k, (∀ f, ν.FamV s f → ∃ f', ν'.FamV s' f' ∧ ∀ α x, f' (I.e α) (I.φ x) = e (f α x)) ∧ ∀ (gm : GtPt D (TE R F)) (gm' : GtPt D (TE R F')), GtPt.IsPull (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (e : F →+* F'))) gm gm' → ∀ α, jc ν' s' gm' (I.e α) = GlobalTheory.CompanionTheory.Ar.dualMap (e : F →+* F') (jc ν s gm α) := by
   intro R _ _ D F F' _ _ _ _ e he N ν
   have hf : (e : F →+* F').comp (algebraMap (FractionRing R) F) = algebraMap (FractionRing R) F' := RingHom.ext he
   have hr : (mapNumOf e hf ν).rg = e ν.rg := rig_iso e hf ν

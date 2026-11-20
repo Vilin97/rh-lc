@@ -112,7 +112,7 @@ abbrev fstS (R : Type) [CommRing R] (S : Type) [CommRing S] [Algebra R S] :
 abbrev inlS (R : Type) [CommRing R] (S : Type) [CommRing S] [Algebra R S] :
     S →ₐ[R] DualNumber S := TrivSqZeroExt.inlAlgHom R S S
 
-def dualMap (ρ : S →ₐ[R] S') : DualNumber S →ₐ[R] DualNumber S' :=
+def GlobalTheory.CompanionTheory.Ar.dualMap (ρ : S →ₐ[R] S') : DualNumber S →ₐ[R] DualNumber S' :=
   dualTo ((inlS R S').comp ρ) (inr 1) (TrivSqZeroExt.inr_mul_inr _ _ _)
 
 def dualScale (R : Type) [CommRing R] {S : Type} [CommRing S] [Algebra R S] (s : S) :
@@ -120,12 +120,12 @@ def dualScale (R : Type) [CommRing R] {S : Type} [CommRing S] [Algebra R S] (s :
   dualTo (inlS R S) (inr s) (TrivSqZeroExt.inr_mul_inr _ _ _)
 
 @[simp] theorem fst_dualMap (ρ : S →ₐ[R] S') (a : DualNumber S) :
-    (dualMap ρ a).fst = ρ a.fst := by
-  simp [dualMap, dualTo_apply]
+    (GlobalTheory.CompanionTheory.Ar.dualMap ρ a).fst = ρ a.fst := by
+  simp [GlobalTheory.CompanionTheory.Ar.dualMap, dualTo_apply]
 
 @[simp] theorem snd_dualMap (ρ : S →ₐ[R] S') (a : DualNumber S) :
-    (dualMap ρ a).snd = ρ a.snd := by
-  simp [dualMap, dualTo_apply]
+    (GlobalTheory.CompanionTheory.Ar.dualMap ρ a).snd = ρ a.snd := by
+  simp [GlobalTheory.CompanionTheory.Ar.dualMap, dualTo_apply]
 
 @[simp] theorem fst_dualScale (s : S) (a : DualNumber S) : (dualScale R s a).fst = a.fst := by
   simp [dualScale, dualTo_apply]
@@ -133,14 +133,14 @@ def dualScale (R : Type) [CommRing R] {S : Type} [CommRing S] [Algebra R S] (s :
 @[simp] theorem snd_dualScale (s : S) (a : DualNumber S) : (dualScale R s a).snd = a.snd * s := by
   simp [dualScale, dualTo_apply, mul_comm]
 
-theorem dualMap_inr (ρ : S →ₐ[R] S') (a : S) : dualMap ρ (inr a) = inr (ρ a) := by
+theorem dualMap_inr (ρ : S →ₐ[R] S') (a : S) : GlobalTheory.CompanionTheory.Ar.dualMap ρ (inr a) = inr (ρ a) := by
   refine TrivSqZeroExt.ext ?_ ?_ <;> simp
 
 theorem dualScale_inr (s a : S) : dualScale R s (inr a) = inr (a * s) := by
   refine TrivSqZeroExt.ext ?_ ?_ <;> simp
 
 theorem dualMap_comp (ρ : S →ₐ[R] S') (ρ' : S' →ₐ[R] S'') :
-    (dualMap ρ').comp (dualMap ρ) = dualMap (ρ'.comp ρ) := AlgHom.ext fun a => TrivSqZeroExt.ext (by simp) (by simp)
+    (GlobalTheory.CompanionTheory.Ar.dualMap ρ').comp (GlobalTheory.CompanionTheory.Ar.dualMap ρ) = GlobalTheory.CompanionTheory.Ar.dualMap (ρ'.comp ρ) := AlgHom.ext fun a => TrivSqZeroExt.ext (by simp) (by simp)
 
 theorem dualScale_comp (s t : S) :
     (dualScale R s).comp (dualScale R t) = dualScale R (s * t) := AlgHom.ext fun a => TrivSqZeroExt.ext (by simp) (by simp only [AlgHom.comp_apply, snd_dualScale]; ring)
@@ -148,15 +148,15 @@ theorem dualScale_comp (s t : S) :
 theorem dualScale_one : dualScale R (1 : S) = AlgHom.id R _ := AlgHom.ext fun a => TrivSqZeroExt.ext (by simp) (by simp)
 
 theorem dualMap_comp_dualScale (ρ : S →ₐ[R] S') (s : S) :
-    (dualMap ρ).comp (dualScale R s) = (dualScale R (ρ s)).comp (dualMap ρ) := AlgHom.ext fun a => TrivSqZeroExt.ext (by simp) (by simp)
+    (GlobalTheory.CompanionTheory.Ar.dualMap ρ).comp (dualScale R s) = (dualScale R (ρ s)).comp (GlobalTheory.CompanionTheory.Ar.dualMap ρ) := AlgHom.ext fun a => TrivSqZeroExt.ext (by simp) (by simp)
 
 theorem fstS_comp_dualMap (ρ : S →ₐ[R] S') :
-    (fstS R S').comp (dualMap ρ) = ρ.comp (fstS R S) := AlgHom.ext fun a => by simp [fstS]
+    (fstS R S').comp (GlobalTheory.CompanionTheory.Ar.dualMap ρ) = ρ.comp (fstS R S) := AlgHom.ext fun a => by simp [fstS]
 
 theorem fstS_comp_dualScale (s : S) : (fstS R S).comp (dualScale R s) = fstS R S := AlgHom.ext fun a => by simp [fstS]
 
 theorem IsAway.dualMap {ρ : S →ₐ[R] S'} {g : S} (h : IsAway ρ g) :
-    IsAway (dualMap ρ) (inlS R S g) := by
+    IsAway (GlobalTheory.CompanionTheory.Ar.dualMap ρ) (inlS R S g) := by
   have hi : ∀ x : S, GlobalTheory.SqZero.dualMap ρ (inlS R S x) = inlS R S' (ρ x) := fun x =>
     TrivSqZeroExt.ext (by simp) (by simp)
   rw [isAway_iff, hi]
@@ -193,7 +193,7 @@ variable {G : Over (Spec (CommRingCat.of R))} [GrpObj G]
 def IsTanOver (w : sp (R₀ := R) (DualNumber S) ⟶ G) : Prop := spMap (fstS R S) ≫ w = 1
 
 abbrev res (ρ : S →ₐ[R] S') (w : sp (R₀ := R) (DualNumber S) ⟶ G) :
-    sp (R₀ := R) (DualNumber S') ⟶ G := spMap (dualMap ρ) ≫ w
+    sp (R₀ := R) (DualNumber S') ⟶ G := spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρ) ≫ w
 
 abbrev scl (s : S) (w : sp (R₀ := R) (DualNumber S) ⟶ G) :
     sp (R₀ := R) (DualNumber S) ⟶ G := spMap (dualScale R s) ≫ w
@@ -265,7 +265,7 @@ theorem exists_scl_eq_of_unitInChart (hS : UnitInChart G S) (hρ : IsAway ρ g)
   obtain ⟨κ, _, β, τ, hτ⟩ := exists_ders R B
   obtain ⟨φ, rfl, hφ⟩ := exists_chart_of_isTanOver j u hu hw
   obtain ⟨φ', rfl, hφ'⟩ := exists_chart_of_isTanOver j u hu hw'
-  have e : (dualMap ρ).comp φ = (dualMap ρ).comp φ' := by
+  have e : (GlobalTheory.CompanionTheory.Ar.dualMap ρ).comp φ = (GlobalTheory.CompanionTheory.Ar.dualMap ρ).comp φ' := by
     apply chart_inj j
     have h' := h
     dsimp only [res] at h'
@@ -302,7 +302,7 @@ theorem exists_res_eq_of_unitInChart (hS : UnitInChart G S) (hρ : IsAway ρ g)
   refine ⟨N, spMap ψ ≫ j, ?_, ?_⟩
   · show spMap (fstS R S) ≫ spMap ψ ≫ j = 1
     rw [← Category.assoc, spMap_comp, hψ, hu]
-  · have e : (dualMap ρ).comp ψ = (dualScale R (ρ g ^ N)).comp φ' := by
+  · have e : (GlobalTheory.CompanionTheory.Ar.dualMap ρ).comp ψ = (dualScale R (ρ g ^ N)).comp φ' := by
       refine AlgHom.ext fun b => TrivSqZeroExt.ext ?_ ?_
       · simp [ψ, addDers_apply, hφ', TrivSqZeroExt.fst_sum]
       · have s := snd_eq_sum hτ (ρ.comp u) φ' hφ' b
@@ -324,7 +324,7 @@ omit [Smooth G.hom] [GrpObj G] in
 theorem dual_ext {κ : Type} {s : κ → S} (hs : Ideal.span (Set.range s) = ⊤) {B : κ → Type}
     [∀ i, CommRing (B i)] [∀ i, Algebra R (B i)] (q : ∀ i, S →ₐ[R] B i)
     (hq : ∀ i, IsAway (q i) (s i)) {w w' : sp (R₀ := R) (DualNumber S) ⟶ G}
-    (h : ∀ i, res (q i) w = res (q i) w') : w = w' := away_ext (span_range_map hs (inlS R S)) (fun i => dualMap (q i)) (fun i => (hq i).dualMap)
+    (h : ∀ i, res (q i) w = res (q i) w') : w = w' := away_ext (span_range_map hs (inlS R S)) (fun i => GlobalTheory.CompanionTheory.Ar.dualMap (q i)) (fun i => (hq i).dualMap)
     fun i => h i
 
 theorem exists_scl_eq (hρ : IsAway ρ g)
@@ -412,10 +412,10 @@ theorem exists_res_eq (hρ : IsAway ρ g)
     rw [res_scl (ja k l) (q k g ^ P) (v1 k), res_scl (jb k l) (q l g ^ P) (v1 l), map_pow, map_pow, ← AlgHom.comp_apply (ja k l), hja,
       ← AlgHom.comp_apply (jb k l), hjb]
     exact scl_pow_eq_of_le (hPQ k l) (hQ k l)
-  obtain ⟨z, hz⟩ := away_glue (X := G) (span_range_map hs (inlS R S)) (fun k => dualMap (q k))
+  obtain ⟨z, hz⟩ := away_glue (X := G) (span_range_map hs (inlS R S)) (fun k => GlobalTheory.CompanionTheory.Ar.dualMap (q k))
     (fun k => (hq k).dualMap) v2 (fun k l T _ _ a b e =>
-      agree_of_isAway ((hq k).dualMap) ((hq l).dualMap) (a₀ := dualMap (ja k l))
-        (b₀ := dualMap (jb k l)) (by rw [dualMap_comp, dualMap_comp, hja, hjb])
+      agree_of_isAway ((hq k).dualMap) ((hq l).dualMap) (a₀ := GlobalTheory.CompanionTheory.Ar.dualMap (ja k l))
+        (b₀ := GlobalTheory.CompanionTheory.Ar.dualMap (jb k l)) (by rw [dualMap_comp, dualMap_comp, hja, hjb])
         (by rw [dualMap_comp, hja, ← map_mul]; exact (hq2 k l).dualMap) (H2 k l) T a b e)
   refine ⟨M + P, z, ?_, ?_⟩
   · show spMap (fstS R S) ≫ z = 1
@@ -425,7 +425,7 @@ theorem exists_res_eq (hρ : IsAway ρ g)
     exact ((hv k).scl _).scl _
   · refine dual_ext (span_range_map hs ρ) ψ hψa fun k => ?_
     rw [res_res, hψ k, ← res_res]
-    show res (p k) (spMap (dualMap (q k)) ≫ z) = _
+    show res (p k) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (q k)) ≫ z) = _
     rw [hz k]
     show res (p k) (scl (q k g ^ P) (v1 k)) = _
     rw [res_scl (p k) (q k g ^ P) (v1 k), H1 k]

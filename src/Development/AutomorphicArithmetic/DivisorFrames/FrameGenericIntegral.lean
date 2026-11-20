@@ -41,13 +41,13 @@ theorem UpperTheory.frame_generic_integral :
       exact congrArg (· ≫ j) (gen_eq _))
   have hι' : spMap (evalPt _ V hξ) ≫ hV.fromSpec ≫ ρ' = genericPt Y ≫ ρ ≫ genι Z := by
     rw [← Category.assoc, hι, Category.assoc, hj]
-  have hc : ∀ i, IsCombAtG Z.t (spMap α ≫ hV.fromSpec ≫ ρ') (fun k => spMap (dualMap α) ≫ b k)
+  have hc : ∀ i, IsCombAtG Z.t (spMap α ≫ hV.fromSpec ≫ ρ') (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap α) ≫ b k)
       (fun k => α (S k i)) (f.v τ i) := fun i => by
     obtain ⟨s, hs, -⟩ := he.2 _ α (f.v τ i) (by rw [hα']; exact f.tan τ i)
     have h2 := coord_map α (toFn (below y.1)) hs
     rw [hαι] at h2
     obtain ⟨w', h3, h4⟩ := hP i
-    obtain rfl : w' = spMap (dualMap (toFn (below y.1))) ≫ f.v τ i :=
+    obtain rfl : w' = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toFn (below y.1))) ≫ f.v τ i :=
       ((comb_iff (g₀.tan τ) _ _).1 h3).trans ((comb_iff (g₀.tan τ) _ _).1 (hf.2 i)).symm
     rw [← hι'] at h4
     have h5 := (he.2 _ (evalPt _ V hξ) _ (comb_tan (fun k => isTan_map _ rfl (he.1 k)) h2)).unique h2 h4

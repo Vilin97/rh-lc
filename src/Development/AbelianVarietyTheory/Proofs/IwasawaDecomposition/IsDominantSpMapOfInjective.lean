@@ -14,9 +14,9 @@ theorem isDominant_spMap_of_injective {R S : Type} [CommRing R] [CommRing S] (φ
     rw [(RingHom.injective_iff_ker_eq_bot φ).1 h]; exact bot_le)⟩
 
 theorem dualMap_comp' {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (φ : R →+* S) (ψ : S →+* T) :
-    (dualMap ψ).comp (dualMap φ) = dualMap (ψ.comp φ) := by
+    (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) = GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ) := by
   refine RingHom.ext fun z => ?_
-  ext <;> simp [dualMap]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem mem_latDR_iff_crd : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) [X.IsSeparated] (t : SAB H X) (L : FinLB X) (aff : ∀ i, IsAffineOpen (L.U i)) (M : ℕ) (crd : Crd t L M), IsLieEmb t L aff crd → ∀ (i : Fin L.n) (C : Type) [NontriviallyNormedField C] [IsUltrametricDist C] (φ : Γ(X, L.U i) →+* ↥(intO C)) (x : Sp C ⟶ X) (w : Tn t C), spMap ((intO C).subtype.comp φ) ≫ (aff i).fromSpec = x → IsTanAtG t x w → (w ∈ latDR t x ↔ ∀ r, ‖crd i C ((intO C).subtype.comp φ) w r‖ ≤ 1) := by
   intro E _ _ _ H X _ t L aff M crd h i C _ _ φ x w hx hw
@@ -37,7 +37,7 @@ theorem mem_latDR_iff_crd : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
     have hvO := fun j => isTanAtG_map t φ (hv j)
     have h1 : spMap (RingHom.id Γ(X, L.U i)) = 𝟙 _ := Spec.map_id _
     have hc := h.comb i C _ n _ a w hvC ha
-    have hn : ∀ j, crd i C ((intO C).subtype.comp φ) (spMap (dualMap ((intO C).subtype.comp φ)) ≫ v j) =
+    have hn : ∀ j, crd i C ((intO C).subtype.comp φ) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((intO C).subtype.comp φ)) ≫ v j) =
         ((intO C).subtype.comp φ) ∘ crd i _ (RingHom.id _) (v j) := fun j =>
       h.nat i _ C (RingHom.id _) ((intO C).subtype.comp φ) (v j) (by rw [h1, Category.id_comp]; exact hv j)
     have hD' := hD.map ((intO C).subtype.comp φ)

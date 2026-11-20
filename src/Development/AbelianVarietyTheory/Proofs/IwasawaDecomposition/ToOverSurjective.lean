@@ -103,7 +103,7 @@ theorem snd_chi_eq (P : Point p v O Λ) (z : Sp O ⟶ X) (φ : P.G.left ⟶ t.G.
       a.left ≫ P.gen ≫ φ = spMap (algebraMap O C) ≫ w.left →
         algebraMap O C (c.χ O w : O) = (GlobalTheory.HTLat.weil P.A (p ^ n) a (s.lev n) : C))
     (x : LieG P.Gt) (g : Over.mk (spMap (algebraMap O (DualNumber (O ⧸ Ideal.span {(p : O) ^ n}))) ≫ z) ⟶ t.G)
-    (hg : g.left = spMap (dualMap (Ideal.Quotient.mk (Ideal.span {(p : O) ^ n}))) ≫ (P.lieCmp x).1.left ≫ φ) :
+    (hg : g.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(p : O) ^ n}))) ≫ (P.lieCmp x).1.left ≫ φ) :
     (c.χ _ g : DualNumber (O ⧸ Ideal.span {(p : O) ^ n})).snd =
       Ideal.Quotient.mk (Ideal.span {(p : O) ^ n}) ((P.al₀ s).1 x) := by
   have hv := P.integers

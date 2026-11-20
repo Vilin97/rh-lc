@@ -395,7 +395,7 @@ def IsExtension (Y : Model Xo c β) (y : IntFr Xo c T io) (yt : Sp T.V ⟶ Y.X)
     ∀ τ i, ∃ u' : Sp (DualNumber T.Fr) ⟶ Y.oF.t.G.left,
       u' ≫ Y.oF.t.G.hom = spMap (algebraMap T.Fr (DualNumber T.Fr)) ≫ ptF y ∧
       u' ≫ Y.m0.toSABMap.φ = y.1.u τ i ∧
-      u' ≫ Y.m.φ = spMap (dualMap (algebraMap T.V T.Fr)) ≫ ut τ i
+      u' ≫ Y.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ ut τ i
 
 def FlagsDefinedOver {X0 : Scheme.{0}} (t : SAB H X0) {k : Type} [Field k] (x : Sp k ⟶ X0)
     (u : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (Sp (DualNumber k) ⟶ t.G.left)) {k' : Type} [Field k'] (φ : k' →+* k) :
@@ -403,7 +403,7 @@ def FlagsDefinedOver {X0 : Scheme.{0}} (t : SAB H X0) {k : Type} [Field k] (x : 
   ∃ (x' : Sp k' ⟶ X0) (v : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → (Sp (DualNumber k') ⟶ t.G.left)),
     spMap φ ≫ x' = x ∧ (∀ τ j, IsTanAtG t x' (v τ j)) ∧
     ∀ τ i, ∃ cf : Fin (Dw.mult τ) → k, (∀ j, i < j → cf j = 0) ∧
-      IsCombAtG t x (fun j => spMap (dualMap φ) ≫ v τ j) cf (u τ i)
+      IsCombAtG t x (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v τ j) cf (u τ i)
 
 def TrdegGe (k : Type) [Field k] (n : ℕ) : Prop :=
   ∃ t : Fin n → k, AlgebraicIndependent (⊥ : Subfield k) t
@@ -413,7 +413,7 @@ def IsGen (Y : Model Xo c β) (y : IntFr Xo c T io) : Prop :=
     IsExtension Y y yt ut ∧
     ∀ (k' : Type) [Field k'] (φ : k' →+* ResidueField T.V),
       FlagsDefinedOver (Dw := Dw) Y.t (spMap (residue T.V) ≫ yt)
-        (fun τ i => spMap (dualMap (residue T.V)) ≫ ut τ i) φ →
+        (fun τ i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (residue T.V)) ≫ ut τ i) φ →
       TrdegGe k' (dimFlag Dw)
 
 def GenEx (Y : Model Xo c β) (Z : Comp Xo c) (la : HeightOneSpectrum (𝓞 c.F)) : Prop :=
@@ -424,13 +424,13 @@ open MonObj in
 
 theorem isTanAtG_map {X0 : Scheme.{0}} (t : SAB H X0) {S S' : Type} [CommRing S] [CommRing S'] (φ : S →+* S')
     {x : Sp S ⟶ X0} {v : Sp (DualNumber S) ⟶ t.G.left} (hv : IsTanAtG t x v) :
-    IsTanAtG t (spMap φ ≫ x) (spMap (dualMap φ) ≫ v) := by
+    IsTanAtG t (spMap φ ≫ x) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v) := by
   refine ⟨?_, ?_⟩
   · rw [Category.assoc, hv.1, ← Category.assoc, ← Category.assoc, spMap_comp', spMap_comp', dualMap_comp_alg]
-  · have e : (TrivSqZeroExt.fstHom S' S' S').toRingHom.comp (dualMap φ) =
+  · have e : (TrivSqZeroExt.fstHom S' S' S').toRingHom.comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) =
         φ.comp (TrivSqZeroExt.fstHom S S S).toRingHom := by
       refine RingHom.ext fun z => ?_
-      simp [dualMap]
+      simp [GlobalTheory.CompanionTheory.Ar.dualMap]
     rw [← Category.assoc, spMap_comp', e, ← spMap_comp', Category.assoc, hv.2]
     let ψ : Over.mk (spMap φ ≫ x) ⟶ Over.mk x := Over.homMk (spMap φ) rfl
     exact congrArg (fun g => g.left) (MonObj.comp_one ψ : ψ ≫ (1 : Over.mk x ⟶ t.G) = 1)

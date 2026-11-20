@@ -37,11 +37,11 @@ theorem tri_trans : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : 
     rcases lt_or_ge j a with h | h
     · rw [hd a j h, zero_mul]
     · rw [hB j i (lt_of_lt_of_le ha h), mul_zero]
-  · have e : (fun j => spMap (dualMap (χ.comp ψ)) ≫ f.v τ j) = f''.v τ := funext fun j => by
+  · have e : (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (χ.comp ψ)) ≫ f.v τ j) = f''.v τ := funext fun j => by
       rw [hf'' τ j, hf' τ j, ← Category.assoc]
       congr 1
-      have e2 : dualMap (χ.comp ψ) = (dualMap χ).comp (dualMap ψ) := by
-        ext r <;> simp [dualMap]
+      have e2 : GlobalTheory.CompanionTheory.Ar.dualMap (χ.comp ψ) = (GlobalTheory.CompanionTheory.Ar.dualMap χ).comp (GlobalTheory.CompanionTheory.Ar.dualMap ψ) := by
+        ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
       rw [e2]
       simp [spMap, Spec.map_comp]
     rw [e]

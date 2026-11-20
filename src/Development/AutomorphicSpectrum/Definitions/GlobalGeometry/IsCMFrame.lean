@@ -74,7 +74,7 @@ abbrev β : c.F →+* X.K := (IntermediateField.inclusion X.hc).toRingHom
 
 def IsImage (b : Bool) (a : PureType.lat hP (sgnRt H b)) (u : epsAt (under X.y) ⟶ Xo.univ.t.G) : Prop :=
   ∃ r : Sp (DualNumber X.K) ⟶ X.t.G.left, r ≫ X.m.φ = u.left ∧
-    r ≫ X.m'.φ = spMap (dualMap (algebraMap (𝓞 X.K) X.K)) ≫ (X.C b).v.left ≫ (X.ψ b a).left
+    r ≫ X.m'.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (𝓞 X.K) X.K)) ≫ (X.C b).v.left ≫ (X.ψ b a).left
 
 def IsCMVec (b : Bool) (τ : E →+* ℂ) (a : PureType.lat hP (sgnRt H b))
     (v : epsAt (under X.y) ⟶ Xo.univ.t.G) : Prop :=

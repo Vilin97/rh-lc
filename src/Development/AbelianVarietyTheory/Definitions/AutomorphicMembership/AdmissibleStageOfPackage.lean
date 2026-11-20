@@ -54,10 +54,10 @@ theorem torusChar_epsVec {O : Type} [CommRing O] (x : Sp O ⟶ X) (q : ℕ) (a :
   simp
 
 theorem dual_base {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) :
-    spMap (dualMap f) ≫ spMap (algebraMap A (DualNumber A)) = spMap (algebraMap B (DualNumber B)) ≫ spMap f := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ spMap (algebraMap A (DualNumber A)) = spMap (algebraMap B (DualNumber B)) ≫ spMap f := by
   rw [sp_comp, sp_comp]
   congr 1
-  ext r <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem latHT_torus {C : Type} [NontriviallyNormedField C] [IsUltrametricDist C] (p : ℕ) (hp : (p : C) ≠ 0)
     (x : Sp C ⟶ X) : latHT (torus H X) p x = latDR (torus H X) x := by
@@ -71,16 +71,16 @@ theorem latHT_torus {C : Type} [NontriviallyNormedField C] [IsUltrametricDist C]
   have hdiv : ∀ a, (p : O) ^ m ∣ c a := fun a => by
     let I : Ideal O := Ideal.span {(p : O) ^ m}
     have hg : spMap (algebraMap O (DualNumber (O ⧸ I))) ≫ xO =
-        spMap (dualMap (Ideal.Quotient.mk I)) ≫ spMap (algebraMap O (DualNumber O)) ≫ xO := by
+        spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk I)) ≫ spMap (algebraMap O (DualNumber O)) ≫ xO := by
       rw [← Category.assoc, sp_comp]
       congr 2
-      ext r <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl, TrivSqZeroExt.algebraMap_eq_inl']
+      ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl, TrivSqZeroExt.algebraMap_eq_inl']
     have h := hd m (torusChar H xO _ a) (GlobalTheory.Diag.epsVec _ ((Ideal.Quotient.mk I).toAddMonoidHom.comp c)) (by
       change _ = spMap _ ≫ w.left
       rw [← hc]
       refine (GlobalTheory.Diag.left_eq_iff _ hg _ _).2 fun b => ?_
       rw [GlobalTheory.Diag.charVal_epsVec, GlobalTheory.Diag.charVal_epsVec]
-      ext <;> simp [dualMap])
+      ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap])
     rw [torusChar_epsVec] at h
     have h0 : (p : O ⧸ I) ^ m = 0 := by
       rw [← map_natCast (Ideal.Quotient.mk I), ← map_pow, Ideal.Quotient.eq_zero_iff_mem]
@@ -105,14 +105,14 @@ theorem latHT_torus {C : Type} [NontriviallyNormedField C] [IsUltrametricDist C]
     rw [sp_comp, ← sp_epsMul_one]
     congr 1
     ext r <;> simp [epsMul, hp]
-  have h3 : spMap (epsMul ((p : C) ^ m)⁻¹) ≫ spMap (dualMap (intO C).subtype) ≫ spMap (epsMul ((p : O) ^ m)) =
-      spMap (dualMap (intO C).subtype) := by
+  have h3 : spMap (epsMul ((p : C) ^ m)⁻¹) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO C).subtype) ≫ spMap (epsMul ((p : O) ^ m)) =
+      spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO C).subtype) := by
     rw [sp_comp, sp_comp]
     congr 1
     refine RingHom.ext fun r => ?_
     ext
-    · simp [epsMul, dualMap, O]
-    · simp [epsMul, dualMap, O]
+    · simp [epsMul, GlobalTheory.CompanionTheory.Ar.dualMap, O]
+    · simp [epsMul, GlobalTheory.CompanionTheory.Ar.dualMap, O]
       field_simp
   rw [← Category.id_comp v, ← h2, Category.assoc, ← e, h1]
   exact (congrArg (· ≫ w'.left) h3.symm).trans (by simp only [Category.assoc]; rfl)

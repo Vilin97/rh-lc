@@ -115,13 +115,13 @@ theorem spMap_algHom_comp {K : Type} [Field K] {S T U : Type} [CommRing S] [Alge
   rfl
 
 theorem dualMap_comp {S T U : Type} [CommRing S] [CommRing T] [CommRing U] (φ : S →+* T) (ψ : T →+* U) :
-    dualMap (ψ.comp φ) = (dualMap ψ).comp (dualMap φ) :=
+    GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ) = (GlobalTheory.CompanionTheory.Ar.dualMap ψ).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) :=
   RingHom.ext fun x => by
-    ext <;> simp [dualMap]
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem spMap_dual_comp {K : Type} [Field K] {S T U : Type} [CommRing S] [Algebra K S] [CommRing T] [Algebra K T]
     [CommRing U] [Algebra K U] (φ : S →ₐ[K] T) (ψ : T →ₐ[K] U) :
-    spMap (dualMap (ψ.comp φ).toRingHom) = spMap (dualMap ψ.toRingHom) ≫ spMap (dualMap φ.toRingHom) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp φ).toRingHom) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ.toRingHom) := by
   have e : (ψ.comp φ).toRingHom = ψ.toRingHom.comp φ.toRingHom := rfl
   rw [e, dualMap_comp]
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
@@ -245,23 +245,23 @@ theorem spMap_comp_ring {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
 
 theorem dualMap_alg {S T : Type} [CommRing S] [CommRing T] (φ : S →+* T) :
-    (dualMap φ).comp (algebraMap S (DualNumber S)) = (algebraMap T (DualNumber T)).comp φ :=
+    (GlobalTheory.CompanionTheory.Ar.dualMap φ).comp (algebraMap S (DualNumber S)) = (algebraMap T (DualNumber T)).comp φ :=
   RingHom.ext fun a => by
-    ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem dualMap_eps {S T : Type} [CommRing S] [CommRing T] (φ : S →+* T) (a : S) :
-    (dualMap φ).comp (epsMul a) = (epsMul (φ a)).comp (dualMap φ) :=
+    (GlobalTheory.CompanionTheory.Ar.dualMap φ).comp (epsMul a) = (epsMul (φ a)).comp (GlobalTheory.CompanionTheory.Ar.dualMap φ) :=
   RingHom.ext fun x => by
-    ext <;> simp [dualMap, epsMul, mul_comm]
+    ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, mul_comm]
 
 theorem isCombAt_pull {S T : Type} [CommRing S] [CommRing T] (φ : S →+* T) {x : Sp S ⟶ Xo.X}
     {x' : Sp T ⟶ Xo.X} (hx : x' = spMap φ ≫ x) {m : ℕ} {v : Fin m → (Sp (DualNumber S) ⟶ Xo.univ.t.G.left)}
-    {v' : Fin m → (Sp (DualNumber T) ⟶ Xo.univ.t.G.left)} (hv : ∀ j, v' j = spMap (dualMap φ) ≫ v j)
+    {v' : Fin m → (Sp (DualNumber T) ⟶ Xo.univ.t.G.left)} (hv : ∀ j, v' j = spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ v j)
     {cf : Fin m → S} {w : Sp (DualNumber S) ⟶ Xo.univ.t.G.left} {w' : Sp (DualNumber T) ⟶ Xo.univ.t.G.left}
-    (hw : w' = spMap (dualMap φ) ≫ w) (h : IsCombAt x v cf w) : IsCombAt x' v' (fun j => φ (cf j)) w' := by
+    (hw : w' = spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ w) (h : IsCombAt x v cf w) : IsCombAt x' v' (fun j => φ (cf j)) w' := by
   obtain ⟨u, hu, hprod⟩ := h
-  let D : tEps x' ⟶ tEps x := Over.homMk (spMap (dualMap φ)) (by
-    show spMap (dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) ≫ x = spMap (algebraMap T (DualNumber T)) ≫ x'
+  let D : tEps x' ⟶ tEps x := Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ)) (by
+    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) ≫ x = spMap (algebraMap T (DualNumber T)) ≫ x'
     rw [hx, ← Category.assoc, ← Category.assoc, spMap_comp_ring, spMap_comp_ring, dualMap_alg])
   have hL : ∀ L : List (tEps x ⟶ Xo.univ.t.G), (L.map (D ≫ ·)).prod = D ≫ L.prod := by
     intro L
@@ -269,7 +269,7 @@ theorem isCombAt_pull {S T : Type} [CommRing S] [CommRing T] (φ : S →+* T) {x
     | nil => simp [MonObj.comp_one]
     | cons a L ih => rw [List.map_cons, List.prod_cons, List.prod_cons, ih, MonObj.comp_mul]
   refine ⟨fun j => D ≫ u j, fun j => ?_, ?_⟩
-  · show spMap (dualMap φ) ≫ (u j).left = spMap (epsMul (φ (cf j))) ≫ v' j
+  · show spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ (u j).left = spMap (epsMul (φ (cf j))) ≫ v' j
     rw [hu j, hv j, ← Category.assoc, ← Category.assoc, spMap_comp_ring, spMap_comp_ring, dualMap_eps]
   · have e : (List.ofFn fun j => D ≫ u j) = (List.ofFn u).map (D ≫ ·) := by
       rw [List.map_ofFn]

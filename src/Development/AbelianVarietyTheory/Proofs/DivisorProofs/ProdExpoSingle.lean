@@ -50,7 +50,7 @@ theorem lgOf_single_inl (w : Pad.Sym E →₀ ℤ) (b : ℕ → Bool) (R : Optio
       (-Real.log (ε.w (resP v)) / Real.log (resP v)) *
         lnStep Z.t (spMap ((ioOf (resP v) ε).comp (Scheme.stalkClosedPointTo y.1).hom) ≫
             stalkPt Y.Y (below y.1) ≫ Y.π ≫ genι Z)
-          (fun τ l => spMap (dualMap ((ioOf (resP v) ε).comp (Scheme.stalkClosedPointTo y.1).hom)) ≫
+          (fun τ l => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((ioOf (resP v) ε).comp (Scheme.stalkClosedPointTo y.1).hom)) ≫
             (Y.gr_spec (below y.1)).choose_spec.choose.v τ l) (resP v) (b (resP v)) (.inl (τ, (k : ℕ))) := by
   have hp := prod_expo_single (Y.gr_spec (below y.1)).choose_spec.choose_spec.choose b R τ k
   rw [← hw] at hp

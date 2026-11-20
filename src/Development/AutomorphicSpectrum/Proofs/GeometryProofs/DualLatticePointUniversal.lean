@@ -64,16 +64,16 @@ theorem epsMul_snd {A : Type} [CommRing A] (c : A) (a : DualNumber A) : (epsMul 
   simp [epsMul]
 
 theorem dualMap_fst {A A' : Type} [CommRing A] [CommRing A'] (f : A →+* A') (a : DualNumber A) :
-    (dualMap f a).fst = f a.fst := by
-  simp [dualMap]
+    (GlobalTheory.CompanionTheory.Ar.dualMap f a).fst = f a.fst := by
+  simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem dualMap_snd {A A' : Type} [CommRing A] [CommRing A'] (f : A →+* A') (a : DualNumber A) :
-    (dualMap f a).snd = f a.snd := by
-  simp [dualMap]
+    (GlobalTheory.CompanionTheory.Ar.dualMap f a).snd = f a.snd := by
+  simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem iota_comp_map (q : V) :
     iota.comp (TrivSqZeroExt.map (LinearMap.toSpanSingleton R V q)).toRingHom =
-      (epsMul (TrivSqZeroExt.inr q : TrivSqZeroExt R V)).comp (dualMap (algebraMap R (TrivSqZeroExt R V))) := by
+      (epsMul (TrivSqZeroExt.inr q : TrivSqZeroExt R V)).comp (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R (TrivSqZeroExt R V))) := by
   refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_
   · simp [iota_fst, epsMul_fst, dualMap_fst, TrivSqZeroExt.algebraMap_eq_inl]
   · simp only [RingHom.comp_apply, iota_snd, epsMul_snd, dualMap_snd]
@@ -87,14 +87,14 @@ theorem fst_comp_iota :
   RingHom.ext fun a => by simp [iota_fst, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem dualMap_fst_comp_iota :
-    (dualMap (TrivSqZeroExt.fstHom R R V).toRingHom).comp iota =
+    (GlobalTheory.CompanionTheory.Ar.dualMap (TrivSqZeroExt.fstHom R R V).toRingHom).comp iota =
       (TrivSqZeroExt.map (0 : V →ₗ[R] R)).toRingHom := by
   refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_
   · simp [iota_fst, dualMap_fst]
   · simp [iota_snd, dualMap_snd]
 
 theorem reduce_epsMul (b : TrivSqZeroExt R V) :
-    ((dualMap (TrivSqZeroExt.fstHom R R V).toRingHom).comp (epsMul b)).comp (dualMap (algebraMap R (TrivSqZeroExt R V))) =
+    ((GlobalTheory.CompanionTheory.Ar.dualMap (TrivSqZeroExt.fstHom R R V).toRingHom).comp (epsMul b)).comp (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R (TrivSqZeroExt R V))) =
       epsMul b.fst := by
   refine RingHom.ext fun a => TrivSqZeroExt.ext ?_ ?_
   · simp [epsMul_fst, dualMap_fst, TrivSqZeroExt.algebraMap_eq_inl]
@@ -121,7 +121,7 @@ def cMor : epsAt (xB x V) ⟶ ob x V :=
     · simp [iota_snd, TrivSqZeroExt.algebraMap_eq_inl])
 
 def dMor : epsAt x ⟶ epsAt (xB x V) :=
-  Over.homMk (Spec.map (CommRingCat.ofHom (dualMap (TrivSqZeroExt.fstHom R R V).toRingHom))) (by
+  Over.homMk (Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (TrivSqZeroExt.fstHom R R V).toRingHom))) (by
     change Spec.map _ ≫ Spec.map _ ≫ Spec.map _ ≫ x = Spec.map _ ≫ x
     rw [← Category.assoc, ← Category.assoc, ← Spec.map_comp, ← Spec.map_comp]
     congr 2
@@ -140,7 +140,7 @@ theorem dMor_cMor : dMor x V ≫ cMor x V = hom x (0 : V →ₗ[R] R) := by
 
 theorem cMor_hom (q : V) : (cMor x V ≫ hom x (LinearMap.toSpanSingleton R V q)).left =
     Spec.map (CommRingCat.ofHom (epsMul (TrivSqZeroExt.inr q : TrivSqZeroExt R V))) ≫
-      Spec.map (CommRingCat.ofHom (dualMap (algebraMap R (TrivSqZeroExt R V)))) := by
+      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R (TrivSqZeroExt R V)))) := by
   change Spec.map _ ≫ Spec.map _ = _
   rw [← Spec.map_comp, ← Spec.map_comp]
   congr 1
@@ -317,7 +317,7 @@ variable {L' : Type} [AddCommGroup L'] [Module (TrivSqZeroExt R V) L'] [Module R
 
 theorem cMor_pt (M : LieModel G x L) (M' : LieModel G (xB x V) L')
     (hj : ∀ y, (M'.pt (β y)).left =
-      Spec.map (CommRingCat.ofHom (dualMap (algebraMap R (TrivSqZeroExt R V)))) ≫ (M.pt y).left)
+      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R (TrivSqZeroExt R V)))) ≫ (M.pt y).left)
     (q : V) (y : L) :
     cMor x V ≫ hom x (LinearMap.toSpanSingleton R V q) ≫ M.pt y =
       M'.pt ((TrivSqZeroExt.inr q : TrivSqZeroExt R V) • β y) := by
@@ -326,7 +326,7 @@ theorem cMor_pt (M : LieModel G x L) (M' : LieModel G (xB x V) L')
 
 theorem dMor_pt (M : LieModel G x L) (M' : LieModel G (xB x V) L')
     (hj : ∀ y, (M'.pt (β y)).left =
-      Spec.map (CommRingCat.ofHom (dualMap (algebraMap R (TrivSqZeroExt R V)))) ≫ (M.pt y).left)
+      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R (TrivSqZeroExt R V)))) ≫ (M.pt y).left)
     (b : TrivSqZeroExt R V) (y : L) :
     dMor x V ≫ M'.pt (b • β y) = M.pt (b.fst • y) := by
   ext1
@@ -336,7 +336,7 @@ theorem dMor_pt (M : LieModel G x L) (M' : LieModel G (xB x V) L')
 
 theorem cMor_hom_univ (M : LieModel G x L) (M' : LieModel G (xB x V) L')
     (hj : ∀ y, (M'.pt (β y)).left =
-      Spec.map (CommRingCat.ofHom (dualMap (algebraMap R (TrivSqZeroExt R V)))) ≫ (M.pt y).left)
+      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R (TrivSqZeroExt R V)))) ≫ (M.pt y).left)
     (e : J → L) (w : J → Module.Dual R L) (φ : Module.Dual R L →ₗ[R] V) :
     cMor x V ≫ hom x φ ≫ univ M e w =
       M'.pt (∑ k, (TrivSqZeroExt.inr (φ (w k)) : TrivSqZeroExt R V) • β (e k)) := by
@@ -359,7 +359,7 @@ theorem hom_zero_tan {v : ob x V ⟶ G} (hv : zsec x ≫ v = 1) : hom x (0 : V �
 
 theorem exists_form (M : LieModel G x L) (M' : LieModel G (xB x V) L')
     (hj : ∀ y, (M'.pt (β y)).left =
-      Spec.map (CommRingCat.ofHom (dualMap (algebraMap R (TrivSqZeroExt R V)))) ≫ (M.pt y).left)
+      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R (TrivSqZeroExt R V)))) ≫ (M.pt y).left)
     (hβ : IsBaseChange (TrivSqZeroExt R V) β) {e : J → L} {w : J → Module.Dual R L}
     (he : ∀ y, ∑ k, w k y • e k = y) {v : ob x V ⟶ G} (hv : zsec x ≫ v = 1) :
     ∃ φ : Module.Dual R L →ₗ[R] V, hom x φ ≫ univ M e w = v := by
@@ -387,7 +387,7 @@ theorem exists_form (M : LieModel G x L) (M' : LieModel G (xB x V) L')
 
 theorem form_unique (M : LieModel G x L) (M' : LieModel G (xB x V) L')
     (hj : ∀ y, (M'.pt (β y)).left =
-      Spec.map (CommRingCat.ofHom (dualMap (algebraMap R (TrivSqZeroExt R V)))) ≫ (M.pt y).left)
+      Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R (TrivSqZeroExt R V)))) ≫ (M.pt y).left)
     (hβ : IsBaseChange (TrivSqZeroExt R V) β) {e : J → L} {w : J → Module.Dual R L}
     (he : ∀ y, ∑ k, w k y • e k = y) {φ φ' : Module.Dual R L →ₗ[R] V}
     (h : hom x φ ≫ univ M e w = hom x φ' ≫ univ M e w) : φ = φ' := by

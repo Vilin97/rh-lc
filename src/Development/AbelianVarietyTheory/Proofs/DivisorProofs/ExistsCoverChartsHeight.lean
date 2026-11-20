@@ -122,7 +122,7 @@ theorem isFlagFrame_frAt : IsFlagFrame O.s.T.Z.t ((O.Φ.C c).π ≫ GlobalTheory
 variable {v : HeightOneSpectrum (𝓞 D.what₂.LL)} [hp : Fact (resP v).Prime] (e : GlobalTheory.TrueGeo.Ext v) (y : AlgPt (O.Φ.C c).Y)
 
 theorem uAt_eq : uAt O c e y =
-    fun l => spMap (dualMap (psiAt O c e y)) ≫ (frAt O c (below y.1)).v (letterAt O l).1 (letterAt O l).2 :=
+    fun l => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (psiAt O c e y)) ≫ (frAt O c (below y.1)).v (letterAt O l).1 (letterAt O l).2 :=
   funext fun l => uAt.eq_1 O c e y l
 
 theorem ptData_intro (hp' : (resP v).Prime) (b : Module.Basis (Fin (D.R.f * O.N + D.R.f * O.N)) ℤ O.S.Dw.La) (n : ℕ)
@@ -176,7 +176,7 @@ theorem exists_frame : Hypotheses2 → HypothesesH → GlobalTheory.Published.Re
   have hf := isFlagFrame_frAt O c
   obtain ⟨T', U, hU, k, e, h, M, hT, hx, he, hd, hM⟩ := exists_charts V ρ' _ e₄ hf
     (fun U hU k e h => ∀ (x : Γ(V.X, U) →+* ↥(intO ℂ_[p])) (y : Sp ↥(intO ℂ_[p]) ⟶ V.X), spMap x ≫ hU.fromSpec = y →
-      ∀ j, DlogIs O.s.T.Z.t p n (ch j y) (fun i => spMap (dualMap x) ≫ e i) (fun i => x (h j i))) hD
+      ∀ j, DlogIs O.s.T.Z.t p n (ch j y) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap x) ≫ e i) (fun i => x (h j i))) hD
   refine ⟨V, W, V.X, U, M, T', hW, fun x _ => ⟨x, hx x⟩, hT, hL₁, hL₂, fun a z hz k l => ?_,
     fun v hv ε y hy z yt hz hyt hp' => ?_⟩
   · obtain ⟨α, b, -, -, hb⟩ := hM a z hz

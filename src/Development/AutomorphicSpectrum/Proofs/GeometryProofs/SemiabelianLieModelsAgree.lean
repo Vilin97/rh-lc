@@ -28,11 +28,11 @@ theorem spMap_genMap_fromSpecStalk (p : Cpt ξ) : spMap (genMap ξ p) ≫ X.from
     (Scheme.Spec_stalkClosedPointTo_fromSpecStalk ξ)
 
 theorem dualMap_comp_algebraMap {R R' : Type} [CommRing R] [CommRing R'] (k : R →+* R') :
-    (dualMap k).comp (algebraMap R (DualNumber R)) = (algebraMap R' (DualNumber R')).comp k := by
-  ext r <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    (GlobalTheory.CompanionTheory.Ar.dualMap k).comp (algebraMap R (DualNumber R)) = (algebraMap R' (DualNumber R')).comp k := by
+  ext r <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem spec_dualMap_comp {R R' : Type} [CommRing R] [CommRing R'] (k : R →+* R') :
-    Spec.map (CommRingCat.ofHom (dualMap k)) ≫ Spec.map (CommRingCat.ofHom (algebraMap R (DualNumber R))) =
+    Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap k)) ≫ Spec.map (CommRingCat.ofHom (algebraMap R (DualNumber R))) =
       Spec.map (CommRingCat.ofHom (algebraMap R' (DualNumber R'))) ≫ Spec.map (CommRingCat.ofHom k) := by
   rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp, dualMap_comp_algebraMap]
 
@@ -66,7 +66,7 @@ theorem isHTFormOver_move (hψ : IsGrpPullback G₀ G x ψ) (hψ' : IsGrpPullbac
   refine ⟨hd, T, _, Γ, i₀ ≫ ψ', L, _, _, M₀', j, χ, w₀, ht', ?_, ?_, hw⟩
   · intro e
     obtain ⟨v, hv, hv'⟩ := tie (j e)
-    have key : Spec.map (CommRingCat.ofHom (dualMap k)) ≫ (M₀₀.pt e).left = v.left ≫ κ := by
+    have key : Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap k)) ≫ (M₀₀.pt e).left = v.left ≫ κ := by
       refine hψ.1.hom_ext ?_ ?_
       · rw [Category.assoc, hM₀, ← hj e, Category.assoc, e₁, hv]
       · have a := Over.w (M₀₀.pt e)
@@ -80,7 +80,7 @@ theorem isHTFormOver_move (hψ : IsGrpPullback G₀ G x ψ) (hψ' : IsGrpPullbac
     refine ⟨s, hs, fun e => ?_⟩
     obtain ⟨v, h₁, h₂, h₃⟩ := hsv e
     refine ⟨v, h₁, ?_, h₃⟩
-    have key : v ≫ i₀ = Spec.map (CommRingCat.ofHom (dualMap (Ideal.Quotient.mk (Ideal.span {(N : R)})))) ≫
+    have key : v ≫ i₀ = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (Ideal.span {(N : R)})))) ≫
         (M₀₀.pt e).left := by
       refine hψ.1.hom_ext ?_ ?_
       · rw [Category.assoc, hi₀, h₂, Category.assoc, hM₀]

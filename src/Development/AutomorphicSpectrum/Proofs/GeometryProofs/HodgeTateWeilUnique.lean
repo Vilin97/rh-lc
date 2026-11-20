@@ -286,7 +286,7 @@ theorem tangent_congr (hξ : IsCptGen ξ) {G : Over X} [GrpObj G] (hG : IsSemiAb
     (Stalk M q) (stalkLie hξ M q) e₁
   rw [he₁] at hvb
   have hV : ⊤ ≤ v.left ⁻¹ᵁ V := fun z _ => ⟨@h z trivial, @h' z trivial⟩
-  have h2 : ⊤ ≤ (Spec.map (CommRingCat.ofHom (dualMap (Ideal.Quotient.mk
+  have h2 : ⊤ ≤ (Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk
       (Ideal.span {((n : ℕ) : X.presheaf.stalk q.1)})))) ≫ v.left) ⁻¹ᵁ V := fun z _ => @hV _ trivial
   have h3 : ⊤ ≤ (vb ≫ i) ⁻¹ᵁ V := hvb ▸ h2
   have hP : ⊤ ≤ vb ⁻¹ᵁ (i ⁻¹ᵁ V) := h3

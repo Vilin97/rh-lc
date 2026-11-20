@@ -402,16 +402,16 @@ theorem sp_comp {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (f : R →
   rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
 
 theorem dual_alg {S T : Type} [CommRing S] [CommRing T] (φ : S →+* T) :
-    spMap (dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) = spMap (algebraMap T (DualNumber T)) ≫ spMap φ := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ spMap (algebraMap S (DualNumber S)) = spMap (algebraMap T (DualNumber T)) ≫ spMap φ := by
   rw [← sp_comp, ← sp_comp]
   congr 1
-  exact RingHom.ext fun a => by ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  exact RingHom.ext fun a => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem dual_comp {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (io : R →+* S) (φ : S →+* T) :
-    spMap (dualMap (φ.comp io)) = spMap (dualMap φ) ≫ spMap (dualMap io) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (φ.comp io)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap io) := by
   rw [← sp_comp]
   congr 1
-  exact RingHom.ext fun a => by ext <;> simp [dualMap]
+  exact RingHom.ext fun a => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem flat_of_injective {A V : Type} [CommRing A] [IsDomain A] [IsPrincipalIdealRing A] [CommRing V] [IsDomain V]
     (f : A →+* V) (hf : Function.Injective f) : f.Flat := by
@@ -488,7 +488,7 @@ theorem eigenbasis_baseChange {E : Type} [Field E] [NumberField E] [IsCMField E]
     (h₂ : ∀ k x, (v₀ k ≫ G.act.act x).left = spMap (epsScaleR (ρ x)) ≫ (v₀ k).left)
     (h₃ : ∀ w : epsR V ⟶ G.G, IsTangent w → (∀ x, (w ≫ G.act.act x).left = spMap (epsScaleR (ρ x)) ≫ w.left) →
       ∃! cf : Fin n → V, IsLieComb cf v₀ w) :
-    ∃ u : Fin n → (epsR S ⟶ G'.G), (∀ k, (u k).left ≫ m.φ = spMap (dualMap f) ≫ (v₀ k).left) ∧
+    ∃ u : Fin n → (epsR S ⟶ G'.G), (∀ k, (u k).left ≫ m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (v₀ k).left) ∧
       (∀ k, IsTangent (u k)) ∧
       (∀ k x, (u k ≫ G'.act.act x).left = spMap (epsScaleR (f (ρ x))) ≫ (u k).left) ∧
       ∀ w : epsR S ⟶ G'.G, IsTangent w →
@@ -620,7 +620,7 @@ theorem integral_baseChange (T T' : CDVR) (io : c.F →+* T.Fr) (io' : c.F →+*
   have qb : q ≫ t.G.hom = spMap (algebraMap T.Fr (DualNumber T.Fr)) := by
     rw [← cancel_mono (spMap (algebraMap T.V T.Fr)), Category.assoc, ← m2.cart.1.w, ← Category.assoc, q2,
       Category.assoc, ub₀, dual_alg]
-  have cnd : (spMap (dualMap ψ.toRingHom) ≫ q) ≫ t.G.hom =
+  have cnd : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ.toRingHom) ≫ q) ≫ t.G.hom =
       spMap (algebraMap T'.Fr (DualNumber T'.Fr)) ≫ spMap ψ.toRingHom := by
     rw [Category.assoc, qb, dual_alg]
   have p1 := n.cart.1.lift_fst _ _ cnd

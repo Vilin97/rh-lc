@@ -118,8 +118,8 @@ theorem sc_epsHom (ψ : R →+* F) (z : Spec (CommRingCat.of R) ⟶ X) (x : Spec
     (hx : Spec.map (CommRingCat.ofHom ψ) ≫ z = x) (c : R) :
     sc x (ψ c) ≫ LieCarrier.epsHom ψ z x hx = LieCarrier.epsHom ψ z x hx ≫ sc z c := by
   refine Over.OverMorphism.ext ?_
-  change Spec.map (CommRingCat.ofHom (epsMul (ψ c))) ≫ Spec.map (CommRingCat.ofHom (dualMap ψ)) =
-    Spec.map (CommRingCat.ofHom (dualMap ψ)) ≫ Spec.map (CommRingCat.ofHom (epsMul c))
+  change Spec.map (CommRingCat.ofHom (epsMul (ψ c))) ≫ Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap ψ)) =
+    Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap ψ)) ≫ Spec.map (CommRingCat.ofHom (epsMul c))
   rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp,
     LieCarrier.dualMap_epsMul]
 
@@ -140,9 +140,9 @@ theorem span_eig (hinj : Function.Injective (algebraMap R F)) (z : Spec (CommRin
     (hue : ∀ i a, ub i ≫ act a = sc z (σ a) ≫ ub i)
     (hub : ∀ v : epsAt z ⟶ G, IsTanAt G z v → (∀ a, v ≫ act a = sc z (σ a) ≫ v) →
       ∃ cf : Fin r → R, v = (List.ofFn fun i => sc z (cf i) ≫ ub i).prod) :
-    ∃ w : Fin r → Li, (∀ i, (M.pt (w i)).left = Spec.map (CommRingCat.ofHom (dualMap (algebraMap R F))) ≫ (ub i).left) ∧
+    ∃ w : Fin r → Li, (∀ i, (M.pt (w i)).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R F))) ≫ (ub i).left) ∧
       ∀ e : Li, ((∃ v : epsAt z ⟶ G, IsTanAt G z v ∧
-        (M.pt e).left = Spec.map (CommRingCat.ofHom (dualMap (algebraMap R F))) ≫ v.left) ∧ e ∈ eigSp ρ σ') ↔
+        (M.pt e).left = Spec.map (CommRingCat.ofHom (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R F))) ≫ v.left) ∧ e ∈ eigSp ρ σ') ↔
         e ∈ Submodule.span R (Set.range w) := by
   let j : epsAt x ⟶ epsAt z := LieCarrier.epsHom (algebraMap R F) z x hx
   have hj : ∀ c, sc x (algebraMap R F c) ≫ j = j ≫ sc z c := sc_epsHom _ z x hx

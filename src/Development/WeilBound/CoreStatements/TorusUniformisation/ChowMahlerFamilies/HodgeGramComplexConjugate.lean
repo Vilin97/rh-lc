@@ -41,7 +41,7 @@ theorem top_le_invol {T X : Scheme.{0}} {c : T ⟶ T} (hc : c ≫ c = 𝟙 T) (x
 
 abbrev cj : Sp ℂ ⟶ Sp ℂ := spMap (starRingEnd ℂ)
 
-abbrev dj : Sp (DualNumber ℂ) ⟶ Sp (DualNumber ℂ) := spMap (dualMap (starRingEnd ℂ))
+abbrev dj : Sp (DualNumber ℂ) ⟶ Sp (DualNumber ℂ) := spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ))
 
 theorem cj_cj : cj ≫ cj = 𝟙 _ := by
   rw [← Spec.map_comp, ← Spec.map_id]
@@ -53,15 +53,15 @@ theorem dj_dj : dj ≫ dj = 𝟙 _ := by
   rw [← Spec.map_comp, ← Spec.map_id]
   congr 1
   refine CommRingCat.hom_ext (RingHom.ext fun z => ?_)
-  show dualMap (starRingEnd ℂ) (dualMap (starRingEnd ℂ) z) = z
-  ext <;> simp [dualMap]
+  show GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ) (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ) z) = z
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem dj_eps : dj ≫ spMap (algebraMap ℂ (DualNumber ℂ)) = spMap (algebraMap ℂ (DualNumber ℂ)) ≫ cj := by
   rw [← Spec.map_comp, ← Spec.map_comp]
   congr 1
   refine CommRingCat.hom_ext (RingHom.ext fun z => ?_)
-  show dualMap (starRingEnd ℂ) (algebraMap ℂ (DualNumber ℂ) z) = algebraMap ℂ (DualNumber ℂ) (starRingEnd ℂ z)
-  ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  show GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ) (algebraMap ℂ (DualNumber ℂ) z) = algebraMap ℂ (DualNumber ℂ) (starRingEnd ℂ z)
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem valAt'_cj {X : Scheme.{0}} (x : Sp ℂ ⟶ X) (U : X.Opens) (f : Γ(X, U)) :
     valAt' (cj ≫ x) U f = star (valAt' x U f) := by
@@ -336,7 +336,7 @@ theorem conj_isDiff (h : IsGrpPullback A' A cj φ) {L : LB A.left} {g : ℕ} (u 
   intro U hU f
   have hU' : ⊤ ≤ (v.left ≫ inv φ) ⁻¹ᵁ U := (top_le_invol dj_dj (v.left ≫ inv φ) U).1 hU
   have e := H (inv φ ⁻¹ᵁ U) hU' (((inv φ).appLE U _ le_rfl).hom f)
-  have e₁ := val_spMap (dualMap (starRingEnd ℂ)) (v.left ≫ inv φ) U hU' hU f
+  have e₁ := val_spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) (v.left ≫ inv φ) U hU' hU f
   have e₂ := appLE_comp v.left (inv φ) U _ le_rfl hU' hU' f
   have e₃ : (fun z => valAt' ((conjUnif h u).ex z).left U f) =
       fun z => star (valAt' (u.ex (star z)).left (inv φ ⁻¹ᵁ U) (((inv φ).appLE U _ le_rfl).hom f)) :=
@@ -345,7 +345,7 @@ theorem conj_isDiff (h : IsGrpPullback A' A cj φ) {L : LB A.left} {g : ℕ} (u 
   refine Eq.trans ?_ ((congrArg star e).trans (fderiv_star_star _ w).symm)
   refine (congrArg TrivSqZeroExt.snd e₁).trans ?_
   rw [e₂]
-  simp [dualMap]
+  simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 end Conj
 
@@ -354,7 +354,7 @@ end PositivityTheory.Xgn.HodgeGramConjugation
 end
 
 open PositivityTheory.Xgn.HodgeGramConjugation in
-theorem PositivityTheory.Xgn.hodge_gram_complex_conjugate_alt : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] (L : LB G.left) (x x' : Sp ℂ ⟶ S) (k : ℕ) (v : Fin k → (epsAt x ⟶ G)) (v' : Fin k → (epsAt x' ⟶ G)) (Γ : Matrix (Fin k) (Fin k) ℂ), x' = spMap (starRingEnd ℂ) ≫ x → (∀ a, (v' a).left = spMap (dualMap (starRingEnd ℂ)) ≫ (v a).left) → IsHodgeGram G L x v Γ → IsHodgeGram G L x' v' (Γ.map star) := by
+theorem PositivityTheory.Xgn.hodge_gram_complex_conjugate_alt : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] (L : LB G.left) (x x' : Sp ℂ ⟶ S) (k : ℕ) (v : Fin k → (epsAt x ⟶ G)) (v' : Fin k → (epsAt x' ⟶ G)) (Γ : Matrix (Fin k) (Fin k) ℂ), x' = spMap (starRingEnd ℂ) ≫ x → (∀ a, (v' a).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ (v a).left) → IsHodgeGram G L x v Γ → IsHodgeGram G L x' v' (Γ.map star) := by
   intro S G _ L x x' k v v' Γ hx hv ⟨Q, ψ, t, u, Hm, χ, W, hψ, hL, hAH, ht, hΓ⟩
   have : IsIso cj := ⟨cj, cj_cj, cj_cj⟩
   have h : IsGrpPullback (pullPol cj Q).A Q.A cj (pullback.fst Q.A.hom cj) := isGrpPullback_pullback Q.A cj

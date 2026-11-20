@@ -37,7 +37,7 @@ def LatPres {R : Type} [CommRing R] (x : Sp R ⟶ T) (kind : ℕ → Bool) (sc :
   ∀ (p : ℕ) [Fact p.Prime] (φ : R →+* ↥(intO ℂ_[p])), ∃ δ : ℂ_[p], ‖δ‖ = (p : ℝ) ^ (-sc p) ∧
     ∀ (cf : Fin g → ℂ_[p]) (w : Sp (DualNumber ℂ_[p]) ⟶ t.G.left),
       IsCombAtG t (spMap ((intO ℂ_[p]).subtype.comp φ) ≫ x)
-        (fun i => spMap (dualMap ((intO ℂ_[p]).subtype.comp φ)) ≫ e i) cf w →
+        (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((intO ℂ_[p]).subtype.comp φ)) ≫ e i) cf w →
       (spMap (epsMul δ) ≫ w ∈ lat t p (spMap ((intO ℂ_[p]).subtype.comp φ) ≫ x) (kind p) ↔
         ∀ j, ‖∑ i, ((φ (h j i) : ↥(intO ℂ_[p])) : ℂ_[p]) * cf i‖ ≤ 1)
 
@@ -66,20 +66,20 @@ def IsEigProj {R : Type} [CommRing R] (x : Sp R ⟶ Z.X) (τ : E →+* ℂ) {g :
   P * P = (D : R) • P ∧
   ∀ (K : Type) [CommRing K] (ψ : R →+* K) (φ : c.F →+* K), spMap ψ ≫ x ≫ Z.s = spMap (φ.comp β) →
     ∀ (cf : Fin g → K) (w : Sp (DualNumber K) ⟶ Z.t.G.left),
-      IsCombAtG Z.t (spMap ψ ≫ x) (fun i => spMap (dualMap ψ) ≫ e i) cf w →
+      IsCombAtG Z.t (spMap ψ ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ e i) cf w →
       (IsEigTan Z φ (spMap ψ ≫ x) τ w ↔ (P.map ψ).mulVec cf = (D : K) • cf)
 
 def RingBasis {R : Type} [CommRing R] (x : Sp R ⟶ Z.X) (τ : E →+* ℂ) (r : ℕ) (kind : ℕ → Bool) (sc : ℕ → ℝ) : Prop :=
   ∃ (N : ℕ) (u : Fin r → (Sp (DualNumber R) ⟶ Z.t.G.left)), N ≠ 0 ∧
     (∀ (K : Type) [CommRing K] (ψ : R →+* K) (φ : c.F →+* K), spMap ψ ≫ x ≫ Z.s = spMap (φ.comp β) →
-      IsEigBasis Z φ (spMap ψ ≫ x) τ (fun i => spMap (dualMap ψ) ≫ u i)) ∧
+      IsEigBasis Z φ (spMap ψ ≫ x) τ (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ u i)) ∧
     ∀ (p : ℕ) [Fact p.Prime] (ψ : R →+* ↥(intO ℂ_[p])) (φ : c.F →+* ℂ_[p]),
       spMap ((intO ℂ_[p]).subtype.comp ψ) ≫ x ≫ Z.s = spMap (φ.comp β) →
       ∃ δ : ℂ_[p], ‖δ‖ = (p : ℝ) ^ (-sc p) ∧
         ∀ w, IsEigTan Z φ (spMap ((intO ℂ_[p]).subtype.comp ψ) ≫ x) τ w →
           ((∃ a : Fin r → ℂ_[p], (∀ i, ‖(N : ℂ_[p]) * a i‖ ≤ 1) ∧
               IsCombAtG Z.t (spMap ((intO ℂ_[p]).subtype.comp ψ) ≫ x)
-                (fun i => spMap (dualMap ((intO ℂ_[p]).subtype.comp ψ)) ≫ u i) a w) ↔
+                (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((intO ℂ_[p]).subtype.comp ψ)) ≫ u i) a w) ↔
             spMap (epsMul δ) ≫ w ∈ lat Z.t p (spMap ((intO ℂ_[p]).subtype.comp ψ) ≫ x) (kind p))
 
 abbrev LocAssign {X W : Scheme.{0}} (r : ℕ) (jB : W ⟶ X) (U : X.Opens) : Type 1 :=
@@ -92,7 +92,7 @@ def IsLocFrame {F : Type} [Field F] (e : F ≃+* c.F) {X W : Scheme.{0}} (jB : W
       IsEigBasis Z (ψ.comp e.symm.toRingHom) (x ≫ πB ≫ genι Z) τ (u K x hx)) ∧
   ∀ (K K' : Type) [CommRing K] [CommRing K'] (ψ : K →+* K') (x : Sp K ⟶ W) (hx : ⊤ ≤ (x ≫ jB) ⁻¹ᵁ U)
       (hx' : ⊤ ≤ ((spMap ψ ≫ x) ≫ jB) ⁻¹ᵁ U) (i : Fin r),
-      u K' (spMap ψ ≫ x) hx' i = spMap (dualMap ψ) ≫ u K x hx i
+      u K' (spMap ψ ≫ x) hx' i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ u K x hx i
 
 def IsLocLat {F : Type} [Field F] [NumberField F] (e : F ≃+* c.F) {X W : Scheme.{0}} (jB : W ⟶ X) (πB : W ⟶ gen Z)
     (r : ℕ) (τ : E →+* ℂ) (kind : ℕ → Bool) (U : X.Opens) (u : LocAssign Z r jB U) : Prop :=
@@ -106,7 +106,7 @@ def IsLocLat {F : Type} [Field F] [NumberField F] (e : F ≃+* c.F) {X W : Schem
             (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z) τ w →
           ((∃ a : Fin r → ℂ_[resP v], (∀ i, ‖a i‖ ≤ 1) ∧
               IsCombAtG Z.t (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z)
-                (fun i => spMap (dualMap (ioOf (resP v) ε)) ≫ u _ xg hx i) a w) ↔
+                (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ioOf (resP v) ε)) ≫ u _ xg hx i) a w) ↔
             spMap (epsMul δ) ≫ w ∈ lat Z.t (resP v) (spMap (ioOf (resP v) ε) ≫ xg ≫ πB ≫ genι Z) (kind (resP v)))
 
 def IsTrans {X W : Scheme.{0}} (jB : W ⟶ X) (πB : W ⟶ gen Z) {r : ℕ} {U U' : X.Opens} (u : LocAssign Z r jB U)

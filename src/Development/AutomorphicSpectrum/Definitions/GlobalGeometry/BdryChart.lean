@@ -52,7 +52,7 @@ attribute [instance] BdryChart.ring
 
 def BdryChart.IsVal {Xo : Moduli D l} {σ : KA l →+* ℂ} {n a : ℕ} (C : BdryChart Xo σ n a) (z : Fin n → ℂ) {m : ℕ}
     (u : Fin m → Fin C.g → C.R) (v : Fin m → (epsAt (spMap (C.ψ z)) ⟶ C.t.G)) : Prop :=
-  ∀ i, (v i).left = spMap (dualMap (C.ψ z)) ≫ (C.M.pt (u i)).left
+  ∀ i, (v i).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ (C.M.pt (u i)).left
 
 def BdryChart.IsRiem {Xo : Moduli D l} {σ : KA l →+* ℂ} {n a : ℕ} (C : BdryChart Xo σ n a) (z : Fin n → ℂ)
     (Hm : Matrix (Fin C.g) (Fin C.g) ℂ) : Prop :=

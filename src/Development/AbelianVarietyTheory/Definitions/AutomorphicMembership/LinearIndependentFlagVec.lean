@@ -132,7 +132,7 @@ def bcTan (φ : S →+* T) (hx : spMap φ ≫ x = x') : TanM x t.G →ₛₗ[φ]
   map_smul' a v := by simpa using tanOf_map_sum φ hx ![v] ![a]
 
 theorem left_bcTan (φ : S →+* T) (hx : spMap φ ≫ x = x') (v : TanM x t.G) :
-    (tv (bcTan φ hx v)).left = spMap (dualMap φ) ≫ (tv v).left := rfl
+    (tv (bcTan φ hx v)).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ (tv v).left := rfl
 
 end Tangent
 
@@ -192,7 +192,7 @@ def taut (σ : E →+* ℂ) (i : ℕ) : AddSubgroup (Lie y) := (Wst y σ i).toAd
 variable {y}
 
 theorem mem_lieL {v : Lie y} : v ∈ lieL y ↔ ∃ w, IsTanAtG (Y Z.i).t (y.z ≫ Z.π) w ∧
-    (tv v).left = spMap (dualMap (intO ↥y.C.S).subtype) ≫ w :=
+    (tv v).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (intO ↥y.C.S).subtype) ≫ w :=
   ⟨fun ⟨w, hw⟩ => ⟨_, isTan_tv w, hw ▸ rfl⟩, fun ⟨_, hw, e⟩ => ⟨tanOf hw, tan_ext e.symm⟩⟩
 
 theorem smul_mem_lieL {a : ↥y.C.S} (ha : ‖a‖ ≤ 1) {v : Lie y} (hv : v ∈ lieL y) : a • v ∈ lieL y := by
@@ -309,7 +309,7 @@ theorem adapted_taut (hty : ∀ σ, Z.ty σ = Finset.range (Dw.mult σ + 1)) {U 
     rw [Wst_succ hty (flagAt_of_intFrame hw (gen_le h))] at h1
     exact mem_Ospan_of_coord (linInd_of_basis hVk (basis_map _ hg' hV hb)) em
       (w := flagVec (flagAt_of_intFrame hw (gen_le h)) σ)
-      (fun i => tan_ext (congrArg (spMap (dualMap (valMap y.gen U (gen_le h)).hom) ≫ ·) (he i))) h1
+      (fun i => tan_ext (congrArg (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (valMap y.gen U (gen_le h)).hom) ≫ ·) (he i))) h1
       (fun k => (cf k).2) ((LieMet.isComb_iff (fun i => tanOf (hVk i)) _ v).1 hk)
   · rintro c hc1 _ ⟨i, hi, rfl⟩
     exact ⟨(Wst y σ (a + 1)).smul_mem c (Submodule.subset_span ⟨_, flagAt_of_intFrame hw (gen_le h), i,

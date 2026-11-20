@@ -23,14 +23,14 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 open scoped MonObj
 
-theorem exists_actMatrix_bc : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (R : Type) [CommRing R] (x : Sp R ⟶ X) (g : ℕ) (e : Fin g → (Sp (DualNumber R) ⟶ t.G.left)), GlobalTheory.LineNorm.IsTanBasis t x e → ∃ ρ : 𝓞 E →+* Matrix (Fin g) (Fin g) R, ∀ (K : Type) [CommRing K] (ψ : R →+* K) (a : 𝓞 E) (cf : Fin g → K) (w : Sp (DualNumber K) ⟶ t.G.left), IsCombAtG t (spMap ψ ≫ x) (fun i => spMap (dualMap ψ) ≫ e i) cf w → IsCombAtG t (spMap ψ ≫ x) (fun i => spMap (dualMap ψ) ≫ e i) (((ρ a).map ψ).mulVec cf) (w ≫ (t.act.act a).left) := by
+theorem exists_actMatrix_bc : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (X : Scheme.{0}) (t : SAB H X) (R : Type) [CommRing R] (x : Sp R ⟶ X) (g : ℕ) (e : Fin g → (Sp (DualNumber R) ⟶ t.G.left)), GlobalTheory.LineNorm.IsTanBasis t x e → ∃ ρ : 𝓞 E →+* Matrix (Fin g) (Fin g) R, ∀ (K : Type) [CommRing K] (ψ : R →+* K) (a : 𝓞 E) (cf : Fin g → K) (w : Sp (DualNumber K) ⟶ t.G.left), IsCombAtG t (spMap ψ ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ e i) cf w → IsCombAtG t (spMap ψ ≫ x) (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ e i) (((ρ a).map ψ).mulVec cf) (w ≫ (t.act.act a).left) := by
   intro E _ _ _ H X t R _ x g e he
   classical
   have h1 : spMap (RingHom.id R) = 𝟙 _ := Spec.map_id _
-  have h2 : dualMap (RingHom.id R) = RingHom.id _ := by
+  have h2 : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R) = RingHom.id _ := by
     refine RingHom.ext fun z => ?_
     ext <;> simp [Formalism.L2.Pj.dualMap]
-  have h3 : spMap (dualMap (RingHom.id R)) = 𝟙 _ := by rw [h2]; exact Spec.map_id _
+  have h3 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R)) = 𝟙 _ := by rw [h2]; exact Spec.map_id _
   have hU : ∀ w, IsTanAtG t x w → ∃! a : Fin g → R, IsCombAtG t x e a w := by
     have h := he.2 R (RingHom.id R)
     simp only [h1, h3, Category.id_comp] at h
@@ -68,9 +68,9 @@ theorem exists_actMatrix_bc : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
     simp only [hB]
   refine ⟨ρ, ?_⟩
   intro K _ ψ a cf w hw
-  have hT : ∀ j, IsTanAtG t (spMap ψ ≫ x) (spMap (dualMap ψ) ≫ e j) :=
+  have hT : ∀ j, IsTanAtG t (spMap ψ ≫ x) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ e j) :=
     fun j => GlobalTheory.LieMet.isTan_map ψ rfl (he.1 j)
-  have hw' : IsCombAtG t (spMap ψ ≫ x) (fun j => spMap (dualMap ψ) ≫ e j ≫ (t.act.act a).left) cf
+  have hw' : IsCombAtG t (spMap ψ ≫ x) (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ e j ≫ (t.act.act a).left) cf
       (w ≫ (t.act.act a).left) := by
     have := t.act.hom a
     have hw0 := (isCombAtG_iff t _ (fun j => ovT (hT j)) cf w).1 hw

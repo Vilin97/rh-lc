@@ -187,7 +187,7 @@ variable {p : ℕ} [Fact p.Prime] {C : Type} [Field C] {v : Valuation C ℝ≥0}
 
 def LieTie {Y : Scheme.{0}} (ψ : P.A.A.left ⟶ Y) (x : LieG P.Gt) (u : Sp (DualNumber C) ⟶ Y) : Prop :=
   ∃ (xG : LieG P.G) (u' : specO C (DualNumber C) ⟶ P.A.A), Corr P x.1 xG.1 ∧ u'.left ≫ ψ = u ∧
-    u'.left ≫ P.gen = spMap (dualMap (algebraMap O C)) ≫ xG.1.left
+    u'.left ≫ P.gen = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O C)) ≫ xG.1.left
 
 variable {P}
 
@@ -207,7 +207,7 @@ theorem LieTie.scale {Y : Scheme.{0}} {ψ : P.A.A.left ⟶ Y} {x : LieG P.Gt} {u
   · change (spMap (epsMul (algebraMap O C a)) ≫ u'.left) ≫ P.gen = _ ≫ spMap (epsMul a) ≫ xG.1.left
     rw [Category.assoc, h3, ← Category.assoc, ← Category.assoc, spMap_spMap, spMap_spMap]
     congr 2
-    ext s <;> simp [dualMap, epsMul, TrivSqZeroExt.algebraMap_eq_inl]
+    ext s <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, epsMul, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem LieTie.act {Y : Scheme.{0}} {ψ : P.A.A.left ⟶ Y} {x : LieG P.Gt} {u : Sp (DualNumber C) ⟶ Y}
     (h : LieTie P ψ x u) (a : Λ) {f : Y ⟶ Y} (hf : (P.oA.act a).left ≫ ψ = ψ ≫ f) :
@@ -226,10 +226,10 @@ theorem LieTie.unique {Y S : Scheme.{0}} {ψ : P.A.A.left ⟶ Y} {s : Y ⟶ S} {
   obtain ⟨xG, w, h1, h2, h3⟩ := h
   obtain ⟨xG', w', h1', h2', h3'⟩ := h'
   have e1 : w.left = w'.left := hψ.hom_ext (h2.trans h2'.symm) ((Over.w w).trans (Over.w w').symm)
-  haveI : IsSchemeTheoreticallyDominant (spMap (dualMap (algebraMap O C))) :=
+  haveI : IsSchemeTheoreticallyDominant (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O C))) :=
     (schemeDominant_specMap_iff _).2 fun a b hab => TrivSqZeroExt.ext
-      (P.integers.hom_inj (by simpa [dualMap] using congrArg TrivSqZeroExt.fst hab))
-      (P.integers.hom_inj (by simpa [dualMap, Algebra.algebraMap_eq_smul_one] using congrArg TrivSqZeroExt.snd hab))
+      (P.integers.hom_inj (by simpa [GlobalTheory.CompanionTheory.Ar.dualMap] using congrArg TrivSqZeroExt.fst hab))
+      (P.integers.hom_inj (by simpa [GlobalTheory.CompanionTheory.Ar.dualMap, Algebra.algebraMap_eq_smul_one] using congrArg TrivSqZeroExt.snd hab))
   haveI := P.semi.separated
   have e2 : xG.1 = xG'.1 := Over.OverMorphism.ext (ext_of_schDom P.G.hom
     ((Over.w xG.1).trans (Over.w xG'.1).symm) _ (by rw [← h3, ← h3', e1]))
@@ -249,11 +249,11 @@ theorem exists_lieTie {Y : Scheme.{0}} (ψ : P.A.A.left ⟶ Y) (x : LieG P.Gt) :
   obtain ⟨y, hy, -⟩ := existsUnique_right (P := P) hp (isAdicComplete_dualNumber p) x.1
   have h1 := hy.comp (TrivSqZeroExt.fstHom O O O)
   rw [x.2] at h1
-  have w : (spMap (dualMap (algebraMap O C)) ≫ y.left) ≫ P.G.hom =
+  have w : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap O C)) ≫ y.left) ≫ P.G.hom =
       spMap (algebraMap C (DualNumber C)) ≫ spMap (algebraMap O C) := by
     rw [Category.assoc, Over.w y, spMap_spMap]
     refine (spMap_spMap _ _).trans (congrArg _ ?_)
-    ext s <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    ext s <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
   exact ⟨_, ⟨y, (existsUnique_right (P := P) hp₀ inferInstance 1).unique h1 Corr.one⟩,
     Over.homMk (P.gen_pull.1.lift _ _ w) (P.gen_pull.1.lift_snd _ _ w), hy, rfl, P.gen_pull.1.lift_fst _ _ w⟩
 

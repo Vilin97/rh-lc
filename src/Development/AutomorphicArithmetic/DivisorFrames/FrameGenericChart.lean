@@ -16,17 +16,17 @@ private theorem split_tr {E : Type} [Field E] [NumberField E] [IsCMField E] {H :
     (hu : ∀ a, IsTanAtG t x (u a)) {P P' : Matrix (Fin m) (Fin m) K} (hP : IsUnit P.det)
     {S : Matrix (Fin g) (Fin m) A} {S' : Matrix (Fin m) (Fin g) A} (hS : S' * S = 1) {S₂ : Matrix (Fin g') (Fin m) A'}
     (h₁ : ∀ i, ∃ w, IsCombAtG t x u (fun a => P a i) w ∧
-      IsCombAtG t x (fun k => spMap (dualMap (ψ.comp α)) ≫ b k) (fun k => (ψ.comp α) (S k i)) w)
+      IsCombAtG t x (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp α)) ≫ b k) (fun k => (ψ.comp α) (S k i)) w)
     (h₂ : ∀ i, ∃ w, IsCombAtG t x u (fun a => P' a i) w ∧
-      IsCombAtG t x (fun k => spMap (dualMap (ψ.comp α')) ≫ b' k) (fun k => (ψ.comp α') (S₂ k i)) w) :
+      IsCombAtG t x (fun k => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp α')) ≫ b' k) (fun k => (ψ.comp α') (S₂ k i)) w) :
     ∃ T : Matrix (Fin m) (Fin m) R, P' = P * T.map ψ := by
   subst hx
-  have hbt : ∀ k, IsTanAtG t (spMap (ψ.comp α) ≫ x₀) (spMap (dualMap (ψ.comp α)) ≫ b k) :=
+  have hbt : ∀ k, IsTanAtG t (spMap (ψ.comp α) ≫ x₀) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp α)) ≫ b k) :=
     fun k => GlobalTheory.LieMet.isTan_map _ rfl (hb.1 k)
   choose U hU using fun a => (hb.2 K (ψ.comp α) (u a) (hu a)).exists
   choose C hC using fun k => (hb.2 R α _ (GlobalTheory.LieMet.isTan_map α' hα.symm (hb'.1 k))).exists
-  have hC' : ∀ k, IsCombAtG t (spMap (ψ.comp α) ≫ x₀) (fun l => spMap (dualMap (ψ.comp α)) ≫ b l)
-      (fun l => ψ (C k l)) (spMap (dualMap (ψ.comp α')) ≫ b' k) := fun k => by
+  have hC' : ∀ k, IsCombAtG t (spMap (ψ.comp α) ≫ x₀) (fun l => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp α)) ≫ b l)
+      (fun l => ψ (C k l)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ψ.comp α')) ≫ b' k) := fun k => by
     have := Chart.coord_map α ψ (hC k)
     rwa [Chart.dual_comp] at this
   have e₁ : (S.map α).map ψ = (Matrix.of U)ᵀ * P := by

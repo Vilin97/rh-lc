@@ -25,7 +25,7 @@ def CutsHT {A : Type} [CommRing A] (x : Sp A ⟶ X) {g n : ℕ} (e : Fin g → (
     (η : Fin n → Fin g → A) : Prop :=
   ∀ (C : SCF p) (κ : A →+* ↥(intO ↥C.S)) (a : Fin g → ↥C.S) (v : Sp (DualNumber ↥C.S) ⟶ t.G.left),
     IsCombAtG t (spMap ((intO ↥C.S).subtype.comp κ) ≫ x)
-      (fun i => spMap (dualMap ((intO ↥C.S).subtype.comp κ)) ≫ e i) a v →
+      (fun i => spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((intO ↥C.S).subtype.comp κ)) ≫ e i) a v →
       (v ∈ latHT t p (spMap ((intO ↥C.S).subtype.comp κ) ≫ x) ↔ ∀ j, ‖∑ i, (κ (η j i) : ↥C.S) * a i‖ ≤ 1)
 
 def SpansP {A : Type} [CommRing A] {g n : ℕ} (η : Fin n → Fin g → A) : Prop :=
@@ -81,7 +81,7 @@ def HasDualFrames (Z : LocM.Mdl Y i₀) {X : Scheme.{0}} (h : X ⟶ Z.X) {r : �
         (φ : Γ(Z.X, (Z.U a).1) →+* k), spMap φ ≫ Z.chart a = spMap κ ≫ V.2.fromSpec ≫ h →
         ∀ (cf : Fin r → k) (v : Sp (DualNumber k) ⟶ (Y Z.i).t.G.left),
           IsCombAtG (Y Z.i).t (spMap κ ≫ V.2.fromSpec ≫ h ≫ Z.π) (fun i => (Z.fr a).bc φ (x i).1 (x i).2) cf v →
-          IsCombAtG (Y Z.i).t (spMap κ ≫ V.2.fromSpec ≫ h ≫ Z.π) (fun l => spMap (dualMap κ) ≫ e l)
+          IsCombAtG (Y Z.i).t (spMap κ ≫ V.2.fromSpec ≫ h ≫ Z.π) (fun l => spMap (GlobalTheory.CompanionTheory.Ar.dualMap κ) ≫ e l)
             (fun l => ∑ i, cf i * valF (spMap κ ≫ V.2.fromSpec) _ (crd (hs a) (f l) i)) v
 
 def ToOpen (Z : LocM.Mdl Y i₀) {X : Scheme.{0}} (h : X ⟶ Z.X) : Prop :=

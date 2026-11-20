@@ -26,7 +26,7 @@ theorem rel_baseChange : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] 
     rw [Category.assoc, hs, ReciprocityTheory.ChartRestriction.G.PullbackSections.spMap_comp_spMap]
   obtain ⟨g', hg'⟩ := hFE K' (ι.comp φ) (spMap ι ≫ z) k hz' hs'
   have e : spMap ι ≫ (z ≫ X.π) = (spMap ι ≫ z) ≫ X.π := (Category.assoc _ _ _).symm
-  have hv : ∀ τ i, g'.v τ i = spMap (dualMap ι) ≫ g.v τ i := fun τ i => by
+  have hv : ∀ τ i, g'.v τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ι) ≫ g.v τ i := fun τ i => by
     have h1 : g'.v τ i = (tv (GlobalTheory.FlagMod.tanPull ι e (X.F.vecAt k z hz rfl τ i))).left := by
       rw [hg' τ i, X.F.tanPull_vecAt k ι z hz hz' rfl rfl e]
     rw [h1, hg τ i]
@@ -39,10 +39,10 @@ theorem rel_baseChange : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] 
   · obtain ⟨cf, h1, h2, h3⟩ := hcomb τ i
     refine ⟨fun j => ι (cf j), by simp [h1], fun j hj => by simp [h2 j hj], ?_⟩
     have h4 := GlobalTheory.LatDRFree.comb_map Y.t ι h3
-    have hd : ∀ j, spMap (dualMap ι) ≫ spMap (dualMap ψ) ≫ f.v τ j = spMap (dualMap (ι.comp ψ)) ≫ f.v τ j := fun j => by
+    have hd : ∀ j, spMap (GlobalTheory.CompanionTheory.Ar.dualMap ι) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f.v τ j = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ι.comp ψ)) ≫ f.v τ j := fun j => by
       rw [← Category.assoc, ReciprocityTheory.ChartRestriction.G.PullbackSections.spMap_comp_spMap]
       congr 2
-      exact RingHom.ext fun a => by ext <;> simp [dualMap]
+      exact RingHom.ext fun a => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
     simp only [hd] at h4
     rw [hv, ← e]
     exact h4

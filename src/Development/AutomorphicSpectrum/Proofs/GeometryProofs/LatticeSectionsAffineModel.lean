@@ -32,7 +32,7 @@ theorem ring_eq' {X : Scheme.{0}} {R : Type} [CommRing R] (x : Sp R ⟶ X) [Mono
     exact spec_centre z
   exact congrArg (fun g => g.hom) (Spec.map_injective ((cancel_mono x).1 h1))
 
-theorem exists_chart_values : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsCommMonObj G] [Smooth G.hom] (Ω : Type) [Field Ω] (ξ : Sp Ω ⟶ X) (E : Type) [AddCommGroup E] [Module Ω E] (M : LieModel G ξ E) (p : Cpt ξ) (N : X.Opens) (J : Type) [Finite J] (c : J → E), p.1 ∈ N → (∀ i, c i ∈ M.lat p) → ∃ (A : X.Opens) (hA : IsAffineOpen A) (EB : Type) (_ : AddCommGroup EB) (_ : Module Γ(X, A) EB) (MB : LieModel G hA.fromSpec EB) (e : J → EB), p.1 ∈ A ∧ A ≤ N ∧ ∀ (y : Sp ℂ ⟶ X) (f : Γ(X, A) →+* ℂ), genPt ξ ⤳ centre y → y = spMap f ≫ hA.fromSpec → ∀ (i : J) (w : epsAt y ⟶ G), w.left = spMap (dualMap f) ≫ (MB.pt (e i)).left → M.ValAt y (c i) w := by
+theorem exists_chart_values : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsCommMonObj G] [Smooth G.hom] (Ω : Type) [Field Ω] (ξ : Sp Ω ⟶ X) (E : Type) [AddCommGroup E] [Module Ω E] (M : LieModel G ξ E) (p : Cpt ξ) (N : X.Opens) (J : Type) [Finite J] (c : J → E), p.1 ∈ N → (∀ i, c i ∈ M.lat p) → ∃ (A : X.Opens) (hA : IsAffineOpen A) (EB : Type) (_ : AddCommGroup EB) (_ : Module Γ(X, A) EB) (MB : LieModel G hA.fromSpec EB) (e : J → EB), p.1 ∈ A ∧ A ≤ N ∧ ∀ (y : Sp ℂ ⟶ X) (f : Γ(X, A) →+* ℂ), genPt ξ ⤳ centre y → y = spMap f ≫ hA.fromSpec → ∀ (i : J) (w : epsAt y ⟶ G), w.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (MB.pt (e i)).left → M.ValAt y (c i) w := by
   intro X G _ _ _ Ω _ ξ E _ _ M p N J _ c hpN hc
   obtain ⟨R, _, x, _, F, _, _, MR, e, hpx, hxN, hext⟩ := GlobalTheory.T.local_lie_model_extends X G Ω ξ E M p N J c hpN hc
   obtain ⟨_, ⟨A, hA, rfl⟩, hpA, hAx⟩ := X.isBasis_affineOpens.exists_subset_of_mem_open hpx x.opensRange.isOpen
@@ -68,8 +68,8 @@ theorem exists_chart_values : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsCo
   let vq : epsAt (R := X.presheaf.stalk q.1) (X.fromSpecStalk q.1) ⟶ G := epsBase ψ hψ ≫ MR.pt (e i)
   refine ⟨hg, vq, hext q ψ hψ i vq rfl, ?_⟩
   rw [hw, heB]
-  change spMap (dualMap f) ≫ spMap (dualMap a) ≫ (MR.pt (e i)).left =
-    spMap (dualMap (Scheme.stalkClosedPointTo y).hom) ≫ spMap (dualMap ψ) ≫ (MR.pt (e i)).left
+  change spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap a) ≫ (MR.pt (e i)).left =
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Scheme.stalkClosedPointTo y).hom) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ (MR.pt (e i)).left
   rw [← Category.assoc, ← Category.assoc, spMap_dual_comp, spMap_dual_comp, hring]
 
 end GlobalTheory.CompanionTheory.Ar.LocFrames.Chart

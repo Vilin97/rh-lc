@@ -36,12 +36,12 @@ theorem exists_eigenBasis_sameVec : ∀ (E : Type) [Field E] [NumberField E] [Is
   have hmono : Mono (spMap (algebraMap T.V T.Fr)) := by
     have : Epi (CommRingCat.ofHom (algebraMap T.V T.Fr)) := IsLocalization.epi (nonZeroDivisors T.V) T.Fr
     exact Scheme.Spec.map_mono (CommRingCat.ofHom _).op
-  have hbase : spMap (dualMap (algebraMap T.V T.Fr)) ≫ (epsOver T.V T.V).hom =
+  have hbase : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ (epsOver T.V T.V).hom =
       spMap (algebraMap T.Fr (DualNumber T.Fr)) ≫ spMap (algebraMap T.V T.Fr) := by
-    show spMap (dualMap (algebraMap T.V T.Fr)) ≫ spMap ((algebraMap T.V (DualNumber T.V)).comp (algebraMap T.V T.V)) = _
+    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap T.V T.Fr)) ≫ spMap ((algebraMap T.V (DualNumber T.V)).comp (algebraMap T.V T.V)) = _
     rw [GlobalTheory.ShFam.OpenReg.spMap_comp, GlobalTheory.ShFam.OpenReg.spMap_comp]
     congr 1
-    ext x <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+    ext x <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
   have hut : u' ≫ t'.G.hom = spMap (algebraMap T.Fr (DualNumber T.Fr)) ≫ 𝟙 _ := by
     rw [Category.comp_id]
     apply (cancel_mono (spMap (algebraMap T.V T.Fr))).1

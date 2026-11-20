@@ -24,11 +24,11 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheo
 def FrameBC (Z : Model Xo c β) : Prop :=
   ∀ (R R' : Type) [CommRing R] [IsLocalRing R] [CommRing R'] [IsLocalRing R'] (φ : c.F →+* R) (x : Sp R ⟶ Z.X)
     (f : EigFrame Z φ x) (ψ : R →+* R'), ∃ g : EigFrame Z (ψ.comp φ) (spMap ψ ≫ x),
-      ∀ τ i, g.v τ i = spMap (dualMap ψ) ≫ f.v τ i
+      ∀ τ i, g.v τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f.v τ i
 
 theorem FrameBC.at (hbc : FrameBC Z) {R R' : Type} [CommRing R] [IsLocalRing R] [CommRing R'] [IsLocalRing R']
     {φ : c.F →+* R} {x : Sp R ⟶ Z.X} (f : EigFrame Z φ x) (ψ : R →+* R') {x' : Sp R' ⟶ Z.X}
-    (hx : x' = spMap ψ ≫ x) : ∃ g : EigFrame Z (ψ.comp φ) x', ∀ τ i, g.v τ i = spMap (dualMap ψ) ≫ f.v τ i := by
+    (hx : x' = spMap ψ ≫ x) : ∃ g : EigFrame Z (ψ.comp φ) x', ∀ τ i, g.v τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f.v τ i := by
   subst hx
   exact hbc R R' φ x f ψ
 
@@ -84,7 +84,7 @@ theorem exists_mem_of_wit (hbc : FrameBC Z) {C : FlagCpt Z e} {A k : Type} [Comm
     (xA : Sp A ⟶ gen Z) (hxA : xA ≫ genStr Z = spMap (algebraMap c.F A))
     (gA : EigFrame Z (algebraMap c.F A) (xA ≫ genι Z)) (z : FrPt Xo c k) {φk : c.F →+* k} {xk : Sp k ⟶ Z.X}
     (gk : EigFrame Z φk xk) (hxk : xk = spMap (algebraMap A k) ≫ xA ≫ genι Z) (hφk : φk = algebraMap c.F k)
-    (hgk : ∀ τ i, gk.v τ i = spMap (dualMap (algebraMap A k)) ≫ gA.v τ i) (hTz : Comparison₂ z gk) (p : Sp k ⟶ C.Y.X)
+    (hgk : ∀ τ i, gk.v τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A k)) ≫ gA.v τ i) (hTz : Comparison₂ z gk) (p : Sp k ⟶ C.Y.X)
     (hp : p ≫ C.π = spMap (algebraMap A k) ≫ xA) (w : Descent.Wit C p z)
     (hbd : xA (IsLocalRing.closedPoint A) ∈ genBd Z) {ex : Ix Dw → ℤ} (hex : ex none = 0) {f : Rul Xo c}
     (hf : f ∈ GlobalTheory.AllWt.secZ Xo c ex) (hv : C.Y.vanishOn (C.LEx ex) (C.val f) C.Ybd) :
@@ -132,7 +132,7 @@ theorem exists_mem_of_wit (hbc : FrameBC Z) {C : FlagCpt Z e} {A k : Type} [Comm
     · rw [← RingHom.comp_assoc, e2]; exact hT.2.1
     · obtain ⟨cf, c1, c2, c3⟩ := hT.2.2 τ i
       refine ⟨cf, c1, c2, ?_⟩
-      have e : ∀ j, spMap (dualMap (toFk C y₂).toRingHom) ≫ f₂.v τ j = spMap (dualMap (toFk C y₀).toRingHom) ≫ f₀.v τ j :=
+      have e : ∀ j, spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toFk C y₂).toRingHom) ≫ f₂.v τ j = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toFk C y₀).toRingHom) ≫ f₀.v τ j :=
         fun j => by rw [hf₂, ← Category.assoc, dual_comp, e2]
       simp only [e]
       exact c3
@@ -156,16 +156,16 @@ theorem exists_mem_of_wit (hbc : FrameBC Z) {C : FlagCpt Z e} {A k : Type} [Comm
       rw [hφk, h3]; exact IsScalarTower.algebraMap_eq _ _ _
     · obtain ⟨cf, c1, c2, c3⟩ := hT1.2.2 τ i
       refine ⟨cf, c1, c2, ?_⟩
-      have e : ∀ j, spMap (dualMap (algebraMap A k)) ≫ fA.v τ j = spMap (dualMap χ₂.toRingHom) ≫ f₂.v τ j :=
+      have e : ∀ j, spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A k)) ≫ fA.v τ j = spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ₂.toRingHom) ≫ f₂.v τ j :=
         fun j => by
-          rw [hfA, hf₂, ← Category.assoc (spMap (dualMap (algebraMap A k))),
-            ← Category.assoc (spMap (dualMap χ₂.toRingHom)), dual_comp, dual_comp, e1]
+          rw [hfA, hf₂, ← Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A k))),
+            ← Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap χ₂.toRingHom)), dual_comp, dual_comp, e1]
       simp only [e]
       exact c3
   have hG : gA.Tri (algebraMap A k) gk 1 := by
     refine ⟨hxk, ?_, fun τ i => ⟨Pi.single i 1, by simp, fun j hj => Pi.single_eq_of_ne hj.ne' _, ?_⟩⟩
     · rw [hφk]; exact IsScalarTower.algebraMap_eq _ _ _
-    · have e : (fun j => spMap (dualMap (algebraMap A k)) ≫ gA.v τ j) = gk.v τ := funext fun j => (hgk τ j).symm
+    · have e : (fun j => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A k)) ≫ gA.v τ j) = gk.v τ := funext fun j => (hgk τ j).symm
       rw [e]
       exact isCombAtG_single Z.t _ (gk.tan τ) i
   obtain ⟨uu, huu⟩ := CoordUniq.exists_unit_ratio fA gA (IsFractionRing.injective A k) hF hG
@@ -190,7 +190,7 @@ theorem exists_mem_maximalIdeal_evR (hbc : FrameBC Z) {σ : c.F →+* ℂ} {N : 
     (xA : Sp A ⟶ gen Z) (hxA : xA ≫ genStr Z = spMap (algebraMap c.F A))
     (gA : EigFrame Z (algebraMap c.F A) (xA ≫ genι Z)) (z : FrPt Xo c k)
     (hz : GlobalTheory.AllWt.ptF z ≫ Z.jQ = spMap (algebraMap A k) ≫ xA)
-    (hu : ∀ τ i, TanRel Z (GlobalTheory.AllWt.ptF z) (z.u τ i) (spMap (dualMap (algebraMap A k)) ≫ gA.v τ i))
+    (hu : ∀ τ i, TanRel Z (GlobalTheory.AllWt.ptF z) (z.u τ i) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A k)) ≫ gA.v τ i))
     (hbd : xA (IsLocalRing.closedPoint A) ∈ genBd Z) {ex : Ix Dw → ℤ} (hex : ex none = 0) {f : Rul Xo c}
     (hf : f ∈ GlobalTheory.AllWt.secZ Xo c ex)
     (hv : ∀ i, (Φ.C i).Y.vanishOn ((Φ.C i).LEx ex) ((Φ.C i).val f) (Φ.C i).Ybd) :
@@ -232,7 +232,7 @@ theorem mem_of_boundary_extension_valuation (hbc : FrameBC Z) {σ : c.F →+* �
   obtain ⟨χ, g, hχ, hpt, hw, hbd⟩ := hB
   obtain ⟨z, hzm⟩ := exists_frMap (IsScalarTower.toAlgHom c.F K k) y
   obtain ⟨gA, hgA⟩ : ∃ gA : EigFrame Z (algebraMap c.F A) ((spMap i ≫ χ) ≫ genι Z), ∀ τ j,
-      gA.v τ j = spMap (dualMap i) ≫ g.v τ j := hiφ ▸ hbc.at g i (x' := (spMap i ≫ χ) ≫ genι Z) (Category.assoc _ _ _)
+      gA.v τ j = spMap (GlobalTheory.CompanionTheory.Ar.dualMap i) ≫ g.v τ j := hiφ ▸ hbc.at g i (x' := (spMap i ≫ χ) ≫ genι Z) (Category.assoc _ _ _)
   have hspm : spMap (algebraMap A k) ≫ spMap i = spMap (algebraMap K k) ≫ spMap (algebraMap V K) := by
     rw [sp_comp, sp_comp, hi]
   have hcoe : (IsScalarTower.toAlgHom c.F K k).toRingHom = algebraMap K k := RingHom.ext fun _ => rfl
@@ -244,11 +244,11 @@ theorem mem_of_boundary_extension_valuation (hbc : FrameBC Z) {σ : c.F →+* �
     (by rw [hptz, Category.assoc, hpt, ← Category.assoc, ← hspm, Category.assoc])
     (fun τ j => by
       obtain ⟨w, w1, w2, w3⟩ := hw τ j
-      have h1 : TanRel Z (GlobalTheory.AllWt.ptF y) (y.u τ j) (spMap (dualMap (algebraMap V K)) ≫ g.v τ j) := ⟨w, w1, w2, w3⟩
+      have h1 : TanRel Z (GlobalTheory.AllWt.ptF y) (y.u τ j) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ g.v τ j) := ⟨w, w1, w2, w3⟩
       have h2 := h1.map (algebraMap K k)
-      have h3 : spMap (dualMap (algebraMap K k)) ≫ spMap (dualMap (algebraMap V K)) ≫ g.v τ j =
-          spMap (dualMap (algebraMap A k)) ≫ gA.v τ j := by
-        rw [hgA, ← Category.assoc (spMap (dualMap (algebraMap K k))), ← Category.assoc (spMap (dualMap (algebraMap A k))),
+      have h3 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K k)) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ g.v τ j =
+          spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A k)) ≫ gA.v τ j := by
+        rw [hgA, ← Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap K k))), ← Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap A k))),
           dual_comp, dual_comp, hi]
       rw [hptz, show z.u τ j = _ from hzm.2.1 τ j, ← h3]
       exact h2)
@@ -286,7 +286,7 @@ end GlobalTheory.CuspFrom.Vanish
 
 namespace GlobalTheory.CuspFrom
 
-theorem evR_mem_maximalIdeal_of_vanishOn : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Z : Model Xo c β), (∀ (R R' : Type) [CommRing R] [IsLocalRing R] [CommRing R'] [IsLocalRing R'] (φ : c.F →+* R) (x : Sp R ⟶ Z.X) (f : EigFrame Z φ x) (ψ : R →+* R'), ∃ g : EigFrame Z (ψ.comp φ) (spMap ψ ≫ x), ∀ τ i, g.v τ i = spMap (dualMap ψ) ≫ f.v τ i) → ∀ (F : Type) [Field F] (e : F ≃+* c.F) (σ : c.F →+* ℂ) (r : ℕ) (U : Formalism.L2.PjFree.Unf Xo c σ r) (Φ : FlagTor Z e U) (V K : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [Field K] [Algebra V K] [IsFractionRing V K] [Algebra c.F K] (φ : c.F →+* V) (y : FrPt Xo c K) (ex : Ix Dw → ℤ) (f : Rul Xo c), (algebraMap V K).comp φ = algebraMap c.F K → BdExt Z φ y → ex none = 0 → f ∈ GlobalTheory.AllWt.secZ Xo c ex → (∀ k, (Φ.C k).Y.vanishOn ((Φ.C k).LEx ex) ((Φ.C k).val f) (Φ.C k).Ybd) → ∃ v ∈ IsLocalRing.maximalIdeal V, evR Xo c f y = algebraMap V K v :=
+theorem evR_mem_maximalIdeal_of_vanishOn : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Z : Model Xo c β), (∀ (R R' : Type) [CommRing R] [IsLocalRing R] [CommRing R'] [IsLocalRing R'] (φ : c.F →+* R) (x : Sp R ⟶ Z.X) (f : EigFrame Z φ x) (ψ : R →+* R'), ∃ g : EigFrame Z (ψ.comp φ) (spMap ψ ≫ x), ∀ τ i, g.v τ i = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ψ) ≫ f.v τ i) → ∀ (F : Type) [Field F] (e : F ≃+* c.F) (σ : c.F →+* ℂ) (r : ℕ) (U : Formalism.L2.PjFree.Unf Xo c σ r) (Φ : FlagTor Z e U) (V K : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [Field K] [Algebra V K] [IsFractionRing V K] [Algebra c.F K] (φ : c.F →+* V) (y : FrPt Xo c K) (ex : Ix Dw → ℤ) (f : Rul Xo c), (algebraMap V K).comp φ = algebraMap c.F K → BdExt Z φ y → ex none = 0 → f ∈ GlobalTheory.AllWt.secZ Xo c ex → (∀ k, (Φ.C k).Y.vanishOn ((Φ.C k).LEx ex) ((Φ.C k).val f) (Φ.C k).Ybd) → ∃ v ∈ IsLocalRing.maximalIdeal V, evR Xo c f y = algebraMap V K v :=
   fun _ _ _ _ _ _ _ _ _ _ _ _ Z hbc _ _ _ _ _ _ Φ _ _ _ _ _ _ _ _ _ φ y ex f hφ hB hex hf hv =>
     Vanish.mem_of_bdExt (Z := Z) hbc Φ φ y hφ hB hex hf hv
 

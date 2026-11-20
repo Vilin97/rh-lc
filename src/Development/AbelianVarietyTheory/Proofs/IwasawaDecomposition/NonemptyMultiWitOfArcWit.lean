@@ -91,9 +91,9 @@ variable {r : ℕ} {δ : Fin r → LinearMap.BilinForm ℤ a.D₀.X} {u : Fin r 
 
 def MultiWit.LieImg (W : MultiWit Y a δ I f u ι y) (ν : Out.GtPt a.D₀ (epsR A)) (v : epsR R ⟶ W.t.G) : Prop :=
   ∀ (n : ℕ) (vn : Sp (DualNumber (R ⧸ I ^ (n + 1))) ⟶ (Out.thickObj R I n W.t.G).left),
-    vn ≫ (Out.fstG I n W.t.G).left = spMap (dualMap (Ideal.Quotient.mk (I ^ (n + 1)))) ≫ v.left →
+    vn ≫ (Out.fstG I n W.t.G).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk (I ^ (n + 1)))) ≫ v.left →
     ∀ x, GenRelR W.w (LB.pullGen _ _ _ ((W.P.U.gt n).t (W.e x)) vn)
-      (LB.pullGen _ _ _ (ν.s x) (spMap (dualMap ((Ideal.Quotient.mk (I ^ (n + 1))).comp f))))
+      (LB.pullGen _ _ _ (ν.s x) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap ((Ideal.Quotient.mk (I ^ (n + 1))).comp f))))
 
 def MultiWit.IsSpecOf (W : MultiWit Y a δ I f u ι y) {γ : levelForms H l.M' a.D₀.X} {h : γ ∈ admitted H l.M' a.D₀.X}
     {R₁ : Type} [CommRing R₁] [IsDomain R₁] {I₁ : Ideal R₁} {f₁ : A →+* R₁} {u₁ : R₁} {χ : Sp R₁ ⟶ Y.X}

@@ -53,7 +53,7 @@ theorem fst_comp_tangent_eq_one : ∀ {E : Type} [Field E] [NumberField E] [IsCM
     (U : X.affineOpens) (v : Sp (DualNumber Γ(X, U.1)) ⟶ t.G.left) (hv : IsTanAtG t (LogKS.chart U) v)
     {K : Type} [Field K] (x0 : Sp K ⟶ X) (hU : ⊤ ≤ x0 ⁻¹ᵁ U.1) (A : Over (Sp K)) [GrpObj A]
     (m : A.left ⟶ t.G.left) (hm : IsGrpPullback A t.G x0 m) (u : epsR K ⟶ A)
-    (hu : u.left ≫ m = spMap (dualMap (ev x0 U.1 hU)) ≫ v),
+    (hu : u.left ≫ m = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev x0 U.1 hU)) ≫ v),
     spMap (TrivSqZeroExt.fstHom K K K).toRingHom ≫ u.left = (1 : Over.mk (𝟙 (Sp K)) ⟶ A).left := by
   intro E _ _ _ H X t U v hv K _ x0 hU A _ m hm u hu
   have hv2 : spMap (TrivSqZeroExt.fstHom Γ(X, U.1) Γ(X, U.1) Γ(X, U.1)).toRingHom ≫ v =
@@ -63,9 +63,9 @@ theorem fst_comp_tangent_eq_one : ∀ {E : Type} [Field E] [NumberField E] [IsCM
 
   have hG1 : (spMap (TrivSqZeroExt.fstHom K K K).toRingHom ≫ u.left) ≫ m = (1 : Over.mk x0 ⟶ t.G).left := by
     rw [Category.assoc, hu, ← Category.assoc, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
-    have e : (TrivSqZeroExt.fstHom K K K).toRingHom.comp (dualMap (ev x0 U.1 hU)) =
+    have e : (TrivSqZeroExt.fstHom K K K).toRingHom.comp (GlobalTheory.CompanionTheory.Ar.dualMap (ev x0 U.1 hU)) =
         (ev x0 U.1 hU).comp ((TrivSqZeroExt.fstHom Γ(X, U.1) Γ(X, U.1) Γ(X, U.1)).toRingHom) := by
-      ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+      ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
     rw [e, CommRingCat.ofHom_comp, Spec.map_comp, Category.assoc, hv2]
     have := congrArg Over.Hom.left (comp_one (M := t.G) κ)
     exact this.symm ▸ rfl
@@ -121,7 +121,7 @@ theorem fst_comp_transl_eq : ∀ {K : Type} [Field K] {A : Over (Sp K)} [GrpObj 
       congr 1
       rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp]
       congr 2
-      ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+      ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
     rw [this, hν, comp_one]
   have h2 : (io ≫ (x' * v')).left = x := by
     rw [comp_mul, h1, _root_.mul_one]
@@ -167,7 +167,7 @@ theorem comp_hom_of_isTransl {K : Type} [Field K] {A : Over (Sp K)} [GrpObj A] {
   obtain ⟨x', v', -, -, rfl⟩ := hw
   exact Over.w (x' * v')
 
-theorem exists_isChartPt : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {X : Scheme.{0}} (t : SAB H X) (U : X.affineOpens) {n : ℕ} (v : Fin n → (Sp (DualNumber Γ(X, U.1)) ⟶ t.G.left)) (D : Γ(X, U.1) → Γ(X, U.1)) (hv : ∀ a, IsTanAtG t (LogKS.chart U) (v a)) (W₀ : t.G.left.Opens) (hW₀ : W₀ ≤ t.G.hom ⁻¹ᵁ U.1) (d : ∀ O : t.G.left.Opens, Γ(t.G.left, O) → Γ(t.G.left, O)) (hd : LogKS.IsField W₀ d) (hlift : ∀ r, d W₀ ((t.G.hom.appLE U.1 W₀ hW₀).hom r) = (t.G.hom.appLE U.1 W₀ hW₀).hom (D r)) {K : Type} [Field K] (x0 : Sp K ⟶ X) (hU : ⊤ ≤ x0 ⁻¹ᵁ U.1) (y1 : Sp (DualNumber K) ⟶ X) (hU' : ⊤ ≤ y1 ⁻¹ᵁ U.1) (hy1 : ∀ r, ev y1 U.1 hU' r = TrivSqZeroExt.inl (ev x0 U.1 hU r) + TrivSqZeroExt.inr (ev x0 U.1 hU (D r))) (A : Over (Sp K)) [GrpObj A] (A' : Over (Sp (DualNumber K))) [GrpObj A'] (m : A.left ⟶ t.G.left) (m' : A'.left ⟶ t.G.left) (u : Fin n → (epsR K ⟶ A)) (hm : IsGrpPullback A t.G x0 m) (hm' : IsGrpPullback A' t.G y1 m') (hu : ∀ a, (u a).left ≫ m = spMap (dualMap (ev x0 U.1 hU)) ≫ v a) (Ω : t.G.left.affineOpens) (hΩ : Ω.1 ≤ W₀) (θ : Matrix (Fin n) (Fin n) K) (Wo : A.left.Opens) (g : Γ(A.left, Wo)ˣ) (B : Type) [CommRing B] [Algebra (DualNumber K) B] (x : Sp B ⟶ A.left) (hx : x ≫ A.hom = spMap (baseMap K B)) (hxΩ : ⊤ ≤ x ⁻¹ᵁ (m ⁻¹ᵁ Ω.1)), ∃ l, IsChartPt A' m m' Ω.1 (d Ω.1) u θ Wo g x l := by
+theorem exists_isChartPt : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {X : Scheme.{0}} (t : SAB H X) (U : X.affineOpens) {n : ℕ} (v : Fin n → (Sp (DualNumber Γ(X, U.1)) ⟶ t.G.left)) (D : Γ(X, U.1) → Γ(X, U.1)) (hv : ∀ a, IsTanAtG t (LogKS.chart U) (v a)) (W₀ : t.G.left.Opens) (hW₀ : W₀ ≤ t.G.hom ⁻¹ᵁ U.1) (d : ∀ O : t.G.left.Opens, Γ(t.G.left, O) → Γ(t.G.left, O)) (hd : LogKS.IsField W₀ d) (hlift : ∀ r, d W₀ ((t.G.hom.appLE U.1 W₀ hW₀).hom r) = (t.G.hom.appLE U.1 W₀ hW₀).hom (D r)) {K : Type} [Field K] (x0 : Sp K ⟶ X) (hU : ⊤ ≤ x0 ⁻¹ᵁ U.1) (y1 : Sp (DualNumber K) ⟶ X) (hU' : ⊤ ≤ y1 ⁻¹ᵁ U.1) (hy1 : ∀ r, ev y1 U.1 hU' r = TrivSqZeroExt.inl (ev x0 U.1 hU r) + TrivSqZeroExt.inr (ev x0 U.1 hU (D r))) (A : Over (Sp K)) [GrpObj A] (A' : Over (Sp (DualNumber K))) [GrpObj A'] (m : A.left ⟶ t.G.left) (m' : A'.left ⟶ t.G.left) (u : Fin n → (epsR K ⟶ A)) (hm : IsGrpPullback A t.G x0 m) (hm' : IsGrpPullback A' t.G y1 m') (hu : ∀ a, (u a).left ≫ m = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev x0 U.1 hU)) ≫ v a) (Ω : t.G.left.affineOpens) (hΩ : Ω.1 ≤ W₀) (θ : Matrix (Fin n) (Fin n) K) (Wo : A.left.Opens) (g : Γ(A.left, Wo)ˣ) (B : Type) [CommRing B] [Algebra (DualNumber K) B] (x : Sp B ⟶ A.left) (hx : x ≫ A.hom = spMap (baseMap K B)) (hxΩ : ⊤ ≤ x ⁻¹ᵁ (m ⁻¹ᵁ Ω.1)), ∃ l, IsChartPt A' m m' Ω.1 (d Ω.1) u θ Wo g x l := by
   intro E _ _ _ H X t U n v D hv W₀ hW₀ d hd hlift K _ x0 hU y1 hU' hy1 A _ A' _ m m' u hm hm' hu Ω hΩ θ Wo g B _ _ x hx hxΩ
   have hwT : ∀ a, IsTransl (baseMap K B) x (u a) (transl (baseMap K B) x (u a)) :=
     fun a => isTransl_transl (baseMap K B) x hx (u a)

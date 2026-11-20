@@ -176,9 +176,9 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {D : Da
   sE := s
   sE_ne := hs
 
-theorem spMap_dualMap_id (R : Type) [CommRing R] : spMap (dualMap (RingHom.id R)) = 𝟙 _ := by
-  have : dualMap (RingHom.id R) = RingHom.id _ := by
-    ext a <;> simp [dualMap]
+theorem spMap_dualMap_id (R : Type) [CommRing R] : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R)) = 𝟙 _ := by
+  have : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R) = RingHom.id _ := by
+    ext a <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
   rw [this]
   simp [spMap]
 
@@ -200,7 +200,7 @@ def refOrigin {G : RefGeo Y} (A : G.An) (hb : Birational G.y) (k : ℕ) (hk : 0 
     show G.𝔐.ξ ≫ G.𝔐.f = spMap (RingHom.id G.Ω) ≫ G.𝔐.ξ ≫ G.𝔐.f
     simp [spMap]
   g_flag s i := by
-    show (G.𝔐.M.pt (G.Fl.b s i)).left ≫ G.𝔐.m.φ = spMap (dualMap (RingHom.id G.Ω)) ≫ (Mf.pt (G.Fl.b s i)).left
+    show (G.𝔐.M.pt (G.Fl.b s i)).left ≫ G.𝔐.m.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id G.Ω)) ≫ (Mf.pt (G.Fl.b s i)).left
     rw [spMap_dualMap_id, hMf]
     exact (Category.id_comp _).symm
   g_deg := (Module.finrank_self G.Ω).trans G.deg_one.symm

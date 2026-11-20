@@ -42,8 +42,8 @@ def IsChart (Y : Model Xo c (RingHom.id c.F)) (U : (Xo.XF c).Opens) (τ : E →+
   IsOpenImmersion x ∧ GlobalTheory.IndefiniteRowSideFullHecke.EigenbasisGramSquares.IsFrame Y U τ j x v w ∧
     ∀ (F : Type) [Field F] (f : R →+* F) (y : Sp F ⟶ Xo.XF c) (v₀ : Vecs y D.p) (w₀ : Vecs y D.q)
       (v' : Fin D.p → (epsAt (y ≫ Y.j) ⟶ Y.t.G)) (w' : Fin D.q → (epsAt (y ≫ Y.j) ⟶ Y.t.G)),
-      y ≫ Y.j = spMap f ≫ x → (∀ i, (v' i).left = spMap (dualMap f) ≫ (v i).left) →
-      (∀ i, (w' i).left = spMap (dualMap f) ≫ (w i).left) →
+      y ≫ Y.j = spMap f ≫ x → (∀ i, (v' i).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (v i).left) →
+      (∀ i, (w' i).left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) ≫ (w i).left) →
       (∀ i, SameVec Y y (v₀ i) (v' i)) → (∀ i, SameVec Y y (w₀ i) (w' i)) → f u = φ F y v₀ w₀
 
 def IsModelMap {O : Type} [CommRing O] {β : O →+* c.F} (Y' : Model Xo c (RingHom.id c.F)) (Y : Model Xo c β)
@@ -58,7 +58,7 @@ def IsBareFrame {V K : Type} [CommRing V] [Field K] [Algebra V K] {y : Sp K ⟶ 
     (σ : 𝓞 E →+* K) {n : ℕ} (v : Vecs y n) : Prop :=
   ∃ (σV : 𝓞 E →+* V) (vV : Fin n → (epsAt (𝟙 (Sp V)) ⟶ 𝒢)), (algebraMap V K).comp σV = σ ∧
     IsEigFrame a₁ (𝟙 (Sp V)) σV vV ∧ ∀ a, ∃ u : Sp (DualNumber K) ⟶ A.left,
-      u ≫ φ₀ = (v a).left ∧ u ≫ φ₁ = spMap (dualMap (algebraMap V K)) ≫ (vV a).left
+      u ≫ φ₀ = (v a).left ∧ u ≫ φ₁ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap V K)) ≫ (vV a).left
 
 def BareNormOver (U : Set (Xo.XF c)) (τ : E →+* ℂ) (φ : FrameFn Xo c) (p : Nat.Primes) (κ : c.F →+* ℂ_[p]) (t : ℝ)
     (V K : Type) [CommRing V] [Field K] [Algebra V K] (j : K →+* ℂ_[p]) : Prop :=

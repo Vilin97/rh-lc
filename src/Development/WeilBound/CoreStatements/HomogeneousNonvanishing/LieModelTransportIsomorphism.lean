@@ -24,7 +24,7 @@ theorem extends_pull (hψ : IsGrpPullback G G' g ψ) (fg : f ≫ g = 𝟙 _) (h�
     (q' : Cpt ξ') (q : Cpt ξ) (σ : X.presheaf.stalk q.1 →+* X'.presheaf.stalk q'.1)
     (h1 : spMap σ ≫ X.fromSpecStalk q.1 = X'.fromSpecStalk q'.1 ≫ f) (h2 : (genMap ξ' q').comp σ = genMap ξ q)
     (e : V) (v) (hv : M.Extends q e v) :
-    ∃ v', M'.Extends q' e v' ∧ v'.left = spMap (dualMap σ) ≫ v.left ≫ ψ := by
+    ∃ v', M'.Extends q' e v' ∧ v'.left = spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) ≫ v.left ≫ ψ := by
   obtain ⟨v1, hv1, ht1⟩ := mv_bc (G := G) σ (x := X.fromSpecStalk q.1) (x' := X'.fromSpecStalk q'.1 ≫ f) h1 v
   have hw : (v1.left ≫ ψ) ≫ G'.hom = (epsAt (X'.fromSpecStalk q'.1)).hom := by
     rw [Category.assoc, hψ.1.w, ← Category.assoc, Over.w v1]
@@ -33,11 +33,11 @@ theorem extends_pull (hψ : IsGrpPullback G G' g ψ) (fg : f ≫ g = 𝟙 _) (h�
   let v' : epsAt (X'.fromSpecStalk q'.1) ⟶ G' := Over.homMk (v1.left ≫ ψ) hw
   have hgx : (X'.fromSpecStalk q'.1 ≫ f) ≫ g = X'.fromSpecStalk q'.1 := by
     rw [Category.assoc, fg, Category.comp_id]
-  have key : spMap (dualMap (genMap ξ q)) = spMap (dualMap (genMap ξ' q')) ≫ spMap (dualMap σ) := by
+  have key : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (genMap ξ q)) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (genMap ξ' q')) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) := by
     rw [mv_dual_comp, h2]
   refine ⟨v', ⟨mv_tan hψ hgx (v' := v1) (v := v') rfl (ht1 hv.1), ?_⟩, ?_⟩
   · rw [← hM e, hv.2]
-    show spMap (dualMap (genMap ξ q)) ≫ v.left ≫ ψ = spMap (dualMap (genMap ξ' q')) ≫ v1.left ≫ ψ
+    show spMap (GlobalTheory.CompanionTheory.Ar.dualMap (genMap ξ q)) ≫ v.left ≫ ψ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (genMap ξ' q')) ≫ v1.left ≫ ψ
     rw [key, hv1]
     simp only [Category.assoc]
   · show v1.left ≫ ψ = _
@@ -103,7 +103,7 @@ theorem htAt_push (hψ : IsGrpPullback G G' g ψ) (fg : f ≫ g = 𝟙 _) (gf : 
   · intro e v hv h
     obtain ⟨σ, h1, h2, -⟩ := mv_stalk hξ q' q hq
     obtain ⟨v', hv', hvl⟩ := extends_pull hψ fg hξ hM q' q σ h1 h2 e v hv
-    have hh : ⊤ ≤ (spMap (dualMap σ) ≫ v.left) ⁻¹ᵁ (ψ ⁻¹ᵁ W') := fun p _ => h trivial
+    have hh : ⊤ ≤ (spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) ≫ v.left) ⁻¹ᵁ (ψ ⁻¹ᵁ W') := fun p _ => h trivial
     have h' : ⊤ ≤ v'.left ⁻¹ᵁ W' := by
       rw [hvl]
       exact fun p _ => hh trivial
@@ -111,14 +111,14 @@ theorem htAt_push (hψ : IsGrpPullback G G' g ψ) (fg : f ≫ g = 𝟙 _) (gf : 
     refine ⟨r, hreg hr, ?_⟩
     rw [hwe]
     congr 1
-    have hcomp : (spMap (dualMap σ) ≫ v.left) ≫ ψ = v'.left := by
+    have hcomp : (spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) ≫ v.left) ≫ ψ = v'.left := by
       rw [hvl]
       exact Category.assoc _ _ _
-    have e1 := mv_secVal_comp (spMap (dualMap σ) ≫ v.left) ψ v'.left hcomp W' s' hh h'
-    have e2 := mv_secVal_bc (dualMap σ) v.left (spMap (dualMap σ) ≫ v.left) rfl (ψ ⁻¹ᵁ W') (ψ.app W' s') h hh
-    have hs : secVal v'.left W' h' s' = dualMap σ (secVal v.left (ψ ⁻¹ᵁ W') h (ψ.app W' s')) := e1.symm.trans e2
+    have e1 := mv_secVal_comp (spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) ≫ v.left) ψ v'.left hcomp W' s' hh h'
+    have e2 := mv_secVal_bc (GlobalTheory.CompanionTheory.Ar.dualMap σ) v.left (spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) ≫ v.left) rfl (ψ ⁻¹ᵁ W') (ψ.app W' s') h hh
+    have hs : secVal v'.left W' h' s' = GlobalTheory.CompanionTheory.Ar.dualMap σ (secVal v.left (ψ ⁻¹ᵁ W') h (ψ.app W' s')) := e1.symm.trans e2
     rw [hs, ← h2]
-    simp [dualMap]
+    simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem htOm_le (hφ : IsGrpPullback G' G f φ) (hψ : IsGrpPullback G G' g ψ) (fg : f ≫ g = 𝟙 _) (gf : g ≫ f = 𝟙 _)
     (φψ : φ ≫ ψ = 𝟙 _) (ψφ : ψ ≫ φ = 𝟙 _) (hξ : ξ' ≫ f = ξ)

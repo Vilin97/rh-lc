@@ -122,24 +122,24 @@ theorem top_le_of_redE {A : Type} [CommRing A] {X : Scheme.{0}} (x : Sp (DualNum
   exact h (Set.mem_univ w)
 
 theorem redE_dualMap {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) :
-    redE B ≫ spMap (dualMap f) = spMap f ≫ redE A := by
+    redE B ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) = spMap f ≫ redE A := by
   show Spec.map _ ≫ Spec.map _ = Spec.map _ ≫ Spec.map _
   rw [← Spec.map_comp, ← Spec.map_comp]
   congr 1
   refine CommRingCat.hom_ext (RingHom.ext fun x => ?_)
-  show (dualMap f x).fst = f x.fst
-  simp [dualMap]
+  show (GlobalTheory.CompanionTheory.Ar.dualMap f x).fst = f x.fst
+  simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem dualMap_comp {A B E : Type} [CommRing A] [CommRing B] [CommRing E] (f : A →+* B) (g : B →+* E) :
-    spMap (dualMap g) ≫ spMap (dualMap f) = spMap (dualMap (g.comp f)) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f)) := by
   show Spec.map _ ≫ Spec.map _ = Spec.map _
   rw [← Spec.map_comp]
   congr 1
   refine CommRingCat.hom_ext (RingHom.ext fun x => TrivSqZeroExt.ext ?_ ?_)
-  · show (dualMap g (dualMap f x)).fst = (dualMap (g.comp f) x).fst
-    simp [dualMap]
-  · show (dualMap g (dualMap f x)).snd = (dualMap (g.comp f) x).snd
-    simp [dualMap]
+  · show (GlobalTheory.CompanionTheory.Ar.dualMap g (GlobalTheory.CompanionTheory.Ar.dualMap f x)).fst = (GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) x).fst
+    simp [GlobalTheory.CompanionTheory.Ar.dualMap]
+  · show (GlobalTheory.CompanionTheory.Ar.dualMap g (GlobalTheory.CompanionTheory.Ar.dualMap f x)).snd = (GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f) x).snd
+    simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem redE_algebraMap (A : Type) [CommRing A] : redE A ≫ spMap (algebraMap A (DualNumber A)) = 𝟙 _ := by
   show Spec.map _ ≫ Spec.map _ = _
@@ -174,24 +174,24 @@ variable {R : Type} [CommRing R] [IsDomain R] {D : DegPre R} {C : Type} [NormedF
 
 theorem norm_vE (hS : ∀ x, x ∈ S ↔ ‖x‖ ≤ 1) (hI : ν.Integral S) {Y : Scheme.{0}} {K : Type} [Fintype K]
     {φ : K → (Y ⟶ D.P.A.left)} {ε : K → ℤ} (t : LB.Gen (LB.LinComb D.P.L φ ε)) (r : Sp (DualNumber C) ⟶ Y)
-    (r₀ : Sp (DualNumber S) ⟶ Y) (e : spMap (dualMap S.subtype) ≫ r₀ = r)
+    (r₀ : Sp (DualNumber S) ⟶ Y) (e : spMap (GlobalTheory.CompanionTheory.Ar.dualMap S.subtype) ≫ r₀ = r)
     (h : ∀ k, (redE C ≫ r) ≫ φ k ≫ D.P.A.hom = (TF (R := R) C).hom) :
     ‖(vE t r ν.J).fst‖ ≤ 1 ∧ ‖(vE t r ν.J).snd‖ ≤ 1 := by
   subst e
-  have e : redE C ≫ spMap (dualMap S.subtype) ≫ r₀ = spMap S.subtype ≫ redE S ≫ r₀ := by
+  have e : redE C ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap S.subtype) ≫ r₀ = spMap S.subtype ≫ redE S ≫ r₀ := by
     rw [← Category.assoc, redE_dualMap, Category.assoc]
   rw [e] at h
   have h1 := top_le_of_redE _ _ (IntVal.le_wchart hI φ (redE S ≫ r₀) h)
   have e2 : (fun k => ν.J ((spMap S.subtype ≫ redE S ≫ r₀) ≫ φ k)) =
-      fun k => ν.J (redE C ≫ (spMap (dualMap S.subtype) ≫ r₀) ≫ φ k) := funext fun k => by
+      fun k => ν.J (redE C ≫ (spMap (GlobalTheory.CompanionTheory.Ar.dualMap S.subtype) ≫ r₀) ≫ φ k) := funext fun k => by
     rw [← e]; simp only [Category.assoc]
   rw [e2] at h1
-  obtain ⟨w, hw⟩ : ∃ w : DualNumber S, vE t (spMap (dualMap S.subtype) ≫ r₀) ν.J = dualMap S.subtype w :=
-    ⟨_, valR_spMap (dualMap S.subtype) r₀ _ h1 _⟩
+  obtain ⟨w, hw⟩ : ∃ w : DualNumber S, vE t (spMap (GlobalTheory.CompanionTheory.Ar.dualMap S.subtype) ≫ r₀) ν.J = GlobalTheory.CompanionTheory.Ar.dualMap S.subtype w :=
+    ⟨_, valR_spMap (GlobalTheory.CompanionTheory.Ar.dualMap S.subtype) r₀ _ h1 _⟩
   rw [hw]
   constructor
-  · simpa [dualMap] using (hS _).1 w.fst.2
-  · simpa [dualMap] using (hS _).1 w.snd.2
+  · simpa [GlobalTheory.CompanionTheory.Ar.dualMap] using (hS _).1 w.fst.2
+  · simpa [GlobalTheory.CompanionTheory.Ar.dualMap] using (hS _).1 w.snd.2
 
 end Norm
 
@@ -241,7 +241,7 @@ theorem norm_mul_dual {C : Type} [NormedField C] [IsUltrametricDist C] (x y : Du
     · rw [norm_mul, mul_comm]
       exact mul_le_mul h₁ (le_max_right _ _) (norm_nonneg _) h0
 
-theorem main : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] (D : DegData V (IsLocalRing.maximalIdeal V)) (C : Type) [NontriviallyNormedField C] [IsUltrametricDist C] [IsAlgClosed C] [CharZero C] [Algebra (FractionRing V) C], CExt V (IsLocalRing.maximalIdeal V) C → ∀ (N : NumD C) (ν : NumOf D.toPre C N), ν.IntN → ∀ q, N.Int q → ∀ (k : ℕ), 1 ≤ k → ∀ (s : Fam D.toPre C k) (gm₀ : GtPt D.toPre (epsR V)) (gm : GtPt D.toPre (TE V C)), GtTan gm₀ → GtPt.IsPull (spMap (dualMap (toF V C))) gm₀ gm → ∀ α mu : N.X, ‖(jc ν s gm (α + k • mu)).fst‖ ≤ Real.exp (-((k : ℝ) * q mu + QuadraticMap.polar q mu α)) * ‖(trVal ν s gm α mu).fst‖ ∧ ‖(jc ν s gm (α + k • mu)).snd‖ ≤ Real.exp (-((k : ℝ) * q mu + QuadraticMap.polar q mu α)) * max ‖(trVal ν s gm α mu).fst‖ ‖(trVal ν s gm α mu).snd‖ := by
+theorem main : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] (D : DegData V (IsLocalRing.maximalIdeal V)) (C : Type) [NontriviallyNormedField C] [IsUltrametricDist C] [IsAlgClosed C] [CharZero C] [Algebra (FractionRing V) C], CExt V (IsLocalRing.maximalIdeal V) C → ∀ (N : NumD C) (ν : NumOf D.toPre C N), ν.IntN → ∀ q, N.Int q → ∀ (k : ℕ), 1 ≤ k → ∀ (s : Fam D.toPre C k) (gm₀ : GtPt D.toPre (epsR V)) (gm : GtPt D.toPre (TE V C)), GtTan gm₀ → GtPt.IsPull (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF V C))) gm₀ gm → ∀ α mu : N.X, ‖(jc ν s gm (α + k • mu)).fst‖ ≤ Real.exp (-((k : ℝ) * q mu + QuadraticMap.polar q mu α)) * ‖(trVal ν s gm α mu).fst‖ ∧ ‖(jc ν s gm (α + k • mu)).snd‖ ≤ Real.exp (-((k : ℝ) * q mu + QuadraticMap.polar q mu α)) * max ‖(trVal ν s gm α mu).fst‖ ‖(trVal ν s gm α mu).snd‖ := by
   intro V _ _ _ D C _ _ _ _ _ hC N ν hν q hq k _ s gm₀ gm _ hp α mu
   obtain ⟨S, hS, hI⟩ := hν
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible V
@@ -250,7 +250,7 @@ theorem main : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing
   have hg : spMap S.subtype ≫ spMap g = (TF (R := V) C).hom := by
     show Spec.map _ ≫ Spec.map _ = Spec.map _ ≫ Spec.map _
     rw [← Spec.map_comp, ← Spec.map_comp]; rfl
-  have hg' : spMap (dualMap S.subtype) ≫ spMap (dualMap g) = spMap (dualMap (toF V C)) := dualMap_comp _ _
+  have hg' : spMap (GlobalTheory.CompanionTheory.Ar.dualMap S.subtype) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF V C)) := dualMap_comp _ _
   obtain ⟨eB, c₀, hc₀, hfe⟩ := exists_fe_val hϖ hQ k (ν.eX mu) (ν.eX α) s
   have hψ : ∀ χ, Real.exp (-q χ) = ‖toF V C ϖ‖ ^ Q (ν.eX χ) := fun χ =>
     (hq.ψ χ).symm.trans (norm_psi_eq hC.1 hS hI g hg hQ χ)
@@ -274,10 +274,10 @@ theorem main : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing
   have hb : redE C ≫ gm.b.left ≫ D.toPre.P.A.hom = (TF (R := V) C).hom :=
     (congrArg (redE C ≫ ·) (Over.w gm.b)).trans ((Category.assoc _ _ _).symm.trans
       ((congrArg (· ≫ (TF (R := V) C).hom) (redE_algebraMap C)).trans (Category.id_comp _)))
-  have hb₀ : redE C ≫ spMap (dualMap (toF V C)) ≫ (epsR V).hom = (TF (R := V) C).hom := by
+  have hb₀ : redE C ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF V C)) ≫ (epsR V).hom = (TF (R := V) C).hom := by
     rw [← hb, hp.1, ← Over.w gm₀.b]
     exact congrArg (redE C ≫ ·) (Category.assoc _ _ _).symm
-  have n₁ := norm_vE hS hI eB gm.b.left (spMap (dualMap g) ≫ gm₀.b.left)
+  have n₁ := norm_vE hS hI eB gm.b.left (spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ gm₀.b.left)
     (by rw [← Category.assoc, hg']; exact hp.1.symm) (fun i => by
       have hB : ∀ χ j, D.toPre.famφB χ j ≫ D.toPre.P.A.hom = D.toPre.P.A.hom := fun χ j => by
         fin_cases j
@@ -287,12 +287,12 @@ theorem main : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing
       rcases i with i | i
       · exact hB _ _
       · exact (Category.assoc _ _ _).trans ((congrArg (_ ≫ ·) (hB _ _)).trans (Over.w _)))
-  have n₂ := norm_vE hS hI (gm₀.s (ν.eX α + k • ν.eX mu)) (spMap (dualMap (toF V C))) (spMap (dualMap g)) hg'
+  have n₂ := norm_vE hS hI (gm₀.s (ν.eX α + k • ν.eX mu)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF V C))) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap g)) hg'
     (fun i => by
-      refine (Category.assoc _ _ _).trans (Eq.trans (congrArg (fun t => redE C ≫ spMap (dualMap (toF V C)) ≫ t) ?_) hb₀)
+      refine (Category.assoc _ _ _).trans (Eq.trans (congrArg (fun t => redE C ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF V C)) ≫ t) ?_) hb₀)
       fin_cases i <;> exact Over.w _)
   have E : jc ν s gm (α + k • mu) = trVal ν s gm α mu * (TrivSqZeroExt.inl c *
-      (vE eB gm.b.left ν.J * vE (gm₀.s (ν.eX α + k • ν.eX mu)) (spMap (dualMap (toF V C))) ν.J)) := by
+      (vE eB gm.b.left ν.J * vE (gm₀.s (ν.eX α + k • ν.eX mu)) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (toF V C))) ν.J)) := by
     have hG := good_red ν.good (cpt (DualNumber C))
     have e₁ := hfe _ r _ _ hG
     have e₂ : gs r (cpt (DualNumber C)) ⊤ (gF D.toPre C c) = toStkA (cpt (DualNumber C)) (TrivSqZeroExt.inl c) :=

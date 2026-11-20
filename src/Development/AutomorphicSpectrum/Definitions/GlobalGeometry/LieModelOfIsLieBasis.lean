@@ -190,14 +190,14 @@ theorem exists_chart_pos (D : Datum H) (hD : 1 ≤ D.p + D.q) (l : Level H) {n a
 variable {Xo : Moduli D l} {σ : KA l →+* ℂ} {n a : ℕ} (C : BdryChart Xo σ n a)
 
 theorem exists_isVal (z : Fin n → ℂ) {m : ℕ} (u : Fin m → Fin C.g → C.R) : ∃ v, C.IsVal z u v := by
-  refine ⟨fun i => Over.homMk (spMap (dualMap (C.ψ z)) ≫ (C.M.pt (u i)).left) ?_, fun _ => rfl⟩
+  refine ⟨fun i => Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z)) ≫ (C.M.pt (u i)).left) ?_, fun _ => rfl⟩
   rw [Category.assoc, Over.w]
   change Spec.map _ ≫ Spec.map _ ≫ 𝟙 _ = Spec.map _ ≫ Spec.map _
   rw [Category.comp_id, ← Spec.map_comp, ← Spec.map_comp]
   congr 1
   ext r : 2
-  change dualMap (C.ψ z) (algebraMap _ _ r) = algebraMap ℂ (DualNumber ℂ) (C.ψ z r)
-  ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  change GlobalTheory.CompanionTheory.Ar.dualMap (C.ψ z) (algebraMap _ _ r) = algebraMap ℂ (DualNumber ℂ) (C.ψ z r)
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem hermForm_single {g : ℕ} (Hm : Matrix (Fin g) (Fin g) ℂ) (i j : Fin g) :
     hermForm Hm (Pi.single i 1) (Pi.single j 1) = Hm i j := by

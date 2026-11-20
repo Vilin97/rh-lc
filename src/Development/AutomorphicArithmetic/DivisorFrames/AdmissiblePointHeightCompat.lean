@@ -60,11 +60,11 @@ private theorem exists_sec (M : LineModel Z k st x) {X : Scheme.{0}} [IsIntegral
 
 private theorem bc_comp {X : Scheme.{0}} {t : SAB H X} {A B C : Type} [CommRing A] [CommRing B] [CommRing C]
     (χ : B →+* C) (ρ : A →+* B) (u : Vecs Dw t A) :
-    (fun σ m => spMap (dualMap (χ.comp ρ)) ≫ u σ m) = Vecs.bc χ (Vecs.bc ρ u) := by
+    (fun σ m => spMap (GlobalTheory.CompanionTheory.Ar.dualMap (χ.comp ρ)) ≫ u σ m) = Vecs.bc χ (Vecs.bc ρ u) := by
   funext σ m
   rw [Vecs.bc, Vecs.bc, ← Category.assoc, ModelRelProbe.spMap_comp]
   congr 2
-  ext w <;> simp [dualMap]
+  ext w <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 private theorem lnStep_congr {X : Scheme.{0}} {t : SAB H X} {C : Type} [NontriviallyNormedField C] [IsUltrametricDist C]
     {x x' : Sp C ⟶ X} {u u' : Vecs Dw t C} (hx : x = x') (hu : u = u') (p : ℕ) (b : Bool)

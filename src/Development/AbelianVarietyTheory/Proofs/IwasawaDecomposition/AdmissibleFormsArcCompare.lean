@@ -15,7 +15,7 @@ open GlobalTheory.ArcBaseChange GlobalTheory.ObjRebase
 
 set_option maxHeartbeats 1600000 in
 
-theorem lieImg_subst : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (A : Type) [CommRing A] [IsDomain A] [IsLocalRing A] (b : O →+* A) (a₀ : ArcIn Dw l β A b) (γ γ' : levelForms H l.M' a₀.D₀.X) (h : γ ∈ admitted H l.M' a₀.D₀.X) (h' : γ' ∈ admitted H l.M' a₀.D₀.X) (χ : Sp (PowerSeries A) ⟶ Y.X) (g : PowerSeries A →+* PowerSeries A) (W : Wit Y (withForm a₀ γ h) χ) (W' : Wit Y (withForm a₀ γ' h') (spMap g ≫ χ)) (hD : Out.IsPullDeg g W.P.D.toPre W'.P.D.toPre) (bc : W'.t.G ≅ (Over.pullback (Out.specOf g)).obj W.t.G) (w₁ : LB.Iso W'.P.D.toPre.P.L (a₀.D₀.P.L.pull ((hD.e.hom.left ≫ pullback.fst W.P.D.toPre.P.A.hom (Out.specOf g)) ≫ W.φ))), g.comp (PowerSeries.C (R := A)) = PowerSeries.C → g PowerSeries.X ∈ Ideal.span {PowerSeries.X} → Out.IsPullUnif g hD bc W.P.U W'.P.U → (∀ y, hD.xe (W'.e y) = W.e y) → W'.φ = (hD.e.hom.left ≫ pullback.fst W.P.D.toPre.P.A.hom (Out.specOf g)) ≫ W.φ → HEq W'.w w₁ → Tri W.w hD.w w₁ → ∀ (ν : Out.GtPt a₀.D₀ (epsR A)) (v : epsR (PowerSeries A) ⟶ W.t.G) (v' : epsR (PowerSeries A) ⟶ W'.t.G), LieImg W ν v → v'.left ≫ bc.hom.left ≫ pullback.fst W.t.G.hom (Out.specOf g) = spMap (dualMap g) ≫ v.left → LieImg W' ν v' := by
+theorem lieImg_subst : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (A : Type) [CommRing A] [IsDomain A] [IsLocalRing A] (b : O →+* A) (a₀ : ArcIn Dw l β A b) (γ γ' : levelForms H l.M' a₀.D₀.X) (h : γ ∈ admitted H l.M' a₀.D₀.X) (h' : γ' ∈ admitted H l.M' a₀.D₀.X) (χ : Sp (PowerSeries A) ⟶ Y.X) (g : PowerSeries A →+* PowerSeries A) (W : Wit Y (withForm a₀ γ h) χ) (W' : Wit Y (withForm a₀ γ' h') (spMap g ≫ χ)) (hD : Out.IsPullDeg g W.P.D.toPre W'.P.D.toPre) (bc : W'.t.G ≅ (Over.pullback (Out.specOf g)).obj W.t.G) (w₁ : LB.Iso W'.P.D.toPre.P.L (a₀.D₀.P.L.pull ((hD.e.hom.left ≫ pullback.fst W.P.D.toPre.P.A.hom (Out.specOf g)) ≫ W.φ))), g.comp (PowerSeries.C (R := A)) = PowerSeries.C → g PowerSeries.X ∈ Ideal.span {PowerSeries.X} → Out.IsPullUnif g hD bc W.P.U W'.P.U → (∀ y, hD.xe (W'.e y) = W.e y) → W'.φ = (hD.e.hom.left ≫ pullback.fst W.P.D.toPre.P.A.hom (Out.specOf g)) ≫ W.φ → HEq W'.w w₁ → Tri W.w hD.w w₁ → ∀ (ν : Out.GtPt a₀.D₀ (epsR A)) (v : epsR (PowerSeries A) ⟶ W.t.G) (v' : epsR (PowerSeries A) ⟶ W'.t.G), LieImg W ν v → v'.left ≫ bc.hom.left ≫ pullback.fst W.t.G.hom (Out.specOf g) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ v.left → LieImg W' ν v' := by
   intro E _ _ _ H Dw l Xo c O _ β Y A _ _ _ b a₀ γ γ' h h' χ g W W' hD bc w₁ hgC hgX hU he hφ hw₁ T ν v v' hv hv'
   intro n ρ' κ' vn' hρ₁ hρ₂ hκ₁ hκ₂ hb hf x
   obtain ⟨wL, -, -, -, lev⟩ := (isPullUnif_iff_stalks _ _ _ _ _ _ _ hD _ _ _ _ bc _ _).1 hU
@@ -39,9 +39,9 @@ theorem lieImg_subst : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
     rw [Ideal.map_pow, Ideal.map_span, Set.image_singleton]
     exact Ideal.pow_right_mono ((Ideal.span_singleton_le_iff_mem _).2 hgX) _)
   let gb : PowerSeries A ⧸ I ^ (n + 1) →+* PowerSeries A ⧸ I ^ (n + 1) := Ideal.quotientMap _ g hI
-  let ρ : DualNumber (PowerSeries A) →+* DualNumber (PowerSeries A ⧸ I ^ (n + 1)) := dualMap (Ideal.Quotient.mk _)
+  let ρ : DualNumber (PowerSeries A) →+* DualNumber (PowerSeries A ⧸ I ^ (n + 1)) := GlobalTheory.CompanionTheory.Ar.dualMap (Ideal.Quotient.mk _)
   let κ : DualNumber A →+* DualNumber (PowerSeries A ⧸ I ^ (n + 1)) :=
-    dualMap ((Ideal.Quotient.mk _).comp (PowerSeries.C (R := A)))
+    GlobalTheory.CompanionTheory.Ar.dualMap ((Ideal.Quotient.mk _).comp (PowerSeries.C (R := A)))
   let s : Sp (DualNumber (PowerSeries A ⧸ I ^ (n + 1))) ⟶ Sp (PowerSeries A ⧸ I ^ (n + 1)) := spMap (algebraMap _ _)
   have hs₀ : s ≫ Out.thick (PowerSeries A) I n = spMap ρ ≫ (epsR (PowerSeries A)).hom :=
     ((ArcBaseChange.spMap_comp' _ _).trans (congrArg spMap (RingHom.ext fun r =>
@@ -52,8 +52,8 @@ theorem lieImg_subst : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
   have hx : vn ≫ (Out.fstG I n W.t.G).left = spMap ρ ≫ v.left := pullback.lift_fst _ _ _
   have G := hv n ρ κ vn (dualMap_inl _) (dualMap_eps' _) (dualMap_inl _) (dualMap_eps' _)
     (pullback.lift_snd _ _ _) hx x
-  let q := spMap (dualMap gb)
-  have hρ : spMap ρ' ≫ spMap (dualMap g) = q ≫ spMap ρ := by
+  let q := spMap (GlobalTheory.CompanionTheory.Ar.dualMap gb)
+  have hρ : spMap ρ' ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) = q ≫ spMap ρ := by
     rw [ArcBaseChange.spMap_comp', ArcBaseChange.spMap_comp']
     refine congrArg spMap (dual_hom_ext (fun r => ?_) ?_)
     · simp only [RingHom.comp_apply, ρ, dualMap_inl, hρ₁]

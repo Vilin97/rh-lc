@@ -37,10 +37,10 @@ theorem spMap_comp' {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (f : R
   rw [← Spec.map_comp]; rfl
 
 theorem spMap_dualMap_comp {R S T : Type} [CommRing R] [CommRing S] [CommRing T] (f : R →+* S) (g : S →+* T) :
-    spMap (dualMap g) ≫ spMap (dualMap f) = spMap (dualMap (g.comp f)) := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap g) ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap f) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (g.comp f)) := by
   rw [← spMap_comp']
   congr 1
-  exact RingHom.ext fun z => by ext <;> simp [dualMap]
+  exact RingHom.ext fun z => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem frame_ext {R : Type} [CommRing R] {φ : c.F →+* R} {x : Sp R ⟶ Zm.X} {f g : EigFrame Zm φ x}
     (h : ∀ τ i, f.v τ i = g.v τ i) : f = g := by
@@ -209,8 +209,8 @@ theorem ratLin_pull : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H 
     obtain ⟨MainNotions, hSK⟩ := (FK y).exists_isMap (functionFieldMap (ρ' γ).hom) (hσ γ) (hSx γ)
     have eS : FsK = MainNotions := frame_ext fun τ i => by
       rw [hFsK τ i, hFs τ i, hSK τ i, hFK y τ i,
-        ← Category.assoc (spMap (dualMap (algebraMap (X'.presheaf.stalk x) X'.functionField))),
-        ← Category.assoc (spMap (dualMap (functionFieldMap (ρ' γ).hom))), spMap_dualMap_comp, spMap_dualMap_comp]
+        ← Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap (X'.presheaf.stalk x) X'.functionField))),
+        ← Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (functionFieldMap (ρ' γ).hom))), spMap_dualMap_comp, spMap_dualMap_comp]
       congr 3
       exact RingHom.ext fun z => (hstK z).symm
     have hmat : ∀ τ, (Fs.co Ft τ).map (algebraMap (X'.presheaf.stalk x) X'.functionField) * (FK x).co f₀' τ =
@@ -258,7 +258,7 @@ theorem ratLin_pull : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H 
     have hq : genericFieldPoint X' ≫ (ρ' δ).hom = spMap (functionFieldMap (ρ' δ).hom) ≫ genericFieldPoint X' :=
       (specMap_functionFieldMap _).symm
     have e1 : S (γ * δ) = F1 := frame_ext fun τ i => by
-      rw [hS (γ * δ) τ i, hF1 τ i, hS γ τ i, ← Category.assoc (spMap (dualMap (functionFieldMap (ρ' δ).hom))),
+      rw [hS (γ * δ) τ i, hF1 τ i, hS γ τ i, ← Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (functionFieldMap (ρ' δ).hom))),
         spMap_dualMap_comp, hσc]
     have e3 : T (γ * δ) = F3 := frame_ext fun τ i => by
       rw [hT (γ * δ) τ i, hF3 τ i, hT δ τ i, hmul, trv_comp hG.1 (m δ) (m γ) (hm δ).1.w _ (f₀'.tan τ i).1]
@@ -315,7 +315,7 @@ theorem ratLin_pull : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H 
       have eR : FsR = FtR := frame_ext fun τ' i => by
         have hv := GlobalTheory.LieMet.isTan_map (IsLocalRing.residue (X'.presheaf.stalk x)) rfl ((F x).tan τ' i)
         rw [hFsR τ' i, hFs τ' i, hFtR τ' i, hFt τ' i,
-          ← Category.assoc (spMap (dualMap (IsLocalRing.residue (X'.presheaf.stalk x)))), spMap_dualMap_comp, hrs]
+          ← Category.assoc (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (IsLocalRing.residue (X'.presheaf.stalk x)))), spMap_dualMap_comp, hrs]
         refine Eq.trans ?_ (trv_map hG.1 (m γ) (IsLocalRing.residue (X'.presheaf.stalk x)) _ ((F x).tan τ' i).1)
         exact (trv_eq_self hG.1 (m γ) _ (fun w hw => hfix γ x hfx _ w _ hw) hv.1).symm
       have e := EigFrame.IsMap.co τ hFsR hFtR hxR

@@ -68,18 +68,18 @@ section Inj
 variable {π : Y ⟶ X} {t : Y ⟶ Sp (DualNumber R)} (hp : IsPullback π t s (spMap (algebraMap R (DualNumber R))))
 
 def yeps {B : Type} [CommRing B] (x : Sp B ⟶ X) : Sp (DualNumber B) ⟶ Y :=
-  hp.lift (spMap (algebraMap B (DualNumber B)) ≫ x) (spMap (dualMap (pre (x ≫ s)))) (by
+  hp.lift (spMap (algebraMap B (DualNumber B)) ≫ x) (spMap (GlobalTheory.CompanionTheory.Ar.dualMap (pre (x ≫ s)))) (by
     rw [← GlobalTheory.Cris.spMap_comp, dualMap_comp_algebraMap, GlobalTheory.Cris.spMap_comp (pre (x ≫ s)) (algebraMap B (DualNumber B)),
       spMap_pre, Category.assoc])
 
 theorem yeps_fst {B : Type} [CommRing B] (x : Sp B ⟶ X) :
     yeps hp x ≫ π = spMap (algebraMap B (DualNumber B)) ≫ x := hp.lift_fst _ _ _
 
-theorem yeps_snd {B : Type} [CommRing B] (x : Sp B ⟶ X) : yeps hp x ≫ t = spMap (dualMap (pre (x ≫ s))) :=
+theorem yeps_snd {B : Type} [CommRing B] (x : Sp B ⟶ X) : yeps hp x ≫ t = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (pre (x ≫ s))) :=
   hp.lift_snd _ _ _
 
 theorem yeps_map {B B' : Type} [CommRing B] [CommRing B'] (ρ : B →+* B') (x : Sp B ⟶ X) :
-    yeps hp (spMap ρ ≫ x) = spMap (dualMap ρ) ≫ yeps hp x := by
+    yeps hp (spMap ρ ≫ x) = spMap (GlobalTheory.CompanionTheory.Ar.dualMap ρ) ≫ yeps hp x := by
   refine hp.hom_ext ?_ ?_
   · rw [yeps_fst, Category.assoc, yeps_fst, ← Category.assoc, ← Category.assoc, ← GlobalTheory.Cris.spMap_comp,
       ← GlobalTheory.Cris.spMap_comp, dualMap_comp_algebraMap]
@@ -87,7 +87,7 @@ theorem yeps_map {B B' : Type} [CommRing B] [CommRing B'] (ρ : B →+* B') (x :
 
 theorem valR_yeps {B : Type} [CommRing B] (x : Sp B ⟶ X) : valR (yeps hp x) ⊤ (epsFn t) = DualNumber.eps := by
   rw [epsFn, valR_cst, yeps_snd, pre_spMap]
-  ext <;> simp [dualMap]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 include hp in
 theorem mk_eq_zero_of_triv (z : Z1 (FP s)) (h : Ecl s (H1.mk _ z) π (epsFn t) (epsFn_sq t) = 0) : H1.mk _ z = 0 := by
@@ -111,15 +111,15 @@ theorem mk_eq_zero_of_triv (z : Z1 (FP s)) (h : Ecl s (H1.mk _ z) π (epsFn t) (
     linear_combination (W U' _ (yeps hp x)).snd * ((V U' _ (yeps hp x)).fst * a - (V U _ (yeps hp x)).fst * b)
   · have a := congrArg ρ (h0' U B x hx)
     have b := h0' U B' _ (hx.map ρ)
-    have e := h2 U _ _ (dualMap ρ) _ (hin U B x hx)
+    have e := h2 U _ _ (GlobalTheory.CompanionTheory.Ar.dualMap ρ) _ (hin U B x hx)
     rw [← yeps_map] at e
-    have e' : W U _ (yeps hp (spMap ρ ≫ x)) = dualMap ρ (W U _ (yeps hp x)) *
-        (1 + dualMap ρ (valR (yeps hp x) ⊤ (epsFn t)) * cv z (dualMap ρ) (yeps hp x ≫ π)) := e
+    have e' : W U _ (yeps hp (spMap ρ ≫ x)) = GlobalTheory.CompanionTheory.Ar.dualMap ρ (W U _ (yeps hp x)) *
+        (1 + GlobalTheory.CompanionTheory.Ar.dualMap ρ (valR (yeps hp x) ⊤ (epsFn t)) * cv z (GlobalTheory.CompanionTheory.Ar.dualMap ρ) (yeps hp x ≫ π)) := e
     rw [valR_yeps, yeps_fst] at e'
-    have c1 := cv_comp z (algebraMap B (DualNumber B)) (dualMap ρ) x
+    have c1 := cv_comp z (algebraMap B (DualNumber B)) (GlobalTheory.CompanionTheory.Ar.dualMap ρ) x
     rw [dualMap_comp_algebraMap, cv_comp] at c1
-    have f : ∀ c : DualNumber B, (dualMap ρ c).fst = ρ c.fst := fun _ ↦ add_zero _
-    have sn : ∀ c : DualNumber B, (dualMap ρ c).snd = ρ c.snd := fun _ ↦ zero_add _
+    have f : ∀ c : DualNumber B, (GlobalTheory.CompanionTheory.Ar.dualMap ρ c).fst = ρ c.fst := fun _ ↦ add_zero _
+    have sn : ∀ c : DualNumber B, (GlobalTheory.CompanionTheory.Ar.dualMap ρ c).snd = ρ c.snd := fun _ ↦ zero_add _
     have c2 := congrArg TrivSqZeroExt.fst c1
     have e1 := congrArg TrivSqZeroExt.fst e'
     have e2 := congrArg TrivSqZeroExt.snd e'
@@ -136,7 +136,7 @@ theorem mk_eq_zero_of_triv (z : Z1 (FP s)) (h : Ecl s (H1.mk _ z) π (epsFn t) (
     generalize (V U _ (yeps hp (spMap ρ ≫ x))).fst = v' at *
     have k : v' = v := by linear_combination v * b - v' * a
     rw [k]
-    linear_combination (cv z (dualMap ρ) (spMap (algebraMap B (DualNumber B)) ≫ x)).fst * a - c2
+    linear_combination (cv z (GlobalTheory.CompanionTheory.Ar.dualMap ρ) (spMap (algebraMap B (DualNumber B)) ≫ x)).fst * a - c2
 
 end Inj
 

@@ -19,7 +19,7 @@ namespace GlobalTheory.DualFlag
 variable {X : Scheme.{0}} {S : ShortComplex X.Modules} {r s : ℕ}
 
 theorem epi_dualMap_f (hS : S.ShortExact) (h₁ : IsVB S.X₁ r) (h₃ : IsVB S.X₃ s) :
-    Epi (dualMap S.f) := by
+    Epi (GlobalTheory.CompanionTheory.Ar.dualMap S.f) := by
   classical
   refine QCoh.epi_of_locally_app_surjective _ fun W x hx => ?_
   obtain ⟨c, hc⟩ := VBExt.exists_adaptedChart hS h₁ h₃ x
@@ -42,22 +42,22 @@ theorem shortExact_ι (fl : Vert.Flag E N) (i : Fin (N + 1)) :
     (ShortComplex.mk (fl.ι i) (cokernel.π _) (cokernel.condition _)).ShortExact :=
   { exact := ShortComplex.exact_cokernel _ }
 
-instance epi_dualMap_ι (fl : Vert.Flag E N) (i : Fin (N + 1)) : Epi (dualMap (fl.ι i)) :=
+instance epi_dualMap_ι (fl : Vert.Flag E N) (i : Fin (N + 1)) : Epi (GlobalTheory.CompanionTheory.Ar.dualMap (fl.ι i)) :=
   epi_dualMap_f (S := .mk (fl.ι i) (cokernel.π _) (cokernel.condition _)) (r := i) (s := N - i)
     (shortExact_ι fl i) (fl.isVB i) (fl.isVB_cokernel i)
 
 abbrev annSeq (fl : Vert.Flag E N) (i : Fin (N + 1)) : ShortComplex X.Modules :=
-  .mk (kernel.ι (dualMap (fl.ι i))) (dualMap (fl.ι i)) (kernel.condition _)
+  .mk (kernel.ι (GlobalTheory.CompanionTheory.Ar.dualMap (fl.ι i))) (GlobalTheory.CompanionTheory.Ar.dualMap (fl.ι i)) (kernel.condition _)
 
 theorem annSeq_shortExact (fl : Vert.Flag E N) (i : Fin (N + 1)) : (annSeq fl i).ShortExact :=
   { exact := ShortComplex.exact_of_f_is_kernel _ (kernelIsKernel _) }
 
 theorem kernel_ι_comp_dualMap (fl : Vert.Flag E N) (k : Fin N) :
-    kernel.ι (dualMap (fl.ι k.succ)) ≫ dualMap (fl.ι k.castSucc) = 0 := by
+    kernel.ι (GlobalTheory.CompanionTheory.Ar.dualMap (fl.ι k.succ)) ≫ GlobalTheory.CompanionTheory.Ar.dualMap (fl.ι k.castSucc) = 0 := by
   rw [← fl.step_ι k, dualMap_comp, kernel.condition_assoc, zero_comp]
 
 def dualFlag (fl : Vert.Flag E N) : Vert.Flag (dual E) N where
-  F j := kernel (dualMap (fl.ι j.rev))
+  F j := kernel (GlobalTheory.CompanionTheory.Ar.dualMap (fl.ι j.rev))
   ι j := kernel.ι _
   isSubbundle j := isSubbundle_of_shortExact (annSeq_shortExact fl j.rev) (fl.isVB j.rev).dual
   isVB j := by
@@ -76,7 +76,7 @@ def dualFlag (fl : Vert.Flag E N) : Vert.Flag (dual E) N where
       have := (fl.isVB (Fin.last N).rev).dual
       rw [Fin.rev_last] at this ⊢
       simpa using this
-    rw [hz.eq_of_tgt (dualMap _) 0]
+    rw [hz.eq_of_tgt (GlobalTheory.CompanionTheory.Ar.dualMap _) 0]
     infer_instance
 
 end GlobalTheory.DualFlag

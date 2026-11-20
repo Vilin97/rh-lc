@@ -16,22 +16,22 @@ noncomputable def lf {S : Scheme.{0}} {G : Over S} {R : Type} [CommRing R] {x : 
   v.left
 
 theorem sq_alg {R R' : Type} [CommRing R] [CommRing R'] (e : R →+* R') :
-    spMap (dualMap e) ≫ spMap (algebraMap R (DualNumber R)) = spMap (algebraMap R' (DualNumber R')) ≫ spMap e := by
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap e) ≫ spMap (algebraMap R (DualNumber R)) = spMap (algebraMap R' (DualNumber R')) ≫ spMap e := by
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
   congr 2
   refine RingHom.ext fun r => ?_
-  show dualMap e (algebraMap R (DualNumber R) r) = algebraMap R' (DualNumber R') (e r)
+  show GlobalTheory.CompanionTheory.Ar.dualMap e (algebraMap R (DualNumber R) r) = algebraMap R' (DualNumber R') (e r)
   rw [TrivSqZeroExt.algebraMap_eq_inl, TrivSqZeroExt.algebraMap_eq_inl]
-  ext <;> simp [dualMap]
+  ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem sq_fst {R R' : Type} [CommRing R] [CommRing R'] (e : R →+* R') :
-    spMap (TrivSqZeroExt.fstHom R' R' R').toRingHom ≫ spMap (dualMap e) =
+    spMap (TrivSqZeroExt.fstHom R' R' R').toRingHom ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap e) =
       spMap e ≫ spMap (TrivSqZeroExt.fstHom R R R).toRingHom := by
   simp only [spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp]
   congr 2
   refine RingHom.ext fun r => ?_
-  show (dualMap e r).fst = e r.fst
-  simp [dualMap]
+  show (GlobalTheory.CompanionTheory.Ar.dualMap e r).fst = e r.fst
+  simp [GlobalTheory.CompanionTheory.Ar.dualMap]
 
 theorem one_comp {S T T' : Scheme.{0}} (G : Over S) [GrpObj G] (x : T ⟶ S) (a : T' ⟶ T) :
     a ≫ (1 : Over.mk x ⟶ G).left = (1 : Over.mk (a ≫ x) ⟶ G).left := by
@@ -42,14 +42,14 @@ theorem one_comp {S T T' : Scheme.{0}} (G : Over S) [GrpObj G] (x : T ⟶ S) (a 
 
 theorem exists_bc {S : Scheme.{0}} {G : Over S} [GrpObj G] {R R' : Type} [CommRing R] [CommRing R'] (e : R →+* R')
     (z : Sp R ⟶ S) (z' : Sp R' ⟶ S) (hz : z' = spMap e ≫ z) (v : epsAt z ⟶ G) :
-    ∃ v' : epsAt z' ⟶ G, lf v' = spMap (dualMap e) ≫ lf v ∧ (IsTanAt G z v → IsTanAt G z' v') := by
+    ∃ v' : epsAt z' ⟶ G, lf v' = spMap (GlobalTheory.CompanionTheory.Ar.dualMap e) ≫ lf v ∧ (IsTanAt G z v → IsTanAt G z' v') := by
   subst hz
   have hw : lf v ≫ G.hom = spMap (algebraMap R (DualNumber R)) ≫ z := Over.w v
-  refine ⟨Over.homMk (spMap (dualMap e) ≫ lf v) ?_, rfl, fun ht => ?_⟩
-  · show (spMap (dualMap e) ≫ lf v) ≫ G.hom = spMap (algebraMap R' (DualNumber R')) ≫ spMap e ≫ z
+  refine ⟨Over.homMk (spMap (GlobalTheory.CompanionTheory.Ar.dualMap e) ≫ lf v) ?_, rfl, fun ht => ?_⟩
+  · show (spMap (GlobalTheory.CompanionTheory.Ar.dualMap e) ≫ lf v) ≫ G.hom = spMap (algebraMap R' (DualNumber R')) ≫ spMap e ≫ z
     rw [Category.assoc, hw, ← Category.assoc, sq_alg, Category.assoc]
   · have ht' : spMap (TrivSqZeroExt.fstHom R R R).toRingHom ≫ lf v = (1 : Over.mk z ⟶ G).left := ht
-    show spMap (TrivSqZeroExt.fstHom R' R' R').toRingHom ≫ spMap (dualMap e) ≫ lf v =
+    show spMap (TrivSqZeroExt.fstHom R' R' R').toRingHom ≫ spMap (GlobalTheory.CompanionTheory.Ar.dualMap e) ≫ lf v =
       (1 : Over.mk (spMap e ≫ z) ⟶ G).left
     rw [← Category.assoc, sq_fst, Category.assoc, ht']
     exact one_comp G z (spMap e)
@@ -84,7 +84,7 @@ theorem PositivityTheory.Xgn.height_bound_complex_conjugate : ∀ (E : Type) [Fi
   obtain ⟨v₀', hv₀', -⟩ := exists_bc (starRingEnd ℂ) z _ rfl v₀
   obtain ⟨a, ha, -⟩ := exists_bc (starRingEnd ℂ) (𝟙 (Sp ℂ)) _ rfl (v ≫ P.τ.q ≫ P.e.hom)
   obtain ⟨b, hb₁, -⟩ := exists_bc (starRingEnd ℂ) (𝟙 (Sp ℂ)) _ hid (v ≫ P.τ.q ≫ P.e.hom)
-  have hv'' : lf v' ≫ mK.φ = spMap (dualMap (starRingEnd ℂ)) ≫ lf v := hv'.trans hu
+  have hv'' : lf v' ≫ mK.φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (starRingEnd ℂ)) ≫ lf v := hv'.trans hu
   have hv₀'' : lf v ≫ P.m.φ = lf v₀ := hv₀
   have e₁ : lf v' ≫ P'.m.φ = lf v₀' := by
     rw [← c1, ← Category.assoc, hv'', Category.assoc, hv₀'', hv₀']

@@ -33,8 +33,8 @@ theorem exists_isProjMat {X : Scheme.{0}} {t : SAB H X} {R : Type} [CommRing R] 
   obtain ⟨c, hc1, hc2⟩ := exists_dual b (discr_ne_zero E)
   have hbas : ∀ w, IsTanAtG t ξ w → ∃ a, IsCombAtG t ξ e a w := fun w hw => by
     have h0 : spMap (RingHom.id R) = 𝟙 (Sp R) := Spec.map_id _
-    have h1 : spMap (dualMap (RingHom.id R)) = 𝟙 _ := by
-      have : dualMap (RingHom.id R) = RingHom.id _ := by ext s <;> simp [dualMap]
+    have h1 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R)) = 𝟙 _ := by
+      have : GlobalTheory.CompanionTheory.Ar.dualMap (RingHom.id R) = RingHom.id _ := by ext s <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap]
       rw [this]
       exact Spec.map_id _
     have := he.2 R (RingHom.id R) w (by rwa [h0, Category.id_comp])
@@ -49,7 +49,7 @@ theorem exists_isProjMat {X : Scheme.{0}} {t : SAB H X} {R : Type} [CommRing R] 
   have hA : ∀ a k, actR t.act a (T k) = ∑ j, φ (ρ a k j) • T j := fun a k => by
     refine (GlobalTheory.LieMet.isComb_iff T _ _).1 ?_
     have := GlobalTheory.GradedPieces.comb_map φ rfl (hρ a k)
-    have e1 : spMap (dualMap φ) ≫ (tv (actR t.act a (GlobalTheory.LieMet.tanOf (he.1 k)))).left =
+    have e1 : spMap (GlobalTheory.CompanionTheory.Ar.dualMap φ) ≫ (tv (actR t.act a (GlobalTheory.LieMet.tanOf (he.1 k)))).left =
         (tv (actR t.act a (T k))).left := (Category.assoc _ _ _).symm
     rw [e1] at this
     exact this

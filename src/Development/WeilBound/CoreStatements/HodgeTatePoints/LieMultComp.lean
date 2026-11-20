@@ -151,8 +151,8 @@ theorem key_integral : ∀ κ : GlobalTheory.KeyCl.Rule, GlobalTheory.KeyCl.Homo
     · simpa only [GlobalTheory.KeyCl.ArchNorm, _root_.mul_one] using k₅
   have := t.semi.smooth
   obtain ⟨u, hu⟩ := key_isUnit hκ (GlobalTheory.KeyCl.rule_pow κ k₁ k₂ k₄) t th v x
-    ⟨φ, he, w, rfl, dualMap (algebraMap R K), h1, h2, h3, h4,
-      fun a => by ext <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl], by ext <;> simp [dualMap], h5⟩
+    ⟨φ, he, w, rfl, GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R K), h1, h2, h3, h4,
+      fun a => by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap, TrivSqZeroExt.algebraMap_eq_inl], by ext <;> simp [GlobalTheory.CompanionTheory.Ar.dualMap], h5⟩
     hv (nonzeroClosed_of_primitive th hprim)
   exact ⟨u, hu.symm⟩
 

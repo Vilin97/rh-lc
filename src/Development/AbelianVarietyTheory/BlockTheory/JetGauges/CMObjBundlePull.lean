@@ -51,7 +51,7 @@ abbrev locRing (𝔭 : HeightOneSpectrum (𝓞 K)) : Subalgebra (𝓞 K) K :=
 def IntegralAt (P : Out.PolAV (Sp (𝓞 K))) (v : epsAt (genPt K) ⟶ P.A) (𝔭 : HeightOneSpectrum (𝓞 K)) (x : K) :
     Prop :=
   ∃ u : epsAt (spMap (algebraMap (𝓞 K) (locRing 𝔭))) ⟶ P.A, IsTan _ u ∧
-    spMap (dualMap (locRing 𝔭).val.toRingHom) ≫ u.left = spMap (epsScaleR x) ≫ v.left
+    spMap (GlobalTheory.CompanionTheory.Ar.dualMap (locRing 𝔭).val.toRingHom) ≫ u.left = spMap (epsScaleR x) ≫ v.left
 
 def LineLocAt (P : Out.PolAV (Sp (𝓞 K))) (v : epsAt (genPt K) ⟶ P.A) (ℓ : MLine K)
     (𝔭 : HeightOneSpectrum (𝓞 K)) : Prop :=
@@ -61,7 +61,7 @@ def LineArchAt (P : Out.PolAV (Sp (𝓞 K))) (v : epsAt (genPt K) ⟶ P.A) (ℓ 
   ∃ (A : Over (Sp ℂ)) (_ : GrpObj A) (pr : A.left ⟶ P.A.left) (u : HolUnif A (P.L.pull pr) P.g)
     (Hm : Matrix (Fin P.g) (Fin P.g) ℂ) (χ : u.Λ → ℂ) (vσ : epsR ℂ ⟶ A) (w : Fin P.g → ℂ),
     IsGrpPullback A P.A (spMap (σ.comp (algebraMap (𝓞 K) K))) pr ∧ u.IsAH Hm χ ∧
-    vσ.left ≫ pr = spMap (dualMap σ) ≫ v.left ∧ u.IsDiff w vσ ∧
+    vσ.left ≫ pr = spMap (GlobalTheory.CompanionTheory.Ar.dualMap σ) ≫ v.left ∧ u.IsDiff w vσ ∧
     ℓ.n σ ^ 2 = Real.pi * (w ⬝ᵥ Hm.mulVec (star w)).re
 
 def IsLineOf (P : Out.PolAV (Sp (𝓞 K))) (v : epsAt (genPt K) ⟶ P.A) (ℓ : MLine K) : Prop :=

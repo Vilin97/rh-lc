@@ -24,7 +24,7 @@ def KeyAtVia {Y : Model Xo c β} (M : GChart Y) {R : Type} [CommRing R] (z : Sp 
       (φ.appLE _ _ h).hom (M.θ (j PUnit.unit)) =
         (show Γ(x.P.A.left, (Y.t.PP.L.pull φ).U j ⊓ x.P.L.U i) from (w.s (j, i)).val) *
           resG _ inf_le_right (x.th.f i)) ∧
-    ∀ i, (x.v i).left ≫ φ = spMap (dualMap (ev z M.U hz)) ≫ M.v₀ (i.cast hg)
+    ∀ i, (x.v i).left ≫ φ = spMap (GlobalTheory.CompanionTheory.Ar.dualMap (ev z M.U hz)) ≫ M.v₀ (i.cast hg)
 
 def ArcFib (Y : Model Xo c β) (bF : c.F →+* ℂ) {g : ℕ} {ty : Fin g → (E →+* ℂ)}
     (Fu : FamilyUnif Xo (bF.comp (IntermediateField.inclusion c.le).toRingHom) ty) (i : Fin Fu.n)
