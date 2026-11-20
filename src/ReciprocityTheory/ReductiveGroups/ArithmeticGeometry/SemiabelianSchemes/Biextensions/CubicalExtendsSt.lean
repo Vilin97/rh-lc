@@ -63,8 +63,8 @@ def lemmaBSt : Prop :=
     (G : Over (Spec (CommRingCat.of V))) [GrpObj G] [IsCommMonObj G]
     [Smooth G.hom] [IsSeparated G.hom] [QuasiCompact G.hom] [GeometricallyConnected G.hom]
     (N : LB G.left), N.IsLB → ∀ (s : LB.Sec N) (π : V), Irreducible π →
-    (∀ i (e : ℕ), s.f i ∈ Ideal.span {(G.left.presheaf.map (homOfLE (le_top :
-        N.U i ≤ ⊤)).op).hom ((G.hom.app ⊤).hom ((Scheme.ΓSpecIso (CommRingCat.of V)).inv.hom π))} ^ e) →
+    (∀ i (e : ℕ), s.f i ∈ Ideal.span (Set.singleton ((G.left.presheaf.map (homOfLE (le_top :
+        N.U i ≤ ⊤)).op).hom ((G.hom.app ⊤).hom ((Scheme.ΓSpecIso (CommRingCat.of V)).inv.hom π)))) ^ e) →
     ∀ i, s.f i = 0
 
 end
