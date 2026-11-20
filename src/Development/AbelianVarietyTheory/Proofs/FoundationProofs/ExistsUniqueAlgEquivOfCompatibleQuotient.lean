@@ -12,7 +12,6 @@ theorem isPrecomplete_of_finite {R : Type*} [CommRing R] (I : Ideal R) [IsAdicCo
   intro y
   obtain ⟨t, rfl⟩ := AdicCompletion.ofTensorProduct_surjective_of_finite I M y
   induction t with
-  | zero => exact ⟨0, by simp⟩
   | tmul a m =>
     obtain ⟨r, rfl⟩ := AdicCompletion.of_surjective I R a
     refine ⟨r • m, ?_⟩
@@ -190,7 +189,6 @@ theorem comul_one_tmul_eq_distribBaseChange (S : Type*) [CommRing S] [Algebra R 
       AlgebraTensorModule.distribBaseChange R S A A (1 ⊗ₜ Coalgebra.comul a) := by
   rw [TensorProduct.comul_tmul]
   induction (Coalgebra.comul a : A ⊗[R] A) with
-  | zero => simp
   | tmul x y => simp
   | add x y hx hy => simp only [tmul_add, map_add, hx, hy]
 
@@ -218,7 +216,6 @@ theorem existsUnique_bialgHom_of_compatible_tensor [Module.Finite R B]
     simp only [AlgHom.comp_apply, Bialgebra.comulAlgHom_apply]
     rw [← this]
     induction (Coalgebra.comul a : A ⊗[R] A) with
-    | zero => simp
     | tmul x y => simp [hg]
     | add x y hx hy => simp only [tmul_add, map_add, hx, hy]
 

@@ -13,7 +13,6 @@ theorem UpperTheory.V.CA.d_comm :
   have hπι : ∀ c z, π c (ι z) = z := by
     intro c z
     induction z with
-    | zero => simp
     | tmul s e => simp [π, ι, ev, i]
     | add a b ha hb => simp only [map_add, ha, hb]
   let t : S[X] ⊗[A] E := X ⊗ₜ 1

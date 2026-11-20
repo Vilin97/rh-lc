@@ -44,7 +44,6 @@ theorem PDivGroup.semiHom_app_eq_conn_part :
         (LinearMap.lTensor (C.A n) (counit (R := k)) c))) := by
     intro c
     induction c with
-    | zero => simp
     | add c d hc hd => simp only [map_add, hc, hd]
     | tmul b c =>
       rw [TensorProduct.map_tmul, Algebra.TensorProduct.lift_tmul, LinearMap.lTensor_tmul,

@@ -140,7 +140,6 @@ theorem exists_const_add (P : AbelianDeRham) {A : Over (Sp R)} [GrpObj A] {g : �
     ∃ u v : primDR A, p = (constMor A).pull u + (DualNumber.eps : DualNumber R) • (constMor A).pull v := by
   obtain ⟨z, rfl⟩ := constMor_surjective P hA hg p
   induction z with
-  | zero => exact ⟨0, 0, by simp only [map_zero, smul_zero, add_zero]⟩
   | add x y hx hy =>
     obtain ⟨u, v, e⟩ := hx
     obtain ⟨u', v', e'⟩ := hy

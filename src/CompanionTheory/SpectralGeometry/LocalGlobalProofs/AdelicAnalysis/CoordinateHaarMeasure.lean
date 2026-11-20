@@ -56,7 +56,6 @@ theorem sigR_tmul (σ : E →ₐ[F] E) (r : R) (e : E) :
 theorem sigR_sigR {σ : E →ₐ[F] E} (hinv : ∀ x, σ (σ x) = x) (y : R ⊗[F] E) :
     sigR R σ (sigR R σ y) = y := by
   induction y with
-  | zero => simp
   | tmul r e => rw [sigR_tmul, sigR_tmul, hinv]
   | add a b ha hb => rw [map_add, map_add, ha, hb]
 

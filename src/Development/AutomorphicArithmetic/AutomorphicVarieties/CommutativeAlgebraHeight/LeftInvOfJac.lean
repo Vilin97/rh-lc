@@ -17,7 +17,6 @@ private theorem left_inv_of_jac {A E K : Type} [CommRing A] [Ring E] [Algebra A 
   have hw : ∀ y : E ⊗[A] K, y * w ∈ Module.jacobson E (E ⊗[A] K) := by
     intro y
     induction y with
-    | zero => simp
     | add a b ha hb => rw [add_mul]; exact add_mem ha hb
     | tmul e a =>
       rw [Finset.mul_sum]
@@ -99,7 +98,6 @@ theorem UpperTheory.V.CA.d_rad :
       (Algebra.TensorProduct.includeRight : E →ₐ[A] ResidueField A ⊗[A] E).toRingHom
     haveI : RingHomSurjective f := ⟨fun t => by
       induction t with
-      | zero => exact ⟨0, map_zero _⟩
       | add a b ha hb =>
         obtain ⟨a, rfl⟩ := ha
         obtain ⟨b, rfl⟩ := hb

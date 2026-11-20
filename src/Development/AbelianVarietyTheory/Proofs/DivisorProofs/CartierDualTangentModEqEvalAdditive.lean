@@ -11,7 +11,6 @@ private theorem dualDistrib_eq_mul'_map {O M N : Type} [CommRing O] [AddCommGrou
     [AddCommGroup N] [Module O N] (φ : Module.Dual O M) (ψ : Module.Dual O N) (t : M ⊗[O] N) :
     dualDistrib O M N (φ ⊗ₜ ψ) t = LinearMap.mul' O O (TensorProduct.map φ ψ t) := by
   induction t with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul m n => simp [dualDistrib_apply]
 

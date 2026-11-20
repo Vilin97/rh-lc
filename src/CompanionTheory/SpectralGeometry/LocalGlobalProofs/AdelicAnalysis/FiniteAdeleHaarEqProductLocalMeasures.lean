@@ -23,7 +23,6 @@ theorem cK_map {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Algebra F
     (b : Module.Basis (Fin d) F E) (f : R →ₐ[F] R') (y : R ⊗[F] E) (k : Fin d) :
     cK R' b (Algebra.TensorProduct.map f (AlgHom.id F E) y) k = f (cK R b y k) := by
   induction y with
-  | zero => simp [cK]
   | add x y hx hy =>
     simp only [cK] at hx hy ⊢
     simp [map_add, hx, hy]

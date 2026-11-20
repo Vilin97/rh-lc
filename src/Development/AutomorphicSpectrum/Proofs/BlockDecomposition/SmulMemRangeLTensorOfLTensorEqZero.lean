@@ -56,7 +56,6 @@ theorem smul_mem_range_lTensor_of_lTensor_eq_zero :
       r (k + 1) • (LinearMap.ker d₁).subtype.lTensor N u ∈ LinearMap.range (d₀.lTensor N) := by
     intro u
     induction u with
-    | zero => simp
     | tmul n z =>
       obtain ⟨y, hy⟩ := h1 z z.2 (k + 1)
       exact ⟨n ⊗ₜ y, by simp [hy, TensorProduct.tmul_smul]⟩

@@ -55,7 +55,6 @@ def toTens {P Q : Type} [AddCommGroup P] [Module ℂ P] [AddCommGroup Q] [Module
 theorem toTens_surjective {P Q : Type} [AddCommGroup P] [Module ℂ P] [AddCommGroup Q] [Module ℂ Q] :
     Function.Surjective (toTens (P := P) (Q := Q)) := fun x => by
   induction x with
-  | zero => exact ⟨0, map_zero _⟩
   | tmul p q => exact ⟨Finsupp.single (((), p), q) 1, by simp [toTens]⟩
   | add x y hx hy =>
     obtain ⟨a, rfl⟩ := hx

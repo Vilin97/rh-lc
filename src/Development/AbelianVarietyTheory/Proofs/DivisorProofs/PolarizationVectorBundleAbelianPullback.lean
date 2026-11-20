@@ -462,7 +462,6 @@ theorem exists_pairing {R K : Type} [CommRing R] [CommRing K] [Algebra R K] {B :
   refine ⟨β, fun s y => ?_, hβ⟩
   obtain ⟨z, rfl⟩ := hm.2 s
   induction z with
-  | zero => simp
   | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
   | tmul x c =>
     rw [liftSemi_tmul, map_smul, map_smul, map_smul, LinearMap.smul_apply]

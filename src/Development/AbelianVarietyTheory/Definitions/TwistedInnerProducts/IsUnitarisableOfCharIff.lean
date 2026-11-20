@@ -255,7 +255,6 @@ theorem isSmooth_extTensor [TopologicalSpace H] [IsTopologicalGroup H] {ρ : Rep
   intro x
   show x ∈ smoothPart (extTensor ρ σ)
   induction x with
-  | zero => exact zero_mem _
   | add x y hx hy => exact add_mem hx hy
   | tmul v w =>
     refine mem_smoothPart_of_nhds (Filter.mem_of_superset

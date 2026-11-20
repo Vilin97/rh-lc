@@ -50,10 +50,8 @@ abbrev gFst : A ⊗[k] A →ₐ[k] A ⊗[k] (A ⊗[k] A) :=
 theorem algAssoc_apply (w : (A ⊗[k] A) ⊗[k] A) :
     Algebra.TensorProduct.assoc k k k A A A w = TensorProduct.assoc k A A A w := by
   induction w with
-  | zero => simp
   | tmul x b =>
     induction x with
-    | zero => simp
     | tmul a a' => simp
     | add x y hx hy => simp only [add_tmul, map_add, hx, hy]
   | add x y hx hy => simp only [map_add, hx, hy]
@@ -61,27 +59,23 @@ theorem algAssoc_apply (w : (A ⊗[k] A) ⊗[k] A) :
 theorem gSumL_apply (t : A ⊗[k] A) :
     gSumL k A t = TensorProduct.assoc k A A A (Coalgebra.comul.rTensor A t) := by
   induction t with
-  | zero => simp
   | tmul a b => simp [algAssoc_apply]
   | add x y hx hy => simp only [map_add, hx, hy]
 
 theorem gSumR_apply (t : A ⊗[k] A) : gSumR k A t = Coalgebra.comul.lTensor A t := by
   induction t with
-  | zero => simp
   | tmul a b => simp
   | add x y hx hy => simp only [map_add, hx, hy]
 
 theorem gFst_apply (t : A ⊗[k] A) :
     gFst k A t = ((TensorProduct.mk k A A).flip 1).lTensor A t := by
   induction t with
-  | zero => simp
   | tmul a b => simp
   | add x y hx hy => simp only [map_add, hx, hy]
 
 theorem gFst_eq_assoc (t : A ⊗[k] A) :
     gFst k A t = Algebra.TensorProduct.assoc k k k A A A (t ⊗ₜ 1) := by
   induction t with
-  | zero => simp
   | tmul a b => simp
   | add x y hx hy => simp only [map_add, hx, hy, add_tmul]
 

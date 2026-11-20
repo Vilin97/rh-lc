@@ -10,7 +10,6 @@ theorem UpperTheory.V.CA.d_toDet_ofRep :
   · change (GDet.repAlg ρ S (ofT A G S x)).det = (Det.repS (GDet.repAlg ρ A) S x).det
     congr 1
     induction x with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul s y =>
       rw [ofT_tmul, Det.repS_tmul, map_smul]
@@ -23,7 +22,6 @@ theorem UpperTheory.V.CA.d_toDet_ofRep :
       D.D S (ofT A G S (Algebra.TensorProduct.map (AlgHom.id S S) (MonoidAlgebra.mapDomainAlgHom A A φ) x))
     congr 1
     induction x with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul s y =>
       induction y using MonoidAlgebra.induction_linear with

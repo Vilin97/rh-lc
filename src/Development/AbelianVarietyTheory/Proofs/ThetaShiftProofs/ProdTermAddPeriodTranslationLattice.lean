@@ -65,17 +65,17 @@ variable {a} in
 
 theorem prodTerm_add_Pw_y (ha : ∑ i, a i = 0) (m : Fin n → A.X) (y : A.X) (v : A.V) :
     A.prodTerm th w a (fun i => m i + y) v =
-      (A.psi y * eTwoPi (v.1 y) * eTwoPi (w * A.q y)) ^ n * A.prodTerm th w a m (v + A.Pw w (La.mk y 0 0)) := by
-  have h1 : ∏ i, eTwoPi ((a i).1 y) = 1 := by
-    rw [← e_sum, ← AddMonoidHom.finset_sum_apply, ← Prod.fst_sum, ha]; simp
-  have h2 : ∀ i, A.term 1 0 th (m i + y) (v + a i) * eTwoPi (w * A.exponent 1 0 (m i + y)) =
-      eTwoPi ((a i).1 y) * ((A.psi y * eTwoPi (v.1 y) * eTwoPi (w * A.q y)) *
-        (A.term 1 0 th (m i) (v + A.Pw w (La.mk y 0 0) + a i) * eTwoPi (w * A.exponent 1 0 (m i)))) := fun i => by
-    rw [← term_add_Pw_y, add_right_comm v, Prod.fst_add, AddMonoidHom.add_apply, e_add]
-    ring
-  simp only [prodTerm, h2]
-  rw [Finset.prod_mul_distrib, h1, one_mul, Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ,
-    Fintype.card_fin]
+      (A.psi y * eTwoPi (v.1 y) * eTwoPi (w * A.q y)) ^ n * A.prodTerm th w a m (v + A.Pw w (La.mk y 0 0)) := by sorry
+
+
+
+
+
+
+
+
+
+
 
 variable {a th} in
 
@@ -130,13 +130,13 @@ theorem hasSum_prodTerm (v : A.V) :
   exact h2 ▸ h1.of_norm.hasSum
 
 theorem locally_normal_prodTerm (v : A.V) :
-    ∃ t ∈ 𝓝 v, ∃ u : (Fin n → A.X) → ℝ, Summable u ∧ ∀ m, ∀ v' ∈ t, ‖A.prodTerm th w a m v'‖ ≤ u m := by
-  choose t ht u hu hb using fun i => locally_normal_right hT one_ne_zero h hw (v + a i)
-  refine ⟨⋂ i, (fun v' => v' + a i) ⁻¹' t i, iInter_mem.2 fun i =>
-    (continuous_add_right (a i)).continuousAt (ht i), fun m => ∏ i, u i (m i),
-    (summable_norm_pi_prod_and_tsum n u fun i => (hu i).norm).1.of_norm, fun m v' hv' => ?_⟩
-  rw [prodTerm, norm_prod]
-  exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => hb i _ _ (Set.mem_iInter.1 hv' i)
+    ∃ t ∈ 𝓝 v, ∃ u : (Fin n → A.X) → ℝ, Summable u ∧ ∀ m, ∀ v' ∈ t, ‖A.prodTerm th w a m v'‖ ≤ u m := by sorry
+
+
+
+
+
+
 
 variable {a}
 

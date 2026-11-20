@@ -362,7 +362,6 @@ theorem liftPts_natural {K : Over S} [GrpObj K] [IsCommMonObj K] {c : OAct O K}
   obtain ⟨z, rfl⟩ := (h.equiv T).surjective y
   rw [← h.natural]
   induction z with
-  | zero => simp
   | tmul m x => ext; simp [liftPts_equiv_tmul]
   | add z w hz hw => simp only [map_add, hz, hw]
 
@@ -409,7 +408,6 @@ theorem hom_equiv_comp_map (φ : M →ₗ[O] M') {f : G ⟶ G'} (hf : IsLinearHo
     (h.equiv T z).hom ≫ h.map h' φ hf =
       (h'.equiv T (TensorProduct.map φ (Pts.post hf T) z)).hom := by
   induction z with
-  | zero => simp
   | tmul m x => simp
   | add z w hz hw => simp only [map_add, Pts.hom_add, MonObj.mul_comp, hz, hw]
 
@@ -588,7 +586,6 @@ def congrLeft (h : IsTensor H b G a M) (e : M' ≃ₗ[O] M) : IsTensor H b G a M
     simp only [LinearEquiv.trans_apply, ← h.natural]
     congr 1
     induction z with
-    | zero => simp
     | tmul m x => simp
     | add z w hz hw => simp only [map_add, hz, hw]
 
@@ -602,7 +599,6 @@ def congrRight (h : IsTensor H b G a M) (e : G' ≅ G) (he : IsLinearHom a' a e.
     simp only [LinearEquiv.trans_apply, ← h.natural]
     congr 1
     induction z with
-    | zero => simp
     | tmul m x =>
       simp only [LinearMap.lTensor_tmul, LinearEquiv.lTensor_tmul]
       congr 1
@@ -626,7 +622,6 @@ def self (a : OAct O G) : IsTensor G a G a O where
   equiv T := TensorProduct.lid O (Pts a T)
   natural u z := by
     induction z with
-    | zero => simp
     | tmul m x => simp
     | add z w hz hw => simp only [map_add, hz, hw]
 
@@ -678,7 +673,6 @@ def algEquiv (T : Over S) : M ⊗[O] Pts a T ≃ₗ[O'] Pts (h.algAct O') T wher
     have := (h.algAct O').hom c
     apply Pts.ext
     induction z with
-    | zero => simp
     | tmul m x => simp [smul_tmul']
     | add z w hz hw =>
       simp only [Pts.hom_mk, RingHom.id_apply, Pts.hom_smul] at hz hw ⊢
@@ -713,11 +707,9 @@ def trans {K : Over S} [GrpObj K] [IsCommMonObj K] {c : OAct O' K} {N : Type} [A
       Pts.pre c u (k.equiv T ((h.algEquiv O' T).lTensor N
         (AlgebraTensorModule.assoc O O' O' N M _ z)))
     induction z with
-    | zero => simp
     | add z w hz hw => simp only [map_add, hz, hw]
     | tmul w x =>
       induction w with
-      | zero => simp
       | add v w hv hw => simp only [add_tmul, map_add, hv, hw]
       | tmul n m => ext; simp
 
@@ -822,7 +814,6 @@ def prod (h : IsTensor H b G a M) (h' : IsTensor H' b' G a M') :
     (Pts.prodEquiv b b' T).symm
   natural u z := by
     induction z with
-    | zero => simp only [map_zero]
     | tmul m x =>
       obtain ⟨m, m'⟩ := m
       apply Pts.ext
@@ -838,7 +829,6 @@ def pow {n : ℕ} (p : IsPowGrp G' G n) (a : OAct O G) :
     (Pts.powEquiv p a T).symm
   natural u z := by
     induction z with
-    | zero => simp
     | tmul m x => exact Pts.ext (pow_hom_ext p fun i ↦ by simp)
     | add z w hz hw => simp only [map_add, hz, hw]
 
@@ -941,7 +931,6 @@ def baseChange (h : IsTensor H b G a M) (hφ : IsLinearPullback a₁ a f φ)
       ← h.natural]
     congr 1
     induction z with
-    | zero => simp only [map_zero]
     | tmul m x =>
       simp only [LinearMap.lTensor_tmul, LinearEquiv.lTensor_tmul, Pts.pullbackEquiv_pre]
     | add z w hz hw => simp only [map_add, hz, hw]

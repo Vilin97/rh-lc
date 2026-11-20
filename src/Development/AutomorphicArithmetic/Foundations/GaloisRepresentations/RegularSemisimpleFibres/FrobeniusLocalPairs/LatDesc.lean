@@ -194,7 +194,6 @@ private theorem fin_desc (σ : F₁ ≃ₐ[F₀] F₁) (d : ℕ) (hG : UpperTheo
     intro m _
     obtain ⟨z, rfl⟩ := hsurj m
     induction z with
-    | zero => simp
     | add a b ha hb =>
       rw [map_add]
       exact add_mem (ha (Submodule.mem_top)) (hb (Submodule.mem_top))

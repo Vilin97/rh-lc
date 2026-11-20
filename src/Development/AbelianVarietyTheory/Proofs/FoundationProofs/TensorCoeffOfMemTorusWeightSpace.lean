@@ -31,7 +31,6 @@ theorem exists_eq_sum_tensorCoeff (t : M ⊗[R] R[X]) :
   have hE : ∀ t x, E t x = tensorCoeff R M x t := by
     intro t x
     induction t with
-    | zero => simp
     | add a b ha hb => simp [ha, hb]
     | tmul m p => simp [E, finsuppScalarRight_apply_tmul_apply]
   refine ⟨(E t).support, fun x hx => by rw [← hE]; simpa using hx, E.injective ?_⟩
@@ -65,7 +64,6 @@ theorem IsCoaction.tensorCoeff_mem {ρ : M →ₗ[R] M ⊗[R] R[X]} (h : IsCoact
       ρ (tensorCoeff R M x t) := by
     intro t
     induction t with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul m p => simp
   have h2 : ∀ t : M ⊗[R] R[X], tensorCoeff R (M ⊗[R] R[X]) x
@@ -73,7 +71,6 @@ theorem IsCoaction.tensorCoeff_mem {ρ : M →ₗ[R] M ⊗[R] R[X]} (h : IsCoact
       tensorCoeff R M x t ⊗ₜ single x 1 := by
     intro t
     induction t with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb, add_tmul]
     | tmul m p =>
       induction p using AddMonoidAlgebra.induction_linear with

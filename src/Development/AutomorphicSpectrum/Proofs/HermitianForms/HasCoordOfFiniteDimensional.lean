@@ -145,13 +145,11 @@ theorem sigR_tmul (r : R) (x : E) : sigR R σ (r ⊗ₜ[F] x) = r ⊗ₜ[F] σ x
 
 theorem sigR_invol (hσ : ∀ x, σ (σ x) = x) (z : R ⊗[F] E) : sigR R σ (sigR R σ z) = z := by
   induction z with
-  | zero => simp
   | tmul r x => rw [sigR_tmul, sigR_tmul, hσ]
   | add a b ha hb => rw [map_add, map_add, ha, hb]
 
 theorem sigR_smul (r : R) (z : R ⊗[F] E) : sigR R σ (r • z) = r • sigR R σ z := by
   induction z with
-  | zero => simp
   | tmul s x => simp [TensorProduct.smul_tmul', sigR_tmul]
   | add a b ha hb => rw [smul_add, map_add, ha, hb, map_add, smul_add]
 
@@ -163,7 +161,6 @@ def sigLin : R ⊗[F] E →ₗ[R] R ⊗[F] E where
 theorem trace_sigR (hσ : ∀ x, σ (σ x) = x) (z : R ⊗[F] E) :
     Algebra.trace R (R ⊗[F] E) (sigR R σ z) = Algebra.trace R (R ⊗[F] E) z := by
   induction z with
-  | zero => simp
   | tmul r x =>
     rw [sigR_tmul, trace_tmul, trace_tmul]
     congr 2

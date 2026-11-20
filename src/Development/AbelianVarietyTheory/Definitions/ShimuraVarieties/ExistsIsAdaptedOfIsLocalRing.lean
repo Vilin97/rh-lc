@@ -321,21 +321,17 @@ theorem nonempty_baseChange_step_equiv (F : FullFlag R M n) (S : Type*) [CommRin
   refine ⟨subQuotEquivOfSplitting (π.baseChange S) (σ.baseChange S) (fun l => ?_) (fun x hx => ?_)
     (fun l => ?_) (fun x hx => ?_)⟩
   · induction l with
-    | zero => simp
     | tmul a l => simp [h₁]
     | add x y hx hy => simp [hx, hy]
   · obtain ⟨x, rfl⟩ := hx
     induction x with
-    | zero => simp
     | tmul a l => simp [h₂ l l.2]
     | add x y hx hy => simp only [map_add, hx, hy, add_zero]
   · induction l with
-    | zero => simp
     | tmul a l => exact Submodule.tmul_mem_baseChange_of_mem _ (h₃ l)
     | add x y hx hy => rw [map_add]; exact add_mem hx hy
   · obtain ⟨x, rfl⟩ := hx
     induction x with
-    | zero => simp
     | tmul a l =>
       simp only [LinearMap.baseChange_tmul, Submodule.subtype_apply, ← tmul_sub]
       exact Submodule.tmul_mem_baseChange_of_mem _ (h₄ l l.2)

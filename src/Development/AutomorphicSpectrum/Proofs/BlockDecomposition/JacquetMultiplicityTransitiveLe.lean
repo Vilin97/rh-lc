@@ -57,7 +57,6 @@ theorem jhMult_extLeft_add_le {ρ : Representation ℂ G V} {S T : Subrepresenta
     (Module.Flat.rTensor_preserves_injective_linearMap _ (Submodule.inclusion_injective h))
     (LinearMap.rTensor_surjective W (Submodule.Quotient.mk_surjective _)) fun x => ?_
   induction x with
-  | zero => simp
   | add x y hx hy => simpa using congrArg₂ (· + ·) hx hy
   | tmul v w =>
     show (p (ι v)) ⊗ₜ[ℂ] w = 0
@@ -75,7 +74,6 @@ theorem jhMult_extRight_add_le {ρ : Representation ℂ H V} {S T : Subrepresent
     (Module.Flat.lTensor_preserves_injective_linearMap _ (Submodule.inclusion_injective h))
     (LinearMap.lTensor_surjective W (Submodule.Quotient.mk_surjective _)) fun x => ?_
   induction x with
-  | zero => simp
   | add x y hx hy => simpa using congrArg₂ (· + ·) hx hy
   | tmul v w =>
     show v ⊗ₜ[ℂ] (p (ι w)) = 0

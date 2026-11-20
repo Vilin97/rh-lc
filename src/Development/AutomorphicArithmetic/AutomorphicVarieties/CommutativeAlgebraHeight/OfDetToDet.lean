@@ -61,7 +61,6 @@ def ofRep {ι : Type} [Fintype ι] [DecidableEq ι] (h : Fintype.card ι = n) (r
   nat S T _ _ _ _ φ x := by
     have : repS r T (Algebra.TensorProduct.map φ (AlgHom.id A E) x) = φ.toRingHom.mapMatrix (repS r S x) := by
       induction x with
-      | zero => simp
       | tmul s y => ext a b; simp [repS_tmul]
       | add a b ha hb => simp only [map_add, ha, hb]
     exact (congrArg Matrix.det this).trans (RingHom.map_det φ.toRingHom _).symm
@@ -94,10 +93,8 @@ def baseChange (B : Type) [CommRing B] [Algebra A B] : Det n B (B ⊗[A] E) wher
     have : cancel A E B T (Algebra.TensorProduct.map φ (AlgHom.id B _) x) =
         Algebra.TensorProduct.map (φ.restrictScalars A) (AlgHom.id A E) (cancel A E B S x) := by
       induction x with
-      | zero => simp
       | tmul s y =>
         induction y with
-        | zero => simp
         | tmul b z => simp [cancel_tmul]
         | add a b ha hb => simp only [tmul_add, map_add, ha, hb]
       | add a b ha hb => simp only [map_add, ha, hb]
@@ -126,7 +123,6 @@ def op : Det n A Eᵐᵒᵖ where
     have : unopS A E T (Algebra.TensorProduct.map φ (AlgHom.id A _) x) =
         Algebra.TensorProduct.map φ (AlgHom.id A E) (unopS A E S x) := by
       induction x with
-      | zero => simp
       | add a b ha hb => simp only [map_add, ha, hb]
       | tmul s a => simp [unopS]
     exact (congrArg (D.D T) this).trans (D.nat S T φ _)
@@ -166,7 +162,6 @@ theorem ofT_toT (x : MonoidAlgebra S G) : ofT A G S (toT A G S x) = x := by
 
 theorem toT_ofT (x : S ⊗[A] MonoidAlgebra A G) : toT A G S (ofT A G S x) = x := by
   induction x with
-  | zero => simp
   | add a b ha hb => simp only [map_add, ha, hb]
   | tmul s y =>
     induction y using MonoidAlgebra.induction_linear with
@@ -188,7 +183,6 @@ def toDet (D : GDet n A G) : Det n A (MonoidAlgebra A G) where
     have h1 : ofT A G T (Algebra.TensorProduct.map ψ (AlgHom.id A _) x) =
         MonoidAlgebra.mapRingHom G (ψ : S →+* T) (ofT A G S x) := by
       induction x with
-      | zero => simp
       | add a b ha hb => simp only [map_add, ha, hb]
       | tmul s y => ext g; simp [ofT_tmul]
     exact (congrArg (D.D T) h1).trans (D.nat S T ψ _)

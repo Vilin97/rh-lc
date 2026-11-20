@@ -19,7 +19,6 @@ private theorem ofT_map {A G : Type} [CommRing A] [Group G] (S : Type) [CommRing
     ofT A G S[X] (Algebra.TensorProduct.map (IsScalarTower.toAlgHom A S S[X]) (AlgHom.id A _) x) =
       MonoidAlgebra.mapRingHom G (C : S →+* S[X]) (ofT A G S x) := by
   induction x with
-  | zero => simp
   | add a b ha hb => simp only [map_add, ha, hb]
   | tmul s y => ext1; ext1 g; simp [ofT_tmul]
 
@@ -41,7 +40,6 @@ private theorem coeff_lid {A G : Type} [CommRing A] [Group G] {m : ℕ} (β : Fi
     (TensorProduct.lid A (MonoidAlgebra A G) ((MvPolynomial.lcoeff A β).rTensor _ w)).coeff g =
       AddMonoidAlgebra.coeff ((ofT A G _ w).coeff g) β := by
   induction w with
-  | zero => simp
   | add a b ha hb => simp only [map_add, MonoidAlgebra.coeff_add, Finsupp.add_apply, MvPolynomial.coeff_add, ha, hb]
   | tmul s y => simp [ofT_tmul, mul_comm s, MvPolynomial.coeff_C_mul, mul_comm (y.coeff g)]
 

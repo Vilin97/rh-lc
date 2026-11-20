@@ -41,7 +41,6 @@ private theorem exists_of_idem (T C : Type) [CommRing T] [IsDomain T] [IsIntegra
   rw [← ht']
   clear ht ht'
   induction t with
-  | zero => exact ⟨0, by simp⟩
   | add x y hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy

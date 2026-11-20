@@ -23,7 +23,6 @@ theorem span_range_of [Module.Finite B N] :
   refine Submodule.eq_top_iff'.2 fun x ↦ ?_
   obtain ⟨t, rfl⟩ := ofTensorProduct_surjective_of_finite I N x
   induction t with
-  | zero => simp
   | tmul a e =>
     rw [ofTensorProduct_tmul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨e, rfl⟩)

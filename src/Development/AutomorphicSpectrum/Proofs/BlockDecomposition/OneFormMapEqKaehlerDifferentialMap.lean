@@ -97,7 +97,6 @@ theorem lTensor_bijective_of_isBaseChange {S B N M P : Type} [CommRing S] [CommR
     (h₂ : IsBaseChange B (ev ∘ₗ T)) : Function.Bijective (T.lTensor B) := by
   have e : ∀ x, h₁.equiv (T.lTensor B x) = h₂.equiv x := fun x ↦ by
     induction x with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul b n => simp [IsBaseChange.equiv_tmul]
   refine (Function.Bijective.of_comp_iff' h₁.equiv.bijective _).1 ?_

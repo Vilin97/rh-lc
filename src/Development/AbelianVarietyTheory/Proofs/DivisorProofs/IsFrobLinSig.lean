@@ -31,7 +31,6 @@ theorem span_lift [Algebra A T] [Module A N] [IsScalarTower A T N] (l : M →ₗ
       (∀ (a : A) (x : M), τ (a • x) = algebraMap A T a • τ x) → ∃ g : N →ₗ[T] P, ∀ x, g (l x) = τ x := by
   refine ⟨eq_top_iff.2 fun n _ => ?_, fun P _ _ τ hτ => ?_⟩
   · induction n using hl.inductionOn with
-    | zero => exact zero_mem _
     | tmul m => exact Submodule.subset_span ⟨m, rfl⟩
     | smul t n ih => exact Submodule.smul_mem _ _ (ih trivial)
     | add n₁ n₂ h₁ h₂ => exact add_mem (h₁ trivial) (h₂ trivial)

@@ -122,7 +122,6 @@ theorem sum_mem_integralPart_iff {ι : Type} [Fintype ι] (b : Basis ι ℤ (�
         integralMap E R t = ∑ i, ((b i : 𝓞 E) : E) ⊗ₜ[ℚ] y i := by
       intro t
       induction t with
-      | zero => exact ⟨0, fun _ => R.zero_mem, by simp⟩
       | tmul a r =>
         refine ⟨fun i => (b.repr a i : C) * r, fun i => R.mul_mem (intCast_mem R _) r.2, ?_⟩
         rw [integralMap_tmul]

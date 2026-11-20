@@ -123,7 +123,6 @@ private theorem dm_rep (S : Type) [CommRing S] [Algebra k S] (y : S ⊗[k] Matri
     matrixEquivTensor ι k S (Det.repS (AlgHom.id k _) S y) = y := by
   rw [← AlgEquiv.eq_symm_apply]
   induction y with
-  | zero => simp
   | add a b ha hb => simp only [map_add, ha, hb]
   | tmul s x =>
     rw [Det.repS_tmul, matrixEquivTensor_apply_symm]

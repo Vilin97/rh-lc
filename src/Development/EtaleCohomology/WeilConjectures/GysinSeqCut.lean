@@ -197,7 +197,6 @@ theorem bc_comm {R A : Type} [CommRing R] [CommRing A] [Algebra R A] {M N P P' :
     g.baseChange A (f.baseChange A x) = (m : A) ^ r • g'.baseChange A (f'.baseChange A x) := by
   rw [← Nat.cast_pow, Nat.cast_smul_eq_nsmul]
   induction x with
-  | zero => simp
   | tmul a y => simp only [LinearMap.baseChange_tmul, h, TensorProduct.tmul_smul]
   | add x y hx hy => simp only [map_add, hx, hy, smul_add]
 

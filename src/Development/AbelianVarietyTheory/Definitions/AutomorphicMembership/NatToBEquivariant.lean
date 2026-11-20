@@ -65,7 +65,6 @@ theorem eigDefect_map {ρ : Λ →+* Module.End O M} {ρ' : Λ →+* Module.End 
     f.baseChange C (eigDefect h ρ i x) = eigDefect h ρ' i (f x) := by
   have e : IsEquivariant (baseChangeAction C ρ) (baseChangeAction C ρ') (f.baseChange C) := fun a z => by
     induction z with
-    | zero => simp
     | add z w hz hw => simp only [map_add, hz, hw]
     | tmul c m => exact congrArg (c ⊗ₜ[O] ·) (hf a m)
   rw [eigDefect, map_sub, e.proj h]

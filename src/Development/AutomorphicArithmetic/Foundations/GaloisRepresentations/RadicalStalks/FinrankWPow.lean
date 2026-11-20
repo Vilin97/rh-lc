@@ -42,7 +42,6 @@ private theorem E_tmul (l : k) (c : C) : E p (l ⊗ₜ[ℤ] c) = (l ^ p) ⊗ₜ[
 
 private theorem E_smul (l : k) (x : k ⊗[ℤ] C) : E p (l • x) = l ^ p • E p x := by
   induction x with
-  | zero => simp
   | tmul a c => simp [TensorProduct.smul_tmul', E_tmul, mul_pow]
   | add x y hx hy => simp [smul_add, hx, hy]
 

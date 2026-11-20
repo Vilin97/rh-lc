@@ -20,7 +20,6 @@ private theorem chiS_map (S T : Type) [CommRing S] [Algebra A S] [CommRing T] [A
   · simp
   · clear h
     induction y with
-    | zero => simp
     | tmul s x => simp
     | add a b ha hb => simp only [map_add, ha, hb]
 
@@ -45,7 +44,6 @@ private theorem expand {ι : Type} (S : Type) [CommRing S] [Algebra A S] (f : Mv
       TensorProduct.lid A E ((MvPolynomial.lcoeff A α).rTensor E w) := by
     clear h
     induction w with
-    | zero => exact ⟨∅, by simp⟩
     | add a b ha hb =>
       obtain ⟨s, hs⟩ := ha
       obtain ⟨s', hs'⟩ := hb
@@ -106,21 +104,17 @@ private theorem chElt_bc (S : Type) [CommRing S] [Algebra A S] {k : ℕ} (x : Fi
     congr 1
     · rw [Algebra.TensorProduct.one_def, Det.cancel_tmul]; simp
     · induction y with
-      | zero => simp
       | add a b ha hb => simp only [map_add, ha, hb]
       | tmul s y =>
         induction y with
-        | zero => simp
         | add a b ha hb => simp only [tmul_add, map_add, ha, hb]
         | tmul b z => simp [Det.cancel_tmul]
   rw [h1, Polynomial.aeval_algHom_apply]
   generalize Polynomial.aeval y (D.chiS _ (Det.cancel A E S (MvPolynomial (Fin k) S) y)) = w
   induction w with
-  | zero => simp
   | add a b ha hb => simp only [map_add, ha, hb]
   | tmul s y =>
     induction y with
-    | zero => simp
     | add a b ha hb => simp only [tmul_add, map_add, ha, hb]
     | tmul b z =>
       rw [Det.cancel_tmul, mul_comm]
@@ -137,7 +131,6 @@ private theorem chElt_one (S : Type) [CommRing S] [Algebra A S] {k : ℕ} (x : F
   unfold Det.chElt
   generalize Polynomial.aeval (Det.gen (A := A) x) (D.chiS (MvPolynomial (Fin k) A) (Det.gen x)) = w
   induction w with
-  | zero => simp
   | add a b ha hb => simp only [map_add, tmul_add, ha, hb]
   | tmul s y =>
     simp [MvPolynomial.coeff_map, Algebra.ofId_apply, Algebra.algebraMap_eq_smul_one, smul_tmul]
@@ -150,7 +143,6 @@ private theorem span_mul (S : Type) [CommRing S] [Algebra A S] (I : TwoSidedIdea
   | mem x hx =>
     obtain ⟨z, hz, rfl⟩ := hx
     induction u with
-    | zero => simp
     | add a b ha hb => rw [add_mul, mul_add]; exact ⟨add_mem ha.1 hb.1, add_mem ha.2 hb.2⟩
     | tmul s e =>
       have key : ∀ t ∈ I, s ⊗ₜ[A] t ∈ Submodule.span S ((fun z : E => (1 : S) ⊗ₜ[A] z) '' (I : Set E)) := by

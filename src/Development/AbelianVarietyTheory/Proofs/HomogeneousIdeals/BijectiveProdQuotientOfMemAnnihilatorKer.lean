@@ -52,7 +52,6 @@ theorem mem_coactionWeightSpace_iff_dualContraction [Module.Finite R C] [Module.
 private theorem tensorToHom_rTensor (f : M →ₗ[R] M') (x : M ⊗[R] C) (w : CartierDual R C) :
     tensorToHom R M' C (f.rTensor C x) w = f (tensorToHom R M C x w) := by
   induction x with
-  | zero => simp
   | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
   | tmul n m => simp
 
@@ -75,13 +74,11 @@ private theorem tensorToHom_assoc_rTensor (ρ : M →ₗ[R] M ⊗[R] C) (φ ψ :
     tensorToHom R M (C ⊗[R] C) (TensorProduct.assoc R M C C (ρ.rTensor C x))
       (toConv (pair R C C (φ ⊗ₜ ψ))) = dualContraction ρ φ (tensorToHom R M C x ψ) := by
   induction x with
-  | zero => simp
   | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
   | tmul m c =>
     rw [LinearMap.rTensor_tmul, tensorToHom_tmul, map_smul, dualContraction_apply]
     generalize ρ m = s
     induction s with
-    | zero => simp
     | add x y hx hy => simp only [map_add, LinearMap.add_apply, add_tmul, smul_add, hx, hy]
     | tmul m' c' => simp [smul_smul, mul_comm]
 
@@ -89,7 +86,6 @@ private theorem tensorToHom_lTensor_comul (φ ψ : CartierDual R C) (x : M ⊗[R
     tensorToHom R M (C ⊗[R] C) ((comul : C →ₗ[R] C ⊗[R] C).lTensor M x)
       (toConv (pair R C C (φ ⊗ₜ ψ))) = tensorToHom R M C x (φ * ψ) := by
   induction x with
-  | zero => simp
   | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
   | tmul m c => rw [LinearMap.lTensor_tmul, tensorToHom_tmul, tensorToHom_tmul, mul_apply]
 
@@ -344,7 +340,6 @@ theorem existsUnique_mem_annihilator_ker [Algebra.FormallyUnramified R A]
     fun _ _ => Commute.all _ _
   have hπ (t : A ⊗[R] A) : ε (π t) = ε (Algebra.TensorProduct.lmul' R t) := by
     induction t with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul a b => simp [π, Algebra.ofId_apply]
   have he : π (Algebra.FormallyUnramified.elem R A) ∈ (RingHom.ker ε).annihilator :=
@@ -393,7 +388,6 @@ theorem one_tmul_mem_annihilator_ker {ε : D →ₐ[R] R} {Λ : D}
     (1 : K) ⊗ₜ[R] Λ ∈ (RingHom.ker (augmentationBaseChange K ε)).annihilator := by
   refine mem_annihilator_ker_iff.2 fun w => ?_
   induction w with
-  | zero => simp
   | add a b ha hb => rw [add_mul, ha, hb, map_add, add_smul]
   | tmul k d =>
     rw [Algebra.TensorProduct.tmul_mul_tmul, mem_annihilator_ker_iff.1 hΛ,
@@ -480,7 +474,6 @@ theorem dualContraction_baseChange [AddCommMonoid H] [Module R H] {ρ : M →ₗ
   rw [dualContraction_apply, dualContraction_apply, (LinearEquiv.eq_symm_apply _).2 (hj m)]
   generalize ρ m = x
   induction x with
-  | zero => simp
   | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
   | tmul n h => simp
 
@@ -495,7 +488,6 @@ theorem baseChange_one_tmul_mem_annihilator_ker {Λ : CartierDual R H}
   rw [counitAlgHom_cartierDual_apply, ← baseChangeLinear_mul, ← map_smul]
   congr 1
   induction x with
-  | zero => simp
   | add a b ha hb => rw [add_mul, ha, hb, map_add, ofConv_add, LinearMap.add_apply, add_smul]
   | tmul k d =>
     rw [Algebra.TensorProduct.tmul_mul_tmul, mem_annihilator_ker_iff.1 hΛ,

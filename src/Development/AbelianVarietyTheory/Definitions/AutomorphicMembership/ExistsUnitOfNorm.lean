@@ -456,7 +456,6 @@ theorem exists_lift {X : Type} [AddCommGroup X] [Module.Finite ℤ X] (β : X �
   have hle : M ≤ LinearMap.range v := by
     rintro _ ⟨z, rfl⟩
     induction z with
-    | zero => simp
     | tmul a b => obtain ⟨c, hc⟩ := h a b; exact ⟨Additive.ofMul c, hc.symm⟩
     | add z w hz hw => rw [map_add]; exact add_mem hz hw
   obtain ⟨s, hs⟩ := Module.projective_lifting_property v.rangeRestrict (Submodule.inclusion hle)

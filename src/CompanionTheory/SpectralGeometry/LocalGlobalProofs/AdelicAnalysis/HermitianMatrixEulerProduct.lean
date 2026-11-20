@@ -23,7 +23,6 @@ variable (R : Type) [CommRing R] [Algebra F R]
 theorem sigR_smul (σ : E →ₐ[F] E) (r : R) (y : R ⊗[F] E) :
     sigR R σ (r • y) = r • sigR R σ y := by
   induction y with
-  | zero => simp
   | tmul s e => simp [TensorProduct.smul_tmul', HaarCoord.sigR_tmul]
   | add a b ha hb => simp only [smul_add, map_add, ha, hb]
 
@@ -170,7 +169,6 @@ theorem phi_tmul (r : F) (e : E) : phi R (r ⊗ₜ[F] e) = algebraMap F R r ⊗�
 
 theorem phi_sig (σ : E →ₐ[F] E) (y : F ⊗[F] E) : phi R (sigR F σ y) = sigR R σ (phi R y) := by
   induction y with
-  | zero => simp
   | tmul r e => rw [HaarCoord.sigR_tmul, phi_tmul, phi_tmul, HaarCoord.sigR_tmul]
   | add a b ha hb => simp only [map_add, ha, hb]
 

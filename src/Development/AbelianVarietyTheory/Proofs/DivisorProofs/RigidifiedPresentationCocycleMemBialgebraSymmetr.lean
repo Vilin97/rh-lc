@@ -35,14 +35,12 @@ theorem coc_mem_symCocycles (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A]
     have e1 : ∀ x : H ⊗[R] H, (1 : H) ⊗ₜ[R] x = lift i2 i3 (fun _ _ ↦ Commute.all _ _) x := by
       intro x
       induction x with
-      | zero => simp
       | add x y hx hy => rw [tmul_add, map_add, hx, hy]
       | tmul a b => simp [i2, i3, Algebra.TensorProduct.tmul_mul_tmul, includeLeft_apply, includeRight_apply]
     have e2 : ∀ x : H ⊗[R] H, TensorProduct.assoc R H H H ((Coalgebra.comul (R := R) (A := H)).rTensor H x) =
         lift i12 i3 (fun _ _ ↦ Commute.all _ _) x := by
       intro x
       induction x with
-      | zero => simp
       | add x y hx hy => rw [map_add, map_add, hx, hy, map_add]
       | tmul a b =>
         rw [LinearMap.rTensor_tmul, lift_tmul]
@@ -54,7 +52,6 @@ theorem coc_mem_symCocycles (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A]
     have e3 : ∀ x : H ⊗[R] H, (Coalgebra.comul (R := R) (A := H)).lTensor H x = lift i1 i23 (fun _ _ ↦ Commute.all _ _) x := by
       intro x
       induction x with
-      | zero => simp
       | add x y hx hy => rw [map_add, map_add, hx, hy]
       | tmul a b =>
         rw [LinearMap.lTensor_tmul, lift_tmul]
@@ -67,7 +64,6 @@ theorem coc_mem_symCocycles (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A]
         lift i1 i2 (fun _ _ ↦ Commute.all _ _) x := by
       intro x
       induction x with
-      | zero => simp
       | add x y hx hy => rw [map_add, map_add, hx, hy]
       | tmul a b => simp [i1, i2, Algebra.TensorProduct.tmul_mul_tmul, includeLeft_apply, includeRight_apply]
     rw [cobTwo_apply, e1, e2, e3, e4, V, V, V, V]
@@ -79,7 +75,6 @@ theorem coc_mem_symCocycles (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A]
         lift (includeRight : H →ₐ[R] H ⊗[R] H) (includeLeft : H →ₐ[R] H ⊗[R] H) (fun _ _ ↦ Commute.all _ _) x := by
       intro x
       induction x with
-      | zero => simp
       | add x y hx hy => rw [map_add, map_add, hx, hy]
       | tmul a b => simp [Algebra.TensorProduct.tmul_mul_tmul, includeLeft_apply, includeRight_apply]
     have e' : d.coc n = lift (includeLeft : H →ₐ[R] H ⊗[R] H) includeRight (fun _ _ ↦ Commute.all _ _) (d.coc n) := by

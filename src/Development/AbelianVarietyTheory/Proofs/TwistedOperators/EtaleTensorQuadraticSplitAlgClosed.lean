@@ -55,7 +55,6 @@ theorem splitClosed_quad {F E : Type} [Field F] [CharZero F] [CommRing E] [Algeb
   refine ⟨(Algebra.TensorProduct.comm F E Ω).trans
     ((AlgEquiv.ofBijective f ⟨hi, hs⟩).restrictScalars F), fun ω => (hf ω 1).trans (by simp), fun u => ?_⟩
   induction u with
-  | zero => simp
   | tmul a w =>
     change f (w ⊗ₜ σ a) = (f (w ⊗ₜ a)).swap
     rw [hf, hf, h.invol]; rfl
@@ -85,7 +84,6 @@ theorem splitClosed : SplitClosed := by
     intro p x i; rfl
   refine ⟨φ, fun ω => funext fun i => by rw [hφ, hg1, he'], fun u i => ?_⟩
   induction u with
-  | zero => simp
   | tmul p x => rw [tConj3, Algebra.TensorProduct.map_tmul, hφ, hφ, hg]; rfl
   | add a w ha hw => rw [map_add, map_add, map_add, Pi.add_apply, Pi.add_apply, ha, hw, Prod.swap_add]
 

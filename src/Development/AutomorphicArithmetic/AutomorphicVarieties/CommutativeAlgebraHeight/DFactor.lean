@@ -10,7 +10,6 @@ variable {n : ℕ} {A E : Type} [CommRing A] [Ring E] [Algebra A E] (D : Det n A
 private theorem map_eq_lTensor (S : Type) [CommRing S] [Algebra A S] (z : S ⊗[A] E) :
     Algebra.TensorProduct.map (AlgHom.id S S) f z = f.toLinearMap.lTensor S z := by
   induction z with
-  | zero => simp
   | tmul s x => simp
   | add a b ha hb => simp only [map_add, ha, hb]
 
@@ -32,7 +31,6 @@ private theorem eq_of_map_eq (hf : Function.Surjective f) (hk : ∀ x, f x = 0 �
       D.D S (y + (LinearMap.ker f.toLinearMap).subtype.lTensor S w) = D.D S y := by
     intro w
     induction w with
-    | zero => simp
     | tmul s k =>
       intro y
       have := (D.mem_ker.1 (hk k.1 k.2)) S y (s ⊗ₜ 1) 1
@@ -45,7 +43,6 @@ private theorem map_map_swap (B B' : Type) [CommRing B] [Algebra A B] [CommRing 
     Algebra.TensorProduct.map (AlgHom.id B' B') f (Algebra.TensorProduct.map g (AlgHom.id A E) x) =
       Algebra.TensorProduct.map g (AlgHom.id A E') (Algebra.TensorProduct.map (AlgHom.id B B) f x) := by
   induction x with
-  | zero => simp
   | tmul s x => simp
   | add a b ha hb => simp only [map_add, ha, hb]
 

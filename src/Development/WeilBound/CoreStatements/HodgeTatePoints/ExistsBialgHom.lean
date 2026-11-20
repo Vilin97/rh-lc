@@ -23,14 +23,12 @@ theorem sep_two (sep : ∀ f g : A, (∀ a, x a f = x a g) → f = g) (s t : A �
       φ (TensorProduct.rid O A (LinearMap.lTensor A ψ.ofConv s)) = CartierDual.pair O A A (φ ⊗ₜ ψ) s := by
     intro φ ψ s
     induction s with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul a b => simp [mul_comm]
   have hl : ∀ (φ ψ : CartierDual O A) (s : A ⊗[O] A),
       ψ (TensorProduct.lid O A (LinearMap.rTensor A φ.ofConv s)) = CartierDual.pair O A A (φ ⊗ₜ ψ) s := by
     intro φ ψ s
     induction s with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul a b => simp
   refine CartierDual.tensor_eq_of_forall_pair fun φ ψ => ?_
@@ -68,7 +66,6 @@ theorem exists_bialgHom [AddCommGroup J] (sep : ∀ f g : A, (∀ a, x a f = x a
     rw [← hxa, hl, hmul, ← CartierDual.pair_comul_tmul]
     generalize comul (R := O) φ = s
     induction s with
-    | zero => simp
     | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
     | tmul φ ψ =>
       rw [Algebra.TensorProduct.map_tmul, CartierDual.pair_tmul_tmul, CartierDual.pair_tmul_tmul, ← hl, ← hl]

@@ -30,7 +30,6 @@ theorem ext_tensor : ∀ (R : Type) [CommRing R] [IsDomain R] (T : Type) [CommGr
   have hM : ∀ x, M (L x) = algebraMap R R' d • x := by
     intro x
     induction x with
-    | zero => simp
     | add x y hx hy => rw [map_add, map_add, hx, hy, smul_add]
     | tmul r a =>
       have e : ∑ t, a.1 t • m t = d • a := by
@@ -52,7 +51,6 @@ theorem ext_tensor : ∀ (R : Type) [CommRing R] [IsDomain R] (T : Type) [CommGr
     apply le_antisymm
     · rintro _ ⟨x, rfl⟩
       induction x with
-      | zero => exact (map_zero L.toRingHom).symm ▸ zero_mem _
       | add x y hx hy => exact (map_add L.toRingHom x y).symm ▸ add_mem hx hy
       | tmul r a =>
         exact (extOrder (algebraMap R R') A).smul_mem (OrderApi.comp_mem_extOrder (algebraMap R R') a.2) r

@@ -18,7 +18,6 @@ theorem ev_mulRight_comul_of_primitive (l : Λ →ₗ[R] R)
       ev Λ l w * b + ev Λ (l ∘ₗ LinearMap.mulRight R b) w := by
     intro w
     induction w with
-    | zero => simp
     | add u v hu hv =>
       simp only [add_mul, map_add, hu, hv]
       ring
@@ -41,20 +40,17 @@ theorem coact_ev_mulRight_of_primitive (ρ : B →ₐ[R] B ⊗[R] Λ)
       F (TensorProduct.assoc R B Λ Λ (ρ.toLinearMap.rTensor Λ w)) := by
     intro w
     induction w with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul a b =>
       rw [ev_tmul, map_smul, LinearMap.rTensor_tmul, AlgHom.toLinearMap_apply]
       generalize ρ a = w
       induction w with
-      | zero => simp
       | add u v hu hv => simp only [map_add, smul_add, add_tmul, hu, hv]
       | tmul u v => simp [F]
   have h2 : ∀ w : B ⊗[R] Λ, F ((Coalgebra.comul (R := R)).lTensor B w) =
       ev B l' w ⊗ₜ 1 - ev B l w ⊗ₜ b := by
     intro w
     induction w with
-    | zero => simp
     | add a c ha hc =>
       simp only [map_add, add_tmul, ha, hc]
       abel
@@ -101,7 +97,6 @@ theorem exists_coact_eq_add_of_primitive : ∀ {R Λ B : Type} [CommRing R] [Com
     intro k z
     obtain ⟨w, rfl⟩ := hsurj z
     induction w with
-    | zero => simp
     | add u v hu hv =>
       rw [map_add, map_add]
       exact add_mem hu hv

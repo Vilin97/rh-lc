@@ -29,7 +29,6 @@ theorem ker_le_range_of_residueField {R A B C A' B' C' : Type} [CommRing R] [IsD
   have hc' : Function.Surjective c := fun z' => by
     obtain ⟨t, rfl⟩ := hc z'
     induction t with
-    | zero => exact ⟨0, (map_zero c).trans (map_zero _).symm⟩
     | add s t hs ht =>
       obtain ⟨x, hx⟩ := hs
       obtain ⟨y, hy⟩ := ht

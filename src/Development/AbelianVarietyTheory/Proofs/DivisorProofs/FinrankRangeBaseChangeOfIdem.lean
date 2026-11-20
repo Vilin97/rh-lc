@@ -117,7 +117,6 @@ theorem bcMap_toLinearMap {O : Type} [CommRing O] (O' : Type) [CommRing O'] [Alg
       ((f : A →ₐ[O] A).toLinearMap).baseChange O' := by
   refine LinearMap.ext fun x => ?_
   induction x with
-  | zero => simp
   | add x y hx hy => rw [map_add, map_add, hx, hy]
   | tmul r a => exact bcMap_tmul f r a
 

@@ -69,7 +69,6 @@ theorem UpperTheory.exists_derivations_dual_to_cotangent_parameters :
     rw [eq_top_iff]
     rintro v -
     induction v with
-    | zero => exact Submodule.zero_mem _
     | add u v hu hv => exact Submodule.add_mem _ hu hv
     | tmul e q =>
       obtain ⟨a, rfl⟩ := N.mkQ_surjective q

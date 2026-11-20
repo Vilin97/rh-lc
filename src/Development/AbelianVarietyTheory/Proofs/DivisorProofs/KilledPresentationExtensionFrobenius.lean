@@ -25,7 +25,6 @@ private theorem lTensor_injective_of_flat_quot {R Q S M N : Type} [CommRing R] [
       f'.lTensor S ((equivOfCompatibleSMul R Q R S M).symm x) := by
     intro x
     induction x with
-    | zero => simp
     | add a b ha hb => simp [ha, hb]
     | tmul s m => rfl
   intro x y hxy
@@ -87,7 +86,6 @@ private theorem lTensor_injective_val {R S M N : Type} [CommRing R] [IsDomain R]
     have hsurj : ∀ x : Ideal.span {a'} ⊗[R ⧸ Ideal.span {g}] S, ∃ s : S, x = e ⊗ₜ s := by
       intro x
       induction x with
-      | zero => exact ⟨0, by simp⟩
       | add x y hx hy =>
         obtain ⟨s, rfl⟩ := hx
         obtain ⟨t, rfl⟩ := hy
@@ -162,7 +160,6 @@ private theorem exists_smul_eq_zero {A C R M N M' N' : Type} [CommRing A] [CommR
     intro K _ _ hK x
     rw [algebraMap_smul]
     induction x with
-    | zero => simp
     | add x y hx hy => rw [smul_add, hx, hy, add_zero]
     | tmul r m => rw [← tmul_smul, hK, tmul_zero]
   have inj := lTensor_injective_val p (algebraMap A R g) (algebraMap A R u) (hu.map _) hp0
@@ -173,11 +170,9 @@ private theorem exists_smul_eq_zero {A C R M N M' N' : Type} [CommRing A] [CommR
         f.lTensor S (AlgebraTensorModule.cancelBaseChange A R R S M x) := by
       intro x
       induction x with
-      | zero => simp
       | add a b ha hb => simp only [map_add, ha, hb]
       | tmul s m =>
         induction m with
-        | zero => simp
         | add a b ha hb => simp only [tmul_add, map_add, ha, hb]
         | tmul r m => simp
     intro x y hxy
@@ -191,14 +186,12 @@ private theorem exists_smul_eq_zero {A C R M N M' N' : Type} [CommRing A] [CommR
     rw [map_zero, ← hs]
     clear hs
     induction x with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul c m => simp [hab]
   have h2 : ∀ y : C ⊗[A] M, f.lTensor S ((Algebra.linearMap C S).restrictScalars A |>.rTensor M y) =
       ((Algebra.linearMap C S).restrictScalars A).rTensor N (f.lTensor C y) := by
     intro y
     induction y with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul c m => simp
   have h3 : ((Algebra.linearMap C S).restrictScalars A).rTensor M x = 0 := by
@@ -209,7 +202,6 @@ private theorem exists_smul_eq_zero {A C R M N M' N' : Type} [CommRing A] [CommR
     rw [map_zero, ← h3]
     clear h1 h3 hs
     induction x with
-    | zero => simp
     | add a b ha hb => simp only [tmul_add, map_add, ha, hb]
     | tmul c m => simp [Algebra.algebraMap_eq_smul_one]
   haveI : IsLocalizedModule T (TensorProduct.mk C S (C ⊗[A] M) 1) :=

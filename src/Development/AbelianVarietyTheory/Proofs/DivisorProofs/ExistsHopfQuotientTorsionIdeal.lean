@@ -28,7 +28,6 @@ theorem exists_hopf_quotient_torsionIdeal :
             TensorProduct.map (π : B →ₗ[O] B ⧸ torsionIdeal O B n) (π : B →ₗ[O] B ⧸ torsionIdeal O B n) (TensorProduct.comm O B B t) := by
           intro t
           induction t with
-          | zero => simp
           | add x y hx hy => simp only [map_add, hx, hy]
           | tmul x y => simp
         change TensorProduct.comm O (B ⧸ torsionIdeal O B n) (B ⧸ torsionIdeal O B n) (comul (π a)) = comul (π a)

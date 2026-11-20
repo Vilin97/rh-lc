@@ -315,7 +315,6 @@ theorem rid_leviRep (μ : kˣ →* ℂˣ) (σ : Representation ℂ (GL (Fin r) k
       (μ (Matrix.GeneralLinearGroup.det (g true : GL (Fin t) k)) : ℂ) •
         σ (g false : GL (Fin r) k) (TensorProduct.rid ℂ V x) := by
   induction x with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy, smul_add]
   | tmul v z =>
     show TensorProduct.rid ℂ V (extTensor σ (detRep (Fin t) μ) ((leviTwo k (Fin r) (Fin t)).symm g) (v ⊗ₜ z)) = _

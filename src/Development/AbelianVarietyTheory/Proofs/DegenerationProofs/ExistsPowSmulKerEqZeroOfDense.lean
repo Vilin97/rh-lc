@@ -20,7 +20,6 @@ theorem IsBasisAway.exists_basis_apply_eq {a : R} {s : Set M}
     ?_, fun x => Module.Basis.mk_apply _ _ x⟩
   intro y _
   induction y with
-  | zero => exact Submodule.zero_mem _
   | add y z hy hz => exact Submodule.add_mem _ (hy trivial) (hz trivial)
   | tmul c m =>
     obtain ⟨n, hn⟩ := h.2.2 m trivial
@@ -103,7 +102,6 @@ theorem exists_baseChange_injective_of_dense.{w} {D : Set (PrimeSpectrum R)} (hD
   obtain ⟨w, rfl⟩ := (hex z).1 hz
   clear hz
   induction w with
-  | zero => simp
   | add y z hy hz => rw [map_add, hy, hz, add_zero]
   | tmul c y =>
     obtain ⟨n, hn⟩ := ha y y.2

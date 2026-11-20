@@ -108,7 +108,6 @@ theorem fixed_of_tensor (π : Representation ℂ G V) (x : V ⊗[ℂ] T) (hx : x
   have : ∀ y : V ⊗[ℂ] T, π g (TensorProduct.equivFinsuppOfBasisRight b y i) =
       TensorProduct.equivFinsuppOfBasisRight b (TensorProduct.map (π g) LinearMap.id y) i := fun y => by
     induction y with
-    | zero => simp
     | tmul a t => simp
     | add a t ha ht => simp [ha, ht]
   rw [this, h]

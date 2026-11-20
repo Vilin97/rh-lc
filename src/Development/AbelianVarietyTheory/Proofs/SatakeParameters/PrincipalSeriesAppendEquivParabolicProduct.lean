@@ -237,7 +237,6 @@ theorem stage_two (ψ₁ : Fin r → kˣ →* ℂˣ) (ψ₂ : Fin t → kˣ →*
       simp only [Units.val_one, one_smul, Module.End.one_apply])
     (rho1 ψ₁ ψ₂) (TensorProduct.comm _ _ _) (fun q y => by
       induction y with
-      | zero => simp only [map_zero]
       | add x y hx hy => simp only [map_add, hx, hy]
       | tmul a f =>
         show TensorProduct.comm ℂ _ _ ((sB ψ₁ (fstB q) a) ⊗ₜ (Stages.tauSnd (eSt r t) (prinSeries ψ₂) (incl q) f)) = _
@@ -245,7 +244,6 @@ theorem stage_two (ψ₁ : Fin r → kˣ →* ℂˣ) (ψ₂ : Fin t → kˣ →*
         exact TensorProduct.smul_tmul _ _ _)
     (sB (Fin.append ψ₁ ψ₂)) (TensorProduct.lid ℂ ℂ) (fun q h z => by
       induction z with
-      | zero => simp only [map_zero]
       | add x y hx hy => simp only [map_add, hx, hy]
       | tmul a b =>
         rw [TensorProduct.lid_tmul, TensorProduct.map_tmul, TensorProduct.lid_tmul]

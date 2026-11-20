@@ -66,7 +66,6 @@ theorem exists_mul_sub_eq_zero {R B K : Type} [CommRing R] [CommRing B] [Field K
   have h₂ : Subsingleton (K ⊗[R] LinearMap.range P) := by
     refine subsingleton_of_forall_eq 0 fun z => ?_
     induction z with
-    | zero => rfl
     | tmul k m => rw [← _root_.mul_one k, ← smul_eq_mul, ← TensorProduct.smul_tmul', h₁, smul_zero]
     | add a b ha hb => rw [ha, hb, add_zero]
   obtain ⟨f, hf, H⟩ := exists_smul_eq_zero h₂

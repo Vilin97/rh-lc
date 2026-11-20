@@ -62,7 +62,6 @@ theorem GlobalTheory.PDivGroup.semiHom_factor_of_isConn_of_isEt :
       (q₁ ≫ i₁).app n (x.app n (TensorProduct.lid k _ (LinearMap.rTensor _ counit t))) := by
     intro t
     induction t with
-    | zero => simp
     | add u v hu hv =>
       rw [map_add, map_add, hu, hv, map_add, map_add, ← map_add, ← map_add]
     | tmul a₁ a₂ =>

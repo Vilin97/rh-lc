@@ -195,7 +195,6 @@ theorem exists_order [ValuationRing R] [Finite T] (Γ : QFGroup R T) (U : Γ.G.l
         Algebra.TensorProduct.productMap (valAlg hρ z.1 z.1.2) (valAlg hρ z.2 z.2.2) c' := by
     intro c'
     induction c' with
-    | zero => exact ⟨0, Submodule.zero_mem _, fun z => by simp⟩
     | tmul a b =>
       refine ⟨fun z => Φ a z.1 * Φ b z.2, Submodule.subset_span ⟨Φ a, ⟨a, rfl⟩, Φ b, ⟨b, rfl⟩, rfl⟩, fun z => ?_⟩
       simp only [map_mul, Algebra.TensorProduct.productMap_apply_tmul]

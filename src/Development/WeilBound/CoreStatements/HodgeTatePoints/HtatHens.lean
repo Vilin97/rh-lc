@@ -21,7 +21,6 @@ theorem stage_int [IsIntegrallyClosed R] {z : S ⊗[R] FractionRing R} (hz : IsI
   rw [← ht']
   clear ht ht'
   induction t with
-  | zero => exact ⟨0, by simp⟩
   | add x y hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
@@ -37,7 +36,6 @@ omit [Algebra.Etale R S] in
 theorem stage_den (z : S ⊗[R] FractionRing R) :
     ∃ (r : R) (y : S), r ≠ 0 ∧ algebraMap S _ y = algebraMap S _ (algebraMap R S r) * z := by
   induction z with
-  | zero => exact ⟨1, 0, one_ne_zero, by simp⟩
   | add x y hx hy =>
     obtain ⟨r, a, hr, ha⟩ := hx
     obtain ⟨s, b, hs, hb⟩ := hy

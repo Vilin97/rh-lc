@@ -131,7 +131,6 @@ theorem IsKSValue.unique (P : AbelianDeRham) {A : Over (Sp R)} [GrpObj A] {A' : 
   have key : ∀ z, (d - d') (liftSemi (constMor A).pull z) =
       TrivSqZeroExt.inr ((k - k') ((redMor A).pull (liftSemi (constMor A).pull z))) := fun z => by
     induction z with
-    | zero => simp only [map_zero, TrivSqZeroExt.inr_zero]
     | add x y hx hy => simp only [map_add, hx, hy, TrivSqZeroExt.inr_add]
     | tmul r c =>
       rw [liftSemi_tmul, LinearMap.map_smul, eD, LinearMap.map_smulₛₗ, redMor_constMor, LinearMap.map_smul]

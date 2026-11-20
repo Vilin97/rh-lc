@@ -342,14 +342,12 @@ noncomputable def tensorMulSemiringAction : MulSemiringAction G (S ⊗[R] A) whe
   one_smul x := by
     change Algebra.TensorProduct.map _ _ x = x
     induction x with
-    | zero => simp
     | tmul s a => simp
     | add x y hx hy => rw [map_add, hx, hy]
   mul_smul g h x := by
     change Algebra.TensorProduct.map _ _ x =
       Algebra.TensorProduct.map _ _ (Algebra.TensorProduct.map _ _ x)
     induction x with
-    | zero => simp
     | tmul s a => simp [mul_smul]
     | add x y hx hy => rw [map_add, hx, hy, map_add, map_add]
   smul_zero g := map_zero (Algebra.TensorProduct.map _ _)
@@ -636,7 +634,6 @@ theorem bijective_toSpanSingleton_of_isBaseChange [Module.Invertible A M] (f : M
   haveI : Module.Invertible A' M' := .congr hl.equiv
   refine Module.Invertible.bijective_of_surjective fun y ↦ ?_
   induction y using hl.inductionOn with
-  | zero => exact ⟨0, map_zero _⟩
   | tmul m =>
     obtain ⟨u, hu⟩ := hu
     refine ⟨↑u⁻¹ * algebraMap A A' (f m), ?_⟩

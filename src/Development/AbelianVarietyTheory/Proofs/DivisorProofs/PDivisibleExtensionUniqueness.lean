@@ -332,7 +332,6 @@ theorem two_injective [Module.Flat S A'] (hK : Function.Injective (algebraMap S 
   have h3 : ∀ c, s.two c = TensorProduct.map g g (TensorProduct.AlgebraTensorModule.distribBaseChange S K A' A' (1 ⊗ₜ c)) :=
     fun c => by
       induction c with
-      | zero => simp
       | add x y hx hy => simp only [map_add, TensorProduct.tmul_add, hx, hy]
       | tmul a b => simp [g]
   intro x y h
@@ -357,7 +356,6 @@ theorem exists_semi [Module.Flat S A'] (hK : Function.Injective (algebraMap S K)
   · rw [s'.two_comul, hg, ← s.two_comul]
     generalize Coalgebra.comul (R := R) a = c
     induction c with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul a b => simp [hg]
 
@@ -423,7 +421,6 @@ theorem exists_iso (hθ₁ : θ₁.IsOpenNearZero) (hθ₂ : θ₂.IsOpenNearZer
       AlgHom.comp { (s₂.app n).toRingHom with commutes' := (s₂.app n).map_algebraMap } (V.lift.app n)
     have hj1 : ∀ y, j y = s₁.lift.app n (LinearMap.rTensor _ (IsScalarTower.toAlgHom R S K).toLinearMap y) := fun y => by
       induction y with
-      | zero => simp only [map_zero]
       | add x y hx hy => simp only [map_add, hx, hy]
       | tmul r a =>
         refine (congrArg (s₂.app n) (V.lift_app n r a)).trans ?_

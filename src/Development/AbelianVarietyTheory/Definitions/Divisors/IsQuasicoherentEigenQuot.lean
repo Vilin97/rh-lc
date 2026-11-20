@@ -215,7 +215,6 @@ theorem IsSplitBy.injective (h : IsSplitBy σ) : Function.Injective σ := fun i 
   by_contra hij
   have key (x : k ⊗[ℤ] O) : splitMap σ x i = splitMap σ x j := by
     induction x with
-    | zero => simp
     | tmul c a => simp [e]
     | add x y hx hy => simp [hx, hy]
   obtain ⟨x, hx⟩ := h.2 (Pi.single i 1)
@@ -262,7 +261,6 @@ theorem eigenι_tensorAct (j : ι) (x : k ⊗[ℤ] O) :
     eigenι ρ (scal X (σ j)) ≫ act (tensorAct k ρ) x =
       algebraMap k Γ(X, ⊤) (splitMap σ x j) • eigenι ρ (scal X (σ j)) := by
   induction x with
-  | zero => simp only [act, map_zero, Pi.zero_apply, zero_smul]; exact comp_zero
   | tmul c a => rw [act_tensorAct_tmul, Linear.comp_smul, eigenι_act, splitMap_tmul, map_mul,
       mul_smul]; rfl
   | add x y hx hy =>
@@ -322,7 +320,6 @@ theorem isIso_eigenι_eigenπ (h : IsSplitBy σ) [Fintype ι] (j : ι) :
   have key (x : k ⊗[ℤ] O) : act (tensorAct k ρ) x ≫ eigenπ ρ (scal X (σ j)) =
       algebraMap k Γ(X, ⊤) (splitMap σ x j) • eigenπ ρ (scal X (σ j)) := by
     induction x with
-    | zero => simp only [act, map_zero, Pi.zero_apply, zero_smul]; exact zero_comp
     | tmul c a => rw [act_tensorAct_tmul, Linear.smul_comp, act_eigenπ, splitMap_tmul, map_mul,
         mul_smul]; rfl
     | add x y hx hy =>

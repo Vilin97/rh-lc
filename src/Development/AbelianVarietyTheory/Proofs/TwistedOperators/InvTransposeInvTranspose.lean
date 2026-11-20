@@ -35,7 +35,6 @@ theorem isSmooth_onRight {G : Type} [Group G] [TopologicalSpace G] [IsTopologica
   intro x
   show x ∈ smoothPart (onRight V σ)
   induction x with
-  | zero => exact zero_mem _
   | add x y hx hy => exact add_mem hx hy
   | tmul v w =>
     refine mem_smoothPart_of_nhds (Filter.mem_of_superset ((hσ w).mem_nhds (by simp)) fun g hg => ?_)
@@ -59,7 +58,6 @@ def tensorInd (σ : Representation ℂ P W) :
 theorem tensorInd_apply (σ : Representation ℂ P W) (t : V ⊗[ℂ] smoothPart (ind P σ)) (x : H) :
     (tensorInd σ t).1.1 x = (MultiIrr.ev σ x).lTensor V t := by
   induction t with
-  | zero => simp
   | add s t hs ht => simp only [map_add, ← hs, ← ht]; rfl
   | tmul v f => rfl
 
@@ -132,7 +130,6 @@ theorem exists_lift [T2Space H] {K : Subgroup H} (hP : IsClosed (P : Set H)) (hK
     obtain ⟨t, rfl⟩ := E.surjective z
     have e1 : smIndMap (T γ) (E t) = E (TensorProduct.map (R γ) (smIndMap (S γ)).toLinearMap t) := by
       induction t with
-      | zero => simp
       | add s t hs ht => simp only [map_add, hs, ht]
       | tmul v f => rfl
     have e2 : β (TensorProduct.map (R γ) (smIndMap (S γ)).toLinearMap t) = β t :=
@@ -149,7 +146,6 @@ theorem exists_lift [T2Space H] {K : Subgroup H} (hP : IsClosed (P : Set H)) (hK
   obtain ⟨t, rfl⟩ := E.surjective z
   show T₀ (smInd P ρ h _) = π' h (T₀ _)
   induction t with
-  | zero => simp
   | add s t hs ht => simp only [map_add, hs, ht]
   | tmul v f => exact (hT v (smInd P σ h f)).trans (((B v).isIntertwining _ _ h f).trans (congrArg _ (hT v f).symm))
 

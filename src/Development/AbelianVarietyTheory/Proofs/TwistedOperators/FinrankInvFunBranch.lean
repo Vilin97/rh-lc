@@ -85,7 +85,6 @@ theorem finrank_invFun_outer {ι H : Type} [Fintype ι] [DecidableEq ι] [Monoid
     · have hl' : l ∈ invFun ((ρ τ).tprod (σ τ)) := by
         intro k z
         induction z with
-        | zero => simp
         | tmul a b => exact hl k a b
         | add a b ha hb => simp only [map_add, ha, hb]
       obtain ⟨c, hc⟩ := hε ⟨l, hl'⟩
@@ -97,7 +96,6 @@ theorem finrank_invFun_outer {ι H : Type} [Fintype ι] [DecidableEq ι] [Monoid
   have hε : ε ∈ invFun ((outer ρ).tprod (outer σ)) := by
     intro k z
     induction z with
-    | zero => simp
     | tmul a b =>
       have := he k 1 a b
       rw [map_one] at this

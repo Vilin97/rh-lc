@@ -20,7 +20,6 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E]
 theorem sigR_sigR (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E) (hinv : ∀ x, σ (σ x) = x)
     (x : R ⊗[F] E) : sigR R σ (sigR R σ x) = x := by
   induction x with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul r e => simp [sigR, hinv]
 

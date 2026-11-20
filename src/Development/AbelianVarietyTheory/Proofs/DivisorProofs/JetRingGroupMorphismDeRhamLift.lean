@@ -24,7 +24,6 @@ theorem crys_ext (hm : m.IsBC) {d₁ d₂ : Crys J.κ (spMap J.π) X.A} (h : ∀
   refine LinearMap.ext fun c ↦ ?_
   obtain ⟨z, rfl⟩ := hm.2 c
   induction z with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul x c => rw [liftSemi_tmul, map_smul, map_smul, h c]
 
@@ -88,7 +87,6 @@ theorem bcE_bijective (hm : m.IsBC) : Function.Bijective (bcE hm) := by
   let G : Crys J.κ (spMap J.π) X.A → J.B ⊗[R] HdR X.A := fun d ↦ ∑ ν, J.b ν ⊗ₜ co hm ν d
   have hG : ∀ z, G (bcE hm z) = z := fun z ↦ by
     induction z with
-    | zero => simp only [G, map_zero, co_zero, tmul_zero, Finset.sum_const_zero]
     | add x y hx hy =>
       simp only [G, map_add, co_add, tmul_add, Finset.sum_add_distrib] at hx hy ⊢
       rw [hx, hy]
@@ -188,7 +186,6 @@ theorem corr_iff (hm : m.IsBC) (d : Crys J.κ (spMap J.π) X.A) (y : HdR X.A) :
   · intro H c'
     obtain ⟨z, rfl⟩ := hm.2 c'
     induction z with
-    | zero => simp
     | add x z hx hz => simp only [map_add, hx, hz]
     | tmul β c =>
       rw [liftSemi_tmul, LinearMap.map_smulₛₗ, red_pull, map_smul, map_smul, smul_eq_mul, smul_eq_mul, map_mul, H c]

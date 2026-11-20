@@ -64,7 +64,6 @@ def cotBC (R k : Type) [CommRing R] [CommRing k] [Algebra R k] (A : Type) [CommR
     (AugCot.congr (AlgEquiv.refl : (k ⊗[R] A) ≃ₐ[k] (k ⊗[R] A)) (by
       refine AlgHom.ext fun x => ?_
       induction x with
-      | zero => simp
       | add x y hx hy => simp only [map_add, hx, hy]
       | tmul r a => simp [Algebra.smul_def, mul_comm]))).symm
 
@@ -75,7 +74,6 @@ def cotDualBC (R k : Type) [CommRing R] [CommRing k] [Algebra R k] (A : Type) [C
     (AugCot.congr (CartierDual.baseChange R k A).toAlgEquiv (by
       refine AlgHom.ext fun x => ?_
       induction x with
-      | zero => simp
       | add x y hx hy => simp only [map_add, hx, hy]
       | tmul r φ => simp [Algebra.TensorProduct.one_def, Algebra.smul_def, mul_comm]))).symm
 
@@ -116,7 +114,6 @@ theorem nakayama (R : Type) [CommRing R] (M : Type) [AddCommGroup M] [Module R M
     suffices h : ∀ z, z ∈ Submodule.span κ (Set.range (f ∘ v)) from eq_top_iff.2 fun z _ => h z
     intro z
     induction z with
-    | zero => exact zero_mem _
     | add a b ha hb => exact add_mem ha hb
     | tmul c m =>
       have hm : m ∈ Submodule.span R (Set.range v) := hv ▸ Submodule.mem_top

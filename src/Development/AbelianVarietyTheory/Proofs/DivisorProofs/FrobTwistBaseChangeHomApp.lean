@@ -27,7 +27,6 @@ def SemiBialgHom.liftOver {ρ : R →+* R''} (f : SemiBialgHom ρ A A'') (τ : R
   have hg : ∀ r a, g (r ⊗ₜ a) = τ r • f a := fun r a => (Algebra.smul_def (τ r) (f a)).symm
   have hs : ∀ (r : R') x, g (r • x) = τ r • g x := fun r x => by
     induction x with
-    | zero => simp
     | add x y hx hy => simp only [smul_add, map_add, hx, hy]
     | tmul s a => rw [smul_tmul', hg, hg, smul_eq_mul, map_mul, mul_smul]
   { toRingHom := g
@@ -35,7 +34,6 @@ def SemiBialgHom.liftOver {ρ : R →+* R''} (f : SemiBialgHom ρ A A'') (τ : R
     counit_map := fun x => by
       change counit (g x) = _
       induction x with
-      | zero => simp
       | add x y hx hy => simp only [map_add, hx, hy]
       | tmul r a =>
         rw [hg, map_smul, f.counit_map, TensorProduct.counit_tmul, h]
@@ -43,7 +41,6 @@ def SemiBialgHom.liftOver {ρ : R →+* R''} (f : SemiBialgHom ρ A A'') (τ : R
     comul_map := fun x => by
       change comul (g x) = _
       induction x with
-      | zero => simp
       | add x y hx hy => simp only [map_add, hx, hy]
       | tmul r a =>
         rw [← mul_one r, ← smul_eq_mul, ← smul_tmul', hs, map_smul, map_smul, map_smulₛₗ, hg, map_one,
@@ -53,7 +50,6 @@ def SemiBialgHom.liftOver {ρ : R →+* R''} (f : SemiBialgHom ρ A A'') (τ : R
         rw [← SemiBialgHom.two_comul, ← SemiBialgHom.two_comul]
         generalize comul (R := R) a = c
         induction c with
-        | zero => simp
         | add x y hx hy => simp only [map_add, hx, hy]
         | tmul a b => simp [hg] }
 
@@ -87,7 +83,6 @@ def frobBialg (h : (p : R) = 0) (A : Type) [CommRing A] [Bialgebra R A] :
     rw [frobRing_apply, comul_pow, ← frobRing_apply (natCast_eq_zero_of_algebra h (A ⊗[R] A))]
     generalize comul (R := R) a = c
     induction c with
-    | zero => simp only [map_zero]
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul a b => simp [Algebra.TensorProduct.tmul_pow]
 

@@ -27,7 +27,6 @@ theorem isHopfIdeal_kerIdeal_of_bialgHom (k A B : Type) [CommRing k] [CommRing A
             (TensorProduct.lid k B (LinearMap.rTensor B (counit (R := k) (A := B)) t))) := by
         intro t
         induction t with
-        | zero => simp
         | add x y hx hy => simp only [map_add, hx, hy]
         | tmul x y =>
           rw [TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul, LinearMap.rTensor_tmul,

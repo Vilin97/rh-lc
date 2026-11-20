@@ -299,7 +299,6 @@ theorem span_range_one_tmul :
     Submodule.span ℝ (Set.range fun x : X => (1 : ℝ) ⊗ₜ[ℤ] x) = ⊤ := by
   refine eq_top_iff.2 fun v _ => ?_
   induction v with
-  | zero => exact zero_mem _
   | add v w hv hw => exact add_mem (hv trivial) (hw trivial)
   | tmul s x =>
     have : s ⊗ₜ[ℤ] x = s • ((1 : ℝ) ⊗ₜ[ℤ] x) := by simp [smul_tmul']

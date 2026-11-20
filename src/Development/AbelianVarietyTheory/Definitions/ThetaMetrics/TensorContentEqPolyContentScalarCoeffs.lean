@@ -827,7 +827,6 @@ theorem basisVal_baseChange_rTensor (w : Valuation S Γ₀) (φ : R →ₐ[O] S)
   have key : ∀ i, (b.baseChange S).repr (φ.toLinearMap.rTensor M x) i =
       φ ((b.baseChange R).repr x i) := fun i => by
     induction x with
-    | zero => simp
     | tmul a y => simp
     | add y z hy hz => simp only [map_add, Finsupp.add_apply, hy, hz]
   exact eq_of_forall_ge_iff fun γ => by simp only [basisVal_le_iff, key, h]
@@ -848,7 +847,6 @@ theorem repr_tensorCoeffs (x : MvPolynomial σ R ⊗[O] M) (m : σ →₀ ℕ) (
     (b.baseChange R).repr (tensorCoeffs x m) i =
       AddMonoidAlgebra.coeff ((b.baseChange (MvPolynomial σ R)).repr x i) m := by
   induction x with
-  | zero => simp
   | tmul f y => simp
   | add y z hy hz => simp only [map_add, Finsupp.add_apply, hy, hz, MvPolynomial.coeff_add]
 
@@ -902,7 +900,6 @@ theorem tensorContent_eq_polyContent_scalarCoeffs {N : Type*} [AddCommGroup N] [
   have key : ∀ m i, c.repr (scalarCoeffs x m) i =
       AddMonoidAlgebra.coeff ((c.baseChange (MvPolynomial σ R)).repr x i) m := fun m i => by
     induction x with
-    | zero => simp
     | tmul f y => simp [mul_comm]
     | add y z hy hz => simp only [map_add, Finsupp.add_apply, hy, hz, MvPolynomial.coeff_add]
   refine eq_of_forall_ge_iff fun γ => ?_

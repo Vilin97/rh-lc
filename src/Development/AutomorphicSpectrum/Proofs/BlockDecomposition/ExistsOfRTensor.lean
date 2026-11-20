@@ -108,17 +108,14 @@ theorem tensor_prim (p q m : V →ₗ[R] V') (p' q' m' : W →ₗ[R] W') (P : V'
     (ht : TensorProduct.map m m' t = TensorProduct.map p p' t + TensorProduct.map q q' t) : t = 0 := by
   have h1 : ∀ t : V ⊗[R] W, TensorProduct.map P Q (TensorProduct.map m m' t) = t := fun t ↦ by
     induction t with
-    | zero => simp
     | tmul v w => simp [hm, hm', hPp, hPq, hQp, hQq]
     | add x y hx hy => simp only [map_add, hx, hy]
   have h2 : ∀ t : V ⊗[R] W, TensorProduct.map P Q (TensorProduct.map p p' t) = 0 := fun t ↦ by
     induction t with
-    | zero => simp
     | tmul v w => simp [hQp]
     | add x y hx hy => simp only [map_add, hx, hy, add_zero]
   have h3 : ∀ t : V ⊗[R] W, TensorProduct.map P Q (TensorProduct.map q q' t) = 0 := fun t ↦ by
     induction t with
-    | zero => simp
     | tmul v w => simp [hPq]
     | add x y hx hy => simp only [map_add, hx, hy, add_zero]
   have := congrArg (TensorProduct.map P Q) ht
@@ -267,7 +264,6 @@ theorem mu_pull (m : CoefMap (RingHom.id R) F G) (muF : Z1 F ⊗[R] Glob1 F →�
     muG (TensorProduct.map m.pullbackOneCocycle (pullGlob1 m) t) T T' φ =
       q1 m T' (muF t _ _ (m.G.map φ)) := by
   induction t with
-  | zero => simp
   | tmul f ω =>
     rw [TensorProduct.map_tmul, hG, hF, prodFirstProjection_smul]
     rfl
@@ -277,7 +273,6 @@ theorem rTensor_pull (m : CoefMap (RingHom.id R) F G) (t : Z1 F ⊗[R] Glob1 F) 
     (H1.mk G).rTensor (Glob1 G) (TensorProduct.map m.pullbackOneCocycle (pullGlob1 m) t) =
       TensorProduct.map m.pull1 (pullGlob1 m) ((H1.mk F).rTensor (Glob1 F) t) := by
   induction t with
-  | zero => simp
   | tmul f ω => rfl
   | add x y hx hy => simp only [map_add, hx, hy]
 
@@ -290,7 +285,6 @@ theorem exists_of_rTensor (muF : Z1 F ⊗[R] Glob1 F →ₗ[R] A1 F)
   obtain ⟨u, rfl⟩ := (rTensor_exact (Glob1 F) hex (H1.mk_surjective F) t).1 ht
   clear ht
   induction u with
-  | zero => exact ⟨0, by simp⟩
   | tmul g ω =>
     refine ⟨fun T ↦ g T • ω.1 T, fun T T' φ ↦ ?_⟩
     rw [LinearMap.rTensor_tmul, hF]

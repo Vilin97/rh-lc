@@ -222,11 +222,9 @@ theorem inv_mul (D : H →ₗ[k] k) (hD : ∀ a b, D (a * b) = counit (R := k) a
   have he : ∀ a, e (comul a) = a := fun a => by simp [e]
   have key : ∀ s t, β (s * t) = e s * β t + β s * e t := fun s t => by
     induction s with
-    | zero => simp
     | add x y hx hy => simp only [add_mul, map_add, hx, hy]; ring
     | tmul a a' =>
       induction t with
-      | zero => simp
       | add x y hx hy => simp only [mul_add, map_add, hx, hy]; ring
       | tmul b b' => simp [β, e, hD, Algebra.smul_def]; ring
   have := key (comul a) (comul b)
@@ -256,7 +254,6 @@ theorem exists_transl (χ : H →ₐ[k] k) : ∃ σ : H →ₐ[k] H, (∀ y, χ 
       simp only [LinearMap.comp_apply]
       generalize comul (R := k) x = t
       induction t with
-      | zero => simp
       | add x y hx hy => simp only [map_add, hx, hy]
       | tmul a b => simp [u, e]; rw [← Algebra.smul_def, map_smul, smul_eq_mul, mul_comm]
     rw [h3]
@@ -347,7 +344,6 @@ theorem hopf_dvd [IsAlgClosed k] [Module.Finite k H] [IsCocomm k H] (p : ℕ) [F
       simp only [LinearMap.comp_apply]
       generalize comul (R := k) φ = t
       induction t with
-      | zero => simp
       | add x y hx hy => simp only [map_add, LinearMap.add_apply, ← hx, ← hy]; rfl
       | tmul a b => simp [mul_comm]
     refine dvd_quot p (fun i => CartierDual.evalAt k H (f i)) (fun i φ ψ => ?_) ?_ _ fun i φ hφ => ?_
@@ -383,25 +379,21 @@ noncomputable def co (i : Fin r) : B ⊗[k] Sq k r →ₗ[k] B :=
 
 theorem co_mul (i : Fin r) (s t : B ⊗[k] Sq k r) : co i (s * t) = c0 k r B s * co i t + co i s * c0 k r B t := by
   induction s with
-  | zero => simp
   | add x y hx hy => simp only [add_mul, map_add, hx, hy]; ring
   | tmul a a' =>
     induction t with
-    | zero => simp
     | add x y hx hy => simp only [mul_add, map_add, hx, hy]; ring
     | tmul b b' => simp [snd_mul, Algebra.smul_def]; ring
 
 theorem co_map {B' : Type} [CommRing B'] [Algebra k B'] (θ : B →ₐ[k] B') (i : Fin r) (s : B ⊗[k] Sq k r) :
     co i (Algebra.TensorProduct.map θ (AlgHom.id k _) s) = θ (co i s) := by
   induction s with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul a a' => simp
 
 theorem map_lineCoeffConst {B' : Type} [CommRing B'] [Algebra k B'] (θ : B →ₐ[k] B') (s : B ⊗[k] Sq k r) :
     c0 k r B' (Algebra.TensorProduct.map θ (AlgHom.id k _) s) = θ (c0 k r B s) := by
   induction s with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul a a' => simp
 
@@ -411,7 +403,6 @@ theorem map_dir (l : Fin r → k) (s : B ⊗[k] Sq k r) :
     Algebra.TensorProduct.map (AlgHom.id k B) (dir l) s =
       c0 k r B s ⊗ₜ[k] 1 + (∑ i, l i • co i s) ⊗ₜ[k] (DualNumber.eps : DualNumber k) := by
   induction s with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy, smul_add, Finset.sum_add_distrib, add_tmul]; abel
   | tmul a x =>
     have : dir l x = x.fst • 1 + (∑ i, l i * x.snd i) • (DualNumber.eps : DualNumber k) := by

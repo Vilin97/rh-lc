@@ -40,7 +40,6 @@ theorem smul_dUnit_mem (A : Type) [CommRing A] [Bialgebra O A] [IsCocomm O A] [M
     refine sup_le (Submodule.span_le.2 hM) (sup_le ?_ ?_)
     · rintro _ ⟨t, rfl⟩
       induction t with
-      | zero => simp
       | tmul a b =>
         have h0 : ∀ a, ε (π a) = 0 := fun a => by rw [hπ]; simp
         rw [Submodule.mem_comap, hμ, AugCot.d_mul, h0, h0, zero_smul, zero_smul, add_zero]
@@ -106,7 +105,6 @@ theorem hodgeTateCokerSharp : GlobalTheory.CompanionTheory.Ar.HT.HodgeTateCokerS
   rw [← hz]
   clear hz
   induction z with
-  | zero => simp
   | tmul c χ =>
     obtain ⟨t, rfl⟩ := (tateCongr O G.bidual).surjective χ
     exact ⟨c ⊗ₜ t, rfl⟩

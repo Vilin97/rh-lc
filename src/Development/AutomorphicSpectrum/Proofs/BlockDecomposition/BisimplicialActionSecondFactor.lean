@@ -157,7 +157,6 @@ theorem map_left_eq {A B T : C} (f : A ⟶ B) (t : F.obj A ⊗[R] F.obj T) :
     TensorProduct.map (mp F f).toLinearMap LinearMap.id t =
       mp (box F) (lh f T) t := by
   induction t with
-  | zero => simp
   | add a b ha hb => simp only [map_add, ha, hb]
   | tmul a b =>
     refine (TensorProduct.map_tmul _ _ _ _).trans ?_
@@ -167,7 +166,6 @@ theorem map_right_eq {A B T : C} (f : A ⟶ B) (t : F.obj T ⊗[R] F.obj A) :
     TensorProduct.map LinearMap.id (mp F f).toLinearMap t =
       mp (box F) (rh T f) t := by
   induction t with
-  | zero => simp
   | add a b ha hb => simp only [map_add, ha, hb]
   | tmul a b =>
     refine (TensorProduct.map_tmul _ _ _ _).trans ?_

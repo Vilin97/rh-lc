@@ -29,7 +29,6 @@ noncomputable def dualDer (f : A) (hf : comul (R := k) f = f ⊗ₜ[k] (1 : A) +
         CartierDual.pair k A A (a ⊗ₜ (CartierDual.transpose (LinearMap.mulLeft k f) b)) t := by
       intro t
       induction t with
-      | zero => simp
       | add x y hx hy => simp only [mul_add, map_add, hx, hy]; ring
       | tmul c d => simp [add_mul]
     have h2 := h (comul (R := k) c)
@@ -260,7 +259,6 @@ theorem isCocomm_quot (I : Ideal A) [I.IsHopfIdeal k] [Coalgebra.IsCocomm k A] :
   conv_rhs => rw [← h]
   generalize comul (R := k) a = t
   induction t with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul a b => simp
 end

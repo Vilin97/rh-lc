@@ -142,7 +142,6 @@ theorem exists_prim_pow (hf : Function.Surjective (f.app 1)) :
       f.app 1 (TensorProduct.lid K _ (l.rTensor _ z)).1 = TensorProduct.lid K _ (l.rTensor _
         (bcMap k (f.app 1) (liftSemi (toBaseChange K k (H.A 1)).prim z).1)) := fun z => by
     induction z with
-    | zero => simp
     | add x y hx hy => simp only [map_add, Submodule.coe_add, hx, hy]
     | tmul r x => simp [smul_tmul']
   refine ⟨_, (TensorProduct.lid K _ (l.rTensor _ z)).2, ?_⟩
@@ -155,7 +154,6 @@ theorem omegaMap_baseChangeMap_surjective (R' : Type) [CommRing R'] [Algebra K R
   obtain ⟨z, rfl⟩ := (T.omega_baseChange_bijective_of_p_eq_zero G R' h).2 w
   change _ ∈ LinearMap.range _
   induction z with
-  | zero => simp
   | add x y hx hy => rw [map_add]; exact add_mem hx hy
   | tmul r x =>
     obtain ⟨x, rfl⟩ := hf x

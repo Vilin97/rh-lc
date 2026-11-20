@@ -68,7 +68,6 @@ theorem crys_ext (P : AbelianDeRham) {g : ℕ} (hA : IsAbelianScheme A) (hg : Sm
   refine LinearMap.ext fun w => ?_
   obtain ⟨z, rfl⟩ := constMor_surjective P hA hg w
   induction z with
-  | zero => simp only [map_zero]
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul r c => rw [liftSemi_tmul, map_smul, map_smul, e]
 
@@ -77,7 +76,6 @@ theorem fst_eq_crysLo (P : AbelianDeRham) {g : ℕ} (hA : IsAbelianScheme A)
     (w : prim (epsDP R) (epsRed R) A) : (d w).fst = crysLo d ((redMor A).pull w) := by
   obtain ⟨z, rfl⟩ := constMor_surjective P hA hg w
   induction z with
-  | zero => simp only [map_zero, TrivSqZeroExt.fst_zero]
   | add x y hx hy => simp only [map_add, TrivSqZeroExt.fst_add, hx, hy]
   | tmul r c =>
     rw [liftSemi_tmul, map_smul, LinearMap.map_smulₛₗ, redMor_constMor, map_smul]
@@ -124,7 +122,6 @@ theorem constMor_isBC (P : AbelianDeRham) {g : ℕ} (hA : IsAbelianScheme A)
   have e : ∀ z, liftSemi (constMor A).pull z = (liftMor (epsDP R) hic).pull (liftSemi (bcMor hφ).pull z) :=
     fun z => by
       induction z with
-      | zero => simp only [map_zero]
       | add x y hx hy => simp only [map_add, hx, hy]
       | tmul r c =>
         rw [liftSemi_tmul, liftSemi_tmul, map_smul,

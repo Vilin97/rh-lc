@@ -75,7 +75,6 @@ theorem coeff_mem {K L B ι : Type*} [Field K] [Field L] [Algebra K L] [CommRing
   have hej : ∀ z, e (j z) = (e' z : L) := by
     intro z
     induction z with
-    | zero => simp
     | tmul x y =>
       simp [he, he', hj, Algebra.ofId_apply]
       left
@@ -153,7 +152,6 @@ theorem tensor_unit_eq_one {K A B : Type} [Field K] [IsAlgClosed K] [CommRing A]
       algebraMap A L ((Algebra.TensorProduct.basis A b).repr z i) := by
     intro z i
     induction z with
-    | zero => simp
     | tmul x y => simp [hj, ← IsScalarTower.algebraMap_apply, Algebra.smul_def]
     | add x y hx hy => simp [hx, hy]
   have hev : ∀ z, Algebra.TensorProduct.lift (AlgHom.id K L) ((Algebra.ofId K L).comp ψ)
@@ -162,7 +160,6 @@ theorem tensor_unit_eq_one {K A B : Type} [Field K] [IsAlgClosed K] [CommRing A]
           (fun _ _ => Commute.all _ _) z) := by
     intro z
     induction z with
-    | zero => simp
     | tmul x y => simp [hj, Algebra.ofId_apply, ← IsScalarTower.algebraMap_apply]
     | add x y hx hy => simp only [map_add, hx, hy]
   have hco : ∀ i, ∃ k : K, (Algebra.TensorProduct.basis A b).repr u i = algebraMap K A k := by

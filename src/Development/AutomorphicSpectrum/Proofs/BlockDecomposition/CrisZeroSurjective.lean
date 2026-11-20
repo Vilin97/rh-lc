@@ -150,12 +150,10 @@ theorem tens_change {W A R R' : Type} [CommRing W] [CommRing A] [CommRing R] [Co
       invFun := Bk
       left_inv := fun x => by
         induction x with
-        | zero => simp
         | tmul a y => rw [hF, hB, ← hE, AddEquiv.symm_apply_apply]
         | add x y hx hy => rw [map_add, map_add, hx, hy]
       right_inv := fun x => by
         induction x with
-        | zero => simp
         | tmul r v =>
           obtain ⟨a, rfl⟩ := hc r
           rw [hB, hF, ← hE, AddEquiv.apply_symm_apply]

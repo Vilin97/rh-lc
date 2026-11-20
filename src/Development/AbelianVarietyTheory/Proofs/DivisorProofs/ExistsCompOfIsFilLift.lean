@@ -58,7 +58,6 @@ theorem Comp.ext (hm : (constMor A).IsBC) (h : Comp d f k) (h' : Comp d' f k) : 
 theorem Comp.corr (hm : (constMor A).IsBC) (h : Comp d f k) : (redMor A).Corr d f := fun c ↦ by
   obtain ⟨z, rfl⟩ := hm.2 c
   induction z with
-  | zero => simp only [map_zero]
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul r c =>
     rw [liftSemi_tmul, LinearMap.map_smul, h, LinearMap.map_smulₛₗ, redMor_constMor, LinearMap.map_smul]

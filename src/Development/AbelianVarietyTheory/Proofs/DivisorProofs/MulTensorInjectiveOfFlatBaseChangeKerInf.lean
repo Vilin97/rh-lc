@@ -96,7 +96,6 @@ theorem mul_tensor_injective : ∀ (P R₂ B B₂ : Type) [CommRing P] [CommRing
   have hχψ : ∀ t, χ (ψ t) = t := by
     intro t
     induction t with
-    | zero => simp
     | add u v hu hv => rw [map_add, map_add, hu, hv]
     | tmul k b =>
       simp only [ψ, χ, liftAddHom_tmul, ψ0, χ0, AddMonoidHom.mk'_apply]
@@ -112,7 +111,6 @@ theorem mul_tensor_injective : ∀ (P R₂ B B₂ : Type) [CommRing P] [CommRing
   have key : ∀ t, ν (ψ t) = c₂ (μ t) := by
     intro t
     induction t with
-    | zero => simp
     | add u v hu hv => rw [map_add, map_add, hu, hv, map_add, map_add]
     | tmul k b =>
       simp only [ψ, liftAddHom_tmul, ψ0, AddMonoidHom.mk'_apply, ν, LinearMap.coe_comp,

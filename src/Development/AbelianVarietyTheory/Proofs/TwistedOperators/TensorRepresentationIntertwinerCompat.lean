@@ -45,7 +45,6 @@ theorem dual_eq_zero_of_map_eq_zero {U W X Y : Type} [AddCommGroup U] [Module �
   have key : ∀ z, l (TensorProduct.map s t (TensorProduct.map p q z)) = l z := by
     intro z
     induction z with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul u w =>
       simp only [TensorProduct.map_tmul]
@@ -62,15 +61,12 @@ theorem iso_tprod_shuffle {Γ A B C D : Type} [Monoid Γ] [AddCommGroup A] [Modu
     Iso ((a.tprod c).tprod (b.tprod d)) (a.tprod (b.tprod (c.tprod d))) := by
   refine ⟨(TensorProduct.tensorTensorTensorComm ℂ A C B D).trans (TensorProduct.assoc ℂ A B (C ⊗[ℂ] D)), fun g z => ?_⟩
   induction z with
-  | zero => simp
   | add a b ha hb => simp only [map_add, ha, hb]
   | tmul u w =>
     induction u with
-    | zero => simp
     | add a b ha hb => simp only [TensorProduct.add_tmul, map_add, ha, hb]
     | tmul u1 u2 =>
       induction w with
-      | zero => simp
       | add a b ha hb => simp only [TensorProduct.tmul_add, map_add, ha, hb]
       | tmul w1 w2 => simp
 
@@ -90,19 +86,16 @@ theorem finrank_invFun_two_contractions (Γ A B C D X Y : Type) [Monoid Γ] [Add
   have ep' : ∀ g z, p (a.tprod c g z) = x g (p z) := by
     intro g z
     induction z with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul u w => simp [ep]
   have eq' : ∀ g z, q (b.tprod d g z) = y g (q z) := by
     intro g z
     induction z with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul u w => simp [eq]
   refine finrank_invFun_eq_of_surjective _ _ (TensorProduct.map p q) (TensorProduct.map_surjective hp hq)
     (fun g z => ?_) (fun l hl z hz => dual_eq_zero_of_map_eq_zero p q hp hq l ?_ ?_ z hz)
   · induction z with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul u w =>
       rw [Representation.tprod_apply, Representation.tprod_apply x, TensorProduct.map_tmul, TensorProduct.map_tmul,

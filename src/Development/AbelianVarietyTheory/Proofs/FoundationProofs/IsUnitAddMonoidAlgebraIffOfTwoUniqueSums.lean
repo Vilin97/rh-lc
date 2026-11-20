@@ -193,14 +193,12 @@ theorem hochschild_homotopy_one (ρ : M →ₗ[R] M ⊗[R] R[X]) (f : M ⊗[R] R
       hochschildD₀ ρ (tensorCoeff R M 0 f) = f := by
   classical
   induction f with
-  | zero => simp
   | add a b ha hb => simp only [map_add]; rw [add_sub_add_comm, ha, hb]
   | tmul m p =>
     have h : ∀ (t : M ⊗[R] R[X]) (p : R[X]), (tensorCoeff R R[X] (0 : X)).lTensor M
         (TensorProduct.assoc R M R[X] R[X] (t ⊗ₜ p)) = p.coeff 0 • t := by
       intro t p
       induction t with
-      | zero => simp
       | add a b ha hb => simp only [add_tmul, map_add, ha, hb, smul_add]
       | tmul m q => simp
     induction p using AddMonoidAlgebra.induction_linear with
@@ -218,7 +216,6 @@ theorem hochschild_homotopy_two (ρ : M →ₗ[R] M ⊗[R] R[X]) (f : M ⊗[R] (
       ((tensorCoeff R R[X] (0 : X)).lTensor R[X]).lTensor M (hochschildD₂ ρ f) = f := by
   classical
   induction f with
-  | zero => simp
   | add a b ha hb => simp only [map_add]; rw [add_sub_add_comm, ha, hb]
   | tmul m u =>
     have h : ∀ (t : M ⊗[R] R[X]) (u : R[X] ⊗[R] R[X]),
@@ -227,11 +224,9 @@ theorem hochschild_homotopy_two (ρ : M →ₗ[R] M ⊗[R] R[X]) (f : M ⊗[R] (
         TensorProduct.assoc R M R[X] R[X] (t ⊗ₜ tensorCoeff R R[X] (0 : X) u) := by
       intro t u
       induction t with
-      | zero => simp
       | add a b ha hb => simp only [add_tmul, map_add, ha, hb]
       | tmul m q => simp
     induction u with
-    | zero => simp
     | add a b ha hb => simp only [tmul_add, map_add]; rw [add_sub_add_comm, ha, hb]
     | tmul p q =>
       induction p using AddMonoidAlgebra.induction_linear with
@@ -276,7 +271,6 @@ theorem IsCoaction.exact_hochschildD₁_hochschildD₂ {ρ : M →ₗ[R] M ⊗[R
   · rintro ⟨g, rfl⟩
     let := h.decomposition
     induction g with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb, add_zero]
     | tmul m p =>
       induction m using DirectSum.Decomposition.inductionOn (torusWeightSpace ρ) with

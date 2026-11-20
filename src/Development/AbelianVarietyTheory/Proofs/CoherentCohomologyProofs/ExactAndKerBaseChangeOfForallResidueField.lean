@@ -285,7 +285,6 @@ noncomputable def tensorEquivExtendScalars (M : ModuleCat.{u} R) :
       change TensorProduct.congr e (LinearEquiv.refl R M) (s • x) =
         s • TensorProduct.congr e (LinearEquiv.refl R M) x
       induction x with
-      | zero => simp
       | tmul a m => rfl
       | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add] }
 

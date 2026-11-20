@@ -134,12 +134,12 @@ theorem pa_opNorm_le (L : EuclideanSpace ℂ ι →L[ℂ] ℂ) :
 
 theorem pa_fderiv_bound {κ : Type} (G : κ → EuclideanSpace ℂ ι → ℂ) (hG : ∀ k, Differentiable ℂ (G k))
     (R : ℝ) (u : κ → ℝ) (hu : ∀ k v, ‖v‖ ≤ R + 1 → ‖G k v‖ ≤ u k) (j : ι) :
-    ∀ k y, ‖y‖ ≤ R → ‖fderiv ℂ (G k) y (EuclideanSpace.single j 1)‖ ≤ u k := by
-  intro k y hy
-  refine pa_cauchy1 (hG k) y j fun t ht => hu k _ ?_
-  calc ‖y + t • EuclideanSpace.single j (1 : ℂ)‖ ≤ ‖y‖ + ‖t • EuclideanSpace.single j (1 : ℂ)‖ := norm_add_le _ _
-    _ = ‖y‖ + 1 := by rw [norm_smul, EuclideanSpace.norm_single, ht, norm_one, mul_one]
-    _ ≤ R + 1 := by linarith
+    ∀ k y, ‖y‖ ≤ R → ‖fderiv ℂ (G k) y (EuclideanSpace.single j 1)‖ ≤ u k := by sorry
+
+
+
+
+
 
 theorem pa_fderiv_norm {κ : Type} (G : κ → EuclideanSpace ℂ ι → ℂ) (hG : ∀ k, Differentiable ℂ (G k))
     (R : ℝ) (u : κ → ℝ) (hu : ∀ k v, ‖v‖ ≤ R + 1 → ‖G k v‖ ≤ u k) :

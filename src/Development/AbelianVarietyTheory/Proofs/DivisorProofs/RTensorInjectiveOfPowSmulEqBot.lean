@@ -22,11 +22,9 @@ theorem rTensor_injective_of_flat_baseChange {A C M N' N : Type} [CommRing A] [C
   have key : ∀ z, (ι.restrictScalars A).rTensor M (e' z) = e (ι.rTensor (C ⊗[A] M) z) := by
     intro z
     induction z with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul n t =>
       induction t with
-      | zero => simp
       | add a b ha hb => simp only [tmul_add, map_add, ha, hb]
       | tmul c b => simp [e, e']
   intro x y h
@@ -47,11 +45,9 @@ theorem lTensor_injective_of_flat {A C F N' N : Type} [CommRing A] [CommRing C] 
   have key : ∀ z, ι.lTensor F (e' z) = e ((ι.baseChange C).lTensor F z) := by
     intro z
     induction z with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul n t =>
       induction t with
-      | zero => simp
       | add a b ha hb => simp only [tmul_add, map_add, ha, hb]
       | tmul c b => simp [e, e']
   intro x y h
@@ -121,7 +117,6 @@ theorem rTensor_injective_of_pow_smul_eq_bot (I : Ideal B) {K L : Type} [AddComm
       simpa using hx
     have hz : ∀ z : K ⊗[B] N, z = 0 := fun z => by
       induction z with
-      | zero => rfl
       | tmul k x => rw [h0 x, tmul_zero]
       | add a b ha hb => rw [ha, hb, add_zero]
     intro a b _

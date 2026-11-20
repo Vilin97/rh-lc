@@ -84,7 +84,6 @@ private theorem dker_kills_of {x : E}
       (Algebra.TensorProduct.map (IsScalarTower.toAlgHom A S S[X]) (AlgHom.id A E) h) = h := by
     clear key
     induction h with
-    | zero => simp
     | tmul b z => simp [ev]
     | add a b ha hb => simp only [map_add, ha, hb]
   have hX : ev X = 1 := by simp [ev]

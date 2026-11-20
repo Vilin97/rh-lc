@@ -147,7 +147,6 @@ theorem associatedPrimes_tensor_residueField (p : Ideal A) [hp : p.IsPrime] :
   have hinj : Function.Injective φ := injective_lTensor_residueField p
   have hsurj : ∀ x : M ⊗[A] p.ResidueField, ∃ r ∉ p, ∃ y, φ y = r • x := fun x ↦ by
     induction x with
-    | zero => exact ⟨1, (Ideal.ne_top_iff_one p).1 hp.ne_top, 0, by simp⟩
     | tmul m c =>
       obtain ⟨a, b, hb, rfl⟩ := IsFractionRing.div_surjective (A := A ⧸ p) c
       obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective b

@@ -308,7 +308,6 @@ theorem tenMap_bijective [Module.Free ℤ Ch] [Module.Finite ℤ Ch] : Function.
   have : (tenMap (Ch := Ch) k : _ → _) = e := by
     funext z
     induction z with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul c l =>
       rw [tenMap_tmul]

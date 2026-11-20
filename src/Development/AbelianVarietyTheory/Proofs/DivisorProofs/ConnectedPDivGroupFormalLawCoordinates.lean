@@ -37,7 +37,6 @@ theorem main : ∀ (p : ℕ) (k : Type) [CommRing k] (d : ℕ) (G : PDivGroup p 
           (LinearMap.rTensor (G.A 0) (Coalgebra.counit (R := k) (A := G.A 0)) t)) := by
       intro t
       induction t with
-      | zero => simp
       | tmul a b => simp [Algebra.TensorProduct.lift_tmul, Bialgebra.counitAlgHom_apply]
       | add x y hx hy => simp only [map_add, hx, hy]
     rw [key, Coalgebra.rTensor_counit_comul, TensorProduct.lid_tmul, one_smul]

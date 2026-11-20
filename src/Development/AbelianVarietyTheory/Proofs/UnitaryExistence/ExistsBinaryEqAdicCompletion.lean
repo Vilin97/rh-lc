@@ -111,7 +111,6 @@ theorem exists_sub_notMem {A B : Type*} [CommRing A] [CommRing B] [IsDomain B] [
   have h1 : ∀ z, Algebra.TensorProduct.lmul' A z - ψ z ∈ P := by
     intro z
     induction z with
-    | zero => simp
     | tmul x y =>
       simp only [hψ, Algebra.TensorProduct.productMap_apply_tmul, AlgHom.id_apply,
         Algebra.TensorProduct.lmul'_apply_tmul, ← mul_sub]

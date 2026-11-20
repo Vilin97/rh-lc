@@ -93,7 +93,6 @@ theorem regular_of_finite (c : B) (q : Ideal A) (hq : q = (IsLocalRing.maximalId
   obtain ⟨y, rfl⟩ := ((lTensor_exact B (LinearMap.exact_subtype_mkQ P) P.mkQ_surjective) z).1 e3
   clear e3 hz
   induction y with
-  | zero => simp
   | add a b ha hb => rw [map_add]; exact add_mem ha hb
   | tmul b v =>
     obtain ⟨v, hv⟩ := v

@@ -26,7 +26,6 @@ theorem two_injective [Module.Flat R A] (hK : Function.Injective (algebraMap R K
   have e : ∀ c : A ⊗[R] A, (toBaseChange R K A).two c =
       TensorProduct.AlgebraTensorModule.distribBaseChange R K A A ((1 : K) ⊗ₜ[R] c) := fun c => by
     induction c with
-    | zero => simp
     | add x y hx hy => simp only [TensorProduct.tmul_add, map_add, hx, hy]
     | tmul a b => simp
   intro x y h
@@ -68,7 +67,6 @@ theorem exists_bialgHom [Module.Flat R A] (hK : Function.Injective (algebraMap R
         refine ((congrArg _ (hF b).symm).trans (F.two_comul b).symm).trans ?_
         generalize comul (R := R) b = c
         induction c with
-        | zero => simp
         | add x y hx hy => simp only [map_add, hx, hy]
         | tmul a b =>
           simp only [TensorProduct.map_tmul, SemiBialgHom.lin_apply, hF]

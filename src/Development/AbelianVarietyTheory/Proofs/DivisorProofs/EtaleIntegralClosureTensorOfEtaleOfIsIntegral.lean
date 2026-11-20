@@ -18,7 +18,6 @@ theorem exists_one_tmul_eq_of_isIntegral_smooth_fractionField
       (TensorProduct.toIntegralClosure R B K y : B ⊗[R] K) = b ⊗ₜ[R] (1 : K) := by
     intro y
     induction y with
-    | zero => exact ⟨0, by simp⟩
     | tmul b c =>
       obtain ⟨r, hr⟩ := IsIntegrallyClosed.isIntegral_iff.1 c.2
       refine ⟨r • b, ?_⟩

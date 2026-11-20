@@ -57,7 +57,6 @@ theorem exists_addEquiv {A R B M L Q : Type} [CommRing A] [CommRing R] [CommRing
   have hF : ∀ (r : R) (y : L), F (q r ⊗ₜ[R] y) = r • lam y := fun r y => hQ r (lam y)
   have hz : ∀ z : B ⊗[R] L, ∃ m, z = (1 : B) ⊗ₜ[R] t m := fun z => by
     induction z with
-    | zero => exact ⟨0, by rw [map_zero, tmul_zero]⟩
     | tmul r y =>
       obtain ⟨r, rfl⟩ := hq r
       obtain ⟨a, rfl⟩ := hψ r

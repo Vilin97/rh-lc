@@ -67,7 +67,6 @@ theorem eq_sum_of_isIntegral_genericChart : ∀ (R : Type) [CommRing R] [IsDomai
   rw [hfy]
   clear hfy hy
   induction y with
-  | zero => exact ⟨0, Fin.elim0, Fin.elim0, fun m => m.elim0, by simp⟩
   | tmul c b =>
     refine ⟨1, fun _ => c, fun _ => (b : Γ(Sp (FractionRing R), M.gp ⁻¹ᵁ U)), fun _ => b.2, ?_⟩
     rw [Fin.sum_univ_one]

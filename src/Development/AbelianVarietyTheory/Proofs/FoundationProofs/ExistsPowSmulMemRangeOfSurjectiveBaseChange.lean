@@ -574,7 +574,6 @@ theorem exists_pow_smul_mem_range_of_surjective_baseChange.{w}
       (LinearMap.range φ.toLinearMap).mkQ_surjective z
     obtain ⟨z, rfl⟩ := hsurj z
     induction z with
-    | zero => simp
     | tmul c x =>
       have : (LinearMap.range φ.toLinearMap).mkQ (φ x) = 0 :=
         (Submodule.Quotient.mk_eq_zero _).2 ⟨x, rfl⟩
@@ -615,7 +614,6 @@ theorem exists_baseChange_surjective_of_dense.{w} {D : Set (PrimeSpectrum R)} (h
   refine ⟨a, ha0, fun R' _ _ hu z => ?_⟩
   change z ∈ (Algebra.TensorProduct.map (AlgHom.id R' R') φ).range
   induction z with
-  | zero => exact zero_mem _
   | tmul c y =>
     obtain ⟨n, x, hx⟩ := ha y
     obtain ⟨u, hu⟩ := (hu.pow n).exists_left_inv

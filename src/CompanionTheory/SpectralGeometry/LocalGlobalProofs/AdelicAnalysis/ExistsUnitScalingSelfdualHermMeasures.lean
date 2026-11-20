@@ -55,7 +55,6 @@ theorem trace_sigR [FiniteDimensional F E] (R : Type) [CommRing R] [Algebra F R]
     (hinv : ∀ x, σ (σ x) = x) (y : R ⊗[F] E) :
     Algebra.trace R (R ⊗[F] E) (sigR R σ y) = Algebra.trace R (R ⊗[F] E) y := by
   induction y with
-  | zero => simp
   | tmul r e => rw [HaarCoord.sigR_tmul, trace_tmul, trace_tmul, trace_sigma hinv]
   | add a b ha hb => rw [map_add, map_add, map_add, ha, hb]
 

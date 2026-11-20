@@ -14,7 +14,6 @@ private theorem unopS_tmul (S : Type) [CommRing S] [Algebra A S] (s : S) (a : E�
 private theorem unopS_surj (S : Type) [CommRing S] [Algebra A S] (y : S ⊗[A] E) :
     ∃ z, Det.unopS A E S z = y := by
   induction y with
-  | zero => exact ⟨0, map_zero _⟩
   | tmul s a => exact ⟨s ⊗ₜ MulOpposite.op a, unopS_tmul S s _⟩
   | add a b ha hb =>
     obtain ⟨a', rfl⟩ := ha
@@ -29,7 +28,6 @@ private theorem unopS_map (S T : Type) [CommRing S] [Algebra A S] [CommRing T] [
     Det.unopS A E T (Algebra.TensorProduct.map φ (AlgHom.id A _) x) =
       Algebra.TensorProduct.map φ (AlgHom.id A E) (Det.unopS A E S x) := by
   induction x with
-  | zero => simp
   | add a b ha hb => simp only [map_add, ha, hb]
   | tmul s a => simp [Det.unopS]
 
@@ -61,7 +59,6 @@ private theorem lid_unopS (S : Type) [CommRing S] [Algebra A S] (f : S →ₗ[A]
     (TensorProduct.lid A Eᵐᵒᵖ (f.rTensor Eᵐᵒᵖ y)).unop =
       TensorProduct.lid A E (f.rTensor E (Det.unopS A E S y)) := by
   induction y with
-  | zero => simp
   | add a b ha hb => simp only [map_add, MulOpposite.unop_add, ha, hb]
   | tmul s a => simp [unopS_tmul]
 

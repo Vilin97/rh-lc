@@ -17,7 +17,6 @@ theorem UpperTheory.V.CA.d_poly_ext :
     | smul a z _ hz => rw [tmul_smul]; exact Submodule.smul_of_tower_mem _ a hz
   have h2 : y ∈ Submodule.span S ((fun z : E => (1 : S) ⊗ₜ[A] z) '' M) := by
     induction y with
-    | zero => simp
     | add a b ha hb => exact add_mem ha hb
     | tmul s x =>
       have : s ⊗ₜ[A] x = s • ((1 : S) ⊗ₜ[A] x) := by simp [smul_tmul']

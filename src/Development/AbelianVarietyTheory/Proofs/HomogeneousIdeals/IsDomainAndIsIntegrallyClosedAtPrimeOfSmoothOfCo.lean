@@ -107,7 +107,6 @@ theorem isIntegrallyClosedIn_tensor_of_smooth {A B L : Type*} [CommRing A] [Comm
     subst hy'
     clear hx hy
     induction y with
-    | zero => exact ⟨0, by simp⟩
     | add x y hx hy =>
       obtain ⟨a, ha⟩ := hx
       obtain ⟨b, hb⟩ := hy

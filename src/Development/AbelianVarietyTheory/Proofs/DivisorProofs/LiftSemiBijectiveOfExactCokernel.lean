@@ -12,13 +12,11 @@ theorem liftSemi_bijective_of_exact_cokernel : ∀ (R R' : Type) [CommRing R] [C
   have sqN : ∀ x, liftSemi fZ (d.lTensor R' x) = d' (liftSemi fN x) := by
     intro x
     induction x with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul r n => rw [LinearMap.lTensor_tmul, liftSemi_tmul, liftSemi_tmul, map_smul, sN]
   have sqZ : ∀ z, liftSemi fQ (p.lTensor R' z) = p' (liftSemi fZ z) := by
     intro z
     induction z with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul r n => rw [LinearMap.lTensor_tmul, liftSemi_tmul, liftSemi_tmul, map_smul, sZ]
   have ex : Function.Exact (d.lTensor R') (p.lTensor R') := lTensor_exact R' hdp hp

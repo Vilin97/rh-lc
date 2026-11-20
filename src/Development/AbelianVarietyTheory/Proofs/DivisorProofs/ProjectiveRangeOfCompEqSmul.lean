@@ -57,7 +57,6 @@ theorem projective_range_of_comp_eq_smul {A R M : Type} [CommRing A] [CommRing R
     refine le_antisymm ?_ ?_
     · rintro _ ⟨x, rfl⟩
       induction x with
-      | zero => simp
       | tmul r m => rw [hF]; exact Submodule.smul_mem _ _ ⟨m, rfl⟩
       | add x y hx hy => rw [map_add]; exact add_mem hx hy
     · rintro _ ⟨m, rfl⟩

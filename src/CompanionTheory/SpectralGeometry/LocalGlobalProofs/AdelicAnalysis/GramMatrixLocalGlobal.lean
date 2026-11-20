@@ -22,7 +22,6 @@ theorem bcE_inclR (f : R →ₐ[F] S) (e : E) : bcE E f (inclR R e) = inclR S e 
 theorem bcE_sigR (f : R →ₐ[F] S) (σ : E →ₐ[F] E) (z : R ⊗[F] E) :
     bcE E f (sigR R σ z) = sigR S σ (bcE E f z) := by
   induction z with
-  | zero => simp
   | tmul r e => simp [sigR, bcE]
   | add x y hx hy => simp only [map_add, hx, hy]
 
@@ -42,7 +41,6 @@ theorem repr_bcE {ι : Type} [Fintype ι] [DecidableEq ι] (b : Module.Basis ι 
     (Algebra.TensorProduct.basis S b).repr (bcE E f z) k =
       f ((Algebra.TensorProduct.basis R b).repr z k) := by
   induction z with
-  | zero => simp
   | tmul r e => simp [bcE, Algebra.TensorProduct.basis_repr_tmul, Algebra.smul_def]
   | add x y hx hy => simp [map_add, hx, hy]
 

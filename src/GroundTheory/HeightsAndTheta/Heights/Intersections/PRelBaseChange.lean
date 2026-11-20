@@ -35,7 +35,6 @@ theorem RelBaseChange.proof : RelBaseChange.Statement := by
           aeval (fun s => MvPolynomial.map (algebraMap F F') (g s)) (eσ y) := by
       intro y
       induction y with
-      | zero => simp
       | add y z hy hz => simp only [map_add, hy, hz]
       | tmul a p =>
         simp only [AlgebraTensorModule.lTensor_tmul, eσ, eτ, algebraTensorAlgEquiv_tmul, map_smul,
@@ -51,7 +50,6 @@ theorem RelBaseChange.proof : RelBaseChange.Statement := by
     rw [hx']
     clear hz hx'
     induction z with
-    | zero => simp
     | add y z hy hz => rw [map_add, map_add]; exact Ideal.add_mem _ hy hz
     | tmul a k =>
       simp only [AlgebraTensorModule.lTensor_tmul, Submodule.coe_subtype, eσ,

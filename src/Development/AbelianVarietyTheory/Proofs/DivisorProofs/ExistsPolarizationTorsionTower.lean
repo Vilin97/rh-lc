@@ -44,7 +44,6 @@ theorem apply_slice (u : A ⊗[O] B) (y : A →ₐ[O] O) (x : B →ₐ[O] O) :
     y (slice u x) = ev y x u := by
   unfold slice
   induction u with
-  | zero => simp
   | add s t hs ht => simp only [map_add, LinearMap.add_apply, hs, ht]
   | tmul a b => simp [mul_comm]
 
@@ -52,14 +51,12 @@ theorem apply_contr (u : A ⊗[O] B) (f : CartierDual O A) (x : B →ₐ[O] O) :
     x (contr u f) = f (slice u x) := by
   unfold slice contr
   induction u with
-  | zero => simp
   | add s t hs ht => simp only [map_add, LinearMap.add_apply, hs, ht]
   | tmul a b => simp [mul_comm]
 
 theorem ev_map_contr (u : A ⊗[O] B) (x x' : B →ₐ[O] O) (t : CartierDual O A ⊗[O] CartierDual O A) :
     ev x x' (TensorProduct.map (contr u) (contr u) t) = pair O A A t (slice u x ⊗ₜ slice u x') := by
   induction t with
-  | zero => simp
   | add s t hs ht => simp only [map_add, LinearMap.add_apply, hs, ht]
   | tmul a b => simp [apply_contr]
 

@@ -43,7 +43,6 @@ theorem spanFinrank_map_eq_of_flat {A B : Type*} [CommRing A] [CommRing B] [Alge
     apply le_antisymm
     · rintro _ ⟨x, -, rfl⟩
       induction x with
-      | zero => simp
       | tmul b i =>
         have : g (b ⊗ₜ i) = b * algebraMap A B i := by
           simp [g, Algebra.smul_def, mul_comm]

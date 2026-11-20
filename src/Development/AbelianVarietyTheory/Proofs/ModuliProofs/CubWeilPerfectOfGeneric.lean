@@ -86,7 +86,6 @@ theorem isReduced_rep {A : Over (Sp O)} [GrpObj A] [IsCommMonObj A] {n : ℕ} {H
     have := congrArg TrivSqZeroExt.snd (congrArg (fun f => f a) h4)
     simpa using this
   induction b with
-  | zero => simp
   | add x y hx hy => simp [hx, hy]
   | tmul f a =>
     have : f ⊗ₜ[O] a = f • ((1 : F) ⊗ₜ[O] a) := by

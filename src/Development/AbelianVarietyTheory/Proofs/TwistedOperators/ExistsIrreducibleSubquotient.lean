@@ -99,7 +99,6 @@ theorem exists_jac₂_map {a b n : Type} [Fintype a] [DecidableEq a] [Fintype b]
     show extTensor R (detRep b χ) ((g true)⁻¹, (g false)⁻¹) w = _
     rw [hg]
     induction w with
-    | zero => simp
     | add x y hx hy => rw [map_add, hx, hy, smul_add]
     | tmul x y =>
       rw [extTensor_tmul, ← TensorProduct.tmul_smul]

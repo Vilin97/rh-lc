@@ -164,7 +164,6 @@ theorem trace_map [FiniteDimensional F E] (φ : R →ₐ[F] R') (y : R ⊗[F] E)
     φ (Algebra.trace R (R ⊗[F] E) y) =
       Algebra.trace R' (R' ⊗[F] E) (Algebra.TensorProduct.map φ (AlgHom.id F E) y) := by
   induction y with
-  | zero => simp
   | tmul r e => simp [trace_tmul']
   | add a c ha hc => simp only [map_add, ha, hc]
 
@@ -172,7 +171,6 @@ theorem map_sigR (σ : E →ₐ[F] E) (φ : R →ₐ[F] R') (z : R ⊗[F] E) :
     Algebra.TensorProduct.map φ (AlgHom.id F E) (sigR R σ z) =
       sigR R' σ (Algebra.TensorProduct.map φ (AlgHom.id F E) z) := by
   induction z with
-  | zero => simp
   | tmul r e => simp [sigR]
   | add a c ha hc => simp only [map_add, ha, hc]
 

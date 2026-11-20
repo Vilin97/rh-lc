@@ -21,7 +21,6 @@ def counitLeft : H ⊗[K] H →ₐ[K] H :=
 theorem counitLeft_eq_lid (y : H ⊗[K] H) :
     counitLeft y = TensorProduct.lid K H (LinearMap.rTensor H (counit (R := K)) y) := by
   induction y with
-  | zero => simp
   | add a b ha hb => simp [ha, hb]
   | tmul a b => simp
 
@@ -37,7 +36,6 @@ theorem counitLeft_assoc_symm_tmul (a : H) (y : H ⊗[K] H) :
     Algebra.TensorProduct.map counitLeft (AlgHom.id K H)
       ((Algebra.TensorProduct.assoc K K K H H H).symm (a ⊗ₜ[K] y)) = counit (R := K) a • y := by
   induction y with
-  | zero => simp
   | add y z hy hz => simp only [TensorProduct.tmul_add, map_add, smul_add, hy, hz]
   | tmul b d => simp [TensorProduct.smul_tmul']
 
@@ -45,7 +43,6 @@ theorem counitLeft_map_comul (y : H ⊗[K] H) :
     Algebra.TensorProduct.map counitLeft (AlgHom.id K H)
       (Algebra.TensorProduct.map (Bialgebra.comulAlgHom K H) (AlgHom.id K H) y) = y := by
   induction y with
-  | zero => simp
   | add y z hy hz => simp only [map_add, hy, hz]
   | tmul a b => simp [counitLeft_comul]
 
@@ -55,7 +52,6 @@ theorem counitLeft_assoc_symm_map_comul (y : H ⊗[K] H) :
         (Algebra.TensorProduct.map (AlgHom.id K H) (Bialgebra.comulAlgHom K H) y)) =
       comul (R := K) (counitLeft y) := by
   induction y with
-  | zero => simp
   | add y z hy hz => simp only [map_add, hy, hz]
   | tmul a b =>
     rw [Algebra.TensorProduct.map_tmul, counitLeft_assoc_symm_tmul, counitLeft_tmul, map_smul]
@@ -80,7 +76,6 @@ theorem rTensor_comulTw (c y : H ⊗[K] H) :
     (comulTw c).rTensor H y =
       c ⊗ₜ[K] (1 : H) * Algebra.TensorProduct.map (Bialgebra.comulAlgHom K H) (AlgHom.id K H) y := by
   induction y with
-  | zero => simp
   | add y z hy hz => simp only [map_add, mul_add, hy, hz]
   | tmul a b => simp [comulTw_apply, Algebra.TensorProduct.tmul_mul_tmul]
 
@@ -88,7 +83,6 @@ theorem lTensor_comulTw (c y : H ⊗[K] H) :
     (comulTw c).lTensor H y =
       (1 : H) ⊗ₜ[K] c * Algebra.TensorProduct.map (AlgHom.id K H) (Bialgebra.comulAlgHom K H) y := by
   induction y with
-  | zero => simp
   | add y z hy hz => simp only [map_add, mul_add, hy, hz]
   | tmul a b => simp [comulTw_apply, Algebra.TensorProduct.tmul_mul_tmul]
 
@@ -99,7 +93,6 @@ theorem map_comul_id (y : H ⊗[K] H) :
     Algebra.TensorProduct.map (Bialgebra.comulAlgHom K H) (AlgHom.id K H) y =
       (comul (R := K) (A := H)).rTensor H y := by
   induction y with
-  | zero => simp
   | add y z hy hz => simp only [map_add, hy, hz]
   | tmul a b => simp
 
@@ -107,7 +100,6 @@ theorem map_id_comul (y : H ⊗[K] H) :
     Algebra.TensorProduct.map (AlgHom.id K H) (Bialgebra.comulAlgHom K H) y =
       (comul (R := K) (A := H)).lTensor H y := by
   induction y with
-  | zero => simp
   | add y z hy hz => simp only [map_add, hy, hz]
   | tmul a b => simp
 
@@ -139,7 +131,6 @@ theorem lid_rTensor_smul_counit (c : H ⊗[K] H) (y : H ⊗[K] H) :
     TensorProduct.lid K H (((kappa c)⁻¹ • counit (R := K) (A := H)).rTensor H y) =
       (kappa c)⁻¹ • counitLeft y := by
   induction y with
-  | zero => simp
   | add y z hy hz => simp only [map_add, smul_add, hy, hz]
   | tmul a b => simp [smul_smul]
 
@@ -147,7 +138,6 @@ theorem rid_lTensor_smul_counit (c : H ⊗[K] H) (y : H ⊗[K] H) :
     TensorProduct.rid K H (((kappa c)⁻¹ • counit (R := K) (A := H)).lTensor H y) =
       (kappa c)⁻¹ • counitLeft (TensorProduct.comm K H H y) := by
   induction y with
-  | zero => simp
   | add y z hy hz => simp only [map_add, smul_add, hy, hz]
   | tmul a b => simp [smul_smul]
 

@@ -166,7 +166,6 @@ theorem isInvariant_of_isBaseChange_of_sum_eq_one {c : A} (hc : ∑ g : G, g •
     hb.lift_eq _ a
   have hτ (x : A') : algebraMap B' A' (τ x) = ∑ g : G, g • (f c * x) := by
     induction x using hb.inductionOn with
-    | zero => simp
     | tmul a =>
       change algebraMap B' A' (τ (f a)) = ∑ g : G, g • (f c * f a)
       rw [hτf, ← IsScalarTower.algebraMap_apply, ← f.commutes, FreeQuotient.algebraMap_ringTrace,

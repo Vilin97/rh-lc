@@ -42,7 +42,6 @@ private theorem typeCharacterExtension_mem_range_coefficientRing {ρ : Represent
       ext1 B f (AlgebraTensorModule.map (ρ g) (σ g) y) := by
     intro y
     induction y with
-    | zero => simp
     | tmul v b => simp [scalar_extension_tmul, h g v]
     | add a b ha hb => simp only [map_add, ha, hb]
   rw [key, hx]
@@ -50,14 +49,12 @@ private theorem typeCharacterExtension_mem_range_coefficientRing {ρ : Represent
 private theorem scalar_extension_period_action (f : V →ₗ[L] W) (y : V ⊗[F] B) :
     ext1 B f (onPer ψ L V y) = onPer ψ L W (ext1 B f y) := by
   induction y with
-  | zero => simp
   | tmul v b => simp [scalar_extension_tmul, onPer]
   | add a b ha hb => simp only [map_add, ha, hb]
 
 private theorem scalar_extension_basis_coord {κ : Type} [DecidableEq κ] (b : Basis κ F B) (f : V →ₗ[L] W) (y : V ⊗[F] B) (k : κ) :
     TensorProduct.equivFinsuppOfBasisRight b (ext1 B f y) k = f (TensorProduct.equivFinsuppOfBasisRight b y k) := by
   induction y with
-  | zero => simp
   | tmul v c =>
     rw [scalar_extension_tmul, TensorProduct.equivFinsuppOfBasisRight_apply_tmul_apply,
       TensorProduct.equivFinsuppOfBasisRight_apply_tmul_apply, LinearMap.map_smul_of_tower]

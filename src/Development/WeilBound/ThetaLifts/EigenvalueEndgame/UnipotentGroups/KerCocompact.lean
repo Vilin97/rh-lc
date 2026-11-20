@@ -33,7 +33,6 @@ theorem ker_cocompact {F A V V' M M' : Type} [Field F] [CommRing A] [Algebra F A
   let w : Fin _ → M := fun j => i (b j)
   have key : ∀ x, x - hb'.lift (i ∘ₗ s) (TA x) ∈ Submodule.span A (Set.range w) := fun x => by
     induction x using hb.inductionOn with
-    | zero => simp
     | tmul v =>
       rw [h, hb'.lift_eq, LinearMap.comp_apply, ← map_sub]
       have hv : v - s (T v) ∈ LinearMap.ker T := by simp [hs]

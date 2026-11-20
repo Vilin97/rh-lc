@@ -105,7 +105,6 @@ theorem eq_tmul_of_contract {z : V ⊗[ℂ] W} {L : Submodule ℂ V} (hL : Modul
       φ (TensorProduct.lid ℂ W (LinearMap.rTensor W ψ z)) := by
     intro z
     induction z with
-    | zero => simp
     | tmul x y => simp [mul_comm]
     | add x y hx hy => simp only [map_add, hx, hy]
   have h2 := key z
@@ -117,7 +116,6 @@ theorem rid_lTensor_map (φ : W →ₗ[ℂ] ℂ) (A : Module.End ℂ V) (z : V �
     TensorProduct.rid ℂ V (LinearMap.lTensor V φ (TensorProduct.map A LinearMap.id z)) =
       A (TensorProduct.rid ℂ V (LinearMap.lTensor V φ z)) := by
   induction z with
-  | zero => simp
   | tmul x y => simp
   | add x y hx hy => simp only [map_add, hx, hy]
 
@@ -125,7 +123,6 @@ theorem lid_rTensor_map (ψ : V →ₗ[ℂ] ℂ) (B : Module.End ℂ W) (z : V �
     TensorProduct.lid ℂ W (LinearMap.rTensor W ψ (TensorProduct.map LinearMap.id B z)) =
       B (TensorProduct.lid ℂ W (LinearMap.rTensor W ψ z)) := by
   induction z with
-  | zero => simp
   | tmul x y => simp
   | add x y hx hy => simp only [map_add, hx, hy]
 
@@ -221,7 +218,6 @@ theorem range_eq (M₁ : GKMod p q) (hI : IrrGK M₁) (M₂ B : GKMod r s) (hB :
       · intro y; exact (Submodule.eq_top_iff'.1 h y :)
     rintro _ ⟨z, rfl⟩
     induction z with
-    | zero => simp
     | tmul x y => obtain ⟨_, y, rfl⟩ := y; exact s2 x y
     | add x y hx hy => rw [map_add]; exact add_mem hx hy
 

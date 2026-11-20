@@ -67,7 +67,6 @@ theorem tensorEval_comp {R₀ A R R' : Type} [CommRing R₀] [CommRing A] [CommR
     [Algebra R₀ R'] (ψ : A →+* R) (τ : R →ₐ[R₀] R') (h : R₀ ⊗[ℤ] A) :
     tensorEval ((τ : R →+* R').comp ψ) h = τ (tensorEval ψ h) := by
   induction h with
-  | zero => simp
   | tmul r a => simp
   | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
 

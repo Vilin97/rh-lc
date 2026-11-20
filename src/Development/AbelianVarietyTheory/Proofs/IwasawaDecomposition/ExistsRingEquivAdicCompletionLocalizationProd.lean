@@ -109,7 +109,6 @@ theorem bijective_of_complete_quotient {T C A R : Type*} [CommRing T] [IsLocalRi
   have h₂ : ∀ x, χ (ψ (π x)) = π x := by
     intro x
     induction x with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul a c =>
       have e1 : a ⊗ₜ[T] c = (a ⊗ₜ[T] (1 : C)) * (1 ⊗ₜ[T] c) := by simp

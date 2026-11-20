@@ -16,7 +16,6 @@ private theorem cancel_one {A E : Type} [CommRing A] [Ring E] [Algebra A E] (B :
     (y : B ⊗[A] E) : Det.cancel A E B S (1 ⊗ₜ y) =
       Algebra.TensorProduct.map (IsScalarTower.toAlgHom A B S) (AlgHom.id A E) y := by
   induction y with
-  | zero => simp
   | tmul b z => simp [Det.cancel_tmul]
   | add a b ha hb => simp only [tmul_add, map_add, ha, hb]
 
@@ -43,7 +42,6 @@ theorem UpperTheory.V.CA.d_bc :
     rw [bc_D, cancel_one]
     congr 1
     induction y with
-    | zero => simp
     | tmul b z => simp
     | add a b ha hb => simp only [map_add, ha, hb]
   · unfold Det.lam

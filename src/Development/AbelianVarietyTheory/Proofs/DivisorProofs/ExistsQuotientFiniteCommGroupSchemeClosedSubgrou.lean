@@ -74,7 +74,6 @@ theorem mul_map_apply {D : Type} [CommRing D] [Bialgebra k D] (f : D →ₐc[k] 
       r (f (TensorProduct.rid k D (LinearMap.lTensor D (counit (R := k) (A := D)) t))) * ψ 1 := by
     intro t
     induction t with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy, add_mul]
     | tmul x y =>
       rw [TensorProduct.map_tmul, CartierDual.pair_tmul_tmul, LinearMap.lTensor_tmul,

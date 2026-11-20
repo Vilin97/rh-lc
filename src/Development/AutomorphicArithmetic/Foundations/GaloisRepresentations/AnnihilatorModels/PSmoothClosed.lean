@@ -47,7 +47,6 @@ theorem UpperTheory.Gal.crystallineComparison.smoothClosed_of :
           R ⊗[O] Localization.Away (l : O)) := by
     intro s
     induction s with
-    | zero => exact ⟨0, by simp⟩
     | tmul r y =>
       obtain ⟨o, ho⟩ := away_closed O (l : O) hl y.1 y.2
       refine ⟨algebraMap O R o * r, ?_⟩

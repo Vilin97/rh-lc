@@ -51,7 +51,6 @@ theorem flat_of_basis_mod_pow [IsNoetherianRing A] (B : Type*) [CommRing B] [IsN
     rw [eq_top_iff]
     rintro t -
     induction t with
-    | zero => exact zero_mem _
     | add x y hx hy => exact add_mem hx hy
     | tmul y j =>
       have hy : y ∈ Submodule.span A (Set.range m) ⊔ I • ⊤ := by rw [hsurj]; trivial

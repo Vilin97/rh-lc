@@ -79,7 +79,6 @@ theorem relLength_read (h : Induces emb v) (rd : V →ₛₗ[emb] W) {ι : Type}
   have hnorm : ∀ t : O' ⊗[Ow v] V, ∃ c : Ow v, c ≠ 0 ∧ ∃ s : ι → O', c • t = ∑ a, s a ⊗ₜ b a := by
     intro t
     induction t with
-    | zero => exact ⟨1, one_ne_zero, 0, by simp⟩
     | tmul s x =>
       obtain ⟨c, hc⟩ := IsLocalization.exist_integer_multiples_of_finite (nonZeroDivisors (Ow v)) (b.repr x)
       choose y hy using hc
@@ -112,7 +111,6 @@ theorem relLength_read (h : Induces emb v) (rd : V →ₛₗ[emb] W) {ι : Type}
     have h4 : ∀ u : O' ⊗[Ow v] V, f.lTensor O' (c • u) = u := by
       intro u
       induction u with
-      | zero => simp
       | tmul s x =>
         rw [← TensorProduct.tmul_smul, LinearMap.lTensor_tmul]
         congr 1

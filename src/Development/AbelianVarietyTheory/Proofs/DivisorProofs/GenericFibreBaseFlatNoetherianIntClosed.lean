@@ -62,7 +62,6 @@ theorem flat_noetherian_nzd_intClosed : ∀ (A : Type) [CommRing A] [IsDomain A]
         (TensorProduct.toIntegralClosure A R K y : R ⊗[A] K) = b ⊗ₜ[A] (1 : K) := by
       intro y
       induction y with
-      | zero => exact ⟨0, by simp⟩
       | tmul b c =>
         obtain ⟨r, hr⟩ := IsIntegrallyClosed.isIntegral_iff.1 c.2
         refine ⟨r • b, ?_⟩

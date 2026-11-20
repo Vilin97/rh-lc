@@ -81,7 +81,6 @@ theorem SemiHom.rigExtMap_lift_comp_liftSemi [Algebra R S] {G : PDivGroup p R} {
     rigExtMap s.lift ∘ₗ liftSemi (G.toBase S).rig = liftSemi s.rig :=
   LinearMap.ext fun y => by
     induction y with
-    | zero => simp only [map_zero]
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul r x =>
       rw [LinearMap.comp_apply, liftSemi_tmul, liftSemi_tmul, map_smul, ← SemiHom.ofHom_rig,

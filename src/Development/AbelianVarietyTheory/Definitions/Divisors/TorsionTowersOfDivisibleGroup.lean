@@ -649,7 +649,6 @@ theorem LieCorr.add (h : t.LieCorr x v) (h' : t.LieCorr x' v') : t.LieCorr (x + 
   rw [← e1, ← e2]
   generalize comul (R := O) a = c
   induction c with
-  | zero => simp
   | add c d hc hd => simp only [map_add, TrivSqZeroExt.snd_add, ← hc, ← hd]; abel
   | tmul b c =>
     rw [Algebra.TensorProduct.lift_tmul, LinearMap.lTensor_tmul, LinearMap.rTensor_tmul,

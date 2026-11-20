@@ -72,7 +72,6 @@ theorem exists_tensor_equiv (A : Subalgebra R (X → R)) (B : Subalgebra R (Y �
     simp [m, p, q]
   have hmem : ∀ w, m w ∈ C := fun w => by
     induction w with
-    | zero => simp
     | tmul a b =>
       rw [hC]
       simp only [hm]
@@ -87,17 +86,14 @@ theorem exists_tensor_equiv (A : Subalgebra R (X → R)) (B : Subalgebra R (Y �
       (TensorProduct.rid R A).toLinearMap ∘ₗ ((LinearMap.proj y).comp B.val.toLinearMap).lTensor A
     have h1 : ∀ y x w, (s y w).1 x = m w (E (x, y)) := fun y x w => by
       induction w with
-      | zero => simp
       | tmul a b => rw [hm]; simp [s, mul_comm]
       | add a b ha hb => simp only [map_add, AddMemClass.coe_add, Pi.add_apply, ha, hb]
     have h2 : ∀ l y w, (c l w).1 y = l (s y w) := fun l y w => by
       induction w with
-      | zero => simp
       | tmul a b => simp [s, c, mul_comm]
       | add a b ha hb => simp only [map_add, AddMemClass.coe_add, Pi.add_apply, ha, hb]
     have h3 : ∀ w, ∑ i, b i ⊗ₜ c (l i) w = w := fun w => by
       induction w with
-      | zero => simp
       | tmul a b' =>
         conv_rhs => rw [← h a, TensorProduct.sum_tmul]
         refine Finset.sum_congr rfl fun i _ => ?_

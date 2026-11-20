@@ -72,7 +72,6 @@ theorem counit_invariantDerivation (φ : H →ₗ[k] k)
       φ (TensorProduct.lid k H ((counit (R := k)).rTensor H s)) := by
     intro s
     induction s with
-    | zero => simp
     | add s s' h h' => simp only [map_add, h, h']
     | tmul a b => simp [mul_comm]
   rw [invariantDerivation_apply, key]
@@ -428,7 +427,6 @@ theorem isHopfIdeal_closureIdeal_of_flat [Module.Flat V (H ⧸ closureIdeal K J)
       TensorProduct.comul_tmul]
     generalize comul (R := V) x = t
     induction t with
-    | zero => simp only [map_zero, TensorProduct.tmul_zero]
     | add a b ha hb => simp only [map_add, TensorProduct.tmul_add, ha, hb]
     | tmul a b =>
       simp only [CommSemiring.comul_apply, TensorProduct.map_tmul, TensorProduct.AlgebraTensorModule.tensorTensorTensorComm_tmul]
@@ -469,7 +467,6 @@ theorem isHopfIdeal_ker_counit (R H : Type*) [CommRing R] [CommRing H] [HopfAlge
         π 1 ⊗ₜ π (TensorProduct.lid R H ((counit (R := R)).rTensor H t)) := by
       intro t
       induction t with
-      | zero => simp
       | add a b ha hb => simp only [map_add, TensorProduct.tmul_add, ha, hb]
       | tmul a b =>
         rw [TensorProduct.map_tmul, h1 a, TensorProduct.smul_tmul, LinearMap.rTensor_tmul,

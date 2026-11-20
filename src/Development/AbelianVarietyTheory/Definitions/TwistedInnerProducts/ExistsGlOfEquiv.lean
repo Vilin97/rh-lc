@@ -110,16 +110,16 @@ theorem smul_mem_ker {s : 𝒪[k]} (hs : s ∈ maximalIdeal 𝒪[k]) (hx : x ∈
   rw [(residue_eq_zero_iff s).2 hs, zero_mul] at this
   exact mem_ker.2 this
 
-theorem ker_isLat (P : Pair k n) : P.ker.IsLattice k := by
-  obtain ⟨q⟩ : Nonempty (Unif k) := inferInstance
-  haveI := P.isLat
-  refine ⟨?_, ?_⟩
-  · haveI : IsNoetherian 𝒪[k] P.lat := inferInstance
-    exact (IsNoetherian.noetherian _).map _
-  · rw [eq_top_iff, ← P.isLat.span_eq_top, Submodule.span_le]
-    intro x hx
-    rw [← q.inv_smul_smul x]
-    exact Submodule.smul_mem _ _ (Submodule.subset_span (smul_mem_ker q.mem_max hx))
+theorem ker_isLat (P : Pair k n) : P.ker.IsLattice k := by sorry
+
+
+
+
+
+
+
+
+
 
 def vec (P : Pair k n) : n → k := P.exists_hasVal_one.choose
 
@@ -174,47 +174,47 @@ theorem IsGlue.smul_mem_iff {L : Submodule 𝒪[k] (n → k)} {e : n → k} (h :
   simpa [smul_smul] using L.smul_mem ((u⁻¹ : 𝒪[k]ˣ) : 𝒪[k]) hs
 
 theorem IsGlue.exists_pair {L : Submodule 𝒪[k] (n → k)} {e : n → k} (h : IsGlue L e) :
-    ∃ P : Pair k n, P.ker = L ∧ P.HasVal e 1 := by
-  let j : 𝒪[k] →ₗ[𝒪[k]] (n → k) ⧸ L := L.mkQ ∘ₗ LinearMap.toSpanSingleton 𝒪[k] _ e
-  have hj : ∀ s, j s = 0 ↔ s ∈ maximalIdeal 𝒪[k] := fun s => by
-    rw [← h.smul_mem_iff]
-    exact Submodule.Quotient.mk_eq_zero L
-  let ι : 𝓀[k] →ₗ[𝒪[k]] (n → k) ⧸ L := (maximalIdeal 𝒪[k]).liftQ j fun s hs => (hj s).2 hs
-  have hι : ∀ s, ι (residue 𝒪[k] s) = L.mkQ (s • e) := fun s => rfl
-  have hinj : Function.Injective ι := by
-    rw [injective_iff_map_eq_zero]
-    intro a ha
-    obtain ⟨s, rfl⟩ := residue_surjective (R := 𝒪[k]) a
-    exact (residue_eq_zero_iff s).2 ((hj s).1 ha)
-  let M := L ⊔ Submodule.span 𝒪[k] {e}
-  have hM : ∀ x : M, (L.mkQ ∘ₗ M.subtype) x ∈ LinearMap.range ι := by
-    rintro ⟨x, hx⟩
-    obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hx
-    obtain ⟨s, rfl⟩ := Submodule.mem_span_singleton.1 hz
-    refine ⟨residue _ s, ?_⟩
-    simp [hι, (Submodule.Quotient.mk_eq_zero L).2 hy]
-  let f : M →ₗ[𝒪[k]] 𝓀[k] :=
-    (LinearEquiv.ofInjective ι hinj).symm.toLinearMap ∘ₗ LinearMap.codRestrict _ _ hM
-  have hf : ∀ x : M, ι (f x) = L.mkQ x := fun x => by
-    have := (LinearEquiv.ofInjective ι hinj).apply_symm_apply (LinearMap.codRestrict _ _ hM x)
-    exact congrArg Subtype.val this
-  have he : e ∈ M := Submodule.mem_sup_right (Submodule.mem_span_singleton_self e)
-  have hfe : f ⟨e, he⟩ = 1 := hinj (by rw [hf, ← map_one (residue 𝒪[k]), hι, one_smul])
-  haveI := h.isLat
-  have hlat : M.IsLattice k := Submodule.IsLattice.of_le_of_isLattice_of_fg k (M := L) le_sup_left
-    (h.isLat.fg.sup (Submodule.fg_span_singleton e))
-  refine ⟨⟨M, hlat, f, fun h0 => by simp [h0] at hfe⟩, ?_, he, hfe⟩
-  ext x
-  rw [Pair.mem_ker]
-  constructor
-  · rintro ⟨hx, h0⟩
-    have := hf ⟨x, hx⟩
-    rw [show f ⟨x, hx⟩ = 0 from h0, map_zero] at this
-    exact (Submodule.Quotient.mk_eq_zero L).1 this.symm
-  · intro hx
-    refine ⟨Submodule.mem_sup_left hx, hinj ?_⟩
-    rw [map_zero]
-    exact (hf _).trans ((Submodule.Quotient.mk_eq_zero L).2 hx)
+    ∃ P : Pair k n, P.ker = L ∧ P.HasVal e 1 := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def glue {L : Submodule 𝒪[k] (n → k)} {e : n → k} (h : IsGlue L e) : Pair k n := h.exists_pair.choose
 
@@ -353,18 +353,18 @@ def out (x : Red L) : L := (mk_surjective L x).choose
 
 @[simp] theorem mk_out (x : Red L) : mk L x.out = x := (mk_surjective L x).choose_spec
 
-instance [L.IsLattice k] : Module.Finite 𝓀[k] (Red L) :=
-  haveI : Module.Finite 𝒪[k] (Red L) := Module.Finite.of_surjective _ (mk_surjective L)
-  Module.Finite.of_restrictScalars_finite 𝒪[k] _ _
+instance [L.IsLattice k] : Module.Finite 𝓀[k] (Red L) := sorry
+
+
 
 instance [L.IsLattice k] : Finite (Red L) := Module.finite_of_finite 𝓀[k]
 
 instance [L.IsLattice k] : Finite (Module.Dual 𝓀[k] (Red L)) := Module.finite_of_finite 𝓀[k]
 
-theorem finrank_eq [Fintype n] [L.IsLattice k] : Module.finrank 𝓀[k] (Red L) = Fintype.card n := by
-  let e : TensorProduct 𝒪[k] 𝓀[k] L ≃ₗ[𝒪[k]] Red L := TensorProduct.quotTensorEquivQuotSMul L (maximalIdeal 𝒪[k])
-  let e' : TensorProduct 𝒪[k] 𝓀[k] L ≃ₗ[𝓀[k]] Red L := e.extendScalarsOfSurjective residue_surjective
-  rw [← e'.finrank_eq, Module.finrank_baseChange, Submodule.IsLattice.finrank_of_pi k L]
+theorem finrank_eq [Fintype n] [L.IsLattice k] : Module.finrank 𝓀[k] (Red L) = Fintype.card n := by sorry
+
+
+
 
 theorem card_eq [Fintype n] [L.IsLattice k] : Nat.card (Red L) = SplitWeil.resCard k ^ Fintype.card n := by
   rw [Module.natCard_eq_pow_finrank (K := 𝓀[k]), finrank_eq]
@@ -521,32 +521,32 @@ theorem mem_smul_iff {g : GL n k} {L : Submodule 𝒪[k] (n → k)} {x : n → k
   refine (Submodule.mem_smul_pointwise_iff_exists x g L).trans ?_
   exact ⟨fun ⟨y, hy, h⟩ => by simpa [← h] using hy, fun h => ⟨_, h, smul_inv_smul _ _⟩⟩
 
-instance isLattice_smul (g : GL n k) (L : Submodule 𝒪[k] (n → k)) [hL : L.IsFullLattice k] : (g • L).IsLattice k := by
-  refine ⟨hL.fg.map _, ?_⟩
-  rw [eq_top_iff]
-  intro x _
-  have hx : g⁻¹ • x ∈ Submodule.span k (L : Set (n → k)) := hL.span_eq_top ▸ trivial
-  have h : Submodule.span k (L : Set (n → k)) ≤
-      (Submodule.span k ((g • L : Submodule 𝒪[k] (n → k)) : Set (n → k))).comap
-        (DistribSMul.toLinearMap k _ g) :=
-    Submodule.span_le.2 fun y hy => Submodule.subset_span (Submodule.smul_mem_pointwise_smul y g L hy)
-  have h2 : g • g⁻¹ • x ∈ Submodule.span k ((g • L : Submodule 𝒪[k] (n → k)) : Set (n → k)) := h hx
-  rwa [smul_inv_smul] at h2
+instance isLattice_smul (g : GL n k) (L : Submodule 𝒪[k] (n → k)) [hL : L.IsFullLattice k] : (g • L).IsLattice k := sorry
+
+
+
+
+
+
+
+
+
+
 
 abbrev latStab (L : Submodule 𝒪[k] (n → k)) : Subgroup (GL n k) := MulAction.stabilizer (GL n k) L
 
 namespace Pair
 
 instance : SMul (GL n k) (Pair k n) where
-  smul g P :=
-    { lat := g • P.lat
-      isLat := inferInstance
-      fn := P.fn ∘ₗ (DistribSMul.toLinearMap 𝒪[k] _ g⁻¹).restrict fun _ hx => mem_smul_iff.1 hx
-      fn_ne := fun h => by
-        have h1 := LinearMap.congr_fun h ⟨g • P.vec, Submodule.smul_mem_pointwise_smul _ g _ P.hasVal_vec.mem⟩
-        have h2 : P.HasVal (g⁻¹ • g • P.vec) 0 := ⟨_, h1⟩
-        rw [inv_smul_smul] at h2
-        exact one_ne_zero (P.hasVal_vec.unique h2) }
+  smul g P := sorry
+
+
+
+
+
+
+
+
 
 @[simp] theorem smul_lat (g : GL n k) (P : Pair k n) : (g • P).lat = g • P.lat := rfl
 
@@ -583,69 +583,69 @@ theorem cross_smul (q : Unif k) {P₁ P : Pair k n} (h : P.lat = P₁.ker) (g : 
   exact h1.unique ((cross_hasVal q h P₁.hasVal_vec).gl_smul g)
 
 theorem exists_gl_of_equiv {L L' : Submodule 𝒪[k] (n → k)} [L.IsLattice k] [L'.IsLattice k] (e : L ≃ₗ[𝒪[k]] L') :
-    ∃ g : GL n k, ∀ x : L, g • (x : n → k) = e x := by
-  let b := Module.Free.chooseBasis 𝒪[k] L
-  let E : (n → k) ≃ₗ[k] (n → k) := (b.extendOfIsLattice k).equiv ((b.map e).extendOfIsLattice k) (Equiv.refl _)
-  refine ⟨Matrix.GeneralLinearGroup.toLin.symm (LinearMap.GeneralLinearGroup.ofLinearEquiv E), ?_⟩
-  have : (E.toLinearMap.restrictScalars 𝒪[k]) ∘ₗ L.subtype = L'.subtype ∘ₗ e.toLinearMap := by
-    refine b.ext fun i => ?_
-    have := (b.extendOfIsLattice k).equiv_apply i ((b.map e).extendOfIsLattice k) (Equiv.refl _)
-    simpa [E] using this
-  intro x
-  refine Eq.trans ?_ (LinearMap.congr_fun this x)
-  change LinearMap.toMatrix' E.toLinearMap *ᵥ (x : n → k) = E x
-  rw [LinearMap.toMatrix'_mulVec]
-  rfl
+    ∃ g : GL n k, ∀ x : L, g • (x : n → k) = e x := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
 
 omit [Fintype n] [DecidableEq n] in
 
 theorem Pair.exists_split (P : Pair k n) :
-    ∃ (K : Submodule 𝒪[k] P.lat) (e : (K × 𝒪[k]) ≃ₗ[𝒪[k]] P.lat), ∀ z, P.fn (e z) = residue 𝒪[k] z.2 := by
-  obtain ⟨F, hF⟩ := Module.projective_lifting_property (Algebra.linearMap 𝒪[k] 𝓀[k]) P.fn residue_surjective
-  have hF' : ∀ x, residue 𝒪[k] (F x) = P.fn x := fun x => LinearMap.congr_fun hF x
-  have hu : IsUnit (F ⟨P.vec, P.hasVal_vec.mem⟩) := by
-    rw [← notMem_maximalIdeal, ← residue_eq_zero_iff, hF', P.hasVal_vec.2]
-    exact one_ne_zero
-  obtain ⟨u, hu⟩ := hu
-  obtain ⟨v, hv⟩ : ∃ v, F v = 1 :=
-    ⟨(u⁻¹ : 𝒪[k]ˣ).val • ⟨P.vec, P.hasVal_vec.mem⟩, by rw [map_smul, ← hu, smul_eq_mul, Units.inv_mul]⟩
-  let j := (LinearMap.ker F).subtype.coprod (LinearMap.toSpanSingleton 𝒪[k] _ v)
-  have hj : ∀ z, F (j z) = z.2 := fun z => by
-    have := z.1.2
-    rw [LinearMap.mem_ker] at this
-    simp [j, hv, this]
-  refine ⟨LinearMap.ker F, LinearEquiv.ofBijective j ⟨?_, fun x => ?_⟩, fun z => by rw [← hF', ← hj]; rfl⟩
-  · rw [injective_iff_map_eq_zero]
-    rintro ⟨y, s⟩ h
-    have hs : s = 0 := by simpa [h] using (hj (y, s)).symm
-    subst hs
-    simpa [j] using h
-  · exact ⟨(⟨x - F x • v, by simp [hv]⟩, F x), by simp [j]⟩
+    ∃ (K : Submodule 𝒪[k] P.lat) (e : (K × 𝒪[k]) ≃ₗ[𝒪[k]] P.lat), ∀ z, P.fn (e z) = residue 𝒪[k] z.2 := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 instance : MulAction.IsPretransitive (GL n k) (Pair k n) where
-  exists_smul_eq P Q := by
-    obtain ⟨K, e, he⟩ := P.exists_split
-    obtain ⟨K', e', he'⟩ := Q.exists_split
-    have h1 := e.finrank_eq
-    have h2 := e'.finrank_eq
-    rw [Module.finrank_prod, Submodule.IsLattice.finrank_of_pi k] at h1 h2
-    let d : K ≃ₗ[𝒪[k]] K' := LinearEquiv.ofFinrankEq _ _ (by omega)
-    let t : P.lat ≃ₗ[𝒪[k]] Q.lat := e.symm ≪≫ₗ d.prodCongr (LinearEquiv.refl _ _) ≪≫ₗ e'
-    have ht : ∀ x, Q.fn (t x) = P.fn x := fun x => by
-      obtain ⟨z, rfl⟩ := e.surjective x
-      simp [t, he, he']
-    obtain ⟨g, hg⟩ := exists_gl_of_equiv t
-    refine ⟨g, Pair.ext fun x a => ?_⟩
-    rw [Pair.smul_hasVal]
-    constructor
-    · rintro ⟨h, rfl⟩
-      have := Q.hasVal_fn (t ⟨_, h⟩)
-      rwa [← hg, ht, smul_inv_smul] at this
-    · rintro ⟨h, rfl⟩
-      obtain ⟨y, hy⟩ := t.surjective ⟨x, h⟩
-      have hx : x = g • (y : n → k) := by rw [hg, hy]
-      rw [← hy, ht, hx, inv_smul_smul]
-      exact P.hasVal_fn y
+  exists_smul_eq P Q := sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 end Action
 
@@ -661,16 +661,16 @@ omit [Fintype n] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem mem_stdLat {x : n → k} : x ∈ stdLat k n ↔ ∀ i, x i ∈ 𝒪[k] :=
   ⟨fun ⟨y, hy⟩ i => hy ▸ (y i).2, fun h => ⟨fun i => ⟨x i, h i⟩, rfl⟩⟩
 
-instance : (stdLat k n).IsLattice k := by
-  classical
-  refine ⟨by rw [stdLat, LinearMap.range_eq_map]; exact Module.Finite.fg_top.map _, ?_⟩
-  rw [eq_top_iff, ← (Pi.basisFun k n).span_eq]
-  refine Submodule.span_mono ?_
-  rintro _ ⟨i, rfl⟩
-  refine mem_stdLat.2 fun j => ?_
-  rw [Pi.basisFun_apply, Pi.single_apply]
-  split_ifs
-  exacts [one_mem _, zero_mem _]
+instance : (stdLat k n).IsLattice k := sorry
+
+
+
+
+
+
+
+
+
 
 variable (k) in
 

@@ -151,7 +151,6 @@ theorem map_cmp_ker_ev [Finite Hh] (B : Type) [CommRing B] [Algebra R B] (d : â„
       eval (fun i => algebraMap R B (p h i)) (cmp B d z) := by
     intro z h
     induction z with
-    | zero => simp
     | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy]
     | tmul b F =>
       rw [cmp_tmul, smul_eval, LinearMap.baseChange_tmul, TensorProduct.piScalarRight_apply,

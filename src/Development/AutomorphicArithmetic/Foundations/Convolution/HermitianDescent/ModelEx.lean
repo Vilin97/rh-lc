@@ -28,13 +28,11 @@ private theorem desc_alg {k R : Type} [CommRing k] [CommRing R] [Algebra k R] (c
     convert h2 using 1
     funext z
     induction z with
-    | zero => simp
     | add a b ha hb => simp only [Function.comp_apply, map_add] at ha hb ⊢; rw [ha, hb]
     | tmul r a => rw [hf, ← Algebra.smul_def]; rfl
   refine ⟨A, inferInstance, inferInstance, AlgEquiv.ofBijective f hbij, fun z => ?_⟩
   change f _ = s (f z)
   induction z with
-  | zero => simp
   | add a b ha hb => simp only [map_add, ha, hb]
   | tmul r a =>
     have h1 : io c A (r ⊗ₜ a) = c r ⊗ₜ a := by simp [io]

@@ -18,7 +18,6 @@ theorem UpperTheory.V.CA.d_kills_poly :
       exact Submodule.smul_mem _ _ hy
   have hh : h ∈ Submodule.span B ((fun m : E => (1 : B) ⊗ₜ[A] m) '' M) := by
     induction h with
-    | zero => simp
     | add a b ha hb => exact add_mem ha hb
     | tmul b e =>
       have : b ⊗ₜ[A] e = b • ((1 : B) ⊗ₜ[A] e) := by simp [smul_tmul']

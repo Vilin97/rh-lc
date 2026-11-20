@@ -48,7 +48,6 @@ theorem exists_eq_smul_pow_of_pow_eq_tmul :
     have hS : ∀ t, σ.toLinearMap.rTensor A t = S t := by
       intro t
       induction t with
-      | zero => simp
       | tmul b v => simp [S]
       | add x y hx hy => simp only [map_add, hx, hy]
     obtain ⟨μ, hμ⟩ := IsAlgClosed.exists_pow_nat_eq (σ C / C) hn

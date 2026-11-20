@@ -40,7 +40,6 @@ theorem map_pow_eq (t : H ⊗[k] H) :
     (1 : H ⧸ frobKerIdeal p k H) ⊗ₜ[k] (Ideal.Quotient.mkₐ k (frobKerIdeal p k H)
       (TensorProduct.lid k H (LinearMap.rTensor H (counit (R := k) (A := H)) t)) ^ p) := by
   induction t with
-  | zero => simp [hp.out.ne_zero]
   | add x y hx hy =>
     simp only [map_add]
     rw [add_pow_of_cast_eq_zero hp.out (cast_eq_zero_of_algebra p k _),

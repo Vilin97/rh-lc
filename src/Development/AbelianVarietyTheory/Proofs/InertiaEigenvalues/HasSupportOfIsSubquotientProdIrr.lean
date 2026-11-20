@@ -96,7 +96,6 @@ theorem nonempty_prod₂_equiv_multiProd_succ (d : Fin (s + 1) → ℕ)
   · rw [stdSum_inr, stdBlocks_val, stdBlocks_val]
     simp [Fin.sum_univ_succ, add_assoc]
   · induction x with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul v w =>
       induction w using PiTensorProduct.induction_on with

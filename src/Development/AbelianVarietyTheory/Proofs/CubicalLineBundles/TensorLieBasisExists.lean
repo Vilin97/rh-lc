@@ -117,7 +117,6 @@ theorem exists_lie_tensor : ∀ (R : Type) [CommRing R] (G : Over (Sp R)) [GrpOb
   · rintro ⟨y, rfl⟩
     rw [← pre_eq_zero_iff]
     induction y with
-    | zero => simp
     | tmul r m =>
       rw [pre_eq_zero_iff, hΨ]
       exact isTangent_epsScale r (isTangent_comp (hv.1 0) _)
@@ -125,7 +124,6 @@ theorem exists_lie_tensor : ∀ (R : Type) [CommRing R] (G : Over (Sp R)) [GrpOb
   · simp only [map_add, Pts.hom_add]
   · rw [isLieComb_one_iff]
     induction y with
-    | zero => simp
     | tmul r m =>
       simp only [TensorProduct.smul_tmul', hΨ, smul_eq_mul]
       rw [epsScale_mul_assoc]
@@ -134,7 +132,6 @@ theorem exists_lie_tensor : ∀ (R : Type) [CommRing R] (G : Over (Sp R)) [GrpOb
       rw [hy, hz]
   · simp only [hΨ, epsScale_one, Category.id_comp]
   · induction y with
-    | zero => simp
     | tmul r m => simp only [LinearMap.baseChange_tmul, hΨ, Category.assoc, IsTensor.tmul_mapLeft]
     | add y z hy hz =>
       simp only [map_add, Pts.hom_add, MonObj.mul_comp] at hy hz ⊢

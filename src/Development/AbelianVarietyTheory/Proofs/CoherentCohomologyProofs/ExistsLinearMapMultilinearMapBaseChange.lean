@@ -29,7 +29,6 @@ theorem multilinearMap_ext_one_tmul {ι : Type*} [Finite ι]
   rw [eq_top_iff]
   rintro z -
   induction z with
-  | zero => exact zero_mem _
   | tmul a x =>
     rw [← mul_one a, ← smul_eq_mul, ← smul_tmul']
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨x, rfl⟩)

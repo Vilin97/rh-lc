@@ -19,11 +19,9 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 theorem baseChange_neg_apply (D : Datum H) (x y : ℝ ⊗[ℤ] D.La) :
     (-D.EF).baseChange ℝ x y = -D.EF.baseChange ℝ x y := by
   induction x with
-  | zero => simp
   | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]; ring
   | tmul r a =>
     induction y with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]; ring
     | tmul s b => simp
 

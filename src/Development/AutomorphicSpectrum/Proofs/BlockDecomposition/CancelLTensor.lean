@@ -16,11 +16,9 @@ theorem cancel_lTensor (A : Type) [CommRing A] (B : Type) [CommRing B] [Algebra 
     TensorProduct.AlgebraTensorModule.cancelBaseChange A B B₁ B₁ K₀ ((d.baseChange B).lTensor B₁ w) =
       d.lTensor B₁ (TensorProduct.AlgebraTensorModule.cancelBaseChange A B B₁ B₁ K₁ w) := by
   induction w with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul b t =>
     induction t with
-    | zero => simp
     | add x y hx hy => simp only [map_add, TensorProduct.tmul_add, hx, hy]
     | tmul c k => simp [TensorProduct.AlgebraTensorModule.cancelBaseChange_tmul, TensorProduct.smul_tmul']
 

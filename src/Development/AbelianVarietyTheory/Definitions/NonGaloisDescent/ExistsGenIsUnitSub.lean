@@ -88,7 +88,6 @@ theorem tensor_hom_ext {Z W J : Type} [CommRing Z] [CommRing W] [Algebra Z O] [A
     | smul c x _ hx => rw [tmul_smul, ← algebraMap_smul O c, map_smul, map_smul, hx]
   ext1 x
   induction x with
-  | zero => simp
   | tmul o w =>
     have : o ⊗ₜ[Z] w = o • ((1 : O) ⊗ₜ[Z] w) := by rw [smul_tmul', smul_eq_mul, mul_one]
     rw [this, map_smul, map_smul, h1]

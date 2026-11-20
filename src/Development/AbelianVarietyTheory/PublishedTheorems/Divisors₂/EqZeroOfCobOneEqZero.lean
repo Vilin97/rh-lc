@@ -43,7 +43,6 @@ theorem cobTwo_cobOne (b : A) : cobTwo O A (cobOne O A b) = 0 := by
   have h1 : ∀ t : A ⊗[O] A, TensorProduct.assoc O A A A (t ⊗ₜ 1) =
       ((TensorProduct.mk O A A).flip 1).lTensor A t := fun t => by
     induction t with
-    | zero => simp
     | tmul a b => simp
     | add x y hx hy => simp only [add_tmul, map_add, hx, hy]
   have h2 : comul (R := O) (1 : A) = 1 ⊗ₜ 1 := by simp [Algebra.TensorProduct.one_def]
@@ -69,7 +68,6 @@ theorem pullTwo_cobOne (f : A →ₐc[O] B) (b : A) :
 theorem cobTwo_pullTwo (f : A →ₐc[O] B) (c : A ⊗[O] A) :
     cobTwo O B (pullbackTwo f c) = TensorProduct.map (f : A →ₗ[O] B) (pullbackTwo f) (cobTwo O A c) := by
   induction c with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul a b =>
     have h := TensorProduct.map_map_assoc (f : A →ₗ[O] B) (f : A →ₗ[O] B) (f : A →ₗ[O] B)
@@ -84,13 +82,11 @@ theorem pullTwo_mem (f : A →ₐc[O] B) {c : A ⊗[O] A} (hc : c ∈ symCocycle
 theorem pullTwo_comp {D : Type} [CommRing D] [Bialgebra O D] (g : B →ₐc[O] D) (f : A →ₐc[O] B)
     (c : A ⊗[O] A) : pullbackTwo (g.comp f) c = pullbackTwo g (pullbackTwo f c) := by
   induction c with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul a b => simp
 
 theorem pullTwo_id (c : A ⊗[O] A) : pullbackTwo (BialgHom.id O A) c = c := by
   induction c with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul a b => simp
 

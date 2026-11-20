@@ -55,7 +55,6 @@ theorem integral_of_integral_tensor : ∀ (R K : Type) [CommRing R] [IsDomain R]
     refine (h s s').symm.trans (congrArg _ ?_)
     clear h hg g
     induction T with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul a b => simp
   let B : K ⊗[R] CartierDual R A →ₗ[K] Module.Dual K (K ⊗[R] A) :=

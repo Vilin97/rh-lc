@@ -59,7 +59,6 @@ private theorem chk_eval (S : Type) [CommRing S] [Algebra A S] (s : S) (y : S �
       (Algebra.TensorProduct.map (IsScalarTower.toAlgHom A S S[X]) (AlgHom.id A E) y) = y := by
     clear h
     induction y with
-    | zero => simp
     | tmul b z => simp [ev]
     | add a b ha hb => simp only [map_add, ha, hb]
   rw [map_sub, hev] at h
@@ -100,7 +99,6 @@ private theorem chk_chiS_map (S T : Type) [CommRing S] [Algebra A S] [CommRing T
   · simp
   · clear h
     induction y with
-    | zero => simp
     | tmul s x => simp
     | add a b ha hb => simp only [map_add, ha, hb]
 
@@ -125,7 +123,6 @@ private theorem chk_comp {B S T : Type} [CommRing B] [Algebra A B] [CommRing S] 
     Algebra.TensorProduct.map g (AlgHom.id A E) (Algebra.TensorProduct.map f (AlgHom.id A E) w) =
       Algebra.TensorProduct.map (g.comp f) (AlgHom.id A E) w := by
   induction w with
-  | zero => simp
   | tmul s x => simp
   | add a b ha hb => simp only [map_add, ha, hb]
 
@@ -199,7 +196,6 @@ private theorem chk_expand {ι : Type} (w : MvPolynomial ι A ⊗[A] E) :
       TensorProduct.lid A E ((MvPolynomial.lcoeff A α).rTensor E w) := by
   classical
   induction w with
-  | zero => exact ⟨∅, by simp⟩
   | add a b ha hb =>
     obtain ⟨s, hs⟩ := ha
     obtain ⟨s', hs'⟩ := hb

@@ -58,7 +58,6 @@ theorem exists_coeff {E : Type} [CommRing E] [Algebra F E]
     refine ⟨c + d, fun t => ?_⟩
     rw [map_add, hc, hd, Finsupp.sum_add_index' (by simp) (by simp [smul_add])]
   induction x with
-  | zero => exact ⟨0, fun t => by simp⟩
   | add x y hx hy => exact hadd x y hx hy
   | tmul e p =>
     induction p using AddMonoidAlgebra.induction_linear with

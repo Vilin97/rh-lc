@@ -69,7 +69,6 @@ theorem pd_quot {A : Type} [CommRing A] [IsNoetherianRing A] {x : A} (hx : IsSMu
         x • TensorProduct.lid A N t := by
       intro t
       induction t with
-      | zero => simp
       | add a b ha hb => simp only [map_add, ha, hb, smul_add]
       | tmul a m => simp [smul_smul, mul_comm]
     intro a b hab

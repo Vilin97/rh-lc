@@ -139,7 +139,6 @@ theorem pairsTo_epsPoint [Fact p.Prime] (hC : GlobalTheory.Published.CubeTheorem
   have hf : ∀ z, (f z).fst = TensorProduct.rid R _ ((1 : CartierDual R (ℬ.A 1)).ofConv.lTensor _ z) ∧
       (f z).snd = TensorProduct.rid R _ (b.ofConv.lTensor _ z) := fun z ↦ by
     induction z with
-    | zero => simp
     | add x y hx hy => simp only [map_add, TrivSqZeroExt.fst_add, TrivSqZeroExt.snd_add, hx, hy, and_self]
     | tmul x y =>
       simp [f, EpsWeil.epsMap, DualNumber.lift_apply_apply, TrivSqZeroExt.algebraMap_eq_inl', fst_epsPoint,

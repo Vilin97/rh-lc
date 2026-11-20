@@ -12,7 +12,6 @@ theorem nonempty_invFun_dual_tprod_equiv (G V W : Type) [Group G] [AddCommGroup 
   let L : σ.IntertwiningMap ρ →ₗ[ℂ] invFun (ρ.dual.tprod σ) :=
     { toFun := fun f => ⟨TensorProduct.lift (LinearMap.lcomp ℂ ℂ f.toLinearMap), fun g x => by
         induction x with
-        | zero => simp
         | tmul ξ w =>
           have h := LinearMap.congr_fun (f.isIntertwining' g) w
           simp only [LinearMap.comp_apply] at h

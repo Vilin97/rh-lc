@@ -123,7 +123,6 @@ theorem dimDeg_add_finrank {A σ : Type} [CommRing A] [Finite σ] (I : Ideal (Mv
         ⟨_, isHomogeneous_monomial 1 hd', rfl⟩)
     · rintro _ ⟨z, rfl⟩
       induction z with
-      | zero => simp
       | add z w hz hw => rw [map_add]; exact add_mem hz hw
       | tmul c n =>
         obtain ⟨_, F, hF, rfl⟩ := n

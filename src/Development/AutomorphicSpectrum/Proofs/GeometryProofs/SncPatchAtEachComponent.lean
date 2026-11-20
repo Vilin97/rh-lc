@@ -135,7 +135,6 @@ theorem coords_rat {F R : Type} [Field F] [Algebra ℚ F] [Algebra.FormallyEtale
     obtain ⟨y, rfl⟩ := (KaehlerDifferential.exact_mapBaseChange_map ℚ F R x).1 hx
     have hall : ∀ y : TensorProduct F R Ω[F⁄ℚ], y = 0 := fun y => by
       induction y with
-      | zero => rfl
       | add a b ha hb => rw [ha, hb, add_zero]
       | tmul a b => rw [Subsingleton.elim b 0, TensorProduct.tmul_zero]
     rw [hall y, map_zero]

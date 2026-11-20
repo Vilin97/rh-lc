@@ -72,7 +72,6 @@ def toBialgHom {B : Type} [CommRing B] [Bialgebra R B] (g : SemiBialgHom (RingHo
 theorem two_two (g : SemiBialgHom τ A' A'') {ρ : R →+* R''} (k : A →ₛₗ[ρ] A'')
     (h : ∀ a, k a = g (f a)) (c : A ⊗[R] A) : g.two (f.two c) = TensorProduct.map k k c := by
   induction c with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul a b => simp [h]
 
@@ -103,7 +102,6 @@ def pts : WithConv (A' →ₐ[R'] B) →* WithConv (A →ₐ[R] B) where
     rw [AlgHom.convMul_apply, AlgHom.convMul_apply, ← f.two_comul]
     generalize comul (R := R) a = c
     induction c with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul a b => rfl)
 
@@ -138,7 +136,6 @@ def ofPts (g : A →+* A') (hg : ∀ r, g (algebraMap R A r) = algebraMap R' A' 
     refine ((e _).symm.trans h.symm).trans ?_
     generalize comul (R := R) a = c
     induction c with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul a b =>
       rw [Algebra.TensorProduct.lift_tmul, TensorProduct.map_tmul]
@@ -165,13 +162,11 @@ theorem two_cobOne (b : A) : f.two (cobOne R A b) = cobOne R' A' (f b) := by
 theorem cobTwo_two (c : A ⊗[R] A) :
     cobTwo R' A' (f.two c) = TensorProduct.map f.lin f.two (cobTwo R A c) := by
   induction c with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul a b =>
     have h : ∀ t : A ⊗[R] A, TensorProduct.map f.lin f.two (TensorProduct.assoc R A A A (t ⊗ₜ b)) =
         TensorProduct.assoc R' A' A' A' (f.two t ⊗ₜ f b) := fun t => by
       induction t with
-      | zero => simp
       | add x y hx hy => simp only [add_tmul, map_add, hx, hy]
       | tmul a b => simp
     simp [cobTwo_apply, ← two_comul, h]
@@ -182,7 +177,6 @@ theorem two_mem {c : A ⊗[R] A} (hc : c ∈ symCocycles R A) : f.two c ∈ symC
   conv_rhs => rw [← hc.2]
   generalize c = t
   induction t with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul a b => simp
 
@@ -201,7 +195,6 @@ def toBaseChange : SemiBialgHom (algebraMap R R') A (R' ⊗[R] A) where
     rw [TensorProduct.comul_tmul]
     generalize comul (R := R) a = c
     induction c with
-    | zero => simp
     | add x y hx hy => simp only [tmul_add, map_add, hx, hy]
     | tmul a b => simp
 
@@ -230,7 +223,6 @@ def bcMap (R' : Type) [CommRing R'] [Algebra R R'] {C : Type} [CommRing C] [Bial
 theorem bc_hom_ext {g h : R' ⊗[R] A →ₐc[R'] A'} (e : ∀ a, g (1 ⊗ₜ a) = h (1 ⊗ₜ a)) : g = h :=
   BialgHom.ext fun x => by
     induction x with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul r a => rw [← mul_one r, ← smul_eq_mul, ← smul_tmul', map_smul, map_smul, e]
 
@@ -243,14 +235,12 @@ def SemiBialgHom.liftBC (f : SemiBialgHom (algebraMap R R') A A') : R' ⊗[R] A 
   .ofAlgHom g
     (AlgHom.ext fun x => by
       induction x with
-      | zero => simp
       | add x y hx hy => simp only [map_add, hx, hy]
       | tmul r a =>
         rw [← mul_one r, ← smul_eq_mul, ← smul_tmul', map_smul, map_smul, AlgHom.comp_apply, hg]
         exact congrArg _ ((f.counit_map a).trans ((toBaseChange R R' A).counit_map a).symm))
     (AlgHom.ext fun x => by
       induction x with
-      | zero => simp
       | add x y hx hy => simp only [map_add, hx, hy]
       | tmul r a =>
         rw [← mul_one r, ← smul_eq_mul, ← smul_tmul', map_smul, map_smul, AlgHom.comp_apply,
@@ -260,7 +250,6 @@ def SemiBialgHom.liftBC (f : SemiBialgHom (algebraMap R R') A A') : R' ⊗[R] A 
         rw [← SemiBialgHom.two_comul, ← SemiBialgHom.two_comul]
         generalize comul (R := R) a = c
         induction c with
-        | zero => simp
         | add x y hx hy => simp only [map_add, hx, hy]
         | tmul a b => simp [hg])
 
@@ -322,7 +311,6 @@ def funs : G.funs →ₛₗ[σ] G'.funs where
 theorem res_two (n : ℕ) (c : G.A (n + 1) ⊗[O] G.A (n + 1)) :
     pullbackTwo (G'.res n) ((s.app (n + 1)).two c) = (s.app n).two (pullbackTwo (G.res n) c) := by
   induction c with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul a b => simp [s.res_app]
 

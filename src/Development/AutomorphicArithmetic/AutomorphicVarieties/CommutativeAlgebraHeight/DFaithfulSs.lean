@@ -171,7 +171,6 @@ theorem UpperTheory.V.CA.d_faithful_ss :
       haveI : IsScalarTower k (ResidueField k) S := .of_algebraMap_eq fun _ => rfl
       obtain ⟨z, rfl⟩ : ∃ z, Det.cancel k E (ResidueField k) S z = y := by
         induction y with
-        | zero => exact ⟨0, map_zero _⟩
         | tmul s e => exact ⟨s ⊗ₜ (1 ⊗ₜ e), by simp [Det.cancel_tmul]⟩
         | add a b ha hb =>
           obtain ⟨a, rfl⟩ := ha

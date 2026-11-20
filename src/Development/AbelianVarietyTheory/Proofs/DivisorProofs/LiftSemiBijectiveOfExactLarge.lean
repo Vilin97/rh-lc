@@ -21,12 +21,10 @@ theorem liftSemi_bijective_of_exact {R R' : Type} [CommRing R] [CommRing R'] [Al
     Function.Bijective (liftSemi fZ) := by
   have sqZ : ∀ w, i' (liftSemi fZ w) = liftSemi fM (i.lTensor R' w) := fun w ↦ by
     induction w with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul x z => rw [LinearMap.lTensor_tmul, liftSemi_tmul, liftSemi_tmul, map_smul, hZ]
   have sqN : ∀ w, d' (liftSemi fM w) = liftSemi fN (d.lTensor R' w) := fun w ↦ by
     induction w with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul x z => rw [LinearMap.lTensor_tmul, liftSemi_tmul, liftSemi_tmul, map_smul, hN]
   have hinj : Function.Injective (i.lTensor R') :=

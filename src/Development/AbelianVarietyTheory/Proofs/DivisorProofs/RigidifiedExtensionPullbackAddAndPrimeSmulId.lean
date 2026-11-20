@@ -35,7 +35,6 @@ theorem restrZeroZero_assoc (u : A ⊗[R] A) (b : A) :
     restrZeroZero R A (TensorProduct.assoc R A A A (u ⊗ₜ b)) =
       counit (R := R) (restrZeroLeft R A u) • b := by
   induction u with
-  | zero => simp
   | add x y hx hy => simp only [add_tmul, map_add, hx, hy, add_smul]
   | tmul x y =>
     rw [TensorProduct.assoc_tmul, restrZeroZero_tmul, restrZeroLeft_tmul, restrZeroLeft_tmul,
@@ -49,7 +48,6 @@ theorem restrZeroLeft_of_cobTwo_eq_zero {c : A ⊗[R] A} (hc : cobTwo R A c = 0)
       algebraMap R A (TensorProduct.lid R R (TensorProduct.map (counit (R := R) (A := A))
         (counit (R := R) (A := A)) t)) := fun t => by
     induction t with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]; abel
     | tmul a b =>
       rw [cobTwo_apply]
@@ -73,7 +71,6 @@ theorem dUnit_mul'_map (f g : A →ₐc[R] B) (t : A ⊗[R] A) :
       cotMap g (dUnit R (restrZeroLeft R A t)) +
         cotMap f (dUnit R (restrZeroLeft R A (TensorProduct.comm R A A t))) := by
   induction t with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy]; abel
   | tmul a b =>
     have e1 : dUnit R (counit (R := R) a • b) = counit (R := R) a • dUnit R b :=
@@ -107,7 +104,6 @@ theorem rigExtMap_add (f g : G ⟶ H) : rigExtMap (f + g) = rigExtMap f + rigExt
     rw [← (c.2 n).2]
     generalize c.1 (n + 1) = t
     induction t with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul x y => simp [res_app]⟩
   have hB : G.dFun B = 0 :=

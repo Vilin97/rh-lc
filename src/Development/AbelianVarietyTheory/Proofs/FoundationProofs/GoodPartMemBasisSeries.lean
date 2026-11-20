@@ -188,7 +188,6 @@ theorem toFrac_injective : Function.Injective (toFrac O F O') := by
       ((Algebra.linearMap O' (FractionRing O')).restrictScalars O).rTensor F x := by
     intro x
     induction x with
-    | zero => simp
     | tmul a x => rfl
     | add x y hx hy => rw [map_add, map_add, hx, hy]
   intro x y hxy
@@ -216,7 +215,6 @@ theorem toFrac_surjective (hi : Function.Injective (algebraMap O O')) [Module.Fi
     Function.Surjective (toFrac O F O') := by
   intro y
   induction y with
-  | zero => exact ⟨0, map_zero _⟩
   | tmul k x =>
     obtain ⟨z, -, hz⟩ := toFrac_smul_mem O F O' hi ⊤ k x trivial
     exact ⟨z, hz⟩
@@ -302,7 +300,6 @@ theorem eExt_toFrac (y : O' ⊗[X.O i] Y.Fm i j b) :
     ToricLatticeDenominators.eExt Y i j b O' (toFrac _ _ O' y) =
       toFrac _ _ O' ((Formalism.MainNotions.IntegralHeckeForms.eO Y i j b).baseChange O' y) := by
   induction y with
-  | zero => simp
   | tmul a x => rfl
   | add x y hx hy => simp only [map_add, hx, hy]
 
@@ -335,14 +332,12 @@ def up : X.Ok i k ⊗[X.O i] Y.Fm i j b →ₗ[X.Ok i k] O' ⊗[X.O i] Y.Fm i j 
 theorem up_eq (y : X.Ok i k ⊗[X.O i] Y.Fm i j b) : up Y i j b O' k y =
     LinearMap.rTensor (Y.Fm i j b) (IsScalarTower.toAlgHom (X.O i) (X.Ok i k) O').toLinearMap y := by
   induction y with
-  | zero => simp
   | tmul a x => rfl
   | add x y hx hy => simp only [map_add, hx, hy]
 
 theorem incl_eq (y : X.Ok i k ⊗[X.O i] Y.Fm i j b) :
     ToricLatticeDenominators.incl Y i j b O' k y = toFrac _ _ O' (up Y i j b O' k y) := by
   induction y with
-  | zero => simp
   | tmul a x => rfl
   | add x y hx hy => simp only [map_add, hx, hy]
 
@@ -350,7 +345,6 @@ theorem up_e (y : X.Ok i k ⊗[X.O i] Y.Fm i j b) :
     up Y i j b O' k ((Formalism.MainNotions.IntegralHeckeForms.eO Y i j b).baseChange (X.Ok i k) y) =
       (Formalism.MainNotions.IntegralHeckeForms.eO Y i j b).baseChange O' (up Y i j b O' k y) := by
   induction y with
-  | zero => simp
   | tmul a x => rfl
   | add x y hx hy => simp only [map_add, hx, hy]
 
@@ -414,7 +408,6 @@ theorem ext_self (k : ℕ) (L : Submodule (X.Ok i k) (X.Ok i k ⊗[X.O i] Y.Fm i
   have : ∀ y, up Y i j b (X.Ok i k) k y = y := by
     intro y
     induction y with
-    | zero => simp
     | tmul a x => rfl
     | add x y hx hy => simp only [map_add, hx, hy]
   rw [ext, Set.image_congr fun y _ => this y, Set.image_id', Submodule.span_eq]

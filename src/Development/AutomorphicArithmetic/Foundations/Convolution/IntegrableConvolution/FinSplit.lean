@@ -117,7 +117,6 @@ theorem UpperTheory.ConvolutionTheory.L1.finSplit :
     intro b
     obtain ⟨t, rfl⟩ := (tensorEquiv' E v).surjective b
     induction t with
-    | zero => simp
     | add x y hx hy =>
       rw [map_add, map_add, Pi.add_apply, map_add, hx, hy, Pi.add_apply]
     | tmul x a =>

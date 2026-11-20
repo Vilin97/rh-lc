@@ -41,23 +41,23 @@ theorem im_posDef_of_hermForm {M τ : Matrix (Fin g) (Fin g) ℂ} (hM : M.IsHerm
     (hpos : ∀ z : Fin g → ℂ, z ≠ 0 → 0 < (hermForm M z z).re)
     (h1 : ∀ j k, (hermForm M (Pi.single j 1) (Pi.single k 1)).im = 0)
     (h2 : ∀ j k, (hermForm M (τ *ᵥ Pi.single j 1) (Pi.single k 1)).im = if j = k then 1 else 0) :
-    (τ.map Complex.im).PosDef := by
-  have hs : ∀ k : Fin g, star (Pi.single k 1 : Fin g → ℂ) = Pi.single k 1 := fun k => by
-    rw [← Pi.single_star, star_one]
-  have h1' : ∀ j k, (M j k).im = 0 := fun j k => by simpa [hermForm, hs] using h1 j k
-  have hG : (M.map Complex.re).PosDef := by
-    refine posDef_iff_dotProduct_mulVec.2 ⟨?_, fun x hx => ?_⟩
-    · ext j k
-      simpa using congrArg Complex.re (hM.apply j k)
-    · have h0 : (fun i => (x i : ℂ)) ≠ 0 := fun h => hx (funext fun i => by simpa using congrFun h i)
-      refine (hpos _ h0).trans_eq ?_
-      simp [hermForm, dotProduct, mulVec, Complex.re_sum, Complex.im_sum, h1']
-  have hY : (τ.map Complex.im)ᵀ * M.map Complex.re = 1 := by
-    ext j k
-    rw [one_apply, ← h2 j k]
-    simp [hermForm, hs, dotProduct, mul_apply, Complex.im_sum, h1']
-  have := hG.inv.transpose
-  rwa [inv_eq_left_inv hY, transpose_transpose] at this
+    (τ.map Complex.im).PosDef := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 theorem exists_half_char_of_even {χ : (Fin g → ℤ) → (Fin g → ℤ) → ℂ}
     (hadd : ∀ n m n' m', χ (n + n') (m + m') = χ n m * χ n' m') (h0 : χ 0 0 = 1)

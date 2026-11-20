@@ -203,7 +203,6 @@ theorem map_eq_smul_idem [IsDomain R] [DecidableEq ι] (hσ : Function.Injective
   have e (y : R ⊗[ℤ] O) (k : ι) : splitMap (fun k => f.comp (σ k))
       (Algebra.TensorProduct.map f.toIntAlgHom (AlgHom.id ℤ O) y) k = f (splitMap σ y k) := by
     induction y with
-    | zero => simp
     | add y z hy hz => simp only [map_add, Pi.add_apply, hy, hz]
     | tmul r a => simp
   refine h.1 (funext fun k => ?_)

@@ -184,7 +184,6 @@ theorem ev₂_pull2_nmul (c : QLog.Chart G d) (n k : ℕ) (s : MvPowerSeries (Fi
   rw [e, H _ _ _ hs hE, AlgHom.comp_apply]
   generalize c.ev₂ n s = t
   induction t with
-  | zero => simp
   | add x y hx hy => rw [map_add, map_add, hx, hy]
   | tmul a b => simp [T, M]
 

@@ -299,7 +299,6 @@ theorem inrPull_zero : inrPull κ t A (0 : M ⊗[R] prim κ t A) = 0 := by
 theorem smul_inrPull (x : TrivSqZeroExt R M) (ω : M ⊗[R] prim κ t A) :
     x • inrPull κ t A ω = inrPull κ t A (x.fst • ω) := by
   induction ω with
-  | zero => simp only [smul_zero, inrPull_zero]
   | add a b ha hb => simp only [smul_add, inrPull_add, ha, hb]
   | tmul m c =>
     rw [smul_tmul', inrPull_tmul, inrPull_tmul, smul_smul]
@@ -333,7 +332,6 @@ theorem IsConn.pull (h : IsConn t A hD c ω) {κ' : DividedPowers I'} {t' : S' �
       (fun r ↦ by ext <;> simp [extMap, e]) (by simp) c).trans (GrpMor.pull_pull _ _ _ (fun _ ↦ rfl) rfl c).symm
   have k₂ : ∀ ω, k.pull (inrPull κ t A ω) = inrPull κ' t' A' (TensorProduct.map u m.pull ω) := fun ω ↦ by
     induction ω with
-    | zero => simp only [map_zero, inrPull_zero]
     | add a b ha hb => simp only [map_add, inrPull_add, ha, hb]
     | tmul x c =>
       rw [map_tmul, inrPull_tmul, inrPull_tmul, LinearMap.map_smulₛₗ, k₀]
@@ -369,7 +367,6 @@ theorem existsUnique_isConn (H : (inlMor M κ t A).IsBC) (hD : IsDPDer κ D) (c 
       (inlMor M κ t A).pull ((prMor M κ t A).pull (liftSemi (inlMor M κ t A).pull z)) +
         inrPull κ t A ((sndHom R M).rTensor _ z) := fun z ↦ by
     induction z with
-    | zero => simp only [map_zero, inrPull_zero, add_zero]
     | add a b ha hb =>
       simp only [map_add, inrPull_add]
       rw [add_add_add_comm, ← ha, ← hb]
@@ -415,7 +412,6 @@ theorem isBC_of_lift [Algebra R R'] (H : AbelianDeRham) (hA : IsAbelianScheme A)
   have sq : ∀ z, liftSemi m.pull ((liftMor κ h).pull.lTensor R' z) =
       (liftMor κ' h').pull (liftSemi (AbelianDeRham.bcMor hψ).pull z) := fun z ↦ by
     induction z with
-    | zero => simp only [map_zero]
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul x c =>
       rw [LinearMap.lTensor_tmul, liftSemi_tmul, liftSemi_tmul, map_smul]

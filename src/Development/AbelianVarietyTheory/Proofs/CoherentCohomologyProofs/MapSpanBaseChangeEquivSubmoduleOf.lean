@@ -129,7 +129,6 @@ theorem baseChangeToField_naturality (f : V →ₗ[K] V') (x : S ⊗[R] V) :
     f.baseChange L (baseChangeToField R K S L V x) =
       baseChangeToField R K S L V' ((f.restrictScalars R).baseChange S x) := by
   induction x with
-  | zero => simp
   | add x y hx hy => simp [hx, hy]
   | tmul s v => simp
 
@@ -161,7 +160,6 @@ theorem baseChangeToField_injective : Function.Injective (baseChangeToField R K 
       (baseChangeToField R K S L V x) = (IsScalarTower.toAlgHom R S L).toLinearMap.rTensor V x := by
     intro x
     induction x with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul s v => rw [baseChangeToField_tmul]; rfl
   intro x y hxy

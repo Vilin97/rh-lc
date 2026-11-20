@@ -106,7 +106,6 @@ theorem eq_zero_of_forall_toBase (hR : (p : R) = 0) (κ : Γ'.baseChange K ⟶ �
   rw [← e.symm_apply_apply η', ← ht]
   clear ht
   induction t with
-  | zero => simp only [map_zero]
   | add x y hx hy => rw [map_add, map_add, map_add, hx, hy, add_zero]
   | tmul r η₀ =>
     rw [PDiv.liftSemi_tmul, map_smul, map_smul, hf _ η₀ (e.apply_symm_apply _), smul_zero]

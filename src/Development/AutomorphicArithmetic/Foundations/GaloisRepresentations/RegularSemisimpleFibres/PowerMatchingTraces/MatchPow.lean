@@ -56,7 +56,6 @@ private theorem norm_gal (σ : E ≃ₐ[F] E) {v : Pl F} (w : PlacesOver E v) (h
     rw [h1]
     clear h1
     induction t with
-    | zero => simp
     | add a b ha hb => simp only [map_add, Pi.add_apply, ha, hb]
     | tmul x a =>
       rw [Algebra.TensorProduct.map_tmul, tensorEquiv'_tmul, tensorEquiv'_tmul, Pi.mul_apply, Pi.mul_apply, map_mul]

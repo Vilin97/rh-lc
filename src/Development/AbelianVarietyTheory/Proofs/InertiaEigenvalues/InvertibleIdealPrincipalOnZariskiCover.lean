@@ -20,7 +20,6 @@ theorem one_mem_span_values {A : Type} [CommRing A] (I : Ideal A) [Module.Invert
   rw [← ht]
   clear ht
   induction t with
-  | zero => simp
   | tmul f y => exact Ideal.subset_span ⟨f, y, by simp [contractLeft_apply]⟩
   | add a b ha hb => rw [map_add]; exact Ideal.add_mem _ ha hb
 

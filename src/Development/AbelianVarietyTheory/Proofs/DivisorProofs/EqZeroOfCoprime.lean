@@ -58,7 +58,6 @@ theorem symm_of_casimir {R S L W ι : Type*} [CommRing R] [CommRing S] [Algebra 
   have k' : ∀ w : Module.Dual S L ⊗[S] L,
       (m * n) • (contractLeft S L w * (Φ f (κ f') - Φ f' (κ f))) = 0 := fun w ↦ by
     induction w with
-    | zero => simp
     | add x y hx hy => rw [map_add, add_mul, smul_add, hx, hy, add_zero]
     | tmul ℓ u =>
       have c := congrArg ℓ (k u)
@@ -125,7 +124,6 @@ theorem exists_casimir (F : Type) [Field F] [NumberField F] (l : ℕ) [Fact l.Pr
   refine ⟨n, fun i ↦ 1 ⊗ₜ b i, fun i ↦ 1 ⊗ₜ t i, (AlgebraTensorModule.rid ℤ R R).toLinearMap ∘ₗ τ.baseChange R, hn,
     fun f s ↦ ?_, ?_⟩
   · induction s with
-    | zero => simp
     | add x y hx hy => simp only [add_mul, map_add, add_smul, Finset.sum_add_distrib, hx, hy]
     | tmul r a =>
       have e₁ : ∀ i, (r ⊗ₜ[ℤ] a * (1 : R) ⊗ₜ[ℤ] b i) = r • ∑ j, b.repr (a * b i) j • (1 : R) ⊗ₜ[ℤ] b j := fun i ↦ by

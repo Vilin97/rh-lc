@@ -16,7 +16,6 @@ theorem cobOne_baseChange :
       (comul (R := R') (1 : R') ⊗ₜ[R] c) = AlgebraTensorModule.distribBaseChange R R' A A (1 ⊗ₜ c) := by
     intro c
     induction c with
-    | zero => simp
     | add x y hx hy => simp only [tmul_add, map_add, hx, hy]
     | tmul x y => simp [Bialgebra.comul_one, Algebra.TensorProduct.one_def]
   simp only [cobOne_apply, LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply,
@@ -35,7 +34,6 @@ theorem liftSemi_prim_baseChange_bijective {R A : Type} (R' : Type) [CommRing R]
       (liftSemi (toBaseChange R R' A).prim y).1 = K.subtype.lTensor R' y := by
     intro y
     induction y with
-    | zero => simp
     | add x y hx hy => simp only [map_add, Submodule.coe_add, hx, hy]
     | tmul r b =>
       rw [liftSemi_tmul, Submodule.coe_smul, SemiBialgHom.prim_val, toBaseChange_apply,

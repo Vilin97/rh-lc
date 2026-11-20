@@ -166,7 +166,6 @@ theorem mem_span_of_map_eq_zero (R A B D : Type) [CommRing R] [CommRing A] [Comm
       (mapBaseChange_surjective R A B hs) v).mp hv'
     clear hv hv'
     induction w with
-    | zero => simp
     | add x y hx hy => rw [map_add, map_add]; exact add_mem hx hy
     | tmul d w =>
       obtain ⟨y, hy⟩ := (exact_kerCotangentToTensor_mapBaseChange R A B hs w.1).mp w.2
@@ -201,7 +200,6 @@ theorem mem_span_of_residue {A D k M I I' : Type} [CommRing A] [CommRing D] [IsL
       ((Algebra.linearMap D k).restrictScalars A).exact_subtype_ker_map hs v).mp hv
     clear hv
     induction w with
-    | zero => exact ⟨0, by rw [map_zero, smul_zero]⟩
     | add x y hx hy =>
       obtain ⟨x', hx⟩ := hx
       obtain ⟨y', hy⟩ := hy
@@ -264,7 +262,6 @@ theorem exists_mul_mem_span (R A B K I : Type) [CommRing R] [CommRing A] [CommRi
   have : Subsingleton (K ⊗[A] (RingHom.ker (algebraMap A B) ⧸ N)) := by
     refine subsingleton_of_forall_eq 0 fun v => ?_
     induction v with
-    | zero => rfl
     | add x y hx hy => rw [hx, hy, add_zero]
     | tmul d m =>
       obtain ⟨m, rfl⟩ := N.mkQ_surjective m

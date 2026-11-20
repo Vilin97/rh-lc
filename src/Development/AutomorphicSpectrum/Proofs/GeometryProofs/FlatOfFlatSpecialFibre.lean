@@ -71,7 +71,6 @@ theorem fibreMap_flat_localize (R k P Q Bp An : Type*) [CommRing R] [CommRing k]
       (fibreMap R k Q An).comp (fibreMap R k P Q) := by
     refine RingHom.ext fun x => ?_
     induction x with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul a b =>
       simp [← IsScalarTower.algebraMap_apply]

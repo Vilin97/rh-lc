@@ -18,7 +18,6 @@ theorem pair_points {K : Type} [Field K] {H : Type} [CommRing H] [HopfAlgebra K 
     CartierDual.pair K H H ((toConv n.toLinearMap : CartierDual K H) ⊗ₜ toConv n'.toLinearMap) t =
       (Algebra.TensorProduct.lift n n' (fun _ _ => Commute.all _ _) : H ⊗[K] H →ₐ[K] K) t := by
   induction t with
-  | zero => simp
   | add s t hs ht => simp only [map_add, hs, ht]
   | tmul a b => simp
 
@@ -100,7 +99,6 @@ theorem integral_eq_sum : ∀ (K : Type) [Field K] [CharZero K] (H : Type) [Comm
         Λ (TensorProduct.lid K H (LinearMap.rTensor H m.toLinearMap t)) := by
       intro t
       induction t with
-      | zero => simp
       | add s t hs ht => simp only [map_add, hs, ht]
       | tmul a b => simp
     simp only [CartierDual.mul_apply, h2] at h1

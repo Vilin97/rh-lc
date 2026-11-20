@@ -49,11 +49,9 @@ theorem isUnitarisable_extTensor {ρ : Representation ℂ G V} {σ : Representat
   · exact (re_inner_self_pos (𝕜 := ℂ)).2 hv
   · show inner ℂ (extTensor ρ σ g w) (extTensor ρ σ g v) = inner ℂ w v
     induction v with
-    | zero => simp
     | add x y hx hy => simp only [map_add, inner_add_right, hx, hy]
     | tmul v v' =>
       induction w with
-      | zero => simp
       | add x y hx hy => simp only [map_add, inner_add_left, hx, hy]
       | tmul w w' =>
         rw [extTensor_tmul, extTensor_tmul, TensorProduct.inner_tmul, TensorProduct.inner_tmul]

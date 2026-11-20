@@ -33,12 +33,10 @@ theorem exists_algHom_of_isBaseChange {φ : M →ₗ[A] N} (hφ : IsBaseChange B
   have hf (m : M) : f (φ m) = 1 ⊗ₜ ExteriorAlgebra.ι A m := hφ.lift_eq _ m
   have anti (n n' : N) : f n * f n' + f n' * f n = 0 := by
     induction n using hφ.inductionOn with
-    | zero => simp
     | smul s n h => rw [map_smul, smul_mul_assoc, mul_smul_comm, ← smul_add, h, smul_zero]
     | add a b ha hb => rw [map_add, add_mul, mul_add, add_add_add_comm, ha, hb, add_zero]
     | tmul m =>
       induction n' using hφ.inductionOn with
-      | zero => simp
       | smul s n h => rw [map_smul, smul_mul_assoc, mul_smul_comm, ← smul_add, h, smul_zero]
       | add a b ha hb => rw [map_add, add_mul, mul_add, add_add_add_comm, ha, hb, add_zero]
       | tmul m' =>
@@ -46,7 +44,6 @@ theorem exists_algHom_of_isBaseChange {φ : M →ₗ[A] N} (hφ : IsBaseChange B
           ← TensorProduct.tmul_add, ExteriorAlgebra.ι_add_mul_swap, TensorProduct.tmul_zero]
   have sq (n : N) : f n * f n = 0 := by
     induction n using hφ.inductionOn with
-    | zero => simp
     | smul s n h => rw [map_smul, smul_mul_assoc, mul_smul_comm, h, smul_zero, smul_zero]
     | add a b ha hb =>
       rw [map_add, add_mul, mul_add, mul_add, ha, hb, zero_add, add_zero, anti]
@@ -91,7 +88,6 @@ theorem isBaseChange_exteriorPower {φ : M →ₗ[A] N} (hφ : IsBaseChange B φ
         rw [eq_top_iff]
         rintro n -
         induction n using hφ.inductionOn with
-        | zero => simp
         | smul s n h => exact Submodule.smul_mem _ _ h
         | add a b ha hb => exact add_mem ha hb
         | tmul m => exact Submodule.subset_span ⟨m, rfl⟩), Submodule.span_le]

@@ -21,7 +21,6 @@ theorem exists_eq_tmul_add_tmul {F E P : Type} [Field F] [CommRing E] [Algebra F
     [Algebra F P] (b : Module.Basis (Fin 2) F E) (x : P ⊗[F] (E ⊗[F] F)) :
     ∃ p q : P, x = p ⊗ₜ (b 0 ⊗ₜ (1 : F)) + q ⊗ₜ (b 1 ⊗ₜ (1 : F)) := by
   induction x with
-  | zero => exact ⟨0, 0, by simp⟩
   | tmul p y =>
     obtain ⟨e, rfl⟩ := (TensorProduct.rid F E).symm.surjective y
     refine ⟨b.repr e 0 • p, b.repr e 1 • p, ?_⟩

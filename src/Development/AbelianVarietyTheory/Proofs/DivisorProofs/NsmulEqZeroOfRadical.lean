@@ -126,7 +126,6 @@ theorem form_balanced (HR : AbelianDeRham) {c : 𝔠.elt} {φ : HdR X.A →ₗ[R
     (hφ : IsCorrForm (dp0 R) (𝟙 _) X.A X.A (X.P c) φ) (s : R ⊗[ℤ] 𝓞 F) (x y : HdR X.A) :
     φ (actAlg (dp0 R) (𝟙 _) X.rm s x) y = φ x (actAlg (dp0 R) (𝟙 _) X.rm s y) := by
   induction s with
-  | zero => simp
   | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]
   | tmul r b =>
     obtain ⟨χ, hχ⟩ := exists_form_of X HR (b • c)
@@ -152,13 +151,11 @@ theorem form_symm [IsTotallyReal F] (HR : AbelianDeRham) (HD : DualAbelianScheme
   have sm : ∀ (r : R) (b : 𝓞 F) (v : X.Lie), (r ⊗ₜ[ℤ] b : R ⊗[ℤ] 𝓞 F) • v = r • b • v := fun _ _ _ ↦ rfl
   haveI : IsScalarTower R (R ⊗[ℤ] 𝓞 F) X.Lie := ⟨fun r s v ↦ by
     induction s with
-    | zero => simp
     | add a b ha hb => simp only [smul_add, add_smul, ha, hb]
     | tmul r' b => rw [smul_tmul', sm, sm, smul_assoc]⟩
   have lie : ∀ (s : R ⊗[ℤ] 𝓞 F) x, hL.toLie X.rm (actAlg (dp0 R) (𝟙 _) X.rm s x) = s • hL.toLie X.rm x :=
     fun s x ↦ by
     induction s with
-    | zero => simp
     | add a b ha hb => simp only [map_add, LinearMap.add_apply, add_smul, ha, hb]
     | tmul r b => rw [actAlg_tmul, map_smul, hL.toLie_act, sm]
   have mem : ∀ (s : R ⊗[ℤ] 𝓞 F) (x : Fil X.A), actAlg (dp0 R) (𝟙 _) X.rm s x ∈ Fil X.A := fun s x ↦ by

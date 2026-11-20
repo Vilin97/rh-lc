@@ -57,7 +57,6 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E] {R : Type} [CommRing R] 
 theorem exists_coords (δ : E) (h : ∀ z : E, ∃ a b : F, z = a • (1 : E) + b • δ) (z : R ⊗[F] E) :
     ∃ u v : R, z = u ⊗ₜ[F] (1 : E) + v ⊗ₜ[F] δ := by
   induction z with
-  | zero => exact ⟨0, 0, by simp⟩
   | tmul r e =>
     obtain ⟨a, b, rfl⟩ := h e
     exact ⟨a • r, b • r, by

@@ -30,7 +30,6 @@ theorem tensor_eq_zero_of_forall_pair (O F : Type) [CommRing O] [Field F] [IsAlg
   rw [map_zero, ← ht x y]
   clear ht
   induction t with
-  | zero => simp
   | add a b ha hb => simp only [map_add, ha, hb]
   | tmul a b => simp [mul_comm]
 
@@ -120,7 +119,6 @@ theorem torsionCharacter_ext_and_exists_of_integral_points :
       rw [AlgHom.comp_apply, AlgHom.comp_apply]
       generalize Δ a = t
       induction t with
-      | zero => simp
       | add a b ha hb => simp only [map_add, ha, hb]
       | tmul a b => simp only [Algebra.TensorProduct.lift_tmul, map_mul, hσ]
     simp only [k]

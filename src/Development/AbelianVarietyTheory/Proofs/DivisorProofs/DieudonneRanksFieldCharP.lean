@@ -51,7 +51,6 @@ theorem rigExtMap_baseChangeMap_comp_liftSemi (f : G ⟶ H) :
       liftSemi (G.toBase S).rig ∘ₗ (rigExtMap f).baseChange S :=
   LinearMap.ext fun y => by
     induction y with
-    | zero => simp only [map_zero]
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul r x =>
       rw [LinearMap.comp_apply, LinearMap.comp_apply, LinearMap.baseChange_tmul, liftSemi_tmul,
@@ -114,7 +113,6 @@ theorem range_rigExtMap_relFrob (G : PDivGroup p K) :
       obtain ⟨y, rfl⟩ := (liftSemi_rig_bijective (R := K) K G h
         (.inl (@Module.Flat.of_free K K _ _ (_) (@Module.Free.of_divisionRing K K _ _ (_))))).2 x
       induction y with
-      | zero => exact (congrArg P (map_zero _)).mpr h0
       | add x y hx hy => exact (congrArg P (map_add _ _ _)).mpr (h2 _ _ hx hy)
       | tmul r y => exact h1 r y
     refine key (fun x => rigExtMap (relFrob h G) x ∈ Submodule.span K (Set.range (absFrob h G).rig))

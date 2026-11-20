@@ -831,7 +831,6 @@ theorem exists_tensor_coord {σ : E →ₐ[F] E} [CharZero E] (h2 : Module.finra
     (hδ : δ ≠ 0) (hσδ : σ δ = -δ) (t : R ⊗[F] E) :
     ∃ a b : R, t = a ⊗ₜ[F] (1 : E) + b ⊗ₜ[F] δ := by
   induction t with
-  | zero => exact ⟨0, 0, by simp⟩
   | tmul r e =>
     obtain ⟨x, y, rfl⟩ := exists_coord h2 hδ hσδ e
     refine ⟨x • r, y • r, ?_⟩

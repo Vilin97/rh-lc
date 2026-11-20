@@ -57,7 +57,6 @@ lemma lTensor_injective_of_extend {κ M N : Type*} [Field κ] [Field k] [Algebra
   have : ∀ z : κ ⊗[B] M, ψ.liftBaseChange κ (l.lTensor κ z) = algebraMap κ k (χ z) := by
     intro z
     induction z with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul c m =>
       have h := LinearMap.congr_fun hψ m

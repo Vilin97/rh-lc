@@ -254,7 +254,6 @@ theorem range_trivial (BS : GlobalTheory.Published.BhattScholzeCrystallineLattic
     have key : ∀ y : WCb l ⊗[ℤ_[l]] T, y = ∑ i,
         (LinearMap.toSpanSingleton ℤ_[l] T (b i)).lTensor (WCb l) ((b.coord i).lTensor (WCb l) y) := fun y => by
       induction y with
-      | zero => simp
       | tmul w t =>
         simp only [LinearMap.lTensor_tmul, LinearMap.toSpanSingleton_apply, Module.Basis.coord_apply]
         rw [← TensorProduct.tmul_sum, b.sum_repr]
@@ -283,7 +282,6 @@ variable {Z O W RW T T' : Type} [CommRing Z] [CommRing O] [CommRing W] [CommRing
 theorem kappa_smul (κ : W ⊗[Z] T ≃+ RW ⊗[O] T) (hκ : ∀ w t, κ (w ⊗ₜ t) = c w ⊗ₜ t) (w : W) (y : W ⊗[Z] T) :
     κ (w • y) = c w • κ y := by
   induction y with
-  | zero => simp
   | tmul w' t => rw [TensorProduct.smul_tmul', hκ, hκ, TensorProduct.smul_tmul', smul_eq_mul, smul_eq_mul, map_mul]
   | add y y' h h' => rw [smul_add, map_add, map_add, smul_add, h, h']
 
@@ -293,7 +291,6 @@ theorem kappa_map (κ : W ⊗[Z] T ≃+ RW ⊗[O] T) (hκ : ∀ w t, κ (w ⊗�
     (f : T →ₗ[Z] T') (f' : T →ₗ[O] T') (hf : ∀ t, f' t = f t) (y : W ⊗[Z] T) :
     κ' (TensorProduct.map σ f y) = TensorProduct.map σ' f' (κ y) := by
   induction y with
-  | zero => simp
   | tmul w' t => rw [TensorProduct.map_tmul, hκ, hκ', TensorProduct.map_tmul, hσ, hf]
   | add y y' h h' => simp only [map_add, h, h']
 
@@ -311,7 +308,6 @@ omit [Module Z T] in
 theorem map_mulLeft (r : RW) (y : RW ⊗[O] T) :
     TensorProduct.map (LinearMap.mulLeft O r) (LinearMap.id : T →ₗ[O] T) y = r • y := by
   induction y with
-  | zero => simp
   | tmul w' t => rw [TensorProduct.map_tmul, TensorProduct.smul_tmul']; rfl
   | add y y' h h' => rw [map_add, smul_add, h, h']
 

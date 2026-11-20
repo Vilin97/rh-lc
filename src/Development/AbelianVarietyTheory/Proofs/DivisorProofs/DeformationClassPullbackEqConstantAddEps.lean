@@ -18,7 +18,6 @@ theorem exists_const_add_eps_const {K : Type} [Field K] {A : Over (Sp K)} [GrpOb
     ∃ a b : primDR A, liftSemi (constMor A).pull z =
       (constMor A).pull a + (DualNumber.eps : DualNumber K) • (constMor A).pull b := by
   induction z with
-  | zero => exact ⟨0, 0, by rw [map_zero, map_zero, smul_zero, add_zero]⟩
   | add x y hx hy =>
     obtain ⟨a, b, e⟩ := hx
     obtain ⟨a', b', e'⟩ := hy

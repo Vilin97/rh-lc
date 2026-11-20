@@ -29,7 +29,6 @@ theorem exists_elem_of_unramified {A : Type*} [CommRing A] [Algebra R A]
   refine ⟨f (Algebra.FormallyUnramified.elem R A), ?_, fun x ↦ ?_⟩
   · have : ∀ z, χ (f z) = χ (Algebra.TensorProduct.lmul' R z) := fun z ↦ by
       induction z with
-      | zero => simp
       | tmul x y => simp [f]
       | add z w hz hw => simp only [map_add, hz, hw]
     rw [this, Algebra.FormallyUnramified.lmul_elem, map_one]
@@ -75,21 +74,17 @@ theorem exists_eigen_of_unramified (N : Type*) [AddCommGroup N] [Module R N] [Mo
   let q : N ⊗[O] M →ₗ[R] N ⊗[O'] M := mapOfCompatibleSMul O' O R N M
   have hq : ∀ y z, q (ρ y z) = mulChar R O O' y • q z := fun y z ↦ by
     induction y with
-    | zero => simp
     | add y y' hy hy' => simp only [map_add, LinearMap.add_apply, hy, hy', add_smul]
     | tmul r x =>
       induction z with
-      | zero => simp
       | add z z' hz hz' => simp only [map_add, hz, hz', smul_add]
       | tmul n m => simp [hρ, q, mul_smul]
   have hqs : ∀ z, q (s z) = z := fun z ↦ by
     induction z with
-    | zero => simp
     | add z z' hz hz' => simp only [map_add, hz, hz']
     | tmul n m => exact (hq e (n ⊗ₜ m)).trans (by rw [he₁, one_smul]; rfl)
   have hsq : ∀ z, s (q z) = ρ e z := fun z ↦ by
     induction z with
-    | zero => simp
     | add z z' hz hz' => simp only [map_add, hz, hz']
     | tmul n m => rfl
   refine ⟨s, Function.LeftInverse.injective hqs, fun z ↦ ⟨?_, fun hz ↦ ⟨q z, ?_⟩⟩⟩
@@ -97,7 +92,6 @@ theorem exists_eigen_of_unramified (N : Type*) [AddCommGroup N] [Module R N] [Mo
     rw [← hqs z, hsq, hρe]
   · have : ∀ y, ρ y z = mulChar R O O' y • z := fun y ↦ by
       induction y with
-      | zero => simp
       | add y y' hy hy' => simp only [map_add, LinearMap.add_apply, hy, hy', add_smul]
       | tmul r x => rw [hρ, hz, mulChar_tmul, mul_smul]
     rw [hsq, this, he₁, one_smul]
@@ -118,14 +112,12 @@ theorem exists_eigen_of_projective (M : Type*) [AddCommGroup M] [Module O M] [Mo
       map_smul' := fun r z ↦ by
         change i'.rTensor M (r • z) = r • i'.rTensor M z
         induction z with
-        | zero => simp
         | add z z' hz hz' => simp only [smul_add, map_add, hz, hz']
         | tmul n m => simp [smul_tmul', i'] }
   refine ⟨j, fun _ _ ↦ rfl, Module.Flat.rTensor_preserves_injective_linearMap i' hi,
     fun z ↦ ⟨?_, fun hz ↦ ?_⟩⟩
   · rintro ⟨z, rfl⟩ x
     induction z with
-    | zero => simp
     | add z z' hz hz' => simp only [smul_add, map_add, hz, hz']
     | tmul n m =>
       change (x • i n) ⊗ₜ[O] m = (τ x • i n) ⊗ₜ[O] m
@@ -135,12 +127,10 @@ theorem exists_eigen_of_projective (M : Type*) [AddCommGroup M] [Module O M] [Mo
       (TensorProduct.rid O L).toLinearMap ∘ₗ (LinearMap.proj k ∘ₗ s).lTensor L
     have hc : ∀ k (r : R) z, c k (r • z) = r • c k z := fun k r z ↦ by
       induction z with
-      | zero => simp
       | add z z' hz hz' => simp only [smul_add, map_add, hz, hz']
       | tmul l m => simpa [smul_tmul', c] using smul_comm _ r l
     have hsum : ∀ z, ∑ k, c k z ⊗ₜ[O] t (Pi.single k 1) = z := fun z ↦ by
       induction z with
-      | zero => simp
       | add z z' hz hz' => simp only [map_add, add_tmul, Finset.sum_add_distrib, hz, hz']
       | tmul l m =>
         have hm : t (s m) = m := congr($hst m)
@@ -166,7 +156,6 @@ theorem exists_eigen_tensor [Module.Finite O M] [Module.Projective O M]
   have hj : ∀ (x : O') z, j ((Algebra.lsmul O O M x).lTensor N z) =
       (Algebra.lsmul O O M x).lTensor L (j z) := fun x z ↦ by
     induction z with
-    | zero => simp
     | add z z' hz hz' => simp only [map_add, hz, hz']
     | tmul n m => simp [hj₀]
   refine ⟨j ∘ₗ s, hj₁.comp hs₁, fun z ↦ ⟨?_, fun hz ↦ ?_⟩⟩

@@ -363,7 +363,6 @@ theorem isClosed_class_HA (h : IsCMExt F E σ) (hJ : IsHermND σ J) (k : Type) [
   refine isClosed_class_UJ k (σ := sigR k σ) (J := JR k J) two_ne_zero (fun c a => ?_) (fun a => ?_) ?_ ?_ hg
   · exact map_smul (Algebra.TensorProduct.map (AlgHom.id k k) σ) c a
   · induction a with
-    | zero => simp
     | tmul a b => simp [sigR, hσ]
     | add a b ha hb => rw [map_add, map_add, ha, hb]
   · ext i j

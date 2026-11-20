@@ -15,7 +15,6 @@ theorem UpperTheory.V.Pa.tens :
   let m : C ⊗[B] MonoidAlgebra B G →ₐ[C] C ⊗[B] E := Algebra.TensorProduct.map (AlgHom.id C C) π
   have hm : ∀ x, m x = π.toLinearMap.lTensor C x := fun x => by
     induction x with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul s y => rfl
   have h2 : ∀ y, m (toT B G C (MonoidAlgebra.mapRingHom G (algebraMap B C) y)) = 1 ⊗ₜ π y := fun y => by
@@ -28,7 +27,6 @@ theorem UpperTheory.V.Pa.tens :
     rw [← ofT_toT (A := B) y, ← hx]
     clear hx
     induction x with
-    | zero => simp
     | add a b ha hb => rw [map_add, map_add]; exact add_mem ha hb
     | tmul s z =>
       rw [LinearMap.lTensor_tmul, ofT_tmul, Algebra.smul_def]
@@ -48,13 +46,11 @@ theorem UpperTheory.V.Pa.tens :
         Algebra.TensorProduct.map (AlgHom.id S S) π (Det.cancel B (MonoidAlgebra B G) C S
           (Algebra.TensorProduct.map (AlgHom.id S S) (toT B G C) x)) := by
       induction x with
-      | zero => simp
       | add a b ha hb => simp only [map_add, ha, hb]
       | tmul s y =>
         rw [Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul, AlgHom.comp_apply]
         generalize toT B G C y = w
         induction w with
-        | zero => simp
         | add a b ha hb => simp only [TensorProduct.tmul_add, map_add, ha, hb]
         | tmul c z => simp [m, Det.cancel_tmul]
     exact congrArg (DE.D S) h

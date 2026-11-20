@@ -88,7 +88,6 @@ theorem UpperTheory.V.CA.d_gma_det :
     · rw [eq_top_iff]
       rintro y -
       induction y with
-      | zero => exact zero_mem _
       | add a b ha hb => exact add_mem ha hb
       | tmul s z =>
         have hz : z = ∑ i, ∑ j, e i * z * e j := by

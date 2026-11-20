@@ -15,7 +15,6 @@ private theorem UpperTheory.V.CA.prod_piRight_apply (S : Type) [CommRing S] [Alg
     Algebra.TensorProduct.piRight A S S E y i =
       Algebra.TensorProduct.map (AlgHom.id S S) (Pi.evalAlgHom A E i) y := by
   induction y with
-  | zero => simp
   | tmul s y => simp
   | add a b ha hb => simp only [map_add, Pi.add_apply, ha, hb]
 
@@ -24,7 +23,6 @@ private theorem UpperTheory.V.CA.prod_piRight_map (S T : Type) [CommRing S] [Alg
     Algebra.TensorProduct.piRight A T T E (Algebra.TensorProduct.map f (AlgHom.id A _) y) i =
       Algebra.TensorProduct.map f (AlgHom.id A _) (Algebra.TensorProduct.piRight A S S E y i) := by
   induction y with
-  | zero => simp
   | tmul s y => simp
   | add a b ha hb => simp only [map_add, Pi.add_apply, ha, hb]
 

@@ -476,7 +476,6 @@ theorem exists_coords {O W V ι : Type} [CommRing O] [AddCommGroup W] [Module O 
   classical
   obtain ⟨w, rfl⟩ := hw
   induction w with
-  | zero => exact ⟨0, fun _ _ _ _ _ _ => by simp⟩
   | add x y hx hy =>
     obtain ⟨m, hm⟩ := hx
     obtain ⟨m', hm'⟩ := hy

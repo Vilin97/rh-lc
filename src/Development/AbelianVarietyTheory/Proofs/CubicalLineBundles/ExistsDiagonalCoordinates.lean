@@ -51,7 +51,6 @@ theorem tensor_unif {X Y V : Type} [AddCommGroup X] [Module O X]
   obtain ⟨Φ, hΦ⟩ := exists_lift P hP
   have hc : ∀ t, ex (Φ t) = eqv (TensorProduct.comm O X M (e₀.rTensor M t)) := fun t => by
     induction t with
-    | zero => simp
     | tmul z a => simp [hΦ, hex]
     | add x y hx hy => simp [hx, hy]
   have hker : ∀ t, ex (Φ t) = 0 → ∃ a, t = 1 ⊗ₜ a := fun t ht => by
@@ -73,7 +72,6 @@ theorem tensor_unif {X Y V : Type} [AddCommGroup X] [Module O X]
   refine ⟨eq_top_iff.2 fun v _ => ?_, fun v => ⟨fun hv => ?_, ?_⟩, fun V' _ _ f hf => ?_⟩
   · obtain ⟨t, rfl⟩ := hsurj v
     induction t with
-    | zero => simp
     | tmul z a => rw [hΦ]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
     | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ (hx trivial) (hy trivial)
   · obtain ⟨t, rfl⟩ := hsurj v

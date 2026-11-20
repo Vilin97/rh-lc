@@ -50,7 +50,6 @@ theorem span_bcMap {R R' : Type} [CommRing R] [IsLocalRing R] [CommRing R'] [Alg
     refine LinearMap.ext fun c ↦ ?_
     obtain ⟨z, rfl⟩ := hm.2 c
     induction z with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul x c =>
       rw [liftSemi_tmul, map_smul, map_smul]

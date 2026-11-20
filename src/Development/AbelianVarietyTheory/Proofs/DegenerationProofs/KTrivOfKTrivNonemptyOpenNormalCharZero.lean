@@ -53,7 +53,6 @@ theorem mono_of_finite {R : Type} [CommRing R] {X : Scheme.{0}} (h : X ⟶ Sp R)
     have hsurj : Function.Surjective (Algebra.TensorProduct.includeLeftRingHom : V →+* V ⊗[R] B) := by
       intro z
       induction z with
-      | zero => exact ⟨0, map_zero _⟩
       | add y z hy hz =>
         obtain ⟨y, rfl⟩ := hy
         obtain ⟨z, rfl⟩ := hz

@@ -51,23 +51,19 @@ theorem isBaseChange_away_of_intertwine (ψ : N₀ →ₗ[R₀] N) (hψ : IsBase
     ((LinearMap.lsmul A₀ N₀ (x₀ ^ k)).restrictScalars R₀).baseChange R
   have hFP (k l : ℕ) (t : R ⊗[R₀] N₀) : F (k + l) (P l t) = F k t := by
     induction t with
-    | zero => simp
     | tmul r y => exact congrArg (r ⊗ₜ[R₀] ·) (awayFrac_add_pow_smul x₀ k l y)
     | add a b ha hb => simp only [map_add, ha, hb]
   have hP (l : ℕ) (t : R ⊗[R₀] N₀) : hψ.equiv (P l t) = x ^ l • hψ.equiv t := by
     induction t with
-    | zero => simp
     | tmul r y => simp [P, IsBaseChange.equiv_tmul, h, smul_comm r]
     | add a b ha hb => simp only [map_add, ha, hb, smul_add]
   have hF (k : ℕ) (t : R ⊗[R₀] N₀) :
       θ.liftBaseChange R (F k t) = awayFrac N x k (hψ.equiv t) := by
     induction t with
-    | zero => simp
     | tmul r y => simp [F, IsBaseChange.equiv_tmul, hθ, LinearMap.map_smul_of_tower]
     | add a b ha hb => simp only [map_add, ha, hb]
   have hsurj (z : R ⊗[R₀] LocalizedModule.Away x₀ N₀) : ∃ k t, F k t = z := by
     induction z with
-    | zero => exact ⟨0, 0, map_zero _⟩
     | tmul r z =>
       obtain ⟨k, y, rfl⟩ := exists_awayFrac z
       exact ⟨k, r ⊗ₜ y, by simp [F]⟩

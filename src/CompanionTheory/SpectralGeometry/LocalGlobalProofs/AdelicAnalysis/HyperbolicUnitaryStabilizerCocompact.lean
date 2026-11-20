@@ -121,7 +121,6 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E]
 theorem sigR_invol (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x)
     (a : R ⊗[F] E) : sigR R σ (sigR R σ a) = a := by
   induction a with
-  | zero => simp
   | tmul r e => simp [sigR, hσ]
   | add x y hx hy => simp [map_add, hx, hy]
 

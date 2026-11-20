@@ -52,7 +52,6 @@ theorem specU_rTensor (A : Module.End (X.O i) (Y.Fm i j b)) (Q : Finset (PlE D.h
     (w : Y.Fm i j b ⊗[X.O i] AddMonoidAlgebra (X.O i) (DelQM D.host (X.l i) Q M)) :
     specU Y i j b Q M k χ (A.rTensor _ w) = A.baseChange (X.Ok i k) (specU Y i j b Q M k χ w) := by
   induction w with
-  | zero => simp
   | tmul v g => simp [specU]
   | add v w hv hw => simp only [map_add, hv, hw]
 

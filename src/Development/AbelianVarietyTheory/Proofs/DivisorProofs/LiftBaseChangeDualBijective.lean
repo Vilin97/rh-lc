@@ -107,7 +107,6 @@ theorem liftBaseChange_dual_bijective (R A M : Type) [CommRing R] [CommRing A] [
       e ∘ dualTensorHom R M A ∘ TensorProduct.comm R _ _ := by
     funext x
     induction x with
-    | zero => simp
     | add x y hx hy => simp only [Function.comp_apply, map_add] at hx hy ⊢; rw [hx, hy]
     | tmul a φ =>
       refine TensorProduct.AlgebraTensorModule.ext fun b m => ?_

@@ -36,11 +36,9 @@ theorem free_on_lift : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgC
   have eskew : ∀ x y, e x y = -e y x := by
     intro x y
     induction x with
-    | zero => simp
     | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]; ring
     | tmul s x =>
       induction y with
-      | zero => simp
       | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]; ring
       | tmul t y => rw [he, he, hskew]; push_cast; ring
   have hTb : T = Submodule.span O (Set.range B) := by
@@ -110,11 +108,9 @@ theorem free_on_lift : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgC
         rw [← algebraMap_smul C o x, map_smul, LinearMap.smul_apply, smul_eq_mul]
         exact Subring.mul_mem _ ⟨o, rfl⟩ hx
   · induction x with
-    | zero => simp
     | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]
     | tmul s x =>
       induction y with
-      | zero => simp
       | add a b ha hb => simp only [map_add, ha, hb]
       | tmul t y => rw [hρ, hρ, he, he, h.adj]
 

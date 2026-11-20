@@ -8,7 +8,6 @@ theorem lid_lTensor_apply {R X Y : Type} [CommRing R] [AddCommGroup X] [Module R
     (f : X →ₗ[R] Y) (u : R ⊗[R] X) :
     TensorProduct.lid R Y (f.lTensor R u) = f (TensorProduct.lid R X u) := by
   induction u with
-  | zero => simp
   | tmul a b => simp
   | add a b ha hb => simp only [map_add, ha, hb]
 

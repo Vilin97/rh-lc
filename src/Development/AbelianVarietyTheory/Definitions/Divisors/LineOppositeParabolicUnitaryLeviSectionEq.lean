@@ -1110,7 +1110,6 @@ theorem twKer_charFst_extProd (χ χ' : A →* ℂˣ) (π : Representation ℂ H
   have key : ∀ (a : A) (v : ℂ ⊗[ℂ] W), extProd (charRep χ') π (a, 1) v = (χ' a : ℂ) • v := by
     intro a v
     induction v with
-    | zero => simp
     | tmul x w => simp [TensorProduct.smul_tmul']
     | add x y hx hy => rw [map_add, hx, hy, smul_add]
   constructor

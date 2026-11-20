@@ -213,7 +213,6 @@ def lieMap : M ⊗[O] Lie a →ₗ[O] Lie b :=
 theorem toPts_lieMap (z : M ⊗[O] Lie a) :
     Lie.toPts b (h.lieMap z) = h.equiv (epsR R) ((Lie.toPts a).lTensor M z) := by
   induction z with
-  | zero => simp
   | tmul m v => ext; simp [lieMap]
   | add z w hz hw => simp only [map_add, hz, hw]
 
@@ -240,7 +239,6 @@ theorem toPts_lieEquiv (z : M ⊗[O] Lie a) :
 theorem lieEquiv_smul (r : R) (z : M ⊗[O] Lie a) :
     h.lieEquiv ((DistribSMul.toLinearMap O (Lie a) r).lTensor M z) = r • h.lieEquiv z := by
   induction z with
-  | zero => simp
   | tmul m v => ext; simp
   | add z w hz hw => simp only [map_add, smul_add, hz, hw]
 
@@ -249,14 +247,12 @@ theorem map_lieEquiv (h' : IsTensor H' b' G' a' M') (φ : M →ₗ[O] M') {f : G
     Lie.map b b' (h.map h' φ hf) (h.lieEquiv z) =
       h'.lieEquiv (TensorProduct.map φ (Lie.mapLinear hf) z) := by
   induction z with
-  | zero => simp
   | tmul m v => ext; simp
   | add z w hz hw => simp only [map_add, hz, hw]
 
 theorem mapLeft_lieEquiv (h' : IsTensor H' b' G a M') (φ : M →ₗ[O] M') (z : M ⊗[O] Lie a) :
     Lie.map b b' (h.mapLeft h' φ) (h.lieEquiv z) = h'.lieEquiv (φ.rTensor _ z) := by
   induction z with
-  | zero => simp
   | tmul m v => ext; simp
   | add z w hz hw => simp only [map_add, hz, hw]
 
@@ -266,7 +262,6 @@ def lieEquivBase (b₁ : OAct O' H) : Lie a ⊗[O] M ≃ₗ[R] Lie b₁ :=
       change h.lieEquiv (TensorProduct.comm O _ _ (r • z)) =
         r • h.lieEquiv (TensorProduct.comm O _ _ z)
       induction z with
-      | zero => simp
       | tmul v m => ext; simp [smul_tmul']
       | add z w hz hw => simp only [map_add, smul_add, hz, hw] } :
     Lie a ⊗[O] M ≃ₗ[R] Lie b) ≪≫ₗ Lie.changeAct b b₁
@@ -286,7 +281,6 @@ def lieAlgEquiv : M ⊗[O] Lie a ≃ₗ[O'] Lie (h.algAct O') :=
     map_smul' := fun x z ↦ by
       change Lie.changeAct b _ (h.lieEquiv (x • z)) = x • Lie.changeAct b _ (h.lieEquiv z)
       induction z with
-      | zero => simp
       | tmul m v => ext; simp [smul_tmul']
       | add z w hz hw => simp only [map_add, smul_add, hz, hw] }
 
@@ -298,7 +292,6 @@ theorem lieEquivBase_smul (x : O') (z : Lie a ⊗[O] M) :
     h.lieEquivBase (h.algAct O') ((Algebra.lsmul O O M x).lTensor _ z) =
       x • h.lieEquivBase (h.algAct O') z := by
   induction z with
-  | zero => simp
   | tmul v m => ext; simp
   | add z w hz hw => simp only [map_add, smul_add, hz, hw]
 
@@ -374,7 +367,6 @@ theorem lieEquivLine_smul {v : epsR R ⟶ G} (hv : IsLieBasis ![v])
     h.lieEquivLine (h.algAct O') hv hτ ((Algebra.lsmul O O M x).lTensor R z) =
       x • h.lieEquivLine (h.algAct O') hv hτ z := by
   induction z with
-  | zero => simp
   | tmul v m => ext; simp
   | add z w hz hw => simp only [map_add, smul_add, hz, hw]
 

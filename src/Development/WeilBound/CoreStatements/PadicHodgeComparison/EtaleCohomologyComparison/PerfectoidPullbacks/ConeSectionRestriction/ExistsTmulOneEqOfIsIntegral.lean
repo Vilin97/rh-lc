@@ -24,7 +24,6 @@ theorem exists_tmul_one_eq_of_isIntegral {P A : Type} [CommRing P] [IsDomain P] 
         ((TensorProduct.toIntegralClosure P A (FractionRing P) u : _) : A ⊗[P] FractionRing P) := by
     intro u
     induction u with
-    | zero => exact ⟨0, by simp⟩
     | tmul a y =>
       obtain ⟨p, hp⟩ := IsIntegrallyClosed.isIntegral_iff.mp y.2
       refine ⟨p • a, ?_⟩

@@ -15,7 +15,6 @@ private lemma loc_ker {W A C L : Type*} [CommRing W] [CommRing A] [CommRing C] [
       LinearMap.rTensor L (IsScalarTower.toAlgHom W A C).toLinearMap p := by
     intro p
     induction p with
-    | zero => simp
     | add p q hp hq => simp only [map_add, hp, hq]
     | tmul a y => simp [Algebra.algebraMap_eq_smul_one]
   have h0 : (TensorProduct.mk A C (A ⊗[W] L) 1) x = 0 := by
@@ -67,7 +66,6 @@ private lemma aux {W : Type u₁} {K : Type u₂} {A : Type u₅} {C : Type u₃
   have hΦs : ∀ (a : A) x i, Φ (a • x) i = algebraMap A C a * Φ x i := by
     intro a x i
     induction x with
-    | zero => simp [hΦ0]
     | add p q hp hq =>
       rw [smul_add, hΦadd, hΦadd, Finsupp.add_apply, Finsupp.add_apply, hp, hq, mul_add]
     | tmul a' y => rw [TensorProduct.smul_tmul', hΦt, hΦt, smul_eq_mul, map_mul, mul_assoc]
@@ -82,7 +80,6 @@ private lemma aux {W : Type u₁} {K : Type u₂} {A : Type u₅} {C : Type u₃
   have hΦT : ∀ g x i, Φ (T g x) i = σC g (Φ x i) := by
     intro g x i
     induction x with
-    | zero => simp [hΦ0]
     | add p q hp hq =>
       rw [map_add, hΦadd, hΦadd, Finsupp.add_apply, Finsupp.add_apply, hp, hq, map_add]
     | tmul a y => rw [hT, hΦt, hΦt, map_mul, hσ, hσK]

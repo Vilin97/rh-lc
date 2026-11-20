@@ -20,7 +20,6 @@ private theorem UpperTheory.Ru.crystallineComparison.eq_zero_of_coord {F V C : T
       TensorProduct.lid F C (LinearMap.rTensor C (b.coord i) w) := by
     intro w
     induction w with
-    | zero => simp
     | tmul x y => simp
     | add x y hx hy => simp [hx, hy]
   rw [key, h]

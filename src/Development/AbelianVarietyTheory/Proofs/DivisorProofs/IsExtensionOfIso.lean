@@ -20,7 +20,6 @@ theorem tensorAct_comp {F G : X.Modules} {ρ : O →+* End F} {ρ' : O →+* End
     (h : IsEquivariant ρ ρ' φ) (x : TensorProduct ℤ k O) :
     act (tensorAct k ρ) x ≫ φ = φ ≫ act (tensorAct k ρ') x := by
   induction x with
-  | zero => simp only [act, map_zero]; rw [zero_comp, comp_zero]
   | tmul c a => rw [act_tensorAct_tmul, act_tensorAct_tmul, Linear.smul_comp, Linear.comp_smul, h a]
   | add x y hx hy =>
     simp only [act, map_add] at hx hy ⊢

@@ -30,7 +30,6 @@ theorem lTensor_map_injective {R A M : Type*} [CommRing R] [CommRing A] [Algebra
   have hsurj : ∀ x, x ∈ LinearMap.range φ := by
     intro x
     induction x with
-    | zero => exact zero_mem _
     | add a b ha hb => exact add_mem ha hb
     | tmul m i =>
       obtain ⟨i, hi⟩ := i
@@ -54,7 +53,6 @@ theorem lTensor_map_injective {R A M : Type*} [CommRing R] [CommRing A] [Algebra
       TensorProduct.rid R M (p.subtype.lTensor M y) := by
     intro y
     induction y with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul m r => simp [hφ, c]
   rw [injective_iff_map_eq_zero]

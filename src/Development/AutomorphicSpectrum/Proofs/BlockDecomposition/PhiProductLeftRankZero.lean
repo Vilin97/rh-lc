@@ -35,7 +35,6 @@ theorem twKer_trT (ρ : Representation ℂ G V) (N : Subgroup G) (θ : N →* �
     rintro _ ⟨n, x, rfl⟩
     show _ ∈ LinearMap.range _
     induction x with
-    | zero => simp
     | add x y hx hy =>
       have : trT ρ W (n : G) (x + y) - ((θ n : ℂˣ) : ℂ) • (x + y) =
           (trT ρ W (n : G) x - ((θ n : ℂˣ) : ℂ) • x) + (trT ρ W (n : G) y - ((θ n : ℂˣ) : ℂ) • y) := by
@@ -47,7 +46,6 @@ theorem twKer_trT (ρ : Representation ℂ G V) (N : Subgroup G) (θ : N →* �
       simp [TensorProduct.sub_tmul, TensorProduct.smul_tmul']
   · rintro _ ⟨y, rfl⟩
     induction y with
-    | zero => simp
     | add x y hx hy => rw [map_add]; exact add_mem hx hy
     | tmul a w =>
       obtain ⟨a, ha⟩ := a
@@ -71,7 +69,6 @@ theorem nonempty_twAct_trT (ρ : Representation ℂ G V) (N : Subgroup G) (θ : 
   induction x using Submodule.Quotient.induction_on with
   | H x =>
     induction x with
-    | zero => simp
     | add x y hx hy =>
       rw [Submodule.Quotient.mk_add, map_add, map_add, hx, hy]
     | tmul v w =>
@@ -135,7 +132,6 @@ theorem isSmooth_trT [TopologicalSpace G] [IsTopologicalGroup G] {ρ : Represent
   intro x
   show x ∈ smoothPart (trT ρ W)
   induction x with
-  | zero => exact zero_mem _
   | add x y hx hy => exact add_mem hx hy
   | tmul v w =>
     refine mem_smoothPart_of_nhds (Filter.mem_of_superset ((hρ v).mem_nhds (by simp)) fun g hg => ?_)

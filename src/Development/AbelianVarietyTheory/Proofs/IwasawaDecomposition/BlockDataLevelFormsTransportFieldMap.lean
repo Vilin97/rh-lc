@@ -34,7 +34,6 @@ theorem exists_dual_family [NumberField K] [NumberField K'] (φ : K →+* K') :
   · exact (F i).map_smul a x
   · intro x
     induction x using hbc.inductionOn with
-    | zero => simp
     | tmul a =>
       have h1 : a = ∑ i, g a i • f (Pi.single i 1) := by
         conv_lhs => rw [← LinearMap.id_apply (R := 𝓞 K) a, ← hfg, LinearMap.comp_apply, pi_eq_sum_univ' (g a), map_sum]

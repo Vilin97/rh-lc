@@ -94,7 +94,6 @@ theorem evMap_equivariant (ρ : Representation ℂ (G × H) V) (σ : Representat
     (x : X ⊗[ℂ] homSp ρ σ) :
     evMap ρ σ (extTensor σ (homRep ρ σ) p x) = ρ p (evMap ρ σ x) := by
   induction x with
-  | zero => simp
   | add a b ha hb => simp only [map_add, ha, hb]
   | tmul s f =>
     obtain ⟨g, h⟩ := p
@@ -328,7 +327,6 @@ theorem piTensor_succ_equiv {s : ℕ} (Γ : Fin (s + 1) → Type) [∀ a, Group 
   obtain ⟨y, rfl⟩ := e.surjective x
   show L (piTensor π g (e y)) = ρ g (L (e y))
   induction y with
-  | zero => simp
   | add a b ha hb => simp only [map_add, ha, hb]
   | tmul t a =>
     have h1 : piTensor π g = PiTensorProduct.map fun a => π a (g a) := rfl

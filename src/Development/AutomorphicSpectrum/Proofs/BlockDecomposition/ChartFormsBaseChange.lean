@@ -58,14 +58,12 @@ theorem isBaseChange_of_pushout {P Q R₀ R M N : Type*} [CommRing P] [CommRing 
       φ.liftBaseChange R ∘ (Algebra.IsPushout.cancelBaseChange P Q R₀ R M).symm := by
     funext z
     induction z with
-    | zero => simp
     | add x y hx hy => simp only [Function.comp_apply, map_add] at hx hy ⊢; rw [hx, hy]
     | tmul s m => simp [e]
   have hb : Function.Bijective (φ.liftBaseChange R) := by
     have : (φ.liftBaseChange R : R ⊗[R₀] M → N) = hφ.equiv := by
       funext z
       induction z with
-      | zero => simp
       | add x y hx hy => simp only [map_add, hx, hy]
       | tmul s m => simp
     rw [this]
@@ -86,7 +84,6 @@ theorem isBaseChange_restrict {P Q U M V N : Type*} [CommRing P] [CommRing Q] [A
   have hc : ∀ z : Q ⊗[P] U, j (g.liftBaseChange Q z) = hf.equiv (u.lTensor Q z) := by
     intro z
     induction z with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul s m => simp [hg]
   have hinj : Function.Injective (g.liftBaseChange Q) := fun x y h => by
@@ -160,7 +157,6 @@ theorem isBaseChange_core {P Q R₀ R M N U V : Type*} [CommRing P] [CommRing Q]
   refine mem_span_of_mem_span (Set.range (algebraMap R₀ R)) (fun r => ?_) _ ?_ (hs v)
   · have hpo : IsBaseChange Q (IsScalarTower.toAlgHom P R₀ R).toLinearMap := Algebra.IsPushout.out
     induction r using hpo.inductionOn with
-    | zero => exact Submodule.zero_mem _
     | tmul m => exact Submodule.subset_span ⟨m, rfl⟩
     | smul s n h => exact Submodule.smul_mem _ s h
     | add a b ha hb => exact Submodule.add_mem _ ha hb

@@ -16,7 +16,6 @@ theorem exists_retraction (K A B R : Type) [CommRing K] [CommRing A] [CommRing B
   · intro x
     have key : KaehlerDifferential.map K B R R (KaehlerDifferential.mapBaseChange K A R x) = e x := by
       induction x with
-      | zero => simp
       | add x y hx hy => simp only [map_add, hx, hy]
       | tmul s w =>
         have hw : w ∈ Submodule.span A (Set.range (KaehlerDifferential.D K A)) := by
@@ -33,7 +32,6 @@ theorem exists_retraction (K A B R : Type) [CommRing K] [CommRing A] [CommRing B
     simp [key]
   · intro y
     induction y with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy, add_zero]
     | tmul s w =>
       have hw : w ∈ Submodule.span B (Set.range (KaehlerDifferential.D K B)) := by

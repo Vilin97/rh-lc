@@ -37,7 +37,6 @@ private theorem UpperTheory.universal_derivation_surjective {A B : Type} [CommRi
     intro x
     change x ∈ LinearMap.range D0.toLinearMap
     induction x with
-    | zero => simp
     | tmul a w => exact h1 w a
     | add x y hx hy => exact add_mem hx hy
   refine ⟨_, (e.equivFun.toLinearMap.restrictScalars B).compDer D0,

@@ -143,7 +143,6 @@ theorem injective_and_exists_frac_genericChart : ∀ (R : Type) [CommRing R] [Is
       ∃ (c : Γ(G.left, W)) (r : R), r ≠ 0 ∧ e y * (α.app W).hom (σ r) = (α.app W).hom c := by
     intro y
     induction y with
-    | zero => exact ⟨0, 1, one_ne_zero, by simp⟩
     | tmul c k =>
       obtain ⟨a, r, hr, hk⟩ := exists_mul_fracRes (M.gp ⁻¹ᵁ U) k
       refine ⟨c * σ a, r, hr, ?_⟩

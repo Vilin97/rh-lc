@@ -31,7 +31,6 @@ theorem algHom_ext_of_sub_mem_jacobson {R A B : Type*} [CommRing R] [CommRing A]
       (⊥ : Ideal B).jacobson := by
     intro x
     induction x with
-    | zero => simp
     | tmul a b =>
       have : f (Algebra.TensorProduct.lmul' R (a ⊗ₜ b)) - φ (a ⊗ₜ b) = f a * (f b - g b) := by
         simp [φ, mul_sub]

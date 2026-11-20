@@ -480,7 +480,6 @@ theorem bijective_galoisMap (h : IsFreeRingAction G A) :
         ∑ p ∈ s, (∑ g : G, g • p.2 * galoisMap G A B z g) ⊗ₜ[B] p.1 = z := by
       intro z
       induction z with
-      | zero => simp
       | add x y hx hy =>
         simp only [map_add, Pi.add_apply, mul_add, Finset.sum_add_distrib, TensorProduct.add_tmul,
           hx, hy]
@@ -538,7 +537,6 @@ theorem isBaseChange_invariants (h : IsFreeRingAction G A) :
     refine Function.bijective_iff_has_inverse.mpr
       ⟨fun m ↦ ∑ p ∈ s, p.1 ⊗ₜ[B] moduleTrace G B M (p.2 • m), fun z ↦ ?_, fun m ↦ ?_⟩
     · induction z with
-      | zero => simp
       | add x y hx hy =>
         simp only [map_add, smul_add, TensorProduct.tmul_add, Finset.sum_add_distrib] at hx hy ⊢
         rw [hx, hy]
@@ -599,7 +597,6 @@ theorem existsUnique_equivariant_extension
   refine ⟨hb.lift (Submodule.subtype _ ∘ₗ φ), ⟨fun g m ↦ ?_, hf⟩, fun f' hf' ↦
     hb.algHom_ext _ _ fun x ↦ (hf'.2 x).trans (hf x).symm⟩
   induction m using hb.inductionOn with
-  | zero => simp
   | tmul x =>
     have hx : g • (Submodule.subtype _ x : M) = Submodule.subtype _ x := x.2 g
     rw [hx, hf]
@@ -618,7 +615,6 @@ variable (G : Type*) [Group G] (A : Type*) [CommRing A] [MulSemiringAction G A]
 instance smulDistribClass_tensorProduct : SMulDistribClass G A (A ⊗[B] N) where
   smul_distrib_smul g a z := by
     induction z with
-    | zero => simp
     | add x y hx hy => simp only [smul_add, hx, hy]
     | tmul b n => simp only [TensorProduct.smul_tmul', smul_eq_mul, smul_mul']
 
@@ -644,7 +640,6 @@ theorem bijective_toInvariantsTensor_of_sum_eq_one [Fintype G] {c : A}
   have hτ : ∀ z : A ⊗[B] N, (1 : A) ⊗ₜ[B] τ z = ∑ g : G, g • z := by
     intro z
     induction z with
-    | zero => simp
     | add x y hx hy => simp only [map_add, TensorProduct.tmul_add, hx, hy, smul_add,
         Finset.sum_add_distrib]
     | tmul a n =>

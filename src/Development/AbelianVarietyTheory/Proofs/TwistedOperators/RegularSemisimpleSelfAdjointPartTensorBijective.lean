@@ -25,7 +25,6 @@ theorem productMap_bijective_of_involution {F E L : Type} [Field F] [CharZero F]
   · have hrep : ∀ x : P ⊗[F] E, ∃ a c : P, x = a ⊗ₜ[F] 1 + c ⊗ₜ[F] b 1 := by
       intro x
       induction x with
-      | zero => exact ⟨0, 0, by simp⟩
       | tmul p e =>
         refine ⟨b.repr e 0 • p, b.repr e 1 • p, ?_⟩
         conv_lhs => rw [← b.sum_repr e, Fin.sum_univ_two, h0]

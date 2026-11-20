@@ -17,7 +17,6 @@ theorem ker_counitAlgHom_baseChange_field (O B κ : Type) [CommRing O] [CommRing
         (Algebra.TensorProduct.map (AlgHom.id O κ) (Bialgebra.counitAlgHom O B) x) := by
     intro x
     induction x with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul c b => simp [TensorProduct.counit_tmul]
   ext x

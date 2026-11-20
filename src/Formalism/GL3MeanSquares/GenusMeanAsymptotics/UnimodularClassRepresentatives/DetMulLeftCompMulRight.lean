@@ -55,7 +55,6 @@ theorem exists_decomp {δ : K} (hδ : star δ = -δ) (hδ0 : δ ≠ 0) (a : K) :
 theorem exists_tensor_decomp {δ : K} (hδ : star δ = -δ) (hδ0 : δ ≠ 0) (t : K ⊗[F] (hermSub hF m)) :
     ∃ B C : hermSub hF m, t = (1 : K) ⊗ₜ B + δ ⊗ₜ C := by
   induction t with
-  | zero => exact ⟨0, 0, by simp⟩
   | tmul a B =>
     obtain ⟨x, y, rfl⟩ := exists_decomp hF hδ hδ0 a
     refine ⟨x • B, y • B, ?_⟩

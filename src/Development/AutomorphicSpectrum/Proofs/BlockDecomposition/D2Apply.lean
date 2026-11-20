@@ -44,7 +44,6 @@ theorem tw_nat (E : R' ⊗[R] N ≃ₗ[R'] Q) (E₂ : R' ⊗[R] N₂ ≃ₗ[R'] 
     (H : ∀ n, h (E (1 ⊗ₜ n)) = E₂ (1 ⊗ₜ g n)) (t : M ⊗[R] N) :
     tw M E₂ (g.lTensor M t) = h.lTensor M (tw M E t) := by
   induction t with
-  | zero => simp
   | tmul x n => simp [tw_tmul, H]
   | add a b ha hb => simp only [map_add, ha, hb]
 
@@ -80,7 +79,6 @@ theorem bc_ext {R R' N Q : Type} [CommRing R] [CommRing R'] [Algebra R R'] [AddC
     [AddCommGroup Q] [Module R' Q] (g h : R' ⊗[R] N →ₗ[R'] Q) (H : ∀ n, g (1 ⊗ₜ n) = h (1 ⊗ₜ n)) : g = h := by
   refine LinearMap.ext fun t ↦ ?_
   induction t with
-  | zero => simp
   | tmul r n =>
     have e : r ⊗ₜ[R] n = r • ((1 : R') ⊗ₜ[R] n) := by simp [TensorProduct.smul_tmul']
     rw [e, map_smul, map_smul, H]

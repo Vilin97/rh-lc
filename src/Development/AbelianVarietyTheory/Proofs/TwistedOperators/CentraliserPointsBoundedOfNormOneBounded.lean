@@ -16,10 +16,8 @@ theorem assoc_sigR (P : Type) [CommRing P] [Algebra F P] (σ : E →ₐ[F] E) (R
     Algebra.TensorProduct.assoc F F F P E R (sigR (tConj P σ) R x) =
       tConj3 P σ R (Algebra.TensorProduct.assoc F F F P E R x) := by
   induction x with
-  | zero => simp
   | tmul a r =>
     induction a with
-    | zero => simp
     | tmul p e => simp [sigR, tConj, tConj3]
     | add a b ha hb => rw [TensorProduct.add_tmul, map_add, map_add, map_add, map_add, ha, hb]
   | add a b ha hb => rw [map_add, map_add, map_add, map_add, ha, hb]
@@ -34,10 +32,8 @@ theorem toMat_assoc_apply (σ : E →ₐ[F] E) (J γ : Matrix n n E) (R : Type) 
     toMat σ J γ R (Algebra.TensorProduct.assoc F F F (plusAlg σ J γ) E R x) i j =
       LinearMap.rTensor R (entry σ J γ i j) x := by
   induction x with
-  | zero => simp
   | tmul a r =>
     induction a with
-    | zero => simp
     | tmul p e =>
       have h : (plusTensor σ J γ (p ⊗ₜ e) : Matrix n n E) =
           e • ((p : genAlg γ) : Matrix n n E) := by

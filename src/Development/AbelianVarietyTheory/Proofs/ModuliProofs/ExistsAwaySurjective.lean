@@ -39,7 +39,6 @@ theorem subsingleton_of_isUnit {N : Type} [AddCommGroup N] [Module A N] {a : A}
     (hu : IsUnit (algebraMap A S a)) : Subsingleton (S ⊗[A] N) := by
   refine subsingleton_of_forall_eq 0 fun z => ?_
   induction z with
-  | zero => rfl
   | add y z hy hz => rw [hy, hz, add_zero]
   | tmul c n =>
     obtain ⟨u, hu⟩ := hu.exists_left_inv

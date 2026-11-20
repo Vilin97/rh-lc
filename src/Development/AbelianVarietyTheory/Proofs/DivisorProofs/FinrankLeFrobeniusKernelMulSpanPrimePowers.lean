@@ -65,7 +65,6 @@ def iterFrobSemi : SemiBialgHom (algebraMap (IterFrobBase K p r) K) H H where
               rw [smul_pow]⟩ c := by
       intro c
       induction c with
-      | zero => exact map_zero _
       | add x y hx hy =>
         rw [map_add, ← hx, ← hy]
         exact map_add _ (@id (H ⊗[K] H) x) (@id (H ⊗[K] H) y)
@@ -113,7 +112,6 @@ theorem finrank_le_frobKer_mul_span_pow (p : ℕ) [Fact p.Prime] (K H : Type) [F
   · refine Submodule.finrank_mono ?_
     rintro _ ⟨x, rfl⟩
     induction x with
-    | zero => simp
     | add x y hx hy =>
       rw [map_add]
       exact Submodule.add_mem _ hx hy

@@ -459,7 +459,6 @@ theorem end_ext (bc : SemiBC j) (s : WCb l ≃ₐ[ℤ_[l]] WCb l) {r r' : T →�
       TensorProduct.map s.symm.toLinearMap LinearMap.id (TensorProduct.map s.toLinearMap r y) =
         r.baseChange (WCb l) y := fun r y => by
     induction y with
-    | zero => simp
     | tmul a t => simp
     | add y z hy hz => simp only [map_add, hy, hz]
   have h1 : r.baseChange (WCb l) = r'.baseChange (WCb l) :=

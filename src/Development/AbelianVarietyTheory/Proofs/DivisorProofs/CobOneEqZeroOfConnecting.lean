@@ -50,7 +50,6 @@ theorem vecExtMap_add (f g : G ⟶ H) : vecExtMap (f + g) = vecExtMap f + vecExt
     rw [← (c.2 n).2]
     generalize c.1 (n + 1) = t
     induction t with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul x y => simp [res_app]⟩
   change Submodule.Quotient.mk (cocyclesMap (f + g) c) =
@@ -184,7 +183,6 @@ theorem SemiHom.connecting {σ : R →+* R'} {G' : PDivGroup p R'} (s : SemiHom 
   rw [SemiHom.cocycles_val, cocyclesMap_natCast_val, cocyclesMap_natCast_val, SemiHom.cocycles_val]
   generalize c.1 n = t
   induction t with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul x y => simp [SemiBialgHom.map_mulBy]
 
@@ -288,7 +286,6 @@ theorem liftSemi_vecExt_bijective (hp : (p : R) = 0)
       liftSemi ((G.toBase R').app 1).prim ∘ (G.extCharEquiv hp).baseChange R R' _ _ :=
     funext fun x => by
       induction x with
-      | zero => simp
       | add x y hx hy => simpa only [Function.comp_apply, map_add] using congrArg₂ (· + ·) hx hy
       | tmul r x =>
         simp only [Function.comp_apply, liftSemi_tmul, map_smul, LinearEquiv.baseChange_tmul,
@@ -306,13 +303,11 @@ theorem liftSemi_rig_bijective (hp : (p : R) = 0)
   have s1 : ∀ y, liftSemi (G.toBase R').rig (G.rigOfOmega.lTensor R' y) =
       (G.baseChange R').rigOfOmega (liftSemi (G.toBase R').omega y) := fun y => by
     induction y with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul r x => simp [SemiHom.rig_rigOfOmega]
   have s2 : ∀ y, (G.baseChange R').rigToExt (liftSemi (G.toBase R').rig y) =
       liftSemi (G.toBase R').vecExt (G.rigToExt.lTensor R' y) := fun y => by
     induction y with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul r x => simp [SemiHom.rigToExt_rig]
   refine ⟨(injective_iff_map_eq_zero _).2 fun x hx => ?_, fun z => ?_⟩

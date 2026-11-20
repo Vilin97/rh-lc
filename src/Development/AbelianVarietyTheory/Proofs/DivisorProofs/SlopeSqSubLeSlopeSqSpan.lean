@@ -46,7 +46,6 @@ theorem relIndex_span {R S M W : Type} [CommRing R] [CommRing S] [Algebra R S] [
     rw [hN, Submodule.baseChange_span, ← Set.range_comp]; rfl
   have hmz : ∀ z : S ⊗[R] M, m • z ∈ N.baseChange S := fun z => by
     induction z with
-    | zero => simp
     | tmul a x => rw [← tmul_smul]; exact Submodule.tmul_mem_baseChange_of_mem a (hme x)
     | add x y hx hy => rw [smul_add]; exact add_mem hx hy
   have hinj : Function.Injective θ := by

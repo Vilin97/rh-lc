@@ -84,13 +84,11 @@ lemma exists_invariant [Module.Flat A B] (u w : B ⊗[A] B) (huw : u * w = 1)
   have h23 : ∀ z : B ⊗[A] B, pr e₂ e₃ z = (1 : B) ⊗ₜ[A] z := by
     intro z
     induction z with
-    | zero => simp
     | add a b ha hb => simp [ha, hb, TensorProduct.tmul_add]
     | tmul a b => simp [e₂, e₃, Algebra.TensorProduct.tmul_mul_tmul]
   have hl : ∀ z : B ⊗[A] B, d.lTensor B z = pr e₁ e₂ z - pr e₂ e₃ u * pr e₁ e₃ z := by
     intro z
     induction z with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb, mul_add]; ring
     | tmul a b =>
       simp only [LinearMap.lTensor_tmul, hd, TensorProduct.tmul_sub, h23]
@@ -119,7 +117,6 @@ lemma exists_invariant [Module.Flat A B] (u w : B ⊗[A] B) (huw : u * w = 1)
       m ((LinearMap.ker d).subtype.lTensor B z) ∈ Ideal.span ((LinearMap.ker d : Submodule A B) : Set B) := by
     intro z
     induction z with
-    | zero => simp
     | add a b ha hb => simpa using Ideal.add_mem _ ha hb
     | tmul a b =>
       simp only [LinearMap.lTensor_tmul, Submodule.subtype_apply, m]

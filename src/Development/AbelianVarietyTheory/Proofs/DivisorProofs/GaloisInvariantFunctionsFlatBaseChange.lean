@@ -46,7 +46,6 @@ theorem alg_inv {R A R' B : Type} [CommRing R] [CommRing A] [CommRing R'] [CommR
         t i (e w) - e w := by
       intro w i
       induction w with
-      | zero => simp
       | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy]; ring
       | tmul a r => simp [d, he, htA, htR, mul_sub, tmul_sub]
     have h0 : d.lTensor A w = 0 := by

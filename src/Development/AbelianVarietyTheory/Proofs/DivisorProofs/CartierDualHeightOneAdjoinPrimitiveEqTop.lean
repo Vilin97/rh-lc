@@ -30,7 +30,6 @@ theorem apply_convD (φ : CartierDual K H) (δ : H →ₗ[K] K) (y : H) :
   simp only [ReciprocityTheory.PGsh.convD, LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply]
   generalize comul (R := K) y = t
   induction t with
-  | zero => simp
   | add u v hu hv => simp only [map_add, hu, hv]
   | tmul a b => simp [mul_comm]
 

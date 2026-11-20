@@ -363,7 +363,6 @@ theorem tau_L (T₀ : C) (ε : F.obj T₀ →ₐ[R] R) (x : Cn F 1) (hx : dn F 1
 theorem lid_evL (T₀ T : C) (ε : F.obj T₀ →ₐ[R] R) (t : F.obj T₀ ⊗[R] F.obj T) :
     TensorProduct.lid R (F.obj T) (LinearMap.rTensor (F.obj T) ε.toLinearMap t) = evL F T₀ T ε t := by
   induction t with
-  | zero => simp
   | add a b ha hb => simp only [map_add, ha, hb]
   | tmul a b => simp [evL, Algebra.ofId_apply, Algebra.smul_def]
 

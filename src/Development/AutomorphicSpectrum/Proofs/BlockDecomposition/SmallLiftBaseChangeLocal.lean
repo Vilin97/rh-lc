@@ -53,7 +53,6 @@ theorem lTensor_rTensor_apply {R A A' P P' : Type} [CommRing R] [CommRing A] [Co
     (π : A →ₐ[R] A') (f : P →ₗ[R] P') (w : A ⊗[R] P) :
     f.lTensor A' (π.toLinearMap.rTensor P w) = π.toLinearMap.rTensor P' (f.lTensor A w) := by
   induction w with
-  | zero => simp
   | add u v hu hv => simp only [map_add, hu, hv]
   | tmul a p => simp
 

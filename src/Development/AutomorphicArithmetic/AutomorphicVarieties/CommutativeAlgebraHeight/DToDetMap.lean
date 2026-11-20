@@ -12,7 +12,6 @@ theorem UpperTheory.V.CA.d_toDet_map :
   have h : ofT B G S x = ofT A G S (Det.cancel A (MonoidAlgebra A G) B S
       (Algebra.TensorProduct.map (AlgHom.id S S) (toT A G B) x)) := by
     induction x with
-    | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]
     | tmul s y =>
       induction y using MonoidAlgebra.induction_linear with

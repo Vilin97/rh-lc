@@ -79,12 +79,10 @@ theorem exists_re_im {B : Type} [Ring B] [Algebra ℝ B] (w : ℂ ⊗[ℝ] B) (h
   have hP : ∀ f c x, P f (c ⊗ₜ x) = f c • x := fun f c x => by simp [P]
   have hl : ∀ f (x : B) (w : ℂ ⊗[ℝ] B), P f ((1 ⊗ₜ x) * w) = x * P f w := fun f x w => by
     induction w with
-    | zero => simp
     | tmul c y => rw [Algebra.TensorProduct.tmul_mul_tmul, hP, hP, one_mul, mul_smul_comm]
     | add a b ha hb => rw [mul_add, map_add, map_add, ha, hb, mul_add]
   have hr : ∀ f (x : B) (w : ℂ ⊗[ℝ] B), P f (w * (1 ⊗ₜ x)) = P f w * x := fun f x w => by
     induction w with
-    | zero => simp
     | tmul c y => rw [Algebra.TensorProduct.tmul_mul_tmul, hP, hP, mul_one, smul_mul_assoc]
     | add a b ha hb => rw [add_mul, map_add, map_add, ha, hb, add_mul]
   have hc : ∀ f, P f w ∈ Subalgebra.center ℝ B := fun f =>
@@ -92,7 +90,6 @@ theorem exists_re_im {B : Type} [Ring B] [Algebra ℝ B] (w : ℂ ⊗[ℝ] B) (h
   refine ⟨_, hc Complex.reLm, _, hc Complex.imLm, ?_⟩
   clear hc hw
   induction w with
-  | zero => simp
   | tmul c y =>
     rw [hP, hP, ← TensorProduct.smul_tmul, ← TensorProduct.smul_tmul, ← TensorProduct.add_tmul]
     congr 1

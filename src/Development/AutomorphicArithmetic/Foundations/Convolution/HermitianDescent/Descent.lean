@@ -56,7 +56,6 @@ theorem descent : Descent := by
   have hg : ∀ m, g m = ∑ i, x i ⊗ₜ[k] T (y i • m) := fun m => LinearMap.sum_apply _ _ _
   refine Function.bijective_iff_has_inverse.2 ⟨g, fun z => ?_, fun m => ?_⟩
   · induction z with
-    | zero => simp
     | add a b ha hb => rw [map_add, map_add, ha, hb]
     | tmul r n =>
       have h1 : ∀ i, T (y i • r • (n : M)) = c (y i * r) • n := by

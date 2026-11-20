@@ -52,7 +52,6 @@ theorem Sep.pair {S S' : Type} [Finite S'] [Module.Flat R M] {ev : S → (M →�
       Twpdiv.pair (ev s) (ev' t) z := by
     intro z
     induction z with
-    | zero => simp
     | tmul u v => simp [i, mul_comm]
     | add u v hu hv => simp only [map_add, Pi.add_apply, hu, hv]
   rw [key, key]

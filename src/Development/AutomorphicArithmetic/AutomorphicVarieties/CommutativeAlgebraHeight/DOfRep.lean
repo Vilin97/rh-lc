@@ -10,7 +10,6 @@ private theorem chiS_ofRep {n : ℕ} {A E ι : Type} [CommRing A] [Ring E] [Alge
       (Algebra.TensorProduct.map (IsScalarTower.toAlgHom A S (Polynomial S)) (AlgHom.id A E) y) =
       (Det.repS r S y).map Polynomial.C := by
     induction y with
-    | zero => simp
     | tmul s z => ext1 a b; simp [Det.repS_tmul, Polynomial.algebraMap_apply]
     | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, Matrix.map_add _ (map_add _)]
   change (Det.repS r (Polynomial S) _).det = _

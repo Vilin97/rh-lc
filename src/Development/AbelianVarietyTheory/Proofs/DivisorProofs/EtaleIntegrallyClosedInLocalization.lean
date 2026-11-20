@@ -60,7 +60,6 @@ theorem etale_integrallyClosed_localization : ∀ (S E : Type) [CommRing S] [IsD
       (TensorProduct.toIntegralClosure S E SM y : T) = b ⊗ₜ[S] (1 : SM) := by
     intro y
     induction y with
-    | zero => exact ⟨0, by simp⟩
     | tmul b c =>
       obtain ⟨r, hr⟩ := IsIntegrallyClosedIn.isIntegral_iff.1 c.2
       refine ⟨r • b, ?_⟩

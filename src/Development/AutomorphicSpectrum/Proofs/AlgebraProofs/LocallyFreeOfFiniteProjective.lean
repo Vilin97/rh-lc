@@ -93,7 +93,6 @@ theorem exists_chart {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] (R : S
     rw [eq_top_iff]
     intro e _
     induction e using hb.inductionOn with
-    | zero => exact Submodule.zero_mem _
     | tmul x =>
       obtain ⟨a, ha⟩ := key x
       rw [← Submodule.smul_mem_iff _ hs0]

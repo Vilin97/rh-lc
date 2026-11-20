@@ -48,14 +48,12 @@ theorem Iso.tprod {V' W' : Type} [AddCommGroup V'] [Module ℂ V'] [AddCommGroup
   obtain ⟨e', he'⟩ := h'
   refine ⟨TensorProduct.congr e e', fun g x => ?_⟩
   induction x with
-  | zero => simp
   | tmul a b => simp [he, he']
   | add a b ha hb => simp only [map_add, ha, hb]
 
 theorem Iso.tprod_comm (ρ : Representation ℂ G V) (σ : Representation ℂ G W) : Iso (ρ.tprod σ) (σ.tprod ρ) := by
   refine ⟨TensorProduct.comm ℂ V W, fun g x => ?_⟩
   induction x with
-  | zero => simp
   | tmul a b => simp
   | add a b ha hb => simp only [map_add, ha, hb]
 

@@ -75,7 +75,6 @@ theorem exists_generic {X : Scheme.{0}} (G : Over X) [GrpObj G] [IsCommMonObj G]
     exact (smul_eq_zero.1 (show (s : 𝓞 L) • x = 0 from hs)).resolve_left (nonZeroDivisors.coe_ne_zero s)
   · refine eq_top_iff.2 fun x _ => ?_
     induction x using hbc.inductionOn with
-    | zero => exact Submodule.zero_mem _
     | tmul m => exact Submodule.subset_span ⟨m, rfl⟩
     | smul s n hn => exact Submodule.smul_mem _ _ (hn trivial)
     | add a b ha hb => exact Submodule.add_mem _ (ha trivial) (hb trivial)

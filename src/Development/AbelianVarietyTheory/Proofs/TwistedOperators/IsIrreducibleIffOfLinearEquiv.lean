@@ -100,7 +100,6 @@ def coord (l : V →ₗ[F] F) (W : Type) [AddCommGroup W] [Module F W] : V ⊗[F
 theorem coord_lTensor (l : V →ₗ[F] F) (A : W →ₗ[F] U) (x : V ⊗[F] W) :
     coord l U (A.lTensor V x) = A (coord l W x) := by
   induction x with
-  | zero => simp
   | add x y hx hy => simp [hx, hy]
   | tmul v w => simp [coord]
 
@@ -109,7 +108,6 @@ theorem exists_sum_coord {ι : Type} (b : Module.Basis ι F V) (x : V ⊗[F] W) 
       ∀ t : Finset ι, s ⊆ t → x = ∑ i ∈ t, b i ⊗ₜ coord (b.coord i) W x := by
   classical
   induction x with
-  | zero => exact ⟨∅, by simp, by simp⟩
   | add x y hx hy =>
     obtain ⟨s, h1, h2⟩ := hx
     obtain ⟨s', h1', h2'⟩ := hy
@@ -193,7 +191,6 @@ theorem smInd_stages {P Q : Subgroup G} (hPQ : P ≤ Q) {P' : Subgroup H} (π : 
     rw [hσ q h1 ((hP q).1 h1), hτ, map_smul, map_smul]
     congr 2
     induction t with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul v f =>
       simp only [LinearMap.lTensor_tmul, TensorProduct.map_tmul]
@@ -206,7 +203,6 @@ theorem smInd_stages {P Q : Subgroup G} (hPQ : P ≤ Q) {P' : Subgroup H} (π : 
     rw [hτ, hπj, map_smul, map_smul]
     congr 2
     induction t with
-    | zero => simp
     | add x y hx hy => simp only [map_add, hx, hy]
     | tmul v f =>
       simp only [LinearMap.lTensor_tmul, TensorProduct.map_tmul, map_one, Module.End.one_apply]
@@ -349,7 +345,6 @@ theorem isIrreducible_ind₂Lower (H : GlobalTheory.Published.BernsteinUnitaryPr
       (isIrreducible_ind₂ H ((Equiv.sumComm b a).trans e) s₂ i₂ u₂ s₁ i₁ u₁))
   show _ = extTensor π₁ π₂ (g.2, g.1) _
   induction x with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul v w => simp
 
@@ -456,7 +451,6 @@ theorem multiProd_succ_equiv (e : (Σ i, m i) ≃ n) {X : Fin (s + 1) → Type} 
       (extTensor (σ 0) (multiProd (Equiv.refl _) fun i : Fin s => σ i.succ))).Equiv (multiProd e σ)) := by
   refine ind₂_parInd_equiv e (σ 0) _ _ (tensorCons X) fun g x => ?_
   induction x with
-  | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy]
   | tmul v w =>
     induction w using PiTensorProduct.induction_on with

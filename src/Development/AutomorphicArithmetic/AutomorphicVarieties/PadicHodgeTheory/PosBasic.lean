@@ -18,7 +18,6 @@ private noncomputable def spanT (l : ℕ) [Fact l.Prime] {E : Type} [Field E] [A
 private theorem filT_le_spanT : FilT (l := l) E V 0 ≤ spanT l (⊤ : Submodule E V) := by
   rintro _ ⟨z, rfl⟩
   induction z with
-  | zero => simp
   | tmul v b => exact Submodule.subset_span ⟨v, trivial, b.1, b.2, by simp⟩
   | add x y hx hy => rw [map_add]; exact add_mem hx hy
 
@@ -74,7 +73,6 @@ private theorem step (φ : G →* GQ l) (ρ : Representation E G V) (κ : G →*
         (LinearMap.id : Bdr l →ₗ[ℚ_[l]] Bdr l) (L z) := by
     intro z
     induction z with
-    | zero => simp
     | tmul v b => simp [hL, sub_tmul]
     | add x y hx hy => simp only [map_add, hx, hy]; abel
   rwa [h2, h0, map_zero, sub_zero] at h1
