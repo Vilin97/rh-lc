@@ -88,7 +88,7 @@ theorem spectral_pairing_operator : RDSPOp := by
   intro k r Wp Wq _ _ _ _ _ _ D Θ hS hC F hF hFc hFO
   have hOP : tsupport F ⊆ B.GPos D := fun g hg => ⟨(hFO hg).1, (hFO hg).2.2⟩
   have hsuppF : B.SuppIn (B.GPos D) F :=
-    (closure_mono (fun g hg => hg.2)).trans ((closure_minimal subset_closure (isClosed_tsupport F)).trans hOP)
+    (closure_mono (by exact fun g hg => hg.2)).trans ((closure_minimal subset_closure (isClosed_tsupport F)).trans hOP)
   have hA1t : tsupport (B.opApply Θ F) ⊆ tsupport F := rdsp_tsupport_sub (rdsp_opApply_vanishP Θ F)
   have hB1t : tsupport (B.opAdj Θ F) ⊆ tsupport F := rdsp_tsupport_sub (rdsp_opAdj_vanishP Θ F)
   have hA1s : B.CkOn ⊤ (B.GV k r) (B.opApply Θ F) := by

@@ -45,7 +45,7 @@ theorem DivisionDimOne.proof (hNear : DivisionNearS.Statement)
   refine Finset.sum_le_sum fun j _ => ?_
   refine lintegral_mono_ae ?_
   have hsub : volume.restrict (piece X.A j) ≪ volume.restrict (X.A.chart j).target :=
-    Measure.absolutelyContinuous_of_le (Measure.restrict_mono (fun y hy => hy.1) le_rfl)
+    Measure.absolutelyContinuous_of_le (Measure.restrict_mono (by exact fun y hy => hy.1) le_rfl)
   refine hsub.ae_le ?_
   refine (ae_restrict_iff' (X.A.chart j).open_target.measurableSet).mpr ?_
   have hfin : ((X.A.chart j) '' Z.S).Finite := Z.finite.image _

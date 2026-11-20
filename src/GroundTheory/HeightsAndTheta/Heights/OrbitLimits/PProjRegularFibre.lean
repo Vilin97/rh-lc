@@ -42,7 +42,7 @@ theorem isClosed_projFibre {n : ℕ} (R : AnLogRes P J (n + 1))
     IsClosed {x | x ∈ V ∧ Ψ (segre (R.lift x x)) 0 ≠ 0 ∧ projCoord R Ψ x = y} := by
   refine isClosed_of_closure_subset fun x hx => ?_
   set F := {x | x ∈ V ∧ Ψ (segre (R.lift x x)) 0 ≠ 0 ∧ projCoord R Ψ x = y} with hFdef
-  have hxV : x ∈ V := closure_minimal (fun z hz => hz.1) hV hx
+  have hxV : x ∈ V := closure_minimal (by exact fun z hz => hz.1) hV hx
   set w : R.X → Fin (n + 1) → ℂ := fun z => Ψ (segre (R.lift x z)) with hwdef
   have hw : ContinuousAt w x :=
     (continuousOn_segre_lift R Ψ x).continuousAt ((R.isOpen_U x).mem_nhds (R.mem_U x))

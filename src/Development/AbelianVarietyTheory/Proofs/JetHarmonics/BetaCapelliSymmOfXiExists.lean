@@ -116,7 +116,7 @@ theorem gv_stable (D : RealPlaceData k r Wp Wq) : IsStableOpen D (GV k r) :=
     fun _ hs _ hs' _ hg => gv_mul (gv_mul (Sset_sub hs) hg) (Sset_sub hs')⟩
 
 theorem suppIn_gv (F : Mat k r → (Wq →L[ℂ] Wp)) : SuppIn (GV k r) F :=
-  closure_minimal (fun _ hg => hg.1) gv_closed
+  closure_minimal (by exact fun _ hg => hg.1) gv_closed
 
 end GlobalTheory.BetaSym
 

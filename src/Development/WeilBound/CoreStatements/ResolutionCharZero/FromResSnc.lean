@@ -272,7 +272,7 @@ theorem preimage_union_eq_strictTransform_union {X X₁ : Scheme.{0}} [IsLocally
   · rintro (hx | hx)
     · left
       rw [hcl] at hx
-      exact closure_minimal (fun y hy => hy.1) hD hx
+      exact closure_minimal (by exact fun y hy => hy.1) hD hx
     · exact Or.inr hx
 
 theorem support_exceptionalProduct_eq {k : Type} [Field k] {X : Scheme.{0}}

@@ -19,8 +19,8 @@ theorem jAFFStable_of_parts (hG : GermOps) (hE : ExtLoc) (hS : SmoothOps) (hA : 
       B.SuppIn (B.GPos (T v).base) f' := by
     intro f' hs x hx
     have hxG : x ∈ B.GV S.G.k S.G.r :=
-      (Formalism.FourierDecayAlt.P.B5.GV_closed (k := S.G.k) (r := S.G.r)).closure_subset_iff.2 (fun y hy => hy.1) hx
-    have hxT : x ∈ tsupport f' := closure_mono (fun y hy => hy.2) hx
+      (Formalism.FourierDecayAlt.P.B5.GV_closed (k := S.G.k) (r := S.G.r)).closure_subset_iff.2 (by exact fun y hy => hy.1) hx
+    have hxT : x ∈ tsupport f' := closure_mono (by exact fun y hy => hy.2) hx
     exact hPos x (hs hxT) hxG
   constructor
   · refine hQ hE _ _ _ _ (T v).base (OmP S T v) (B.opApply Θ) hDom

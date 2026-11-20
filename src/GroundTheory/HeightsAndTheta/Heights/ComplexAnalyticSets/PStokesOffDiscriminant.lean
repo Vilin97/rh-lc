@@ -13,7 +13,7 @@ theorem StokesOffDiscriminant.proof : StokesOffDiscriminant.Statement := by
   intro n d J A P _ _ _ _ hsheet F G φ hF hG hφ hFc ⟨U, hUo, hPU, hFU⟩
   set K := closure {x | x ∈ zeroSet J ∧ F x ≠ 0} with hKdef
   have hKZ : K ⊆ zeroSet J :=
-    closure_minimal (fun x hx => hx.1) (SheetSumMeasurable.isClosed_zeroSet J)
+    closure_minimal (by exact fun x hx => hx.1) (SheetSumMeasurable.isClosed_zeroSet J)
   have hKU : K ⊆ Uᶜ :=
     closure_minimal (fun x hx hxU => hx.2 (hFU x ⟨hxU, hx.1⟩)) hUo.isClosed_compl
   have hKc : IsCompact K := hFc.of_isClosed_subset isClosed_closure (closure_mono fun x hx => hx.2)

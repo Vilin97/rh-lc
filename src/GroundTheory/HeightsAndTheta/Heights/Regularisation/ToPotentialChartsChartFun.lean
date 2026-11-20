@@ -169,7 +169,7 @@ def toPotentialCharts [T2Space X] (hW : ∀ j, R.W j ⊆ ball 0 1) : PotentialCh
     obtain ⟨V₂, hV₂, hyV₂, G₂, hG₂, h₂⟩ := R.θ_pot.2 x y y ⟨hyx, R.θ.mem_U y⟩
     refine ⟨V ∩ V₂ ∩ R.θ.U y, (hV.inter hV₂).inter (R.θ.isOpen_U y),
       ⟨⟨hyV, hyV₂⟩, R.θ.mem_U y⟩, fun z => -(G₁ z + G₂ z),
-      fun k => (((hG₁ k).mono fun _ hz => ⟨hz.1, hz.2.1.1⟩).add
+      fun k => (((hG₁ k).mono (by exact fun _ hz => ⟨hz.1, hz.2.1.1⟩)).add
         ((hG₂ k).mono fun _ hz => ⟨hz.1, hz.2.1.2⟩)).neg, ?_⟩
     rintro z ⟨⟨⟨⟨hzV, hzV₂⟩, hzU⟩, hzx⟩, hzs, hzW⟩
     have e1 := h₁ z ⟨⟨hzV, hzU⟩, hzs⟩ hzW

@@ -64,7 +64,7 @@ theorem norm_l_pow (n : ℕ) : ‖(l : PadicComplex l) ^ n‖ = (l : ℝ) ^ (-(n
 
 theorem ohat_norm (K : FinExt l) {y : PadicComplex l} (hy : y ∈ Ohat K) : ‖y‖ ≤ 1 := by
   have : closure (intC (Kinf K)) ⊆ {y : PadicComplex l | ‖y‖ ≤ 1} :=
-    closure_minimal (fun _ h => h.2) (isClosed_le continuous_norm continuous_const)
+    closure_minimal (by exact fun _ h => h.2) (isClosed_le continuous_norm continuous_const)
   exact this hy
 
 theorem exists_zeta (K : FinExt l) (s : ℕ) (hs : 1 ≤ s) :

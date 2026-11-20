@@ -34,7 +34,7 @@ theorem interior_closure_zero (X : Data E r) {F : Frame X.Ψ r → ℂ} (hF : Di
   have hO := FourierCoefficientDomain.isOpen_dom X
   by_contra hU
   obtain ⟨y, hy⟩ := Set.nonempty_iff_ne_empty.2 hU
-  have hyc : y ∈ closure X.dom := closure_mono (fun x hx => hx.1) (interior_subset hy)
+  have hyc : y ∈ closure X.dom := closure_mono (by exact fun x hx => hx.1) (interior_subset hy)
   obtain ⟨z, hzV, hzd⟩ := mem_closure_iff_nhds.1 hyc _ (isOpen_interior.mem_nhds hy)
   have hev : F =ᶠ[𝓝 z] 0 := by
     filter_upwards [isOpen_interior.mem_nhds hzV, hO.mem_nhds hzd] with w hwV hwd

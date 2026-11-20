@@ -17,7 +17,7 @@ theorem c2on {e : ℕ} {X : Type} [TopologicalSpace X] (A : FinHolAtlas e X) (U 
     (ph : X → ℝ) (hth : IsPotential A th) (hph : A.SmoothOn U ph) (x : X) (k : Fin A.n) :
     ContDiffOn ℝ 2 ((th + LocPot.ofFun ph).φ x ∘ (A.chart k).symm)
       ((A.chart k).target ∩ (A.chart k).symm ⁻¹' (th.U x ∩ U)) :=
-  ((potSmoothOn A th hth x k).mono fun _ hy => ⟨hy.1, hy.2.1⟩).add
+  ((potSmoothOn A th hth x k).mono (by exact fun _ hy => ⟨hy.1, hy.2.1⟩)).add
     (((hph k).of_le (WithTop.coe_le_coe.2 le_top)).mono fun _ hy => ⟨hy.1, hy.2.2⟩)
 
 theorem c2at {e : ℕ} {X : Type} [TopologicalSpace X] (A : FinHolAtlas e X) (U : Set X) (hU : IsOpen U)

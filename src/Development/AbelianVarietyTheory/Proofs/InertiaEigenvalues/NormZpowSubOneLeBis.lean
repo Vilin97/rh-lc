@@ -207,7 +207,7 @@ theorem act_inC {act : GQ l →* (PadicComplex l ≃+* PadicComplex l)} (ha : Is
 
 theorem ohat_norm (K : FinExt l) {y : PadicComplex l} (hy : y ∈ Ohat K) : ‖y‖ ≤ 1 := by
   have : closure (intC (Kinf K)) ⊆ {y : PadicComplex l | ‖y‖ ≤ 1} :=
-    closure_minimal (fun _ h => h.2) (isClosed_le continuous_norm continuous_const)
+    closure_minimal (by exact fun _ h => h.2) (isClosed_le continuous_norm continuous_const)
   exact this hy
 
 theorem twAct_fixed_eq_zero {act : GQ l →* (PadicComplex l ≃+* PadicComplex l)}

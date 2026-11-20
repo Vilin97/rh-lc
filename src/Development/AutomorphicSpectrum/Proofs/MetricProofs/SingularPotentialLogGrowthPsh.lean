@@ -265,7 +265,7 @@ theorem localBound {e : ℕ} {X : Type} [TopologicalSpace X] (A : FinHolAtlas e 
   have hpull := pshPull A ψ hcompat (O := th.U x ∩ (bdry s)ᶜ)
     ((th.isOpen_U x).inter (LeviFormBoundaryTopology.isClosed_bdry hS).isOpen_compl)
     (f := fun y => th.φ x y + u y)
-    (fun j => ((hth.1 x j).mono fun y hy => ⟨hy.1, hy.2.1⟩).add
+    (fun j => ((hth.1 x j).mono (by exact fun y hy => ⟨hy.1, hy.2.1⟩)).add
       ((hu j).mono fun y hy => ⟨hy.1, hy.2.2⟩))
     (fun j y hy w => hpsh x j y ⟨hy.1, ⟨hy.2.1, trivial⟩, hy.2.2⟩ w)
     a (ρ : ℂ) hVo

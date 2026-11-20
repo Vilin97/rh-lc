@@ -93,7 +93,7 @@ theorem mem_support_strictTransform_iff_of_notMem_support {X X' : Scheme.{u}}
       exact h0
     have h2 : closure (⇑π.base ⁻¹' ((D.support : Set ↥X) \ (Z.support : Set ↥X)))
         ⊆ ⇑π.base ⁻¹' ((D.support : Set ↥X)) := by
-      refine closure_minimal (fun y hy => hy.1) ?_
+      refine closure_minimal (by exact fun y hy => hy.1) ?_
       exact (Scheme.IdealSheafData.support D).isClosed.preimage π.base.hom.continuous
     exact h2 h1
   · intro hx

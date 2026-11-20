@@ -25,7 +25,7 @@ theorem potOff_of_listForm {A : FinHolAtlas e X} {Z : Set X} {r : X → ℝ} {Om
     (h : ListForm A Z r Om K T) : PotOff A Z T := by
   obtain ⟨θ, u, rfl, hθ, -, -, hu, -⟩ := h
   refine ⟨fun x j => ?_, fun x x' y hy => ?_⟩
-  · exact ((hθ.1 x j).mono fun y hy => ⟨hy.1, hy.2.1.1⟩).add ((hu j).mono fun y hy => ⟨hy.1, hy.2.2⟩)
+  · exact ((hθ.1 x j).mono (by exact fun y hy => ⟨hy.1, hy.2.1.1⟩)).add ((hu j).mono fun y hy => ⟨hy.1, hy.2.2⟩)
   · obtain ⟨W, hW, hyW, G, hG, hGe⟩ := hθ.2 x x' y ⟨hy.1.1, hy.2.1⟩
     refine ⟨W, hW, hyW, G, hG, fun z hz => ?_⟩
     have := hGe z ⟨⟨hz.1.1, hz.1.2.1⟩, hz.2.1⟩

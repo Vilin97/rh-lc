@@ -36,7 +36,7 @@ theorem isClosed_rank {X : Type} [TopologicalSpace X] {F : Set X} (hF : IsClosed
     IsClosed {x | x ∈ F ∧ (f x).rank = r} := by
   apply isClosed_of_closure_subset
   intro x hx
-  have hxF : x ∈ F := hF.closure_subset (closure_mono (fun y hy => hy.1) hx)
+  have hxF : x ∈ F := hF.closure_subset (closure_mono (by exact fun y hy => hy.1) hx)
   obtain ⟨U, hU, hUe⟩ := rank_eq_near (hi x hxF)
   obtain ⟨y, hyU, hyF, hyr⟩ := mem_closure_iff_nhds.1 hx _ (hf.continuousAt.preimage_mem_nhds hU)
   exact ⟨hxF, (hUe _ hyU (hi y hyF)).symm.trans hyr⟩

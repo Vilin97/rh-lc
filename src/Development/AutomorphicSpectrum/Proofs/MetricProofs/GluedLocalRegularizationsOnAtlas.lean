@@ -157,7 +157,7 @@ lemma chart_data {e : ℕ} {X : Type} [TopologicalSpace X] (A B : FinHolAtlas e 
       exact ⟨hVU z (hVt z hz), hVb z hz⟩
     have hsm : ContDiffOn ℝ ∞ (f ∘ (A.chart k).symm)
         ((A.chart k).target ∩ (A.chart k).symm ⁻¹' (th.U xj ∩ (bdry s)ᶜ)) :=
-      ((hW.1.1 xj k).mono fun y hy => ⟨hy.1, hy.2.1⟩).add
+      ((hW.1.1 xj k).mono (by exact fun y hy => ⟨hy.1, hy.2.1⟩)).add
         ((hW.2.1 k).mono fun y hy => ⟨hy.1, hy.2.2⟩)
     have hφ : ContDiffAt ℝ 2 (f ∘ (A.chart k).symm) (τ z) :=
       (hsm.contDiffAt (hO.mem_nhds hmem)).of_le (by norm_cast)

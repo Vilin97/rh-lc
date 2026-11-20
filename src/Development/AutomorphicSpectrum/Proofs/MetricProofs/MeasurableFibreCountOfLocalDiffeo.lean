@@ -96,7 +96,7 @@ theorem aestronglyMeasurable_fibreSum_pushDens : ∀ {e : ℕ} {X : Type} [Topol
     exact this
   have hjm : ∀ j, AEStronglyMeasurable (hj j) (volume.restrict (goodT A q j)) := fun j =>
     (((hχc j).aestronglyMeasurable (A.chart j).open_target.measurableSet).mul (hG j)).mono_measure
-      (Measure.restrict_mono (fun u hu => hu.1) le_rfl)
+      (Measure.restrict_mono (by exact fun u hu => hu.1) le_rfl)
   have hsum := sum_fibSum_ae A q S hN hq hfin Pt hj (fun x => G x * pushDens A Φ q x) (by
     intro j x hx hxS
     have hd := locDens_div_jacN A Φ q S hq hsm j hx hxS

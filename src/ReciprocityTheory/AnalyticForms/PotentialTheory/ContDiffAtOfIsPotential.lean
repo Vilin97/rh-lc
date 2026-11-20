@@ -19,7 +19,7 @@ def SmoothOnAlgStatement : Prop :=
 theorem smoothOnAlg : SmoothOnAlgStatement := by
   intro e X _ A U V f g c hf hg hVU
   refine ⟨fun j => ?_, fun j => ?_⟩
-  · exact ((hf j).mono fun y hy => ⟨hy.1, hVU hy.2⟩).add (hg j)
+  · exact ((hf j).mono (by exact fun y hy => ⟨hy.1, hVU hy.2⟩)).add (hg j)
   · exact contDiffOn_const.mul (hf j)
 
 section SlopeTestRemainingChoices
@@ -62,7 +62,7 @@ theorem isPotentialAdd : IsPotentialAddStatement := by
   intro e X _ A P Q hP hQ
   refine ⟨fun x => ?_, fun x x' y hy => ?_⟩
   · rw [add_U, add_φ]
-    exact fun j => ((hP.1 x j).mono fun y hy => ⟨hy.1, hy.2.1⟩).add
+    exact fun j => ((hP.1 x j).mono (by exact fun y hy => ⟨hy.1, hy.2.1⟩)).add
       ((hQ.1 x j).mono fun y hy => ⟨hy.1, hy.2.2⟩)
   · rw [add_U, add_U] at hy
     obtain ⟨⟨hPx, hQx⟩, hPx', hQx'⟩ := hy

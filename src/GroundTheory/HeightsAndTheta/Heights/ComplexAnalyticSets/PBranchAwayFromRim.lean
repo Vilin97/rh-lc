@@ -99,7 +99,7 @@ theorem BranchAwayFromRim.proof (hex : NormalModelExists.Statement)
   obtain ⟨xh, hxcl, φ, hφ, hlim⟩ :=
     tendsto_subseq_of_bounded (hprop n J M _ Metric.isBounded_closedBall) hmem
   have hlim' : Tendsto (fun j => Γ b (τ (φ j))) atTop (𝓝 xh) := hlim
-  have hxZ : xh ∈ Z' := hZc.closure_subset_iff.mpr (fun w hw => hw.1) hxcl
+  have hxZ : xh ∈ Z' := hZc.closure_subset_iff.mpr (by exact fun w hw => hw.1) hxcl
   have h1j : Tendsto (fun j => 1 / ((φ j : ℝ) + 1)) atTop (𝓝 0) :=
     tendsto_one_div_add_atTop_nhds_zero_nat.comp hφ.tendsto_atTop
   have hγlim : Tendsto (fun j => (γ b).toFun (τ (φ j))) atTop (𝓝 x) := by
