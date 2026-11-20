@@ -22,7 +22,7 @@ theorem exists_finExt_etale_of_isSeparable : ∀ (R : Type) [CommRing R] [IsDoma
   haveI := hN; haveI := hIC; haveI := hC
   obtain ⟨A, _, _, hfin, het, hloc, ⟨ε⟩⟩ := GlobalTheory.exists_etale_lift_of_isSeparable R k'
   haveI : IsLocalHom (algebraMap R A) :=
-    ((local_hom_TFAE (algebraMap R A)).out 0 4).mpr (comap_eq_maximalIdeal_of_finite _)
+    ((local_hom_tfae (algebraMap R A)).out 1 5).mpr (comap_eq_maximalIdeal_of_finite _)
   have hm : (maximalIdeal R).map (algebraMap R A) = maximalIdeal A :=
     Algebra.FormallyUnramified.map_maximalIdeal
   obtain ⟨hD, hI⟩ := GlobalTheory.isDomain_and_isIntegrallyClosed_atPrime_of_etale R (maximalIdeal A)

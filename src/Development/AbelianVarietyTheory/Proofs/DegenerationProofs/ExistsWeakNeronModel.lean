@@ -326,7 +326,7 @@ theorem exists_weakNeron : ∀ (R K : Type) [CommRing R] [IsDomain R] [IsDiscret
     show (M i k).Y.hom ((spMap c.toRingHom ≫ g i k) _) = _
     rw [← Scheme.Hom.comp_apply, hb₀]
     haveI : IsLocalHom (algebraMap R V) := by
-      apply ((IsLocalRing.local_hom_TFAE (algebraMap R V)).out 0 2).2
+      apply ((IsLocalRing.local_hom_tfae (algebraMap R V)).out 1 3).2
       exact hmax.le
     exact IsLocalRing.comap_closedPoint (algebraMap R V)
   obtain ⟨l, hl⟩ := hcov i k _ hsp

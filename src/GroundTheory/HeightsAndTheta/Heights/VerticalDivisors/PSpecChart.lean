@@ -46,7 +46,7 @@ theorem SpecChart.proof : SpecChart.Statement := by
   refine ⟨ψ, fun g => ?_, ?_, ?_, hmax⟩
   · rw [hψ]
     rfl
-  · exact ((IsLocalRing.local_hom_TFAE (ψ.comp (Ideal.Quotient.mk _))).out 2 0).mp hmax.le
+  · exact ((IsLocalRing.local_hom_tfae (ψ.comp (Ideal.Quotient.mk _))).out 3 1).mp hmax.le
   · have := SpecChart.isLocalization_quot W (integralModel I)
     refine SpecChart.flat_of_isLocalization_comp (R := MvPolynomial (Fin n) (𝓞 K) ⧸ integralModel I)
       (S := Localization.AtPrime W ⧸ (integralModel I).map (algebraMap _ (Localization.AtPrime W)))

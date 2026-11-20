@@ -167,7 +167,7 @@ theorem ringHom_flat_of_comp_flat_of_map_maximalIdeal :
   intro O R' E _ _ _ _ _ _ _ _ _ φ' b _ hm hb hc
   algebraize [φ', b, b.comp φ']
   refine LocalFlatMax.flat_of_lTensor_injective E (maximalIdeal R') ?_ ?_
-  · have h : (maximalIdeal R').map b ≤ maximalIdeal E := ((local_hom_TFAE b).out 0 2).mp hb
+  · have h : (maximalIdeal R').map b ≤ maximalIdeal E := ((local_hom_tfae b).out 1 3).mp hb
     exact h.trans (maximalIdeal_le_jacobson _)
   · rw [← hm]
     exact LocalFlatMax.lTensor_map_injective (maximalIdeal O)

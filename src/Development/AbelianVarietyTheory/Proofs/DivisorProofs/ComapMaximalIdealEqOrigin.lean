@@ -326,7 +326,7 @@ theorem comap_maximalIdeal_eq_origin {T O : Type} [CommRing T] [IsLocalRing T] [
     (maximalIdeal O).comap (algebraMap T[X] O) = GlobalTheory.KeyOriginCut.originIdeal T := by
   haveI : IsLocalHom φ := hsh.2.2.1
   have h1 : (maximalIdeal O).comap φ = maximalIdeal (Localization.AtPrime P) :=
-    ((IsLocalRing.local_hom_TFAE φ).out 0 4).mp this
+    ((IsLocalRing.local_hom_tfae φ).out 1 5).mp this
   rw [← hφ, ← Ideal.comap_comap, h1, ← hP]
   exact Localization.AtPrime.comap_maximalIdeal (I := P)
 

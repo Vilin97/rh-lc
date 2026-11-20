@@ -25,7 +25,7 @@ theorem exists_etale_of_isEtaleCompletion (A R : Type) [CommRing A] [IsLocalRing
     rw [AdicCompletion.maximalIdeal_eq_map, Ideal.map_map]
     change (maximalIdeal A).map (g.comp _) = _
     rw [hg, hmap]
-  haveI : IsLocalHom (algebraMap D R) := ((local_hom_TFAE _).out 0 2).mpr hmA.le
+  haveI : IsLocalHom (algebraMap D R) := ((local_hom_tfae _).out 1 3).mpr hmA.le
   have hres : ((residue R).comp g).Finite :=
     RingHom.Finite.of_comp_finite (f := algebraMap A D) (by rw [RingHom.comp_assoc, hg]; exact hfin)
   haveI : Module.Finite D (R ⧸ (maximalIdeal D).map (algebraMap D R)) := by

@@ -207,7 +207,7 @@ theorem exists_two_traits {A : Type} [CommRing A] [CharZero k] (θ : A →+* Cha
     rw [← hgm, hm, Ideal.map_span, Set.image_singleton]
   have hB' : maximalIdeal B = Ideal.span {ϖ'} := by
     rw [← hgm', hm', Ideal.map_span, Set.image_singleton]
-  have hl0 : IsLocalHom g0 := ((IsLocalRing.local_hom_TFAE g0).out 0 2).2 hgm.le
+  have hl0 : IsLocalHom g0 := ((IsLocalRing.local_hom_tfae g0).out 1 3).2 hgm.le
   have hreg : ϖ ∈ nonZeroDivisors B := by
     letI := g0.toAlgebra
     haveI : Module.Flat V B := hg0

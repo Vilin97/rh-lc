@@ -43,11 +43,11 @@ theorem exists_localised_base_change : ∀ (A B R : Type) [CommRing A] [IsDomain
   have e1 := GlobalTheory.T.localization_maximal_ideal_map B (B ⊗[A] R) _ q hJ hle hFU1 hFin1
   obtain ⟨e2, e3⟩ := GlobalTheory.T.localization_residue_finite_unram B (B ⊗[A] R) _ q (hJ.trans hle) hFU1 hFin1
   refine ⟨C, inferInstance, inferInstance, inferInstance, (algebraMap (B ⊗[A] R) C).comp (Algebra.TensorProduct.includeRight : R →ₐ[A] B ⊗[A] R).toRingHom, (algebraMap (B ⊗[A] R) C).comp (algebraMap B (B ⊗[A] R)), inferInstance, ?_, ?_, ?_, ?_, ?_, e1, e2, e3, ?_⟩
-  · refine ((local_hom_TFAE _).out 0 2).2 ?_
+  · refine ((local_hom_tfae _).out 1 3).2 ?_
     rw [← Localization.AtPrime.map_eq_maximalIdeal, ← Ideal.map_map]
     exact Ideal.map_mono (le_trans (hmax ▸ hJ) hle)
   · exact (IsLocalization.injective C q.primeCompl_le_nonZeroDivisors).comp hinjR
-  · refine ((local_hom_TFAE _).out 0 2).2 ?_
+  · refine ((local_hom_tfae _).out 1 3).2 ?_
     rw [e1]
   · refine (IsLocalization.injective C q.primeCompl_le_nonZeroDivisors).comp ?_
     show Function.Injective (algebraMap B (B ⊗[A] R))

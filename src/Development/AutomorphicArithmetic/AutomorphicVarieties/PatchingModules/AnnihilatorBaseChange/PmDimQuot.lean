@@ -117,7 +117,7 @@ theorem UpperTheory.V.Pa.Core.pmDim :
   letI : Algebra La B := ψ.toAlgebra
   haveI : IsLocalHom (algebraMap La B) := by
     show IsLocalHom ψ
-    refine ((IsLocalRing.local_hom_TFAE ψ).out 0 3).mpr ?_
+    refine ((IsLocalRing.local_hom_tfae ψ).out 1 4).mpr ?_
     have hm : maximalIdeal La = (q.comap c).map (algebraMap Λ La) := by
       simpa using (UpperTheory.V.AlgebraTools.IsCplAt.map_pow_eq Λ (q.comap c) La hLa 1).symm
     rw [hm, Ideal.map_le_iff_le_comap, Ideal.comap_comap, hψ, hφ]

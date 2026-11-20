@@ -236,7 +236,7 @@ theorem flat_of_flat_fibres {R A B : Type} [CommRing R] [CommRing A] [CommRing B
     refine flat_of_injective_on_fibre p ?_ ?_
     · rw [IsLocalRing.jacobson_eq_maximalIdeal ⊥ bot_ne_top]
       have h0 : (IsLocalRing.maximalIdeal A').map (algebraMap A' L) ≤ IsLocalRing.maximalIdeal L :=
-        ((IsLocalRing.local_hom_TFAE (algebraMap A' L)).out 0 2).mp hl
+        ((IsLocalRing.local_hom_tfae (algebraMap A' L)).out 1 3).mp hl
       exact (Ideal.map_mono Ideal.map_comap_le).trans h0
     · intro N' N _ _ _ _ _ _ _ _ ι hι
       exact lTensor_injective_of_fibre (A := A) (B := B) (A' := A') (L := L)

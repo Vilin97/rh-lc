@@ -34,7 +34,7 @@ theorem finExt_isLocalHom {R R' : Type} [CommRing R] [IsLocalRing R] [CommRing R
   have hi : Algebra.IsIntegral R R' := ⟨fun x => h.2.2.to_isIntegral x⟩
   have hm : (maximalIdeal R').comap ρ = maximalIdeal R :=
     IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (R := R) (maximalIdeal R'))
-  exact ((IsLocalRing.local_hom_TFAE ρ).out 0 4).2 hm
+  exact ((IsLocalRing.local_hom_tfae ρ).out 1 5).2 hm
 
 theorem finExt_comp {R R₁ R₂ : Type} [CommRing R] [CommRing R₁] [IsDomain R₁] [IsLocalRing R₁] [CommRing R₂]
     [IsDomain R₂] [IsLocalRing R₂] {ρ : R →+* R₁} {ρ' : R₁ →+* R₂} (h : FinExt ρ) (h' : FinExt ρ') :

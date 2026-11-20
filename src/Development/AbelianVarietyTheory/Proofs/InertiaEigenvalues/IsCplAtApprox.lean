@@ -69,7 +69,7 @@ theorem IsCplAt.approx_inj {R S : Type} [CommRing R] [CommRing S] [IsLocalRing S
   haveI : Module.Flat L S := (Module.flat_iff_of_isLocalization L q.primeCompl S).2 hfl
   have hcomp : (algebraMap L S).comp (algebraMap R L) = φ := RingHom.ext hψ
   haveI : IsLocalHom (algebraMap L S) := by
-    apply ((local_hom_TFAE (algebraMap L S)).out 0 2).2
+    apply ((local_hom_tfae (algebraMap L S)).out 1 3).2
     rw [← Localization.AtPrime.map_eq_maximalIdeal, Ideal.map_map, hcomp, h.max_eq]
   haveI : Module.FaithfullyFlat L S := Module.FaithfullyFlat.of_flat_of_isLocalHom
   have key := Ideal.comap_map_eq_self_of_faithfullyFlat (B := S) ((q ^ k).map (algebraMap R L))

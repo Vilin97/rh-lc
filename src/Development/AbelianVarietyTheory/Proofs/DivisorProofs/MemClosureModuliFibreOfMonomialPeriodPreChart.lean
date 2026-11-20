@@ -29,7 +29,7 @@ theorem isPrime_map_of_flat {A R : Type} [CommRing A] [IsLocalRing A] [CommRing 
       ← hm, Ideal.map_map, Ideal.map_map]
     rfl
   have : IsLocalHom (algebraMap (A ⧸ I) (R ⧸ I.map (algebraMap A R))) :=
-    ((local_hom_TFAE _).out 0 2).2 hmap.le
+    ((local_hom_tfae _).out 1 3).2 hmap.le
   have := GroundTheory.Arith.SchemeCoh.IsRegularLocalRing.of_flat_of_map_maximalIdeal hmap
   have : IsDomain (R ⧸ I.map (algebraMap A R)) := GroundTheory.Arith.SchemeCoh.IsRegularLocalRing.isDomain
   exact (Ideal.Quotient.isDomain_iff_prime _).1 this

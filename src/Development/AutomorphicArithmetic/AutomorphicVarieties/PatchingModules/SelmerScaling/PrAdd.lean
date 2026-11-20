@@ -49,4 +49,4 @@ theorem UpperTheory.V.Pa.prAdd :
     rw [this.1, add_sub_cancel_left]
     exact Ideal.subset_span ⟨_, (S.pr1 a).2, _, (S.pr1 a').2, e⟩
   · refine sup_le (sup_le ?_ (Ideal.pow_le_self two_ne_zero)) hi
-    exact ((IsLocalRing.local_hom_TFAE (algebraMap S.OO S.Bh)).out 0 2).1 (IsCO.isLocalHom (O := S.OO) (R := S.Bh))
+    exact ((IsLocalRing.local_hom_tfae (algebraMap S.OO S.Bh)).out 1 3).1 (IsCO.isLocalHom (O := S.OO) (R := S.Bh))

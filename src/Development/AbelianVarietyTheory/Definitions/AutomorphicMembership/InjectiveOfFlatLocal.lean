@@ -51,7 +51,7 @@ theorem exists_etale_local (V : Type) [CommRing V] [IsLocalRing V] [IsNoetherian
     exact (hmax.eq_of_le hM.ne_top (Ideal.map_le_iff_le_comap.2 (IsLocalRing.eq_maximalIdeal hc).ge)).symm
   have hme : (maximalIdeal V).map (algebraMap V (AdjoinRoot f)) = maximalIdeal (AdjoinRoot f) :=
     IsLocalRing.eq_maximalIdeal hmax
-  have hlh : IsLocalHom (algebraMap V (AdjoinRoot f)) := ((IsLocalRing.local_hom_TFAE _).out 0 2).2 hme.le
+  have hlh : IsLocalHom (algebraMap V (AdjoinRoot f)) := ((IsLocalRing.local_hom_tfae _).out 1 3).2 hme.le
   have hres : (algebraMap (ResidueField V) (ResidueField (AdjoinRoot f))).comp (residue V) =
       (residue _).comp (algebraMap V (AdjoinRoot f)) := RingHom.ext fun a => ResidueField.map_residue _ a
   have hroot : aeval (residue _ (AdjoinRoot.root f)) (f.map (residue V)) = 0 := by

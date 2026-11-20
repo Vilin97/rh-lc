@@ -36,7 +36,7 @@ theorem main : ∀ (V R K : Type) [inst : CommRing V] [IsDomain V] [IsLocalRing 
   intro V R K _ _ _ _ _ _ _ _ ρ hinj hfin
   have hint : ρ.IsIntegral := hfin.to_isIntegral
   refine ⟨?_, fun ev => ?_⟩
-  · refine ((IsLocalRing.local_hom_TFAE ρ).out 4 0).mp ?_
+  · refine ((IsLocalRing.local_hom_tfae ρ).out 5 1).mp ?_
     exact IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal' ρ hint _)
   · let := ρ.toAlgebra
     have : Algebra.IsIntegral V R := ⟨hint⟩

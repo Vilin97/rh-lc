@@ -79,7 +79,7 @@ theorem exists_complAt_factor_of_isAdicComplete : ∀ (W : Type) [CommRing W] [I
       exact Ideal.mul_mem_right _ _ h2
   · haveI : IsLocalHom (θ.comp (algebraMap L R)) := by
       rw [hθ]
-      apply ((IsLocalRing.local_hom_TFAE φ).out 0 2).mpr
+      apply ((IsLocalRing.local_hom_tfae φ).out 1 3).mpr
       simpa using hk
     exact GlobalTheory.isLocalHom_of_extend_adicCompletion hfg θ
   · refine ⟨fun a ha => hC.map_nonunit a ?_⟩

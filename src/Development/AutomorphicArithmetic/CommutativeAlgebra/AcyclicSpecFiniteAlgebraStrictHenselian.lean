@@ -16,7 +16,7 @@ private theorem sh_of_finite (O T : Type) [CommRing O] [CommRing T] [Algebra O T
     [Module.Finite O T] (hO : SH O) (hT : HenselianLocalRing T) : SH T := by
   obtain ⟨_, hk⟩ := hO
   haveI : IsLocalHom (algebraMap O T) :=
-    ((IsLocalRing.local_hom_TFAE (algebraMap O T)).out 0 4).mpr
+    ((IsLocalRing.local_hom_tfae (algebraMap O T)).out 1 5).mpr
       (GlobalTheory.comap_eq_maximalIdeal_of_finite (IsLocalRing.maximalIdeal T))
   haveI : Algebra.IsAlgebraic (IsLocalRing.ResidueField O) (IsLocalRing.ResidueField T) := inferInstance
   exact ⟨hT, sepClosed_of_isAlgebraic (IsLocalRing.ResidueField O) (IsLocalRing.ResidueField T)⟩

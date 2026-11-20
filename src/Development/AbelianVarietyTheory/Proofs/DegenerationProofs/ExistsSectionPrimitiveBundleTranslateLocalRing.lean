@@ -137,7 +137,7 @@ theorem exists_section_translate : Laws → Laws2 → ∀ (A : Type) [CommRing A
     rfl
   have hN : (IsLocalRing.maximalIdeal V).map (algebraMap V R) ≤ IsLocalRing.maximalIdeal R :=
     IsLocalRing.le_maximalIdeal (Ideal.Quotient.nontrivial_iff.1 inferInstance)
-  have hloc : IsLocalHom (algebraMap V R) := ((IsLocalRing.local_hom_TFAE (algebraMap V R)).out 2 0).1 hN
+  have hloc : IsLocalHom (algebraMap V R) := ((IsLocalRing.local_hom_tfae (algebraMap V R)).out 3 1).1 hN
   have hsurj : Function.Surjective (algebraMap V (R ⧸ I)) := by
     have : IsClosedImmersion (Spec.map (CommRingCat.ofHom (Ideal.Quotient.mk I))) :=
       IsClosedImmersion.spec_of_surjective _ Ideal.Quotient.mk_surjective

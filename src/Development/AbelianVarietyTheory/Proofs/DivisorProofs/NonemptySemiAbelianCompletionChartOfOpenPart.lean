@@ -29,7 +29,7 @@ theorem completedStalk_chart (X : Scheme.{0}) (x : X) [IsNoetherianRing (X.presh
   have fg : (maximalIdeal (X.presheaf.stalk x)).FG := IsNoetherian.noetherian _
   have hm := AdicCompletion.maximalIdeal_eq_map_of_fg fg
   let φ := algebraMap (X.presheaf.stalk x) (AdicCompletion (maximalIdeal (X.presheaf.stalk x)) (X.presheaf.stalk x))
-  haveI : IsLocalHom φ := ((IsLocalRing.local_hom_TFAE φ).out 0 2).mpr hm.symm.le
+  haveI : IsLocalHom φ := ((IsLocalRing.local_hom_tfae φ).out 1 3).mpr hm.symm.le
   have hres : Function.Surjective ((residue _).comp φ) := by
     intro r
     obtain ⟨a, ha⟩ := (AdicCompletion.residueField_map_bijective (X.presheaf.stalk x)).2 r

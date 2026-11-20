@@ -163,7 +163,7 @@ private theorem cd_tel {M : Type} [CommGroup M] {n : ℕ} (U : Fin n → M) :
 private theorem cd_fin {l : ℕ} [Fact l.Prime] (c : Coef l) : Finite (ResidueField c.O) := by
   have h : (maximalIdeal c.O).comap (algebraMap ℤ_[l] c.O) = maximalIdeal ℤ_[l] :=
     eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal _)
-  have : IsLocalHom (algebraMap ℤ_[l] c.O) := ((IsLocalRing.local_hom_TFAE _).out 4 0).1 h
+  have : IsLocalHom (algebraMap ℤ_[l] c.O) := ((IsLocalRing.local_hom_tfae _).out 5 1).1 h
   exact ResidueField.finite_of_finite (R := ℤ_[l]) inferInstance
 private theorem cd_eT {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {n : ℕ}
     (i : Fin n) (c : ℕ) (y : Uo k) (hy : valuation k (((y : kˣ) : k) - 1) ≤ uniformizer k ^ ((c + 1 : ℕ) : ℤ)) :

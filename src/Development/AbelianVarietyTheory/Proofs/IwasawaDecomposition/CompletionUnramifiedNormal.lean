@@ -45,7 +45,7 @@ theorem isDomain_and_isIntegrallyClosed : ∀ (D E : Type) [CommRing D] [IsDomai
     rw [AdicCompletion.maximalIdeal_eq_map, Ideal.map_map]
     change (maximalIdeal D).map (g.comp _) = _
     rw [hg, hmap]
-  haveI : IsLocalHom (algebraMap A E) := ((local_hom_TFAE _).out 0 2).mpr hmA.le
+  haveI : IsLocalHom (algebraMap A E) := ((local_hom_tfae _).out 1 3).mpr hmA.le
 
   have hres : ((residue E).comp g).Finite :=
     RingHom.Finite.of_comp_finite (f := algebraMap D A) (by rw [RingHom.comp_assoc, hg]; exact hfin)

@@ -63,7 +63,7 @@ theorem exists_chart : ∀ (F : Type) [Field F] [NumberField F] (X : Scheme.{0})
   have hm := AdicCompletion.maximalIdeal_eq_map_of_fg fg
   set R := AdicCompletion (maximalIdeal (X.presheaf.stalk x)) (X.presheaf.stalk x) with hR
   set φ := algebraMap (X.presheaf.stalk x) R with hφ
-  haveI : IsLocalHom φ := ((IsLocalRing.local_hom_TFAE φ).out 0 2).mpr hm.symm.le
+  haveI : IsLocalHom φ := ((IsLocalRing.local_hom_tfae φ).out 1 3).mpr hm.symm.le
   have hres : Function.Surjective ((residue R).comp φ) := by
     intro r
     obtain ⟨a, ha⟩ := (AdicCompletion.residueField_map_bijective (X.presheaf.stalk x)).2 r

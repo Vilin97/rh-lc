@@ -27,7 +27,7 @@ theorem exists_trait_of_unif (R₀ : Type) [CommRing R₀] [IsDomain R₀] [IsLo
   have := hR.2
   have := hR.1.1
   obtain ⟨W, _, _, _, φ, hW, hφ, hc⟩ := GlobalTheory.PrimeUnif.exists_cdvr R₀ (maximalIdeal R₀)
-  haveI hloc : IsLocalHom φ := ((IsLocalRing.local_hom_TFAE φ).out 0 4).mpr hc
+  haveI hloc : IsLocalHom φ := ((IsLocalRing.local_hom_tfae φ).out 1 5).mpr hc
   have := hW.1
   have hW' : AdmBase W (maximalIdeal W) := ⟨inferInstance, inferInstance, inferInstance, hW.2.1⟩
   obtain ⟨hL, -, -, h4, h5⟩ := GlobalTheory.firstFiveLaws

@@ -13,7 +13,7 @@ namespace GlobalTheory.CompleteClosedDvr
 theorem exists_complete_dvr_isAlgClosed : ∀ (V : Type) [CommRing V] [IsDomain V] [IsLocalRing V] [IsNoetherianRing V], ¬ IsField V → Nonempty (ℚ →+* V) → ∃ (W : Type) (_ : CommRing W) (_ : IsDomain W) (_ : IsDiscreteValuationRing W) (ρ : V →+* W), IsAdicComplete (maximalIdeal W) W ∧ IsAlgClosed (ResidueField W) ∧ Function.Injective ρ ∧ IsLocalHom ρ := by
   intro V _ _ _ _ _ _
   obtain ⟨D, _, _, _, φ, hac, hinj, hc⟩ := GlobalTheory.UnifProperChar.exists_dvr_centre V (maximalIdeal V)
-  have : IsLocalHom φ := ((IsLocalRing.local_hom_TFAE φ).out 0 4).mpr hc
+  have : IsLocalHom φ := ((IsLocalRing.local_hom_tfae φ).out 1 5).mpr hc
   have hb := AdicCompletion.residueField_map_bijective_of_fg (R := D)
     (maximalIdeal D).fg_of_isNoetherianRing
   refine ⟨AdicCompletion (maximalIdeal D) D, inferInstance, inferInstance, inferInstance,

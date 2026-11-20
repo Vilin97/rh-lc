@@ -64,14 +64,14 @@ theorem exists_finite_trait_extension : ∀ (R W R₁ : Type) [CommRing R] [IsDo
     have : f₀ a = f₀ b := congrArg Subtype.val h
     exact IsFractionRing.injective R₁ (FractionRing R₁) (e.injective this)
   have hφ₁l : IsLocalHom φ₁ := by
-    have h1 : (maximalIdeal W₁).comap iw = maximalIdeal W := ((local_hom_TFAE iw).out 0 4).mp hloc
-    have h2 : (maximalIdeal W).comap φ = maximalIdeal R := ((local_hom_TFAE φ).out 0 4).mp hφl
+    have h1 : (maximalIdeal W₁).comap iw = maximalIdeal W := ((local_hom_tfae iw).out 1 5).mp hloc
+    have h2 : (maximalIdeal W).comap φ = maximalIdeal R := ((local_hom_tfae φ).out 1 5).mp hφl
     have hP : ((maximalIdeal W₁).comap φ₁).comap ρ = maximalIdeal R := by
       rw [Ideal.comap_comap, hcomp, ← Ideal.comap_comap, h1, h2]
     have hmax : ((maximalIdeal W₁).comap φ₁).IsMaximal :=
       Ideal.isMaximal_of_isIntegral_of_isMaximal_comap' ρ (RingHom.Finite.to_isIntegral hρf) _
         (by rw [hP]; infer_instance)
-    exact ((local_hom_TFAE φ₁).out 0 4).mpr (IsLocalRing.eq_maximalIdeal hmax)
+    exact ((local_hom_tfae φ₁).out 1 5).mpr (IsLocalRing.eq_maximalIdeal hmax)
   haveI : Algebra.IsAlgebraic W₁ Ω := Algebra.IsAlgebraic.extendScalars hiwinj
   haveI : Module.IsTorsionFree W₁ Ω :=
     Module.isTorsionFree_iff_algebraMap_injective.mpr Subtype.val_injective

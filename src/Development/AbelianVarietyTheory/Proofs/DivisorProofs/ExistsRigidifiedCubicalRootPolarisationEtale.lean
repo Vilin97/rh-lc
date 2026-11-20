@@ -76,7 +76,7 @@ theorem exists_rigLB_sFam_etale :
   obtain ⟨R', _, _, hfinR, het, _, ⟨ε⟩⟩ := exists_etale_lift_of_isSeparable R k''
   haveI : HenselianLocalRing R' := henselianLocalRing_of_finite R R'
   haveI : IsLocalHom (algebraMap R R') :=
-    ((local_hom_TFAE (algebraMap R R')).out 0 4).mpr (comap_eq_maximalIdeal_of_finite _)
+    ((local_hom_tfae (algebraMap R R')).out 1 5).mpr (comap_eq_maximalIdeal_of_finite _)
   have hm : (maximalIdeal R).map (algebraMap R R') = maximalIdeal R' := Algebra.FormallyUnramified.map_maximalIdeal
   have hcR' : IsAdicComplete (maximalIdeal R') R' := by
     have := isAdicComplete_map_of_finite (maximalIdeal R) R'

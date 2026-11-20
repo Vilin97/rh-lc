@@ -33,7 +33,7 @@ theorem UpperTheory.V.Pa.BC.til_co :
       exact RingHom.IsIntegralElem.mul f h1 f.isIntegralElem_map
     | add x y hx hy => exact RingHom.IsIntegralElem.add f hx hy
   have hloc : IsLocalHom f := by
-    refine ((IsLocalRing.local_hom_TFAE f).out 0 4).mpr ?_
+    refine ((IsLocalRing.local_hom_tfae f).out 1 5).mpr ?_
     haveI := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal' f hint (maximalIdeal (O' ⊗[O] R))
     exact IsLocalRing.eq_maximalIdeal this
   haveI hco : IsCO O' (Til O O' R) := UpperTheory.V.Alg.co_mvps O' (O' ⊗[O] R) Unit

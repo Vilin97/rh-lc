@@ -31,7 +31,7 @@ theorem regularityDehomogenization_holds.proof (h₁ : GroundTheory.Heights₂.H
   refine ⟨hyO, ?_⟩
   obtain ⟨_, _, _, hmax⟩ := h₂ K ι P W hP hWm hPW
   have : IsLocalHom (algebraMap (locRing P W) (coneLocRing P W hPW)) :=
-    ((local_hom_TFAE _).out 2 0).mp hmax.le
+    ((local_hom_tfae _).out 3 1).mp hmax.le
 
   have hu : IsUnit (algebraMap (MRing ι ⧸ P) (coneLocRing P W hPW) (Ideal.Quotient.mk P t)) :=
     IsLocalization.map_units (coneLocRing P W hPW)

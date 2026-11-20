@@ -31,7 +31,7 @@ private theorem unr_ex {l : ℕ} (O : Type) [CommRing O] [IsDomain O] [IsDiscret
   haveI : Module.Finite O (AdjoinRoot f) := hf.finite_adjoinRoot
   have hm : (maximalIdeal O).map (algebraMap O (AdjoinRoot f)) = maximalIdeal (AdjoinRoot f) := by
     rw [hϖ.maximalIdeal_eq, hi.maximalIdeal_eq, Ideal.map_span, Set.image_singleton]
-  haveI hl : IsLocalHom (algebraMap O (AdjoinRoot f)) := ((local_hom_TFAE _).out 0 2).2 hm.le
+  haveI hl : IsLocalHom (algebraMap O (AdjoinRoot f)) := ((local_hom_tfae _).out 1 3).2 hm.le
   have hcl : UpperTheory.V.CA.IsCL O (AdjoinRoot f) := UpperTheory.V.CA.cl_fin O O (AdjoinRoot f) (UpperTheory.V.CA.IsCL.of_isCO O O)
   have hfin : Finite (ResidueField (AdjoinRoot f)) := Nat.finite_of_card_ne_zero (by
     rw [hc]; exact pow_ne_zero _ Nat.card_pos.ne')

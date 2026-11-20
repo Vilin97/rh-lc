@@ -54,7 +54,7 @@ theorem localised_base_change_at_prime : ∀ (A D R : Type) [CommRing A] [IsLoca
   have e1 := GlobalTheory.map_maximalIdeal_localization_eq_of_formallyUnramified_quotient D (D ⊗[A] R) J q hJ hle hFU1 hFin1
   obtain ⟨e2, e3⟩ := GlobalTheory.residue_atMaximal_finite_formallyUnramified D (D ⊗[A] R) J q (hJ.trans hle) hFU1 hFin1
   refine ⟨IsLocalization.isNoetherianRing q.primeCompl _ inferInstance, ?_, ?_, e1, e2, e3⟩
-  · refine ((local_hom_TFAE _).out 0 2).2 ?_
+  · refine ((local_hom_tfae _).out 1 3).2 ?_
     rw [e1]
   · exact RingHom.Flat.comp ((RingHom.flat_algebraMap_iff).2 (Module.Flat.baseChange A D R)) ((RingHom.flat_algebraMap_iff).2 (IsLocalization.flat (Localization.AtPrime q) q.primeCompl))
 

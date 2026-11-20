@@ -60,7 +60,7 @@ theorem exists_complete_normal {p : ℕ} (hp : p.Prime) (hpO : (p : O) ∈ maxim
   let f₁ : A →+* O := IsLocalization.lift hu
   have hf₁ : f₁.comp (algebraMap B A) = f := IsLocalization.lift_comp hu
   have : IsLocalHom f₁ := by
-    refine ((IsLocalRing.local_hom_TFAE f₁).out 0 2).2 ?_
+    refine ((IsLocalRing.local_hom_tfae f₁).out 1 3).2 ?_
     rw [← Localization.AtPrime.map_eq_maximalIdeal, Ideal.map_map, hf₁]
     exact Ideal.map_comap_le
   have : IsNoetherianRing A := IsLocalization.isNoetherianRing n.primeCompl A inferInstance
@@ -86,7 +86,7 @@ theorem exists_complete_normal {p : ℕ} (hp : p.Prime) (hpO : (p : O) ∈ maxim
     exact congrArg (fun w => w a) he
   have hz : CharZero (integralClosure S (FractionRing S)) := RingHom.charZero g'
   have hloc : IsLocalHom g' := by
-    refine ((IsLocalRing.local_hom_TFAE g').out 0 4).2 ?_
+    refine ((IsLocalRing.local_hom_tfae g').out 1 5).2 ?_
     have : (((maximalIdeal O).comap g').comap (algebraMap S _)).IsMaximal := by
       rw [Ideal.comap_comap, hg', IsLocalRing.maximalIdeal_comap]
       infer_instance

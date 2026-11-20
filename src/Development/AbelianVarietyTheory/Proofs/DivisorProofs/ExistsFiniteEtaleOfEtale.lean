@@ -29,7 +29,7 @@ theorem exists_finite_etale_of_etale (R : Type) [CommRing R] [HenselianLocalRing
   obtain ⟨R', _, _, hfin, het, hloc, ⟨ε⟩⟩ := exists_etale_lift_of_isSeparable R (ResidueField Aq)
   haveI : HenselianLocalRing R' := henselianLocalRing_of_finite R R'
   haveI : IsLocalHom (algebraMap R R') :=
-    ((local_hom_TFAE (algebraMap R R')).out 0 4).mpr (comap_eq_maximalIdeal_of_finite _)
+    ((local_hom_tfae (algebraMap R R')).out 1 5).mpr (comap_eq_maximalIdeal_of_finite _)
   let g1 : A →ₐ[R] ResidueField Aq :=
     (IsScalarTower.toAlgHom R Aq (ResidueField Aq)).comp (IsScalarTower.toAlgHom R A Aq)
   let g2 : ResidueField R ⊗[R] R' →ₐ[R] ResidueField R' :=

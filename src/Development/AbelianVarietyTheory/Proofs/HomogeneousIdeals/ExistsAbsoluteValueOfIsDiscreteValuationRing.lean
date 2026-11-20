@@ -230,7 +230,7 @@ theorem isLocalHom_of_comp_algebraMap_adicCompletion {A B : Type*} [CommRing A] 
     IsLocalHom g := by
   refine ((IsLocalRing.local_hom_TFAE g).out 1 3).2 ?_
   rw [AdicCompletion.maximalIdeal_eq_map, Ideal.map_map, hg]
-  exact ((IsLocalRing.local_hom_TFAE f).out 0 2).1 ‹_›
+  exact ((IsLocalRing.local_hom_tfae f).out 1 3).1 ‹_›
 
 theorem isAlgClosed_of_denseRange {K L : Type*} [Field K] [NontriviallyNormedField L]
     [CompleteSpace L] [IsUltrametricDist L] [Algebra K L]

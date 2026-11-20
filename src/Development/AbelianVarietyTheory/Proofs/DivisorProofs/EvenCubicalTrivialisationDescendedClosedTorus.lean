@@ -391,7 +391,7 @@ theorem nonempty_tq {R R' : Type} [CommRing R] [IsDomain R] [IsLocalRing R] [Com
 
 theorem evenOn_of_galAct : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R], Base R → ∀ (R' : Type) [CommRing R'] [IsDomain R'] [IsLocalRing R'] (ρ : R →+* R'), FinExt ρ → IsGal ρ → ∀ (D : DegData R (maximalIdeal R)) (D' : DegData R' (maximalIdeal R')) (hD : IsPullDeg ρ D.toPre D'.toPre) (A' : PolAV (Sp (FractionRing R'))) (G' : Over (Sp R')) [GrpObj G'] [IsCommMonObj G'], IsSemiAbelian G' → ∀ (U' : Unif (maximalIdeal R') D' A' G'), ∀ (a : GalAct ρ hD U') (G : Over (Sp R)) [GrpObj G] [IsCommMonObj G] (β : G'.left ⟶ G.left), IsSemiAbelian G → IsGrpPullback G' G (spMap ρ) β → (∀ σ, a.act σ ≫ β = β) → ∀ P : GlobalTheory.UU.CP G, LBIso U'.LG.L (P.L.L.pull β) → EvenOn P := by
   intro R _ _ _ _ R' _ _ _ ρ hρ hgal D D' hD A' G' _ _ hG' U' a G _ _ β hG hβ hinv P hP
-  have hloc : IsLocalHom ρ := ((local_hom_TFAE ρ).out 2 0).1 (ResidueGalois.map_maximalIdeal_le ρ hρ.2.2.to_isIntegral)
+  have hloc : IsLocalHom ρ := ((local_hom_tfae ρ).out 3 1).1 (ResidueGalois.map_maximalIdeal_le ρ hρ.2.2.to_isIntegral)
   have hp : IsProper (pullback.snd G'.hom (jK R')) := by
     have e : pullback.snd G'.hom (jK R') = U'.gen.hom.left ≫ A'.A.hom := (Over.w U'.gen.hom).symm
     have : IsIso U'.gen.hom.left := inferInstanceAs (IsIso ((Over.forget _).map U'.gen.hom))

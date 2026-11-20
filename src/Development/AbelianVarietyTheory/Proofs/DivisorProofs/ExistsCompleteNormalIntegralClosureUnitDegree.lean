@@ -24,7 +24,7 @@ theorem exists_isCN_integralClosure_of_isUnit_finrank : ∀ (V : Type) [CommRing
   haveI : CharZero W := charZero_of_injective_algebraMap hinjW
   have h1 : (maximalIdeal W).comap (algebraMap V W) = maximalIdeal V :=
     IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (maximalIdeal W))
-  have hlocW : IsLocalHom (algebraMap V W) := ((local_hom_TFAE _).out 0 4).2 h1
+  have hlocW : IsLocalHom (algebraMap V W) := ((local_hom_tfae _).out 1 5).2 h1
   haveI : IsFractionRing W K' := IsIntegralClosure.isFractionRing_of_finite_extension V K K' W
   have hrank : Module.finrank V W = Module.finrank K K' := (IsFractionRing.finrank_eq V K W K').symm
   have hunit' : IsUnit ((Module.finrank V W : ℕ) : V) := by rw [hrank]; exact hunit

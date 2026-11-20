@@ -42,7 +42,7 @@ theorem formallyUnramified_quotient (hm : (maximalIdeal O).map (algebraMap O S) 
   have H : (maximalIdeal O).map (algebraMap O (S ⧸ J)) = maximalIdeal (S ⧸ J) := by
     rw [← hmap, ← hm, Ideal.map_map]; rfl
   have : IsLocalHom (algebraMap O (S ⧸ J)) :=
-    ((local_hom_TFAE (algebraMap O (S ⧸ J))).out 2 0 rfl rfl).mp H.le
+    ((local_hom_tfae (algebraMap O (S ⧸ J))).out 3 1 rfl rfl).mp H.le
   let g : (S ⧸ maximalIdeal S) →ₐ[O] ResidueField (S ⧸ J) :=
     Ideal.Quotient.liftₐ _ ((IsScalarTower.toAlgHom O (S ⧸ J) (ResidueField (S ⧸ J))).comp (Ideal.Quotient.mkₐ O J))
       fun a ha => by
@@ -203,7 +203,7 @@ theorem exists_extension : ∀ (O R' E Ω : Type) [CommRing O] [IsLocalRing O] [
     ∃ b : R' →+* E, b.comp φ' = ψ ∧ v.comp b = u' := by
   intro O R' E Ω _ _ _ _ _ _ _ _ _ φ' ψ u' v het hun hE hψ _ hv hc hr
   obtain ⟨b, h1, h2⟩ := exists_extension_of_surjective het hun (maximalIdeal E) ψ
-    (((local_hom_TFAE ψ).out 0 2 rfl rfl).mp hψ) v.rangeRestrict v.rangeRestrict_surjective
+    (((local_hom_tfae ψ).out 1 3 rfl rfl).mp hψ) v.rangeRestrict v.rangeRestrict_surjective
     (v.ker_rangeRestrict.trans hv) (u'.codRestrict v.range hr)
     (RingHom.ext fun x => Subtype.ext (RingHom.congr_fun hc x).symm)
   exact ⟨b, h1, RingHom.ext fun x => congrArg Subtype.val (RingHom.congr_fun h2 x)⟩

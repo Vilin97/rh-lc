@@ -35,7 +35,7 @@ theorem exists_trait_pt : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing 
     exact (germ_injective_of_isIntegral M.S (U := ⊤) x trivial).comp
       (hπinj.comp (Scheme.ΓSpecIso (CommRingCat.of R)).commRingCatIsoToRingEquiv.symm.injective)
   have hψl : IsLocalHom ψc.hom := by
-    refine ((IsLocalRing.local_hom_TFAE ψc.hom).out 0 4).2 ?_
+    refine ((IsLocalRing.local_hom_tfae ψc.hom).out 1 5).2 ?_
     have e1 : (Spec.map ψc) (closedPoint A) = closedPoint R := by
       have h0 := congrArg M.π (Scheme.fromSpecStalk_closedPoint (x := x))
       rw [hx] at h0

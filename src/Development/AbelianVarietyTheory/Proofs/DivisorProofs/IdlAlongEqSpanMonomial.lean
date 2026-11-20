@@ -48,7 +48,7 @@ theorem eq_span_of_forall_cdvr {R R' : Type} [CommRing R] [IsDomain R] [IsLocalR
       IsLocalHom ψ → (I.map ρ).map ψ = Ideal.span {ψ (ρ f)}) : I = Ideal.span {f} := by
   obtain ⟨_, _, -, _⟩ := hR'
   have loc : ∀ (V : Type) [CommRing V] [IsLocalRing V] (ψ : R' →+* V), (maximalIdeal V).comap ψ = maximalIdeal R' →
-      IsLocalHom ψ := fun V _ _ ψ h => ((IsLocalRing.local_hom_TFAE ψ).out 0 4).2 h
+      IsLocalHom ψ := fun V _ _ ψ h => ((IsLocalRing.local_hom_tfae ψ).out 1 5).2 h
   have hdvd : ∀ x ∈ I, f ∣ x := fun x hx => by
     refine dvd_of_map_dvd ρ hρ hi hf (GlobalTheory.ValCrit.dvd_of_forall_cdvr R' _ _ ((map_ne_zero_iff _ hρ).2 hf)
       fun V _ _ _ ψ hV hψ hc => ?_)

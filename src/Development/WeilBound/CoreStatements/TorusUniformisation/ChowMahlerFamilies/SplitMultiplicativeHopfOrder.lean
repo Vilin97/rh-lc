@@ -368,7 +368,7 @@ theorem exists_complete_normal (V : Type) [CommRing V] [IsDomain V] [IsLocalRing
   have hm₂ : (maximalIdeal R₂).map f₂ ≤ maximalIdeal V := by
     rw [← Localization.AtPrime.map_eq_maximalIdeal, Ideal.map_map, hf₂]
     exact Ideal.map_comap_le
-  haveI l₂ : IsLocalHom f₂ := ((IsLocalRing.local_hom_TFAE f₂).out 2 0).1 hm₂
+  haveI l₂ : IsLocalHom f₂ := ((IsLocalRing.local_hom_tfae f₂).out 3 1).1 hm₂
   have hfg : (maximalIdeal R₂).FG := IsNoetherian.noetherian _
   obtain ⟨k, hk⟩ := Ideal.exists_pow_le_of_le_radical_of_fg (hm₂.trans hnil) (hfg.map f₂)
   let R₃ := AdicCompletion (maximalIdeal R₂) R₂

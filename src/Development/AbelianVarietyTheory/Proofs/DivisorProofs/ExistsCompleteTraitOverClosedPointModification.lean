@@ -42,7 +42,7 @@ theorem exists_trait_over_closedPoint : ∀ (R : Type) [CommRing R] [IsDomain R]
   have hpt : ∀ q, (Spec.map θ) q = M.π (M.S.fromSpecStalk x₀ q) := fun q => by
     rw [hθ, Scheme.Hom.comp_apply]
   have hloc : IsLocalHom θ.hom := by
-    apply ((local_hom_TFAE θ.hom).out 0 4).2
+    apply ((local_hom_tfae θ.hom).out 1 5).2
     have e := hpt (closedPoint (M.S.presheaf.stalk x₀) : Spec (M.S.presheaf.stalk x₀))
     rw [Scheme.fromSpecStalk_closedPoint, hx] at e
     exact congrArg PrimeSpectrum.asIdeal e

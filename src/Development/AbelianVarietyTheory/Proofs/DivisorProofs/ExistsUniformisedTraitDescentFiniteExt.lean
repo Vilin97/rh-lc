@@ -304,7 +304,7 @@ theorem exists_restrict {R R₁ W : Type} [CommRing R] [IsLocalRing R] [CommRing
       refine Ideal.isMaximal_of_isIntegral_of_isMaximal_comap' ρ (RingHom.IsIntegral.of_finite hρ) _ ?_
       rw [Ideal.comap_comap, hc, IsLocalRing.maximalIdeal_comap]
       infer_instance
-    exact ((IsLocalRing.local_hom_TFAE φ).out 4 0).1 (IsLocalRing.eq_maximalIdeal hm)
+    exact ((IsLocalRing.local_hom_tfae φ).out 5 1).1 (IsLocalRing.eq_maximalIdeal hm)
 
 theorem exists_fib_finite {K Ω : Type} [Field K] [Field Ω] (α : K →+* Ω) (hα : α.IsIntegral) (t : PolAV (Sp Ω))
     (ht : letI := t.isAb.comm; GlobalTheory.ZH.HypS t.A t.L) :

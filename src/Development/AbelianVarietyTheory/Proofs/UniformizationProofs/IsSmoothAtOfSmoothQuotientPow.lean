@@ -47,7 +47,7 @@ theorem isSmoothAt_of_smooth_quotient_pow [IsLocalRing V] [IsNoetherianRing V]
       show (maximalIdeal S).comap (algebraMap A S) = q from
         Localization.AtPrime.under_maximalIdeal, hq]
   haveI : IsLocalHom (algebraMap V S) :=
-    ((IsLocalRing.local_hom_TFAE (algebraMap V S)).out 2 0).mp hle
+    ((IsLocalRing.local_hom_tfae (algebraMap V S)).out 3 1).mp hle
   haveI : Module.Flat V S := by
     refine LocalFlat.flat_of_relationsLift S (I := maximalIdeal V)
       (hle.trans (IsLocalRing.maximalIdeal_le_jacobson _)) fun n => ?_

@@ -21,7 +21,7 @@ theorem ConeLocalLength.proof (h₁ : LocalizedQuotientLength.Statement.{u, u})
   have := hW.isPrime
   obtain ⟨_, _, _, hmax⟩ := h₂ F K ι P hP W hW hPW
   have : IsLocalHom (algebraMap (degZeroLoc P {W}) (coneLocal P W hPW)) :=
-    ((local_hom_TFAE _).out 2 0).mp hmax.le
+    ((local_hom_tfae _).out 3 1).mp hmax.le
   have hu : IsUnit (algebraMap (MRing ι F ⧸ P) (coneLocal P W hPW) (Ideal.Quotient.mk P h)) :=
     IsLocalization.map_units (coneLocal P W hPW)
       (⟨_, ⟨h, hhW, rfl⟩⟩ : W.primeCompl.map (Ideal.Quotient.mk P))

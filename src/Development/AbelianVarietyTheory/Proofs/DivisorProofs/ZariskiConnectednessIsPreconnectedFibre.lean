@@ -36,7 +36,7 @@ theorem exists_complete_flat (R : Type) [CommRing R] [IsNoetherianRing R] (P : P
   haveI : IsNoetherianRing (AdicCompletion (maximalIdeal L) L) := GlobalTheory.AdicNoeth.isNoetherianRing_adicCompletion _ _
   have hm := AdicCompletion.maximalIdeal_eq_map_of_fg fg
   let ψ := algebraMap L (AdicCompletion (maximalIdeal L) L)
-  haveI : IsLocalHom ψ := ((IsLocalRing.local_hom_TFAE ψ).out 0 2).mpr hm.symm.le
+  haveI : IsLocalHom ψ := ((IsLocalRing.local_hom_tfae ψ).out 1 3).mpr hm.symm.le
   refine ⟨AdicCompletion (maximalIdeal L) L, inferInstance, inferInstance, hloc, ψ.comp (algebraMap R L), ?_, ?_, ?_⟩
   · rw [hm]; exact AdicCompletion.isAdicComplete_self _ fg
   · exact RingHom.Flat.comp (RingHom.flat_algebraMap_iff.2 inferInstance)

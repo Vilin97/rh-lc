@@ -71,7 +71,7 @@ theorem snd_eq_sum {n : ℕ} (e : MvPowerSeries (Fin n) O →ₐ[O] O) (he : ∀
 omit [IsNoetherianRing O] [IsAdicComplete (maximalIdeal O) O] in
 theorem isLocalHom_of_X_mem {n : ℕ} (e : MvPowerSeries (Fin n) O →ₐ[O] O) (he : ∀ i, e (X i) ∈ maximalIdeal O) :
     IsLocalHom e.toRingHom := by
-  refine ((IsLocalRing.local_hom_TFAE _).out 0 3).2 fun g hg => ?_
+  refine ((IsLocalRing.local_hom_tfae _).out 1 4).2 fun g hg => ?_
   have h1 := algHom_sub_constantCoeff_mem e he g
   have h2 := (FormalIsogeny.mem_maximalIdeal_iff_constantCoeff (g := g)).1 hg
   simpa using add_mem h1 h2

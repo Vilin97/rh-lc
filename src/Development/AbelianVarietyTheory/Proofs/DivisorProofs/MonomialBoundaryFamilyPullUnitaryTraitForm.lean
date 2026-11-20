@@ -36,7 +36,7 @@ theorem trait_pull {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host 
   obtain ⟨h1, -, h3, h4, h5⟩ := GlobalTheory.firstFiveLaws
   obtain ⟨hdvr, hcomp, -⟩ := hW
   have hWa : AdmBase W (maximalIdeal W) := ⟨inferInstance, inferInstance, inferInstance, hcomp⟩
-  have hI : (maximalIdeal R).map ρ ≤ maximalIdeal W := ((IsLocalRing.local_hom_TFAE ρ).out 0 2).1 hloc
+  have hI : (maximalIdeal R).map ρ ≤ maximalIdeal W := ((IsLocalRing.local_hom_tfae ρ).out 1 3).1 hloc
   obtain ⟨t', m₀, P', hD, -, -, -, -, hlin, -⟩ := GlobalTheory.ArcDataDescent.exists_pelUnif_pull h3.cubePull h1.polBaseChange
     h4.unifBaseChange h5 hR.1 hWa C.t C.P ρ hinj hI
   let e : P'.D.toPre.X ≃ₗ[𝓞 E] C.P.D.toPre.X := { hD.xe with map_smul' := hlin }

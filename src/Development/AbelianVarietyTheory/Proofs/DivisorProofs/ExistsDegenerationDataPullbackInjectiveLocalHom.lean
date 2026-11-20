@@ -28,7 +28,7 @@ theorem exists_pull : ∀ (R R' : Type) [CommRing R] [IsDomain R] [IsLocalRing R
   have hη : (specOf ρ).base (genericPoint (Spec (CommRingCat.of R'))) ∈ W := by
     rw [specOf_genericPoint ρ hρ]; exact hW
   have hI : (maximalIdeal R).map ρ ≤ maximalIdeal R' :=
-    ((IsLocalRing.local_hom_TFAE ρ).out 0 2).1 hloc
+    ((IsLocalRing.local_hom_tfae ρ).out 1 3).1 hloc
   obtain ⟨D', hD, -, -⟩ := GlobalTheory.exists_degData_isPullDeg L.polBaseChange L.globalFns R R' (maximalIdeal R)
     (maximalIdeal R') ρ hI D W hψ hη
   exact ⟨D', ⟨hD⟩⟩

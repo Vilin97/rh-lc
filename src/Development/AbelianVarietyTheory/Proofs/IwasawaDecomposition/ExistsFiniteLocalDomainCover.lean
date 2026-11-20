@@ -101,14 +101,14 @@ theorem exists_isCN_common_of_finite : ∀ (R₀ A R' : Type) [CommRing R₀] [I
   haveI : CharZero W := charZero_of_injective_algebraMap hinjW
   have h1 : (maximalIdeal W).comap (algebraMap V W) = maximalIdeal V :=
     IsLocalRing.eq_maximalIdeal (Ideal.isMaximal_comap_of_isIntegral_of_isMaximal (maximalIdeal W))
-  have hlocW : IsLocalHom (algebraMap V W) := ((local_hom_TFAE _).out 0 4).2 h1
+  have hlocW : IsLocalHom (algebraMap V W) := ((local_hom_tfae _).out 1 5).2 h1
   refine ⟨W, inferInstance, inferInstance, inferInstance, algebraMap V W, ψ',
     ⟨IsNoetherianRing.of_finite V W, integralClosure.isIntegrallyClosedOfFiniteExtension K,
       CompleteFiniteExtension.isAdicComplete_of_finite_local V W, inferInstance⟩, hinjW,
     RingHom.finite_algebraMap.2 hWf, hlocW, ?_, hcomm⟩
-  refine ((local_hom_TFAE ψ').out 0 4).2 ?_
+  refine ((local_hom_tfae ψ').out 1 5).2 ?_
   have hmR : (maximalIdeal W).comap (ψ'.comp (algebraMap R R')) = maximalIdeal R := by
-    have h2 : (maximalIdeal V).comap ψ = maximalIdeal R := ((local_hom_TFAE _).out 0 4).1 hψ
+    have h2 : (maximalIdeal V).comap ψ = maximalIdeal R := ((local_hom_tfae _).out 1 5).1 hψ
     change (maximalIdeal W).comap (ψ'.comp ρ) = maximalIdeal R
     rw [hcomm, ← Ideal.comap_comap, h1, h2]
   have hQ : ((maximalIdeal W).comap ψ').IsMaximal := by

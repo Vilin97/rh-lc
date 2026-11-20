@@ -106,7 +106,7 @@ theorem gtN_iff {g : GtPtF u.D.toPre (PadicAlgCl p)} {J} (hJ : u.IntGood J) (hG 
   exact h'
 
 theorem top_le_of_j (U : (Sp u.V).Opens) (h : ⊤ ≤ spMap u.j ⁻¹ᵁ U) : ⊤ ≤ U := by
-  have : IsLocalHom u.j := ((IsLocalRing.local_hom_TFAE u.j).out 0 3).2 (fun x hx => j_mem_max u x hx)
+  have : IsLocalHom u.j := ((IsLocalRing.local_hom_tfae u.j).out 1 4).2 (fun x hx => j_mem_max u x hx)
   refine (top_le_iff_cpt (𝟙 (Sp u.V)) U).2 ?_
   have e : spMap u.j (cpt (OO p)) = cpt u.V := IsLocalRing.comap_closedPoint u.j
   have := h (x := cpt (OO p)) trivial

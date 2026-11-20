@@ -80,11 +80,11 @@ theorem exists_extension : ∀ (R R' : Type) [CommRing R] [IsLocalRing R] [CommR
   have hmax : ((IsLocalRing.maximalIdeal W).comap ψ').IsMaximal := by
     apply Ideal.isMaximal_of_isIntegral_of_isMaximal_comap' ρ hfin.to_isIntegral
     have e : (IsLocalRing.maximalIdeal W).comap (ψ'.comp ρ) = IsLocalRing.maximalIdeal R :=
-      ((IsLocalRing.local_hom_TFAE (ψ'.comp ρ)).out 0 4).1 hloc
+      ((IsLocalRing.local_hom_tfae (ψ'.comp ρ)).out 1 5).1 hloc
     rw [Ideal.comap_comap, e]
     infer_instance
   refine ⟨W, inferInstance, inferInstance, inferInstance, algebraMap V W, ψ',
     ⟨hW1, hW2, charZero_of_injective_algebraMap hf⟩, hf, hl, ?_, hcomp⟩
-  exact ((IsLocalRing.local_hom_TFAE ψ').out 0 4).2 (IsLocalRing.eq_maximalIdeal hmax)
+  exact ((IsLocalRing.local_hom_tfae ψ').out 1 5).2 (IsLocalRing.eq_maximalIdeal hmax)
 
 end GlobalTheory.FieldExtensionExists
