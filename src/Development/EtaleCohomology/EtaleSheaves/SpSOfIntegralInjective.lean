@@ -13,7 +13,7 @@ theorem spS_of_integral_injective {C D : CommRingCat.{0}} (g : C ⟶ D) (hi : g.
   have : Algebra.IsIntegral C D := ⟨hi⟩
   have hk : RingHom.ker (algebraMap C D) ≤ r := by
     rw [(RingHom.injective_iff_ker_eq_bot (algebraMap C D)).1 hj]; exact bot_le
-  obtain ⟨Q, -, hQ, hQc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral r ⊥ (by rw [← RingHom.ker_eq_comap_bot (algebraMap C D)]; exact hk)
+  obtain ⟨Q, -, hQ, hQc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral r ⊥ (by rw [Ideal.under_def C (B := D), ← RingHom.ker_eq_comap_bot (algebraMap C D)]; exact hk)
   exact ⟨Q, hQ, hQc⟩
 
 theorem SpS.comp {C D E : CommRingCat.{0}} {f : C ⟶ D} {g : D ⟶ E} (hf : SpS f) (hg : SpS g) : SpS (f ≫ g) := by

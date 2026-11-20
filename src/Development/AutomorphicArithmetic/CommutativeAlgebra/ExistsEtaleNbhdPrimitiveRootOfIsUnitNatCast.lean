@@ -38,7 +38,7 @@ private theorem surjOf {A : Type} [CommRing A] [Nontrivial A] (q : ℕ) [NeZero 
   have := (Polynomial.cyclotomic.monic q A).finite_adjoinRoot
   obtain ⟨Q, -, hQ, hQc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral
     (S := AdjoinRoot (Polynomial.cyclotomic q A)) p.asIdeal ⊥ (by
-      rw [← RingHom.ker_eq_comap_bot, (RingHom.injective_iff_ker_eq_bot _).1 (injOf q)]
+      rw [Ideal.under_def, ← RingHom.ker_eq_comap_bot, (RingHom.injective_iff_ker_eq_bot _).1 (injOf q)]
       exact bot_le)
   exact ⟨⟨Q, hQ⟩, PrimeSpectrum.ext hQc⟩
 

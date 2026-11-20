@@ -40,7 +40,7 @@ theorem exists_above {K F : Type} [Field K] [NumberField K] [Field F] [NumberFie
   have hQ0 : Q ≠ ⊥ := by
     rintro rfl
     apply v.ne_bot
-    rw [← hQc, ← RingHom.ker_eq_comap_bot,
+    rw [← hQc, Ideal.under_def, ← RingHom.ker_eq_comap_bot,
       (RingHom.injective_iff_ker_eq_bot _).mp (FaithfulSMul.algebraMap_injective (𝓞 F) (𝓞 K))]
   refine ⟨⟨Q, hQ.isPrime, hQ0⟩, ?_⟩
   ext1

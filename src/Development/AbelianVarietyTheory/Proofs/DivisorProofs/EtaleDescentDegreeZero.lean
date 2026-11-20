@@ -67,7 +67,7 @@ private lemma spec_map_surjective_of_integral_ker_le_nilradical (A A' : Type) [C
   intro x
   let p : PrimeSpectrum A := x
   obtain ⟨Q, -, hQ, hQx⟩ := Ideal.exists_ideal_over_prime_of_isIntegral p.asIdeal (⊥ : Ideal A')
-    (by rw [← RingHom.ker_eq_comap_bot]; exact hker.trans (nilradical_le_prime _))
+    (by rw [Ideal.under_def, ← RingHom.ker_eq_comap_bot]; exact hker.trans (nilradical_le_prime _))
   exact ⟨(⟨Q, hQ⟩ : PrimeSpectrum A'), PrimeSpectrum.ext hQx⟩
 
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex Simplicial in

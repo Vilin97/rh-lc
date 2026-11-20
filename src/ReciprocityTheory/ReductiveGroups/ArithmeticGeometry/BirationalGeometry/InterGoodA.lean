@@ -17,7 +17,7 @@ theorem exists_ltSeries_lift {R S : Type*} [CommRing R] [CommRing S] [Algebra R 
       rw [(RingHom.injective_iff_ker_eq_bot _).mp hinj]
       exact bot_le
     obtain ⟨Q, -, hQ, hQc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral p.last.asIdeal (⊥ : Ideal S)
-      (by rw [← RingHom.ker_eq_comap_bot]; exact hker)
+      (by rw [Ideal.under_def, ← RingHom.ker_eq_comap_bot]; exact hker)
     exact ⟨RelSeries.singleton _ ⟨Q, hQ⟩, rfl, hQc⟩
   | succ n ih =>
     intro p hp

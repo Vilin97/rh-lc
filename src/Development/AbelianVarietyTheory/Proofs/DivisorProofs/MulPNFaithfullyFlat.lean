@@ -43,7 +43,7 @@ theorem mulP_faithfullyFlat (G : PDivGroup p R) (n : ℕ) :
     ((G.mulP n : G.A n →ₐ[R] G.A (n + 1)).commutes r).symm
   haveI : Module.Finite (G.A n) (G.A (n + 1)) := Module.Finite.of_restrictScalars_finite R _ _
   obtain ⟨Q, -, hQ, e⟩ := Ideal.exists_ideal_over_prime_of_isIntegral (S := G.A (n + 1)) P.asIdeal ⊥ (by
-    rw [← RingHom.ker_eq_comap_bot,
+    rw [Ideal.under_def, ← RingHom.ker_eq_comap_bot,
       (RingHom.injective_iff_ker_eq_bot (algebraMap (G.A n) (G.A (n + 1)))).1 (Test.mulP_injective G n)]
     exact bot_le)
   exact ⟨⟨Q, hQ⟩, PrimeSpectrum.ext e⟩

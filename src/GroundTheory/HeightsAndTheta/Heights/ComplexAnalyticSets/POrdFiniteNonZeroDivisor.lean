@@ -45,7 +45,7 @@ theorem OrdFiniteNonZeroDivisor.proof : OrdFiniteNonZeroDivisor.Statement := by
     inferInstanceAs (Algebra.IsIntegral (curveLocalRing I q)
       (integralClosure (curveLocalRing I q) (FractionRing (curveLocalRing I q))))
   obtain ⟨Q, -, hQ, hQp⟩ := Ideal.exists_ideal_over_prime_of_isIntegral p (⊥ : Ideal (curveNormalisation I q))
-    (by rw [← RingHom.ker_eq_comap_bot, (RingHom.injective_iff_ker_eq_bot _).1
+    (by rw [Ideal.under_def, ← RingHom.ker_eq_comap_bot, (RingHom.injective_iff_ker_eq_bot _).1
       (algebraMap_curveNormalisation_injective I q)]; exact bot_le)
   obtain ⟨P, hPm, hQP⟩ := Ideal.exists_le_maximal Q hQ.ne_top
   apply hord ⟨P, hPm⟩

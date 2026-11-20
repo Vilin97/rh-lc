@@ -39,7 +39,7 @@ theorem UpperTheory.Gal.UnramifiedFromSplittingCriterion.apartUp :
     have hne : Q ≠ ⊥ := by
       rintro rfl
       apply v.ne_bot
-      rw [← hQm, ← RingHom.ker_eq_comap_bot, (RingHom.injective_iff_ker_eq_bot _).1 hinj]
+      rw [← hQm, Ideal.under_def, ← RingHom.ker_eq_comap_bot, (RingHom.injective_iff_ker_eq_bot _).1 hinj]
     refine ⟨⟨Q, hQ.isPrime, hne⟩, ?_⟩
     apply HeightOneSpectrum.ext
     rw [HeightOneSpectrum.under_asIdeal]

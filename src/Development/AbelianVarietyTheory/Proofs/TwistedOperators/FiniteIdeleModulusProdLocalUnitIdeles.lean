@@ -26,7 +26,7 @@ theorem exists_under_eq {F E : Type} [Field F] [NumberField F] [Field E] [Number
   have hQ0 : Q ≠ ⊥ := by
     rintro rfl
     apply v.ne_bot
-    rw [← hQc, ← RingHom.ker_eq_comap_bot,
+    rw [← hQc, Ideal.under_def, ← RingHom.ker_eq_comap_bot,
       (RingHom.injective_iff_ker_eq_bot _).mp (FaithfulSMul.algebraMap_injective (𝓞 F) (𝓞 E))]
   refine ⟨⟨Q, hQ.isPrime, hQ0⟩, ?_⟩
   ext1

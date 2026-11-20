@@ -26,7 +26,7 @@ theorem exists_cdvr_of_isIntegral {V A : Type} [CommRing V] [IsDomain V] [IsDisc
   have hP0 : P ≠ ⊥ := by
     rintro rfl
     apply IsDiscreteValuationRing.not_a_field V
-    rw [← hPc, ← RingHom.ker_eq_comap_bot, (RingHom.injective_iff_ker_eq_bot _).mp hinj]
+    rw [← hPc, Ideal.under_def, ← RingHom.ker_eq_comap_bot, (RingHom.injective_iff_ker_eq_bot _).mp hinj]
   haveI : IsDomain (Localization.AtPrime P) :=
     IsLocalization.isDomain_localization (Ideal.primeCompl_le_nonZeroDivisors P)
   haveI : IsDiscreteValuationRing (Localization.AtPrime P) :=

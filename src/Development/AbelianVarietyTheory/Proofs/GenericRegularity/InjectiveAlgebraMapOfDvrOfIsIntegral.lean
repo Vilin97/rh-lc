@@ -29,8 +29,8 @@ theorem _root_.GlobalTheory.dvr_finite_over_complete_dvr :
       rw [hb] at hmem
       exact (Ideal.mem_bot).1 hmem
     have hbot : (⊥ : Ideal V).IsMaximal :=
-      Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := O) ⊥
-        (by rwa [← RingHom.ker_eq_comap_bot])
+      Ideal.isMaximal_of_isIntegral_of_isMaximal_under (R := O) ⊥
+        (by rwa [Ideal.under_def, ← RingHom.ker_eq_comap_bot])
     exact IsDiscreteValuationRing.not_a_field V (IsLocalRing.eq_maximalIdeal hbot).symm
   have hloc : IsLocalHom (algebraMap O V) :=
     RingHom.IsIntegral.isLocalHom (fun x => Algebra.IsIntegral.isIntegral x) hinj

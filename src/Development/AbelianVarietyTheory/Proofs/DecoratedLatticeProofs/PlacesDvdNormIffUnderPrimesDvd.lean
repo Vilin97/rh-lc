@@ -20,7 +20,7 @@ theorem places_dvd_iff (D : Formalism.BasicNotions.D7) (π π' : 𝓞 D.host.E) 
       rw [(RingHom.injective_iff_ker_eq_bot _).1 hinj]; exact bot_le
     haveI := x.isPrime
     obtain ⟨Q, -, hQp, hQ⟩ := Ideal.exists_ideal_over_prime_of_isIntegral x.asIdeal (⊥ : Ideal (𝓞 D.host.E))
-      (by rw [← RingHom.ker_eq_comap_bot]; exact hker)
+      (by rw [Ideal.under_def, ← RingHom.ker_eq_comap_bot]; exact hker)
     have hQb : Q ≠ ⊥ := by
       rintro rfl
       apply x.ne_bot

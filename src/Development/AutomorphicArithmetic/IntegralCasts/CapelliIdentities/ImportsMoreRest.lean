@@ -7,7 +7,7 @@ theorem UpperTheory.Reformulated.B.Qi28.exists_extend.{u_1, u_2} :
   intro R A _ _ _ _ ev h
   haveI hP : (RingHom.ker ev).IsPrime := RingHom.ker_isPrime ev
   obtain ⟨Q, -, hQ, hQP⟩ := Ideal.exists_ideal_over_prime_of_isIntegral (S := A) (RingHom.ker ev) ⊥
-    (by rw [← RingHom.ker_eq_comap_bot]; exact h)
+    (by rw [Ideal.under_def, ← RingHom.ker_eq_comap_bot]; exact h)
   haveI : Q.LiesOver (RingHom.ker ev) := ⟨hQP.symm⟩
   letI : Algebra (R ⧸ RingHom.ker ev) ℂ := (RingHom.kerLift ev).toAlgebra
   haveI : FaithfulSMul (R ⧸ RingHom.ker ev) ℂ :=
