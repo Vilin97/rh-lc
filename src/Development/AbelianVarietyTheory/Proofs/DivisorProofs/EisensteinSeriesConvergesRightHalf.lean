@@ -57,7 +57,7 @@ theorem midSet_sum_rpow_lt_top : GlobalTheory.Published.EisensteinIsotropicLine 
     _ = ENNReal.ofReal (GlobalTheory.EisMidHt.ht L a (GlobalTheory.EisMidHt.adVec F (GlobalTheory.EisMidHt.firstColumn X)) ^ s) *
           ∑' t : GlobalTheory.EisCT.midSet σ J (col0 X) T, (fun p : Yr × E => Q p.1 p.2) (f t) := ENNReal.tsum_mul_left
     _ ≤ ENNReal.ofReal (GlobalTheory.EisMidHt.ht L a (GlobalTheory.EisMidHt.adVec F (GlobalTheory.EisMidHt.firstColumn X)) ^ s) * ∑' p : Yr × E, Q p.1 p.2 :=
-          by gcongr; exact ENNReal.tsum_comp_le_tsum_of_injective hf _
+          by gcongr; exact (by refine' _root_.le_trans _ (_root_.tsum_comp_le_tsum_of_injective hf _); exact _root_.le_rfl)
     _ = ENNReal.ofReal (GlobalTheory.EisMidHt.ht L a (GlobalTheory.EisMidHt.adVec F (GlobalTheory.EisMidHt.firstColumn X)) ^ s) * ∑' y : Yr, ∑' c : E, Q y c := by rw [ENNReal.tsum_prod]
     _ ≤ ENNReal.ofReal (GlobalTheory.EisMidHt.ht L a (GlobalTheory.EisMidHt.adVec F (GlobalTheory.EisMidHt.firstColumn X)) ^ s) *
           ∑' y : Yr, ENNReal.ofReal C * ENNReal.ofReal (GlobalTheory.EisMidHt.ht L a (GlobalTheory.EisMidHt.adVec F y.1) ^ (1 - s)) := by

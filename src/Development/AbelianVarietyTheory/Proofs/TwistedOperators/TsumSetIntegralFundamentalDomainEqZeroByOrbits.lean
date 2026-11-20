@@ -145,7 +145,7 @@ theorem _root_.GlobalTheory.OrbitUnfold.tsum_setIntegral_eq_zero :
             lintegral_iUnion_le _ _
         _ = ∑' a : MulAction.orbit Γ y₀, ∫⁻ h in 𝓕, ‖Φ a h‖ₑ ∂ν := by simp only [hlpt]
         _ ≤ ∑' y, ∫⁻ h in 𝓕, ‖Φ y h‖ₑ ∂ν :=
-            ENNReal.tsum_comp_le_tsum_of_injective Subtype.val_injective _
+            (by refine' _root_.le_trans _ (_root_.tsum_comp_le_tsum_of_injective Subtype.val_injective _); exact _root_.le_rfl)
         _ < ⊤ := lt_top_iff_ne_top.2 hfin
     simp only [hpt]
     rw [← integral_iUnion_ae (fun a => _root_.GlobalTheory.OrbitUnfold.nullMeasurableSet_pull hF _) hdisj hint]

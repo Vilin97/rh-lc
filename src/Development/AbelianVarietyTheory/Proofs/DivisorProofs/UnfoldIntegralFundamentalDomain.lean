@@ -83,7 +83,7 @@ theorem tsum_orbit_eq_zero (Γ : Subgroup G) [Countable Γ] (μ : Measure G) [μ
     simp only [hlchange]
     calc ∑' q : O, ∫⁻ x in 𝓕, ‖f x * T q x‖ₑ ∂μ
         ≤ ∑' q : Q, ∫⁻ x in 𝓕, ‖f x * T q x‖ₑ ∂μ :=
-          ENNReal.tsum_comp_le_tsum_of_injective Subtype.val_injective _
+          (by refine' _root_.le_trans _ (_root_.tsum_comp_le_tsum_of_injective Subtype.val_injective _); exact _root_.le_rfl)
       _ = ∫⁻ x in 𝓕, ‖f x‖ₑ * ∑' q, ‖T q x‖ₑ ∂μ := tsum_setLIntegral_enorm_mul μ 𝓕 T f hTm hfm
       _ < ⊤ := hfin.lt_top
   have hDfd : IsFundamentalDomain S D μ := by

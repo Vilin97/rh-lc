@@ -65,7 +65,7 @@ theorem main : ∀ (G α : Type) [Group G] [MulAction G α] , (∀ (X Y : Set α
           have h1 : (1 : ℕ∞) ≤ ENat.card (MulAction.stabilizer G (Quotient.out q.1)) :=
             (ENat.one_le_card_iff_nonempty _).2 ⟨1⟩
           exact_mod_cast h1
-      _ ≤ ∑' _ : s, (1 : ℝ≥0∞) := ENNReal.tsum_comp_le_tsum_of_injective hinj _
+      _ ≤ ∑' _ : s, (1 : ℝ≥0∞) := (by refine' _root_.le_trans _ (_root_.tsum_comp_le_tsum_of_injective hinj _); exact _root_.le_rfl)
       _ = s.encard := ENNReal.tsum_set_one s
   · intro X N N'
     simp only [orbSum]

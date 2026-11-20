@@ -75,7 +75,7 @@ theorem IsHilbertSchmidt.isCompactOperator {T : H →L[𝕜] K} (hT : IsHilbertS
   have hHS : ∀ F, IsHilbertSchmidt (T - hsTruncation b T F) := fun F => by
     refine lt_of_le_of_lt ?_ hT
     rw [hsNormSq_sub_hsTruncation, hsNormSq]
-    exact ENNReal.tsum_comp_le_tsum_of_injective Subtype.val_injective _
+    exact (by refine' _root_.le_trans _ (_root_.tsum_comp_le_tsum_of_injective Subtype.val_injective _); exact _root_.le_rfl)
   have hnorm : Tendsto (fun F => hsNorm (T - hsTruncation b T F)) atTop (𝓝 0) := by
     have h1 := (ENNReal.tendsto_toReal ENNReal.zero_ne_top).comp htail
     have h2 := (Real.continuous_sqrt.tendsto _).comp h1

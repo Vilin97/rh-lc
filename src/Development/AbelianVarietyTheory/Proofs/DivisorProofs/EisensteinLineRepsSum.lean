@@ -124,7 +124,7 @@ theorem midLines_sum_rpow_lt_top : GlobalTheory.Published.EisensteinIsotropicLin
       _ = ENNReal.ofReal (H₀ ^ (-s)) * ∑' y : Yr, (fun t : T => ENNReal.ofReal (h₀ t.1.1 ^ s)) (f y) :=
           ENNReal.tsum_mul_left
       _ ≤ ENNReal.ofReal (H₀ ^ (-s)) * ∑' t : T, ENNReal.ofReal (h₀ t.1.1 ^ s) := by
-          gcongr; exact ENNReal.tsum_comp_le_tsum_of_injective hfinj _
+          gcongr; exact (by refine' _root_.le_trans _ (_root_.tsum_comp_le_tsum_of_injective hfinj _); exact _root_.le_rfl)
       _ < ⊤ := by
           refine ENNReal.mul_lt_top ENNReal.ofReal_lt_top ?_
           rw [← ENNReal.ofReal_tsum_of_nonneg (fun t => Real.rpow_nonneg (hpos0 _).le _) hsR]

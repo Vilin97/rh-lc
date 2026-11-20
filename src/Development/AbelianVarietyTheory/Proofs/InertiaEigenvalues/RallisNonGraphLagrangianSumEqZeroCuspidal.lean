@@ -122,7 +122,7 @@ theorem nonGraph_sum_eq_zero : ∀ D : D7, EisAbs D → TermMove D → TermInv D
       rw [enorm_mul, enorm_mul, hs]
       ring
     rw [tsum_congr e]
-    exact ENNReal.tsum_comp_le_tsum_of_injective Subtype.val_injective _
+    exact (by refine' _root_.le_trans _ (_root_.tsum_comp_le_tsum_of_injective Subtype.val_injective _); exact _root_.le_rfl)
   · intro g₂ hfin
     by_cases h0 : φ₂ g₂ = 0
     · simp [h0]

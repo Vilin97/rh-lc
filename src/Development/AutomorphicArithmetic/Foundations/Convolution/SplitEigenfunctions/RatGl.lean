@@ -132,7 +132,7 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.rank1 :
             rw [hact x (σ r.1) _ _ (he r s)]
         _ = ∑' p, ‖F x (e p).1‖ₑ := ENNReal.tsum_prod.symm
         _ = ∑' ξ : ↥{ξ : Fin 4 → ℚ | ξ ≠ 0 ∧ qr D.δ ξ = 0}, ‖F x ξ.1‖ₑ := e.tsum_eq fun ξ => ‖F x ξ.1‖ₑ
-        _ ≤ ∑' ξ : Fin 4 → ℚ, ‖F x ξ‖ₑ := ENNReal.tsum_comp_le_tsum_of_injective Subtype.val_injective _
+        _ ≤ ∑' ξ : Fin 4 → ℚ, ‖F x ξ‖ₑ := (by refine' _root_.le_trans _ (_root_.tsum_comp_le_tsum_of_injective Subtype.val_injective _); exact _root_.le_rfl)
     have h2 : ∑' ξ : Fin 4 → ℚ, ‖F x ξ‖ₑ = ENNReal.ofReal (∑' ξ : Fin 4 → ℚ, ‖F x ξ‖) := by
       rw [ENNReal.ofReal_tsum_of_nonneg (fun _ => norm_nonneg _) (hb x).1]
       exact tsum_congr fun ξ => (ofReal_norm_eq_enorm _).symm

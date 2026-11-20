@@ -267,7 +267,7 @@ theorem setIntegral_mul_tsum_rank_eq_zero (μ : Measure (normOneGL K n)) [μ.IsH
       _ ≤ ‖ψ' g‖ₑ * ∑' ξ : Matrix (Fin n) (Fin n) K,
           ‖Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) * ratMat ξ *
             ((g : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]))‖ₑ :=
-          by gcongr; exact ENNReal.tsum_comp_le_tsum_of_injective Subtype.val_injective _
+          by gcongr; exact (by refine' _root_.le_trans _ (_root_.tsum_comp_le_tsum_of_injective Subtype.val_injective _); exact _root_.le_rfl)
       _ = ENNReal.ofReal (‖ψ' g‖ * ∑' ξ : Matrix (Fin n) (Fin n) K,
           ‖Φ ((y : Matrix (Fin n) (Fin n) 𝔸[K]) * ratMat ξ *
             ((g : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]))‖) := by

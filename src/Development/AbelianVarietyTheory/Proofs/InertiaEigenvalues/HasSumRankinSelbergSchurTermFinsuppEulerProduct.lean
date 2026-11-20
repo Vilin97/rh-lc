@@ -109,7 +109,7 @@ theorem summable_sqTerm {I : Type} (q : I → ℕ) {n : ℕ} (α : I → Fin n �
         fun p => (fun l : I →₀ (Fin n → ℤ) => l.prod f) (Finsupp.single p.1 p.2.1) := by
       funext p; simp only; rw [Finsupp.prod_single_index (hf0 p.1)]
     rw [hc]
-    exact ENNReal.tsum_comp_le_tsum_of_injective hinj _
+    exact (by refine' _root_.le_trans _ (_root_.tsum_comp_le_tsum_of_injective hinj _); exact _root_.le_rfl)
   have hfin : ∑' p : I × {v : Fin n → ℤ // v ≠ 0}, f p.1 p.2 ≠ ⊤ := ne_top_of_le_ne_top (hE ▸ h) hle
   refine (ENNReal.summable_toReal hfin).congr fun p => ?_
   simp only [hf]
