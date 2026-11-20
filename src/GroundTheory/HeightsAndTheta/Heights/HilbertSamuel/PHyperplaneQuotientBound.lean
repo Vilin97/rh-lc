@@ -78,12 +78,13 @@ theorem pow_regular {c : ∀ k, ι k} {e : K → ℤ} {σ : Ω} (hσ : σ ∈ ch
 theorem finiteDimensional (hF : SectionLatticeFinite.Statement) (hy : ∀ k, ∃ i, y ⟨k, i⟩ ≠ 0) (b : K → ℤ) :
     FiniteDimensional ℚ (chartLatQ y b 1) := by
   classical
-  obtain ⟨G, hG⟩ := hF K ι Ω y b 1 hy
-  refine Submodule.finiteDimensional_of_le (S₂ := Submodule.span ℚ (G : Set Ω)) fun s hs => ?_
+  obtain ⟨G, hG, hGfin⟩ := (AddSubgroup.fg_iff (chartLat y b 1)).mp (hF K ι Ω y b 1 hy)
+  have := FiniteDimensional.span_of_finite ℚ hGfin
+  refine Submodule.finiteDimensional_of_le (S₂ := Submodule.span ℚ G) fun s hs => ?_
   obtain ⟨N, hN, hNs⟩ := ChartDenominator.proof K ι Ω y b 1 s hs
-  have hmem : (N : Ω) * s ∈ Submodule.span ℚ (G : Set Ω) := by
+  have hmem : (N : Ω) * s ∈ Submodule.span ℚ G := by
     rw [← hG] at hNs
-    exact (AddSubgroup.closure_le (Submodule.span ℚ (G : Set Ω)).toAddSubgroup).mpr Submodule.subset_span hNs
+    exact (AddSubgroup.closure_le (Submodule.span ℚ G).toAddSubgroup).mpr Submodule.subset_span hNs
   have hN0 : (N : Ω) ≠ 0 := by exact_mod_cast (show N ≠ 0 by omega)
   have hs' : s = ((N : ℚ)⁻¹) • ((N : Ω) * s) := by
     rw [Rat.smul_def]

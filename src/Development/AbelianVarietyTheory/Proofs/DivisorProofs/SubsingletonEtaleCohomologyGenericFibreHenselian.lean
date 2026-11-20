@@ -53,7 +53,7 @@ theorem genericFibre_subsingleton : ∀ (q : ℕ) [NeZero q] (T : Type) [CommRin
   obtain ⟨J, _, _, D, t, s, hs, hst⟩ := h2
   let c : Cocone D := ⟨CommRingCat.of (TensorProduct T (FractionRing T) A),
     s ≫ (Functor.const J).map (CommRingCat.ofHom (eX : _ →+* _))⟩
-  have hc : IsColimit c := hs.ofIsoColimit (Cocones.ext eX.toCommRingCatIso (fun j => rfl))
+  have hc : IsColimit c := hs.ofIsoColimit (Cocone.ext eX.toCommRingCatIso (fun j => rfl))
   have hqA : IsUnit (q : c.pt) := by
     simpa using hq.map (algebraMap T (TensorProduct T (FractionRing T) A))
   suffices h0 : ∀ x : Ht q (sp (TensorProduct T (FractionRing T) A)) n i, x = 0 from

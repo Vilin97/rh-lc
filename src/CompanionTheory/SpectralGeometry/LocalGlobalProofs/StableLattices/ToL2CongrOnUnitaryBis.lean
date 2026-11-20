@@ -399,8 +399,8 @@ theorem memLp_of_level {F : Matrix (Fin n) (Fin n) ℂ → ℂ} (hc : Continuous
     (hL : LevelF ε F 0) : MemLp (fun g : Formalism.REAL.UJ ε => F (Formalism.MainNotions.S.umat g)) 2 (Formalism.REAL.muG ε) := by
   have hcont : Continuous (fun g : Formalism.REAL.UJ ε => F (Formalism.MainNotions.S.umat g)) :=
     hc.comp_continuous (Units.continuous_val.comp continuous_subtype_val) (fun g => g.2)
-  refine ⟨hcont.aestronglyMeasurable, ?_⟩
-  rw [eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top (by norm_num) (by norm_num)]
+  rw [memLp_iff, eLpNorm_lt_top_iff_lintegral_rpow_eNorm_lt_top
+    (by norm_num) (by norm_num) hcont.aestronglyMeasurable]
   unfold LevelF at hL
   simp only [Real.rpow_zero, ENNReal.ofReal_one, mul_one] at hL
   have h' : (∫⁻ a : Formalism.REAL.UJ ε, ‖F (Formalism.MainNotions.S.umat a)‖ₑ ^ 2 ∂(Formalism.REAL.muG ε)) < ⊤ := hL

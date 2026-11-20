@@ -104,9 +104,9 @@ def SmConn {S : Scheme.{0}} (G : Over S) [GrpObj G] : Prop :=
   IsCommMonObj G ∧ Smooth G.hom ∧ IsSeparated G.hom ∧ QuasiCompact G.hom ∧ GeometricallyConnected G.hom
 
 def FrobLike {k : Type} [Field k] (G : Over (Sp k)) [GrpObj G] (F : End G) (q : ℕ) : Prop :=
-  IsMonHom (show G ⟶ G from F) ∧ ∀ (U : G.left.Opens) (f : Γ(G.left, U)), Set.range (η[G]).left ⊆ U → ∃ m : ℕ, 1 ≤ m ∧ ∃ (U' : G.left.Opens)
-    (h : U' ≤ U) (h' : U' ≤ (show G ⟶ G from F ^ m).left ⁻¹ᵁ U), Set.range (η[G]).left ⊆ U' ∧
-    ((show G ⟶ G from F ^ m).left.appLE U U' h').hom f = (G.left.presheaf.map (homOfLE h).op).hom f ^ (q ^ m)
+  IsMonHom F.asHom ∧ ∀ (U : G.left.Opens) (f : Γ(G.left, U)), Set.range (η[G]).left ⊆ U → ∃ m : ℕ, 1 ≤ m ∧ ∃ (U' : G.left.Opens)
+    (h : U' ≤ U) (h' : U' ≤ (F ^ m).asHom.left ⁻¹ᵁ U), Set.range (η[G]).left ⊆ U' ∧
+    ((F ^ m).asHom.left.appLE U U' h').hom f = (G.left.presheaf.map (homOfLE h).op).hom f ^ (q ^ m)
 
 def Wt {S : Scheme.{0}} {G : Over S} [GrpObj G] {X : Type} [AddCommGroup X] (i : splitTorus S X ⟶ G) (V : G.left.Opens)
     (u : Γ(G.left, V)) (χ : X) : Prop :=
@@ -121,7 +121,7 @@ def IsQuot {S : Scheme.{0}} {T G B : Over S} [GrpObj T] [GrpObj G] [GrpObj B] (i
   IsMonHom i ∧ IsMonHom q ∧ Flat q.left ∧ Surjective q.left ∧ IsAffineHom q.left ∧ IsPullback i (toUnit _) q (η[B]) ∧ SmConn B
 
 def polyPt {S : Scheme.{0}} {G Z : Over S} [GrpObj G] (F : End G) (P : Polynomial ℤ) (x : Z ⟶ G) : Z ⟶ G :=
-  ((List.range (P.natDegree + 1)).map fun n => (x ≫ (show G ⟶ G from F ^ n)) ^ P.coeff n).prod
+  ((List.range (P.natDegree + 1)).map fun n => (x ≫ (F ^ n).asHom) ^ P.coeff n).prod
 
 def Defect {R B R' : Type} [CommRing R] [CommRing B] [Algebra R B] [CommRing R'] [Algebra R R'] (a : B →ₐ[R] R') (π : R) (c : ℕ) : Prop :=
   letI := a.toRingHom.toAlgebra
@@ -331,7 +331,7 @@ theorem isFrame_pderiv (n : ℕ) :
 end SpecVF
 
 theorem polyPt_X {S : Scheme.{0}} {G Z : Over S} [GrpObj G] (F : End G) (x : Z ⟶ G) :
-    polyPt F Polynomial.X x = x ≫ (show G ⟶ G from F) := by
+    polyPt F Polynomial.X x = x ≫ F.asHom := by
   simp [polyPt, List.range_succ, Polynomial.coeff_X]
 
 theorem unr_self {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] {π : R} (h : Irreducible π) :

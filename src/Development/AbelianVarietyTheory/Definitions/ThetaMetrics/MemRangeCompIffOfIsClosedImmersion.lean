@@ -988,7 +988,7 @@ def resolutionHomeomorph {K : Type} [Fintype K] [Nonempty K] {ι : K → Type} [
       refine continuous_generateFrom_iff.2 ?_
       rintro _ ⟨c, O, hO, rfl⟩
       have h1 : IsOpen (e ⁻¹' w.src c) := by
-        rw [show e ⁻¹' w.src c = _ from Set.ext (hmem c)]
+        rw [show e ⁻¹' w.src c = {x | ⊤ ≤ x.1 ⁻¹ᵁ (w.pres c.1 c.2).V} from Set.ext (hmem c)]
         exact (isOpen_setOf_le_preimage _).preimage continuous_subtype_val
       have h2 : ContinuousOn (fun x => w.coord c (e x)) (e ⁻¹' w.src c) := by
         refine continuousOn_pi.2 fun l => ?_
