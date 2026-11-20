@@ -319,7 +319,7 @@ theorem wZero : UpperTheory.Ru.crystallineComparison.WZero := by
   have e := hz s t
   have e2 : (PX (D.π ≫ q) κ).map (S.f s ≫ (R s).f t).hom y =
       (PX (D.π ≫ q) κ).map ((R s).f t).hom ((PX (D.π ≫ q) κ).map (S.f s).hom y) :=
-    FunctorToTypes.map_comp_apply _ _ _ _
+    Functor.map_comp_apply _ _ _ _
   change (∑ i, _) = 0 ∨ _
   simp only [e2]
   exact e

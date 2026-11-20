@@ -35,7 +35,7 @@ theorem snd_map {U Y W : Scheme.{0}} {E : Spc} {p : ℕ} (y : Sx (sch.obj Y ⨯ 
 theorem sx_res_res {E : Spc} {p : ℕ} {U V W : Scheme.{0}} (x : Sx E p U) (f : V ⟶ U) (g : W ⟶ V) :
     (x.res f).res g = x.res (g ≫ f) := by
   change _ = (E.obj (op (SimplexCategory.mk p))).map (g ≫ f).op x
-  rw [op_comp, FunctorToTypes.map_comp_apply]; rfl
+  rw [op_comp, Functor.map_comp_apply]; rfl
 
 theorem ev_res_pair {U W W' : Scheme.{0}} (α : Cochain ((chains R).obj (sch.obj U ⨯ fibQ q N)) I n) (p : ℕ) (s : ℤ)
     (h : -(p : ℤ) + n = s) (y : Sx (sch.obj U ⨯ fibQ q N) p W) (w : W' ⟶ W) :

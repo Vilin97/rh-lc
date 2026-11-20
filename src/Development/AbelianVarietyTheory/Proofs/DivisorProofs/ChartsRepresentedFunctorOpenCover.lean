@@ -25,10 +25,10 @@ theorem charts_represented_open_cover : ∀ (F : Scheme.{0}ᵒᵖ ⥤ Type 1) (I
     have hl : l ≫ W.ι = j i := IsOpenImmersion.lift_fac _ _ _
     have huj : u ≫ j i = W.ι := by
       apply uniq
-      rw [op_comp, FunctorToTypes.map_comp_apply, hj i, hu]
+      rw [op_comp, Functor.map_comp_apply, hj i, hu]
     have hlu : l ≫ u = 𝟙 _ := by
       apply hinj i
-      rw [op_comp, FunctorToTypes.map_comp_apply, ← hu, ← FunctorToTypes.map_comp_apply, ← op_comp, hl, hj i]
+      rw [op_comp, Functor.map_comp_apply, ← hu, ← Functor.map_comp_apply, ← op_comp, hl, hj i]
       simp
     have hul : u ≫ l = 𝟙 _ := by
       rw [← cancel_mono W.ι, Category.assoc, hl, huj, Category.id_comp]
@@ -39,7 +39,7 @@ theorem charts_represented_open_cover : ∀ (F : Scheme.{0}ᵒᵖ ⥤ Type 1) (I
     refine ⟨i, u q, ?_⟩
     have : a = u ≫ j i := by
       apply uniq
-      rw [ha, op_comp, FunctorToTypes.map_comp_apply, hj i]
+      rw [ha, op_comp, Functor.map_comp_apply, hj i]
     rw [this]
     rfl
 

@@ -98,7 +98,7 @@ theorem GlobalTheory.EtC.CechPts.main : ∀ (R : Type) [CommRing R] (F : Shv R) 
         apply (e V).1
         change ((cech f).obj (op ⦋k⦌)).map (c V _).op (cechPt f k x y h) =
           ((cech f).obj (op ⦋k⦌)).map (g ≫ c U v).op (cechPt f k x y h)
-        rw [hc' V, op_comp, FunctorToTypes.map_comp_apply, hc' U v]
+        rw [hc' V, op_comp, Functor.map_comp_apply, hc' U v]
       dsimp only
       rw [h1]
       simp [Sec.res])

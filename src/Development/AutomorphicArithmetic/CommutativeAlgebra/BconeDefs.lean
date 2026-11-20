@@ -28,11 +28,11 @@ theorem prodW_compatible (W : Scheme.{0}) :
   have hc := hx (f₁ ≫ prod.snd) (f₂ ≫ prod.snd) hg₁ hg₂ hsnd
   calc ℱ.obj.map f₁.op (x g₁ hg₁)
       = ℱ.obj.map u.op (ℱ.obj.map ((prodW W).map (f₁ ≫ prod.snd)).op (x g₁ hg₁)) := by
-        rw [← FunctorToTypes.map_comp_apply, ← op_comp, ← k₁]
+        rw [← Functor.map_comp_apply, ← op_comp, ← k₁]
     _ = ℱ.obj.map u.op (ℱ.obj.map ((prodW W).map (f₂ ≫ prod.snd)).op (x g₂ hg₂)) :=
         congrArg _ hc
     _ = ℱ.obj.map f₂.op (x g₂ hg₂) := by
-        rw [← FunctorToTypes.map_comp_apply, ← op_comp, ← k₂]
+        rw [← Functor.map_comp_apply, ← op_comp, ← k₂]
 
 set_option backward.isDefEq.respectTransparency false in
 theorem prodW_cover (W : Scheme.{0}) :

@@ -37,12 +37,12 @@ theorem UpperTheory.equiv_of_affine_bijective :
     · refine loc_of_affine U _ fun A hA c W k => ?_
       obtain ⟨x, hx⟩ := (hf A hA).2 (Q.map c.op y)
       refine ⟨P.map k.op x, ?_⟩
-      rw [FunctorToTypes.naturality, hx, op_comp, FunctorToTypes.map_comp_apply]
+      rw [FunctorToTypes.naturality, hx, op_comp, Functor.map_comp_apply]
     · refine loc_of_affine U _ fun A hA c W k => ?_
       have h1 : P.map c.op x = P.map c.op x' := by
         apply (hf A hA).1
         rw [FunctorToTypes.naturality, FunctorToTypes.naturality, hxx]
-      rw [op_comp, FunctorToTypes.map_comp_apply, FunctorToTypes.map_comp_apply, h1]
+      rw [op_comp, Functor.map_comp_apply, Functor.map_comp_apply, h1]
   have hc : IsIso ((chains R).map (disc.map f)) := GlobalTheory.T.chains_iso_of_free_iso R _ fun _ => hiso
   intro n
   refine Function.bijective_iff_has_inverse.2 ⟨HK.pull R (inv ((chains R).map (disc.map f))) F n, fun x => ?_, fun x => ?_⟩

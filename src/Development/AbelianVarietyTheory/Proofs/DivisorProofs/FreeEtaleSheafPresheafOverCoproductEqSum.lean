@@ -111,7 +111,7 @@ theorem main : ∀ (R : Type) [CommRing R] (U : Scheme.{0}) (ι : Type) (V : ι 
     rw [← h1, ← res_res, hφ, ← (FH (Q i) G).2.2.1 (c i)]
     congr 1
     apply huq
-    · rw [hqa, FunctorToTypes.naturality, hqa, ← FunctorToTypes.map_comp_apply, ← FunctorToTypes.map_comp_apply,
+    · rw [hqa, FunctorToTypes.naturality, hqa, ← Functor.map_comp_apply, ← Functor.map_comp_apply,
         ← op_comp, ← op_comp, h1]
     · rw [hqb, FunctorToTypes.naturality, hqb]
       exact h2.symm

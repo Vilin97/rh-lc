@@ -69,8 +69,8 @@ def resAssocBwd (T : Over X) : assocSet E Q' ξ T →ₗ[E] assocSet E Q ξ ((Ov
       have h2 : Q'.P.map w.op ((e _).symm (Q.P.map (mapLiftOverHom f u).op η)) =
           (e _).symm (Q.P.map (mapLiftOverHom f (v ≫ u)).op (Q.P.map v.op η)) := by
         apply (e _).injective
-        rw [he, Equiv.apply_symm_apply, Equiv.apply_symm_apply, ← FunctorToTypes.map_comp_apply,
-          ← FunctorToTypes.map_comp_apply, ← op_comp, ← op_comp]
+        rw [he, Equiv.apply_symm_apply, Equiv.apply_symm_apply, ← Functor.map_comp_apply,
+          ← Functor.map_comp_apply, ← op_comp, ← op_comp]
         congr 2
       have h3 := G.2.1 w (liftOverHom f u) ((e _).symm (Q.P.map (mapLiftOverHom f u).op η)) t
       rw [h1, h2] at h3

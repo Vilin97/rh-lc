@@ -197,7 +197,7 @@ theorem qpt {T T' : Thick (Wc.L l F ρ (n + 1))} (f : T ⟶ T') :
   have hcomp : CommRingCat.ofHom (qe T) ≫ CommRingCat.ofHom (Ideal.quotientMap _ (qφ f) (qφ_le f)) =
       CommRingCat.ofHom (Ideal.quotientMap T'.J f.φ f.hle) ≫ CommRingCat.ofHom (qe T') :=
     CommRingCat.hom_ext (Ideal.Quotient.ringHom_ext (RingHom.ext fun b => rfl))
-  rw [← hpt, ← FunctorToTypes.map_comp_apply, ← FunctorToTypes.map_comp_apply, hcomp]
+  rw [← hpt, ← Functor.map_comp_apply, ← Functor.map_comp_apply, hcomp]
 
 def qmap {T T' : Thick (Wc.L l F ρ (n + 1))} (f : T ⟶ T') : qT hn T ⟶ qT hn T' where
   φ := qφ f

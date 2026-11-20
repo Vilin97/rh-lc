@@ -96,7 +96,7 @@ def U2obj (n : SimplexCategoryᵒᵖ) : PSh where
   obj X := {x : ((PB (bsumOf V W)).obj n).obj X // AllSec V W (n := n.unop.len) (X := X.unop) x}
   map k := TypeCat.ofHom fun x => ⟨((PB (bsumOf V W)).obj n).map k x.1, allSec_res V W k.unop x.1 x.2⟩
   map_id X := by ext x; exact FunctorToTypes.map_id_apply _ _
-  map_comp f g := by ext x; exact FunctorToTypes.map_comp_apply _ _ _ _
+  map_comp f g := by ext x; exact Functor.map_comp_apply _ _ _ _
 
 def U2 : Spc where
   obj := U2obj V W
