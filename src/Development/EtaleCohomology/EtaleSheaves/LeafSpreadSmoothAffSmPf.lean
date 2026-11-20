@@ -76,9 +76,9 @@ theorem leafInvert (k : Type) [Field k] (Ω : Type) [Field Ω] [Algebra k Ω] (R
 theorem leafGenericNbhd : LeafGenericNbhd := by
   classical
   intro k _ Ω _ _ R hR T hT hgen
-  let η : PrimeSpectrum R := ⟨⊥, Ideal.bot_prime⟩
+  let η : PrimeSpectrum R := ⟨⊥, Ideal.isPrime_bot⟩
   have hη : (show Sp R from η) ∈ Set.range (toR R).base := by
-    refine ⟨(show Sp Ω from (⟨⊥, Ideal.bot_prime⟩ : PrimeSpectrum Ω)), ?_⟩
+    refine ⟨(show Sp Ω from (⟨⊥, Ideal.isPrime_bot⟩ : PrimeSpectrum Ω)), ?_⟩
     apply PrimeSpectrum.ext
     change Ideal.comap (algebraMap R Ω) ⊥ = ⊥
     rw [← RingHom.ker_eq_comap_bot]

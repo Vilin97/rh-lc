@@ -22,7 +22,7 @@ theorem jK_asIdeal {R : Type} [CommRing R] [IsDomain R] (z : Sp (FractionRing R)
 
 theorem exists_jK_eq {R : Type} [CommRing R] [IsDomain R] (x : Sp R) (hx : x.asIdeal = ⊥) :
     ∃ z : Sp (FractionRing R), Out.jK R z = x :=
-  ⟨(⟨⊥, Ideal.bot_prime⟩ : PrimeSpectrum (FractionRing R)), PrimeSpectrum.ext ((jK_asIdeal _).trans hx.symm)⟩
+  ⟨(⟨⊥, Ideal.isPrime_bot⟩ : PrimeSpectrum (FractionRing R)), PrimeSpectrum.ext ((jK_asIdeal _).trans hx.symm)⟩
 
 theorem polArc : PolArcSt := by
   intro E _ _ _ H D Xo s l c hg Z BD φ m hhom hdom hpol

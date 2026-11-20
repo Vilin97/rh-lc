@@ -98,7 +98,7 @@ theorem GlobalTheory.FlatModel.exists_normBlowup_off_basicOpen : ∀ (F : Type) 
 
   have hUne : (U : Set X).Nonempty := by
     obtain x := Classical.arbitrary X
-    let g₀ : Sp V := (⟨⊥, Ideal.bot_prime⟩ : PrimeSpectrum V)
+    let g₀ : Sp V := (⟨⊥, Ideal.isPrime_bot⟩ : PrimeSpectrum V)
     have hg₀s : g₀ ⤳ s x := (PrimeSpectrum.le_iff_specializes _ _).1 bot_le
     obtain ⟨x', -, hx'⟩ := Flat.generalizingMap s hg₀s
     refine ⟨x', ?_⟩

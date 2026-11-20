@@ -22,7 +22,7 @@ private theorem fibre_closed {B A : Type} [CommRing B] [CommRing A] [Algebra B A
   haveI : IsJacobsonRing (A ⧸ p.asIdeal) :=
     isJacobsonRing_of_finiteType (A := B ⧸ p.asIdeal.comap (algebraMap B A))
   have hbot : (⊥ : Ideal (A ⧸ p.asIdeal)).jacobson = ⊥ :=
-    isJacobsonRing_iff_prime_eq.1 ‹_› ⊥ Ideal.bot_prime
+    isJacobsonRing_iff_prime_eq.1 ‹_› ⊥ Ideal.isPrime_bot
   have hf0 : Ideal.Quotient.mk p.asIdeal f ∉ (⊥ : Ideal (A ⧸ p.asIdeal)).jacobson := by
     rw [hbot, Ideal.mem_bot, Ideal.Quotient.eq_zero_iff_mem]
     exact (PrimeSpectrum.mem_basicOpen _ _).1 hpf

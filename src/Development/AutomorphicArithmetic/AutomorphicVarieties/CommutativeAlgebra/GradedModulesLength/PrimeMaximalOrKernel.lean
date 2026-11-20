@@ -25,7 +25,7 @@ private theorem prime_maximal_or_kernel (O : Type) [CommRing O] [IsDomain O] [Is
     have hbot : (⊥ : Ideal (B ⧸ P)).comap (algebraMap O (B ⧸ P)) = P.comap (algebraMap O B) := by
       ext a
       rw [Ideal.mem_comap, Ideal.mem_bot, Ideal.mem_comap, hcomap]
-    haveI : (⊥ : Ideal (B ⧸ P)).IsPrime := Ideal.bot_prime
+    haveI : (⊥ : Ideal (B ⧸ P)).IsPrime := Ideal.isPrime_bot
     have hmax := Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := O) (⊥ : Ideal (B ⧸ P)) (hbot ▸ hQ)
     rw [Ideal.Quotient.maximal_ideal_iff_isField_quotient]
     exact Ring.isField_iff_maximal_bot.2 hmax

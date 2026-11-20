@@ -68,7 +68,7 @@ theorem primes_eq (T O : Type) [CommRing T] [IsDomain T] [CommRing O] [IsDomain 
   · intro hb
     have : (⊥ : Ideal O).comap (algebraMap (Polynomial T) O) = p.comap (algebraMap (Polynomial T) O) := by
       apply le_antisymm (Ideal.comap_mono bot_le); rw [hb]; exact bot_le
-    exact h0 (hinc ⊥ p Ideal.bot_prime inferInstance bot_le this).symm
+    exact h0 (hinc ⊥ p Ideal.isPrime_bot inferInstance bot_le this).symm
   · rw [Ideal.comap_comap, ← IsScalarTower.algebraMap_eq]; exact hT
 
 end GlobalTheory.QPic

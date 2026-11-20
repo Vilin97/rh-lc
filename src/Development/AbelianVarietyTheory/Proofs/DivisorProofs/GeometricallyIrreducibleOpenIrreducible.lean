@@ -48,7 +48,7 @@ theorem GlobalTheory.FlatModel.isIrreducible_of_geomIrr_of_le_basicOpen : ∀ (F
       rw [he]
       convert hmem
       simp
-    refine ⟨⟨⊥, Ideal.bot_prime⟩, ?_⟩
+    refine ⟨⟨⊥, Ideal.isPrime_bot⟩, ?_⟩
     rw [Scheme.Hom.comp_apply]
     refine PrimeSpectrum.ext ?_
     rw [hbot]

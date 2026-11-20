@@ -32,7 +32,7 @@ theorem not_two_le_coheight_of_ringKrullDim_eq_one {X : Scheme.{0}} (x : X)
 theorem apply_genericPoint_ne_closedPoint {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     {X : Scheme.{0}} [IsIntegral X] (f : X ⟶ Sp R) [Flat f] : f (genericPoint X) ≠ closedPoint R := by
   intro h
-  let p₀ : Sp R := ⟨⊥, Ideal.bot_prime⟩
+  let p₀ : Sp R := ⟨⊥, Ideal.isPrime_bot⟩
   have hs : p₀ ⤳ f (genericPoint X) := by
     rw [h]; exact (PrimeSpectrum.le_iff_specializes p₀ (closedPoint R)).mp bot_le
   obtain ⟨w, hw, hfw⟩ := Flat.generalizingMap f hs

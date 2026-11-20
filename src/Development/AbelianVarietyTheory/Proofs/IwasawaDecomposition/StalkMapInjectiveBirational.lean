@@ -34,7 +34,7 @@ theorem stalkMap_birational : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
   intro E _ _ _ H D l Xo c X Z π hj _ z
   obtain ⟨hBd, -⟩ := Z.normal z
   obtain ⟨hAd, -⟩ := X.normal (π z)
-  let p0 : PrimeSpectrum (Z.X.presheaf.stalk z) := ⟨⊥, Ideal.bot_prime⟩
+  let p0 : PrimeSpectrum (Z.X.presheaf.stalk z) := ⟨⊥, Ideal.isPrime_bot⟩
   obtain ⟨w, hw⟩ := GlobalTheory.T.generic_stalk_point_in_interior E H D l Xo c Z z p0 rfl
   have hy : Z.j w ⤳ z := by
     have hm : Z.X.fromSpecStalk z p0 ∈ Set.range (Z.X.fromSpecStalk z) := ⟨p0, rfl⟩

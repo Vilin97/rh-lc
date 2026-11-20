@@ -59,7 +59,7 @@ theorem connectedSpace_specialFibre : ∀ (O : Type) [CommRing O] [IsDomain O] [
     exact h
   have hne : ∃ y : Y, f y = IsLocalRing.closedPoint O := by
     obtain ⟨y⟩ := (inferInstance : Nonempty Y)
-    let η : Spec (.of O) := ⟨⊥, Ideal.bot_prime⟩
+    let η : Spec (.of O) := ⟨⊥, Ideal.isPrime_bot⟩
     have hgen : η ⤳ f y := (PrimeSpectrum.le_iff_specializes _ _).1 bot_le
     obtain ⟨y', -, hy'⟩ := (Flat.generalizingMap f) hgen
     have hc : IsClosed (Set.range f) := f.isClosedMap.isClosed_range

@@ -41,7 +41,7 @@ theorem comap_eq_of_height_one_of_flat {A B R : Type} [CommRing A] [IsDomain A] 
     haveI : Module.Flat A R := hι.comp hψ
     haveI : P₁.IsPrime := hP₁
     haveI : (P.comap ι).IsPrime := Ideal.comap_isPrime ι P
-    haveI : (⊥ : Ideal A).IsPrime := Ideal.bot_prime
+    haveI : (⊥ : Ideal A).IsPrime := Ideal.isPrime_bot
     haveI : P₁.LiesOver (P.comap ι) := ⟨by rw [← hP₁P]; rfl⟩
     obtain ⟨P₂, h1, h2, h3⟩ :=
       Ideal.exists_ideal_le_liesOver_of_le (p := (⊥ : Ideal A)) (q := P.comap ι) P₁ bot_le

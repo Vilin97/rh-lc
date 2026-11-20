@@ -47,7 +47,7 @@ theorem localised_base_change_at_prime : ∀ (A D R : Type) [CommRing A] [IsLoca
       · intro d hd
         rw [Ideal.mem_comap, Ideal.mem_bot, IsScalarTower.algebraMap_apply D (D ⊗[A] R) ((D ⊗[A] R) ⧸ q), Ideal.Quotient.algebraMap_eq, Ideal.Quotient.eq_zero_iff_mem]
         exact hle (Ideal.mem_map_of_mem _ hd)
-    haveI : (⊥ : Ideal ((D ⊗[A] R) ⧸ q)).IsPrime := Ideal.bot_prime
+    haveI : (⊥ : Ideal ((D ⊗[A] R) ⧸ q)).IsPrime := Ideal.isPrime_bot
     have hbot : (⊥ : Ideal ((D ⊗[A] R) ⧸ q)).IsMaximal :=
       Ideal.isMaximal_of_isIntegral_of_isMaximal_comap (R := D) _ (hcomap ▸ maximalIdeal.isMaximal D)
     exact Ideal.Quotient.maximal_of_isField q (Ring.isField_iff_maximal_bot.mpr hbot)

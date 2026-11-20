@@ -50,7 +50,7 @@ theorem exists_const_mul_unitAt_coheight_one : ∀ (R K : Type) [CommRing R] [Is
     rw [Set.setOf_exists]
     exact isOpen_iUnion fun i => (U i).isOpen.inter (isOpen_unitAt _)
   have hg : genericPoint X ∈ S := by
-    let p₀ : PrimeSpectrum R := ⟨⊥, Ideal.bot_prime⟩
+    let p₀ : PrimeSpectrum R := ⟨⊥, Ideal.isPrime_bot⟩
     obtain ⟨y, -, hy⟩ := hgz ((PrimeSpectrum.le_iff_specializes p₀ (q (genericPoint X))).1 bot_le)
     exact (genericPoint_specializes y).mem_open hS (hgen y (by rw [hy]))
   have hB := GlobalTheory.T.finite_coheight_one_notMem_open_genericPoint X S hS hg

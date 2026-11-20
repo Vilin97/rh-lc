@@ -36,12 +36,12 @@ theorem mem_range_j_of_maximal (Z : GMod Xo c) (P : Z.X) (hP : ∀ q : Z.X, q �
     exact (HasRingHomProperty.Spec_iff (P := @Flat)).2 (RingHom.flat_algebraMap_iff.2 this)
   have a₂ : Flat (pullback.fst Z.s (spMap (algebraMap (𝓞 c.F) c.F))) :=
     MorphismProperty.of_isPullback (P := @Flat) (IsPullback.of_hasPullback _ _).flip b₂
-  let g0 : PrimeSpectrum (𝓞 c.F) := ⟨⊥, Ideal.bot_prime⟩
+  let g0 : PrimeSpectrum (𝓞 c.F) := ⟨⊥, Ideal.isPrime_bot⟩
   have hsP : Z.s P = g0 := by
     have s₀ : g0 ⤳ Z.s P := (PrimeSpectrum.le_iff_specializes _ _).1 bot_le
     obtain ⟨P', h₁, h₂⟩ := Flat.generalizingMap Z.s s₀
     rw [← hP P' h₁, h₂]
-  let f0 : PrimeSpectrum c.F := ⟨⊥, Ideal.bot_prime⟩
+  let f0 : PrimeSpectrum c.F := ⟨⊥, Ideal.isPrime_bot⟩
   have hf0 : spMap (algebraMap (𝓞 c.F) c.F) f0 = g0 := by
     apply PrimeSpectrum.ext
     show Ideal.comap (algebraMap (𝓞 c.F) c.F) ⊥ = ⊥

@@ -32,7 +32,7 @@ theorem j_genericPoint {F : Type} [Field F] [NumberField F] {Y : Var F} (V : Cov
   haveI := V.int
   haveI := V.intG
 
-  let η : Sp F := ⟨⊥, Ideal.bot_prime⟩
+  let η : Sp F := ⟨⊥, Ideal.isPrime_bot⟩
   have hη : ∀ w : Sp F, (spMap (algebraMap (𝓞 F) F) w).asIdeal = ⊥ := by
     intro w
     have hw : w.asIdeal = ⊥ := by

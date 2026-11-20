@@ -8,7 +8,7 @@ namespace GlobalTheory.SpreadFromGeneric
 
 theorem maximalIdeal_stalk_eq_bot {T : Scheme.{0}} (p : T) [IsDomain (T.presheaf.stalk p)]
     (hp : ∀ q : T, q ⤳ p → q = p) : maximalIdeal (T.presheaf.stalk p) = ⊥ := by
-  let η : Spec (T.presheaf.stalk p) := (⟨⊥, Ideal.bot_prime⟩ : PrimeSpectrum (T.presheaf.stalk p))
+  let η : Spec (T.presheaf.stalk p) := (⟨⊥, Ideal.isPrime_bot⟩ : PrimeSpectrum (T.presheaf.stalk p))
   have h1 : T.fromSpecStalk p η = p := hp _ (by
     have : T.fromSpecStalk p η ∈ Set.range (T.fromSpecStalk p) := ⟨η, rfl⟩
     rwa [Scheme.range_fromSpecStalk] at this)

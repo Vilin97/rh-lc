@@ -26,7 +26,7 @@ theorem mem_comp_of_frameIn : ∀ {E : Type} [Field E] [NumberField E] [IsCMFiel
   haveI : Nonempty V.toScheme := inferInstance
   haveI : IsDomain Γ(V.toScheme, ⊤) := inferInstance
   haveI : IsDomain Γ(gen Z, V) := (V.topIso.commRingCatIsoToRingEquiv).symm.toMulEquiv.isDomain
-  let t₀ : PrimeSpectrum (MvPolynomial (Coord Dw) Γ(gen Z, V)) := ⟨⊥, Ideal.bot_prime⟩
+  let t₀ : PrimeSpectrum (MvPolynomial (Coord Dw) Γ(gen Z, V)) := ⟨⊥, Ideal.isPrime_bot⟩
   obtain ⟨i₀, h₀⟩ := GlobalTheory.T.exists_cell_lands_of_eigFrame Φ hV f₀ hstr w (GeoF t₀) ((geoHom t₀).comp MvPolynomial.C)
     (fun j => geoHom t₀ (MvPolynomial.X j))
   have hall : ∀ t, InComp Φ hV f₀ w i₀ t := fun t => GlobalTheory.T.flag_torus_frame_unique Φ hV f₀ hstr w i₀ t₀ t bot_le h₀

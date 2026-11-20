@@ -23,7 +23,7 @@ theorem flat_of_generic_zero : ∀ {X : Scheme.{0}} [IsIntegral X] (s : X ⟶ Sp
   have : IsIntegral (Spec R) := isIntegral_of_isOpenImmersion j
   have : IsDomain R := (affine_isIntegral_iff R).1 this
   obtain ⟨φ, hφ⟩ := Spec.map_surjective (j ≫ s)
-  let p0 : PrimeSpectrum R := ⟨⊥, Ideal.bot_prime⟩
+  let p0 : PrimeSpectrum R := ⟨⊥, Ideal.isPrime_bot⟩
   have hg : genericPoint X ∈ Set.range j :=
     (genericPoint_specializes (j (Classical.arbitrary (Spec R)))).mem_open
       j.isOpenEmbedding.isOpen_range ⟨_, rfl⟩

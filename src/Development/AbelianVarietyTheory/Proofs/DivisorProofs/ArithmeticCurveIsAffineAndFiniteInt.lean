@@ -25,7 +25,7 @@ theorem not_isClosed_genericPoint_int : ¬ IsClosed ({genericPoint (Sp ℤ)} : S
     have hx : x ∈ closure ({genericPoint (Sp ℤ)} : Set (Sp ℤ)) :=
       (genericPoint_spec (Sp ℤ)).def ▸ Set.mem_univ x
     rwa [hc.closure_eq] at hx
-  let a : PrimeSpectrum ℤ := ⟨⊥, Ideal.bot_prime⟩
+  let a : PrimeSpectrum ℤ := ⟨⊥, Ideal.isPrime_bot⟩
   let b : PrimeSpectrum ℤ := ⟨Ideal.span {(2 : ℤ)},
     (Ideal.span_singleton_prime (by norm_num)).2 Int.prime_two⟩
   have hab : a = b := (hu (show Sp ℤ from a)).trans (hu (show Sp ℤ from b)).symm

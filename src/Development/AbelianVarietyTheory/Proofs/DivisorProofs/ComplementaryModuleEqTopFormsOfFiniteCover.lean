@@ -30,7 +30,7 @@ theorem height_under_eq_one {A B : Type} [CommRing A] [IsDomain A] [CommRing B]
     haveI := hr
     obtain ⟨P₁, hP₁Q, hP₁, hP₁o⟩ := Ideal.exists_ideal_lt_liesOver_of_lt (p := r) (q := p) Q hrp
     haveI := hP₁
-    haveI : (⊥ : Ideal A).IsPrime := Ideal.bot_prime
+    haveI : (⊥ : Ideal A).IsPrime := Ideal.isPrime_bot
     obtain ⟨P₀, hP₀P₁, hP₀, -⟩ := Ideal.exists_ideal_lt_liesOver_of_lt (p := ⊥) (q := r) P₁
       (bot_lt_iff_ne_bot.mpr hr0)
     haveI := hP₀
@@ -40,7 +40,7 @@ theorem height_under_eq_one {A B : Type} [CommRing A] [IsDomain A] [CommRing B]
     have h4 : (1 : ℕ∞) ≤ P₁.height := le_trans le_add_self h1
     have h3 : (1 : ℕ∞) + 1 ≤ 1 := le_trans (by gcongr) h2
     exact absurd h3 (by decide)
-  · haveI : (⊥ : Ideal A).IsPrime := Ideal.bot_prime
+  · haveI : (⊥ : Ideal A).IsPrime := Ideal.isPrime_bot
     have := Ideal.height_add_one_le_of_lt_of_isPrime (bot_lt_iff_ne_bot.mpr hne)
     simpa using this
 

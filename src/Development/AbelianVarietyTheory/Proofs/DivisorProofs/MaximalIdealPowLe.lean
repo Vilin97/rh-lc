@@ -32,7 +32,7 @@ theorem maximalIdeal_pow_le : ∀ (k : Type) [Field k] [IsAlgClosed k] (A B : Ov
     haveI := hP
     obtain ⟨z, hz⟩ := (hJ (A.left.presheaf.stalk ((η[A]).left.base s) ⧸ P) (Ideal.Quotient.mk P)).2
       (by rw [Ideal.mk_ker]; exact hJP)
-    let q : Sp (A.left.presheaf.stalk ((η[A]).left.base s) ⧸ P) := ⟨⊥, Ideal.bot_prime⟩
+    let q : Sp (A.left.presheaf.stalk ((η[A]).left.base s) ⧸ P) := ⟨⊥, Ideal.isPrime_bot⟩
     set g := Spec.map (CommRingCat.ofHom (Ideal.Quotient.mk P)) with hg
     have hgq : g q = ⟨P, hP⟩ := by
       apply PrimeSpectrum.ext

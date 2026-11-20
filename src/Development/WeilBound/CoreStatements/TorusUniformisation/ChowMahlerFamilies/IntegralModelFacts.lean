@@ -26,7 +26,7 @@ theorem mem_range_spMap {O F : Type} [CommRing O] [Field F] (β : O →+* F) (h�
     rw [h2, Ideal.mem_bot] at h1
     exact ho (hβ (by rw [h1, map_zero]))
   · intro hx
-    refine ⟨(⟨⊥, Ideal.bot_prime⟩ : PrimeSpectrum F), ?_⟩
+    refine ⟨(⟨⊥, Ideal.isPrime_bot⟩ : PrimeSpectrum F), ?_⟩
     apply PrimeSpectrum.ext
     change Ideal.comap β ⊥ = x.asIdeal
     ext o

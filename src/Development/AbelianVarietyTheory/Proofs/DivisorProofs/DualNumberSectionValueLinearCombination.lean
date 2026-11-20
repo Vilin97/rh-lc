@@ -35,7 +35,7 @@ theorem sE_comb : ∀ (V : Type) [CommRing V] [IsDomain V] (D : DegPre V) (F : T
       (fun k' => J (redE F ≫ r ≫ DegPre.famφ D F β k')) := by
     intro y _
     haveI := sp_dual_subsingleton F
-    let z : Sp F := (⟨⊥, Ideal.bot_prime⟩ : PrimeSpectrum F)
+    let z : Sp F := (⟨⊥, Ideal.isPrime_bot⟩ : PrimeSpectrum F)
     have hy : y = (redE F).base z := Subsingleton.elim _ _
     refine Set.mem_iInter.2 fun k' => ?_
     have := hJ (redE F ≫ r ≫ DegPre.famφ D F β k') (Set.mem_univ z)

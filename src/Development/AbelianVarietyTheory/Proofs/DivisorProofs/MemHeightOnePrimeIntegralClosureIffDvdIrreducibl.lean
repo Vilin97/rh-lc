@@ -51,7 +51,7 @@ theorem mem_iff_dvd_of_height_one : ∀ (k F K : Type) [Field k] [Field F] [Fiel
       have : t ∈ (⊥ : Ideal B).under A := h ▸ Ideal.mem_span_singleton_self t
       rw [Ideal.under, Ideal.mem_comap, Ideal.mem_bot] at this
       exact ht0 ((FaithfulSMul.algebraMap_injective A B) (by rw [this, map_zero]))
-    haveI : (⊥ : Ideal B).IsPrime := Ideal.bot_prime
+    haveI : (⊥ : Ideal B).IsPrime := Ideal.isPrime_bot
     have h1 := Ideal.height_add_one_le_of_lt_of_isPrime (bot_lt_iff_ne_bot.mpr hQ'0)
     have h2 := Ideal.height_add_one_le_of_lt_of_isPrime hQ'Q
     have h4 : (1 : ℕ∞) ≤ Q'.height := le_trans le_add_self h1

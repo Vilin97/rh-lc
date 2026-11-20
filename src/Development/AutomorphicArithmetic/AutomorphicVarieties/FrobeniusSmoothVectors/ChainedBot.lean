@@ -58,7 +58,7 @@ theorem UpperTheory.V.Fr.sharp2 :
   have hch : Chained (Ideal.span (Set.range f)) (2 * F.d + 1) := by
     apply c1ch _ N' (2 * F.d + 1) f
     · rw [nilradical_eq_zero, Ideal.zero_eq_bot]
-      exact Ideal.bot_prime
+      exact Ideal.isPrime_bot
     · exact ⟨L.O', inferInstance, inferInstance, inferInstance, inferInstance, inferInstance, inferInstance⟩
     · intro i
       have hi : f i ∈ RingHom.ker p := hk ▸ Ideal.subset_span ⟨i, rfl⟩

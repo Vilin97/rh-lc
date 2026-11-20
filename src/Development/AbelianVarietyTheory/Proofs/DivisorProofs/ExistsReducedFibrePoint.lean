@@ -23,7 +23,7 @@ theorem exists_reducedSpecialFibre_of_not_mem_basicOpen : ∀ (O : Type) [CommRi
     · rw [(IsDiscreteValuationRing.irreducible_iff_uniformizer ϖ).1 hϖ, Ideal.span_le]
       simpa using h1
   let k := IsLocalRing.ResidueField O
-  let pt : Spec (.of k) := (⟨⊥, Ideal.bot_prime⟩ : PrimeSpectrum k)
+  let pt : Spec (.of k) := (⟨⊥, Ideal.isPrime_bot⟩ : PrimeSpectrum k)
   have hpt : f z = Spec.map (CommRingCat.ofHom (IsLocalRing.residue O)) pt := by
     apply PrimeSpectrum.ext
     rw [hmax]

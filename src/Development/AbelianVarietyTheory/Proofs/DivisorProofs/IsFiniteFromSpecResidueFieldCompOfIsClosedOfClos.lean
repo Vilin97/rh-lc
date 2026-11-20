@@ -22,7 +22,7 @@ theorem isFinite_fromSpecResidueField_comp_of_isClosed_of_closedPoint : ∀ (R :
   rw [HasRingHomProperty.Spec_iff (P := @LocallyOfFiniteType)] at hf
   generalize Spec.preimage (X.left.fromSpecResidueField x ≫ X.hom) = φ at hf hpt ⊢
   let K := X.left.residueField x
-  let p0 : PrimeSpectrum K := ⟨⊥, Ideal.bot_prime⟩
+  let p0 : PrimeSpectrum K := ⟨⊥, Ideal.isPrime_bot⟩
   have hker : RingHom.ker φ.hom = maximalIdeal R := by
     have h1 := congrArg PrimeSpectrum.asIdeal (hpt p0)
     have h2 : (Spec.map φ).base p0 = PrimeSpectrum.comap φ.hom p0 := rfl

@@ -74,9 +74,9 @@ theorem fromC_of_tmap {em : o →+* ℂ} {C : TObj g k J b (spMap em) → Prop} 
 
 theorem mem_range_spMap {R K : Type} [CommRing R] [Field K] (y : R →+* K) (p : Sp R)
     (h : RingHom.ker y = (show PrimeSpectrum R from p).asIdeal) : p ∈ Set.range (spMap y) := by
-  refine ⟨(⟨⊥, Ideal.bot_prime⟩ : PrimeSpectrum K), ?_⟩
+  refine ⟨(⟨⊥, Ideal.isPrime_bot⟩ : PrimeSpectrum K), ?_⟩
   apply PrimeSpectrum.ext
-  change (PrimeSpectrum.comap y ⟨⊥, Ideal.bot_prime⟩).asIdeal = _
+  change (PrimeSpectrum.comap y ⟨⊥, Ideal.isPrime_bot⟩).asIdeal = _
   rw [← h, RingHom.ker_eq_comap_bot]
   rfl
 
@@ -449,7 +449,7 @@ theorem Covered.hasTh_iff (h : Covered Mat κ univ) (h₁ : Out.Laws) (h₂ : Ou
 theorem Covered.tmap (h : Covered Mat κ univ) (K : Type) [Field K] [IsAlgClosed K] (z : Sp K ⟶ U.toScheme)
     {s' : Sp K ⟶ Sp o} (t' : TObj g (N' ^ 2) J b s') (hs : s' = z ≫ U.ι ≫ Y.s) (v' : Ix g (N' ^ 2) → K)
     (hsh : t'.Shape Mat κ) (hth : t'.HasTh (𝟙 _) v') (hv' : SecCoord Y.de Y.th (z ≫ U.ι) v') : TMap t' univ z := by
-  have pt : Sp K := (⟨⊥, Ideal.bot_prime⟩ : PrimeSpectrum K)
+  have pt : Sp K := (⟨⊥, Ideal.isPrime_bot⟩ : PrimeSpectrum K)
   obtain ⟨R, _, x, v, t, hc, hp, hmap⟩ := h (z pt)
   haveI : IsOpenImmersion (x ≫ U.ι) := hc.1
   obtain ⟨r, hr⟩ := hp
@@ -542,7 +542,7 @@ theorem nonempty_wFam : Out.Laws → Out.Laws2 → ∀ (g : ℕ) (J : Type) [Fin
   obtain ⟨U, univ, hcov, hsub⟩ := exists_covered h₁ h₂ hn.two_le (pow_dvd_pow n hj3) ho hG
   refine ⟨WFam.mk Y U univ (hcov.dense hG) (fun R _ x v => hcov.hasTh_iff h₁ h₂ ho R x v) ?_⟩
   intro K _ _ x t' v hsh hth hsc
-  have pt : Sp K := (⟨⊥, Ideal.bot_prime⟩ : PrimeSpectrum K)
+  have pt : Sp K := (⟨⊥, Ideal.isPrime_bot⟩ : PrimeSpectrum K)
   obtain ⟨R, _, x1, v1, t1, hc, hx1⟩ := exists_chart hG hB K x t' v hsh hth hsc pt
   have hU : x pt ∈ (U : Set Y.MM) := hsub R x1 v1 t1 hc hx1
   have hrange : Set.range x ⊆ Set.range U.ι := by
