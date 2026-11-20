@@ -55,7 +55,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.subDet :
   rw [← hm] at H1 H2
   change (GroundTheory.Global.IdeleGroup.ideleModule K (AdelicGLn.det K 2 m) : ℝ) ≤ 1
   rw [GroundTheory.Global.IdeleGroup.ideleModule_eq]
-  refine mul_le_one₀ (Finset.prod_le_one (fun _ _ => by positivity)
+  refine mul_le_one₀ (Finset.prod_le_one₀ (fun _ _ => by positivity)
     fun w _ => pow_le_one₀ (norm_nonneg _) (H1 w)) (finprod_nonneg fun _ => norm_nonneg _) ?_
   exact finprod_induction (fun x : ℝ => 0 ≤ x ∧ x ≤ 1) ⟨zero_le_one, le_rfl⟩
     (fun x y hx hy => ⟨mul_nonneg hx.1 hy.1, mul_le_one₀ hx.2 hy.1 hy.2⟩)

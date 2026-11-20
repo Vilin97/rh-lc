@@ -85,7 +85,7 @@ theorem op_add (s₁ s₂ : Sym m n) (f : PX m n) : op (s₁ + s₂) f = op s₁
   rw [op_eq_sum (s₁ + s₂) _ MvPolynomial.support_add, op_eq_sum s₁ (s₁.support ∪ s₂.support) Finset.subset_union_left,
     op_eq_sum s₂ (s₁.support ∪ s₂.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun t _ => ?_
-  rw [coeff_add, add_smul]
+  rw [MvPolynomial.coeff_add, add_smul]
 
 theorem op_smul (c : ℂ) (s : Sym m n) (f : PX m n) : op (c • s) f = c • op s f := by
   rw [op_eq_sum (c • s) s.support MvPolynomial.support_smul, op]
@@ -149,9 +149,9 @@ theorem op_renameL (p : PX m n) (s : Sym m n) (f : PX m n) : op (rename Sum.inl 
   conv_rhs => rw [p.as_sum, Finset.sum_mul]
   rw [op_sum]
   refine Finset.sum_congr rfl fun μ _ => ?_
-  have h1 : (monomial (Finsupp.mapDomain Sum.inl μ) (coeff μ p) : Sym m n) =
-      coeff μ p • monomial (Finsupp.mapDomain Sum.inl μ) 1 := by rw [smul_monomial, smul_eq_mul, mul_one]
-  have h2 : (monomial μ (coeff μ p) : PX m n) = coeff μ p • monomial μ 1 := by rw [smul_monomial, smul_eq_mul, mul_one]
+  have h1 : (monomial (Finsupp.mapDomain Sum.inl μ) (AddMonoidAlgebra.coeff p μ) : Sym m n) =
+      AddMonoidAlgebra.coeff p μ • monomial (Finsupp.mapDomain Sum.inl μ) 1 := by rw [smul_monomial, smul_eq_mul, mul_one]
+  have h2 : (monomial μ (AddMonoidAlgebra.coeff p μ) : PX m n) = AddMonoidAlgebra.coeff p μ • monomial μ 1 := by rw [smul_monomial, smul_eq_mul, mul_one]
   rw [rename_monomial, h1, h2, smul_mul_assoc, op_smul, op_mulL, smul_mul_assoc]
 
 theorem opMono_inr (γ δ : σ →₀ ℕ) :

@@ -36,7 +36,7 @@ theorem fock_lattice_add_mem {p : ℕ} (hV : ValuationProperties p O) {σ : Type
   obtain ⟨-, -, hVadd, -, -, -⟩ := id hV
   rw [mem_fock_lattice_iff_coeff hV] at hF hG ⊢
   intro m
-  rw [coeff_add]
+  rw [MvPolynomial.coeff_add]
   calc (0 : WithTop ℚ)
       ≤ min (vK p (F.coeff m) + halfFactorialValuation p m) (vK p (G.coeff m) + halfFactorialValuation p m) := le_min (hF m) (hG m)
     _ = min (vK p (F.coeff m)) (vK p (G.coeff m)) + halfFactorialValuation p m := min_add_add_right _ _ _

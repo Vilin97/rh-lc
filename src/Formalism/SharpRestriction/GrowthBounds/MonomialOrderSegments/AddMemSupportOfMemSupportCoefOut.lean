@@ -77,7 +77,7 @@ theorem pge_zero (n : WithTop ℤ) : pge n (0 : MvPolynomial σ (LaurentPolynomi
 
 theorem pge_add {n : WithTop ℤ} {F G : MvPolynomial σ (LaurentPolynomial R)} (hF : pge n F)
     (hG : pge n G) : pge n (F + G) := by
-  intro β; rw [coeff_add]; exact le_lord_add (hF β) (hG β)
+  intro β; rw [MvPolynomial.coeff_add]; exact le_lord_add (hF β) (hG β)
 
 theorem pge_sum {ι : Type} {n : WithTop ℤ} (s : Finset ι)
     (f : ι → MvPolynomial σ (LaurentPolynomial R)) (h : ∀ i ∈ s, pge n (f i)) :
@@ -375,7 +375,7 @@ theorem coefOut_add (μ : L × Fin r →₀ ℕ) (F G : MvPolynomial (L × Fin r
     coefOut_eq_sum out μ G (F.support ∪ G.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun α _ => ?_
   split_ifs
-  · rw [coeff_add, map_add]
+  · rw [MvPolynomial.coeff_add, map_add]
   · rw [add_zero]
 
 theorem coefOut_smul (μ : L × Fin r →₀ ℕ) (a : K) (F : MvPolynomial (L × Fin r) K) :
@@ -430,7 +430,7 @@ theorem coeff_coefOut (μ β : L × Fin r →₀ ℕ) (F : MvPolynomial (L × Fi
       · rfl
       · rfl
   | add p q hp hq =>
-    rw [coefOut_add, coeff_add, hp, hq, coeff_add]
+    rw [coefOut_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]
     split_ifs <;> simp
 
 theorem eOut_eq_zero_of_mem_support_coefOut {μ β : L × Fin r →₀ ℕ} {F : MvPolynomial (L × Fin r) K}

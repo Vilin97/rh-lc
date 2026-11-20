@@ -55,7 +55,7 @@ private lemma polCoef_pderiv {R₀ : Type} [CommRing R₀] (p : ℕ) {g N : ℕ}
 
 private lemma polCoef_span {R : Type} [CommRing R] {g N : ℕ} (f : MvPolynomial (Fin g) R)
     (hf : f ∈ Ideal.span (Set.range fun j : Fin g => (MvPolynomial.X j : MvPolynomial (Fin g) R) ^ N)) :
-    ∀ m : Fin g →₀ ℕ, (∀ i, m i < N) → MvPolynomial.coeff m f = 0 := by
+    ∀ m : Fin g →₀ ℕ, (∀ i, m i < N) → AddMonoidAlgebra.coeff f m = 0 := by
   rw [Ideal.mem_span_range_iff_exists_fun] at hf
   obtain ⟨c, rfl⟩ := hf
   intro m hm
@@ -71,7 +71,7 @@ theorem coeff_dvd_of_aeval_add_sq_zero :
   (∀ {R₀ : Type} [CommRing R₀] (p : ℕ) [Fact p.Prime] (g N : ℕ) (G : MvPolynomial (Fin g) R₀),
     (∀ (S : Type) [CommRing S] [Algebra R₀ S], (p : S) = 0 → ∀ a e : Fin g → S, (∀ i, a i ^ N = 0) → (∀ i j, e i * e j = 0) →
       MvPolynomial.aeval (a + e) G = MvPolynomial.aeval a G) →
-    ∀ m : Fin g →₀ ℕ, (∀ i, m i < N) → (∃ i, ¬ p ∣ m i) → ∃ r : R₀, MvPolynomial.coeff m G = p * r) := by
+    ∀ m : Fin g →₀ ℕ, (∀ i, m i < N) → (∃ i, ¬ p ∣ m i) → ∃ r : R₀, AddMonoidAlgebra.coeff G m = p * r) := by
   intro R₀ _ p hp g N G H m hm ⟨i, hi⟩
   let I : Ideal R₀ := Ideal.span {(p : R₀)}
   let R := R₀ ⧸ I
@@ -106,7 +106,7 @@ theorem coeff_dvd_of_aeval_add_sq_zero :
     (fun j => lt_of_le_of_lt (by simp) (hm j))
   have hle : Finsupp.single i 1 ≤ m := Finsupp.single_le_iff.mpr hpos
   rw [MvPolynomial.coeff_map, MvPolynomial.coeff_pderiv, tsub_add_cancel_of_le hle] at h6
-  have h7 : MvPolynomial.coeff m G * (m i : R₀) ∈ I := by
+  have h7 : AddMonoidAlgebra.coeff G m * (m i : R₀) ∈ I := by
     rw [← Ideal.Quotient.eq_zero_iff_mem]
     have e : (((m - Finsupp.single i 1 : Fin g →₀ ℕ) i : ℕ) : R₀) + 1 = (m i : R₀) := by
       rw [Finsupp.tsub_apply, Finsupp.single_eq_same, Nat.cast_sub hpos]; simp
@@ -116,7 +116,7 @@ theorem coeff_dvd_of_aeval_add_sq_zero :
   have hc : IsCoprime (p : R₀) (m i : R₀) :=
     Nat.Coprime.cast ((Nat.Prime.coprime_iff_not_dvd hp.out).mpr hi)
   obtain ⟨u, v, huv⟩ := hc
-  exact ⟨u * MvPolynomial.coeff m G + v * s, by
-    linear_combination (-MvPolynomial.coeff m G) * huv - v * hs⟩
+  exact ⟨u * AddMonoidAlgebra.coeff G m + v * s, by
+    linear_combination (-AddMonoidAlgebra.coeff G m) * huv - v * hs⟩
 
 end GlobalTheory

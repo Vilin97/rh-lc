@@ -193,10 +193,10 @@ theorem nfac_bound {x b : Frame X.Ψ N} (hx : x ∈ X.dom) (hb : b ∈ Bor X.Ψ 
   rw [← h]
   refine ⟨hb0, ?_⟩
   rw [hbc, ← Finset.prod_pow_eq_pow_sum, ← Finset.prod_inv_distrib]
-  refine Finset.prod_le_prod (fun τ _ => inv_nonneg.2 (Finset.prod_nonneg fun i _ => (zpow_pos (hpos τ i) _).le))
+  refine Finset.prod_le_prod₀ (fun τ _ => inv_nonneg.2 (Finset.prod_nonneg fun i _ => (zpow_pos (hpos τ i) _).le))
     fun τ _ => ?_
   rw [← Finset.prod_pow_eq_pow_sum, ← Finset.prod_inv_distrib]
-  refine Finset.prod_le_prod (fun i _ => inv_nonneg.2 (zpow_pos (hpos τ i) _).le) fun i _ => ?_
+  refine Finset.prod_le_prod₀ (fun i _ => inv_nonneg.2 (zpow_pos (hpos τ i) _).le) fun i _ => ?_
   rcases le_or_gt X.p0 i with hi | hi
   · obtain ⟨m, hm⟩ := Int.eq_ofNat_of_zero_le ((hla τ i).1 hi)
     rw [hm, zpow_natCast, Int.natAbs_natCast, ← inv_pow]

@@ -20,7 +20,7 @@ theorem mem_of_residue_map_mem_specialIdeal {K : Type} [DecidableEq K] {ι : K �
     rw [MvPolynomial.mem_map_C_iff]
     intro d
     rw [← IsLocalRing.residue_eq_zero_iff]
-    have h := congrArg (MvPolynomial.coeff d) hgf
+    have h := congrArg (AddMonoidAlgebra.coeff · d) hgf
     rw [MvPolynomial.coeff_map, MvPolynomial.coeff_map] at h
     rw [MvPolynomial.coeff_sub, map_sub, h, sub_self]
   have := W.add_mem hker hg

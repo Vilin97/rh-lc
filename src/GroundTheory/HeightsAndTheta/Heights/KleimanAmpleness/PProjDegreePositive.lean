@@ -142,7 +142,7 @@ theorem le_ker_constantCoeff (q : Ideal (MRing (fun _ : Unit => ι₀) F)) (hq :
     intro h'
     have := congrFun h' ()
     simp [blockWeight] at this)] at h0
-  have hu : IsUnit (C (coeff 0 p) : MRing (fun _ : Unit => ι₀) F) :=
+  have hu : IsUnit (C (AddMonoidAlgebra.coeff p 0) : MRing (fun _ : Unit => ι₀) F) :=
     (isUnit_iff_ne_zero.mpr (by rwa [← constantCoeff_eq])).map C
   exact hq.isPrime.ne_top (Ideal.eq_top_of_isUnit_mem _ h0 hu)
 

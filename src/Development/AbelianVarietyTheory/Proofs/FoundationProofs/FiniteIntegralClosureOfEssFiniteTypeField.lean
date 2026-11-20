@@ -36,7 +36,7 @@ theorem finiteDimensional_algebraicClosure_of_essFiniteType (K L : Type*) [Field
       rfl
     have h2 : q i = 0 := by
       ext m
-      have h3 := congrArg (MvPolynomial.coeff m) h1
+      have h3 := congrArg (AddMonoidAlgebra.coeff · m) h1
       simp only [MvPolynomial.coeff_sum, mul_comm _ (MvPolynomial.C _), MvPolynomial.coeff_C_mul,
         MvPolynomial.coeff_map, MvPolynomial.coeff_zero, mul_comm (b _), ← Algebra.smul_def] at h3
       exact linearIndependent_iff'.mp b.linearIndependent t (fun j => (q j).coeff m) h3 i hi

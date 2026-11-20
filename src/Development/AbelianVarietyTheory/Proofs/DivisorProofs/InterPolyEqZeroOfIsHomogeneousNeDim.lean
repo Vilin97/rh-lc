@@ -11,7 +11,7 @@ theorem interPoly_eq_zero_of_isHomogeneous (F : Type) [Field F] (Y : Var F) (κ 
   rw [P.as_sum, map_sum]
   refine Finset.sum_eq_zero fun d hd => ?_
   have hw : Finsupp.weight 1 d = k := hP (mem_support_iff.mp hd)
-  have e : monomial d (coeff d P) = coeff d P • basisMonomials κ ℝ d := by
+  have e : monomial d (AddMonoidAlgebra.coeff P d) = AddMonoidAlgebra.coeff P d • basisMonomials κ ℝ d := by
     rw [coe_basisMonomials, smul_monomial, smul_eq_mul, mul_one]
   rw [e, map_smul, interPoly, Module.Basis.constr_basis, dif_neg, smul_zero]
   rintro ⟨s, hs⟩

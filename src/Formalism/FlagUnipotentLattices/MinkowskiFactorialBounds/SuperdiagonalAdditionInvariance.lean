@@ -245,7 +245,7 @@ theorem involution_well_defined : TauWell := by
 theorem orbit_count_formula : OmCount := by
   intro P Om H hH
   calc (2:ℝ)^Om.card = ∏ p ∈ Om, (2:ℝ) := by simp
-    _ ≤ ∏ p ∈ Om, H p := Finset.prod_le_prod (fun _ _ => by norm_num) hH
+    _ ≤ ∏ p ∈ Om, H p := Finset.prod_le_prod₀ (fun _ _ => by norm_num) hH
 
 theorem gauss_summand_formula : GaussSummand := by
   intro U₀ U₁ _ _ φ₀ φ₁ h
@@ -478,13 +478,13 @@ theorem fourth_reduction_identity : Step4 := by
       calc g p0 * ∏ p ∈ univ.erase p0, g p ≤ ((2 : ℝ) ^ κ)⁻¹ * 1 := by
             apply mul_le_mul
             · simp only [hg, if_pos hp0]; exact hq2 p0
-            · exact Finset.prod_le_one (fun p _ => hg0 p) (fun p _ => hg1 p)
+            · exact Finset.prod_le_one₀ (fun p _ => hg0 p) (fun p _ => hg1 p)
             · exact Finset.prod_nonneg fun p _ => hg0 p
             · positivity
         _ = _ := mul_one _
     calc ∏ p, ∑ x : D p, w p x * ‖(if p ∈ A then aN p x else aZ p x)‖ ^ 2
         ≤ ∏ p, (H p ^ c * (H p ^ c * ngen p)) * g p := by
-          refine Finset.prod_le_prod (fun p _ => Finset.sum_nonneg fun x _ => mul_nonneg (hw p x) (sq_nonneg _))
+          refine Finset.prod_le_prod₀ (fun p _ => Finset.sum_nonneg fun x _ => mul_nonneg (hw p x) (sq_nonneg _))
             fun p _ => ?_
           have hb : H p ^ c * nn p ≤ H p ^ c * (H p ^ c * ngen p) :=
             mul_le_mul_of_nonneg_left (hgen p) (hHc p).le

@@ -36,7 +36,7 @@ theorem factValA {K : Type u} [NormedField K] [IsUltrametricDist K] [CharZero K]
   rw [hmf, norm_prod]
   calc ∏ i ∈ κ.support, ‖(((κ i).factorial : ℕ) : K)‖
       ≤ ∏ i ∈ κ.support, ‖(l : K)‖ ^ ((κ i : ℝ) / ((l : ℝ) - 1) - L) :=
-        Finset.prod_le_prod (fun i _ => norm_nonneg _) hcoord
+        Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) hcoord
     _ = ‖(l : K)‖ ^ (∑ i ∈ κ.support, ((κ i : ℝ) / ((l : ℝ) - 1) - L)) :=
         (Real.rpow_sum_of_pos hpi0 _ _).symm
     _ ≤ ‖(l : K)‖ ^ ((∑ i, (κ i : ℝ) / ((l : ℝ) - 1)) - (Fintype.card ι : ℝ) * L) := by

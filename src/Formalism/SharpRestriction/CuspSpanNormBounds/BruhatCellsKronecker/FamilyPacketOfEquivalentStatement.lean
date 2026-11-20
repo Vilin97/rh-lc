@@ -688,7 +688,7 @@ theorem term_L2 {C' Cl Cg cb Cu cT CT C0 A C : ℝ} (hH : Cnt.Hyp D large₂ u u
     have h1 : 0 ≤ nV D (Tu D u) (Tu D u') (ZhatL (X.fl t) (X.fl' t)) τ := by
       unfold nV; exact D.R.k_even.pow_nonneg _
     exact div_nonneg (mul_nonneg h1 (d_hsNormSq_nonneg _)) (Nat.cast_nonneg _)
-  have P := Finset.prod_le_prod (s := Finset.univ) (fun τ _ => nn τ) (fun τ _ => each τ)
+  have P := Finset.prod_le_prod₀ (s := Finset.univ) (fun τ _ => nn τ) (fun τ _ => each τ)
   rw [Finset.prod_div_distrib, Finset.prod_mul_distrib, Finset.prod_mul_distrib, Finset.prod_inv_distrib,
     d_dims Y hH.1 ha hb] at P
   have e : aT X t ^ 2 = Y.volR t ^ 2 * ∏ τ, hsNormSq ((Y.A τ).J (Y.νR t τ) (Y.γ t τ)) := by

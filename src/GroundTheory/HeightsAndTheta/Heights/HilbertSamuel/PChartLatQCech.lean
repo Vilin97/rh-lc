@@ -79,7 +79,7 @@ theorem mem_idealOverQ {p : MRingOver ℚ ι} {d : K → ℕ} (hp : IsMultiHomog
     intro m hm
     apply hp m
     rw [MvPolynomial.mem_support_iff] at hm ⊢
-    have h1 := congrArg (MvPolynomial.coeff m) hG'
+    have h1 := congrArg (AddMonoidAlgebra.coeff · m) hG'
     rw [MvPolynomial.coeff_map, MvPolynomial.coeff_smul] at h1
     intro h2
     rw [h2, smul_zero] at h1

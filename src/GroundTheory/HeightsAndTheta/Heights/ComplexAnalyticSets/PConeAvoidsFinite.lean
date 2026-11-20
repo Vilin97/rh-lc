@@ -82,7 +82,7 @@ theorem ConeAvoidsFinite.proof : ConeAvoidsFinite.Statement := by
     have hdeg : s.degree = k := by
       have := hq (mem_support_iff.mp hs)
       rw [Finsupp.degree_eq_weight_one]; exact this
-    have hCs : monomial s (coeff s q) = pullback A (C (coeff s q)) * monomial s 1 := by
+    have hCs : monomial s (AddMonoidAlgebra.coeff q s) = pullback A (C (AddMonoidAlgebra.coeff q s)) * monomial s 1 := by
       simp [pullback, C_mul_monomial]
     rw [hCs]
     refine hsmul _ _ ?_

@@ -30,8 +30,8 @@ def LemmaDetPoly : Prop :=
     (r : G →* (X → Matrix n n K)),
     (∀ (g : G) (k : ℕ), FromT T (fun x => (Matrix.charpolyRev (r g x)).coeff k)) →
     ∀ (m : ℕ) (a : Fin m → X → Matrix n n K), (∀ i, a i ∈ tSpan T r) →
-    ∀ s : Fin m →₀ ℕ, FromT T (fun x => MvPolynomial.coeff s
-      (Matrix.det (∑ i, (MvPolynomial.X i : MvPolynomial (Fin m) K) • (a i x).map MvPolynomial.C)))
+    ∀ s : Fin m →₀ ℕ, FromT T (fun x => AddMonoidAlgebra.coeff (Matrix.det (∑ i, (MvPolynomial.X i : MvPolynomial (Fin m) K) • (a i x).map MvPolynomial.C))
+      s)
 
 def LemmaDetSub : Prop :=
   ∀ (O : Type*) [CommRing O] [IsDomain O] (X' G : Type*) [Monoid G] (T' : Subalgebra O (X' → O))

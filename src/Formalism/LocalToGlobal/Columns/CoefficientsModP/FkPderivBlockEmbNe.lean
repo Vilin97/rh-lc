@@ -98,10 +98,10 @@ section Rat
 variable {K : Type} [Field K] (K0 : Subfield K)
 
 theorem fk_coeff_mem {σ : Type} {P : MvPolynomial σ K} (hP : P ∈ (map (σ := σ) K0.subtype).range) (m : σ →₀ ℕ) :
-    coeff m P ∈ K0 := by
+    AddMonoidAlgebra.coeff P m ∈ K0 := by
   obtain ⟨Q, rfl⟩ := hP
   rw [MvPolynomial.coeff_map]
-  exact (coeff m Q).2
+  exact (AddMonoidAlgebra.coeff Q m).2
 
 theorem fk_int_mem {σ : Type} (P : MvPolynomial σ ℤ) :
     map (Int.castRingHom K) P ∈ (map (σ := σ) K0.subtype).range := by
@@ -170,10 +170,10 @@ theorem fk_descent {σ κ : Type} [Fintype κ] (v : κ → MvPolynomial σ K) (h
     rw [coeff_sum, coeff_zero]
     simp only [coeff_smul, smul_eq_mul, sub_mul, Finset.sum_sub_distrib]
     rw [sub_eq_zero]
-    have h1 : coeff m (∑ i, c i • v i) = ∑ i, c i * coeff m (v i) := by
+    have h1 : AddMonoidAlgebra.coeff (∑ i, c i • v i) m = ∑ i, c i * AddMonoidAlgebra.coeff (v i) m := by
       rw [coeff_sum]
       simp only [coeff_smul, smul_eq_mul]
-    have h2 : ((π (coeff m (∑ i, c i • v i)) : K0) : K) = coeff m (∑ i, c i • v i) :=
+    have h2 : ((π (AddMonoidAlgebra.coeff (∑ i, c i • v i) m) : K0) : K) = AddMonoidAlgebra.coeff (∑ i, c i • v i) m :=
       congrArg (fun a : K0 => (a : K)) (hπ' ⟨_, fk_coeff_mem K0 hx m⟩)
     rw [← h1, ← h2, h1, map_sum]
     push_cast

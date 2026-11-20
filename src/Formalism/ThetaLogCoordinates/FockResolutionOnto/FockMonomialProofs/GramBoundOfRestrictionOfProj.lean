@@ -12,17 +12,17 @@ section Gen
 variable {p : ℕ} [Fact p.Prime] {σ : Type}
 
 private theorem coeff_initPart_eq_ite (v : σ) (e : ℕ) (f : MvPolynomial σ ℚ_[p]) (n : σ →₀ ℕ) :
-    coeff n (initPart v e f) = if n v = e then coeff n f else 0 := by
+    AddMonoidAlgebra.coeff (initPart v e f) n = if n v = e then AddMonoidAlgebra.coeff f n else 0 := by
   classical
   unfold initPart
   rw [coeff_sum]
-  simp only [apply_ite (coeff n), coeff_monomial, coeff_zero]
+  simp only [apply_ite (AddMonoidAlgebra.coeff · n), coeff_monomial, coeff_zero]
   rw [Finset.sum_eq_single n]
   · by_cases h : n v = e <;> simp [h]
   · intro b _ hb
     simp [hb]
   · intro hn
-    have h0 : coeff n f = 0 := by simpa [mem_support_iff] using hn
+    have h0 : AddMonoidAlgebra.coeff f n = 0 := by simpa [mem_support_iff] using hn
     simp [h0]
 
 theorem p_pow_ne_zero (n : ℕ) : ((p : ℚ_[p]) ^ n) ≠ 0 :=
@@ -32,14 +32,14 @@ noncomputable def strip (p : ℕ) [Fact p.Prime] (v : σ) (e : ℕ) :
     MvPolynomial σ ℚ_[p] →ₗ[ℚ_[p]] MvPolynomial σ ℚ_[p] where
   toFun f := (initPart v e f).divMonomial (Finsupp.single v e)
   map_add' x y := by
-    rw [initPart_add]; ext m; simp only [coeff_divMonomial, coeff_add]
+    rw [initPart_add]; ext m; simp only [coeff_divMonomial, MvPolynomial.coeff_add]
   map_smul' a x := by
     rw [initPart_smul]; ext m; simp only [coeff_divMonomial, coeff_smul, RingHom.id_apply]
 
 theorem coeff_strip (v : σ) (e : ℕ) (n : σ →₀ ℕ) (f : MvPolynomial σ ℚ_[p]) :
-    coeff n (strip p v e f) = if n v = 0 then coeff (Finsupp.single v e + n) f else 0 := by
+    AddMonoidAlgebra.coeff (strip p v e f) n = if n v = 0 then AddMonoidAlgebra.coeff f (Finsupp.single v e + n) else 0 := by
   classical
-  show coeff n ((initPart v e f).divMonomial (Finsupp.single v e)) = _
+  show AddMonoidAlgebra.coeff ((initPart v e f).divMonomial (Finsupp.single v e)) n = _
   rw [coeff_divMonomial, coeff_initPart_eq_ite]
   by_cases h : n v = 0 <;> simp [h]
 
@@ -97,13 +97,13 @@ private theorem fock_eq_sum_coeff_mul_factorial (F G : MvPolynomial σ ℚ_[p]) 
   have h0 : F.coeff m = 0 := by simpa [mem_support_iff] using hm
   rw [h0, zero_mul, zero_mul]
 
-theorem fock_eq_zero_of (F G : MvPolynomial σ ℚ_[p]) (h : ∀ m, coeff m F = 0 ∨ coeff m G = 0) : fock p F G = 0 := by
+theorem fock_eq_zero_of (F G : MvPolynomial σ ℚ_[p]) (h : ∀ m, AddMonoidAlgebra.coeff F m = 0 ∨ AddMonoidAlgebra.coeff G m = 0) : fock p F G = 0 := by
   unfold fock
   refine Finset.sum_eq_zero fun m _ => ?_
   rcases h m with h1 | h1 <;> simp [h1]
 
 theorem coeff_pow_mul_ne (v : σ) (e : ℕ) (y : MvPolynomial σ ℚ_[p]) (hy : y ∈ FreeOf p v) (m : σ →₀ ℕ)
-    (hm : m v ≠ e) : coeff m (X v ^ e * y) = 0 := by
+    (hm : m v ≠ e) : AddMonoidAlgebra.coeff (X v ^ e * y) m = 0 := by
   classical
   rw [X_pow_eq_monomial, coeff_monomial_mul']
   split_ifs with h
@@ -127,7 +127,7 @@ theorem fock_pow_mul (v : σ) (e : ℕ) (y z : MvPolynomial σ ℚ_[p]) (hy : y 
     rw [mem_restrictSupport_iff] at hy
     exact hy (Finset.mem_coe.mpr hm)
   have hcoeff : ∀ (u : MvPolynomial σ ℚ_[p]) (m : σ →₀ ℕ),
-      coeff (Finsupp.single v e + m) (X v ^ e * u) = coeff m u := by
+      AddMonoidAlgebra.coeff (X v ^ e * u) (Finsupp.single v e + m) = AddMonoidAlgebra.coeff u m := by
     intro u m
     rw [X_pow_eq_monomial, coeff_monomial_mul, one_mul]
   have hsub : (X v ^ e * y).support ⊆ y.support.image (fun m => Finsupp.single v e + m) := by

@@ -22,7 +22,7 @@ theorem inWj_add {P Q : MvPolynomial σ (KK O)} {j : ℕ} (hP : InWj w P j) (hQ 
     InWj w (P + Q) j := fun m => by
   obtain ⟨a, ha⟩ := hP m
   obtain ⟨b, hb⟩ := hQ m
-  exact ⟨a + b, by rw [coeff_add, ha, hb, ← map_add]; ring_nf⟩
+  exact ⟨a + b, by rw [MvPolynomial.coeff_add, ha, hb, ← map_add]; ring_nf⟩
 
 theorem inWj_neg {P : MvPolynomial σ (KK O)} {j : ℕ} (hP : InWj w P j) : InWj w (-P) j := fun m => by
   obtain ⟨a, ha⟩ := hP m
@@ -448,7 +448,7 @@ theorem residue_zero_mem_order_one {p : ℕ} {O : Type} [CommRing O] [IsDomain O
     InWj S.w (MvPolynomial.map (algebraMap O (KK O)) P) 1 := by
   intro m
   have h1 : IsLocalRing.residue O (P.coeff m) = 0 := by
-    have := congrArg (MvPolynomial.coeff m) hP
+    have := congrArg (AddMonoidAlgebra.coeff · m) hP
     simpa [MvPolynomial.coeff_map] using this
   have h2 : P.coeff m ∈ IsLocalRing.maximalIdeal O := (IsLocalRing.residue_eq_zero_iff _).mp h1
   rw [S.w_irr.maximalIdeal_eq, Ideal.mem_span_singleton] at h2
@@ -1150,7 +1150,7 @@ theorem order_mem_add {w : O} {P Q : MvPolynomial σ (KK O)} {j : ℕ} (hP : InW
     InWj w (P + Q) j := fun m => by
   obtain ⟨a, ha⟩ := hP m
   obtain ⟨b, hb⟩ := hQ m
-  exact ⟨a + b, by rw [coeff_add, ha, hb, ← map_add, mul_add]⟩
+  exact ⟨a + b, by rw [MvPolynomial.coeff_add, ha, hb, ← map_add, mul_add]⟩
 
 theorem inWPow_neg {w : O} {P : MvPolynomial σ (KK O)} {j : ℕ} (hP : InWj w P j) : InWj w (-P) j := fun m => by
   obtain ⟨a, ha⟩ := hP m
@@ -3114,10 +3114,10 @@ theorem leading_part_normal_degree {O : Type} [CommRing O] [IsDomain O] (r o : �
 
 theorem uniformiser_power_leading_mem_order {O : Type} [CommRing O] [IsDomain O] (w : O) (j : ℕ) (P : MvPolynomial (TV n' k) O) :
     InWj w (MvPolynomial.map (algebraMap O (KK O)) (C (w ^ j) * P)) j := fun m =>
-  ⟨coeff m P, by rw [coeff_map, coeff_C_mul]⟩
+  ⟨AddMonoidAlgebra.coeff P m, by rw [coeff_map, coeff_C_mul]⟩
 
 theorem integral_map_mem_integral {O : Type} [CommRing O] [IsDomain O] (P : MvPolynomial (TV n' k) O) :
-    InA (MvPolynomial.map (algebraMap O (KK O)) P) := fun m => ⟨coeff m P, by rw [coeff_map]⟩
+    InA (MvPolynomial.map (algebraMap O (KK O)) P) := fun m => ⟨AddMonoidAlgebra.coeff P m, by rw [coeff_map]⟩
 
 theorem map_supported_fraction_field {O : Type} [CommRing O] [IsDomain O] (s : Set (TV n' k)) (P : MvPolynomial (TV n' k) O)
     (h : P ∈ supported O s) : MvPolynomial.map (algebraMap O (KK O)) P ∈ supported (KK O) s :=
@@ -3305,7 +3305,7 @@ theorem row_power_mem_supported (Fr : Frames n' r) (hrk : r ≤ k) (s : ℤ) (St
 
 theorem inWPow_one_of_C_w_mul (w : O) (P : MvPolynomial (TV n' k) O) :
     InWj w (C (algebraMap O (KK O) w) * MvPolynomial.map (algebraMap O (KK O)) P) 1 := fun m =>
-  ⟨coeff m P, by rw [coeff_C_mul, coeff_map, pow_one, map_mul]⟩
+  ⟨AddMonoidAlgebra.coeff P m, by rw [coeff_C_mul, coeff_map, pow_one, map_mul]⟩
 
 theorem uniformiser_variable_pow_split (w : O) (v : TV n' k) (P : ℕ) (hP : 2 ≤ P) :
     (C w * X v : MvPolynomial (TV n' k) O) ^ P = C (w ^ 2) * (C (w ^ (P - 2)) * X v ^ P) := by
@@ -3956,7 +3956,7 @@ theorem bx_Gr_add {P Q : MvPolynomial (TV n' k) (KK O)} (hP : bx_Gr w r P) (hQ :
   fun m => by
     obtain ⟨a, ha⟩ := hP m
     obtain ⟨b, hb⟩ := hQ m
-    exact ⟨a + b, by rw [coeff_add, ha, hb, ← map_add]; ring_nf⟩
+    exact ⟨a + b, by rw [MvPolynomial.coeff_add, ha, hb, ← map_add]; ring_nf⟩
 
 theorem bx_Gr_zero : bx_Gr w r (0 : MvPolynomial (TV n' k) (KK O)) := fun m => ⟨0, by simp⟩
 
@@ -4688,9 +4688,9 @@ theorem bc_restTail (D : Formalism.BasicNotions.D7) : bc_RestTail D := by
   obtain ⟨hA, hoQ, hnd, h0, htail, _⟩ := hk
   obtain ⟨T, hTdef⟩ : ∃ T, T = subst p n' O S.w n' r g ka - ka0 := ⟨_, rfl⟩
   rw [← hTdef]
-  have hc1 : ∀ m, ∃ c : O, coeff m T = algebraMap O (KK O) (S.w ^ (o + 1) * c) := by
+  have hc1 : ∀ m, ∃ c : O, AddMonoidAlgebra.coeff T m = algebraMap O (KK O) (S.w ^ (o + 1) * c) := by
     rw [hTdef]; exact htail
-  have hc2 : ∀ m, ∃ c : O, coeff m T = algebraMap O (KK O) (S.w ^ (normDeg r m) * c) := by
+  have hc2 : ∀ m, ∃ c : O, AddMonoidAlgebra.coeff T m = algebraMap O (KK O) (S.w ^ (normDeg r m) * c) := by
     intro m
     obtain ⟨c1, hc1⟩ := bx_coeff_normDeg S.w r hg hA m
     by_cases hm : m ∈ ka0.support
@@ -4709,7 +4709,7 @@ theorem bc_restTail (D : Formalism.BasicNotions.D7) : bc_RestTail D := by
   rw [T.as_sum]
   refine sum_mem fun m hm => ?_
   obtain ⟨x, c, hx1, hx2, hxc⟩ : ∃ (x : ℕ) (c : O), o + 1 ≤ x ∧ normDeg r m ≤ x ∧
-      coeff m T = algebraMap O (KK O) (S.w ^ x * c) := by
+      AddMonoidAlgebra.coeff T m = algebraMap O (KK O) (S.w ^ x * c) := by
     by_cases h : o + 1 ≤ normDeg r m
     · obtain ⟨c, hc⟩ := hc2 m; exact ⟨_, c, h, le_rfl, hc⟩
     · obtain ⟨c, hc⟩ := hc1 m; exact ⟨_, c, le_rfl, by omega, hc⟩
@@ -4986,7 +4986,7 @@ theorem components_preserve_valuation : ComponentsPreserveValuation := by
     exact G.support_sum_monomial_coeff.symm
   have key : (twistSub LL S (lastIdx n) (multidegreeComponent d G)).coeff m' = (twistSub LL S (lastIdx n) G).coeff m' := by
     conv_rhs => rw [hsplit]
-    rw [map_add, coeff_add, map_sum, coeff_sum, Finset.sum_eq_zero, add_zero]
+    rw [map_add, MvPolynomial.coeff_add, map_sum, coeff_sum, Finset.sum_eq_zero, add_zero]
     intro m hm
     apply (twist_substitution_weighted_homog LL S (lastIdx n) m (G.coeff m)).coeff_eq_zero
     intro h

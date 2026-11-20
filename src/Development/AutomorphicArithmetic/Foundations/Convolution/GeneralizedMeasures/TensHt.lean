@@ -89,7 +89,7 @@ private theorem module_le (q : Pl F) (x : AdelicGLn.FiniteAdelicGL E n)
     IdeleGroup.ideleModule_eq, heightOff, hP, one_mul]
   simp only [hg, hi, norm_one, one_pow, Finset.prod_const_one, one_mul]
   rw [e1, e2, ← Finset.prod_pow]
-  refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun v _ => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun v _ => ?_
   rw [hf]
   by_cases hb : AdeleBaseChange.below F v = q
   · have := hq ⟨v, liesOver_of_below hb⟩

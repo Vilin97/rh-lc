@@ -106,7 +106,7 @@ theorem colength_bound_at_two : ∀ (p : ℕ) [Fact p.Prime], AvFSt p → ∀ (E
       rw [a2, hsum, ← a1]; ring
     have hfin : (X.v (p : X.C) : ℝ) ^ ((f : ℝ) * Dw.q * (1 + vd / 2)) ≤ ∏ z, (xz z : ℝ) := by
       rw [hexp, Real.rpow_sum_of_pos hr0, Fintype.prod_sigma]
-      exact Finset.prod_le_prod (fun i _ => (Real.rpow_pos_of_pos hr0 _).le) fun i _ => hi i
+      exact Finset.prod_le_prod₀ (fun i _ => (Real.rpow_pos_of_pos hr0 _).le) fun i _ => hi i
     convert hfin using 1
 
 end GlobalTheory.CharDepth

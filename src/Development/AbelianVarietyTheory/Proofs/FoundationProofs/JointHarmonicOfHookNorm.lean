@@ -37,7 +37,7 @@ theorem fock_add_left {σ : Type} (P P' Q : MvPolynomial σ ℂ) :
   rw [key _ _ support_add, key P _ Finset.subset_union_left, key P' _ Finset.subset_union_right,
     ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun m _ => ?_
-  rw [coeff_add]; ring
+  rw [MvPolynomial.coeff_add]; ring
 
 theorem fock_monomial_left {σ : Type} (α : σ →₀ ℕ) (c : ℂ) (Q : MvPolynomial σ ℂ) :
     fock (monomial α c) Q = c * star (Q.coeff α) * (Formalism.A.mfact α : ℂ) := by
@@ -66,13 +66,13 @@ theorem mapDomain_add_inj (hf : Function.Injective f) (hg : Function.Injective g
 theorem coeff_rename_mul (hf : Function.Injective f) (hg : Function.Injective g)
     (hfg : ∀ x y, f x ≠ g y) (α : σ₁ →₀ ℕ) (β : σ₂ →₀ ℕ) (P : MvPolynomial σ₁ ℂ)
     (Q : MvPolynomial σ₂ ℂ) :
-    coeff (α.mapDomain f + β.mapDomain g) (rename f P * rename g Q) = coeff α P * coeff β Q := by
+    AddMonoidAlgebra.coeff (rename f P * rename g Q) (α.mapDomain f + β.mapDomain g) = AddMonoidAlgebra.coeff P α * AddMonoidAlgebra.coeff Q β := by
   classical
   induction P using MvPolynomial.induction_on' with
-  | add P P' h h' => simp only [map_add, add_mul, coeff_add, h, h']
+  | add P P' h h' => simp only [map_add, add_mul, MvPolynomial.coeff_add, h, h']
   | monomial α' x =>
     induction Q using MvPolynomial.induction_on' with
-    | add Q Q' h h' => simp only [map_add, mul_add, coeff_add, h, h']
+    | add Q Q' h h' => simp only [map_add, mul_add, MvPolynomial.coeff_add, h, h']
     | monomial β' y =>
       rw [rename_monomial, rename_monomial, monomial_mul, coeff_monomial, coeff_monomial,
         coeff_monomial]

@@ -119,7 +119,7 @@ theorem realZeta : GlobalTheory.Published.HarishChandraModules → ∀ D : D7, G
       (GlobalTheory.T.doublingHeightAtRealPlace_continuous_pos_le_one D s.V a ha w).1.comp ((GlobalTheory.AdelicU.continuous_projArch _ _ w).comp continuous_subtype_val)
     have hHpos : ∀ g, 0 < Hf g ∧ Hf g ≤ 1 := fun g =>
       ⟨Finset.prod_pos fun w _ => ((GlobalTheory.T.doublingHeightAtRealPlace_continuous_pos_le_one D s.V a ha w).2 _).1,
-        Finset.prod_le_one (fun w _ => ((GlobalTheory.T.doublingHeightAtRealPlace_continuous_pos_le_one D s.V a ha w).2 _).1.le)
+        Finset.prod_le_one₀ (fun w _ => ((GlobalTheory.T.doublingHeightAtRealPlace_continuous_pos_le_one D s.V a ha w).2 _).1.le)
           fun w _ => ((GlobalTheory.T.doublingHeightAtRealPlace_continuous_pos_le_one D s.V a ha w).2 _).2⟩
     have hzint : Integrable z mR :=
       (hIint.const_mul i0).congr (Filter.Eventually.of_forall fun g => (hz g).symm)

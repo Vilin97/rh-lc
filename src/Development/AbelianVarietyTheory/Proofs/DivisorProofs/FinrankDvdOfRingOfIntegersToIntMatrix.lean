@@ -10,7 +10,7 @@ theorem finrank_dvd_of_ringOfIntegers_to_matrix (E : Type) [Field E] [NumberFiel
     IsIntegralClosure.isLocalization ℤ ℚ E (𝓞 E)
   let g : 𝓞 E →+* Matrix (Fin r) (Fin r) ℚ := (Int.castRingHom ℚ).mapMatrix.comp ρ
   let S : Subalgebra ℚ (Matrix (Fin r) (Fin r) ℚ) := Algebra.adjoin ℚ (Set.range g)
-  letI : CommRing S := Algebra.adjoinCommRingOfComm ℚ (by
+  letI : CommRing S := Algebra.isMulCommutative_adjoin ℚ (by
     rintro _ ⟨a, rfl⟩ _ ⟨b, rfl⟩
     rw [← map_mul, mul_comm, map_mul])
   let g₁ : 𝓞 E →+* S := g.codRestrict S (fun a => Algebra.subset_adjoin ⟨a, rfl⟩)

@@ -38,7 +38,7 @@ theorem component_ne_zero_of_mem {p : MvPolynomial σ R} {a : ℕ} (ha : a ∈ w
   classical
   obtain ⟨d, hd, rfl⟩ := mem_weightSet.mp ha
   intro h
-  have := congrArg (coeff d) h
+  have := congrArg (AddMonoidAlgebra.coeff · d) h
   rw [coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at this
   exact mem_support_iff.mp hd this
 

@@ -47,7 +47,7 @@ theorem thmAOp7_of (hJ : ThmAJet7.{u}) : ThmAOp7.{u} := by
   have hjet := hJ K l d N0 N1 hl hl3 hd hde hnl h0 K0 hK0 ζ hζ be hbe x hx g hg0 hg U hU ε hε
     TT nu1 nu2 size h21 h1s spec κ ?_ ?_ hspec ?_ hcap hframe
   · rw [mul_assoc, norm_mul]
-    calc ‖coeff κ (∏ s : ZMod d, minorProd (rowOp (N1 := N1) TT T s) (p s) (hp s) (I s))‖ * _
+    calc ‖AddMonoidAlgebra.coeff (∏ s : ZMod d, minorProd (rowOp (N1 := N1) TT T s) (p s) (hp s) (I s)) κ‖ * _
         ≤ 1 * _ := mul_le_mul_of_nonneg_right (hPint κ) (norm_nonneg _)
       _ ≤ _ := by rw [one_mul]; exact hjet
   · intro s hs

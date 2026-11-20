@@ -31,8 +31,8 @@ theorem coeff_mon_divDer (m a : σ →₀ ℕ) (F : MvPolynomial σ Kf) :
     unfold divDer
     rw [coeff_sum]
     have hsingle : ∀ b ∈ F.support, b ≠ a →
-        coeff (a - m) (if m ≤ b then monomial (b - m) (F.coeff b * ((m.prod fun k j => (b k).choose j : ℕ) : Kf))
-          else 0) = 0 := by
+        AddMonoidAlgebra.coeff (if m ≤ b then monomial (b - m) (F.coeff b * ((m.prod fun k j => (b k).choose j : ℕ) : Kf))
+          else 0) (a - m) = 0 := by
       intro b _ hb
       split_ifs with hmb
       · rw [coeff_monomial, if_neg]
@@ -106,7 +106,7 @@ theorem padicVal_expFact_le' (p : ℕ) [hp : Fact p.Prime] {ι : Type} [Fintype 
   have hE0 : expFact α ≠ 0 := by
     rw [h2]
     exact Finset.prod_ne_zero_iff.2 fun s _ => Finset.prod_ne_zero_iff.2 fun c _ => Nat.factorial_ne_zero _
-  rw [h3, padicValNat.mul hMn0 hE0]
+  rw [h3, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hMn0 hE0]
   omega
 
 section St

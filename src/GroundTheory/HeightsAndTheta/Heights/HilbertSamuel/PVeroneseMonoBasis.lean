@@ -35,7 +35,7 @@ theorem linearIndependent_mono (D N : ℕ) :
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_zsmul, aeval_monoZ]
   have hp0 := VeroneseGenDeg.aeval_t_injective D hpa
-  have hc := congrArg (coeff (Finsupp.equivFunOnFinite.symm (adtEnum D N l))) hp0
+  have hc := congrArg (AddMonoidAlgebra.coeff · (Finsupp.equivFunOnFinite.symm (adtEnum D N l))) hp0
   rw [hp, coeff_sum, coeff_zero, Finset.sum_eq_single l (fun k _ hkl => ?_) (by simp)] at hc
   · rwa [coeff_smul, monoZ, coeff_monomial, if_pos rfl, smul_eq_mul, mul_one] at hc
   · rw [coeff_smul, monoZ, coeff_monomial, if_neg, smul_zero]

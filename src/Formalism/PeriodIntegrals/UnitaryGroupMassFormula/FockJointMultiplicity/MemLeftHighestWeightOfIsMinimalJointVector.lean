@@ -14,7 +14,7 @@ variable {σ : Type*}
 
 theorem coeff_diag (T : Module.End ℂ (MvPolynomial σ ℂ)) (w : (σ →₀ ℕ) → ℂ)
     (hT : ∀ m, T (monomial m 1) = w m • monomial m 1) (P : MvPolynomial σ ℂ) (e : σ →₀ ℕ) :
-    coeff e (T P) = w e * coeff e P := by
+    AddMonoidAlgebra.coeff (T P) e = w e * AddMonoidAlgebra.coeff P e := by
   classical
   refine MvPolynomial.induction_on' P (fun m a => ?_) (fun p q hp hq => ?_)
   · have h1 : monomial m a = a • monomial m (1 : ℂ) := by
@@ -27,7 +27,7 @@ theorem coeff_diag (T : Module.End ℂ (MvPolynomial σ ℂ)) (w : (σ →₀ �
       ring
     · rw [if_neg h]
       ring
-  · rw [map_add, coeff_add, coeff_add, hp, hq, mul_add]
+  · rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem eig_of_mem_support (T : Module.End ℂ (MvPolynomial σ ℂ)) (w : (σ →₀ ℕ) → ℂ)
     (hT : ∀ m, T (monomial m 1) = w m • monomial m 1) (P : MvPolynomial σ ℂ) (c : ℂ) (hP : T P = c • P)
@@ -58,7 +58,7 @@ theorem noVar_of_pderiv_eq_zero {P : MvPolynomial σ ℂ} {v : σ} (h : pderiv v
   classical
   intro e he
   by_contra hev
-  have hc : coeff (e - Finsupp.single v 1) (pderiv v P) = coeff e P * (e v : ℂ) := by
+  have hc : AddMonoidAlgebra.coeff (pderiv v P) (e - Finsupp.single v 1) = AddMonoidAlgebra.coeff P e * (e v : ℂ) := by
     conv_lhs => rw [P.as_sum]
     rw [map_sum, coeff_sum]
     simp only [pderiv_monomial, coeff_monomial]

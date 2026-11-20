@@ -34,7 +34,7 @@ def PairingSeriesLinearForm : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (X : Sys p) (Kc : Type) [Field Kc] [Algebra X.G.Kf Kc] [Infinite Kc] (j : ℕ)
     (P : DA X Kc j) (f : MvPowerSeries (X.ZA j) Kc) (l : XspC (X.Pj (j + 1)) Kc →ₗ[Kc] Kc) (R : MvPolynomial (X.ZA j) Kc),
     (∀ d0 : X.ZA j → Kc, eval d0 R = l (evD X Kc j d0 P)) →
-      l (pairD X Kc j P f) = ∑ n ∈ R.support, derAt X Kc j n f * coeff n R
+      l (pairD X Kc j P f) = ∑ n ∈ R.support, derAt X Kc j n f * AddMonoidAlgebra.coeff R n
 
 def XMid : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (X : Sys p) (Kc : Type) [Field Kc] [Algebra (K0 p) Kc] [Algebra X.G.Kf Kc] [CharZero Kc] (j : ℕ)

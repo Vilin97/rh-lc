@@ -12,7 +12,7 @@ def intO (O : Type) {K : Type} [CommRing O] [Field K] [Algebra O K] (k : ℕ) (�
   Submodule.map (mapAlgHom (Algebra.ofId O K)).toLinearMap (dualWeyl O k k ν)
 
 def Row0 {K : Type} [CommRing K] {k : ℕ} (f : MvPolynomial (Fin (k + 1) × Fin (k + 1)) K) (d : ℕ) : Prop :=
-  ∀ u, coeff u f ≠ 0 → rowDeg u 0 = d
+  ∀ u, AddMonoidAlgebra.coeff f u ≠ 0 → rowDeg u 0 = d
 
 def ContractionStandardLattice : Prop :=
   ∀ (p n' : ℕ) (R : RS p n') (mm : ℕ), 1 ≤ mm → ∀ (a ccl P Q : ℕ) (lam : Fin (mm + 1 + 1) → ℤ), Antitone lam →

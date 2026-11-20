@@ -47,7 +47,7 @@ theorem balanced_lower {ι : Type} [Fintype ι] (z : ι → ℝ) (hz : ∀ i, 0 
   have hcard : Fintype.card ι ≠ 0 := Fintype.card_ne_zero
   have hp : ∏ i, z i ≤ q ^ Fintype.card ι := by
     calc ∏ i, z i ≤ ∏ _i : ι, q :=
-          Finset.prod_le_prod (fun i _ => (hz i).le) (fun i _ => hle i)
+          Finset.prod_le_prod₀ (fun i _ => (hz i).le) (fun i _ => hle i)
       _ = q ^ Fintype.card ι := by simp
   have := pow_le_of_le_one hqpos.le hq1 hcard
   linarith
@@ -158,7 +158,7 @@ theorem reduction : ∀ (F : Type) [Field F] [NumberField F], IsTotallyReal F �
   have hprod : P ≤ ∏ w, (mob ρ (r * k) τ w).im := by
     rw [Finset.prod_congr rfl (fun w _ => hz w), Finset.prod_mul_distrib, hprodu, one_mul]
     have h1' : ∏ w, 1 / (A * ρ w l ^ 2) ≤ ∏ w, y' w :=
-      Finset.prod_le_prod (fun w _ => by
+      Finset.prod_le_prod₀ (fun w _ => by
         have hlw : ρ w l ≠ 0 := (map_ne_zero _).2 hl0
         positivity) (fun w _ => hlow w)
     refine le_trans ?_ h1'

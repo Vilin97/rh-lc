@@ -32,7 +32,7 @@ private theorem finiteModule_le_of_mem {K : Type} [Field K] [NumberField K]
     exact sub_nonneg.2 (h2 v)
   rw [h4, zetaWeight_add]
   refine mul_le_of_le_one_left (zetaWeight_nonneg _ _) ?_
-  refine Finset.prod_le_one (fun v _ => (Real.rpow_pos_of_pos (absNorm_asIdeal_pos v) _).le) fun v _ => ?_
+  refine Finset.prod_le_one₀ (fun v _ => (Real.rpow_pos_of_pos (absNorm_asIdeal_pos v) _).le) fun v _ => ?_
   refine Real.rpow_le_one_of_one_le_of_nonpos ?_ ?_
   · exact_mod_cast (HeightOneSpectrum.one_lt_absNorm v).le
   · have : (0 : ℝ) ≤ (((n - countFinsupp L) v : ℤ) : ℝ) := by exact_mod_cast hk v

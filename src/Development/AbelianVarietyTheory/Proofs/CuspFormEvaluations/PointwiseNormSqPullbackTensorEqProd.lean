@@ -188,7 +188,7 @@ theorem norm_polyDeriv_pullback_tensor_le (X : PT E) {q n : ℕ} {π : Vsp X.dim
     ((C ^ n * Real.sqrt (X.l2 1 s) ^ n) ^ 2) (fun v => by
       rw [pointwiseNormSq_pullback_tensor_eq_prod X hπ]
       calc ∏ k, X.ptN2 1 s (fun _ => π (v k)) ≤ ∏ _k : Fin n, C ^ 2 * X.l2 1 s :=
-            Finset.prod_le_prod (fun k _ => by unfold PT.ptN2; positivity)
+            Finset.prod_le_prod₀ (fun k _ => by unfold PT.ptN2; positivity)
               fun k _ => diagonal_pointwiseNormSq_le_l2 X hs hlam hmin _
         _ = _ := by
             rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin, ← mul_pow, ← pow_mul,

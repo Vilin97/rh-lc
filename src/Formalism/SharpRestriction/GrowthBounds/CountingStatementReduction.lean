@@ -781,7 +781,7 @@ theorem res_coeff (O : Type) [CommRing O] (r : ℕ) (c : ℤ) (ka : Fin (r + 1) 
     rw [h1]
     rfl
   rw [hchi] at key
-  have := congrArg (fun P => coeff m P) key
+  have := congrArg (fun P => AddMonoidAlgebra.coeff P m) key
   simp only [coeff_map, coeff_C_mul] at this
   exact this
 
@@ -1062,9 +1062,9 @@ theorem subOps_wt [CharZero K] (Lt : Letters (Fin N)) (S : Set (Fin N)) (φ : Fi
   funext a
   have h1 := (mem_weightSpace_iff_diag _ mu F).1 hF a
   rw [subOps_apply, gl_operator_apply_derivation] at h1
-  have h2 := congrArg (coeff m) h1
+  have h2 := congrArg (AddMonoidAlgebra.coeff · m) h1
   rw [diagonal_derivation_coeff, coeff_smul, smul_eq_mul] at h2
-  have h3 : coeff m F ≠ 0 := by simpa using hm
+  have h3 : AddMonoidAlgebra.coeff F m ≠ 0 := by simpa using hm
   have h4 := mul_right_cancel₀ h3 h2
   show wtS Lt S m (φ a) = mu a
   exact_mod_cast h4
@@ -3458,7 +3458,7 @@ theorem restFlat_proved (hp : 0 < X.p) (ha : 1 ≤ X.L.a) :
       (((hi : ℝ) / X.L.a) ^ X.r) ^ X.s * ∏ i, (Formalism.MainNotions.ColumnSystems.symDim (X.r + 1) (aTop' i : ℤ) : ℝ) := by
     calc (∏ i, (Formalism.MainNotions.ColumnSystems.symDim (X.r + 1) (aTop i : ℤ) : ℝ))
         ≤ ∏ i : Fin X.s, (((hi : ℝ) / X.L.a) ^ X.r * (Formalism.MainNotions.ColumnSystems.symDim (X.r + 1) (aTop' i : ℤ) : ℝ)) :=
-          Finset.prod_le_prod (fun i _ => Nat.cast_nonneg _) (fun i _ => hone i)
+          Finset.prod_le_prod₀ (fun i _ => Nat.cast_nonneg _) (fun i _ => hone i)
       _ = (((hi : ℝ) / X.L.a) ^ X.r) ^ X.s * ∏ i, (Formalism.MainNotions.ColumnSystems.symDim (X.r + 1) (aTop' i : ℤ) : ℝ) := by
           rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
   push_cast

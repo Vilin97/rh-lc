@@ -60,7 +60,7 @@ theorem normInf_nonneg (g : X.B.I.Ginf) : 0 ≤ normInf X g :=
 theorem normInf_mul_le (a b : X.B.I.Ginf) : normInf X (a * b) ≤ normInf X a * normInf X b := by
   unfold normInf
   rw [← Finset.prod_mul_distrib]
-  refine Finset.prod_le_prod (fun v _ => opn_nonneg _) (fun v _ => ?_)
+  refine Finset.prod_le_prod₀ (fun v _ => opn_nonneg _) (fun v _ => ?_)
   show opn (uMat (a v * b v)) ≤ _
   rw [uMat_mul']
   exact opn_mul_le _ _

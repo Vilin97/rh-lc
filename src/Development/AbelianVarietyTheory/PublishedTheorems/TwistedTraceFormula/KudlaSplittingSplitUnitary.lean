@@ -185,8 +185,8 @@ theorem continuous_form_left (Q : Matrix α α E) (w' : Matrix α (ν ⊕ ν) E)
   have h : ∀ e : E, Continuous fun z : E => Algebra.trace F E (z * e) := fun e =>
     IsModuleTopology.continuous_of_linearMap ((Algebra.trace F E).comp (LinearMap.mulRight F e))
   simp only [form, hTens, map_sum, mul_assoc]
-  refine continuous_const.mul (continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
-    continuous_finset_sum _ fun k _ => continuous_finset_sum _ fun l _ => (h _).comp ?_)
+  refine continuous_const.mul (continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
+    continuous_finsetSum _ fun k _ => continuous_finsetSum _ fun l _ => (h _).comp ?_)
   rcases j with j | j
   · exact continuous_id.matrix_elem i j
   · exact continuous_const

@@ -103,7 +103,7 @@ theorem mvPowerSeries_prod_X_pow_notMem {k : Type} [CommRing k] [Nontrivial k] {
   · exact zero_ne_one this
   · intro i _
     refine X_pow_dvd_iff.1 (dvd_mul_left _ _) _ ?_
-    simp [Finsupp.finset_sum_apply, Finsupp.single_apply]
+    simp [Finsupp.finsetSum_apply, Finsupp.single_apply]
 
 theorem mvPowerSeries_variables_syzygy_socle :
     ∀ (k : Type) [Field k] (g : ℕ) (x : Fin g → MvPowerSeries (Fin g) k), (∀ i, x i = MvPowerSeries.X i) → (∀ r : Fin g → _, ∑ i, r i * x i = 0 → ∃ s : Matrix (Fin g) (Fin g) _, s.transpose = -s ∧ (∀ i, s i i = 0) ∧ r = s.mulVec x) ∧ ∀ N : ℕ, ∏ i, x i ^ N ∉ Ideal.span (Set.range fun i => x i ^ (N + 1)) := by

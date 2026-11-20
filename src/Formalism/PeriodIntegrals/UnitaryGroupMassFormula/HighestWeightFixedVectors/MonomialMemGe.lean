@@ -9,12 +9,12 @@ namespace PI.HwFix.UnitaryGroupMassFormula
 variable {σ : Type*} {K : Type*} [Field K]
 
 def Ge (w : σ → ℕ) (d : ℕ) : Submodule K (MvPolynomial σ K) where
-  carrier := {F | ∀ m, Finsupp.weight w m < d → coeff m F = 0}
+  carrier := {F | ∀ m, Finsupp.weight w m < d → AddMonoidAlgebra.coeff F m = 0}
   add_mem' := by
     intro F G hF hG
     rw [Set.mem_setOf_eq] at hF hG ⊢
     intro m hm
-    rw [coeff_add, hF m hm, hG m hm, add_zero]
+    rw [MvPolynomial.coeff_add, hF m hm, hG m hm, add_zero]
   zero_mem' := by
     rw [Set.mem_setOf_eq]
     intro m _
@@ -26,7 +26,7 @@ def Ge (w : σ → ℕ) (d : ℕ) : Submodule K (MvPolynomial σ K) where
     rw [coeff_smul, hF m hm, smul_zero]
 
 theorem mem_Ge {w : σ → ℕ} {d : ℕ} {F : MvPolynomial σ K} :
-    F ∈ Ge w d ↔ ∀ m, Finsupp.weight w m < d → coeff m F = 0 := Iff.rfl
+    F ∈ Ge w d ↔ ∀ m, Finsupp.weight w m < d → AddMonoidAlgebra.coeff F m = 0 := Iff.rfl
 
 theorem Ge_mono {w : σ → ℕ} {d e : ℕ} (h : d ≤ e) {F : MvPolynomial σ K} (hF : F ∈ Ge w e) : F ∈ Ge w d :=
   mem_Ge.2 fun m hm => mem_Ge.1 hF m (lt_of_lt_of_le hm h)
@@ -99,12 +99,12 @@ theorem monomial_step (w : σ → ℕ) (φ : MvPolynomial σ K →ₐ[K] MvPolyn
 theorem uni_step (w : σ → ℕ) (φ : MvPolynomial σ K →ₐ[K] MvPolynomial σ K)
     (hφ : ∀ v, φ (X v) - X v ∈ Ge w (w v + 1)) (d : ℕ) (F : MvPolynomial σ K) (hF : F ∈ Ge w d) :
     φ F - F ∈ Ge w (d + 1) := by
-  have key : ∀ m ∈ F.support, φ (monomial m (coeff m F)) - monomial m (coeff m F) ∈ Ge w (d + 1) := by
+  have key : ∀ m ∈ F.support, φ (monomial m (AddMonoidAlgebra.coeff F m)) - monomial m (AddMonoidAlgebra.coeff F m) ∈ Ge w (d + 1) := by
     intro m hm
     have hd : d ≤ Finsupp.weight w m := by
       by_contra h
       exact (mem_support_iff.mp hm) (mem_Ge.1 hF m (by omega))
-    have e : monomial m (coeff m F) = coeff m F • monomial m (1 : K) := by
+    have e : monomial m (AddMonoidAlgebra.coeff F m) = AddMonoidAlgebra.coeff F m • monomial m (1 : K) := by
       rw [smul_monomial, smul_eq_mul, mul_one]
     rw [e, map_smul, ← smul_sub]
     exact Submodule.smul_mem _ _ (Ge_mono (by omega) (monomial_step w φ hφ m))
@@ -156,7 +156,7 @@ theorem sc_monomial (w : σ → ℕ) (c : K) (m : σ →₀ ℕ) (a : K) :
   ring
 
 theorem coeff_sc (w : σ → ℕ) (c : K) (F : MvPolynomial σ K) (m : σ →₀ ℕ) :
-    coeff m (sc w c F) = c ^ Finsupp.weight w m * coeff m F := by
+    AddMonoidAlgebra.coeff (sc w c F) m = c ^ Finsupp.weight w m * AddMonoidAlgebra.coeff F m := by
   classical
   conv_lhs => rw [F.as_sum]
   rw [map_sum, coeff_sum]

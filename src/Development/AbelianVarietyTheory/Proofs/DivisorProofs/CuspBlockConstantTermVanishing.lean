@@ -348,7 +348,7 @@ theorem exists_height_blockEmb_infGL_le (hι : IsBlockEmb σ J Xf Yf h ι) :
   rw [e, NNReal.coe_prod]
   calc ∏ w, (htInf F w (bc (compInf F E w) (matHom (AF F) σ J (ι (infGL E d y)))) : ℝ)
       ≤ ∏ w, (c w * GlobalTheory.CuspRep.height y) :=
-        Finset.prod_le_prod (fun w _ => NNReal.coe_nonneg _) fun w _ => hc w y
+        Finset.prod_le_prod₀ (fun w _ => NNReal.coe_nonneg _) fun w _ => hc w y
     _ = (∏ w, c w) * GlobalTheory.CuspRep.height y ^ Fintype.card (InfinitePlace F) := by
         rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ]
 

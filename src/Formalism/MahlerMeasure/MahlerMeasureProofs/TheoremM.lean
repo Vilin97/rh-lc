@@ -833,7 +833,7 @@ theorem fock_add_left (F F' G : MvPolynomial σ ℚ_[p]) : fock p (F + F') G = f
     fock_eq_sum F' G (F.support ∪ F'.support) subset_union_right, ← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl
   intro m _
-  rw [coeff_add]; ring
+  rw [MvPolynomial.coeff_add]; ring
 
 theorem fock_smul_left (c : ℚ_[p]) (F G : MvPolynomial σ ℚ_[p]) : fock p (c • F) G = c * fock p F G := by
   classical
@@ -847,7 +847,7 @@ theorem fock_add_right (F G G' : MvPolynomial σ ℚ_[p]) : fock p F (G + G') = 
   rw [← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl
   intro m _
-  rw [coeff_add]; ring
+  rw [MvPolynomial.coeff_add]; ring
 
 theorem fock_smul_right (c : ℚ_[p]) (F G : MvPolynomial σ ℚ_[p]) : fock p F (c • G) = c * fock p F G := by
   unfold fock

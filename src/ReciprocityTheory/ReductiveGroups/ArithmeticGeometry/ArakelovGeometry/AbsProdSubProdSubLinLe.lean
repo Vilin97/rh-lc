@@ -11,7 +11,7 @@ section Scalar
 theorem abs_prod_le_pow {α : Type*} (s : Finset α) (y : α → ℝ) {Y : ℝ} (hy : ∀ i ∈ s, |y i| ≤ Y) :
     |∏ i ∈ s, y i| ≤ Y ^ s.card := by
   rw [Finset.abs_prod]
-  calc ∏ i ∈ s, |y i| ≤ ∏ _i ∈ s, Y := Finset.prod_le_prod (fun _ _ => abs_nonneg _) hy
+  calc ∏ i ∈ s, |y i| ≤ ∏ _i ∈ s, Y := Finset.prod_le_prod₀ (fun _ _ => abs_nonneg _) hy
     _ = Y ^ s.card := Finset.prod_const Y
 
 theorem card_filter_lt_add_gt {α : Type*} [LinearOrder α] (s : Finset α) {i : α} (hi : i ∈ s) :

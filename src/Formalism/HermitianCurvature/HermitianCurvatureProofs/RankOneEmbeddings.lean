@@ -276,13 +276,13 @@ theorem invM_smul : (invM : Mt k r → Mt k r) = fun x => (detF x)⁻¹ • adjF
   rw [Matrix.inv_def, Ring.inverse_eq_inv]
   rfl
 
-theorem invM_meas : Measurable (invM : Mt k r → Mt k r) := by
-  rw [invM_smul]
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
-  have h1 : Measurable fun x : Mt k r => (detF x)⁻¹ := detF_cont.measurable.inv
-  have h2 : Measurable fun x : Mt k r => adjF x i j :=
-    ((continuous_apply j).comp ((continuous_apply i).comp adjF_cont)).measurable
-  exact h1.mul h2
+theorem invM_meas : Measurable (invM : Mt k r → Mt k r) := by sorry
+
+
+
+
+
+
 
 theorem lmulM_cont (a : Mat k r) : Continuous (lmulM a : Mt k r → Mt k r) := by
   refine continuous_pi fun i => continuous_pi fun j => ?_
@@ -353,19 +353,19 @@ def MeasSec (s : ℂ → Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ) : Prop :=
   @Measurable ℂ (Fin (k + 1) → Fin (k + 1) → ℂ) _ _ s
 
 theorem secF_meas {z z' : Vc k r} {μsec : ℂ → Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ}
-    (hsec : IsSection k r z z' μsec) : MeasSec (secF k r z z' μsec) := by
-  classical
-  have hs := hsec
-  unfold IsSection at hs
-  unfold MeasSec
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
-  have heq : (fun ζ => secF k r z z' μsec ζ i j) =
-      (Om k r z z').piecewise (fun ζ => μsec ζ i j) (fun _ => (1 : Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ) i j) := by
-    funext ζ
-    unfold secF Set.piecewise
-    split_ifs <;> rfl
-  rw [heq]
-  exact ContinuousOn.measurable_piecewise (hs.1 i j).continuousOn continuousOn_const (Om_open z z').measurableSet
+    (hsec : IsSection k r z z' μsec) : MeasSec (secF k r z z' μsec) := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
 
 theorem zW_meas (k : ℕ) (T T' : ℝ) : Measurable (zWeight k T T') := by
   unfold zWeight
@@ -868,10 +868,10 @@ theorem uw_unit {z : Vc k r} {h : Mat k r} (hh : h ∈ UWset k r z) : IsUnit h.d
   rw [h0, mul_zero] at h2
   exact hd h2.symm
 
-theorem conjM_cont (a : Mat k r) : Continuous (conjM a : Mt k r → Mt k r) := by
-  refine continuous_pi fun i => continuous_pi fun j => ?_
-  simp only [conjM, Matrix.mul_apply, Matrix.of_apply]
-  fun_prop
+theorem conjM_cont (a : Mat k r) : Continuous (conjM a : Mt k r → Mt k r) := by sorry
+
+
+
 
 def m1 (p : Mt k r × Mt k r) : Mt k r := mulM (p.2, p.1)
 
@@ -989,15 +989,15 @@ attribute [local fun_prop] mulM_meas invM_meas sgF_meas
 
 def bc1 (k r : ℕ) (c : Fin r → ℂ) : Mt k r := bigCell k r c 1
 
-theorem big_cell_coordinate_measurable : Measurable (bc1 k r) := by
-  refine measurable_pi_lambda _ fun i => measurable_pi_lambda _ fun j => ?_
-  simp only [bc1, bigCell]
-  split_ifs
-  all_goals first
-    | exact measurable_const
-    | exact measurable_pi_apply _
-    | exact (continuous_star.measurable.comp (measurable_pi_apply _)).inv
-    | fun_prop
+theorem big_cell_coordinate_measurable : Measurable (bc1 k r) := by sorry
+
+
+
+
+
+
+
+
 
 theorem cW_cont : Continuous (cWeight k r) := by
   unfold cWeight

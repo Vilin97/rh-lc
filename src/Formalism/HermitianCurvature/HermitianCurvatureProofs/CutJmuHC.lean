@@ -43,7 +43,7 @@ theorem prod_ratio_le (x : Fin n → ℝ) (hinj : Function.Injective x) (hint : 
   rw [← prod_filter_mul_prod_filter_not T (fun t => x t < x s)]
 
   have hlow : ∏ t ∈ T.filter (fun t => ¬ x t < x s), |x s + 1 - x t| / |x s - x t| ≤ 1 := by
-    apply prod_le_one (fun t _ => by positivity)
+    apply prod_le_one₀ (fun t _ => by positivity)
     intro t ht
     obtain ⟨ht, hlt⟩ := mem_filter.1 ht
     have hgt : x s < x t := lt_of_le_of_ne (not_lt.1 hlt) (hne t ht)
@@ -194,7 +194,7 @@ theorem numHC_addI_le (x : Fin n → ℝ) (hinj : Function.Injective x) (hint : 
   have hP0 : 0 ≤ Pr := prod_nonneg fun s _ => prod_nonneg fun t _ => by positivity
   have hPn : Pr ≤ (n : ℝ) ^ I.card := by
     rw [← prod_const]
-    refine prod_le_prod (fun s _ => prod_nonneg fun t _ => by positivity) fun s hs => ?_
+    refine prod_le_prod₀ (fun s _ => prod_nonneg fun t _ => by positivity) fun s hs => ?_
     have e : ∏ t ∈ univ \ I, f s t = ∏ t ∈ univ \ I, |x s + 1 - x t| / |x s - x t| := by
       refine prod_congr rfl fun t ht => ?_
       have htI : t ∉ I := (mem_sdiff.1 ht).2

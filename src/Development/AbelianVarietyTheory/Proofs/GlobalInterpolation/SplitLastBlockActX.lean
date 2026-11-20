@@ -72,7 +72,7 @@ def expOf {ι : Type} [Fintype ι] {n : ℕ} (b : ι → Fin n → ℕ) : ι × 
 @[simp] theorem expOf_apply {ι : Type} [Fintype ι] {n : ℕ} (b : ι → Fin n → ℕ) (p : ι × Fin n) : expOf b p = b p.1 p.2 := rfl
 
 theorem coefLast_eq_coeff [Fintype ι] (b : ι → Fin n → ℕ) (F : Pol K ι N) :
-    coefLast hN b F = coeff (expOf b) (splitLast K ι hN F) := by
+    coefLast hN b F = AddMonoidAlgebra.coeff (splitLast K ι hN F) (expOf b) := by
   classical
   induction F using MvPolynomial.induction_on' with
   | add p q hp hq => simp [hp, hq]
@@ -195,11 +195,11 @@ theorem projVV_blockAct (sg : ι → DomWeight n) (U : ι → Matrix (Fin n) (Fi
 end Proj
 
 theorem coeff_scale {A : Type} [CommRing A] [Fintype ι] (t : ι → A) (e : ι × Fin n →₀ ℕ) (P : MvPolynomial (ι × Fin n) A) :
-    coeff e (aeval (fun p : ι × Fin n => C (t p.1) * X p) P : MvPolynomial (ι × Fin n) A) =
-      (∏ p : ι × Fin n, t p.1 ^ e p) * coeff e P := by
+    AddMonoidAlgebra.coeff (aeval (fun p : ι × Fin n => C (t p.1) * X p) P : MvPolynomial (ι × Fin n) A) e =
+      (∏ p : ι × Fin n, t p.1 ^ e p) * AddMonoidAlgebra.coeff P e := by
   classical
   induction P using MvPolynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, coeff_add, hp, hq, mul_add]
+  | add p q hp hq => simp only [map_add, MvPolynomial.coeff_add, hp, hq, mul_add]
   | monomial m a =>
     have : (aeval (fun p : ι × Fin n => C (t p.1) * X p) (monomial m a) : MvPolynomial (ι × Fin n) A) =
         C (∏ p : ι × Fin n, t p.1 ^ m p) * monomial m a := by

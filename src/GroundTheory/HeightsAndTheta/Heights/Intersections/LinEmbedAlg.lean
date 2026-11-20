@@ -59,7 +59,7 @@ theorem isMultiHomog_aeval (τ : K ≃ K') (g : (Σ k, ι k) → MRingOver F ι'
       have hk' : k' ≠ τ k := fun h => hk (by rw [h, Equiv.symm_apply_apply])
       simp [Pi.single_eq_of_ne hk']
     · simp
-  have h := isMultiHomog_mul (isMultiHomog_C (ι := ι') (coeff m s))
+  have h := isMultiHomog_mul (isMultiHomog_C (ι := ι') (AddMonoidAlgebra.coeff s m))
     (isMultiHomog_prod m.support _ _ fun p _ => isMultiHomog_pow (hg p) (m p))
   rw [hdeg] at h
   rwa [aeval_monomial, MvPolynomial.algebraMap_eq]

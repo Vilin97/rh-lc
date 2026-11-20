@@ -57,9 +57,9 @@ theorem finrank_delSq_le (N : ℕ) (lam : DomWeight N) (B : ℝ) (hB : 1 ≤ B)
   calc ∏ i : Fin N, ∏ j ∈ Finset.Ioi i,
       (((lam.w i : ℝ) - (lam.w j : ℝ) + ((j : ℕ) : ℝ) - ((i : ℕ) : ℝ)) / (((j : ℕ) : ℝ) - ((i : ℕ) : ℝ)))
         ≤ ∏ _i : Fin N, (6 * B) ^ N := by
-          refine Finset.prod_le_prod (fun i _ => Finset.prod_nonneg fun j hj => (hf i j hj).1) fun i _ => ?_
+          refine Finset.prod_le_prod₀ (fun i _ => Finset.prod_nonneg fun j hj => (hf i j hj).1) fun i _ => ?_
           calc _ ≤ ∏ _j ∈ Finset.Ioi i, (6 * B) :=
-                Finset.prod_le_prod (fun j hj => (hf i j hj).1) fun j hj => (hf i j hj).2
+                Finset.prod_le_prod₀ (fun j hj => (hf i j hj).1) fun j hj => (hf i j hj).2
             _ = (6 * B) ^ (Finset.Ioi i).card := Finset.prod_const _
             _ ≤ (6 * B) ^ N := by
                 apply pow_le_pow_right₀ h6

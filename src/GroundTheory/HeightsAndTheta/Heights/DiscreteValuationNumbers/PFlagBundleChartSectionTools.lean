@@ -283,7 +283,7 @@ theorem component_mem_projIdeal (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin
   rw [ProjIdealFormValue.proof F Ω K ι y N E w M φ Φ t d _
     (weightedHomogeneousComponent_isWeightedHomogeneous _ _)]
   rw [projIdeal, RingHom.mem_ker, coe_eval₂Hom] at hq
-  have hc := congrArg (coeff (Finsupp.equivFunOnFinite.symm d)) hq
+  have hc := congrArg (AddMonoidAlgebra.coeff · (Finsupp.equivFunOnFinite.symm d)) hq
   rw [← q.support_sum_monomial_coeff, eval₂_sum, coeff_sum, coeff_zero] at hc
   rw [weightedHomogeneousComponent_apply, eval₂_sum, Finset.sum_filter]
   refine (Finset.sum_congr rfl fun m _ => ?_).trans hc
@@ -347,7 +347,7 @@ theorem bind₁_isMultiHomog (g : (Σ o, bundleIdx ι M o) → MRing (bundleIdx 
   refine IsWeightedHomogeneous.sum _ _ _ fun m hm => ?_
   have hmd : Finsupp.weight (blockWeight (bundleIdx ι M)) m = d := hq (mem_support_iff.mp hm)
   rw [bind₁_monomial]
-  have := (isWeightedHomogeneous_C (blockWeight (bundleIdx ι M)) (coeff m q)).mul
+  have := (isWeightedHomogeneous_C (blockWeight (bundleIdx ι M)) (AddMonoidAlgebra.coeff q m)).mul
     (IsWeightedHomogeneous.prod m.support (fun v => g v ^ m v) (fun v => m v • Λ (blockWeight _ v))
       (fun v _ => (hg v).pow (m v)))
   rw [zero_add] at this

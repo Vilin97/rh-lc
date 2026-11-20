@@ -47,7 +47,7 @@ theorem rowGen_diag_homog (R : Type) [CommRing R] {r n : ℕ} (μ : Fin r → �
   conv_rhs => rw [f.as_sum]
   rw [map_sum, map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun d hd => ?_
-  have e : (monomial d (coeff d f) : MvPolynomial (Fin r × Fin n) R) = coeff d f • monomial d 1 := by
+  have e : (monomial d (AddMonoidAlgebra.coeff f d) : MvPolynomial (Fin r × Fin n) R) = AddMonoidAlgebra.coeff f d • monomial d 1 := by
     rw [smul_monomial, smul_eq_mul, mul_one]
   rw [e, map_smul, rowGen_diag_monomial_one, hf (mem_support_iff.mp hd), ← mul_smul_comm,
     Polynomial.smul_C]

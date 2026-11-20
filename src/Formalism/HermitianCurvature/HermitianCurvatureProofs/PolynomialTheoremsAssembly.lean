@@ -57,7 +57,7 @@ theorem p3aOfParts_ok : LeadingBlockRecursiveBoundFromComponents := by
   have hnn : ∀ j, (∏ b, nn (grid b (j b))) ≤ (∏ _b : Fin K, (Rw * ZZ)) * ∏ b, ρ b j := by
     intro j
     rw [← Finset.prod_mul_distrib]
-    apply Finset.prod_le_prod (fun b _ => (hpos b (j b)).2.1.le)
+    apply Finset.prod_le_prod₀ (fun b _ => (hpos b (j b)).2.1.le)
     intro b _
     have hq := (hpos b (j b)).1
     have hnb := (hpos b (j b)).2.1

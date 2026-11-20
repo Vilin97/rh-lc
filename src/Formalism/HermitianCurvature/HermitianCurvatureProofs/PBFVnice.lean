@@ -78,7 +78,7 @@ theorem good_cexp (Bs : RealPlaceData k r Wp Wq) (ε : ℝ) (θ : Mat k r →L[�
       have h3 := ContinuousMultilinearMap.norm_compContinuousLinearMap_le
         (iteratedFDeriv ℝ i Complex.exp (θ g)) (fun _ : Fin i => θ)
       have h5 := h3.trans (mul_le_mul (le_of_eq (by rw [norm_iter_cexp, hθ, Real.exp_zero]))
-        (Finset.prod_le_prod (fun _ _ => norm_nonneg _) (fun _ _ => hθK))
+        (Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) (fun _ _ => hθK))
         (Finset.prod_nonneg fun _ _ => norm_nonneg _) zero_le_one)
       rw [one_mul, Finset.prod_const, Finset.card_univ, Fintype.card_fin] at h5
       calc ‖iteratedFDeriv ℝ i Λ g‖ ≤ ‖Lid‖ * ‖iteratedFDeriv ℝ i (fun g => Complex.exp (θ g)) g‖ := h1

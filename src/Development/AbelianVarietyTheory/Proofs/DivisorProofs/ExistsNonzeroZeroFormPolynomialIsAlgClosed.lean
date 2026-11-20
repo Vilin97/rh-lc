@@ -54,12 +54,12 @@ theorem coeffHom_eval₂ {n d : ℕ} {f : MvPolynomial (Fin n) k[X]} (hf : f.IsH
     CoeffHom d (MvPolynomial.eval₂ (mapRingHom (MvPolynomial.C : k →+* MvPolynomial σ k)) y f) := by
   rw [MvPolynomial.eval₂_eq']
   refine CoeffHom.sum _ _ _ fun s hs => ?_
-  have h := (coeffHom_map (σ := σ) (MvPolynomial.coeff s f)).mul
+  have h := (coeffHom_map (σ := σ) (AddMonoidAlgebra.coeff f s)).mul
     (CoeffHom.prod Finset.univ (fun i => s i) (fun i => y i ^ s i) fun i => (hy i).pow _)
   rwa [zero_add, sum_eq_of_mem_support hf hs] at h
 
 theorem natDegree_eval_le {n d N D : ℕ} {f : MvPolynomial (Fin n) k[X]} (hf : f.IsHomogeneous d)
-    (hD : ∀ s ∈ f.support, (MvPolynomial.coeff s f).natDegree ≤ D)
+    (hD : ∀ s ∈ f.support, (AddMonoidAlgebra.coeff f s).natDegree ≤ D)
     (x : Fin n → k[X]) (hx : ∀ i, (x i).natDegree ≤ N) :
     (MvPolynomial.eval x f).natDegree ≤ D + d * N := by
   rw [MvPolynomial.eval_eq']
@@ -76,9 +76,9 @@ theorem exists_nonzero_zero_polynomial_of_isAlgClosed (k : Type) [Field k] [IsAl
     (f : MvPolynomial (Fin n) (Polynomial k)) (hf : f.IsHomogeneous d) (hd : 0 < d) (hn : d < n) :
     ∃ x : Fin n → Polynomial k, x ≠ 0 ∧ MvPolynomial.eval x f = 0 := by
   classical
-  obtain ⟨D, hD⟩ : ∃ D, ∀ s ∈ f.support, (MvPolynomial.coeff s f).natDegree ≤ D :=
-    ⟨f.support.sup fun s => (MvPolynomial.coeff s f).natDegree, fun s hs =>
-      Finset.le_sup (f := fun s => (MvPolynomial.coeff s f).natDegree) hs⟩
+  obtain ⟨D, hD⟩ : ∃ D, ∀ s ∈ f.support, (AddMonoidAlgebra.coeff f s).natDegree ≤ D :=
+    ⟨f.support.sup fun s => (AddMonoidAlgebra.coeff f s).natDegree, fun s hs =>
+      Finset.le_sup (f := fun s => (AddMonoidAlgebra.coeff f s).natDegree) hs⟩
   let y : Fin n → (MvPolynomial (Fin (n * (D + 1))) k)[X] := fun i =>
     ∑ m : Fin (D + 1), monomial (m : ℕ) (MvPolynomial.X (finProdFinEquiv (i, m)))
   have hy : ∀ i, CoeffHom 1 (y i) := fun i => CoeffHom.sum _ _ _ fun m _ j => by

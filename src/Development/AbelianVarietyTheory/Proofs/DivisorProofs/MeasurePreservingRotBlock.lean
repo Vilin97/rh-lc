@@ -261,7 +261,7 @@ theorem gaussAbs_coeff_along_le {K ι : Type} [Field K] [NumberField K] (v : Fin
   rw [along, optionEquivLeft_coeff_coeff]
   refine (coeff_le_gauss_abs v _ _).trans (GlobalTheory.GaussSubst.gaussAbs_aeval_le K v _ _ _ _ fun p => ?_)
   refine gauss_abs_le_of_coeff_le v _ zero_le_one fun m => ?_
-  rw [coeff_add, coeff_C_mul]
+  rw [MvPolynomial.coeff_add, coeff_C_mul]
   refine (FinitePlace.add_le v _ _).trans (max_le ?_ ?_)
   · rw [coeff_X']; split_ifs <;> simp
   · rw [coeff_X']; split_ifs <;> simp [hd p]

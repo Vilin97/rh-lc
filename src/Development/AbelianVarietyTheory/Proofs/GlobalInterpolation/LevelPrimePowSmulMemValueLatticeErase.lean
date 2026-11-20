@@ -108,7 +108,7 @@ theorem rowDiv_shift (R : Type) [CommRing R] {r n : ℕ} (H : Fin r → ℤ) (a 
   conv => enter [2, 1, 2]; rw [f.as_sum]
   rw [map_sum, Polynomial.finsetSum_coeff]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
-  have := shift_rowGen_monomial R a b d (coeff d f) k
+  have := shift_rowGen_monomial R a b d (AddMonoidAlgebra.coeff f d) k
   rwa [hf (mem_support_iff.mp hd)] at this
 
 theorem weight_rowZ {r n : ℕ} (d : Fin r × Fin n →₀ ℕ) (a : Fin r) :

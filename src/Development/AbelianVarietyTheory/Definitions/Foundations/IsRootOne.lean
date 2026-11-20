@@ -53,7 +53,7 @@ def mon (R : Type) [CommRing R] (w : ℕ) (i : Fin (w + 1)) : MvPolynomial (Fin 
   MvPolynomial.X 0 ^ (i : ℕ) * MvPolynomial.X 1 ^ (w - (i : ℕ))
 
 def cf (w : ℕ) (m : Matrix (Fin 2) (Fin 2) ℤ) (i k : Fin (w + 1)) : ℤ :=
-  MvPolynomial.coeff (Finsupp.single 0 (i : ℕ) + Finsupp.single 1 (w - (i : ℕ))) (slP m (mon ℤ w k))
+  AddMonoidAlgebra.coeff (slP m (mon ℤ w k)) (Finsupp.single 0 (i : ℕ) + Finsupp.single 1 (w - (i : ℕ)))
 
 def SSPotS (S : Letter → Prop) (R : Type) [CommRing R] (N l w : ℕ) (lam : Letter → R) : Prop :=
   ∃ P ∈ Algebra.adjoin R (FreeAlgebra.ι R '' {T | S T}), FreeAlgebra.lift R lam P = 1 ∧ ∀ F ∈ Pot R w (Gam N l), ∀ T : Letter, S T →

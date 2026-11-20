@@ -8,13 +8,13 @@ namespace Formalism.MainNotions.ColumnSystems.Pf
 open Formalism.MainNotions.G MvPolynomial
 
 theorem eig_one {R : Type} [CommSemiring R] {σ : Type} (ν μ : σ →₀ ℕ) (u : MvPolynomial σ R) :
-    coeff μ (monomial ν (1 : R) * divDer ν u) = coeff μ u * ((ν.prod fun k i => (μ k).choose i : ℕ) : R) := by
+    AddMonoidAlgebra.coeff (monomial ν (1 : R) * divDer ν u) μ = AddMonoidAlgebra.coeff u μ * ((ν.prod fun k i => (μ k).choose i : ℕ) : R) := by
   classical
   unfold divDer
   rw [Finset.mul_sum, coeff_sum]
-  have key : ∀ m ∈ u.support, coeff μ (monomial ν (1 : R) * (if ν ≤ m then
-      monomial (m - ν) (coeff m u * ((ν.prod fun k i => (m k).choose i : ℕ) : R)) else 0)) =
-      if m = μ then coeff μ u * ((ν.prod fun k i => (μ k).choose i : ℕ) : R) else 0 := by
+  have key : ∀ m ∈ u.support, AddMonoidAlgebra.coeff (monomial ν (1 : R) * (if ν ≤ m then
+      monomial (m - ν) (AddMonoidAlgebra.coeff u m * ((ν.prod fun k i => (m k).choose i : ℕ) : R)) else 0)) μ =
+      if m = μ then AddMonoidAlgebra.coeff u μ * ((ν.prod fun k i => (μ k).choose i : ℕ) : R) else 0 := by
     intro m _
     by_cases h1 : ν ≤ m
     · rw [if_pos h1, monomial_mul, one_mul, add_tsub_cancel_of_le h1, coeff_monomial]
@@ -57,10 +57,10 @@ theorem fock_monoMap {K : Type} [Field K] {σ τ : Type} (f : MvPolynomial σ K 
     conv_lhs => rw [← v.support_sum_monomial_coeff]
     rw [map_sum]
     exact Finset.sum_congr rfl fun μ _ => hf μ _
-  have hco : ∀ (v : MvPolynomial σ K) (μ : σ →₀ ℕ), coeff (ε μ) (f v) = coeff μ v := by
+  have hco : ∀ (v : MvPolynomial σ K) (μ : σ →₀ ℕ), AddMonoidAlgebra.coeff (f v) (ε μ) = AddMonoidAlgebra.coeff v μ := by
     intro v μ
     rw [hexp, coeff_sum]
-    have : ∀ μ' ∈ v.support, coeff (ε μ) (monomial (ε μ') (v.coeff μ')) = if μ' = μ then v.coeff μ else 0 := by
+    have : ∀ μ' ∈ v.support, AddMonoidAlgebra.coeff (monomial (ε μ') (v.coeff μ')) (ε μ) = if μ' = μ then v.coeff μ else 0 := by
       intro μ' _
       rw [coeff_monomial]
       by_cases h : μ' = μ

@@ -12,8 +12,8 @@ theorem UpperTheory.V.Stk.groupRing_intAt_div_smul_of_padicValNat_le :
     simp [Stk.cf]
   rw [hcoef]
   have hdvdM : l ^ (padicValNat l D + t) ∣ M :=
-    (pow_dvd_pow l (by omega)).trans pow_padicValNat_dvd
-  have hdvdD : l ^ padicValNat l D ∣ D := pow_padicValNat_dvd
+    (pow_dvd_pow l (by omega)).trans (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
+  have hdvdD : l ^ padicValNat l D ∣ D := (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
   obtain ⟨k, hk⟩ := hdvdM
   obtain ⟨E, hE⟩ := hdvdD
   have hnd : ¬ l ∣ E := by

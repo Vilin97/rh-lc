@@ -305,7 +305,7 @@ lemma pk_le (y : Fin d → ℝ) : pk y ≤ 4 ^ d := by
   have h4 : (4 : ℝ) ^ d = ∏ _j : Fin d, (4 : ℝ) := by simp
   rw [h4]
   unfold pk
-  refine Finset.prod_le_prod (fun i _ => by positivity) (fun i _ => ?_)
+  refine Finset.prod_le_prod₀ (fun i _ => by positivity) (fun i _ => ?_)
   rw [fac_eq]; linarith [Real.cos_le_one (2 * π * y i)]
 
 lemma normSq_prod (n : ℕ) (y : Fin d → ℝ) :

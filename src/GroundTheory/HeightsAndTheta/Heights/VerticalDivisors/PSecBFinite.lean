@@ -95,8 +95,8 @@ theorem finite_of_pow_mem {R : Type*} [CommRing R] {n : ℕ} (Q : Ideal (MvPolyn
         exact Q.mul_mem_left _ (hQ j)
       rw [hmk, (q j).as_sum, Finset.mul_sum, map_sum]
       refine Submodule.sum_mem _ fun m hm => ?_
-      have hprod : monomial s' (1 : R) * monomial m (coeff m (q j)) =
-          C (coeff m (q j)) * monomial (s' + m) 1 := by
+      have hprod : monomial s' (1 : R) * monomial m (AddMonoidAlgebra.coeff (q j) m) =
+          C (AddMonoidAlgebra.coeff (q j) m) * monomial (s' + m) 1 := by
         rw [monomial_mul, C_mul_monomial, one_mul, mul_one]
       rw [hprod, hC]
       refine Submodule.smul_mem _ _ (ih _ ?_ _ le_rfl)
@@ -111,7 +111,7 @@ theorem finite_of_pow_mem {R : Type*} [CommRing R] {n : ℕ} (Q : Ideal (MvPolyn
   obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective x
   rw [p.as_sum, map_sum]
   refine Submodule.sum_mem _ fun s _ => ?_
-  rw [← mul_one (coeff s p), ← C_mul_monomial, hC]
+  rw [← mul_one (AddMonoidAlgebra.coeff p s), ← C_mul_monomial, hC]
   exact Submodule.smul_mem _ _ (key _ s le_rfl)
 
 section NumberField
@@ -129,7 +129,7 @@ theorem map_integralModel {n : ℕ} (I : Ideal (MvPolynomial (Fin n) K)) :
     intro x hx
     obtain ⟨m, hm, rfl⟩ := mem_coeffs_iff.mp hx
     rw [coeff_C_mul]
-    by_cases h0 : coeff m f = 0
+    by_cases h0 : AddMonoidAlgebra.coeff f m = 0
     · rw [h0, mul_zero]; exact ⟨0, map_zero _⟩
     · obtain ⟨y, hy⟩ := hb _ (coeff_mem_coeffs m h0)
       exact ⟨y, by rw [hy, Algebra.smul_def]⟩

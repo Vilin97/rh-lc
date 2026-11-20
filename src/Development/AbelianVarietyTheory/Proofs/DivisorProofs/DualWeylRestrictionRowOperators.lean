@@ -120,7 +120,7 @@ theorem resT_wrong_degree (p q : ℕ) (f : MvPolynomial (Fin (p + q) × Fin (p +
     (ht : t ≠ ∑ c : Fin p, (ν (Fin.castAdd q c) : ℚ)) : resT ℚ p q f = 0 := by
   rw [f.as_sum, map_sum]
   refine Finset.sum_eq_zero fun m hm => ?_
-  have hc : coeff m f ≠ 0 := mem_support_iff.1 hm
+  have hc : AddMonoidAlgebra.coeff f m ≠ 0 := mem_support_iff.1 hm
   by_contra hne
   have h1 : ∀ (a : Fin p) (t' : Fin q), m (Fin.castAdd q a, Fin.natAdd p t') = 0 := by
     intro a t'
@@ -132,7 +132,7 @@ theorem resT_wrong_degree (p q : ℕ) (f : MvPolynomial (Fin (p + q) × Fin (p +
     exact hne (resT_monomial_eq_zero p q m _ _ (resVarT_natAdd_castAdd p q b s) h0)
   have hw : Finsupp.weight (colW (p + q) (p + q)) m = ν := hf hc
   have ht' : t = ∑ c : Fin p, ((Finsupp.weight (rowW (p + q) (p + q)) m (Fin.castAdd q c) : ℕ) : ℚ) := by
-    have h3 := congrArg (coeff m) hsum
+    have h3 := congrArg (AddMonoidAlgebra.coeff · m) hsum
     rw [coeff_sum, coeff_smul, smul_eq_mul] at h3
     simp only [Formalism.CohomologicalDescent.LR.coeff_der_diag] at h3
     rw [← Finset.sum_mul] at h3

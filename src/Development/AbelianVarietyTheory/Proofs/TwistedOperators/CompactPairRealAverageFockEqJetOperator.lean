@@ -43,7 +43,7 @@ theorem integrable_term {K : Type} [Group K] [TopologicalSpace K] [IsTopological
     Integrable (fun k => ℓ (mvZ (fun τ => (r k τ)⁻¹) (fun _ => 1) P) * evalAt (fun τ => r k τ * y τ) F) ν := by
   have key : ∀ k, ℓ (mvZ (fun τ => (r k τ)⁻¹) (fun _ => 1) P) =
       ∑ m ∈ (GlobalTheory.KJAvg.univSubst P).support,
-        eval (fun w => r k⁻¹ w.1 w.2.1 w.2.2) (coeff m (GlobalTheory.KJAvg.univSubst P)) * ℓ (monomial m 1) := by
+        eval (fun w => r k⁻¹ w.1 w.2.1 w.2.2) (AddMonoidAlgebra.coeff (GlobalTheory.KJAvg.univSubst P) m) * ℓ (monomial m 1) := by
     intro k
     rw [GlobalTheory.KJAvg.mvZ_one_eq_map_univSubst, GlobalTheory.KJAvg.linear_eq_sum_coeff ℓ _ _ (MvPolynomial.support_map_subset _ _)]
     refine Finset.sum_congr rfl fun m _ => ?_
@@ -51,7 +51,7 @@ theorem integrable_term {K : Type} [Group K] [TopologicalSpace K] [IsTopological
     simp only [GlobalTheory.KJAvg.ontoUni_inv hr]
   simp_rw [key, Finset.sum_mul]
   refine integrable_finset_sum _ fun m _ => ?_
-  have hm := (GlobalTheory.KJAvg.integrable_avg_term ν hr (coeff m (GlobalTheory.KJAvg.univSubst P)) y F).mul_const (ℓ (monomial m 1))
+  have hm := (GlobalTheory.KJAvg.integrable_avg_term ν hr (AddMonoidAlgebra.coeff (GlobalTheory.KJAvg.univSubst P) m) y F).mul_const (ℓ (monomial m 1))
   refine hm.congr (Filter.Eventually.of_forall fun k => ?_)
   simp only
   ring

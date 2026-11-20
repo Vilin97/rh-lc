@@ -16,7 +16,7 @@ namespace RatioAlgebraicDependence
 variable {K : Type} {ι : K → Type} {d : ℕ}
 
 def homog (c : ∀ k, ι k) (p : Fin d → Σ k, ι k) (f : MvPolynomial (Fin d) ℤ) : MvPolynomial (Σ k, ι k) ℤ :=
-  ∑ m ∈ f.support, C (coeff m f) *
+  ∑ m ∈ f.support, C (AddMonoidAlgebra.coeff f m) *
     ∏ j, X (p j) ^ m j * X ⟨(p j).1, c (p j).1⟩ ^ (f.totalDegree - m j)
 
 theorem aeval_homog {F : Type} [Field F] [Algebra ℤ F] (c : ∀ k, ι k) (p : Fin d → Σ k, ι k)
@@ -25,7 +25,7 @@ theorem aeval_homog {F : Type} [Field F] [Algebra ℤ F] (c : ∀ k, ι k) (p : 
       aeval (fun j ↦ w (p j) / w ⟨(p j).1, c (p j).1⟩) f := by
   classical
   have hsum : aeval (fun j ↦ w (p j) / w ⟨(p j).1, c (p j).1⟩) f =
-      ∑ m ∈ f.support, aeval (fun j ↦ w (p j) / w ⟨(p j).1, c (p j).1⟩) (monomial m (coeff m f)) := by
+      ∑ m ∈ f.support, aeval (fun j ↦ w (p j) / w ⟨(p j).1, c (p j).1⟩) (monomial m (AddMonoidAlgebra.coeff f m)) := by
     conv_lhs => rw [f.as_sum]
     rw [map_sum]
   rw [hsum, Finset.mul_sum, homog, map_sum]

@@ -66,7 +66,7 @@ theorem muDef_line (b : Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
   have hle : ht b X L ≤ (Real.exp Λ ^ 2) ^ nPl K := by
     rw [hht]
     calc ∏ v, Formalism.HermitianLatticesTheory.normAt b X v x ^ 2 ≤ ∏ _v : InfinitePlace K, Real.exp Λ ^ 2 :=
-          Finset.prod_le_prod (fun v _ => by positivity)
+          Finset.prod_le_prod₀ (fun v _ => by positivity)
             (fun v _ => pow_le_pow_left₀ (by unfold Formalism.HermitianLatticesTheory.normAt Formalism.HermitianLatticesTheory.cnorm; exact Real.sqrt_nonneg _)
               (hn v) 2)
       _ = (Real.exp Λ ^ 2) ^ nPl K := by rw [Finset.prod_const, Finset.card_univ]; rfl

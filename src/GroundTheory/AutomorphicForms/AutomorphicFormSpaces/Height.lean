@@ -194,14 +194,14 @@ theorem height_mul_le (g h : AdelicGLn.AdelicGL K n) :
         ∏ᶠ v : HeightOneSpectrum (𝓞 K), locHeight (finAt v h) := by
     rw [hfin _ (Or.inr (Or.inr rfl)), hfin _ (Or.inl rfl), hfin _ (Or.inr (Or.inl rfl)),
       ← Finset.prod_mul_distrib]
-    refine Finset.prod_le_prod (fun v _ => (locHeight_pos _).le) fun v _ => ?_
+    refine Finset.prod_le_prod₀ (fun v _ => (locHeight_pos _).le) fun v _ => ?_
     rw [finAt_mul]
     exact locHeight_mul_le_of_ultrametric _ _
   have hi : (∏ w : InfinitePlace K, locHeight (infAt w (g * h)) ^ w.mult) ≤
       heightConst K n * (∏ w : InfinitePlace K, locHeight (infAt w g) ^ w.mult) *
         ∏ w : InfinitePlace K, locHeight (infAt w h) ^ w.mult := by
     rw [heightConst, ← Finset.prod_mul_distrib, ← Finset.prod_mul_distrib]
-    refine Finset.prod_le_prod (fun w _ => by have := locHeight_pos (infAt w (g * h)); positivity)
+    refine Finset.prod_le_prod₀ (fun w _ => by have := locHeight_pos (infAt w (g * h)); positivity)
       fun w _ => ?_
     rw [← mul_pow, ← mul_pow, infAt_mul]
     exact pow_le_pow_left₀ (locHeight_pos _).le (locHeight_mul_le _ _) _

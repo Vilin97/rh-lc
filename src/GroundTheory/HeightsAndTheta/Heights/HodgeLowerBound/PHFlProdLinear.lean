@@ -143,7 +143,7 @@ theorem hFl_sum_monomial (II : IntersectionSystem) {β : Type} (s : Finset β) (
     hFl Ψ N II (∑ b ∈ s, monomial (m b) (a b)) = ∑ b ∈ s, (a b : ℝ) * hFlMono Ψ N II (m b) := by
   classical
   have hsub : ∀ (F : RootPoly Ψ N) (S : Finset ((Ψ × Fin N) →₀ ℕ)), F.support ⊆ S →
-      hFl Ψ N II F = ∑ m ∈ S, ((coeff m F : ℚ) : ℝ) * hFlMono Ψ N II m := by
+      hFl Ψ N II F = ∑ m ∈ S, ((AddMonoidAlgebra.coeff F m : ℚ) : ℝ) * hFlMono Ψ N II m := by
     intro F S hS
     unfold hFl
     exact Finset.sum_subset hS fun m _ hm => by rw [notMem_support_iff.mp hm]; simp
@@ -153,7 +153,7 @@ theorem hFl_sum_monomial (II : IntersectionSystem) {β : Type} (s : Finset β) (
       hsub F (F.support ∪ G.support) Finset.subset_union_left,
       hsub G (F.support ∪ G.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun m _ => ?_
-    rw [coeff_add]
+    rw [MvPolynomial.coeff_add]
     push_cast
     ring
   have hmono : ∀ (m : (Ψ × Fin N) →₀ ℕ) (a : ℚ), hFl Ψ N II (monomial m a) = (a : ℝ) * hFlMono Ψ N II m := by

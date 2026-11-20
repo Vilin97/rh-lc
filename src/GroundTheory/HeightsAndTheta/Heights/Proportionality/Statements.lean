@@ -120,7 +120,7 @@ def CoefficientwiseLimit.Statement : Prop :=
   ∀ (n D : ℕ) (F : ℝ → MvPolynomial (Fin n) ℝ) (δ : ℝ → ℝ) (R : ℝ),
     CoefficientwiseLimit.Hyp n D F δ R →
     ∃ P : MvPolynomial (Fin n) ℝ, P.totalDegree ≤ D ∧
-      (∀ m, Tendsto (fun t => coeff m (F t)) (𝓝[>] 0) (𝓝 (coeff m P))) ∧
+      (∀ m, Tendsto (fun t => AddMonoidAlgebra.coeff (F t) m) (𝓝[>] 0) (𝓝 (AddMonoidAlgebra.coeff P m))) ∧
       ∀ lam : Fin n → ℝ, Tendsto (fun t => eval lam (F t)) (𝓝[>] 0) (𝓝 (eval lam P))
 
 example : CoefficientwiseLimit.Hyp 1 1 (fun t => C t * X 0) id 1 := by

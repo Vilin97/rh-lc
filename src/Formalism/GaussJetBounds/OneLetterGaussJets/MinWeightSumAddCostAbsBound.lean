@@ -39,7 +39,7 @@ def OneRow7 : Prop :=
     (f : Matrix (Fin N0) (Fin N0) K), (∀ a a', ‖f a a'‖ ≤ 1) → ‖f.det‖ = 1 →
     ∀ (x : Fin N0 → Fin N0 → K), (∀ i a, ‖x i a‖ ≤ 1) → ∀ (p : Fin C → ℕ) (hp : ∀ c, p c ≤ N0)
       (I : ∀ c, Fin (p c) → Fin N1),
-    ∃ Q : MvPolynomial (Fin N0 × Fin N1) K, (∀ n, ‖MvPolynomial.coeff n Q‖ ≤ 1) ∧
+    ∃ Q : MvPolynomial (Fin N0 × Fin N1) K, (∀ n, ‖AddMonoidAlgebra.coeff Q n‖ ≤ 1) ∧
       minorProd (fun (i : Fin N0) (b : Fin N1) =>
           (∑ a, MvPolynomial.C (x i a) * MvPolynomial.X (a, b) : MvPolynomial (Fin N0 × Fin N1) K))
           p hp I =

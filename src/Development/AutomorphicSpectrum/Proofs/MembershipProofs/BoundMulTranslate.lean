@@ -116,7 +116,7 @@ theorem seminorm_remainder {F : P × E → ℂ} (hF : ContDiff ℝ ∞ F) (z : P
     rw [e2]
     refine (ContinuousMultilinearMap.norm_compContinuousLinearMap_le _ _).trans ?_
     refine le_trans (mul_le_of_le_one_right (norm_nonneg _) ?_) h3
-    exact Finset.prod_le_one (fun _ _ => norm_nonneg _) fun _ _ => ContinuousLinearMap.norm_inr_le_one _ _ _
+    exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun _ _ => ContinuousLinearMap.norm_inr_le_one _ _ _
   calc _ ≤ ‖x‖ ^ k * (C / ‖x‖ ^ k * ‖v‖ * ‖v‖) := by gcongr
     _ = _ := by field_simp
 

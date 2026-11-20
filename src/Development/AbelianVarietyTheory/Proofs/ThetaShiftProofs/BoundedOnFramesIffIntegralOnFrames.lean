@@ -180,10 +180,10 @@ open MvPolynomial
 variable {K : Type*} [Field K] {σ τ : Type*}
 
 noncomputable def coeffPoly (m : ℤ) (G : MvPolynomial σ K⸨X⸩) : MvPolynomial σ K :=
-  ∑ μ ∈ G.support, monomial μ ((coeff μ G).coeff m)
+  ∑ μ ∈ G.support, monomial μ ((AddMonoidAlgebra.coeff G μ).coeff m)
 
 @[simp] theorem coeff_coeffPoly (m : ℤ) (G : MvPolynomial σ K⸨X⸩) (μ : σ →₀ ℕ) :
-    coeff μ (coeffPoly m G) = (coeff μ G).coeff m := by
+    AddMonoidAlgebra.coeff (coeffPoly m G) μ = (AddMonoidAlgebra.coeff G μ).coeff m := by
   classical
   simp only [coeffPoly, coeff_sum, coeff_monomial, Finset.sum_ite_eq']
   split_ifs with h
@@ -216,11 +216,11 @@ theorem isHomogeneous_coeffPoly (m : ℤ) {G : MvPolynomial σ K⸨X⸩} {d : �
 
 theorem exists_coeffPoly_eq_zero (G : MvPolynomial σ K⸨X⸩) :
     ∃ b : ℕ, ∀ m : ℤ, m < -(b : ℤ) → coeffPoly m G = 0 := by
-  refine ⟨G.support.sup fun μ => (-(coeff μ G).order).toNat, fun m hm => ?_⟩
+  refine ⟨G.support.sup fun μ => (-(AddMonoidAlgebra.coeff G μ).order).toNat, fun m hm => ?_⟩
   ext μ
   rw [coeff_coeffPoly, coeff_zero]
   by_cases h : μ ∈ G.support
-  · have := Finset.le_sup (f := fun μ => (-(coeff μ G).order).toNat) h
+  · have := Finset.le_sup (f := fun μ => (-(AddMonoidAlgebra.coeff G μ).order).toNat) h
     exact HahnSeries.coeff_eq_zero_of_lt_order (by omega)
   · simp [notMem_support_iff.1 h]
 
@@ -240,7 +240,7 @@ theorem hasSum_coeffPoly {K : Type*} [NormedField K] [CompleteSpace K] (i : O �
     HasSum (fun m : ℤ => eval x (coeffPoly m (map (laurent π A i hπ) F)) * t ^ m)
       (eval₂ (discEvalAway π A i hi hπ ht0 ht) x F) := by
   have h : ∀ m : ℤ, coeffPoly m (map (laurent π A i hπ) F) =
-      ∑ μ ∈ F.support, monomial μ ((laurent π A i hπ (coeff μ F)).coeff m) := fun m => by
+      ∑ μ ∈ F.support, monomial μ ((laurent π A i hπ (AddMonoidAlgebra.coeff F μ)).coeff m) := fun m => by
     classical
     ext μ
     simp only [coeff_coeffPoly, coeff_map, coeff_sum, coeff_monomial, Finset.sum_ite_eq']
@@ -250,16 +250,16 @@ theorem hasSum_coeffPoly {K : Type*} [NormedField K] [CompleteSpace K] (i : O �
   rw [eval₂_eq]
   refine Eq.mpr (congrArg (HasSum · _) (funext fun m => ?_))
     (hasSum_sum fun μ (_ : μ ∈ F.support) =>
-      (hasSum_laurent i hi hπ ht0 ht (coeff μ F)).mul_right (∏ k ∈ μ.support, x k ^ μ k))
+      (hasSum_laurent i hi hπ ht0 ht (AddMonoidAlgebra.coeff F μ)).mul_right (∏ k ∈ μ.support, x k ^ μ k))
   rw [h, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun μ _ => ?_
   rw [eval_monomial, Finsupp.prod]
   ring
 
 theorem norm_coeff_bind₁_le {K : Type*} [NormedField K] [IsUltrametricDist K] {σ τ : Type*}
-    {P : MvPolynomial σ K} {d : ℕ} (hP : P.IsHomogeneous d) (hP1 : ∀ μ, ‖coeff μ P‖ ≤ 1)
-    {g : σ → MvPolynomial τ K} {c : ℝ} (hc : 0 ≤ c) (hg : ∀ k μ, ‖coeff μ (g k)‖ ≤ c)
-    (μ : τ →₀ ℕ) : ‖coeff μ (bind₁ g P)‖ ≤ c ^ d := by
+    {P : MvPolynomial σ K} {d : ℕ} (hP : P.IsHomogeneous d) (hP1 : ∀ μ, ‖AddMonoidAlgebra.coeff P μ‖ ≤ 1)
+    {g : σ → MvPolynomial τ K} {c : ℝ} (hc : 0 ≤ c) (hg : ∀ k μ, ‖AddMonoidAlgebra.coeff (g k) μ‖ ≤ c)
+    (μ : τ →₀ ℕ) : ‖AddMonoidAlgebra.coeff (bind₁ g P) μ‖ ≤ c ^ d := by
   open ReciprocityTheory.ChartRestriction.G.FreeQuotientRank.BasisChangePf in
   have hmain : CB (bind₁ g P) (c ^ d) := by
     conv_lhs => rw [P.as_sum]
@@ -269,7 +269,7 @@ theorem norm_coeff_bind₁_le {K : Type*} [NormedField K] [IsUltrametricDist K] 
     have hdeg : ∑ k ∈ ν.support, ν k = d := by
       have := hP (mem_support_iff.1 hν)
       simpa [Finsupp.weight_apply, Finsupp.sum] using this
-    have h1 := cb_C_mul (coeff ν P) (cb_prod ν.support _ (fun k => c ^ ν k)
+    have h1 := cb_C_mul (AddMonoidAlgebra.coeff P ν) (cb_prod ν.support _ (fun k => c ^ ν k)
       (fun k => pow_nonneg hc _) (fun k _ => cb_pow hc (hg k) (ν k)))
     rw [Finset.prod_pow_eq_pow_sum, hdeg] at h1
     exact fun μ' => (h1 μ').trans (mul_le_of_le_one_left (pow_nonneg hc d) (hP1 ν))
@@ -278,7 +278,7 @@ theorem norm_coeff_bind₁_le {K : Type*} [NormedField K] [IsUltrametricDist K] 
 variable {K : Type} [NormedField K] [IsUltrametricDist K]
 
 theorem norm_coeff_detProdPoly_le {ι : Type*} [Fintype ι] (n : ι → Type*) [∀ s, Fintype (n s)]
-    [∀ s, DecidableEq (n s)] (μ : EntryIndex n n →₀ ℕ) : ‖coeff μ (detProdPoly K n)‖ ≤ 1 := by
+    [∀ s, DecidableEq (n s)] (μ : EntryIndex n n →₀ ℕ) : ‖AddMonoidAlgebra.coeff (detProdPoly K n) μ‖ ≤ 1 := by
   have h : map (Int.castRingHom K) (detProdPoly ℤ n) = detProdPoly K n := by
     rw [detProdPoly, detProdPoly, map_prod]
     refine Finset.prod_congr rfl fun s _ => ?_
@@ -290,7 +290,7 @@ theorem norm_coeff_detProdPoly_le {ι : Type*} [Fintype ι] (n : ι → Type*) [
   exact IsUltrametricDist.norm_intCast_le_one K _
 
 theorem exists_norm_coeff_detProdPoly {ι : Type*} [Fintype ι] (n : ι → Type*) [∀ s, Fintype (n s)]
-    [∀ s, DecidableEq (n s)] : ∃ μ, ‖coeff μ (detProdPoly K n)‖ = 1 := by
+    [∀ s, DecidableEq (n s)] : ∃ μ, ‖AddMonoidAlgebra.coeff (detProdPoly K n) μ‖ = 1 := by
   by_contra! h
   have h1 : eval (entries fun s => (1 : Matrix (n s) (n s) K)) (detProdPoly K n) = 1 := by
     simp [eval_detProdPoly]
@@ -301,7 +301,7 @@ theorem exists_norm_coeff_detProdPoly {ι : Type*} [Fintype ι] (n : ι → Type
     refine (mul_le_of_le_one_right (norm_nonneg _) ?_).trans_lt
       ((norm_coeff_detProdPoly_le n _).lt_of_ne (h _))
     rw [norm_prod]
-    refine Finset.prod_le_one (fun _ _ => norm_nonneg _) fun k _ => ?_
+    refine Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun k _ => ?_
     rw [norm_pow]
     refine pow_le_one₀ (norm_nonneg _) ?_
     simp only [entries, Matrix.one_apply]
@@ -316,11 +316,11 @@ theorem coeffPoly_integral_of_admissible (K₀ : Subfield K)
     (hdense : ∀ r : ℝ, 0 < r → r < 1 → ∀ ε > (0 : ℝ), ∃ t ∈ S, |‖t‖ - r| < ε)
     (hrot : ∀ t ∈ S, ∀ τ ∈ K₀, ‖τ‖ = 1 → t * τ ∈ S)
     (i : O →+* K) (hi : ∀ x, ‖i x‖ ≤ 1) (hπ : i π ≠ 0) {σ : Type} [Fintype σ]
-    (δ : MvPolynomial σ K) (hδ : ∀ μ, ‖coeff μ δ‖ ≤ 1) (hδ1 : ∃ μ, ‖coeff μ δ‖ = 1)
+    (δ : MvPolynomial σ K) (hδ : ∀ μ, ‖AddMonoidAlgebra.coeff δ μ‖ ≤ 1) (hδ1 : ∃ μ, ‖AddMonoidAlgebra.coeff δ μ‖ = 1)
     (F : MvPolynomial σ A)
     (hF : ∀ t ∈ S, ∀ (ht0 : t ≠ 0) (ht : ‖t‖ < 1) (x : σ → K), (∀ k, x k ∈ K₀ ∧ ‖x k‖ ≤ 1) →
       ‖eval x δ‖ = 1 → ‖eval₂ (discEvalAway π A i hi hπ ht0 ht) x F‖ ≤ 1) (m : ℤ) :
-    (∀ μ, ‖coeff μ (coeffPoly m (map (laurent π A i hπ) F))‖ ≤ 1) ∧
+    (∀ μ, ‖AddMonoidAlgebra.coeff (coeffPoly m (map (laurent π A i hπ) F)) μ‖ ≤ 1) ∧
       (m < 0 → coeffPoly m (map (laurent π A i hπ) F) = 0) := by
   obtain ⟨b, hb⟩ := exists_coeffPoly_eq_zero (map (laurent π A i hπ) F)
   refine ReciprocityTheory.ChartRestriction.G.FreeQuotientRank.finCore_holds K K₀ hres S hS hdense hrot σ δ hδ hδ1 _ b hb
@@ -775,7 +775,7 @@ theorem boundedOnFrames_iff_integralOnFrames [Algebra ℤ_[p] O] [Module.Finite 
 variable {i hi hπ} {F : MvPolynomial (EntryIndex n n) A}
 
 theorem BoundedOnFrames.coeffPoly_integral (hF : BoundedOnFrames i hi hπ F) (m : ℤ) :
-    (∀ μ, ‖coeff μ (coeffPoly m (map (laurent π A i hπ) F))‖ ≤ 1) ∧
+    (∀ μ, ‖AddMonoidAlgebra.coeff (coeffPoly m (map (laurent π A i hπ) F)) μ‖ ≤ 1) ∧
       (m < 0 → coeffPoly m (map (laurent π A i hπ) F) = 0) := by
   refine coeffPoly_integral_of_admissible (algField p) (residueFieldInfiniteOn_algField p)
     (algDisc p) (fun _ ht => ht.2) (algDisc_dense p) (mul_mem_algDisc p) i hi hπ
@@ -791,11 +791,11 @@ theorem BoundedOnFrames.coeffPoly_integral (hF : BoundedOnFrames i hi hπ F) (m 
 
 theorem BoundedOnFrames.norm_coeff_bind₁_le (hF : BoundedOnFrames i hi hπ F) {d : ℕ}
     (hd : F.IsHomogeneous d) {τ : Type*} {g : EntryIndex n n → MvPolynomial τ ℂ_[p]} {c : ℝ}
-    (hc : 0 ≤ c) (hg : ∀ k μ, ‖coeff μ (g k)‖ ≤ c) (μ : τ →₀ ℕ) (m : ℤ) :
-    ‖(coeff μ (bind₁ (fun k => map HahnSeries.C (g k)) (map (laurent π A i hπ) F))).coeff m‖ ≤
+    (hc : 0 ≤ c) (hg : ∀ k μ, ‖AddMonoidAlgebra.coeff (g k) μ‖ ≤ c) (μ : τ →₀ ℕ) (m : ℤ) :
+    ‖(AddMonoidAlgebra.coeff (bind₁ (fun k => map HahnSeries.C (g k)) (map (laurent π A i hπ) F)) μ).coeff m‖ ≤
         c ^ d ∧
-      (m < 0 → (coeff μ (bind₁ (fun k => map HahnSeries.C (g k))
-        (map (laurent π A i hπ) F))).coeff m = 0) := by
+      (m < 0 → (AddMonoidAlgebra.coeff (bind₁ (fun k => map HahnSeries.C (g k))
+        (map (laurent π A i hπ) F)) μ).coeff m = 0) := by
   rw [← coeff_coeffPoly, coeffPoly_bind₁]
   exact ⟨DiscEval.norm_coeff_bind₁_le (isHomogeneous_coeffPoly m (hd.map _))
     (hF.coeffPoly_integral m).1 hc hg μ, fun hm => by simp [(hF.coeffPoly_integral m).2 hm]⟩
@@ -803,10 +803,10 @@ theorem BoundedOnFrames.norm_coeff_bind₁_le (hF : BoundedOnFrames i hi hπ F) 
 theorem BoundedOnFrames.norm_coeff_linear_le (hF : BoundedOnFrames i hi hπ F) {d : ℕ}
     (hd : F.IsHomogeneous d) {B : EntryIndex n n → EntryIndex n n → ℂ_[p]} {c : ℝ}
     (hc : 1 ≤ c) (hB : ∀ k l, ‖B k l‖ ≤ c) (μ : EntryIndex n n →₀ ℕ) (m : ℤ) :
-    ‖(coeff μ (bind₁ (fun k => ∑ l, C (HahnSeries.C (B k l)) * X l)
-        (map (laurent π A i hπ) F))).coeff m‖ ≤ c ^ d ∧
-      (m < 0 → (coeff μ (bind₁ (fun k => ∑ l, C (HahnSeries.C (B k l)) * X l)
-        (map (laurent π A i hπ) F))).coeff m = 0) := by
+    ‖(AddMonoidAlgebra.coeff (bind₁ (fun k => ∑ l, C (HahnSeries.C (B k l)) * X l)
+        (map (laurent π A i hπ) F)) μ).coeff m‖ ≤ c ^ d ∧
+      (m < 0 → (AddMonoidAlgebra.coeff (bind₁ (fun k => ∑ l, C (HahnSeries.C (B k l)) * X l)
+        (map (laurent π A i hπ) F)) μ).coeff m = 0) := by
   have h : (fun k => ∑ l, C (HahnSeries.C (B k l)) * X l :
       EntryIndex n n → MvPolynomial (EntryIndex n n) ℂ_[p]⸨X⸩) =
       fun k => map HahnSeries.C (∑ l, C (B k l) * X l) := by
@@ -820,10 +820,10 @@ theorem BoundedOnFrames.norm_coeff_mul_le (hF : BoundedOnFrames i hi hπ F) {d :
     (hd : F.IsHomogeneous d) {κ : ι → Type*} [∀ s, Fintype (κ s)]
     {w : ∀ s, Matrix (n s) (κ s) ℂ_[p]} {c : ℝ} (hc : 0 ≤ c) (hw : ∀ s a b, ‖w s a b‖ ≤ c)
     (μ : EntryIndex κ n →₀ ℕ) (m : ℤ) :
-    ‖(coeff μ (bind₁ (fun k => ∑ j, C (HahnSeries.C (w k.1 k.2.1 j)) * X ⟨k.1, j, k.2.2⟩)
-        (map (laurent π A i hπ) F))).coeff m‖ ≤ c ^ d ∧
-      (m < 0 → (coeff μ (bind₁ (fun k => ∑ j, C (HahnSeries.C (w k.1 k.2.1 j)) * X ⟨k.1, j, k.2.2⟩)
-        (map (laurent π A i hπ) F))).coeff m = 0) := by
+    ‖(AddMonoidAlgebra.coeff (bind₁ (fun k => ∑ j, C (HahnSeries.C (w k.1 k.2.1 j)) * X ⟨k.1, j, k.2.2⟩)
+        (map (laurent π A i hπ) F)) μ).coeff m‖ ≤ c ^ d ∧
+      (m < 0 → (AddMonoidAlgebra.coeff (bind₁ (fun k => ∑ j, C (HahnSeries.C (w k.1 k.2.1 j)) * X ⟨k.1, j, k.2.2⟩)
+        (map (laurent π A i hπ) F)) μ).coeff m = 0) := by
   classical
   have h : (fun k => ∑ j, C (HahnSeries.C (w k.1 k.2.1 j)) * X ⟨k.1, j, k.2.2⟩ :
       EntryIndex n n → MvPolynomial (EntryIndex κ n) ℂ_[p]⸨X⸩) =
@@ -845,7 +845,7 @@ theorem boundedOnFrames_map (F₀ : MvPolynomial (EntryIndex n n) O⟦X⟧) :
   rw [norm_mul, RingHom.comp_apply, discEvalAway_algebraMap, norm_prod]
   refine mul_le_one₀ (norm_discEval_le_one i hi ht _)
     (Finset.prod_nonneg fun _ _ => norm_nonneg _)
-    (Finset.prod_le_one (fun _ _ => norm_nonneg _) fun k _ => ?_)
+    (Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun k _ => ?_)
   rw [norm_pow]
   exact pow_le_one₀ (norm_nonneg _) ((g k.1).1 k.2.1 k.2.2).2.2
 

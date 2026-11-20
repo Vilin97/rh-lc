@@ -250,9 +250,9 @@ theorem m3bNorm_holds : FlowNormRatio (E := E) := by
     rw [← Finset.prod_div_distrib]
   rw [key]
   constructor
-  · exact Finset.prod_le_prod (fun τ _ => (ratio_tau X e he la hx s hT τ).1)
+  · exact Finset.prod_le_prod₀ (fun τ _ => (ratio_tau X e he la hx s hT τ).1)
       (fun τ _ => (ratio_tau X e he la hx s hT τ).2.1)
-  · exact Finset.prod_le_prod
+  · exact Finset.prod_le_prod₀
       (fun τ _ => (ratio_tau X e he la hx s hT τ).1.trans (ratio_tau X e he la hx s hT τ).2.1)
       (fun τ _ => (ratio_tau X e he la hx s hT τ).2.2)
 

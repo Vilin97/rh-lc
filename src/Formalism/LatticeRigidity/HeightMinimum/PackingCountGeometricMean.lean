@@ -114,7 +114,7 @@ theorem packing_count_geometric_mean : Formalism.SA.P7.PackCount := by
       calc ∏ v, ‖x v - y v‖ = (∏ v, c v) * ∏ v, ‖x v - y v‖ := by rw [hprodc, one_mul]
         _ = ∏ v, (c v * ‖x v - y v‖) := by rw [Finset.prod_mul_distrib]
         _ ≤ ∏ _v : ι, ‖g x - g y‖ :=
-            Finset.prod_le_prod (fun v _ => mul_nonneg (hc v).le (norm_nonneg _))
+            Finset.prod_le_prod₀ (fun v _ => mul_nonneg (hc v).le (norm_nonneg _))
               (fun v _ => hcoord v)
         _ = ‖g x - g y‖ ^ Fintype.card ι := by rw [Finset.prod_const, Finset.card_univ]
     calc lam ≤ (∏ v, ‖x v - y v‖) ^ (1 / (Fintype.card ι : ℝ)) := h1

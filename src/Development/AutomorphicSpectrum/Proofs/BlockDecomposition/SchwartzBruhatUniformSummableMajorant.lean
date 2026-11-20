@@ -186,7 +186,7 @@ theorem exists_summable_bound_tensor_cosetIndicator2 (φ : 𝓢(Fin 2 → mixedS
   · have hJξ := hJ h hh ξ hmem
     have hind : ‖finiteTensor2 (fun i ↦ cosetIndicator I (b i)) (finPart x)‖ ≤ 1 := by
       simp only [finiteTensor2, norm_prod]
-      refine Finset.prod_le_one (fun i _ => norm_nonneg _) (fun i _ => ?_)
+      refine Finset.prod_le_one₀ (fun i _ => norm_nonneg _) (fun i _ => ?_)
       simp only [cosetIndicator]
       refine (norm_indicator_le_norm_self _ _).trans ?_
       simp

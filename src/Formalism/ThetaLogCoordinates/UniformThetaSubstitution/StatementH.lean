@@ -18,7 +18,7 @@ def KernelValuationBoundPadic : Prop :=
     2 < p → ϖ ^ (p ^ 2 - 1) = (p : ℂ_[p]) → (∀ s, ‖u s‖ ≤ 1) →
     InClass (p : ℂ_[p]) (hhS p u) (MvPowerSeries.subst
       (fun x => MvPowerSeries.C ϖ * (MvPowerSeries.X x : MvPowerSeries (ZV ν r0 r1) ℂ_[p])) Th) →
-    ∀ n, ‖MvPolynomial.coeff n (frameJet colN hts hp I Th)‖ ≤
+    ∀ n, ‖AddMonoidAlgebra.coeff (frameJet colN hts hp I Th) n‖ ≤
       (p : ℝ) ^ (-(excessGain (p : ℝ) TT (dSet TT) (fun s => (alG TT colN hts s : ℝ))
         (fun s => (capG TT colN hts s : ℝ)) (deLoss p r0 r1 TT (alG TT colN hts) (lsG TT colN hts))))
 
@@ -29,7 +29,7 @@ def KernelValuationBoundEvenSizes : Prop :=
     2 < p → ϖ ^ (p ^ 2 - 1) = (p : ℂ_[p]) → (∀ s, ‖u s‖ ≤ 1) →
     InClass (p : ℂ_[p]) (hhS p u) (MvPowerSeries.subst
       (fun x => MvPowerSeries.C ϖ * (MvPowerSeries.X x : MvPowerSeries (ZV ν r0 r1) ℂ_[p])) Th) →
-    ∀ n, ‖MvPolynomial.coeff n (frameJet colN hts hp I Th)‖ ≤
+    ∀ n, ‖AddMonoidAlgebra.coeff (frameJet colN hts hp I Th) n‖ ≤
       (p : ℝ) ^ (-(gainG (p : ℝ) TT (oddT TT) (fun s => (alG TT colN hts s : ℝ))
         (fun s => (capG TT colN hts s : ℝ)) (deLoss p r0 r1 TT (alG TT colN hts) (lsG TT colN hts)) -
         ∑ s ∈ TT \ oddT TT, (alG TT colN hts s : ℝ)))
@@ -45,7 +45,7 @@ def KernelB : Prop :=
           (if s.val % 2 = 0 then
             min (hts s c) i - ((univ.image (I s c)) ∩ univ.filter (fun b : Fin r1 => b.val < i)).card
           else ((univ.image (I s c)) ∩ univ.filter (fun b : Fin r1 => b.val < i)).card)) *
-        MvPolynomial.coeff n (frameJet colN hts hp I Th)‖ ≤
+        AddMonoidAlgebra.coeff (frameJet colN hts hp I Th) n‖ ≤
       (p : ℝ) ^ (-(gainG (p : ℝ) TT (oddT TT) (fun s => (alG TT colN hts s : ℝ))
         (fun s => (capG TT colN hts s : ℝ)) (deLoss p r0 r1 TT (alG TT colN hts) (lsG TT colN hts))))
 

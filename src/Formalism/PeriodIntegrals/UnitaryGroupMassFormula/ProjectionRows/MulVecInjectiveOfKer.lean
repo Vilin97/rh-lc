@@ -41,7 +41,7 @@ lemma det_one_add_psd {N : Matrix n n ℂ} (hN : N.PosSemidef) :
     rw [← det_mul, hU, det_one]
   refine ⟨∏ i, (1 + hH.eigenvalues i), ?_, ?_⟩
   · calc (1 : ℝ) = ∏ _i : n, (1 : ℝ) := by simp
-      _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one)
+      _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one)
           (fun i _ => by linarith [hN.eigenvalues_nonneg i])
   · rw [key, det_mul, det_mul]
     have h1 : (1 + diagonal (RCLike.ofReal ∘ hH.eigenvalues) : Matrix n n ℂ) =

@@ -30,7 +30,7 @@ theorem ultrametric_root_le : ∀ {A K : Type} [CommRing A] [Field K] (w : Absol
     intro s hs
     rw [map_mul, map_prod]
     refine (mul_le_mul (hcoef l hl s hs) ?_ (by positivity) hB0).trans_eq (mul_one B)
-    refine Finset.prod_le_one (fun i _ => by positivity) (fun i _ => ?_)
+    refine Finset.prod_le_one₀ (fun i _ => by positivity) (fun i _ => ?_)
     rw [map_pow]
     exact pow_le_one₀ (by positivity) (hζ i)
   by_contra hlt

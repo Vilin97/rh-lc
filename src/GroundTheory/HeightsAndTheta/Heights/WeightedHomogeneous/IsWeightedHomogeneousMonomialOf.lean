@@ -148,7 +148,7 @@ theorem norm_evalCone_monomialOf_le (z : Cone n ℂ) (μ : Coord n → ℕ) (hμ
   rw [he, norm_prod]
   show ∏ v, ‖z v.1 v.2 ^ μ v‖ ≤ ∏ k, l2Norm (z k)
   calc ∏ v, ‖z v.1 v.2 ^ μ v‖ ≤ ∏ v : Coord n, l2Norm (z v.1) ^ μ v :=
-        Finset.prod_le_prod (fun _ _ ↦ norm_nonneg _) fun v _ ↦ by
+        Finset.prod_le_prod₀ (fun _ _ ↦ norm_nonneg _) fun v _ ↦ by
           rw [norm_pow]
           exact pow_le_pow_left₀ (norm_nonneg _) (norm_le_l2Norm _ _) _
     _ = ∏ k, l2Norm (z k) := by

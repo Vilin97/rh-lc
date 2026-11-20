@@ -28,14 +28,14 @@ private lemma sum_padicValNat_eq_padicValNat_descFactorial (p : ℕ) [Fact p.Pri
   | succ S ih =>
     rw [Finset.sum_range_succ, ih, show m + (S + 1) = (m + S) + 1 by omega,
       Nat.succ_descFactorial_succ,
-      padicValNat.mul (by omega) (fun h => by rw [Nat.descFactorial_eq_zero_iff_lt] at h; omega),
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by omega) (fun h => by rw [Nat.descFactorial_eq_zero_iff_lt] at h; omega),
       show m + 1 + S = m + S + 1 by omega]
     omega
 
 private lemma padicValNat_descFactorial_le_factorial_add_log (p : ℕ) [hp : Fact p.Prime] (m S : ℕ) :
     padicValNat p ((m + S).descFactorial S) ≤ padicValNat p S.factorial + Nat.log p (m + S) := by
   rw [Nat.descFactorial_eq_factorial_mul_choose,
-    padicValNat.mul (Nat.factorial_ne_zero S) (Nat.choose_pos (by omega)).ne']
+    (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.factorial_ne_zero S) (Nat.choose_pos (by omega)).ne']
   have h := Nat.factorization_choose_le_log (p := p) (n := m + S) (k := S)
   rw [Nat.factorization_def _ hp.out] at h
   omega

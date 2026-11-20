@@ -31,7 +31,7 @@ theorem symmGrowth : symmGrowthStatement.{u} := by
         rw [Finset.mem_powersetCard] at ht
         rw [norm_prod]
         calc ∏ y ∈ t, ‖u y‖ ≤ ∏ _y ∈ t, max (R w) 0 :=
-              Finset.prod_le_prod (fun _ _ => norm_nonneg _) (fun y hy => hu y (ht.1 hy))
+              Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) (fun y hy => hu y (ht.1 hy))
           _ = (max (R w) 0) ^ k := by rw [Finset.prod_const, ht.2]
     _ = ((hfin.toFinset.powersetCard k).card : ℝ) * (max (R w) 0) ^ k := by
         rw [Finset.sum_const, nsmul_eq_mul]

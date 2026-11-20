@@ -14,7 +14,7 @@ open Formalism.BasicNotions Formalism.L2.DIV Formalism.L2.GlobalTheoryTheory.HLa
 
 section FockN
 
-def fockN {σ : Type} (f : MvPolynomial σ ℂ) : ℝ := ∑ m ∈ f.support, ‖coeff m f‖ ^ 2 * (mfact m : ℝ)
+def fockN {σ : Type} (f : MvPolynomial σ ℂ) : ℝ := ∑ m ∈ f.support, ‖AddMonoidAlgebra.coeff f m‖ ^ 2 * (mfact m : ℝ)
 
 theorem fockF_self {σ : Type} (f : MvPolynomial σ ℂ) : Formalism.REAL.fockF f f = (fockN f : ℂ) := by
   unfold Formalism.REAL.fockF fockN
@@ -32,14 +32,14 @@ theorem fockN_pos {σ : Type} (f : MvPolynomial σ ℂ) (hf : f ≠ 0) : 0 < foc
   obtain ⟨m, hm⟩ := hne
   unfold fockN
   refine Finset.sum_pos' (fun i _ => by positivity) ⟨m, hm, ?_⟩
-  have h1 : coeff m f ≠ 0 := MvPolynomial.mem_support_iff.mp hm
+  have h1 : AddMonoidAlgebra.coeff f m ≠ 0 := MvPolynomial.mem_support_iff.mp hm
   have h2 : (0 : ℝ) < (mfact m : ℝ) := by
     have : 0 < mfact m := Finset.prod_pos fun k _ => Nat.factorial_pos _
     exact_mod_cast this
   exact mul_pos (pow_pos (norm_pos_iff.mpr h1) 2) h2
 
 theorem fockN_sum_le {σ : Type} (f : MvPolynomial σ ℂ) (S : Finset (σ →₀ ℕ)) :
-    ∑ m ∈ S, ‖coeff m f‖ ^ 2 * (mfact m : ℝ) ≤ fockN f := by
+    ∑ m ∈ S, ‖AddMonoidAlgebra.coeff f m‖ ^ 2 * (mfact m : ℝ) ≤ fockN f := by
   classical
   unfold fockN
   rw [← Finset.sum_filter_of_ne (p := fun m => m ∈ f.support)]
@@ -189,7 +189,7 @@ theorem hsN_nonneg {n : ℕ} (U : Matrix (Fin n) (Fin n) ℂ) : 0 ≤ hsN U :=
 
 def FockSubNorm : Prop :=
   ∀ (ι : Type) [Fintype ι] (n : ℕ) (U : ι → Matrix (Fin n) (Fin n) ℂ) (d : ι → ℕ) (F : MvPolynomial (ι × Fin n × Fin n) ℂ),
-    (∀ m, coeff m F ≠ 0 → ∀ τ, ∑ a, ∑ s, m (τ, a, s) = d τ) →
+    (∀ m, AddMonoidAlgebra.coeff F m ≠ 0 → ∀ τ, ∑ a, ∑ s, m (τ, a, s) = d τ) →
     fockN (Formalism.GradedWeylDivisibility.blockAct ℂ U F) ≤ (∏ τ, hsN (U τ) ^ d τ) * fockN F
 
 variable (K : Type) [Field K] [NumberField K] [StarRing K] {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → DomWeight n)
@@ -206,12 +206,12 @@ theorem coefficient_map_norm_bound (hS : FockSubNorm) (g : ι → GL (Fin n) K) 
   rw [monH_norm, source_norm_fock_ratio]
   set G : MvPolynomial (ι × Fin n × Fin n) ℂ := map v.embedding (trAct g x.1) with hG
   have e1 : ∑ m, monW lam m * ‖v.embedding (cfMap lam g x m)‖ ^ 2 =
-      (∑ m : MonI lam, ‖coeff m.1 G‖ ^ 2 * (mfact m.1 : ℝ)) / extremalFockNormProduct lam := by
+      (∑ m : MonI lam, ‖AddMonoidAlgebra.coeff G m.1‖ ^ 2 * (mfact m.1 : ℝ)) / extremalFockNormProduct lam := by
     rw [Finset.sum_div]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [hG, coeff_map, cfMap_apply, monW]
     ring
-  have e2 : ∑ m : MonI lam, ‖coeff m.1 G‖ ^ 2 * (mfact m.1 : ℝ) ≤ fockN G := by
+  have e2 : ∑ m : MonI lam, ‖AddMonoidAlgebra.coeff G m.1‖ ^ 2 * (mfact m.1 : ℝ) ≤ fockN G := by
     have := fockN_sum_le G ((Finset.univ : Finset (MonI lam)).map ⟨fun m : MonI lam => m.1, fun a b h => Subtype.ext h⟩)
     rwa [Finset.sum_map] at this
   have e3 : G = Formalism.GradedWeylDivisibility.blockAct ℂ (fun τ => ((g τ : Matrix (Fin n) (Fin n) K)ᵀ).map v.embedding) (map v.embedding x.1) :=

@@ -16,7 +16,7 @@ theorem abs_prod_le {α : Type} [Fintype α] (g : α → ℝ) (hg : ∀ x, |g x|
   refine mul_le_mul_of_nonneg_left ?_ (abs_nonneg _)
   rw [Finset.abs_prod]
   calc ∏ x ∈ Finset.univ.erase x₀, |g x| ≤ ∏ _x ∈ Finset.univ.erase x₀, (2 : ℝ) :=
-        Finset.prod_le_prod (fun _ _ => abs_nonneg _) (fun x _ => hg x)
+        Finset.prod_le_prod₀ (fun _ _ => abs_nonneg _) (fun x _ => hg x)
     _ = 2 ^ (Finset.univ.erase x₀).card := by rw [Finset.prod_const]
     _ ≤ 2 ^ Fintype.card α := by
         apply pow_le_pow_right₀ (by norm_num)

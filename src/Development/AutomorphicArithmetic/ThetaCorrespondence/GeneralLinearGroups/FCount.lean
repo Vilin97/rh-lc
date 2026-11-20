@@ -88,7 +88,7 @@ theorem UpperTheory.Lit.Full.count :
   obtain ⟨Z, Ψ, hS, hΨ, hX⟩ := hZ k
   let c := MvPolynomial.basisMonomials (Segment k) ℤ
   let e : (IrrGL k →₀ ℤ) ≃ₗ[ℤ] ((Segment k →₀ ℕ) →₀ ℤ) := Ψ.toIntLinearEquiv.trans c.repr
-  have hc : ∀ p m, c.repr p m = MvPolynomial.coeff m p := fun _ _ => rfl
+  have hc : ∀ p m, c.repr p m = AddMonoidAlgebra.coeff p m := fun _ _ => rfl
   have hc' : ∀ m, c.repr.symm (Finsupp.single m 1) = MvPolynomial.monomial m 1 := fun m => by
     rw [Module.Basis.repr_symm_single_one]
     simp [c]

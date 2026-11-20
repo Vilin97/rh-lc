@@ -14,7 +14,7 @@ open scoped ComplexOrder
 theorem aeval_eq_sum_adt {D N : ℕ} {S : Type*} [CommRing S] (g : MvPolynomial (Fin (D + 1)) ℤ)
     (hg : g.IsHomogeneous N) (y : Fin (D + 1) → S) :
     aeval y g = ∑ a ∈ Finset.Nat.antidiagonalTuple (D + 1) N,
-      ((coeff (Finsupp.equivFunOnFinite.symm a) g : ℤ) : S) * ∏ i, y i ^ a i := by
+      ((AddMonoidAlgebra.coeff g (Finsupp.equivFunOnFinite.symm a) : ℤ) : S) * ∏ i, y i ^ a i := by
   classical
   rw [aeval_def, eval₂_eq']
   symm

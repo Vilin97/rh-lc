@@ -118,7 +118,7 @@ theorem two_letter_lattice_gauss_inverse : TwoLetterLatticeGaussInverse := by
       rwa [glAct_inv_glAct] at this
     rw [f₀.as_sum, map_sum, map_sum]
     refine Submodule.sum_mem _ fun v hv => ?_
-    obtain ⟨c, hc⟩ : ∃ c : R.O, algebraMap R.O R.Kf c = coeff v f₀ := hG v
+    obtain ⟨c, hc⟩ : ∃ c : R.O, algebraMap R.O R.Kf c = AddMonoidAlgebra.coeff f₀ v := hG v
     rw [ta_monomial_split, map_smul, map_smul, ← hc, algebraMap_smul]
     refine Submodule.smul_mem _ _ ?_
     have hP : (∏ i : Fin (m + 1), (X i : MvPolynomial (Fin (m + 1)) R.Kf) ^ v (Sum.inl i)).IsHomogeneous P := by

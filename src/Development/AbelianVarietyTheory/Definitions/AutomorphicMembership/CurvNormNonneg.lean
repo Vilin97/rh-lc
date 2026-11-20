@@ -327,7 +327,7 @@ theorem exp_le_r {z : Pt ι p q} (hz : z ∈ DomI ι p q) : Real.exp 1 ≤ B.r z
   unfold r
   have h0 : 0 ≤ ∏ i, B.nrm i z := Finset.prod_nonneg fun i _ => (B.nrm_pos i z hz).le
   have h1 : ∏ i, B.nrm i z ≤ 1 :=
-    Finset.prod_le_one (fun i _ => (B.nrm_pos i z hz).le) fun i _ => B.nrm_le i z hz
+    Finset.prod_le_one₀ (fun i _ => (B.nrm_pos i z hz).le) fun i _ => B.nrm_le i z hz
   have h3 : Real.log ((∏ i, B.nrm i z) ^ 2) ≤ 0 := Real.log_nonpos (by positivity) (pow_le_one₀ h0 h1)
   linarith
 

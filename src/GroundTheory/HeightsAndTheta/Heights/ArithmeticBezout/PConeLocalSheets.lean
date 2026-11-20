@@ -17,7 +17,7 @@ namespace ConeLocalSheets
 variable {n e : ℕ}
 
 def homogenize (c : MvPolynomial (Fin e) ℂ) : MvPolynomial (Fin (e + 1)) ℂ :=
-  ∑ m ∈ c.support, C (coeff m c) * (X 0 ^ (c.totalDegree - m.degree) * rename Fin.succ (monomial m 1))
+  ∑ m ∈ c.support, C (AddMonoidAlgebra.coeff c m) * (X 0 ^ (c.totalDegree - m.degree) * rename Fin.succ (monomial m 1))
 
 theorem homogenize_isHomogeneous (c : MvPolynomial (Fin e) ℂ) :
     (homogenize c).IsHomogeneous c.totalDegree := by

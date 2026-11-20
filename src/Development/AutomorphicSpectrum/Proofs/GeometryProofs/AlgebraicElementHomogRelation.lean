@@ -63,8 +63,8 @@ theorem form_natCast_mul {f : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) 
 theorem cone_form (y : (Σ k, ι k) → Ω) {h : MRing ι} {d : K → ℕ} (hh : IsMultiHomog h d) :
     mConeMap y h = MvPolynomial.C (aeval y h) * ∏ k, (X k : MvPolynomial K Ω) ^ d k := by
   classical
-  have key : ∀ v ∈ h.support, mConeMap y (monomial v (coeff v h)) =
-      MvPolynomial.C (aeval y (monomial v (coeff v h))) * ∏ k, (X k : MvPolynomial K Ω) ^ d k := by
+  have key : ∀ v ∈ h.support, mConeMap y (monomial v (AddMonoidAlgebra.coeff h v)) =
+      MvPolynomial.C (aeval y (monomial v (AddMonoidAlgebra.coeff h v))) * ∏ k, (X k : MvPolynomial K Ω) ^ d k := by
     intro v hv
     have hX : (v.prod fun p e => (X p.1 : MvPolynomial K Ω) ^ e) = ∏ k, (X k : MvPolynomial K Ω) ^ d k := by
       rw [Finsupp.prod_fintype _ _ (fun _ => pow_zero _), Fintype.prod_sigma]
@@ -73,7 +73,7 @@ theorem cone_form (y : (Σ k, ι k) → Ω) {h : MRing ι} {d : K → ℕ} (hh :
         MvPolynomial.C (v.prod fun p e => y p ^ e) * v.prod fun p e => (X p.1 : MvPolynomial K Ω) ^ e := by
       rw [map_finsuppProd, ← Finsupp.prod_mul]
       exact Finsupp.prod_congr fun p _ => by simp only [mul_pow, map_pow]
-    show (aeval fun p => MvPolynomial.C (y p) * (X p.1 : MvPolynomial K Ω)) (monomial v (coeff v h)) = _
+    show (aeval fun p => MvPolynomial.C (y p) * (X p.1 : MvPolynomial K Ω)) (monomial v (AddMonoidAlgebra.coeff h v)) = _
     simp only [MvPolynomial.aeval_monomial]
     rw [h1, hX, map_mul]
     simp only [algebraMap_int_eq, eq_intCast, Int.coe_castRingHom, map_intCast]

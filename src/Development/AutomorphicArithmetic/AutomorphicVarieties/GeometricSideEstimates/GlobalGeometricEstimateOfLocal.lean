@@ -16,7 +16,7 @@ private theorem key {E : Type} [Field E] [NumberField E] {a : ℕ} (g : GA E a) 
   rw [← prod_norm_mul_finprod_norm hcx, AutomorphicForm.height, ← mul_assoc, ← Finset.prod_mul_distrib]
   refine mul_le_mul ?_ ?_ (finprod_nonneg fun _ => norm_nonneg _)
     (Finset.prod_nonneg fun w _ => by have := locHeight_pos (infAt w g); positivity)
-  · refine Finset.prod_le_prod (fun _ _ => pow_nonneg (norm_nonneg _) _) fun w _ => ?_
+  · refine Finset.prod_le_prod₀ (fun _ _ => pow_nonneg (norm_nonneg _) _) fun w _ => ?_
     rw [← mul_pow]
     refine pow_le_pow_left₀ (norm_nonneg _) ?_ _
     have h1 : ((c * x : E) : w.Completion) = ∑ j, ((c : w.Completion) * (y j).1 w) * ((infAt w g)⁻¹).val j i := by

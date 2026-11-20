@@ -200,7 +200,7 @@ theorem partial_product_bounds (y : ℝ) (hy0 : 0 ≤ y) (hy : y ≤ 1 / 2) (k n
       rw [e]
       nlinarith [mul_le_mul_of_nonneg_right ih (hfac (k + n + 1)).1,
         mul_nonneg ht0 (by linarith : (0 : ℝ) ≤ 1 - 2 * y), mul_nonneg ht0 (sub_nonneg.mpr hmono)]
-  exact ⟨low n, Finset.prod_le_one (fun j _ => (hfac j).1) (fun j _ => (hfac j).2),
+  exact ⟨low n, Finset.prod_le_one₀ (fun j _ => (hfac j).1) (fun j _ => (hfac j).2),
     Finset.prod_nonneg fun j _ => (hfac j).1⟩
 
 theorem triangular_number_identities (k : ℕ) : ∃ A, k * (k - 1) / 2 = A ∧ k * (k + 1) / 2 = A + k ∧ k * k = 2 * A + k := by

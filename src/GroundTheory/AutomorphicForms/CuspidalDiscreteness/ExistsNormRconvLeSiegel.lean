@@ -250,7 +250,7 @@ theorem exists_norm_rconv_le_siegel {β : ArchMatrix K n → ℝ}
         refine (hc Y hYY hYR Cε hCε2 w).trans ?_
         have hprod : ∏ i, ‖Y i‖ ≤ (C₁' * gain) ^ k := by
           rw [← Fin.prod_const]
-          exact Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i _ => hYn i
+          exact Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i _ => hYn i
         calc c * ∏ i, ‖Y i‖ ≤ c' * ∏ i, ‖Y i‖ :=
               mul_le_mul_of_nonneg_right (le_max_left _ _)
                 (Finset.prod_nonneg fun i _ => norm_nonneg _)

@@ -759,7 +759,7 @@ lemma norm_cosetMean_le (I : AddSubgroup (E0 × H)) (h : E0 × H) (ψ : AddChar 
 lemma norm_primVal_le (D : ArithData H) (ψ : AddChar (E0 × H) ℂ) (n : ℕ) : ‖primVal D ψ n‖ ≤ 1 := by
   unfold primVal
   rw [norm_prod]
-  exact Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun p _ => norm_cosetMean_le _ _ _)
+  exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun p _ => norm_cosetMean_le _ _ _)
 
 lemma norm_coef_le (D : ArithData H) (ψ : AddChar (E0 × H) ℂ) (n : ℕ) :
     ‖(Λ n : ℂ) * primVal D ψ n‖ ≤ Λ n := by

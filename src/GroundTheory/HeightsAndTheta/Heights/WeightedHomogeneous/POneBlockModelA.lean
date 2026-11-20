@@ -76,7 +76,7 @@ theorem latticeForm_sum {ι : Type*} (s : Finset ι) (u : ι → Fin m → K) :
   | insert i s hi ih => rw [Finset.sum_insert hi, Finset.sum_insert hi, latticeForm_add, ih]
 
 theorem coeff_latticeForm (u : Fin m → K) (j : Fin m) :
-    coeff (Finsupp.single j 1) (latticeForm u) = u j := by
+    AddMonoidAlgebra.coeff (latticeForm u) (Finsupp.single j 1) = u j := by
   simp [latticeForm, coeff_sum, coeff_C_mul, coeff_X, Finsupp.single_left_inj]
 
 theorem latticeForm_eq_zero_iff (u : Fin m → K) : latticeForm u = 0 ↔ u = 0 := by

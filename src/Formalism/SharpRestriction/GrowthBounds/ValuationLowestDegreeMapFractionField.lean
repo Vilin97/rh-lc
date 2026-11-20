@@ -411,7 +411,7 @@ theorem suppProj_monomial (R : Type) [CommRing R] {σ : Type} (s : Set (σ →�
 
 open Classical in
 theorem coeff_suppProj (R : Type) [CommRing R] {σ : Type} (s : Set (σ →₀ ℕ)) (A : MvPolynomial σ R) (m : σ →₀ ℕ) :
-    coeff m (suppProj R s A) = if m ∈ s then coeff m A else 0 := by
+    AddMonoidAlgebra.coeff (suppProj R s A) m = if m ∈ s then AddMonoidAlgebra.coeff A m else 0 := by
   induction A using MvPolynomial.induction_on' with
   | monomial u a =>
     rw [suppProj_monomial]
@@ -427,7 +427,7 @@ theorem coeff_suppProj (R : Type) [CommRing R] {σ : Type} (s : Set (σ →₀ �
         rintro rfl; exact hu hm
       · rw [if_neg hm]
   | add p q hp hq =>
-    rw [map_add, coeff_add, hp, hq, coeff_add]
+    rw [map_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]
     split_ifs <;> simp
 
 theorem suppProj_support_subset (R : Type) [CommRing R] {σ : Type} (s : Set (σ →₀ ℕ)) (A : MvPolynomial σ R) :
@@ -529,7 +529,7 @@ theorem hom_Pol_C (R : Type) [CommRing R] {ι : Type} {n : ℕ} (a : R) :
   unfold Pol
   rw [mem_restrictSupport_iff]
   intro m hm
-  have hm' : coeff m (C a : MvPolynomial (ι × Fin n) R) ≠ 0 := mem_support_iff.mp (by simpa using hm)
+  have hm' : AddMonoidAlgebra.coeff (C a : MvPolynomial (ι × Fin n) R) m ≠ 0 := mem_support_iff.mp (by simpa using hm)
   rw [coeff_C] at hm'
   have h0 : (0 : ι × Fin n →₀ ℕ) = m := by
     by_contra h
@@ -544,7 +544,7 @@ theorem hom_Pol_CX (R : Type) [CommRing R] {ι : Type} {n : ℕ} (a : R) (l : ι
   unfold Pol
   rw [mem_restrictSupport_iff]
   intro m hm
-  have hm' : coeff m (C a * X (l, c) : MvPolynomial (ι × Fin n) R) ≠ 0 := mem_support_iff.mp (by simpa using hm)
+  have hm' : AddMonoidAlgebra.coeff (C a * X (l, c) : MvPolynomial (ι × Fin n) R) m ≠ 0 := mem_support_iff.mp (by simpa using hm)
   rw [coeff_C_mul, coeff_X] at hm'
   have h0 : Finsupp.single (l, c) 1 = m := by
     by_contra h
@@ -635,7 +635,7 @@ theorem sDegs_polComp_subset {R : Type} [CommRing R] {ι : Type} {n : ℕ} (LL :
   unfold sDegs at hk ⊢
   obtain ⟨m, hm, hmk⟩ := Finset.mem_biUnion.mp hk
   rw [twistSub_polComp] at hm hmk
-  have hc : coeff m (polComp (GLLaurent R n) n d (twistSub LL S j A)) = coeff m (twistSub LL S j A) := by
+  have hc : AddMonoidAlgebra.coeff (polComp (GLLaurent R n) n d (twistSub LL S j A)) m = AddMonoidAlgebra.coeff (twistSub LL S j A) m := by
     have h0 := mem_support_iff.mp hm
     unfold polComp at h0 ⊢
     rw [coeff_suppProj] at h0 ⊢
@@ -661,7 +661,7 @@ theorem exists_sum_polComp (R : Type) [CommRing R] {ι : Type} (n : ℕ) (A : Mv
   refine ⟨A.support.image fun m i => multideg m i, ?_⟩
   ext m
   rw [coeff_sum]
-  have h : ∀ d : ι → ℕ, coeff m (polComp R n d A) = if (fun i => multideg m i) = d then coeff m A else 0 := by
+  have h : ∀ d : ι → ℕ, AddMonoidAlgebra.coeff (polComp R n d A) m = if (fun i => multideg m i) = d then AddMonoidAlgebra.coeff A m else 0 := by
     intro d
     unfold polComp
     rw [coeff_suppProj]
@@ -761,8 +761,8 @@ theorem sDegs_empty_subset {ι : Type} {n : ℕ} (LL : Letters ι) (j : Fin n) (
     ∀ k ∈ sDegs LL ∅ j A, k ∈ ({0} : Set ℤ) := by
   refine sDegs_subset LL ∅ j A _ fun m => ?_
   rw [twistSub_empty, coeff_map]
-  have : coefL R n (coeff m A) = LaurentPolynomial.C (algebraMap (MvPolynomial (Fin n × Fin n) R) (GLCoord R n)
-      (C (coeff m A))) * LaurentPolynomial.T 0 := by
+  have : coefL R n (AddMonoidAlgebra.coeff A m) = LaurentPolynomial.C (algebraMap (MvPolynomial (Fin n × Fin n) R) (GLCoord R n)
+      (C (AddMonoidAlgebra.coeff A m))) * LaurentPolynomial.T 0 := by
     rw [LaurentPolynomial.T_zero, mul_one]; rfl
   rw [this]
   exact SuppIn.C_mul_T _ _ rfl
@@ -772,7 +772,7 @@ theorem sDegs_empty [IsDomain R] {ι : Type} {n : ℕ} (LL : Letters ι) (j : Fi
   rw [Finset.eq_singleton_iff_unique_mem]
   refine ⟨?_, fun k hk => sDegs_empty_subset LL j A k hk⟩
   obtain ⟨m0, hm0⟩ := MvPolynomial.ne_zero_iff.mp hA
-  have hne : coefL R n (coeff m0 A) ≠ 0 := fun h => hm0 (coefL_injective n (h.trans (map_zero _).symm))
+  have hne : coefL R n (AddMonoidAlgebra.coeff A m0) ≠ 0 := fun h => hm0 (coefL_injective n (h.trans (map_zero _).symm))
   unfold sDegs
   rw [twistSub_empty]
   refine Finset.mem_biUnion.mpr ⟨m0, ?_, ?_⟩
@@ -1264,7 +1264,7 @@ def ordOK (o : ℤ → ℝ) (b' b'' : Fin (segN F j) → ℕ) : Prop :=
 end Four0
 
 theorem li_coeff_zero {R σ : Type} [CommRing R] {T : Set (σ →₀ ℕ)} {p : MvPolynomial σ R}
-    (hp : p ∈ restrictSupport R T) {m : σ →₀ ℕ} (hm : m ∉ T) : coeff m p = 0 := by
+    (hp : p ∈ restrictSupport R T) {m : σ →₀ ℕ} (hm : m ∉ T) : AddMonoidAlgebra.coeff p m = 0 := by
   by_contra h
   exact hm (((MvPolynomial.mem_restrictSupport_iff (R := R)).mp hp) (Finset.mem_coe.mpr (mem_support_iff.mpr h)))
 
@@ -1279,7 +1279,7 @@ theorem li_graded {R : Type} [CommRing R] {σ ι κ : Type} (f : ι → MvPolyno
     ext m
     rw [coeff_sum, coeff_zero]
     by_cases hm : m ∈ T (d x0)
-    · have h0 := congrArg (coeff m) hs
+    · have h0 := congrArg (AddMonoidAlgebra.coeff · m) hs
       rw [coeff_sum, coeff_zero] at h0
       rw [Finset.sum_filter]
       refine Eq.trans ?_ h0
@@ -1356,7 +1356,7 @@ theorem li_sum_inr {R σ τ : Type} [CommRing R] (q : MvPolynomial τ R) :
   | mul_X p v hp => simp only [map_mul, hp, rename_X, sumAlgEquiv_X_inr]
 
 theorem li_key {R σ τ : Type} [CommRing R] (p : MvPolynomial σ R) (q : MvPolynomial τ R) (m : σ →₀ ℕ) :
-    coeff m (sumAlgEquiv R σ τ (rename Sum.inl p * rename Sum.inr q)) = coeff m p • q := by
+    AddMonoidAlgebra.coeff (sumAlgEquiv R σ τ (rename Sum.inl p * rename Sum.inr q)) m = AddMonoidAlgebra.coeff p m • q := by
   rw [map_mul, li_sum_inl, li_sum_inr, mul_comm, coeff_C_mul, coeff_map, mul_comm, ← smul_eq_C_mul]
 
 theorem li_ext {R : Type} [CommRing R] {σ τ α β : Type} (u : α → MvPolynomial σ R) (v : β → MvPolynomial τ R)
@@ -1381,16 +1381,16 @@ theorem li_ext {R : Type} [CommRing R] {σ τ α β : Type} (u : α → MvPolyno
     · intro x hx
       have hx' : (x.1, x.2) ∈ s := hx
       simp only [g', if_pos hx']
-  have step : ∀ m : σ →₀ ℕ, ∑ b ∈ s.image Prod.snd, (∑ a ∈ s.image Prod.fst, g' a b * coeff m (u a)) • v b = 0 := by
+  have step : ∀ m : σ →₀ ℕ, ∑ b ∈ s.image Prod.snd, (∑ a ∈ s.image Prod.fst, g' a b * AddMonoidAlgebra.coeff (u a) m) • v b = 0 := by
     intro m
-    have h1 := congrArg (fun P => coeff m (sumAlgEquiv R σ τ P)) hs'
+    have h1 := congrArg (fun P => AddMonoidAlgebra.coeff (sumAlgEquiv R σ τ P) m) hs'
     simp only [map_sum, map_smul, coeff_sum, coeff_smul, li_key, map_zero, coeff_zero] at h1
     rw [Finset.sum_comm] at h1
     rw [← h1]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [Finset.sum_smul]
     exact Finset.sum_congr rfl fun a _ => by rw [mul_smul]
-  have hb : ∀ b ∈ s.image Prod.snd, ∀ m : σ →₀ ℕ, ∑ a ∈ s.image Prod.fst, g' a b * coeff m (u a) = 0 :=
+  have hb : ∀ b ∈ s.image Prod.snd, ∀ m : σ →₀ ℕ, ∑ a ∈ s.image Prod.fst, g' a b * AddMonoidAlgebra.coeff (u a) m = 0 :=
     fun b hb m => linearIndependent_iff'.mp hv _ _ (step m) b hb
   have ha : ∀ b ∈ s.image Prod.snd, ∑ a ∈ s.image Prod.fst, g' a b • u a = 0 := by
     intro b hb'
@@ -2127,7 +2127,7 @@ theorem jone_weight (LL : Letters (Fin N)) (S : Set (Fin N)) (e : Fin m → Fin 
   · simp [jone_w, hl]
 
 theorem jone_coeff_XD (i : Fin N × Fin k) (p : MvPolynomial (Fin N × Fin k) Fd) (mm : Fin N × Fin k →₀ ℕ) :
-    coeff mm (X i * pderiv i p) = (mm i : Fd) * coeff mm p := by
+    AddMonoidAlgebra.coeff (X i * pderiv i p) mm = (mm i : Fd) * AddMonoidAlgebra.coeff p mm := by
   classical
   induction p using MvPolynomial.induction_on' with
   | monomial u a =>
@@ -2135,14 +2135,14 @@ theorem jone_coeff_XD (i : Fin N × Fin k) (p : MvPolynomial (Fin N × Fin k) Fd
     by_cases h : u = mm
     · subst h; simp
     · simp [h]
-  | add p q hp hq => rw [map_add, mul_add, coeff_add, coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add, mul_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 open Classical in
 theorem jone_coeff_Eaa (LL : Letters (Fin N)) (S : Set (Fin N)) (e : Fin m → Fin k) (a : Fin m)
     (v : MvPolynomial (Fin N × Fin k) Fd) (mm : Fin N × Fin k →₀ ℕ) :
-    coeff mm (glOpsE Fd LL S e a a v) =
+    AddMonoidAlgebra.coeff (glOpsE Fd LL S e a a v) mm =
       ((∑ l, if l ∈ S then (if LL.vec l then (mm (l, e a) : ℤ) else -(mm (l, e a) : ℤ)) else 0 : ℤ) : Fd) *
-        coeff mm v := by
+        AddMonoidAlgebra.coeff v mm := by
   simp only [glOpsE, LinearMap.sum_apply, coeff_sum]
   rw [Int.cast_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun l _ => ?_
@@ -2162,7 +2162,7 @@ theorem jone_wt [CharZero Fd] (LL : Letters (Fin N)) (S : Set (Fin N)) (e : Fin 
       have := (Submodule.mem_iInf _).mp hv a
       rw [LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.smul_apply, Module.End.one_apply, sub_eq_zero] at this
       exact this
-    have hc := congrArg (coeff mm) ha
+    have hc := congrArg (AddMonoidAlgebra.coeff · mm) ha
     rw [jone_coeff_Eaa, coeff_smul, smul_eq_mul] at hc
     exact Int.cast_injective (mul_right_cancel₀ hmm hc)
   rw [jone_weight LL S e he]
@@ -2196,7 +2196,7 @@ theorem jone_letter [CharZero Fd] (LL : Letters (Fin N)) (e : Fin m → Fin k) (
     ∀ mm ∈ x.support, ∀ i : Fin N, ∑ a, mm (i, e a) = b i := by
   classical
   intro mm hmm i
-  have hc : coeff mm x ≠ 0 := MvPolynomial.mem_support_iff.mp hmm
+  have hc : AddMonoidAlgebra.coeff x mm ≠ 0 := MvPolynomial.mem_support_iff.mp hmm
   have h1 := jone_iso LL _ e he _ x (hx i.succ) hc
   have h0 := jone_iso LL _ e he _ x (hx i.castSucc) hc
   rw [jone_weight LL _ e he] at h1 h0
@@ -2263,9 +2263,9 @@ theorem proj_exists_sum (R : Type) [CommRing R] {N r K : ℕ} (A : MvPolynomial 
     fun i => ∑ c : Fin K, mm (i, Fin.natAdd r c)), ?_⟩
   ext m
   rw [coeff_sum]
-  have h : ∀ d : (Fin N → ℕ) × (Fin N → ℕ), coeff m (suppProj R (biSet d.1 d.2) A) =
+  have h : ∀ d : (Fin N → ℕ) × (Fin N → ℕ), AddMonoidAlgebra.coeff (suppProj R (biSet d.1 d.2) A) m =
       if ((fun i => ∑ c : Fin r, m (i, Fin.castAdd K c), fun i => ∑ c : Fin K, m (i, Fin.natAdd r c)) :
-        (Fin N → ℕ) × (Fin N → ℕ)) = d then coeff m A else 0 := by
+        (Fin N → ℕ) × (Fin N → ℕ)) = d then AddMonoidAlgebra.coeff A m else 0 := by
     intro d
     rw [coeff_suppProj]
     refine if_congr ?_ rfl rfl

@@ -27,7 +27,7 @@ theorem exists_of_mem_ratVec {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 :
     (R : RealDat D A Ks) (i : Fin D.R.m) {c0L : VsV D i D.what₂.LL →ₛₗ[D.what₂.embLL] (R.cV i).W}
     {c0 : VsV D i ℂ →ₗ[ℂ] (R.cV i).W} (hc : CoefficientBaseChange R i D.what₂.embLL (RingHom.id ℂ) c0L c0) (k : Subfield ℂ)
     {w : (R.cV i).W} (hw : w ∈ ratVec R i c0L k) :
-    ∃ v : VsV D i ℂ, (∀ m, MvPolynomial.coeff m (v : Formalism.L2.DIV.Pol ℂ D.what₂.Tau (Vc D i).rank) ∈ k) ∧ w = c0 v := by
+    ∃ v : VsV D i ℂ, (∀ m, AddMonoidAlgebra.coeff (v : Formalism.L2.DIV.Pol ℂ D.what₂.Tau (Vc D i).rank) m ∈ k) ∧ w = c0 v := by
   induction hw using Submodule.span_induction with
   | mem x hx =>
     obtain ⟨v, hv, rfl⟩ := hx

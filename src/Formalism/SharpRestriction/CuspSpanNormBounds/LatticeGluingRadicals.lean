@@ -7132,7 +7132,7 @@ theorem j_hadamard2 (e : ℕ) (K : Matrix (Fin e) (Fin e) ℂ) (h : ∀ j, ∑ i
   simp only [Matrix.transpose_apply] at h1
   refine h1.trans ?_
   calc ∏ j : Fin e, ∑ i, ‖K i j‖ ^ 2 ≤ ∏ _j : Fin e, (4 : ℝ) :=
-        Finset.prod_le_prod (fun j _ => Finset.sum_nonneg fun i _ => by positivity) (fun j _ => h j)
+        Finset.prod_le_prod₀ (fun j _ => Finset.sum_nonneg fun i _ => by positivity) (fun j _ => h j)
     _ = 4 ^ e := by simp
 
 variable {E : Type} [Field E] [StarRing E]
@@ -7452,7 +7452,7 @@ theorem j_main_abs (hS : StarConj E) {u w : Fin e → S.V}
       4 ^ (e * finrank ℚ E) := by
     rw [j_norm_prod, j_norm_prod, ← Finset.prod_mul_distrib]
     calc _ ≤ ∏ _τ : E →+* ℂ, (4 : ℝ) ^ e :=
-          Finset.prod_le_prod (fun τ _ => by positivity) (fun τ _ => j_factor hS hpu hpw B hbd τ)
+          Finset.prod_le_prod₀ (fun τ _ => by positivity) (fun τ _ => j_factor hS hpu hpw B hbd τ)
       _ = 4 ^ (e * finrank ℚ E) := by
           rw [Finset.prod_const, Finset.card_univ, NumberField.Embeddings.card E ℂ, ← pow_mul]
   have permutedRowProductSplitSum : 0 ≤ genIdx S (dualIn S L₁) L₁ := by

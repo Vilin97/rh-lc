@@ -115,8 +115,8 @@ theorem dimDeg_add_finrank {A σ : Type} [CommRing A] [Finite σ] (I : Ideal (Mv
       have hd' : d.degree = e := by
         rw [Finsupp.degree_eq_weight_one]
         exact hG (mem_support_iff.1 hd)
-      have : (monomial d (coeff d G) : MvPolynomial σ K) =
-          coeff d G • map (algebraMap A K) (monomial d 1) := by
+      have : (monomial d (AddMonoidAlgebra.coeff G d) : MvPolynomial σ K) =
+          AddMonoidAlgebra.coeff G d • map (algebraMap A K) (monomial d 1) := by
         simp [smul_monomial]
       rw [this, map_smul, hψ]
       exact Submodule.smul_mem _ _ (Submodule.tmul_mem_baseChange_of_mem _

@@ -69,7 +69,7 @@ def KernelTwo : Prop :=
     ∀ (n : Type) [Fintype n] (c : n → K), (∀ i, ‖c i‖ ≤ 1) →
     ∀ G : MvPowerSeries n K, IntMv (unitBall K) G →
     JetsIntegral (toZ linv (mvExp (-(phSum c ph)) * G)) ∧
-    ∀ P : MvPolynomial n K, (∀ m, ‖MvPolynomial.coeff m P‖ ≤ 1) →
+    ∀ P : MvPolynomial n K, (∀ m, ‖AddMonoidAlgebra.coeff P m‖ ≤ 1) →
       ‖jetPair P (toZ linv (mvExp (-(phSum c ph)) * G))‖ ≤ 1
 
 def CurveKernelTwo : Prop :=
@@ -83,7 +83,7 @@ def CurveKernelTwo : Prop :=
     ‖x0‖ ≤ 1 → ‖y0‖ ≤ 1 →
     ∀ (n : Type) [Fintype n] (c : n → K), (∀ i, ‖c i‖ ≤ 1) →
     ∀ G : MvPowerSeries n K, IntMv (unitBall K) G →
-    ∀ P : MvPolynomial n K, (∀ m, ‖MvPolynomial.coeff m P‖ ≤ 1) →
+    ∀ P : MvPolynomial n K, (∀ m, ‖AddMonoidAlgebra.coeff P m‖ ≤ 1) →
       ‖jetPair P (toZ (expSer W) (mvExp (-(phSum c (phT W x0 y0 s2))) * G))‖ ≤ 1
 
 def SplitVanishTwo : Prop :=

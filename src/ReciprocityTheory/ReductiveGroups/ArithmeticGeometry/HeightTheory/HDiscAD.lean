@@ -124,8 +124,8 @@ theorem unifOp_irreducible (la : HeightOneSpectrum (𝓞 K)) : Irreducible (unif
     obtain ⟨mm, hmm⟩ := hs'
     have h3 := ha mm
     rw [MvPolynomial.coeff_C_mul] at h3
-    have v1 : la.intValuation (Data.unif la) = la.intValuation (Data.unif la) * la.intValuation (MvPolynomial.coeff mm s) := by
-      have : la.intValuation (MvPolynomial.coeff mm s) = 1 := by
+    have v1 : la.intValuation (Data.unif la) = la.intValuation (Data.unif la) * la.intValuation (AddMonoidAlgebra.coeff s mm) := by
+      have : la.intValuation (AddMonoidAlgebra.coeff s mm) = 1 := by
         apply le_antisymm (la.intValuation_le_one _)
         rw [← not_lt, la.intValuation_lt_one_iff_mem]
         exact hmm

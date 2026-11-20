@@ -147,18 +147,18 @@ theorem symmetric_le_adjoin (q : Fin n → MvPolynomial (Fin n) ℂ) (hq : ∀ k
       intro c
       simp only [P, Q, Finsupp.prod, psumWt]
       exact TopClose.prod _ _ _ _ fun i _ => (hclose i).pow (c i)
-    have hF : aeval psumFin F = ∑ c ∈ F.support, coeff c F • P c := by
+    have hF : aeval psumFin F = ∑ c ∈ F.support, AddMonoidAlgebra.coeff F c • P c := by
       conv_lhs => rw [F.as_sum]
       rw [map_sum]
       refine sum_congr rfl fun c _ => ?_
       rw [aeval_monomial, Algebra.smul_def]
     set S := F.support.filter fun c => psumWt c = d + 1
-    set r := ∑ c ∈ S, coeff c F • Q c
+    set r := ∑ c ∈ S, AddMonoidAlgebra.coeff F c • Q c
     have hr : r ∈ B := by
       refine B.sum_mem fun c _ => B.smul_mem ?_ _
       simp only [Q, Finsupp.prod]
       exact B.prod_mem fun i _ => B.pow_mem (Algebra.subset_adjoin ⟨i, rfl⟩) _
-    have htop : homogeneousComponent (d + 1) (aeval psumFin F) = ∑ c ∈ S, coeff c F • P c := by
+    have htop : homogeneousComponent (d + 1) (aeval psumFin F) = ∑ c ∈ S, AddMonoidAlgebra.coeff F c • P c := by
       rw [hF, map_sum, sum_filter]
       refine sum_congr rfl fun c _ => ?_
       rw [map_smul, homogeneousComponent_of_mem (hPhom c)]
@@ -179,7 +179,7 @@ theorem symmetric_le_adjoin (q : Fin n → MvPolynomial (Fin n) ℂ) (hq : ∀ k
           rfl
         rw [this] at h1 ⊢
         omega
-    have hdiff : (∑ c ∈ S, coeff c F • P c - r).totalDegree ≤ d := by
+    have hdiff : (∑ c ∈ S, AddMonoidAlgebra.coeff F c • P c - r).totalDegree ≤ d := by
       rw [← sum_sub_distrib]
       refine totalDegree_finsetSum_le fun c hc => ?_
       rw [← smul_sub]
@@ -190,7 +190,7 @@ theorem symmetric_le_adjoin (q : Fin n → MvPolynomial (Fin n) ℂ) (hq : ∀ k
       · rw [hwc] at h; omega
     have hkey : (aeval psumFin F - r).totalDegree ≤ d := by
       have : aeval psumFin F - r = (aeval psumFin F - homogeneousComponent (d + 1) (aeval psumFin F))
-          + (∑ c ∈ S, coeff c F • P c - r) := by rw [htop]; ring
+          + (∑ c ∈ S, AddMonoidAlgebra.coeff F c • P c - r) := by rw [htop]; ring
       rw [this]
       exact (totalDegree_add _ _).trans (max_le hlow hdiff)
     have hsym : (aeval psumFin F - r).IsSymmetric :=

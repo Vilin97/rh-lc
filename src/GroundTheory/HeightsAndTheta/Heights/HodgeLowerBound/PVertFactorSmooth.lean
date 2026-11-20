@@ -58,7 +58,7 @@ theorem mConeMap_monomial (y : (Σ k, ι k) → Ω) (e : (Σ k, ι k) →₀ ℕ
     mul_one]
 
 theorem mConeMap_eq_sum (y : (Σ k, ι k) → Ω) (u : MRing ι) :
-    mConeMap y u = ∑ e ∈ u.support, monomial (mdeg e) (((coeff e u : ℤ) : Ω) * e.prod fun p n => y p ^ n) := by
+    mConeMap y u = ∑ e ∈ u.support, monomial (mdeg e) (((AddMonoidAlgebra.coeff u e : ℤ) : Ω) * e.prod fun p n => y p ^ n) := by
   conv_lhs => rw [u.as_sum]
   rw [map_sum]
   simp only [mConeMap_monomial]
@@ -66,10 +66,10 @@ theorem mConeMap_eq_sum (y : (Σ k, ι k) → Ω) (u : MRing ι) :
 open Classical in
 
 def comp (u : MRing ι) (m : K →₀ ℕ) : MRing ι :=
-  ∑ e ∈ u.support.filter (fun e => mdeg e = m), monomial e (coeff e u)
+  ∑ e ∈ u.support.filter (fun e => mdeg e = m), monomial e (AddMonoidAlgebra.coeff u e)
 
 theorem coeff_comp (u : MRing ι) (m : K →₀ ℕ) (e : (Σ k, ι k) →₀ ℕ) :
-    coeff e (comp u m) = if mdeg e = m then coeff e u else 0 := by
+    AddMonoidAlgebra.coeff (comp u m) e = if mdeg e = m then AddMonoidAlgebra.coeff u e else 0 := by
   classical
   rw [comp, coeff_sum]
   simp only [coeff_monomial]
@@ -85,7 +85,7 @@ theorem isMultiHomog_comp (u : MRing ι) (m : K →₀ ℕ) : IsMultiHomog (comp
   exact he (if_neg h)
 
 theorem aeval_comp (y : (Σ k, ι k) → Ω) (u : MRing ι) (m : K →₀ ℕ) :
-    aeval y (comp u m) = coeff m (mConeMap y u) := by
+    aeval y (comp u m) = AddMonoidAlgebra.coeff (mConeMap y u) m := by
   classical
   rw [mConeMap_eq_sum, coeff_sum, comp, map_sum]
   simp only [coeff_monomial, aeval_monomial, algebraMap_int_eq, eq_intCast]
@@ -205,7 +205,7 @@ theorem exists_forms (D : ComponentData II Ψ K ι Ω E) {p : ℕ} (hp : p ∈ D
   set bg' : K →₀ ℕ := Finsupp.equivFunOnFinite.symm bg with hbg'
   have hf' : IsMultiHomog (D.vnum p) ⇑bf' := by simpa [bf'] using hf
   have hg' : IsMultiHomog (D.vden p) ⇑bg' := by simpa [bg'] using hg
-  have key : coeff (m + bf') (mConeMap D.y (u * D.vnum p - v * D.vden p)) = 0 := by
+  have key : AddMonoidAlgebra.coeff (mConeMap D.y (u * D.vnum p - v * D.vden p)) (m + bf') = 0 := by
     have h0 : mConeMap D.y (u * D.vnum p - v * D.vden p) = 0 := huv
     rw [h0, coeff_zero]
   rw [map_sub, map_mul, map_mul, mConeMap_of_homog _ hf', mConeMap_of_homog _ hg', coeff_sub,

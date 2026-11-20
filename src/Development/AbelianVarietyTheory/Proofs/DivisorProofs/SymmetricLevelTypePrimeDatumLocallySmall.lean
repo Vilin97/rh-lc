@@ -246,7 +246,7 @@ theorem locSmall_phiGS (E K : Type) [Field E] [NumberField E] [StarRing E] [Fiel
     split_ifs
     · unfold lamGvS
       rw [map_mul, map_mul, norm_mul, norm_mul, norm_addChar, one_mul, map_inv₀, norm_inv, map_prod, norm_prod]
-      refine mul_le_one₀ (Finset.prod_le_one (fun _ _ => norm_nonneg _) fun i _ => ?_) (by positivity) ?_
+      refine mul_le_one₀ (Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun i _ => ?_) (by positivity) ?_
       · rcases norm_unitV P σ (χ i) _ with h | h <;> rw [h] <;> norm_num
       · rcases norm_unitV P σ (χ (j - 1)) _ with h | h <;> rw [h] <;> norm_num
     · simp

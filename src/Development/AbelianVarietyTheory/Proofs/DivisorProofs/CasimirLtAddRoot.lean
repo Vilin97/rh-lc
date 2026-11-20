@@ -115,7 +115,7 @@ theorem not_hw_of_uFree (P Q R S : ℕ) (μ : Ix R S → ℚ) (j : Fin S) (f : P
 
 theorem coeff_diag {σ : Type} (L : Module.End ℂ (MvPolynomial σ ℂ)) (g : (σ →₀ ℕ) → ℂ)
     (hL : ∀ α, L (monomial α 1) = g α • monomial α 1) (f : MvPolynomial σ ℂ) (α : σ →₀ ℕ) :
-    coeff α (L f) = g α * coeff α f := by
+    AddMonoidAlgebra.coeff (L f) α = g α * AddMonoidAlgebra.coeff f α := by
   classical
   induction f using MvPolynomial.induction_on' with
   | monomial β c =>
@@ -124,11 +124,11 @@ theorem coeff_diag {σ : Type} (L : Module.End ℂ (MvPolynomial σ ℂ)) (g : (
     by_cases h : β = α
     · subst h; simp; ring
     · simp [h]
-  | add p q hp hq => rw [map_add, coeff_add, coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem coeff_eig {σ : Type} (L : Module.End ℂ (MvPolynomial σ ℂ)) (g : (σ →₀ ℕ) → ℂ)
     (hL : ∀ α, L (monomial α 1) = g α • monomial α 1) (f : MvPolynomial σ ℂ) (c : ℂ) (hf : L f = c • f)
-    (α : σ →₀ ℕ) (hα : coeff α f ≠ 0) : g α = c := by
+    (α : σ →₀ ℕ) (hα : AddMonoidAlgebra.coeff f α ≠ 0) : g α = c := by
   have h := coeff_diag L g hL f α
   rw [hf, coeff_smul, smul_eq_mul] at h
   exact (mul_right_cancel₀ hα h).symm
@@ -137,7 +137,7 @@ theorem trace_Eab_self {p q : ℕ} (a : Ix p q) : (Eab a a).trace = 1 := by
   simp [Eab, Matrix.trace_single_eq_same]
 
 theorem monomial_facts (P Q R S : ℕ) (x : ℚ) (μ : Ix R S → ℚ) (f : Pol P Q R S)
-    (hf : GlobalTheory.RealLift.IsHarmVec x μ f) (α : (Ix P Q × Ix R S) →₀ ℕ) (hα : coeff α f ≠ 0) :
+    (hf : GlobalTheory.RealLift.IsHarmVec x μ f) (α : (Ix P Q × Ix R S) →₀ ℕ) (hα : AddMonoidAlgebra.coeff f α ≠ 0) :
     (∀ i' : Fin P, ∑ k : Fin R, (α (.inl i', .inl k) : ℚ) - ∑ l : Fin S, (α (.inl i', .inr l) : ℚ) = x - cPair R S) ∧
     (∀ j' : Fin Q, ∑ l : Fin S, (α (.inr j', .inr l) : ℚ) - ∑ k : Fin R, (α (.inr j', .inl k) : ℚ) = x + cPair R S) ∧
     (∀ k : Fin R, ∑ i' : Fin P, (α (.inl i', .inl k) : ℚ) - ∑ j' : Fin Q, (α (.inr j', .inl k) : ℚ) = μ (.inl k) - cPair P Q) ∧
@@ -192,7 +192,7 @@ theorem sum_fin_ite_lt (P R : ℕ) (hPR : P ≤ R) (a b : ℚ) :
   simp [Finset.sum_ite_of_true, Finset.sum_range]
 
 theorem monomial_cols (P Q R S : ℕ) (x : ℚ) (μ : Ix R S → ℚ) (f : Pol P Q R S)
-    (hf : GlobalTheory.RealLift.IsHarmVec x μ f) (α : (Ix P Q × Ix R S) →₀ ℕ) (hα : coeff α f ≠ 0) :
+    (hf : GlobalTheory.RealLift.IsHarmVec x μ f) (α : (Ix P Q × Ix R S) →₀ ℕ) (hα : AddMonoidAlgebra.coeff f α ≠ 0) :
     ∑ y, (α y : ℚ) = degW (cPair P Q) μ := by
   obtain ⟨hh, _, hne, hmem⟩ := hf
   obtain ⟨W, fW, hP, sW⟩ := ((GlobalTheory.FockPolGK.pol_locFin_weights P Q R S).2 f).1
@@ -219,7 +219,7 @@ theorem alpha_beta_ge_one (P Q P' Q' R S : ℕ) (κ : ℤ) (hN : GlobalTheory.Re
   constructor <;> linarith
 
 theorem col_pure (P Q R S : ℕ) (x : ℚ) (μ : Ix R S → ℚ) (f : Pol P Q R S)
-    (hf : GlobalTheory.RealLift.IsHarmVec x μ f) (α : (Ix P Q × Ix R S) →₀ ℕ) (hα : coeff α f ≠ 0) :
+    (hf : GlobalTheory.RealLift.IsHarmVec x μ f) (α : (Ix P Q × Ix R S) →₀ ℕ) (hα : AddMonoidAlgebra.coeff f α ≠ 0) :
     (∀ k : Fin R, 0 ≤ μ (.inl k) - cPair P Q → ∀ j' : Fin Q, α (.inr j', .inl k) = 0) ∧
     (∀ l : Fin S, 0 ≤ μ (.inr l) + cPair P Q → ∀ i' : Fin P, α (.inl i', .inr l) = 0) := by
   obtain ⟨_, _, F3, F4⟩ := monomial_facts P Q R S x μ f hf α hα
@@ -263,7 +263,7 @@ theorem col_pure (P Q R S : ℕ) (x : ℚ) (μ : Ix R S → ℚ) (f : Pol P Q R 
     exact_mod_cast this
 
 theorem pderiv_eq_zero_of_coeff {σ : Type} [DecidableEq σ] (f : MvPolynomial σ ℂ) (v : σ)
-    (h : ∀ α, coeff α f ≠ 0 → α v = 0) : pderiv v f = 0 := by
+    (h : ∀ α, AddMonoidAlgebra.coeff f α ≠ 0 → α v = 0) : pderiv v f = 0 := by
   apply pderiv_eq_zero_of_notMem_vars
   intro hv
   rw [mem_vars] at hv
@@ -287,7 +287,7 @@ theorem harm_shape_inl_inr : ∀ (P Q P' Q' R S : ℕ) (κ : ℤ), GlobalTheory.
     intro l
     simp only [hμ, GlobalTheory.RealLift.addRoot, GlobalTheory.RealLift.lam, Sum.inr.injEq, reduceCtorEq, if_false, add_zero]
     split_ifs <;> ring
-  have key : ∀ α, coeff α f ≠ 0 → (∀ (j' : Fin Q) (k : Fin R), α (.inr j', .inl k) = 0) ∧ Q ≤ (j : ℕ) := by
+  have key : ∀ α, AddMonoidAlgebra.coeff f α ≠ 0 → (∀ (j' : Fin Q) (k : Fin R), α (.inr j', .inl k) = 0) ∧ Q ≤ (j : ℕ) := by
     intro α hα0
     obtain ⟨cw, cu⟩ := col_pure P Q R S _ μ f hf α hα0
     have hw : ∀ (k : Fin R) (j' : Fin Q), α (.inr j', .inl k) = 0 := fun k =>
@@ -328,7 +328,7 @@ theorem harm_shape_inr_inl : ∀ (P Q P' Q' R S : ℕ) (κ : ℤ), GlobalTheory.
     intro l
     simp only [hμ, GlobalTheory.RealLift.addRoot, GlobalTheory.RealLift.lam, Sum.inr.injEq, reduceCtorEq, if_false, sub_zero]
     split_ifs <;> ring
-  have key : ∀ α, coeff α f ≠ 0 → (∀ (i' : Fin P) (l : Fin S), α (.inl i', .inr l) = 0) ∧ P ≤ (i : ℕ) := by
+  have key : ∀ α, AddMonoidAlgebra.coeff f α ≠ 0 → (∀ (i' : Fin P) (l : Fin S), α (.inl i', .inr l) = 0) ∧ P ≤ (i : ℕ) := by
     intro α hα0
     obtain ⟨cw, cu⟩ := col_pure P Q R S _ μ f hf α hα0
     have hu : ∀ (l : Fin S) (i' : Fin P), α (.inl i', .inr l) = 0 := fun l =>

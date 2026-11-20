@@ -102,7 +102,7 @@ def sP (z : Hn F) : ℝ := ∏ v, sF (z v)
 
 lemma one_le_sP (z : Hn F) : 1 ≤ sP z := by
   calc (1 : ℝ) = ∏ v, (1 : ℝ) := by simp
-    _ ≤ ∏ v, sF (z v) := Finset.prod_le_prod (fun _ _ => zero_le_one) (fun v _ => one_le_sF _)
+    _ ≤ ∏ v, sF (z v) := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun v _ => one_le_sF _)
 
 lemma sP_nonneg (z : Hn F) : 0 ≤ sP z := zero_le_one.trans (one_le_sP z)
 

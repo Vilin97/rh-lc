@@ -200,7 +200,7 @@ private theorem bd_local {x : ToroidalCompactificationData s} {Φ : s.Flag} (P :
   rw [← (he z hz).2] at h₁
   have h₂ := norm_pos_iff.2 (ratVal_ne_zero hu)
   have h₃ : ∏ i, x.nrm _ i ((Φ.C c).down z) ^ (mu i * P.b) ≤ ∏ i, x.nrm _ i ((Φ.C c).down z) :=
-    Finset.prod_le_prod (fun i _ => pow_nonneg ((hn i).1 z).1 _) fun i _ =>
+    Finset.prod_le_prod₀ (fun i _ => pow_nonneg ((hn i).1 z).1 _) fun i _ =>
       pow_le_of_le_one ((hn i).1 z).1 ((hn i).1 z).2 (Nat.mul_pos (hmu₁ i) P.b_pos).ne'
   have h₄ := Real.log_le_log (mul_pos h₂ (Real.exp_pos _)) (h₁.trans_le h₃)
   rw [Real.log_mul h₂.ne' (Real.exp_ne_zero _), Real.log_exp] at h₄

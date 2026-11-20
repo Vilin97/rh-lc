@@ -18,12 +18,12 @@ theorem finset_sum_exp_neg_le_of_card_le {ι : Type*} (s : Finset ι) (f : ι �
       integral_Ici_eq_integral_Ioi, integral_exp_neg_Ioi]
   have hint2 : IntegrableOn (fun u : ℝ => exp (-(1 / 2) * u)) (Ici t) :=
     (integrableOn_Ici_iff_integrableOn_Ioi).2 (exp_neg_integrableOn_Ioi t (by norm_num))
-  rw [Finset.sum_congr rfl h1, ← integral_finset_sum _
+  rw [Finset.sum_congr rfl h1, ← MeasureTheory.integral_finsetSum _
     (fun i _ => hint.indicator measurableSet_Ici)]
   calc ∫ u in Ici t, ∑ i ∈ s, (Ici (f i)).indicator (fun u : ℝ => exp (-u)) u
       ≤ ∫ u in Ici t, (C * exp (-t / 2)) * exp (-(1 / 2) * u) := by
         refine setIntegral_mono_on
-          (integrable_finset_sum _ fun i _ => hint.indicator measurableSet_Ici)
+          (MeasureTheory.integrable_finsetSum _ fun i _ => hint.indicator measurableSet_Ici)
           (hint2.const_mul _) measurableSet_Ici fun u hu => ?_
         have e : ∑ i ∈ s, (Ici (f i)).indicator (fun u : ℝ => exp (-u)) u =
             ((s.filter fun i => f i ≤ u).card : ℝ) * exp (-u) := by

@@ -345,7 +345,7 @@ theorem pnorm_coordProd_le (hζ : IsPrimitiveRoot ζ 4) (x : Frame (data hζ).Ψ
     (data hζ).pnorm 1 coordProd x ≤ 1 := by
   unfold Data.pnorm coordProd
   rw [norm_prod, ← Finset.prod_mul_distrib]
-  refine Finset.prod_le_one (fun τ _ => by positivity) fun τ _ => ?_
+  refine Finset.prod_le_one₀ (fun τ _ => by positivity) fun τ _ => ?_
   rw [Fin.prod_univ_one]
   change _ * ‖dmin 1 x τ _ / dmin 1 x τ _‖ ^ (-((1 : ℤ) : ℝ) / 2) ≤ 1
   rw [dmin_zero, dmin_one, div_one, Complex.norm_real, Real.norm_of_nonneg (sq_nonneg _),

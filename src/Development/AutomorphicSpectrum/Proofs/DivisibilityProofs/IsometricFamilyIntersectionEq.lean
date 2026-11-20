@@ -133,9 +133,9 @@ theorem arNum_eq_sum_log_val : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : 
     rw [Finsupp.card_toMultiset, ← h, Finsupp.weight_apply]
     simp only [Pi.one_apply, smul_eq_mul, mul_one]
     rfl
-  have hpoly : (X (Sum.inl i) - X (Sum.inr i)) * monomial μ (coeff μ (Gs i)) =
-      monomial (μ + Finsupp.single (Sum.inl i) 1) (coeff μ (Gs i)) +
-        monomial (μ + Finsupp.single (Sum.inr i) 1) (-coeff μ (Gs i)) := by
+  have hpoly : (X (Sum.inl i) - X (Sum.inr i)) * monomial μ (AddMonoidAlgebra.coeff (Gs i) μ) =
+      monomial (μ + Finsupp.single (Sum.inl i) 1) (AddMonoidAlgebra.coeff (Gs i) μ) +
+        monomial (μ + Finsupp.single (Sum.inr i) 1) (-AddMonoidAlgebra.coeff (Gs i) μ) := by
     rw [monomial_add_single, monomial_add_single, map_neg]
     ring
   have hmono := link_monomial hP hI hT hA hA' hiso i μ hcard

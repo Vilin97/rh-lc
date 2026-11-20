@@ -50,7 +50,7 @@ lemma exists_monomial_prod {R ι α : Type} [CommSemiring R] (s : Finset α)
 private lemma coeff_sum_mem_lemma {K : Type} [Field K] {σ ι α : Type}
     (M : Submodule K (MvPolynomial σ K)) (S : Finset α) (f : α → MvPolynomial ι (MvPolynomial σ K))
     (hf : ∀ A ∈ S, ∃ e Q, Q ∈ M ∧ f A = MvPolynomial.monomial e Q) (κ : ι →₀ ℕ) :
-    MvPolynomial.coeff κ (∑ A ∈ S, f A) ∈ M := by
+    AddMonoidAlgebra.coeff (∑ A ∈ S, f A) κ ∈ M := by
   classical
   rw [MvPolynomial.coeff_sum]
   refine Submodule.sum_mem _ fun A hA => ?_
@@ -62,11 +62,11 @@ private lemma coeff_sum_mem_lemma {K : Type} [Field K] {σ ι α : Type}
 
 private lemma jetPairPoly_mem_lemma_2 {K : Type} [Field K] {σ ι : Type}
     (M : Submodule K (MvPolynomial σ K)) (P : MvPolynomial ι (MvPolynomial σ K))
-    (Th : MvPowerSeries ι K) (hP : ∀ κ, MvPolynomial.coeff κ P ∈ M) :
+    (Th : MvPowerSeries ι K) (hP : ∀ κ, AddMonoidAlgebra.coeff P κ ∈ M) :
     jetPairPoly P Th ∈ M := by
   unfold jetPairPoly
   refine Submodule.sum_mem _ fun κ _ => ?_
-  rw [mul_comm (MvPolynomial.coeff κ P), ← MvPolynomial.smul_eq_C_mul]
+  rw [mul_comm (AddMonoidAlgebra.coeff P κ), ← MvPolynomial.smul_eq_C_mul]
   exact Submodule.smul_mem _ _ (hP κ)
 
 private lemma prod_mul_C_lemma_3 {K : Type} [Field K] {σ ι α : Type}

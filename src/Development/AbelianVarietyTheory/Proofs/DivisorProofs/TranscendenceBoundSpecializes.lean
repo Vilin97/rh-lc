@@ -69,7 +69,7 @@ theorem TrLe.of_ker_le {A K L : Type} [CommRing A] [Field K] [Field L] (φ : A �
       apply hs.1
       rw [map_zero, aeval_map_algebraMap, ← hQ]
       simp only [hy]
-    have h2 := congrArg (fun R => ((coeff m R : (⊥ : Subfield L)) : L)) h1
+    have h2 := congrArg (fun R => ((AddMonoidAlgebra.coeff R m : (⊥ : Subfield L)) : L)) h1
     simpa [coeff_map] using h2
   refine AlgebraicIndependent.cardinalMk_le_trdeg (x := fun i => φ (y i)) ?_
   rw [algebraicIndependent_iff]

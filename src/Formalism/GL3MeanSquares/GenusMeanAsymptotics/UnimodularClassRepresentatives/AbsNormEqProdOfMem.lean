@@ -92,7 +92,7 @@ theorem absNorm_le_of_mem (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
     (hn : n ∈ boxSet K F T) :
     (Ideal.absNorm (Ideal.span {n}) : ℝ) ≤ T ^ Formalism.HermitianLatticesTheory.fDeg K := by
   rw [absNorm_eq_prod_of_mem hK hF hn, ← card_real hK hF, ← Finset.card_univ, ← Finset.prod_const]
-  exact Finset.prod_le_prod (fun w _ => (((mem_boxSet_iff hK hF).1 hn) w).1.le)
+  exact Finset.prod_le_prod₀ (fun w _ => (((mem_boxSet_iff hK hF).1 hn) w).1.le)
     fun w _ => (((mem_boxSet_iff hK hF).1 hn) w).2
 
 end Formalism.HermitianLattices.Ext.L3.BoxSum

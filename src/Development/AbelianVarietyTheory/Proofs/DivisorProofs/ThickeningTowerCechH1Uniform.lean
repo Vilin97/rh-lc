@@ -114,8 +114,8 @@ theorem GlobalTheory.FormalAlg.towerCech_h1_uniform : ∀ (R : Type) [CommRing R
       (((MvPolynomial.isHomogeneous_X_pow l N).mul (hFh i j)).add
         ((MvPolynomial.isHomogeneous_X_pow i N).mul (hFh j l))).sub
         ((MvPolynomial.isHomogeneous_X_pow j N).mul (hFh i l))
-    have hHc : ∀ m, MvPolynomial.coeff m (MvPolynomial.X l ^ N * F i j + MvPolynomial.X i ^ N * F j l -
-        MvPolynomial.X j ^ N * F i l : MvPolynomial (Fin (n + 1)) R) ∈ I ^ e :=
+    have hHc : ∀ m, AddMonoidAlgebra.coeff (MvPolynomial.X l ^ N * F i j + MvPolynomial.X i ^ N * F j l -
+        MvPolynomial.X j ^ N * F i l : MvPolynomial (Fin (n + 1)) R) m ∈ I ^ e :=
       MvPolynomial.mem_map_C_iff.1 (sub_mem (add_mem (Ideal.mul_mem_left _ _ (hFm i j))
         (Ideal.mul_mem_left _ _ (hFm j l))) (Ideal.mul_mem_left _ _ (hFm i l)))
 

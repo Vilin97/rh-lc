@@ -665,9 +665,9 @@ theorem exists_complete_discreteValuationRing_of_prime_lt {A : Type u} [CommRing
   have hq' : (q.map (algebraMap A S)).IsPrime :=
     IsLocalization.isPrime_of_isPrime_disjoint p.primeCompl S q inferInstance hdis
   have hc : (q.map (algebraMap A S)).comap (algebraMap A S) = q :=
-    IsLocalization.comap_map_of_isPrime_disjoint p.primeCompl S inferInstance hdis
+    IsLocalization.under_map_of_isPrime_disjoint p.primeCompl S inferInstance hdis
   have hm : (maximalIdeal S).comap (algebraMap A S) = p :=
-    Localization.AtPrime.comap_maximalIdeal
+    Localization.AtPrime.under_maximalIdeal
   obtain ⟨O, _, _, _, _, φ, h1, h2⟩ := exists_complete_discreteValuationRing_ker_eq
     (q.map (algebraMap A S)) (fun h => hqp.ne (by rw [← hc, h, hm]))
   refine ⟨O, inferInstance, inferInstance, inferInstance, inferInstance,

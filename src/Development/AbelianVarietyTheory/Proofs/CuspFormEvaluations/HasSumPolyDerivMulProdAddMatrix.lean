@@ -192,7 +192,7 @@ theorem mul_prod_thTerm_locally_normal {κ : Type*} [Fintype κ] {U : Set W} (hU
     fun m => (‖G x‖ + 1) * ∏ k, v k (m k),
     (summable_prod_tuples (J := fun _ : κ => Fin g → ℤ) h0 hv).mul_left _, fun m w hw => ?_⟩
   rw [norm_mul, norm_prod]
-  exact mul_le_mul (le_of_lt hw.1) (Finset.prod_le_prod (fun k _ => norm_nonneg _)
+  exact mul_le_mul (le_of_lt hw.1) (Finset.prod_le_prod₀ (fun k _ => norm_nonneg _)
     fun k _ => h k _ w (Set.mem_iInter.1 hw.2 k))
     (Finset.prod_nonneg fun k _ => norm_nonneg _) (by positivity)
 

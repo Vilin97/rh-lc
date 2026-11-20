@@ -115,7 +115,7 @@ theorem fock_inner_sum {T0 : GrpData (p * r + q * s) (p * s + q * r)} {T1 : GrpD
     simp
   · intro hi'; exact absurd hi hi'
 
-theorem pol_as_sum (P : FP p q r s) : P = ∑ α ∈ P.support, coeff α P • monomial α 1 := by
+theorem pol_as_sum (P : FP p q r s) : P = ∑ α ∈ P.support, AddMonoidAlgebra.coeff P α • monomial α 1 := by
   conv_lhs => rw [P.as_sum]
   refine Finset.sum_congr rfl fun α _ => ?_
   rw [smul_monomial, smul_eq_mul, mul_one]
@@ -124,13 +124,13 @@ theorem norm_swap {T0 : GrpData (p * r + q * s) (p * s + q * r)} {T1 : GrpData p
     {T2 : GrpData r s} (F : FockData T0 T1 T2) {T0' : GrpData (r * p + s * q) (r * q + s * p)}
     {T1' : GrpData r s} {T2' : GrpData p q} (F' : FockData T0' T1' T2') (Φ : FP r s p q) :
     ‖F.ι (rename Prod.swap Φ)‖ = ‖F'.ι Φ‖ := by
-  have h1 : rename Prod.swap Φ = ∑ α ∈ Φ.support, coeff α Φ • monomial (Finsupp.mapDomain Prod.swap α) 1 := by
+  have h1 : rename Prod.swap Φ = ∑ α ∈ Φ.support, AddMonoidAlgebra.coeff Φ α • monomial (Finsupp.mapDomain Prod.swap α) 1 := by
     conv_lhs => rw [pol_as_sum Φ]
     simp only [map_sum, map_smul, rename_monomial]
   have hinj : Set.InjOn (fun α : Ix r s × Ix p q →₀ ℕ => Finsupp.mapDomain Prod.swap α) Φ.support :=
     fun a _ b _ h => Finsupp.mapDomain_injective Prod.swap_injective h
-  have e1 := fock_inner_sum F Φ.support (fun α => coeff α Φ) _ hinj
-  have e2 := fock_inner_sum F' Φ.support (fun α => coeff α Φ) id (Set.injOn_id _)
+  have e1 := fock_inner_sum F Φ.support (fun α => AddMonoidAlgebra.coeff Φ α) _ hinj
+  have e2 := fock_inner_sum F' Φ.support (fun α => AddMonoidAlgebra.coeff Φ α) id (Set.injOn_id _)
   simp only [id] at e2
   rw [← pol_as_sum Φ] at e2
   rw [← h1] at e1

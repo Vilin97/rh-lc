@@ -164,7 +164,7 @@ theorem subst_mem {ν : T → Fin N → ℕ} (g : T → Matrix (Fin N) (Fin N) �
     have hb : ∀ x : ∀ τ, Fin (m τ), ‖c * r * ∏ τ, o τ (x τ)‖ ≤ 1 := fun x => by
       rw [norm_mul, norm_mul, norm_prod]
       exact mul_le_one₀ (mul_le_one₀ hc (norm_nonneg _) hr) (Finset.prod_nonneg fun _ _ => norm_nonneg _)
-        (Finset.prod_le_one (fun _ _ => norm_nonneg _) fun τ _ => ho τ _)
+        (Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun τ _ => ho τ _)
     have hgen : ∀ x : ∀ τ, Fin (m τ), (fun y : T → Matrix (Fin N) (Fin N) ℂ_[p] => (c * r * ∏ τ, o τ (x τ)) *
         ∏ τ, eval (fun k : Fin N × Fin N => y τ k.1 k.2) (map (Int.castRingHom ℂ_[p]) (h τ (x τ)))) ∈
         WeylLatticeDuality.DelW p T N ν := fun x =>

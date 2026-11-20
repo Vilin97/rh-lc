@@ -11,21 +11,21 @@ namespace GlobalTheory.CompanionTheory.WInfCont
 
 theorem continuous_coeff_rowAct {r m : ℕ} (f : MvPolynomial (Fin r × Fin m) ℂ) :
     ∀ s : (Fin r × Fin m) →₀ ℕ, Continuous fun M : Matrix (Fin r) (Fin r) ℂ =>
-      MvPolynomial.coeff s (Formalism.GradedWeylDivisibility.rowAct ℂ (n := m) M f) := by
+      AddMonoidAlgebra.coeff (Formalism.GradedWeylDivisibility.rowAct ℂ (n := m) M f) s := by
   induction f using MvPolynomial.induction_on with
   | C a =>
     intro s
     simpa [MvPolynomial.algebraMap_eq] using
-      (continuous_const : Continuous fun _ : Matrix (Fin r) (Fin r) ℂ => MvPolynomial.coeff s (MvPolynomial.C a))
+      (continuous_const : Continuous fun _ : Matrix (Fin r) (Fin r) ℂ => AddMonoidAlgebra.coeff (MvPolynomial.C a) s)
   | add p q hp hq =>
     intro s
     simp only [map_add, MvPolynomial.coeff_add]
     exact (hp s).add (hq s)
   | mul_X p v hp =>
     intro s
-    have key : ∀ M : Matrix (Fin r) (Fin r) ℂ, MvPolynomial.coeff s (Formalism.GradedWeylDivisibility.rowAct ℂ (n := m) M (p * MvPolynomial.X v)) =
+    have key : ∀ M : Matrix (Fin r) (Fin r) ℂ, AddMonoidAlgebra.coeff (Formalism.GradedWeylDivisibility.rowAct ℂ (n := m) M (p * MvPolynomial.X v)) s =
         ∑ b : Fin r, M v.1 b * (if (b, v.2) ∈ s.support then
-          MvPolynomial.coeff (s - Finsupp.single (b, v.2) 1) (Formalism.GradedWeylDivisibility.rowAct ℂ (n := m) M p) else 0) := by
+          AddMonoidAlgebra.coeff (Formalism.GradedWeylDivisibility.rowAct ℂ (n := m) M p) (s - Finsupp.single (b, v.2) 1) else 0) := by
       intro M
       have hX : Formalism.GradedWeylDivisibility.rowAct ℂ (n := m) M (MvPolynomial.X v) =
           ∑ b : Fin r, MvPolynomial.C (M v.1 b) * MvPolynomial.X (b, v.2) := by
@@ -48,18 +48,18 @@ theorem continuous_detPow (n : ℕ) (c : ℤ) : Continuous fun g : GL (Fin n) �
 
 theorem continuous_coeff_sqAct {n : ℕ} (lam : DomWeight n) (f : MvPolynomial (Fin n × Fin n) ℂ)
     (s : (Fin n × Fin n) →₀ ℕ) :
-    Continuous fun g : GL (Fin n) ℂ => MvPolynomial.coeff s (sqAct ℂ n lam g f) := by
+    Continuous fun g : GL (Fin n) ℂ => AddMonoidAlgebra.coeff (sqAct ℂ n lam g f) s := by
   simp only [sqAct, MvPolynomial.coeff_smul, smul_eq_mul]
   exact (continuous_detPow n _).mul
     ((continuous_coeff_rowAct f s).comp Units.continuous_val.matrix_transpose)
 
 theorem exists_finset_factor {σ : Type} (W : Submodule ℂ (MvPolynomial σ ℂ)) [FiniteDimensional ℂ W]
     (φ : Module.Dual ℂ W) : ∃ (S : Finset (σ →₀ ℕ)) (c : S → ℂ),
-      ∀ p : W, φ p = ∑ s : S, c s * MvPolynomial.coeff s.1 p.1 := by
+      ∀ p : W, φ p = ∑ s : S, c s * AddMonoidAlgebra.coeff p.1 s.1 := by
   let b := Module.finBasis ℂ W
   let S : Finset (σ →₀ ℕ) := Finset.univ.biUnion fun i => (b i : MvPolynomial σ ℂ).support
   let L : W →ₗ[ℂ] (S → ℂ) :=
-    { toFun := fun p s => MvPolynomial.coeff s.1 p.1
+    { toFun := fun p s => AddMonoidAlgebra.coeff p.1 s.1
       map_add' := fun p q => by funext s; simp
       map_smul' := fun a p => by funext s; simp }
   have hL : LinearMap.ker L = ⊥ := by
@@ -68,7 +68,7 @@ theorem exists_finset_factor {σ : Type} (W : Submodule ℂ (MvPolynomial σ ℂ
     refine MvPolynomial.ext _ _ fun s => ?_
     by_cases hs : s ∈ S
     · simpa [L] using congrFun hp ⟨s, hs⟩
-    · have h0 : ∀ i, MvPolynomial.coeff s (b i : MvPolynomial σ ℂ) = 0 := fun i => by
+    · have h0 : ∀ i, AddMonoidAlgebra.coeff (b i : MvPolynomial σ ℂ) s = 0 := fun i => by
         by_contra h
         exact hs (Finset.mem_biUnion.2 ⟨i, Finset.mem_univ _, MvPolynomial.mem_support_iff.2 h⟩)
       have hp' : (p : MvPolynomial σ ℂ) = ∑ i, b.repr p i • (b i : MvPolynomial σ ℂ) := by

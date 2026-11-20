@@ -117,13 +117,13 @@ theorem exists_le_sum (γ : Fin n → ℕ) (a : ℕ) (h : a ≤ ∑ i, γ i) : �
     · simp [Finset.sum_add_distrib, h2]
 
 def supp (q : (Fin (n + 1) →₀ ℕ) → Prop) : Submodule ℂ (MvPolynomial (Fin (n + 1)) ℂ) where
-  carrier := {p | ∀ β, ¬ q β → coeff β p = 0}
+  carrier := {p | ∀ β, ¬ q β → AddMonoidAlgebra.coeff p β = 0}
   zero_mem' := fun _ _ => by simp
   add_mem' := fun hp hq β hβ => by simp [hp β hβ, hq β hβ]
   smul_mem' := fun c p hp β hβ => by simp [hp β hβ]
 
 theorem eval_single_eq_coeff (p : MvPolynomial (Fin (n + 1)) ℂ) {k : ℕ} (hp : p.IsHomogeneous k) :
-    eval (Pi.single 0 1) p = coeff (ex k 0) p := by
+    eval (Pi.single 0 1) p = AddMonoidAlgebra.coeff p (ex k 0) := by
   rw [eval_eq', Finset.sum_eq_single (ex k 0)]
   · rw [Fin.prod_univ_succ]; simp
   · intro β hβ hne
@@ -225,7 +225,7 @@ theorem anFacts_of_poly (hφ : Function.Injective φ) (x0 : R.Y) (hx : ∀ p, φ
       rw [hF, hL]; omega
     rw [hsp, hn] at hg
     obtain ⟨q, hq, rfl⟩ := hg
-    have h1 : coeff (ex k 0) q = 0 := by rw [← eval_single_eq_coeff q hq, ← hx]; exact h0 0
+    have h1 : AddMonoidAlgebra.coeff q (ex k 0) = 0 := by rw [← eval_single_eq_coeff q hq, ← hx]; exact h0 0
     change R.s w t 0 ^ (0 + 1) * φ q ∈ _
     rw [zero_add, pow_one, hs, ← map_mul, q.as_sum, Finset.mul_sum, map_sum]
     refine Submodule.sum_mem _ fun β hβ => ?_
@@ -310,8 +310,8 @@ theorem anFacts_of_poly (hφ : Function.Injective φ) (x0 : R.Y) (hx : ∀ p, φ
         · simp; omega
         · simp
       simp only [h2] at h1
-      have h3 : φ (monomial β (coeff β q)) =
-          (coeff β q / θ i x0) • R.lead w t T (a0 D j T) θ (⟨fun i => β i.succ, hb⟩, i) := by
+      have h3 : φ (monomial β (AddMonoidAlgebra.coeff q β)) =
+          (AddMonoidAlgebra.coeff q β / θ i x0) • R.lead w t T (a0 D j T) θ (⟨fun i => β i.succ, hb⟩, i) := by
         rw [h1, ← map_smul, smul_monomial, smul_eq_mul, div_mul_cancel₀ _ hi]
       rw [h3]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩)
@@ -331,7 +331,7 @@ def hC (j : ℕ) (w : WeightFamilies.Wt D j) : Submodule B₀.KO (MvPolynomial (
   homogeneousSubmodule _ _ (w.n / 2)
 
 def hN (j : ℕ) (w : WeightFamilies.Wt D j) (σ : B₀.KO →+* ℂ) (f : MvPolynomial (Fin (WeightFamilies.dimY D j + 1)) B₀.KO) : ℝ :=
-  ∑ m ∈ Finset.finsuppAntidiag Finset.univ (w.n / 2), ‖σ (coeff m f)‖
+  ∑ m ∈ Finset.finsuppAntidiag Finset.univ (w.n / 2), ‖σ (AddMonoidAlgebra.coeff f m)‖
 
 theorem hN_norm (j : ℕ) (_ : InR D j) (w : WeightFamilies.Wt D j) (σ : B₀.KO →+* ℂ) : IsNormOn (hC B₀ j w) σ (hN B₀ j w σ) where
   nonneg f _ := Finset.sum_nonneg fun _ _ => norm_nonneg _
@@ -345,7 +345,7 @@ theorem hN_norm (j : ℕ) (_ : InR D j) (w : WeightFamilies.Wt D j) (σ : B₀.K
   smul a f _ := by simp [hN, Finset.mul_sum]
   add f _ g _ := by
     rw [hN, hN, hN, ← Finset.sum_add_distrib]
-    exact Finset.sum_le_sum fun m _ => by rw [coeff_add, map_add]; exact norm_add_le _ _
+    exact Finset.sum_le_sum fun m _ => by rw [MvPolynomial.coeff_add, map_add]; exact norm_add_le _ _
 
 theorem hC_fd (j : ℕ) (_ : InR D j) (w : WeightFamilies.Wt D j) : FiniteDimensional B₀.KO (hC B₀ j w) :=
   Module.Finite.iff_fg.2 (homogeneousSubmodule_fg _ _ _)
@@ -433,12 +433,12 @@ theorem exampleEvaluation_span_univ (σ : B₀.KO →+* ℂ) (u : WeightFamilies
       exact (mem_support_iff.1 hβ) (IsHomogeneous.coeff_eq_zero hq hc)
     have hm : (monomial β (1 : B₀.KO)) ∈ cutR (hC B₀) j u := by
       rw [cutR_eq _ hj]; exact isHomogeneous_monomial _ hd
-    have : fn _ (monomial β (coeff β q)) = coeff β q • fn _ (MvPolynomial.map σ (monomial β 1)) := by
+    have : fn _ (monomial β (AddMonoidAlgebra.coeff q β)) = AddMonoidAlgebra.coeff q β • fn _ (MvPolynomial.map σ (monomial β 1)) := by
       rw [← map_smul, map_monomial, map_one, smul_monomial, smul_eq_mul, mul_one]
     have h2 : fn _ (MvPolynomial.map σ (monomial β 1)) ∈ (exampleEvaluation X₀ hj σ).sp u Set.univ :=
       Submodule.subset_span ⟨⟨_, hm⟩, trivial, evalEmbedding_single σ (deg u) _⟩
     rw [this]
-    exact ((exampleEvaluation X₀ hj σ).sp u Set.univ).smul_mem (coeff β q) h2
+    exact ((exampleEvaluation X₀ hj σ).sp u Set.univ).smul_mem (AddMonoidAlgebra.coeff q β) h2
 
 def toyW (k : Fin (WeightFamilies.dimY D j + 1)) : (exampleB B₀).Cusp j (wscalar D j 2 even_two) :=
   ⟨MvPolynomial.X k, by rw [cutR_eq _ hj]; rw [hC, show (wscalar D j 2 even_two).n / 2 = 1 from Nat.div_self two_pos]; exact isHomogeneous_X B₀.KO k⟩
@@ -506,7 +506,7 @@ theorem homRel_of_monomials (σ : K →+* ℂ) (X : Data E r) {m d : ℕ} (hm : 
     exact Finset.prod_congr rfl fun k _ => Finset.prod_pow_eq_pow_sum _ _ _
   refine ⟨monomial cp 1 - monomial cm 1, cm.degree, fun h => ?_,
     (isHomogeneous_monomial _ hdeg).sub (isHomogeneous_monomial _ rfl), fun x _ => ?_⟩
-  · have := congrArg (coeff cp) h
+  · have := congrArg (AddMonoidAlgebra.coeff · cp) h
     simp [coeff_monomial, hne.symm] at this
   · rw [eval₂_sub, hev, hev]; simp [hexp]
 

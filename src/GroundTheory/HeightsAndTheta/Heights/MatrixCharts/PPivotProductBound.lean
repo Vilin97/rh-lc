@@ -50,7 +50,7 @@ theorem PivotProductBound.proof (hLB : LeadMinorBasic.Statement) : PivotProductB
     pivot_pos hLB hS (lt_of_lt_of_le (Finset.mem_range.1 (Finset.mem_sdiff.1 hi).1) hrd)
   have hQ : ∏ i ∈ Finset.range r \ A, pivot S i ≤ m ^ r := by
     calc ∏ i ∈ Finset.range r \ A, pivot S i ≤ ∏ _i ∈ Finset.range r \ A, m :=
-          Finset.prod_le_prod (fun i hi => (hQpos i hi).le) (fun i hi =>
+          Finset.prod_le_prod₀ (fun i hi => (hQpos i hi).le) (fun i hi =>
             (hα i (Finset.mem_range.1 (Finset.mem_sdiff.1 hi).1)).trans (le_max_right _ _))
       _ = m ^ (Finset.range r \ A).card := Finset.prod_const _
       _ ≤ m ^ r := pow_le_pow_right₀ hm1
@@ -76,7 +76,7 @@ theorem PivotProductBound.proof (hLB : LeadMinorBasic.Statement) : PivotProductB
         _ = d := Finset.card_range d
     calc c ^ d ≤ c ^ B.card := pow_le_pow_of_le_one hc0.le hc1 hBd
       _ = ∏ _i ∈ B, c := (Finset.prod_const _).symm
-      _ ≤ ∏ i ∈ B, pivot S i := Finset.prod_le_prod (fun _ _ => hc0.le) (fun i hi => by
+      _ ≤ ∏ i ∈ B, pivot S i := Finset.prod_le_prod₀ (fun _ _ => hc0.le) (fun i hi => by
           rw [Finset.mem_filter] at hi
           exact (min_le_right _ _).trans (hεp i (not_lt.1 hi.2) (hP i hi.1)))
   rw [← Finset.prod_filter_mul_prod_filter_not P (· < r), mul_assoc, mul_comm]

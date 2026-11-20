@@ -76,10 +76,10 @@ private theorem UpperTheory.mvPolynomial_primitive_decomposition {K σ : Type} [
   obtain ⟨g, hg⟩ := hr
   refine ⟨f.coeff n, g, hc, ?_, ?_⟩
   · intro h0
-    have h1 := congrArg (MvPolynomial.coeff n) hg
+    have h1 := congrArg (AddMonoidAlgebra.coeff · n) hg
     rw [MvPolynomial.coeff_map, MvPolynomial.coeff_C_mul, inv_mul_cancel₀ hc] at h1
     have h2 : g.coeff n = 1 := Subtype.ext h1
-    have h3 := congrArg (MvPolynomial.coeff n) h0
+    have h3 := congrArg (AddMonoidAlgebra.coeff · n) h0
     rw [MvPolynomial.coeff_map, h2] at h3
     simp at h3
   · rw [hg, ← mul_assoc, ← map_mul, mul_inv_cancel₀ hc]; simp

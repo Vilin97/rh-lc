@@ -197,7 +197,7 @@ theorem sum_rpow_neg_le_exp_tsum (T : Finset (Ideal (𝓞 K))) {s : ℝ} (hs : 1
     _ = ∏ p : P, ∑ k ∈ Finset.range M, x p.1 ^ k :=
         (Finset.prod_univ_sum (fun _ : P => Finset.range M) (fun p k => x p.1 ^ k)).symm
     _ ≤ ∏ p : P, Real.exp (x p.1 + 2 * x p.1 ^ 2) :=
-        Finset.prod_le_prod (fun _ _ => Finset.sum_nonneg fun _ _ => pow_nonneg (hx0 _) _)
+        Finset.prod_le_prod₀ (fun _ _ => Finset.sum_nonneg fun _ _ => pow_nonneg (hx0 _) _)
           (fun p _ => geom_sum_le_exp (hx0 _) (hxhalf p) M)
     _ = Real.exp (∑ p : P, (x p.1 + 2 * x p.1 ^ 2)) :=
         (Real.exp_sum Finset.univ fun p : P => x p.1 + 2 * x p.1 ^ 2).symm
@@ -291,7 +291,7 @@ theorem abs_log_dedekindZetaReal_sub_tsum_le {s : ℝ} (hs : 1 < s)
     refine (hxs.sub hx2s).tsum_le_of_sum_le fun F => ?_
     rw [Real.le_log_iff_exp_le hζpos, Real.exp_sum]
     calc ∏ w ∈ F, Real.exp (x w - x w ^ 2) ≤ ∏ w ∈ F, (1 + x w) :=
-          Finset.prod_le_prod (fun _ _ => (Real.exp_pos _).le)
+          Finset.prod_le_prod₀ (fun _ _ => (Real.exp_pos _).le)
             (fun w _ => exp_sub_sq_le_one_add (hx0 w) (rpow_neg_absNorm_le_half w.prime hs.le))
       _ = _ := prod_one_add_rpow_neg_eq_sum F s
       _ ≤ _ := sum_rpow_neg_le_dedekindZetaReal _ hζ

@@ -179,7 +179,7 @@ theorem zcomp_lift {lam b : Fin n → ℕ} {f : MvPolynomial (Fin n × Fin n) K}
   exact (bmF_lead_WH K n b f).weightedHomogeneousComponent_same
 
 theorem coeff_zcomp (β : Fin n → ℤ) (G : BP K n) (μ : Fin (n + 1) × Fin n →₀ ℕ) :
-    coeff μ (zcomp K n β G) = if Finsupp.weight (zW n) μ = β then coeff μ G else 0 := by
+    AddMonoidAlgebra.coeff (zcomp K n β G) μ = if Finsupp.weight (zW n) μ = β then AddMonoidAlgebra.coeff G μ else 0 := by
   classical
   unfold zcomp
   rw [coeff_weightedHomogeneousComponent]
@@ -456,18 +456,18 @@ open scoped Pointwise
 
 theorem coeff_prod_rename {A ι : Type} [CommRing A] [Fintype ι] {n : ℕ} (b : ι → Fin n → ℕ)
     (P : ι → MvPolynomial (Unit × Fin n) A) :
-    coeff (expOf b) (∏ τ, rename (fun p : Unit × Fin n => (τ, p.2)) (P τ)) =
-      ∏ τ, coeff (expOf fun _ : Unit => b τ) (P τ) := by
+    AddMonoidAlgebra.coeff (∏ τ, rename (fun p : Unit × Fin n => (τ, p.2)) (P τ)) (expOf b) =
+      ∏ τ, AddMonoidAlgebra.coeff (P τ) (expOf fun _ : Unit => b τ) := by
   classical
   have hinj : ∀ τ : ι, Function.Injective (fun p : Unit × Fin n => (τ, p.2)) :=
     fun τ p q h => Prod.ext rfl (Prod.mk.inj h).2
   have h1 : ∀ τ, rename (fun p : Unit × Fin n => (τ, p.2)) (P τ) =
-      ∑ m ∈ (P τ).support, monomial (m.mapDomain fun p : Unit × Fin n => (τ, p.2)) (coeff m (P τ)) := by
+      ∑ m ∈ (P τ).support, monomial (m.mapDomain fun p : Unit × Fin n => (τ, p.2)) (AddMonoidAlgebra.coeff (P τ) m) := by
     intro τ
     conv_lhs => rw [(P τ).as_sum]
     simp only [map_sum, rename_monomial]
-  have h2 : ∀ τ, coeff (expOf fun _ : Unit => b τ) (P τ) =
-      ∑ m ∈ (P τ).support, if m = expOf (fun _ : Unit => b τ) then coeff m (P τ) else 0 := by
+  have h2 : ∀ τ, AddMonoidAlgebra.coeff (P τ) (expOf fun _ : Unit => b τ) =
+      ∑ m ∈ (P τ).support, if m = expOf (fun _ : Unit => b τ) then AddMonoidAlgebra.coeff (P τ) m else 0 := by
     intro τ
     conv_lhs => rw [(P τ).as_sum]
     simp only [coeff_sum, coeff_monomial]

@@ -157,7 +157,7 @@ theorem goodFam_H : GlobalTheory.Published.ArCalc → ∀ (k : Type) [CommRing k
     have hsum : ∑ l, α l ≤ e * q + s := by omega
     calc (∏ l, P.nu e 0 σ y (x l) ^ α l) * P.nu ((e : ℤ) * (g.1 : ℤ) + s) 1 σ y g.2
         ≤ (∏ l, (1 + ∑ l, Cx l) ^ α l) * (1 + ∑ g ∈ G, Cg g) :=
-          mul_le_mul (Finset.prod_le_prod (fun l _ => pow_nonneg (hnu0 l) _)
+          mul_le_mul (Finset.prod_le_prod₀ (fun l _ => pow_nonneg (hnu0 l) _)
             fun l _ => pow_le_pow_left₀ (hnu0 l) (hxl l σ y) _) (hgl g hg σ y) (nu_nonneg P _ _ σ y _)
             (Finset.prod_nonneg fun _ _ => pow_nonneg (by linarith) _)
       _ = (1 + ∑ l, Cx l) ^ (∑ l, α l) * (1 + ∑ g ∈ G, Cg g) := by rw [Finset.prod_pow_eq_pow_sum]

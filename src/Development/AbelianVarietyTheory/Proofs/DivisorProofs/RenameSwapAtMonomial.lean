@@ -108,12 +108,12 @@ theorem eq_zero_of_anti (L : Pol ι N →ₗ[ℝ] ℝ)
     simp only [Function.Injective, not_forall] at hni
     obtain ⟨a, b, h, hne⟩ := hni
     exact ⟨a, b, h, hne⟩
-  have hmon : (monomial m (coeff m P)).IsHomogeneous k := isHomogeneous_monomial _ (by rw [Finsupp.degree_eq_weight_one]; exact hdeg)
+  have hmon : (monomial m (AddMonoidAlgebra.coeff P m)).IsHomogeneous k := isHomogeneous_monomial _ (by rw [Finsupp.degree_eq_weight_one]; exact hdeg)
   rcases lt_or_gt_of_ne hne with h | h
-  · have e := anti_swap L hL τ h (monomial m (coeff m P)) hmon
+  · have e := anti_swap L hL τ h (monomial m (AddMonoidAlgebra.coeff P m)) hmon
     rw [rename_swapAt_monomial τ hab] at e
     linarith
-  · have e := anti_swap L hL τ h (monomial m (coeff m P)) hmon
+  · have e := anti_swap L hL τ h (monomial m (AddMonoidAlgebra.coeff P m)) hmon
     rw [rename_swapAt_monomial τ hab.symm] at e
     linarith
 
@@ -175,7 +175,7 @@ theorem formDeg_eq_zero {ω : FormPol ι N} {k : ℕ} (hω : ω.IsHomogeneous k)
 noncomputable def defect (hh : Pol ι N →ₗ[ℝ] ℝ) (τ : ι) : Pol ι N →ₗ[ℝ] ℝ where
   toFun Q := hh (pSum τ 2 * Q) - formDeg (bcForm τ * toForm Q)
   map_add' P Q := by
-    simp only [mul_add, map_add, toForm, formDeg, coeff_add, add_div]
+    simp only [mul_add, map_add, toForm, formDeg, MvPolynomial.coeff_add, add_div]
     ring
   map_smul' c Q := by
     simp only [mul_smul_comm, map_smul, toForm, formDeg, coeff_smul, smul_eq_mul, RingHom.id_apply]

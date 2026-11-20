@@ -8,7 +8,7 @@ theorem hasSum_conjClasses_tsum_of_finite_support {G : Type} [Group G] (g : G �
       (∑' δ, g δ) := by
   classical
   let c : G → Set G := fun δ => {δ' | IsConj δ δ'}
-  have hsum : HasSum g (∑' δ, g δ) := (summable_of_finite_support hg).hasSum
+  have hsum : HasSum g (∑' δ, g δ) := (summable_of_hasFiniteSupport hg).hasSum
   have h1 := hsum.tsum_fiberwise c
   have hfib : ∀ γ : G, c ⁻¹' {c γ} = c γ := by
     intro γ; ext b

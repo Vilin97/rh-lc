@@ -166,9 +166,9 @@ theorem jp_subst_expand {K A σ τ : Type} [CommRing K] [CommRing A] [Algebra K 
     ring
   unfold jp
   have hL : ∑ κ ∈ Q.support, (((fac κ : ℕ) : K) * MvPowerSeries.coeff κ (F * MvPowerSeries.subst a U)) •
-        MvPolynomial.coeff κ Q =
+        AddMonoidAlgebra.coeff Q κ =
       ∑ κ ∈ Q.support, ∑ β ∈ B, (((fac κ : ℕ) : K) * (MvPowerSeries.coeff β U *
-        MvPowerSeries.coeff κ (F * β.prod fun s e => a s ^ e))) • MvPolynomial.coeff κ Q := by
+        MvPowerSeries.coeff κ (F * β.prod fun s e => a s ^ e))) • AddMonoidAlgebra.coeff Q κ := by
     refine Finset.sum_congr rfl fun κ hκ' => ?_
     rw [hκ κ hκ', Finset.mul_sum, Finset.sum_smul]
   rw [hL, Finset.sum_comm]

@@ -217,7 +217,7 @@ theorem ibp : IBP := by
       simp only [Delta, Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Finset.sum_mul, hfold]
       refine Finset.sum_congr rfl fun σ _ => ?_
       ring
-    rw [e, integral_finset_sum]
+    rw [e, MeasureTheory.integral_finsetSum]
     swap
     · intro σ _
       exact (integrable_mul_chr (hI _) (contDiff_foldr hf _).continuous t β).const_mul _

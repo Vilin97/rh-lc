@@ -233,14 +233,14 @@ theorem _root_.GlobalTheory.LocalCube.exists_third_difference :
     Filter.eventually_all.2 fun I => eventually_nhds_zero_comp_of_continuous
       (T := fun x : Fin 3 → Fin g → ℂ => M (∑ a ∈ I, x a))
       (p := fun y => F y = cexp (L + f y))
-      (M.continuous.comp (continuous_finset_sum _ fun a _ => continuous_apply a)) (by simp) hFexp
+      (M.continuous.comp (continuous_finsetSum _ fun a _ => continuous_apply a)) (by simp) hFexp
   have evk : ∀ᶠ x in 𝓝 (0 : Fin 3 → Fin g → ℂ), ∀ I : Finset (Fin 3),
       k ((2 : ℂ) • ∑ a ∈ I, x a) - 3 * k (∑ a ∈ I, x a) - k (-∑ a ∈ I, x a) =
         -φ (∑ a ∈ I, x a) :=
     Filter.eventually_all.2 fun I => eventually_nhds_zero_comp_of_continuous
       (T := fun x : Fin 3 → Fin g → ℂ => ∑ a ∈ I, x a)
       (p := fun z => k ((2 : ℂ) • z) - 3 * k z - k (-z) = -φ z)
-      (continuous_finset_sum _ fun a _ => continuous_apply a) (by simp) hkeq
+      (continuous_finsetSum _ fun a _ => continuous_apply a) (by simp) hkeq
   have hEt : ∀ᶠ x in 𝓝 (0 : Fin 3 → Fin g → ℂ),
       ‖f ((2 : ℂ) • x) + D φ x - 3 * f x - f (-x)‖ < 2 * π := by
     have h2x : (fun x : Fin 3 → Fin g → ℂ => f ((2 : ℂ) • x)) =O[𝓝 0] fun x => ‖x‖ ^ 3 := by

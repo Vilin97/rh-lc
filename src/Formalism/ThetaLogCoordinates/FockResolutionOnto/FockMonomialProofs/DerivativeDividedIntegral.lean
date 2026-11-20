@@ -9,13 +9,13 @@ section D
 variable {p : ℕ} [Fact p.Prime] {σ : Type}
 
 theorem coeff_pderiv_pow (v : σ) (k : ℕ) (f : MvPolynomial σ ℚ_[p]) (m : σ →₀ ℕ) :
-    coeff m ((((pderiv v).toLinearMap : MvPolynomial σ ℚ_[p] →ₗ[ℚ_[p]] MvPolynomial σ ℚ_[p]) ^ k) f) =
-      (((m v + k).descFactorial k : ℕ) : ℚ_[p]) * coeff (m + Finsupp.single v k) f := by
+    AddMonoidAlgebra.coeff ((((pderiv v).toLinearMap : MvPolynomial σ ℚ_[p] →ₗ[ℚ_[p]] MvPolynomial σ ℚ_[p]) ^ k) f) m =
+      (((m v + k).descFactorial k : ℕ) : ℚ_[p]) * AddMonoidAlgebra.coeff f (m + Finsupp.single v k) := by
   induction k generalizing m with
   | zero => simp
   | succ k ih =>
     rw [pow_succ', Module.End.mul_apply]
-    show coeff m (pderiv v _) = _
+    show AddMonoidAlgebra.coeff (pderiv v _) m = _
     rw [coeff_pderiv, ih, Nat.descFactorial_succ]
     have h1 : (m + Finsupp.single v 1 : σ →₀ ℕ) v = m v + 1 := by simp
     have h2 : m + Finsupp.single v 1 + Finsupp.single v k = m + Finsupp.single v (k + 1) := by

@@ -38,11 +38,11 @@ theorem map_lin_smul {E K : Type} [CommRing E] [CommRing K] (φ : E →+* K) {N 
 theorem exists_eq_C_mul {E K σ : Type} [Field E] [Field K] (φ : E →+* K) {P Q : MvPolynomial σ E} (hP : P ≠ 0) {c : K}
     (hc : c ≠ 0) (h : map φ Q = C c * map φ P) : ∃ c₀ : E, c₀ ≠ 0 ∧ Q = C c₀ * P := by
   obtain ⟨m, hm⟩ := ne_zero_iff.1 hP
-  have e : φ (coeff m Q) = c * φ (coeff m P) := by
-    simpa only [coeff_map, coeff_C_mul] using congrArg (coeff m) h
-  have e' : φ (coeff m Q / coeff m P) = c := by
+  have e : φ (AddMonoidAlgebra.coeff Q m) = c * φ (AddMonoidAlgebra.coeff P m) := by
+    simpa only [coeff_map, coeff_C_mul] using congrArg (AddMonoidAlgebra.coeff · m) h
+  have e' : φ (AddMonoidAlgebra.coeff Q m / AddMonoidAlgebra.coeff P m) = c := by
     rw [map_div₀, e, mul_div_cancel_right₀ _ ((map_ne_zero φ).2 hm)]
-  refine ⟨coeff m Q / coeff m P, fun h0 => hc (by rw [← e', h0, map_zero]), map_injective φ φ.injective ?_⟩
+  refine ⟨AddMonoidAlgebra.coeff Q m / AddMonoidAlgebra.coeff P m, fun h0 => hc (by rw [← e', h0, map_zero]), map_injective φ φ.injective ?_⟩
   rw [map_mul, map_C, e', h]
 
 theorem exists_eq_C_mul_prod {E K ι : Type} [Field E] [Field K] [Fintype ι] (φ : E →+* K) {N : ℕ}

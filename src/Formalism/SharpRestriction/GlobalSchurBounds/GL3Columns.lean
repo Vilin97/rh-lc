@@ -480,7 +480,7 @@ def applyQ {Lt : Type} (l : ℕ) [Fact l.Prime] (N0 N1 : ℕ) (Th : MvPowerSerie
   let P : MvPolynomial (Lt × Fin N0 × Fin N1) ℂ_[l] :=
     MvPolynomial.aeval (fun v : Lt × Fin N0 × ℕ => ∑ b : Fin N1,
       MvPolynomial.C (y' v.1 b v.2.2) * MvPolynomial.X ((v.1, v.2.1, b) : Lt × Fin N0 × Fin N1)) Q
-  ∑ α ∈ P.support, MvPolynomial.coeff α P * (α.prod fun _ n => (n.factorial : ℂ_[l])) * MvPowerSeries.coeff α Th
+  ∑ α ∈ P.support, AddMonoidAlgebra.coeff P α * (α.prod fun _ n => (n.factorial : ℂ_[l])) * MvPowerSeries.coeff α Th
 
 def wwCB (D : D7) : Prop :=
   ∀ (k : Type) [CommRing k] (N : ℕ) (nu : Bool × HH D → YoungDiagram) (y : Bool × HH D → Fin N → ℕ → k),
@@ -516,7 +516,7 @@ def wwEv (D : D7) : Prop :=
         MvPolynomial.aeval (fun v : (Bool × HH D) × ℕ × Fin N1 => ∑ a : Fin N0,
           MvPolynomial.C (x (v.1, v.2.1, a)) * MvPolynomial.X ((v.1, a, v.2.2) : (Bool × HH D) × Fin N0 × Fin N1))
           (KM.nablaX N1 nu I)
-       ∑ α ∈ P.support, MvPolynomial.coeff α P * (α.prod fun _ n => (n.factorial : ℂ_[l])) * MvPowerSeries.coeff α Th)
+       ∑ α ∈ P.support, AddMonoidAlgebra.coeff P α * (α.prod fun _ n => (n.factorial : ℂ_[l])) * MvPowerSeries.coeff α Th)
 
 def BasR (D : D7) {p : ℕ} [Fact p.Prime] (lam : Qbar →+* ℂ_[p]) (τ : D.what₂.Tau) {N : ℕ}
     (L : Submodule (𝓞 D.host.E) (Fin N → D.host.E)) (B : Matrix (Fin N) (Fin N) ℂ_[p]) : Prop :=
@@ -1127,7 +1127,7 @@ def csIII (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) : Prop :=
         IsRat D (γA : GL (Fin N) (AE D)) (γ : Matrix (Fin N) (Fin N) D.host.E) →
         Pg (γA * g) = (∏ τ, embT D τ (γ : Matrix (Fin N) (Fin N) D.host.E).det ^ (S.a τ)) •
           actS D (γ : Matrix (Fin N) (Fin N) D.host.E) (Pg g)) →
-      (∀ g, ∀ j ∈ X.J, ∀ α, MvPolynomial.coeff α (Pg (g * j)) • S.W.Om (g * j) 1 F = MvPolynomial.coeff α (Pg g) • S.W.Om g 1 F) →
+      (∀ g, ∀ j ∈ X.J, ∀ α, AddMonoidAlgebra.coeff (Pg (g * j)) α • S.W.Om (g * j) 1 F = AddMonoidAlgebra.coeff (Pg g) α • S.W.Om g 1 F) →
       ∀ g' : GA D N', X.I (fun g => Θ.Th (Pg g) (S.W.Om g g' F)) =
         c0 * ∑ g ∈ R, ((X.gam g : ℕ) : ℂ)⁻¹ * applyO D (tor0 D cc δ) (Pg g) (S.W.Om g g' F)
 
@@ -1141,7 +1141,7 @@ def csIIIf (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) : Prop :=
         ∀ y : D.what₂.Tau → Matrix (Fin N) (Fin N) ℂ, evFr D (Qg (γA * g)) y =
           (∏ τ, embT D τ (γ : Matrix (Fin N) (Fin N) D.host.E).det ^ (S.a τ)) *
             evFr D (Qg g) (fun τ => (matT D (γ : Matrix (Fin N) (Fin N) D.host.E) τ).conjTranspose * y τ)) →
-      (∀ g, ∀ j ∈ X.J, ∀ α, MvPolynomial.coeff α (Qg (g * j)) • S.W.Om (g * j) 1 F = MvPolynomial.coeff α (Qg g) • S.W.Om g 1 F) →
+      (∀ g, ∀ j ∈ X.J, ∀ α, AddMonoidAlgebra.coeff (Qg (g * j)) α • S.W.Om (g * j) 1 F = AddMonoidAlgebra.coeff (Qg g) α • S.W.Om g 1 F) →
       ∀ (g' : GA D N') (y' : D.what₂.Tau → Matrix (Fin N') (Fin N') ℂ),
         X.I (fun g => (∏ τ, (y' τ).det ^ (S.a' τ)) * Θ.Th (polD D (fun _ => 1) (Qg g) y') (S.W.Om g g' F)) =
           c0 * ∑ g ∈ R, ((X.gam g : ℕ) : ℂ)⁻¹ *

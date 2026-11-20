@@ -88,12 +88,12 @@ theorem le_pow_of_root {t : Fin r → ℝ} (ht : ∀ i, 0 < t i) {ρ : ℝ} (hρ
 theorem prod_max_le {t : Fin r → ℝ} (ht : ∀ i, 0 < t i) {ρ : ℝ} (hρ : 1 ≤ ρ) (h : ∀ j, root t j ≤ ρ) :
     ∏ i, max (t i) 1 ≤ ρ ^ (r * r) := by
   calc ∏ i, max (t i) 1 ≤ ∏ _i : Fin r, ρ ^ r :=
-        Finset.prod_le_prod (fun i _ => by positivity) fun i _ =>
+        Finset.prod_le_prod₀ (fun i _ => by positivity) fun i _ =>
           max_le (le_pow_of_root ht hρ h i) (one_le_pow₀ hρ)
     _ = ρ ^ (r * r) := by simp [pow_mul]
 
 theorem one_le_prod_max (t : Fin r → ℝ) : 1 ≤ ∏ i, max (t i) 1 := by
-  have := Finset.prod_le_prod (s := Finset.univ) (f := fun _ : Fin r => (1 : ℝ)) (g := fun i => max (t i) 1)
+  have := Finset.prod_le_prod₀ (s := Finset.univ) (f := fun _ : Fin r => (1 : ℝ)) (g := fun i => max (t i) 1)
     (fun _ _ => zero_le_one) fun i _ => le_max_right _ _
   simpa using this
 
@@ -103,7 +103,7 @@ theorem inv_pow_le_prod {t : Fin r → ℝ} (ht : ∀ i, 0 < t i) {ρ : ℝ} (h�
   calc ρ⁻¹ ^ (r * r * m) = ∏ _i : Fin r, ((ρ ^ r)⁻¹) ^ m := by
         simp only [Finset.prod_const, Finset.card_univ, Fintype.card_fin, inv_pow, ← pow_mul]
         congr 2; ring
-    _ ≤ ∏ i, (t i)⁻¹ ^ m := Finset.prod_le_prod (fun i _ => by positivity) fun i _ => by
+    _ ≤ ∏ i, (t i)⁻¹ ^ m := Finset.prod_le_prod₀ (fun i _ => by positivity) fun i _ => by
         gcongr
         · exact ht i
         · exact le_pow_of_root ht hρ h i

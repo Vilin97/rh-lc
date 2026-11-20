@@ -38,7 +38,7 @@ theorem weight_eq_zero_iff {σ : Type*} (w : σ → ℕ) (d : σ →₀ ℕ) :
     rw [smul_eq_mul, h p (Finsupp.mem_support_iff.mp hp), mul_zero]
 
 theorem coeff_proj (T : Finset K) (f : MRing ι) (d : (Σ k, ι k) →₀ ℕ) :
-    coeff d (proj T f) = if ∀ p, d p ≠ 0 → p.1 ∉ T then coeff d f else 0 := by
+    AddMonoidAlgebra.coeff (proj T f) d = if ∀ p, d p ≠ 0 → p.1 ∉ T then AddMonoidAlgebra.coeff f d else 0 := by
   classical
   rw [proj_apply, coeff_weightedHomogeneousComponent]
   have : Finsupp.weight (wt T) d = 0 ↔ ∀ p, d p ≠ 0 → p.1 ∉ T := by

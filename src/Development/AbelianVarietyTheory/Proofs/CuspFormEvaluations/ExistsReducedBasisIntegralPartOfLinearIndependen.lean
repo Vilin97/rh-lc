@@ -97,7 +97,7 @@ theorem mem_integralPart {W : Submodule K (MvPolynomial σ K)} {P : MvPolynomial
 theorem smul_mem_integralPart {W : Submodule K (MvPolynomial σ K)} (c : 𝓞 K)
     {P : MvPolynomial σ K} (hP : P ∈ integralPart W) : c • P ∈ integralPart W :=
   ⟨W.smul_mem (c : K) hP.1, fun α => by
-    change IsIntegral ℤ (coeff α ((c : K) • P))
+    change IsIntegral ℤ (AddMonoidAlgebra.coeff ((c : K) • P) α)
     rw [coeff_smul, smul_eq_mul]
     exact c.isIntegral_coe.mul (hP.2 α)⟩
 
@@ -247,7 +247,7 @@ theorem exists_reduced_basis_integralPart {κ : Type*}
 example : (X 0 : MvPolynomial (Fin 1) ℚ) ∈ integralPart (span ℚ {X 0}) ∧
     (1 / 2 : ℚ) • (X 0 : MvPolynomial (Fin 1) ℚ) ∉ integralPart (span ℚ {X 0}) := by
   refine ⟨⟨mem_span_singleton_self _, fun α => ?_⟩, fun h => ?_⟩
-  · change IsIntegral ℤ (coeff α (X 0))
+  · change IsIntegral ℤ (AddMonoidAlgebra.coeff (X 0) α)
     rw [coeff_X]
     split_ifs
     exacts [isIntegral_one, isIntegral_zero]

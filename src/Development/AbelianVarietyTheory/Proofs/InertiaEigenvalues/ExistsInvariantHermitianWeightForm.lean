@@ -101,7 +101,7 @@ open MeasureTheory Topology Matrix
 namespace GlobalTheory.InvFormBdd
 
 theorem norm_eval_le {σ : Type} (P : MvPolynomial σ ℂ) (v : σ → ℂ) (hv : ∀ s, ‖v s‖ ≤ 1) :
-    ‖MvPolynomial.eval v P‖ ≤ ∑ d ∈ P.support, ‖MvPolynomial.coeff d P‖ := by
+    ‖MvPolynomial.eval v P‖ ≤ ∑ d ∈ P.support, ‖AddMonoidAlgebra.coeff P d‖ := by
   first
   | exact @_root_.GlobalTheory.EvalNormCoefficientBound.norm_eval_le_sum_norm_coeff
   | exact _root_.GlobalTheory.EvalNormCoefficientBound.norm_eval_le_sum_norm_coeff
@@ -143,7 +143,7 @@ theorem GlobalTheory.InvFormBdd.exists_isInvForm : ∀ (L : Type) [Field L] [Num
     (Units.map (LinearMap.toMatrixAlgEquiv b).toMonoidHom).comp a.ρ.asGroupHom
   have hf : ∀ γ, ((f γ : Matrix.GeneralLinearGroup ι ℂ) : Matrix ι ι ℂ) = LinearMap.toMatrix b b (a.ρ γ) := by
     intro γ; ext i j; simp [f, LinearMap.toMatrixAlgEquiv_apply, LinearMap.toMatrix_apply, Representation.asGroupHom_apply]
-  let C : ℝ := ∑ i, ∑ j, ∑ d ∈ (P i j).support, ‖MvPolynomial.coeff d (P i j)‖
+  let C : ℝ := ∑ i, ∑ j, ∑ d ∈ (P i j).support, ‖AddMonoidAlgebra.coeff (P i j) d‖
   have hC : ∀ h ∈ f.range, ∀ i j, ‖(h : Matrix ι ι ℂ) i j‖ ≤ C := by
     rintro _ ⟨γ, rfl⟩ i j
     have hγ := γ.2
@@ -155,9 +155,9 @@ theorem GlobalTheory.InvFormBdd.exists_isInvForm : ∀ (L : Type) [Field L] [Num
       rw [← e]; rfl
     rw [hf, hP γ g e']
     refine (norm_eval_le _ _ fun p => norm_emb_le_one g hg _ _ _).trans ?_
-    refine le_trans ?_ (Finset.single_le_sum (f := fun i => ∑ j, ∑ d ∈ (P i j).support, ‖MvPolynomial.coeff d (P i j)‖)
+    refine le_trans ?_ (Finset.single_le_sum (f := fun i => ∑ j, ∑ d ∈ (P i j).support, ‖AddMonoidAlgebra.coeff (P i j) d‖)
       (fun i _ => Finset.sum_nonneg fun _ _ => Finset.sum_nonneg fun _ _ => norm_nonneg _) (Finset.mem_univ i))
-    exact Finset.single_le_sum (f := fun j => ∑ d ∈ (P i j).support, ‖MvPolynomial.coeff d (P i j)‖)
+    exact Finset.single_le_sum (f := fun j => ∑ d ∈ (P i j).support, ‖AddMonoidAlgebra.coeff (P i j) d‖)
       (fun _ _ => Finset.sum_nonneg fun _ _ => norm_nonneg _) (Finset.mem_univ j)
   obtain ⟨β₀, h1, h2, h3⟩ := exists_form_of_bounded f.range C hC
   let e : a.W →ₗ[ℂ] (ι → ℂ) := b.equivFun.toLinearMap

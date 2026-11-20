@@ -24,12 +24,12 @@ private theorem padic_val_one_add_pow_sub_one (l c m : ℕ) (hl : l.Prime) (hc :
     rw [one_pow] at h
     have hA : padicValNat 2 (1 + 2 ^ (d + 2) + 1) = 1 := by
       have e : 1 + 2 ^ (d + 2) + 1 = 2 * (1 + 2 * 2 ^ d) := by rw [h4]; ring
-      rw [e, padicValNat.mul (by norm_num) (by omega), padicValNat.self (by norm_num),
+      rw [e, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by norm_num) (by omega), padicValNat.self (by norm_num),
         padicValNat.eq_zero_of_not_dvd (by omega)]
     have hB : padicValNat 2 (1 + 2 ^ (d + 2) - 1) = d + 2 := by
       rw [Nat.add_sub_cancel_left, padicValNat.prime_pow]
     have hC : padicValNat 2 (2 * m) = 1 + padicValNat 2 m := by
-      rw [padicValNat.mul (by norm_num) hm, padicValNat.self (by norm_num)]
+      rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by norm_num) hm, padicValNat.self (by norm_num)]
     have hxm : 1 < (1 + 2 ^ (d + 2)) ^ m := Nat.one_lt_pow hm hx1
     obtain ⟨b, hb⟩ : ∃ b, (1 + 2 ^ (d + 2)) ^ m = b + 1 := ⟨_ - 1, (Nat.sub_add_cancel hxm.le).symm⟩
     have hmod : (1 + 2 ^ (d + 2)) ^ m % 4 = 1 := by
@@ -40,14 +40,14 @@ private theorem padic_val_one_add_pow_sub_one (l c m : ℕ) (hl : l.Prime) (hc :
     have hD : padicValNat 2 ((1 + 2 ^ (d + 2)) ^ m + 1) = 1 := by
       obtain ⟨q, hq⟩ : ∃ q, (1 + 2 ^ (d + 2)) ^ m + 1 = 2 * (2 * q + 1) :=
         ⟨((1 + 2 ^ (d + 2)) ^ m + 1) / 4, by omega⟩
-      rw [hq, padicValNat.mul (by norm_num) (by omega), padicValNat.self (by norm_num),
+      rw [hq, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by norm_num) (by omega), padicValNat.self (by norm_num),
         padicValNat.eq_zero_of_not_dvd (by omega)]
     have hfac : (1 + 2 ^ (d + 2)) ^ (2 * m) - 1 =
         ((1 + 2 ^ (d + 2)) ^ m - 1) * ((1 + 2 ^ (d + 2)) ^ m + 1) := by
       rw [pow_mul', hb, Nat.add_sub_cancel]
       have : (b + 1) ^ 2 = b * (b + 1 + 1) + 1 := by ring
       rw [this, Nat.add_sub_cancel]
-    rw [hfac, padicValNat.mul (by omega) (by omega), hD, hA, hB, hC] at h
+    rw [hfac, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by omega) (by omega), hD, hA, hB, hC] at h
     omega
   · have := padicValNat.pow_sub_pow hodd hx1 hdvd hnd hm
     rwa [one_pow, Nat.add_sub_cancel_left, padicValNat.prime_pow] at this
@@ -64,5 +64,5 @@ theorem UpperTheory.V.ZK.Ct.lte :
     exact padic_val_one_add_pow_sub_one l c E hl hc h2 hE0
   · rw [Nat.factorization_def _ hl, Nat.factorization_def _ hl, ← pow_mul,
       padic_val_one_add_pow_sub_one l c _ hl hc h2 (mul_ne_zero hE0 (pow_ne_zero _ hl.ne_zero)),
-      padicValNat.mul hE0 (pow_ne_zero _ hl.ne_zero), padicValNat.prime_pow]
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hE0 (pow_ne_zero _ hl.ne_zero), padicValNat.prime_pow]
     omega

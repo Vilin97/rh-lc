@@ -260,7 +260,7 @@ theorem multipliable_integral {S₀ : Finset V} (hS : ∀ v ∉ S₀, μf v (K v
     refine add_le_add_right ?_ _
     have e := hC (S₀ ∪ T \ S₀) Finset.subset_union_left
     rw [Finset.prod_union Finset.disjoint_sdiff, ← le_div_iff₀' hP] at e
-    refine le_trans ?_ ((Finset.prod_le_prod (fun v _ => by positivity)
+    refine le_trans ?_ ((Finset.prod_le_prod₀ (fun v _ => by positivity)
       fun v hv => hb v (Finset.mem_sdiff.1 hv).2).trans e)
     exact (le_add_of_nonneg_left zero_le_one).trans (one_add_sum_le_prod_one_add _ fun _ => norm_nonneg _)
   simpa using multipliable_one_add_of_summable hs

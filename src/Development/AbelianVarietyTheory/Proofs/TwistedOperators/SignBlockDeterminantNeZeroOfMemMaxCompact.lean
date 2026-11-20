@@ -20,7 +20,7 @@ section General
 
 variable {G σ : Type} [TopologicalSpace G]
 
-def CoefCont (F : G → MvPolynomial σ ℂ) : Prop := ∀ m, Continuous fun k => MvPolynomial.coeff m (F k)
+def CoefCont (F : G → MvPolynomial σ ℂ) : Prop := ∀ m, Continuous fun k => AddMonoidAlgebra.coeff (F k) m
 
 theorem CoefCont.const (P : MvPolynomial σ ℂ) : CoefCont fun _ : G => P := fun _ => continuous_const
 
@@ -52,12 +52,12 @@ theorem CoefCont.aeval {τ : Type} {g : G → τ → MvPolynomial σ ℂ} (h : �
   | mul_X p v hp => simpa using hp.mul (h v)
 
 theorem exists_monomials [Finite σ] (N : ℕ) : ∃ (n : ℕ) (e : Fin n → σ →₀ ℕ), ∀ P : MvPolynomial σ ℂ,
-    P.totalDegree ≤ N → P = ∑ i, MvPolynomial.coeff (e i) P • MvPolynomial.monomial (e i) (1 : ℂ) := by
+    P.totalDegree ≤ N → P = ∑ i, AddMonoidAlgebra.coeff P (e i) • MvPolynomial.monomial (e i) (1 : ℂ) := by
   let T := (Finsupp.finite_of_degree_le (σ := σ) N).toFinset
   refine ⟨T.card, fun i => (T.equivFin.symm i : σ →₀ ℕ), fun P hP => ?_⟩
-  rw [T.equivFin.symm.sum_comp (fun d : T => MvPolynomial.coeff (d : σ →₀ ℕ) P •
+  rw [T.equivFin.symm.sum_comp (fun d : T => AddMonoidAlgebra.coeff P (d : σ →₀ ℕ) •
     MvPolynomial.monomial (d : σ →₀ ℕ) (1 : ℂ)),
-    Finset.sum_coe_sort T fun d => MvPolynomial.coeff d P • MvPolynomial.monomial d (1 : ℂ)]
+    Finset.sum_coe_sort T fun d => AddMonoidAlgebra.coeff P d • MvPolynomial.monomial d (1 : ℂ)]
   simp only [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
   conv_lhs => rw [P.as_sum]
   refine Finset.sum_subset (fun d hd => ?_) fun d _ hd => ?_
@@ -70,8 +70,8 @@ theorem exists_coefFam [Group G] [Finite σ] (ρ : G → Module.End ℂ (MvPolyn
     (hc : ∀ P, CoefCont fun k => ρ k P) (φ : MvPolynomial σ ℂ) :
     ∃ (n : ℕ) (φs : Fin n → MvPolynomial σ ℂ) (c : Fin n → G → ℂ), IsCoefFam c ∧ ∀ k, ρ k φ = ∑ i, c i k • φs i := by
   obtain ⟨n, e, he⟩ := exists_monomials (σ := σ) φ.totalDegree
-  refine ⟨n, fun i => MvPolynomial.monomial (e i) 1, fun i k => MvPolynomial.coeff (e i) (ρ k φ),
-    ⟨fun i => hc φ _, fun k₀ i => ⟨fun j => MvPolynomial.coeff (e i) (ρ k₀ (MvPolynomial.monomial (e j) 1)),
+  refine ⟨n, fun i => MvPolynomial.monomial (e i) 1, fun i k => AddMonoidAlgebra.coeff (ρ k φ) (e i),
+    ⟨fun i => hc φ _, fun k₀ i => ⟨fun j => AddMonoidAlgebra.coeff (ρ k₀ (MvPolynomial.monomial (e j) 1)) (e i),
       fun k => ?_⟩⟩, fun k => he _ (hd k φ)⟩
   beta_reduce
   rw [hm]

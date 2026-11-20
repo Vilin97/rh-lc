@@ -143,13 +143,13 @@ theorem msum_eq_of_coeff_ne (hG : GeometricLemma) (hBZ : BernsteinZelevinskyFini
     (hS : IsSegmentClass k Z) (hΨ : IsProductIso k Ψ)
     (hX : ∀ Δ, Ψ (Finsupp.single ⟨Δ.len * Δ.d, Z Δ⟩ 1) = MvPolynomial.X Δ)
     {w : IrrGL k} {s : Multiset (IrrGL k)} (hw : HasSupport w.rep s) {m : Segment k →₀ ℕ}
-    (hm : coeff m (Ψ (Finsupp.single w 1)) ≠ 0) : msum m = s := by
+    (hm : AddMonoidAlgebra.coeff (Ψ (Finsupp.single w 1)) m ≠ 0) : msum m = s := by
   classical
   set P := Ψ (Finsupp.single w 1) with hP
   by_contra hne
   set S := P.support.filter (fun n => msum n ≠ s) with hSdef
-  set P1 := ∑ n ∈ S, monomial n (coeff n P) with hP1def
-  set P2 := ∑ n ∈ P.support.filter (fun n => ¬ msum n ≠ s), monomial n (coeff n P) with hP2def
+  set P1 := ∑ n ∈ S, monomial n (AddMonoidAlgebra.coeff P n) with hP1def
+  set P2 := ∑ n ∈ P.support.filter (fun n => ¬ msum n ≠ s), monomial n (AddMonoidAlgebra.coeff P n) with hP2def
   have hsplit : P1 + P2 = P := by
     rw [hP1def, hP2def, hSdef, Finset.sum_filter_add_sum_filter_not]
     exact support_sum_monomial_coeff P
@@ -158,7 +158,7 @@ theorem msum_eq_of_coeff_ne (hG : GeometricLemma) (hBZ : BernsteinZelevinskyFini
   have hz : ∀ u, (Ψ.symm P1) u = 0 := by
     intro u
     by_contra hu
-    obtain ⟨n, hnS, hn⟩ := exists_hasSupport_of_symm_sum_ne_zero hS hΨ hX S (fun n => coeff n P) u hu
+    obtain ⟨n, hnS, hn⟩ := exists_hasSupport_of_symm_sum_ne_zero hS hΨ hX S (fun n => AddMonoidAlgebra.coeff P n) u hu
     have hnS' := (Finset.mem_filter.mp hnS).2
     by_cases huw : u = w
     · subst huw
@@ -169,17 +169,17 @@ theorem msum_eq_of_coeff_ne (hG : GeometricLemma) (hBZ : BernsteinZelevinskyFini
         have e := congrArg (fun f => f u) hsum
         simp only [Finsupp.add_apply, h2, add_zero, Finsupp.single_apply, if_neg (Ne.symm huw)] at e
         exact e
-      obtain ⟨n', hn'S, hn'⟩ := exists_hasSupport_of_symm_sum_ne_zero hS hΨ hX _ (fun n => coeff n P) u h2
+      obtain ⟨n', hn'S, hn'⟩ := exists_hasSupport_of_symm_sum_ne_zero hS hΨ hX _ (fun n => AddMonoidAlgebra.coeff P n) u h2
       have h3 := (Finset.mem_filter.mp hn'S).2
       exact hnS' ((TD.hasSupport_unique hG hBZ hn hn').trans (not_not.mp h3))
   have hP1 : P1 = 0 := by
     have e : Ψ.symm P1 = 0 := Finsupp.ext hz
     simpa using congrArg Ψ e
   have hmS : m ∈ S := Finset.mem_filter.mpr ⟨mem_support_iff.mpr hm, hne⟩
-  have hc : coeff m P1 = coeff m P := by
+  have hc : AddMonoidAlgebra.coeff P1 m = AddMonoidAlgebra.coeff P m := by
     rw [hP1def, coeff_sum]
     simp only [coeff_monomial]
-    rw [Finset.sum_ite_eq' S m (fun n => coeff n P), if_pos hmS]
+    rw [Finset.sum_ite_eq' S m (fun n => AddMonoidAlgebra.coeff P n), if_pos hmS]
   rw [hP1, coeff_zero] at hc
   exact hm hc.symm
 
@@ -373,8 +373,8 @@ theorem eq_monomial_of_hasSupport (hG : GeometricLemma) (hBZ : BernsteinZelevins
     ∃ c : ℤ, Ψ (Finsupp.single w 1) =
       monomial (Finsupp.single (Segment.single x hx) 1 + Finsupp.single (Segment.single y hy) 1) c := by
   classical
-  refine ⟨coeff (Finsupp.single (Segment.single x hx) 1 + Finsupp.single (Segment.single y hy) 1)
-    (Ψ (Finsupp.single w 1)), ?_⟩
+  refine ⟨AddMonoidAlgebra.coeff (Ψ (Finsupp.single w 1))
+    (Finsupp.single (Segment.single x hx) 1 + Finsupp.single (Segment.single y hy) 1), ?_⟩
   ext n
   rw [coeff_monomial]
   split_ifs with h

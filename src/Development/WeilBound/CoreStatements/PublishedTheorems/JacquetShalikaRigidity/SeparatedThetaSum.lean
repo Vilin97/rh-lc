@@ -59,7 +59,7 @@ theorem fin_bd (C : Set (Fin k → Af E)) (hC : IsCompact C) : ∃ B : ℝ, 1 �
       (continuous_norm.comp (continuous_pi fun i =>
         (RestrictedProduct.continuous_eval v).comp (continuous_apply i)))
   choose b hb1 hb using hfin
-  refine ⟨∏ v ∈ S, b v, by simpa using Finset.prod_le_prod (s := S) (f := fun _ => (1:ℝ)) (fun _ _ => zero_le_one) (fun v _ => hb1 v), fun g ξ hξ hy => ?_⟩
+  refine ⟨∏ v ∈ S, b v, by simpa using Finset.prod_le_prod₀ (s := S) (f := fun _ => (1:ℝ)) (fun _ _ => zero_le_one) (fun v _ => hb1 v), fun g ξ hξ hy => ?_⟩
   have hfc := hasFiniteContent_height g hξ
   set y : Fin k → Ad E := (fun i => algebraMap E (Ad E) (ξ i)) ᵥ* g.val with hy'
   set b' : HeightOneSpectrum (𝓞 E) → ℝ := fun v => if v ∈ S then b v else 1 with hb'
@@ -97,7 +97,7 @@ theorem ht_le (C : Set (Fin k → Af E)) (hC : IsCompact C) : ∃ B : ℝ, 0 < B
   have h1 : (∏ w : InfinitePlace E, euclidNorm (infComp w y) ^ w.mult) ≤
       ((√k + 1) * ‖z‖) ^ (∑ w : InfinitePlace E, w.mult) := by
     rw [← Finset.prod_pow_eq_pow_sum]
-    exact Finset.prod_le_prod (fun w _ => pow_nonneg (euclidNorm_nonneg _) _)
+    exact Finset.prod_le_prod₀ (fun w _ => pow_nonneg (euclidNorm_nonneg _) _)
       fun w _ => pow_le_pow_left₀ (euclidNorm_nonneg _) (hw w) _
   have h2 := hf g ξ hξ hy
   have h3 : 0 ≤ ∏ᶠ v, ‖finComp v y‖ := finprod_nonneg fun _ => norm_nonneg _

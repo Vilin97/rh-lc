@@ -18,7 +18,7 @@ def detR (C : Type) [Field C] (n0 : ℕ) : MvPolynomial (PVar n0) C :=
 def mfact {σ : Type} (m : σ →₀ ℕ) : ℕ := m.prod fun _ k => k.factorial
 
 def jetAt0 {σ : Type} (P : MvPolynomial σ C) (g : MvPowerSeries σ C) : C :=
-  ∑ m ∈ P.support, MvPolynomial.coeff m P * (mfact m : C) * MvPowerSeries.coeff m g
+  ∑ m ∈ P.support, AddMonoidAlgebra.coeff P m * (mfact m : C) * MvPowerSeries.coeff m g
 
 def mvExp {σ : Type} (h : MvPowerSeries σ C) : MvPowerSeries σ C :=
   fun m => ∑ k ∈ Finset.range (m.degree + 1), MvPowerSeries.coeff m (h ^ k) / (k.factorial : C)
@@ -49,7 +49,7 @@ def diffOp {σ : Type} (P Q : MvPolynomial σ C) : MvPolynomial σ C :=
   ∑ m ∈ P.support, ∑ a ∈ Q.support,
     if m ≤ a then
       MvPolynomial.monomial (a - m)
-        (MvPolynomial.coeff m P * MvPolynomial.coeff a Q * ((mfact a : C) / (mfact (a - m) : C)))
+        (AddMonoidAlgebra.coeff P m * AddMonoidAlgebra.coeff Q a * ((mfact a : C) / (mfact (a - m) : C)))
     else 0
 
 def CayleyId : Prop :=

@@ -28,6 +28,6 @@ theorem UpperTheory.Gal.crystallineComparison.gaussLin_of :
   rw [map_multiset_prod, Multiset.prod_eq_zero_iff, Multiset.mem_map] at hprod
   obtain ⟨p, hp, hp0⟩ := hprod
   obtain ⟨m, hm⟩ := hs p hp
-  have h2 := congrArg (MvPolynomial.coeff m) hp0
+  have h2 := congrArg (AddMonoidAlgebra.coeff · m) hp0
   rw [MvPolynomial.coeff_map, hm, map_one, MvPolynomial.coeff_zero] at h2
   exact one_ne_zero h2

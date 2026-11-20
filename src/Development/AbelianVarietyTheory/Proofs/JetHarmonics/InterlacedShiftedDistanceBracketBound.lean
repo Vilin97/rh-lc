@@ -48,7 +48,7 @@ theorem main : ∀ (k r l : ℕ) (b c Y e : ℝ) (lam v : ℕ → ℝ), 1 ≤ k 
   have hN : ∏ s ∈ Finset.Icc k (k + 2 * r + 1), (|Y + e + lam s| + c) ≤ (b ^ 2) ^ (2 * r + 2) := by
     calc ∏ s ∈ Finset.Icc k (k + 2 * r + 1), (|Y + e + lam s| + c)
         ≤ ∏ _s ∈ Finset.Icc k (k + 2 * r + 1), b ^ 2 :=
-          Finset.prod_le_prod (fun s _ => ha0 s) (fun s hs =>
+          Finset.prod_le_prod₀ (fun s _ => ha0 s) (fun s hs =>
             (ha2 s (by rw [hsplit]; exact Finset.mem_union_right _ hs)).trans h3b)
       _ = (b ^ 2) ^ (2 * r + 2) := by
           rw [Finset.prod_const, Nat.card_Icc]

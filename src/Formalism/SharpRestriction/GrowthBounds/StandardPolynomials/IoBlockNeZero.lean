@@ -188,7 +188,7 @@ theorem ioBlock_coeff (hp : 0 < X.p) (j : Fin (numSeg X.TT)) (b : SegBlock (segS
     by_cases h : ν = μ
     · rw [if_pos h, if_pos (by rw [h])]
     · rw [if_neg h, if_neg fun e => h (ioExp_inj C0 CE1 CE2 X hp j b e)]
-  | add p q hp' hq' => rw [ioBlock_add, coeff_add, coeff_add, hp', hq']
+  | add p q hp' hq' => rw [ioBlock_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp', hq']
 
 theorem ioBlock_ne_zero (hp : 0 < X.p) (j : Fin (numSeg X.TT)) (b : SegBlock (segS X.TT j) X.m)
     {u : MvPolynomial (BV C0 CE1 CE2 X j) (KK O)} (hu : u ≠ 0) : ioBlock (KK O) X.p C0 CE1 CE2 X j b u ≠ 0 := by

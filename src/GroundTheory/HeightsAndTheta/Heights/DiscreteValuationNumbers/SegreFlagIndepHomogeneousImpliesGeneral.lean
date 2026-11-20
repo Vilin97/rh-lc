@@ -50,7 +50,7 @@ def polyNumHom {r : ℕ} (deg : Fin r → K → ℤ) : MvPolynomial (Fin r) ℤ 
       polyNum_eq_of_subset I V n deg P (P.support ∪ Q.support) Finset.subset_union_left,
       polyNum_eq_of_subset I V n deg Q (P.support ∪ Q.support) Finset.subset_union_right,
       ← Finset.sum_add_distrib]
-    simp only [coeff_add, add_mul]
+    simp only [MvPolynomial.coeff_add, add_mul]
 
 theorem polyNumHom_apply {r : ℕ} (deg : Fin r → K → ℤ) (Q : MvPolynomial (Fin r) ℤ) :
     polyNumHom I V n deg Q = polyNum I V n deg Q := rfl

@@ -282,7 +282,7 @@ theorem comparison_surjective [FiniteDimensional F V] (hadm : IsAdmissible B ρ)
       have hk := congrFun hw0 k
       rw [Pi.zero_apply] at hk
       rw [map_zero, Finsupp.zero_apply, map_sum, ← hk]
-      simp only [Finsupp.coe_finset_sum, Finset.sum_apply, map_smul, Finsupp.smul_apply,
+      simp only [Finsupp.coe_finsetSum, Finset.sum_apply, map_smul, Finsupp.smul_apply,
         smul_eq_mul, Matrix.mulVec, dotProduct, a, Basis.toMatrix_apply, mul_comm]
     exact funext fun j => Fintype.linearIndependent_iff.1 hli w hsum j
   have hunit : IsUnit a.det := h.isUnit_of_mem_span _ hne fun g => by

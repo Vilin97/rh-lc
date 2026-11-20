@@ -156,7 +156,7 @@ theorem mat_eq (Z : Mat 1 0) : Z = Z (.inl 0) (.inl 0) • Eab (.inl 0) (.inl 0)
 
 theorem vac_monomial (α : Ln 1 0 1 0 →₀ ℕ) :
     vac (monomial α 1) = (if α = 0 then (1 : ℂ) else 0) • ((1 : ℂ) ⊗ₜ[ℂ] (1 : ℂ) : TensorProduct ℂ ℂ ℂ) := by
-  show coeff 0 (monomial α (1 : ℂ)) • ((1 : ℂ) ⊗ₜ[ℂ] (1 : ℂ) : TensorProduct ℂ ℂ ℂ) = _
+  show AddMonoidAlgebra.coeff (monomial α (1 : ℂ)) 0 • ((1 : ℂ) ⊗ₜ[ℂ] (1 : ℂ) : TensorProduct ℂ ℂ ℂ) = _
   rw [coeff_monomial]
 
 theorem intw_vac : Intw (charMod 1 0 (1 / 2)) (charMod 1 0 (1 / 2)) vac ∧ vac ≠ 0 := by

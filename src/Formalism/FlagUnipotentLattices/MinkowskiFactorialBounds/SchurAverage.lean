@@ -110,7 +110,7 @@ lemma prod_lt_one_of_lt_one {ι : Type*} [Fintype ι] (a : ι → ℝ) (h0 : ∀
   classical
   rw [← Finset.mul_prod_erase Finset.univ a (Finset.mem_univ v₀)]
   have : ∏ v ∈ Finset.univ.erase v₀, a v ≤ 1 :=
-    Finset.prod_le_one (fun v _ => h0 v) (fun v _ => (h1 v).le)
+    Finset.prod_le_one₀ (fun v _ => h0 v) (fun v _ => (h1 v).le)
   calc a v₀ * ∏ v ∈ Finset.univ.erase v₀, a v ≤ a v₀ * 1 := mul_le_mul_of_nonneg_left this (h0 v₀)
     _ < 1 := by rw [mul_one]; exact h1 v₀
 
@@ -137,7 +137,7 @@ theorem box_count_big_O : BoxCountO := by
     congr 1; field_simp; ring
   refine ⟨h12.1, h12.2, ?_⟩
   rw [Fintype.card, ← Finset.prod_const, ← Finset.prod_mul_distrib]
-  refine Finset.prod_le_prod (fun v _ => by positivity) fun v _ => ?_
+  refine Finset.prod_le_prod₀ (fun v _ => by positivity) fun v _ => ?_
   have a1 : (1:ℝ) ≤ max 1 (B v) := le_max_left _ _
   have a2 : B v ≤ max 1 (B v) := le_max_right _ _
   have := hB v
@@ -199,7 +199,7 @@ theorem box_count_alt : BoxCount := by
         finrank_euclideanSpace, Fintype.card_fin]
     rw [hdim]
     calc ∏ v, ((B v + B v / (2 * τ)) / (B v / (2 * τ))) ^ (2 * s) ≤ ∏ _v : ι, (3 * τ) ^ (2 * s) := by
-          refine Finset.prod_le_prod (fun v _ => by have := hB v; positivity) fun v _ => ?_
+          refine Finset.prod_le_prod₀ (fun v _ => by have := hB v; positivity) fun v _ => ?_
           have hb := hB v
           have e : (B v + B v / (2 * τ)) / (B v / (2 * τ)) = 2 * τ + 1 := by field_simp
           rw [e]
@@ -301,9 +301,9 @@ theorem gram_hadamard_inequality : GramHadamard := by
   intro U _ _ r a
   have h1 : Real.sqrt ‖(Matrix.gram ℂ a).det‖ ≤ ∏ b, ‖a b‖ := by
     rw [sqrt_det_gram_eq_prod_norm]
-    exact Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => norm_gramSchmidt_le a i
+    exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => norm_gramSchmidt_le a i
   refine ⟨h1, fun R hR => h1.trans ?_⟩
-  calc ∏ b, ‖a b‖ ≤ ∏ _b : Fin r, R := Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun b _ => hR b
+  calc ∏ b, ‖a b‖ ≤ ∏ _b : Fin r, R := Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun b _ => hR b
     _ = R ^ r := by simp
 
 lemma norm_det_le_prod_row_norms {j : ℕ} (N : Matrix (Fin j) (Fin j) ℂ) :
@@ -318,7 +318,7 @@ lemma norm_det_le_prod_row_norms {j : ℕ} (N : Matrix (Fin j) (Fin j) ℂ) :
   have h1 := sqrt_det_gram_eq_prod_norm a
   rw [hdet, Real.sqrt_sq (norm_nonneg _)] at h1
   rw [h1]
-  refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => ?_
   refine (norm_gramSchmidt_le a i).trans (le_of_eq ?_)
   simp [a, EuclideanSpace.norm_eq]
 
@@ -404,7 +404,7 @@ lemma norm_det_sesquilinear_le_gramSchmidt {V₁ V₂ : Type*} [NormedAddCommGro
   calc (∏ k, ‖g' k‖) * ‖Nt.det‖ ≤ (∏ k, ‖g' k‖) * ∏ i, (c * ‖g i‖) := by
         apply mul_le_mul_of_nonneg_left _ (Finset.prod_nonneg fun _ _ => norm_nonneg _)
         exact (norm_det_le_prod_row_norms Nt).trans
-          (Finset.prod_le_prod (fun _ _ => Real.sqrt_nonneg _) fun i _ => hrow i)
+          (Finset.prod_le_prod₀ (fun _ _ => Real.sqrt_nonneg _) fun i _ => hrow i)
     _ = _ := by
         rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin]; ring
 
@@ -414,8 +414,8 @@ theorem wedge_hadamard_inequality : WedgeHadamard := by
   rw [one_pow, one_mul] at this
   refine this.trans ?_
   apply mul_le_mul
-  · exact Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => norm_gramSchmidt_le y i
-  · exact Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => norm_gramSchmidt_le y' i
+  · exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => norm_gramSchmidt_le y i
+  · exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => norm_gramSchmidt_le y' i
   · exact Finset.prod_nonneg fun _ _ => norm_nonneg _
   · exact Finset.prod_nonneg fun _ _ => norm_nonneg _
 
@@ -539,7 +539,7 @@ theorem lattice_sum_alt : LatticeSum := by
     intro c y hy
     simp only [W]
     rw [hf, Fintype.card, ← Finset.prod_const, ← Finset.prod_mul_distrib]
-    refine Finset.prod_le_prod (fun v _ => (hw10 _).le) fun v _ => ?_
+    refine Finset.prod_le_prod₀ (fun v _ => (hw10 _).le) fun v _ => ?_
     have h1 := hy v (Set.mem_univ v)
     rw [mem_ball, dist_eq_norm] at h1
     have h2 : ‖y v‖ ≤ ‖c v‖ + 1 / 2 := by

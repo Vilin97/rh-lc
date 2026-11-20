@@ -372,10 +372,10 @@ theorem F_degrees (hd : d.AxH 𝒜) (h : d.S1) (c : ι) (F : KTp K d.D d.N)
     (∀ s ∈ F.support, ∑ j, s (0, j) = d.delc c) ∧
       ∀ b : Fin (d.D + 1), b ≠ 0 → ∀ s ∈ F.support, ∑ j, s (b, j) = (d.aMM h c).toNat := by
   have hco : ∀ (b : Fin (d.D + 1)) (u : Kˣ) (s : TVar d.D d.N →₀ ℕ),
-      coeff s F * (u : K) ^ (∑ j, s (b, j)) =
-        (u : K) ^ (if b = 0 then (d.delc c : ℤ) else d.aMM h c) * coeff s F := by
+      AddMonoidAlgebra.coeff F s * (u : K) ^ (∑ j, s (b, j)) =
+        (u : K) ^ (if b = 0 then (d.delc c : ℤ) else d.aMM h c) * AddMonoidAlgebra.coeff F s := by
     intro b u s
-    have e := congrArg (coeff s) (sigP_F d hd h c F hF b u)
+    have e := congrArg (AddMonoidAlgebra.coeff · s) (sigP_F d hd h c F hF b u)
     rw [coeff_C_mul] at e
     rw [← e]
     conv_rhs => rw [F.as_sum]

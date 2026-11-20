@@ -119,7 +119,7 @@ theorem dividedDeriv_monomial (β n : σ →₀ ℕ) (c : R) :
     mul_one]
 
 theorem coeff_dividedDeriv (β m : σ →₀ ℕ) (P : MvPolynomial σ R) :
-    coeff m (dividedDeriv R β P) = multiChoose (m + β) β • coeff (m + β) P := by
+    AddMonoidAlgebra.coeff (dividedDeriv R β P) m = multiChoose (m + β) β • AddMonoidAlgebra.coeff P (m + β) := by
   classical
   induction P using MvPolynomial.induction_on' with
   | monomial n c =>
@@ -132,7 +132,7 @@ theorem coeff_dividedDeriv (β m : σ →₀ ℕ) (P : MvPolynomial σ R) :
       · rw [if_neg, smul_zero]
         rintro rfl
         exact h (tsub_add_cancel_of_le (le_of_multiChoose_ne_zero h0)).symm
-  | add P Q hP hQ => simp only [map_add, coeff_add, hP, hQ, smul_add]
+  | add P Q hP hQ => simp only [map_add, MvPolynomial.coeff_add, hP, hQ, smul_add]
 
 @[simp] theorem dividedDeriv_zero : dividedDeriv R (0 : σ →₀ ℕ) = 1 := by
   refine LinearMap.ext fun P => MvPolynomial.ext _ _ fun m => ?_

@@ -97,7 +97,7 @@ theorem UpperTheory.height_bounded_on_support_of_compact_test_functions :
     rfl
   simp only [hg]
   rw [finprod_eq_prod_of_mulSupport_subset (s := W)]
-  · refine Finset.prod_le_prod (fun w _ => ?_) fun w hw => ?_
+  · refine Finset.prod_le_prod₀ (fun w _ => ?_) fun w hw => ?_
     · split_ifs
       · exact (locHeight_pos _).le
       · exact zero_le_one

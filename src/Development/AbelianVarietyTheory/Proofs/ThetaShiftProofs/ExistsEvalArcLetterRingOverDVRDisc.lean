@@ -62,7 +62,7 @@ theorem hasSum_lcoeffPoly {σ : Type} (Y : σ → K) {P : MvPolynomial σ (Laure
   have hμ : ∀ μ, P.coeff μ *
       (HahnSeries.ofPowerSeries ℤ F (PowerSeries.C (R := F) (a ϖ) * PowerSeries.X)) ^ N =
       HahnSeries.ofPowerSeries ℤ F (PowerSeries.map a (G.coeff μ)) := fun μ => by
-    have := congrArg (MvPolynomial.coeff μ) h
+    have := congrArg (AddMonoidAlgebra.coeff · μ) h
     rwa [← map_pow, mul_comm, MvPolynomial.coeff_C_mul, mul_comm, MvPolynomial.coeff_map] at this
   set s := P.support ∪ G.support
   have hP : ∀ k : ℤ, GlobalTheory.ArcQ.lcoeffPoly P k =

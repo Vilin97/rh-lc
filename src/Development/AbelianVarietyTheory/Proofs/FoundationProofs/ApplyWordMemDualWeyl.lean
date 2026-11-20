@@ -160,7 +160,7 @@ theorem nablaEqDualWeylOf : NablaEqDualWeylOf := by
         exact Submodule.subset_span ⟨_, rfl⟩
       obtain ⟨z, hz⟩ := hPQ _ hmem
       exact ⟨z, by rw [fockQ_symm, hAdj, hz]⟩
-    have hcoef : ∀ e : Fin r × Fin n →₀ ℕ, LowerTri e → ∃ z : ℤ, coeff e P = z := by
+    have hcoef : ∀ e : Fin r × Fin n →₀ ℕ, LowerTri e → ∃ z : ℤ, AddMonoidAlgebra.coeff P e = z := by
       intro e he
       by_cases hs : ∀ s : Fin n, ∑ a : Fin r, e (a, s) = ν s
       · obtain ⟨z, hz⟩ := hint (wordOf e)

@@ -17,7 +17,7 @@ theorem weightedHomogeneousComponent_mem_span_of_isMultiHomog {R : Type*} [CommR
   obtain ⟨a, rfl⟩ := Ideal.mem_span_singleton'.mp ht
   rw [a.as_sum, Finset.sum_mul, map_sum]
   refine Ideal.sum_mem _ fun d _ => ?_
-  have hd : IsWeightedHomogeneous (blockWeight ι) (monomial d (coeff d a) * s)
+  have hd : IsWeightedHomogeneous (blockWeight ι) (monomial d (AddMonoidAlgebra.coeff a d) * s)
       (Finsupp.weight (blockWeight ι) d + c) :=
     (isWeightedHomogeneous_monomial _ d _ rfl).mul hs
   by_cases hb : b = Finsupp.weight (blockWeight ι) d + c

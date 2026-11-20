@@ -213,8 +213,8 @@ theorem ptsIntegral_map [Nonempty K] (V : Ideal (MRing ι)) (hV : IsMultiHomogId
           have h0 := z'.2.2 t (hVS ▸ Ideal.subset_span ht)
           change eval _ (map _ t) = 0
           rw [eval_map, eval₂_eq'] at h0 ⊢
-          have : ∀ m ∈ t.support, (Int.castRingHom ℂ) (coeff m t) * ∏ p : Σ k, ι' k, (c p.1 * z'.1 p) ^ m p =
-              (∏ k, c k ^ a k) * ((Int.castRingHom ℂ) (coeff m t) * ∏ p, z'.1 p ^ m p) := by
+          have : ∀ m ∈ t.support, (Int.castRingHom ℂ) (AddMonoidAlgebra.coeff t m) * ∏ p : Σ k, ι' k, (c p.1 * z'.1 p) ^ m p =
+              (∏ k, c k ^ a k) * ((Int.castRingHom ℂ) (AddMonoidAlgebra.coeff t m) * ∏ p, z'.1 p ^ m p) := by
             intro m hm
             have h1 : ∏ p : Σ k, ι' k, c p.1 ^ m p = ∏ k, c k ^ a k := by
               rw [Fintype.prod_sigma]

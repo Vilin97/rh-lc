@@ -28,7 +28,7 @@ lemma one_le_det_one_add {m : Type*} [Fintype m] [DecidableEq m] {Z : Matrix m m
     rfl
   rw [hprod, ← Complex.ofReal_one, Complex.real_le_real]
   calc (1 : ℝ) = ∏ _i : m, (1 : ℝ) := by simp
-    _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one) (fun i _ => by linarith [hev i])
+    _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun i _ => by linarith [hev i])
 
 lemma det_le_det_add {m : Type*} [Fintype m] [DecidableEq m] {X Y : Matrix m m ℂ}
     (hX : X.PosSemidef) (hY : Y.PosSemidef) : X.det ≤ (X + Y).det := by

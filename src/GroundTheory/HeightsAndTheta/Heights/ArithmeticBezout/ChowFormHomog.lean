@@ -114,7 +114,7 @@ theorem IsChowForm.exists_multiHomog {P : Ideal (MvPolynomial (Fin n) F)}
     have h2 := (Finset.sum_eq_zero_iff.mp h1) ij (Finsupp.mem_support_iff.mpr hne)
     simp [groupWeight] at h2
     exact hne h2
-  have hC : f = C (coeff 0 f) := by
+  have hC : f = C (AddMonoidAlgebra.coeff f 0) := by
     ext d
     rw [coeff_C]
     split_ifs with hd

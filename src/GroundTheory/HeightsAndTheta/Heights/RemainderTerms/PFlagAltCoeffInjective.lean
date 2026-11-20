@@ -36,8 +36,8 @@ theorem FlagAltCoeffInjective.proof (h1 : FlagCoeffBlockPermute.Statement) :
     · simp [w, Function.update_of_ne hσ]
   have key := h1 f N w P α
   rw [hα, hP w, hsign, coeff_smul] at key
-  have : coeff α P = 0 := by
-    have h2 : (2 : ℚ) * coeff α P = 0 := by
+  have : AddMonoidAlgebra.coeff P α = 0 := by
+    have h2 : (2 : ℚ) * AddMonoidAlgebra.coeff P α = 0 := by
       rw [smul_eq_mul] at key
       linarith
     simpa using h2

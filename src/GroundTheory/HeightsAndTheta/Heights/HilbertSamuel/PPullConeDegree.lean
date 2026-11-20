@@ -40,7 +40,7 @@ theorem prod_X_pow_eq_monomial (a : K → ℕ) :
   simp
 
 theorem coeff_mConeMapQ (y : (Σ k, ι k) → Ω) (f : MvPolynomial (Σ k, ι k) ℚ) (n : K → ℕ) :
-    coeff (Finsupp.equivFunOnFinite.symm n) (mConeMapQ y f) =
+    AddMonoidAlgebra.coeff (mConeMapQ y f) (Finsupp.equivFunOnFinite.symm n) =
       aeval y (weightedHomogeneousComponent (NumbersDVR.blockWeight ι) n f) := by
   induction f using MvPolynomial.induction_on' with
   | monomial m r =>
@@ -50,7 +50,7 @@ theorem coeff_mConeMapQ (y : (Σ k, ι k) → Ω) (f : MvPolynomial (Σ k, ι k)
     by_cases h : n = Finsupp.weight (NumbersDVR.blockWeight ι) m
     · rw [if_pos h, if_pos (by rw [h])]
     · rw [if_neg h, if_neg (fun h' => h (Finsupp.equivFunOnFinite.symm.injective h').symm), map_zero]
-  | add p q hp hq => rw [map_add, coeff_add, hp, hq, map_add, map_add]
+  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, hp, hq, map_add, map_add]
 
 omit [DecidableEq K] [CharZero Ω] in
 
@@ -82,7 +82,7 @@ theorem proof : PullConeDegree.Statement := by
     rw [g.as_sum]
     refine Ideal.sum_mem _ fun μ hμ => ?_
     obtain ⟨c, hc⟩ := exists_dvd_monomial N hne μ
-      (fun k => by rw [hg μ hμ k]; have := hd k; omega) (coeff μ g)
+      (fun k => by rw [hg μ hμ k]; have := hd k; omega) (AddMonoidAlgebra.coeff g μ)
     exact Ideal.mem_of_dvd _ hc (hN c)
   have hI : coneNullIdeal y L = RingHom.ker (mConeMapQ y) ⊔
       Ideal.span (Set.range fun j => map (Int.castRingHom ℚ) (L j)) := by
@@ -105,7 +105,7 @@ theorem proof : PullConeDegree.Statement := by
 
   refine ⟨fun j => weightedHomogeneousComponent (NumbersDVR.blockWeight ι) (d - e) (b j),
     fun j => isMultiHomog_of_isWeightedHomogeneous (weightedHomogeneousComponent_isWeightedHomogeneous _ _), ?_⟩
-  have hc := congrArg (coeff (Finsupp.equivFunOnFinite.symm d)) hψg
+  have hc := congrArg (AddMonoidAlgebra.coeff · (Finsupp.equivFunOnFinite.symm d)) hψg
   rw [mConeMapQ_eq y (isWeightedHomogeneous_of_isMultiHomog hg), prod_X_pow_eq_monomial, C_mul_monomial, mul_one,
     coeff_monomial, if_pos rfl, coeff_sum] at hc
   rw [hc]

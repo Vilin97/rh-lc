@@ -223,7 +223,7 @@ theorem summable_vecCoeff_of_deriv [DecidableEq ι] (F : List (ι × BIdx K) →
     refine h.trans ?_
     have hpos' : 0 < ∏ p, (1 + (n p : ℝ) ^ 2) := Finset.prod_pos fun p _ => by positivity
     have hle : ∏ p, (1 + (n p : ℝ) ^ 2) ≤ ∏ p, (1 + (2 * π * (n p : ℝ)) ^ 2) :=
-      Finset.prod_le_prod (fun p _ => by positivity) fun p _ => by
+      Finset.prod_le_prod₀ (fun p _ => by positivity) fun p _ => by
         have : (1 : ℝ) ≤ (2 * π) ^ 2 := by nlinarith [Real.pi_gt_three]
         nlinarith [sq_nonneg (n p : ℝ)]
     refine (div_le_div_of_nonneg_left hB hpos' hle).trans (le_of_eq ?_)

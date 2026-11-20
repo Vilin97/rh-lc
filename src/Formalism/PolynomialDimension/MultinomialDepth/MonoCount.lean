@@ -561,17 +561,17 @@ theorem ext_mul (φ : MvPolynomial σ K →ₗ[K] MvPolynomial σ K) {g q : MvPo
   refine Finset.sum_congr rfl fun m' hm' => Finset.sum_congr rfl fun m hm => ?_
   rw [MvPolynomial.monomial_mul, ext_monomial, frst_add, ltr_add, frst_of fs (hg m hm), frst_of' fs (hq m' hm'),
     ltr_of fs (hg m hm), ltr_of' fs (hq m' hm'), add_zero, zero_add,
-    show monomial m (coeff m g) = coeff m g • monomial m (1 : K) by rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one],
+    show monomial m (AddMonoidAlgebra.coeff g m) = AddMonoidAlgebra.coeff g m • monomial m (1 : K) by rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one],
     map_smul,
-    show monomial m' (coeff m' q) = coeff m' q • monomial m' (1 : K) by rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one],
+    show monomial m' (AddMonoidAlgebra.coeff q m') = AddMonoidAlgebra.coeff q m' • monomial m' (1 : K) by rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one],
     smul_mul_smul_comm]
 
 theorem sl_mul (m : σ →₀ ℕ) {g q : MvPolynomial σ K} (hg : IsF fs g) (hq : IsL fs q) :
-    slc fs m (g * q) = coeff m q • g := by
+    slc fs m (g * q) = AddMonoidAlgebra.coeff q m • g := by
   conv_lhs => rw [g.as_sum, q.as_sum]
   simp only [Finset.sum_mul, Finset.mul_sum, map_sum]
   have key : ∀ a ∈ g.support, ∀ b ∈ q.support,
-      slc fs m (monomial a (coeff a g) * monomial b (coeff b q)) = if b = m then coeff m q • monomial a (coeff a g) else 0 := by
+      slc fs m (monomial a (AddMonoidAlgebra.coeff g a) * monomial b (AddMonoidAlgebra.coeff q b)) = if b = m then AddMonoidAlgebra.coeff q m • monomial a (AddMonoidAlgebra.coeff g a) else 0 := by
     intro a ha b hb
     rw [MvPolynomial.monomial_mul, sl_monomial, frst_add, ltr_add, frst_of fs (hg a ha), frst_of' fs (hq b hb),
       ltr_of fs (hg a ha), ltr_of' fs (hq b hb), add_zero, zero_add]
@@ -583,14 +583,14 @@ theorem sl_mul (m : σ →₀ ℕ) {g q : MvPolynomial σ K} (hg : IsF fs g) (hq
   by_cases hm : m ∈ q.support
   · simp only [Finset.sum_ite_eq', Finset.sum_ite_eq, hm, if_true]
     rw [← Finset.smul_sum, ← g.as_sum]
-  · have h0 : coeff m q = 0 := by simpa using hm
+  · have h0 : AddMonoidAlgebra.coeff q m = 0 := by simpa using hm
     simp only [Finset.sum_ite_eq', Finset.sum_ite_eq, hm, if_false, Finset.sum_const_zero, h0, zero_smul]
 
 theorem ext_eq_sum (φ : MvPolynomial σ K →ₗ[K] MvPolynomial σ K) (x : MvPolynomial σ K) (S : Finset (σ →₀ ℕ))
     (hS : ∀ m ∈ x.support, ltr fs m ∈ S) : ext fs φ x = ∑ m ∈ S, φ (slc fs m x) * monomial m 1 := by
   classical
-  have e : ∀ m' ∈ x.support, ext fs φ (monomial m' (coeff m' x)) =
-      ∑ m ∈ S, φ (slc fs m (monomial m' (coeff m' x))) * monomial m 1 := by
+  have e : ∀ m' ∈ x.support, ext fs φ (monomial m' (AddMonoidAlgebra.coeff x m')) =
+      ∑ m ∈ S, φ (slc fs m (monomial m' (AddMonoidAlgebra.coeff x m'))) * monomial m 1 := by
     intro m' hm'
     simp_rw [sl_monomial]
     rw [Finset.sum_eq_single (ltr fs m') (fun b _ hb => by rw [if_neg (Ne.symm hb), map_zero, zero_mul])
@@ -1488,7 +1488,7 @@ variable {p : ℕ} [Fact p.Prime] {K r : ℕ}
 theorem freeze_surj (LL : Letters K) (ρ : Fin r) (n : ℕ) (hS : LL.total ≤ n)
     (F : MvPolynomial (Fin (K + 1) × Fin r) ℚ_[p]) (hFpol' : F ∈ Pol p r (LL.snoc n))
     (hinv : IsFrozenInv p LL ρ n F) :
-    ∃ f ∈ Pol p r LL, freeze p LL ρ n f = F ∧ ∀ m', coeff m' f = coeff (FB.ext n ρ m') F := by
+    ∃ f ∈ Pol p r LL, freeze p LL ρ n f = F ∧ ∀ m', AddMonoidAlgebra.coeff f m' = AddMonoidAlgebra.coeff F (FB.ext n ρ m') := by
   have hFrow : ∀ m ∈ F.support, ∑ c, m (Fin.last K, c) = n := fun m hm => by
     have h : MultiDeg (LL.snoc n) m := hFpol' (Finset.mem_coe.mpr hm)
     simpa using h (Fin.last K)
@@ -1511,7 +1511,7 @@ theorem freeze_surj (LL : Letters K) (ρ : Fin r) (n : ℕ) (hS : LL.total ≤ n
     rw [map_sub, FB.ev_freeze, sub_self]
   have hGinv : IsFrozenInv p LL ρ n (F - freeze p LL ρ n (FB.ev p ρ F)) := fun c hc => by
     rw [map_sub, hinv c hc, FB.freeze_inv LL ρ n _ c hc, sub_self]
-  have h0 : ∀ m, FB.kk ρ m = 0 → coeff m (F - freeze p LL ρ n (FB.ev p ρ F)) = 0 := by
+  have h0 : ∀ m, FB.kk ρ m = 0 → AddMonoidAlgebra.coeff (F - freeze p LL ρ n (FB.ev p ρ F)) m = 0 := by
     intro m hm
     by_contra hne
     have hrow := hGrow m (mem_support_iff.mpr hne)
@@ -1706,8 +1706,8 @@ theorem tie_onto [NeZero r] (ρ : Fin r) (hρ : (ρ : ℕ) = r - 1) (n : Fin T.t
         (rename (fun x : Fin (T.pos i + 1 + 1) × Fin r => (ιF N (T.pos i + 1) x.1, x.2)) v') μ := by
       have h0 : weightedHomogeneousComponent (wv LL (T.pos i + 1 + 1)) μ _ = _ := hvH'.1
       rw [← h0]; exact weightedHomogeneousComponent_isWeightedHomogeneous _ _
-    have h2 : coeff (Finsupp.mapDomain (fun x : Fin (T.pos i + 1 + 1) × Fin r => (ιF N (T.pos i + 1) x.1, x.2)) m')
-        (rename (fun x : Fin (T.pos i + 1 + 1) × Fin r => (ιF N (T.pos i + 1) x.1, x.2)) v') ≠ 0 := by
+    have h2 : AddMonoidAlgebra.coeff (rename (fun x : Fin (T.pos i + 1 + 1) × Fin r => (ιF N (T.pos i + 1) x.1, x.2)) v')
+        (Finsupp.mapDomain (fun x : Fin (T.pos i + 1 + 1) × Fin r => (ιF N (T.pos i + 1) x.1, x.2)) m') ≠ 0 := by
       rw [coeff_rename_mapDomain _ hinj]; exact hm'
     have h3 := h1 h2
     rwa [weight_mapDomain, wv_compat LL T hadm i n (n i)] at h3

@@ -82,7 +82,7 @@ theorem mem_subfield_of_bilinForm_monomials :
         simp [Finset.sum_apply, Pi.single_apply]
       rw [h1, map_sum, map_sum] at h0
       simp only [map_smul, smul_eq_mul] at h0
-      simp only [AddSubmonoidClass.coe_finset_sum, Submodule.coe_smul, LinearMap.sum_apply,
+      simp only [AddSubmonoidClass.coe_finsetSum, Submodule.coe_smul, LinearMap.sum_apply,
         LinearMap.smul_apply, smul_eq_mul, ZeroMemClass.coe_zero, LinearMap.zero_apply]
       rw [← h0]
       exact Finset.sum_congr rfl fun j _ => mul_comm _ _

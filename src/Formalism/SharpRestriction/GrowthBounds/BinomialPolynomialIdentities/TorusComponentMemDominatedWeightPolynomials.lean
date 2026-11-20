@@ -58,8 +58,8 @@ theorem laurentCoeff_mem_dominatedWeightPolynomials (y : MvPolynomial (ι × Fin
   intro h0
   have h2 := congrArg (fun f : LaurentPolynomial k1 => f.coeff k0) h0
   simp only [MvPolynomial.coeff_C_mul, MvPolynomial.coeff_map] at h2
-  have h3 : ∀ k, (LaurentPolynomial.T k * ψ (coeff m (matrixSubst LL S φ g0inv g0 (yk k)))) =
-      AddMonoidAlgebra.single k (coeff m (matrixSubst LL S φ g0inv g0 (yk k))) := by
+  have h3 : ∀ k, (LaurentPolynomial.T k * ψ (AddMonoidAlgebra.coeff (matrixSubst LL S φ g0inv g0 (yk k)) m)) =
+      AddMonoidAlgebra.single k (AddMonoidAlgebra.coeff (matrixSubst LL S φ g0inv g0 (yk k)) m) := by
     intro k
     rw [LaurentPolynomial.single_eq_C_mul_T, mul_comm]
   simp only [h3, AddMonoidAlgebra.coeff_sum, AddMonoidAlgebra.coeff_single, Finsupp.coe_finsetSum,

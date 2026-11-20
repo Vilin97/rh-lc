@@ -117,7 +117,7 @@ def typ {G n : ℕ} (i : Fin n → Fin G) : Fin G → ℕ := fun j => (univ.filt
 def JetEntry : Prop :=
   ∀ (R : Type) [CommRing R] (G n : ℕ) (P : MvPolynomial (Fin G) R) (i : Fin n → Fin G),
     eval 0 ((List.ofFn i).foldr (fun j Q => pderiv j Q) P) =
-      ((∏ j, (typ i j).factorial : ℕ) : R) * coeff (Finsupp.equivFunOnFinite.symm (typ i)) P
+      ((∏ j, (typ i j).factorial : ℕ) : R) * AddMonoidAlgebra.coeff P (Finsupp.equivFunOnFinite.symm (typ i))
 
 def JetNorm : Prop :=
   ∀ (G n : ℕ) (c : (Fin G → ℕ) → ℂ),
@@ -144,7 +144,7 @@ def GridSpanOpen : Prop :=
 
 def CoeffTorus : Prop :=
   ∀ (m : ℕ) (P : MvPolynomial (Fin m) ℂ) (M : ℝ),
-    (∀ z : Fin m → ℂ, (∀ i, ‖z i‖ = 1) → ‖eval z P‖ ≤ M) → ∀ e, ‖coeff e P‖ ≤ M
+    (∀ z : Fin m → ℂ, (∀ i, ‖z i‖ = 1) → ‖eval z P‖ ≤ M) → ∀ e, ‖AddMonoidAlgebra.coeff P e‖ ≤ M
 
 def rowSubst {N n r : ℕ} (x₀ : Fin n → ℂ) (y : Fin r → Fin n → ℂ) (z : Fin n → ℂ)
     (p : Fin (N + 1) × Fin n) : MvPolynomial ((Fin N × Fin r) ⊕ Fin N) ℂ :=
@@ -159,7 +159,7 @@ def RowBound : Prop :=
     F ∈ weightedHomogeneousSubmodule ℂ (Formalism.NormUnitaryCountingLemmas.blockWt (N + 1) n) ν →
     ∀ (x₀ : Fin n → ℂ) (y : Fin r → Fin n → ℂ) (z : Fin n → ℂ) (Rb : ℝ),
     (∀ i, vlen (y i) ≤ Rb) → vlen z ≤ 1 →
-    ∀ e, ‖coeff e (aeval (rowSubst x₀ y z) F)‖ ≤
+    ∀ e, ‖AddMonoidAlgebra.coeff (aeval (rowSubst x₀ y z) F) e‖ ≤
       Formalism.NormUnitaryCountingLemmas.bnorm F * vlen x₀ ^ ν 0 * ((r : ℝ) * Rb + 1) ^ (∑ j : Fin N, ν j.succ)
 
 def Hadamard : Prop :=

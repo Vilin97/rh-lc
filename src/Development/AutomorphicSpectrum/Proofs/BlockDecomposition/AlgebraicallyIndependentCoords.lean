@@ -19,7 +19,7 @@ theorem shiftE_zero {d : ℕ} (D : ℕ) (α : Fin d →₀ ℕ) : shiftE D α 0 
 theorem shiftE_succ {d : ℕ} (D : ℕ) (α : Fin d →₀ ℕ) (k : Fin d) : shiftE D α k.succ = α k := rfl
 
 def homogP {K : Type} [Field K] {d : ℕ} (D : ℕ) (P : MvPolynomial (Fin d) K) : MvPolynomial (Fin (d + 1)) K :=
-  ∑ α ∈ P.support, monomial (shiftE D α) (coeff α P)
+  ∑ α ∈ P.support, monomial (shiftE D α) (AddMonoidAlgebra.coeff P α)
 
 theorem degree_le_of_mem {K : Type} [Field K] {d D : ℕ} {P : MvPolynomial (Fin d) K} (hD : P.totalDegree ≤ D)
     {α : Fin d →₀ ℕ} (hα : α ∈ P.support) : α.degree ≤ D := by

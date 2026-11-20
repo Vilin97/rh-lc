@@ -16,7 +16,7 @@ theorem comp_mul {σ M R : Type*} [CommRing R] [AddCancelCommMonoid M] (w : σ �
   conv_rhs => rw [s.as_sum]
   rw [map_sum, map_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl (fun d _ => ?_)
-  have hm : IsWeightedHomogeneous w (monomial d (coeff d s)) (Finsupp.weight w d) :=
+  have hm : IsWeightedHomogeneous w (monomial d (AddMonoidAlgebra.coeff s d)) (Finsupp.weight w d) :=
     isWeightedHomogeneous_monomial _ _ _ rfl
   by_cases h : Finsupp.weight w d = b
   · subst h

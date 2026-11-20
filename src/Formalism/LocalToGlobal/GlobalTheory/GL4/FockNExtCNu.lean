@@ -87,10 +87,10 @@ theorem monW_ge_cNu (lam : ι → DomWeight n) (m : MonI lam) : monCnu lam ≤ m
       unfold dW
       rw [← Finset.prod_pow_eq_pow_sum]
     rw [hmf, hpow, ← Finset.prod_mul_distrib]
-    apply Finset.prod_le_prod (fun _ _ => Nat.zero_le _)
+    apply Finset.prod_le_prod₀ (fun _ _ => Nat.zero_le _)
     intro τ _
     rw [← Finset.prod_mul_distrib]
-    apply Finset.prod_le_prod (fun _ _ => Nat.zero_le _)
+    apply Finset.prod_le_prod₀ (fun _ _ => Nat.zero_le _)
     intro s _
     have h := sub_one_mul_padicValNat_factorial_le' (fun a => m.1 (τ, a, s))
     rw [m.2 τ s] at h

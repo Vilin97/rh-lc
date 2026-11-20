@@ -83,7 +83,7 @@ theorem summable_prod {u : ι → ℕ → ℝ} (hu0 : ∀ i, u i 0 = 1) (hu : �
     _ = ∏ i ∈ F.biUnion (fun v => v.support), ∑ j ∈ range ((F.sup fun v => v i) + 1), u i j :=
         sum_ebox u hu0 _ _
     _ ≤ ∏ i ∈ F.biUnion (fun v => v.support), Real.exp (t i) := by
-        apply Finset.prod_le_prod (fun i _ => Finset.sum_nonneg fun j _ => hu i j)
+        apply Finset.prod_le_prod₀ (fun i _ => Finset.sum_nonneg fun j _ => hu i j)
         intro i _
         calc _ ≤ 1 + t i := hut i _
           _ ≤ Real.exp (t i) := by linarith [Real.add_one_le_exp (t i)]

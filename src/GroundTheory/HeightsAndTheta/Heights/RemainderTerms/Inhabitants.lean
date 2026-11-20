@@ -47,11 +47,11 @@ theorem inh_J_eq : fibreDegree 1 1 1 .last = -1 := by
   rw [Finset.sum_eq_single (Finsupp.single ((0:Fin 1), (1 : Fin (1+1))) 1)]
   · simp [flagTwoFirstRoot, flagTwoSecondRoot, coeff_X', Finsupp.single_left_inj, hne, hne.symm, Finsupp.single_eq_single_iff]
   · intro b _ hb
-    have : coeff b flagTwoSecondRoot = 0 := by
+    have : AddMonoidAlgebra.coeff flagTwoSecondRoot b = 0 := by
       rw [coeff_X']; exact if_neg (fun h => hb h.symm)
     simp [this]
   · intro h
-    have : coeff (Finsupp.single ((0:Fin 1), (1 : Fin (1+1))) 1) (flagTwoFirstRoot - flagTwoSecondRoot) = 0 := by
+    have : AddMonoidAlgebra.coeff (flagTwoFirstRoot - flagTwoSecondRoot) (Finsupp.single ((0:Fin 1), (1 : Fin (1+1))) 1) = 0 := by
       simpa using h
     simp [flagTwoFirstRoot, flagTwoSecondRoot, coeff_X', Finsupp.single_eq_single_iff, hne, hne.symm] at this
 

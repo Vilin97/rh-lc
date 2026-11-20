@@ -110,8 +110,8 @@ theorem range_evalForms (y : (Σ k, ι k) → Ω) (a : K → ℕ) :
     conv => arg 2; rw [f.as_sum]
     rw [map_sum]
     refine Submodule.sum_mem _ fun v hv => ?_
-    have hmon : aeval y (monomial v (coeff v f)) =
-        coeff v f • aeval y (monomial v (1 : ℤ) : MRing ι) := by
+    have hmon : aeval y (monomial v (AddMonoidAlgebra.coeff f v)) =
+        AddMonoidAlgebra.coeff f v • aeval y (monomial v (1 : ℤ) : MRing ι) := by
       simp only [aeval_monomial, Algebra.smul_def, map_one, one_mul]
     rw [hmon]
     refine Submodule.smul_mem _ _ (Submodule.subset_span ⟨monomial v 1, ?_, rfl⟩)

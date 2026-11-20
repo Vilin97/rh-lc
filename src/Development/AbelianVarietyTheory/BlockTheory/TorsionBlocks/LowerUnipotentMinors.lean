@@ -69,7 +69,7 @@ def IsUpperUnipotent {m : ℕ} (u : Matrix (Fin m) (Fin m) ℂ) : Prop :=
 
 def fockForm {σ : Type*} [DecidableEq σ] (P Q : MvPolynomial σ ℂ) : ℂ :=
   ∑ α ∈ P.support ∪ Q.support,
-    ((α.prod fun _ k => k.factorial : ℕ) : ℂ) * coeff α P * starRingEnd ℂ (coeff α Q)
+    ((α.prod fun _ k => k.factorial : ℕ) : ℂ) * AddMonoidAlgebra.coeff P α * starRingEnd ℂ (AddMonoidAlgebra.coeff Q α)
 
 def fockDensity {σ : Type*} [Fintype σ] (P : MvPolynomial σ ℂ) (z : σ → ℂ) : ℝ :=
   ‖eval z P‖ ^ 2 * Real.exp (-∑ v, ‖z v‖ ^ 2) / Real.pi ^ Fintype.card σ

@@ -31,11 +31,11 @@ theorem coeffForm_monomial (φ : K →ₗ[F] F) (m : σ →₀ ℕ) (r : K) :
   simpa [smul_monomial] using this
 
 theorem coeff_coeffForm (φ : K →ₗ[F] F) (m : σ →₀ ℕ) (P : MvPolynomial σ K) :
-    coeff m (coeffForm φ P) = φ (coeff m P) := by
+    AddMonoidAlgebra.coeff (coeffForm φ P) m = φ (AddMonoidAlgebra.coeff P m) := by
   classical
   induction P using MvPolynomial.induction_on' with
   | monomial d r => rw [coeffForm_monomial, coeff_monomial, coeff_monomial]; split_ifs <;> simp
-  | add P Q hP hQ => simp only [map_add, coeff_add, hP, hQ]
+  | add P Q hP hQ => simp only [map_add, MvPolynomial.coeff_add, hP, hQ]
 
 theorem coeffForm_comm (φ : K →ₗ[F] F) (L : MvPolynomial σ F →ₗ[F] MvPolynomial σ F)
     (L' : MvPolynomial σ K →ₗ[K] MvPolynomial σ K)

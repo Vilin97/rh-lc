@@ -186,7 +186,7 @@ theorem UpperTheory.Reformulated.B.Yzb5.relIndex_map :
     have hx := b.sum_repr (e x)
     simp only [he] at hx
     have hmv : ((M.mulVecLin x) i : F) = f (∑ j, M i j * x j) := rfl
-    rw [hmv, map_sum, ← hx, map_sum, map_sum, Finsupp.finset_sum_apply]
+    rw [hmv, map_sum, ← hx, map_sum, map_sum, Finsupp.finsetSum_apply]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_mul, map_smul, map_smul, Finsupp.smul_apply, smul_eq_mul, mul_comm]
     rfl

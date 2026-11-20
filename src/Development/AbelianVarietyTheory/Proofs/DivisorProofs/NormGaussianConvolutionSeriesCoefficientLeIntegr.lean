@@ -19,7 +19,7 @@ theorem norm_powForm_le {E : Type} [NormedAddCommGroup E] [InnerProductSpace ℝ
     ContinuousMultilinearMap.mkPiAlgebra_apply]
   rw [norm_prod]
   calc ∏ i, ‖innerC a (m i)‖ ≤ ∏ i, (‖a‖ * ‖m i‖) :=
-        Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => norm_innerC_apply_le a (m i)
+        Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => norm_innerC_apply_le a (m i)
     _ = ‖a‖ ^ k * ∏ i, ‖m i‖ := by
         rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
 

@@ -70,7 +70,7 @@ theorem formalDeg_div_volU_log_bound : ∀ (r n : ℕ) (d : ℝ) (lam : Fin r �
       · intro a _
         calc (∏ b ∈ Finset.univ.filter (fun b : Fin r => a < b), |lam a - lam b|)
             ≤ ∏ _b ∈ Finset.univ.filter (fun b : Fin r => a < b), M :=
-              Finset.prod_le_prod (fun b _ => abs_nonneg _) (fun b _ => hbd a b)
+              Finset.prod_le_prod₀ (fun b _ => abs_nonneg _) (fun b _ => hbd a b)
           _ = M ^ (Finset.univ.filter (fun b : Fin r => a < b)).card := Finset.prod_const _
           _ ≤ M ^ r := by
               apply pow_le_pow_right₀ hM1

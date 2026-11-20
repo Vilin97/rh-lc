@@ -127,7 +127,7 @@ theorem product_of_jets : JetsProductBound := by
   refine h1.trans ?_
   rw [mul_assoc, ← Finset.prod_mul_distrib]
   refine mul_le_mul_of_nonneg_left ?_ hS2
-  refine Finset.prod_le_prod (fun τ _ => ?_) (fun τ _ => ?_)
+  refine Finset.prod_le_prod₀ (fun τ _ => ?_) (fun τ _ => ?_)
   · have := hepos τ
     positivity
   · exact Formalism.LogVandermondeBounds.flipTwoThree.jet_exponential_bound (n τ) g₀ hg

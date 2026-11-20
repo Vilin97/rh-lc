@@ -154,7 +154,7 @@ private theorem ht_le (q : Pl K) (T : Finset (Pl K)) (B : Pl K → ℝ) (hB : �
     rfl
   simp only [hg]
   rw [finprod_eq_prod_of_mulSupport_subset (s := T)]
-  · refine Finset.prod_le_prod (fun v _ => ?_) fun v hv => ?_
+  · refine Finset.prod_le_prod₀ (fun v _ => ?_) fun v hv => ?_
     · split_ifs
       · exact (locHeight_pos _).le
       · exact zero_le_one

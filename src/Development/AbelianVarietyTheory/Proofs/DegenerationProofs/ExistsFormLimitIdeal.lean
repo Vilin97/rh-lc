@@ -9,21 +9,21 @@ theorem exists_form_limit_ideal (R : Type) [CommRing R] (I : Ideal R) (hI : IsAd
     (hK : ∀ e F, F.IsHomogeneous t → F ∈ K (e + 1) → F ∈ K e)
     (ha : ∀ e, ∀ a ∈ I ^ (e + 1), MvPolynomial.C a ∈ K e)
     (hs : ∀ e F, F.IsHomogeneous t → F ∈ K e → ∃ G : MvPolynomial σ R, G.IsHomogeneous t ∧
-      (∀ d, MvPolynomial.coeff d G ∈ I ^ (e + 1)) ∧ F - G ∈ K (e + 1))
+      (∀ d, AddMonoidAlgebra.coeff G d ∈ I ^ (e + 1)) ∧ F - G ∈ K (e + 1))
     (e : ℕ) (F : MvPolynomial σ R) (hF : F.IsHomogeneous t) (hFe : F ∈ K e) :
     ∃ F₁ : MvPolynomial σ R, F₁.IsHomogeneous t ∧ (∀ e', F₁ ∈ K e') ∧
-      ∀ d, MvPolynomial.coeff d (F - F₁) ∈ I ^ (e + 1) := by
+      ∀ d, AddMonoidAlgebra.coeff (F - F₁) d ∈ I ^ (e + 1) := by
   classical
   have hdesc : ∀ (P : MvPolynomial σ R), P.IsHomogeneous t → ∀ m k, P ∈ K (m + k) → P ∈ K m := by
     intro P hP m k
     induction k with
     | zero => exact id
     | succ k ih => exact fun h => ih (hK _ _ hP h)
-  have hcoef : ∀ (j : ℕ) (P : MvPolynomial σ R), (∀ d, coeff d P ∈ I ^ (j + 1)) → P ∈ K j := by
+  have hcoef : ∀ (j : ℕ) (P : MvPolynomial σ R), (∀ d, AddMonoidAlgebra.coeff P d ∈ I ^ (j + 1)) → P ∈ K j := by
     intro j P hP
     rw [P.as_sum]
     refine Ideal.sum_mem _ fun d _ => ?_
-    have : (monomial d (coeff d P) : MvPolynomial σ R) = C (coeff d P) * monomial d 1 := by
+    have : (monomial d (AddMonoidAlgebra.coeff P d) : MvPolynomial σ R) = C (AddMonoidAlgebra.coeff P d) * monomial d 1 := by
       rw [C_mul_monomial, mul_one]
     rw [this]
     exact Ideal.mul_mem_right _ _ (ha _ _ (hP d))
@@ -64,10 +64,10 @@ theorem exists_form_limit_ideal (R : Type) [CommRing R] (I : Ideal R) (hI : IsAd
   let F₁ : MvPolynomial σ R := ∑ d ∈ hfin.toFinset, monomial d (L d)
   have hF₁ : F₁.IsHomogeneous t :=
     IsHomogeneous.sum _ _ _ fun d hd => isHomogeneous_monomial _ (by simpa using hd)
-  have hc : ∀ m d, coeff d ((s m).1 - F₁) ∈ I ^ (e + m + 1) := by
+  have hc : ∀ m d, AddMonoidAlgebra.coeff ((s m).1 - F₁) d ∈ I ^ (e + m + 1) := by
     intro m d
     by_cases hdt : d.degree = t
-    · have : coeff d F₁ = L d := by
+    · have : AddMonoidAlgebra.coeff F₁ d = L d := by
         simp only [F₁, coeff_sum, coeff_monomial]
         rw [Finset.sum_ite_eq']
         simp [hdt]

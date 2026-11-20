@@ -32,7 +32,7 @@ theorem coeffDerivAddHom_monomial {B τ : Type} [CommRing B] (D : Derivation ℤ
     coeffDerivAddHom D (MvPolynomial.monomial s a) = MvPolynomial.monomial s (D a) := by
   classical
   ext m
-  change MvPolynomial.coeff m (coeffDerivFun D _) = _
+  change AddMonoidAlgebra.coeff (coeffDerivFun D _) m = _
   rw [coeff_coeffDerivFun, MvPolynomial.coeff_monomial, MvPolynomial.coeff_monomial]
   split_ifs <;> simp
 

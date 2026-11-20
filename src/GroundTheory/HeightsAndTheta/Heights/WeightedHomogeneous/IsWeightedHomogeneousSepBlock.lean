@@ -115,7 +115,7 @@ theorem isWeightedHomogeneous_sepBlock (k₀ : ι) {q : MvPolynomial (Coord n) �
       · subst hj; simp [coordDeg, Ne.symm h]
       · simp [Function.update_of_ne hj]
   have hc : IsWeightedHomogeneous (coordDeg n)
-      (algebraMap ℤ (MvPolynomial (Coord n) (BlockRing n k₀)) (coeff ν q)) 0 := by
+      (algebraMap ℤ (MvPolynomial (Coord n) (BlockRing n k₀)) (AddMonoidAlgebra.coeff q ν)) 0 := by
     rw [MvPolynomial.algebraMap_apply]
     exact isWeightedHomogeneous_C _ _
   rw [sepBlock, aeval_monomial, Finsupp.prod]
@@ -165,7 +165,7 @@ def coeffVec (M : Finset (Coord n →₀ ℕ)) : MvPolynomial (Coord n) ℂ →�
 
 omit [Fintype ι] [DecidableEq ι] in
 theorem coeffVec_apply (M : Finset (Coord n →₀ ℕ)) (g : MvPolynomial (Coord n) ℂ) (μ : M) :
-    coeffVec M g μ = coeff μ.1 g := rfl
+    coeffVec M g μ = AddMonoidAlgebra.coeff g μ.1 := rfl
 
 variable (n) in
 
@@ -334,9 +334,9 @@ theorem coeffVec_mem_span (P : ArithVariety n) (k₀ : ι) (w : Cone (fun _ : Un
 
 theorem det_mem_projIdeal (P : ArithVariety n) (k₀ : ι) (D : ℕ)
     (q : offMonos n k₀ D → MvPolynomial (Coord n) ℤ) (hq : ∀ i, q i ∈ homogIn n P k₀ D) :
-    (Matrix.of fun i (μ : offMonos n k₀ D) ↦ coeff μ.1 (sepBlock k₀ (q i))).det ∈ P.projIdeal k₀ := by
+    (Matrix.of fun i (μ : offMonos n k₀ D) ↦ AddMonoidAlgebra.coeff (sepBlock k₀ (q i)) μ.1).det ∈ P.projIdeal k₀ := by
   classical
-  let Bm : Matrix (offMonos n k₀ D) (offMonos n k₀ D) (BlockRing n k₀) := Matrix.of fun i μ ↦ coeff μ.1 (sepBlock k₀ (q i))
+  let Bm : Matrix (offMonos n k₀ D) (offMonos n k₀ D) (BlockRing n k₀) := Matrix.of fun i μ ↦ AddMonoidAlgebra.coeff (sepBlock k₀ (q i)) μ.1
   have hsupp : ∀ i, (sepBlock k₀ (q i)).support ⊆ offMonos n k₀ D := fun i ν hν ↦
     mem_offMonos.mpr ((hq i).2 (MvPolynomial.mem_support_iff.mp hν))
   have hexp : ∀ i, q i = ∑ μ : offMonos n k₀ D, rename (blockIncl k₀) (Bm i μ) * monomial μ.1 1 := by
@@ -417,12 +417,12 @@ theorem exists_point_over (P : ArithVariety n) (k₀ : ι) (w : Cone (fun _ : Un
     obtain ⟨q, hq, hqe⟩ := hbV (e i).2
     exact ⟨q, hq, hqe⟩
   choose q hqS hqe using hsel
-  have hdet : evalBlock w (Matrix.of fun i (μ : offMonos n k₀ D) ↦ coeff μ.1 (sepBlock k₀ (q i))).det ≠ 0 := by
+  have hdet : evalBlock w (Matrix.of fun i (μ : offMonos n k₀ D) ↦ AddMonoidAlgebra.coeff (sepBlock k₀ (q i)) μ.1).det ≠ 0 := by
     rw [RingHom.map_det]
-    have hrows : (evalBlock w).mapMatrix (Matrix.of fun i (μ : offMonos n k₀ D) ↦ coeff μ.1 (sepBlock k₀ (q i))) =
+    have hrows : (evalBlock w).mapMatrix (Matrix.of fun i (μ : offMonos n k₀ D) ↦ AddMonoidAlgebra.coeff (sepBlock k₀ (q i)) μ.1) =
         Matrix.of fun i ↦ (e i : offMonos n k₀ D → ℂ) := by
       ext i μ
-      show evalBlock w (coeff μ.1 (sepBlock k₀ (q i))) = (e i : offMonos n k₀ D → ℂ) μ
+      show evalBlock w (AddMonoidAlgebra.coeff (sepBlock k₀ (q i)) μ.1) = (e i : offMonos n k₀ D → ℂ) μ
       rw [← hqe i, coeffVec_apply, atBlock_apply, coeff_map]
     rw [hrows]
     have hli : LinearIndependent ℂ (Matrix.of fun i ↦ (e i : offMonos n k₀ D → ℂ)).row := hbli.comp e e.injective

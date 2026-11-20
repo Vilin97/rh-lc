@@ -90,7 +90,7 @@ theorem fock_norm_rational_eq {σ : Type} (P : MvPolynomial σ ℚ) : fockN (map
   push_cast
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [coeff_map, mfact]
-  have : ‖(algebraMap ℚ ℂ) (coeff m P)‖ ^ 2 = ((coeff m P : ℚ) : ℝ) * ((coeff m P : ℚ) : ℝ) := by
+  have : ‖(algebraMap ℚ ℂ) (AddMonoidAlgebra.coeff P m)‖ ^ 2 = ((AddMonoidAlgebra.coeff P m : ℚ) : ℝ) * ((AddMonoidAlgebra.coeff P m : ℚ) : ℝ) := by
     rw [eq_ratCast, Complex.norm_ratCast, sq_abs]
     ring
   rw [this]
@@ -143,7 +143,7 @@ theorem monomial_weight_lower_bound (hC : HwNormBound) {κ : ℕ} (lam : ι → 
   have hE : extremalFockNormProduct lam ≤ (∏ τ, ∏ s, (((lam τ).natW s).factorial : ℝ)) * ∏ τ, (((lam τ).natW 0 : ℝ) + κ + 1) ^ ((κ + 1) * κ / 2) := by
     unfold extremalFockNormProduct
     rw [← Finset.prod_mul_distrib]
-    exact Finset.prod_le_prod (fun τ _ => fockN_nonneg _) fun τ _ => fock_norm_extremal_bound hC (lam τ)
+    exact Finset.prod_le_prod₀ (fun τ _ => fockN_nonneg _) fun τ _ => fock_norm_extremal_bound hC (lam τ)
   have hM : (∏ τ, ∏ s, (((lam τ).natW s).factorial : ℝ)) ≤ ((κ : ℝ) + 1) ^ (∑ τ, dW (lam τ)) * (mfact m.1 : ℝ) := by
     exact_mod_cast factorial_prod_le_monomial lam m
   have hP : 0 < ∏ τ, (((lam τ).natW 0 : ℝ) + κ + 1) ^ ((κ + 1) * κ / 2) :=

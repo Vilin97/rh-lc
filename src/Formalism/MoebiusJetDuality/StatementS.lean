@@ -16,11 +16,11 @@ def ajetCoeff {n : ℕ} (f : (Fin n → ℂ) → ℂ) (α : Fin n →₀ ℕ) : 
   partialPow α f 0 / (mfac α : ℂ)
 
 def aevOp {n : ℕ} (P : MvPolynomial (Fin n) ℂ) (f : (Fin n → ℂ) → ℂ) : ℂ :=
-  ∑ α ∈ P.support, coeff α P * partialPow α f 0
+  ∑ α ∈ P.support, AddMonoidAlgebra.coeff P α * partialPow α f 0
 
 def AJetPoly : Prop :=
   ∀ (n : ℕ) (F : MvPolynomial (Fin n) ℂ) (α : Fin n →₀ ℕ),
-    ajetCoeff (fun z => eval z F) α = coeff α F
+    ajetCoeff (fun z => eval z F) α = AddMonoidAlgebra.coeff F α
 
 def AEvPoly : Prop :=
   ∀ (n : ℕ) (P F : MvPolynomial (Fin n) ℂ),

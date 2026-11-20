@@ -41,7 +41,7 @@ theorem IsWeightedHomogeneous.bind₁ {σ τ : Type*} {w : σ → ℕ} {w' : τ 
   have h1 : IsWeightedHomogeneous w' (∏ x ∈ d.support, φ x ^ d x) (∑ x ∈ d.support, d x * w x) :=
     IsWeightedHomogeneous.prod _ _ _ fun x _ => by
       simpa [mul_comm] using (hφ x).pow (d x)
-  have h2 := h1.C_mul (coeff d f)
+  have h2 := h1.C_mul (AddMonoidAlgebra.coeff f d)
   convert h2 using 1
   rw [← hw, Finsupp.weight_apply, Finsupp.sum]
   simp [smul_eq_mul]

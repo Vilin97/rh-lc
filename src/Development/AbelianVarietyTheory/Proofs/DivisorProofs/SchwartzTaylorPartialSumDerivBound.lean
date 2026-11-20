@@ -20,7 +20,7 @@ theorem norm_iteratedFDeriv_diag_le {V F : Type} [NormedAddCommGroup V] [NormedS
         ContinuousMultilinearMap.norm_compContinuousLinearMap_le _ _
     _ ≤ ‖iteratedFDeriv ℝ a (⇑f) (L x)‖ * 1 := by
         gcongr
-        exact Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun _ _ => hLn)
+        exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun _ _ => hLn)
     _ ≤ (j.descFactorial a : ℝ) * ‖f‖ * ‖L x‖ ^ (j - a) := by
         rw [mul_one]
         have := f.norm_iteratedFDeriv_le a (L x)

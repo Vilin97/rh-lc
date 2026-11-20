@@ -21,7 +21,7 @@ theorem disjoint_step_iff_det_ne_zero (b g : Frames k V) (i : ι) (m : ℕ) (hm 
   have hrepr (x : Fin m → k) (c : Fin (finrank k (V i))) :
       (b i).repr (∑ a, x a • g i (Fin.castLE hm a)) c =
         ∑ a, (b i).repr (g i (Fin.castLE hm a)) c * x a := by
-    simp [map_sum, Finsupp.finset_sum_apply, mul_comm]
+    simp [map_sum, Finsupp.finsetSum_apply, mul_comm]
   constructor
   · intro hd h0
     obtain ⟨x, hx, hMx⟩ := Matrix.exists_mulVec_eq_zero_iff.2 h0

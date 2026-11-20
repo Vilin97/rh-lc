@@ -48,9 +48,9 @@ theorem indicator_mem_span : ∀ {R : Type} [CommRing R] [TopologicalSpace R] [I
   have memL : ∀ y : κ → R, y ∈ L ↔ ∀ i, y i ∈ O := by
     intro y; simp [L, AddSubgroup.mem_pi]
   let Gs : AddSubgroup (κ → R) :=
-    L.comap (DistribMulAction.toAddMonoidHom (κ → R) (((u⁻¹ * v : Rˣ)) : R))
+    L.comap (DistribSMul.toAddMonoidHom (κ → R) (((u⁻¹ * v : Rˣ)) : R))
   let Hs : AddSubgroup (κ → R) :=
-    L.comap (DistribMulAction.toAddMonoidHom (κ → R) (((u⁻¹ : Rˣ)) : R))
+    L.comap (DistribSMul.toAddMonoidHom (κ → R) (((u⁻¹ : Rˣ)) : R))
   have memG : ∀ y : κ → R, y ∈ Gs ↔ ∀ i, (((u⁻¹ * v : Rˣ)) : R) * y i ∈ O := by
     intro y; simp only [Gs, AddSubgroup.mem_comap, DistribMulAction.toAddMonoidHom_apply, memL,
       Pi.smul_apply, smul_eq_mul]

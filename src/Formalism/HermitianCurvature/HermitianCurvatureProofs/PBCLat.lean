@@ -105,7 +105,7 @@ theorem sizesSup : PBC.SizesSup := by
         simp only [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
         rw [pow_mul]
     _ ≤ ∏ v, Cs * (thr S b n v ^ 2 * ((S.g : ℝ) * (x * S6.rd E)) ^ 2) :=
-        Finset.prod_le_prod (fun v _ => by have := hthr v; positivity) (fun v _ => key v)
+        Finset.prod_le_prod₀ (fun v _ => by have := hthr v; positivity) (fun v _ => key v)
     _ = Cs ^ S.f * ((∏ v, thr S b n v) ^ 2 * ((S.g : ℝ) * (x * S6.rd E)) ^ (2 * S.f)) := by
         rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin,
           Finset.prod_mul_distrib, Finset.prod_pow, Finset.prod_const, Finset.card_univ, Fintype.card_fin,
@@ -362,7 +362,7 @@ theorem lstdSum : PBC.LstdSum := by
     intro σ; rw [hvb, Measure.real, Measure.real, Measure.addHaar_ball_center]
   have hpt : ∀ σ : crystallineComparison.V f, ∀ y ∈ Metric.ball σ δ, crystallineComparison.mL K large₂ σ ≤ crystallineComparison.mL K L' y := by
     intro σ y hy
-    apply Finset.prod_le_prod (fun v _ => Formalism.FourierDecayAlt.P.LatticeSummability.mfac_nonneg K (hLg0 v) _ (norm_nonneg _))
+    apply Finset.prod_le_prod₀ (fun v _ => Formalism.FourierDecayAlt.P.LatticeSummability.mfac_nonneg K (hLg0 v) _ (norm_nonneg _))
     intro v _
     have hyv : ‖y v‖ ≤ ‖σ v‖ + δ := by
       have h1 : ‖y v - σ v‖ ≤ ‖y - σ‖ := norm_le_pi_norm (y - σ) v

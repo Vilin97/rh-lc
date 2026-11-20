@@ -112,7 +112,7 @@ theorem exists_comp_eq_nsmul (A B : AbVar k) (f : A ⟶ B) (hdim : A.dim = B.dim
       rw [hc]; push_cast; rw [hlK, zero_mul]
     · haveI := Fact.mk hl
       have e' := hv l hl hlK
-      rw [hdeg, padicValNat.mul hq0 hh0] at e'
+      rw [hdeg, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hq0 hh0] at e'
       have h1 := one_le_padicValNat_of_dvd hh0 hdvd
       omega
   have hiso : IsIso h := (GlobalTheory.AV.AbVar.isIso_iff_deg_eq_one k C B h).2 hh1

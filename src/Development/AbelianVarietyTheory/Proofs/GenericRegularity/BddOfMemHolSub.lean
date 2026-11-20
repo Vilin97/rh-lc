@@ -30,7 +30,7 @@ private theorem norm_eval_le_of_isHomogeneous' {N d : ℕ} {p : MvPolynomial (Fi
     have := hp (MvPolynomial.mem_support_iff.mp hs)
     simpa [Finsupp.weight_apply, Finsupp.sum_fintype] using this
   calc ∏ j, ‖w j ^ s j‖ ≤ ∏ j, ‖w‖ ^ s j := by
-        refine Finset.prod_le_prod (fun j _ => norm_nonneg _) (fun j _ => ?_)
+        refine Finset.prod_le_prod₀ (fun j _ => norm_nonneg _) (fun j _ => ?_)
         rw [norm_pow]
         exact pow_le_pow_left₀ (norm_nonneg _) (norm_le_pi_norm w j) _
     _ = ‖w‖ ^ d := by rw [Finset.prod_pow_eq_pow_sum, hdeg]

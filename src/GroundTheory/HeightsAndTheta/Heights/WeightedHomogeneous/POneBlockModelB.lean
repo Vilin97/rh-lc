@@ -167,9 +167,9 @@ theorem dehom_latticeForm_ne_zero {u : Fin (r + 1) → K} (hu : u ≠ 0) : dehom
   have h' := IsFractionRing.injective (MvPolynomial (Fin r) K) (LatticeField K r) (h.trans (map_zero _).symm)
   funext j
   refine Fin.cases ?_ (fun i ↦ ?_) j
-  · have := congrArg (coeff 0) h'
+  · have := congrArg (AddMonoidAlgebra.coeff · 0) h'
     simpa [coeff_sum, coeff_C_mul, coeff_X, coeff_C] using this
-  · have := congrArg (coeff (Finsupp.single i 1)) h'
+  · have := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single i 1)) h'
     have h0 : (0 : Fin r →₀ ℕ) ≠ Finsupp.single i 1 := (Finsupp.single_ne_zero.mpr one_ne_zero).symm
     simpa [coeff_sum, coeff_C_mul, coeff_X, coeff_C, Finsupp.single_left_inj, h0] using this
 

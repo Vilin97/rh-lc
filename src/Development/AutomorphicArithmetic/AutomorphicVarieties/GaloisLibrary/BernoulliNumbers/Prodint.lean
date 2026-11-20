@@ -44,7 +44,7 @@ theorem UpperTheory.V.Bern.b_prodint :
   · have hle : |(M : ℝ)| ≤ bnd N k ^ (charSet ℂ P).ncard := by
       have h1 : |(M : ℝ)| = ‖(M : ℂ)‖ := by simp
       rw [h1, ← hC', norm_prod, Set.ncard_eq_toFinset_card _ hfin, ← Finset.prod_const]
-      exact Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun χ _ => (b_denupper k χ).2.1
+      exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun χ _ => (b_denupper k χ).2.1
     rw [← Real.log_pow]
     exact Real.log_le_log (abs_pos.mpr (Int.cast_ne_zero.mpr hM0)) hle
   · rw [hq Ω]; simp

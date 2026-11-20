@@ -322,7 +322,7 @@ theorem norm_natCast_inv_le (LL : FinExt l) (m : ℕ) : ‖(m : ↥LL.1)⁻¹‖
     rw [← norm_algebraMap' ↥LL.1 (m : ℚ_[l]), map_natCast]
   rw [norm_inv, h1, Padic.norm_eq_zpow_neg_valuation (by exact_mod_cast hm.ne'), Padic.valuation_natCast,
     zpow_neg, inv_inv, zpow_natCast]
-  exact_mod_cast Nat.le_of_dvd hm pow_padicValNat_dvd
+  exact_mod_cast Nat.le_of_dvd hm (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
 
 theorem norm_integer_le_one (x : ↥(OL LL)) : ‖algebraMap ↥(OL LL) ↥LL.1 x‖ ≤ 1 := by
   have h : IsIntegral ℤ_[l] ((x : ↥LL.1) : Om l) :=

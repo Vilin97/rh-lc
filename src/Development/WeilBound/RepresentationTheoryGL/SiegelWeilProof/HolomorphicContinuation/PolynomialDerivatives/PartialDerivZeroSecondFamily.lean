@@ -102,7 +102,7 @@ theorem contr_add (c : ℝ) (p q : PX m n) : contr c (p + q) = contr c p + contr
   rw [contr_eqS c (p.support ∪ q.support) MvPolynomial.support_add, contr_eqS c (p.support ∪ q.support) Finset.subset_union_left,
     contr_eqS c (p.support ∪ q.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun s _ => ?_
-  split_ifs <;> simp [coeff_add, add_mul]
+  split_ifs <;> simp [MvPolynomial.coeff_add, add_mul]
 
 theorem contr_smul (c : ℝ) (r : ℂ) (p : PX m n) : contr c (r • p) = r * contr c p := by
   classical

@@ -13,8 +13,8 @@ noncomputable section
 namespace GlobalTheory.NablaDensity
 
 theorem coeff_aeval_scale {k σ : Type} [Field k] (e : σ → k) (f : MvPolynomial σ k) (m : σ →₀ ℕ) :
-    MvPolynomial.coeff m (MvPolynomial.aeval (fun v => MvPolynomial.C (e v) * MvPolynomial.X v) f) =
-      (m.prod fun v j => e v ^ j) * MvPolynomial.coeff m f := by
+    AddMonoidAlgebra.coeff (MvPolynomial.aeval (fun v => MvPolynomial.C (e v) * MvPolynomial.X v) f) m =
+      (m.prod fun v j => e v ^ j) * AddMonoidAlgebra.coeff f m := by
   classical
   induction f using MvPolynomial.induction_on' with
   | monomial u a =>
@@ -59,8 +59,8 @@ theorem prod_rowDeg {k : Type} [Field k] {r c : ℕ} (x : Fin r → k) (m : Fin 
 
 theorem coeff_sqAct_diag {k : Type} [Field k] {r : ℕ} (lam : DomWeight r) (t : Fin r → kˣ)
     (f : MvPolynomial (Fin r × Fin r) k) (m : Fin r × Fin r →₀ ℕ) :
-    MvPolynomial.coeff m (sqAct k r lam (diagGL k r t) f) =
-      (∏ a, (t a : k)) ^ lam.detShift * ((∏ a, (t a : k) ^ Formalism.GradedWeylDivisibility.rowDeg m a) * MvPolynomial.coeff m f) := by
+    AddMonoidAlgebra.coeff (sqAct k r lam (diagGL k r t) f) m =
+      (∏ a, (t a : k)) ^ lam.detShift * ((∏ a, (t a : k) ^ Formalism.GradedWeylDivisibility.rowDeg m a) * AddMonoidAlgebra.coeff f m) := by
   have e1 : ((diagGL k r t : GL (Fin r) k) : Matrix (Fin r) (Fin r) k).transpose =
       Matrix.diagonal fun a => (t a : k) := by
     simp [diagGL]
@@ -107,11 +107,11 @@ theorem weightLine : ∀ (k : Type) [Field k] [CharZero k] (N : ℕ) (lam : DomW
       · intro b _ hb
         simp [t, Pi.mulSingle_eq_of_ne hb]
       · simp
-    have h1 := congrArg (MvPolynomial.coeff m) (hwt t)
+    have h1 := congrArg (AddMonoidAlgebra.coeff · m) (hwt t)
     rw [coeff_sqAct_diag, MvPolynomial.coeff_smul, smul_eq_mul, hp1, hpn, hpz] at h1
     have h2 : (2 : k) ^ lam.detShift * 2 ^ Formalism.GradedWeylDivisibility.rowDeg m a = 2 ^ lam.w a := by
-      have h1' : (2 : k) ^ lam.detShift * 2 ^ Formalism.GradedWeylDivisibility.rowDeg m a * MvPolynomial.coeff m f =
-          2 ^ lam.w a * MvPolynomial.coeff m f := by
+      have h1' : (2 : k) ^ lam.detShift * 2 ^ Formalism.GradedWeylDivisibility.rowDeg m a * AddMonoidAlgebra.coeff f m =
+          2 ^ lam.w a * AddMonoidAlgebra.coeff f m := by
         rw [mul_assoc]; exact h1
       exact mul_right_cancel₀ hm h1'
     rw [← PI.WGB.natW_add_A lam a, zpow_add₀ two_ne_zero, zpow_natCast, mul_comm ((2 : k) ^ lam.natW a)] at h2

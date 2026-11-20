@@ -25,7 +25,7 @@ theorem geZ_iff (x : ℂ_[p]) : GeZ x ↔ x ∈ Formalism.L2.G.Pend.OcC p := by
     rw [hk, zpow_natCast]
     exact Subring.mul_mem _ (Subring.pow_mem _ hx b) (Subring.pow_mem _ (natCast_mem _ p) k)
 
-def GeP {τ : Type} (a : MvPolynomial τ ℂ_[p]) : Prop := ∀ n, MvPolynomial.coeff n a ∈ Formalism.L2.G.Pend.OcC p
+def GeP {τ : Type} (a : MvPolynomial τ ℂ_[p]) : Prop := ∀ n, AddMonoidAlgebra.coeff a n ∈ Formalism.L2.G.Pend.OcC p
 
 theorem geP_one {τ : Type} : GeP (1 : MvPolynomial τ ℂ_[p]) := by
   classical
@@ -218,7 +218,7 @@ theorem first_kernel_product_factor (j : ℕ) {Th : MvPowerSeries (X.EA j ⊕ X.
 
 theorem ent_of_K1gen (j : ℕ) (hLow : ∀ v, LowZC X be j v) {Th : MvPowerSeries (X.EA j ⊕ X.EA j) ℂ_[p]}
     (hK : ExtensionGeneratorCondition p ℂ_[p] (Formalism.L2.G.Pend.OcC p) be Th) (I : X.ColCh j) (n : X.FrI j →₀ ℕ) :
-    GeZ (MvPolynomial.coeff n (applyD (X.PI j I fun _ => 0) (X.ThZA ℂ_[p] j Th))) := by
+    GeZ (AddMonoidAlgebra.coeff (applyD (X.PI j I fun _ => 0) (X.ThZA ℂ_[p] j Th)) n) := by
   obtain ⟨U1, hU1, rfl⟩ := first_kernel_product_factor X be j hK
   exact (geZ_iff _).2 (geP_applyD_prod_FC_mul X be j hLow U1 hU1 I n)
 

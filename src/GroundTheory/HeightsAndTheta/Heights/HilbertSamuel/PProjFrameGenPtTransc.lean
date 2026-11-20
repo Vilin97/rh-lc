@@ -51,7 +51,7 @@ theorem proof : ProjFrameGenPtTransc.Statement := by
   have hcoef : ∀ m, q.coeff m = 0 := by
     intro m
     by_cases hm : m ∈ q.support
-    · have h1 := congrArg (coeff (Finsupp.single () m)) hFΓ
+    · have h1 := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single () m)) hFΓ
       rw [coeff_sum, coeff_zero, Finset.sum_eq_single m] at h1
       · rw [coeff_C_mul, coeff_X_pow, if_pos rfl, mul_one] at h1
         have h2 := (mul_eq_zero.1 h1).resolve_right (pow_ne_zero _ hX)

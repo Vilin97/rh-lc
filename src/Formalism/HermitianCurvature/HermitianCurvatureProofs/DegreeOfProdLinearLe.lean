@@ -365,7 +365,7 @@ theorem t_PRatioMiddle : PRatioMiddle := by
       rw [div_mul_eq_mul_div, le_div_iff₀ hI]; nlinarith
     nlinarith
   calc ∏ t, |Y + lam t| ≤ ∏ t, (1 + 3 * L / (β - α)) * |Y + s + lam t| :=
-        Finset.prod_le_prod (fun _ _ => abs_nonneg _) (fun t _ => hfac t)
+        Finset.prod_le_prod₀ (fun _ _ => abs_nonneg _) (fun t _ => hfac t)
     _ = (1 + 3 * L / (β - α)) ^ n * ∏ t, |Y + s + lam t| := by
         rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
     _ ≤ Real.exp 3 * ∏ t, |Y + s + lam t| := by

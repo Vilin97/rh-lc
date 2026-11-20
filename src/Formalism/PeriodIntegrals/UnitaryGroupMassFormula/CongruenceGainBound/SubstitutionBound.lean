@@ -11,7 +11,7 @@ section Int
 
 variable {σ τ Kc : Type} [Field Kc] (Oc : Subring Kc)
 
-def IntP (x : MvPolynomial τ Kc) : Prop := ∀ m, MvPolynomial.coeff m x ∈ Oc
+def IntP (x : MvPolynomial τ Kc) : Prop := ∀ m, AddMonoidAlgebra.coeff x m ∈ Oc
 
 theorem coeffsIn_zero : IntP Oc (0 : MvPolynomial τ Kc) := fun m => by simp [Oc.zero_mem]
 

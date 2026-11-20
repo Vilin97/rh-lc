@@ -198,9 +198,9 @@ theorem fdeg_shift {m : ℕ} {lam : Fin m → ℝ} (s : Fin m) (h : Formalism.Qu
   rw [mul_div_assoc']
   apply div_le_div_of_nonneg_right
   · calc _ ≤ ∏ a : Fin m, ∏ b ∈ Finset.univ.filter (fun b => a < b), (c a * c b * |l' a - l' b|) := by
-          apply Finset.prod_le_prod (fun a _ => Finset.prod_nonneg fun b _ => abs_nonneg _)
+          apply Finset.prod_le_prod₀ (fun a _ => Finset.prod_nonneg fun b _ => abs_nonneg _)
           intro a _
-          apply Finset.prod_le_prod (fun b _ => abs_nonneg _)
+          apply Finset.prod_le_prod₀ (fun b _ => abs_nonneg _)
           intro b hb
           exact fdeg_of_isHCParam_sub_single_ne s h a b (Finset.mem_filter.mp hb).2.ne
       _ = (∏ a : Fin m, ∏ b ∈ Finset.univ.filter (fun b => a < b), (c a * c b)) *

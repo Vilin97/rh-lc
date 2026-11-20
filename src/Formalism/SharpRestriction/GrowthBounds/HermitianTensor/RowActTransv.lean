@@ -42,7 +42,7 @@ def thR (K : Type) [Field K] (r : ℕ) (ρ : MvPolynomial (Fin r × Fin r) K →
 
 theorem thR_coeff (ρ : MvPolynomial (Fin r × Fin r) K →ₐ[K] MvPolynomial (Fin r × Fin r) K) (b : Bool)
     (v : MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) K) (u : Fin (r + 1 + 1) × Fin (r + 1 + 1) →₀ ℕ) :
-    coeff u (thR K r ρ b v) = blockEmb K b (ρ (coeff u (subY K r v))) := by
+    AddMonoidAlgebra.coeff (thR K r ρ b v) u = blockEmb K b (ρ (AddMonoidAlgebra.coeff (subY K r v) u)) := by
   simp only [thR, AlgHom.comp_apply, mAH_coeff]
 
 theorem caseM (ψ : MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) K →ₐ[K] MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) K)
@@ -84,11 +84,11 @@ theorem lam_caseM (L : MvPolynomial (Bool × (Fin r × Fin r)) K →ₗ[K] K) (N
         ∑ i : Fin r, C (blockEmb K b (rowAct K l (X (i, j')))) * X (a, midI r i))
     (hnone : ∀ a t, midOf t = none → ψ (X (a, t)) = X (a, t))
     (v t : MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) K)
-    (hv : ∀ u, coeff u (subY K r v) ∈ dualWeyl K r r α) (ht : ∀ u, coeff u (subY K r t) ∈ dualWeyl K r r α') :
+    (hv : ∀ u, AddMonoidAlgebra.coeff (subY K r v) u ∈ dualWeyl K r r α) (ht : ∀ u, AddMonoidAlgebra.coeff (subY K r t) u ∈ dualWeyl K r r α') :
     ψ (lamOf K r L (blockEmb K true v * blockEmb K false t)) =
       l.det ^ N • lamOf K r L (blockEmb K true v * blockEmb K false t) := by
   have hc : ∀ (h : MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) (MvPolynomial (Bool × (Fin r × Fin r)) K))
-      (u : Fin (r + 1 + 1) × Fin (r + 1 + 1) →₀ ℕ), coeff u (lcoef L h) = L (coeff u h) := by
+      (u : Fin (r + 1 + 1) × Fin (r + 1 + 1) →₀ ℕ), AddMonoidAlgebra.coeff (lcoef L h) u = L (AddMonoidAlgebra.coeff h u) := by
     intro h u
     exact coeff_sum_monomial_linear L h u
   rw [lam_eq, lcoef_comm, map_mul, caseM ψ (rowAct K l) hgen hnone, caseM ψ (rowAct K l) hgen hnone]
@@ -101,7 +101,7 @@ theorem lam_caseM (L : MvPolynomial (Bool × (Fin r × Fin r)) K →ₗ[K] K) (N
 theorem lam_scaleM (L : MvPolynomial (Bool × (Fin r × Fin r)) K →ₗ[K] K) (N : ℕ) (α α' : Fin r → ℕ)
     (hInv : PhInv K r N α α' L) (j : Fin r) (c : K) (hc : c ≠ 0)
     (v t : MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) K)
-    (hv : ∀ u, coeff u (subY K r v) ∈ dualWeyl K r r α) (ht : ∀ u, coeff u (subY K r t) ∈ dualWeyl K r r α') :
+    (hv : ∀ u, AddMonoidAlgebra.coeff (subY K r v) u ∈ dualWeyl K r r α) (ht : ∀ u, AddMonoidAlgebra.coeff (subY K r t) u ∈ dualWeyl K r r α') :
     scCol K (r + 1 + 1) (midI r j) c (lamOf K r L (blockEmb K true v * blockEmb K false t)) =
       c ^ N • lamOf K r L (blockEmb K true v * blockEmb K false t) := by
   classical
@@ -145,7 +145,7 @@ theorem rowAct_transv (l j : Fin r) (c : K) (i t : Fin r) :
 theorem lam_addM (L : MvPolynomial (Bool × (Fin r × Fin r)) K →ₗ[K] K) (N : ℕ) (α α' : Fin r → ℕ)
     (hInv : PhInv K r N α α' L) (l j : Fin r) (hlj : l ≠ j) (c : K)
     (v t : MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) K)
-    (hv : ∀ u, coeff u (subY K r v) ∈ dualWeyl K r r α) (ht : ∀ u, coeff u (subY K r t) ∈ dualWeyl K r r α') :
+    (hv : ∀ u, AddMonoidAlgebra.coeff (subY K r v) u ∈ dualWeyl K r r α) (ht : ∀ u, AddMonoidAlgebra.coeff (subY K r t) u ∈ dualWeyl K r r α') :
     colAdd K (midI r l) (midI r j) c (lamOf K r L (blockEmb K true v * blockEmb K false t)) =
       lamOf K r L (blockEmb K true v * blockEmb K false t) := by
   classical

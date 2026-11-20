@@ -111,7 +111,7 @@ private lemma exists_pos_uniform_le_sum_log_ratio_det_gram {r i : ℕ}
     simp only [Set.mem_pi, Set.mem_univ, Metric.mem_closedBall, dist_zero_right, forall_const]
     exact fun j k => norm_apply_le_one_of_conjTranspose_mul_self_eq_one Q hQ j k
   have hcont : ContinuousOn F K := by
-    refine continuousOn_finset_sum _ fun a _ => ?_
+    refine continuousOn_finsetSum _ fun a _ => ?_
     refine ContinuousOn.log ?_ ?_
     · refine ((hgram _ (continuous_const.matrix_mul continuous_id)).continuousOn).div
         (hgram _ continuous_id).continuousOn ?_

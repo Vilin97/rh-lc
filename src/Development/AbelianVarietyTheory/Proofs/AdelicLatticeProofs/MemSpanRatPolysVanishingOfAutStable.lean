@@ -38,7 +38,7 @@ theorem mem_span_vanI_of_vanish : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] 
         unfold evC at *
         rw [MvPolynomial.smul_eval, h1, mul_zero] }
   have hrepr : ∀ (p : MvPolynomial (ι × ι) ℂ) k,
-      (MvPolynomial.basisMonomials (ι × ι) ℂ).repr p k = MvPolynomial.coeff k p := fun p k => rfl
+      (MvPolynomial.basisMonomials (ι × ι) ℂ).repr p k = AddMonoidAlgebra.coeff p k := fun p k => rfl
   have key := GlobalTheory.T.galoisStable_submodule_le_span_rational _ _ (MvPolynomial.basisMonomials (ι × ι) ℂ) W (by
     intro σ w hw
     refine ⟨MvPolynomial.map (σ : ℂ →+* ℂ) w, ?_, ?_⟩

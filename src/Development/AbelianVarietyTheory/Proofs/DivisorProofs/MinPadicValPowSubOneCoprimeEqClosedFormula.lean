@@ -43,7 +43,7 @@ theorem mE_le_padicValNat {l n a : ℕ} (hl : l.Prime) (hn : 2 ≤ n) (he : Even
       intro h
       have := Nat.le_of_dvd (by omega) h
       omega
-    rw [padicValNat.mul (by omega) hk, hvl]
+    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by omega) hk, hvl]
     omega
   · exact Nat.zero_le _
 

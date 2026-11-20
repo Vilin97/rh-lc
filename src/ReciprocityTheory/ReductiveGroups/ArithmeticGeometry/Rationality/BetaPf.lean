@@ -36,7 +36,7 @@ theorem exists_int_avoid {f : ℕ} (Z : Finset (Fin f → ℝ)) (hZ : ∀ z ∈ 
     apply hZ z hz
     funext j
     have h1 := congrArg (fun p => Polynomial.coeff p (j : ℕ)) h0
-    simp only [P, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow,
+    simp only [P, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow,
       Polynomial.coeff_zero] at h1
     rw [Finset.sum_eq_single j (fun i _ hij => by
       rw [if_neg (fun h => hij (Fin.ext h.symm)), mul_zero]) (by simp)] at h1
@@ -53,7 +53,7 @@ theorem exists_int_avoid {f : ℕ} (Z : Finset (Fin f → ℝ)) (hZ : ∀ z ∈ 
   rw [Finset.mem_biUnion]
   refine ⟨z, hz, ?_⟩
   rw [Multiset.mem_toFinset, Polynomial.mem_roots (hP z hz), Polynomial.IsRoot]
-  simp only [P, Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
+  simp only [P, Polynomial.eval_finsetSum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
     Polynomial.eval_X]
   push_cast at h0
   exact h0

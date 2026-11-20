@@ -82,8 +82,8 @@ theorem wide {r n : ℕ} (h : r ≤ n) (ν : Fin n → ℕ) (hν : Antitone ν) 
   obtain ⟨g, rfl⟩ := exists_rename_eq_of_vars_subset_range f _ hφi hvars
   have hgw : IsWeightedHomogeneous (colW r r) g (fun i => ν (Fin.castLE h i)) := by
     intro u hu
-    have hu' : coeff (Finsupp.mapDomain (Prod.map id (Fin.castLE h)) u)
-        (rename (Prod.map id (Fin.castLE h)) g) ≠ 0 := by
+    have hu' : AddMonoidAlgebra.coeff (rename (Prod.map id (Fin.castLE h)) g)
+        (Finsupp.mapDomain (Prod.map id (Fin.castLE h)) u) ≠ 0 := by
       rwa [coeff_rename_mapDomain _ hφi]
     have hwu := hpt.1 hu'
     funext i

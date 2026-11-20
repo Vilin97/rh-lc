@@ -18,7 +18,7 @@ theorem component_mul_multiHomog {R : Type*} [CommRing R] {K : Type} [DecidableE
     rw [coeff_weightedHomogeneousComponent]
     split_ifs with hx1
     · rfl
-    · by_cases h2 : coeff x.2 f = 0
+    · by_cases h2 : AddMonoidAlgebra.coeff f x.2 = 0
       · rw [h2, mul_zero, mul_zero]
       · exfalso
         apply hx1
@@ -29,7 +29,7 @@ theorem component_mul_multiHomog {R : Type*} [CommRing R] {K : Type} [DecidableE
   · refine Finset.sum_eq_zero fun x hx => ?_
     rw [coeff_weightedHomogeneousComponent]
     split_ifs with hx1
-    · by_cases h2 : coeff x.2 f = 0
+    · by_cases h2 : AddMonoidAlgebra.coeff f x.2 = 0
       · rw [h2, mul_zero]
       · exfalso
         apply hd

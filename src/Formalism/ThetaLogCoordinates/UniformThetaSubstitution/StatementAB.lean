@@ -24,7 +24,7 @@ def shiftPoly {K ι κ : Type} [Field K] [Fintype κ] (b : κ → ι → K) (Q :
 
 def hasseDir {K ι κ : Type} [Field K] [Fintype κ] (b : κ → ι → K) (β : κ →₀ ℕ)
     (Q : MvPolynomial ι K) : MvPolynomial ι K :=
-  MvPolynomial.coeff β (shiftPoly b Q)
+  AddMonoidAlgebra.coeff (shiftPoly b Q) β
 
 def JetPairingHasseIdentity : Prop :=
   ∀ (K ι κ : Type) [Field K] [Fintype ι] [Fintype κ] (b : κ → ι → K) (β : κ →₀ ℕ)
@@ -35,8 +35,8 @@ def JetPairingHasseIdentity : Prop :=
 def HasseDerivIntegralHomogeneous : Prop :=
   ∀ (K ι κ : Type) [NormedField K] [IsUltrametricDist K] [Fintype κ] (b : κ → ι → K)
     (β : κ →₀ ℕ) (Q : MvPolynomial ι K),
-    ((∀ n, ‖MvPolynomial.coeff n Q‖ ≤ 1) → (∀ k x, ‖b k x‖ ≤ 1) →
-      ∀ n, ‖MvPolynomial.coeff n (hasseDir b β Q)‖ ≤ 1) ∧
+    ((∀ n, ‖AddMonoidAlgebra.coeff Q n‖ ≤ 1) → (∀ k x, ‖b k x‖ ≤ 1) →
+      ∀ n, ‖AddMonoidAlgebra.coeff (hasseDir b β Q) n‖ ≤ 1) ∧
     (∀ d, Q.IsHomogeneous d → (hasseDir b β Q).IsHomogeneous (d - ∑ k, β k)) ∧
     (∀ d, Q.IsHomogeneous d → d < ∑ k, β k → hasseDir b β Q = 0)
 

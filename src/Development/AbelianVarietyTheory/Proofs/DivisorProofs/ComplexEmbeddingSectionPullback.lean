@@ -227,7 +227,7 @@ private theorem jp_cons {k : ℕ} (a : ℕ → R) (x : Fin k) (l : List (Fin k))
     jp a (x :: l) n = jp a l n + MvPolynomial.X x * jp a l (n + 1) := rfl
 
 private theorem jp_supp {k : ℕ} (a : ℕ → R) (l : List (Fin k)) :
-    ∀ (n : ℕ) (d : Fin k →₀ ℕ) (x : Fin k), x ∉ l → d x ≠ 0 → MvPolynomial.coeff d (jp a l n) = 0 := by
+    ∀ (n : ℕ) (d : Fin k →₀ ℕ) (x : Fin k), x ∉ l → d x ≠ 0 → AddMonoidAlgebra.coeff (jp a l n) d = 0 := by
   induction l with
   | nil =>
     intro n d x _ hd
@@ -260,7 +260,7 @@ private theorem topCoeff_jp {k : ℕ} (a : ℕ → R) :
   have := jp_top a (List.finRange k) (List.nodup_finRange k) 0
   rw [zero_add, List.length_finRange] at this
   rw [← this]
-  change MvPolynomial.coeff (topMon k) _ = _
+  change AddMonoidAlgebra.coeff _ (topMon k) = _
   rw [topMon, Fin.sum_univ_def]
   rfl
 

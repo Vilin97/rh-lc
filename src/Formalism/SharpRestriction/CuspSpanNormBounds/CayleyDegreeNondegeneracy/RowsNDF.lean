@@ -49,7 +49,7 @@ theorem rows_one_le_HHZ' (D : D7) (large₂ : SizeData₂ D) (c : ℝ) (Z : Gram
     linarith [Real.add_one_le_exp (1 : ℝ)]
   have hsz : 1 ≤ Cnt.sizeZ D large₂.sc.b c Z := by
     have key : ∀ {ι : Type} (s : Finset ι) (g : ι → ℝ), (∀ i ∈ s, 1 ≤ g i) → 1 ≤ ∏ i ∈ s, g i :=
-      fun s g h => by simpa using Finset.prod_le_prod (f := fun _ => (1 : ℝ)) (fun _ _ => zero_le_one) h
+      fun s g h => by simpa using Finset.prod_le_prod₀ (f := fun _ => (1 : ℝ)) (fun _ _ => zero_le_one) h
     unfold Cnt.sizeZ
     exact key _ _ (fun τ _ => key _ _ (fun l _ => le_max_left _ _))
   unfold Cnt.HHZ

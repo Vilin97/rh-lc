@@ -12,7 +12,7 @@ open Finset NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.M
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem one_le_prod_max {ι : Type*} (s : Finset ι) (g : ι → ℝ) : 1 ≤ ∏ i ∈ s, max 1 (g i) := by
-  have := Finset.prod_le_prod (s := s) (f := fun _ => (1 : ℝ)) (g := fun i => max 1 (g i))
+  have := Finset.prod_le_prod₀ (s := s) (f := fun _ => (1 : ℝ)) (g := fun i => max 1 (g i))
     (fun i _ => zero_le_one) (fun i _ => le_max_left _ _)
   simpa using this
 

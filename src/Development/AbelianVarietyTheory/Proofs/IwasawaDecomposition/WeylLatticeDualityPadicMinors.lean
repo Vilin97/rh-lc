@@ -136,7 +136,7 @@ theorem nsum {p : ℕ} [Fact p.Prime] {α : Type} (s : Finset α) (f : α → �
 theorem nprod {p : ℕ} [Fact p.Prime] {α : Type} (s : Finset α) (f : α → ℂ_[p]) (h : ∀ i ∈ s, ‖f i‖ ≤ 1) :
     ‖∏ i ∈ s, f i‖ ≤ 1 := by
   rw [norm_prod]
-  exact Finset.prod_le_one (fun i _ => norm_nonneg _) h
+  exact Finset.prod_le_one₀ (fun i _ => norm_nonneg _) h
 
 theorem nint {p : ℕ} [Fact p.Prime] (z : ℤ) : ‖(z : ℂ_[p])‖ ≤ 1 := IsUltrametricDist.norm_intCast_le_one _ z
 

@@ -143,7 +143,7 @@ theorem negLog_coord_le_mul_r : ∀ (D : D7) (A : Amb D) (N j : ℕ) (S : Sig A 
     rw [← Finset.prod_pow, Finset.prod_congr rfl fun i _ => heq i y (hpy i), Finset.prod_mul_distrib, norm_prod,
       Finset.prod_pow]
   have hE : ∏ i, Real.exp (-f i y) ≤ Q :=
-    Finset.prod_le_prod (fun i _ => (Real.exp_pos _).le) fun i _ => Real.exp_le_exp.2 (by linarith [hfyy i])
+    Finset.prod_le_prod₀ (fun i _ => (Real.exp_pos _).le) fun i _ => Real.exp_le_exp.2 (by linarith [hfyy i])
   have hPle : (∏ i, x.nrm σ i y) ^ 2 ≤ (Lt * ‖e y k‖) ^ 2 * Q := by
     rw [hPeq]
     exact mul_le_mul (pow_le_pow_left₀ (norm_nonneg _) (hby k hk) 2) hE

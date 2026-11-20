@@ -90,10 +90,10 @@ theorem indep_int {n : ℕ} (B : Module.Basis (Fin n) ℚ K) (q : Fin n → MvPo
   have hB : LinearIndependent ℤ B := B.linearIndependent.restrict_scalars' ℤ
   intro k
   ext m
-  have hm := congrArg (coeff m) h'
+  have hm := congrArg (AddMonoidAlgebra.coeff · m) h'
   rw [coeff_sum, coeff_zero] at hm
   simp only [coeff_C_mul, coeff_map, eq_intCast] at hm
-  have := Fintype.linearIndependent_iff.mp hB (fun k => coeff m (q k)) (by simpa [zsmul_eq_mul, mul_comm] using hm) k
+  have := Fintype.linearIndependent_iff.mp hB (fun k => AddMonoidAlgebra.coeff (q k) m) (by simpa [zsmul_eq_mul, mul_comm] using hm) k
   simpa using this
 
 theorem exists_int_smul_mem (F : HermLattice K i) (v : Fin i → K) :

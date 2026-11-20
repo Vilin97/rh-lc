@@ -27,9 +27,9 @@ theorem RelAlgClosureFinite.linearIndependent_adjoin {K L : Type*} [Field K] [Fi
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [Subalgebra.smul_def, smul_eq_mul, mul_comm]
     rfl
-  have hcoeff : ∀ d, ∀ j ∈ s, coeff d (p j) = 0 := fun d => by
-    apply hm s (fun j => coeff d (p j))
-    have := congrArg (coeff d) hP
+  have hcoeff : ∀ d, ∀ j ∈ s, AddMonoidAlgebra.coeff (p j) d = 0 := fun d => by
+    apply hm s (fun j => AddMonoidAlgebra.coeff (p j) d)
+    have := congrArg (AddMonoidAlgebra.coeff · d) hP
     simp only [coeff_sum, coeff_C_mul, coeff_map, coeff_zero] at this
     rw [← this]
     refine Finset.sum_congr rfl fun j _ => ?_

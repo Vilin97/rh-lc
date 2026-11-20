@@ -99,7 +99,7 @@ theorem hFac_inv_bound {Z : CM Ψ N N} (hZ : Z ∈ Hn Ψ N) (z z' : CM Ψ n N) :
   rw [hFac_zero, hFac, Finset.prod_mul_distrib, mul_inv, norm_mul, mul_comm]
   refine mul_le_mul_of_nonneg_right ?_ (norm_nonneg _)
   rw [← Finset.prod_inv_distrib, norm_prod]
-  refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun τ _ => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun τ _ => ?_
   rw [← Complex.exp_neg]
   refine (Complex.norm_exp_le_exp_norm _).trans (Real.exp_le_exp.2 ?_)
   rw [norm_neg, norm_mul]

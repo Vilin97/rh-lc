@@ -2455,7 +2455,7 @@ theorem shell_energy_bound_of_one_step (D : D7) (Ch Cg Cq Cs C1 : ℝ) (hCg : 1 
     apply ENNReal.ofReal_le_ofReal
     calc ∏ i ∈ Finset.range q, (Cs * n ^ 2 * (b + ((j + 2 * i : ℕ) : ℝ))) ^ 2
         ≤ ∏ _i ∈ Finset.range q, (C1 * n ^ 2 * (b + j + q)) ^ 2 := by
-          refine Finset.prod_le_prod (fun i _ => by positivity) fun i hi => ?_
+          refine Finset.prod_le_prod₀ (fun i _ => by positivity) fun i hi => ?_
           have hiq : (i : ℝ) ≤ q := by exact_mod_cast (Finset.mem_range.mp hi).le
           apply pow_le_pow_left₀ (by positivity)
           have hn0 : 0 ≤ n ^ 2 := by positivity

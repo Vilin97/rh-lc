@@ -451,7 +451,7 @@ theorem comparison_transfer_holds : ComparisonTransfer := by
   have hprod : ∀ x : (∀ v, T v), a ^ Fintype.card ι * ∏ v, wU v (x v) ≤ ∏ v, wJ v (x v) := by
     intro x
     rw [← Finset.card_univ, ← Finset.prod_const, ← Finset.prod_mul_distrib]
-    exact Finset.prod_le_prod (fun v _ => mul_nonneg ha0 (hU0 v _)) (fun v _ => hJU v _)
+    exact Finset.prod_le_prod₀ (fun v _ => mul_nonneg ha0 (hU0 v _)) (fun v _ => hJU v _)
   have hsJ := Finset.sum_sdiff (f := fun x => ∏ v, wJ v (x v)) (Finset.subset_univ A)
   have hsU := Finset.sum_sdiff (f := fun x => ∏ v, wU v (x v)) (Finset.subset_univ A)
   rw [htot wJ hJ1] at hsJ

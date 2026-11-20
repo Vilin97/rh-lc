@@ -144,7 +144,7 @@ theorem lattice_sum_holds : Formalism.NuclearRankWeightBounds.Z.LatSum := by
     have hmem : o - o' ∈ La := La.sub_mem (hS o ho).1 (hS o' ho').1
     have h1 := hLa (o - o') hmem (sub_ne_zero.mpr hoo)
     have h2 : ∏ v, ‖(o - o') v‖ ≤ ∏ v, x v := by
-      apply prod_le_prod (fun v _ => norm_nonneg _)
+      apply prod_le_prod₀ (fun v _ => norm_nonneg _)
       intro v _
       have hcv := congrFun hc v
       simp only [c, Prod.mk.injEq] at hcv

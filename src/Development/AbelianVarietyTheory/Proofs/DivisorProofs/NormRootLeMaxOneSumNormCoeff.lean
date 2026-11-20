@@ -10,7 +10,7 @@ theorem norm_eval₂Hom_le_sum_norm_coeff_of_norm_le_one {A K : Type} [CommRing 
   rw [norm_mul]
   refine mul_le_of_le_one_right (norm_nonneg _) ?_
   rw [norm_prod]
-  refine Finset.prod_le_one (fun _ _ => norm_nonneg _) fun i _ => ?_
+  refine Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun i _ => ?_
   rw [norm_pow]
   exact pow_le_one₀ (norm_nonneg _) (hζ i)
 

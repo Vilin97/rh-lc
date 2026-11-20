@@ -61,15 +61,15 @@ theorem mem_polB {R : Type*} [CommRing R] {N : ℕ} {B : ℕ → ℕ} {f : MvPol
 
 def Gc {k : Type*} [CommRing k] (i : ℕ) (G : MvPolynomial (ℕ × Fin n) k) (β : ℕ × Fin n →₀ ℕ) :
     MvPolynomial (ℕ × Fin n) k :=
-  ∑ e ∈ G.support.filter (fun e => highP i e = β), monomial (lowP i e) (coeff e G)
+  ∑ e ∈ G.support.filter (fun e => highP i e = β), monomial (lowP i e) (AddMonoidAlgebra.coeff G e)
 
 theorem decomp {k : Type*} [CommRing k] (i : ℕ) (G : MvPolynomial (ℕ × Fin n) k) :
     G = ∑ β ∈ G.support.image (highP i), Gc i G β * monomial β 1 := by
   symm
   simp only [Gc, Finset.sum_mul, monomial_mul, mul_one]
   have h1 : ∀ β ∈ G.support.image (highP i),
-      ∑ e ∈ G.support.filter (fun e => highP i e = β), monomial (lowP i e + β) (coeff e G) =
-      ∑ e ∈ G.support.filter (fun e => highP i e = β), monomial e (coeff e G) :=
+      ∑ e ∈ G.support.filter (fun e => highP i e = β), monomial (lowP i e + β) (AddMonoidAlgebra.coeff G e) =
+      ∑ e ∈ G.support.filter (fun e => highP i e = β), monomial e (AddMonoidAlgebra.coeff G e) :=
     fun β _ => Finset.sum_congr rfl fun e he => by rw [← (Finset.mem_filter.mp he).2, low_add_high]
   rw [Finset.sum_congr rfl h1, Finset.sum_fiberwise_of_maps_to (fun x hx => Finset.mem_image_of_mem _ hx)]
   exact G.as_sum.symm
@@ -252,7 +252,7 @@ theorem factSplit_valid : FactSplit := by
     rw [mem_polB]
     intro e he j
     have he2 : e ∈ (∑ e ∈ G.support.filter (fun e => highP i e = β),
-        monomial (lowP i e) (coeff e G)).support := he
+        monomial (lowP i e) (AddMonoidAlgebra.coeff G e)).support := he
     have hsub := Finset.mem_of_subset support_sum he2
     simp only [Finset.mem_biUnion, Finset.mem_filter] at hsub
     obtain ⟨e', ⟨he', -⟩, hmem⟩ := hsub

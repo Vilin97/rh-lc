@@ -87,7 +87,7 @@ theorem gram_product_le_height_bound_two (Z : GramM D) {b C CT : ℝ} (hb : 2 �
     rw [Finset.abs_prod]
     calc (∏ τ, |Cnt.Gz D (Tu D u) (Tu D u') Z τ|)
         ≤ ∏ τ, 2 * (b ^ (CT * (D.R.m : ℝ))) ^ 2 * (b ^ (C * (D.R.m : ℝ) ^ 2) * Pt D b C Z τ) ^ 2 :=
-          Finset.prod_le_prod (fun τ _ => abs_nonneg _) (fun τ _ => hG τ)
+          Finset.prod_le_prod₀ (fun τ _ => abs_nonneg _) (fun τ _ => hG τ)
       _ = _ := by
           rw [sizeZ_eq, ← D.what₂.card_Tau]
           simp only [mul_pow, Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Finset.prod_pow]

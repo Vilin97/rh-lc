@@ -218,7 +218,7 @@ theorem pack_of_loc : ∀ {D : D7} (θ : InfFam D), IsInfFam θ → ∀ {Y V : H
           ∂(Formalism.REAL.muG (M₀.ε τ))) *
         eu (B τ *ᵥ (GlobalTheory.SepPer.cmp θ τ g *ᵥ fun i => tauE D τ (zv d i))) ^ (2 * V.rank + 5)) ≤
         ∏ τ, (Real.exp q * ‖c τ‖) :=
-      Finset.prod_le_prod (fun τ _ => mul_nonneg (integral_nonneg fun _ => norm_nonneg _)
+      Finset.prod_le_prod₀ (fun τ _ => mul_nonneg (integral_nonneg fun _ => norm_nonneg _)
         (pow_nonneg (eu_nonneg _) _)) fun τ _ => ((hL τ).far _ (hgU τ)).2
     calc _ ≤ κ * ∏ τ, (Real.exp q * ‖c τ‖) := mul_le_mul_of_nonneg_left hle hκ.le
       _ = _ := by
@@ -281,7 +281,7 @@ theorem pack_of_loc : ∀ {D : D7} (θ : InfFam D), IsInfFam θ → ∀ {Y V : H
               mco M σ (g₀ σ) (v₀ σ) (embAt θ d σ Z)‖
           else ‖mco M σ (g₀ σ) (v₀ σ) (embAt θ d σ Z)‖)).2.trans (smul_eq_mul _ _))
     rw [hI]
-    have hle := Finset.prod_le_prod (s := Finset.univ) (fun σ _ => integral_nonneg fun u => by
+    have hle := Finset.prod_le_prod₀ (s := Finset.univ) (fun σ _ => integral_nonneg fun u => by
       show (0 : ℝ) ≤ (if σ = τ then _ else _)
       split_ifs <;> exact norm_nonneg _) fun σ _ => hb σ
     calc _ ≤ κ * ∏ σ, (Real.exp q * ‖c σ‖ * (if σ = τ then |s| * hsn (A τ * X * (A τ)⁻¹) else 1)) :=

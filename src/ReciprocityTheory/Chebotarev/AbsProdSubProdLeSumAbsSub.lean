@@ -66,7 +66,7 @@ theorem abs_prod_sub_prod_le_sum_abs_sub {κ : Type*} (s : Finset κ) (a b : κ 
     rw [prod_insert hj, prod_insert hj, sum_insert hj]
     have hP : |∏ i ∈ s, b i| ≤ 1 := by
       rw [Finset.abs_prod]
-      exact prod_le_one (fun i _ => abs_nonneg _) (fun i hi => hb i (mem_insert_of_mem hi))
+      exact prod_le_one₀ (fun i _ => abs_nonneg _) (fun i hi => hb i (mem_insert_of_mem hi))
     have ih' := ih (fun i hi => ha i (mem_insert_of_mem hi)) (fun i hi => hb i (mem_insert_of_mem hi))
     have haj := ha j (mem_insert_self j s)
     have hsum : 0 ≤ ∑ i ∈ s, |a i - b i| := sum_nonneg fun i _ => abs_nonneg _
@@ -86,7 +86,7 @@ noncomputable def Tent (y : ι → ℝ) : ℝ := ∏ i, tent (y i)
 theorem Tent_nonneg (y : ι → ℝ) : 0 ≤ Tent y := prod_nonneg fun _ _ => tent_nonneg _
 
 theorem Tent_le_one (y : ι → ℝ) : Tent y ≤ 1 :=
-  prod_le_one (fun _ _ => tent_nonneg _) (fun _ _ => tent_le_one _)
+  prod_le_one₀ (fun _ _ => tent_nonneg _) (fun _ _ => tent_le_one _)
 
 theorem abs_lt_one_of_Tent_ne_zero {y : ι → ℝ} (h : Tent y ≠ 0) (i : ι) : |y i| < 1 :=
   abs_lt_one_of_tent_ne_zero fun h' => h (prod_eq_zero (mem_univ i) h')

@@ -100,16 +100,16 @@ theorem moment_top (k : ℕ) (hk : 1 ≤ k) :
   ext m
   rw [DiagFibreMoment.coeff_momentPoly, coeff_neg, coeff_smul, DiagFibreMoment.coeff_momentPoly]
   have hpt : ∀ p : S2 × S2,
-      coeff m (aeval ![dotPoly (Prod.fst : S2 × S2 → S2), dotPoly Prod.snd]
-        (C ((N + 1 : ℕ) : ℝ) * X 1 ^ N : MvPolynomial (Fin 2) ℝ)) p =
-        ((N + 1 : ℕ) : ℝ) * coeff m (dotPoly (id : S2 → S2) ^ N) p.2 := by
+      AddMonoidAlgebra.coeff (aeval ![dotPoly (Prod.fst : S2 × S2 → S2), dotPoly Prod.snd]
+        (C ((N + 1 : ℕ) : ℝ) * X 1 ^ N : MvPolynomial (Fin 2) ℝ)) m p =
+        ((N + 1 : ℕ) : ℝ) * AddMonoidAlgebra.coeff (dotPoly (id : S2 → S2) ^ N) m p.2 := by
     intro p
     rw [map_mul, aeval_C, map_pow, aeval_X, Matrix.cons_val_one, Matrix.cons_val_fin_one, dotPoly_snd, ← map_pow,
       MvPolynomial.algebraMap_apply, coeff_C_mul, coeff_map]
     rfl
   simp_rw [hpt]
   have hsnd := integral_fun_snd (μ := sphereMeasure) (ν := sphereMeasure)
-    (fun y : S2 => (1 : ℝ) * (((N + 1 : ℕ) : ℝ) * coeff m (dotPoly (id : S2 → S2) ^ N) y))
+    (fun y : S2 => (1 : ℝ) * (((N + 1 : ℕ) : ℝ) * AddMonoidAlgebra.coeff (dotPoly (id : S2 → S2) ^ N) m y))
   rw [hsnd, probReal_univ, one_smul]
   simp only [one_mul, smul_eq_mul]
   rw [integral_const_mul, hc]

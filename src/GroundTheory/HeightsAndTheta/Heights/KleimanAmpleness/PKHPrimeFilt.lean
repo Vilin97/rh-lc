@@ -70,7 +70,7 @@ theorem decompose_smul (hgr : IsMGraded S ι 𝓜) {g : M} {e : K → ℤ} (hg :
   rw [Finset.sum_smul, DirectSum.decompose_sum, DFinsupp.finsetSum_apply, Submodule.coe_sum,
     weightedHomogeneousComponent_apply, Finset.sum_smul, Finset.sum_filter]
   refine Finset.sum_congr rfl fun d _ => ?_
-  have hm : monomial d (coeff d r) • g ∈ 𝓜 (shift e (Finsupp.weight (blockWeight ι) d)) :=
+  have hm : monomial d (AddMonoidAlgebra.coeff r d) • g ∈ 𝓜 (shift e (Finsupp.weight (blockWeight ι) d)) :=
     hgr.2 _ e _ g (isMultiHomog_of_isWeightedHomogeneous
       (isWeightedHomogeneous_monomial _ _ _ rfl)) hg
   split_ifs with h
@@ -85,7 +85,7 @@ theorem decompose_smul_mem_span (hgr : IsMGraded S ι 𝓜) {g : M} {e : K → �
   rw [← r.support_sum_monomial_coeff]
   rw [Finset.sum_smul, DirectSum.decompose_sum, DFinsupp.finsetSum_apply, Submodule.coe_sum]
   refine Submodule.sum_mem _ fun d _ => ?_
-  have hm : monomial d (coeff d r) • g ∈ 𝓜 (shift e (Finsupp.weight (blockWeight ι) d)) :=
+  have hm : monomial d (AddMonoidAlgebra.coeff r d) • g ∈ 𝓜 (shift e (Finsupp.weight (blockWeight ι) d)) :=
     hgr.2 _ e _ g (isMultiHomog_of_isWeightedHomogeneous
       (isWeightedHomogeneous_monomial _ _ _ rfl)) hg
   by_cases h : shift e (Finsupp.weight (blockWeight ι) d) = c

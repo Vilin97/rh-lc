@@ -135,7 +135,7 @@ private theorem coef_hom {B A : Type} [CommRing B] [CommRing A] [Algebra B A] {k
   refine le_antisymm (fun p hp => ?_) (Submodule.span_le.2 fun w hw => hw.1)
   rw [eq_sum_mono N p]
   refine Submodule.sum_mem _ fun m _ => Submodule.subset_span ⟨fun n => ?_, _, mono_mem N m _ _⟩
-  show MvPolynomial.coeff n (MvPolynomial.monomial m _) ∈ J
+  show AddMonoidAlgebra.coeff (MvPolynomial.monomial m _) n ∈ J
   rw [MvPolynomial.coeff_monomial]
   split_ifs
   · exact hp m

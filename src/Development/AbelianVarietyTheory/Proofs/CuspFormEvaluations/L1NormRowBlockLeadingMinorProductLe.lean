@@ -38,7 +38,7 @@ theorem l1Norm_rowBlockLeadingMinorProduct_le [Fintype T] (c : T → Fin p → �
     l1Norm (minorProd c c' ε φ) ≤ (N * √(n : ℝ) * R) ^ typeDegree c c' := by
   have hB : 0 ≤ √(n : ℝ) * R := by positivity
   rw [minorProd, typeDegree, ← Finset.prod_pow_eq_pow_sum, mul_assoc]
-  refine (l1Norm_prod_le _ _).trans (Finset.prod_le_prod (fun _ _ => l1Norm_nonneg _) fun t _ => ?_)
+  refine (l1Norm_prod_le _ _).trans (Finset.prod_le_prod₀ (fun _ _ => l1Norm_nonneg _) fun t _ => ?_)
   rw [pow_add]
   refine (l1Norm_mul_le _ _).trans (mul_le_mul ?_ ?_ (l1Norm_nonneg _) (by positivity))
   · refine (l1Norm_prod_pow_le _ _ _ (fun i => (N * (√(n : ℝ) * R)) ^ (i.val + 1))

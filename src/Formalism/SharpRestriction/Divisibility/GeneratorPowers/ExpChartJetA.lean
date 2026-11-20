@@ -36,8 +36,8 @@ theorem zero_ne_single {κ : Type} (q : κ) : (0 : κ →₀ ℕ) ≠ Finsupp.si
 
 theorem aeval_inr {κ : Type} [Fintype κ] [DecidableEq κ] (g : κ → R) (P : MvPolynomial κ R) :
     MvPolynomial.aeval (fun q => (TrivSqZeroExt.inr (g q) : DualNumber R)) P =
-      TrivSqZeroExt.inl (MvPolynomial.coeff 0 P) +
-        TrivSqZeroExt.inr (∑ q, g q * MvPolynomial.coeff (Finsupp.single q 1) P) := by
+      TrivSqZeroExt.inl (AddMonoidAlgebra.coeff P 0) +
+        TrivSqZeroExt.inr (∑ q, g q * AddMonoidAlgebra.coeff P (Finsupp.single q 1)) := by
   induction P using MvPolynomial.induction_on with
   | C a => simp [MvPolynomial.coeff_C, zero_ne_single, TrivSqZeroExt.algebraMap_eq_inl]
   | add p q hp hq =>
@@ -46,8 +46,8 @@ theorem aeval_inr {κ : Type} [Fintype κ] [DecidableEq κ] (g : κ → R) (P : 
       TrivSqZeroExt.inr_add]
     abel
   | mul_X p n hp =>
-    have hc : ∀ q, MvPolynomial.coeff (Finsupp.single q 1) (p * MvPolynomial.X n) =
-        if q = n then MvPolynomial.coeff 0 p else 0 := by
+    have hc : ∀ q, AddMonoidAlgebra.coeff (p * MvPolynomial.X n) (Finsupp.single q 1) =
+        if q = n then AddMonoidAlgebra.coeff p 0 else 0 := by
       intro q
       rw [MvPolynomial.coeff_mul_X']
       by_cases h : q = n
@@ -56,7 +56,7 @@ theorem aeval_inr {κ : Type} [Fintype κ] [DecidableEq κ] (g : κ → R) (P : 
       · rw [if_neg h, if_neg]
         rw [Finsupp.support_single_ne_zero _ one_ne_zero, Finset.mem_singleton]
         exact fun h' => h h'.symm
-    have h0 : MvPolynomial.coeff 0 (p * MvPolynomial.X n) = 0 := by
+    have h0 : AddMonoidAlgebra.coeff (p * MvPolynomial.X n) 0 = 0 := by
       rw [MvPolynomial.coeff_mul_X']
       simp
     rw [map_mul, hp, MvPolynomial.aeval_X, h0]
@@ -64,7 +64,7 @@ theorem aeval_inr {κ : Type} [Fintype κ] [DecidableEq κ] (g : κ → R) (P : 
 
 private lemma coeff_psTrunc_lemma {κ : Type} [Fintype κ] [DecidableEq κ] (f : MvPowerSeries κ R)
     (e : κ →₀ ℕ) (he : e.degree < 0 + 1 + 1) :
-    MvPolynomial.coeff e (psTrunc (0 + 1) f) = MvPowerSeries.coeff e f := by
+    AddMonoidAlgebra.coeff (psTrunc (0 + 1) f) e = MvPowerSeries.coeff e f := by
   rw [psTrunc_eq, MvPowerSeries.coeff_truncTotal _ he]
 
 theorem tp_psJet {κ : Type} [Fintype κ] [DecidableEq κ] (g : κ → R) (f : MvPowerSeries κ R) :

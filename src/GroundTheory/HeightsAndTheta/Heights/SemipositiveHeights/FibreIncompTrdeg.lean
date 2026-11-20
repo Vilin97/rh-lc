@@ -32,11 +32,11 @@ theorem aeval_scale {A : Type} [CommRing A] [Algebra S A] {g : MRingOver S ι'} 
 
 theorem coeff_eval₂_scale {σ R A : Type} [Fintype σ] [CommRing R] [CommRing A] (f : R →+* A) (b : σ → A)
     (P : MvPolynomial σ R) (m : σ →₀ ℕ) :
-    coeff m (eval₂ ((C : A →+* MvPolynomial σ A).comp f) (fun k => X k * C (b k)) P) =
-      f (coeff m P) * ∏ k, b k ^ m k := by
+    AddMonoidAlgebra.coeff (eval₂ ((C : A →+* MvPolynomial σ A).comp f) (fun k => X k * C (b k)) P) m =
+      f (AddMonoidAlgebra.coeff P m) * ∏ k, b k ^ m k := by
   classical
-  have hterm : ∀ d : σ →₀ ℕ, ((C : A →+* MvPolynomial σ A).comp f) (coeff d P) *
-      ∏ k, (X k * C (b k)) ^ d k = monomial d (f (coeff d P) * ∏ k, b k ^ d k) := by
+  have hterm : ∀ d : σ →₀ ℕ, ((C : A →+* MvPolynomial σ A).comp f) (AddMonoidAlgebra.coeff P d) *
+      ∏ k, (X k * C (b k)) ^ d k = monomial d (f (AddMonoidAlgebra.coeff P d) * ∏ k, b k ^ d k) := by
     intro d
     have hX : ∏ k, (X k : MvPolynomial σ A) ^ d k = monomial d 1 := by
       rw [monomial_eq, C_1, one_mul, Finsupp.prod_fintype _ _ (fun _ => pow_zero _)]

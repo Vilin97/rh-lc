@@ -152,7 +152,7 @@ theorem val_pow_sub_one_nat {p : ℕ} (hp : p.Prime) (hp2 : p ≠ 2) (hv : v (p 
     (hy : 1 ≤ v (x - 1)) {m : ℕ} (hm : m ≠ 0) :
     v (x ^ m - 1) = v (x - 1) + (padicValNat p m : WithTop ℚ) := by
   haveI := Fact.mk hp
-  obtain ⟨n, hn⟩ := (pow_padicValNat_dvd : p ^ padicValNat p m ∣ m)
+  obtain ⟨n, hn⟩ := ((_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)) : p ^ padicValNat p m ∣ m)
   have hpn : ¬ p ∣ n := by
     rintro ⟨c, rfl⟩
     exact pow_succ_padicValNat_not_dvd hm ⟨c, hn.trans (by ring)⟩

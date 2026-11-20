@@ -54,7 +54,7 @@ theorem lccomp_colAddGen_homog {B : Type*} [CommRing B] {r n : ℕ} (l j : Fin n
   classical
   rw [f.as_sum, map_sum]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
-  have h := lccomp_colAddGen_monomial_homog (B := B) l j d (coeff d f)
+  have h := lccomp_colAddGen_monomial_homog (B := B) l j d (AddMonoidAlgebra.coeff f d)
   rwa [hf (mem_support_iff.mp hd)] at h
 
 theorem lccomp_sum_components {R : Type*} [CommRing R] {σ M : Type*} [AddCommMonoid M] [DecidableEq M]

@@ -65,7 +65,7 @@ theorem cn_int_dens_le {a : ℕ} (j : Fin a → ℕ) (n0 f : ℕ) (hf : 1 ≤ f)
     (fun x s => cn_hT_nonneg f n0 (j x) s)
   have s4 : ENNReal.ofReal (∏ x, ∫ s, cn_hT f n0 (j x) s) ≤ 1 := by
     rw [← ENNReal.ofReal_one]
-    exact ENNReal.ofReal_le_ofReal (Finset.prod_le_one (fun x _ => integral_nonneg (cn_hT_nonneg f n0 (j x)))
+    exact ENNReal.ofReal_le_ofReal (Finset.prod_le_one₀ (fun x _ => integral_nonneg (cn_hT_nonneg f n0 (j x)))
       fun x _ => cn_int_hT_le f n0 (j x) hf (hj x) hn)
   exact s1.trans (s2.trans (s3.le.trans s4))
 

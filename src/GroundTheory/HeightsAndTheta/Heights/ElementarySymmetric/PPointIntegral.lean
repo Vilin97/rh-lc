@@ -35,8 +35,8 @@ theorem isFiniteProjection (p : Fin n → ℂ) (A : Matrix (Fin 0) (Fin n) ℂ) 
     simp
   refine ⟨?_, ?_⟩
   · intro P Q hPQ
-    obtain ⟨a, rfl⟩ : ∃ a, P = C a := ⟨coeff 0 P, (eq_C_of_isEmpty P)⟩
-    obtain ⟨b, rfl⟩ : ∃ b, Q = C b := ⟨coeff 0 Q, (eq_C_of_isEmpty Q)⟩
+    obtain ⟨a, rfl⟩ : ∃ a, P = C a := ⟨AddMonoidAlgebra.coeff P 0, (eq_C_of_isEmpty P)⟩
+    obtain ⟨b, rfl⟩ : ∃ b, Q = C b := ⟨AddMonoidAlgebra.coeff Q 0, (eq_C_of_isEmpty Q)⟩
     simp only [projHom, pullback, AlgHom.comp_apply, aeval_C, Ideal.Quotient.mkₐ_eq_mk] at hPQ
     rw [Ideal.Quotient.eq, RingHom.mem_ker] at hPQ
     simp [sub_eq_zero] at hPQ

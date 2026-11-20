@@ -164,7 +164,7 @@ def fibreQ (k : ℕ) : MvPolynomial (Fin 3) (Sphere2 × Sphere2 → ℝ) :=
     (gMixed k)
 
 theorem fibrePoly_eq (k : ℕ) : fibrePoly k = ∑ μ ∈ (fibreQ k).support,
-    monomial μ (∫ p, kernelL ⟪(p.1 : E3), (p.2 : E3)⟫_ℝ * coeff μ (fibreQ k) p ∂pairMeasure) :=
+    monomial μ (∫ p, kernelL ⟪(p.1 : E3), (p.2 : E3)⟫_ℝ * AddMonoidAlgebra.coeff (fibreQ k) μ p ∂pairMeasure) :=
   rfl
 
 theorem fibreQ_eq_map (k : ℕ) : fibreQ k = mapAlgHom (ContinuousMap.coeFnAlgHom (R := ℝ))
@@ -175,9 +175,9 @@ theorem fibreQ_eq_map (k : ℕ) : fibreQ k = mapAlgHom (ContinuousMap.coeFnAlgHo
   simp [map_sum, mapAlgHom_apply, map_X, map_C]
   rfl
 
-theorem continuous_coeff (k : ℕ) (μ : Fin 3 →₀ ℕ) : Continuous (coeff μ (fibreQ k)) := by
+theorem continuous_coeff (k : ℕ) (μ : Fin 3 →₀ ℕ) : Continuous (AddMonoidAlgebra.coeff (fibreQ k) μ) := by
   rw [fibreQ_eq_map, mapAlgHom_apply, coeff_map]
-  exact (coeff μ (aeval (fun r : Fin 2 => ∑ i : Fin 3, X i * C (coordC r i)) (gMixed k))).continuous
+  exact (AddMonoidAlgebra.coeff (aeval (fun r : Fin 2 => ∑ i : Fin 3, X i * C (coordC r i)) (gMixed k)) μ).continuous
 
 theorem integrable_term
     (hint : Integrable (fun p : Sphere2 × Sphere2 => kernelL ⟪(p.1 : E3), (p.2 : E3)⟫_ℝ)

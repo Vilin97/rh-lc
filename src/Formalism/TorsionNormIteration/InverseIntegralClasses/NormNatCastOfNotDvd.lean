@@ -43,7 +43,7 @@ lemma norm_natCast_eq {p n : ℕ} (hp : p.Prime) (hp1 : ‖(p : K)‖ < 1) (hn :
   have hm0 : m ≠ 0 := by
     rintro rfl
     exact hm (dvd_zero p)
-  rw [padicValNat.mul (pow_ne_zero _ hp.ne_zero) hm0, padicValNat.prime_pow,
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.ne_zero) hm0, padicValNat.prime_pow,
     padicValNat.eq_zero_of_not_dvd hm, add_zero]
   push_cast
   rw [norm_mul, norm_pow, norm_natCast_of_not_dvd hp hp1 hm, mul_one]
@@ -97,7 +97,7 @@ lemma scalar_bound {p : ℕ} (hp : p.Prime) (hp1 : ‖(p : K)‖ < 1) (c : K) (d
   have hkn : ‖((j + 1 : ℕ) : K)‖ = ‖(p : K)‖ ^ padicValNat p (j + 1) :=
     norm_natCast_eq hp hp1 (Nat.succ_ne_zero j)
   have hv : padicValNat p (j + 1) < j + 1 := by
-    have h1 : p ^ padicValNat p (j + 1) ≤ j + 1 := Nat.le_of_dvd (Nat.succ_pos j) pow_padicValNat_dvd
+    have h1 : p ^ padicValNat p (j + 1) ≤ j + 1 := Nat.le_of_dvd (Nat.succ_pos j) (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
     have h2 : j + 1 < p ^ (j + 1) := Nat.lt_pow_self hp.one_lt
     exact (Nat.pow_lt_pow_iff_right hp.one_lt).1 (lt_of_le_of_lt h1 h2)
   have hcd : ‖c‖ * ‖((n + 1 : ℕ) : K)‖ ≤ 1 := by

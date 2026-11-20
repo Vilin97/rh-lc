@@ -432,8 +432,8 @@ def CharpolyCoeffsInSubalgebra {X' : Type} (T' : Subalgebra (N.O i) (X' → N.O 
     Prop :=
   (∀ (m : ℕ) (a : Fin m → X' → MatN N i), (∀ k, InSpan N i T' rep (a k)) →
     ∀ d : Fin m →₀ ℕ,
-      (fun x' => MvPolynomial.coeff d (Matrix.det (∑ k,
-        (MvPolynomial.X k : MvPolynomial (Fin m) (N.O i)) • (a k x').map MvPolynomial.C))) ∈ T') ∧
+      (fun x' => AddMonoidAlgebra.coeff (Matrix.det (∑ k,
+        (MvPolynomial.X k : MvPolynomial (Fin m) (N.O i)) • (a k x').map MvPolynomial.C)) d) ∈ T') ∧
   (∀ (g : ℕ) (Θ : Fin g → Fin g → X' → MatN N i), (∀ p q, InSpan N i T' rep (Θ p q)) →
     (fun x' => Matrix.det (Matrix.of fun (pa qb : Fin g × Fin R.nV) =>
       Θ pa.1 qb.1 x' pa.2 qb.2)) ∈ T')

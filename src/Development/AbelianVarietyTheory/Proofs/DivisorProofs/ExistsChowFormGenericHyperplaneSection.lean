@@ -128,9 +128,9 @@ theorem _root_.GlobalTheory.ChowSpec.exists_isChowFormInt_generic_section : ∀ 
         have hh := hfhom.isHomogeneous
         simp only [Finset.sum_const_zero] at hh
         have hf0 := hf.ne_zero
-        have hC : f = C (coeff 0 f) :=
+        have hC : f = C (AddMonoidAlgebra.coeff f 0) :=
           (totalDegree_eq_zero_iff_eq_C).1 (by simpa using hh.totalDegree hf0)
-        have hc : coeff 0 f ≠ 0 := fun h0 => hf0 (by rw [hC, h0, C_0])
+        have hc : AddMonoidAlgebra.coeff f 0 ≠ 0 := fun h0 => hf0 (by rw [hC, h0, C_0])
         apply hf.irred.not_isUnit
         rw [hC]
         exact hc.isUnit.map C
@@ -144,7 +144,7 @@ theorem _root_.GlobalTheory.ChowSpec.exists_isChowFormInt_generic_section : ∀ 
       obtain ⟨r, hr, hfr⟩ := (MvPolynomial.isUnit_iff_eq_C_of_isReduced).1 hu
       have hh := hf'hom.isHomogeneous
       rw [hfr] at hh
-      have h0 := hh (show coeff 0 (C r) ≠ 0 by simpa using hr.ne_zero)
+      have h0 := hh (show AddMonoidAlgebra.coeff (C r) 0 ≠ 0 by simpa using hr.ne_zero)
       simp at h0
       omega
     have hdisj : Disjoint ((Submonoid.map (C : MvPolynomial (Fin N) K →+*

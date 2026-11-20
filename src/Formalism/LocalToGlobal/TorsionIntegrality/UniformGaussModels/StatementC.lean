@@ -75,13 +75,13 @@ def ThmBGaussOrth : Prop :=
       (∀ τ, nu2 τ = (Finset.univ.filter (fun c => 2 ≤ ht τ c)).card) →
       (∀ τ, size τ = ∑ c, ht τ c) →
     ∀ nn : ((Bool × H) × Fin N0 × Fin N0) →₀ ℕ,
-      ‖MvPolynomial.coeff nn (jetPairPoly (∏ τ : Bool × H, minorProd
+      ‖AddMonoidAlgebra.coeff (jetPairPoly (∏ τ : Bool × H, minorProd
             (fun (i : Fin N0) (b : Fin N1) =>
               (∑ a : Fin N0, MvPolynomial.C (MvPolynomial.X (τ, i, a)) * MvPolynomial.X (τ, a, b) :
                 MvPolynomial ((Bool × H) × Fin N0 × Fin N1)
                   (MvPolynomial ((Bool × H) × Fin N0 × Fin N0) ℂ_[p])))
             (ht τ) (hht τ) (I τ))
-          (linSub A (thetaZ p L ι ω₀ r s)))‖ ≤
+          (linSub A (thetaZ p L ι ω₀ r s))) nn‖ ≤
         ‖(p : ℂ_[p])‖ ^ (-(1 / 2 : ℝ) * ∑ t : H, ((size (false, t) : ℝ) -
           (if t ∈ TT then (nu1 (false, t) : ℝ) - nu2 (false, t) else 0) +
           (if t ∈ TT then (nu1 (true, t) : ℝ) else 0)))
@@ -94,7 +94,7 @@ def IntOpOrth : Prop :=
   ∀ (κ : Type) [Fintype κ] (r : κ → ℂ_[p]) (s : κ → n → ℂ) (N : ℕ), (∀ k, ‖r k‖ ≤ 1) → 0 < N →
     ¬ p ∣ N → (∀ k i, (N : ℂ) * s k i ∈ L.lattice) →
     JetsIntegral (thetaZ p L ι ω₀ r s) ∧
-    ∀ P : MvPolynomial n ℂ_[p], (∀ m, ‖MvPolynomial.coeff m P‖ ≤ 1) →
+    ∀ P : MvPolynomial n ℂ_[p], (∀ m, ‖AddMonoidAlgebra.coeff P m‖ ≤ 1) →
       ‖jetPair P (thetaZ p L ι ω₀ r s)‖ ≤ 1
 
 end Formalism.L2.Th1.Top

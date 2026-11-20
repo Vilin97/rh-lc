@@ -60,7 +60,7 @@ theorem logTerm_order_ge {N : ℤ} {k : ℕ} (hk : 4 * N.toNat + 32 * absRamific
 omit [CharZero K] in
 theorem padicValNat_le_self' {j : ℕ} (hj : j ≠ 0) : padicValNat p j ≤ j := by
   have h1 : padicValNat p j < p ^ padicValNat p j := Nat.lt_pow_self hp.out.one_lt
-  have h2 : p ^ padicValNat p j ≤ j := Nat.le_of_dvd (Nat.pos_of_ne_zero hj) pow_padicValNat_dvd
+  have h2 : p ^ padicValNat p j ≤ j := Nat.le_of_dvd (Nat.pos_of_ne_zero hj) (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
   omega
 
 theorem natCast_prime_pow_mem_valBall (n : ℕ) :

@@ -24,12 +24,12 @@ lemma bil_add_left (f f' g : MvPolynomial τ R) : bil (f + f') g = bil f g + bil
     bil_eq_of_subset (S := f.support ∪ f'.support) subset_union_left,
     bil_eq_of_subset (S := f.support ∪ f'.support) subset_union_right, ← sum_add_distrib]
   refine sum_congr rfl fun m _ => ?_
-  rw [coeff_add]; ring
+  rw [MvPolynomial.coeff_add]; ring
 
 lemma bil_add_right (f g g' : MvPolynomial τ R) : bil f (g + g') = bil f g + bil f g' := by
   rw [bil, bil, bil, ← sum_add_distrib]
   refine sum_congr rfl fun m _ => ?_
-  rw [coeff_add]; ring
+  rw [MvPolynomial.coeff_add]; ring
 
 lemma deg1 (d : τ →₀ ℕ) (h : d.degree = 1) : ∃ k, d = Finsupp.single k 1 := by
   classical
@@ -62,7 +62,7 @@ lemma lin_repr (x : MvPolynomial τ R) (hx : x.IsHomogeneous 1) :
       rw [if_neg, mul_zero]
       intro h; exact hb (Finsupp.single_left_injective one_ne_zero h)
     · intro hk; exfalso; apply hk
-      rw [mem_vars]
+      rw [MvPolynomial.mem_vars_iff_mem_support]
       exact ⟨Finsupp.single k 1, mem_support_iff.mpr h0, by simp⟩
 
 lemma pderiv_lin (z : MvPolynomial τ R) (hz : z.IsHomogeneous 1) (k : τ) :

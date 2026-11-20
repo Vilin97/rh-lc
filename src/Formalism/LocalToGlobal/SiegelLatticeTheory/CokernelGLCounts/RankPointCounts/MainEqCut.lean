@@ -411,7 +411,7 @@ theorem meanAmplitudeGeneric_holds : MeanAmpGen := by
     exact mul_le_mul_of_nonneg_left (h3 p) (by have := hH p; positivity)
   have hprod : ∏ p, ∑ d, L.wt p d * ‖L.aZ p d‖ ^ 2 ≤ ∏ p, (L.H p ^ (C1 * (r + 1) ^ 2) *
       (if p ∈ L.Om then 8 * L.H p ^ (C0 * (r + 1) ^ 2 + 2 * (2 * r + 2)) else 1)) * L.ngen p :=
-    Finset.prod_le_prod (fun p _ => Finset.sum_nonneg (fun d _ => mul_nonneg (hb.1 p d) (by positivity)))
+    Finset.prod_le_prod₀ (fun p _ => Finset.sum_nonneg (fun d _ => mul_nonneg (hb.1 p d) (by positivity)))
       (fun p _ => hloc p)
   have hfin := Formalism.FourierDecayAlt.P.HermitianFormNormLemmas.B.finish L (fun p => L.H p ^ (C1 * (r + 1) ^ 2))
     (fun p => if p ∈ L.Om then 8 * L.H p ^ (C0 * (r + 1) ^ 2 + 2 * (2 * r + 2)) else 1)

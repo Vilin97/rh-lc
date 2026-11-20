@@ -79,7 +79,7 @@ theorem smooth_isWeakD (E : Type*) [NormedAddCommGroup E] [NormedSpace ℝ E] [F
   refine ⟨fun k => (hg k).continuous.locallyIntegrable, ?_, ?_⟩
   · have hc : Continuous (Dop c v g) := by
       unfold Dop
-      exact continuous_finset_sum _ fun k _ => continuous_const.mul (hgc k)
+      exact continuous_finsetSum _ fun k _ => continuous_const.mul (hgc k)
     exact hc.locallyIntegrable
   · intro φ hφ hφc
     have hφd : Differentiable ℝ φ := hφ.differentiable (by simp)
@@ -100,7 +100,7 @@ theorem smooth_isWeakD (E : Type*) [NormedAddCommGroup E] [NormedSpace ℝ E] [F
     have hsum : ∫ x, Dop c v g x * φ x ∂μ =
         ∑ k, c k * ∫ x, fderiv ℝ (g k) x (v k) * φ x ∂μ := by
       simp only [Dop, Finset.sum_mul]
-      rw [integral_finset_sum _ fun k _ => by simpa [mul_assoc] using (int1 k).const_mul (c k)]
+      rw [MeasureTheory.integral_finsetSum _ fun k _ => by simpa [mul_assoc] using (int1 k).const_mul (c k)]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [← integral_const_mul]
       congr 1

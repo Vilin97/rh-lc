@@ -122,16 +122,16 @@ private theorem linearIndependent_algebraMap_C_fractionRing
     apply IsFractionRing.injective (MvPolynomial σ E) (FractionRing (MvPolynomial σ E))
     rw [_root_.map_zero, _root_.map_sum, Finset.sum_congr rfl (fun j _ => key j), ← Finset.mul_sum,
       hg', mul_zero]
-  have hcoeff : ∀ m j, MvPolynomial.coeff m (a j) = 0 := by
+  have hcoeff : ∀ m j, AddMonoidAlgebra.coeff (a j) m = 0 := by
     intro m
     have hsum' : ∑ j, MvPolynomial.C (e j) * MvPolynomial.map (algebraMap L E) (a j) = 0 := by
       simpa only [mul_comm] using hsum
-    have h0 := congrArg (MvPolynomial.coeff m) hsum'
+    have h0 := congrArg (AddMonoidAlgebra.coeff · m) hsum'
     simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_C_mul, MvPolynomial.coeff_map,
       MvPolynomial.coeff_zero] at h0
-    have h1 : ∑ j, MvPolynomial.coeff m (a j) • e j = 0 := by
+    have h1 : ∑ j, AddMonoidAlgebra.coeff (a j) m • e j = 0 := by
       simpa only [Algebra.smul_def, mul_comm] using h0
-    exact Fintype.linearIndependent_iff.mp he (fun j => MvPolynomial.coeff m (a j)) h1
+    exact Fintype.linearIndependent_iff.mp he (fun j => AddMonoidAlgebra.coeff (a j) m) h1
   have hai : a i = 0 := by
     ext m
     rw [hcoeff m i, MvPolynomial.coeff_zero]

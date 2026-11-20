@@ -79,7 +79,7 @@ theorem coeff_of_jet {V F κ : Type} [CommRing V] [CommRing F] (g : V →+* F) [
     (h : psJet e.degree f = ∑ i, algebraMap F (Jet F κ e.degree) (c i) * jetCoef g κ e.degree (a i)) :
     ∃ b : Fin n → V, MvPowerSeries.coeff e f = ∑ i, c i * g (b i) := by
   choose p hp using fun i => Ideal.Quotient.mk_surjective (a i)
-  refine ⟨fun i => MvPolynomial.coeff e (p i), ?_⟩
+  refine ⟨fun i => AddMonoidAlgebra.coeff (p i) e, ?_⟩
   have h1 : psJet e.degree f = Ideal.Quotient.mk _ (∑ i, MvPolynomial.C (c i) * MvPolynomial.map g (p i)) := by
     rw [h, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_

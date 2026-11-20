@@ -59,7 +59,7 @@ theorem sum_padic_log_le (P : Finset ℕ) (hP : ∀ p ∈ P, p.Prime) (n : ℕ) 
   rcases Nat.eq_zero_or_pos n with rfl | hn
   · simp
   · have hd : ∏ p ∈ P, p ^ padicValNat p n ∣ n := by
-      refine Finset.prod_dvd_of_isRelPrime ?_ fun p _ => pow_padicValNat_dvd
+      refine Finset.prod_dvd_of_isRelPrime ?_ fun p _ => (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
       intro p hp q hq hpq
       exact Nat.coprime_iff_isRelPrime.1
         (Nat.Coprime.pow _ _ ((Nat.coprime_primes (hP p hp) (hP q hq)).2 hpq))

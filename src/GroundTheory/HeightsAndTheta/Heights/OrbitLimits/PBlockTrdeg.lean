@@ -149,11 +149,11 @@ theorem algebraicIndependent_forgotten (hv : ∀ p, (v p).1 = κ p.1) (hP : IsMu
   set ψ : MvPolynomial (Σ k, ι k) ℤ →+* L := φ.comp (rename v).toRingHom with hψ
   have hA : adjoin ℚ (Set.range fun p : Σ k, ι k ↦ φ (X (v p))) = adjoin ℚ (Set.range fun p ↦ ψ (X p)) := by
     simp [ψ]
-  obtain ⟨N, hN, hNs⟩ := exists_nat_mul_mem_range_finset ψ (p.support.image fun a ↦ ((coeff a p : S) : L)) (by
+  obtain ⟨N, hN, hNs⟩ := exists_nat_mul_mem_range_finset ψ (p.support.image fun a ↦ ((AddMonoidAlgebra.coeff p a : S) : L)) (by
     intro y hy
     obtain ⟨a, -, rfl⟩ := Finset.mem_image.mp hy
     rw [← hA]
-    exact hS (coeff a p).2)
+    exact hS (AddMonoidAlgebra.coeff p a).2)
   choose g hg using fun a : p.support ↦ RingHom.mem_range.mp (hNs _ (Finset.mem_image_of_mem _ a.2))
   set H : MRing ι' := ∑ a : p.support, rename v (g a) * forgetMonomial κ i a.1 with hHdef
   have hH : H ∈ P' := by
@@ -189,7 +189,7 @@ theorem algebraicIndependent_forgotten (hv : ∀ p, (v p).1 = κ p.1) (hP : IsMu
   rw [e2] at hcomp
   rcases hprime.mem_or_mem hcomp with h1 | h1
   · rw [← hker, RingHom.mem_ker] at h1
-    have h2 : (N : L) * ((coeff a p : S) : L) = 0 := by
+    have h2 : (N : L) * ((AddMonoidAlgebra.coeff p a : S) : L) = 0 := by
       rw [← hg ⟨a, ha⟩]
       exact h1
     have : CharZero L := charZero_of_injective_algebraMap (algebraMap ℚ L).injective

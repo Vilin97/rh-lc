@@ -61,14 +61,14 @@ lemma dGlue_fact (em : B → σ → τ) (hem : Function.Injective fun x : B × �
 
 lemma rename_prod_expand [DecidableEq B] (em : B → σ → τ) (F : B → MvPolynomial σ R) :
     ∏ b, rename (em b) (F b) = ∑ p ∈ Fintype.piFinset (fun b => (F b).support),
-      monomial (dGlue em p) (∏ b, coeff (p b) (F b)) := by
+      monomial (dGlue em p) (∏ b, AddMonoidAlgebra.coeff (F b) (p b)) := by
   calc ∏ b, rename (em b) (F b)
-      = ∏ b, ∑ m ∈ (F b).support, rename (em b) (monomial m (coeff m (F b))) := by
+      = ∏ b, ∑ m ∈ (F b).support, rename (em b) (monomial m (AddMonoidAlgebra.coeff (F b) m)) := by
         refine Finset.prod_congr rfl fun b _ => ?_
         conv_lhs => rw [(F b).as_sum]
         rw [map_sum]
     _ = ∑ p ∈ Fintype.piFinset (fun b => (F b).support),
-          ∏ b, rename (em b) (monomial (p b) (coeff (p b) (F b))) := Finset.prod_univ_sum _ _
+          ∏ b, rename (em b) (monomial (p b) (AddMonoidAlgebra.coeff (F b) (p b))) := Finset.prod_univ_sum _ _
     _ = _ := Finset.sum_congr rfl fun p _ => by
         simp only [rename_monomial]
         exact prod_monomial_eq _ _ _

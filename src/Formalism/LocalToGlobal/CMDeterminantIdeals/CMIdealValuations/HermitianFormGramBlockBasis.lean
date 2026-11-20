@@ -67,7 +67,7 @@ theorem Step5_of (hLK : LamKey) : Step5 := by
   choose Hs hHs using hS5A
   have hRr : (0 : ℝ) < (r : ℝ) * La := mul_pos (Nat.cast_pos.mpr hr) (by linarith)
 
-  have hmem : MvPolynomial.coeff μ G ∈ (lineNN T.dual ℓ (fun v : FrVar m => e ⟨v.1, v.2.2⟩) μ n).I := by
+  have hmem : AddMonoidAlgebra.coeff G μ ∈ (lineNN T.dual ℓ (fun v : FrVar m => e ⟨v.1, v.2.2⟩) μ n).I := by
     refine coeff_mem_of_local K x.P.g ℓ T.dual (FrVar m) _ μ n _ hTd hℓ fun p => ?_
     obtain ⟨t, cd, cl, ht, hcd, hcl, hv, V, K', _, _, _, _, _, _, f, Ub, hVc, hfin, hind, hUb, hclUb, hW⟩ := hS5L p
     refine ⟨t, cl, ht, hcl, ?_⟩
@@ -75,15 +75,15 @@ theorem Step5_of (hLK : LamKey) : Step5 := by
     have hftn : f (t ^ n) ≠ 0 := (map_ne_zero f).mpr htn
     obtain ⟨w, hw⟩ := coeff_integral_local V K' B m (MvPolynomial.map f G) Ub (fun b j => f (cl (e ⟨b, j⟩)))
       (f (t ^ n)) hVc hfin hftn hUb hclUb hW μ
-    have hrange : f (MvPolynomial.coeff μ G * (∏ v : FrVar m, cl (e ⟨v.1, v.2.2⟩) ^ μ v) / t ^ n) ∈
+    have hrange : f (AddMonoidAlgebra.coeff G μ * (∏ v : FrVar m, cl (e ⟨v.1, v.2.2⟩) ^ μ v) / t ^ n) ∈
         Set.range (algebraMap V K') := by
       refine ⟨w, ?_⟩
       rw [map_div₀, map_mul, map_prod]
       simp only [map_pow]
       rw [← map_pow f t n, ← MvPolynomial.coeff_map, hw, mul_div_cancel_left₀ _ hftn]
     have h1 := (hind _).mp hrange
-    calc p.valuation K (MvPolynomial.coeff μ G * ∏ v : FrVar m, cl (e ⟨v.1, v.2.2⟩) ^ μ v)
-        = p.valuation K (MvPolynomial.coeff μ G * (∏ v : FrVar m, cl (e ⟨v.1, v.2.2⟩) ^ μ v) / t ^ n) *
+    calc p.valuation K (AddMonoidAlgebra.coeff G μ * ∏ v : FrVar m, cl (e ⟨v.1, v.2.2⟩) ^ μ v)
+        = p.valuation K (AddMonoidAlgebra.coeff G μ * (∏ v : FrVar m, cl (e ⟨v.1, v.2.2⟩) ^ μ v) / t ^ n) *
             p.valuation K (t ^ n) := by
           rw [← map_mul, div_mul_cancel₀ _ htn]
       _ ≤ p.valuation K (t ^ n) := mul_le_of_le_one_left' h1

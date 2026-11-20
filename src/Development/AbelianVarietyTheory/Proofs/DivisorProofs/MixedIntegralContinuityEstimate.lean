@@ -163,7 +163,7 @@ theorem abs_mInt_comb_le : ∀ (e : ℕ) (X : Type) [TopologicalSpace X] [Compac
       have hχ := h.some.nonneg j ((A.chart j).symm y)
       have hc : |∏ i, c i (s i)| ≤ K ^ e := by
         rw [Finset.abs_prod]
-        refine (Finset.prod_le_prod (fun i _ => abs_nonneg _) fun i _ => (hTc i (s i)).2).trans (by simp)
+        refine (Finset.prod_le_prod₀ (fun i _ => abs_nonneg _) fun i _ => (hTc i (s i)).2).trans (by simp)
       have hg : |g ((A.chart j).symm y)| ≤ ε * cut Z Set.univ (fun _ => 1) ((A.chart j).symm y) +
           a * cut Z {x | R ≤ r x} (fun x => Real.log (r x)) ((A.chart j).symm y) := by
         have := hy.2

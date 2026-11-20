@@ -51,16 +51,16 @@ private theorem frame_frob_norm {K : Type*} [NormedField K] [IsUltrametricDist K
 
 private theorem frame_coeff_mul_lin {R ι : Type*} [CommSemiring R] [Fintype ι] [DecidableEq ι]
     (Q : MvPolynomial ι R) (c : ι → R) (m : ι →₀ ℕ) :
-    MvPolynomial.coeff m (Q * ∑ y, MvPolynomial.C (c y) * MvPolynomial.X y) =
-      ∑ y, c y * (if y ∈ m.support then MvPolynomial.coeff (m - Finsupp.single y 1) Q else 0) := by
+    AddMonoidAlgebra.coeff (Q * ∑ y, MvPolynomial.C (c y) * MvPolynomial.X y) m =
+      ∑ y, c y * (if y ∈ m.support then AddMonoidAlgebra.coeff Q (m - Finsupp.single y 1) else 0) := by
   rw [Finset.mul_sum, MvPolynomial.coeff_sum]
   refine Finset.sum_congr rfl fun y _ => ?_
   rw [mul_left_comm, MvPolynomial.coeff_C_mul, MvPolynomial.coeff_mul_X']
 
 private theorem frame_coeff_pow_lin {R ι : Type*} [CommSemiring R] [Fintype ι] [DecidableEq ι]
     (c : ι → R) (j : ι) (B : ℕ) :
-    MvPolynomial.coeff (Finsupp.single j B)
-      ((∑ y, MvPolynomial.C (c y) * MvPolynomial.X y) ^ B) = c j ^ B := by
+    AddMonoidAlgebra.coeff ((∑ y, MvPolynomial.C (c y) * MvPolynomial.X y) ^ B)
+      (Finsupp.single j B) = c j ^ B := by
   induction B with
   | zero => simp
   | succ B ih =>
@@ -72,9 +72,9 @@ private theorem frame_coeff_pow_lin {R ι : Type*} [CommSemiring R] [Fintype ι]
 
 private theorem frame_coeff_two {R ι : Type*} [CommSemiring R] [Fintype ι] [DecidableEq ι]
     (c c' : ι → R) (i j : ι) (hij : i ≠ j) (hc : ∀ y, c y ≠ 0 → y ≠ j) (A B : ℕ) :
-    MvPolynomial.coeff (Finsupp.single i A + Finsupp.single j B)
-      ((∑ y, MvPolynomial.C (c' y) * MvPolynomial.X y) ^ B *
-        (∑ y, MvPolynomial.C (c y) * MvPolynomial.X y) ^ A) = c i ^ A * c' j ^ B := by
+    AddMonoidAlgebra.coeff ((∑ y, MvPolynomial.C (c' y) * MvPolynomial.X y) ^ B *
+        (∑ y, MvPolynomial.C (c y) * MvPolynomial.X y) ^ A)
+      (Finsupp.single i A + Finsupp.single j B) = c i ^ A * c' j ^ B := by
   induction A with
   | zero => simp [frame_coeff_pow_lin]
   | succ A ih =>

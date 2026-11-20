@@ -126,15 +126,15 @@ abbrev SymIdx (n b : ℕ) := {α : Fin n → Fin (b + 1) // ∑ a, (α a : ℕ) 
 def symMono {n b : ℕ} (α : SymIdx n b) : Fin n →₀ ℕ := Finsupp.equivFunOnFinite.symm fun a => (α.1 a : ℕ)
 
 def SymMat (n b : ℕ) : Matrix (SymIdx n b) (SymIdx n b) (GLCoord ℤ n) :=
-  fun α β => MvPolynomial.coeff (symMono α)
-    (∏ m : Fin n, (∑ a : Fin n, MvPolynomial.C (algebraMap _ (GLCoord ℤ n) (genMat ℤ n a m)) * X a) ^ (β.1 m : ℕ))
+  fun α β => AddMonoidAlgebra.coeff (∏ m : Fin n, (∑ a : Fin n, MvPolynomial.C (algebraMap _ (GLCoord ℤ n) (genMat ℤ n a m)) * X a) ^ (β.1 m : ℕ))
+    (symMono α)
 
 def ginvC (n : ℕ) (a b : Fin n) : GLCoord ℤ n :=
   (((detU n)⁻¹ : (GLCoord ℤ n)ˣ) : GLCoord ℤ n) * algebraMap _ (GLCoord ℤ n) ((genMat ℤ n).adjugate a b)
 
 def SymDMat (n b : ℕ) : Matrix (SymIdx n b) (SymIdx n b) (GLCoord ℤ n) :=
-  fun α β => MvPolynomial.coeff (symMono α)
-    (∏ m : Fin n, (∑ a : Fin n, MvPolynomial.C (ginvC n m a) * X a) ^ (β.1 m : ℕ))
+  fun α β => AddMonoidAlgebra.coeff (∏ m : Fin n, (∑ a : Fin n, MvPolynomial.C (ginvC n m a) * X a) ^ (β.1 m : ℕ))
+    (symMono α)
 
 abbrev LamIdx (n b : ℕ) := {J : Finset (Fin n) // J.card = b}
 

@@ -266,13 +266,13 @@ theorem transp_of_pairs {ψ : W →ₗ[ℂ] PolF D m n} (hinj : Function.Injecti
 end Frame
 
 theorem expand_tor (p : D.what₂.Tau → ℕ) (τ : D.what₂.Tau) (c : Fin n) (z : ℂˣ) (P : PolF D m n) :
-    GlobalTheory.ExportSeries.fockSubst p (tor τ c z) P = ∑ s ∈ P.support, ((z : ℂ) ^ wt p τ c s) • monomial s (coeff s P) := by
+    GlobalTheory.ExportSeries.fockSubst p (tor τ c z) P = ∑ s ∈ P.support, ((z : ℂ) ^ wt p τ c s) • monomial s (AddMonoidAlgebra.coeff P s) := by
   conv_lhs => rw [P.as_sum]
   rw [map_sum]
   exact Finset.sum_congr rfl fun s _ => tor_monomial p τ c z s _
 
 theorem expand_gder (p : D.what₂.Tau → ℕ) (τ : D.what₂.Tau) (c : Fin n) (P : PolF D m n) :
-    gder p τ (Matrix.single c c 1) P = ∑ s ∈ P.support, (wt p τ c s : ℂ) • monomial s (coeff s P) := by
+    gder p τ (Matrix.single c c 1) P = ∑ s ∈ P.support, (wt p τ c s : ℂ) • monomial s (AddMonoidAlgebra.coeff P s) := by
   conv_lhs => rw [P.as_sum]
   rw [map_sum]
   exact Finset.sum_congr rfl fun s _ => gder_monomial p τ c s _
@@ -541,7 +541,7 @@ theorem transp_torus
     Transp w BS r ρ (gder (m := m) w.p τ (Matrix.single c c 1)).toLinearMap := by
   refine transp_of_pairs hinj hψ fun φ hφ x => ?_
   let f : (Formalism.IndefR.Datum.FVar D m n →₀ ℕ) ⊕ (Formalism.IndefR.Datum.FVar D m n →₀ ℕ) → PolF D m n × PolF D m n :=
-    Sum.elim (fun s => (monomial s (coeff s (ψ x)), 0)) (fun s => (0, monomial s (coeff s (φ x))))
+    Sum.elim (fun s => (monomial s (AddMonoidAlgebra.coeff (ψ x) s), 0)) (fun s => (0, monomial s (AddMonoidAlgebra.coeff (φ x) s)))
   let wf : (Formalism.IndefR.Datum.FVar D m n →₀ ℕ) ⊕ (Formalism.IndefR.Datum.FVar D m n →₀ ℕ) → ℤ :=
     Sum.elim (wt w.p τ c) (wt w.p τ c)
   have hmem : ∑ i ∈ (ψ x).support.disjSum (φ x).support, (wf i : ℂ) • f i ∈ LinearMap.range (ψ.prod φ) := by

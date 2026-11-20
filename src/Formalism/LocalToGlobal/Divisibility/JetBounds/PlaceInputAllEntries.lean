@@ -19,9 +19,9 @@ def expD {H : Type} [Fintype H] [DecidableEq H] (TT : Finset H) (nu1 nu2 size : 
 inductive IsEntryAll (l : ℕ) [Fact l.Prime] (Q : OrbSys ℂ_[l] → ℝ → Prop) : ℝ → ℂ_[l] → Prop
   | thmA {β : ℝ} {e : ℂ_[l]} (h : IsEntry7 l Q β e) : IsEntryAll l Q β e
   | weyl (S : OrbSys ℂ_[l]) (β : ℝ) (hS : IsSysW l Q S β) (U : MvPowerSeries S.ι ℂ_[l]) (hU : Integral U) :
-      IsEntryAll l Q β (MvPolynomial.coeff 0 (S.jet U))
+      IsEntryAll l Q β (AddMonoidAlgebra.coeff (S.jet U) 0)
   | int (ι : Type) (Th : MvPowerSeries ι ℂ_[l]) (hTh : JetsIntegral Th) (P : MvPolynomial ι ℂ_[l])
-      (hP : ∀ n, ‖MvPolynomial.coeff n P‖ ≤ 1) : IsEntryAll l Q 0 (jetPair P Th)
+      (hP : ∀ n, ‖AddMonoidAlgebra.coeff P n‖ ≤ 1) : IsEntryAll l Q 0 (jetPair P Th)
   | ramD (H : Type) [Fintype H] [DecidableEq H] (N0 N1 : ℕ) (S : ℂ_[l])
       (u : H → ℂ_[l]) (hS : ‖S‖ ≤ ‖(l : ℂ_[l])‖ ^ (-(1 / 2 : ℝ))) (hu : ∀ t, ‖u t‖ ≤ 1)
       (sg : MvPowerSeries ((Bool × H) × Fin N0 × Fin N1) ℂ_[l]) (hsg : JetsIntegral sg)

@@ -91,7 +91,7 @@ theorem arch_bound (k m : ℕ) : ∃ C : ℝ, 0 < C ∧ ∀ x y : UpperTheory.V.
   obtain ⟨C, hC0, hC⟩ := arch_factor_bound k m
   refine ⟨C ^ Fintype.card (InfinitePlace F), by positivity, fun x y => ?_⟩
   rw [arch, norm_prod, ← Finset.prod_mul_distrib, ← Finset.card_univ, ← Finset.prod_const]
-  refine Finset.prod_le_prod (fun v _ => by positivity) fun v _ => ?_
+  refine Finset.prod_le_prod₀ (fun v _ => by positivity) fun v _ => ?_
   rw [← mul_assoc]
   exact hC (x v) (y v)
 
@@ -129,7 +129,7 @@ theorem summable_beta (D : 𝓞 F) (hD : D ≠ 0) : ∃ m : ℕ, Summable (fun x
         intro v
         rw [hP, ← Finset.mul_prod_erase Finset.univ (fun v => 1 + sig v x ^ 2) (Finset.mem_univ v)]
         have h1 : (1 : ℝ) ≤ ∏ w ∈ Finset.univ.erase v, (1 + sig w x ^ 2) := by
-          have := Finset.prod_le_prod (s := Finset.univ.erase v) (f := fun _ => (1 : ℝ))
+          have := Finset.prod_le_prod₀ (s := Finset.univ.erase v) (f := fun _ => (1 : ℝ))
             (g := fun w => 1 + sig w x ^ 2) (fun _ _ => zero_le_one) (fun w _ => by nlinarith [sq_nonneg (sig w x)])
           simpa using this
         nlinarith [sq_nonneg (sig v x)]

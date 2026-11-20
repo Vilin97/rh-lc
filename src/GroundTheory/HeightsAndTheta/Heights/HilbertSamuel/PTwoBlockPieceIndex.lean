@@ -44,7 +44,7 @@ theorem mConeMap_of_homog (y : (Σ k, ι k) → Ω) {g : MRing ι} {d : K → �
   ring
 
 theorem aeval_i2comp (y : (Σ k, ι k) → Ω) (m : K → ℕ) (q : MRing ι) :
-    aeval y (i2comp m q) = coeff (Finsupp.equivFunOnFinite.symm m) (mConeMap y q) := by
+    aeval y (i2comp m q) = AddMonoidAlgebra.coeff (mConeMap y q) (Finsupp.equivFunOnFinite.symm m) := by
   classical
   induction q using MvPolynomial.induction_on' with
   | monomial μ c =>
@@ -53,7 +53,7 @@ theorem aeval_i2comp (y : (Σ k, ι k) → Ω) (m : K → ℕ) (q : MRing ι) :
     by_cases h : (fun k => ∑ i, μ ⟨k, i⟩) = m
     · rw [if_pos h, if_pos (by rw [h]), mul_one]
     · rw [if_neg h, if_neg (fun h' => h (Finsupp.equivFunOnFinite.symm.injective h')), mul_zero, map_zero]
-  | add p q hp hq => rw [i2comp_add, map_add, hp, hq, map_add, coeff_add]
+  | add p q hp hq => rw [i2comp_add, map_add, hp, hq, map_add, MvPolynomial.coeff_add]
 
 theorem aeval_i2comp_of_mem (y : (Σ k, ι k) → Ω) {p : MRing ι} (hp : p ∈ mCoordIdeal y) (m : K → ℕ) :
     aeval y (i2comp m p) = 0 := by

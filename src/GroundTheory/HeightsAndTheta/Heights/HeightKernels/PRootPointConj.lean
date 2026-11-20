@@ -32,7 +32,7 @@ theorem homog_vanish {f j m : ℕ} (ζ : Fin f → Matrix (Fin j) (Fin m) ℂ)
   have hS : ∀ μ ∈ Q.support, (μ.sum fun _ e => e) ≤ Q.totalDegree := fun μ hμ => le_totalDegree hμ
   set H : MRing (plBlocks f j m) := ∑ μ ∈ Q.support,
     X ⟨τ, plAnchor j m⟩ ^ (Q.totalDegree - μ.sum fun _ e => e) *
-      rename (Sigma.mk τ) (monomial μ (coeff μ Q)) with hH
+      rename (Sigma.mk τ) (monomial μ (AddMonoidAlgebra.coeff Q μ)) with hH
   have hmem : H ∈ rootPointIdeal ζ := by
     show mConeMap (rootCoord ζ) H = 0
     have hC : ∀ P : MvPolynomial (PlIdx j m) ℤ,

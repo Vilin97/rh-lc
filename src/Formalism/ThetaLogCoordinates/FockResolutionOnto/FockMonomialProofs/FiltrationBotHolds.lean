@@ -13,18 +13,18 @@ variable {p : ℕ} [Fact p.Prime] {σ : Type}
 theorem pow_mul_mem (v : σ) (e : ℕ) (Q : Set (σ →₀ ℕ)) (g : MvPolynomial σ ℚ_[p]) :
     X v ^ e * g ∈ restrictSupport ℚ_[p] Q ↔ g ∈ restrictSupport ℚ_[p] {m | Finsupp.single v e + m ∈ Q} := by
   classical
-  have c1 : ∀ (m : σ →₀ ℕ) (g' : MvPolynomial σ ℚ_[p]), coeff m (X v ^ e * g') =
-      if e ≤ m v then coeff (m - Finsupp.single v e) g' else 0 := by
+  have c1 : ∀ (m : σ →₀ ℕ) (g' : MvPolynomial σ ℚ_[p]), AddMonoidAlgebra.coeff (X v ^ e * g') m =
+      if e ≤ m v then AddMonoidAlgebra.coeff g' (m - Finsupp.single v e) else 0 := by
     intro m g'
     rw [X_pow_eq_monomial, coeff_monomial_mul']
     simp only [Finsupp.single_le_iff, one_mul]
-  have c2 : ∀ (m : σ →₀ ℕ) (g' : MvPolynomial σ ℚ_[p]), coeff (m + Finsupp.single v e) (X v ^ e * g') = coeff m g' := by
+  have c2 : ∀ (m : σ →₀ ℕ) (g' : MvPolynomial σ ℚ_[p]), AddMonoidAlgebra.coeff (X v ^ e * g') (m + Finsupp.single v e) = AddMonoidAlgebra.coeff g' m := by
     intro m g'
     rw [c1, if_pos (by simp), add_tsub_cancel_right]
   rw [mem_restrictSupport_iff, mem_restrictSupport_iff]
   constructor
   · intro h m hm
-    have h1 : coeff (m + Finsupp.single v e) (X v ^ e * g) ≠ 0 := by
+    have h1 : AddMonoidAlgebra.coeff (X v ^ e * g) (m + Finsupp.single v e) ≠ 0 := by
       rwa [c2, ← mem_support_iff]
     have h2 := h (mem_support_iff.mpr h1)
     show Finsupp.single v e + m ∈ Q
@@ -46,8 +46,8 @@ theorem pow_mul_int_iff (v : σ) (e : ℕ) (a : MvPolynomial σ ℚ_[p]) :
 theorem pow_mul_order (v : σ) (e : ℕ) (h : MvPolynomial σ ℚ_[p]) :
     X v ^ e * h ∈ restrictSupport ℚ_[p] {m : σ →₀ ℕ | e ≤ m v} := by
   classical
-  have c1 : ∀ (m : σ →₀ ℕ) (g' : MvPolynomial σ ℚ_[p]), coeff m (X v ^ e * g') =
-      if e ≤ m v then coeff (m - Finsupp.single v e) g' else 0 := by
+  have c1 : ∀ (m : σ →₀ ℕ) (g' : MvPolynomial σ ℚ_[p]), AddMonoidAlgebra.coeff (X v ^ e * g') m =
+      if e ≤ m v then AddMonoidAlgebra.coeff g' (m - Finsupp.single v e) else 0 := by
     intro m g'
     rw [X_pow_eq_monomial, coeff_monomial_mul']
     simp only [Finsupp.single_le_iff, one_mul]
@@ -79,8 +79,8 @@ theorem exists_pow_div (v : σ) (e : ℕ) (f : MvPolynomial σ ℚ_[p])
 theorem initPart_pow_mul (v : σ) (e : ℕ) (h : MvPolynomial σ ℚ_[p]) :
     initPart v e (X v ^ e * h) = X v ^ e * initPart v 0 h := by
   classical
-  have c1 : ∀ (m : σ →₀ ℕ) (g' : MvPolynomial σ ℚ_[p]), coeff m (X v ^ e * g') =
-      if e ≤ m v then coeff (m - Finsupp.single v e) g' else 0 := by
+  have c1 : ∀ (m : σ →₀ ℕ) (g' : MvPolynomial σ ℚ_[p]), AddMonoidAlgebra.coeff (X v ^ e * g') m =
+      if e ≤ m v then AddMonoidAlgebra.coeff g' (m - Finsupp.single v e) else 0 := by
     intro m g'
     rw [X_pow_eq_monomial, coeff_monomial_mul']
     simp only [Finsupp.single_le_iff, one_mul]

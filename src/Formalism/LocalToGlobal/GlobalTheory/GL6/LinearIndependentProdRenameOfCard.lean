@@ -22,7 +22,7 @@ def mvPolynomialCoeffInFirstVariables (m : S₁ →₀ ℕ) : MvPolynomial (S₁
   (lcoeff (MvPolynomial S₂ K) m).restrictScalars K ∘ₗ (sumAlgEquiv K S₁ S₂).toLinearMap
 
 theorem leftCoeff_rename_mul (m : S₁ →₀ ℕ) (a : MvPolynomial S₁ K) (b : MvPolynomial S₂ K) :
-    mvPolynomialCoeffInFirstVariables m (rename Sum.inl a * rename Sum.inr b) = coeff m a • b := by
+    mvPolynomialCoeffInFirstVariables m (rename Sum.inl a * rename Sum.inr b) = AddMonoidAlgebra.coeff a m • b := by
   simp only [mvPolynomialCoeffInFirstVariables, LinearMap.comp_apply, AlgEquiv.toLinearMap_apply, LinearMap.restrictScalars_apply,
     lcoeff_apply, map_mul, sumAlgEquiv_rename_inl, sumAlgEquiv_rename_inr_eq_C']
   rw [mul_comm, coeff_C_mul, coeff_map, smul_eq_C_mul, mul_comm]
@@ -166,7 +166,7 @@ theorem eq_zero_of_sum_rename_mul {S₁ S₂ κ : Type*} [Fintype κ] (w : κ �
   ext m
   have h' := congrArg (mvPolynomialCoeffInFirstVariables (K := K) (S₁ := S₁) (S₂ := S₂) m) h
   simp only [map_sum, leftCoeff_rename_mul, map_zero] at h'
-  simpa using (Fintype.linearIndependent_iff.1 hw) (fun j => coeff m (a j)) h' j
+  simpa using (Fintype.linearIndependent_iff.1 hw) (fun j => AddMonoidAlgebra.coeff (a j) m) h' j
 
 def mvPolynomialProductExtension {ι σ : Type} [Fintype ι] [DecidableEq ι] (τ₀ : ι) (κ : ι → Type) [∀ τ, Fintype (κ τ)]
     (b : ∀ τ, κ τ → MvPolynomial σ K) :

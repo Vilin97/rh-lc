@@ -49,7 +49,7 @@ omit [Fintype K] in
 
 theorem valPoly_add {A A' : MvPolynomial σ Ω} {B B' : MvPolynomial σ ℂ} (h : ValPoly y z A B)
     (h' : ValPoly y z A' B') : ValPoly y z (A + A') (B + B') := fun μ => by
-  rw [coeff_add, coeff_add]
+  rw [MvPolynomial.coeff_add, MvPolynomial.coeff_add]
   exact isValueAt_add (h μ) (h' μ)
 
 theorem valPoly_mul {A A' : MvPolynomial σ Ω} {B B' : MvPolynomial σ ℂ} (h : ValPoly y z A B)

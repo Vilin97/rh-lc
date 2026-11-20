@@ -98,7 +98,7 @@ theorem exp_le_norm_of_hasProd {ψ : HChar L} (hu : ψ.IsUnitary) {S : Set (Heig
   have hE := he'.rexp
   have hN := ha.norm
   refine le_of_tendsto_of_tendsto' hE hN fun F => ?_
-  refine Finset.prod_le_prod (fun P _ => (Real.exp_pos _).le) fun P _ => ?_
+  refine Finset.prod_le_prod₀ (fun P _ => (Real.exp_pos _).le) fun P _ => ?_
   simp only [Function.comp_apply, he]
   split_ifs with hP
   · exact exp_le_norm_eulerFactor hs (hS P hP).1 (hS P hP).2

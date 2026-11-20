@@ -35,7 +35,7 @@ theorem fock_val_prod {ι : Type*} (p : ℕ) [Fact p.Prime] (s : Finset ι) (f :
     have h1 : f a ≠ 0 := hf a (Finset.mem_insert_self a s)
     have h2 : ∏ i ∈ s, f i ≠ 0 :=
       Finset.prod_ne_zero_iff.mpr fun i hi => hf i (Finset.mem_insert_of_mem hi)
-    rw [padicValNat.mul h1 h2, ih fun i hi => hf i (Finset.mem_insert_of_mem hi)]
+    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) h1 h2, ih fun i hi => hf i (Finset.mem_insert_of_mem hi)]
 
 theorem fock_L_nonneg (p : ℕ) [hp : Fact p.Prime] (k : ℕ) (a : ℝ) (ha : 0 ≤ a) (hk : 1 ≤ k) :
     0 ≤ Real.logb p (2 * a + k) + 1 := by
@@ -88,7 +88,7 @@ theorem fock_core (p : ℕ) [Fact p.Prime] {σ Z : Type} [Fintype σ] [Fintype Z
     Finset.prod_ne_zero_iff.mpr fun z _ => (Nat.multinomial_pos _ _).ne'
   set S := ∑ z, padicValNat p (Nat.multinomial (univ.filter (fun i => letter i = z)) α) with hS
   have hV : padicValNat p (∏ z, (d z).factorial) = padicValNat p (factProd α) + S := by
-    rw [hkey, padicValNat.mul (factProd_ne_zero α) hne, hS,
+    rw [hkey, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (factProd_ne_zero α) hne, hS,
       fock_val_prod p univ _ (fun z _ => (Nat.multinomial_pos _ _).ne')]
   refine ⟨by rw [hV]; omega, ?_⟩
   set T := ∑ z, (univ.filter (fun i => letter i = z)).card * Nat.log p (d z) with hT
@@ -128,7 +128,7 @@ theorem frame_val (p : ℕ) [Fact p.Prime] (D : ℕ) {r : ℕ} (m : Fin r → �
     padicValNat p (D.choose (∑ i, m i) * Nat.multinomial univ m) ≤ (r + 1) * Nat.log p D := by
   have hc : D.choose (∑ i, m i) ≠ 0 := (Nat.choose_pos hm).ne'
   have hm0 : Nat.multinomial univ m ≠ 0 := (Nat.multinomial_pos _ _).ne'
-  rw [padicValNat.mul hc hm0]
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hc hm0]
   have h1 : padicValNat p (D.choose (∑ i, m i)) ≤ Nat.log p D := by
     rw [← Nat.factorization_def _ (Fact.out : p.Prime)]
     exact Nat.factorization_choose_le_log

@@ -11,7 +11,7 @@ variable {D : Formalism.BasicNotions.D7} {N : NData D.R D.host D.what₂} (X : N
 
 def OrdLE (i : X.Tw) (M : ℕ) (ι : Type) (n : ℕ) (F : abelian₂ X i M ι) : Prop :=
   ∀ G : MvPolynomial ι (X.O0 i), toLam X i M ι G = F →
-    ∃ m : ι →₀ ℕ, m.degree ≤ n ∧ IsUnit (MvPolynomial.coeff m G)
+    ∃ m : ι →₀ ℕ, m.degree ≤ n ∧ IsUnit (AddMonoidAlgebra.coeff G m)
 
 def AdmPl (H : Subgroup (GE N)) (S : Finset (PlE D.host)) (P : PlE D.host) : Prop :=
   P ∉ S ∧ IsSplitPl D.host P ∧ DecV N P ≤ H

@@ -158,7 +158,7 @@ open MvPolynomial
 variable {L : Type} {S : Type} [AddCommGroup S] [Module ℂ S]
 
 theorem eq_zero_of_stable (K : Submodule ℂ (MvPolynomial L ℂ)) (hK : ∀ l, ∀ P ∈ K, pderiv l P ∈ K)
-    (hC : ∀ a : ℂ, C a ∈ K → a = 0) (n : ℕ) : ∀ P ∈ K, (∀ α, coeff α P ≠ 0 → α.degree < n) → P = 0 := by
+    (hC : ∀ a : ℂ, C a ∈ K → a = 0) (n : ℕ) : ∀ P ∈ K, (∀ α, AddMonoidAlgebra.coeff P α ≠ 0 → α.degree < n) → P = 0 := by
   classical
   induction n with
   | zero => exact fun P _ h => MvPolynomial.ext _ _ fun α => by simpa using h α
@@ -169,13 +169,13 @@ theorem eq_zero_of_stable (K : Submodule ℂ (MvPolynomial L ℂ)) (hK : ∀ l, 
       have := h _ (left_ne_zero_of_mul hα)
       simp only [map_add, Finsupp.degree_single] at this
       omega
-    have h2 : P = C (coeff 0 P) := by
+    have h2 : P = C (AddMonoidAlgebra.coeff P 0) := by
       refine MvPolynomial.ext _ _ fun α => ?_
       rw [coeff_C]
       split_ifs with h0
       · rw [h0]
       · obtain ⟨l, hl⟩ := Finsupp.ne_iff.1 (Ne.symm h0)
-        have h3 := congrArg (coeff (α - Finsupp.single l 1)) (h1 l)
+        have h3 := congrArg (AddMonoidAlgebra.coeff · (α - Finsupp.single l 1)) (h1 l)
         rw [coeff_pderiv, Finsupp.sub_add_single_one_cancel hl, coeff_zero] at h3
         exact (mul_eq_zero.1 h3).resolve_right (Nat.cast_add_one_ne_zero _)
     rw [h2] at hP

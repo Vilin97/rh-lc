@@ -33,10 +33,10 @@ theorem charpoly_coeff_mem_of_charPolyIn {Γ X O : Type} [Group Γ] [CommRing O]
 
 private theorem coeff_det_generic_sum_eval {X O : Type} [CommRing O] {n m : ℕ}
     (a : Fin m → X → Matrix (Fin n) (Fin n) O) (x : X) (d : Fin m →₀ ℕ) :
-    MvPolynomial.coeff d (Matrix.det (∑ k,
-      (MvPolynomial.X k : MvPolynomial (Fin m) O) • (a k x).map MvPolynomial.C)) =
-    (MvPolynomial.coeff d (Matrix.det (∑ k, (MvPolynomial.X k : MvPolynomial (Fin m) (X → O)) •
-      Matrix.of (fun i j => MvPolynomial.C (fun y => a k y i j)))) : X → O) x := by
+    AddMonoidAlgebra.coeff (Matrix.det (∑ k,
+      (MvPolynomial.X k : MvPolynomial (Fin m) O) • (a k x).map MvPolynomial.C)) d =
+    (AddMonoidAlgebra.coeff (Matrix.det (∑ k, (MvPolynomial.X k : MvPolynomial (Fin m) (X → O)) •
+      Matrix.of (fun i j => MvPolynomial.C (fun y => a k y i j)))) d : X → O) x := by
   set φ : MvPolynomial (Fin m) (X → O) →+* MvPolynomial (Fin m) O :=
     MvPolynomial.map (Pi.evalRingHom (fun _ => O) x) with hφ
   have h1 : φ.mapMatrix (∑ k, (MvPolynomial.X k : MvPolynomial (Fin m) (X → O)) •
@@ -53,17 +53,17 @@ theorem coeff_det_generic_sum_mem_of_inRing :
     ∀ {Γ X O : Type} [Group Γ] [CommRing O] {n : ℕ} (T : Subalgebra O (X → O))
       (rep : X → (Γ →* GL (Fin n) O)), CharPolyIn T rep →
       ∀ (m : ℕ) (a : Fin m → X → Matrix (Fin n) (Fin n) O), (∀ k, InRing T rep (a k)) →
-      ∀ d : Fin m →₀ ℕ, (fun x => MvPolynomial.coeff d (Matrix.det (∑ k,
-        (MvPolynomial.X k : MvPolynomial (Fin m) O) • (a k x).map MvPolynomial.C))) ∈ T := by
+      ∀ d : Fin m →₀ ℕ, (fun x => AddMonoidAlgebra.coeff (Matrix.det (∑ k,
+        (MvPolynomial.X k : MvPolynomial (Fin m) O) • (a k x).map MvPolynomial.C)) d) ∈ T := by
   intro Γ X O _ _ n T rep hT m a ha d
   classical
 
   let T' : Subring (MvPolynomial (Fin m) (X → O)) := (MvPolynomial.map T.val.toRingHom).range
-  have hmemT : ∀ p ∈ T', ∀ e, MvPolynomial.coeff e p ∈ T := by
+  have hmemT : ∀ p ∈ T', ∀ e, AddMonoidAlgebra.coeff p e ∈ T := by
     intro p hp e
     obtain ⟨q, rfl⟩ := RingHom.mem_range.1 hp
     rw [MvPolynomial.coeff_map]
-    exact (MvPolynomial.coeff e q).2
+    exact (AddMonoidAlgebra.coeff q e).2
   have hC : ∀ f ∈ T, (MvPolynomial.C f : MvPolynomial (Fin m) (X → O)) ∈ T' := fun f hf =>
     RingHom.mem_range.2 ⟨MvPolynomial.C ⟨f, hf⟩, by simp⟩
   have hX : ∀ k, (MvPolynomial.X k : MvPolynomial (Fin m) (X → O)) ∈ T' := fun k =>
@@ -160,10 +160,10 @@ theorem coeff_det_generic_sum_mem_of_inRing :
     rw [← hfg]
     rfl
   rw [hsum] at hdet
-  have key : (fun x => MvPolynomial.coeff d (Matrix.det (∑ k,
-      (MvPolynomial.X k : MvPolynomial (Fin m) O) • (a k x).map MvPolynomial.C))) =
-      MvPolynomial.coeff d (Matrix.det (∑ k, (MvPolynomial.X k : MvPolynomial (Fin m) (X → O)) •
-        Matrix.of (fun i j => MvPolynomial.C (fun y => a k y i j)))) :=
+  have key : (fun x => AddMonoidAlgebra.coeff (Matrix.det (∑ k,
+      (MvPolynomial.X k : MvPolynomial (Fin m) O) • (a k x).map MvPolynomial.C)) d) =
+      AddMonoidAlgebra.coeff (Matrix.det (∑ k, (MvPolynomial.X k : MvPolynomial (Fin m) (X → O)) •
+        Matrix.of (fun i j => MvPolynomial.C (fun y => a k y i j)))) d :=
     funext fun x => coeff_det_generic_sum_eval a x d
   rw [key]
   exact hmemT _ hdet d

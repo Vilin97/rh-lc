@@ -896,7 +896,7 @@ example : ¬ Limits.IsZero (grH (Fin 2) (polyGrading (Fin 2) ℤ) (-2) 1) := by
       locRes X _ (by decide) (Cube.termOneFinTwo _ x).1.1 := congrArg Subtype.val e
   rw [← hp, ← hq, locRes_awayFrac X _ (c := X 0) (by simp),
     locRes_awayFrac X _ (c := X 1) (by simp [mul_comm]), ← map_sub] at e'
-  have e'' := congrArg (coeff (Finsupp.single 0 (a + b) + Finsupp.single 1 (a + b)))
+  have e'' := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single 0 (a + b) + Finsupp.single 1 (a + b)))
     (awayFrac_injective (xProd_smul_injective _) _
       ((awayFrac_add_pow_smul _ 1 (a + b) 1).trans e'))
   clear * - e''

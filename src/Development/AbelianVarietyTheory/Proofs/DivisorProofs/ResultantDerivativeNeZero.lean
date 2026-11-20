@@ -35,7 +35,7 @@ theorem exists_specialise_ne_zero : ∀ (F S T : Type) [Field F] [Infinite F] (R
   intro F S T _ _ R hR
   have h1 : sumAlgEquiv F S T R ≠ 0 := (map_ne_zero_iff _ (sumAlgEquiv F S T).injective).2 hR
   obtain ⟨m, hm⟩ := MvPolynomial.ne_zero_iff.1 h1
-  obtain ⟨v, hv⟩ : ∃ v : T → F, eval v (coeff m (sumAlgEquiv F S T R)) ≠ 0 := by
+  obtain ⟨v, hv⟩ : ∃ v : T → F, eval v (AddMonoidAlgebra.coeff (sumAlgEquiv F S T R) m) ≠ 0 := by
     by_contra! H
     exact hm (MvPolynomial.funext fun x => by simpa using H x)
   refine ⟨v, fun h => hv ?_⟩
@@ -55,9 +55,9 @@ theorem irreducible_of_map {F L : Type} [Field F] [Field L] [Algebra F L] {σ : 
   have hinj := (algebraMap F L).injective
   haveI : IsLocalHom (MvPolynomial.map (σ := σ) (algebraMap F L)) := ⟨fun g hg => by
     obtain ⟨c, hc, e⟩ := MvPolynomial.isUnit_iff_eq_C_of_isReduced.1 hg
-    have hc0 : algebraMap F L (coeff 0 g) = c := by
+    have hc0 : algebraMap F L (AddMonoidAlgebra.coeff g 0) = c := by
       rw [← coeff_map, e, coeff_zero_C]
-    refine MvPolynomial.isUnit_iff_eq_C_of_isReduced.2 ⟨coeff 0 g, ?_, ?_⟩
+    refine MvPolynomial.isUnit_iff_eq_C_of_isReduced.2 ⟨AddMonoidAlgebra.coeff g 0, ?_, ?_⟩
     · refine isUnit_iff_ne_zero.2 fun h0 => hc.ne_zero ?_
       rw [← hc0, h0, map_zero]
     · apply MvPolynomial.map_injective _ hinj

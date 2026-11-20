@@ -572,21 +572,21 @@ theorem ext_mul (φ : MvPolynomial σ K →ₗ[K] MvPolynomial σ K) {g q : MvPo
   refine Finset.sum_congr rfl fun b hb => ?_
   rw [monomial_mul, ext_monomial, frst_add, ltr_add, frst_of fs (hg a ha), ltr_of fs (hg a ha),
     frst_of' fs (hq b hb), ltr_of' fs (hq b hb), add_zero, zero_add]
-  have h1 : (monomial a (coeff a g) : MvPolynomial σ K) = coeff a g • monomial a 1 := by
+  have h1 : (monomial a (AddMonoidAlgebra.coeff g a) : MvPolynomial σ K) = AddMonoidAlgebra.coeff g a • monomial a 1 := by
     rw [smul_monomial, smul_eq_mul, mul_one]
-  have h2 : (monomial b (coeff b q) : MvPolynomial σ K) = coeff b q • monomial b 1 := by
+  have h2 : (monomial b (AddMonoidAlgebra.coeff q b) : MvPolynomial σ K) = AddMonoidAlgebra.coeff q b • monomial b 1 := by
     rw [smul_monomial, smul_eq_mul, mul_one]
   rw [h1, h2, map_smul, smul_mul_assoc, mul_smul_comm, smul_smul]
 
 theorem sl_mul (m : σ →₀ ℕ) {g q : MvPolynomial σ K} (hg : IsF fs g) (hq : IsL fs q) :
-    slc fs m (g * q) = coeff m q • g := by
+    slc fs m (g * q) = AddMonoidAlgebra.coeff q m • g := by
   classical
   conv_lhs => rw [g.as_sum, q.as_sum, Finset.sum_mul_sum, map_sum]
   conv_rhs => rw [g.as_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun a ha => ?_
   rw [map_sum]
-  have key : ∀ b ∈ q.support, slc fs m (monomial a (coeff a g) * monomial b (coeff b q)) =
-      if b = m then monomial a (coeff a g * coeff m q) else 0 := by
+  have key : ∀ b ∈ q.support, slc fs m (monomial a (AddMonoidAlgebra.coeff g a) * monomial b (AddMonoidAlgebra.coeff q b)) =
+      if b = m then monomial a (AddMonoidAlgebra.coeff g a * AddMonoidAlgebra.coeff q m) else 0 := by
     intro b hb
     rw [monomial_mul, sl_monomial, frst_add, ltr_add, frst_of fs (hg a ha), ltr_of fs (hg a ha),
       frst_of' fs (hq b hb), ltr_of' fs (hq b hb), add_zero, zero_add]
@@ -595,7 +595,7 @@ theorem sl_mul (m : σ →₀ ℕ) {g q : MvPolynomial σ K} (hg : IsF fs g) (hq
     · rfl
   rw [Finset.sum_congr rfl key, Finset.sum_ite_eq']
   split_ifs with hm
-  · rw [smul_monomial, smul_eq_mul, mul_comm (coeff a g)]
+  · rw [smul_monomial, smul_eq_mul, mul_comm (AddMonoidAlgebra.coeff g a)]
   · simp only [mem_support_iff, not_not] at hm
     rw [hm, zero_smul]
 
@@ -608,7 +608,7 @@ theorem ext_eq_sum (φ : MvPolynomial σ K →ₗ[K] MvPolynomial σ K) (x : MvP
   refine Finset.sum_congr rfl fun d hd => ?_
   simp_rw [sl_monomial, apply_ite φ, map_zero, ite_mul, zero_mul]
   rw [Finset.sum_ite_eq S (ltr fs d), if_pos (hS d hd), ext_monomial]
-  have h1 : (monomial (frst fs d) (coeff d x) : MvPolynomial σ K) = coeff d x • monomial (frst fs d) 1 := by
+  have h1 : (monomial (frst fs d) (AddMonoidAlgebra.coeff x d) : MvPolynomial σ K) = AddMonoidAlgebra.coeff x d • monomial (frst fs d) 1 := by
     rw [smul_monomial, smul_eq_mul, mul_one]
   rw [h1, map_smul, smul_mul_assoc]
 
@@ -1317,7 +1317,7 @@ theorem fock_mul_mono (j0 : ℕ) {g g' : MvPolynomial (Fin N × Fin r) ℚ_[p]} 
     (hm' : ∀ v, m' v ≠ 0 → ¬ fsj N r j0 v) :
     fock p (g * monomial m 1) (g' * monomial m' 1) =
       if m = m' then fock p g g' * (m.prod fun _ k => (k.factorial : ℚ_[p])) else 0 := by
-  have := fock_mul_monomial_orthogonal j0 g.support g'.support (fun a => coeff a g) (fun b => coeff b g')
+  have := fock_mul_monomial_orthogonal j0 g.support g'.support (fun a => AddMonoidAlgebra.coeff g a) (fun b => AddMonoidAlgebra.coeff g' b)
     (fun a ha => hg a ha) (fun b hb => hg' b hb) m m' hm hm'
   rwa [← g.as_sum, ← g'.as_sum] at this
 
@@ -1746,18 +1746,18 @@ theorem gamma_zero_integral_alt (K r : ℕ) (LLw : Letters (K + 1)) (ρ : Fin r)
   simp only [hδ, FrozenVariableComponents.snoc_deg_last, FrozenVariableComponents.snoc_deg_castSucc] at h1
   have h2 : padicValNat p Den = padicValNat p (n - LLw.total).factorial + padicValNat p LLw.total.factorial +
       ∑ i, padicValNat p (LLw.deg i).factorial := by
-    rw [hDen, padicValNat.mul (Nat.mul_ne_zero (Nat.factorial_pos _).ne' (Nat.factorial_pos _).ne')
+    rw [hDen, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.mul_ne_zero (Nat.factorial_pos _).ne' (Nat.factorial_pos _).ne')
       (Finset.prod_ne_zero_iff.mpr fun i _ => (Nat.factorial_pos _).ne'),
-      padicValNat.mul (Nat.factorial_pos _).ne' (Nat.factorial_pos _).ne',
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.factorial_pos _).ne' (Nat.factorial_pos _).ne',
       gammaIntegralityLemmas.v_prod _ _ (fun i _ => (Nat.factorial_pos _).ne')]
   have h3 : padicValNat p (n - LLw.total).factorial + padicValNat p LLw.total.factorial ≤
       padicValNat p n.factorial := by
     have e := Nat.choose_mul_factorial_mul_factorial hS
-    rw [← e, padicValNat.mul (Nat.mul_ne_zero (Nat.choose_pos hS).ne' (Nat.factorial_pos _).ne')
-      (Nat.factorial_pos _).ne', padicValNat.mul (Nat.choose_pos hS).ne' (Nat.factorial_pos _).ne']
+    rw [← e, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.mul_ne_zero (Nat.choose_pos hS).ne' (Nat.factorial_pos _).ne')
+      (Nat.factorial_pos _).ne', (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.choose_pos hS).ne' (Nat.factorial_pos _).ne']
     omega
   have h4 := gamma_zero_exponent_le (p := p) K r a hr κ hκ
-  have h5 := gammaIntegralityLemmas.norm_K (p := p) ⌈κ⌉₊ (coeff m F) (coeff m F') 0 0 (by simpa using hc m) (by simpa using hc' m)
+  have h5 := gammaIntegralityLemmas.norm_K (p := p) ⌈κ⌉₊ (AddMonoidAlgebra.coeff F m) (AddMonoidAlgebra.coeff F' m) 0 0 (by simpa using hc m) (by simpa using hc' m)
     Num Den hNum0 hDen0 1 norm_one (by
       have : (padicValNat p Den : ℤ) ≤ (padicValNat p Num : ℤ) + (⌈κ⌉₊ : ℤ) := by
         have : padicValNat p Den ≤ padicValNat p Num + ⌈κ⌉₊ := by

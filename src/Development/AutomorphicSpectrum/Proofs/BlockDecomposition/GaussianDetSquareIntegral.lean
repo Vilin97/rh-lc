@@ -123,17 +123,17 @@ theorem integrable_rowF (G : Matrix β (Fin d) ℂ) (a c : Fin d) : Integrable (
   have : rowF G a c = fun r => ∑ i, ∑ j, (G i a * conj (G j c)) * (r i * conj (r j) * eR r) :=
     funext (rowF_eq G a c)
   rw [this]
-  exact integrable_finset_sum _ fun i _ => integrable_finset_sum _ fun j _ =>
+  exact MeasureTheory.integrable_finsetSum _ fun i _ => MeasureTheory.integrable_finsetSum _ fun j _ =>
     (integrable_row i j).const_mul _
 
 theorem integral_rowF (G : Matrix β (Fin d) ℂ) (a c : Fin d) :
     ∫ r, rowF G a c r = (Real.pi : ℂ) ^ Fintype.card β * (G.conjTranspose * G) c a := by
   simp_rw [rowF_eq]
-  rw [integral_finset_sum _ fun i _ => integrable_finset_sum _ fun j _ =>
+  rw [MeasureTheory.integral_finsetSum _ fun i _ => MeasureTheory.integrable_finsetSum _ fun j _ =>
     (integrable_row i j).const_mul _]
   simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [integral_finset_sum _ fun j _ => (integrable_row i j).const_mul _]
+  rw [MeasureTheory.integral_finsetSum _ fun j _ => (integrable_row i j).const_mul _]
   simp only [integral_const_mul, integral_row, mul_ite, mul_zero, Finset.sum_ite_eq, Finset.mem_univ,
     if_true]
   simp only [Complex.star_def]
@@ -217,18 +217,18 @@ def fR (G : Matrix β (Fin d) ℂ) (C : Fin d → β → ℂ) : ℝ :=
 theorem integrable_fR_complex (G : Matrix β (Fin d) ℂ) :
     Integrable (fun C => ((fR G C : ℝ) : ℂ)) := by
   simp_rw [fR, det_expand]
-  exact integrable_finset_sum _ fun σ _ => integrable_finset_sum _ fun τ _ =>
+  exact MeasureTheory.integrable_finsetSum _ fun σ _ => MeasureTheory.integrable_finsetSum _ fun τ _ =>
     (integrable_prod_rowF G σ τ).const_mul _
 
 theorem integral_fR_complex (G : Matrix β (Fin d) ℂ) :
     ∫ C, ((fR G C : ℝ) : ℂ) = ((Real.pi : ℂ) ^ Fintype.card β) ^ d * (d.factorial : ℂ) *
       (G.conjTranspose * G).det := by
   simp_rw [fR, det_expand]
-  rw [integral_finset_sum _ fun σ _ => integrable_finset_sum _ fun τ _ =>
+  rw [MeasureTheory.integral_finsetSum _ fun σ _ => MeasureTheory.integrable_finsetSum _ fun τ _ =>
     (integrable_prod_rowF G σ τ).const_mul _]
   rw [← perm_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_
-  rw [integral_finset_sum _ fun τ _ => (integrable_prod_rowF G σ τ).const_mul _]
+  rw [MeasureTheory.integral_finsetSum _ fun τ _ => (integrable_prod_rowF G σ τ).const_mul _]
   refine Finset.sum_congr rfl fun τ _ => ?_
   rw [integral_const_mul, integral_prod_rowF]
 

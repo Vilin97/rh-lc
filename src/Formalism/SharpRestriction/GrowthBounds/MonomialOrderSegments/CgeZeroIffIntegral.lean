@@ -146,7 +146,7 @@ private lemma coeff_dg_eq_mul_coeff {σ : Type} (f : (σ →₀ ℕ) → K) (F :
     · subst h
       ring
     · simp
-  | add F G hF hG => rw [map_add, coeff_add, coeff_add, hF, hG, mul_add]
+  | add F G hF hG => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hF, hG, mul_add]
 
 theorem cge_dg {σ : Type} {a b : ℝ} {f : (σ →₀ ℕ) → K} {F : MvPolynomial σ K}
     (hf : ∀ α, vge v a (f α)) (hF : cge v b F) : cge v (a + b) (dg f F) := by
@@ -246,7 +246,7 @@ theorem v_natCast (hD : DVRHyp v p) {n : ℕ} (hn : n ≠ 0) :
   have hm0 : m ≠ 0 := by
     rintro rfl
     exact hm (dvd_zero p)
-  rw [padicValNat.mul (pow_ne_zero _ hD.prime.ne_zero) hm0, padicValNat.prime_pow,
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hD.prime.ne_zero) hm0, padicValNat.prime_pow,
     padicValNat.eq_zero_of_not_dvd hm, add_zero, Nat.cast_mul, Nat.cast_pow, v.map_mul,
     v_p_pow hD, v_natCast_of_not_dvd hD hm, add_zero]
 
@@ -275,7 +275,7 @@ theorem vN_one (hD : DVRHyp v p) : vN v 1 = 0 := by
 theorem vN_mul (hD : DVRHyp v p) {m n : ℕ} (hm : m ≠ 0) (hn : n ≠ 0) :
     vN v (m * n) = vN v m + vN v n := by
   haveI := Fact.mk hD.prime
-  rw [vN_eq hD, vN_eq hD, vN_eq hD, padicValNat.mul hm hn]
+  rw [vN_eq hD, vN_eq hD, vN_eq hD, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hm hn]
   push_cast
   ring
 

@@ -73,9 +73,9 @@ theorem dsc_divide (p : ℕ) [Fact p.Prime] {σ : Type*} (k : ℕ) (g : MvPolyno
     rw [C_dvd_iff_dvd_coeff]
     intro m
     rw [← PadicInt.pow_p_dvd_int_iff]
-    have := congrArg (coeff m) h
+    have := congrArg (AddMonoidAlgebra.coeff · m) h
     rw [coeff_map, coeff_smul] at this
-    exact ⟨coeff m z, by simpa using this⟩
+    exact ⟨AddMonoidAlgebra.coeff z m, by simpa using this⟩
   obtain ⟨g1, rfl⟩ := hd
   exact ⟨g1, by rw [smul_eq_C_mul]⟩
 

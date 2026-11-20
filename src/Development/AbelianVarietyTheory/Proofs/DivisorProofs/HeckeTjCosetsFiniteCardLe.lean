@@ -23,7 +23,7 @@ theorem prod_le_pow (q n j : ℕ) (hq : 2 ≤ q) (hj : j ≤ n) :
   refine ⟨Finset.prod_pos hpos, ?_⟩
   calc ∏ i ∈ Finset.range j, ((q : ℤ) ^ (n - i) - 1)
       ≤ ∏ _i ∈ Finset.range j, (q : ℤ) ^ n := by
-        apply Finset.prod_le_prod (fun i hi => (hpos i hi).le)
+        apply Finset.prod_le_prod₀ (fun i hi => (hpos i hi).le)
         intro i hi
         have : (q : ℤ) ^ (n - i) ≤ (q : ℤ) ^ n := pow_le_pow_right₀ hq1.le (Nat.sub_le n i)
         linarith
@@ -38,7 +38,7 @@ theorem one_le_prod (q j : ℕ) (hq : 2 ≤ q) : 1 ≤ ∏ i ∈ Finset.range j,
         _ ≤ (q : ℤ) ^ (i + 1) := pow_le_pow_right₀ hq1.le (by omega)
     linarith
   calc (1 : ℤ) = ∏ _i ∈ Finset.range j, (1 : ℤ) := by simp
-    _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one) h1
+    _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) h1
 
 end GlobalTheory.TjCount
 

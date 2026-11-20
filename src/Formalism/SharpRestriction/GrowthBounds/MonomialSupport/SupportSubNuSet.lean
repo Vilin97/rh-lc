@@ -161,7 +161,7 @@ private theorem valS_le_valS_C_mul {R : Type} [CommRing R] {ι : Type} {n : ℕ}
 private theorem fdig_eq_sum_filter_digOK_of_support_subset (rho : (ZMod J × Fin r) × Fin r → ℕ) (F : MvPolynomial (TL J Dt.nL r × Fin r) (KK O))
     (T : Finset (TL J Dt.nL r × Fin r →₀ ℕ)) (hT : F.support ⊆ T) :
     Dt.Fdig rho F = ∑ mo ∈ T with Dt.digOK rho mo,
-      MvPolynomial.C (MvPolynomial.coeff mo F) * ∏ v ∈ mo.support, MvPolynomial.X (Dt.liftVar v) ^ Dt.liftExp mo v := by
+      MvPolynomial.C (AddMonoidAlgebra.coeff F mo) * ∏ v ∈ mo.support, MvPolynomial.X (Dt.liftVar v) ^ Dt.liftExp mo v := by
   unfold SignedChainData.Fdig
   apply Finset.sum_subset (Finset.filter_subset_filter _ hT)
   intro x hx hnx

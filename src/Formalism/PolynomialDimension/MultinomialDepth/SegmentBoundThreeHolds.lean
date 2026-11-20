@@ -119,7 +119,7 @@ theorem segment_bound_three_holds : DigitSumValuationBound := by
       rw [h00]
       unfold lgSeg
       exact mul_nonneg (by linarith [Real.logb_nonneg hp1' hY]) hp1.le
-    · have hlen := Nat.digits_len p n hp2 (by omega)
+    · have hlen := Nat.length_digits p n hp2 (by omega)
       have hsum : (p.digits n).sum ≤ (p.digits n).length * (p - 1) := by
         have := List.sum_le_card_nsmul (p.digits n) (p - 1)
           (fun x hx => by have := Nat.digits_lt_base hp2 hx; omega)
@@ -487,7 +487,7 @@ theorem det_leading_diagonal : DetLeadDiag := by
     refine (Polynomial.natDegree_prod_le _ _).trans ?_
     calc ∑ i, (A (σ i) i).natDegree ≤ ∑ _i : Fin n, J := Finset.sum_le_sum fun i _ => hdeg (σ i) i
       _ = n * J := by simp
-  · rw [Polynomial.finset_sum_coeff, Finset.sum_eq_single 1]
+  · rw [Polynomial.finsetSum_coeff, Finset.sum_eq_single 1]
     · rw [← Polynomial.C_eq_intCast, Polynomial.coeff_C_mul, hprod]
       simp only [Equiv.Perm.sign_one, Units.val_one, Int.cast_one, one_mul, Equiv.Perm.one_apply]
       exact Finset.prod_congr rfl fun i _ => by rw [hcoeff]; simp

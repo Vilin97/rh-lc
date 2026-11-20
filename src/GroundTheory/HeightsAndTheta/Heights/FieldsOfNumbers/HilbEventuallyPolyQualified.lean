@@ -94,8 +94,8 @@ theorem hilbFn_eq_zero_of_block {I : Ideal (MRing ι F)} (k : K)
         rw [hw] at h0
         simp only at h0
         omega
-      have hmono : monomial d (coeff d f) =
-          X ⟨k, i⟩ * monomial (d - Finsupp.single ⟨k, i⟩ 1) (coeff d f) := by
+      have hmono : monomial d (AddMonoidAlgebra.coeff f d) =
+          X ⟨k, i⟩ * monomial (d - Finsupp.single ⟨k, i⟩ 1) (AddMonoidAlgebra.coeff f d) := by
         rw [X, monomial_mul, one_mul, add_tsub_cancel_of_le]
         rw [Finsupp.single_le_iff]
         omega

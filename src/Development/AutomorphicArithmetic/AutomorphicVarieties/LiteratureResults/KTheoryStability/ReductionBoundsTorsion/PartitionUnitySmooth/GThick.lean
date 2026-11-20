@@ -319,7 +319,7 @@ private theorem nrmDet_le_mul_div_pow_of_q_le {L : Type} [Field L] [NumberField 
   have hpos : ∀ w, 0 < (mat h w).det.re := fun w => (Complex.pos_iff.mp (hh w).det_pos).1
   have hprod : (∏ w : InfinitePlace L, Complex.normSq (w.embedding (A.det : L))) * ∏ w, (mat h w).det.re ≤ (D ^ N) ^ r := by
     rw [← Finset.prod_mul_distrib, hr, ← Finset.card_univ, ← Finset.prod_const]
-    exact Finset.prod_le_prod (fun w _ => mul_nonneg (Complex.normSq_nonneg _) (hpos w).le)
+    exact Finset.prod_le_prod₀ (fun w _ => mul_nonneg (Complex.normSq_nonneg _) (hpos w).le)
       (fun w _ => hw w)
   have hRy : c⁻¹ • h ∈ Ry L N := by
     intro y hy

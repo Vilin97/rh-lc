@@ -54,7 +54,7 @@ theorem bC_euler_monomial {r n : ℕ} (a : Fin r) (m : Fin r × Fin n →₀ ℕ
 
 theorem bC_coeff_euler {r n : ℕ} (a : Fin r) (f : MvPolynomial (Fin r × Fin n) ℂ)
     (m : Fin r × Fin n →₀ ℕ) :
-    coeff m (rowDiv ℂ a a 1 f) = ((Finsupp.weight (lgraded_wa a) m : ℕ) : ℂ) * coeff m f := by
+    AddMonoidAlgebra.coeff (rowDiv ℂ a a 1 f) m = ((Finsupp.weight (lgraded_wa a) m : ℕ) : ℂ) * AddMonoidAlgebra.coeff f m := by
   have hadd : ∀ p q : MvPolynomial (Fin r × Fin n) ℂ,
       rowDiv ℂ a a 1 (p + q) = rowDiv ℂ a a 1 p + rowDiv ℂ a a 1 q := by
     intro p q
@@ -88,15 +88,15 @@ theorem bC_sep {r n : ℕ} (M : Submodule ℂ (MvPolynomial (Fin r × Fin n) ℂ
     intro f hf hV t
     set g := rowDiv ℂ a a 1 f - (s : ℂ) • f with hg
     have hgM : g ∈ M := M.sub_mem (hM a a 1 f hf) (M.smul_mem _ hf)
-    have hcg : ∀ m, MvPolynomial.coeff m g =
-        ((Finsupp.weight (lgraded_wa a) m : ℂ) - s) * MvPolynomial.coeff m f := by
+    have hcg : ∀ m, AddMonoidAlgebra.coeff g m =
+        ((Finsupp.weight (lgraded_wa a) m : ℂ) - s) * AddMonoidAlgebra.coeff f m := by
       intro m
       rw [hg, MvPolynomial.coeff_sub, MvPolynomial.coeff_smul, bC_coeff_euler, smul_eq_mul]
       ring
     have hgV : ∀ m ∈ g.support, Finsupp.weight (lgraded_wa a) m ∈ V := by
       intro m hm
       rw [MvPolynomial.mem_support_iff, hcg] at hm
-      have hfm : MvPolynomial.coeff m f ≠ 0 := right_ne_zero_of_mul hm
+      have hfm : AddMonoidAlgebra.coeff f m ≠ 0 := right_ne_zero_of_mul hm
       have hws : (Finsupp.weight (lgraded_wa a) m : ℂ) - s ≠ 0 := left_ne_zero_of_mul hm
       rcases Finset.mem_insert.mp (hV m (MvPolynomial.mem_support_iff.mpr hfm)) with h | h
       · exact (hws (by rw [h, sub_self])).elim
@@ -123,7 +123,7 @@ theorem bC_sep {r n : ℕ} (M : Submodule ℂ (MvPolynomial (Fin r × Fin n) ℂ
         rw [MvPolynomial.coeff_sub, MvPolynomial.coeff_sum]
         simp only [MvPolynomial.coeff_weightedHomogeneousComponent]
         rw [Finset.sum_ite_eq]
-        by_cases hm : MvPolynomial.coeff m f = 0
+        by_cases hm : AddMonoidAlgebra.coeff f m = 0
         · simp [hm]
         · rcases Finset.mem_insert.mp (hV m (MvPolynomial.mem_support_iff.mpr hm)) with h | h
           · simp [h, hs]
@@ -135,8 +135,8 @@ theorem bC_sep {r n : ℕ} (M : Submodule ℂ (MvPolynomial (Fin r × Fin n) ℂ
 
 theorem bC_multi {r n : ℕ} (M : Submodule ℂ (MvPolynomial (Fin r × Fin n) ℂ)) (hM : RowDivClosed M)
     (μ : Fin r → ℕ) (A : Finset (Fin r)) :
-    ∀ f ∈ M, ∃ h ∈ M, ∀ m, coeff m h =
-      if (∀ a ∈ A, Finsupp.weight (lgraded_wa a) m = μ a) then coeff m f else 0 := by
+    ∀ f ∈ M, ∃ h ∈ M, ∀ m, AddMonoidAlgebra.coeff h m =
+      if (∀ a ∈ A, Finsupp.weight (lgraded_wa a) m = μ a) then AddMonoidAlgebra.coeff f m else 0 := by
   classical
   induction A using Finset.induction_on
   next =>
@@ -360,8 +360,8 @@ theorem bC_exists_killed {r n : ℕ}
   obtain ⟨m0, hm0⟩ := MvPolynomial.ne_zero_iff.mp hf0
   have hg0M : weightedHomogeneousComponent (rowW r n) (Finsupp.weight (rowW r n) m0) f ∈ M :=
     bC_graded M hM f hfM _
-  have hg0c : coeff m0 (weightedHomogeneousComponent (rowW r n) (Finsupp.weight (rowW r n) m0) f) =
-      coeff m0 f := by
+  have hg0c : AddMonoidAlgebra.coeff (weightedHomogeneousComponent (rowW r n) (Finsupp.weight (rowW r n) m0) f) m0 =
+      AddMonoidAlgebra.coeff f m0 := by
     rw [MvPolynomial.coeff_weightedHomogeneousComponent, if_pos rfl]
   have hg0ne : weightedHomogeneousComponent (rowW r n) (Finsupp.weight (rowW r n) m0) f ≠ 0 := by
     intro h

@@ -63,7 +63,7 @@ theorem detMono {N : ℕ} (h k : Matrix (Fin N) (Fin N) ℂ) (hh : h.PosDef) (hk
     rw [hk'.1.det_eq_prod_eigenvalues]
     erw [← Complex.ofReal_prod, Complex.ofReal_re]
     calc ∏ i, hk'.1.eigenvalues i ≤ ∏ _i : Fin N, c :=
-          Finset.prod_le_prod (fun i _ => hk'.eigenvalues_nonneg i) (fun i _ => hev i)
+          Finset.prod_le_prod₀ (fun i _ => hk'.eigenvalues_nonneg i) (fun i _ => hev i)
       _ = c ^ N := by simp
   have e : ∀ X : ℂ, star T.det * X * T.det = (Complex.normSq T.det : ℂ) * X := by
     intro X

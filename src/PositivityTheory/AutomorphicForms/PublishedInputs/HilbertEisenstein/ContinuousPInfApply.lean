@@ -45,7 +45,7 @@ theorem arch_norm_le (x y : UpperTheory.V.TR.Rinf F) :
     ‖arch x y‖ ≤ Real.exp (-(Real.pi - 1) * ∑ v, (x v ^ 2 + y v ^ 2)) := by
   unfold arch
   rw [norm_prod, Finset.mul_sum, Real.exp_sum]
-  refine Finset.prod_le_prod (fun v _ => norm_nonneg _) fun v _ => ?_
+  refine Finset.prod_le_prod₀ (fun v _ => norm_nonneg _) fun v _ => ?_
   have he : -(Real.pi : ℂ) * (((x v : ℝ) : ℂ) ^ 2 + ((y v : ℝ) : ℂ) ^ 2) =
       ((-Real.pi * (x v ^ 2 + y v ^ 2) : ℝ) : ℂ) := by push_cast; ring
   rw [norm_mul, he, Complex.norm_exp_ofReal]

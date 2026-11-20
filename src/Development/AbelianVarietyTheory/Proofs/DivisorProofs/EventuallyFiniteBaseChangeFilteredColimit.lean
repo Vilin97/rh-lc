@@ -222,7 +222,7 @@ theorem eventually_finite_baseChange : ∀ (J : Type) [SmallCategory J] [IsFilte
     intro x hx
     obtain ⟨i, -, hx⟩ := Finset.mem_biUnion.1 hx
     obtain ⟨m, -, rfl⟩ := MvPolynomial.mem_coeffs_iff.1 hx
-    have := congrArg (MvPolynomial.coeff m) (hE i)
+    have := congrArg (AddMonoidAlgebra.coeff · m) (hE i)
     rwa [MvPolynomial.coeff_map, MvPolynomial.coeff_zero] at this)
   have hE2 : ∀ i, MvPolynomial.map (F.map g₂).hom (E i) = 0 := by
     intro i

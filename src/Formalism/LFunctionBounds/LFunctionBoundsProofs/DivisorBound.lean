@@ -80,7 +80,7 @@ theorem divisor_weight_bound : DivisorBound := by
         _ ≤ (p : ℝ) ^ e := Real.rpow_le_rpow (by positivity) h1 he.le
   calc ∏ p ∈ n.primeFactors, (((n.factorization p : ℕ) : ℝ) + 1)
       ≤ ∏ p ∈ n.primeFactors, ((if p < K then M else 1) * ((p : ℝ) ^ e) ^ (n.factorization p)) :=
-        Finset.prod_le_prod (fun p _ => by positivity) hfac
+        Finset.prod_le_prod₀ (fun p _ => by positivity) hfac
     _ = (∏ p ∈ n.primeFactors, (if p < K then M else 1)) *
           ∏ p ∈ n.primeFactors, ((p : ℝ) ^ e) ^ (n.factorization p) := Finset.prod_mul_distrib
     _ ≤ M ^ K * ∏ p ∈ n.primeFactors, ((p : ℝ) ^ e) ^ (n.factorization p) := by

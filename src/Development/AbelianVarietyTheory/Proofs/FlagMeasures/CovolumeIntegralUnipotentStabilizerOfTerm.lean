@@ -262,7 +262,7 @@ theorem prod_maxOneMulMaxOneInv_leadingMinors_le_sq (hN : ∀ o : 𝓞 K, o ≠ 
     ∏ v, ∏ l ∈ Finset.range N, gg2 ‖τ v (leadMinorE Z (l + 1))‖ ≤ PiZ τ Z ^ 2 := by
   unfold PiZ
   rw [Finset.prod_comm, Finset.prod_comm (s := Finset.univ), ← Finset.prod_pow]
-  refine Finset.prod_le_prod (fun l _ => Finset.prod_nonneg fun v _ =>
+  refine Finset.prod_le_prod₀ (fun l _ => Finset.prod_nonneg fun v _ =>
     zero_le_one.trans (one_le_maxOneMulMaxOneInv _)) fun l _ => ?_
   obtain ⟨o, ho⟩ := leadMinor_int hZ (l + 1)
   rw [← ho]
@@ -499,11 +499,11 @@ theorem PiZ_le (D : D7) (b : ℝ) (n : ℕ) (hb : 1 ≤ b) (hrd : D.host.rdE ≤
   obtain ⟨hc, -, -, hm, h1, -⟩ := GlobalTheory.real_places_facts D
   unfold PiZ sizeZ
   rw [← hc, pow_mul _ (D.R.rS + 1), ← Finset.card_univ, ← Finset.prod_const, ← Finset.prod_mul_distrib]
-  refine Finset.prod_le_prod (fun v _ => Finset.prod_nonneg fun _ _ => by positivity) fun v _ => ?_
+  refine Finset.prod_le_prod₀ (fun v _ => Finset.prod_nonneg fun _ _ => by positivity) fun v _ => ?_
   rw [← Finset.Ico_add_one_right_eq_Icc, Finset.prod_Ico_eq_prod_range, Nat.add_sub_cancel]
   nth_rewrite 4 [← Finset.card_range (D.R.rS + 1)]
   rw [← Finset.prod_const, ← Finset.prod_mul_distrib]
-  refine Finset.prod_le_prod (fun _ _ => by positivity) fun l hl => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => by positivity) fun l hl => ?_
   have hl' : l + 1 ≤ D.R.rS + 1 := Finset.mem_range.1 hl
   have e : b ^ ((n : ℝ) * (D.R.m : ℝ) ^ 2) = b ^ (4 * n * (D.R.rS + 1) ^ 2) := by
     rw [← Real.rpow_natCast b (4 * n * (D.R.rS + 1) ^ 2), hm]; congr 1; push_cast; ring

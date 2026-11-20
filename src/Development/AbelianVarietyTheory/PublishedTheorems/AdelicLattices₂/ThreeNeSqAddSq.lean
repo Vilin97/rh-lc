@@ -84,7 +84,7 @@ theorem three_ne_sq_add_sq (a b : ℚ) : (3 : ℚ) ≠ a ^ 2 + b ^ 2 := by
       rw [Nat.mem_primeFactors]
       exact ⟨by norm_num, dvd_mul_right _ _, by positivity⟩) (by norm_num)
   haveI : Fact (Nat.Prime 3) := ⟨by norm_num⟩
-  rw [padicValNat.mul (by norm_num) (pow_ne_zero _ hD0), padicValNat.pow,
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by norm_num) (pow_ne_zero _ hD0), padicValNat.pow,
     padicValNat_self] at h2
   rw [Nat.even_add] at h2
   simp at h2

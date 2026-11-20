@@ -151,12 +151,12 @@ theorem val_eval_eq_zero {Ω U σ : Type} [Field Ω] [Field U] [Algebra Ω U]
     rfl
   have hα : P₀.coeff α = 1 := by
     apply Subtype.ext
-    have h3 := congrArg (MvPolynomial.coeff α) hP₀
+    have h3 := congrArg (AddMonoidAlgebra.coeff · α) hP₀
     rw [MvPolynomial.coeff_map, h1] at h3
     exact h3
   have hne0 : MvPolynomial.map (residue ((vRing w).comap (algebraMap Ω U))) P₀ ≠ 0 := by
     intro h0
-    have h4 := congrArg (MvPolynomial.coeff α) h0
+    have h4 := congrArg (AddMonoidAlgebra.coeff · α) h0
     rw [MvPolynomial.coeff_map, MvPolynomial.coeff_zero, hα, map_one] at h4
     exact one_ne_zero h4
   have hne : residue (vRing w) (MvPolynomial.eval₂

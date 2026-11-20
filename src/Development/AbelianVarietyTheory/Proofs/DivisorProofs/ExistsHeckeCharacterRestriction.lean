@@ -38,7 +38,7 @@ theorem eq_one_of_congr : ∀ (E : Type) [Field E] [NumberField E] (m : ℕ), 3 
   have hprod : ‖∏ τ : E →ₐ[ℚ] ℂ, τ v‖ < 1 := by
     rw [norm_prod, ← Finset.mul_prod_erase _ _ (Finset.mem_univ τ₀)]
     have hr : ∏ τ ∈ Finset.univ.erase τ₀, ‖τ v‖ ≤ 1 :=
-      Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun τ _ => (hb τ.toRingHom).le)
+      Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun τ _ => (hb τ.toRingHom).le)
     calc ‖τ₀ v‖ * ∏ τ ∈ Finset.univ.erase τ₀, ‖τ v‖ ≤ ‖τ₀ v‖ * 1 :=
           mul_le_mul_of_nonneg_left hr (norm_nonneg _)
       _ < 1 := by rw [mul_one]; exact hb τ₀.toRingHom

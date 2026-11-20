@@ -71,11 +71,11 @@ theorem hw_line_field : ∀ (k : Type) [Field k] (N : ℕ) (ν : Fin N → ℕ),
     rw [lclosedeq_rowDiv_map, rowDiv_raise_eq_zero k N ν f hf hwt a b hab j hj, map_zero]
   obtain ⟨c, hc⟩ := hwLine K N N le_rfl ν hν (map φ f) hgK hrK
   obtain ⟨m, hm⟩ := ne_zero_iff.mp (hwNe k N N le_rfl ν)
-  refine ⟨coeff m f / coeff m (hw k le_rfl ν), ?_⟩
-  have hcm := congrArg (coeff m) hc
+  refine ⟨AddMonoidAlgebra.coeff f m / AddMonoidAlgebra.coeff (hw k le_rfl ν) m, ?_⟩
+  have hcm := congrArg (AddMonoidAlgebra.coeff · m) hc
   rw [coeff_map, coeff_smul, ← lclosedeq_hw_map φ, coeff_map, smul_eq_mul] at hcm
-  have hφ : φ (coeff m (hw k le_rfl ν)) ≠ 0 := (map_ne_zero φ).mpr hm
-  have hcv : c = φ (coeff m f / coeff m (hw k le_rfl ν)) := by
+  have hφ : φ (AddMonoidAlgebra.coeff (hw k le_rfl ν) m) ≠ 0 := (map_ne_zero φ).mpr hm
+  have hcv : c = φ (AddMonoidAlgebra.coeff f m / AddMonoidAlgebra.coeff (hw k le_rfl ν) m) := by
     rw [map_div₀, hcm, mul_div_cancel_right₀ _ hφ]
   apply map_injective φ φ.injective
   rw [hc, hcv, smul_eq_C_mul, smul_eq_C_mul, map_mul, map_C, lclosedeq_hw_map]

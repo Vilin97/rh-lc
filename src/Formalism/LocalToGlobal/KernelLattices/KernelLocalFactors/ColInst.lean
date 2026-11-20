@@ -773,7 +773,7 @@ theorem exists_jetLin_ne (Q : MvPolynomial ((ι × Fin b × Fin b) ⊕ DVar ι a
   classical
   obtain ⟨m, hm⟩ := exists_coeff_ne_zero hQ
   refine ⟨fun m' => if m' = m.comapDomain Sum.inr Sum.inr_injective.injOn then 1 else 0, fun h => hm ?_⟩
-  have h1 := congrArg (coeff (m.comapDomain Sum.inl Sum.inl_injective.injOn)) h
+  have h1 := congrArg (AddMonoidAlgebra.coeff · (m.comapDomain Sum.inl Sum.inl_injective.injOn)) h
   rw [coeff_zero] at h1
   conv at h1 => lhs; rw [← support_sum_monomial_coeff Q, map_sum, coeff_sum]
   rw [Finset.sum_eq_single m] at h1

@@ -130,7 +130,7 @@ theorem no_common_zero_spreads : ∀ (A : Type) [CommRing A] (τ J : Type) [Fini
   refine ⟨b, E.coeffs, hb, ?_, ?_⟩
   · intro y hy
     obtain ⟨n, -, rfl⟩ := MvPolynomial.mem_coeffs_iff.1 hy
-    have := congrArg (MvPolynomial.coeff n) hE
+    have := congrArg (AddMonoidAlgebra.coeff · n) hE
     rwa [MvPolynomial.coeff_map, MvPolynomial.coeff_zero] at this
   · intro k _ ψ hψb hψI ⟨z, hz⟩
     have h0 : MvPolynomial.map ψ E = 0 := by

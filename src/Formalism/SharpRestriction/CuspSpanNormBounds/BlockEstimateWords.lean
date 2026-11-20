@@ -447,7 +447,7 @@ theorem first_profile_le (hM : Mod D X a cb c0 Ks E₀ Eg E₁ E₂ E₃ C C4 T 
     (hi : i ≤ D.R.rS + 1) {l : D.host.E} (hl : l ≠ 0) :
     (∏ v, minFac (X.xi E₁ E₂ Ks i v) ‖sgm a δ i 1 l v‖ Ks) ≤ prof1 D C C (Nlet D Ks) T T' δ x Ks i l := by
   unfold prof1
-  refine Finset.prod_le_prod (fun v _ => minFac_nonneg _ (hM.xi_nn i v) (norm_nonneg _)) fun v _ => ?_
+  refine Finset.prod_le_prod₀ (fun v _ => minFac_nonneg _ (hM.xi_nn i v) (norm_nonneg _)) fun v _ => ?_
   rw [norm_sgm]
   exact minFac_scale Ks (hM.xi_nn i v) (kaV_pos hM.δ_ne v) (norm_pos_iff.2 ((map_ne_zero (plEmb D v)).2 hl))
     (norm_pos_iff.2 (hM.a_ne i 1 v)) (hM.thr1 i v hi1 hi)
@@ -837,7 +837,7 @@ theorem product_min_factor_profile (hM : Mod D X a cb c0 Ks E₀ Eg E₁ E₂ E�
       prof3 D C C (Nlet D Ks) T T' δ x Ks i s (1 / t - 1 / t') := by
   refine ⟨Finset.prod_nonneg fun v _ => min_factor_nonneg Ks (hM.blockSizeNonneg _ _ _) (norm_nonneg _), ?_⟩
   unfold prof3
-  refine Finset.prod_le_prod (fun v _ => min_factor_nonneg Ks (hM.blockSizeNonneg _ _ _) (norm_nonneg _)) fun v _ => ?_
+  refine Finset.prod_le_prod₀ (fun v _ => min_factor_nonneg Ks (hM.blockSizeNonneg _ _ _) (norm_nonneg _)) fun v _ => ?_
   have hav := hM.a_ne (i - s + 1) s v
   have h1 : plEmb D v t ≠ 0 := (map_ne_zero (plEmb D v)).2 ht
   have h2 : plEmb D v t' ≠ 0 := (map_ne_zero (plEmb D v)).2 ht'
@@ -1096,7 +1096,7 @@ theorem poisson_core (hstd : X.Std Ks E₀ Eg) (hχ : IsCutoff χ) (hP : Poisson
   have hdec : ∀ t, |(φ t).re| ≤ |Cc| * ∏ v, ((1 + ‖t v‖) ^ 3)⁻¹ := fun t => by
     have h1 : |(φ t).re| ≤ ‖φ t‖ := Complex.abs_re_le_norm _
     have h2 : (∏ v, (1 + ‖t v‖) ^ (-(3 : ℝ))) ≤ ∏ v, ((1 + ‖t v‖) ^ 3)⁻¹ := by
-      refine Finset.prod_le_prod (fun v _ => Real.rpow_nonneg (by positivity) _) fun v _ => ?_
+      refine Finset.prod_le_prod₀ (fun v _ => Real.rpow_nonneg (by positivity) _) fun v _ => ?_
       have hx : (1 : ℝ) ≤ 1 + ‖t v‖ := by linarith [norm_nonneg (t v)]
       have h33 : (1 + ‖t v‖) ^ (3 : ℝ) = (1 + ‖t v‖) ^ 3 := by exact_mod_cast Real.rpow_natCast (1 + ‖t v‖) 3
       rw [Real.rpow_neg (by positivity), h33]
@@ -2738,7 +2738,7 @@ theorem discrete_laC {D : D7} (a : ℕ → ℕ → D.what₂.Tau → ℂ) {L : L
     exact le_trans (norm_le_pi_norm _ v) hnorm.le
   have h4 : A * ∏ v, ‖plEmb D v t‖ ^ 2 ≤ (ε ^ 2) ^ Fintype.card D.what₂.Tau := by
     rw [hA, ← Finset.prod_mul_distrib, ← Finset.card_univ, ← Finset.prod_const]
-    refine Finset.prod_le_prod (fun v _ => by positivity) fun v _ => ?_
+    refine Finset.prod_le_prod₀ (fun v _ => by positivity) fun v _ => ?_
     rw [← mul_pow]
     exact pow_le_pow_left₀ (by positivity) (h2 v) 2
   have hε1 : ε ≤ 1 := min_le_left _ _
@@ -3948,7 +3948,7 @@ theorem block_product_le_sqrt_norm (hΘ : 1 ≤ ThS D C C (Nlet D Ks) T T' δ x 
       Real.sqrt_sq (Finset.prod_nonneg fun v _ => norm_nonneg _)]
   rw [e]
   calc ∏ v, X.abelian₂ E₁ E₂ Ks s b v ≤ ∏ v, (szL D C C (Nlet D Ks) T T' δ x b s v * ‖aDual (aG L av) δ b s v‖) := by
-        refine Finset.prod_le_prod (fun v _ => nm_lam_nonneg hH hX hϱ hkap hav hE₁ hE₁C hE₂ hE₂C _ _ v) fun v _ => ?_
+        refine Finset.prod_le_prod₀ (fun v _ => nm_lam_nonneg hH hX hϱ hkap hav hE₁ hE₁C hE₂ hE₂C _ _ v) fun v _ => ?_
         rw [nm_norm_aDual hH hX hϱ hkap hav hE₁ hE₁C hE₂ hE₂C hb v, mul_div_assoc', le_div_iff₀
           (nm_aG_pos hH hX hϱ hkap hav hE₁ hE₁C hE₂ hE₂C hb v), mul_comm (szL D C C (Nlet D Ks) T T' δ x b s v)]
         exact lam_le hH hX hϱ hkap hav hE₁ hE₁C hE₂ hE₂C hb v
@@ -3981,7 +3981,7 @@ theorem nm_claim1 (hDD : DualDensity D δ L) {b s : ℕ} (hb : IsBlockSL2Embeddi
   refine nm_alg (R := ∏ _v : D.what₂.Tau, L.ρ b s ^ 2) (KA := ∏ v, kaV D δ v ^ 2)
     (Finset.prod_pos fun _ _ => pow_pos hρ 2) hN hL.1.le (sq_nonneg _) ?_ ?_
   · rw [← Finset.prod_mul_distrib, ← Finset.prod_mul_distrib, ← Finset.prod_pow, ← Finset.prod_mul_distrib]
-    refine Finset.prod_le_prod (fun v _ => by positivity) fun v _ => ?_
+    refine Finset.prod_le_prod₀ (fun v _ => by positivity) fun v _ => ?_
     obtain ⟨g0, g1⟩ := nm_lamG_le hH hX hϱ hkap hav hE₁ hE₁C hE₂ hE₂C hb v
     rw [norm_aG hL hav hb v] at g1
     have hk0 : 0 ≤ kap v ^ (2 * b + s - 3) * L.ρ b s := by
@@ -4118,7 +4118,7 @@ theorem block_estimate_bound (hDD : DualDensity D δ L) {E₃ C4 : ℝ} (hE₃ :
               ∏ s' ∈ Finset.Ico 1 s, (L.κ * ∏ v, (kap v ^ (2 * b + s' - 3)) ^ 2) := Finset.prod_mul_distrib
         rw [e0]; ring
     _ ≤ E₃ ^ (D.R.f * s) * ∏ s' ∈ Finset.Ico 1 s, (Real.pi ^ (2 * D.R.f) * volB D C C (Nlet D Ks) T T' δ x L b s') := by
-        refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod (fun s' _ => ?_) fun s' h =>
+        refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod₀ (fun s' _ => ?_) fun s' h =>
           nm_claim1 hH hX hϱ hkap hav hE₁ hE₁C hE₂ hE₂C hDD (hblk s' h)) (pow_nonneg hE₃ _)
         exact mul_nonneg (Finset.prod_nonneg fun v _ => sq_nonneg _)
           (mul_nonneg hκ.le (Finset.prod_nonneg fun v _ => sq_nonneg _))

@@ -146,7 +146,7 @@ theorem finitePart : ∀ (K : Type) [Field K] [NumberField K], Module.finrank �
     · rw [norm_prod]
       calc ∏ v ∈ S ∪ T, ‖(twM M Sv m u v).val (finAt v g₀) ξ‖
           ≤ ∏ v ∈ S ∪ T, (if v ∈ S then max (Bf v) 1 else 1) := by
-            refine Finset.prod_le_prod (fun v _ => norm_nonneg _) fun v _ => ?_
+            refine Finset.prod_le_prod₀ (fun v _ => norm_nonneg _) fun v _ => ?_
             by_cases hv : v ∈ S
             · rw [if_pos hv]
               exact (hloc v).1.trans (le_max_left _ _)

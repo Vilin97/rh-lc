@@ -73,7 +73,7 @@ theorem levelZero_energy_le_of_eigen_sum :
   · intro i a _
     refine le_trans ?_ (hnn a.2)
     simp only [hc, he, abs_mul, hσ, one_mul, Finset.abs_prod]
-    refine Finset.prod_le_prod (fun _ _ => abs_nonneg _) (fun t _ => (abs_add_le _ _).trans ?_)
+    refine Finset.prod_le_prod₀ (fun _ _ => abs_nonneg _) (fun t _ => (abs_add_le _ _).trans ?_)
     have : |(ν i t : ℝ)| ≤ (d : ℝ) := by exact_mod_cast hν i t
     linarith
 

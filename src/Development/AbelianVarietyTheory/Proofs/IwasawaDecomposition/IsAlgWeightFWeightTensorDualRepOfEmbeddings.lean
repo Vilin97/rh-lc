@@ -76,7 +76,7 @@ theorem awfUniv_map (M : ι → Matrix (Fin n) (Fin n) K) (F : Pol K ι n) :
 
 def awfCf (ℓ : Pol K ι n →ₗ[K] K)
     (Q : MvPolynomial (ι × Fin n × Fin n) (MvPolynomial (ι × Fin n × Fin n) K)) : MvPolynomial (ι × Fin n × Fin n) K :=
-  ∑ m ∈ Q.support, MvPolynomial.coeff m Q * MvPolynomial.C (ℓ (MvPolynomial.monomial m 1))
+  ∑ m ∈ Q.support, AddMonoidAlgebra.coeff Q m * MvPolynomial.C (ℓ (MvPolynomial.monomial m 1))
 
 theorem awfCf_eval (ℓ : Pol K ι n →ₗ[K] K) (y : ι × Fin n × Fin n → K)
     (Q : MvPolynomial (ι × Fin n × Fin n) (MvPolynomial (ι × Fin n × Fin n) K)) :
@@ -85,8 +85,8 @@ theorem awfCf_eval (ℓ : Pol K ι n →ₗ[K] K) (y : ι × Fin n × Fin n → 
   rw [map_sum, map_sum, awfCf, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [MvPolynomial.map_monomial, MvPolynomial.eval_mul, MvPolynomial.eval_C,
-    show MvPolynomial.monomial m (MvPolynomial.eval y (MvPolynomial.coeff m Q)) =
-        MvPolynomial.eval y (MvPolynomial.coeff m Q) • (MvPolynomial.monomial m 1 : Pol K ι n) by
+    show MvPolynomial.monomial m (MvPolynomial.eval y (AddMonoidAlgebra.coeff Q m)) =
+        MvPolynomial.eval y (AddMonoidAlgebra.coeff Q m) • (MvPolynomial.monomial m 1 : Pol K ι n) by
       rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one], map_smul, smul_eq_mul]
 
 def awfCoord (lam : ι → DomWeight n) (i : VVIdx lam) : Pol K ι n →ₗ[K] K :=

@@ -29,7 +29,7 @@ def tabDiag {n C : ℕ} (T : Fin C → Finset (Fin n)) : Fin n × Fin n →₀ �
 
 def LeadingMinors : Prop :=
   ∀ (k : Type) [CommRing k] (n C : ℕ) (T : Fin C → Finset (Fin n)),
-    coeff (tabDiag T) (tabMinors k T) = 1 ∧
+    AddMonoidAlgebra.coeff (tabMinors k T) (tabDiag T) = 1 ∧
     (∀ e ∈ (tabMinors k T).support, e ≠ tabDiag T →
       ∃ x : Fin n × Fin n, e x < tabDiag T x ∧
         ∀ y : Fin n × Fin n, (y.1 < x.1 ∨ (y.1 = x.1 ∧ y.2 < x.2)) → e y = tabDiag T y) ∧
@@ -106,8 +106,8 @@ def LemmaA1lead : Prop :=
     IsPath n isVec B μ (N + 1) →
     ∃ ε : ℤ, (ε = 1 ∨ ε = -1) ∧
       ∀ e : ℕ × Fin n →₀ ℕ, (∀ x ∈ e.support, x.1 < N) →
-        coeff (e + ∑ m : Fin n, Finsupp.single (N, m) (|μ (N + 1) m - μ N m|).toNat)
-            (psiPath R isVec μ (N + 1) (canIdx (μ (N + 1)))) =
-          (ε : R) * coeff e (psiPath R isVec μ N (canIdx (μ N)))
+        AddMonoidAlgebra.coeff (psiPath R isVec μ (N + 1) (canIdx (μ (N + 1))))
+            (e + ∑ m : Fin n, Finsupp.single (N, m) (|μ (N + 1) m - μ N m|).toNat) =
+          (ε : R) * AddMonoidAlgebra.coeff (psiPath R isVec μ N (canIdx (μ N))) e
 
 end Formalism.InvariantFactorPaths.GelfandTsetlinBases

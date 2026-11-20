@@ -88,11 +88,11 @@ theorem PSh_rowGen (a b : Fin N) (hab : a ≠ b) (u : Fin N → ℤ) (f : MvPoly
     (hf : IsWeightedHomogeneous (wZ N) f u) : PSh a b u (rowGen O a b f) := by
   classical
   rw [f.as_sum, map_sum]
-  have key : ∀ d ∈ f.support, PSh a b u (rowGen O a b (monomial d (coeff d f))) := by
+  have key : ∀ d ∈ f.support, PSh a b u (rowGen O a b (monomial d (AddMonoidAlgebra.coeff f d))) := by
     intro d hd
     have hw : Finsupp.weight (wZ N) d = u := hf (mem_support_iff.mp hd)
     rw [monomial_eq, map_mul, Finsupp.prod, map_prod]
-    have h1 := (PSh_rowGen_C a b (coeff d f)).mul
+    have h1 := (PSh_rowGen_C a b (AddMonoidAlgebra.coeff f d)).mul
       (PSh.prod d.support (fun v => d v • wZ N v) (fun v => rowGen O a b (X v ^ d v)) fun v _ => by
         rw [map_pow]; exact (PSh_rowGen_X a b hab v).pow (d v))
     rw [zero_add] at h1

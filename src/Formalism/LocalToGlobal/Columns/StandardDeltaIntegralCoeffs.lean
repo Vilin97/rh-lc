@@ -49,7 +49,7 @@ theorem column_sum_eq_weight {r : ℕ} (ν : Fin n → ℕ) (u : (Fin r × Fin n
 open Classical in
 theorem product_support_weights (K : Type) [Field K] (lam : ι → DomWeight n) (f : ι → MvPolynomial (Fin n × Fin n) K)
     (hf : ∀ τ, f τ ∈ nablaSq K n (lam τ)) (T : Finset ι) :
-    ∀ m, coeff m (∏ τ ∈ T, Formalism.GradedWeylDivisibility.blockEmb K τ (f τ)) ≠ 0 → ∀ τ s, ∑ a, m (τ, a, s) = if τ ∈ T then (lam τ).natW s else 0 := by
+    ∀ m, AddMonoidAlgebra.coeff (∏ τ ∈ T, Formalism.GradedWeylDivisibility.blockEmb K τ (f τ)) m ≠ 0 → ∀ τ s, ∑ a, m (τ, a, s) = if τ ∈ T then (lam τ).natW s else 0 := by
   classical
   induction T using Finset.induction_on with
   | empty =>
@@ -85,7 +85,7 @@ theorem product_support_weights (K : Type) [Field K] (lam : ι → DomWeight n) 
       simp only [this, Finset.sum_const_zero, zero_add, Finset.mem_insert, hτ, false_or]
 
 theorem coefficient_space_support (K : Type) [Field K] (lam : ι → DomWeight n) {F : Pol K ι n} (hF : F ∈ VV K lam) :
-    ∀ m, coeff m F ≠ 0 → MonOK lam m := by
+    ∀ m, AddMonoidAlgebra.coeff F m ≠ 0 → MonOK lam m := by
   unfold VV Formalism.GradedWeylDivisibility.tensorLat at hF
   induction hF using Submodule.span_induction with
   | mem x hx =>
@@ -96,8 +96,8 @@ theorem coefficient_space_support (K : Type) [Field K] (lam : ι → DomWeight n
   | zero => intro m hm; exact absurd (coeff_zero m) hm
   | add x y _ _ hx hy =>
     intro m hm
-    rw [coeff_add] at hm
-    by_cases h : coeff m x = 0
+    rw [MvPolynomial.coeff_add] at hm
+    by_cases h : AddMonoidAlgebra.coeff x m = 0
     · exact hy m (by rw [h, zero_add] at hm; exact hm)
     · exact hx m h
   | smul c x _ hx =>
@@ -108,12 +108,12 @@ theorem coefficient_space_support (K : Type) [Field K] (lam : ι → DomWeight n
 variable {K : Type} [Field K]
 
 def cfMap (lam : ι → DomWeight n) (g : ι → GL (Fin n) K) : VV K lam →ₗ[K] (MonI lam → K) where
-  toFun x := fun m => coeff m.1 (trAct g x.1)
+  toFun x := fun m => AddMonoidAlgebra.coeff (trAct g x.1) m.1
   map_add' x y := by funext m; simp
   map_smul' c x := by funext m; simp
 
 theorem cfMap_apply (lam : ι → DomWeight n) (g : ι → GL (Fin n) K) (x : VV K lam) (m : MonI lam) :
-    cfMap lam g x m = coeff m.1 (trAct g x.1) := rfl
+    cfMap lam g x m = AddMonoidAlgebra.coeff (trAct g x.1) m.1 := rfl
 
 theorem transpose_action_mem (lam : ι → DomWeight n) (g : ι → GL (Fin n) K) {F : Pol K ι n} (hF : F ∈ VV K lam) : trAct g F ∈ VV K lam :=
   (Formalism.GradedWeylDivisibility.blockActTensor K K ι n n (fun τ => ((g τ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K)ᵀ)).2
@@ -164,18 +164,18 @@ def locRing (w : HeightOneSpectrum (𝓞 K)) : Subring K where
 
 theorem mem_locRing (w : HeightOneSpectrum (𝓞 K)) (x : K) : x ∈ locRing w ↔ x ∈ localization₂ w.asIdeal (1 : Submodule (𝓞 K) K) := Iff.rfl
 
-theorem mem_range_of_coeff_mem {σ : Type} (R0 : Subring K) {P : MvPolynomial σ K} (h : ∀ m, coeff m P ∈ R0) :
+theorem mem_range_of_coeff_mem {σ : Type} (R0 : Subring K) {P : MvPolynomial σ K} (h : ∀ m, AddMonoidAlgebra.coeff P m ∈ R0) :
     P ∈ (map (σ := σ) R0.subtype).range := by
-  refine ⟨∑ m ∈ P.support, monomial m ⟨coeff m P, h m⟩, ?_⟩
+  refine ⟨∑ m ∈ P.support, monomial m ⟨AddMonoidAlgebra.coeff P m, h m⟩, ?_⟩
   rw [map_sum]
   simp only [map_monomial, Subring.coe_subtype]
   exact P.support_sum_monomial_coeff
 
 theorem coeff_mem_of_mem_range {σ : Type} (R0 : Subring K) {P : MvPolynomial σ K} (hP : P ∈ (map (σ := σ) R0.subtype).range) (m : σ →₀ ℕ) :
-    coeff m P ∈ R0 := by
+    AddMonoidAlgebra.coeff P m ∈ R0 := by
   obtain ⟨Q, rfl⟩ := hP
   rw [coeff_map]
-  exact (coeff m Q).2
+  exact (AddMonoidAlgebra.coeff Q m).2
 
 theorem block_action_integral (R0 : Subring K) {ι : Type} [Fintype ι] {n : ℕ} (U : ι → Matrix (Fin n) (Fin n) K) (hU : ∀ τ a b, U τ a b ∈ R0)
     {P : MvPolynomial (ι × Fin n × Fin n) K} (hP : P ∈ (map (σ := ι × Fin n × Fin n) R0.subtype).range) :
@@ -195,7 +195,7 @@ theorem block_action_integral (R0 : Subring K) {ι : Type} [Fintype ι] {n : ℕ
 variable {ι : Type} [Fintype ι] {n : ℕ}
 
 theorem standard_delta_integral_coeffs (lam : ι → DomWeight n) {F : Pol K ι n} (hF : F ∈ delStd K lam) (m : (ι × Fin n × Fin n) →₀ ℕ) :
-    coeff m F ∈ (1 : Submodule (𝓞 K) K) := by
+    AddMonoidAlgebra.coeff F m ∈ (1 : Submodule (𝓞 K) K) := by
   unfold delStd Formalism.GradedWeylDivisibility.tensorLat at hF
   induction hF using Submodule.span_induction with
   | mem x hx =>
@@ -210,7 +210,7 @@ theorem standard_delta_integral_coeffs (lam : ι → DomWeight n) {F : Pol K ι 
     rw [e, coeff_map]
     exact Submodule.mem_one.2 ⟨_, rfl⟩
   | zero => rw [coeff_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [coeff_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [MvPolynomial.coeff_add]; exact add_mem hx hy
   | smul c x _ hx => rw [coeff_smul]; exact Submodule.smul_mem _ c hx
 
 def twId (lam : ι → DomWeight n) (M : ι → Submodule (𝓞 K) (Fin n → K)) : Submodule (𝓞 K) K :=

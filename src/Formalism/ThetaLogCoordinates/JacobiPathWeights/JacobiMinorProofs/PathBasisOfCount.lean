@@ -17,7 +17,7 @@ section Abstract
 variable {σ X : Type} [Fintype X] [DecidableEq X]
 
 def cmat (m : X → σ →₀ ℕ) (F : X → MvPolynomial σ ℤ) : Matrix X X ℤ :=
-  Matrix.of fun x y => coeff (m y) (F x)
+  Matrix.of fun x y => AddMonoidAlgebra.coeff (F x) (m y)
 
 theorem expand (m : X → σ →₀ ℕ) (hm : Function.Injective m) (F : X → MvPolynomial σ ℤ)
     (hF : ∀ x, ∀ d ∈ (F x).support, d ∈ Set.range m) (S : Type) [CommRing S] (x : X) :
@@ -35,7 +35,7 @@ theorem expand (m : X → σ →₀ ℕ) (hm : Function.Injective m) (F : X → 
     · intro y _ hy
       rw [if_neg (hm.ne hy)]
     · simp
-  · have h0 : coeff d (F x) = 0 := by
+  · have h0 : AddMonoidAlgebra.coeff (F x) d = 0 := by
       by_contra h
       exact hd (hF x d (mem_support_iff.mpr h))
     rw [h0, map_zero, Finset.sum_eq_zero]

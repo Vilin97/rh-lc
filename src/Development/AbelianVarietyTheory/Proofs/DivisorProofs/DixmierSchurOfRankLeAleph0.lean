@@ -44,7 +44,7 @@ theorem linearIndependent_of_sub_apply_eq {V : Type*} [AddCommGroup V] [Module �
     have hinj := ((Module.End.isUnit_iff _).1 hu).1
     exact hv (hinj (by rw [hq0, map_zero]))
   have h2 : eval i q = g i * ∏ j ∈ s.erase i, (i - j) := by
-    rw [hqdef, eval_finset_sum, Finset.sum_eq_single i]
+    rw [hqdef, Polynomial.eval_finsetSum, Finset.sum_eq_single i]
     · simp [eval_prod]
     · intro k _ hki
       rw [eval_mul, eval_prod, Finset.prod_eq_zero (i := i) (Finset.mem_erase.2 ⟨hki.symm, hi⟩)

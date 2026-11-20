@@ -24,7 +24,7 @@ private theorem exists_sec_notMem {p : Ideal (rees N)} (hp : ¬ Irr (reesGr N) �
   have hle : Ideal.span (reesGr N (e i) : Set (rees N)) ≤ p := by
     rw [Ideal.span_le]
     intro q hq
-    have hc : MvPolynomial.coeff (Finsupp.single i 1) (q : MvPolynomial (Fin k) A) ∈ N i := by
+    have hc : AddMonoidAlgebra.coeff (q : MvPolynomial (Fin k) A) (Finsupp.single i 1) ∈ N i := by
       have := q.2 (Finsupp.single i 1)
       rwa [lat_single] at this
     have hq' : q = sec N i _ hc := by

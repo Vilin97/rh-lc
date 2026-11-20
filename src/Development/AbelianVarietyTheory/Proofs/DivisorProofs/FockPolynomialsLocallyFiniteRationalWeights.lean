@@ -102,7 +102,7 @@ theorem mem_of_monomials {σ : Type} (N : Submodule ℂ (MvPolynomial σ ℂ))
     (h : ∀ α, monomial α (1 : ℂ) ∈ N) (P : MvPolynomial σ ℂ) : P ∈ N := by
   rw [P.as_sum]
   refine Submodule.sum_mem _ fun α _ => ?_
-  have := N.smul_mem (coeff α P) (h α)
+  have := N.smul_mem (AddMonoidAlgebra.coeff P α) (h α)
   rwa [smul_monomial, smul_eq_mul, mul_one] at this
 
 theorem monomial_mem_weightSpace_fockAction_first {p q r s : ℕ} (α : Ln p q r s →₀ ℕ) :

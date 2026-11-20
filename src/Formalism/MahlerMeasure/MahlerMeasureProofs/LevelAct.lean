@@ -16,7 +16,7 @@ theorem tieF_apply' (g : MvPolynomial σ k) :
   simp [tieF]
 
 theorem coeff_X_mul_pderiv' (i : σ) (p : MvPolynomial σ k) (m : σ →₀ ℕ) :
-    coeff m (X i * pderiv i p) = coeff m p * (m i : k) := by
+    AddMonoidAlgebra.coeff (X i * pderiv i p) m = AddMonoidAlgebra.coeff p m * (m i : k) := by
   classical
   refine MvPolynomial.induction_on' p ?_ ?_
   · intro s a
@@ -39,7 +39,7 @@ theorem coeff_X_mul_pderiv' (i : σ) (p : MvPolynomial σ k) (m : σ →₀ ℕ)
     · subst h; rfl
     · simp
   · intro p q hp hq
-    simp only [map_add, mul_add, coeff_add, hp, hq, add_mul]
+    simp only [map_add, mul_add, MvPolynomial.coeff_add, hp, hq, add_mul]
 
 theorem euler_w_of_biHom {a b : ℕ} {g : MvPolynomial σ k} (h : BiHom w e a b g) :
     (∑ c, X (w c) * pderiv (w c) g) = (a : k) • g := by
@@ -47,7 +47,7 @@ theorem euler_w_of_biHom {a b : ℕ} {g : MvPolynomial σ k} (h : BiHom w e a b 
   rw [MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, smul_eq_mul]
   simp_rw [coeff_X_mul_pderiv']
   rw [← Finset.mul_sum]
-  by_cases hm : coeff m g = 0
+  by_cases hm : AddMonoidAlgebra.coeff g m = 0
   · rw [hm]; simp
   · obtain ⟨h1, -⟩ := h m (MvPolynomial.mem_support_iff.mpr hm)
     rw [← h1, Nat.cast_sum]
@@ -59,7 +59,7 @@ theorem euler_e_of_biHom {a b : ℕ} {g : MvPolynomial σ k} (h : BiHom w e a b 
   rw [MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, smul_eq_mul]
   simp_rw [coeff_X_mul_pderiv']
   rw [← Finset.mul_sum]
-  by_cases hm : coeff m g = 0
+  by_cases hm : AddMonoidAlgebra.coeff g m = 0
   · rw [hm]; simp
   · obtain ⟨-, h2⟩ := h m (MvPolynomial.mem_support_iff.mpr hm)
     rw [← h2, Nat.cast_sum]

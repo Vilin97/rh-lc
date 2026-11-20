@@ -34,10 +34,10 @@ theorem rename_swap_eq_of_pderiv_eq : ∀ (n : ℕ) (i i' : Fin (n + 1)) (K : Mv
   · subst hii; simp [Equiv.swap_self, rename_id]
   ext m
   set β0 : Fin (n + 1) →₀ ℕ := (m.erase i).erase i' with hβ0
-  set f : ℕ → ℕ → ℝ := fun a b => coeff (β0 + Finsupp.single i a + Finsupp.single i' b) K with hf
+  set f : ℕ → ℕ → ℝ := fun a b => AddMonoidAlgebra.coeff K (β0 + Finsupp.single i a + Finsupp.single i' b) with hf
   have hrec : ∀ a b, f a (b + 1) * ((b : ℝ) + 1) = f (a + 1) b * ((a : ℝ) + 1) := by
     intro a b
-    have h1 := congrArg (coeff (β0 + Finsupp.single i a + Finsupp.single i' b)) hK
+    have h1 := congrArg (AddMonoidAlgebra.coeff · (β0 + Finsupp.single i a + Finsupp.single i' b)) hK
     rw [coeff_pderiv, coeff_pderiv] at h1
     have ei : (β0 + Finsupp.single i a + Finsupp.single i' b) i = a := by
       simp [hβ0, Finsupp.single_apply, Ne.symm hii, hii]
@@ -75,9 +75,9 @@ theorem rename_swap_eq_of_pderiv_eq : ∀ (n : ℕ) (i i' : Fin (n + 1)) (K : Mv
       · subst hj'; simp [hβ0, Finsupp.single_apply, hii, Ne.symm hii]
       · rw [Equiv.swap_apply_of_ne_of_ne hj hj']
         simp [hβ0, Finsupp.single_apply, hj, hj', Ne.symm hj, Ne.symm hj']
-  have h1 : coeff m (rename (Equiv.swap i i') K) = coeff m' K := by
+  have h1 : AddMonoidAlgebra.coeff (rename (Equiv.swap i i') K) m = AddMonoidAlgebra.coeff K m' := by
     rw [← coeff_rename_mapDomain _ (Equiv.swap i i').injective K m', hmm]
-  have hfm : f (m i) (m i') = coeff m K := by
+  have hfm : f (m i) (m i') = AddMonoidAlgebra.coeff K m := by
     simp only [hf]; rw [← hm]
   rw [h1, hm'e]
   exact (hsym (m i') (m i)).trans hfm

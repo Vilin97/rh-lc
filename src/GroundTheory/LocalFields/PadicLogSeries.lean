@@ -121,7 +121,7 @@ theorem four_mul_padicValNat_le (p : ℕ) [hp : Fact p.Prime] (c : ℕ) {n : ℕ
     4 * c * padicValNat p n ≤ n + 32 * c ^ 2 := by
   set v := padicValNat p n
   have h1 : 2 ^ v ≤ p ^ v := Nat.pow_le_pow_left hp.out.two_le v
-  have h2 : p ^ v ≤ n := Nat.le_of_dvd (Nat.pos_of_ne_zero hn) pow_padicValNat_dvd
+  have h2 : p ^ v ≤ n := Nat.le_of_dvd (Nat.pos_of_ne_zero hn) (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
   have h3 := mul_self_le_two_pow_succ v
   rw [pow_succ] at h3
   rcases Nat.lt_or_ge v (8 * c) with h | h
@@ -132,7 +132,7 @@ theorem sub_one_mul_padicValNat_lt (p : ℕ) [hp : Fact p.Prime] {n : ℕ} (hn :
     (p - 1) * padicValNat p n < n := by
   have h : padicValNat p n ≤ padicValNat p n.factorial := by
     rw [← padicValNat_dvd_iff_le (Nat.factorial_ne_zero n)]
-    exact pow_padicValNat_dvd.trans (Nat.dvd_factorial (Nat.pos_of_ne_zero hn) le_rfl)
+    exact (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)).trans (Nat.dvd_factorial (Nat.pos_of_ne_zero hn) le_rfl)
   exact lt_of_le_of_lt (Nat.mul_le_mul_left _ h)
     (sub_one_mul_padicValNat_factorial_lt_of_ne_zero p hn)
 
@@ -178,7 +178,7 @@ theorem normalizedValuation_natCast {n : ℕ} (hn : n ≠ 0) :
       WithZero.exp (-(absRamificationIndex K * padicValNat p n : ℤ)) := by
   obtain ⟨k, m, hm, rfl⟩ := Nat.exists_eq_pow_mul_and_not_dvd hn p hp.out.ne_one
   have hm0 : m ≠ 0 := by rintro rfl; exact hm (dvd_zero p)
-  rw [padicValNat.mul (pow_ne_zero _ hp.out.ne_zero) hm0, padicValNat.prime_pow,
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.out.ne_zero) hm0, padicValNat.prime_pow,
     padicValNat.eq_zero_of_not_dvd hm]
   push_cast
   rw [map_mul, map_pow, normalizedValuation_natCast_prime p,

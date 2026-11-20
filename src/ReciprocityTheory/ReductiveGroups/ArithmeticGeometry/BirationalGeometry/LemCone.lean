@@ -23,7 +23,7 @@ private theorem coeff_coneMap_eq_aeval_homogeneousComponent (x : ι → Ω) (f :
     (coneMap o x f).coeff d = aeval x (homogeneousComponent d f) := by
   classical
   conv_lhs => rw [f.as_sum, map_sum]
-  rw [Polynomial.finset_sum_coeff]
+  rw [Polynomial.finsetSum_coeff]
   simp only [coneMap_monomial', Polynomial.coeff_C_mul_X_pow]
   rw [homogeneousComponent_apply, map_sum, Finset.sum_filter]
   refine Finset.sum_congr rfl fun e _ => ?_

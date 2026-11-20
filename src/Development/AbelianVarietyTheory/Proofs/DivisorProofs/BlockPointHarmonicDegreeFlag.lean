@@ -26,7 +26,7 @@ private theorem apolar_symm (P Q : MvPolynomial V ℝ) : apolar P Q = apolar Q P
       · subst h; simp; ring
       · simp [h, Ne.symm h]
     | add p q hp hq =>
-      rw [map_add, ← hp, ← hq, apolar_monomial, apolar_monomial, apolar_monomial, coeff_add]; ring
+      rw [map_add, ← hp, ← hq, apolar_monomial, apolar_monomial, apolar_monomial, MvPolynomial.coeff_add]; ring
   | add p q hp hq =>
     have h := apolar_sum_left (Finset.univ : Finset Bool) (fun _ => 1) (fun t => if t then p else q) P
     simp at h

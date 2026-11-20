@@ -120,8 +120,8 @@ variable {k : ℕ}
 private noncomputable def amWt (w : FreeMonoid (Fin k)) : Fin k →₀ ℕ := Multiset.toFinsupp (w.toList : Multiset (Fin k))
 
 private def amGood (n : ℕ) (Q : MvPolynomial (Fin k) (MvPolynomial (ℕ × FreeMonoid (Fin k)) ℤ)) : Prop :=
-  ∀ β, MvPolynomial.coeff β Q ∈ MvPolynomial.supported ℤ {v : ℕ × FreeMonoid (Fin k) | 1 ≤ v.1 ∧ v.1 ≤ n ∧ v.2 ≠ 1} ∧
-    (MvPolynomial.coeff β Q).IsWeightedHomogeneous (fun v => v.1 • amWt v.2) β
+  ∀ β, AddMonoidAlgebra.coeff Q β ∈ MvPolynomial.supported ℤ {v : ℕ × FreeMonoid (Fin k) | 1 ≤ v.1 ∧ v.1 ≤ n ∧ v.2 ≠ 1} ∧
+    (AddMonoidAlgebra.coeff Q β).IsWeightedHomogeneous (fun v => v.1 • amWt v.2) β
 
 private theorem amGood_mon (n : ℕ) (γ : Fin k →₀ ℕ) (P : MvPolynomial (ℕ × FreeMonoid (Fin k)) ℤ)
     (h1 : P ∈ MvPolynomial.supported ℤ {v : ℕ × FreeMonoid (Fin k) | 1 ≤ v.1 ∧ v.1 ≤ n ∧ v.2 ≠ 1})
@@ -210,7 +210,7 @@ end Pol
 end UpperTheory.V.CA
 
 theorem UpperTheory.V.CA.d_amitsur :
-    ∀ (n k : ℕ) (α : Fin k →₀ ℕ), ∃ P : MvPolynomial (ℕ × FreeMonoid (Fin k)) ℤ, (∀ v ∈ P.vars, 1 ≤ v.1 ∧ v.1 ≤ n ∧ v.2 ≠ 1) ∧ P.IsWeightedHomogeneous (fun v => v.1 • Multiset.toFinsupp (v.2.toList : Multiset (Fin k))) α ∧ ∀ {A E : Type} [CommRing A] [Ring E] [Algebra A E] (D : Det n A E) (x : Fin k → E), MvPolynomial.coeff α (D.D (MvPolynomial (Fin k) A) (1 + Det.gen x)) = MvPolynomial.aeval (fun v => D.lam v.1 (FreeMonoid.lift x v.2)) P := by
+    ∀ (n k : ℕ) (α : Fin k →₀ ℕ), ∃ P : MvPolynomial (ℕ × FreeMonoid (Fin k)) ℤ, (∀ v ∈ P.vars, 1 ≤ v.1 ∧ v.1 ≤ n ∧ v.2 ≠ 1) ∧ P.IsWeightedHomogeneous (fun v => v.1 • Multiset.toFinsupp (v.2.toList : Multiset (Fin k))) α ∧ ∀ {A E : Type} [CommRing A] [Ring E] [Algebra A E] (D : Det n A E) (x : Fin k → E), AddMonoidAlgebra.coeff (D.D (MvPolynomial (Fin k) A) (1 + Det.gen x)) α = MvPolynomial.aeval (fun v => D.lam v.1 (FreeMonoid.lift x v.2)) P := by
   intro n k α
   obtain ⟨L, hL, hu⟩ := am_univ k α.degree
   have hg := amGood_prod n L hL α
@@ -242,8 +242,8 @@ theorem UpperTheory.V.CA.d_amitsur :
     congr 1
     simp [φ, mul_comm]
   have h3 := MvPolynomial.mem_ideal_span_monomial_image.1 (Ideal.Quotient.eq.1 h2)
-  have h4 : MvPolynomial.coeff α (D.D (MvPolynomial (Fin k) A) (1 + Det.gen x) -
-      MvPolynomial.map φ (L.map (amF n)).prod) = 0 := by
+  have h4 : AddMonoidAlgebra.coeff (D.D (MvPolynomial (Fin k) A) (1 + Det.gen x) -
+      MvPolynomial.map φ (L.map (amF n)).prod) α = 0 := by
     by_contra h
     obtain ⟨β, hβ, hle⟩ := h3 α (MvPolynomial.mem_support_iff.2 h)
     exact absurd (Finsupp.degree_mono hle) (not_le.2 hβ)

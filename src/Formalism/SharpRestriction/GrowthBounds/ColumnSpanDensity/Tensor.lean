@@ -9,7 +9,7 @@ namespace Formalism.MainNotions.flipOneThree.Pf
 open Formalism.MainNotions.G Formalism.MainNotions.flipOneThree Formalism.MainNotions.G.LatticeSystems Formalism.GradedWeylDivisibility MvPolynomial
 
 theorem tn_const {A : Type} [CommRing A] (r n : ℕ) (f : MvPolynomial (Fin r × Fin n) A)
-    (hf : f ∈ dualWeyl A r n 0) : f = C (coeff 0 f) := by
+    (hf : f ∈ dualWeyl A r n 0) : f = C (AddMonoidAlgebra.coeff f 0) := by
   have hf' := (Submodule.mem_inf.mp hf).1
   rw [mem_weightedHomogeneousSubmodule] at hf'
   have hw : ∀ v : Fin r × Fin n, colW r n v ≠ 0 := by
@@ -66,7 +66,7 @@ theorem invariant_sections_zero_weight_iff {O Kf : Type} [CommRing O] [Field Kf]
     obtain ⟨g, hg, hΛg⟩ := hΛ
     obtain ⟨y, hy, hyF⟩ := h g hg.ne_zero hΛg
     rw [tn_const (m + 1) (m + 1) y hy, map_C] at hyF
-    refine ⟨coeff 0 y, ?_⟩
+    refine ⟨AddMonoidAlgebra.coeff y 0, ?_⟩
     have h1 : F = rowAct Kf g⁻¹ (rowAct Kf g F) := by
       rw [rowAct_invariant_zero_weight_iff, Matrix.mul_nonsing_inv g hg, tn_rowAct_one]
     rw [h1, ← hyF, tn_rowAct_C]
@@ -304,7 +304,7 @@ theorem tn_finrank_zero (Kf : Type) [Field Kf] (k n : ℕ) : Module.finrank Kf (
     rw [Submodule.mem_span_singleton]
     constructor
     · intro hf
-      refine ⟨coeff 0 f, ?_⟩
+      refine ⟨AddMonoidAlgebra.coeff f 0, ?_⟩
       conv_rhs => rw [tn_const k n f hf]
       rw [smul_eq_C_mul, mul_one]
     · rintro ⟨a, rfl⟩

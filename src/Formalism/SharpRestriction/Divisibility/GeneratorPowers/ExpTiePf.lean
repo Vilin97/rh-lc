@@ -36,7 +36,7 @@ private lemma mem_degLE_lemma {κ : Type} [Fintype κ] [DecidableEq κ] (m : ℕ
 
 private lemma coeff_psTrunc_lemma_2 {R κ : Type} [CommRing R] [Fintype κ] [DecidableEq κ] (m : ℕ)
     (f : MvPowerSeries κ R) (e : κ →₀ ℕ) (he : (e.sum fun _ k => k) ≤ m) :
-    MvPolynomial.coeff e (psTrunc m f) = MvPowerSeries.coeff e f := by
+    AddMonoidAlgebra.coeff (psTrunc m f) e = MvPowerSeries.coeff e f := by
   unfold psTrunc
   rw [MvPolynomial.coeff_sum, Finset.sum_eq_single e]
   · simp [MvPolynomial.coeff_monomial]
@@ -46,14 +46,14 @@ private lemma coeff_psTrunc_lemma_2 {R κ : Type} [CommRing R] [Fintype κ] [Dec
     exact absurd ((mem_degLE_lemma m e).2 he) h
 
 private lemma mem_orig_pow_lemma_3 {R κ : Type} [CommRing R] (m : ℕ) (p : MvPolynomial κ R)
-    (hp : ∀ e : κ →₀ ℕ, (e.sum fun _ k => k) ≤ m → MvPolynomial.coeff e p = 0) :
+    (hp : ∀ e : κ →₀ ℕ, (e.sum fun _ k => k) ≤ m → AddMonoidAlgebra.coeff p e = 0) :
     p ∈ orig R κ ^ (m + 1) := by
   rw [p.as_sum]
   refine Ideal.sum_mem _ fun e _ => ?_
   by_cases he : (e.sum fun _ k => k) ≤ m
   · rw [hp e he, map_zero]
     exact Ideal.zero_mem _
-  · have h1 : MvPolynomial.monomial e (MvPolynomial.coeff e p) ∈
+  · have h1 : MvPolynomial.monomial e (AddMonoidAlgebra.coeff p e) ∈
         orig R κ ^ (e.sum fun _ k => k) := by
       rw [MvPolynomial.monomial_eq]
       refine Ideal.mul_mem_left _ _ ?_
@@ -98,7 +98,7 @@ theorem psJet_pow {R κ : Type} [CommRing R] [Fintype κ] [DecidableEq κ] (m : 
 
 private lemma mk_eq_psJet_lemma_6 {R κ : Type} [CommRing R] [Fintype κ] [DecidableEq κ] (m : ℕ)
     (p : MvPolynomial κ R) (g : MvPowerSeries κ R)
-    (h : ∀ e : κ →₀ ℕ, (e.sum fun _ k => k) ≤ m → MvPolynomial.coeff e p = MvPowerSeries.coeff e g) :
+    (h : ∀ e : κ →₀ ℕ, (e.sum fun _ k => k) ≤ m → AddMonoidAlgebra.coeff p e = MvPowerSeries.coeff e g) :
     (Ideal.Quotient.mk (orig R κ ^ (m + 1)) p : Jet R κ m) = psJet m g := by
   unfold psJet
   rw [Ideal.Quotient.eq]
@@ -220,7 +220,7 @@ theorem jetSubstPS_psJet {S : Type} [CommRing S] {d N : ℕ} (φ : Fin d → MvP
       rw [MvPolynomial.coe_X, MvPowerSeries.coe_substAlgHom, MvPowerSeries.subst_X hs]
       have hc : MvPolynomial.constantCoeff (psTrunc m (φ n.2)) = 0 := by
         rw [show MvPolynomial.constantCoeff (psTrunc m (φ n.2)) =
-            MvPolynomial.coeff 0 (psTrunc m (φ n.2)) from rfl, coeff_psTrunc_lemma_2 m _ 0 (by simp)]
+            AddMonoidAlgebra.coeff (psTrunc m (φ n.2)) 0 from rfl, coeff_psTrunc_lemma_2 m _ 0 (by simp)]
         first
           | (rw [MvPowerSeries.coeff_zero_eq_constantCoeff_apply]; exact h0 n.2)
           | simpa using h0 n.2

@@ -13,7 +13,7 @@ theorem aeval_isWH {σ τ R : Type} [CommSemiring R] (w' : σ → ℕ) (w : τ �
   have hdeg : Finsupp.weight w' m = d := hf (mem_support_iff.mp hm)
   have hprod : IsWeightedHomogeneous w (∏ i ∈ m.support, g i ^ m i) (∑ i ∈ m.support, m i • w' i) :=
     IsWeightedHomogeneous.prod _ _ _ (fun i _ => (hg i).pow (m i))
-  have hC := (isWeightedHomogeneous_C w (coeff m f)).mul hprod
+  have hC := (isWeightedHomogeneous_C w (AddMonoidAlgebra.coeff f m)).mul hprod
   rw [zero_add] at hC
   rw [← hdeg, Finsupp.weight_apply]
   exact hC

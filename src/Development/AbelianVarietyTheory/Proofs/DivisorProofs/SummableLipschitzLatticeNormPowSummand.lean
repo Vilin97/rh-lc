@@ -154,7 +154,7 @@ theorem GlobalTheory.LipschitzTR.summable_lhsTerm_ideal :
     have h1 := hν _ hmem hne'
     have h2 : |∏ τ : F →+* ℝ, τ ((a : F) - b)| ≤ s ^ Fintype.card (F →+* ℝ) := by
       rw [Finset.abs_prod, ← Finset.card_univ, ← Finset.prod_const]
-      refine Finset.prod_le_prod (fun _ _ => abs_nonneg _) (fun τ _ => ?_)
+      refine Finset.prod_le_prod₀ (fun _ _ => abs_nonneg _) (fun τ _ => ?_)
       have hf := Int.abs_sub_lt_one_of_floor_eq_floor (congrFun hab τ)
       rw [← sub_div, abs_div, abs_of_pos hs0, div_lt_one hs0] at hf
       rw [map_sub]; exact hf.le
@@ -167,7 +167,7 @@ theorem GlobalTheory.LipschitzTR.summable_lhsTerm_ideal :
     (((summable_prod_wt (F →+* ℝ)).comp_injective hN).mul_left C) (fun a => ?_)
   simp only [lhsTerm, zpow_neg, zpow_natCast, ← Finset.prod_pow, ← Finset.prod_inv_distrib, norm_prod, norm_inv, norm_pow]
   rw [hC, ← Finset.prod_mul_distrib]
-  refine Finset.prod_le_prod (fun _ _ => by positivity) (fun τ _ => ?_)
+  refine Finset.prod_le_prod₀ (fun _ _ => by positivity) (fun τ _ => ?_)
   have hD : 0 < c τ * (s / 2) := by have := hc0 τ; positivity
   have hfl := floor_bound hs0 hs1 (τ (a : F))
   have he : c τ * (s / 2) * (1 + |((N a τ : ℤ) : ℝ)|) ≤ ‖z τ + ((τ (a : F) : ℝ) : ℂ)‖ := by

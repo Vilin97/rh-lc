@@ -13,7 +13,7 @@ open PI.WwMain PI.WwMain.KM
 theorem Lfun_eq_of_subset {Lt : Type} (l : ℕ) [Fact l.Prime] (N0 N1 : ℕ)
     (Th : MvPowerSeries (Lt × Fin N0 × Fin N1) ℂ_[l]) (P : MvPolynomial (Lt × Fin N0 × Fin N1) ℂ_[l])
     (s : Finset ((Lt × Fin N0 × Fin N1) →₀ ℕ)) (hs : P.support ⊆ s) :
-    Lfun l N0 N1 Th P = ∑ α ∈ s, coeff α P * wt l N0 N1 Th α := by
+    Lfun l N0 N1 Th P = ∑ α ∈ s, AddMonoidAlgebra.coeff P α * wt l N0 N1 Th α := by
   unfold Lfun
   exact Finset.sum_subset hs (fun α _ h => by
     rw [MvPolynomial.mem_support_iff, not_not] at h

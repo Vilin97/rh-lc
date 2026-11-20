@@ -157,7 +157,7 @@ theorem eq_zero_of_pow {ι : Type} [Fintype ι] (d : ℕ) (Φ : MvPolynomial ι 
   refine (basisMonomials ι ℝ).ext fun a => ?_
   rw [coe_basisMonomials]
   by_cases ha : a.degree = d
-  · have := congrArg (coeff a) h0
+  · have := congrArg (AddMonoidAlgebra.coeff · a) h0
     simp only [Q, coeff_sum, coeff_monomial, Equiv.symm_apply_eq, Finset.sum_ite_eq', coeff_zero] at this
     rw [if_pos (by simp [← ha, Finsupp.degree_eq_sum])] at this
     simpa [(Nat.multinomial_pos _ _).ne'] using this
@@ -211,7 +211,7 @@ private theorem eq_zero_of_isHomogeneous_of_forall_lin_pow_eq_zero {ι : Type} [
       refine ⟨?_, fun i _ => Finset.mem_univ i⟩
       rw [← hd, Finsupp.weight_apply, Finsupp.sum_fintype _ _ (by simp)]
       simp
-    have hc := congrArg (MvPolynomial.coeff d) hQ
+    have hc := congrArg (AddMonoidAlgebra.coeff · d) hQ
     rw [hQdef, MvPolynomial.coeff_sum, Finset.sum_eq_single (⇑d)] at hc
     · rw [Finsupp.equivFunOnFinite_symm_coe, MvPolynomial.coeff_monomial, if_pos rfl,
         MvPolynomial.coeff_zero] at hc
@@ -229,8 +229,8 @@ private theorem eq_zero_of_isHomogeneous_of_forall_lin_pow_eq_zero {ι : Type} [
   rw [P.as_sum, map_sum]
   refine Finset.sum_eq_zero fun d hd => ?_
   have hw := hP (MvPolynomial.mem_support_iff.mp hd)
-  have hsm : MvPolynomial.monomial d (MvPolynomial.coeff d P) =
-      MvPolynomial.coeff d P • MvPolynomial.monomial d (1 : ℝ) := by
+  have hsm : MvPolynomial.monomial d (AddMonoidAlgebra.coeff P d) =
+      AddMonoidAlgebra.coeff P d • MvPolynomial.monomial d (1 : ℝ) := by
     rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
   rw [hsm, map_smul, hmon d hw, smul_zero]
 

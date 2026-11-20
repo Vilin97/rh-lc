@@ -138,7 +138,7 @@ theorem height_le_normInf_pow (hθ : IsInfFam θ) : ∃ d : ℕ, ∀ g ∈ GinfC
     simp [GlobalTheory.SmoothForms.HeightCoset.infHt_rank_zero θ V h0]
   · refine ⟨Fintype.card D.what₂.Tau, fun g hg => ?_⟩
     rw [height_eq_prod_infHt V hθ hg, ← Finset.card_univ, ← Finset.prod_const]
-    exact Finset.prod_le_prod (fun τ _ => NNReal.coe_nonneg _)
+    exact Finset.prod_le_prod₀ (fun τ _ => NNReal.coe_nonneg _)
       (fun τ _ => GlobalTheory.SmoothForms.HeightCoset.infHt_le_normInf θ V hpos τ g)
 
 theorem normInf_height_comparison (D : D7) (V : HSp D)

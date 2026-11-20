@@ -43,7 +43,7 @@ theorem char_ge (a : ℕ) (lam : Fin a → ℝ) (L : ℕ) (hL : ∑ i, |lam i| �
         rw [Finset.sum_neg_distrib]; linarith
     _ = ∏ i, K ^ (-|lam i|) := Real.rpow_sum_of_pos hK0 _ _
     _ ≤ ∏ i, r i ^ lam i :=
-        Finset.prod_le_prod (fun i _ => Real.rpow_nonneg hK0.le _) (fun i _ => hi i)
+        Finset.prod_le_prod₀ (fun i _ => Real.rpow_nonneg hK0.le _) (fun i _ => hi i)
 
 theorem key (a : ℕ) (lam : Fin a → ℝ) (L N : ℕ) (hL : ∑ i, |lam i| ≤ L) (C0 : ℝ) (hC0 : 1 ≤ C0)
     (r : Fin a → ℝ) (hr : ∀ i, 0 < r i) (ρ : ℝ) (hρ : 1 ≤ ρ)

@@ -75,7 +75,7 @@ theorem limVal : GlobalTheory.CovTop.HypothesesXH → Hypotheses2 → Hypotheses
     show Tendsto _ _ _
     have hd : Formalism.DegreeFormula.degFl D.what₂.Tau O.Y.N (x + y) =
         Formalism.DegreeFormula.degFl D.what₂.Tau O.Y.N x + Formalism.DegreeFormula.degFl D.what₂.Tau O.Y.N y := by
-      simp only [Formalism.DegreeFormula.degFl, coeff_add, mul_add, Finset.sum_add_distrib]
+      simp only [Formalism.DegreeFormula.degFl, MvPolynomial.coeff_add, mul_add, Finset.sum_add_distrib]
     have hxy := hx.add hy
     rw [add_zero] at hxy
     refine hxy.congr fun R => ?_

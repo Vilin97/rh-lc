@@ -167,7 +167,7 @@ theorem real_form_finite : RealFinite := by
     rw [p.as_sum]
     refine Submodule.sum_mem _ fun d hd => ?_
     have hdS : Finsupp.weight (colW r n) d = ν := hp (mem_support_iff.1 hd)
-    rw [show monomial d (coeff d p) = coeff d p • monomial d (1 : ℚ) by rw [smul_monomial, smul_eq_mul, mul_one]]
+    rw [show monomial d (AddMonoidAlgebra.coeff p d) = AddMonoidAlgebra.coeff p d • monomial d (1 : ℚ) by rw [smul_monomial, smul_eq_mul, mul_one]]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨d, hdS, rfl⟩)
   haveI : FiniteDimensional ℚ ↥(Submodule.span ℚ ((fun d => monomial d (1 : ℚ)) ''
       {d | Finsupp.weight (colW r n) d = ν})) := FiniteDimensional.span_of_finite ℚ (hfin.image _)

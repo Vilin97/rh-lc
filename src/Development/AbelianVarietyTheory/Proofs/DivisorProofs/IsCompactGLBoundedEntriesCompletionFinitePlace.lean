@@ -44,7 +44,7 @@ theorem isCompact_le (c : WithZero (Multiplicative ℤ)) :
         rw [map_mul, hvu]
         exact mul_le_of_le_one_right' hy
     rw [e]
-    exact hO.image (continuous_mul_left u)
+    exact hO.image (continuous_const_mul u)
 
 theorem isCompact_bounded : ∀ (E : Type) [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (n : ℕ)
     (c : WithZero (Multiplicative ℤ)), IsCompact {g : GL (Fin n) (w.adicCompletion E) | ∀ i j,

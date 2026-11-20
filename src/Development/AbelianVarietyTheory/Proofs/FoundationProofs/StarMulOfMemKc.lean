@@ -208,7 +208,7 @@ theorem polJ_le_exp (B : Matrix (Fin p) (Fin q) ℂ) : polJ (pOf B) ≤
   have hA : ∏ i ∈ Finset.range m, shc (2 * s i) * shc (s i) ^ (2 * D) ≤
       Real.exp ((2 + 2 * (D : ℝ)) * ∑ i ∈ Finset.range m, s i) := by
     rw [Finset.mul_sum, Real.exp_sum]
-    refine Finset.prod_le_prod (fun i _ => mul_nonneg (hs _) (pow_nonneg (hs _) _)) fun i _ => ?_
+    refine Finset.prod_le_prod₀ (fun i _ => mul_nonneg (hs _) (pow_nonneg (hs _) _)) fun i _ => ?_
     have a1 := shc_le_exp (2 * s i)
     have a2 := shc_le_exp (s i)
     rw [abs_of_nonneg (by linarith [h0 i])] at a1 a2
@@ -219,10 +219,10 @@ theorem polJ_le_exp (B : Matrix (Fin p) (Fin q) ℂ) : polJ (pOf B) ≤
       if i < j then (shc (s i - s j) * shc (s i + s j)) ^ 2 else 1) ≤
       Real.exp (4 * (((m : ℝ) - 1) * ∑ i ∈ Finset.range m, s i)) := by
     rw [← sum_sum_ite_lt, Finset.mul_sum, Real.exp_sum]
-    refine Finset.prod_le_prod (fun i _ => Finset.prod_nonneg fun j _ => by split_ifs <;> positivity)
+    refine Finset.prod_le_prod₀ (fun i _ => Finset.prod_nonneg fun j _ => by split_ifs <;> positivity)
       fun i _ => ?_
     rw [Finset.mul_sum, Real.exp_sum]
-    refine Finset.prod_le_prod (fun j _ => by split_ifs <;> positivity) fun j _ => ?_
+    refine Finset.prod_le_prod₀ (fun j _ => by split_ifs <;> positivity) fun j _ => ?_
     split_ifs
     · have a1 := (shc_le_exp (s i - s j)).trans (Real.exp_le_exp.2
         (show |s i - s j| ≤ s i + s j from abs_le.2 ⟨by linarith [h0 i], by linarith [h0 j]⟩))

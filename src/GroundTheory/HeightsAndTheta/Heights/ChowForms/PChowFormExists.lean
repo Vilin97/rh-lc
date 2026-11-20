@@ -15,7 +15,7 @@ theorem constantCoeff_eq_zero_of_isProjPrime {F : Type*} [Field F] {n : ℕ}
   rw [homogeneousComponent_zero] at h0
   apply hP.isPrime.ne_top
   refine Ideal.eq_top_of_isUnit_mem _ h0 ?_
-  have hc : coeff 0 f ≠ 0 := by simpa [constantCoeff] using h
+  have hc : AddMonoidAlgebra.coeff f 0 ≠ 0 := by simpa [constantCoeff] using h
   exact hc.isUnit.map C
 
 theorem one_le_of_isProjPrime {F : Type*} [Field F] {n k : ℕ}

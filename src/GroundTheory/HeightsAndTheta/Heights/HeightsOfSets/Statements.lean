@@ -85,7 +85,7 @@ theorem chartSection_supNormLE (P : ArithVariety n) (c0 : (k : ι) → Fin (n k 
   rw [h1, norm_mul, Real.exp_zero, div_le_one (mul_pos hmn hpos), mul_comm]
   refine mul_le_mul_of_nonneg_left ?_ hmn.le
   rw [evalCone_chartMonomial, norm_prod]
-  refine Finset.prod_le_prod (fun k _ ↦ norm_nonneg _) (fun k _ ↦ ?_)
+  refine Finset.prod_le_prod₀ (fun k _ ↦ norm_nonneg _) (fun k _ ↦ ?_)
   simpa using norm_le_l2Norm (z k) (c0 k)
 
 end Inhabitants

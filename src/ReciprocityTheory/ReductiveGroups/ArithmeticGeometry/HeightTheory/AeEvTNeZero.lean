@@ -56,7 +56,7 @@ theorem ae_evT_ne_zero (sg : K →+* ℂ) (q : KTp K d.D d.N) (hq : q ≠ 0) (m 
   have hg : ReciprocityTheory.MultiplicativeHeights.IsMultiHomogeneous (fun b : Fin d.D => m b.succ) g := by
     unfold ReciprocityTheory.MultiplicativeHeights.IsMultiHomogeneous
     intro s hs b
-    have hs' : MvPolynomial.coeff s q' ≠ 0 := by
+    have hs' : AddMonoidAlgebra.coeff q' s ≠ 0 := by
       rw [hgdef, MvPolynomial.mem_support_iff, MvPolynomial.coeff_map] at hs
       intro h0
       rw [h0, map_zero] at hs

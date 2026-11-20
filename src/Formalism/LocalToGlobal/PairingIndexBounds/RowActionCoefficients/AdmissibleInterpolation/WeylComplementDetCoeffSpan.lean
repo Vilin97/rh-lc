@@ -13,7 +13,7 @@ section Coeff
 variable {R : Type*} [CommRing R] {A : Type*} [CommRing A] [Algebra R A] {τ : Type*}
 
 theorem eval_mem_span (F : MvPolynomial τ A) (p : τ → R) :
-    eval (fun t => algebraMap R A (p t)) F ∈ Submodule.span R (Set.range fun m => coeff m F) := by
+    eval (fun t => algebraMap R A (p t)) F ∈ Submodule.span R (Set.range fun m => AddMonoidAlgebra.coeff F m) := by
   classical
   rw [MvPolynomial.eval_eq]
   refine Submodule.sum_mem _ fun d _ => ?_
@@ -25,11 +25,11 @@ theorem eval_mem_span (F : MvPolynomial τ A) (p : τ → R) :
 theorem coeff_twist_mem (ρ : A →+* Polynomial A) (ψ : τ → MvPolynomial τ (Polynomial R)) (H : MvPolynomial τ A)
     (hH : map ρ H = eval₂ ((C : Polynomial A →+* MvPolynomial τ (Polynomial A)).comp Polynomial.C)
         (fun t => map (Polynomial.mapRingHom (algebraMap R A)) (ψ t)) H) (m : τ →₀ ℕ) (k : ℕ) :
-    (ρ (coeff m H)).coeff k ∈ Submodule.span R (Set.range fun m => coeff m H) := by
+    (ρ (AddMonoidAlgebra.coeff H m)).coeff k ∈ Submodule.span R (Set.range fun m => AddMonoidAlgebra.coeff H m) := by
   classical
   set g : τ → MvPolynomial τ (Polynomial A) := fun t => map (Polynomial.mapRingHom (algebraMap R A)) (ψ t) with hg
   set f := (C : Polynomial A →+* MvPolynomial τ (Polynomial A)).comp Polynomial.C with hf
-  have e1 : eval₂ f g H = ∑ d ∈ H.support, eval₂ f g (monomial d (coeff d H)) := by
+  have e1 : eval₂ f g H = ∑ d ∈ H.support, eval₂ f g (monomial d (AddMonoidAlgebra.coeff H d)) := by
     conv_lhs => rw [H.as_sum]
     exact map_sum (eval₂Hom f g) _ _
   rw [← coeff_map, hH, e1, coeff_sum, Polynomial.finsetSum_coeff]
@@ -100,14 +100,14 @@ theorem weight_rowInd {n : ℕ} (a : Fin n) (d : Fin n × Fin n →₀ ℕ) :
 theorem rowDiv_diag {n : ℕ} (a : Fin n) (k : ℕ) (f : MvPolynomial (Fin n × Fin n) R) (z : ℤ)
     (hf : IsWeightedHomogeneous (rowInd a) f z) : rowDiv R a a k f = (z.toNat.choose k) • f := by
   classical
-  have e : ∀ d ∈ f.support, rowDiv R a a k (monomial d (coeff d f)) = (z.toNat.choose k) • monomial d (coeff d f) := by
+  have e : ∀ d ∈ f.support, rowDiv R a a k (monomial d (AddMonoidAlgebra.coeff f d)) = (z.toNat.choose k) • monomial d (AddMonoidAlgebra.coeff f d) := by
     intro d hd
     have hw := hf (mem_support_iff.mp hd)
     rw [weight_rowInd] at hw
     rw [rowDiv, rowGen_diag_monomial, Polynomial.coeff_C_mul, Polynomial.coeff_X_add_one_pow, ← hw, Int.toNat_natCast,
       mul_comm, ← nsmul_eq_mul]
   conv_lhs => rw [f.as_sum]
-  rw [show rowDiv R a a k (∑ d ∈ f.support, monomial d (coeff d f)) = rowDivL a a k (∑ d ∈ f.support, monomial d (coeff d f))
+  rw [show rowDiv R a a k (∑ d ∈ f.support, monomial d (AddMonoidAlgebra.coeff f d)) = rowDivL a a k (∑ d ∈ f.support, monomial d (AddMonoidAlgebra.coeff f d))
     from rfl, map_sum]
   conv_rhs => rw [f.as_sum, Finset.smul_sum]
   exact Finset.sum_congr rfl e
@@ -217,7 +217,7 @@ theorem g_rowDiv_shift (R : Type*) [CommRing R] {n : ℕ} (H : ℤ) (a b : Fin r
   conv => enter [2, 1, 2]; rw [f.as_sum]
   rw [map_sum, Polynomial.finsetSum_coeff]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
-  have := gShift_rowGen_monomial (ht := ht) R a b d (coeff d f) k
+  have := gShift_rowGen_monomial (ht := ht) R a b d (AddMonoidAlgebra.coeff f d) k
   rwa [hf (mem_support_iff.mp hd)] at this
 
 theorem g_weight {n : ℕ} (d : Fin r × Fin n →₀ ℕ) :

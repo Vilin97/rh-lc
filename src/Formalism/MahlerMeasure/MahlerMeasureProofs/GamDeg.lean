@@ -131,7 +131,7 @@ theorem fock_add_left (F F' G : MvPolynomial σ ℚ_[p]) :
     M.fock p (F + F') G = M.fock p F G + M.fock p F' G := by
   rw [fock_eq_sum' p _ G G.support (Finset.Subset.refl _), fock_eq_sum' p F G G.support (Finset.Subset.refl _),
     fock_eq_sum' p F' G G.support (Finset.Subset.refl _), ← Finset.sum_add_distrib]
-  exact Finset.sum_congr rfl fun m _ => by rw [coeff_add]; ring
+  exact Finset.sum_congr rfl fun m _ => by rw [MvPolynomial.coeff_add]; ring
 
 theorem fock_smul_left (c : ℚ_[p]) (F G : MvPolynomial σ ℚ_[p]) :
     M.fock p (c • F) G = c * M.fock p F G := by
@@ -164,7 +164,7 @@ theorem fock_sum_right {ι : Type} (t : Finset ι) (F : MvPolynomial σ ℚ_[p])
   exact Finset.sum_congr rfl fun i _ => fock_comm p _ _
 
 private theorem coeff_pderiv_lemma_7 (v : σ) (b : MvPolynomial σ ℚ_[p]) (m : σ →₀ ℕ) :
-    coeff m (pderiv v b) = coeff (m + Finsupp.single v 1) b * ((m v + 1 : ℕ) : ℚ_[p]) := by
+    AddMonoidAlgebra.coeff (pderiv v b) m = AddMonoidAlgebra.coeff b (m + Finsupp.single v 1) * ((m v + 1 : ℕ) : ℚ_[p]) := by
   induction b using MvPolynomial.induction_on'
   · rename_i t d
     rw [pderiv_monomial, coeff_monomial, coeff_monomial]
@@ -181,7 +181,7 @@ private theorem coeff_pderiv_lemma_7 (v : σ) (b : MvPolynomial σ ℚ_[p]) (m :
         simp [ht]
       · rfl
   · rename_i f g hf hg
-    rw [map_add, coeff_add, coeff_add, hf, hg, add_mul]
+    rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hf, hg, add_mul]
 
 theorem fock_X_mul (v : σ) (a b : MvPolynomial σ ℚ_[p]) :
     M.fock p (X v * a) b = M.fock p a (pderiv v b) := by
@@ -365,7 +365,7 @@ private theorem X_mul_pderiv_monomial_lemma_3 (v : σ) (t : σ →₀ ℕ) (c : 
     rw [h1]
 
 private theorem coeff_X_mul_pderiv_lemma_4 (v : σ) (g : MvPolynomial σ k) (s : σ →₀ ℕ) :
-    coeff s (X v * pderiv v g) = (s v : k) * coeff s g := by
+    AddMonoidAlgebra.coeff (X v * pderiv v g) s = (s v : k) * AddMonoidAlgebra.coeff g s := by
   classical
   induction g using MvPolynomial.induction_on'
   · rename_i t c
@@ -374,17 +374,17 @@ private theorem coeff_X_mul_pderiv_lemma_4 (v : σ) (g : MvPolynomial σ k) (s :
     · subst h; ring
     · simp
   · rename_i p q hp hq
-    rw [map_add, mul_add, coeff_add, hp, hq, coeff_add]; ring
+    rw [map_add, mul_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]; ring
 
 private theorem coeff_EW_lemma_5 (g : MvPolynomial σ k) (s : σ →₀ ℕ) :
-    coeff s (EW w g) = ((∑ c, s (w c) : ℕ) : k) * coeff s g := by
+    AddMonoidAlgebra.coeff (EW w g) s = ((∑ c, s (w c) : ℕ) : k) * AddMonoidAlgebra.coeff g s := by
   rw [EW, coeff_sum]
   simp only [coeff_X_mul_pderiv_lemma_4, Nat.cast_sum, Finset.sum_mul]
 
 theorem eq_zero_of_EW (a b : ℕ) (hab : a < b) (g : MvPolynomial σ k) (h : EW w g = ((a : k) - b) • g) :
     g = 0 := by
   ext s
-  have hs := congrArg (coeff s) h
+  have hs := congrArg (AddMonoidAlgebra.coeff · s) h
   rw [coeff_EW_lemma_5, coeff_smul, smul_eq_mul] at hs
   have hne : ((∑ c, s (w c) : ℕ) : k) ≠ (a : k) - b := by
     intro heq
@@ -931,8 +931,8 @@ theorem q_isWH (LL : M.Letters (N + 1)) (ρ : Fin r) (e : ℕ) (h : MvPolynomial
     · exact hXX' i ρ ρ
     · intro d hd
       rw [coeff_sub] at hd
-      by_cases h1 : coeff d (X (Fin.last (N + 1), ρ) * X (Fin.castSucc i, c) :
-          MvPolynomial (Fin (N + 1 + 1) × Fin r) ℚ_[p]) = 0
+      by_cases h1 : AddMonoidAlgebra.coeff (X (Fin.last (N + 1), ρ) * X (Fin.castSucc i, c) :
+          MvPolynomial (Fin (N + 1 + 1) × Fin r) ℚ_[p]) d = 0
       · rw [h1, zero_sub, neg_ne_zero] at hd
         exact hXX i ρ c hd
       · exact hXX' i c ρ h1
@@ -946,7 +946,7 @@ theorem q_isWH (LL : M.Letters (N + 1)) (ρ : Fin r) (e : ℕ) (h : MvPolynomial
   have hmd := hsupp m hm
   have hprod := IsWeightedHomogeneous.prod m.support (fun x => M.freezeSub p LL ρ x ^ m x)
     (fun x => m x • (g (Fin.castSucc x.1) + g (Fin.last (N + 1)))) (fun x _ => (hgen x).pow (m x))
-  have hC := isWeightedHomogeneous_C (fun y : Fin (N + 1 + 1) × Fin r => g y.1) (coeff m h)
+  have hC := isWeightedHomogeneous_C (fun y : Fin (N + 1 + 1) × Fin r => g y.1) (AddMonoidAlgebra.coeff h m)
   have key : ∑ b, (g (Fin.castSucc b) + g (Fin.last (N + 1))) * (lowerLast LL e).deg b =
       0 + ∑ x ∈ m.support, m x • (g (Fin.castSucc x.1) + g (Fin.last (N + 1))) := by
     rw [zero_add, Finset.sum_subset (Finset.subset_univ m.support) (fun x _ hx => by

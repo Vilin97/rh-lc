@@ -52,7 +52,7 @@ theorem fk_add_left (F F' G : MvPolynomial σ K) : fk (F + F') G = fk F G + fk F
   rw [fk_eq_sum (F + F') G (F.support ∪ F'.support) support_add,
     fk_eq_sum F G _ (Finset.subset_union_left (s₂ := F'.support)),
     fk_eq_sum F' G _ (Finset.subset_union_right (s₁ := F.support)), ← Finset.sum_add_distrib]
-  exact Finset.sum_congr rfl (fun m _ => by rw [coeff_add]; ring)
+  exact Finset.sum_congr rfl (fun m _ => by rw [MvPolynomial.coeff_add]; ring)
 
 theorem fk_smul_left (c : K) (F G : MvPolynomial σ K) : fk (c • F) G = c * fk F G := by
   rw [fk_eq_sum (c • F) G F.support support_smul, fk, Finset.mul_sum]
@@ -1075,7 +1075,7 @@ theorem kill_monomial (M : σ →₀ ℕ) (a : K) :
       mul_zero]
 
 theorem coeff_kill (g : MvPolynomial σ K) (M : σ →₀ ℕ) :
-    coeff M (kill P g) = if (∀ v, P v → M v = 0) then coeff M g else 0 := by
+    AddMonoidAlgebra.coeff (kill P g) M = if (∀ v, P v → M v = 0) then AddMonoidAlgebra.coeff g M else 0 := by
   induction g using MvPolynomial.induction_on' with
   | monomial M' a =>
     rw [kill_monomial]
@@ -1083,7 +1083,7 @@ theorem coeff_kill (g : MvPolynomial σ K) (M : σ →₀ ℕ) :
     · subst hM; split_ifs <;> simp
     · split_ifs <;> simp [coeff_monomial, hM]
   | add p q hp hq =>
-    rw [map_add, coeff_add, hp, hq, coeff_add]
+    rw [map_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]
     split_ifs <;> ring
 
 theorem kill_X (v : σ) : kill P (X v : MvPolynomial σ K) = if P v then 0 else X v := by

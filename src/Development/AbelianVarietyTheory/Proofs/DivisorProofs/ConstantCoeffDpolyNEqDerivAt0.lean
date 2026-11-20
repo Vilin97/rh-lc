@@ -234,7 +234,7 @@ theorem constantCoeff_dpolyN_eq_derivAt0 : ∀ (C : Type) [Field C] [CharZero C]
     intro f
     simp [DmonN]
   have hsub : ∀ (Q : MvPolynomial ι C) (s : Finset (ι →₀ ℕ)) (f : PS C n d), Q.support ⊆ s →
-      DpolyN G.F cp u Q f = ∑ m ∈ s, MvPowerSeries.C (MvPolynomial.coeff m Q) * DmonN G.F cp u m f := by
+      DpolyN G.F cp u Q f = ∑ m ∈ s, MvPowerSeries.C (AddMonoidAlgebra.coeff Q m) * DmonN G.F cp u m f := by
     intro Q s f hs
     unfold DpolyN
     refine Finset.sum_subset hs fun m _ hm => ?_

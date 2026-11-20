@@ -16,14 +16,14 @@ def ThmBGauss : Prop :=
       (∀ τ, nu2 τ = (Finset.univ.filter (fun c => 2 ≤ ht τ c)).card) →
       (∀ τ, size τ = ∑ c, ht τ c) →
     ∀ n : ((Bool × H) × Fin N0 × Fin N0) →₀ ℕ,
-      ‖MvPolynomial.coeff n (jetPairPoly (∏ τ : Bool × H, minorProd
+      ‖AddMonoidAlgebra.coeff (jetPairPoly (∏ τ : Bool × H, minorProd
             (fun (i : Fin N0) (b : Fin N1) =>
               (∑ a : Fin N0, MvPolynomial.C (MvPolynomial.X (τ, i, a)) * MvPolynomial.X (τ, a, b) :
                 MvPolynomial ((Bool × H) × Fin N0 × Fin N1)
                   (MvPolynomial ((Bool × H) × Fin N0 × Fin N0) ℂ_[p])))
             (ht τ) (hht τ) (I τ))
           (mvExp ((-S) • ∑ t : H, ∑ ab : Fin N0 × Fin N1, MvPowerSeries.C (u t) *
-              MvPowerSeries.X ((false, t), ab.1, ab.2) * MvPowerSeries.X ((true, t), ab.1, ab.2)) * sg))‖ ≤
+              MvPowerSeries.X ((false, t), ab.1, ab.2) * MvPowerSeries.X ((true, t), ab.1, ab.2)) * sg)) n‖ ≤
         ‖(p : ℂ_[p])‖ ^ (-(1 / 2 : ℝ) * ∑ t : H, ((size (false, t) : ℝ) -
           (if t ∈ TT then (nu1 (false, t) : ℝ) - nu2 (false, t) else 0) +
           (if t ∈ TT then (nu1 (true, t) : ℝ) else 0)))

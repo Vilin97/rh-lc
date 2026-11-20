@@ -92,7 +92,7 @@ theorem HasLogGrowth.tendsto_prod_mul {κ X : Type*} [TopologicalSpace X] [Local
             mul_le_mul_of_nonneg_left (pow_le_pow_left₀ hW0 hW N) (by linarith)
         _ = C * ∏ j ∈ S, (1 + |Real.log ‖w x j‖|) ^ N := by rw [Finset.prod_pow]
         _ ≤ C * ∏ j ∈ S, (1 + |Real.log ‖w x j‖|) ^ (N + 1) := by
-            refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod (fun j _ => by positivity)
+            refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod₀ (fun j _ => by positivity)
               fun j _ => pow_le_pow_right₀ ?_ (Nat.le_succ N)) (by linarith)
             linarith [abs_nonneg (Real.log ‖w x j‖)]
     calc ‖(∏ j ∈ S, w x j) * f x‖ = (∏ j ∈ S, ‖w x j‖) * ‖f x‖ := by rw [norm_mul, norm_prod]

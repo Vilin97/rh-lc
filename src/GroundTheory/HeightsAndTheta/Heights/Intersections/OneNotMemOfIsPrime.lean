@@ -82,7 +82,7 @@ theorem mem_of_sum_mem {I : Ideal (MRing ι)} (hI : IsMultiHomogIdeal I) {β : T
   convert hgI using 1
   ext m
   rw [hg, coeff_sum]
-  by_cases hm : coeff m (h b) = 0
+  by_cases hm : AddMonoidAlgebra.coeff (h b) m = 0
   · rw [hm]
     split_ifs with hdeg
     · refine (Finset.sum_eq_zero fun b' hb' => ?_).symm

@@ -427,7 +427,7 @@ theorem lastLine_of_massAndDegree (D : D7) (C3 : ℝ) (h2v : VolumeEqMass₂ D) 
     exact inv_anti₀ (by norm_num) h5
   have hp : (2 / 3 : ℝ) ^ D.R.f * ∏ ρ, dimV (rowLam D ρ) ≤ ∏ ρ, D.dsig ρ := by
     rw [← D.what₂.card_Tau, ← Finset.card_univ, ← Finset.prod_const, ← Finset.prod_mul_distrib]
-    refine Finset.prod_le_prod (fun ρ _ => mul_nonneg (by norm_num) (dim_weyl_pos_of_strictAnti _ (line_param_strictAnti D ρ)).le) fun ρ _ => ?_
+    refine Finset.prod_le_prod₀ (fun ρ _ => mul_nonneg (by norm_num) (dim_weyl_pos_of_strictAnti _ (line_param_strictAnti D ρ)).le) fun ρ _ => ?_
     have := (h3 (1 / 3) hr (by norm_num) ρ (hgap ρ)).1
     linarith
   calc (2 / 3 : ℝ) ^ D.R.f * massI D D.R.r * idxSig D (D.host.g 0) (D.host.g 1) * ∏ ρ, dimV (rowLam D ρ)

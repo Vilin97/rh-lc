@@ -49,7 +49,7 @@ theorem contr_add (c : ℝ) (p q : PX m n) : contr c (p + q) = contr c p + contr
     contr_eq_of_subset c p (p.support ∪ q.support) Finset.subset_union_left,
     contr_eq_of_subset c q (p.support ∪ q.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun s _ => ?_
-  rw [coeff_add, add_mul]
+  rw [MvPolynomial.coeff_add, add_mul]
 
 theorem contr_monomial (c : ℝ) (s : Fin m × Fin n × Bool →₀ ℕ) (r : ℂ) : contr c (monomial s r) = r * wC c s := by
   classical

@@ -41,7 +41,7 @@ theorem norm_inv_natCast_le_of_dvd (l : ℕ) [hl : Fact l.Prime] {c D : ℕ} (hD
   have h1 := norm_l_lt_one l
   have hc0 : c ≠ 0 := fun h => hD (by rw [h] at hc; exact Nat.eq_zero_of_zero_dvd hc)
   have hle : padicValNat l c ≤ padicValNat l D :=
-    (padicValNat_dvd_iff_le hD).1 (dvd_trans pow_padicValNat_dvd hc)
+    (padicValNat_dvd_iff_le hD).1 (dvd_trans (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)) hc)
   rw [norm_inv, norm_natCast_eq_pow_padicValNat hl.out h1 hc0, Real.rpow_neg h0.le, Real.rpow_natCast]
   exact inv_anti₀ (pow_pos h0 _) (pow_le_pow_of_le_one h0.le h1.le hle)
 
@@ -81,7 +81,7 @@ theorem path_height_bound : PathBound := by
     rw [norm_prod, Real.rpow_sum_of_pos h0]
     calc ∏ j : J, ‖(((X.gam π j : ℕ) : ℂ_[l])⁻¹ * X.eps π j * X.e π j)‖
         ≤ ∏ j : J, (p ^ (s j - v) * (if j = j1 then p ^ v else 1)) :=
-          Finset.prod_le_prod (fun j _ => norm_nonneg _) (fun j _ => hfac j)
+          Finset.prod_le_prod₀ (fun j _ => norm_nonneg _) (fun j _ => hfac j)
       _ = (∏ j : J, p ^ (s j - v)) * p ^ v := by
           rw [Finset.prod_mul_distrib, Finset.prod_ite_eq' Finset.univ j1 (fun _ => p ^ v),
             if_pos (Finset.mem_univ _)]

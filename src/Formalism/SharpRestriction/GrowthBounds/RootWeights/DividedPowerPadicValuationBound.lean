@@ -149,7 +149,7 @@ theorem divided_power_padic_valuation_bound {ι : Type} [Fintype ι] {n : ℕ} (
   have hY0 : ∏ l, (m (src l)).choose (f l) ≠ 0 :=
     Finset.prod_ne_zero_iff.2 fun l _ => (Nat.choose_pos (hall' l)).ne'
   have hv := congrArg (padicValNat p) htot
-  rw [padicValNat.mul (exponent_factorial_ne_zero m) hX0, padicValNat.mul (exponent_factorial_ne_zero m') hY0] at hv
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (exponent_factorial_ne_zero m) hX0, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (exponent_factorial_ne_zero m') hY0] at hv
   rw [show padicValInt p (∏ l ∈ f.support, zf l) =
     padicValNat p (∏ l ∈ f.support, zf l).natAbs from rfl, hY]
   omega

@@ -197,7 +197,7 @@ theorem _root_.GlobalTheory.landau_exp_summable : ∀ (ι : Type) (a l : ι → 
   have hps : HasFPowerSeriesOnBall F (FormalMultilinearSeries.ofScalars ℂ c) 2 1 := by
     refine ⟨hrad, one_pos, fun {y} hy => ?_⟩
     have hy1 : ‖y‖ < 1 := by
-      simpa [EMetric.mem_ball, edist_zero_right, ← ofReal_norm, ENNReal.ofReal_lt_one] using hy
+      simpa [Metric.mem_eball, edist_zero_right, ← ofReal_norm, ENNReal.ofReal_lt_one] using hy
     simp only [FormalMultilinearSeries.ofScalars_apply_eq, smul_eq_mul]
     let E : (Σ n : ℕ, Fin n → ι) × ℕ → ℂ := fun q =>
       ((b q.1 * Real.exp (-(2 * L q.1)) : ℝ) : ℂ) * ((-(L q.1 : ℂ) * y) ^ q.2 / (q.2.factorial : ℂ))
@@ -252,7 +252,7 @@ theorem _root_.GlobalTheory.landau_exp_summable : ∀ (ι : Type) (a l : ι → 
   have hent := hF.hasFPowerSeriesOnBall 2 (R := 1) one_pos
   have hpeq := hps.hasFPowerSeriesAt.eq_formalMultilinearSeries hent.hasFPowerSeriesAt
   rw [← hpeq] at hent
-  have H0 := hent.hasSum (y := -2) (EMetric.mem_ball.mpr (edist_lt_top _ _))
+  have H0 := hent.hasSum (y := -2) (Metric.mem_eball.mpr (edist_lt_top _ _))
   simp only [FormalMultilinearSeries.ofScalars_apply_eq, smul_eq_mul] at H0
   have hterm : ∀ n, c n * (-2) ^ n = ((∑' p, T 2 (p, n) : ℝ) : ℂ) := by
     intro n

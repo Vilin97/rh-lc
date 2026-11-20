@@ -177,15 +177,15 @@ theorem eventually_mem_of_X_mul [Finite σ] {J L : Ideal (MvPolynomial σ K)}
     (hJ : ∀ F ∈ J, ∀ e, homogeneousComponent e F ∈ J) (hL : ∀ F ∈ L, ∀ i, X i * F ∈ J) :
     ∀ᶠ e in atTop, ∀ F ∈ L, F.IsHomogeneous e → F ∈ J := by
   obtain ⟨T, hT⟩ := IsNoetherian.noetherian L
-  have key : ∀ A G, G ∈ L → (A - C (coeff 0 A)) * G ∈ J := by
+  have key : ∀ A G, G ∈ L → (A - C (AddMonoidAlgebra.coeff A 0)) * G ∈ J := by
     intro A G hG
     induction A using MvPolynomial.induction_on with
     | C a => simp
     | add p q hp hq =>
       convert J.add_mem hp hq using 1
-      simp only [coeff_add, map_add]; ring
+      simp only [MvPolynomial.coeff_add, map_add]; ring
     | mul_X p i _ =>
-      have : coeff 0 (p * X i) = 0 := by
+      have : AddMonoidAlgebra.coeff (p * X i) 0 = 0 := by
         have := map_mul (constantCoeff (σ := σ) (R := K)) p (X i)
         simpa [constantCoeff_eq] using this
       rw [this, map_zero, sub_zero, mul_assoc]
@@ -204,7 +204,7 @@ theorem eventually_mem_of_X_mul [Finite σ] {J L : Ideal (MvPolynomial σ K)}
       ring
     | smul A x _ hx =>
       obtain ⟨G, h1, h2, h3⟩ := hx
-      refine ⟨C (coeff 0 A) * G, L.mul_mem_left _ h1, ?_, ?_⟩
+      refine ⟨C (AddMonoidAlgebra.coeff A 0) * G, L.mul_mem_left _ h1, ?_, ?_⟩
       · exact (totalDegree_mul _ _).trans (by simpa using h2)
       · convert J.add_mem (J.mul_mem_left A h3) (key A G h1) using 1
         rw [smul_eq_mul]; ring
@@ -400,10 +400,10 @@ section BaseChange
 variable {L : Type} [Field L] [Algebra K L]
 
 noncomputable def contr (φ : L →ₗ[K] K) (F : MvPolynomial σ L) : MvPolynomial σ K :=
-  ∑ m ∈ F.support, monomial m (φ (coeff m F))
+  ∑ m ∈ F.support, monomial m (φ (AddMonoidAlgebra.coeff F m))
 
 @[simp] theorem coeff_contr (φ : L →ₗ[K] K) (F : MvPolynomial σ L) (m : σ →₀ ℕ) :
-    coeff m (contr φ F) = φ (coeff m F) := by
+    AddMonoidAlgebra.coeff (contr φ F) m = φ (AddMonoidAlgebra.coeff F m) := by
   classical
   simp only [contr, coeff_sum, coeff_monomial, Finset.sum_ite_eq', MvPolynomial.mem_support_iff]
   split_ifs with h
@@ -484,7 +484,7 @@ theorem finrank_extSub (W : Submodule K (MvPolynomial σ K)) [Module.Finite K W]
       w.linearIndependent.map' W.subtype W.ker_subtype
     refine Fintype.linearIndependent_iff.1 hw (fun i => φ (c i)) ?_ i
     ext m
-    have := congrArg (fun F => φ (coeff m F)) hc
+    have := congrArg (fun F => φ (AddMonoidAlgebra.coeff F m)) hc
     simp only [coeff_sum, map_sum, coeff_zero, map_zero] at this ⊢
     rw [← this]
     refine Finset.sum_congr rfl fun j _ => ?_
@@ -493,17 +493,17 @@ theorem finrank_extSub (W : Submodule K (MvPolynomial σ K)) [Module.Finite K W]
     apply le_antisymm
     · intro F hF
       let b := Basis.ofVectorSpace K L
-      have : F = ∑ j ∈ F.support.biUnion fun m => (b.repr (coeff m F)).support,
+      have : F = ∑ j ∈ F.support.biUnion fun m => (b.repr (AddMonoidAlgebra.coeff F m)).support,
           b j • map (algebraMap K L) (contr (b.coord j) F) := by
         ext m
         simp only [coeff_sum, coeff_smul, coeff_map, coeff_contr, smul_eq_mul]
-        conv_lhs => rw [← b.linearCombination_repr (coeff m F), Finsupp.linearCombination_apply]
+        conv_lhs => rw [← b.linearCombination_repr (AddMonoidAlgebra.coeff F m), Finsupp.linearCombination_apply]
         rw [Finsupp.sum_of_support_subset (s := F.support.biUnion
-          fun m => (b.repr (coeff m F)).support) _ _ _ (by simp)]
+          fun m => (b.repr (AddMonoidAlgebra.coeff F m)).support) _ _ _ (by simp)]
         · refine Finset.sum_congr rfl fun j _ => ?_
           rw [Algebra.smul_def, mul_comm, Basis.coord_apply]
         · by_cases hm : m ∈ F.support
-          · exact Finset.subset_biUnion_of_mem (fun m => (b.repr (coeff m F)).support) hm
+          · exact Finset.subset_biUnion_of_mem (fun m => (b.repr (AddMonoidAlgebra.coeff F m)).support) hm
           · simp [notMem_support_iff.1 hm]
       rw [this]
       refine Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ ?_

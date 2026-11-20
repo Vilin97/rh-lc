@@ -79,7 +79,7 @@ theorem rhoM_eq_sum (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) :
   · simp
 
 theorem coeff_rhoM_gapDelta (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) :
-    coeff (rhoM Ψ N) (gapDelta Ψ N) = 1 := by
+    AddMonoidAlgebra.coeff (gapDelta Ψ N) (rhoM Ψ N) = 1 := by
   let e := Fintype.equivFin Ψ
   letI : LinearOrder (Ψ × Fin N) :=
     LinearOrder.lift' (fun p => toLex (e p.1, p.2)) (fun p q h => by

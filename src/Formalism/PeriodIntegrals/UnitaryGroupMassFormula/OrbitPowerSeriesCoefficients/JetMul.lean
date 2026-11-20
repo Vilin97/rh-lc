@@ -79,15 +79,15 @@ section Ultra
 variable {σ K : Type*} [NormedCommRing K] [IsUltrametricDist K]
 
 theorem norm_coeff_mul_le {A B : MvPolynomial σ K} {a b : ℝ} (ha0 : 0 ≤ a) (hb0 : 0 ≤ b)
-    (hA : ∀ m, ‖MvPolynomial.coeff m A‖ ≤ a) (hB : ∀ m, ‖MvPolynomial.coeff m B‖ ≤ b) (m : σ →₀ ℕ) :
-    ‖MvPolynomial.coeff m (A * B)‖ ≤ a * b := by
+    (hA : ∀ m, ‖AddMonoidAlgebra.coeff A m‖ ≤ a) (hB : ∀ m, ‖AddMonoidAlgebra.coeff B m‖ ≤ b) (m : σ →₀ ℕ) :
+    ‖AddMonoidAlgebra.coeff (A * B) m‖ ≤ a * b := by
   rw [MvPolynomial.coeff_mul]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (mul_nonneg ha0 hb0) fun x _ => ?_
   exact (norm_mul_le _ _).trans (mul_le_mul (hA _) (hB _) (norm_nonneg _) ha0)
 
 theorem norm_coeff_prod_le [NormOneClass K] {ι : Type*} (s : Finset ι) {A : ι → MvPolynomial σ K}
-    {a : ι → ℝ} (ha0 : ∀ i ∈ s, 0 ≤ a i) (hA : ∀ i ∈ s, ∀ m, ‖MvPolynomial.coeff m (A i)‖ ≤ a i)
-    (m : σ →₀ ℕ) : ‖MvPolynomial.coeff m (∏ i ∈ s, A i)‖ ≤ ∏ i ∈ s, a i := by
+    {a : ι → ℝ} (ha0 : ∀ i ∈ s, 0 ≤ a i) (hA : ∀ i ∈ s, ∀ m, ‖AddMonoidAlgebra.coeff (A i) m‖ ≤ a i)
+    (m : σ →₀ ℕ) : ‖AddMonoidAlgebra.coeff (∏ i ∈ s, A i) m‖ ≤ ∏ i ∈ s, a i := by
   induction s using Finset.induction_on generalizing m with
   | empty =>
     simp only [Finset.prod_empty, MvPolynomial.coeff_one]
@@ -118,17 +118,17 @@ def applyTerm (Th : MvPowerSeries (Lt × Fin N0 × Fin N1) ℂ_[l]) (μ : XZ Lt 
 
 theorem applyAt0_eq_sum (Th : MvPowerSeries (Lt × Fin N0 × Fin N1) ℂ_[l])
     (P : MvPolynomial (XZ Lt N0 N1) ℤ) :
-    applyAt0 N0 N1 l Th P = ∑ μ ∈ P.support, applyTerm l Th μ (MvPolynomial.coeff μ P) := rfl
+    applyAt0 N0 N1 l Th P = ∑ μ ∈ P.support, applyTerm l Th μ (AddMonoidAlgebra.coeff P μ) := rfl
 
 theorem applyTerm_zero (Th : MvPowerSeries (Lt × Fin N0 × Fin N1) ℂ_[l]) (μ : XZ Lt N0 N1 →₀ ℕ) :
     applyTerm l Th μ 0 = 0 := by simp [applyTerm]
 
 theorem applyAt0_eq_sum_of_subset (Th : MvPowerSeries (Lt × Fin N0 × Fin N1) ℂ_[l])
     (P : MvPolynomial (XZ Lt N0 N1) ℤ) (S : Finset (XZ Lt N0 N1 →₀ ℕ)) (hS : P.support ⊆ S) :
-    applyAt0 N0 N1 l Th P = ∑ μ ∈ S, applyTerm l Th μ (MvPolynomial.coeff μ P) := by
+    applyAt0 N0 N1 l Th P = ∑ μ ∈ S, applyTerm l Th μ (AddMonoidAlgebra.coeff P μ) := by
   rw [applyAt0_eq_sum]
   refine Finset.sum_subset hS fun μ _ hμ => ?_
-  have : MvPolynomial.coeff μ P = 0 := by
+  have : AddMonoidAlgebra.coeff P μ = 0 := by
     by_contra h; exact hμ (MvPolynomial.mem_support_iff.2 h)
   rw [this, applyTerm_zero]
 
@@ -202,7 +202,7 @@ theorem applyAt0_mul {A1 A2 : Set Lt} (hA : Disjoint A1 A2) {T1 T2 : MvPowerSeri
   have e1 := P1.as_sum
   have e2 := P2.as_sum
   have hprod : P1 * P2 = ∑ μ ∈ P1.support, ∑ μ' ∈ P2.support,
-      MvPolynomial.monomial (μ + μ') (MvPolynomial.coeff μ P1 * MvPolynomial.coeff μ' P2) := by
+      MvPolynomial.monomial (μ + μ') (AddMonoidAlgebra.coeff P1 μ * AddMonoidAlgebra.coeff P2 μ') := by
     conv_lhs => rw [e1, e2]
     rw [Finset.sum_mul_sum]
     simp only [MvPolynomial.monomial_mul]

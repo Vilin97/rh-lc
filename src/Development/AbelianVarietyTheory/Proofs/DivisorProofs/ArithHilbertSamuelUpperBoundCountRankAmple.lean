@@ -58,7 +58,7 @@ theorem GlobalTheory.HSAmp.HSUpper.upper_bound : ∀ (k : Type) [CommRing k] (X 
   have hR' : 0 ≤ R' := div_nonneg (mul_nonneg hC.le hR) (pow_pos hκ _).le
   obtain ⟨hSfin, hScard, -⟩ := GlobalTheory.T.card_bounded_homogeneous_int_form_families D (q + c) (Module.finrank (ratF x) X.functionField) R' hR'
   set S := {T : Fin (Module.finrank (ratF x) X.functionField) → MvPolynomial (Fin (D + 1)) ℤ |
-    (∀ i, (T i).IsHomogeneous (q + c)) ∧ ∀ i α, |((MvPolynomial.coeff α (T i) : ℤ) : ℝ)| ≤ R'}
+    (∀ i, (T i).IsHomogeneous (q + c)) ∧ ∀ i α, |((AddMonoidAlgebra.coeff (T i) α : ℤ) : ℝ)| ≤ R'}
   have hsub : P.Bl (e * q + a) b R ⊆
       (fun T : Fin (Module.finrank (ratF x) X.functionField) → MvPolynomial (Fin (D + 1)) ℤ =>
         ∑ i, MvPolynomial.aeval x (T i) * w i) '' S := by

@@ -109,7 +109,7 @@ lemma up_nB_le (k a c : ℕ) : (nBetween k a c : ℝ) ≤ (c : ℝ) := by
 private theorem prod_le_pow_of_card_le_of_le (s : Finset ℕ) (G : ℕ → ℝ) (Bd : ℝ) (e : ℕ) (he : s.card ≤ e)
     (hBd : 1 ≤ Bd) (h : ∀ c ∈ s, 0 ≤ G c ∧ G c ≤ Bd) : ∏ c ∈ s, G c ≤ Bd ^ e := by
   calc ∏ c ∈ s, G c ≤ ∏ _c ∈ s, Bd :=
-        Finset.prod_le_prod (fun c hc => (h c hc).1) (fun c hc => (h c hc).2)
+        Finset.prod_le_prod₀ (fun c hc => (h c hc).1) (fun c hc => (h c hc).2)
     _ = Bd ^ s.card := Finset.prod_const Bd
     _ ≤ Bd ^ e := pow_le_pow_right₀ hBd he
 

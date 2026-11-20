@@ -43,7 +43,7 @@ def pairW {r n : ℕ} (l j : Fin n) : Fin r × Fin n → (Fin r × Fin n →₀ 
 def peel {B : Type*} [CommRing B] {r n : ℕ} (l j : Fin n) (a0 : Fin r) (k : ℕ)
     (g : MvPolynomial (Fin r × Fin n) B) : MvPolynomial (Fin r × Fin n) B :=
   ∑ m ∈ g.support.filter (fun m => m (a0, l) = k),
-    monomial ((m.erase (a0, l)).erase (a0, j)) (coeff m g)
+    monomial ((m.erase (a0, l)).erase (a0, j)) (AddMonoidAlgebra.coeff g m)
 
 open scoped MonomialOrder
 

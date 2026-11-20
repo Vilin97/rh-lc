@@ -56,7 +56,7 @@ theorem prod_zpow_le {R : Type} [Fintype R] (S rec : R → ℝ) (n : R → ℤ) 
         _ ≤ |(n r : ℝ)| * C := mul_le_mul_of_nonneg_left (h r) (abs_nonneg _)
     linarith
   calc ∏ r, S r ^ n r ≤ ∏ r, rec r ^ n r * Real.exp (|(n r : ℝ)| * C) :=
-        Finset.prod_le_prod (fun r _ => (zpow_pos (hS r) _).le) key
+        Finset.prod_le_prod₀ (fun r _ => (zpow_pos (hS r) _).le) key
     _ = _ := by rw [Finset.prod_mul_distrib, ← Real.exp_sum, Finset.sum_mul]
 
 theorem supMet_sum {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] {𝕜 : Type} [NormedField 𝕜]

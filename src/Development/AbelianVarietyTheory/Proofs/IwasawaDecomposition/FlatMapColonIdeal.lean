@@ -6,7 +6,7 @@ namespace GlobalTheory
 private lemma mem_colon_span_range_iff {B : Type*} [CommRing B] {P : Ideal B} {ι : Type*}
     (g : ι → B) (r : B) :
     r ∈ P.colon (Ideal.span (Set.range g) : Set B) ↔ ∀ i, r * g i ∈ P := by
-  rw [Submodule.mem_colon', SetLike.coe_subset_coe]
+  rw [Submodule.mem_colon, SetLike.coe_subset_coe]
   change Submodule.span B (Set.range g) ≤ _ ↔ _
   rw [Submodule.span_le, Set.range_subset_iff]
   simp [smul_eq_mul]
@@ -74,13 +74,13 @@ theorem _root_.GlobalTheory.ideal_map_colon_eq_of_flat : ∀ {A R : Type} [CommR
       have hw1 : w.1 = a i := by simp [hw, f, Fintype.linearCombination_apply]
       have hw2 : ∀ p, w.2 p ∈ Ideal.span (Set.range b) := by
         intro p
-        simp only [hw, f, LinearMap.prod_apply, Pi.prod, LinearMap.pi_apply, LinearMap.smul_apply,
+        simp only [hw, f, LinearMap.prod_apply, Function.prod, LinearMap.pi_apply, LinearMap.smul_apply,
           LinearMap.proj_apply, smul_eq_mul]
         exact Ideal.mul_mem_right _ _ (neg_mem (Ideal.subset_span ⟨p.2, rfl⟩))
       have h0 := DFunLike.congr_fun (hdec w) q
       rw [show g w = 0 from LinearMap.congr_fun hgf _] at h0
       simp only [Finsupp.coe_zero, Pi.zero_apply, Finsupp.coe_add, Pi.add_apply, Finsupp.coe_smul,
-        Pi.smul_apply, smul_eq_mul, Finsupp.finset_sum_apply] at h0
+        Pi.smul_apply, smul_eq_mul, Finsupp.finsetSum_apply] at h0
       have h1 : g (1, 0) q * a i = -∑ p, w.2 p * g (0, fun q => if p = q then 1 else 0) q := by
         rw [← hw1]
         linear_combination -h0

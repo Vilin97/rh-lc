@@ -101,7 +101,7 @@ theorem exists_mul_mem_chartRing {I : Chart x} {a : Ω} (ha : a ∈ chartRing F 
   have hse' : s'.IsHomogeneous e := fun d hd => hse (by
     rw [coeff_map]; exact fun h => hd (hinj (h.trans (map_zero _).symm)))
   have hsum : aeval x f / aeval x (map (algebraMap S F) s') =
-      ∑ d ∈ f.support, coeff d f • (aeval x (monomial d (1 : S)) / aeval x s') := by
+      ∑ d ∈ f.support, AddMonoidAlgebra.coeff f d • (aeval x (monomial d (1 : S)) / aeval x s') := by
     rw [aeval_map_algebraMap]
     conv_lhs => rw [f.as_sum]
     rw [map_sum, Finset.sum_div]
@@ -122,10 +122,10 @@ theorem exists_mul_mem_chartRing {I : Chart x} {a : Ω} (ha : a ∈ chartRing F 
     have hmem : aeval x (monomial d (1 : S)) / aeval x s' ∈ chartRing S x I :=
       ⟨monomial d 1, s', e, hs', isHomogeneous_monomial _ (by
         rw [Finsupp.degree_eq_weight_one]; exact hf (mem_support_iff.mp hd)), hse', rfl⟩
-    obtain ⟨u, v, hv, huv⟩ := IsFractionRing.div_surjective (A := S) (coeff d f)
+    obtain ⟨u, v, hv, huv⟩ := IsFractionRing.div_surjective (A := S) (AddMonoidAlgebra.coeff f d)
     refine ⟨v, hv, ?_⟩
     have hv0 : algebraMap S Ω v ≠ 0 := algebraMap_ne_zero_of_mem F hv
-    have : algebraMap S Ω v * (coeff d f • (aeval x (monomial d (1 : S)) / aeval x s')) =
+    have : algebraMap S Ω v * (AddMonoidAlgebra.coeff f d • (aeval x (monomial d (1 : S)) / aeval x s')) =
         algebraMap S Ω u * (aeval x (monomial d (1 : S)) / aeval x s') := by
       rw [Algebra.smul_def, ← huv, map_div₀, ← IsScalarTower.algebraMap_apply,
         ← IsScalarTower.algebraMap_apply]
@@ -217,7 +217,7 @@ theorem FiniteSections.proof (hE : Extension.Statement.{u, w, w}) (hT : TildeTai
     rintro _ ⟨j, f, e, hf, hej, rfl⟩
     have he : e = 0 := by have := (hgen j).1; omega
     subst he
-    have hfC : f = C (coeff 0 f) := totalDegree_eq_zero_iff_eq_C.mp (Nat.le_zero.mp hf.totalDegree_le)
+    have hfC : f = C (AddMonoidAlgebra.coeff f 0) := totalDegree_eq_zero_iff_eq_C.mp (Nat.le_zero.mp hf.totalDegree_le)
     rw [hfC, aeval_C, ← Algebra.smul_def]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
   have := isNoetherian_span_of_finite S (Set.finite_range gen)

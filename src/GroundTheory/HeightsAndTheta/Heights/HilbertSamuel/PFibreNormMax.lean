@@ -126,7 +126,7 @@ theorem exists_comparison {P : Ideal (MRing ι)} (hP : IsMultiHomogIdeal P) {m :
   have hh0 : (HermLine.ofMetrics (fun k => maxMetric ℂ (ι k)) a).h z = ∏ k, ‖(fun i => z ⟨k, i⟩)‖ ^ a k := rfl
   have hW : ‖eval z (map (Int.castRingHom ℂ) (secOf i b))‖ ≤ ∏ k, ‖(fun i => z ⟨k, i⟩)‖ ^ b k := by
     simp only [secOf, map_prod, map_pow, map_X, eval_X, norm_prod, norm_pow]
-    exact Finset.prod_le_prod (fun k _ => pow_nonneg (norm_nonneg _) _) fun k _ =>
+    exact Finset.prod_le_prod₀ (fun k _ => pow_nonneg (norm_nonneg _) _) fun k _ =>
       pow_le_pow_left₀ (norm_nonneg _) (norm_le_pi_norm (fun i => z ⟨k, i⟩) (i k)) _
   have hk : ∀ k, ‖(fun i => z ⟨k, i⟩)‖ ^ a k * ‖(fun i => z ⟨k, i⟩)‖ ^ b k =
       (‖(fun i => z ⟨k, i⟩)‖ ^ e k) ^ q := fun k => by

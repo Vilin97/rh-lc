@@ -225,7 +225,7 @@ theorem momInt_iff_norm_mahler_le : ∀ (q : ℕ) [Fact q.Prime] (ι : ℂ ≃+*
     refine (μ.le_opNorm _).trans (mul_le_one₀ hμ (norm_nonneg _) ?_)
     refine (ContinuousMap.norm_le _ zero_le_one).2 fun a => ?_
     rw [evalFn_Bm, norm_prod]
-    exact Finset.prod_le_one (fun _ _ => norm_nonneg _) fun i _ => GlobalTheory.MultiMahler.norm_binomC_le _ _
+    exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun i _ => GlobalTheory.MultiMahler.norm_binomC_le _ _
   · intro h
     let e := Fintype.equivFin κ
     let c : (Fin (Fintype.card κ) → ℕ) → ℂ_[q] := fun n' => ι (mahler v G (n' ∘ e))

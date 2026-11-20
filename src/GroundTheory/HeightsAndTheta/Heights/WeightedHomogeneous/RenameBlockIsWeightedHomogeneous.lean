@@ -149,7 +149,7 @@ theorem norm_eval₂_le {r N : ℕ} (f : MvPolynomial (Fin r) ℤ) (hf : f.IsHom
   refine mul_le_mul_of_nonneg_left ?_ (norm_nonneg _)
   have hdeg : ∑ i, d i = N := by rw [← weight_one_fin]; exact hf (mem_support_iff.mp hd)
   calc ∏ i, ‖w i ^ d i‖ = ∏ i, ‖w i‖ ^ d i := by simp [norm_pow]
-    _ ≤ ∏ i, l2Norm w ^ d i := Finset.prod_le_prod (fun _ _ ↦ by positivity)
+    _ ≤ ∏ i, l2Norm w ^ d i := Finset.prod_le_prod₀ (fun _ _ ↦ by positivity)
         fun i _ ↦ pow_le_pow_left₀ (norm_nonneg _) (norm_le_l2Norm w i) _
     _ = l2Norm w ^ N := by rw [Finset.prod_pow_eq_pow_sum, hdeg]
 

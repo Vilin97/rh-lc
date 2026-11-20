@@ -338,7 +338,7 @@ theorem rank_alternative_lower (h : Std C0 Cde CE1 CE2 1 X) {Ckap : ℝ} (hCk : 
       have h1 : 2 * brk C0 CE1 CE2 X m ≤ X.N * brk C0 CE1 CE2 X m := mul_le_mul_of_nonneg_right hN2 hB0
       have e : 3 * X.N * brk C0 CE1 CE2 X m = 3 * (X.N * brk C0 CE1 CE2 X m) := by ring
       linarith
-    have hprod := Finset.prod_le_prod (s := Finset.univ)
+    have hprod := Finset.prod_le_prod₀ (s := Finset.univ)
       (f := fun j : Fin (numSeg X.TT) => (1 - 3 * brk C0 CE1 CE2 X m) * ((sd X.m (X.aT (segStart X.TT j)) : ℝ) *
         ((∏ i, (sd X.m (X.bT (segPos X.TT j i)) : ℝ) * (sd X.m (X.aT (segPos X.TT j i)) : ℝ)) *
           (sd X.m (X.bT (segNext X.TT j)) : ℝ))))

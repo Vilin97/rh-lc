@@ -106,7 +106,7 @@ theorem gramProductG0_le_height {C' Cl Cg cb Cu cT CT C0 A c : ℝ} (hH : Cnt.Hy
   rw [rows_gg_eq] at hg
   have hp : ∀ τ, 0 < Gz D (Tu D u) (Tu D u') (termGramMatrix X t) τ := fun τ => rows_Gz_pos Y hT (d_rdE_pos hH.1) t hG hrel τ
   have h3 : ∏ τ, Gz D (Tu D u) (Tu D u') (termGramMatrix X t) τ ≤ HHZ D large₂.sc.b c (termGramMatrix X t) :=
-    le_trans (Finset.prod_le_prod (fun τ _ => (hp τ).le) fun τ _ => le_max_right _ _) h2
+    le_trans (Finset.prod_le_prod₀ (fun τ _ => (hp τ).le) fun τ _ => le_max_right _ _) h2
   unfold wordPairGramProduct
   have h4 : ((gS D : ℝ)⁻¹) ^ (D.R.m * D.R.f) ≤ 1 := pow_le_one₀ (by positivity) (inv_le_one_of_one_le₀ (by linarith))
   calc (∏ τ, Gz D (Tu D u) (Tu D u') (termGramMatrix X t) τ) * ((gS D : ℝ)⁻¹) ^ (D.R.m * D.R.f)

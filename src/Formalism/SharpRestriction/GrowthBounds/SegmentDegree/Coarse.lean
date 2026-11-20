@@ -111,7 +111,7 @@ theorem finite_restrictSupport (Fd : Type) [Field Fd] (σ : Type) (s : Set (σ �
     rw [MvPolynomial.mem_restrictSupport_iff] at hP
     rw [P.as_sum]
     refine Submodule.sum_mem _ fun m hm => ?_
-    have : (monomial m (coeff m P) : MvPolynomial σ Fd) = coeff m P • monomial m (1 : Fd) := by
+    have : (monomial m (AddMonoidAlgebra.coeff P m) : MvPolynomial σ Fd) = AddMonoidAlgebra.coeff P m • monomial m (1 : Fd) := by
       rw [smul_monomial, smul_eq_mul, mul_one]
     rw [this]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨m, hP (by exact_mod_cast hm), rfl⟩)

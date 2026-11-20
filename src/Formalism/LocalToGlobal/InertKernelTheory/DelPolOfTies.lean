@@ -18,13 +18,13 @@ variable {p : ℕ} [Fact p.Prime] (X : Sys p) (Kc : Type) [Field Kc] [Algebra X.
 def trDY (D : D7) {N N' : ℕ} {ι : ℂ →+* Kc} (e : GL3Theta.Idx D N N' → X.ZA j)
     (Φ₀ : MvPolynomial (GL3Theta.FrV D N') ℂ →ₛₗ[ι] XspC (X.Pj (j + 1)) Kc)
     (R : MvPolynomial (GL3Theta.Idx D N N') (MvPolynomial (GL3Theta.FrV D N') ℂ)) : Formalism.L2.G.Pend.DA X Kc j :=
-  ∑ α ∈ R.support, MvPolynomial.monomial (α.mapDomain e) (Φ₀ (MvPolynomial.coeff α R))
+  ∑ α ∈ R.support, MvPolynomial.monomial (α.mapDomain e) (Φ₀ (AddMonoidAlgebra.coeff R α))
 
 end Dict
 
 def pairR (D : D7) {N N' : ℕ} (R : MvPolynomial (GL3Theta.Idx D N N') (MvPolynomial (GL3Theta.FrV D N') ℂ))
     (Θ : TaylorLogMetric.VC D N N' → ℂ) : MvPolynomial (GL3Theta.FrV D N') ℂ :=
-  ∑ α ∈ R.support, MvPolynomial.coeff α R * MvPolynomial.C ((α.prod fun _ n => (n.factorial : ℂ)) * TaylorLogMetric.taylor D Θ α)
+  ∑ α ∈ R.support, AddMonoidAlgebra.coeff R α * MvPolynomial.C ((α.prod fun _ n => (n.factorial : ℂ)) * TaylorLogMetric.taylor D Θ α)
 
 def PairDict : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (X : Sys p) (Kc : Type) [Field Kc] [Algebra X.G.Kf Kc] (j : ℕ) (D : D7) (N N' : ℕ)

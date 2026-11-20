@@ -48,7 +48,7 @@ theorem tail_sum_finset_prod_two_mul_div_sq :
     (Real.prod_one_add_le_exp_sum _ ha0).trans
       (Real.exp_le_exp.mpr (hsum.sum_le_tsum _ (fun v _ => ha0 v)))
   have hB1 : 1 ≤ ∏ v ∈ U \ T, (1 + a v) := by
-    have := Finset.prod_le_prod (s := U \ T) (f := fun _ => (1 : ℝ)) (g := fun v => 1 + a v)
+    have := Finset.prod_le_prod₀ (s := U \ T) (f := fun _ => (1 : ℝ)) (g := fun v => 1 + a v)
       (fun _ _ => zero_le_one) (fun v _ => by linarith [ha0 v])
     simpa using this
 

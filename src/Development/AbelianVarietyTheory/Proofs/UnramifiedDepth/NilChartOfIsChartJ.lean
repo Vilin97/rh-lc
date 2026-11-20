@@ -129,9 +129,9 @@ private theorem psJet_eq_nv {R : Type} [CommRing R] {n d : ℕ} (m : ℕ) (f : P
   rw [h2]
   refine (GlobalTheory.JetSer.jet_mk_eq_iff m _ _).2 fun e he => ?_
   have hle : ∀ i, e i < m + 1 := fun i => lt_of_le_of_lt (Finsupp.le_degree i e) he
-  have hr : MvPolynomial.coeff e (∑ e : Fin n × Fin d → Fin (m + 1), MvPolynomial.monomial
+  have hr : AddMonoidAlgebra.coeff (∑ e : Fin n × Fin d → Fin (m + 1), MvPolynomial.monomial
         (Finsupp.equivFunOnFinite.symm fun i => (e i : ℕ)) (MvPowerSeries.coeff
-        (Finsupp.equivFunOnFinite.symm fun i => (e i : ℕ)) f)) = MvPowerSeries.coeff e f := by
+        (Finsupp.equivFunOnFinite.symm fun i => (e i : ℕ)) f)) e = MvPowerSeries.coeff e f := by
     have he0 : (Finsupp.equivFunOnFinite.symm fun i => ((⟨e i, hle i⟩ : Fin (m + 1)) : ℕ)) = e := by
       ext i; rfl
     rw [MvPolynomial.coeff_sum, Finset.sum_eq_single (fun i => (⟨e i, hle i⟩ : Fin (m + 1)))]

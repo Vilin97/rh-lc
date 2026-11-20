@@ -74,7 +74,7 @@ theorem dom_int {ι : Type} [Fintype ι] (z : ℕ) : ∃ N : ℕ,
       div_eq_mul_inv]
     refine mul_le_of_le_one_left (by positivity) ((div_le_one (by positivity)).2 ?_)
     have : ∏ w, ‖c w‖ ^ 2 ≤ ∏ _w : ι, (1 + ‖c‖) ^ 2 :=
-      Finset.prod_le_prod (fun _ _ => by positivity) fun w _ => by
+      Finset.prod_le_prod₀ (fun _ _ => by positivity) fun w _ => by
         have := norm_le_pi_norm c w
         gcongr; linarith
     calc _ ≤ (∏ _w : ι, (1 + ‖c‖) ^ 2) ^ z := by gcongr

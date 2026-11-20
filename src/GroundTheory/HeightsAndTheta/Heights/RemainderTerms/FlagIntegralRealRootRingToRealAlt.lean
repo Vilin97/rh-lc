@@ -22,12 +22,12 @@ theorem flagIntegralReal_rootRingToReal (f N j k : ℕ) (h : N = j + k) (P : Roo
   rw [this, flagIntegralReal_map]
 
 def coeffMap {σ : Type*} (φ : Module.Dual ℚ ℝ) (P : MvPolynomial σ ℝ) : MvPolynomial σ ℚ :=
-  ∑ d ∈ P.support, monomial d (φ (coeff d P))
+  ∑ d ∈ P.support, monomial d (φ (AddMonoidAlgebra.coeff P d))
 
 variable {σ : Type*} (φ : Module.Dual ℚ ℝ)
 
 theorem coeff_coeffMap (P : MvPolynomial σ ℝ) (d : σ →₀ ℕ) :
-    coeff d (coeffMap φ P) = φ (coeff d P) := by
+    AddMonoidAlgebra.coeff (coeffMap φ P) d = φ (AddMonoidAlgebra.coeff P d) := by
   classical
   rw [coeffMap, coeff_sum]
   simp only [coeff_monomial]
@@ -58,9 +58,9 @@ theorem coeffMap_map (R : MvPolynomial σ ℚ) :
 theorem dual_flagIntegralReal (f N : ℕ) (P : MvPolynomial (Fin f × Fin N) ℝ) :
     φ (flagIntegralReal f N P) = flagIntegral f N (coeffMap φ P) := by
   have hterm : ∀ α : Fin f × Fin N →₀ ℕ,
-      coeff α P * ((coeff α (blockVandermonde f N) : ℚ) : ℝ) *
+      AddMonoidAlgebra.coeff P α * ((AddMonoidAlgebra.coeff (blockVandermonde f N) α : ℚ) : ℝ) *
           α.prod (fun _ e => (e.factorial : ℝ)) =
-        (coeff α (blockVandermonde f N) * α.prod (fun _ e => (e.factorial : ℚ))) • coeff α P := by
+        (AddMonoidAlgebra.coeff (blockVandermonde f N) α * α.prod (fun _ e => (e.factorial : ℚ))) • AddMonoidAlgebra.coeff P α := by
     intro α
     rw [Rat.smul_def]
     simp only [Finsupp.prod, Rat.cast_mul, Rat.cast_prod, Rat.cast_natCast]

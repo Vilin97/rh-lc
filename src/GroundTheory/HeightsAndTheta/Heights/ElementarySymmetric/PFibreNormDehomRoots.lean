@@ -142,12 +142,12 @@ theorem proof (hG : PullFormsGeneric.Statement) (hS : PullSectionIntegral.Statem
 
   have hsplit : ∀ (g : MRing ι) (hg : IsMultiHomog g e),
       (⟨aeval y g / aeval y (L a) ^ (1 * 1), memM g hg⟩ : chartClosure y L a) =
-        ∑ x ∈ g.support.attach, ((coeff x.1 g : ℤ) : chartClosure y L a) *
+        ∑ x ∈ g.support.attach, ((AddMonoidAlgebra.coeff g x.1 : ℤ) : chartClosure y L a) *
           ⟨aeval y (monomial x.1 (1 : ℤ)) / aeval y (L a) ^ (1 * 1), memM _ (isMultiHomog_monomial (hg x.1 x.2))⟩ := by
     intro g hg
     apply Subtype.ext
     simp only [AddSubmonoidClass.coe_finsetSum, MulMemClass.coe_mul, SubringClass.coe_intCast]
-    rw [Finset.sum_attach g.support (fun x => ((coeff x g : ℤ) : Ω) *
+    rw [Finset.sum_attach g.support (fun x => ((AddMonoidAlgebra.coeff g x : ℤ) : Ω) *
       (aeval y (monomial x (1 : ℤ)) / aeval y (L a) ^ (1 * 1)))]
     conv_lhs => rw [g.as_sum]
     rw [map_sum, Finset.sum_div]

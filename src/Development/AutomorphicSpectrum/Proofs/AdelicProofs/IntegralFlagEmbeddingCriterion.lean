@@ -198,7 +198,7 @@ theorem norm_det_le {m : ℕ} (C : Matrix (Fin m) (Fin m) ℂ) (a : Fin m → �
   rw [hCd]
   have hprod : ∏ i, ‖w i‖ ^ 2 ≤ (∏ i, a i) ^ 2 := by
     rw [← Finset.prod_pow]
-    exact Finset.prod_le_prod (fun i _ => by positivity)
+    exact Finset.prod_le_prod₀ (fun i _ => by positivity)
       (fun i _ => pow_le_pow_left₀ (norm_nonneg _) (hw_le i) 2)
   rw [← hdet] at hprod
   exact (sq_le_sq₀ (norm_nonneg _) (Finset.prod_nonneg fun i _ => (ha i).le)).mp hprod

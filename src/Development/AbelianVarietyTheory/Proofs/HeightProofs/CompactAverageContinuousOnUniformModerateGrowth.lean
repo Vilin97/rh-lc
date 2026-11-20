@@ -117,7 +117,7 @@ theorem continuousOn_and_umg_kAvg : ∀ (n : ℕ) (ε : Fin n → Bool) (f : Glo
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun J _ => ?_)
     rw [norm_mul, norm_prod, mul_assoc]
     have hw : 0 ≤ (1 + hs g) ^ N := pow_nonneg (by linarith [hs_nonneg g]) _
-    refine mul_le_mul (Finset.prod_le_prod (fun j _ => norm_nonneg _) fun j _ => ?_) ?_ (norm_nonneg _)
+    refine mul_le_mul (Finset.prod_le_prod₀ (fun j _ => norm_nonneg _) fun j _ => ?_) ?_ (norm_nonneg _)
       (Finset.prod_nonneg fun j _ => abs_nonneg _)
     · rw [Complex.norm_real, Real.norm_eq_abs]
       exact (hM _ _ k).trans (le_abs_self _)

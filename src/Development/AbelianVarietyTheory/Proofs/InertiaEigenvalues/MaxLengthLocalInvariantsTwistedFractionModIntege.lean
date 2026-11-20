@@ -147,7 +147,7 @@ theorem unbotD_le {m : WithBot ℚ} {c : ℚ} (h : m ≤ (c : WithBot ℚ)) (hc 
 
 theorem one_add_padicValNat_le (l : ℕ) [Fact l.Prime] {n t : ℕ} (hn : 0 < n) (hnt : n < t) :
     1 + padicValNat l n ≤ 2 * t := by
-  have h1 : l ^ padicValNat l n ≤ n := Nat.le_of_dvd hn pow_padicValNat_dvd
+  have h1 : l ^ padicValNat l n ≤ n := Nat.le_of_dvd hn (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
   have h2 : 2 ^ padicValNat l n ≤ l ^ padicValNat l n :=
     Nat.pow_le_pow_left (Fact.out : l.Prime).two_le _
   have h3 : padicValNat l n < 2 ^ padicValNat l n := Nat.lt_two_pow_self

@@ -72,13 +72,13 @@ def ThmBGaussInt : Prop :=
       (∀ τ, nu2 τ = (Finset.univ.filter (fun c => 2 ≤ ht τ c)).card) →
       (∀ τ, size τ = ∑ c, ht τ c) →
     ∀ nn : ((Bool × H) × Fin N0 × Fin N0) →₀ ℕ,
-      ‖MvPolynomial.coeff nn (jetPairPoly (∏ τ : Bool × H, minorProd
+      ‖AddMonoidAlgebra.coeff (jetPairPoly (∏ τ : Bool × H, minorProd
             (fun (i : Fin N0) (b : Fin N1) =>
               (∑ a : Fin N0, MvPolynomial.C (MvPolynomial.X (τ, i, a)) * MvPolynomial.X (τ, a, b) :
                 MvPolynomial ((Bool × H) × Fin N0 × Fin N1)
                   (MvPolynomial ((Bool × H) × Fin N0 × Fin N0) ℂ_[p])))
             (ht τ) (hht τ) (I τ))
-          (linSub A Th))‖ ≤
+          (linSub A Th)) nn‖ ≤
         ‖(p : ℂ_[p])‖ ^ (-(1 / 2 : ℝ) * ∑ t : H, ((size (false, t) : ℝ) -
           (if t ∈ TT then (nu1 (false, t) : ℝ) - nu2 (false, t) else 0) +
           (if t ∈ TT then (nu1 (true, t) : ℝ) else 0)))
@@ -96,7 +96,7 @@ def IntOpInt : Prop :=
         (mvExp (-(phIso τ (logSer (curveL p L ι)) (expSer (curveL p L ι)) (phC p L ι) δ)) * G) →
     JetsIntegral Th ∧
     ∀ (ν : Type) [Fintype ν] (A : n → ν → ℂ_[p]), (∀ i x, ‖A i x‖ ≤ 1) →
-    ∀ P : MvPolynomial ν ℂ_[p], (∀ k, ‖MvPolynomial.coeff k P‖ ≤ 1) →
+    ∀ P : MvPolynomial ν ℂ_[p], (∀ k, ‖AddMonoidAlgebra.coeff P k‖ ≤ 1) →
       ‖jetPair P (linSub A Th)‖ ≤ 1
 
 end Formalism.L2.Th1.Top

@@ -36,7 +36,7 @@ private theorem step {α β ι : Type} [Fintype ι] (e : β → ι → α) (he :
     rw [← ENNReal.ofReal_prod_of_nonneg fun i _ => (inv_pos.2 (hf _)).le, ← ENNReal.ofReal_mul (by positivity)]
     refine ENNReal.ofReal_le_ofReal ?_
     rw [← inv_pow, ← Finset.card_univ, ← Finset.prod_const, ← Finset.prod_const, ← Finset.prod_mul_distrib]
-    refine Finset.prod_le_prod (fun _ _ => (inv_pos.2 (hH b)).le) fun i _ => ?_
+    refine Finset.prod_le_prod₀ (fun _ _ => (inv_pos.2 (hH b)).le) fun i _ => ?_
     rw [← div_eq_mul_inv, le_div_iff₀ (hf _), inv_mul_le_iff₀ (hH b), mul_comm]
     exact h b i
   refine ne_top_of_le_ne_top ?_ (ENNReal.tsum_le_tsum h1)
@@ -122,7 +122,7 @@ private theorem entry_le {K : Type} [Field K] [NumberField K] {n : ℕ} (γ : GL
     fun v => max_le (norm_apply_le_locHeight (finAt v (AdelicGLn.diagonal K n γ)) i j) (one_le_locHeight _)
   refine mul_le_mul ?_ ?_ (finprod_nonneg fun _ => le_max_of_le_right zero_le_one)
     (zero_le_one.trans (one_le_prod_locHeight _))
-  · refine Finset.prod_le_prod (fun _ _ => by positivity) fun w _ => ?_
+  · refine Finset.prod_le_prod₀ (fun _ _ => by positivity) fun w _ => ?_
     refine pow_le_pow_left₀ (by positivity) (max_le ?_ (one_le_locHeight _)) _
     refine le_trans (le_of_eq ?_) (norm_apply_le_locHeight (infAt w (AdelicGLn.diagonal K n γ)) i j)
     exact (InfinitePlace.Completion.norm_coe w _).symm

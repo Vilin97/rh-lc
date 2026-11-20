@@ -60,7 +60,7 @@ theorem absNorm_span_eq (c : 𝓞 F) (hc : c ≠ 0) (I : Submodule (𝓞 F) F) (
 
 theorem finsum_log_gaussAbs_le : ∀ (F : Type) [Field F] [NumberField F] (τ : Type) (g : MvPolynomial τ F), g ≠ 0 →
     ∀ (I : Submodule (𝓞 F) F) (δ : F), δ ≠ 0 → 1 ≤ I →
-    (∃ c : 𝓞 F, c ≠ 0 ∧ ∀ y ∈ I, c • y ∈ (1 : Submodule (𝓞 F) F)) → (∀ m, coeff m g / δ ∈ I) →
+    (∃ c : 𝓞 F, c ≠ 0 ∧ ∀ y ∈ I, c • y ∈ (1 : Submodule (𝓞 F) F)) → (∀ m, AddMonoidAlgebra.coeff g m / δ ∈ I) →
     ∑ᶠ q : FinitePlace F, Real.log (gaussAbs q g) ≤
       Real.log ((1 : Submodule (𝓞 F) F).toAddSubgroup.relIndex I.toAddSubgroup) +
         ∑ᶠ q : FinitePlace F, Real.log (q δ) := by
@@ -69,13 +69,13 @@ theorem finsum_log_gaussAbs_le : ∀ (F : Type) [Field F] [NumberField F] (τ : 
   have hne : g.support.Nonempty := MvPolynomial.support_nonempty.2 hg
   set n := g.support.card
   set e := g.support.equivFin
-  have hz : ∀ i : Fin n, ∃ z : 𝓞 F, algebraMap (𝓞 F) F z = c • (coeff (e.symm i : τ →₀ ℕ) g / δ) :=
+  have hz : ∀ i : Fin n, ∃ z : 𝓞 F, algebraMap (𝓞 F) F z = c • (AddMonoidAlgebra.coeff g (e.symm i : τ →₀ ℕ) / δ) :=
     fun i => Submodule.mem_one.1 (hcI _ (hcoef _))
   choose b hb using hz
   have hc' : (c : F) ≠ 0 := by exact_mod_cast hc
-  have hb' : ∀ i, (b i : F) = (c : F) * (coeff (e.symm i : τ →₀ ℕ) g / δ) := fun i => by
+  have hb' : ∀ i, (b i : F) = (c : F) * (AddMonoidAlgebra.coeff g (e.symm i : τ →₀ ℕ) / δ) := fun i => by
     simpa [Algebra.smul_def] using hb i
-  have hcoeff : ∀ i : Fin n, coeff (e.symm i : τ →₀ ℕ) g = δ * ((b i : F) / c) := by
+  have hcoeff : ∀ i : Fin n, AddMonoidAlgebra.coeff g (e.symm i : τ →₀ ℕ) = δ * ((b i : F) / c) := by
     intro i
     rw [hb' i]
     field_simp

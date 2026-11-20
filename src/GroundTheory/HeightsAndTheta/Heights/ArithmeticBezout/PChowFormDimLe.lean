@@ -12,14 +12,14 @@ noncomputable section
 namespace ChowFormDimLe
 
 theorem coeff_zero_eq_zero_of_mem {F : Type} [Field F] {n : ℕ} {I : Ideal (MvPolynomial (Fin n) F)}
-    (hI : IsProjPrime I) {g : MvPolynomial (Fin n) F} (hg : g ∈ I) : coeff 0 g = 0 := by
+    (hI : IsProjPrime I) {g : MvPolynomial (Fin n) F} (hg : g ∈ I) : AddMonoidAlgebra.coeff g 0 = 0 := by
   by_contra h
   have h0 := hI.isHomog g hg 0
   rw [homogeneousComponent_zero] at h0
   exact hI.isPrime.ne_top (Ideal.eq_top_of_isUnit_mem _ h0 ((Ne.isUnit h).map C))
 
 theorem exists_prime_liesOver {F : Type} [Field F] (K : Type) [Field K] [Algebra F K] {n : ℕ}
-    (I : Ideal (MvPolynomial (Fin n) F)) [I.IsPrime] (hI : ∀ g ∈ I, coeff 0 g = 0) :
+    (I : Ideal (MvPolynomial (Fin n) F)) [I.IsPrime] (hI : ∀ g ∈ I, AddMonoidAlgebra.coeff g 0 = 0) :
     ∃ P : Ideal (MvPolynomial (Fin n) K), P.IsPrime ∧
       P ≤ RingHom.ker (eval (0 : Fin n → K)) ∧
       P.comap (MvPolynomial.map (algebraMap F K)) = I := by

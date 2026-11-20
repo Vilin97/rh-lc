@@ -21,7 +21,7 @@ theorem ChartResidueDegreeAlgClosed.proof (h₁ : ChowFormBirationalAlgClosed.St
     cases e with
     | zero =>
       exfalso
-      have h0 : coeff 0 q ≠ 0 := fun h => hq.ne_zero (by rw [eq_C_of_isEmpty q, h, C_0])
+      have h0 : AddMonoidAlgebra.coeff q 0 ≠ 0 := fun h => hq.ne_zero (by rw [eq_C_of_isEmpty q, h, C_0])
       exact hq.not_isUnit (by rw [eq_C_of_isEmpty q]; exact (Ne.isUnit h0).map C)
     | succ k => exact ⟨k, rfl⟩
 

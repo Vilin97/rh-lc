@@ -12,7 +12,7 @@ namespace GlobalTheory.SteepSmall
 
 theorem coeff_diag {σ : Type*} (A : MvPolynomial σ ℂ →ₗ[ℂ] MvPolynomial σ ℂ) (w : (σ →₀ ℕ) → ℂ)
     (hA : ∀ α, A (monomial α 1) = w α • monomial α 1) (g : MvPolynomial σ ℂ) (α : σ →₀ ℕ) :
-    coeff α (A g) = w α * coeff α g := by
+    AddMonoidAlgebra.coeff (A g) α = w α * AddMonoidAlgebra.coeff g α := by
   classical
   induction g using MvPolynomial.induction_on' with
   | monomial u a =>
@@ -22,14 +22,14 @@ theorem coeff_diag {σ : Type*} (A : MvPolynomial σ ℂ →ₗ[ℂ] MvPolynomia
     by_cases h' : u = α
     · subst h'; simp; ring
     · simp [h']
-  | add p q hp hq => simp [map_add, coeff_add, hp, hq, mul_add]
+  | add p q hp hq => simp [map_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem eig_supp {σ : Type*} (A : MvPolynomial σ ℂ →ₗ[ℂ] MvPolynomial σ ℂ) (w : (σ →₀ ℕ) → ℂ)
     (hA : ∀ α, A (monomial α 1) = w α • monomial α 1) (g : MvPolynomial σ ℂ) (c : ℂ)
     (hg : A g = c • g) {α : σ →₀ ℕ} (hα : α ∈ g.support) : w α = c := by
   have h1 := coeff_diag A w hA g α
   rw [hg, coeff_smul, smul_eq_mul] at h1
-  have h2 : coeff α g ≠ 0 := mem_support_iff.1 hα
+  have h2 : AddMonoidAlgebra.coeff g α ≠ 0 := mem_support_iff.1 hα
   exact (mul_right_cancel₀ h2 h1).symm
 
 theorem homog_of_harmVec {P' Q' R S : ℕ} {x : ℚ} {μ : Ix R S → ℚ} {f : Pol P' Q' R S}
@@ -141,7 +141,7 @@ theorem support_zero_of_pderiv {σ : Type*} (f : MvPolynomial σ ℂ) (v : σ)
     (fun β => by simpa using Formalism.BasicNotions.TH.X_mul_pderiv_monomial v β) f α
   have h0 : (LinearMap.mulLeft ℂ (X v) ∘ₗ (pderiv v).toLinearMap) f = 0 := by simp [h]
   rw [h0, coeff_zero] at hd
-  have hc : coeff α f ≠ 0 := mem_support_iff.1 hα
+  have hc : AddMonoidAlgebra.coeff f α ≠ 0 := mem_support_iff.1 hα
   have := (mul_eq_zero.1 hd.symm).resolve_right hc
   exact_mod_cast this
 

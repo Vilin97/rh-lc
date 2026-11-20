@@ -54,7 +54,7 @@ theorem summable_of_entire {σ : Type*} [Fintype σ] [DecidableEq σ] {f : (σ �
           ring
       _ ≤ M * ∏ j, (1 / 2 : ℝ) ^ α j :=
           mul_le_mul_of_nonneg_left
-            (Finset.prod_le_prod (fun j _ => by have := (hR j).le; positivity)
+            (Finset.prod_le_prod₀ (fun j _ => by have := (hR j).le; positivity)
               fun j _ => pow_le_pow_left₀ (by have := (hR j).le; positivity) (hw j) _) hM0
   exact Summable.of_norm_bounded
     ((GlobalTheory.ProdThetaConj.summable_prod_half_pow (σ := σ)).mul_left M) key

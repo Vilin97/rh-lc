@@ -54,7 +54,7 @@ theorem norm_eval₂_le (P : MvPolynomial ι K) (z : ι → ℂ) (hz : ∀ i, �
   rw [MvPolynomial.eval₂_eq]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun m _ => ?_)
   rw [norm_mul, norm_prod]
-  refine mul_le_of_le_one_right (norm_nonneg _) (Finset.prod_le_one (fun _ _ => norm_nonneg _) fun i _ => ?_)
+  refine mul_le_of_le_one_right (norm_nonneg _) (Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun i _ => ?_)
   rw [norm_pow]
   exact pow_le_one₀ (norm_nonneg _) (hz i)
 

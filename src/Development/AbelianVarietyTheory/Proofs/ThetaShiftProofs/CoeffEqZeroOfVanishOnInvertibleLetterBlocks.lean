@@ -75,7 +75,7 @@ theorem coeff_eq_zero_of_vanish_on_invBl : ∀ (E : Type) [Field E] [NumberField
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mul, MvPolynomial.eval_C, eval_coefPoly]
     rfl
-  have := congrArg (MvPolynomial.coeff μ) hP
+  have := congrArg (AddMonoidAlgebra.coeff · μ) hP
   rw [MvPolynomial.coeff_sum, MvPolynomial.coeff_zero] at this
   rw [← this]
   refine Finset.sum_congr rfl fun i _ => ?_

@@ -122,7 +122,7 @@ theorem isGenH_line : IsGenH (mCoordIdeal (ι := GlobalTheory (Fin 2)) y) fsLine
       rw [Fintype.sum_sigma, Fintype.sum_unique]; exact hμ _
     rw [norm_prod, one_mul]
     calc ∏ p, ‖z p ^ μ p‖ ≤ ∏ p, fsLine1.h z ^ μ p :=
-          Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun p _ => by
+          Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun p _ => by
             rw [norm_pow]; exact pow_le_pow_left₀ (norm_nonneg _) (coord_le_fs z p) _
       _ = fsLine1.h z := by rw [Finset.prod_pow_eq_pow_sum, h1, pow_one]⟩
 

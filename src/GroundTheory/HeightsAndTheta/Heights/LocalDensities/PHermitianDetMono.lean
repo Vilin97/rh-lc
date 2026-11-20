@@ -23,7 +23,7 @@ theorem HermitianDetMono.one_le_det_one_add {n : ℕ} {M : Matrix (Fin n) (Fin n
   have hprod : (1 : ℝ) ≤ ∏ i, hH.eigenvalues i := by
     calc (1 : ℝ) = ∏ _i : Fin n, (1 : ℝ) := by simp
       _ ≤ ∏ i, hH.eigenvalues i :=
-        Finset.prod_le_prod (fun _ _ => zero_le_one) (fun i _ => hev i)
+        Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun i _ => hev i)
   have key : ((1 : ℝ) : ℂ) ≤ ((∏ i, hH.eigenvalues i : ℝ) : ℂ) := Complex.real_le_real.mpr hprod
   convert key using 1
   · simp

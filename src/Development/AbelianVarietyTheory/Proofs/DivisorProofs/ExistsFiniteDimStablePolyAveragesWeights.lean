@@ -148,12 +148,12 @@ theorem polyAvg : ∀ (n : ℕ) (ε : Fin n → Bool) (d : ℕ), ∃ A : Set (Fi
     apply hv
     have hP' : P.totalDegree ≤ d := (mem_restrictTotalDegree _ _ _).1 hP
     rw [← inner_self_eq_zero (𝕜 := ℂ)]
-    have e : avg hσ u P = ∑ s ∈ P.support, coeff s P • avg hσ u (monomial s 1) := by
+    have e : avg hσ u P = ∑ s ∈ P.support, AddMonoidAlgebra.coeff P s • avg hσ u (monomial s 1) := by
       conv_lhs => rw [P.as_sum, map_sum]
       refine Finset.sum_congr rfl fun s _ => ?_
       rw [← map_smul, smul_monomial, smul_eq_mul, mul_one]
     generalize avg hσ u P = v at e hw
-    have : inner ℂ v (∑ s ∈ P.support, coeff s P • avg hσ u (monomial s 1)) = 0 := by
+    have : inner ℂ v (∑ s ∈ P.support, AddMonoidAlgebra.coeff P s • avg hσ u (monomial s 1)) = 0 := by
       rw [inner_sum]
       refine Finset.sum_eq_zero fun s hs => ?_
       rw [inner_smul_right, ReciprocityTheory.ChartRestriction.DS.kfin_wt_orth hσ hw (isWtOn_avg hσ u s), mul_zero]

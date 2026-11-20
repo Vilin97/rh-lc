@@ -21,7 +21,7 @@ theorem flagIntegral_blockVandermonde_pos (f N : ℕ) :
     rw [Finset.nonempty_iff_ne_empty, Ne, MvPolynomial.support_eq_empty]
     exact RestTerms.Flag.blockVandermonde_ne_zero f N
   refine Finset.sum_pos (fun α hα => ?_) hne
-  have hc : coeff α (RestTerms.blockVandermonde f N) ≠ 0 := MvPolynomial.mem_support_iff.mp hα
+  have hc : AddMonoidAlgebra.coeff (RestTerms.blockVandermonde f N) α ≠ 0 := MvPolynomial.mem_support_iff.mp hα
   refine mul_pos (mul_self_pos.mpr hc) ?_
   exact Finset.prod_pos fun i _ => by dsimp only; exact_mod_cast Nat.factorial_pos _
 

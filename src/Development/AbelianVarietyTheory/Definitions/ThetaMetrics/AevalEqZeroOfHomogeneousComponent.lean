@@ -75,8 +75,8 @@ theorem exists_C_mul_X_pow_mem {R Ω σ : Type*} [CommRing R] [Field Ω] [IsAlgC
   let T := Submodule.span Ω ((fun v : n → R => φ ∘ v) '' S)
   have h1 : ∀ g ∈ I, π (map φ g) ∈ T := by
     intro g hg
-    refine Submodule.subset_span ⟨fun a => coeff a.1 g, ?_, ?_⟩
-    · have : L (fun a => coeff a.1 g) = homogeneousComponent d g := by
+    refine Submodule.subset_span ⟨fun a => AddMonoidAlgebra.coeff g a.1, ?_, ?_⟩
+    · have : L (fun a => AddMonoidAlgebra.coeff g a.1) = homogeneousComponent d g := by
         ext c
         rw [hL, coeff_sum, coeff_homogeneousComponent]
         split_ifs with hc

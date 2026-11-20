@@ -57,10 +57,10 @@ private theorem height_lev_le (s : ℕ) (a : GA E r) : AutomorphicForm.height (l
       simp only [Set.Finite.coe_toFinset, Set.mem_union]; exact Or.inr hv
   unfold AutomorphicForm.height
   refine mul_le_mul ?_ ?_ (le_trans zero_le_one (one_le_finprod_locHeight _)) (le_trans zero_le_one (one_le_prod_locHeight _))
-  · exact Finset.prod_le_prod (fun w _ => pow_nonneg (locHeight_pos _).le _)
+  · exact Finset.prod_le_prod₀ (fun w _ => pow_nonneg (locHeight_pos _).le _)
       fun w _ => pow_le_pow_left₀ (locHeight_pos _).le (locHeight_inf_le w a) _
   · rw [e1, e2]
-    exact Finset.prod_le_prod (fun v _ => (locHeight_pos _).le) fun v _ => locHeight_fin_le v a
+    exact Finset.prod_le_prod₀ (fun v _ => (locHeight_pos _).le) fun v _ => locHeight_fin_le v a
 
 private theorem ct_growth {n : ℕ} (r : ℕ) (φ : GA E n → ℂ) {B : ℝ} {N : ℕ} (hφ : ∀ g, ‖φ g‖ ≤ B * AutomorphicForm.height g ^ N) :
     ∃ C : ℝ, ∀ g, ‖constantTerm r φ g‖ ≤ C * AutomorphicForm.height g ^ N := by

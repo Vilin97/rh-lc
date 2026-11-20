@@ -425,14 +425,14 @@ theorem UpperTheory.V.Pa.oneLevel :
   have hfixP : (Nat.card x.K ^ (m * nu n x.a k.g)) ^ d ≤
       ∏ i : Fin d, Nat.card {y : ↥(k.M1 (x.Am m)) // (rep (a.cw i)) y = y} := by
     calc (Nat.card x.K ^ (m * nu n x.a k.g)) ^ d = ∏ _i : Fin d, Nat.card x.K ^ (m * nu n x.a k.g) := by simp
-      _ ≤ _ := Finset.prod_le_prod (fun _ _ => Nat.zero_le _) (fun i _ => hfix i)
+      _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => Nat.zero_le _) (fun i _ => hfix i)
   have hP : (∏ w, Nat.card ↥(𝓛 w)) * (Nat.card x.K ^ (m * (n + nu n x.a k.g))) ^ Fintype.card L.Vl ≤
       Nat.card ↥(k.M1 (x.Am m)) ^ Fintype.card (ArData.W L q) * Nat.card x.K ^ (∑ v, e v + ∑ j, f j) := by
     have h1 : ∏ v, (Nat.card ↥(𝓛 (.inl v)) * Nat.card x.K ^ (m * (n + nu n x.a k.g))) ≤
         ∏ v, (Nat.card ↥(k.M1 (x.Am m)) * Nat.card x.K ^ e v) :=
-      Finset.prod_le_prod (fun _ _ => Nat.zero_le _) (fun v _ => hPv v)
+      Finset.prod_le_prod₀ (fun _ _ => Nat.zero_le _) (fun v _ => hPv v)
     have h3 : ∏ j, Nat.card ↥(𝓛 (.inr (.inr j))) ≤ ∏ j, (Nat.card ↥(k.M1 (x.Am m)) * Nat.card x.K ^ f j) :=
-      Finset.prod_le_prod (fun _ _ => Nat.zero_le _) (fun j _ => hPj j)
+      Finset.prod_le_prod₀ (fun _ _ => Nat.zero_le _) (fun j _ => hPj j)
     simp only [Finset.prod_mul_distrib, Finset.prod_const, Finset.prod_pow_eq_pow_sum, Finset.card_univ] at h1 h3
     rw [Fintype.prod_sum_type, Fintype.prod_sum_type, Fintype.card_sum, Fintype.card_sum]
     simp only [hPu, Finset.prod_const, Finset.card_univ]

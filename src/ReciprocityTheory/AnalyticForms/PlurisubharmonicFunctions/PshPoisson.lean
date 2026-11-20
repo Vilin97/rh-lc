@@ -213,7 +213,7 @@ lemma poissonInt_harmonicAt {g : ℂ → ℝ} {r : ℝ} (hr : 0 < r) (hg : Conti
     first
     | (rw [Metric.emetric_ball_nnreal]; exact hw)
     | simpa [Metric.emetric_ball_nnreal] using hw
-    | (refine EMetric.mem_ball.mpr (edist_lt_coe.mpr (NNReal.coe_lt_coe.mp ?_))
+    | (refine Metric.mem_eball.mpr (edist_lt_coe.mpr (NNReal.coe_lt_coe.mp ?_))
        rw [coe_nndist, dist_zero_right]
        exact mem_ball_zero_iff.mp hw)
     | (have hw' : ‖w‖ < r := mem_ball_zero_iff.mp hw

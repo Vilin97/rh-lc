@@ -17,5 +17,5 @@ theorem UpperTheory.Reformulated.B.DYlb5.main :
   have : (⇑f : Matrix (Fin n) (Fin n) k → k) =
       fun M => ∑ i, ∑ j, M i j * f (Matrix.single i j 1) := funext key
   rw [this]
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   exact (continuous_id.matrix_elem i j).mul continuous_const

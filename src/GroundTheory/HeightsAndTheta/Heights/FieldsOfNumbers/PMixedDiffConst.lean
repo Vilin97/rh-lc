@@ -58,9 +58,9 @@ theorem monomial_good (b : K → ℤ) (s : K →₀ ℕ) (a : ℚ) :
       · exact (totalDegree_mul _ _).trans (by rw [totalDegree_C, zero_add]; exact h1)
 
 theorem sum_eq (b : K → ℤ) (p : MvPolynomial K ℚ) :
-    shiftPoly b p = ∑ v ∈ p.support, shiftPoly b (monomial v (coeff v p)) ∧
-      polyStep b p = ∑ v ∈ p.support, polyStep b (monomial v (coeff v p)) := by
-  have hs : shiftPoly b p = ∑ v ∈ p.support, shiftPoly b (monomial v (coeff v p)) := by
+    shiftPoly b p = ∑ v ∈ p.support, shiftPoly b (monomial v (AddMonoidAlgebra.coeff p v)) ∧
+      polyStep b p = ∑ v ∈ p.support, polyStep b (monomial v (AddMonoidAlgebra.coeff p v)) := by
+  have hs : shiftPoly b p = ∑ v ∈ p.support, shiftPoly b (monomial v (AddMonoidAlgebra.coeff p v)) := by
     conv_lhs => rw [p.as_sum]
     simp only [shiftPoly, map_sum]
   refine ⟨hs, ?_⟩
@@ -68,7 +68,7 @@ theorem sum_eq (b : K → ℤ) (p : MvPolynomial K ℚ) :
   rw [← hs, ← p.as_sum]
 
 theorem monomial_le (p : MvPolynomial K ℚ) {v : K →₀ ℕ} (hv : v ∈ p.support) :
-    (monomial v (coeff v p)).totalDegree ≤ p.totalDegree :=
+    (monomial v (AddMonoidAlgebra.coeff p v)).totalDegree ≤ p.totalDegree :=
   (totalDegree_monomial_le _ _).trans (le_totalDegree hv)
 
 theorem polyStep_deg (b : K → ℤ) (p : MvPolynomial K ℚ) :
@@ -81,7 +81,7 @@ theorem polyStep_deg (b : K → ℤ) (p : MvPolynomial K ℚ) :
     have : (polyStep b p).totalDegree ≤ p.totalDegree - 1 := by
       rw [(sum_eq b p).2]
       refine totalDegree_finsetSum_le fun v hv => ?_
-      rcases (monomial_good b v (coeff v p)).2 with h | h
+      rcases (monomial_good b v (AddMonoidAlgebra.coeff p v)).2 with h | h
       · rw [h, totalDegree_zero]; exact zero_le
       · have := monomial_le p hv; omega
     omega
@@ -141,7 +141,7 @@ theorem MixedDiffConst.proof (h1 : HilbDegreeBound.Statement.{u})
       rw [mixedDiff, hm, h0, map_zero]
     · rw [List.length_ofFn] at hd
       have hq0 : ((List.ofFn bs).foldr polyStep p).totalDegree = 0 := by omega
-      refine ⟨coeff 0 ((List.ofFn bs).foldr polyStep p), fun hlt => by omega, ?_⟩
+      refine ⟨AddMonoidAlgebra.coeff ((List.ofFn bs).foldr polyStep p) 0, fun hlt => by omega, ?_⟩
       rw [totalDegree_eq_zero_iff_eq_C] at hq0
       filter_upwards [hE] with m hm
       rw [mixedDiff, hm, hq0, eval_C, coeff_C, if_pos rfl]

@@ -70,10 +70,10 @@ theorem UpperTheory.V.KT.nrmle :
   have hle : ∀ w, (nrmDet A : ℝ) * P ≤ (mat (pull A h) w).det.re := fun w => by
     rw [← hprod, ← Finset.mul_prod_erase _ _ (Finset.mem_univ w)]
     exact mul_le_of_le_one_right (hH w).1
-      (Finset.prod_le_one (fun v _ => (hH v).1) (fun v _ => (hH v).2.1))
+      (Finset.prod_le_one₀ (fun v _ => (hH v).1) (fun v _ => (hH v).2.1))
   have hle1 : (nrmDet A : ℝ) * P ≤ 1 := by
     rw [← hprod]
-    exact Finset.prod_le_one (fun v _ => (hH v).1) (fun v _ => (hH v).2.1)
+    exact Finset.prod_le_one₀ (fun v _ => (hH v).1) (fun v _ => (hH v).2.1)
   refine ⟨?_, fun w => ⟨hpsd w, hdiag w, ?_⟩⟩
   · have : (nrmDet A : ℝ) ≤ I0 L N := by
       calc (nrmDet A : ℝ) ≤ nrmDet A * (I0 L N * P) := le_mul_of_one_le_right (by linarith) hlow

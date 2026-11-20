@@ -187,7 +187,7 @@ private theorem tsupport_finsum_lattice_translate_subset (Λ : Submodule ℤ E) 
   have hz' := closure_mono h1 hz
   rw [hlf.closure_iUnion] at hz'
   obtain ⟨l, hl⟩ := Set.mem_iUnion.1 hz'
-  have hl' : z + l ∈ tsupport φ := tsupport_comp_subset_preimage φ (continuous_add_right (l : E)) hl
+  have hl' : z + l ∈ tsupport φ := tsupport_comp_subset_preimage φ (continuous_add_const (l : E)) hl
   simpa using hper (-l) _ (hU hl')
 
 open Complex Matrix in
@@ -205,7 +205,7 @@ theorem _root_.GlobalTheory.exists_smooth_periodic_partition_of_unity :
           ⋃ l : Λ, (· + (l : Fin g → ℂ)) ⁻¹' Metric.ball x 1 := by
         ext z; simp
       rw [hset]
-      exact isOpen_iUnion fun l => Metric.isOpen_ball.preimage (continuous_add_right _))
+      exact isOpen_iUnion fun l => Metric.isOpen_ball.preimage (continuous_add_const _))
     (fun x l z ⟨m, hm⟩ => ⟨m - l, by
       have hzm : z + (l : Fin g → ℂ) + ((m - l : Λ) : Fin g → ℂ) = z + m := by push_cast; abel
       rw [hzm]

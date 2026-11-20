@@ -44,7 +44,7 @@ theorem unfTh_polFn (σ₀ : X.K →+* ℂ) (cD : X.Tau → ℂ) {a b : ℕ} (Θ
 theorem unfTh_apply (σ₀ : X.K →+* ℂ) (cD : X.Tau → ℂ) {a b : ℕ} (Θ : VCx X.Tau a b → ℂ) (Q : Pol ℂ X.Tau a) (y' : FrS X σ₀ b) :
     unfTh σ₀ cD Θ (polFn σ₀ a Q) y' =
       ∑ α ∈ (polDx cD (fun x : X.Tau × Fin b × Fin b => y'.1 x.1 x.2.1 x.2.2) Q).support,
-        coeff α (polDx cD (fun x : X.Tau × Fin b × Fin b => y'.1 x.1 x.2.1 x.2.2) Q) * derivAt0 Θ α := by
+        AddMonoidAlgebra.coeff (polDx cD (fun x : X.Tau × Fin b × Fin b => y'.1 x.1 x.2.1 x.2.2) Q) α * derivAt0 Θ α := by
   rw [unfTh_polFn, polFn_apply, jetMap_eval]
 
 theorem jetC_zero {ι : Type} [Fintype ι] {a b : ℕ} (cD : ι → ℂ) (Θ : VCx ι a b → ℂ) : jetC cD Θ 0 = Θ 0 := by

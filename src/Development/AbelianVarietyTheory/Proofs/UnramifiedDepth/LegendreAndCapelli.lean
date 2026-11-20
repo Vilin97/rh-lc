@@ -85,7 +85,7 @@ theorem capelli_bound : F3 := by
       exact (Finset.prod_ne_zero_iff.mpr (fun c _ => Nat.factorial_ne_zero (x + c))) h.symm
     have hv : padicValNat l (capNat n0 x) + padicValNat l (∏ c ∈ Finset.range n0, c.factorial)
         = padicValNat l (∏ c ∈ Finset.range n0, (x + c).factorial) := by
-      rw [← padicValNat.mul hC hP, capNat_mul]
+      rw [← (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hC hP, capNat_mul]
     have hvR : (padicValNat l (capNat n0 x) : ℝ)
         = (padicValNat l (∏ c ∈ Finset.range n0, (x + c).factorial) : ℝ)
           - (padicValNat l (∏ c ∈ Finset.range n0, c.factorial) : ℝ) := by

@@ -117,7 +117,7 @@ theorem exc_dvd_prod {g e l : ℕ} (hg : 1 ≤ g) (h1 : 1 ≤ e) (h9 : e ≤ 9) 
   have h3 : g ^ e - 1 ∣ ∏ i ∈ Finset.range 9, (g ^ (i + 1) - 1) := by
     have := Finset.dvd_prod_of_mem (fun i => g ^ (i + 1) - 1) (Finset.mem_range.2 (show e - 1 < 9 by omega))
     rwa [Nat.sub_add_cancel h1] at this
-  exact ((dvd_pow_self l hv).trans pow_padicValNat_dvd).trans h3
+  exact ((dvd_pow_self l hv).trans (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))).trans h3
 
 theorem not_exc_of_cong {M l g e c : ℕ} (hl : l.Prime) (hM : l ^ 4 ∣ M) (hM0 : 0 < M)
     (hg : g = 1 + M + M ^ 2 * c) (hbig : M ^ 7 ≤ g) (h1 : 1 ≤ e) (h9 : e ≤ 9) : ¬ Formalism.CyclotomicNorms.Exc g e l := by
@@ -142,17 +142,17 @@ theorem not_exc_of_cong {M l g e c : ℕ} (hl : l.Prime) (hM : l ^ 4 ∣ M) (hM0
   have hS0 : S ≠ 0 := by rintro h; exact hnd (h ▸ dvd_zero _)
   have hvS : padicValNat l S ≤ 3 := by
     by_contra hc
-    exact hnd ((pow_dvd_pow l (by omega)).trans pow_padicValNat_dvd)
+    exact hnd ((pow_dvd_pow l (by omega)).trans (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)))
   have hlM : l ∣ M := (dvd_pow_self l (by norm_num)).trans hM
   have hv1 : padicValNat l (1 + M * c) = 0 := by
     apply padicValNat.eq_zero_of_not_dvd
     intro hd
     exact hl.one_lt.ne' (Nat.dvd_one.1 ((Nat.dvd_add_left (hlM.mul_right c)).1 hd))
   have hval : padicValNat l (g ^ e - 1) = padicValNat l S + padicValNat l M := by
-    rw [← hgeo, Nat.add_sub_cancel, hx, padicValNat.mul hS0 (by positivity),
-      padicValNat.mul hM0.ne' (by positivity), hv1, add_zero]
+    rw [← hgeo, Nat.add_sub_cancel, hx, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hS0 (by positivity),
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hM0.ne' (by positivity), hv1, add_zero]
   have hle : l ^ (4 * padicValNat l (g ^ e - 1)) ≤ M ^ 7 := by
-    have a1 : l ^ padicValNat l M ≤ M := Nat.le_of_dvd hM0 pow_padicValNat_dvd
+    have a1 : l ^ padicValNat l M ≤ M := Nat.le_of_dvd hM0 (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
     have a2 : l ^ 4 ≤ M := Nat.le_of_dvd hM0 hM
     calc l ^ (4 * padicValNat l (g ^ e - 1)) ≤ l ^ (4 * 3 + 4 * padicValNat l M) :=
           Nat.pow_le_pow_right hl.pos (by rw [hval]; omega)

@@ -207,7 +207,7 @@ theorem exists_hookSchur : ∀ (N k r : ℕ), r < k → k ≤ N → ∃ S : MvPo
   · refine hs_induct x (fun _ p => ∀ m, 0 ≤ p.coeff m) (fun d m => by simp) (fun m => ?_)
       (fun d p q hp hq m => ?_) (fun d i p hp m => ?_) N (k - r) r
     · rw [coeff_one]; split_ifs <;> norm_num
-    · rw [coeff_add]; exact add_nonneg (hp m) (hq m)
+    · rw [MvPolynomial.coeff_add]; exact add_nonneg (hp m) (hq m)
     · simp only [x]
       split_ifs
       · rw [coeff_X_mul']

@@ -22,7 +22,7 @@ theorem HtGenericPt {K : Type} [Field K] [NumberField K] {ι : Type} [Fintype ι
   have hP : ∀ c, P c ≠ 0 := by
     intro c hc
     apply hφ c
-    have := congrArg (MvPolynomial.coeff (Finsupp.single (d.jc c) 1)) hc
+    have := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single (d.jc c) 1)) hc
     simpa [P, MvPolynomial.coeff_sum, MvPolynomial.coeff_C_mul, MvPolynomial.coeff_X',
       Finsupp.single_eq_single_iff] using this
   have hprod : (∏ c, P c) ≠ 0 := Finset.prod_ne_zero_iff.mpr (fun c _ => hP c)

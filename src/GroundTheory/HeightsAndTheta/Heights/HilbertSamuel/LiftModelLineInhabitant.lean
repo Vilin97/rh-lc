@@ -196,8 +196,8 @@ theorem poly_mem (c : Unit → ℤ) (hc : 0 ≤ c ()) (i j : ℕ) (p : MRingOver
     rwa [show ∑ x : Fin 2, μ ⟨(), x⟩ = μ ⟨(), 0⟩ + μ ⟨(), 1⟩ from Fin.sum_univ_two _] at this
   by_cases h0 : i ≤ μ ⟨(), 0⟩
   · have hle : Finsupp.single (⟨(), 0⟩ : Σ _ : Unit, Fin 2) i ≤ μ := Finsupp.single_le_iff.mpr h0
-    have hmono : monomial μ (coeff μ p) =
-        Xc S 0 ^ i * monomial (μ - Finsupp.single ⟨(), 0⟩ i) (coeff μ p) := by
+    have hmono : monomial μ (AddMonoidAlgebra.coeff p μ) =
+        Xc S 0 ^ i * monomial (μ - Finsupp.single ⟨(), 0⟩ i) (AddMonoidAlgebra.coeff p μ) := by
       rw [Xc, X_pow_eq_monomial, monomial_mul, one_mul, add_tsub_cancel_of_le hle]
     rw [hmono]
     refine chart_one_mem c i j ((c ()).toNat + j) (by omega) _ (isMultiHomog_monomial ?_ _) hT
@@ -206,8 +206,8 @@ theorem poly_mem (c : Unit → ℤ) (hc : 0 ≤ c ()) (i j : ℕ) (p : MRingOver
     omega
   · have h1 : j ≤ μ ⟨(), 1⟩ := by omega
     have hle : Finsupp.single (⟨(), 1⟩ : Σ _ : Unit, Fin 2) j ≤ μ := Finsupp.single_le_iff.mpr h1
-    have hmono : monomial μ (coeff μ p) =
-        Xc S 1 ^ j * monomial (μ - Finsupp.single ⟨(), 1⟩ j) (coeff μ p) := by
+    have hmono : monomial μ (AddMonoidAlgebra.coeff p μ) =
+        Xc S 1 ^ j * monomial (μ - Finsupp.single ⟨(), 1⟩ j) (AddMonoidAlgebra.coeff p μ) := by
       rw [Xc, X_pow_eq_monomial, monomial_mul, one_mul, add_tsub_cancel_of_le hle]
     rw [hmono]
     refine chart_zero_mem c i j ((c ()).toNat + i) (by omega) _ (isMultiHomog_monomial ?_ _) hT

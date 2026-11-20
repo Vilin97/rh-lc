@@ -1491,7 +1491,7 @@ theorem dense_hasCompactSupport : ∀ (n : ℕ), Dense {f : SchwartzMap (Fin n �
             rw [(L R).iteratedFDeriv_comp_right hus x (by exact_mod_cast le_top)]
             refine (ContinuousMultilinearMap.norm_compContinuousLinearMap_le _ _).trans ?_
             refine (mul_le_of_le_one_right (norm_nonneg _) ?_).trans (hC i _)
-            exact Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun _ _ => hL1 R)
+            exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun _ _ => hL1 R)
           have h3 := SchwartzMap.le_seminorm ℂ (k + 1) (j - i) f x
           have h4 := hC0 i
           gcongr

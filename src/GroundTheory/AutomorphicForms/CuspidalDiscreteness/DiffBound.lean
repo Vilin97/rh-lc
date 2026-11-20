@@ -179,7 +179,7 @@ theorem exists_norm_sum_altSign_archConvFun_le (hβ : ContDiff ℝ ((⊤ : ℕ�
         have hA' : ‖(A : ArchMatrix K n)‖ ≤ Rβ' := (hRβ A hA).trans (le_max_left _ _)
         have hprod : ∏ i, ‖-(Y i * (A : ArchMatrix K n))‖ ≤ (∏ i, ‖Y i‖) * Rβ' ^ k := by
           rw [← Fin.prod_const, ← Finset.prod_mul_distrib]
-          refine Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i _ => ?_
+          refine Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i _ => ?_
           rw [norm_neg]
           exact (norm_mul_le _ _).trans (mul_le_mul_of_nonneg_left hA' (norm_nonneg _))
         calc Bk * ∏ i, ‖-(Y i * (A : ArchMatrix K n))‖

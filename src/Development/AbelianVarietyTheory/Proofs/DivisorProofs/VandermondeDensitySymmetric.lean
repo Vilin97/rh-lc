@@ -33,7 +33,7 @@ variable {U : Type} [Fintype U]
 
 theorem apolar_add_left (P Q R : MvPolynomial U ℝ) : apolar (P + Q) R = apolar P R + apolar Q R := by
   induction R using MvPolynomial.induction_on' with
-  | monomial u a => simp only [apolar_monomial, coeff_add]; ring
+  | monomial u a => simp only [apolar_monomial, MvPolynomial.coeff_add]; ring
   | add p q hp hq => simp only [map_add, hp, hq]; ring
 
 theorem apolar_comm (P Q : MvPolynomial U ℝ) : apolar P Q = apolar Q P := by
@@ -46,7 +46,7 @@ theorem apolar_comm (P Q : MvPolynomial U ℝ) : apolar P Q = apolar Q P := by
       by_cases h : m = u
       · subst h; simp; ring
       · simp [h, Ne.symm h]
-    | add p q hp hq => rw [map_add, ← hp, ← hq, coeff_add]; ring
+    | add p q hp hq => rw [map_add, ← hp, ← hq, MvPolynomial.coeff_add]; ring
   | add p q hp hq => rw [map_add, hp, hq, apolar_add_left]
 
 theorem apolar_zero_left' (Q : MvPolynomial U ℝ) : apolar 0 Q = 0 := by

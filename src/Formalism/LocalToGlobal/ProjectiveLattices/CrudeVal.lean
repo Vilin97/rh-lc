@@ -89,7 +89,7 @@ lemma crv_vLa_natCast {N : ℕ} (hN : N ≠ 0) :
     vLa la ((N : ℕ) : K) = (padicValNat (resCharOf la) N * ramOverZ la : ℕ) := by
   have hp := resCharOf_prime la
   haveI : Fact (resCharOf la).Prime := ⟨hp⟩
-  obtain ⟨n', hn'⟩ : resCharOf la ^ padicValNat (resCharOf la) N ∣ N := pow_padicValNat_dvd
+  obtain ⟨n', hn'⟩ : resCharOf la ^ padicValNat (resCharOf la) N ∣ N := (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
   have hndvd : ¬ resCharOf la ∣ n' := by
     rintro ⟨b, rfl⟩
     have hd : resCharOf la ^ (padicValNat (resCharOf la) N + 1) ∣
@@ -132,7 +132,7 @@ lemma crv_padic_prod {σ : Type} (p : ℕ) [Fact p.Prime] (α : σ →₀ ℕ) :
   · simp
   · intro a u ha ih
     rw [Finset.prod_insert ha, Finset.sum_insert ha,
-      padicValNat.mul (Nat.factorial_ne_zero _)
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.factorial_ne_zero _)
         (Finset.prod_ne_zero_iff.mpr fun _ _ => Nat.factorial_ne_zero _), ih]
 
 lemma crv_legendre {σ : Type} (p : ℕ) [Fact p.Prime] (α : σ →₀ ℕ) :

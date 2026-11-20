@@ -36,8 +36,8 @@ private lemma finiteDimensional_homog' [Fintype σ] (n : ℕ) :
        have hph : p.IsHomogeneous n := (MvPolynomial.mem_homogeneousSubmodule n p).1 hp
        rw [p.as_sum]
        refine Submodule.sum_mem _ (fun d hd => ?_)
-       have hmono : MvPolynomial.monomial d (MvPolynomial.coeff d p)
-           = MvPolynomial.coeff d p • MvPolynomial.monomial d (1 : ℂ) := by
+       have hmono : MvPolynomial.monomial d (AddMonoidAlgebra.coeff p d)
+           = AddMonoidAlgebra.coeff p d • MvPolynomial.monomial d (1 : ℂ) := by
          first
          | simp [MvPolynomial.smul_monomial]
          | rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]

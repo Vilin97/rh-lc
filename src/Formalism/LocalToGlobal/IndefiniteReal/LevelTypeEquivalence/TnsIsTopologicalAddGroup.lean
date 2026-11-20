@@ -123,7 +123,7 @@ private theorem exists_isOpen_nhd_zero_algebraMap_discrete : ∃ V : Set (AF F),
         | exact w.nonneg _
         | exact apply_nonneg w _
     have hle : ∏ w ∈ Finset.univ.erase w0, w (algebraMap (𝓞 F) F x) ^ w.mult ≤ 1 :=
-      Finset.prod_le_one (fun w _ => pow_nonneg (hnn w) _)
+      Finset.prod_le_one₀ (fun w _ => pow_nonneg (hnn w) _)
         fun w _ => pow_le_one₀ (hnn w) (hw w).le
     have hm : w0.mult ≠ 0 := by
       first

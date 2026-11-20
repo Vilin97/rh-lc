@@ -97,7 +97,7 @@ theorem component_aeval_cx {E : Type*} (w' : E → (K →₀ ℕ))
   classical
   rw [H.as_sum, map_sum, map_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
-  have hmon : IsWeightedHomogeneous (blkWt (ι := ι)) (aeval yt (monomial m (coeff m H)))
+  have hmon : IsWeightedHomogeneous (blkWt (ι := ι)) (aeval yt (monomial m (AddMonoidAlgebra.coeff H m)))
       (Finsupp.weight w' m) := by
     rw [aeval_monomial, algebraMap_eq, Finsupp.prod]
     refine IsWeightedHomogeneous.C_mul ?_ _
@@ -107,9 +107,9 @@ theorem component_aeval_cx {E : Type*} (w' : E → (K →₀ ℕ))
   by_cases h : Finsupp.weight w' m = δ
   · subst h
     rw [hmon.weightedHomogeneousComponent_same,
-      (isWeightedHomogeneous_monomial w' m (coeff m H) rfl).weightedHomogeneousComponent_same]
+      (isWeightedHomogeneous_monomial w' m (AddMonoidAlgebra.coeff H m) rfl).weightedHomogeneousComponent_same]
   · rw [hmon.weightedHomogeneousComponent_ne δ (Ne.symm h),
-      (isWeightedHomogeneous_monomial w' m (coeff m H) rfl).weightedHomogeneousComponent_ne δ
+      (isWeightedHomogeneous_monomial w' m (AddMonoidAlgebra.coeff H m) rfl).weightedHomogeneousComponent_ne δ
         (Ne.symm h), map_zero]
 
 theorem aeval_sumElim_factor_cx (k0 : K) {S : Type*} [CommRing S] [Algebra ℂ S] {r : ℕ}

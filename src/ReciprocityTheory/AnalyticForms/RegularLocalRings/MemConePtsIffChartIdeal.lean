@@ -34,7 +34,7 @@ theorem eval_smul_of_isMultiHomog {f : MvPolynomial (Σ k, ι k) ℂ} {a : K →
   have key : ∏ q, (c q.1 * y q) ^ d q = (∏ k, c k ^ a k) * ∏ q, y q ^ d q := by
     rw [← hc, ← Finset.prod_mul_distrib]
     exact Finset.prod_congr rfl (fun q _ => mul_pow _ _ _)
-  linear_combination (coeff d f) * key
+  linear_combination (AddMonoidAlgebra.coeff f d) * key
 
 theorem eval_eq_zero_of_smul {P : Ideal (MvPolynomial (Σ k, ι k) ℂ)} (hP : IsMultiHomogIdeal P)
     (c : K → ℂ) (y : (Σ k, ι k) → ℂ) (hy : ∀ f ∈ P, eval y f = 0) :

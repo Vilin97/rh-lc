@@ -154,7 +154,7 @@ theorem hiOrd_sub_trunc (f : PS k n d) (D : ℕ) :
   omega
 
 theorem coe_eq_sum (p : MvPolynomial (Fin n × Fin d) k) :
-    (p : PS k n d) = ∑ μ ∈ p.support, MvPolynomial.coeff μ p • monomial μ (1 : k) := by
+    (p : PS k n d) = ∑ μ ∈ p.support, AddMonoidAlgebra.coeff p μ • monomial μ (1 : k) := by
   ext ν
   rw [MvPolynomial.coeff_coe, map_sum]
   simp only [map_smul, MvPowerSeries.coeff_monomial, smul_eq_mul, mul_ite, mul_one, mul_zero]
@@ -166,7 +166,7 @@ theorem coe_eq_sum (p : MvPolynomial (Fin n × Fin d) k) :
 theorem nabL_trunc (F : Fin d → PS k 2 d) {ι : Type} [Fintype ι] (cp : ι → Fin n) (u : ι → Fin d → k)
     (P : MvPolynomial ι k) (G : PS k n d) (f : PS k n d) :
     nabL F cp u P G f = ∑ μ ∈ (trunc' k (cst P.totalDegree) f).support,
-      MvPolynomial.coeff μ (trunc' k (cst P.totalDegree) f) * nabL F cp u P G (monomial μ (1 : k)) := by
+      AddMonoidAlgebra.coeff (trunc' k (cst P.totalDegree) f) μ * nabL F cp u P G (monomial μ (1 : k)) := by
   set T : PS k n d := ((trunc' k (cst P.totalDegree) f : MvPolynomial _ k) : PS k n d) with hTdef
   have h0 : nabL F cp u P G (f - T) = 0 := by
     show constantCoeff (DpolyN F cp u P ((f - T) * G)) = 0

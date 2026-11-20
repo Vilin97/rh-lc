@@ -304,7 +304,7 @@ example : TameDistinct 1 7 (fun _ : Fin 1 => (⟨2, 4, by decide, by decide⟩ :
     refine ⟨1, le_rfl, le_rfl, Nat.prime_three, ?_⟩
     have : padicValNat 3 (7 ^ 1 - 1) = 1 := by
       have : (7 ^ 1 - 1 : ℕ) = 3 * 2 := by norm_num
-      rw [this, padicValNat.mul (by norm_num) (by norm_num), padicValNat_self, padicValNat.eq_zero_of_not_dvd (by norm_num)]
+      rw [this, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by norm_num) (by norm_num), padicValNat_self, padicValNat.eq_zero_of_not_dvd (by norm_num)]
     rw [this]; norm_num
   have hc : ∀ o, tameList (fun _ : Fin 1 => (⟨2, 4, by decide, by decide⟩ : (ZMod 7)ˣ)) o ^ 3 = 1 := by decide
   intro a b hab

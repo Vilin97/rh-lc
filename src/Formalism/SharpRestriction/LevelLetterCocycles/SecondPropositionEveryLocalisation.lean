@@ -990,8 +990,8 @@ theorem span_lemma_of_charpoly
         rfl⟩)
       m (fun k x' => (a k x').map (algebraMap (N.O i) (N.O i)))
       (fun k => inSpan_tSpan N i T' rep (N.O i) (ha k)) d
-    have : (fun x' => MvPolynomial.coeff d (Matrix.det (∑ k,
-        (MvPolynomial.X k : MvPolynomial (Fin m) (N.O i)) • (a k x').map MvPolynomial.C))) = t := by
+    have : (fun x' => AddMonoidAlgebra.coeff (Matrix.det (∑ k,
+        (MvPolynomial.X k : MvPolynomial (Fin m) (N.O i)) • (a k x').map MvPolynomial.C)) d) = t := by
       funext x'
       have := hx x'
       simp only [map_self] at this

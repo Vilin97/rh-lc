@@ -78,7 +78,7 @@ theorem UpperTheory.ConvolutionTheory.R2.G.fockGauss :
     have hmono : ∀ {L' : (FractionalIdeal (𝓞 F)⁰ F)ˣ},
         (L' : FractionalIdeal (𝓞 F)⁰ F) ≤ (GroundTheory.Global.fractionalIdealSupUnit L₁ L₂ : (FractionalIdeal (𝓞 F)⁰ F)ˣ) →
         ∀ v : V4 F, wt4 L' N v ≤ wt4 (GroundTheory.Global.fractionalIdealSupUnit L₁ L₂) N v := fun h v =>
-      Finset.prod_le_prod (fun _ _ => GlobalTheory.CompanionTheory.EpConvB.adeleWeight_nonneg _ _ _)
+      Finset.prod_le_prod₀ (fun _ _ => GlobalTheory.CompanionTheory.EpConvB.adeleWeight_nonneg _ _ _)
         fun i _ => GlobalTheory.CompanionTheory.EpConvB.adeleWeight_mono h N _
     refine ⟨B₁ + B₂, GroundTheory.Global.fractionalIdealSupUnit L₁ L₂, add_nonneg h₁ h₂, fun v => ?_⟩
     have he := (Real.exp_pos (R * ∑ w, |TR.pInf F (v 1) w|)).le

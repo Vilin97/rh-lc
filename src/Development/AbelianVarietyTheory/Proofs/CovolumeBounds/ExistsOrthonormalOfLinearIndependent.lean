@@ -23,7 +23,7 @@ theorem norm_orthonormalBasis_det_le (b : OrthonormalBasis ι 𝕜 E) (x : ι �
   have h2 : c.toBasis.det x = ∏ i, ⟪c i, x i⟫_𝕜 := by
     convert InnerProductSpace.gramSchmidtOrthonormalBasis_det h x
   rw [h1, norm_mul, b.det_to_matrix_orthonormalBasis c, one_mul, h2, norm_prod]
-  refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => ?_
   simpa [c.orthonormal.1 i] using norm_inner_le_norm (𝕜 := 𝕜) (c i) (x i)
 
 theorem norm_det_le_prod_col (A : Matrix ι ι 𝕜) :
@@ -139,7 +139,7 @@ theorem norm_det_apply_sq_le (φ : ι → E →L[𝕜] 𝕜) (x : ι → E) :
     rw [re_det_gram_sum_smul, gram_eq_one_iff_orthonormal.mpr he, det_mul, norm_mul, mul_pow,
       det_one, RCLike.one_re, mul_one, mul_comm]
     refine mul_le_mul_of_nonneg_left ((norm_det_sq_le_prod_row _).trans ?_) (by positivity)
-    exact Finset.prod_le_prod (fun _ _ => by positivity) fun j _ => sum_norm_apply_sq_le he (φ j)
+    exact Finset.prod_le_prod₀ (fun _ _ => by positivity) fun j _ => sum_norm_apply_sq_le he (φ j)
   · obtain ⟨g, hg, i, hi⟩ := Fintype.not_linearIndependent_iff.mp hx
     have h0 : (of fun j k => φ j (x k)).det = 0 := by
       refine exists_mulVec_eq_zero_iff.mp ⟨g, fun h => hi (congrFun h i), ?_⟩

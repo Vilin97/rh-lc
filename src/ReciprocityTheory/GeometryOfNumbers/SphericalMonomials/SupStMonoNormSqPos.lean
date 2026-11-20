@@ -44,7 +44,7 @@ theorem sum_mono_sq_div (D n : ℕ) (z : Fin (D + 1) → ℂ) :
 theorem supSt_norm_mono_le {D : ℕ} (a : Fin (D + 1) → ℕ) (z : Fin (D + 1) → ℂ) (h : sqN z = 1) :
     ‖monoC a z‖ ≤ 1 := by
   simp only [monoC, norm_prod, norm_pow]
-  apply Finset.prod_le_one (fun i _ => by positivity)
+  apply Finset.prod_le_one₀ (fun i _ => by positivity)
   intro i _
   have h1 : ‖z i‖ ^ 2 ≤ sqN z := by
     unfold sqN
@@ -96,7 +96,7 @@ theorem integral_form_sq (D n : ℕ) (c : (Fin (D + 1) → ℕ) → ℂ) :
       (starRingEnd ℂ (monoC a z) * monoC b z) ∂(sphProb (D + 1)) =
       ((‖c a‖ ^ 2 * monoNormSq a : ℝ) : ℂ) := by
     intro a ha
-    rw [integral_finset_sum _ (fun b _ => (supSt_integrable a b).const_mul _)]
+    rw [MeasureTheory.integral_finsetSum _ (fun b _ => (supSt_integrable a b).const_mul _)]
     simp_rw [integral_const_mul, supSt_gram]
     simp only [mul_ite, mul_zero, Finset.sum_ite_eq, ha, if_true]
     rw [Complex.conj_mul']
@@ -104,7 +104,7 @@ theorem integral_form_sq (D n : ℕ) (c : (Fin (D + 1) → ℕ) → ℂ) :
     ring
   rw [hI]
   simp_rw [key]
-  rw [integral_finset_sum _ (fun a _ => integrable_finset_sum _ (fun b _ => (supSt_integrable a b).const_mul _)),
+  rw [MeasureTheory.integral_finsetSum _ (fun a _ => MeasureTheory.integrable_finsetSum _ (fun b _ => (supSt_integrable a b).const_mul _)),
     Finset.sum_congr rfl inner, ← Complex.ofReal_sum, Complex.ofReal_re]
 
 theorem supSt_monoNormSq_pos {D : ℕ} (a : Fin (D + 1) → ℕ) : 0 < monoNormSq a := by

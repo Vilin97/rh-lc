@@ -151,7 +151,7 @@ theorem constantBound : ConstantBound := by
   rw [Real.log_le_iff_le_exp (div_pos (hpos _) (hpos _))] at hB
   have hC : (∏ i, sphV (j i))⁻¹ ≤ Real.exp (J * (s / 2 * (Real.log n / 2))) := by
     rw [← Finset.prod_inv_distrib, hcast, Finset.sum_mul, Real.exp_sum, ← hlogs]
-    apply Finset.prod_le_prod (fun i _ => (inv_pos.2 (hpos _)).le)
+    apply Finset.prod_le_prod₀ (fun i _ => (inv_pos.2 (hpos _)).le)
     intro i _
     apply inv_sph_le _ _ _ (hj1 i)
     have : (j i : ℝ) ≤ J := by exact_mod_cast hjJ i
@@ -194,7 +194,7 @@ theorem constantBound : ConstantBound := by
     linarith
 
   have T5 : ∏ i, ∏ l ∈ Finset.Icc 2 (j i), zetaE E l ≤ Real.exp (f * J * 2) := by
-    refine (Finset.prod_le_prod (fun i _ => (zeta_prod E (j i)).1)
+    refine (Finset.prod_le_prod₀ (fun i _ => (zeta_prod E (j i)).1)
       (fun i _ => (zeta_prod E (j i)).2)).trans ?_
     rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin, ← Real.exp_nat_mul, hdeg]
     apply Real.exp_le_exp.2

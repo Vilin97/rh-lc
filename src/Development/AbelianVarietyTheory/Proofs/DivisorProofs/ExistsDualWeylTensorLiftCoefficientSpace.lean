@@ -64,13 +64,13 @@ theorem linInd_map {F K σ ι : Type} [Field F] [Field K] (e : F →+* K) {v : �
   intro j
   have key : ∑ i ∈ s, (B.repr (c i) j) • v i = 0 := by
     ext m
-    have h1 := congrArg (coeff m) hsum
+    have h1 := congrArg (AddMonoidAlgebra.coeff · m) hsum
     simp only [coeff_sum, coeff_smul, coeff_map, smul_eq_mul, coeff_zero] at h1 ⊢
     have h2 := congrArg (fun x => B.repr x j) h1
     simp only [map_sum, map_zero, Finsupp.finset_sum_apply, Finsupp.coe_zero, Pi.zero_apply] at h2
     rw [← h2]
     refine Finset.sum_congr rfl fun i _ => ?_
-    have h3 : c i * e (coeff m (v i)) = coeff m (v i) • c i := by
+    have h3 : c i * e (AddMonoidAlgebra.coeff (v i) m) = AddMonoidAlgebra.coeff (v i) m • c i := by
       rw [Algebra.smul_def, mul_comm]; rfl
     rw [h3, map_smul, Finsupp.smul_apply, smul_eq_mul, mul_comm]
   have := hv s (fun i => B.repr (c i) j) key i hi

@@ -54,7 +54,7 @@ theorem slice_C (a : ℂ) : slice ι (C a) = C (C a) := by
 variable (ι)
 
 noncomputable def coefAt (t : Outer ι →₀ ℕ) : MvPolynomial σ ℂ →ₗ[ℂ] MvPolynomial σ₀ ℂ where
-  toFun Q := coeff t (slice ι Q)
+  toFun Q := AddMonoidAlgebra.coeff (slice ι Q) t
   map_add' _ _ := by simp
   map_smul' c Q := by simp [coeff_smul]
 

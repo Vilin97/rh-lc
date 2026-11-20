@@ -134,7 +134,7 @@ theorem tateAbs : TateAbs := by
   refine div_le_div_of_nonneg_left (mul_nonneg (Finset.prod_nonneg fun _ _ => by positivity)
     (Real.rpow_nonneg (IdeleGroup.finiteModule_pos _).le _)) (Finset.prod_pos fun _ _ => by positivity) ?_
   rw [pow_mul, ← Finset.card_univ, ← Finset.prod_const]
-  refine Finset.prod_le_prod (fun _ _ => by positivity) fun W _ => pow_le_pow_left₀ (by positivity) ?_ _
+  refine Finset.prod_le_prod₀ (fun _ _ => by positivity) fun W _ => pow_le_pow_left₀ (by positivity) ?_ _
   exact add_le_add le_rfl (Tate.norm_le hB.cm B.emb W l)
 
 end PositivityTheory.ThKCT

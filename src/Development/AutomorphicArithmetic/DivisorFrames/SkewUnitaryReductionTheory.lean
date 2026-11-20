@@ -111,10 +111,10 @@ theorem UpperTheory.skew_unitary_reduction_theory :
     have h5 : (0 : ℝ) ≤ height σ _ (a⁻¹ * p * a * k) := NNReal.coe_nonneg _
     have h6 : (0 : ℝ) ≤ ∏ i, t i := Finset.prod_nonneg fun i _ => (htc.1 i).le
     have h7 : ∏ i, t i ≤ ∏ i, (1 + (absE F E (τ i) : ℝ)) :=
-      Finset.prod_le_prod (fun i _ => (htc.1 i).le) fun i _ => hτle i
+      Finset.prod_le_prod₀ (fun i _ => (htc.1 i).le) fun i _ => hτle i
     have h8 : (1 : ℝ) ≤ ∏ i, (1 + (absE F E (τ i) : ℝ)) :=
       (Finset.prod_const_one (s := Finset.univ)).ge.trans
-        (Finset.prod_le_prod (fun _ _ => zero_le_one) fun i _ => le_add_of_nonneg_right (NNReal.coe_nonneg _))
+        (Finset.prod_le_prod₀ (fun _ _ => zero_le_one) fun i _ => le_add_of_nonneg_right (NNReal.coe_nonneg _))
     have h9 : (height σ _ a : ℝ) ≤ max Ch 0 * (2 * ∏ i, (1 + (absE F E (τ i) : ℝ))) ^ Ah :=
       h2.trans (mul_le_mul (le_max_left _ _) (pow_le_pow_left₀ (by linarith) (by linarith) _) (by positivity)
         (le_max_right _ _))

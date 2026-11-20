@@ -295,8 +295,8 @@ lemma coe_Eh (P : MvPolynomial (Fin n) R) :
     simp [Eh, hv, Formalism.FT.hPS]
 
 lemma coeff_Eh (P : MvPolynomial (Fin n) R) (d : Fin n →₀ ℕ) :
-    MvPolynomial.coeff d (Eh R n P) =
-      ∑ᶠ α, MvPolynomial.coeff α P • MvPowerSeries.coeff d (α.prod fun j e => hv R n j ^ e) := by
+    AddMonoidAlgebra.coeff (Eh R n P) d =
+      ∑ᶠ α, AddMonoidAlgebra.coeff P α • MvPowerSeries.coeff d (α.prod fun j e => hv R n j ^ e) := by
   rw [← MvPolynomial.coeff_coe, coe_Eh, MvPowerSeries.coeff_subst hasSubst_hv]
   simp only [MvPolynomial.coeff_coe]
 
@@ -335,7 +335,7 @@ def Fm (F : MvPowerSeries (Fin n) R) (m : ℕ) : MvPolynomial (Fin n) R :=
   ∑ d ∈ finsuppAntidiag (univ : Finset (Fin n)) m, MvPolynomial.monomial d (MvPowerSeries.coeff d F)
 
 lemma coeff_Fm (F : MvPowerSeries (Fin n) R) (m : ℕ) (d : Fin n →₀ ℕ) :
-    MvPolynomial.coeff d (Fm F m) = if d.degree = m then MvPowerSeries.coeff d F else 0 := by
+    AddMonoidAlgebra.coeff (Fm F m) d = if d.degree = m then MvPowerSeries.coeff d F else 0 := by
   unfold Fm
   rw [MvPolynomial.coeff_sum]
   simp only [MvPolynomial.coeff_monomial]
@@ -369,17 +369,17 @@ theorem exists_G (F : MvPowerSeries (Fin n) R)
       F.subst (fun i => (MvPowerSeries.X (π i) : MvPowerSeries (Fin n) R)) = F) :
     ∃ G : MvPowerSeries (Fin n) R, G.subst (hv R n) = F := by
   choose q hq using fun m => Eh_surj (Fm F m) (Fm_symm F hF m)
-  let G : MvPowerSeries (Fin n) R := fun α => MvPolynomial.coeff α (q (wt α))
+  let G : MvPowerSeries (Fin n) R := fun α => AddMonoidAlgebra.coeff (q (wt α)) α
   refine ⟨G, ?_⟩
   ext d
   rw [MvPowerSeries.coeff_subst hasSubst_hv G d]
-  have h2 : MvPowerSeries.coeff d F = MvPolynomial.coeff d (Eh R n (q d.degree)) := by
+  have h2 : MvPowerSeries.coeff d F = AddMonoidAlgebra.coeff (Eh R n (q d.degree)) d := by
     rw [hq, coeff_Fm, if_pos rfl]
   rw [h2, coeff_Eh]
   apply finsum_congr
   intro α
   by_cases h : wt α = d.degree
-  · show MvPolynomial.coeff α (q (wt α)) • _ = _
+  · show AddMonoidAlgebra.coeff (q (wt α)) α • _ = _
     rw [h]
   · rw [coeff_prodpow_eq_zero α d h, smul_zero, smul_zero]
 
@@ -405,7 +405,7 @@ theorem G_unique (H : MvPowerSeries (Fin n) R) (hH : H.subst (hv R n) = 0) : H =
   rw [map_zero]
   obtain ⟨m, hm⟩ : ∃ m, wt α = m := ⟨_, rfl⟩
   let P : MvPolynomial (Fin n) R := ∑ β ∈ Aw n m, MvPolynomial.monomial β (MvPowerSeries.coeff β H)
-  have hcP : ∀ β, MvPolynomial.coeff β P = if wt β = m then MvPowerSeries.coeff β H else 0 := by
+  have hcP : ∀ β, AddMonoidAlgebra.coeff P β = if wt β = m then MvPowerSeries.coeff β H else 0 := by
     intro β
     simp only [P, MvPolynomial.coeff_sum, MvPolynomial.coeff_monomial]
     rw [Finset.sum_ite_eq']

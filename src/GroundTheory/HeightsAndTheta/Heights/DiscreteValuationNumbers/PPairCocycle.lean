@@ -36,7 +36,7 @@ theorem polyVal_add (A : List (K → ℤ) → ℤ) (cls : σ → K → ℤ) (H�
   rw [polyVal_eq_sum_of_subset A cls (S := H₁.support ∪ H₂.support) support_add,
     polyVal_eq_sum_of_subset A cls (S := H₁.support ∪ H₂.support) Finset.subset_union_left,
     polyVal_eq_sum_of_subset A cls (S := H₁.support ∪ H₂.support) Finset.subset_union_right]
-  simp only [coeff_add, add_mul, Finset.sum_add_distrib]
+  simp only [MvPolynomial.coeff_add, add_mul, Finset.sum_add_distrib]
 
 def polyValHom (A : List (K → ℤ) → ℤ) (cls : σ → K → ℤ) : MvPolynomial σ ℤ →+ ℤ where
   toFun := polyVal A cls

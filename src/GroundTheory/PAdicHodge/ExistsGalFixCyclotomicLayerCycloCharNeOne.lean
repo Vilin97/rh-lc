@@ -39,7 +39,7 @@ theorem one_add_pow_ne_one {w : PadicAlgCl p} (hw0 : w ≠ 0) (hw : ‖w‖ < (p
     have hknorm : ((k + 1 + 1 : ℕ) : ℝ)⁻¹ ≤ ‖((k + 1 + 1 : ℕ) : PadicAlgCl p)‖ := by
       rw [norm_natCast_padicAlgCl hk0, zpow_neg, zpow_natCast]
       gcongr
-      exact_mod_cast Nat.le_of_dvd (by omega) pow_padicValNat_dvd
+      exact_mod_cast Nat.le_of_dvd (by omega) (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
     have hkpos : (0 : ℝ) < ((k + 1 + 1 : ℕ) : ℝ) := by exact_mod_cast Nat.succ_pos _
     have hC : ‖((m' + 1).choose (k + 1 + 1) : PadicAlgCl p)‖ ≤
         ‖((m' + 1 : ℕ) : PadicAlgCl p)‖ * ((k + 1 + 1 : ℕ) : ℝ) := by

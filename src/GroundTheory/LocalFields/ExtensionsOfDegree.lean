@@ -122,7 +122,7 @@ theorem exists_adjoin_eq_of_norm_coeff_sub_lt (f : L[X]) (hm : f.Monic) (hirr : 
     push Not at hcon
     have : r ^ f.natDegree ≤ ‖aeval β' f‖ := by
       rw [heval, norm_prod, ← hcard, ← Finset.prod_const]
-      exact Finset.prod_le_prod (fun _ _ ↦ hr.le) hcon
+      exact Finset.prod_le_prod₀ (fun _ _ ↦ hr.le) hcon
     exact absurd hsmall (not_lt.2 this)
   have hfC : f.map (algebraMap L C) ≠ 0 := (hm.map _).ne_zero
   have haroot : aeval a f = 0 := by

@@ -125,7 +125,7 @@ theorem integrable_tsum_of_summable {α : Type*} [MeasurableSpace α] {μ : Meas
     simp_rw [this]
     rw [← ENNReal.ofReal_tsum_of_nonneg (fun n => integral_nonneg fun _ => norm_nonneg _) hs]
     exact ENNReal.ofReal_ne_top
-  have hae : ∀ᵐ y ∂μ, ∑' n, ‖F n y‖ₑ < ⊤ := ae_lt_top' (AEMeasurable.ennreal_tsum hmeas) hlin
+  have hae : ∀ᵐ y ∂μ, ∑' n, ‖F n y‖ₑ < ⊤ := ae_lt_top' (AEMeasurable.tsum hmeas) hlin
   have hsum : ∀ᵐ y ∂μ, Summable fun n => F n y := by
     filter_upwards [hae] with y hy
     refine Summable.of_norm ?_

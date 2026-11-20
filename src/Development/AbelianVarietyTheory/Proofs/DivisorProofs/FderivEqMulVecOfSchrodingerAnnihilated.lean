@@ -13,7 +13,7 @@ theorem dRho_apply_basis {l : Type} [Fintype l] [DecidableEq l] (w : l ⊕ l →
   rw [dRho_apply]
   have h1 : pPart w = ∑ b, w (.inl b) • EuclideanSpace.single b (1 : ℝ) := by
     ext i
-    simp [pPart, EuclideanSpace.single_apply, Pi.single_apply]
+    simp [pPart, PiLp.single_apply, Pi.single_apply]
   have h2 : inner ℝ (qPart w) x = ∑ b, w (.inr b) * x b := by
     simp [qPart, PiLp.inner_apply, mul_comm]
   rw [h1, map_sum, h2]

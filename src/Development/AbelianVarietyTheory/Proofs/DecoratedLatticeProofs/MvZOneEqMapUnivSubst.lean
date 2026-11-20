@@ -41,11 +41,11 @@ theorem mvZ_one_eq_map_univSubst {ι : Type} [Fintype ι] {a b : ℕ} (g : ι �
   rw [h]; rfl
 
 theorem linear_eq_sum_coeff {σ : Type} (Λ : MvPolynomial σ ℂ →ₗ[ℂ] ℂ) (S : Finset (σ →₀ ℕ)) (p : MvPolynomial σ ℂ)
-    (hp : p.support ⊆ S) : Λ p = ∑ m ∈ S, coeff m p * Λ (monomial m 1) := by
+    (hp : p.support ⊆ S) : Λ p = ∑ m ∈ S, AddMonoidAlgebra.coeff p m * Λ (monomial m 1) := by
   conv_lhs => rw [p.as_sum]
   rw [map_sum, Finset.sum_subset hp]
   · refine Finset.sum_congr rfl fun m _ => ?_
-    rw [show monomial m (coeff m p) = coeff m p • monomial m (1 : ℂ) by rw [smul_monomial, smul_eq_mul, mul_one], map_smul, smul_eq_mul]
+    rw [show monomial m (AddMonoidAlgebra.coeff p m) = AddMonoidAlgebra.coeff p m • monomial m (1 : ℂ) by rw [smul_monomial, smul_eq_mul, mul_one], map_smul, smul_eq_mul]
   · intro m _ hm
     simp [notMem_support_iff.mp hm]
 
@@ -92,7 +92,7 @@ theorem avg_span : ∀ (ι : Type) [Fintype ι] (a b : ℕ) (hab : a ≤ b), 0 <
   obtain ⟨-, hcomp, -, -, -, hev, -, -⟩ := GlobalTheory.T.fockSubstitution_identities ι a b hab
   let S := (univSubst P).support
   let c : (ι × Fin b × Fin a →₀ ℕ) → K → ℂ := fun m k =>
-    eval (fun w => r k⁻¹ w.1 w.2.1 w.2.2) (coeff m (univSubst P))
+    eval (fun w => r k⁻¹ w.1 w.2.1 w.2.2) (AddMonoidAlgebra.coeff (univSubst P) m)
   have hΛ : ∀ (Λ : FP ι a b →ₗ[ℂ] ℂ) k, Λ (mvZ (fun τ => r k⁻¹ τ) (fun _ => 1) P) =
       ∑ m ∈ S, c m k * Λ (monomial m 1) := by
     intro Λ k

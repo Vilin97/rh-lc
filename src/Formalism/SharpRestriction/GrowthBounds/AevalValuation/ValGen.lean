@@ -13,7 +13,7 @@ open Formalism.MainNotions.G Formalism.MainNotions.Proposition5Numerics Formalis
 private theorem le_valS_iff_forall_coeff_ne_zero {R : Type} [CommRing R] {ι : Type} {n : ℕ} [NeZero n] (LL : Letters ι)
     (S : Set ι) (G : MvPolynomial (ι × Fin n) R) (a : WithTop ℤ) :
     a ≤ valS LL S G ↔ ∀ (m : ι × Fin n →₀ ℕ) (k : ℤ),
-      (coeff m (twistSub LL S (lastIdx n) G)).coeff k ≠ 0 → a ≤ (k : WithTop ℤ) := by
+      (AddMonoidAlgebra.coeff (twistSub LL S (lastIdx n) G) m).coeff k ≠ 0 → a ≤ (k : WithTop ℤ) := by
   rw [valS, Finset.le_inf_iff]
   constructor
   · intro h m k hk
@@ -57,7 +57,7 @@ theorem valS_sum_ge {R : Type} [CommRing R] {ι : Type} {n : ℕ} [NeZero n] (LL
   rw [le_valS_iff_forall_coeff_ne_zero]
   intro m k hk
   have hs : Joints.StandardMonomialSpace.SuppIn {k : ℤ | a ≤ (k : WithTop ℤ)}
-      (coeff m (twistSub LL S (lastIdx n) (∑ i ∈ s, f i))) := by
+      (AddMonoidAlgebra.coeff (twistSub LL S (lastIdx n) (∑ i ∈ s, f i)) m) := by
     rw [map_sum, coeff_sum]
     apply Joints.StandardMonomialSpace.SuppIn.sum
     intro i hi k' hk'

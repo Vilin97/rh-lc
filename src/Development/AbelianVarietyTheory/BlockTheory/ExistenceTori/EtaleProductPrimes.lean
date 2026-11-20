@@ -58,7 +58,7 @@ theorem ProdForm.prodBound {X : PT E} {s : (Fin 1 → Vsp X.dim) → ℂ} {r1 : 
   obtain ⟨M, c, ζ, a, hM, hc, hζ, ha, rfl⟩ := h
   refine ⟨M, c, a, hM, hc, ha, ?_⟩
   rw [norm_prod]
-  refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun g _ => (norm_sum_le _ _).trans (le_of_eq ?_)
+  refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun g _ => (norm_sum_le _ _).trans (le_of_eq ?_)
   refine Finset.sum_congr rfl fun t _ => ?_
   obtain ⟨n, hn, h1⟩ := hζ g t
   rw [norm_mul, norm_mul, Complex.norm_eq_one_of_pow_eq_one h1 hn.ne', mul_one, norm_prod, Complex.norm_intCast]

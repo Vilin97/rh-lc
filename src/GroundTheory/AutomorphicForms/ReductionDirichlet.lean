@@ -289,7 +289,7 @@ private theorem finprod_le_finprod_of_nonneg' {ι : Type*} {f g : ι → ℝ} (h
       (fun i hi => Finset.mem_coe.2 (Finset.mem_union_left _ (hf.mem_toFinset.2 hi))),
     finprod_eq_prod_of_mulSupport_subset g (s := hf.toFinset ∪ hg.toFinset)
       (fun i hi => Finset.mem_coe.2 (Finset.mem_union_right _ (hg.mem_toFinset.2 hi)))]
-  exact Finset.prod_le_prod (fun i _ => h0 i) fun i _ => hfg i
+  exact Finset.prod_le_prod₀ (fun i _ => h0 i) fun i _ => hfg i
 
 theorem euclidNorm_two_le {E : Type*} [NormedField E] (y : Fin 2 → E) :
     euclidNorm y ≤ ‖y 0‖ + ‖y 1‖ := by
@@ -479,7 +479,7 @@ theorem exists_adelicNorm_vecMul_le : ∃ C : ℝ, 0 < C ∧ ∀ (α δ : IdeleG
       refine mul_le_mul ?_ ?_ (finprod_nonneg fun _ => norm_nonneg _) (by positivity)
       · calc ∏ w : InfinitePlace K, euclidNorm (infComp w z) ^ w.mult
             ≤ ∏ w : InfinitePlace K, (A * s) ^ w.mult :=
-              Finset.prod_le_prod (fun _ _ => pow_nonneg (euclidNorm_nonneg _) _) fun w _ =>
+              Finset.prod_le_prod₀ (fun _ _ => pow_nonneg (euclidNorm_nonneg _) _) fun w _ =>
                 pow_le_pow_left₀ (euclidNorm_nonneg _) (hinf w) _
           _ = (A * s) ^ d := by rw [Finset.prod_pow_eq_pow_sum, InfinitePlace.sum_mult_eq]
       · calc ∏ᶠ v : HeightOneSpectrum (𝓞 K), ‖finComp v z‖

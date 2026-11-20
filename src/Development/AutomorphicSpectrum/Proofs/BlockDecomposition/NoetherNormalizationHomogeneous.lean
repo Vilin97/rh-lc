@@ -33,7 +33,7 @@ theorem isIntegral_of_homogeneous_relation {K R S ι : Type*} [Field K] [CommRin
     simpa [Finsupp.degree_eq_sum, Finsupp.weight_apply, Finsupp.sum_fintype] using this
   let p : Polynomial R := aeval g F
   have hp : p = ∑ d ∈ F.support,
-      Polynomial.C (algebraMap K R (coeff d F)) * ∏ i, g i ^ d i := by
+      Polynomial.C (algebraMap K R (AddMonoidAlgebra.coeff F d)) * ∏ i, g i ^ d i := by
     simp only [p, aeval_def, eval₂_eq']
     rfl
   have hpd : p.natDegree ≤ n := by

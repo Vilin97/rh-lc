@@ -40,12 +40,12 @@ theorem RelevantPrimeDimGe.proof : RelevantPrimeDimGe.Statement.{u} := by
     ext α
     rw [coeff_zero]
     have hcomp := hP.multiHomog _ hmem ⇑α
-    have hsum : rename j G = ∑ β ∈ G.support, monomial (Finsupp.mapDomain j β) (coeff β G) := by
-      calc rename j G = rename j (∑ β ∈ G.support, monomial β (coeff β G)) := by
+    have hsum : rename j G = ∑ β ∈ G.support, monomial (Finsupp.mapDomain j β) (AddMonoidAlgebra.coeff G β) := by
+      calc rename j G = rename j (∑ β ∈ G.support, monomial β (AddMonoidAlgebra.coeff G β)) := by
             congr 1; exact G.as_sum
         _ = _ := by rw [map_sum]; simp only [rename_monomial]
     have hc : weightedHomogeneousComponent (blockWeight ι) (⇑α) (rename j G) =
-        rename j (monomial α (coeff α G)) := by
+        rename j (monomial α (AddMonoidAlgebra.coeff G α)) := by
       rw [hsum, map_sum, rename_monomial]
       rw [Finset.sum_eq_single α]
       · rw [weightedHomogeneousComponent_of_mem (isWeightedHomogeneous_monomial _ _ _ (hw α)),

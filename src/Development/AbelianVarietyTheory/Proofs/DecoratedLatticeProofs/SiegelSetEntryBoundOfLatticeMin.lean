@@ -65,7 +65,7 @@ theorem siegelSet_entry_bound_of_lattice_min (N : ℕ) (C : ℝ) (k : Matrix (Fi
   have hup : ∀ l, a l * t ^ (N - 1) ≤ C ^ (N - 1) := by
     intro l
     have hprod : ∏ x ∈ Finset.univ.erase l, t ≤ ∏ x ∈ Finset.univ.erase l, (C * a x) :=
-      Finset.prod_le_prod (fun _ _ => le_of_lt ht0) (fun x _ => hlow x)
+      Finset.prod_le_prod₀ (fun _ _ => le_of_lt ht0) (fun x _ => hlow x)
     rw [Finset.prod_const, Finset.prod_mul_distrib, Finset.prod_const,
       Finset.card_erase_of_mem (Finset.mem_univ l), Finset.card_univ, Fintype.card_fin] at hprod
     have h1 : a l * ∏ x ∈ Finset.univ.erase l, a x = 1 := by

@@ -107,7 +107,7 @@ theorem UpperTheory.Esk.pf_KapInt : UpperTheory.Esk.B1a → UpperTheory.Esk.B1b 
   · have hn' : ∀ v, 1 / 2 ≤ kap (w v) (w' v) := hn
     unfold Kap
     rw [hA', ← Finset.prod_mul_distrib]
-    refine Finset.prod_le_prod (fun v _ => Real.rpow_nonneg (h1 _ _).1 _) fun v _ => ?_
+    refine Finset.prod_le_prod₀ (fun v _ => Real.rpow_nonneg (h1 _ _).1 _) fun v _ => ?_
     have e1 := har1 hB (z v) (w v) (w' v) (hn' v) ((k v : ℝ) / 2) (by positivity)
     have h8 : (1 : ℝ) ≤ (8 : ℝ) ^ ((1 : ℝ) / 2) := Real.one_le_rpow (by norm_num) (by norm_num)
     have hp : 0 ≤ (8 : ℝ) ^ ((k v : ℝ) / 2) * kap (z v) (w' v) ^ ((k v : ℝ) / 2) :=
@@ -118,7 +118,7 @@ theorem UpperTheory.Esk.pf_KapInt : UpperTheory.Esk.B1a → UpperTheory.Esk.B1b 
         nlinarith [mul_le_mul_of_nonneg_left h8 hp]
   · have hn' : ∀ v, 1 / 2 ≤ kap (w v) (w' v) := hn
     rw [hsplit w, hsplit w', hA', ← Finset.prod_mul_distrib]
-    refine Finset.prod_le_prod (fun v _ => mul_nonneg (Real.rpow_nonneg (h1 _ _).1 _)
+    refine Finset.prod_le_prod₀ (fun v _ => mul_nonneg (Real.rpow_nonneg (h1 _ _).1 _)
       (Real.rpow_nonneg (div_nonneg (abs_nonneg _) (abs_nonneg _)) _)) fun v _ => ?_
     have e1 := har1 hB (z v) (w v) (w' v) (hn' v) ((k v : ℝ) / 2) (by positivity)
     have e2 := har2 hB (z v) (w v) (w' v) (hn' v)

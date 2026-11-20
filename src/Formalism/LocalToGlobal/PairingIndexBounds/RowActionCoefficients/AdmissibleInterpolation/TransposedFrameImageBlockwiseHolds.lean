@@ -15,7 +15,7 @@ attribute [local instance] Formalism.MainNotions.G.GAtP.ringO Formalism.MainNoti
 namespace PairingSeriesCoefficients
 
 theorem ev_eq {σ τ K : Type} [Field K] (P : MvPolynomial σ (MvPolynomial τ K)) (d0 : σ → K) :
-    eval₂Hom (RingHom.id _) (fun z => C (d0 z)) P = ∑ n ∈ P.support, (∏ i ∈ n.support, d0 i ^ n i) • coeff n P := by
+    eval₂Hom (RingHom.id _) (fun z => C (d0 z)) P = ∑ n ∈ P.support, (∏ i ∈ n.support, d0 i ^ n i) • AddMonoidAlgebra.coeff P n := by
   rw [coe_eval₂Hom, eval₂_eq]
   refine Finset.sum_congr rfl fun n _ => ?_
   rw [RingHom.id_apply, smul_eq_C_mul, mul_comm, map_prod]
@@ -24,9 +24,9 @@ theorem ev_eq {σ τ K : Type} [Field K] (P : MvPolynomial σ (MvPolynomial τ K
 theorem coeff_of_eval {σ τ K : Type} [Field K] [Infinite K] (P : MvPolynomial σ (MvPolynomial τ K))
     (l : MvPolynomial τ K →ₗ[K] K) (R : MvPolynomial σ K)
     (h : ∀ d0 : σ → K, eval d0 R = l (eval₂Hom (RingHom.id _) (fun z => C (d0 z)) P)) (n : σ →₀ ℕ) :
-    coeff n R = l (coeff n P) := by
+    AddMonoidAlgebra.coeff R n = l (AddMonoidAlgebra.coeff P n) := by
   classical
-  have hR : R = ∑ n ∈ P.support, monomial n (l (coeff n P)) := by
+  have hR : R = ∑ n ∈ P.support, monomial n (l (AddMonoidAlgebra.coeff P n)) := by
     refine MvPolynomial.funext fun d0 => ?_
     rw [h d0, ev_eq, map_sum, map_sum]
     refine Finset.sum_congr rfl fun n _ => ?_
@@ -87,8 +87,8 @@ theorem mono_wh (v : X.Pl) (s : Fin (X.G.P.n' v)) (m : X.ZA j →₀ ℕ) :
   exact IsWeightedHomogeneous.prod _ _ _ fun x _ => (isWeightedHomogeneous_linP X Kc j Lk hne v s x).pow _
 
 theorem hGd (m n : X.ZA j →₀ ℕ)
-    (h : coeff n (aeval (linP fun x y => algebraMap Kc (XspC (X.Pj (j + 1)) Kc) (Lk x y))
-        (monomial m (1 : XspC (X.Pj (j + 1)) Kc))) ≠ 0) : GoodDeg X j n ↔ GoodDeg X j m := by
+    (h : AddMonoidAlgebra.coeff (aeval (linP fun x y => algebraMap Kc (XspC (X.Pj (j + 1)) Kc) (Lk x y))
+        (monomial m (1 : XspC (X.Pj (j + 1)) Kc))) n ≠ 0) : GoodDeg X j n ↔ GoodDeg X j m := by
   have key : ∀ (v : X.Pl) (s : Fin (X.G.P.n' v)), ∑ a, ∑ b, n ⟨v, (s, a, b)⟩ = ∑ a, ∑ b, m ⟨v, (s, a, b)⟩ := by
     intro v s
     rw [← wt_eq, ← wt_eq]
@@ -239,7 +239,7 @@ theorem PI_wh (I : X.ColCh j) (i0 : X.Pl → ℕ) (v : X.Pl) (s : Fin (X.G.P.n' 
   · intro h
     exact absurd (Finset.mem_univ _) h
 
-theorem PI_good (I : X.ColCh j) (i0 : X.Pl → ℕ) (n : X.ZA j →₀ ℕ) (hn : coeff n (X.PI j I i0) ≠ 0) : GoodDeg X j n := by
+theorem PI_good (I : X.ColCh j) (i0 : X.Pl → ℕ) (n : X.ZA j →₀ ℕ) (hn : AddMonoidAlgebra.coeff (X.PI j I i0) n ≠ 0) : GoodDeg X j n := by
   intro v s
   rw [← wt_eq, PI_wh X j I i0 v s hn, Finset.sum_range]
   exact sum_colHt X v j s

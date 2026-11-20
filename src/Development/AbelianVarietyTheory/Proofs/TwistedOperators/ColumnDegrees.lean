@@ -17,7 +17,7 @@ theorem polar_mem {σ : Type} (u v : σ) (N : ℕ) (Q : MvPolynomial σ ℂ)
   have hone : ∀ w : σ, ((Finsupp.single w 1).sum fun _ e => e) = 1 :=
     fun w => Finsupp.sum_single_index rfl
   have key : ∀ s ∈ Q.support,
-      X u * pderiv v (monomial s (coeff s Q)) ∈ restrictTotalDegree σ ℂ N := by
+      X u * pderiv v (monomial s (AddMonoidAlgebra.coeff Q s)) ∈ restrictTotalDegree σ ℂ N := by
     intro s hs
     have hsN : (s.sum fun _ e => e) ≤ N := (le_totalDegree hs).trans hQN
     rw [pderiv_monomial]
@@ -85,7 +85,7 @@ theorem harmonic_rowOp {σ I I' J : Type} [Fintype J] (z : I × J → σ) (y : I
 
 private theorem coeff_apply_of_diagonal_on_monomials' {σ : Type} (g : Module.End ℂ (MvPolynomial σ ℂ))
     (w : (σ →₀ ℕ) → ℂ) (hg : ∀ u, g (monomial u 1) = w u • monomial u 1) (m : σ →₀ ℕ)
-    (Q : MvPolynomial σ ℂ) : coeff m (g Q) = w m * coeff m Q := by
+    (Q : MvPolynomial σ ℂ) : AddMonoidAlgebra.coeff (g Q) m = w m * AddMonoidAlgebra.coeff Q m := by
   classical
   induction Q using MvPolynomial.induction_on' with
   | monomial u c =>
@@ -96,11 +96,11 @@ private theorem coeff_apply_of_diagonal_on_monomials' {σ : Type} (g : Module.En
     split_ifs with h
     · subst h; ring
     · ring
-  | add p q hp hq => rw [map_add, coeff_add, coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem coeff_euler {σ : Type} {k n : ℕ} (z : Fin k × Fin n → σ) (m : σ →₀ ℕ)
     (Q : MvPolynomial σ ℂ) :
-    coeff m ((∑ i, rowOp ℂ z i i) Q) = ((∑ i, ∑ t, (m (z (i, t)) : ℤ) : ℤ) : ℂ) * coeff m Q := by
+    AddMonoidAlgebra.coeff ((∑ i, rowOp ℂ z i i) Q) m = ((∑ i, ∑ t, (m (z (i, t)) : ℤ) : ℤ) : ℂ) * AddMonoidAlgebra.coeff Q m := by
   refine coeff_apply_of_diagonal_on_monomials' _ (fun u => ((∑ i, ∑ t, (u (z (i, t)) : ℤ) : ℤ) : ℂ)) (fun u => ?_) m Q
   rw [LinearMap.sum_apply]
   simp only [rowOp_monomial]
@@ -195,7 +195,7 @@ theorem column_degrees (σ : Type) [Fintype σ] [DecidableEq σ] (k l n : ℕ)
   obtain ⟨E, hE⟩ : ∃ E : Module.End ℂ (MvPolynomial σ ℂ), E = ∑ i, rowOp ℂ z i i := ⟨_, rfl⟩
   obtain ⟨zdeg, hzdeg⟩ : ∃ f : (σ →₀ ℕ) → ℤ, ∀ m, f m = ∑ i, ∑ t, (m (z (i, t)) : ℤ) :=
     ⟨_, fun _ => rfl⟩
-  have hcoeffE : ∀ m Q, coeff m (E Q) = (zdeg m : ℂ) * coeff m Q := by
+  have hcoeffE : ∀ m Q, AddMonoidAlgebra.coeff (E Q) m = (zdeg m : ℂ) * AddMonoidAlgebra.coeff Q m := by
     intro m Q
     rw [hE, hzdeg]
     exact coeff_euler z m Q
@@ -281,7 +281,7 @@ theorem column_degrees (σ : Type) [Fintype σ] [DecidableEq σ] (k l n : ℕ)
     intro m0 hm0
     by_contra hne
     have hiter : ∀ s : Finset ℤ, ∃ Q ∈ W, ∀ m,
-        coeff m Q = (∏ D ∈ s, ((zdeg m : ℂ) - (D : ℂ))) * coeff m P := by
+        AddMonoidAlgebra.coeff Q m = (∏ D ∈ s, ((zdeg m : ℂ) - (D : ℂ))) * AddMonoidAlgebra.coeff P m := by
       intro s
       induction s using Finset.induction_on with
       | empty => exact ⟨P, hPW, fun m => by simp⟩
@@ -291,7 +291,7 @@ theorem column_degrees (σ : Type) [Fintype σ] [DecidableEq σ] (k l n : ℕ)
         rw [coeff_sub, coeff_smul, hcoeffE, hQ, Finset.prod_insert hD, smul_eq_mul]
         ring
     obtain ⟨Q, hQW, hQ⟩ := hiter ((P.support.image zdeg).erase (zdeg m0))
-    have hQm0 : coeff m0 Q ≠ 0 := by
+    have hQm0 : AddMonoidAlgebra.coeff Q m0 ≠ 0 := by
       rw [hQ]
       refine mul_ne_zero (Finset.prod_ne_zero_iff.2 fun D hD => sub_ne_zero.2 ?_)
         (mem_support_iff.1 hm0)
@@ -301,7 +301,7 @@ theorem column_degrees (σ : Type) [Fintype σ] [DecidableEq σ] (k l n : ℕ)
     have hEQ : E Q = (zdeg m0 : ℂ) • Q := by
       ext m
       rw [hcoeffE, coeff_smul, smul_eq_mul]
-      by_cases hm : coeff m Q = 0
+      by_cases hm : AddMonoidAlgebra.coeff Q m = 0
       · rw [hm, mul_zero, mul_zero]
       · have hmP : m ∈ P.support := by
           rw [mem_support_iff]
@@ -320,8 +320,8 @@ theorem column_degrees (σ : Type) [Fintype σ] [DecidableEq σ] (k l n : ℕ)
   refine ⟨hκ, fun m hm t => ?_⟩
   have hcol : ∀ t, (∑ i, (m (z (i, t)) : ℤ)) - ∑ j, (m (y (j, t)) : ℤ) = κ t := by
     intro t
-    have h1 : coeff m (mixedOp ℂ z y t t P) =
-        (((∑ i, (m (z (i, t)) : ℤ)) - ∑ j, (m (y (j, t)) : ℤ) : ℤ) : ℂ) * coeff m P := by
+    have h1 : AddMonoidAlgebra.coeff (mixedOp ℂ z y t t P) m =
+        (((∑ i, (m (z (i, t)) : ℤ)) - ∑ j, (m (y (j, t)) : ℤ) : ℤ) : ℂ) * AddMonoidAlgebra.coeff P m := by
       refine coeff_apply_of_diagonal_on_monomials' _
         (fun u => (((∑ i, (u (z (i, t)) : ℤ)) - ∑ j, (u (y (j, t)) : ℤ) : ℤ) : ℂ))
         (fun u => ?_) m P
@@ -330,7 +330,7 @@ theorem column_degrees (σ : Type) [Fintype σ] [DecidableEq σ] (k l n : ℕ)
       push_cast
       rfl
     rw [hwt t, coeff_smul, smul_eq_mul] at h1
-    have hc : coeff m P ≠ 0 := mem_support_iff.1 hm
+    have hc : AddMonoidAlgebra.coeff P m ≠ 0 := mem_support_iff.1 hm
     exact_mod_cast (mul_right_cancel₀ hc h1).symm
   have hsum : ∑ t, (∑ i, (m (z (i, t)) : ℤ)) = ∑ t, max (κ t) 0 := by
     rw [Finset.sum_comm, ← hzdeg]

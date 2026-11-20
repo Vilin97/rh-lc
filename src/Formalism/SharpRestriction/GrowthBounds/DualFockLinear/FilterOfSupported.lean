@@ -60,7 +60,7 @@ theorem slice_spec (γ : MvPolynomial (S × τ) K →ₗ[K] K) (Q : MvPolynomial
     rw [Finsupp.filter_eq_zero_iff]
     intro v hv
     exact (Finsupp.filter_eq_zero_iff _ _).1 h.2 v (not_not.2 hv)
-  have h3 : (monomial e (coeff e Q) : MvPolynomial (S × τ) K) = coeff e Q • monomial e 1 := by
+  have h3 : (monomial e (AddMonoidAlgebra.coeff Q e) : MvPolynomial (S × τ) K) = AddMonoidAlgebra.coeff Q e • monomial e 1 := by
     rw [smul_monomial, smul_eq_mul, mul_one]
   rw [slice_monomial, h.1, h2, ← C_apply, C_1, h3, map_smul, smul_eq_mul]
 

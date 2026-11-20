@@ -15,7 +15,7 @@ theorem norm_capP_le {n : ℕ} {lam μ : Fin n → ℝ} {c : ℝ} (h : μ ∈ Bo
     ‖Formalism.QuantumDeterminants.capP (fun s => (μ s : ℂ)) (y : ℂ)‖ ≤ PStar lam c y := by
   unfold Formalism.QuantumDeterminants.capP PStar
   rw [norm_prod]
-  refine Finset.prod_le_prod (fun s _ => norm_nonneg _) fun s _ => ?_
+  refine Finset.prod_le_prod₀ (fun s _ => norm_nonneg _) fun s _ => ?_
   have e : (y : ℂ) + (μ s : ℂ) = ((y + μ s : ℝ) : ℂ) := by push_cast; ring
   rw [e, Complex.norm_real, Real.norm_eq_abs]
   obtain ⟨h1, h2⟩ := abs_le.mp (h s)

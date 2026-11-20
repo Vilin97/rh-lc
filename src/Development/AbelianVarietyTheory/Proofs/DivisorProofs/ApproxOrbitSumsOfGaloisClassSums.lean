@@ -209,7 +209,7 @@ theorem norm_prod_sub_le {ι : Type} (s : Finset ι) (a b : ι → K) (ε : ℝ)
     · rw [norm_mul]; exact (mul_le_of_le_one_left (norm_nonneg _) (ha j)).trans ih
     · rw [norm_mul]
       refine (mul_le_of_le_one_right (norm_nonneg _) ?_).trans (hab j)
-      rw [norm_prod]; exact Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun i _ => hb i)
+      rw [norm_prod]; exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun i _ => hb i)
 
 end Descent
 

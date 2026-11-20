@@ -95,7 +95,7 @@ theorem subst_Gtor_EV (v0 a0) :
     P.subst (Gtor P v0 a0) (EV P) = ((2 : Kf)⁻¹ ^ (LamTot P (v0, a0))) • EV P := by
   ext m
   rw [subst_Gtor, coeff_aeval_scale, prod_tor, coeff_smul, smul_eq_mul]
-  by_cases hm : coeff m (EV P) = 0
+  by_cases hm : AddMonoidAlgebra.coeff (EV P) m = 0
   · rw [hm, mul_zero, mul_zero]
   · rw [EV_isWH P hm]
 

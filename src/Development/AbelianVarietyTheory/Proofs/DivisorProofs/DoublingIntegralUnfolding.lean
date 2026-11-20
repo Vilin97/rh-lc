@@ -85,7 +85,7 @@ theorem euler_of_majorant {X V Ya : Type} {Yf : V → Type} [Group X] [Group Ya]
   have hC : ∀ S : Finset V, S₀ ⊆ S → ∏ v ∈ S, ∫ y, ‖gf v y‖ ∂μf v ≤ (L / I).toReal := fun S _ => by
     refine le_trans ?_ (ENNReal.toReal_mono hLI (hbd' S))
     rw [ENNReal.toReal_prod]
-    refine Finset.prod_le_prod (fun v _ => integral_nonneg fun _ => norm_nonneg _) fun v _ => ?_
+    refine Finset.prod_le_prod₀ (fun v _ => integral_nonneg fun _ => norm_nonneg _) fun v _ => ?_
     rw [integral_norm_eq_lintegral_enorm (igf v).1]
     exact ENNReal.toReal_mono (hbtop v) (lintegral_mono (hgf v))
   have hm := GlobalTheory.RestrMeas.multipliable_integral (K := fun v => (K v : Set (Yf v))) hK (fun v _ => h1 v) hg1 igf hC

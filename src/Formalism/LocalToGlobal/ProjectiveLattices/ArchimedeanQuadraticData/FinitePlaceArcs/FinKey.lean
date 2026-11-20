@@ -15,7 +15,7 @@ theorem bind₁_scale_monomial {ι R : Type} [CommRing R] (a : ι → R) (ν : �
   ring
 
 theorem coeff_bind₁_scale {ι R : Type} [CommRing R] (a : ι → R) (q : MvPolynomial ι R) (μ : ι →₀ ℕ) :
-    coeff μ (bind₁ (fun x => C (a x) * X x) q) = (μ.prod fun x e => a x ^ e) * coeff μ q := by
+    AddMonoidAlgebra.coeff (bind₁ (fun x => C (a x) * X x) q) μ = (μ.prod fun x e => a x ^ e) * AddMonoidAlgebra.coeff q μ := by
   classical
   refine MvPolynomial.induction_on' q ?_ ?_
   · intro ν r
@@ -25,7 +25,7 @@ theorem coeff_bind₁_scale {ι R : Type} [CommRing R] (a : ι → R) (q : MvPol
       ring
     · simp
   · intro p q hp hq
-    rw [map_add, coeff_add, coeff_add, hp, hq, mul_add]
+    rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H}
 

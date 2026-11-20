@@ -487,7 +487,7 @@ def HasCoeff {σ : Type} [DecidableEq σ] (F : Fock σ) (v : F.H) (c : MvPowerSe
   ∀ α, inner ℂ (F.ι (MvPolynomial.monomial α 1)) v = α.prod (fun _ k => (k.factorial : ℂ)) * MvPowerSeries.coeff α c
 
 def expPS {σ : Type} (q : MvPolynomial σ ℂ) : MvPowerSeries σ ℂ :=
-  fun α => ∑ n ∈ Finset.range (α.degree + 1), MvPolynomial.coeff α (q ^ n) / (n.factorial : ℂ)
+  fun α => ∑ n ∈ Finset.range (α.degree + 1), AddMonoidAlgebra.coeff (q ^ n) α / (n.factorial : ℂ)
 
 def gaussPoly {P Q : ℕ} (A : Matrix (Fin P) (Fin Q) ℂ) (x : Ix P Q → ℂ) : MvPolynomial (Ix P Q) ℂ :=
   ∑ i, ∑ j, MvPolynomial.C (A i j) * MvPolynomial.X (Sum.inl i) * MvPolynomial.X (Sum.inr j) +
@@ -559,7 +559,7 @@ theorem not_isOsc_one (T0 : GrpData 1 0) (F : Fock (Ix 1 0)) : ¬ IsOsc T0 F 1 :
     simp [upq, Matrix.conjTranspose_smul]
   have h1 := (h.der _ hZ (monomial 0 1)).unique (hasDerivAt_const (0 : ℝ) (F.ι (monomial 0 1)))
   rw [omAct0_eq, GlobalTheory.Osc.oscAct_monomial_of_unique, ← map_zero F.ι] at h1
-  have h2 := congrArg (coeff 0) (F.ι_inj h1)
+  have h2 := congrArg (AddMonoidAlgebra.coeff · 0) (F.ι_inj h1)
   have h3 : GlobalTheory.Osc.expo (0 : Ix 1 0 →₀ ℕ) = 1 := rfl
   simp [h3] at h2
 
@@ -575,7 +575,7 @@ theorem hasCoeff_coe {σ : Type} [DecidableEq σ] (F : Fock σ) (f : MvPolynomia
     · subst h; simp [mul_comm]
     · simp [h, Ne.symm h]
 
-theorem coeff_zero_gaussPoly (A : Matrix (Fin P) (Fin Q) ℂ) (x : Ix P Q → ℂ) : coeff 0 (gaussPoly A x) = 0 := by
+theorem coeff_zero_gaussPoly (A : Matrix (Fin P) (Fin Q) ℂ) (x : Ix P Q → ℂ) : AddMonoidAlgebra.coeff (gaussPoly A x) 0 = 0 := by
   change constantCoeff (gaussPoly A x) = 0
   simp [gaussPoly]
 

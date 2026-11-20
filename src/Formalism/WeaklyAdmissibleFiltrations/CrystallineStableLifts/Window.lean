@@ -8,7 +8,7 @@ open Module
 
 theorem pht_window_sum_Ico_telescope (f : ℤ → ℤ) (m k : ℤ) (hmk : m ≤ k) :
     ∑ a ∈ Finset.Ico m k, (f a - f (a + 1)) = f m - f k := by
-  induction k, hmk using Int.le_induction with
+  induction k, hmk using Int.leInduction with
   | base => simp
   | succ k hk ih =>
     have hs : Finset.Ico m (k + 1) = insert k (Finset.Ico m k) := by

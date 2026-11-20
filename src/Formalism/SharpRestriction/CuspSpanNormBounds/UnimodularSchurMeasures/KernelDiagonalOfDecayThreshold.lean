@@ -123,7 +123,7 @@ theorem abs_kernel_L2_of_count_and_decay (X : CData) (hd : RegData X) (hφ : Phi
     have hd0 : ∀ γ v, X.dist x γ v = 0 := fun γ v => cartan_distance_eq_zero_of_definite (by rw [← h0, ← hq v]; rfl) _
     have hb1 : ∀ γ ∈ S, bd γ ≤ 1 := by
       intro γ _
-      refine Finset.prod_le_one (fun v _ => (Real.exp_pos _).le) fun v _ => ?_
+      refine Finset.prod_le_one₀ (fun v _ => (Real.exp_pos _).le) fun v _ => ?_
       rw [hd0 γ v]
       simp [Formalism.HermitianLatticeCounting.S7.decExp]
     have h2 := hcS (fun _ => 0) (fun _ => le_rfl)

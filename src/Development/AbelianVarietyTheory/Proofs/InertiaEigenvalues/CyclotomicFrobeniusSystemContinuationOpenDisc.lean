@@ -189,7 +189,7 @@ theorem inv_le_norm_nat (k : ℕ) (hk : k ≠ 0) : 1 ≤ k * ‖(k : ℤ_[l])‖
   have h0 : (k : ℚ_[l]) ≠ 0 := by exact_mod_cast hk
   rw [PadicInt.norm_def, PadicInt.coe_natCast, Padic.norm_eq_zpow_neg_valuation h0,
     Padic.valuation_natCast, zpow_neg, zpow_natCast, ← div_eq_mul_inv, one_le_div (by positivity)]
-  exact_mod_cast Nat.le_of_dvd (Nat.pos_of_ne_zero hk) pow_padicValNat_dvd
+  exact_mod_cast Nat.le_of_dvd (Nat.pos_of_ne_zero hk) (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
 
 variable (LL : FinExt l)
 

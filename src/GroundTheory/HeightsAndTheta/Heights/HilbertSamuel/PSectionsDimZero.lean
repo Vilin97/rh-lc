@@ -118,7 +118,7 @@ theorem valueSpan_le (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y 
   rw [aeval_monomial_int, monVal_eq y c hc m]
   have hb : ∀ k, blockDeg m k = d k := fun k => hg m hm k
   simp only [hb]
-  exact Submodule.mem_map.mpr ⟨((coeff m g : ℤ) : Ω) * monVal (rt y c) m,
+  exact Submodule.mem_map.mpr ⟨((AddMonoidAlgebra.coeff g m : ℤ) : Ω) * monVal (rt y c) m,
     (mul_mem (intCast_mem _ _) (monVal_mem y c m) : _ * _ ∈ chartRingQ y c),
     by rw [LinearMap.mulRight_apply, mul_assoc]⟩
 

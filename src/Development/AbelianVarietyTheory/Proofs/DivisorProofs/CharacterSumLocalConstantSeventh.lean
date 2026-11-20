@@ -123,7 +123,7 @@ theorem smallDatum_of_frames {a b : ℕ} {ST SG SG' SB : Finset (HeightOneSpectr
       unfold phiT
       split_ifs <;> simp
     have h2 : ∏ P : SB, ‖σ (Ψ P (inFr (f P) (f' P) x))‖ ≤ ∏ P, β P :=
-      Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun P _ => (hΨ P).2.2 σ _
+      Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun P _ => (hΨ P).2.2 σ _
     calc _ ≤ 1 * ∏ P, β P := mul_le_mul h1 h2 (Finset.prod_nonneg fun _ _ => norm_nonneg _) zero_le_one
       _ = _ := one_mul _
 

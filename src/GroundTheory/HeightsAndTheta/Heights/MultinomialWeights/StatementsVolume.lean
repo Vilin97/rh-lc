@@ -383,7 +383,7 @@ def corrFl (al be : Fin d.f → ℝ) (F : LamPoly d) : ℝ :=
 
 def polarFunctional {σ : Type*} (n : ℕ) (P : MvPolynomial σ ℝ) : MvPolynomial σ ℝ →ₗ[ℝ] ℝ :=
   ∑ m ∈ P.support.filter (fun m => (m.sum fun _ e => e) = n),
-    ((-1) ^ n * ((m.prod fun _ e => (e.factorial : ℝ)) / (n.factorial : ℝ)) * coeff m P) •
+    ((-1) ^ n * ((m.prod fun _ e => (e.factorial : ℝ)) / (n.factorial : ℝ)) * AddMonoidAlgebra.coeff P m) •
       lcoeff ℝ m
 
 def VolumeSystem.PP {d : IndexData} (VS : VolumeSystem d) (B : ℤ) : LamPoly d →ₗ[ℝ] ℝ :=
@@ -415,7 +415,7 @@ def CorollaryBPrimeMonomial.Statement : Prop :=
     (m.sum fun _ e => e) = d.D + 1 →
       VS.ee B al be (monomial m 1) =
         (-1) ^ (d.D + 1) * ((m.prod fun _ e => (e.factorial : ℝ)) / ((d.D + 1).factorial : ℝ)) *
-          coeff m (VS.EB B al be)
+          AddMonoidAlgebra.coeff (VS.EB B al be) m
 
 def CorollaryBPrimeRow.Statement : Prop :=
   ∀ (d : IndexData) (al be : Fin d.f → ℝ) (F : LamPoly d),
@@ -442,7 +442,7 @@ abbrev p0 : Idx d1 := (0, ⟨0, by norm_num⟩)
 abbrev p1 : Idx d1 := (0, ⟨1, by norm_num⟩)
 
 theorem polarPoly_coeff_eq {σ R : Type*} [CommRing R] [Fintype σ] (Φ : MvPolynomial σ R →ₗ[R] R)
-    (n : ℕ) (m : σ →₀ ℕ) : coeff m (polarPoly Φ n) = Φ (coeff m ((-outerDot σ R) ^ n)) := by
+    (n : ℕ) (m : σ →₀ ℕ) : AddMonoidAlgebra.coeff (polarPoly Φ n) m = Φ (AddMonoidAlgebra.coeff ((-outerDot σ R) ^ n) m) := by
   classical
   rw [polarPoly, coeff_sum]
   simp only [coeff_monomial]
@@ -463,7 +463,7 @@ theorem polarPoly_one {σ R : Type*} [CommRing R] [Fintype σ] [DecidableEq σ]
   split_ifs <;> simp
 
 theorem flagIntegral_X (f N : ℕ) (v : Fin f × Fin N) :
-    RestTerms.flagIntegral f N (X v) = coeff (Finsupp.single v 1) (RestTerms.blockVandermonde f N) := by
+    RestTerms.flagIntegral f N (X v) = AddMonoidAlgebra.coeff (RestTerms.blockVandermonde f N) (Finsupp.single v 1) := by
   classical
   unfold RestTerms.flagIntegral
   rw [Finset.sum_eq_single (Finsupp.single v 1)]
@@ -489,7 +489,7 @@ theorem flagNormalisation_rankTwo : flagNormalisation d1.f d1.N = -1 := by
   norm_num
 
 theorem intFl_X_of_two_variables (v : Idx d1) :
-    intFl d1 (X v) = -coeff (Finsupp.single v 1) (X p0 - X p1 : XPoly d1) := by
+    intFl d1 (X v) = -AddMonoidAlgebra.coeff (X p0 - X p1 : XPoly d1) (Finsupp.single v 1) := by
   rw [intFl, LinearMap.smul_apply, flagNormalisation_rankTwo]
   show (-1 : ℚ) • RestTerms.flagIntegral d1.f d1.N (X v) = _
   rw [flagIntegral_X, blockVandermonde_rankTwo]
@@ -500,9 +500,9 @@ theorem degPoly_eq_sub_of_two_variables : degPoly d1 = (X p0 - X p1 : XPoly d1) 
   rw [degPoly, hD, polarPoly_one]
   simp only [map_neg, intFl_X_of_two_variables, neg_neg, Fintype.sum_prod_type, Fin.sum_univ_one, Fin.sum_univ_two]
   have hne : p1 ≠ p0 := by decide
-  have e00 : coeff (Finsupp.single p0 1) (X p0 - X p1 : XPoly d1) = 1 := by
+  have e00 : AddMonoidAlgebra.coeff (X p0 - X p1 : XPoly d1) (Finsupp.single p0 1) = 1 := by
     simp [coeff_X, Finsupp.single_left_inj one_ne_zero, hne]
-  have e01 : coeff (Finsupp.single p1 1) (X p0 - X p1 : XPoly d1) = -1 := by
+  have e01 : AddMonoidAlgebra.coeff (X p0 - X p1 : XPoly d1) (Finsupp.single p1 1) = -1 := by
     simp [coeff_X, Finsupp.single_left_inj one_ne_zero, hne.symm]
   have q0 : ((0 : Fin 1), (0 : Fin 2)) = p0 := rfl
   have q1 : ((0 : Fin 1), (1 : Fin 2)) = p1 := rfl

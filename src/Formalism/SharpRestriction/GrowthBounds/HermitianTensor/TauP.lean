@@ -183,9 +183,9 @@ private theorem pow_mul_aeval_eq_of_homogeneous_of_mul_eq {R σ S : Type} [CommR
   have e2 : w ^ D * d.prod (fun i k => Z' i ^ k) = d.prod (fun i k => (w * Z' i) ^ k) := by
     rw [← hD]
     simp only [Finsupp.prod, Finsupp.sum, mul_pow, Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum]
-  calc u ^ D * (algebraMap R S (coeff d f) * d.prod (fun i k => Z i ^ k))
-      = algebraMap R S (coeff d f) * (u ^ D * d.prod (fun i k => Z i ^ k)) := by ring
-    _ = algebraMap R S (coeff d f) * (w ^ D * d.prod (fun i k => Z' i ^ k)) := by rw [e1, e2]; simp only [h]
+  calc u ^ D * (algebraMap R S (AddMonoidAlgebra.coeff f d) * d.prod (fun i k => Z i ^ k))
+      = algebraMap R S (AddMonoidAlgebra.coeff f d) * (u ^ D * d.prod (fun i k => Z i ^ k)) := by ring
+    _ = algebraMap R S (AddMonoidAlgebra.coeff f d) * (w ^ D * d.prod (fun i k => Z' i ^ k)) := by rw [e1, e2]; simp only [h]
     _ = _ := by ring
 
 private theorem degree_eq_sum_of_mem_dualWeyl {R : Type} [CommRing R] (r n : ℕ) (ν : Fin n → ℕ)

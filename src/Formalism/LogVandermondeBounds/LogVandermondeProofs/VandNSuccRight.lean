@@ -85,7 +85,7 @@ private lemma vandN_mul_prod_pow_le_vandN_rowPar (k M : ℕ) (v b : ℕ → ℝ)
     have hA : b m ^ (k - 1) ≤ ∏ i ∈ range (k - 1), (rowPar k v b i - rowPar k v b (k - 1 + m)) := by
       calc b m ^ (k - 1) = ∏ _i ∈ range (k - 1), b m := by simp
         _ ≤ _ := by
-          apply prod_le_prod (fun i _ => hbm.le)
+          apply prod_le_prod₀ (fun i _ => hbm.le)
           intro i hi
           rw [mem_range] at hi
           rw [hr i hi, hr2 m]
@@ -93,7 +93,7 @@ private lemma vandN_mul_prod_pow_le_vandN_rowPar (k M : ℕ) (v b : ℕ → ℝ)
     have hB : (1 : ℝ) ≤ ∏ i ∈ range m, (rowPar k v b (k - 1 + i) - rowPar k v b (k - 1 + m)) := by
       calc (1 : ℝ) = ∏ _i ∈ range m, (1 : ℝ) := by simp
         _ ≤ _ := by
-          apply prod_le_prod (fun i _ => zero_le_one)
+          apply prod_le_prod₀ (fun i _ => zero_le_one)
           intro i hi
           rw [mem_range] at hi
           rw [hr2 i, hr2 m]
@@ -189,7 +189,7 @@ private lemma vandN_le_pow_mul_pow_mul_vandN_of_interlace (p : ℕ) (u v : ℕ �
   have hAdj : (1 : ℝ) ≤ ∏ i ∈ range p, (v i - v (i + 1)) := by
     calc (1 : ℝ) = ∏ _i ∈ range p, (1 : ℝ) := by simp
       _ ≤ _ := by
-        apply prod_le_prod (fun i _ => zero_le_one)
+        apply prod_le_prod₀ (fun i _ => zero_le_one)
         intro i hi
         rw [mem_range] at hi
         exact hst i (by omega)

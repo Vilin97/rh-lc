@@ -117,7 +117,7 @@ theorem kill_loc {V : Type} [AddCommGroup V] [TopologicalSpace V] [Nonarchimedea
       · rw [Set.indicator_of_mem hA]; exact h y (not_or.2 ⟨hA, hy⟩)
     · intro x hx
       obtain ⟨U, hU, hl⟩ := h x hx
-      have : (fun k => k + x) ⁻¹' U ∈ 𝓝 (0 : V) := (continuous_add_right x).continuousAt.preimage_mem_nhds (by simpa using hU)
+      have : (fun k => k + x) ⁻¹' U ∈ 𝓝 (0 : V) := (continuous_add_const x).continuousAt.preimage_mem_nhds (by simpa using hU)
       obtain ⟨K, hK⟩ := NonarchimedeanAddGroup.is_nonarchimedean _ this
       have hA : IsClopen ((fun y => y - x) ⁻¹' (K : Set V)) := K.isClopen.preimage (by fun_prop)
       refine ⟨_, mem_nhdsWithin_of_mem_nhds (hA.isOpen.mem_nhds (by simp)), _, hA, subset_rfl,

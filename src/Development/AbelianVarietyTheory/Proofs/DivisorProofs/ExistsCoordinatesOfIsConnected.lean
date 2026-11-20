@@ -63,7 +63,7 @@ theorem GlobalTheory.PDivGroup.exists_coords_of_isConn : ∀ (p : ℕ) [Fact p.P
     have hDy : ∀ i j, Bialgebra.counitAlgHom (O ⧸ I) ((O ⧸ I) ⊗[O] G.A (m + e)) (D i (φ (x (m + e) j))) =
         if i = j then 1 else 0 := fun i j => (hD i _).trans (hlx i j)
     have hdeg : ∀ β : Fin d →₀ ℕ, N ≤ β.degree →
-        MvPolynomial.coeff β (MvPolynomial.map (algebraMap O (O ⧸ I)) P) = 0 := fun β hβ => by
+        AddMonoidAlgebra.coeff (MvPolynomial.map (algebraMap O (O ⧸ I)) P) β = 0 := fun β hβ => by
       rw [MvPolynomial.coeff_map, hPdeg β hβ, map_zero]
     have hmemB : MvPolynomial.aeval (fun j => φ (x (m + e) j)) (MvPolynomial.map (algebraMap O (O ⧸ I)) P) ∈
         RingHom.ker (Bialgebra.counitAlgHom (O ⧸ I) ((O ⧸ I) ⊗[O] G.A (m + e))) ^ N := by

@@ -111,7 +111,7 @@ theorem packing_geometric_mean_separated : ∀ (ι : Type) [Fintype ι] [Nonempt
       have hgm : (∏ v, ‖(φ s - φ s') v‖) ^ ((1 : ℝ) / k) ≤ ‖φ s - φ s'‖ := by
         have hle : ∏ v, ‖(φ s - φ s') v‖ ≤ ‖φ s - φ s'‖ ^ k := by
           rw [hk, ← Finset.card_univ, ← Finset.prod_const]
-          exact Finset.prod_le_prod (fun v _ => norm_nonneg _) (fun v _ => norm_le_pi_norm _ v)
+          exact Finset.prod_le_prod₀ (fun v _ => norm_nonneg _) (fun v _ => norm_le_pi_norm _ v)
         calc (∏ v, ‖(φ s - φ s') v‖) ^ ((1 : ℝ) / k) ≤ (‖φ s - φ s'‖ ^ k) ^ ((1 : ℝ) / k) :=
               Real.rpow_le_rpow (Finset.prod_nonneg (fun v _ => norm_nonneg _)) hle (by positivity)
           _ = ‖φ s - φ s'‖ := by

@@ -55,7 +55,7 @@ private theorem exists_root_pow_eq_pow_padicVal {g : ℕ} [Fact g.Prime] (l : �
       z ^ l ^ padicValNat l n = y ^ l ^ padicValNat l n := by
   set B := padicValNat l n
   set m := n / l ^ B
-  have hnm : n = l ^ B * m := (Nat.mul_div_cancel' pow_padicValNat_dvd).symm
+  have hnm : n = l ^ B * m := (Nat.mul_div_cancel' (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))).symm
   have hm0 : m ≠ 0 := by rintro h; rw [h, mul_zero] at hnm; omega
   have hcop : (l ^ B).Coprime m := by
     have := Nat.coprime_ordCompl hl hn.ne'
@@ -82,7 +82,7 @@ private theorem pow_pow_gcd_sub_one_eq_one_of_same_prime_power {g : ℕ} [Fact g
     z ^ (g ^ Nat.gcd d e - 1) = 1 := by
   set B := padicValNat l (g ^ e - 1)
   set m := (g ^ e - 1) / l ^ B
-  have hnm : g ^ e - 1 = l ^ B * m := (Nat.mul_div_cancel' pow_padicValNat_dvd).symm
+  have hnm : g ^ e - 1 = l ^ B * m := (Nat.mul_div_cancel' (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))).symm
   have hcop : (l ^ (max a B)).Coprime m := by
     have := Nat.coprime_ordCompl hl he.ne'
     rw [Nat.factorization_def _ hl] at this

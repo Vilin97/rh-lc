@@ -24,7 +24,7 @@ abbrev EpsAlg (k : ℕ) : Type := MvPolynomial (Fin k) R ⧸ sqIdeal R k
 def topMon (k : ℕ) : Fin k →₀ ℕ := ∑ a, Finsupp.single a 1
 
 theorem coeff_topMon_eq_zero {k : ℕ} {p : MvPolynomial (Fin k) R} (hp : p ∈ sqIdeal R k) :
-    MvPolynomial.coeff (topMon k) p = 0 := by
+    AddMonoidAlgebra.coeff p (topMon k) = 0 := by
   obtain ⟨c, rfl⟩ := Ideal.mem_span_range_iff_exists_fun.1 hp
   rw [MvPolynomial.coeff_sum]
   refine Finset.sum_eq_zero fun a _ => ?_

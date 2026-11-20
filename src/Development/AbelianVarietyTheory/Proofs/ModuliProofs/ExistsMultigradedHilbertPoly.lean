@@ -325,7 +325,7 @@ theorem finite_colourPiece [Finite σ] (n : Fin r → ℕ) :
     intro F hF
     rw [F.as_sum]
     refine Submodule.sum_mem _ fun d hd => ?_
-    have : monomial d (coeff d F) = coeff d F • (monomial d (1 : K) : MvPolynomial σ K) := by
+    have : monomial d (AddMonoidAlgebra.coeff F d) = AddMonoidAlgebra.coeff F d • (monomial d (1 : K) : MvPolynomial σ K) := by
       rw [smul_monomial, smul_eq_mul, mul_one]
     rw [this]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨d, hF (mem_support_iff.1 hd), rfl⟩)

@@ -93,7 +93,7 @@ theorem exists_zeta (K : FinExt l) (s : ℕ) (hs : 1 ≤ s) :
       rw [← Nat.cast_succ]; exact congrArg Nat.cast hm'
     rw [h4, ← h3, Finset.prod_range_succ', norm_mul, norm_prod, norm_sub_rev ζ]
     simp only [zero_add, pow_one]
-    refine mul_le_of_le_one_left (norm_nonneg _) (Finset.prod_le_one (fun _ _ => norm_nonneg _) ?_)
+    refine mul_le_of_le_one_left (norm_nonneg _) (Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) ?_)
     intro i _
     rw [sub_eq_add_neg]
     refine (IsUltrametricDist.norm_add_le_max _ _).trans ?_

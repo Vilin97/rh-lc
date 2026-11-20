@@ -209,7 +209,7 @@ theorem dpt_le {r : ℕ} {ka B : ℝ} (hka : 0 < ka) (h1 : ka ≤ B) (h2 : ka⁻
   set S := Finset.univ.filter fun a : Fin (r + 1) => a.val < l.val + 1
   have hc : S.card ≤ r + 1 := (Finset.card_filter_le _ _).trans (by simp)
   have h3 : 1 ≤ ∏ a ∈ S, B ^ (4 * r) * Formalism.MainNotions.FrameBoundFromBesselTorus.tF r ka⁻¹ (ka ^ r) a ^ 2 :=
-    le_trans (by simp) (Finset.prod_le_prod (f := fun _ => (1 : ℝ)) (fun _ _ => zero_le_one) fun a _ => key a)
+    le_trans (by simp) (Finset.prod_le_prod₀ (f := fun _ => (1 : ℝ)) (fun _ _ => zero_le_one) fun a _ => key a)
   rw [Finset.prod_mul_distrib, Finset.prod_const, ← pow_mul] at h3
   refine h3.trans (mul_le_mul (pow_le_pow_right₀ hB ?_) (le_abs_self _)
     (Finset.prod_nonneg fun _ _ => sq_nonneg _) (by positivity))
@@ -281,7 +281,7 @@ theorem weight_le {ι : Type} [Fintype ι] [Nonempty ι] (s x : ι → ℝ) (N :
     rw [mul_comm 2 (∑ i, N i), pow_mul, ← Finset.prod_pow_eq_pow_sum]
     have hn : ∀ i, 0 ≤ 1 + s i * x i ^ 2 := fun i => add_nonneg zero_le_one (mul_nonneg (hs0 i) (sq_nonneg _))
     refine pow_le_pow_left₀ (Finset.prod_nonneg fun i _ => pow_nonneg (hn i) _)
-      (Finset.prod_le_prod (fun i _ => pow_nonneg (hn i) _) fun i _ => pow_le_pow_left₀ (hn i) ?_ _) 2
+      (Finset.prod_le_prod₀ (fun i _ => pow_nonneg (hn i) _) fun i _ => pow_le_pow_left₀ (hn i) ?_ _) 2
     have h1 : s i * x i ^ 2 ≤ σ * M := mul_le_mul (hs i) ((hl i (Finset.mem_univ _)).trans hx) (sq_nonneg _) (by linarith)
     have h2 : 1 ≤ σ * M := one_le_mul_of_one_le_of_one_le hσ hM
     linarith

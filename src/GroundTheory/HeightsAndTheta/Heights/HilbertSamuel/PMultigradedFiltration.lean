@@ -68,7 +68,7 @@ theorem homog_smul_mem (hM : IsMultigrading ι M piece) {f : MRing ι F} {b : K 
   rw [Finset.sum_smul]
   refine Submodule.sum_mem _ fun d hd => ?_
   have hw : Finsupp.weight (blockWeight ι) d = b := hf (mem_support_iff.mp hd)
-  have e : (monomial d (coeff d f) : MRing ι F) = coeff d f • monomial d (1 : F) := by
+  have e : (monomial d (AddMonoidAlgebra.coeff f d) : MRing ι F) = AddMonoidAlgebra.coeff f d • monomial d (1 : F) := by
     rw [smul_monomial, smul_eq_mul, mul_one]
   rw [e, smul_assoc]
   exact Submodule.smul_mem _ _ (hw ▸ monomial_smul_mem hM d m x hx)
@@ -81,13 +81,13 @@ theorem decompose_smul (hM : IsMultigrading ι M piece) (f : MRing ι F) {c : K 
     (hx : x ∈ piece c) (m : K → ℤ) :
     (DirectSum.decompose piece (f • x) m : M) =
       (∑ d ∈ f.support with c + degZ (Finsupp.weight (blockWeight ι) d) = m,
-        monomial d (coeff d f)) • x := by
+        monomial d (AddMonoidAlgebra.coeff f d)) • x := by
   have ef := f.as_sum
   conv_lhs => rw [ef]
   rw [Finset.sum_smul, DirectSum.decompose_sum, DFinsupp.finsetSum_apply,
     AddSubmonoidClass.coe_finsetSum, Finset.sum_filter, Finset.sum_smul]
   refine Finset.sum_congr rfl fun d _ => ?_
-  have hd : (monomial d (coeff d f) : MRing ι F) • x ∈
+  have hd : (monomial d (AddMonoidAlgebra.coeff f d) : MRing ι F) • x ∈
       piece (c + degZ (Finsupp.weight (blockWeight ι) d)) :=
     homog_smul_mem hM (isWeightedHomogeneous_monomial _ _ _ rfl) hx
   split_ifs with h

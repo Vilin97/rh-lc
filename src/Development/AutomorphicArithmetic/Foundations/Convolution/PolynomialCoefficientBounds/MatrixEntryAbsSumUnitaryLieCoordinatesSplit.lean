@@ -18,7 +18,7 @@ private theorem intMvPolynomialCoeffAbsSum_add_le {ι : Type} (p q : MvPolynomia
     matrixEntryAbsSum_unitaryLie_coordinates_split p (p.support ∪ q.support) Finset.subset_union_left,
     matrixEntryAbsSum_unitaryLie_coordinates_split q (p.support ∪ q.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
   refine Finset.sum_le_sum fun α _ => ?_
-  rw [coeff_add]
+  rw [MvPolynomial.coeff_add]
   exact norm_add_le _ _
 
 private theorem intMvPolynomialCoeffAbsSum_sum_le {ι κ : Type} (s : Finset κ) (f : κ → MvPolynomial ι ℂ) :

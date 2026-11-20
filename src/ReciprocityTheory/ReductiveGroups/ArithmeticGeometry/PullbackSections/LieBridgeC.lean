@@ -61,7 +61,7 @@ theorem exists_sepElt {E : Type} [Field E] [NumberField E] {F : Type} [Field F] 
     have ha : ((a : 𝓞 E) : E) ∈ Algebra.adjoin ℚ {((α : 𝓞 E) : E)} := by rw [hadj]; trivial
     rw [Algebra.adjoin_singleton_eq_range_aeval] at ha
     obtain ⟨r, hr⟩ := ha
-    obtain ⟨b, hb⟩ := IsLocalization.integerNormalization_map_to_map (nonZeroDivisors ℤ) r
+    obtain ⟨b, hb⟩ := IsLocalization.integerNormalization_spec (nonZeroDivisors ℤ) r
     refine ⟨(b : ℤ), IsLocalization.integerNormalization (nonZeroDivisors ℤ) r, nonZeroDivisors.coe_ne_zero b, ?_⟩
     apply hinjE
     have hr' : aeval (algebraMap (𝓞 E) E α) r = algebraMap (𝓞 E) E a := hr

@@ -259,7 +259,7 @@ theorem continuous_big {ψ : AddChar k Circle} (hψ : Continuous ψ) (q : Fin c)
   unfold big ch
   refine ((hχ.comp (continuous_pi fun s => continuous_id.matrix_elem _ _)).mul hΦ).mul
     (continuous_subtype_val.comp (hψ.comp (Continuous.neg ?_)))
-  exact continuous_finset_sum _ fun i _ => continuous_id.matrix_elem _ _
+  exact continuous_finsetSum _ fun i _ => continuous_id.matrix_elem _ _
 
 omit [Fintype n] [DecidableEq n] [Fintype n'] [DecidableEq n'] in
 theorem hasCompactSupport_big (ψ : AddChar k Circle) (q : Fin c) (χ : (n' → k) → ℂ)

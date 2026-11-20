@@ -19,7 +19,7 @@ instance heckeCommRing (Y : Submodule A M) (op : ι → Module.End A M) [h : Fac
         change (s (t y) : M) = t (s y)
         rw [hi, hj, hj, hi]
         exact h.out.2 i j y y.2
-      exact (Algebra.adjoinCommSemiringOfComm A key).mul_comm a b }
+      exact (Algebra.isMulCommutative_adjoin A key).mul_comm a b }
 
 def heckeGen (Y : Submodule A M) (op : ι → Module.End A M) [h : Fact (CommOn Y op)] (i : ι) : heckeAlg Y op :=
   ⟨(op i).restrict (h.out.1 i), Algebra.subset_adjoin ⟨i, fun _ => rfl⟩⟩

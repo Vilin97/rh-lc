@@ -91,7 +91,7 @@ theorem pow_dvd_of_prod (a : Ainf p R) (ha : Ainf.theta p R a = 0) {b : Acris p 
       algebraMap (Ainf p R) (Acris p R) a ^ (p ^ (N * 2) * (p - 1)) := by
     refine Dvd.dvd.trans ?_ (fact_dvd a ha _)
     rw [← Nat.cast_pow]
-    exact Nat.cast_dvd_cast pow_padicValNat_dvd
+    exact Nat.cast_dvd_cast (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
   have h2 : (p : Acris p R) ^ 2 ∣ b ^ (p ^ (N * 2) * (p - 1)) := by
     refine (pow_dvd_pow_of_dvd hN 2).trans ?_
     rw [← pow_mul]
@@ -949,7 +949,7 @@ section
 
 theorem Bridge.RingBasics.exists_pow_div_factorial : ∀ (l : ℕ) [Fact l.Prime] (n : ℕ), ∃ c : ℤ_[l], ((n.factorial : ℕ) : ℤ_[l]) * c = ((l : ℕ) : ℤ_[l]) ^ n := by
   intro l hl n
-  obtain ⟨m, hm⟩ : l ^ padicValNat l n.factorial ∣ n.factorial := pow_padicValNat_dvd
+  obtain ⟨m, hm⟩ : l ^ padicValNat l n.factorial ∣ n.factorial := (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
   have hle : padicValNat l n.factorial ≤ n := padicValNat_factorial_le l n
   have hnd : ¬ l ∣ m := by
     rintro ⟨k, hk⟩

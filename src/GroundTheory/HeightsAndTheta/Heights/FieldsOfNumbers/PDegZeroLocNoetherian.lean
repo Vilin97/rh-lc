@@ -70,7 +70,7 @@ theorem DegZeroLocNoetherian.proof (h : DegZeroLocQuot.Statement.{u}) :
     rw [map_sum, map_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun m hm => ?_
     have hw : Finsupp.weight (blockWeight ι) m = b := hf (mem_support_iff.mp hm)
-    have hmon : monomial m (coeff m f) = coeff m f • monomial m (1 : F) := by
+    have hmon : monomial m (AddMonoidAlgebra.coeff f m) = AddMonoidAlgebra.coeff f m • monomial m (1 : F) := by
       rw [smul_monomial, smul_eq_mul, mul_one]
     rw [hmon, map_smul, map_smul, hmono, hw, smul_mul_assoc]
   have hle : e.range ≤ degZeroLoc P {W} := by

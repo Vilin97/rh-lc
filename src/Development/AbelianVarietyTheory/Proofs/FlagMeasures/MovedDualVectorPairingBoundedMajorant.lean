@@ -174,9 +174,9 @@ lemma pluck_flag {k r n : ℕ} (hn : n ≤ r) (z : Fin (2 * r + k + 1) → ℂ) 
   simp only [inner_H, hsum, norm_H] at hp
   simp only [← eucl_eq] at hp
   refine hp.trans (mul_le_mul ?_ ?_ ?_ ?_)
-  · calc _ ≤ ∏ _a : Fin n, R := Finset.prod_le_prod (fun _ _ => Real.sqrt_nonneg _) fun a _ => hy a
+  · calc _ ≤ ∏ _a : Fin n, R := Finset.prod_le_prod₀ (fun _ _ => Real.sqrt_nonneg _) fun a _ => hy a
       _ = _ := by simp
-  · calc _ ≤ ∏ _a : Fin n, R := Finset.prod_le_prod (fun _ _ => Real.sqrt_nonneg _) fun a _ => by
+  · calc _ ≤ ∏ _a : Fin n, R := Finset.prod_le_prod₀ (fun _ _ => Real.sqrt_nonneg _) fun a _ => by
           exact (h1 _).1.trans_le <| (((GlobalTheory.Amp.LInv.lengths_basic k r z hz).2.2 x).2.1 _).2.trans hR
       _ = _ := by simp
   · exact Finset.prod_nonneg fun _ _ => Real.sqrt_nonneg _

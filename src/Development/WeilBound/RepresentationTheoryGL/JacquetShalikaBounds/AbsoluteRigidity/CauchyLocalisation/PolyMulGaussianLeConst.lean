@@ -106,7 +106,7 @@ theorem main (ht : Summable fun w => (∑' l, ‖F w l‖) - 1) :
     rwa [h0, norm_one] at this
   have hprod : ∀ T : Finset ι, ∏ w ∈ T, ∑' l, ‖F w l‖ ≤ c := fun T => by
     calc ∏ w ∈ T, ∑' l, ‖F w l‖ ≤ ∏ w ∈ T, Real.exp ((∑' l, ‖F w l‖) - 1) :=
-          Finset.prod_le_prod (fun w _ => by linarith [hge w])
+          Finset.prod_le_prod₀ (fun w _ => by linarith [hge w])
             (fun w _ => by linarith [Real.add_one_le_exp ((∑' l, ‖F w l‖) - 1)])
       _ = Real.exp (∑ w ∈ T, ((∑' l, ‖F w l‖) - 1)) := (Real.exp_sum _ _).symm
       _ ≤ c := Real.exp_le_exp.2 (ht.sum_le_tsum T (fun w _ => by linarith [hge w]))

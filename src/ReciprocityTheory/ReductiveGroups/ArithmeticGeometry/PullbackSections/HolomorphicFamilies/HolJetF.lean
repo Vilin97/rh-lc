@@ -40,7 +40,7 @@ variable {K : Type} [Field K] {ι : Type} [DecidableEq ι]
 theorem aeval_tan (ℓ : ι) (q : MvPolynomial ι K) :
     MvPolynomial.aeval (fun i => if i = ℓ then (DualNumber.eps : DualNumber K) else 0) q =
       TrivSqZeroExt.inl (MvPolynomial.constantCoeff q) +
-        TrivSqZeroExt.inr (MvPolynomial.coeff (Finsupp.single ℓ 1) q) := by
+        TrivSqZeroExt.inr (AddMonoidAlgebra.coeff q (Finsupp.single ℓ 1)) := by
   induction q using MvPolynomial.induction_on
   next a =>
     have hs : (0 : ι →₀ ℕ) ≠ Finsupp.single ℓ 1 := (Finsupp.single_ne_zero.2 one_ne_zero).symm
@@ -52,7 +52,7 @@ theorem aeval_tan (ℓ : ι) (q : MvPolynomial ι K) :
     rw [map_mul, hp, MvPolynomial.aeval_X]
     by_cases h : i = ℓ
     · subst h
-      have hc : MvPolynomial.coeff (Finsupp.single i 1) (p * MvPolynomial.X i) =
+      have hc : AddMonoidAlgebra.coeff (p * MvPolynomial.X i) (Finsupp.single i 1) =
           MvPolynomial.constantCoeff p := by
         have := MvPolynomial.coeff_mul_X (0 : ι →₀ ℕ) i p
         rw [zero_add] at this
@@ -60,7 +60,7 @@ theorem aeval_tan (ℓ : ι) (q : MvPolynomial ι K) :
       rw [hc]
       ext <;> simp
     · have h' : ℓ ≠ i := Ne.symm h
-      have hc : MvPolynomial.coeff (Finsupp.single ℓ 1) (p * MvPolynomial.X i) = 0 := by
+      have hc : AddMonoidAlgebra.coeff (p * MvPolynomial.X i) (Finsupp.single ℓ 1) = 0 := by
         rw [MvPolynomial.coeff_mul_X']
         simp [Finsupp.single_apply, h', h]
       rw [hc]
@@ -72,7 +72,7 @@ variable {g : ℕ}
 
 private theorem coeff_psTrunc_lemma {ι : Type} [Fintype ι] [DecidableEq ι] (m : ℕ)
     (f : MvPowerSeries ι ℂ) (n : ι →₀ ℕ) (hn : n ∈ degLE (ι := ι) m) :
-    MvPolynomial.coeff n (psTrunc m f) = MvPowerSeries.coeff n f := by
+    AddMonoidAlgebra.coeff (psTrunc m f) n = MvPowerSeries.coeff n f := by
   unfold psTrunc
   rw [MvPolynomial.coeff_sum]
   simp [MvPolynomial.coeff_monomial, hn]
@@ -125,7 +125,7 @@ theorem jetTan_jetOf (ℓ : Fin 1 × Fin g) (θ : (Fin g → ℂ) → ℂ) :
     show iteratedFDeriv ℂ 1 θ 0 (fun i => [(Pi.single ℓ.2 1 : Fin g → ℂ)].get i) = _
     rw [iteratedFDeriv_one_apply]
     rfl
-  have hl : MvPolynomial.coeff (Finsupp.single ℓ 1) (psTrunc (0 + 1) (tay θ 0)) =
+  have hl : AddMonoidAlgebra.coeff (psTrunc (0 + 1) (tay θ 0)) (Finsupp.single ℓ 1) =
       fderiv ℂ θ 0 (Pi.single ℓ.2 1) := by
     rw [coeff_psTrunc_lemma (0 + 1) (tay θ 0) (Finsupp.single ℓ 1)
       (mem_degLE_lemma_2 (0 + 1) (Finsupp.single ℓ 1) hb1 hs1), hc, hd, add_zero, hf, div_one, hm]

@@ -94,12 +94,12 @@ theorem GoodB_monomial (hX : ∀ v, GoodB R ψ (X v) (ψ v)) (e : σ →₀ ℕ)
 
 theorem GoodB_homog (hX : ∀ v, GoodB R ψ (X v) (ψ v)) (g : MvPolynomial σ ℂ) (d : ℕ)
     (hg : IsWeightedHomogeneous ψ g d) : R g - g ∈ FiltB ψ (d + 1) := by
-  have e0 : R g - g = ∑ e ∈ g.support, (R (monomial e (coeff e g)) - monomial e (coeff e g)) := by
+  have e0 : R g - g = ∑ e ∈ g.support, (R (monomial e (AddMonoidAlgebra.coeff g e)) - monomial e (AddMonoidAlgebra.coeff g e)) := by
     conv_lhs => rw [g.as_sum]
     rw [map_sum, ← Finset.sum_sub_distrib]
   rw [e0]
   refine Submodule.sum_mem _ fun e he => ?_
-  have := (GoodB_monomial R ψ hX e (coeff e g)).2
+  have := (GoodB_monomial R ψ hX e (AddMonoidAlgebra.coeff g e)).2
   rwa [hg (mem_support_iff.mp he)] at this
 
 end Good

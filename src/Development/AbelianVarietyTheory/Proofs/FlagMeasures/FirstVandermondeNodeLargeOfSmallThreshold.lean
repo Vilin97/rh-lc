@@ -14,7 +14,7 @@ lemma prod_le_pow_of_le {s : Finset ℕ} {f : ℕ → ℝ} {B : ℝ} (h0 : ∀ i
 
 lemma one_le_prod_of_le {s : Finset ℕ} {f : ℕ → ℝ} (h : ∀ i ∈ s, 1 ≤ f i) : 1 ≤ ∏ i ∈ s, f i := by
   calc (1 : ℝ) = ∏ _i ∈ s, (1 : ℝ) := (Finset.prod_const_one).symm
-    _ ≤ ∏ i ∈ s, f i := Finset.prod_le_prod (fun _ _ => zero_le_one) h
+    _ ≤ ∏ i ∈ s, f i := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) h
 
 lemma b_le (c : Sz.Cfg) (hc : c.Ok) : ∀ i j, 1 ≤ i → i ≤ j → j ≤ c.m → c.b i ≤ c.b j := by
   intro i j hi hij hj

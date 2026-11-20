@@ -193,7 +193,7 @@ theorem _root_.GlobalTheory.CongruenceDet.det_eq_one : ∀ (E : Type) [Field E] 
   rw [← hn] at hprod
   have hle : ‖∏ σ : E →ₐ[ℚ] ℂ, σ ((d - 1) / M)‖ ≤ (2 / 3 : ℝ) ^ Fintype.card (E →ₐ[ℚ] ℂ) := by
     rw [norm_prod, ← Finset.card_univ, ← Finset.prod_const]
-    exact Finset.prod_le_prod (fun _ _ => norm_nonneg _) (fun σ _ => habs σ.toRingHom)
+    exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) (fun σ _ => habs σ.toRingHom)
   have hcard : 0 < Fintype.card (E →ₐ[ℚ] ℂ) :=
     Fintype.card_pos_iff.2 ⟨(IsAlgClosed.lift : E →ₐ[ℚ] ℂ)⟩
   have hlt : (2 / 3 : ℝ) ^ Fintype.card (E →ₐ[ℚ] ℂ) < 1 :=

@@ -32,7 +32,7 @@ theorem UpperTheory.cmDatum_discriminantDepth_bounds :
     refine ⟨(UpperTheory.HF.vd_le H hp).2.trans (by exact_mod_cast hfac ▸ hle), ?_⟩
     rw [Real.le_logb_iff_rpow_le one_lt_two (by linarith), Real.rpow_natCast]
     have h1 : 2 ^ padicValNat l H.QS ≤ H.QS :=
-      (Nat.pow_le_pow_left hp.two_le _).trans (Nat.le_of_dvd H.QS_pos pow_padicValNat_dvd)
+      (Nat.pow_le_pow_left hp.two_le _).trans (Nat.le_of_dvd H.QS_pos (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)))
     exact_mod_cast h1
   · obtain ⟨-, -, h1, h2, -⟩ := UpperTheory.HF.inert_q H
     by_cases h : H.q ∈ H.ram

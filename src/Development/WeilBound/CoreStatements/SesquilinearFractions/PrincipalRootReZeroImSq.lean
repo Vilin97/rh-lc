@@ -85,7 +85,7 @@ theorem exists_big (a : 𝓞 E) (ha : a ≠ 0) (b : Bool) :
   have hlt : ∏ σ : E →+* ℂ, ‖σ (a : E)‖ < 1 := by
     rw [← Finset.mul_prod_erase Finset.univ _ (Finset.mem_univ σ₀)]
     have h1 : ∏ σ ∈ Finset.univ.erase σ₀, ‖σ (a : E)‖ ≤ 1 :=
-      Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun σ _ => (hall σ).le)
+      Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun σ _ => (hall σ).le)
     calc ‖σ₀ (a : E)‖ * ∏ σ ∈ Finset.univ.erase σ₀, ‖σ (a : E)‖ ≤ ‖σ₀ (a : E)‖ * 1 :=
           mul_le_mul_of_nonneg_left h1 (norm_nonneg _)
       _ < 1 := by rw [_root_.mul_one]; exact hall σ₀

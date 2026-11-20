@@ -107,7 +107,7 @@ lemma surj_of_cover {V : B.Opens} (h : V ≤ W) {ι : Type} [Finite ι] (U : ι 
   let F : X →₀ Γ(B, V) := ∑ x ∈ S, Finsupp.single x (c x)
   have hF : ∀ x, F x = if x ∈ S then c x else 0 := by
     intro x
-    simp [F, Finsupp.finset_sum_apply, Finsupp.single_apply]
+    simp [F, Finsupp.finsetSum_apply, Finsupp.single_apply]
   have hres : ∀ i, AddMonoidAlgebra.mapRingHom X (B.presheaf.map (homOfLE (hU i)).op).hom
       (AddMonoidAlgebra.ofCoeff F) = p i := by
     intro i

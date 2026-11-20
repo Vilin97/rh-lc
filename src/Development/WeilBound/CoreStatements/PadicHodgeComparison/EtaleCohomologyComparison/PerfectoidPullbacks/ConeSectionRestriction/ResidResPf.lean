@@ -76,7 +76,7 @@ theorem resRPf_linInd (t : Fin (n + 1) → Rˣ) (ht : AlgebraicIndependent K fun
     have h1 := hbound m hm j
     have h2 := hbound m' hm' j
     omega
-  have hc := congrArg (MvPolynomial.coeff (e m0)) hpoly
+  have hc := congrArg (AddMonoidAlgebra.coeff · (e m0)) hpoly
   rw [MvPolynomial.coeff_sum, MvPolynomial.coeff_zero, Finset.sum_eq_single m0] at hc
   · simpa [MvPolynomial.coeff_monomial] using hc
   · intro m hm hne

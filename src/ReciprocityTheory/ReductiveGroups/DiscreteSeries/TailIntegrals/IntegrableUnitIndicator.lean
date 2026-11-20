@@ -342,7 +342,7 @@ lemma psi_le {p q : ι} (hpq : p ≠ q) {k : ℕ} (hk : Fintype.card ι = k + 1)
 lemma measurableSet_Bset (q : ι) : MeasurableSet (Bset q) := by
   have hc : Continuous (tW q) := by
     unfold tW
-    refine Real.continuous_sqrt.comp (continuous_finset_sum _ fun i _ => ?_)
+    refine Real.continuous_sqrt.comp (continuous_finsetSum _ fun i _ => ?_)
     by_cases h : i = q
     · simp only [h, if_true]
       exact continuous_const

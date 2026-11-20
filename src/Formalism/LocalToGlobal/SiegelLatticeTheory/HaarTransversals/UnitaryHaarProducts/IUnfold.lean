@@ -641,7 +641,7 @@ theorem normGeOne_holds (I : AutInst) : NormGeOne I := by
   unfold normI
   calc (1 : ℝ) = ∏ _v : InfinitePlace I.F, (1 : ℝ) := Finset.prod_const_one.symm
     _ ≤ ∏ v, WuDecay.opn (uMat (g v)) :=
-        Finset.prod_le_prod (fun _ _ => zero_le_one) fun v _ => opn_ge_one hn (I.ε v) (g v)
+        Finset.prod_le_prod₀ (fun _ _ => zero_le_one) fun v _ => opn_ge_one hn (I.ε v) (g v)
 
 theorem normPow_holds (I : AutInst) : NormPow I := by
   intro hn g
@@ -715,7 +715,7 @@ theorem size_subOfEq_le_pl {x x' : I.GA} (hlat : latSet I x' = latSet I x)
   have hP0 : 0 ≤ ∏ v, c v := Finset.prod_nonneg fun v _ => le_trans zero_le_one (hc v)
   have hprod : (∏ v, (gramV I x' v s.b).det.re) ≤ (∏ v, c v) ^ s.j * ∏ v, (gramV I x v s.b).det.re := by
     calc (∏ v, (gramV I x' v s.b).det.re) ≤ ∏ v, (c v ^ s.j * (gramV I x v s.b).det.re) :=
-          Finset.prod_le_prod (fun v _ => Tau.det_gram_nonneg I h5 x' v s.j_pos s.b) fun v _ => hdet v
+          Finset.prod_le_prod₀ (fun v _ => Tau.det_gram_nonneg I h5 x' v s.j_pos s.b) fun v _ => hdet v
       _ = (∏ v, c v) ^ s.j * ∏ v, (gramV I x v s.b).det.re := by
           rw [Finset.prod_mul_distrib, Finset.prod_pow]
   have hht : ht I (Tau.subOfEq I hlat s) ≤ (∏ v, c v) ^ s.j * ht I s := by

@@ -21,7 +21,7 @@ theorem norm_pder_le (h : SchwartzMap (κ' ⊕ κ'' → W) ℂ) (m : ℕ) (x : �
   rw [e, (Ain s).iteratedFDeriv_comp_right (h.smooth ⊤) x (by exact_mod_cast le_top)]
   refine (ContinuousMultilinearMap.norm_compContinuousLinearMap_le _ _).trans ?_
   have hp : ∏ _i : Fin m, ‖(Ain s : (κ' ⊕ κ'' → W) →L[ℝ] (κ' ⊕ κ'' → W))‖ ≤ 1 :=
-    Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun _ _ => norm_Ain_le hs)
+    Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun _ _ => norm_Ain_le hs)
   calc _ ≤ ‖iteratedFDeriv ℝ m h (Ain s x)‖ * 1 := mul_le_mul_of_nonneg_left hp (norm_nonneg _)
     _ = _ := mul_one _
 
@@ -77,7 +77,7 @@ theorem norm_iteratedFDeriv_B_le (β : (κ'' → W) → ℝ) (hβ : ContDiff ℝ
   rw [e, Complex.ofRealLI.norm_iteratedFDeriv_comp_left hβL.contDiffAt (by exact_mod_cast le_top),
     L.iteratedFDeriv_comp_right hβ x (by exact_mod_cast le_top)]
   refine (ContinuousMultilinearMap.norm_compContinuousLinearMap_le _ _).trans ?_
-  have hp : ∏ _j : Fin i, ‖L‖ ≤ 1 := Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun _ _ => hL)
+  have hp : ∏ _j : Fin i, ‖L‖ ≤ 1 := Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun _ _ => hL)
   calc _ ≤ ‖iteratedFDeriv ℝ i β (L x)‖ * 1 := mul_le_mul_of_nonneg_left hp (norm_nonneg _)
     _ = _ := mul_one _
 

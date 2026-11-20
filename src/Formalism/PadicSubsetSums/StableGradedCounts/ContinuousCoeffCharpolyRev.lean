@@ -17,7 +17,7 @@ private theorem CoeffCont.mul {P Q : G → R[X]} (hP : CoeffCont P) (hQ : CoeffC
     CoeffCont fun g => P g * Q g := by
   intro j
   simp only [Polynomial.coeff_mul]
-  exact continuous_finset_sum _ fun x _ => (hP x.1).mul (hQ x.2)
+  exact continuous_finsetSum _ fun x _ => (hP x.1).mul (hQ x.2)
 
 private theorem CoeffCont.sub {P Q : G → R[X]} (hP : CoeffCont P) (hQ : CoeffCont Q) :
     CoeffCont fun g => P g - Q g := by
@@ -28,8 +28,8 @@ private theorem CoeffCont.sub {P Q : G → R[X]} (hP : CoeffCont P) (hQ : CoeffC
 private theorem CoeffCont.sum {ι : Type} (s : Finset ι) {P : ι → G → R[X]}
     (hP : ∀ i ∈ s, CoeffCont (P i)) : CoeffCont fun g => ∑ i ∈ s, P i g := by
   intro j
-  simp only [Polynomial.finset_sum_coeff]
-  exact continuous_finset_sum _ fun i hi => hP i hi j
+  simp only [Polynomial.finsetSum_coeff]
+  exact continuous_finsetSum _ fun i hi => hP i hi j
 
 private theorem CoeffCont.prod {ι : Type} (s : Finset ι) {P : ι → G → R[X]}
     (hP : ∀ i ∈ s, CoeffCont (P i)) : CoeffCont fun g => ∏ i ∈ s, P i g := by

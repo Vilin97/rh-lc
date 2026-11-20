@@ -72,7 +72,7 @@ theorem prod_degBd_le_explicit (C' : ℝ) (ι : Type) [Fintype ι] (k r j q : �
         rw [mul_pow ((2 * H₁) ^ (2 * r))]; ring
     _ ≤ ∏ v, (16 * Real.pi * Real.exp 1 / k) ^ (j * (k - 1 - j)) * (D v ^ (k - 1 - j))⁻¹ * (8 * r * H₁) ^ (80 * r ^ 4) *
           sg v ^ (-(C' * k)) := by
-        refine Finset.prod_le_prod (fun v _ => ?_) fun v _ => ?_
+        refine Finset.prod_le_prod₀ (fun v _ => ?_) fun v _ => ?_
         · have := hD0 v; have := hs0 v; positivity
         · have h1 := hD0 v
           have h2 := hs0 v
@@ -233,7 +233,7 @@ theorem prodC_holds : ProdC := by
       (-(Cs * D.R.k)) ≤ k2S D (H1C large₂ CH) (jT t) (labT t) ^ (-(Cs * (D.R.k : ℝ))) := by
     unfold k2S
     rw [← Real.finset_prod_rpow _ _ (fun τ _ => zero_le_one.trans (one_le_minor_sigma _ _ _ τ))]
-    refine Finset.prod_le_prod (fun τ _ => ?_) fun τ _ => ?_
+    refine Finset.prod_le_prod₀ (fun τ _ => ?_) fun τ _ => ?_
     · refine Real.rpow_nonneg ?_ _
       unfold GlobalTheory.Amp.sgV
       exact (Finset.le_fold_max _).2 (Or.inl zero_le_one)

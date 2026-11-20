@@ -43,7 +43,7 @@ theorem core_est {d m : ℕ} {X : Type} [TopologicalSpace X] (e : OpenPartialHom
         Real.exp 1 - Real.log ((∏ i, nn i y) ^ 2) + m * (2 * A + Real.log 4) := by
   set R := Real.exp 1 - Real.log ((∏ i, nn i y) ^ 2) with hR
   have hP : 0 < ∏ i, nn i y := Finset.prod_pos fun i _ => hpos i
-  have hP1 : ∏ i, nn i y ≤ 1 := Finset.prod_le_one (fun i _ => (hn i y).1) fun i _ => (hn i y).2
+  have hP1 : ∏ i, nn i y ≤ 1 := Finset.prod_le_one₀ (fun i _ => (hn i y).1) fun i _ => (hn i y).2
   have hP2 : (∏ i, nn i y) ^ 2 ≤ 1 := pow_le_one₀ hP.le hP1
   have hlogP : Real.log ((∏ i, nn i y) ^ 2) ≤ 0 := Real.log_nonpos (by positivity) hP2
   have hRpos : 0 ≤ R := by have := Real.exp_pos 1; linarith
@@ -83,7 +83,7 @@ theorem core_est {d m : ℕ} {X : Type} [TopologicalSpace X] (e : OpenPartialHom
       rw [← Finset.mul_prod_erase Finset.univ _ (Finset.mem_univ i), mul_pow]
       have : (∏ k ∈ Finset.univ.erase i, nn k y) ^ 2 ≤ 1 :=
         pow_le_one₀ (Finset.prod_nonneg fun k _ => (hn k y).1)
-          (Finset.prod_le_one (fun k _ => (hn k y).1) fun k _ => (hn k y).2)
+          (Finset.prod_le_one₀ (fun k _ => (hn k y).1) fun k _ => (hn k y).2)
       exact mul_le_of_le_one_right (sq_nonneg _) this
     have hGlow2 : Real.exp (Real.exp 1 - R - A) ≤ G ^ 2 := by
       rw [hG2, sub_eq_add_neg (Real.exp 1 - R), Real.exp_add]

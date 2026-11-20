@@ -307,7 +307,7 @@ theorem exists_series_A {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ
     rw [hq, norm_smul, norm_inv, Complex.norm_natCast, inv_mul_le_iff₀ hf]
     refine h.trans ?_
     have h2 : ∏ i, (l1 ∘ fun i => Matrix.of (Y i)) i ≤ ((n : ℝ) ^ 2) ^ m * ∏ i, ‖Y i‖ := by
-      refine (Finset.prod_le_prod (fun i _ => entrywise_l1_norm_nonneg _) fun i _ => entrywise_l1_norm_le (Y i)).trans (le_of_eq ?_)
+      refine (Finset.prod_le_prod₀ (fun i _ => entrywise_l1_norm_nonneg _) fun i _ => entrywise_l1_norm_le (Y i)).trans (le_of_eq ?_)
       rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
     refine (mul_le_mul_of_nonneg_left h2 (by positivity)).trans (le_of_eq (by ring))
   let p : FormalMultilinearSeries ℂ (Fin n → Fin n → ℂ) H := fun m => (q m).mkContinuous _ (hqb m)

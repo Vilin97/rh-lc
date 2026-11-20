@@ -214,7 +214,7 @@ lemma norm_jetPair_le {K : Type u} [NormedField K] [IsUltrametricDist K] {ι : T
   unfold jetPair
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg hB fun κ hκ => ?_
   rw [mul_assoc, norm_mul]
-  calc ‖coeff κ P‖ * ‖((mfact κ : ℕ) : K) * MvPowerSeries.coeff κ F‖ ≤ 1 * B :=
+  calc ‖AddMonoidAlgebra.coeff P κ‖ * ‖((mfact κ : ℕ) : K) * MvPowerSeries.coeff κ F‖ ≤ 1 * B :=
         mul_le_mul (hP κ) (h κ hκ) (norm_nonneg _) zero_le_one
     _ = B := one_mul B
 

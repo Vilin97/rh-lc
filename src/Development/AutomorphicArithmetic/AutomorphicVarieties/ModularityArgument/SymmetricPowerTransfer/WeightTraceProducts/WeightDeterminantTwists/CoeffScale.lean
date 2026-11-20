@@ -40,7 +40,7 @@ theorem UpperTheory.V.Z.Sym.Wt.memMH :
     have h1 : (MvPolynomial.aeval (fun p : K × Fin d => MvPolynomial.C (Function.update (fun _ => (1 : ℂ)) k 2 p.1) * MvPolynomial.X p) P :
         MvPolynomial (K × Fin d) ℂ) = MvPolynomial.C (∏ v, Function.update (fun _ => (1 : ℂ)) k 2 v ^ n v) * P :=
       MvPolynomial.funext fun x => by rw [eval_scale, map_mul, MvPolynomial.eval_C]; exact h _ x
-    have h2 := congrArg (MvPolynomial.coeff m) h1
+    have h2 := congrArg (AddMonoidAlgebra.coeff · m) h1
     rw [coeff_scale, MvPolynomial.coeff_C_mul, e] at h2
     have h3 := mul_right_cancel₀ (MvPolynomial.mem_support_iff.1 hm) h2
     have h4 : ∀ a : K → ℕ, ∏ v, Function.update (fun _ => (1 : ℂ)) k 2 v ^ a v = 2 ^ a k := fun a => by

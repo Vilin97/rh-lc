@@ -88,14 +88,14 @@ theorem flt_g_pascal (R : Type*) [CommRing R] {σ : Type*} (m be : σ →₀ ℕ
     rw [e2, hc]
 
 theorem flt_tay_monomial (R : Type*) [CommRing R] {σ : Type*} (m : σ →₀ ℕ) :
-    ∀ be, coeff be (flt_tay R σ (monomial m 1)) = flt_g R m be := by
+    ∀ be, AddMonoidAlgebra.coeff (flt_tay R σ (monomial m 1)) be = flt_g R m be := by
   classical
   have htx : ∀ a, flt_tay R σ (X a) = C (X a) + X a := fun a => by simp [flt_tay]
-  have step : ∀ m : σ →₀ ℕ, (∀ be, coeff be (flt_tay R σ (monomial m 1)) = flt_g R m be) →
-      ∀ a be, coeff be (flt_tay R σ (monomial (m + Finsupp.single a 1) 1)) =
+  have step : ∀ m : σ →₀ ℕ, (∀ be, AddMonoidAlgebra.coeff (flt_tay R σ (monomial m 1)) be = flt_g R m be) →
+      ∀ a be, AddMonoidAlgebra.coeff (flt_tay R σ (monomial (m + Finsupp.single a 1) 1)) be =
         flt_g R (m + Finsupp.single a 1) be := by
     intro m hm a be
-    rw [flt_g_pascal, monomial_add_single, pow_one, map_mul, htx, mul_add, coeff_add,
+    rw [flt_g_pascal, monomial_add_single, pow_one, map_mul, htx, mul_add, MvPolynomial.coeff_add,
       mul_comm _ (C (X a)), coeff_C_mul, coeff_mul_X', hm, mul_comm (X a)]
     by_cases ha : a ∈ be.support
     · simp [ha, hm]
@@ -126,12 +126,12 @@ theorem flt_tay_monomial (R : Type*) [CommRing R] {σ : Type*} (m : σ →₀ �
       exact step _ ihb a
 
 theorem flt_tay_coeff (R : Type*) [CommRing R] {σ : Type*} (F : MvPolynomial σ R) (be : σ →₀ ℕ) :
-    coeff be (flt_tay R σ F) = divDer be F := by
+    AddMonoidAlgebra.coeff (flt_tay R σ F) be = divDer be F := by
   conv_lhs => rw [F.as_sum]
   rw [map_sum, coeff_sum, divDer]
   refine Finset.sum_congr rfl fun m _ => ?_
-  rw [show monomial m (coeff m F) = C (coeff m F) * monomial m 1 by rw [C_mul_monomial, mul_one], map_mul]
-  have hC : flt_tay R σ (C (coeff m F)) = C (C (coeff m F)) := by simp [flt_tay]
+  rw [show monomial m (AddMonoidAlgebra.coeff F m) = C (AddMonoidAlgebra.coeff F m) * monomial m 1 by rw [C_mul_monomial, mul_one], map_mul]
+  have hC : flt_tay R σ (C (AddMonoidAlgebra.coeff F m)) = C (C (AddMonoidAlgebra.coeff F m)) := by simp [flt_tay]
   rw [hC, coeff_C_mul, flt_tay_monomial, flt_g, C_mul_monomial]
   split_ifs with hle
   · rfl
@@ -225,11 +225,11 @@ theorem flt_Th_mem {R : Type*} [CommRing R] {ι : Type*} {n : ℕ} (LL : Letters
       exact flt_monomial_mem h1
   rw [P.as_sum, map_sum]
   refine AddSubgroup.sum_mem _ fun m _ => ?_
-  rw [show monomial m (coeff m P) = C (coeff m P) * monomial m 1 by rw [C_mul_monomial, mul_one], map_mul]
-  have hc : coeff m P ∈ (flt_L (GLCoord R n) e).F t := by
+  rw [show monomial m (AddMonoidAlgebra.coeff P m) = C (AddMonoidAlgebra.coeff P m) * monomial m 1 by rw [C_mul_monomial, mul_one], map_mul]
+  have hc : AddMonoidAlgebra.coeff P m ∈ (flt_L (GLCoord R n) e).F t := by
     have h3 := (flt_lift_mem.1 hP) m
     simpa using h3
-  have h1 : flt_Th LL S j (C (coeff m P)) ∈
+  have h1 : flt_Th LL S j (C (AddMonoidAlgebra.coeff P m)) ∈
       (flt_lift (laurentCoeffFiltration R n (ι × Fin n) e) (flt_cost LL S (!bm))).F t := by
     simp only [flt_Th, eval₂Hom_C, RingHom.comp_apply]
     exact flt_C_mem (flt_C_mem hc)
@@ -243,8 +243,8 @@ theorem flt_divDer_mem {R : Type*} [CommRing R] {ι : Type*} {n : ℕ} (LL : Let
     (hF : twistSub LL S j F ∈ (laurentCoeffFiltration R n (ι × Fin n) e).F t) (be : ι × Fin n →₀ ℕ) :
     twistSub LL S j (divDer be F) ∈ (laurentCoeffFiltration R n (ι × Fin n) e).F (t - flt_cost LL S (!bm) be) := by
   have h1 := flt_lift_mem.1 (flt_Th_mem LL S j h hF) be
-  have e1 : twistSub LL S j (divDer be F) = coeff be (flt_Th LL S j (twistSub LL S j F)) := by
-    have h2 := congrArg (fun φ => coeff be (φ F)) (flt_Th_twist (R := R) LL S j)
+  have e1 : twistSub LL S j (divDer be F) = AddMonoidAlgebra.coeff (flt_Th LL S j (twistSub LL S j F)) be := by
+    have h2 := congrArg (fun φ => AddMonoidAlgebra.coeff (φ F) be) (flt_Th_twist (R := R) LL S j)
     simp only [RingHom.comp_apply, coeff_map] at h2
     rw [← h2, flt_tay_coeff]
   rw [e1]

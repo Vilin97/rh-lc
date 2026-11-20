@@ -23,7 +23,7 @@ open MvPolynomial
 theorem totalDegree_pderiv_le_pred {σ : Type} (i : σ) (Q : MvPolynomial σ ℝ) :
     (pderiv i Q).totalDegree ≤ Q.totalDegree - 1 := by
   refine Finset.sup_le fun m hm => ?_
-  have hc : coeff (m + Finsupp.single i 1) Q ≠ 0 := by
+  have hc : AddMonoidAlgebra.coeff Q (m + Finsupp.single i 1) ≠ 0 := by
     rw [mem_support_iff, coeff_pderiv] at hm
     intro h
     rw [h, zero_mul] at hm
@@ -37,7 +37,7 @@ theorem totalDegree_pderiv_le_pred {σ : Type} (i : σ) (Q : MvPolynomial σ ℝ
 
 theorem coeff_eq_zero_of_swap {r : ℕ} {a b : Fin r} (P : MvPolynomial (Option (Fin r)) ℝ)
     (hP : rename (Option.map (Equiv.swap a b)) P = -P) (m : Option (Fin r) →₀ ℕ)
-    (hm : m (some a) = m (some b)) : coeff m P = 0 := by
+    (hm : m (some a) = m (some b)) : AddMonoidAlgebra.coeff P m = 0 := by
   have hinj : Function.Injective (Option.map (Equiv.swap a b)) := Option.map_injective (Equiv.injective _)
   have hmd : m.mapDomain (Option.map (Equiv.swap a b)) = m := by
     ext x

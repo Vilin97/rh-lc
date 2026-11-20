@@ -46,7 +46,7 @@ lemma norm_det_le_one_of_entries {n : Type*} [Fintype n] [DecidableEq n] (M : Ma
   intro p _
   have hp : ‖∏ i, M (p i) i‖ ≤ 1 := by
     rw [norm_prod]
-    exact Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun i _ => h _ _)
+    exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun i _ => h _ _)
   rcases Int.units_eq_one_or (Equiv.Perm.sign p) with hs | hs <;> rw [hs]
   · rw [one_smul]; exact hp
   · rw [Units.neg_smul, one_smul, norm_neg]; exact hp

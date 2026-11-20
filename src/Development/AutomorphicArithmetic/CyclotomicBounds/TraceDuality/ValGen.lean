@@ -103,7 +103,7 @@ theorem UpperTheory.WildB.valGen :
     haveI : Fact p.Prime := ⟨hp⟩
     have hm0 : m' ≠ 0 := by rintro rfl; exact hm' (dvd_zero p)
     have hval : padicValNat p (discr E).natAbs = k := by
-      rw [hk, padicValNat.mul (pow_ne_zero _ hp.ne_zero) hm0, padicValNat.prime_pow,
+      rw [hk, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.ne_zero) hm0, padicValNat.prime_pow,
         padicValNat.eq_zero_of_not_dvd hm', add_zero]
     rw [h1, hval, hk, Nat.cast_mul, Nat.cast_pow, map_mul, map_pow, hwp,
       val_nat_eq_one w hw hp hv' hm', mul_one]

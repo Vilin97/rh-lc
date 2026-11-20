@@ -59,7 +59,7 @@ theorem prod_infinitePlace_le_of_integral : Formalism.SLP.GlobalBoundRefinements
   have hqpos : 0 < ∏ w : NumberField.InfinitePlace F, w q ^ w.mult :=
     Finset.prod_pos (fun w _ => pow_pos (NumberField.InfinitePlace.pos_iff.mpr hq) _)
   have hsle : ∏ w : NumberField.InfinitePlace F, w s ^ w.mult ≤ ∏ w, (x w ^ 2) ^ w.mult :=
-    Finset.prod_le_prod (fun w _ => pow_nonneg (NumberField.InfinitePlace.pos_iff.mpr hs).le _)
+    Finset.prod_le_prod₀ (fun w _ => pow_nonneg (NumberField.InfinitePlace.pos_iff.mpr hs).le _)
       (fun w _ => pow_le_pow_left₀ (NumberField.InfinitePlace.pos_iff.mpr hs).le (hw w) _)
   rw [hdiv, le_div_iff₀ hqpos, one_mul] at hN
   linarith

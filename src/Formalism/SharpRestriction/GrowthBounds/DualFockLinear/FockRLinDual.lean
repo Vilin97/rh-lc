@@ -25,7 +25,7 @@ theorem Lin_X (N : S → Matrix (Fin k) (Fin k) R) (v : S × Fin k) :
   simp [Lin]
 
 theorem Lin_coeff_zero (N : S → Matrix (Fin k) (Fin k) R) (h : MvPolynomial (S × Fin k) R) :
-    coeff 0 (Lin N h) = coeff 0 h := by
+    AddMonoidAlgebra.coeff (Lin N h) 0 = AddMonoidAlgebra.coeff h 0 := by
   have h1 : (MvPolynomial.constantCoeff : MvPolynomial (S × Fin k) R →+* R).comp (Lin N).toRingHom =
       MvPolynomial.constantCoeff := by
     apply MvPolynomial.ringHom_ext
@@ -129,7 +129,7 @@ theorem multDiv_kapFl (O : Type) [CommRing O] [IsLocalRing O] (p : ℕ) [hp : Fa
     rw [e] at this
     exact this
 
-  have hdv : p ^ padicValNat p Mn ∣ Mn := pow_padicValNat_dvd
+  have hdv : p ^ padicValNat p Mn ∣ Mn := (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
   have hnd : ¬ p ^ (padicValNat p Mn + 1) ∣ Mn := pow_succ_padicValNat_not_dvd hMn0
   generalize padicValNat p Mn = v at h4 hdv hnd
   obtain ⟨u, hu⟩ := hdv

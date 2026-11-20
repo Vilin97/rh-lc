@@ -12,7 +12,7 @@ attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem one_le_prod_max {ι : Type} (s : Finset ι) (f : ι → ℝ) : 1 ≤ ∏ l ∈ s, max 1 (f l) := by
   calc (1 : ℝ) = ∏ _l ∈ s, (1 : ℝ) := by simp
-    _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one) (fun _ _ => le_max_left _ _)
+    _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun _ _ => le_max_left _ _)
 
 theorem le_prod_max {ι : Type} [DecidableEq ι] {s : Finset ι} {a : ι} (ha : a ∈ s) (f : ι → ℝ) :
     max 1 (f a) ≤ ∏ l ∈ s, max 1 (f l) := by
@@ -32,7 +32,7 @@ theorem absDl_nonneg (Z : GramM D) (l : ℕ) (τ : D.what₂.Tau) : 0 ≤ Cnt.ab
 theorem one_le_sizeZ (b C : ℝ) (Z : GramM D) : 1 ≤ Cnt.sizeZ D b C Z := by
   unfold Cnt.sizeZ
   calc (1 : ℝ) = ∏ _τ : D.what₂.Tau, (1 : ℝ) := by simp
-    _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one) (fun _ _ => one_le_prod_max _ _)
+    _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun _ _ => one_le_prod_max _ _)
 
 end Bound
 

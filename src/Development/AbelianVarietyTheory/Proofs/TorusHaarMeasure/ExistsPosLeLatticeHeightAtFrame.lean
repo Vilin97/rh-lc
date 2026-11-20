@@ -56,7 +56,7 @@ theorem exists_pos_le_height : (∀ (r : ℕ) (X : Data E r) (d : Frame X.Ψ r �
       (∏ τ, ω τ) * ∏ τ : X.Ψ, (((mat x τ)⁻¹ * Matrix.of fun k a => τ.1 (w a k))ᴴ *
         ((mat x τ)⁻¹ * Matrix.of fun k a => τ.1 (w a k))).det.re := by
     rw [← Finset.prod_mul_distrib]
-    exact Finset.prod_le_prod (fun τ _ => by positivity) (fun τ _ => key τ)
+    exact Finset.prod_le_prod₀ (fun τ _ => by positivity) (fun τ _ => key τ)
   rw [div_le_div_iff₀ (by positivity) hIpos, one_mul]
   calc (I : ℝ) ≤ C * _ := hIle
     _ ≤ C * ((∏ τ, ω τ) * _) := mul_le_mul_of_nonneg_left hprod hC.le

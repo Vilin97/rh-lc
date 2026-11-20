@@ -92,7 +92,7 @@ theorem locPart_le (I : ∀ k, Finset (ι k)) (c d : K → ℤ) :
     refine Submodule.span_le.mpr ?_
     rintro _ ⟨p, ⟨hpos, hp⟩, rfl⟩
     rw [SetLike.mem_coe, Submodule.mem_comap]
-    have hsum : p = ∑ v ∈ p.support, coeff v p • (monomial v 1 : MRingOver S ι) := by
+    have hsum : p = ∑ v ∈ p.support, AddMonoidAlgebra.coeff p v • (monomial v 1 : MRingOver S ι) := by
       conv_lhs => rw [p.as_sum]
       refine Finset.sum_congr rfl fun v _ => ?_
       rw [smul_monomial, smul_eq_mul, mul_one]

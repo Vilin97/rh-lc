@@ -26,7 +26,7 @@ theorem norm_det_lt_one {E : Type} [NormedField E] [IsUltrametricDist E]
   obtain ⟨i⟩ := ‹Nonempty n›
   rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ i)]
   have h2 : ∏ x ∈ Finset.univ.erase i, ‖G (σ x) x‖ ≤ 1 :=
-    Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun _ _ => (h _ _).le)
+    Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun _ _ => (h _ _).le)
   calc ‖G (σ i) i‖ * ∏ x ∈ Finset.univ.erase i, ‖G (σ x) x‖ ≤ ‖G (σ i) i‖ * 1 :=
         mul_le_mul_of_nonneg_left h2 (norm_nonneg _)
     _ < 1 := by rw [mul_one]; exact h _ _

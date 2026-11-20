@@ -84,7 +84,7 @@ theorem exists_cyclic_field {K : Type} [Field K] {r : ℕ} (g : Matrix (Fin r) (
   apply hw0
   ext j
   have := congrArg (fun p => p.coeff j) hq0
-  simpa [q, finset_sum_coeff, coeff_monomial, Fin.val_inj] using this
+  simpa [q, Polynomial.finsetSum_coeff, coeff_monomial, Fin.val_inj] using this
 
 theorem exists_cyclic {A : Type} [CommRing A] [IsArtinianRing A] {r : ℕ}
     (g : Matrix (Fin r) (Fin r) A) (hs : g.charpoly.Separable) :
@@ -131,7 +131,7 @@ theorem leftMulMatrix_transfer (f : R →+* A) (ψ : S →+* B)
   conv_lhs => rw [← b.sum_repr y]
   simp only [map_sum, Algebra.smul_def, map_mul, h, hb]
   simp only [← Algebra.smul_def, map_smul, Module.Basis.repr_self]
-  simp [Finsupp.finset_sum_apply, Finsupp.single_apply]
+  simp [Finsupp.finsetSum_apply, Finsupp.single_apply]
 
 theorem trace_transfer (f : R →+* A) (ψ : S →+* B)
     (h : ∀ a, ψ (algebraMap R S a) = algebraMap A B (f a)) (b : Module.Basis ι R S)
@@ -749,7 +749,7 @@ theorem exists_basis_plus [CharZero E] (hP : IsPPol c r P) (hc : ∀ e, c (c e) 
         l ∈ Submodule.span E (Set.range fun i => (b i : AdjoinRoot P)) := by
       intro l hl
       have h := congrArg Subtype.val (b.sum_repr ⟨l, hl⟩)
-      simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul] at h
+      simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul] at h
       rw [← h]
       exact Submodule.sum_mem _ fun i _ =>
         Submodule.smul_of_tower_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)

@@ -100,7 +100,7 @@ lemma pow_sub_one {l : ℕ} (hp : l.Prime) (hl : ¬ IsUnit (l : O)) (x : O) (s :
   obtain ⟨k, m, hm, rfl⟩ := Nat.exists_eq_pow_mul_and_not_dvd hn l hp.ne_one
   have hm0 : m ≠ 0 := fun h0 => hm (by rw [h0]; exact dvd_zero _)
   have hv : padicValNat l (l ^ k * m) = k := by
-    rw [padicValNat.mul (pow_ne_zero _ hp.ne_zero) hm0, padicValNat.prime_pow,
+    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.ne_zero) hm0, padicValNat.prime_pow,
       padicValNat.eq_zero_of_not_dvd hm, add_zero]
   obtain ⟨y, hy⟩ := iter hp hl x s hs hs2 h k
   have hnu : ¬ IsUnit (x ^ (l ^ k) - 1) := by
@@ -132,7 +132,7 @@ theorem theorem_n_five_delta_sum : WachTwistTheoremDeltaSum := by
     have h : Finset.Ioo 0 (t + 1 + 1) = insert (t + 1) (Finset.Ioo 0 (t + 1)) := by
       ext i; simp only [Finset.mem_Ioo, Finset.mem_insert]; omega
     rw [h, Finset.sum_insert (by simp), ih, Nat.factorial_succ,
-      padicValNat.mul (Nat.succ_ne_zero t) (Nat.factorial_ne_zero t)]
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.succ_ne_zero t) (Nat.factorial_ne_zero t)]
     ring
 
 theorem theorem_n_five_delta_clause : WachTwistTheoremDeltaClause := by
@@ -160,7 +160,7 @@ theorem theorem_n_five_delta_clause : WachTwistTheoremDeltaClause := by
     | zero => simp
     | succ t =>
       rw [theorem_n_five_delta_sum ℓ hℓ s₀ t, Nat.factorial_succ,
-        padicValNat.mul (Nat.succ_ne_zero t) (Nat.factorial_ne_zero t)]
+        (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.succ_ne_zero t) (Nat.factorial_ne_zero t)]
       exact add_le_add (Nat.mul_le_mul_right _ (Nat.le_succ t)) (Nat.le_add_left _ _)
   gcongr
 

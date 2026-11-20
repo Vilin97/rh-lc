@@ -28,7 +28,7 @@ theorem dens_le (n f a : ℕ) (j : Fin a → ℕ) (hf : 1 ≤ f) (hj : ∀ i, 1 
     Finset.prod_nonneg fun i _ => by have := (hτ.2 i).1; positivity
   refine (mul_le_mul_of_nonneg_right h2 h3).trans ?_
   rw [← Finset.prod_mul_distrib]
-  refine Finset.prod_le_prod (fun i _ => by have := (hτ.2 i).1; positivity) fun i _ => ?_
+  refine Finset.prod_le_prod₀ (fun i _ => by have := (hτ.2 i).1; positivity) fun i _ => ?_
   obtain ⟨h0, h1⟩ := hτ.2 i
   have hc : 1 ≤ 2 * f * j i := Nat.mul_pos (by omega) (hj i)
   have he : 2 * f * j i ≤ 2 * j i * (n - 2 * ∑ l, j l) * f := by

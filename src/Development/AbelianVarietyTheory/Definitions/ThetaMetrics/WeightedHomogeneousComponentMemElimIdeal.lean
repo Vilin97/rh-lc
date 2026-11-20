@@ -373,7 +373,7 @@ theorem exists_eq_C_mul_of_dvd {f g : MvPolynomial τ K} (hg : g ≠ 0) (h : f �
   rw [totalDegree_mul_of_isDomain hf hq] at hd
   have h0 : q.totalDegree = 0 := by omega
   rw [totalDegree_eq_zero_iff_eq_C] at h0
-  refine ⟨coeff 0 q, fun hc => hq ?_, ?_⟩
+  refine ⟨AddMonoidAlgebra.coeff q 0, fun hc => hq ?_, ?_⟩
   · rw [h0, hc, C_0]
   · rw [← h0, mul_comm]
 

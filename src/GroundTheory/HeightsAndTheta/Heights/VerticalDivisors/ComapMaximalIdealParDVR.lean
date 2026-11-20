@@ -19,7 +19,7 @@ theorem comap_maximalIdeal_parDVR (e n : ℕ) (v : HeightOneSpectrum (𝓞 K)) :
     IsScalarTower.algebraMap_eq _ _ _
   have h2 : (IsLocalRing.maximalIdeal (ParDVR e n v)).comap
       (algebraMap (MvPolynomial (Par e n) (𝓞 K)) (ParDVR e n v)) = parPrime e n v :=
-    Localization.AtPrime.comap_maximalIdeal
+    Localization.AtPrime.under_maximalIdeal
   rw [h1, ← Ideal.comap_comap, h2]
   ext x
   simp only [Ideal.mem_comap, parPrime]

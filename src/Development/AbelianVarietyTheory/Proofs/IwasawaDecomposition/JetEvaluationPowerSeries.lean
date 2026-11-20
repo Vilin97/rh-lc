@@ -37,7 +37,7 @@ theorem jetCoef_add {n : ρ →₀ ℕ} (hn : n.degree ≤ m) (a b : Jet K ρ m)
     jetCoef n (a + b) = jetCoef n a + jetCoef n b := by
   obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective a
   obtain ⟨q, rfl⟩ := Ideal.Quotient.mk_surjective b
-  rw [← map_add, jetCoef_mk hn, jetCoef_mk hn, jetCoef_mk hn, coeff_add]
+  rw [← map_add, jetCoef_mk hn, jetCoef_mk hn, jetCoef_mk hn, MvPolynomial.coeff_add]
 
 theorem jetCoef_smul {n : ρ →₀ ℕ} (hn : n.degree ≤ m) (c : K) (a : Jet K ρ m) :
     jetCoef n (algebraMap K (Jet K ρ m) c * a) = c * jetCoef n a := by

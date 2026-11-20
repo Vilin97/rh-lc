@@ -140,7 +140,7 @@ theorem GaussDVR.proof (h1 : ParDVRIsDVR.Statement) : GaussDVR.Statement := by
   have hb0 : g.coeff d0 ≠ 0 := mem_support_iff.mp hd0
   have hh : h.coeff d0 ∉ v.asIdeal := by
     intro hmem
-    have hc := congrArg (coeff d0) hth
+    have hc := congrArg (AddMonoidAlgebra.coeff · d0) hth
     rw [coeff_C_mul, ← C_pow, coeff_C_mul] at hc
     have h3 : t * g.coeff d0 ∈ v.asIdeal ^ (m + 1) := by
       rw [hc, pow_succ]

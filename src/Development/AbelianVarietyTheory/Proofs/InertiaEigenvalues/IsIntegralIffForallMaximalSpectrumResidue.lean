@@ -18,7 +18,7 @@ theorem isIntegral_iff_forall_maximalSpectrum (K : UQ) (B : InvAlg K) (hred : Is
     refine ⟨∏ m, p m, monic_prod_of_monic _ _ (fun m _ => hpm m), ?_⟩
     have hmem : ∀ m : MaximalSpectrum B.A, eval₂ (algebraMap K.O B.A) x (∏ m, p m) ∈ m.asIdeal := by
       intro m
-      rw [eval₂_finset_prod]
+      rw [Polynomial.eval₂_finsetProd]
       classical
       rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ m)]
       apply Ideal.mul_mem_right

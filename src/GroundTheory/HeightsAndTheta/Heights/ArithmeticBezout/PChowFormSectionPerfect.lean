@@ -112,12 +112,12 @@ theorem eq_C_mul_of_map_eq {F K : Type*} [Field F] [Field K] (σ : F →+* K) {�
     {a b : MvPolynomial ι F} (hb : b ≠ 0) {c : K} (hc : c ≠ 0) (h : map σ a = C c * map σ b) :
     ∃ c₀ : F, c₀ ≠ 0 ∧ a = C c₀ * b := by
   obtain ⟨m, hm⟩ := ne_zero_iff.mp hb
-  have hcoef := congrArg (coeff m) h
+  have hcoef := congrArg (AddMonoidAlgebra.coeff · m) h
   rw [coeff_map, coeff_C_mul, coeff_map] at hcoef
-  have hσm : σ (coeff m b) ≠ 0 := (map_ne_zero σ).mpr hm
-  have hcc : σ (coeff m a / coeff m b) = c := by
+  have hσm : σ (AddMonoidAlgebra.coeff b m) ≠ 0 := (map_ne_zero σ).mpr hm
+  have hcc : σ (AddMonoidAlgebra.coeff a m / AddMonoidAlgebra.coeff b m) = c := by
     rw [map_div₀, hcoef, mul_div_cancel_right₀ _ hσm]
-  refine ⟨coeff m a / coeff m b, fun h0 => hc (by rw [← hcc, h0, map_zero]), ?_⟩
+  refine ⟨AddMonoidAlgebra.coeff a m / AddMonoidAlgebra.coeff b m, fun h0 => hc (by rw [← hcc, h0, map_zero]), ?_⟩
   apply map_injective σ σ.injective
   rw [h, map_mul, map_C, hcc]
 

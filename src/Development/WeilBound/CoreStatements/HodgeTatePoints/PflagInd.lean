@@ -59,7 +59,7 @@ private theorem genNum_add {N : ℕ} (b : Fin N → K → ℤ) (P P' : MvPolynom
     genNum_eq_sum_of_support_subset F K ι V b P' Q (P.support ∪ P'.support) Finset.subset_union_right,
     ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun μ _ => ?_
-  rw [coeff_add, add_mul]
+  rw [MvPolynomial.coeff_add, add_mul]
 
 private theorem genNum_monomial {N : ℕ} (b : Fin N → K → ℤ) (m : Fin N →₀ ℕ) (c : ℝ)
     (Q : List (K → ℤ)) : genNum F V b (monomial m c) Q = c * intNumL F V (classList b m ++ Q) := by

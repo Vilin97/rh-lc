@@ -33,7 +33,7 @@ def fockBL : MvPolynomial σ K →ₗ[K] MvPolynomial σ K →ₗ[K] K :=
         fockB_eq_sum f g (f.support ∪ f'.support) Finset.subset_union_left,
         fockB_eq_sum f' g (f.support ∪ f'.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun m _ => ?_
-      rw [coeff_add]; ring)
+      rw [MvPolynomial.coeff_add]; ring)
     (by
       intro c f g
       rw [fockB_eq_sum (c • f) g f.support (support_smul), fockB, smul_eq_mul, Finset.mul_sum]
@@ -41,7 +41,7 @@ def fockBL : MvPolynomial σ K →ₗ[K] MvPolynomial σ K →ₗ[K] K :=
       rw [coeff_smul, smul_eq_mul]; ring)
     (by
       intro f g g'
-      simp only [fockB, coeff_add, mul_add, add_mul, Finset.sum_add_distrib])
+      simp only [fockB, MvPolynomial.coeff_add, mul_add, add_mul, Finset.sum_add_distrib])
     (by
       intro c f g
       simp only [fockB, coeff_smul, smul_eq_mul, Finset.mul_sum]

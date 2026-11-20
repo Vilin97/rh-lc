@@ -81,7 +81,7 @@ theorem exists_homogenize (p : (k : K) → ι k) (Q : MvPolynomial (Fin (Fintype
   set T := Q'.totalDegree + 1 with hT
   have hlt : ∀ m ∈ Q'.support, ∀ k, blkDeg m k < T := fun m hm k =>
     Nat.lt_succ_of_le (blkDeg_le_totalDegree hm k)
-  refine ⟨∑ m ∈ Q'.support, monomial (m + padExp p T m) (coeff m Q'), T, ?_, ?_, ?_⟩
+  refine ⟨∑ m ∈ Q'.support, monomial (m + padExp p T m) (AddMonoidAlgebra.coeff Q' m), T, ?_, ?_, ?_⟩
   · intro n hn k
     obtain ⟨m, hm, hn'⟩ := Finset.mem_biUnion.1 (MvPolynomial.support_sum hn)
     have hn'' := support_monomial_subset hn'

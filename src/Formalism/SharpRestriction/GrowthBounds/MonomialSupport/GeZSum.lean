@@ -61,7 +61,7 @@ theorem geZ_sum {R : Type} [CommRing R] {ι : Type} {n : ℕ} [NeZero n] (LL : L
     simp only [sDegs, Finset.mem_biUnion, map_sum, MvPolynomial.coeff_sum] at hd
     obtain ⟨m, -, hdm⟩ := hd
     rw [Finsupp.mem_support_iff] at hdm
-    have hdm' : ∑ i ∈ s, ((MvPolynomial.coeff m (twistSub LL S (lastIdx n) (f i))).coeff d) ≠ 0 := by
+    have hdm' : ∑ i ∈ s, ((AddMonoidAlgebra.coeff (twistSub LL S (lastIdx n) (f i)) m).coeff d) ≠ 0 := by
       simpa [AddMonoidAlgebra.coeff, Finsupp.finset_sum_apply] using hdm
     obtain ⟨i, hi, hne'⟩ := Finset.exists_ne_zero_of_sum_ne_zero hdm'
     have hmem : d ∈ sDegs LL S (lastIdx n) (f i) := by

@@ -159,7 +159,7 @@ theorem exists_scale {s : L →+* L} {h : V → V → L} (hh : IsHerm s h) (B : 
   refine ⟨c, norm_pos_iff.1 hc0, fun x hxB i => ?_⟩
   have hr : b.repr x i = ∑ k, h (b k) x * b.repr (w k) i := by
     conv_lhs => rw [hx x]
-    simp [map_sum, Finsupp.finset_sum_apply]
+    simp [map_sum, Finsupp.finsetSum_apply]
   have hbound : ‖b.repr x i‖ ≤ B * C := by
     rw [hr]
     refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (by positivity) fun k _ => ?_

@@ -124,9 +124,9 @@ theorem comb {N n : ℕ} (ν : Fin N → ℕ) (sF sG : Finset (Fin N × Fin n �
 theorem key_c {N n : ℕ} {ν : Fin N → ℕ} {F G : MvPolynomial (Fin N × Fin n) ℂ}
     (hF : ∀ a ∈ F.support, ∀ j, blockDeg a j = ν j) (c : Fin N × Fin n →₀ ℕ) :
     ‖∑ p ∈ (F.support ×ˢ G.support).filter (fun p => p.1 + p.2 = c),
-        coeff p.1 F * coeff p.2 G‖ ^ 2 * bweight c ≤
+        AddMonoidAlgebra.coeff F p.1 * AddMonoidAlgebra.coeff G p.2‖ ^ 2 * bweight c ≤
       ∑ p ∈ (F.support ×ˢ G.support).filter (fun p => p.1 + p.2 = c),
-        (‖coeff p.1 F‖ ^ 2 * bweight p.1) * (‖coeff p.2 G‖ ^ 2 * bweight p.2) := by
+        (‖AddMonoidAlgebra.coeff F p.1‖ ^ 2 * bweight p.1) * (‖AddMonoidAlgebra.coeff G p.2‖ ^ 2 * bweight p.2) := by
   classical
   rcases ((F.support ×ˢ G.support).filter (fun p => p.1 + p.2 = c)).eq_empty_or_nonempty
     with hA | hA
@@ -177,18 +177,18 @@ theorem key_c {N n : ℕ} {ν : Fin N → ℕ} {F G : MvPolynomial (Fin N × Fin
     exact hsumP
   have hsumgpos : 0 < ∑ p ∈ (F.support ×ˢ G.support).filter (fun p => p.1 + p.2 = c),
       Pc c p.1 / Dc ν c := sum_pos hgpos hA
-  have hsed := sq_sum_div_le_sum_sq_div _ (fun p => ‖coeff p.1 F * coeff p.2 G‖) hgpos
+  have hsed := sq_sum_div_le_sum_sq_div _ (fun p => ‖AddMonoidAlgebra.coeff F p.1 * AddMonoidAlgebra.coeff G p.2‖) hgpos
   have h1 : ‖∑ p ∈ (F.support ×ˢ G.support).filter (fun p => p.1 + p.2 = c),
-        coeff p.1 F * coeff p.2 G‖ ^ 2 ≤
+        AddMonoidAlgebra.coeff F p.1 * AddMonoidAlgebra.coeff G p.2‖ ^ 2 ≤
       ∑ p ∈ (F.support ×ˢ G.support).filter (fun p => p.1 + p.2 = c),
-        ‖coeff p.1 F * coeff p.2 G‖ ^ 2 / (Pc c p.1 / Dc ν c) := by
+        ‖AddMonoidAlgebra.coeff F p.1 * AddMonoidAlgebra.coeff G p.2‖ ^ 2 / (Pc c p.1 / Dc ν c) := by
     calc _ ≤ (∑ p ∈ (F.support ×ˢ G.support).filter (fun p => p.1 + p.2 = c),
-          ‖coeff p.1 F * coeff p.2 G‖) ^ 2 :=
+          ‖AddMonoidAlgebra.coeff F p.1 * AddMonoidAlgebra.coeff G p.2‖) ^ 2 :=
           pow_le_pow_left₀ (norm_nonneg _) (norm_sum_le _ _) 2
       _ ≤ _ := le_div_self (sq_nonneg _) hsumgpos hsumg
       _ ≤ _ := hsed
   calc _ ≤ (∑ p ∈ (F.support ×ˢ G.support).filter (fun p => p.1 + p.2 = c),
-        ‖coeff p.1 F * coeff p.2 G‖ ^ 2 / (Pc c p.1 / Dc ν c)) * bweight c :=
+        ‖AddMonoidAlgebra.coeff F p.1 * AddMonoidAlgebra.coeff G p.2‖ ^ 2 / (Pc c p.1 / Dc ν c)) * bweight c :=
         mul_le_mul_of_nonneg_right h1 (bweight_pos c).le
     _ = _ := by
       rw [sum_mul]
@@ -199,17 +199,17 @@ theorem key_c {N n : ℕ} {ν : Fin N → ℕ} {F G : MvPolynomial (Fin N × Fin
 
 theorem coeff_mul_eq {N n : ℕ} (F G : MvPolynomial (Fin N × Fin n) ℂ)
     (c : Fin N × Fin n →₀ ℕ) :
-    coeff c (F * G) = ∑ p ∈ (F.support ×ˢ G.support).filter (fun p => p.1 + p.2 = c),
-      coeff p.1 F * coeff p.2 G := by
+    AddMonoidAlgebra.coeff (F * G) c = ∑ p ∈ (F.support ×ˢ G.support).filter (fun p => p.1 + p.2 = c),
+      AddMonoidAlgebra.coeff F p.1 * AddMonoidAlgebra.coeff G p.2 := by
   classical
   rw [coeff_mul]
   symm
   refine sum_subset (fun p hp => ?_) (fun p hp hnot => ?_)
   · rw [mem_filter] at hp
     exact mem_antidiagonal.2 hp.2
-  · by_cases h1 : coeff p.1 F = 0
+  · by_cases h1 : AddMonoidAlgebra.coeff F p.1 = 0
     · simp [h1]
-    by_cases h2 : coeff p.2 G = 0
+    by_cases h2 : AddMonoidAlgebra.coeff G p.2 = 0
     · simp [h2]
     have h3 : p.1 + p.2 = c := mem_antidiagonal.1 hp
     exact (hnot (mem_filter.2 ⟨mem_product.2 ⟨mem_support_iff.2 h1, mem_support_iff.2 h2⟩,
@@ -221,20 +221,20 @@ theorem normSq_mul {N n : ℕ} (ν : Fin N → ℕ) (F G : MvPolynomial (Fin N �
   classical
   have hF' : ∀ a ∈ F.support, ∀ j, blockDeg a j = ν j := fun a ha j => blockDeg_of_mem hF ha j
   have hnn : ∀ p : (Fin N × Fin n →₀ ℕ) × (Fin N × Fin n →₀ ℕ),
-      0 ≤ (‖coeff p.1 F‖ ^ 2 * bweight p.1) * (‖coeff p.2 G‖ ^ 2 * bweight p.2) := fun p =>
+      0 ≤ (‖AddMonoidAlgebra.coeff F p.1‖ ^ 2 * bweight p.1) * (‖AddMonoidAlgebra.coeff G p.2‖ ^ 2 * bweight p.2) := fun p =>
     mul_nonneg (mul_nonneg (sq_nonneg _) (bweight_pos _).le)
       (mul_nonneg (sq_nonneg _) (bweight_pos _).le)
-  calc bnormSq (F * G) = ∑ c ∈ (F * G).support, ‖coeff c (F * G)‖ ^ 2 * bweight c := rfl
+  calc bnormSq (F * G) = ∑ c ∈ (F * G).support, ‖AddMonoidAlgebra.coeff (F * G) c‖ ^ 2 * bweight c := rfl
     _ ≤ ∑ c ∈ (F * G).support, ∑ p ∈ (F.support ×ˢ G.support).filter (fun p => p.1 + p.2 = c),
-          (‖coeff p.1 F‖ ^ 2 * bweight p.1) * (‖coeff p.2 G‖ ^ 2 * bweight p.2) := by
+          (‖AddMonoidAlgebra.coeff F p.1‖ ^ 2 * bweight p.1) * (‖AddMonoidAlgebra.coeff G p.2‖ ^ 2 * bweight p.2) := by
         refine sum_le_sum fun c _ => ?_
         rw [coeff_mul_eq]
         exact key_c hF' c
     _ = ∑ p ∈ (F.support ×ˢ G.support).filter (fun p => p.1 + p.2 ∈ (F * G).support),
-          (‖coeff p.1 F‖ ^ 2 * bweight p.1) * (‖coeff p.2 G‖ ^ 2 * bweight p.2) :=
+          (‖AddMonoidAlgebra.coeff F p.1‖ ^ 2 * bweight p.1) * (‖AddMonoidAlgebra.coeff G p.2‖ ^ 2 * bweight p.2) :=
         sum_fiberwise_eq_sum_filter _ _ _ _
     _ ≤ ∑ p ∈ F.support ×ˢ G.support,
-          (‖coeff p.1 F‖ ^ 2 * bweight p.1) * (‖coeff p.2 G‖ ^ 2 * bweight p.2) :=
+          (‖AddMonoidAlgebra.coeff F p.1‖ ^ 2 * bweight p.1) * (‖AddMonoidAlgebra.coeff G p.2‖ ^ 2 * bweight p.2) :=
         sum_le_sum_of_subset_of_nonneg (filter_subset _ _) (fun p _ _ => hnn p)
     _ = bnormSq F * bnormSq G := by
         rw [bnormSq, bnormSq, Finset.sum_mul_sum, Finset.sum_product]

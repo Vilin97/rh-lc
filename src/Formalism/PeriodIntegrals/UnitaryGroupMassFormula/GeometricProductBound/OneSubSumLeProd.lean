@@ -13,7 +13,7 @@ theorem one_sub_sum_le_prod (s : Finset ℕ) (u a : ℕ → ℝ) (h0 : ∀ i ∈
   | insert j s hj ih =>
     rw [Finset.prod_insert hj, Finset.sum_insert hj]
     have hP1 : ∏ i ∈ s, u i ≤ 1 :=
-      Finset.prod_le_one (fun i hi => h0 i (Finset.mem_insert_of_mem hi))
+      Finset.prod_le_one₀ (fun i hi => h0 i (Finset.mem_insert_of_mem hi))
         (fun i hi => h1 i (Finset.mem_insert_of_mem hi))
     have hP := ih (fun i hi => h0 i (Finset.mem_insert_of_mem hi))
       (fun i hi => h1 i (Finset.mem_insert_of_mem hi))

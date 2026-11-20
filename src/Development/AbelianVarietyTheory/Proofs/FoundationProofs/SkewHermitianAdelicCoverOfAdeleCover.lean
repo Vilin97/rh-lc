@@ -134,7 +134,7 @@ theorem cover_skew : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
     (fun y => Matrix.of fun i j => psi δ (y (i, j)) (y (j, i))), ?_, fun S hS => ?_⟩
   · refine (Nat.cast_le.mpr Finset.card_image_le).trans ?_
     rw [Fintype.card_piFinset, Nat.cast_prod]
-    refine (Finset.prod_le_prod (fun _ _ => Nat.cast_nonneg _) (fun p _ => hY _)).trans (le_of_eq ?_)
+    refine (Finset.prod_le_prod₀ (fun _ _ => Nat.cast_nonneg _) (fun p _ => hY _)).trans (le_of_eq ?_)
     rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_prod,
       Fintype.card_fin, Finset.prod_pow_eq_pow_sum]
     congr 1

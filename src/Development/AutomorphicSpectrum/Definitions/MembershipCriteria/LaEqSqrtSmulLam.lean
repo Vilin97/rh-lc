@@ -406,7 +406,7 @@ theorem relIndex_ex : G₂.relIndex G₁ = 2 := by
   rw [AddSubgroup.relIndex, AddSubgroup.index_eq_two_iff]
   refine ⟨⟨(1, 0), by rw [mem_G₁]; decide⟩, ?_⟩
   rintro ⟨⟨a, b⟩, hb⟩
-  simp only [AddSubgroup.mem_addSubgroupOf, mem_G₂, AddSubgroup.coe_add, Prod.fst_add, Xor']
+  simp only [AddSubgroup.mem_addSubgroupOf, mem_G₂, AddSubgroup.coe_add, Prod.fst_add, Xor]
   clear hb
   revert a; decide
 

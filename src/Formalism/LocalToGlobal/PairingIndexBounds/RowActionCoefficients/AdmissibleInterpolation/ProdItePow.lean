@@ -42,7 +42,7 @@ theorem map_rowAct {R S : Type*} [CommRing R] [CommRing S] (f : R →+* S) {r n 
     simp [map_sum, map_mul, map_C, map_X]
 
 theorem sum_C_mul {σ K : Type*} [CommRing K] (κ : K) (R0 : MvPolynomial σ K) (d : (σ →₀ ℕ) → K) :
-    ∑ n ∈ (C κ * R0).support, d n * coeff n (C κ * R0) = κ * ∑ n ∈ R0.support, d n * coeff n R0 := by
+    ∑ n ∈ (C κ * R0).support, d n * AddMonoidAlgebra.coeff (C κ * R0) n = κ * ∑ n ∈ R0.support, d n * AddMonoidAlgebra.coeff R0 n := by
   classical
   have hsub : (C κ * R0).support ⊆ R0.support := by
     intro n hn

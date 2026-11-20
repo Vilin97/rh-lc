@@ -14,7 +14,7 @@ theorem padicValNat_factorial_add_sum (l : ℕ) [Fact l.Prime] (m S : ℕ) :
       rw [show m + (n + 1) = m + n + 1 by omega, Nat.factorial_succ]
     have h2 : padicValNat l ((m + n + 1) * (m + n).factorial) =
         padicValNat l (m + n + 1) + padicValNat l (m + n).factorial :=
-      padicValNat.mul (by omega) (Nat.factorial_ne_zero _)
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by omega) (Nat.factorial_ne_zero _)
     rw [Finset.sum_range_succ, h1, h2, show m + 1 + n = m + n + 1 by omega]
     omega
 

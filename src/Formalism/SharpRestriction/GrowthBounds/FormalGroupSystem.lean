@@ -256,7 +256,7 @@ def atPi {σ R : Type} [CommRing R] (vp : R) (f : MvPowerSeries σ R) : MvPowerS
 def applyD {σ τ Kc : Type} [Field Kc] (P : MvPolynomial σ (MvPolynomial τ ℤ)) (f : MvPowerSeries σ Kc) :
     MvPolynomial τ Kc :=
   ∑ n ∈ P.support, ((∏ x ∈ n.support, ((n x).factorial : Kc)) * MvPowerSeries.coeff n f) •
-    MvPolynomial.map (Int.castRingHom Kc) (MvPolynomial.coeff n P)
+    MvPolynomial.map (Int.castRingHom Kc) (AddMonoidAlgebra.coeff P n)
 
 theorem Pj_nV {p : ℕ} {G : GAtP p} (Fl : Fills G) (j : ℕ) : (Fl.Pj j).nV = G.P.nV := by
   cases j <;> rfl
@@ -529,8 +529,8 @@ def inLatC (j : ℕ) (g : ℝ) (L : (X.Pj j).Tup) (y : XspC (X.Pj j) Y.Kc) : Pro
 def LowAt (j : ℕ) (v : X.Pl) (g : ℝ) : Prop :=
   ∀ U : MvPowerSeries (X.EA j ⊕ X.EA j) Y.Kc, IntR Y.Oc (inParamK p Y.Kc U) →
     ∀ (I : X.ColCh j) (n : X.FrI j →₀ ℕ),
-      Y.geC (MvPolynomial.coeff n (applyD (X.PIv j I v)
-        (X.ThZA Y.Kc j (MvPowerSeries.map (algebraMap (K0 p) Y.Kc) (expS p (-Y.PhAt j v)) * U)))) g
+      Y.geC (AddMonoidAlgebra.coeff (applyD (X.PIv j I v)
+        (X.ThZA Y.Kc j (MvPowerSeries.map (algebraMap (K0 p) Y.Kc) (expS p (-Y.PhAt j v)) * U))) n) g
 
 theorem geC_mono {x : Y.Kc} {g g' : ℝ} (h : g' ≤ g) (hx : Y.geC x g) : Y.geC x g' := by
   intro a b hb hab
@@ -558,7 +558,7 @@ def adm2c (_D : Formalism.BasicNotions.D7) {p : ℕ} [Fact p.Prime] (X : Sys p) 
 def adm3 (_D : Formalism.BasicNotions.D7) {p : ℕ} [Fact p.Prime] (X : Sys p) (Y : Pend X) : Prop :=
   ∀ j < X.mm, ∀ (La : X.Lt j) (La' : X.Lt (j + 1)), (X.Pj j).IsLatTup La.2 → (X.Pj (j + 1)).IsLatTup La'.2 →
     ∀ (φ : Y.Frm j La La') (I : X.ColCh j) (n : X.FrI j →₀ ℕ),
-      Y.geC (MvPolynomial.coeff n (applyD (X.PI j I fun _ => 0) (X.ThZA Y.Kc j (Y.ThA j La La' φ)))) 0
+      Y.geC (AddMonoidAlgebra.coeff (applyD (X.PI j I fun _ => 0) (X.ThZA Y.Kc j (Y.ThA j La La' φ))) n) 0
 
 def adm3b (_D : Formalism.BasicNotions.D7) {p : ℕ} [Fact p.Prime] (X : Sys p) : Prop :=
   ∀ j < X.mm, ∀ F ∈ X.FQ j, X.Kz j F ∈ X.FQ (j + 1)
@@ -616,7 +616,7 @@ def adm7 (_D : Formalism.BasicNotions.D7) {p : ℕ} [Fact p.Prime] (X : Sys p) (
     (∀ v' : Fin (X.Pj (j + 1)).nV, (i0 (X.vB (j + 1) v') = 0 ∧ L'' v' = L' v') ∨
       (1 ≤ i0 (X.vB (j + 1) v') ∧ IsEdge p ((X.Pj (j + 1)).n' v') (i0 (X.vB (j + 1) v')) ⟨L'' v', L' v'⟩)) →
     ∃ φ : Y.Frm j La (c', L''), ∀ (f : MvPowerSeries (X.ZA j) Y.Kc) (g : ℝ),
-      (∀ (I : X.ColCh j) (n : X.FrI j →₀ ℕ), Y.geC (MvPolynomial.coeff n (applyD (X.PI j I i0) f)) g) →
+      (∀ (I : X.ColCh j) (n : X.FrI j →₀ ℕ), Y.geC (AddMonoidAlgebra.coeff (applyD (X.PI j I i0) f) n) g) →
       ∀ G ∈ (X.Pj j).HtupW La.2, Y.inLatC (j + 1) g L'
         ((∏ v : X.Pl, (p : X.G.Kf) ^ (Nprime (X.G.P.lam0 v) (X.w v) (j + 1) (i0 v))) •
           Y.kerF j La (c', L'') (linSub (Y.bc j La (c', L'') φ) f) G)
@@ -652,7 +652,7 @@ def Conclusion2 (_D : Formalism.BasicNotions.D7) {p : ℕ} [Fact p.Prime] (X : S
 def projection_lemma_base_level (_D : Formalism.BasicNotions.D7) {p : ℕ} [Fact p.Prime] (X : Sys p) (Y : Pend X) : Prop :=
   ∀ j < X.mm, ∀ (La : X.Lt j) (La' : X.Lt (j + 1)), (X.Pj j).IsLatTup La.2 → (X.Pj (j + 1)).IsLatTup La'.2 →
     ∀ (φ : Y.Frm j La La') (I : X.ColCh j) (n : X.FrI j →₀ ℕ),
-      Y.geC (MvPolynomial.coeff n (applyD (X.PI j I fun _ => 0) (X.ThZA Y.Kc j (Y.ThA j La La' φ))))
+      Y.geC (AddMonoidAlgebra.coeff (applyD (X.PI j I fun _ => 0) (X.ThZA Y.Kc j (Y.ThA j La La' φ))) n)
         (∑ v, X.g0v v (j + 1))
 
 def VolumeRatio₂ (_D : Formalism.BasicNotions.D7) {p : ℕ} [Fact p.Prime] (X : Sys p) (Y : Pend X) : Prop :=

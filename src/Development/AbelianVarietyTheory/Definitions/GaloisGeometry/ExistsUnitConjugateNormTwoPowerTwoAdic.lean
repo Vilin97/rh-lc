@@ -308,7 +308,7 @@ theorem jUnit_of (hW : TwoIsog) (hN : NormPow) (hC : Chain) (hR : RootCubic) (hU
   obtain ⟨k, rfl⟩ : ∃ k, h = k + 1 := ⟨h - 1, by omega⟩
   rw [Finset.prod_range_succ'] at hnorm
   have hrest : ∏ i ∈ Finset.range k, ‖ι (r (i + 1))‖ ≤ 1 :=
-    Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun i hi => hle (i + 1) (by simp at hi; omega))
+    Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun i hi => hle (i + 1) (by simp at hi; omega))
   have h0le := hle 0 (by omega)
   have hr0 : ‖ι (r 0)‖ = 1 := by
     have := mul_le_of_le_one_left (norm_nonneg (ι (r 0))) hrest

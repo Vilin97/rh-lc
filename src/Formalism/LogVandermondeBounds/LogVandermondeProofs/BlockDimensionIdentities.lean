@@ -147,7 +147,7 @@ theorem eulerProductBounds : EulerProductBounds := by
     intro i _
     exact ⟨by have : x ^ (i + 1) ≤ 1 := pow_le_one₀ hx0.le hx1; linarith,
       by have : 0 ≤ x ^ (i + 1) := pow_nonneg hx0.le _; linarith⟩
-  refine ⟨?_, Finset.prod_le_one (fun i hi => (hfac i hi).1) (fun i hi => (hfac i hi).2)⟩
+  refine ⟨?_, Finset.prod_le_one₀ (fun i hi => (hfac i hi).1) (fun i hi => (hfac i hi).2)⟩
   by_contra hlt
   push_neg at hlt
   have h1 : (1 - x) * ∏ i ∈ range n, (1 - x ^ (i + 1)) < (1 - x) * (1 / 2) :=

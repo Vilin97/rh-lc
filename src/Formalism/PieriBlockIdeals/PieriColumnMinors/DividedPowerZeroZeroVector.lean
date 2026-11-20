@@ -939,7 +939,7 @@ theorem ld_sym_unique (q w : ℕ) (μ : Fin (1 + q) → ℕ) (x : MvPolynomial (
       rw [← h1]
       exact Finset.sum_congr rfl fun a _ => (hdz a).symm
   obtain ⟨d, hd⟩ := MvPolynomial.support_nonempty.mpr hne
-  refine ⟨(key d hd).2, coeff (∑ a, Finsupp.single (a, ldZ q) (μ a)) x, ?_⟩
+  refine ⟨(key d hd).2, AddMonoidAlgebra.coeff x (∑ a, Finsupp.single (a, ldZ q) (μ a)), ?_⟩
   have hprod : ∏ a, (X (a, ldZ q) : MvPolynomial (Fin (1 + q) × Fin (1 + q)) ℤ) ^ μ a =
       monomial (∑ a, Finsupp.single (a, ldZ q) (μ a)) 1 := by
     rw [monomial_sum_one]

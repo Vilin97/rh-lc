@@ -90,7 +90,7 @@ private theorem jetLin_split (p : MvPolynomial ((ι × Fin b × Fin b) ⊕ DVar 
       jetLin J p = ∑ k ∈ S, J k • jetLin (fun m => if m = k then (1 : ℂ) else 0) p := by
   have hsplit : ∀ J' : (DVar ι a b →₀ ℕ) → ℂ, jetLin J' p = ∑ μ ∈ p.support,
       monomial (μ.comapDomain Sum.inl Sum.inl_injective.injOn)
-        (coeff μ p * J' (μ.comapDomain Sum.inr Sum.inr_injective.injOn)) := by
+        (AddMonoidAlgebra.coeff p μ * J' (μ.comapDomain Sum.inr Sum.inr_injective.injOn)) := by
     intro J'
     conv_lhs => rw [p.as_sum]
     rw [map_sum]

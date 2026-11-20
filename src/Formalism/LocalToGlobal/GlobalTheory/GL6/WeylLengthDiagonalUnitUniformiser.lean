@@ -51,7 +51,7 @@ theorem weyl_word_homogeneous_nat (hn : n ≤ r) (ν : Fin n → ℕ) (hν : Ant
     intro d hd
     simp at hd
   · obtain ⟨d, hd⟩ := MvPolynomial.ne_zero_iff.mp h0
-    have key : ∀ d', MvPolynomial.coeff d' (Formalism.GradedWeylDivisibility.applyWord R w (Formalism.GradedWeylDivisibility.hw R hn ν)) ≠ 0 →
+    have key : ∀ d', AddMonoidAlgebra.coeff (Formalism.GradedWeylDivisibility.applyWord R w (Formalism.GradedWeylDivisibility.hw R hn ν)) d' ≠ 0 →
         Finsupp.weight (Formalism.GradedWeylDivisibility.rowW r n) d' = Finsupp.weight (Formalism.GradedWeylDivisibility.rowW r n) d := by
       intro d' hd'
       funext a
@@ -110,7 +110,7 @@ theorem weyl_homogeneous_component_mem (hn : n ≤ r) (ν : Fin n → ℕ) (hν 
 
 theorem weyl_support_row_weight_sum (hn : n ≤ r) (ν : Fin n → ℕ) (hν : Antitone ν)
     (f : MvPolynomial (Fin r × Fin n) R) (hf : f ∈ Formalism.GradedWeylDivisibility.weyl R r n hn ν) :
-    ∀ d, coeff d f ≠ 0 → ∑ a, Finsupp.weight (Formalism.GradedWeylDivisibility.rowW r n) d a = ∑ a, Formalism.GradedWeylDivisibility.rowNu (r := r) ν a := by
+    ∀ d, AddMonoidAlgebra.coeff f d ≠ 0 → ∑ a, Finsupp.weight (Formalism.GradedWeylDivisibility.rowW r n) d a = ∑ a, Formalism.GradedWeylDivisibility.rowNu (r := r) ν a := by
   unfold Formalism.GradedWeylDivisibility.weyl at hf
   induction hf using Submodule.span_induction with
   | mem x hx =>
@@ -124,7 +124,7 @@ theorem weyl_support_row_weight_sum (hn : n ≤ r) (ν : Fin n → ℕ) (hν : A
   | add x y _ _ hx hy =>
     intro d hd
     rw [MvPolynomial.coeff_add] at hd
-    by_cases h : MvPolynomial.coeff d x = 0
+    by_cases h : AddMonoidAlgebra.coeff x d = 0
     · rw [h, zero_add] at hd
       exact hy d hd
     · exact hx d h
@@ -135,7 +135,7 @@ theorem weyl_support_row_weight_sum (hn : n ≤ r) (ν : Fin n → ℕ) (hν : A
 
 theorem weyl_support_row_weight_le (hn : n ≤ r) (ν : Fin n → ℕ) (hν : Antitone ν)
     (f : MvPolynomial (Fin r × Fin n) R) (hf : f ∈ Formalism.GradedWeylDivisibility.weyl R r n hn ν) (d : Fin r × Fin n →₀ ℕ)
-    (hd : coeff d f ≠ 0) : ∀ a, Finsupp.weight (Formalism.GradedWeylDivisibility.rowW r n) d a ≤ ∑ a, Formalism.GradedWeylDivisibility.rowNu (r := r) ν a := by
+    (hd : AddMonoidAlgebra.coeff f d ≠ 0) : ∀ a, Finsupp.weight (Formalism.GradedWeylDivisibility.rowW r n) d a ≤ ∑ a, Formalism.GradedWeylDivisibility.rowNu (r := r) ν a := by
   intro a
   rw [← weyl_support_row_weight_sum R hn ν hν f hf d hd]
   exact Finset.single_le_sum (f := fun a => Finsupp.weight (Formalism.GradedWeylDivisibility.rowW r n) d a)
@@ -183,9 +183,9 @@ theorem weyl_lattice_finite (hν : Antitone ν) : Module.Finite ℤ (Formalism.G
     intro f hf
     rw [MvPolynomial.as_sum f]
     refine Submodule.sum_mem _ fun d hd => ?_
-    have hd' : MvPolynomial.coeff d f ≠ 0 := MvPolynomial.mem_support_iff.mp hd
-    have hmono : MvPolynomial.monomial d (MvPolynomial.coeff d f) =
-        MvPolynomial.coeff d f • MvPolynomial.monomial d (1 : ℤ) := by
+    have hd' : AddMonoidAlgebra.coeff f d ≠ 0 := MvPolynomial.mem_support_iff.mp hd
+    have hmono : MvPolynomial.monomial d (AddMonoidAlgebra.coeff f d) =
+        AddMonoidAlgebra.coeff f d • MvPolynomial.monomial d (1 : ℤ) := by
       rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
     rw [hmono]
     refine Submodule.smul_mem _ _ (Submodule.subset_span ⟨d, ?_, rfl⟩)
@@ -333,7 +333,7 @@ theorem weighted_homogeneous_rename_perm (σ : Equiv.Perm (Fin r)) (f : MvPolyno
     IsWeightedHomogeneous (Formalism.GradedWeylDivisibility.rowW r n) (MvPolynomial.rename (t2wE σ) f) (m ∘ σ.symm) := by
   classical
   intro d hd
-  have : ∃ u, Finsupp.mapDomain (t2wE σ) u = d ∧ MvPolynomial.coeff u f ≠ 0 := by
+  have : ∃ u, Finsupp.mapDomain (t2wE σ) u = d ∧ AddMonoidAlgebra.coeff f u ≠ 0 := by
     by_contra hcon
     push_neg at hcon
     apply hd
@@ -625,7 +625,7 @@ theorem weyl_basis_lin_indep_field (hν : Antitone ν) (K : Type) [Field K] [Cha
   set Kb := ∑ a, Formalism.GradedWeylDivisibility.rowNu (r := r) ν a
   set S : Set (Fin r × Fin n →₀ ℕ) := {d | ∀ v, d v ≤ Kb}
   have : Finite S := (bounded_monomials_finite Kb).to_subtype
-  have hsupp : ∀ x ∈ Formalism.GradedWeylDivisibility.weyl ℤ r n hn ν, ∀ d, d ∉ S → coeff d x = 0 := by
+  have hsupp : ∀ x ∈ Formalism.GradedWeylDivisibility.weyl ℤ r n hn ν, ∀ d, d ∉ S → AddMonoidAlgebra.coeff x d = 0 := by
     intro x hx d hd
     by_contra h
     exact hd fun v => (variable_le_row_weight d v).trans (weyl_support_row_weight_le ℤ hn ν hν x hx d h v.1)

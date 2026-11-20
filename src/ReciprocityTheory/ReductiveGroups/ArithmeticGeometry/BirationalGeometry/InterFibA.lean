@@ -44,12 +44,12 @@ theorem fibSys_finite {W : Type*} [Fintype W] (r : W → ℕ) (H : W → MvPolyn
           monomial u' a * monomial (Finsupp.single i (r i)) 1 by rw [monomial_mul, mul_one],
           map_mul, map_mul, ← X_pow_eq_monomial, map_pow, eval_X, hw i]
       have hsum : monomial u' a * H i =
-          ∑ v ∈ (H i).support, monomial (u' + v) (a * coeff v (H i)) := by
+          ∑ v ∈ (H i).support, monomial (u' + v) (a * AddMonoidAlgebra.coeff (H i) v) := by
         conv_lhs => rw [(H i).as_sum]
         rw [Finset.mul_sum]
         simp only [monomial_mul]
       have hterm : ∀ v ∈ (H i).support, ∃ q ∈ M, ∀ w : W → ℂ, (∀ i, w i ^ r i = eval w (H i)) →
-          eval w (monomial (u' + v) (a * coeff v (H i))) = eval w q := by
+          eval w (monomial (u' + v) (a * AddMonoidAlgebra.coeff (H i) v)) = eval w q := by
         intro v hv
         have hv' : v.degree ≤ (H i).totalDegree := le_totalDegree hv
         have hlt : (u' + v).degree < n := by

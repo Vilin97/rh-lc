@@ -47,7 +47,7 @@ theorem bihom_zero_const (g : Pol K k) (hg : g ∈ Bihom K k 0) : ∃ r : K, g =
   have hg' : g ∈ weightedHomogeneousSubmodule K (wx k) 0 ⊓ weightedHomogeneousSubmodule K (wxi k) 0 := hg
   obtain ⟨h1, h2⟩ := Submodule.mem_inf.1 hg'
   rw [mem_weightedHomogeneousSubmodule] at h1 h2
-  refine ⟨coeff 0 g, ?_⟩
+  refine ⟨AddMonoidAlgebra.coeff g 0, ?_⟩
   ext m
   rw [coeff_C]
   split_ifs with hm
@@ -86,10 +86,10 @@ theorem bihom_le_Sc : ∀ c, c ≤ d → Bihom K k c ≤ Sc K k d c
     rw [as_sum g]
     apply Submodule.sum_mem
     intro m hmS
-    have hne : coeff m g ≠ 0 := MvPolynomial.mem_support_iff.1 hmS
+    have hne : AddMonoidAlgebra.coeff g m ≠ 0 := MvPolynomial.mem_support_iff.1 hmS
     have hw1 := hg'.1 hne
     have hw2 := hg'.2 hne
-    rw [show monomial m (coeff m g) = coeff m g • monomial m (1 : K) by rw [smul_monomial, smul_eq_mul, mul_one]]
+    rw [show monomial m (AddMonoidAlgebra.coeff g m) = AddMonoidAlgebra.coeff g m • monomial m (1 : K) by rw [smul_monomial, smul_eq_mul, mul_one]]
     apply Submodule.smul_mem
 
     rw [wtXSum] at hw1

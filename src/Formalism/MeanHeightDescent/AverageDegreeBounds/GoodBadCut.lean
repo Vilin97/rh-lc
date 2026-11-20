@@ -416,7 +416,7 @@ theorem good_bad_split : GoodBadCut := by
       Finset.prod_nonneg fun v _ => pow_nonneg (norm_nonneg _) _
     have hP : ∏ v, opNormAt b X b X v φ ^ (2 * rkK I) ≤ (g : ℝ) ^ (nPl K * (2 * rkK I)) := by
       calc ∏ v, opNormAt b X b X v φ ^ (2 * rkK I) ≤ ∏ _v : InfinitePlace K, (g : ℝ) ^ (2 * rkK I) :=
-            Finset.prod_le_prod (fun v _ => pow_nonneg (norm_nonneg _) _) fun v _ =>
+            Finset.prod_le_prod₀ (fun v _ => pow_nonneg (norm_nonneg _) _) fun v _ =>
               pow_le_pow_left₀ (norm_nonneg _) (opNormAt_le b X hX e g v hee (hsa v)) _
         _ = (g : ℝ) ^ (nPl K * (2 * rkK I)) := by
             rw [Finset.prod_const, ← pow_mul, nPl, Finset.card_univ, mul_comm]

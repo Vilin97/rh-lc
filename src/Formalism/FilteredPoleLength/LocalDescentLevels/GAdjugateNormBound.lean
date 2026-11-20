@@ -14,7 +14,7 @@ private lemma norm_det_le {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (x : ℝ)
     have hp : ‖∏ i, A (σ i) i‖ ≤ x ^ n := by
       rw [norm_prod]
       calc ∏ i, ‖A (σ i) i‖ ≤ ∏ _i : Fin n, x :=
-            Finset.prod_le_prod (fun i _ => norm_nonneg _) (fun i _ => hx _ _)
+            Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) (fun i _ => hx _ _)
         _ = x ^ n := by simp
     rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with hs | hs
     · rw [hs, one_smul]
@@ -36,7 +36,7 @@ private theorem det_le_one_of_posSemidef_of_diag_eq_one {n : ℕ} (G : Matrix (F
     exact this.symm
   calc G.det = ∏ i, hG.1.eigenvalues i := hG.1.det_eq_prod_eigenvalues
     _ ≤ ∏ i, Real.exp (hG.1.eigenvalues i - 1) :=
-        Finset.prod_le_prod (fun i _ => hG.eigenvalues_nonneg i)
+        Finset.prod_le_prod₀ (fun i _ => hG.eigenvalues_nonneg i)
           (fun i _ => by linarith [Real.add_one_le_exp (hG.1.eigenvalues i - 1)])
     _ = Real.exp (∑ i, (hG.1.eigenvalues i - 1)) := (Real.exp_sum _ _).symm
     _ = 1 := by

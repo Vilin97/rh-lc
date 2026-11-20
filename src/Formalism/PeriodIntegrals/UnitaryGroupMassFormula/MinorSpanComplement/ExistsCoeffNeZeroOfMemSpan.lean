@@ -98,7 +98,7 @@ theorem isCompl_map_rename (O : MonomialOrder σ) {τ : Type*} {φ : σ → τ}
     have hsupp := (MvPolynomial.mem_restrictSupport_iff R).mp hg2
     have hmem : Finsupp.mapDomain φ (O.degree (c i)) ∈ ((rename φ).toLinearMap h).support := by
       rw [MvPolynomial.mem_support_iff]
-      show MvPolynomial.coeff (Finsupp.mapDomain φ (O.degree (c i))) (rename φ h) ≠ 0
+      show AddMonoidAlgebra.coeff (rename φ h) (Finsupp.mapDomain φ (O.degree (c i))) ≠ 0
       rw [MvPolynomial.coeff_rename_mapDomain φ hφ]
       exact hi
     exact hsupp (Finset.mem_coe.mpr hmem) ⟨O.degree (c i), ⟨i, rfl⟩, rfl⟩

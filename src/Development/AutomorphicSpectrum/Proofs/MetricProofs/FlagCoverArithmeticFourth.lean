@@ -355,14 +355,14 @@ theorem eval_one_ne_zero {D : MRing SingletonBlock} {a : Unit → ℕ} (hD : IsM
     simp only [Finset.univ_unique, Finset.sum_singleton] at h1 h2
     ext ⟨⟨⟩, ⟨⟩⟩
     exact h1.trans h2.symm
-  have hD' : D = monomial m₀ (coeff m₀ D) := by
+  have hD' : D = monomial m₀ (AddMonoidAlgebra.coeff D m₀) := by
     ext m
     rw [coeff_monomial]
     split_ifs with e
     · rw [e]
     · by_contra hc
       exact e (huniq m (mem_support_iff.2 hc)).symm
-  have hc : coeff m₀ D ≠ 0 := mem_support_iff.1 hm₀
+  have hc : AddMonoidAlgebra.coeff D m₀ ≠ 0 := mem_support_iff.1 hm₀
   rw [hD', map_monomial, eval_monomial]
   simpa using hc
 

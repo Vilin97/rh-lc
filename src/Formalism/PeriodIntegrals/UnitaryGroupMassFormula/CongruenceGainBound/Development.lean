@@ -11,7 +11,7 @@ namespace PI.UnitaryGroupMassFormula.PadicGainBound
 def applyDs {σ τ Kc : Type} [Field Kc] (vp : Kc) (P : MvPolynomial σ (MvPolynomial τ ℤ)) (f : MvPowerSeries σ Kc) :
     MvPolynomial τ Kc :=
   ∑ n ∈ P.support, ((∏ x ∈ n.support, ((n x).factorial : Kc)) * (vp ^ n.degree)⁻¹ * MvPowerSeries.coeff n f) •
-    MvPolynomial.map (Int.castRingHom Kc) (MvPolynomial.coeff n P)
+    MvPolynomial.map (Int.castRingHom Kc) (AddMonoidAlgebra.coeff P n)
 
 def term (p : ℕ) {Kc : Type} [Field Kc] (Sh : Shape) (u : ∀ v : Fin Sh.nV, Fin (Sh.n' v) → Kc) (i : Fin Sh.nV → ℕ)
     (g : MvPowerSeries Sh.ZV Kc) : MvPowerSeries Sh.ZV Kc :=
@@ -52,7 +52,7 @@ def Counts.coef (p : ℕ) {Kc : Type} [Field Kc] (vp : Kc) {Sh : Shape} (rb : �
 
 def Gen (p : ℕ) {Kc : Type} [Field Kc] (Oc : Subring Kc) (vp : Kc) (Sh : Shape) (rb : ℕ) (nu : Sh.Wt)
     (TT : ∀ v, Finset (Fin (Sh.n' v))) : Set (MvPolynomial Sh.FrV Kc) :=
-  {y | ∃ D : Counts Sh, D.Ok p rb nu TT ∧ ∃ r : MvPolynomial Sh.FrV Kc, (∀ n, MvPolynomial.coeff n r ∈ Oc) ∧
+  {y | ∃ D : Counts Sh, D.Ok p rb nu TT ∧ ∃ r : MvPolynomial Sh.FrV Kc, (∀ n, AddMonoidAlgebra.coeff r n ∈ Oc) ∧
     y = MvPolynomial.C (D.coef p vp rb nu) * r}
 
 def SLin : Prop :=

@@ -9,8 +9,8 @@ attribute [local instance] Over.cartesianMonoidalCategory
 namespace GlobalTheory.CompanionTheory.Ar.Coc
 
 private theorem coeff_mul_eq_zero_of_order_two_of_degree_le_two {σ k : Type} [CommRing k] (j : ℕ) (q a : MvPolynomial σ k)
-    (ha : ∀ e : σ →₀ ℕ, e.degree < j → MvPolynomial.coeff e a = 0) :
-    ∀ e : σ →₀ ℕ, e.degree < j → MvPolynomial.coeff e (q * a) = 0 := by
+    (ha : ∀ e : σ →₀ ℕ, e.degree < j → AddMonoidAlgebra.coeff a e = 0) :
+    ∀ e : σ →₀ ℕ, e.degree < j → AddMonoidAlgebra.coeff (q * a) e = 0 := by
   classical
   intro e he
   rw [MvPolynomial.coeff_mul]
@@ -22,14 +22,14 @@ private theorem coeff_mul_eq_zero_of_order_two_of_degree_le_two {σ k : Type} [C
 
 private theorem coeff_eq_zero_of_mem_span_X_pow_of_degree_lt {σ k : Type} [CommRing k] :
     ∀ (j : ℕ) (P : MvPolynomial σ k), P ∈ Ideal.span (Set.range (MvPolynomial.X : σ → MvPolynomial σ k)) ^ j →
-      ∀ e : σ →₀ ℕ, e.degree < j → MvPolynomial.coeff e P = 0 := by
+      ∀ e : σ →₀ ℕ, e.degree < j → AddMonoidAlgebra.coeff P e = 0 := by
   classical
   intro j
   induction j with
   | zero => intro P _ e he; exact absurd he (Nat.not_lt_zero _)
   | succ j ih =>
     let K : Ideal (MvPolynomial σ k) :=
-      { carrier := {P | ∀ e : σ →₀ ℕ, e.degree < j + 1 → MvPolynomial.coeff e P = 0}
+      { carrier := {P | ∀ e : σ →₀ ℕ, e.degree < j + 1 → AddMonoidAlgebra.coeff P e = 0}
         add_mem' := fun {a b} ha hb e he => by rw [MvPolynomial.coeff_add, ha e he, hb e he, add_zero]
         zero_mem' := fun e _ => MvPolynomial.coeff_zero e
         smul_mem' := fun c a ha => coeff_mul_eq_zero_of_order_two_of_degree_le_two (j + 1) c a ha }
@@ -38,7 +38,7 @@ private theorem coeff_eq_zero_of_mem_span_X_pow_of_degree_lt {σ k : Type} [Comm
       intro r hr s hs
       refine Submodule.span_induction (p := fun s _ => r * s ∈ K) ?_ ?_ ?_ ?_ hs
       · rintro _ ⟨i, rfl⟩
-        show ∀ e : σ →₀ ℕ, e.degree < j + 1 → MvPolynomial.coeff e (r * MvPolynomial.X i) = 0
+        show ∀ e : σ →₀ ℕ, e.degree < j + 1 → AddMonoidAlgebra.coeff (r * MvPolynomial.X i) e = 0
         intro e he
         rw [MvPolynomial.coeff_mul]
         refine Finset.sum_eq_zero fun x hx => ?_
@@ -85,7 +85,7 @@ theorem pderiv_eq_zero_of_jet_pow_sub : ∀ (k : Type) [Field k] (p : ℕ) [Fact
     · show (e + Finsupp.single q 1).degree ≤ e.degree + 1
       rw [map_add, Finsupp.degree_single]
   have htr : ∀ g : MvPowerSeries (Fin 1 × Fin d) k,
-      MvPolynomial.coeff (e + Finsupp.single q 1) (psTrunc (e.degree + 1) g) =
+      AddMonoidAlgebra.coeff (psTrunc (e.degree + 1) g) (e + Finsupp.single q 1) =
         MvPowerSeries.coeff (e + Finsupp.single q 1) g := by
     intro g
     simp [psTrunc, MvPolynomial.coeff_sum, MvPolynomial.coeff_monomial, hin]

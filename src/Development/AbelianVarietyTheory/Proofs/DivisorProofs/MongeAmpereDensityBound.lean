@@ -47,7 +47,7 @@ theorem maDens_le_prod_of_levi_le_diag {e : ℕ} (f : (Fin e → ℂ) → ℝ) (
   have hdet : (H.det).re ≤ ∏ k, c k := by
     have h := GlobalTheory.posSemidef_re_det_le_prod_diag hpsd
     refine h.trans ?_
-    refine Finset.prod_le_prod (fun k _ => ?_) fun k _ => ?_
+    refine Finset.prod_le_prod₀ (fun k _ => ?_) fun k _ => ?_
     · change 0 ≤ (H k k).re
       rw [hdiag]; exact hpos _
     · change (H k k).re ≤ c k

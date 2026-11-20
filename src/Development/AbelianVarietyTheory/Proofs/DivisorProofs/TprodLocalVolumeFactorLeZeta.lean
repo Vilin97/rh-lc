@@ -97,7 +97,7 @@ theorem locFactor_nonneg_and_mul_le_one (E : Type) [Field E] [NumberField E] [Is
   have hg0 : 0 ≤ ∏ i ∈ Finset.Icc 2 r, (1 - (q ^ i)⁻¹) :=
     Finset.prod_nonneg fun i _ => sub_nonneg.2 (ht i).2
   have hg1 : ∏ i ∈ Finset.Icc 2 r, (1 - (q ^ i)⁻¹) ≤ 1 :=
-    Finset.prod_le_one (fun i _ => sub_nonneg.2 (ht i).2) fun i _ => sub_le_self _ (ht i).1
+    Finset.prod_le_one₀ (fun i _ => sub_nonneg.2 (ht i).2) fun i _ => sub_le_self _ (ht i).1
   by_cases hp : (v.asIdeal.map (algebraMap (𝓞 (maximalRealSubfield E)) (𝓞 E))).IsPrime
   · rw [locFactor_eq_of_isPrime E r v hr hp, ← hqdef, ← Finset.prod_mul_distrib]
     have hf0 : ∀ i : ℕ, 0 ≤ 1 - (-1) ^ i * (q ^ i)⁻¹ := by
@@ -105,7 +105,7 @@ theorem locFactor_nonneg_and_mul_le_one (E : Type) [Field E] [NumberField E] [Is
       obtain ⟨h0, h1⟩ := ht i
       rcases neg_one_pow_eq_or ℝ i with h | h <;> rw [h] <;> linarith
     refine ⟨Finset.prod_nonneg fun i _ => hf0 i, ?_⟩
-    refine Finset.prod_le_one (fun i _ => mul_nonneg (hf0 i) (sub_nonneg.2 (ht i).2)) fun i _ => ?_
+    refine Finset.prod_le_one₀ (fun i _ => mul_nonneg (hf0 i) (sub_nonneg.2 (ht i).2)) fun i _ => ?_
     obtain ⟨h0, h1⟩ := ht i
     rcases neg_one_pow_eq_or ℝ i with h | h <;> rw [h] <;> nlinarith
   · have heq : locFactor E r v = ∏ i ∈ Finset.Icc 2 r, (1 - (q ^ i)⁻¹) := by
@@ -150,10 +150,10 @@ theorem tprod_locFactor_le : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
   have g_nonneg : ∀ x : ℝ, 1 ≤ x → 0 ≤ g x := fun x hx =>
     Finset.prod_nonneg fun i _ => sub_nonneg.2 (inv_le_one_of_one_le₀ (one_le_pow₀ hx))
   have g_le_one : ∀ x : ℝ, 1 ≤ x → g x ≤ 1 := fun x hx =>
-    Finset.prod_le_one (fun i _ => sub_nonneg.2 (inv_le_one_of_one_le₀ (one_le_pow₀ hx)))
+    Finset.prod_le_one₀ (fun i _ => sub_nonneg.2 (inv_le_one_of_one_le₀ (one_le_pow₀ hx)))
       fun i _ => sub_le_self _ (by positivity)
   have g_mono : ∀ x y : ℝ, 1 ≤ x → x ≤ y → g x ≤ g y := fun x y hx hxy =>
-    Finset.prod_le_prod (fun i _ => sub_nonneg.2 (inv_le_one_of_one_le₀ (one_le_pow₀ hx)))
+    Finset.prod_le_prod₀ (fun i _ => sub_nonneg.2 (inv_le_one_of_one_le₀ (one_le_pow₀ hx)))
       fun i _ => sub_le_sub_left (inv_anti₀ (by positivity) (pow_le_pow_left₀ (by linarith) hxy i)) _
   have hloc : ∀ v, 0 ≤ locFactor E r v ∧ locFactor E r v * g (Ideal.absNorm v.asIdeal) ≤ 1 :=
     fun v => locFactor_nonneg_and_mul_le_one E r v (by omega)
@@ -178,19 +178,19 @@ theorem tprod_locFactor_le : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
       obtain ⟨v, -, rfl⟩ := Finset.mem_image.1 hp
       exact_mod_cast (hN v).1.one_lt.le
     have s1 : ∏ v ∈ s, g (pv v) ≤ ∏ v ∈ s, g (Ideal.absNorm v.asIdeal) := by
-      refine Finset.prod_le_prod (fun v _ => g_nonneg _ (by exact_mod_cast (hN v).1.one_lt.le))
+      refine Finset.prod_le_prod₀ (fun v _ => g_nonneg _ (by exact_mod_cast (hN v).1.one_lt.le))
         fun v _ => g_mono _ _ (by exact_mod_cast (hN v).1.one_lt.le) (by exact_mod_cast (hN v).2)
     have s2 : ∏ v ∈ s, g (pv v) = ∏ p ∈ T, g p ^ (s.filter fun v => pv v = p).card := by
       rw [Finset.prod_comp (fun p : ℕ => g p) pv]
     have s3 : ∏ p ∈ T, g p ^ fdeg E ≤ ∏ p ∈ T, g p ^ (s.filter fun v => pv v = p).card := by
-      refine Finset.prod_le_prod (fun p hp => pow_nonneg (g_nonneg _ (hp1 p hp)) _) fun p hp => ?_
+      refine Finset.prod_le_prod₀ (fun p hp => pow_nonneg (g_nonneg _ (hp1 p hp)) _) fun p hp => ?_
       refine pow_le_pow_of_le_one (g_nonneg _ (hp1 p hp)) (g_le_one _ (hp1 p hp)) ?_
       rw [hf]
       obtain ⟨v, -, rfl⟩ := Finset.mem_image.1 hp
       exact ReciprocityTheory.Neutral.Bridge.card_fiber_ratPrimeBelow_le id Function.injective_id s (pv v) (hN v).1
     have s4 : Z⁻¹ ≤ ∏ p ∈ T, g p := by
       rw [Finset.prod_comm, hZdef, ← Finset.prod_inv_distrib]
-      refine Finset.prod_le_prod (fun i _ => by positivity) fun i hi => ?_
+      refine Finset.prod_le_prod₀ (fun i _ => by positivity) fun i hi => ?_
       refine GlobalTheory.EulerLocVol.inv_zeta_le_prod_primes i (Finset.mem_Icc.1 hi).1 T fun p hp => ?_
       obtain ⟨v, -, rfl⟩ := Finset.mem_image.1 hp
       exact (hN v).1
@@ -204,7 +204,7 @@ theorem tprod_locFactor_le : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
     have hL0 : 0 ≤ ∏ v ∈ s, locFactor E r v := Finset.prod_nonneg fun v _ => (hloc v).1
     have hprod : (∏ v ∈ s, locFactor E r v) * ∏ v ∈ s, g (Ideal.absNorm v.asIdeal) ≤ 1 := by
       rw [← Finset.prod_mul_distrib]
-      refine Finset.prod_le_one (fun v _ => mul_nonneg (hloc v).1 (g_nonneg _ ?_)) fun v _ => (hloc v).2
+      refine Finset.prod_le_one₀ (fun v _ => mul_nonneg (hloc v).1 (g_nonneg _ ?_)) fun v _ => (hloc v).2
       have : Ideal.absNorm v.asIdeal ≠ 0 := by
         rw [Ne, Ideal.absNorm_eq_zero_iff]; exact v.ne_bot
       exact_mod_cast Nat.one_le_iff_ne_zero.2 this

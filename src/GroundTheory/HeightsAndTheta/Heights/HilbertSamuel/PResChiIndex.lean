@@ -37,7 +37,7 @@ theorem isHomogeneous_of_map {f : MvPolynomial J ℚ} {n : ℕ} (hf : f.IsHomoge
   apply hf
   intro h0
   apply hs
-  have h := congrArg (coeff s) hg
+  have h := congrArg (AddMonoidAlgebra.coeff · s) hg
   rw [coeff_map, coeff_C_mul, h0, mul_zero] at h
   simpa using h
 

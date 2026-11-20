@@ -31,7 +31,7 @@ theorem gramLB_one_le_det {n : Type} [Fintype n] [DecidableEq n] {R : Matrix n n
   rw [e]
   calc (1 : ℝ) = ∏ _i : n, (1 : ℝ) := by simp
     _ ≤ ∏ i, (hR.1.eigenvalues i + 1) :=
-      Finset.prod_le_prod (fun _ _ => zero_le_one) fun i _ => by linarith [hR.eigenvalues_nonneg i]
+      Finset.prod_le_prod₀ (fun _ _ => zero_le_one) fun i _ => by linarith [hR.eigenvalues_nonneg i]
 
 theorem gramLB_exists_shift {n : Type} [Fintype n] [DecidableEq n] {A : Matrix n n ℝ}
     (hA : A.PosDef) : ∃ k : ℝ, 0 < k ∧ k ≤ 1 ∧ (A - k • (1 : Matrix n n ℝ)).PosSemidef := by

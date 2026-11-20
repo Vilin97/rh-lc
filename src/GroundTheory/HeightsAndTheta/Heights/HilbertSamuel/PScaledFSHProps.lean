@@ -67,14 +67,14 @@ theorem monomialsBounded (P : Ideal (MRing ι)) : MonomialsBounded P (scaledFSH 
   have hblk : ∀ k, ∏ i, ‖z ⟨k, i⟩ ^ μ ⟨k, i⟩‖ ≤ (fsMetric (ι k)).ρ (fun i => z ⟨k, i⟩) := by
     intro k
     calc ∏ i, ‖z ⟨k, i⟩ ^ μ ⟨k, i⟩‖ ≤ ∏ i, (fsMetric (ι k)).ρ (fun i => z ⟨k, i⟩) ^ μ ⟨k, i⟩ := by
-          refine Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i _ => ?_
+          refine Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i _ => ?_
           rw [norm_pow]
           exact pow_le_pow_left₀ (norm_nonneg _) (norm_le_rho z k i) _
       _ = (fsMetric (ι k)).ρ (fun i => z ⟨k, i⟩) := by
           rw [Finset.prod_pow_eq_pow_sum, hμ k]
           exact pow_one _
   calc ∏ k, ∏ i, ‖z ⟨k, i⟩ ^ μ ⟨k, i⟩‖ ≤ ∏ k, (fsMetric (ι k)).ρ (fun i => z ⟨k, i⟩) :=
-        Finset.prod_le_prod (fun k _ => Finset.prod_nonneg fun i _ => norm_nonneg _) fun k _ => hblk k
+        Finset.prod_le_prod₀ (fun k _ => Finset.prod_nonneg fun i _ => norm_nonneg _) fun k _ => hblk k
     _ ≤ (∏ k, (fsMetric (ι k)).ρ (fun i => z ⟨k, i⟩)) * Real.exp 1 :=
         le_mul_of_one_le_right (Finset.prod_nonneg fun k _ => hρ k) (Real.one_le_exp zero_le_one)
 

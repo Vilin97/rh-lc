@@ -90,7 +90,7 @@ theorem isBdSec_atlasOf : ∀ (F : Type) [Field F] [NumberField F] (Y : Var F) (
     GlobalTheory.DivSec.isSection_divSec hn (isAlgAtlas_atlasOf σ), fun z => ?_, ?_, ?_, fun z hz => ?_⟩
   · rw [hlog]
     exact Real.log_nonpos (Finset.prod_nonneg fun i _ => ((hn i).1 _).1)
-      (Finset.prod_le_one (fun i _ => ((hn i).1 _).1) fun i _ => ((hn i).1 _).2)
+      (Finset.prod_le_one₀ (fun i _ => ((hn i).1 _).1) fun i _ => ((hn i).1 _).2)
   · ext z
     exact (GlobalTheory.DivSec.divSec_eq_zero_iff hn z).symm
   · intro hu

@@ -11,7 +11,7 @@ theorem totalDegree_pderiv_le_self {σ : Type} (i : σ) (Q : MvPolynomial σ ℂ
     (pderiv i Q).totalDegree ≤ Q.totalDegree := by
   classical
   refine Finset.sup_le fun m hm => ?_
-  have hc : coeff (m + Finsupp.single i 1) Q ≠ 0 := by
+  have hc : AddMonoidAlgebra.coeff Q (m + Finsupp.single i 1) ≠ 0 := by
     rw [mem_support_iff, coeff_pderiv] at hm
     intro h
     rw [h, zero_mul] at hm

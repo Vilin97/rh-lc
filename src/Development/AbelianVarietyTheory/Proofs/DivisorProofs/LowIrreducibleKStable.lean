@@ -11,7 +11,7 @@ theorem X_mul_pderiv_totalDegree_le {σ : Type} (u v : σ) (g : MvPolynomial σ 
   classical
   have key : ∀ m ∈ (pderiv v g).support, (m.sum fun _ e => e) + 1 ≤ g.totalDegree := by
     intro m hm
-    have hc : coeff (m + Finsupp.single v 1) g ≠ 0 := by
+    have hc : AddMonoidAlgebra.coeff g (m + Finsupp.single v 1) ≠ 0 := by
       rw [mem_support_iff, coeff_pderiv] at hm
       intro h
       rw [h, zero_mul] at hm

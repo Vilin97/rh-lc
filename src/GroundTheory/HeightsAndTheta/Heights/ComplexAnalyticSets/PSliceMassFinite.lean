@@ -24,7 +24,7 @@ theorem SliceMassFinite.exists_projClosure {n e : ℕ} (I : Ideal (MvPolynomial 
     refine mem_nonZeroDivisors_of_ne_zero fun h0 => hP.ne_top ?_
     have h00 := hW.isHomog _ (Ideal.Quotient.eq_zero_iff_mem.mp h0) 0
     rw [homogeneousComponent_zero] at h00
-    have hc : coeff 0 (linForm ℓ - 1) = -1 := by
+    have hc : AddMonoidAlgebra.coeff (linForm ℓ - 1) 0 = -1 := by
       simp [linForm, coeff_sum, coeff_C_mul, coeff_X]
     rw [hc, map_neg, map_one, Ideal.neg_mem_iff] at h00
     exact (Ideal.eq_top_iff_one W).mpr h00

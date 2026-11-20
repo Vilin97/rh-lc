@@ -13,7 +13,7 @@ variable {m : ℕ}
 
 abbrev ex (v : Fin m → ℕ) : Fin m →₀ ℕ := Finsupp.equivFunOnFinite.symm v
 
-def cf (v : Fin m → ℕ) (P : MvPolynomial (Fin m) ℚ) : ℚ := coeff (ex v) P
+def cf (v : Fin m → ℕ) (P : MvPolynomial (Fin m) ℚ) : ℚ := AddMonoidAlgebra.coeff P (ex v)
 
 def alt (v : Fin m → ℕ) : MvPolynomial (Fin m) ℚ :=
   (Matrix.of fun i j : Fin m => (X i : MvPolynomial (Fin m) ℚ) ^ v j).det
@@ -219,7 +219,7 @@ theorem IsAlt.eq_zero_of_cf {P : MvPolynomial (Fin m) ℚ} (hP : IsAlt P)
     (h : ∀ l : Fin m → ℕ, StrictAnti l → cf l P = 0) : P = 0 := by
   ext d
   rw [coeff_zero]
-  have hd : coeff d P = cf (⇑d) P := by unfold cf; simp
+  have hd : AddMonoidAlgebra.coeff P d = cf (⇑d) P := by unfold cf; simp
   rw [hd]
   by_cases hinj : Function.Injective (⇑d)
   · obtain ⟨σ, hσ⟩ := exists_perm_strictAnti hinj
@@ -232,13 +232,13 @@ theorem IsAlt.eq_zero_of_cf {P : MvPolynomial (Fin m) ℚ} (hP : IsAlt P)
     exact cf_eq_zero_of_eq hP hne hij
 
 theorem IsAlt.eq_sum_alt {P : MvPolynomial (Fin m) ℚ} (hP : IsAlt P) :
-    P = ∑ d ∈ P.support.filter (fun d : Fin m →₀ ℕ => StrictAnti (⇑d)), coeff d P • alt (⇑d) := by
+    P = ∑ d ∈ P.support.filter (fun d : Fin m →₀ ℕ => StrictAnti (⇑d)), AddMonoidAlgebra.coeff P d • alt (⇑d) := by
   rw [← sub_eq_zero]
   refine (hP.sub (IsAlt.sum _ fun d _ => (alt_isAlt _).smul _)).eq_zero_of_cf fun l hl => ?_
   unfold cf
   rw [coeff_sub, coeff_sum, sub_eq_zero]
   have hterm : ∀ d ∈ P.support.filter (fun d : Fin m →₀ ℕ => StrictAnti (⇑d)),
-      coeff (ex l) (coeff d P • alt (⇑d)) = if d = ex l then coeff d P else 0 := by
+      AddMonoidAlgebra.coeff (AddMonoidAlgebra.coeff P d • alt (⇑d)) (ex l) = if d = ex l then AddMonoidAlgebra.coeff P d else 0 := by
     intro d hd
     rw [Finset.mem_filter] at hd
     have := cf_alt_of_strictAnti hl hd.2

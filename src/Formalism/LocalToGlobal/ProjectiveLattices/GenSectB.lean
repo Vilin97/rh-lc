@@ -32,14 +32,14 @@ theorem exists_pderiv_ne_zero_lt' {K : Type*} [Field K] [CharZero K] {ι : Type*
     conv_lhs => rw [← tsub_add_cancel_of_le hle]
     rw [Finsupp.sum_add_index' (fun _ => rfl) (fun _ _ _ => rfl), Finsupp.sum_single_index rfl]
   have hder : pderiv i P =
-      ∑ t ∈ P.support, monomial (t - Finsupp.single i 1) (coeff t P * (t i : K)) := by
+      ∑ t ∈ P.support, monomial (t - Finsupp.single i 1) (AddMonoidAlgebra.coeff P t * (t i : K)) := by
     conv_lhs => rw [P.as_sum]
     rw [map_sum]
     refine Finset.sum_congr rfl fun t _ => ?_
     rw [pderiv_monomial]
   refine ⟨i, ?_, ?_⟩
   · intro h0
-    have hc := congrArg (coeff (s - Finsupp.single i 1)) h0
+    have hc := congrArg (AddMonoidAlgebra.coeff · (s - Finsupp.single i 1)) h0
     rw [hder, coeff_sum, coeff_zero, Finset.sum_eq_single s] at hc
     · rw [coeff_monomial, if_pos rfl] at hc
       exact mul_ne_zero (mem_support_iff.1 hs) (by exact_mod_cast hi) hc
@@ -60,7 +60,7 @@ theorem exists_pderiv_ne_zero_lt' {K : Type*} [Field K] [CharZero K] {ι : Type*
       rw [← htd]
       exact hP
     rw [htd, hder]
-    refine lt_of_le_of_lt (totalDegree_finset_sum _ _) ((Finset.sup_lt_iff hpos).2 fun t ht => ?_)
+    refine lt_of_le_of_lt (MvPolynomial.totalDegree_finsetSum _ _) ((Finset.sup_lt_iff hpos).2 fun t ht => ?_)
     by_cases hti : t i = 0
     · simpa [hti, htd] using hP
     · refine lt_of_le_of_lt (totalDegree_monomial_le _ _) ?_
@@ -187,7 +187,7 @@ theorem gs_indep [CharZero K] (x : Fin m → Ω) (j₀ : Fin m) (hx₀ : x j₀ 
     have h0 : G.totalDegree = 0 := by omega
     rw [totalDegree_eq_zero_iff_eq_C] at h0
     rw [h0, aeval_C] at hG0
-    have hc : coeff 0 G = 0 :=
+    have hc : AddMonoidAlgebra.coeff G 0 = 0 :=
       (algebraMap K (CT Ω D j₀)).injective (by rw [hG0, map_zero])
     exact hGne (by rw [h0, hc, C_0])
   obtain ⟨p₁, hp₁ne, hp₁lt⟩ := exists_pderiv_ne_zero_lt' G hpos

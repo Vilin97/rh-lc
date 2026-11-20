@@ -7,7 +7,7 @@ open MvPolynomial Equiv UpperTheory.V.AlgebraTools.Hk
 private theorem X_sub_ne {R : Type} [CommRing R] [IsDomain R] {n : ℕ} (q : R) {i j : Fin n} (h : i ≠ j) :
     (X i - C q * X j : MvPolynomial (Fin n) R) ≠ 0 := by
   intro h0
-  have := congrArg (MvPolynomial.coeff (Finsupp.single i 1)) h0
+  have := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single i 1)) h0
   simp [MvPolynomial.coeff_X', MvPolynomial.coeff_C_mul, Finsupp.single_left_inj, h, Ne.symm h] at this
 
 theorem UpperTheory.V.AlgebraTools.hkFaith :

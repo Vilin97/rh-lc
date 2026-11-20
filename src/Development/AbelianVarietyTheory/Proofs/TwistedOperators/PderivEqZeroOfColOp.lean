@@ -104,7 +104,7 @@ theorem Sep.mixed {z : Fin k × Fin n → σ} {y : Fin l × Fin n → σ} {A B :
 theorem mixed_weight (z : Fin k × Fin n → σ) (y : Fin l × Fin n → σ) {P : MvPolynomial σ ℂ}
     {t : Fin n} {w : ℚ} (h : mixedOp ℂ z y t t P = (w : ℂ) • P) {m : σ →₀ ℕ} (hm : m ∈ P.support) :
     w = ((∑ i, m (z (i, t)) : ℕ) : ℚ) - (∑ j, m (y (j, t)) : ℕ) := by
-  have := congrArg (coeff m) h
+  have := congrArg (AddMonoidAlgebra.coeff · m) h
   rw [mixedOp_apply, coeff_sub, coeff_sum, coeff_sum, coeff_smul] at this
   simp only [GlobalTheory.Harm.HighestUnique.coeff_X_mul_pderiv, ← Finset.sum_mul, ← sub_mul,
     smul_eq_mul] at this

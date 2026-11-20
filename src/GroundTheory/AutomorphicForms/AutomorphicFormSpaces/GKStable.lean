@@ -122,7 +122,7 @@ theorem exists_height_infEmb_le {S : Set (archGroup K n)} (hS : IsCompact S) :
       (fun i j => le_trans (le_add_of_nonneg_left (norm_nonneg _)) ((hterm w i j).trans hFy))
   unfold height
   rw [finprod_eq_one_of_forall_eq_one (fun v => by rw [finAt_infEmb, locHeight_one]), mul_one]
-  exact Finset.prod_le_prod (fun w _ => pow_nonneg (locHeight_pos _).le _)
+  exact Finset.prod_le_prod₀ (fun w _ => pow_nonneg (locHeight_pos _).le _)
     fun w _ => pow_le_pow_left₀ (locHeight_pos _).le (hloc w) _
 
 section Integral

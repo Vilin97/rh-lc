@@ -141,7 +141,7 @@ theorem eSum_coeff (g : ∀ i, G i) : (eSum E S).coeff g =
     open Classical in ∑ a : (∀ i, L i), if S a then ∏ i, (E i (a i)).coeff (g i) else 0 := by
   classical
   unfold eSum
-  rw [MonoidAlgebra.coeff_sum, Finsupp.finset_sum_apply]
+  rw [MonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply]
   refine Finset.sum_congr rfl fun a _ => ?_
   split_ifs
   · rfl

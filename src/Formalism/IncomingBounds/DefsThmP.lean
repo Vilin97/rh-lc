@@ -21,7 +21,7 @@ def pp {n0 : ℕ} (Q : MvPolynomial (PVar n0) C) (G : MvPowerSeries (PVar n0) C)
     MvPowerSeries (PVar n0) C :=
   fun m => if rpart m = 0 then
     ∑ a ∈ Q.support, if lpart a ≤ m then
-      MvPolynomial.coeff a Q * (mfact (rpart a) : C) *
+      AddMonoidAlgebra.coeff Q a * (mfact (rpart a) : C) *
         MvPowerSeries.coeff (m - lpart a + rpart a) G
     else 0
   else 0
@@ -101,8 +101,8 @@ def DetShift : Prop :=
 
 def PsDiv : Prop :=
   ∀ l : ℕ, l.Prime → ∀ (i n0 s : ℕ) (a : PVar n0 →₀ ℕ),
-    (l : ℤ) ^ (expE l i * degR a + (s - degR a)) ∣ MvPolynomial.coeff a (psZ l i n0 ^ s) ∧
-      (MvPolynomial.coeff a (psZ l i n0 ^ s) ≠ 0 → degL a + l ^ i * degR a = l ^ i * n0 * s)
+    (l : ℤ) ^ (expE l i * degR a + (s - degR a)) ∣ AddMonoidAlgebra.coeff (psZ l i n0 ^ s) a ∧
+      (AddMonoidAlgebra.coeff (psZ l i n0 ^ s) a ≠ 0 → degL a + l ^ i * degR a = l ^ i * n0 * s)
 
 def SizeA : Prop :=
   ∀ (C : Type) [Field C] [CharZero C] (v : AddValuation C (WithTop ℝ)) (l : ℕ),

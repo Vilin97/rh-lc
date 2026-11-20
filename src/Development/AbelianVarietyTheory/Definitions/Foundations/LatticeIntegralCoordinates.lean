@@ -214,7 +214,7 @@ def CarriesTupleCharacters (D : D7) {u : D.what₂.Word} (C : ColumnChain D.R D.
 def Mod1E (x : ℂ) : Prop := ∃ hx : x ∈ Qbar, ∀ ρ : Qbar →+* ℂ, ‖ρ ⟨x, hx⟩‖ = 1
 
 def applyAt0 (D : D7) {N N' : ℕ} (P : MvPolynomial (Idx D N N') ℂ) (G : VC D N N' → ℂ) : ℂ :=
-  ∑ α ∈ P.support, MvPolynomial.coeff α P * (α.prod fun _ n => (n.factorial : ℂ)) * taylor D G α
+  ∑ α ∈ P.support, AddMonoidAlgebra.coeff P α * (α.prod fun _ n => (n.factorial : ℂ)) * taylor D G α
 
 abbrev FrV (D : D7) (N : ℕ) : Type := D.what₂.Tau × Fin N × Fin N
 

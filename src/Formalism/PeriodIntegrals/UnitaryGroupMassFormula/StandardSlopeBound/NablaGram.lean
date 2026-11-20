@@ -164,7 +164,7 @@ theorem nabla_gram_lower_bound : NablaGramLow := by
   have hprod : ∀ f : Fin r → S, A ^ r ≤ ∏ i, q (f i) := by
     intro f
     calc A ^ r = ∏ _i : Fin r, A := by rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
-      _ ≤ ∏ i, q (f i) := Finset.prod_le_prod (fun _ _ => hA0) (fun i _ => hqA (f i))
+      _ ≤ ∏ i, q (f i) := Finset.prod_le_prod₀ (fun _ _ => hA0) (fun i _ => hqA (f i))
   have hmain : A ^ r * ((r.factorial : ℚ) * (Vᵀ * V).det) ≤
       (r.factorial : ℚ) * (Vᵀ * diagonal q * V).det := by
     rw [hid1, hid, Finset.mul_sum]

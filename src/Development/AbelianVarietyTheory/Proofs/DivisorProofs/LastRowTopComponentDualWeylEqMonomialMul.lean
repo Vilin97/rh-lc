@@ -17,7 +17,7 @@ theorem monomial_eq_zmon_mul_emb {K : Type} [Field K] {n : ℕ} (b : Fin n → �
 
 theorem eq_zmon_mul_emb_of_homogeneous {K : Type} [Field K] {n : ℕ} (b : Fin n → ℕ) (H : BP K n)
     (hH : IsWeightedHomogeneous (zW n) H (fun s => (b s : ℤ))) : ∃ f, H = zmon K n b * emb K n f := by
-  have h : ∀ μ ∈ H.support, ∃ f, (monomial μ (coeff μ H) : BP K n) = zmon K n b * emb K n f := by
+  have h : ∀ μ ∈ H.support, ∃ f, (monomial μ (AddMonoidAlgebra.coeff H μ) : BP K n) = zmon K n b * emb K n f := by
     intro μ hμ
     refine monomial_eq_zmon_mul_emb b μ (fun s => ?_) _
     have h1 := congrFun (hH (mem_support_iff.1 hμ)) s

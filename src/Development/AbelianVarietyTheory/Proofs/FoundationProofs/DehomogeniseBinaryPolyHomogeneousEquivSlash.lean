@@ -23,11 +23,11 @@ theorem dehH_slP_mon (w : ℕ) (m : Matrix (Fin 2) (Fin 2) ℤ) (i : ℕ) :
 
 theorem dehH_expand (w : ℕ) (p : MvPolynomial (Fin 2) ℂ) (hp : p.IsHomogeneous w) :
     deh p = ∑ i ∈ Finset.range (w + 1),
-      Polynomial.C (MvPolynomial.coeff (Finsupp.single 0 i + Finsupp.single 1 (w - i)) p) * Polynomial.X ^ i := by
+      Polynomial.C (AddMonoidAlgebra.coeff p (Finsupp.single 0 i + Finsupp.single 1 (w - i))) * Polynomial.X ^ i := by
   have h := (GlobalTheory.T.binaryMonomialDegree_subst_expansion ℂ w).2.1 p hp
   conv_lhs => rw [h]
-  rw [map_sum, ← Fin.sum_univ_eq_sum_range (fun i => Polynomial.C (MvPolynomial.coeff
-    (Finsupp.single 0 i + Finsupp.single 1 (w - i)) p) * Polynomial.X ^ i)]
+  rw [map_sum, ← Fin.sum_univ_eq_sum_range (fun i => Polynomial.C (AddMonoidAlgebra.coeff
+    p (Finsupp.single 0 i + Finsupp.single 1 (w - i))) * Polynomial.X ^ i)]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [map_mul, dehH_mon]
   simp [deh]
@@ -73,8 +73,8 @@ theorem deh_homog_iso : ∀ w : ℕ, (∀ (m : Matrix (Fin 2) (Fin 2) ℤ) (p : 
     have h := (GlobalTheory.T.binaryMonomialDegree_subst_expansion ℂ w).2.1 p hp
     rw [dehH_expand w p hp, dehH_slP_sum]
     conv_lhs => rw [h]
-    rw [map_sum, map_sum, ← Fin.sum_univ_eq_sum_range (fun i => Polynomial.C (MvPolynomial.coeff
-      (Finsupp.single 0 i + Finsupp.single 1 (w - i)) p) *
+    rw [map_sum, map_sum, ← Fin.sum_univ_eq_sum_range (fun i => Polynomial.C (AddMonoidAlgebra.coeff
+      p (Finsupp.single 0 i + Finsupp.single 1 (w - i))) *
         ((Polynomial.C ((m 0 0 : ℤ) : ℂ) * Polynomial.X + Polynomial.C ((m 0 1 : ℤ) : ℂ)) ^ i *
           (Polynomial.C ((m 1 0 : ℤ) : ℂ) * Polynomial.X + Polynomial.C ((m 1 1 : ℤ) : ℂ)) ^ (w - i)))]
     refine Finset.sum_congr rfl fun i _ => ?_
@@ -99,8 +99,8 @@ theorem deh_homog_iso : ∀ w : ℕ, (∀ (m : Matrix (Fin 2) (Fin 2) ℤ) (p : 
   · intro p p' hp hp' he
     rw [(GlobalTheory.T.binaryMonomialDegree_subst_expansion ℂ w).2.1 p hp, (GlobalTheory.T.binaryMonomialDegree_subst_expansion ℂ w).2.1 p' hp']
     refine Finset.sum_congr rfl fun i _ => ?_
-    have h1 := dehH_coeff w (fun i => MvPolynomial.coeff (Finsupp.single 0 i + Finsupp.single 1 (w - i)) p) i i.2
-    have h2 := dehH_coeff w (fun i => MvPolynomial.coeff (Finsupp.single 0 i + Finsupp.single 1 (w - i)) p') i i.2
+    have h1 := dehH_coeff w (fun i => AddMonoidAlgebra.coeff p (Finsupp.single 0 i + Finsupp.single 1 (w - i))) i i.2
+    have h2 := dehH_coeff w (fun i => AddMonoidAlgebra.coeff p' (Finsupp.single 0 i + Finsupp.single 1 (w - i))) i i.2
     rw [← dehH_expand w p hp, he, dehH_expand w p' hp', h2] at h1
     rw [h1]
 

@@ -59,7 +59,7 @@ theorem exists_clear_coeff_at_prime_any : ∀ (E : Type) [Field E] [NumberField 
       ∀ G : MvPolynomial (Formalism.L2.LamCM.FrVar Dw.mult) z.K, (∀ (y' : FrPt Xo c z.K) (Y : ∀ b : E →+* ℂ, Matrix (Fin (Dw.mult b)) (Fin (Dw.mult b)) z.K),
           (∀ b, (Y b).det ≠ 0) → GlobalTheory.Frames.FrChg (fun b => (Y b).transpose) 1 z.y y' →
           (∏ b, (Y b).det ^ k b) * evR Xo c F y' = Formalism.L2.LamCM.evalFr G Y) →
-        ∀ μ, p.valuation z.K ((x : z.K) * MvPolynomial.coeff μ G) ≤ 1 := by
+        ∀ μ, p.valuation z.K ((x : z.K) * AddMonoidAlgebra.coeff G μ) ≤ 1 := by
   intro E _ _ _ H Dw l Xo c _ z f La hz e k p
   classical
   obtain ⟨T, iK, hT, hiK⟩ := GlobalTheory.T.exists_completeDVR_completion_integral_iff z.K p
@@ -114,7 +114,7 @@ theorem exists_clear_coeff_at_prime_any : ∀ (E : Type) [Field E] [NumberField 
   obtain ⟨N, t, hNt⟩ := dvd_pow_of_ne_zero_of_not_isUnit (nonZeroDivisors.ne_zero d.2) hπ0 hπu
   refine ⟨ϖ ^ N, pow_ne_zero _ hϖ0, ?_⟩
   intro F hF hv G hG μ
-  by_cases hμ : MvPolynomial.coeff μ G = 0
+  by_cases hμ : AddMonoidAlgebra.coeff G μ = 0
   · simp [hμ]
   have hG1 := hG
   have hdeg := GlobalTheory.FrameHomZ.frPoly_secZ_degree_eq_any E H Dw l Xo c z.K z.y e k F hF G hG1 μ hμ
@@ -126,7 +126,7 @@ theorem exists_clear_coeff_at_prime_any : ∀ (E : Type) [Field E] [NumberField 
   apply (hiK _).1
   have hP : (∏ v : Formalism.L2.LamCM.FrVar Dw.mult, cl v.1 v.2.2 ^ μ v) ≠ 0 :=
     Finset.prod_ne_zero_iff.2 fun v _ => pow_ne_zero _ ((map_ne_zero iK).2 (hc0 v.1 v.2.2).1)
-  have hc : iK (MvPolynomial.coeff μ G) = yμ μ * algebraMap T.V T.Fr w := by
+  have hc : iK (AddMonoidAlgebra.coeff G μ) = yμ μ * algebraMap T.V T.Fr w := by
     have hsn : ((s : T.Fr) ^ e none) ≠ 0 := zpow_ne_zero _ s.ne_zero
     have e0 : yμ μ * algebraMap T.V T.Fr w = (τ * algebraMap T.V T.Fr w) *
         ((∏ v : Formalism.L2.LamCM.FrVar Dw.mult, cl v.1 v.2.2 ^ μ v)⁻¹ * ((s : T.Fr) ^ e none)⁻¹) := by
@@ -153,7 +153,7 @@ theorem coeff_valuation_le_one_almost_all_any : ∀ (E : Type) [Field E] [Number
       ∀ G : MvPolynomial (Formalism.L2.LamCM.FrVar Dw.mult) z.K, (∀ (y' : FrPt Xo c z.K) (Y : ∀ b : E →+* ℂ, Matrix (Fin (Dw.mult b)) (Fin (Dw.mult b)) z.K),
           (∀ b, (Y b).det ≠ 0) → GlobalTheory.Frames.FrChg (fun b => (Y b).transpose) 1 z.y y' →
           (∏ b, (Y b).det ^ k b) * evR Xo c F y' = Formalism.L2.LamCM.evalFr G Y) →
-        ∀ μ, p.valuation z.K (MvPolynomial.coeff μ G) ≤ 1 := by
+        ∀ μ, p.valuation z.K (AddMonoidAlgebra.coeff G μ) ≤ 1 := by
   intro E _ _ _ H Dw l Xo c _ z f La hz e k
   classical
   obtain ⟨S₁, hS₁⟩ := GlobalTheory.T.cmPoint_eigenbasis_change_det_integral_almost_all_primes E H Dw l Xo c z f La hz
@@ -220,7 +220,7 @@ theorem coeff_valuation_le_one_almost_all_any : ∀ (E : Type) [Field E] [Number
         ((Units.map (algebraMap T.V T.Fr : T.V →* T.Fr) (u ^ (-e none)) : T.Frˣ) : T.Fr) := rfl
     rw [h1, map_zpow, Units.val_zpow_eq_zpow_val, hu, zpow_neg]
     rfl
-  have hc : iK (MvPolynomial.coeff μ G) = (∏ b, (g b).det ^ k b) * algebraMap T.V T.Fr w * ((s : T.Fr) ^ e none)⁻¹ :=
+  have hc : iK (AddMonoidAlgebra.coeff G μ) = (∏ b, (g b).det ^ k b) * algebraMap T.V T.Fr w * ((s : T.Fr) ^ e none)⁻¹ :=
     (eq_mul_inv_iff_mul_eq₀ hsn).2 hw
   refine (hiK _).1 ((hR _).2 ?_)
   rw [hc]

@@ -495,11 +495,11 @@ theorem mean_inter (hH : IsHerm H) {A₁ A₂ : AddSubgroup W} [Finite (A₂ ⧸
         (continuous_const.mul (continuous_dens hH (differentiable_opU hc _).continuous
           (differentiable_opU hc _).continuous))
     rw [integral_congr_ae (Filter.Eventually.of_forall hpt), integral_const_mul,
-      integral_finset_sum _ fun y _ => integrable_finset_sum _ fun y' _ => hint y y',
+      MeasureTheory.integral_finsetSum _ fun y _ => MeasureTheory.integrable_finsetSum _ fun y' _ => hint y y',
       Complex.ofReal_mul, Complex.ofReal_sum]
     congr 1
     refine Finset.sum_congr rfl fun c _ => ?_
-    rw [integral_finset_sum _ fun y' _ => hint c y', Finset.sum_eq_single_of_mem c (Finset.mem_univ _)]
+    rw [MeasureTheory.integral_finsetSum _ fun y' _ => hint c y', Finset.sum_eq_single_of_mem c (Finset.mem_univ _)]
     · rw [alpha_sq hs₂ (hrm c), ← integral_complex_ofReal]
       simp only [one_mul, ← rho_eq hH, rho_opU hH]
     · intro c' _ hne

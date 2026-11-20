@@ -38,7 +38,7 @@ theorem repTrace_eq_mul_trace {E : Type} [Field E] [NumberField E] {r : ℕ} (ρ
     (Matrix.toLinAlgEquiv' : Matrix (Fin r) (Fin r) ℚ ≃ₐ[ℚ] _).toRingEquiv.toRingHom.comp
       ((Int.castRingHom ℚ).mapMatrix.comp ρ)
   let A := Algebra.adjoin ℚ (Set.range g)
-  letI : CommRing A := Algebra.adjoinCommRingOfComm ℚ (by
+  letI : CommRing A := Algebra.isMulCommutative_adjoin ℚ (by
     rintro _ ⟨x, rfl⟩ _ ⟨y, rfl⟩
     rw [← map_mul, ← map_mul, mul_comm])
   let g' : 𝓞 E →+* A := g.codRestrict A (fun x => Algebra.subset_adjoin ⟨x, rfl⟩)

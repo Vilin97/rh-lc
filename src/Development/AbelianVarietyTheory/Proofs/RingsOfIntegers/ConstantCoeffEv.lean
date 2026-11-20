@@ -52,9 +52,9 @@ private theorem coeff_subst_congr_lemma {σ τ : Type} [Finite σ] [Finite τ] {
     split_ifs with hy
     · exact hgg y (Nat.lt_succ_iff.mp hy)
     · rfl
-  have e1 := congrArg (MvPolynomial.coeff x)
+  have e1 := congrArg (AddMonoidAlgebra.coeff · x)
     (truncTotal_subst_eq_truncTotal_truncTotal_subst (k := x.degree + 1) (f := g) hA)
-  have e2 := congrArg (MvPolynomial.coeff x)
+  have e2 := congrArg (AddMonoidAlgebra.coeff · x)
     (truncTotal_subst_eq_truncTotal_truncTotal_subst (k := x.degree + 1) (f := g') hA)
   rw [coeff_truncTotal _ (Nat.lt_succ_self _)] at e1 e2
   rw [e1, e2, hT]

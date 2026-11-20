@@ -285,7 +285,7 @@ theorem lattice_count : ∀ {D : D7} (θ : InfFam D), IsInfFam θ → ∀ (m r :
     rw [Finset.prod_inv_distrib]
     apply inv_anti₀ (Finset.prod_pos fun p _ => by positivity)
     calc ∏ p, (1 + b * |((kap ξ p : ℤ) : ℝ)|) ^ 2 ≤ ∏ _p : P, (1 + s) ^ 2 :=
-          Finset.prod_le_prod (fun p _ => by positivity)
+          Finset.prod_le_prod₀ (fun p _ => by positivity)
             (fun p _ => pow_le_pow_left₀ (by positivity) (hkp p) 2)
       _ = (1 + s) ^ (2 * Fintype.card P) := by
           rw [Finset.prod_const, Finset.card_univ, ← pow_mul]

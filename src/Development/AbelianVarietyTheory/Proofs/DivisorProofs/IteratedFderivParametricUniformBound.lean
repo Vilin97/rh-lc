@@ -33,7 +33,7 @@ theorem exists_bound_iteratedFDeriv_snd_of_isCompact_prod :
   rw [hfun, h1]
   refine (ContinuousMultilinearMap.norm_compContinuousLinearMap_le _ _).trans ?_
   have hgn : ‖g‖ ≤ 1 := ContinuousLinearMap.norm_inr_le_one ℝ ℝ E
-  have h2 : ∏ _i : Fin k, ‖g‖ ≤ 1 := Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun _ _ => hgn)
+  have h2 : ∏ _i : Fin k, ‖g‖ ≤ 1 := Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun _ _ => hgn)
   exact (mul_le_of_le_one_right (norm_nonneg _) h2).trans (hM _ ⟨hε, hx⟩)
 
 end GlobalTheory

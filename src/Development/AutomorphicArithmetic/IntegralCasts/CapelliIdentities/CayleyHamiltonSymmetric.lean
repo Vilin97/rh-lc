@@ -285,10 +285,10 @@ private lemma map_gam {B B' : Type} [CommRing B] [CommRing B'] [Algebra B B'] (S
 private lemma exists_phi (D : GDet n A G) : ∃ c : (Fin n → G) → A,
     ∀ (B : Type) [CommRing B] [Algebra A B] (y : MonoidAlgebra B G), D.D B y = phi c B (tens fun _ => y) := by
   classical
-  let c0 : (G →₀ ℕ) → A := fun α => MvPolynomial.coeff α (D.D _ (gam A α.support))
+  let c0 : (G →₀ ℕ) → A := fun α => AddMonoidAlgebra.coeff (D.D _ (gam A α.support)) α
   let c : (Fin n → G) → A := fun g => if g = Function.invFun typ (typ g) then c0 (typ g) else 0
-  have kill : ∀ (S T : Finset G) (α : G →₀ ℕ), T ⊆ S → MvPolynomial.coeff α (D.D _ (gam A T)) =
-      if α.support ⊆ T then MvPolynomial.coeff α (D.D _ (gam A S)) else 0 := by
+  have kill : ∀ (S T : Finset G) (α : G →₀ ℕ), T ⊆ S → AddMonoidAlgebra.coeff (D.D _ (gam A T)) α =
+      if α.support ⊆ T then AddMonoidAlgebra.coeff (D.D _ (gam A S)) α else 0 := by
     intro S T α hTS
     rw [← coeff_kill, ← D.nat]
     congr 2
@@ -319,8 +319,8 @@ private lemma exists_phi (D : GDet n A G) : ∃ c : (Fin n → G) → A,
       rw [Fintype.mem_piFinset]
       by_contra h
       exact hg (if_neg h)
-    have e : ∀ g ∈ Fintype.piFinset fun _ : Fin n => S, MvPolynomial.coeff α
-        ((tens fun _ => gam A S).coeff g * algebraMap A (MvPolynomial G A) (c g)) =
+    have e : ∀ g ∈ Fintype.piFinset fun _ : Fin n => S, AddMonoidAlgebra.coeff ((tens fun _ => gam A S).coeff g * algebraMap A (MvPolynomial G A) (c g))
+        α =
           if typ g = α then c g else 0 := by
       intro g hg
       rw [coeff_tens_gam, if_pos (Fintype.mem_piFinset.1 hg), mul_comm, MvPolynomial.algebraMap_eq,

@@ -233,7 +233,7 @@ theorem arFun_mul_pull : ArCalc → ∀ (k : Type) [CommRing k] (B Y : Scheme.{0
   have e₁ := arFun_prod H hB (RegGenSmooth.genSmooth hB hr) hΦ' e Y p hY f w G j s hG L Ψ' hΨ'
   rw [VertForm.FormEx.arFun_eq_rename H hB hΦ' hΦ r fun _ => rfl,
     VertForm.FormEx.arFun_eq_rename H hY hΨ' hΨ (Sum.map id r) (by rintro (a | a) <;> rfl)] at e₁
-  rw [show monomial m (coeff m P) = coeff m P • monomial m 1 by rw [smul_monomial, smul_eq_mul, mul_one], e₀, map_smul, mul_smul_comm, map_smul, map_smul, smul_eq_mul,
+  rw [show monomial m (AddMonoidAlgebra.coeff P m) = AddMonoidAlgebra.coeff P m • monomial m 1 by rw [smul_monomial, smul_eq_mul, mul_one], e₀, map_smul, mul_smul_comm, map_smul, map_smul, smul_eq_mul,
     smul_eq_mul, mul_left_comm]
   congr 1
   simpa [Fintype.prod_sum_type] using e₁

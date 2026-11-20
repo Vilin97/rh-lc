@@ -181,14 +181,14 @@ theorem cenFock : ∀ D : D7, CenFock D := by
       rw [thPair_eq_zero_of_eigen hW v (z, 1) (hth _) (hth _) (heig α.1 z hz hzc) (heig β z hz hzc) (hwt β z hz hzc).1
         (by rw [(hmem α.1).1 α.2 z hz hzc]; exact hne), mul_zero]
   refine sub_eq_zero.1 (GlobalTheory.FockTotal.eq_zero_of_orth_fock D ψ θ hθ S T x y hx hy k.vac hk.vac v _ hg hgl fun Q => ?_)
-  have hQ : pt Q = ∑ β ∈ Q.support, MvPolynomial.coeff β Q • pt (MvPolynomial.monomial β 1) := by
+  have hQ : pt Q = ∑ β ∈ Q.support, AddMonoidAlgebra.coeff Q β • pt (MvPolynomial.monomial β 1) := by
     conv_lhs => rw [Q.as_sum]
     rw [map_sum]
     refine Finset.sum_congr rfl fun β _ => ?_
     rw [← map_smul, MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
   show thPair v.μ v.𝓕 (f - pt (∑ α, c α • mon α)) (pt Q) = 0
   rw [hQ]
-  refine (thPair_sum_right v.μ v.𝓕 Q.support (fun β => MvPolynomial.coeff β Q) _
+  refine (thPair_sum_right v.μ v.𝓕 Q.support (fun β => AddMonoidAlgebra.coeff Q β) _
     (fun β => pt (MvPolynomial.monomial β 1)) (fun β => hint hg (hth _))).trans ?_
   exact Finset.sum_eq_zero fun β _ => by rw [hmono, mul_zero]
 

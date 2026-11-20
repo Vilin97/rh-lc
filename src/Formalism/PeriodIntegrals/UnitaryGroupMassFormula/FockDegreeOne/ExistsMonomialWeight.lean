@@ -34,7 +34,7 @@ theorem key {σ : Type*} (v : MvPolynomial σ ℂ) (ac ad bc bd : σ) (hne : bc 
     pd_comm ad ac]
 
 theorem coeff_zero_of_dd {σ : Type*} (v : MvPolynomial σ ℂ) (i j : σ) (hij : i ≠ j)
-    (h : pderiv i (pderiv j v) = 0) (α : σ →₀ ℕ) (hα : coeff α v ≠ 0) :
+    (h : pderiv i (pderiv j v) = 0) (α : σ →₀ ℕ) (hα : AddMonoidAlgebra.coeff v α ≠ 0) :
     α i = 0 ∨ α j = 0 := by
   classical
   by_contra hcon
@@ -47,7 +47,7 @@ theorem coeff_zero_of_dd {σ : Type*} (v : MvPolynomial σ ℂ) (i j : σ) (hij 
       Finsupp.single_apply, Finsupp.single_apply]
     split_ifs with h1 h2 h2 <;> (try subst_vars) <;> first | omega | exact (hij rfl).elim
   obtain ⟨m, hm⟩ : ∃ m, α = m + Finsupp.single i 1 + Finsupp.single j 1 := ⟨_, hsplit⟩
-  have hc := congrArg (coeff m) h
+  have hc := congrArg (AddMonoidAlgebra.coeff · m) h
   rw [coeff_pderiv, coeff_pderiv, coeff_zero, ← hm] at hc
   rcases mul_eq_zero.1 hc with h' | h'
   · rcases mul_eq_zero.1 h' with h'' | h''
@@ -258,13 +258,13 @@ theorem exists_monomial_weight' {σ ι : Type*} [Fintype σ]
       ((f a β : ℚ) : ℂ) • MvPolynomial.monomial β 1)
     (μ : ι → ℚ) (d : ℕ) (P : MvPolynomial σ ℂ) (hP : P ∈ homog σ d) (h0 : P ≠ 0)
     (hw : ∀ a, (T a - ((μ a : ℚ) : ℂ) • (LinearMap.id : Module.End ℂ (MvPolynomial σ ℂ))) P = 0) :
-    ∃ α : σ →₀ ℕ, MvPolynomial.coeff α P ≠ 0 ∧ ∑ i, α i = d ∧ ∀ a, μ a = f a α := by
+    ∃ α : σ →₀ ℕ, AddMonoidAlgebra.coeff P α ≠ 0 ∧ ∑ i, α i = d ∧ ∀ a, μ a = f a α := by
   obtain ⟨α, hα⟩ := MvPolynomial.exists_coeff_ne_zero h0
   refine ⟨α, hα, ?_, fun a => ?_⟩
   · have hh : P.IsHomogeneous d := hP
     by_contra hne
     exact hα (hh.coeff_eq_zero (by rwa [Finsupp.degree_eq_sum]))
-  · have h1 := congrArg (MvPolynomial.coeff α) (hw a)
+  · have h1 := congrArg (AddMonoidAlgebra.coeff · α) (hw a)
     rw [LinearMap.sub_apply, MvPolynomial.coeff_sub,
       coeff_of_diag (T a) (fun β => ((f a β : ℚ) : ℂ)) (hT a),
       LinearMap.smul_apply, LinearMap.id_apply, MvPolynomial.coeff_smul, MvPolynomial.coeff_zero,

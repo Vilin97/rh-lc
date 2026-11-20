@@ -376,7 +376,7 @@ theorem growth_main (hσ : IsCMExt F E σ) (hJ : IsHermND σ J) (hM : 3 ≤ M) (
     rw [e2]
     refine mul_le_mul_of_nonneg_right ?_ hC.le
     calc (1 / 2 : ℝ) ^ P.card = ∏ _v ∈ P, (1 / 2 : ℝ) := by simp
-      _ ≤ _ := Finset.prod_le_prod (fun _ _ => by norm_num) fun v hv =>
+      _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => by norm_num) fun v hv =>
         hhalf a ha hDa v fun hvB => hpB v hvB ((hPmem v).1 hv)
   rw [mul_comm]
   exact mul_le_mul_of_nonneg_left hlow (by positivity)

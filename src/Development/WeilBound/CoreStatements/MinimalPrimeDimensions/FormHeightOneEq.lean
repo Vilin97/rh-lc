@@ -23,7 +23,7 @@ theorem gaussAbs_eq {K : Type} [Field K] [NumberField K] {ι : Type} (v : IsDede
   funext s
   apply NNReal.eq
   rw [FinitePlace.equivHeightOneSpectrum_symm_apply]
-  show ((‖(FinitePlace.embedding v) (coeff s f)‖).toNNReal : ℝ) = HeightOneSpectrum.adicAbv K v (coeff s f)
+  show ((‖(FinitePlace.embedding v) (AddMonoidAlgebra.coeff f s)‖).toNNReal : ℝ) = HeightOneSpectrum.adicAbv K v (AddMonoidAlgebra.coeff f s)
   rw [FinitePlace.norm_embedding]
   exact Real.coe_toNNReal _ (AbsoluteValue.nonneg _ _)
 
@@ -138,7 +138,7 @@ theorem ChowFormHeightComparison₂.CF.stForm : ChowFormHeightComparison₂.CF.S
       exfalso
       have hirr := hΦ.irred
       have hC := MvPolynomial.eq_C_of_isEmpty Φ
-      have hc : MvPolynomial.coeff 0 Φ ≠ 0 := fun h => hne (by rw [hC, h, map_zero])
+      have hc : AddMonoidAlgebra.coeff Φ 0 ≠ 0 := fun h => hne (by rw [hC, h, map_zero])
       rw [hC] at hirr
       exact hirr.not_isUnit ((isUnit_iff_ne_zero.2 hc).map MvPolynomial.C)
     · exact h0

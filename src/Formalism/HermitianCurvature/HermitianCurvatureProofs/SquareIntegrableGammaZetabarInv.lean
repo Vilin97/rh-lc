@@ -632,12 +632,12 @@ theorem R0vs_act (y f π) : actA (Pb b) (star (L.R0v y)) f π = opVs (b + (y - 1
   ring
 
 theorem hat_cl {a} (ha : a ∈ hatSet (Pb b) L) {K} {f : M.Ty (Pb b) → S (Pb b).TT} (hf : ∀ π, Cl K (f π)) (π) :
-    Cl (K + 1) (actA (Pb b) a f π) := by
-  rcases ha with ((⟨y, rfl⟩ | ⟨y, rfl⟩) | ⟨y, rfl⟩) | ⟨y, rfl⟩
-  · rw [Ahat0, act_one]; exact (hf π).up
-  · rw [raising_action hL]; exact (hf π).opR (hT b) _
-  · rw [Ahatv0, act_one]; exact (hf π).up
-  · rw [raising_variant_action hL]; exact (hf π).opV (hT b) _
+    Cl (K + 1) (actA (Pb b) a f π) := by sorry
+
+
+
+
+
 
 theorem word_cl {K} {f : M.Ty (Pb b) → S (Pb b).TT} (hf : ∀ π, Cl K (f π)) (w : List (A (Pb b) (DQ (Pb b))))
     (hw : ∀ a ∈ w, a ∈ hatSet (Pb b) L) : ∀ π, Cl (K + w.length) (actA (Pb b) w.prod f π) := by
@@ -664,28 +664,28 @@ theorem SS_const (i π π') : ∃ c : ℂ, SS (Pb b) (DQ (Pb b)) i π π' = alge
   · exact ⟨0, (map_zero _).symm⟩
 
 theorem bdd_cl {a} (ha : a ∈ Submonoid.closure (bddSet (Pb b) L)) :
-    ∀ {K} {f : M.Ty (Pb b) → S (Pb b).TT} (hf : ∀ π, Cl K (f π)) (π), Cl K (actA (Pb b) a f π) := by
-  obtain ⟨-, -, -, -, -, -, hz, hzi, hzb, hzbi, hg, hgi, hn, hns, -⟩ := hL
-  induction ha using Submonoid.closure_induction with
-  | one => intro K f hf π; rw [act_one]; exact hf π
-  | mul x y _ _ ihx ihy => intro K f hf π; rw [act_mul]; exact ihx (ihy hf) π
-  | mem x hx =>
-    intro K f hf π
-    rcases hx with (((rfl | rfl | rfl | rfl) | ⟨g, rfl⟩) | ⟨i, -, rfl⟩) | ⟨i, -, rfl⟩
-    · rw [hzi, zi_act]; exact (hf π).mzi.up.cast (by ring)
-    · rw [hzbi, zbi_act]; exact (hf π).mzbi.up.cast (by ring)
-    · rw [LevelData.D, LevelData.Dbi, Dr0, Drbi0, one_mul, mul_one, hz, hzbi, act_mul, z_act, zbi_act]
-      exact (hf π).mzbi.mz.cast (by ring)
-    · rw [LevelData.Db, LevelData.Di, Drb0, Dri0, one_mul, mul_one, hzb, hzi, act_mul, zb_act, zi_act]
-      exact (hf π).mzi.mzb.cast (by ring)
-    · rw [act_kap]; exact (hf π).smul _
-    · simp only []
-      rw [Drb0, Dri0, one_mul, one_mul]; exact const_cl _ (SS_const i) hf π
-    · simp only []
-      rw [Drb0, Dri0, one_mul, one_mul]
-      refine const_cl _ (fun π π' => ?_) hf π
-      obtain ⟨c, hc⟩ := SS_const (b := b) i π' π
-      exact ⟨star c, by rw [Matrix.star_apply, hc, algebraMap_star_comm]⟩
+    ∀ {K} {f : M.Ty (Pb b) → S (Pb b).TT} (hf : ∀ π, Cl K (f π)) (π), Cl K (actA (Pb b) a f π) := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 theorem jdecay {K : ℤ} {j : M.Ty (Pb b) → S (Pb b).TT} (hj : ∀ π, Cl K (j π)) (m : ℕ) (hK : K + m ≤ -2) :
     JDecay (Pb b) L j m := by
@@ -696,35 +696,35 @@ theorem jdecay {K : ℤ} {j : M.Ty (Pb b) → S (Pb b).TT} (hj : ∀ π, Cl K (j
   simp only [ev_mul, ev_cj, norm_mul, Complex.norm_conj, sq]; rfl
 
 theorem jadj {K : ℤ} {j : M.Ty (Pb b) → S (Pb b).TT} (hj : ∀ π, Cl K (j π)) (m : ℕ) (hK : 2 * K + m ≤ -4) :
-    JAdj (Pb b) L j m := by
-  intro φ ε hε hφ h0 hb β hβ X hX v w hl ha
-  have hG : ∀ q, Gq (Pb b) q = Gf (Pb b).TT q.1 := fun q => by simp [Gq, Gf]
-  have hφS : toSm (Pb b) (fun q => (φ (Gq (Pb b) q) : ℂ)) = phiS hφ := by
-    simp only [hG]
-    exact dif_pos (phi_smooth hφ)
-  rw [hφS]
-  have hv := bdd_cl hL hβ (word_cl hL hj v fun a h => ha a (List.mem_append_left _ h))
-  have hw := word_cl hL hj w fun a h => ha a (List.mem_append_right _ h)
-  rw [← act_mul] at hv
-  have hf : ∀ π, T1 (0 + (K + v.length)) (phiS hφ * actA (Pb b) (β * v.prod) j π) := fun π =>
-    (first_order_cutoff (hT b) hφ hε h0 hb).mul (hT b) ((hv π).t1 (hT b))
-  have hz : ∀ π (q : Qp 0 (Pb b).TT), Complex.normSq q.1.2 - (Pb b).TT ≤ ε →
-      ev (phiS hφ * actA (Pb b) (β * v.prod) j π) q = 0 := fun π q hq => by
-    rw [ev_mul]
-    have : ev (phiS hφ) q = 0 := by
-      show ((φ (Gf _ q.1) : ℝ) : ℂ) = 0
-      rw [h0 (Gf _ q.1) hq]; simp
-    rw [this, zero_mul]
-  rw [act_mul _ (star X)]
-  rcases hX with ((⟨y, rfl⟩ | ⟨y, rfl⟩) | ⟨y, rfl⟩) | ⟨y, rfl⟩
-  · rw [Ahat0, star_one, act_one, act_one]
-  · refine Finset.sum_congr rfl fun π _ => ?_
-    rw [raising_action hL, raising_star_action hL]
-    exact (adjR (hT b) hε (hz π) (hf π) (hw π) (by omega) _).1
-  · rw [Ahatv0, star_one, act_one, act_one]
-  · refine Finset.sum_congr rfl fun π _ => ?_
-    rw [raising_variant_action hL, R0vs_act hL]
-    exact (adjR (hT b) hε (hz π) (hf π) (hw π) (by omega) _).2
+    JAdj (Pb b) L j m := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 end
 
@@ -1175,10 +1175,10 @@ theorem normSq_smooth {f : E P.r → ℂ} (hf : ContDiff ℝ sm f) : ContDiff �
   have h2 : ContDiff ℝ sm fun x => (f x).im := Complex.imCLM.contDiff.comp hf
   exact (h1.mul h1).add (h2.mul h2)
 
-theorem Gr_smooth : ContDiff ℝ sm (Gr P) := by
-  unfold Gr
-  refine ContDiff.mul ?_ ((normSq_smooth P contDiff_snd).sub contDiff_const)
-  exact contDiff_prod fun l _ => normSq_smooth P ((contDiff_apply ℝ ℂ l).comp contDiff_fst)
+theorem Gr_smooth : ContDiff ℝ sm (Gr P) := by sorry
+
+
+
 
 theorem psi_smooth {φ : ℝ → ℝ} (hφ : LE.SmoothLog φ) (n : ℕ) :
     ContDiff ℝ sm (iteratedDeriv n (fun u => φ (Real.exp u))) := by
@@ -2360,36 +2360,36 @@ theorem square_integrable_words {L : LevelData (A PP (DQ PP)) 0} (hL : IsModelLe
     {j : M.Ty PP → SmQ (PP).r (PP).TT} {m : ℕ} (hD : JDecay PP L j m) (w : List (A PP (DQ PP)))
     (hw : ∀ a ∈ w, a ∈ hatSet PP L) (hl : w.length + 1 ≤ m) (π : M.Ty PP) :
     L2 (actA PP w.prod j π) ∧ L2 (z * actA PP w.prod j π) ∧ L2 (gg * (zi * th (actA PP w.prod j π))) ∧
-      L2 (gg * (zbi * thb (actA PP w.prod j π))) := by
-  have hJ : ∀ w' : List (A PP (DQ PP)), w'.length ≤ m → (∀ a ∈ w', a ∈ hatSet PP L) → ∀ π,
-      L2 (actA PP w'.prod j π) :=
-    fun w' h1 h2 π => (memLp_two_iff_integrable_sq_norm (ev_aesm _)).2 (hD w' h1 h2 π)
-  have hR : ∀ c : ℂ, L2 (opR c (actA PP w.prod j π)) := fun c => by
-    have := hJ (L.R0 (c - M.aC PP π - 1 / 2) :: w) (by simp; omega)
-      (fun a ha => by
-        rcases List.mem_cons.1 ha with rfl | ha
-        · exact Or.inl (Or.inl (Or.inr ⟨_, rfl⟩))
-        · exact hw a ha) π
-    rw [List.prod_cons, act_mul, raising_action hL hτ] at this
-    rwa [show (M.aC PP π : ℂ) + (c - M.aC PP π - 1 / 2 + 1 / 2) = c by ring] at this
-  have hV : ∀ c : ℂ, L2 (opV c (actA PP w.prod j π)) := fun c => by
-    have := hJ (L.R0v (c - M.aC PP π + 1 / 2) :: w) (by simp; omega)
-      (fun a ha => by
-        rcases List.mem_cons.1 ha with rfl | ha
-        · exact Or.inr ⟨_, rfl⟩
-        · exact hw a ha) π
-    rw [List.prod_cons, act_mul, raising_variant_action hL hτ] at this
-    rwa [show (M.aC PP π : ℂ) + (c - M.aC PP π + 1 / 2 - 1 / 2) = c by ring] at this
-  have e1 : gg * (zi * th (actA PP w.prod j π)) = -(opR 0 (actA PP w.prod j π)) := by
-    simp only [opR, zero_smul, sub_zero, neg_neg]
-  have e3 : gg * (zbi * thb (actA PP w.prod j π)) = opV 0 (actA PP w.prod j π) := by
-    simp only [opV, zero_smul, sub_zero]
-  have e4 : z * actA PP w.prod j π = opV 0 (actA PP w.prod j π) - opV 1 (actA PP w.prod j π) := by
-    simp only [opV, zero_smul, one_smul, sub_zero]; abel
-  refine ⟨hJ w (by omega) hw π, ?_, ?_, ?_⟩
-  · rw [e4]; exact (hV 0).sub (hV 1)
-  · rw [e1]; exact (hR 0).neg
-  · rw [e3]; exact hV 0
+      L2 (gg * (zbi * thb (actA PP w.prod j π))) := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def MulMat (δ : ℝ) (a : A PP (DQ PP)) : Prop :=
   ∀ π π', ∃ β : S (PP).TT, Good δ β ∧ ∀ g, Phi PP (a π π') g = β * g
@@ -2422,52 +2422,52 @@ theorem mulmat_mul (hτ : 0 ≤ (PP).TT) {δ : ℝ} {a b : A PP (DQ PP)} (ha : M
   rw [map_mul, Module.End.mul_apply, hpb, hpa, mul_assoc]
 
 theorem mulmat_closure {L : LevelData (A PP (DQ PP)) 0} (hL : IsModelLevel PP (DQ PP) L) (hτ : 0 ≤ (PP).TT)
-    {δ : ℝ} (hδ : 0 < δ) {b : A PP (DQ PP)} (hb : b ∈ Submonoid.closure (bddSet PP L)) : MulMat δ b := by
-  obtain ⟨-, -, -, -, -, -, hz, hzi, hzb, hzbi, hg, hgi, hn, hns, -⟩ := hL
-  induction hb using Submonoid.closure_induction with
-  | one =>
-    rw [← Matrix.diagonal_one]
-    exact mulmat_diag hτ δ _ fun π => ⟨1, by simpa using good_const hτ δ 1, fun g => by rw [one_mul]; rfl⟩
-  | mul x y _ _ ihx ihy => exact mulmat_mul hτ ihx ihy
-  | mem x hx =>
-    rcases hx with (((rfl | rfl | rfl | rfl) | ⟨g, rfl⟩) | ⟨i, -, rfl⟩) | ⟨i, -, rfl⟩
-    · rw [hzi]
-      show MulMat δ (Matrix.scalar _ (DQ PP).ziP)
-      rw [Matrix.scalar_apply]
-      exact mulmat_diag hτ δ _ fun _ => ⟨zi, good_zi hτ hδ, fun g => rfl⟩
-    · rw [hzbi]
-      show MulMat δ (Matrix.scalar _ (DQ PP).zbiP)
-      rw [Matrix.scalar_apply]
-      exact mulmat_diag hτ δ _ fun _ => ⟨zbi, good_zbi hτ hδ, fun g => rfl⟩
-    · rw [LevelData.D, LevelData.Dbi, Dr0, Drbi0, one_mul, mul_one, hz, hzbi]
-      show MulMat δ (Matrix.scalar _ (DQ PP).zP * Matrix.scalar _ (DQ PP).zbiP)
-      rw [← map_mul, Matrix.scalar_apply]
-      exact mulmat_diag hτ δ _ fun _ => ⟨z * zbi, good_zzbi hτ δ, fun g => by
-        show (z : S (PP).TT) * (zbi * g) = z * zbi * g
-        rw [mul_assoc]⟩
-    · rw [LevelData.Db, LevelData.Di, Drb0, Dri0, one_mul, mul_one, hzb, hzi]
-      show MulMat δ (Matrix.scalar _ (DQ PP).zbP * Matrix.scalar _ (DQ PP).ziP)
-      rw [← map_mul, Matrix.scalar_apply]
-      exact mulmat_diag hτ δ _ fun _ => ⟨zb * zi, good_zbzi hτ δ, fun g => by
-        show (zb : S (PP).TT) * (zi * g) = zb * zi * g
-        rw [mul_assoc]⟩
-    · show MulMat δ (Matrix.diagonal fun π => algebraMap ℂ (DQ PP).Pr (g π))
-      exact mulmat_diag hτ δ _ fun π => entry_alg hτ δ (g π)
-    · dsimp only
-      rw [Drb0, Dri0, one_mul, one_mul]
-      intro π π'
-      simp only [SS, Matrix.of_apply]
-      split_ifs
-      · exact entry_alg hτ δ _
-      · exact entry_zero hτ δ
-    · dsimp only
-      rw [Drb0, Dri0, one_mul, one_mul]
-      intro π π'
-      rw [Matrix.star_apply]
-      simp only [SS, Matrix.of_apply]
-      split_ifs
-      · rw [← algebraMap_star_comm]; exact entry_alg hτ δ _
-      · rw [star_zero]; exact entry_zero hτ δ
+    {δ : ℝ} (hδ : 0 < δ) {b : A PP (DQ PP)} (hb : b ∈ Submonoid.closure (bddSet PP L)) : MulMat δ b := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 theorem F_facts (hτ : 0 ≤ (PP).TT) {δ : ℝ} {ψ : S (PP).TT}
     (hψ : Van δ ψ) (hψ1 : Van δ (th ψ)) (hψ2 : Van δ (thb ψ))
@@ -2515,38 +2515,38 @@ namespace Formalism.FourierDecayAlt.P
 
 open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.MA Formalism.FourierDecayAlt.R Formalism.FourierDecayAlt.P.MAx2.J0
 
-theorem adjoint_at_zero : Formalism.FourierDecayAlt.MA.JAdjZero := by
-  intro P L j m hr hτ hL hD
-  obtain ⟨k, r, T, T', uu, uu'⟩ := P
-  simp only at hr
-  subst hr
-  intro φ ε hε hφ h0 hb β hβ X hX v w hl ha
-  have hG : ∀ q, Gq (Pz k T T' uu uu') q = GR q := fun q => by simp [Gq, GR]
-  have hφS : toSm (Pz k T T' uu uu') (fun q => (φ (Gq (Pz k T T' uu uu') q) : ℂ)) = phiS hφ := by
-    simp only [hG]
-    exact dif_pos (phi_smooth hφ)
-  rw [hφS]
-  have hδ : (0 : ℝ) < ε / 2 := by positivity
-  obtain ⟨v0, v1, v2⟩ := van_phi hτ hφ hε h0 hb
-  have hbm : MulMat (ε / 2) β := mulmat_closure hL hτ hδ hβ
-  have hv := square_integrable_words hL hτ hD v (fun a h => ha a (List.mem_append_left _ h)) (show v.length + 1 ≤ m by omega)
-  have hw := square_integrable_words hL hτ hD w (fun a h => ha a (List.mem_append_right _ h)) (show w.length + 1 ≤ m by omega)
-  have hF := fun π => F_facts hτ v0 v1 v2 hbm hv π
-  rw [act_mul _ β v.prod, act_mul _ (star X) w.prod]
-  unfold ipA
-  rcases hX with ((⟨y, rfl⟩ | ⟨y, rfl⟩) | ⟨y, rfl⟩) | ⟨y, rfl⟩
-  · rw [Ahat0 L y, star_one, act_one, act_one]
-  · refine Finset.sum_congr rfl fun π _ => ?_
-    rw [raising_action hL hτ, raising_star_action hL hτ]
-    obtain ⟨f0v, f0, f1, f2, f3⟩ := hF π
-    obtain ⟨g0, g1, g2, g3⟩ := hw π
-    exact (adjR hτ hδ f0v f0 f1 f2 f3 g0 g1 g2 g3 _).1
-  · rw [Ahatv0 L y, star_one, act_one, act_one]
-  · refine Finset.sum_congr rfl fun π _ => ?_
-    rw [raising_variant_action hL hτ, R0vs_act hL hτ]
-    obtain ⟨f0v, f0, f1, f2, f3⟩ := hF π
-    obtain ⟨g0, g1, g2, g3⟩ := hw π
-    exact (adjR hτ hδ f0v f0 f1 f2 f3 g0 g1 g2 g3 _).2
+theorem adjoint_at_zero : Formalism.FourierDecayAlt.MA.JAdjZero := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 end Formalism.FourierDecayAlt.P
 

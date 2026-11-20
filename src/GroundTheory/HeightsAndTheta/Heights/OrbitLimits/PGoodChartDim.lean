@@ -72,7 +72,7 @@ theorem linForm_sub_one_not_mem {m : ℕ} {V : Ideal (MvPolynomial (Fin m) ℂ)}
   intro h
   have h0 := hV _ h 0
   rw [homogeneousComponent_zero] at h0
-  have hc : coeff 0 (linForm t - 1) = -1 := by
+  have hc : AddMonoidAlgebra.coeff (linForm t - 1) 0 = -1 := by
     simp [linForm, coeff_sum, coeff_C_mul, coeff_X]
   rw [hc] at h0
   exact hne (Ideal.eq_top_of_isUnit_mem _ h0 (by simp))

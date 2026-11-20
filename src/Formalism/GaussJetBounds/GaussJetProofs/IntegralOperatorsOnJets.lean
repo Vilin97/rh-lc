@@ -57,7 +57,7 @@ theorem matching_bound : MatchBound.{u} := by
     have h1 : (∏ i ∈ Finset.univ.filter (fun i => i < σ i), ‖-S * polar c (L i) (L (σ i))‖) ≤
         (pi ^ (-(1 / 2 : ℝ))) ^ (Finset.univ.filter (fun i => i < σ i)).card := by
       rw [← Finset.prod_const]
-      refine Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i _ => ?_
+      refine Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i _ => ?_
       rw [norm_mul, norm_neg]
       calc ‖S‖ * ‖polar c (L i) (L (σ i))‖ ≤ pi ^ (-(1 / 2 : ℝ)) * 1 :=
             mul_le_mul hS (norm_polar_le c hc _ _ (hL i) (hL (σ i))) (norm_nonneg _) hB0

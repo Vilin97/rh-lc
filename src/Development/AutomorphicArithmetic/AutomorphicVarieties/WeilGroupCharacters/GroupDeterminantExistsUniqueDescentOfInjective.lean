@@ -14,7 +14,7 @@ private theorem exists_poly {n : ℕ} {A' A G : Type} [CommRing A'] [CommRing A]
       x.coeff.support ⊆ S → D.D B x = MvPolynomial.eval₂ ((algebraMap A B).comp f) x.coeff P := by
   classical
   let z : S → MonoidAlgebra A G := fun g => MonoidAlgebra.single g 1
-  have h1 : ∀ α, MvPolynomial.coeff α (D.toDet.poly z) ∈ f.range := by
+  have h1 : ∀ α, AddMonoidAlgebra.coeff (D.toDet.poly z) α ∈ f.range := by
     refine d_coef_mem D.toDet (MonoidHom.mrange (MonoidAlgebra.of A G)) f.range ?_ z (fun a => ⟨a, rfl⟩)
     rintro x ⟨g, rfl⟩ i - -
     rw [(d_toDet D _).2.1]

@@ -120,13 +120,13 @@ def ThmBGaussLoc : Prop :=
       (∀ τ, nu2 τ = (Finset.univ.filter (fun c => 2 ≤ ht τ c)).card) →
       (∀ τ, size τ = ∑ c, ht τ c) →
     ∀ nn : ((Bool × H) × Fin N0 × Fin N0) →₀ ℕ,
-      ‖MvPolynomial.coeff nn (jetPairPoly (∏ τ : Bool × H, minorProd
+      ‖AddMonoidAlgebra.coeff (jetPairPoly (∏ τ : Bool × H, minorProd
             (fun (i : Fin N0) (b : Fin N1) =>
               (∑ a : Fin N0, MvPolynomial.C (MvPolynomial.X (τ, i, a)) * MvPolynomial.X (τ, a, b) :
                 MvPolynomial ((Bool × H) × Fin N0 × Fin N1)
                   (MvPolynomial ((Bool × H) × Fin N0 × Fin N0) ℂ_[p])))
             (ht τ) (hht τ) (I τ))
-          (thetaLin (ι : ℂ →+* ℂ_[p]) h θ r t (frameM (ι : ℂ →+* ℂ_[p]) v A)))‖ ≤
+          (thetaLin (ι : ℂ →+* ℂ_[p]) h θ r t (frameM (ι : ℂ →+* ℂ_[p]) v A))) nn‖ ≤
         ‖(p : ℂ_[p])‖ ^ (-(1 / 2 : ℝ) * ∑ s : H, ((size (false, s) : ℝ) -
           (if s ∈ TT then (nu1 (false, s) : ℝ) - nu2 (false, s) else 0) +
           (if s ∈ TT then (nu1 (true, s) : ℝ) else 0)))
@@ -143,7 +143,7 @@ def IntOpLoc : Prop :=
   ∀ (J : Type) [Fintype J] (v : J → n → ℂ), (∀ j, InMul (cmL a₀ b₀ dK ha hdK lam hlam) Λ (v j)) →
   ∀ (ν : Type) [Fintype ν] (A : J → ν → ℂ_[p]), (∀ j x, ‖A j x‖ ≤ 1) →
     JetsIntegral (thetaLin (ι : ℂ →+* ℂ_[p]) h θ r t (frameM (ι : ℂ →+* ℂ_[p]) v A)) ∧
-    ∀ P : MvPolynomial ν ℂ_[p], (∀ k, ‖MvPolynomial.coeff k P‖ ≤ 1) →
+    ∀ P : MvPolynomial ν ℂ_[p], (∀ k, ‖AddMonoidAlgebra.coeff P k‖ ≤ 1) →
       ‖jetPair P (thetaLin (ι : ℂ →+* ℂ_[p]) h θ r t (frameM (ι : ℂ →+* ℂ_[p]) v A))‖ ≤ 1
 
 end Formalism.L2.Th1.GD

@@ -40,7 +40,7 @@ theorem GlobalTheory.prod_rpow_decay_isBigO_cocompact : ∀ (ι : Type) [Fintype
       _ = n ^ b * ‖v‖ ^ (-b) := by
         rw [Real.div_rpow (norm_nonneg _) hnpos.le, Real.rpow_neg hnpos.le, div_inv_eq_mul, mul_comm]
   have hrest : ∏ i ∈ Finset.univ.erase i₀, ‖g i (v i)‖ ≤ ∏ i ∈ Finset.univ.erase i₀, C i :=
-    Finset.prod_le_prod (fun i _ => norm_nonneg _) (fun i _ => (hC i (v i)).trans
+    Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) (fun i _ => (hC i (v i)).trans
       (mul_le_of_le_one_right (hC0 i)
         (Real.rpow_le_one_of_one_le_of_nonpos (by linarith [abs_nonneg (v i)]) (by linarith))))
   have h0 : ‖g i₀ (v i₀)‖ ≤ C i₀ * (n ^ b * ‖v‖ ^ (-b)) :=

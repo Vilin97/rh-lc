@@ -43,9 +43,9 @@ theorem norm_finprod_le {ι : Type} (c : ι → ℂ) (hc : (Function.mulSupport 
     · simp [h]
     · simp only [Finset.coe_union, Set.mem_union, Finset.mem_coe, Finset.mem_sdiff, Set.Finite.mem_toFinset]
       exact Or.inr ⟨hv, h⟩), Finset.prod_union Finset.disjoint_sdiff, norm_mul, norm_prod, norm_prod]
-  have a1 : ∏ v ∈ S, ‖c v‖ ≤ ∏ v ∈ S, C v := Finset.prod_le_prod (fun _ _ => norm_nonneg _) hS
+  have a1 : ∏ v ∈ S, ‖c v‖ ≤ ∏ v ∈ S, C v := Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) hS
   have a2 : ∏ v ∈ hc.toFinset \ S, ‖c v‖ ≤ 1 :=
-    Finset.prod_le_one (fun _ _ => norm_nonneg _) fun v hv => h1 v (Finset.mem_sdiff.1 hv).2
+    Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun v hv => h1 v (Finset.mem_sdiff.1 hv).2
   exact (mul_le_of_le_one_right (Finset.prod_nonneg fun _ _ => norm_nonneg _) a2).trans a1
 
 omit [NumberField E] in

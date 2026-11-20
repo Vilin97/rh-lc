@@ -10,7 +10,7 @@ namespace GroundTheory.Heights₂.Heights.TheoremB
 open MvPolynomial Finset
 
 theorem coeff_polarPoly {σ R : Type*} [CommRing R] [Fintype σ] (Φ : MvPolynomial σ R →ₗ[R] R)
-    (n : ℕ) (m : σ →₀ ℕ) : coeff m (polarPoly Φ n) = Φ (coeff m ((-outerDot σ R) ^ n)) := by
+    (n : ℕ) (m : σ →₀ ℕ) : AddMonoidAlgebra.coeff (polarPoly Φ n) m = Φ (AddMonoidAlgebra.coeff ((-outerDot σ R) ^ n) m) := by
   classical
   unfold polarPoly
   rw [coeff_sum]
@@ -21,7 +21,7 @@ theorem coeff_polarPoly {σ R : Type*} [CommRing R] [Fintype σ] (Φ : MvPolynom
   · rw [MvPolynomial.notMem_support_iff.mp h, map_zero]
 
 theorem coeff_neg_outerDot_pow (σ : Type*) [Fintype σ] (m : σ →₀ ℕ) (n : ℕ) :
-    coeff m ((-outerDot σ ℚ) ^ n) =
+    AddMonoidAlgebra.coeff ((-outerDot σ ℚ) ^ n) m =
       if m.sum (fun _ e => e) = n then monomial m ((-1) ^ n * (m.multinomial : ℚ)) else 0 := by
   have hdot : outerDot σ ℚ =
       ∑ v, (X v : MvPolynomial σ ℚ) • (X v : MvPolynomial σ (MvPolynomial σ ℚ)) := by
@@ -40,7 +40,7 @@ theorem coeff_neg_outerDot_pow (σ : Type*) [Fintype σ] (m : σ →₀ ℕ) (n 
 
 theorem flagIntegral_monomial (f N : ℕ) (m : Fin f × Fin N →₀ ℕ) :
     RestTerms.flagIntegral f N (monomial m 1) =
-      coeff m (RestTerms.blockVandermonde f N) * m.prod (fun _ e => (e.factorial : ℚ)) := by
+      AddMonoidAlgebra.coeff (RestTerms.blockVandermonde f N) m * m.prod (fun _ e => (e.factorial : ℚ)) := by
   classical
   unfold RestTerms.flagIntegral
   rw [Finset.sum_eq_single m]

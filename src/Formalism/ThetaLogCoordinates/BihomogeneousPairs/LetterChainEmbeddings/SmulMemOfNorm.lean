@@ -11,13 +11,13 @@ open MvPolynomial Finset Formalism.GM.M
 section intpol
 variable {p : ℕ} [Fact p.Prime] {σ : Type}
 
-theorem intPol_iff_bnd (x : MvPolynomial σ ℚ_[p]) : x ∈ IntPol p σ ↔ ∀ m, ‖coeff m x‖ ≤ 1 := by
+theorem intPol_iff_bnd (x : MvPolynomial σ ℚ_[p]) : x ∈ IntPol p σ ↔ ∀ m, ‖AddMonoidAlgebra.coeff x m‖ ≤ 1 := by
   constructor
   · rintro ⟨y, rfl⟩ m
     simp only [AlgHom.toLinearMap_apply, MvPolynomial.mapAlgHom_apply, MvPolynomial.coeff_map]
-    exact PadicInt.norm_le_one (coeff m y)
+    exact PadicInt.norm_le_one (AddMonoidAlgebra.coeff y m)
   · intro h
-    refine ⟨∑ m ∈ x.support, MvPolynomial.monomial m (⟨coeff m x, h m⟩ : ℤ_[p]), ?_⟩
+    refine ⟨∑ m ∈ x.support, MvPolynomial.monomial m (⟨AddMonoidAlgebra.coeff x m, h m⟩ : ℤ_[p]), ?_⟩
     simp only [AlgHom.toLinearMap_apply, map_sum, MvPolynomial.mapAlgHom_apply, MvPolynomial.map_monomial]
     conv_rhs => rw [x.as_sum]
     refine Finset.sum_congr rfl fun m _ => ?_

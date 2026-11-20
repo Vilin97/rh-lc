@@ -96,8 +96,8 @@ private theorem th_map_coeffAddMonoidHom_eq_coeff_th {n m : ℕ} {A Q G : Type} 
     (f : A →+* Q) (σ : G →* Matrix (Fin n) (Fin n) Q) (β : Fin m →₀ ℕ)
     (x : MonoidAlgebra (MvPolynomial (Fin m) A) G) (i k : Fin n) :
     th f σ (MonoidAlgebra.map (MvPolynomial.coeffAddMonoidHom β) x) i k =
-      MvPolynomial.coeff β (th (MvPolynomial.map f)
-        ((MvPolynomial.C : Q →+* MvPolynomial (Fin m) Q).mapMatrix.toMonoidHom.comp σ) x i k) := by
+      AddMonoidAlgebra.coeff (th (MvPolynomial.map f)
+        ((MvPolynomial.C : Q →+* MvPolynomial (Fin m) Q).mapMatrix.toMonoidHom.comp σ) x i k) β := by
   induction x using MonoidAlgebra.induction_linear with
   | zero => simp
   | add a b ha hb =>

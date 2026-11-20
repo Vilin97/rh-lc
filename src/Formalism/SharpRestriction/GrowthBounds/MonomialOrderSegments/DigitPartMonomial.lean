@@ -73,7 +73,7 @@ theorem coeff_ddiv {σ : Type} (M β : σ →₀ ℕ) (F : MvPolynomial σ K) :
     · have : ¬ α = β + M := by
         intro h3; apply h; rw [h3]; exact le_add_self
       rw [if_neg h, if_neg this, coeff_zero, zero_mul]
-  | add p q hp hq => rw [ddiv_add, coeff_add, coeff_add, hp, hq, add_mul]
+  | add p q hp hq => rw [ddiv_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, add_mul]
 
 namespace TwistData
 

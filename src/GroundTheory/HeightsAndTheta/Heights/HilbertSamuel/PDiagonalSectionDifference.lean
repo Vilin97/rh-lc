@@ -215,7 +215,7 @@ theorem pow_sub_pow_le (t : ℚ) (ht : 1 ≤ t) (e : ℕ) : t ^ (e + 1) - (t - 1
 
 theorem poly_diff_bound {σ : Type} (p : MvPolynomial σ ℚ) (D : ℕ) (hp : p.totalDegree ≤ D) :
     ∃ C : ℚ, ∀ t : ℚ, 1 ≤ t → eval (fun _ => t) p - eval (fun _ => t - 1) p ≤ C * t ^ (D - 1) := by
-  have hev : ∀ t : ℚ, eval (fun _ => t) p = ∑ m ∈ p.support, coeff m p * t ^ (m.sum fun _ e => e) := by
+  have hev : ∀ t : ℚ, eval (fun _ => t) p = ∑ m ∈ p.support, AddMonoidAlgebra.coeff p m * t ^ (m.sum fun _ e => e) := by
     intro t
     rw [MvPolynomial.eval_eq]
     refine Finset.sum_congr rfl fun m _ => ?_
@@ -237,7 +237,7 @@ theorem poly_diff_bound {σ : Type} (p : MvPolynomial σ ℚ) (D : ℕ) (hp : p.
       calc t ^ (e' + 1) - (t - 1) ^ (e' + 1) ≤ (e' + 1) * t ^ e' := h3
         _ ≤ (e' + 1) * t ^ (D - 1) := by gcongr
         _ = ((e' + 1 : ℕ) : ℚ) * t ^ (D - 1) := by push_cast; ring
-  calc coeff m p * t ^ e - coeff m p * (t - 1) ^ e = coeff m p * (t ^ e - (t - 1) ^ e) := by ring
+  calc AddMonoidAlgebra.coeff p m * t ^ e - AddMonoidAlgebra.coeff p m * (t - 1) ^ e = AddMonoidAlgebra.coeff p m * (t ^ e - (t - 1) ^ e) := by ring
     _ ≤ |coeff m p| * (t ^ e - (t - 1) ^ e) := mul_le_mul_of_nonneg_right (le_abs_self _) (by linarith)
     _ ≤ |coeff m p| * ((e : ℚ) * t ^ (D - 1)) := mul_le_mul_of_nonneg_left h2 (abs_nonneg _)
     _ = |coeff m p| * (e : ℚ) * t ^ (D - 1) := by ring

@@ -757,7 +757,7 @@ theorem domain_of_cell [NumberField K] (ι : Type) [Fintype ι] (τ : ι → (K 
     rw [hp]
     calc ∏ v, ‖τ v (((eqMat Z S).submatrix e id).det)‖ ^ 2
         ≤ ∏ v, (4 * (N : ℝ) ^ 2 * max 1 (Bv v) ^ 4) ^ N ^ 2 :=
-          Finset.prod_le_prod (fun v _ => by positivity)
+          Finset.prod_le_prod₀ (fun v _ => by positivity)
             (fun v _ => norm_det_eqMat_le (τ v) Z (Bv v) (fun t I J => hBv t I J v) S hSup e)
       _ = ((4 * (N : ℝ) ^ 2) ^ Fintype.card ι * (∏ v, max 1 (Bv v)) ^ 4) ^ N ^ 2 := by
           rw [Finset.prod_pow, Finset.prod_mul_distrib, Finset.prod_const, Finset.prod_pow, Finset.card_univ]

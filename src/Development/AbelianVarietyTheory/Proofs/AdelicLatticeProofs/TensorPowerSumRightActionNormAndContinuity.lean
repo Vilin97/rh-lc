@@ -75,7 +75,7 @@ private lemma norm_tpow_apply_le_pow_of_forall_norm_le {ι : Type} (n : ℕ) (y 
     (hy : ∀ i j, ‖y i j‖ ≤ B) (a b : Fin n → ι) : ‖_root_.GlobalTheory.ClassFin.tpow n y a b‖ ≤ B ^ n := by
   rw [tpow_apply_eq_prod, norm_prod]
   calc ∏ k, ‖y (a k) (b k)‖ ≤ ∏ _k : Fin n, B :=
-        Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun k _ => hy _ _
+        Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun k _ => hy _ _
     _ = B ^ n := by simp
 
 open Matrix in

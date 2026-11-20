@@ -20,11 +20,11 @@ def cwl_iota : MvPolynomial (Fin r × Fin n) R →+*
 def cwl_coeffT (d : Fin r × Fin n →₀ ℕ)
     (G : MvPolynomial (Fin r × Fin n) (MvPolynomial (Fin r × Fin n) R)) :
     MvPolynomial (Fin r × Fin n) R :=
-  ∑ m ∈ G.support, monomial m (coeff d (coeff m G))
+  ∑ m ∈ G.support, monomial m (AddMonoidAlgebra.coeff (AddMonoidAlgebra.coeff G m) d)
 
 theorem cwl_coeff_coeffT (d m : Fin r × Fin n →₀ ℕ)
     (G : MvPolynomial (Fin r × Fin n) (MvPolynomial (Fin r × Fin n) R)) :
-    coeff m (cwl_coeffT d G) = coeff d (coeff m G) := by
+    AddMonoidAlgebra.coeff (cwl_coeffT d G) m = AddMonoidAlgebra.coeff (AddMonoidAlgebra.coeff G m) d := by
   classical
   unfold cwl_coeffT
   rw [coeff_sum]
@@ -52,7 +52,7 @@ theorem cwl_coeffT_sum {ι : Type*} (s : Finset ι) (d : Fin r × Fin n →₀ �
   simp [cwl_coeff_coeffT, coeff_sum]
 
 theorem cwl_coeffT_monomial (d u : Fin r × Fin n →₀ ℕ) (c : MvPolynomial (Fin r × Fin n) R) :
-    cwl_coeffT d (monomial u c) = monomial u (coeff d c) := by
+    cwl_coeffT d (monomial u c) = monomial u (AddMonoidAlgebra.coeff c d) := by
   classical
   ext m
   rw [cwl_coeff_coeffT, coeff_monomial, coeff_monomial]
@@ -208,7 +208,7 @@ theorem cwl_coeffT_Phi (L : List (Fin r × Fin r × (Fin r × Fin n)))
 
 theorem cw_eval_coeffT (d : Fin r × Fin n →₀ ℕ) (y : Fin r × Fin n → R)
     (G : MvPolynomial (Fin r × Fin n) (MvPolynomial (Fin r × Fin n) R)) :
-    eval y (cwl_coeffT d G) = coeff d (eval (fun v => C (y v)) G) := by
+    eval y (cwl_coeffT d G) = AddMonoidAlgebra.coeff (eval (fun v => C (y v)) G) d := by
   induction G using MvPolynomial.induction_on' with
   | monomial u c =>
     rw [cwl_coeffT_monomial, eval_monomial, eval_monomial]
@@ -216,7 +216,7 @@ theorem cw_eval_coeffT (d : Fin r × Fin n →₀ ℕ) (y : Fin r × Fin n → R
         C (u.prod fun v k => y v ^ k) := by
       simp [Finsupp.prod, map_prod]
     rw [h, mul_comm c, coeff_C_mul, mul_comm]
-  | add p q hp hq => rw [cwl_coeffT_add, map_add, map_add, coeff_add, hp, hq]
+  | add p q hp hq => rw [cwl_coeffT_add, map_add, map_add, MvPolynomial.coeff_add, hp, hq]
 
 def cwUpd (l : Fin r × Fin r × (Fin r × Fin n)) (y : Fin r × Fin n → MvPolynomial (Fin r × Fin n) R) :
     Fin r × Fin n → MvPolynomial (Fin r × Fin n) R :=

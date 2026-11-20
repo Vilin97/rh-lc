@@ -25,7 +25,7 @@ lemma bijective_algebraMap_gradeZero (n : ℕ) :
       MvPolynomial.algebraMap_eq] at h'
     exact MvPolynomial.C_injective _ _ h'
   · rintro ⟨p, hp⟩
-    refine ⟨coeff 0 p, Subtype.ext ?_⟩
+    refine ⟨AddMonoidAlgebra.coeff p 0, Subtype.ext ?_⟩
     rw [SetLike.GradeZero.coe_algebraMap, MvPolynomial.algebraMap_eq]
     by_cases h0 : p = 0
     · subst h0

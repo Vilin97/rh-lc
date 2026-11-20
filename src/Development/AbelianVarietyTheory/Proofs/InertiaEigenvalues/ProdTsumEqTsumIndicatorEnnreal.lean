@@ -154,7 +154,7 @@ theorem summable_norm_finsupp_prod (f : I → X → ℂ) (hf0 : ∀ v, f v 0 = 1
         refine ENNReal.ofReal_le_ofReal ?_
         calc ∏ v ∈ T.biUnion Finsupp.support, (1 + a v)
             ≤ ∏ v ∈ T.biUnion Finsupp.support, Real.exp (a v) :=
-              Finset.prod_le_prod (fun v _ => by linarith [ha0 v])
+              Finset.prod_le_prod₀ (fun v _ => by linarith [ha0 v])
                 fun v _ => by linarith [Real.add_one_le_exp (a v)]
           _ = Real.exp (∑ v ∈ T.biUnion Finsupp.support, a v) := (Real.exp_sum _ _).symm
           _ ≤ Real.exp (∑' v, a v) := Real.exp_le_exp.2 (hA.sum_le_tsum _ (fun v _ => ha0 v))

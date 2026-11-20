@@ -106,11 +106,11 @@ theorem exists_value {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {z : (Σ k
       mConeMap_of_isMultiHomog y hg] at h
     exact h
 
-  have hcoef := congrArg (coeff (m + Finsupp.equivFunOnFinite.symm bf)) hrel'
+  have hcoef := congrArg (AddMonoidAlgebra.coeff · (m + Finsupp.equivFunOnFinite.symm bf)) hrel'
   rw [prod_X_pow_eq_monomial, prod_X_pow_eq_monomial, C_mul_monomial, C_mul_monomial,
     coeff_mul_monomial', coeff_mul_monomial', if_pos le_add_self, add_tsub_cancel_right, mul_one,
     mul_one] at hcoef
-  have hcu : coeff m (mConeMap y u) = aeval y ue := by
+  have hcu : AddMonoidAlgebra.coeff (mConeMap y u) m = aeval y ue := by
     rw [← Finsupp.equivFunOnFinite_symm_coe m, HilbertSamuel.GenFibreHomog.coeff_mConeMap]
   rw [hcu] at hcoef
   by_cases hle : Finsupp.equivFunOnFinite.symm bg ≤ m + Finsupp.equivFunOnFinite.symm bf
@@ -122,8 +122,8 @@ theorem exists_value {Ω : Type} [Field Ω] {y : (Σ k, ι k) → Ω} {z : (Σ k
   set a := weightedHomogeneousComponent (NumbersDVR.blockWeight ι) d' v with ha_def
   have ha : IsMultiHomog a d' := HilbertSamuel.GenFibreHomog.isMultiHomog_of_weighted
     (weightedHomogeneousComponent_isWeightedHomogeneous d' v)
-  have hcv : coeff (m + Finsupp.equivFunOnFinite.symm bf - Finsupp.equivFunOnFinite.symm bg)
-      (mConeMap y v) = aeval y a := by
+  have hcv : AddMonoidAlgebra.coeff (mConeMap y v)
+      (m + Finsupp.equivFunOnFinite.symm bf - Finsupp.equivFunOnFinite.symm bg) = aeval y a := by
     rw [← Finsupp.equivFunOnFinite_symm_coe
       (m + Finsupp.equivFunOnFinite.symm bf - Finsupp.equivFunOnFinite.symm bg),
       HilbertSamuel.GenFibreHomog.coeff_mConeMap]

@@ -453,7 +453,7 @@ theorem core (D : D7) (V W S : HSp D) (hS : S.gram = 1) (C C' : Matrix (Fin V.ra
       have hx := hCb (ratW W S y + k)
       have hprod : ∏ i, (1 + ℓ (ratW W S y) i ^ 2) ≤ A * ∏ i, (1 + ℓ (ratW W S y + k) i ^ 2) := by
         rw [← Finset.prod_mul_distrib]
-        refine Finset.prod_le_prod (fun i _ => by positivity) (fun i _ => ?_)
+        refine Finset.prod_le_prod₀ (fun i _ => by positivity) (fun i _ => ?_)
         have e : ℓ (ratW W S y) i = ℓ (ratW W S y + k) i - ℓ k i := by rw [hℓa]; ring
         rw [e]
         have := hMi i k hk

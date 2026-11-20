@@ -531,7 +531,7 @@ theorem lift_eq (D : D7) (u : D.what₂.Word) (i : ℕ) (φ : (D.mem u).C.cls i 
     LinearMap.smul_apply, LinearMap.comp_apply, rhoDet_eq, rhoDet'_eq]
 
 def applyAt0 (D : D7) {N N' : ℕ} (P : MvPolynomial (Idx D N N') ℂ) (G : VC D N N' → ℂ) : ℂ :=
-  ∑ α ∈ P.support, MvPolynomial.coeff α P * (α.prod fun _ n => (n.factorial : ℂ)) * taylor D G α
+  ∑ α ∈ P.support, AddMonoidAlgebra.coeff P α * (α.prod fun _ n => (n.factorial : ℂ)) * taylor D G α
 
 abbrev FrV (D : D7) (N : ℕ) : Type := D.what₂.Tau × Fin N × Fin N
 

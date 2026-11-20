@@ -285,7 +285,7 @@ theorem had_onb {E : Type} [NormedAddCommGroup E] [InnerProductSpace ℂ E] (ρ 
     (hw : Orthonormal ℂ w) :
     ‖(Matrix.of fun l k => inner ℂ (w l) (x k)).det‖ ≤ ∏ k, ‖x k‖ := by
   refine (had_cols ρ _).trans ?_
-  refine Finset.prod_le_prod (fun _ _ => Real.sqrt_nonneg _) fun k _ => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => Real.sqrt_nonneg _) fun k _ => ?_
   rw [Real.sqrt_le_left (norm_nonneg _)]
   simpa using hw.sum_inner_products_le (x k) (s := Finset.univ)
 
@@ -363,7 +363,7 @@ theorem Herm.had {K : Type} [Field K] [NumberField K] {V : Type} [AddCommGroup V
   refine (had_inner dH ρ a fun k => Hm.e σ (v k)).trans ?_
   simp only [Hm.norm_e]
   refine mul_le_mul_of_nonneg_right ?_ (Finset.prod_nonneg fun k _ => ?_)
-  · exact Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => ha1 i
+  · exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => ha1 i
   · rw [← Hm.norm_e]; exact norm_nonneg _
 
 section Det
@@ -630,7 +630,7 @@ theorem deepCore (M : Submodule (𝓞 K) V) {ρ : ℕ} (z : Fin ρ → (ι →�
       refine hb.trans ?_
       rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin, Real.exp_sum]
       refine mul_le_mul_of_nonneg_left ?_ (pow_pos hB _).le
-      refine Finset.prod_le_prod (fun k _ => Finset.sum_nonneg fun γ _ => ?_) fun k _ => hE σ k
+      refine Finset.prod_le_prod₀ (fun k _ => Finset.sum_nonneg fun γ _ => ?_) fun k _ => hE σ k
       rw [← Hm.norm_e]; exact norm_nonneg _
     calc Real.log ‖σ a‖ ≤ Real.log (Bop ^ ρ * Real.exp (∑ k, E σ k)) := Real.log_le_log hpos hb2
       _ = _ := by rw [Real.log_mul (pow_pos hB _).ne' (Real.exp_pos _).ne', Real.log_pow, Real.log_exp]

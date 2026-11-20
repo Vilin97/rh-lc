@@ -7,7 +7,7 @@ namespace GroundTheory.Heights₂.Heights.HilbertSamuel
 open MvPolynomial Finset
 
 theorem norm_eval_le_sum_norm_coeff_mul {d : ℕ} (a : MvPolynomial (Fin d) ℂ) (y : Fin d → ℂ) :
-    ‖eval y a‖ ≤ (∑ s ∈ a.support, ‖coeff s a‖) * (1 + ‖y‖) ^ a.totalDegree := by
+    ‖eval y a‖ ≤ (∑ s ∈ a.support, ‖AddMonoidAlgebra.coeff a s‖) * (1 + ‖y‖) ^ a.totalDegree := by
   have h1 : (1 : ℝ) ≤ 1 + ‖y‖ := le_add_of_nonneg_right (norm_nonneg _)
   rw [eval_eq, sum_mul]
   refine (norm_sum_le _ _).trans (sum_le_sum fun s hs ↦ ?_)
@@ -38,7 +38,7 @@ theorem norm_le_one_add_sum_norm_coeff_of_monic {q : Polynomial ℂ} (hq : q.Mon
 theorem MonicRootGrowth.proof : MonicRootGrowth.Statement := by
   intro d m hm
   set n := m.natDegree
-  set S : ℕ → ℝ := fun i ↦ ∑ s ∈ (m.coeff i).support, ‖coeff s (m.coeff i)‖
+  set S : ℕ → ℝ := fun i ↦ ∑ s ∈ (m.coeff i).support, ‖AddMonoidAlgebra.coeff (m.coeff i) s‖
   refine ⟨1 + ∑ i ∈ range n, S i, (range n).sup fun i ↦ (m.coeff i).totalDegree, fun y τ hτ ↦ ?_⟩
   have hmap : (m.map (eval y)).Monic := hm.map _
   have hdeg : (m.map (eval y)).natDegree = n := hm.natDegree_map _

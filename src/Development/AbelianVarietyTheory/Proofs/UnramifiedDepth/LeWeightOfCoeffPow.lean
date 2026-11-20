@@ -158,8 +158,8 @@ lemma not_dvd_mfact [Fintype κ] {l : ℕ} (hl : l.Prime) (β : κ →₀ ℕ) (
   exact absurd (hl.dvd_factorial.1 hj) (not_le.2 (h j))
 
 lemma coeff_pow_zmod {l : ℕ} (hl : l.Prime) (q : MvPolynomial κ ℤ) (A : κ →₀ ℕ) :
-    ((MvPolynomial.coeff A (q ^ l) : ℤ) : ZMod l) =
-      MvPolynomial.coeff A (MvPolynomial.expand l (MvPolynomial.map (Int.castRingHom (ZMod l)) q)) := by
+    ((AddMonoidAlgebra.coeff (q ^ l) A : ℤ) : ZMod l) =
+      AddMonoidAlgebra.coeff (MvPolynomial.expand l (MvPolynomial.map (Int.castRingHom (ZMod l)) q)) A := by
   haveI := Fact.mk hl
   rw [MvPolynomial.expand_zmod, ← map_pow, MvPolynomial.coeff_map]
   rfl
@@ -256,7 +256,7 @@ lemma mem_mult {O : Subring C} {l : ℕ} {x : C} : x ∈ mult O l ↔ ∃ o ∈ 
 
 lemma coeff_mul_mfact [Fintype κ] {l : ℕ} (hl : l.Prime) (q : MvPolynomial κ ℤ) (A β : κ →₀ ℕ)
     (h : ∀ j, l * β j ≤ A j) (hne : A ≠ l • β) :
-    ∃ z : ℤ, MvPolynomial.coeff A (q ^ l) * (mfact A : ℤ) = (-(l : ℤ)) ^ (∑ j, β j) * (l * z) := by
+    ∃ z : ℤ, AddMonoidAlgebra.coeff (q ^ l) A * (mfact A : ℤ) = (-(l : ℤ)) ^ (∑ j, β j) * (l * z) := by
   classical
   obtain ⟨j, hj⟩ : ∃ j, A j ≠ l * β j := by
     by_contra hc
@@ -277,7 +277,7 @@ lemma coeff_mul_mfact [Fintype κ] {l : ℕ} (hl : l.Prime) (q : MvPolynomial κ
       · simpa [Finsupp.single_apply, hi] using h i
     have hs : ∑ i, (β + Finsupp.single j 1 : κ →₀ ℕ) i = ∑ i, β i + 1 := by
       simp [Finset.sum_add_distrib, Finsupp.single_apply]
-    refine ⟨-(MvPolynomial.coeff A (q ^ l) * z), ?_⟩
+    refine ⟨-(AddMonoidAlgebra.coeff (q ^ l) A * z), ?_⟩
     rw [hz, hs]
     ring
   · obtain ⟨z, hz⟩ := mfact_int hl A β h
@@ -298,9 +298,9 @@ lemma offDiag_mem [CharZero C] [Fintype κ] {l : ℕ} (hl : l.Prime) (O : Subrin
     (hB : ∀ j, B j < l) (hAB : ∑ j, A j = l * ∑ j, B j) (G : MvPowerSeries (κ ⊕ κ) C)
     (hG0 : MvPowerSeries.coeff 0 G = 1)
     (hG : ∀ m ≤ Finsupp.sumElim A B, MvPowerSeries.coeff m G ∈ O) :
-    ((MvPolynomial.coeff A (q ^ l) : ℤ) : C) * t * ((mfact A : C) * mfact B) *
+    ((AddMonoidAlgebra.coeff (q ^ l) A : ℤ) : C) * t * ((mfact A : C) * mfact B) *
         MvPowerSeries.coeff (Finsupp.sumElim A B) (mvExp (mainTerm l (-(l : C)⁻¹)) * G) -
-      ((MvPolynomial.coeff A (q ^ l) : ℤ) : C) * t * ((mfact A : C) * mfact B) *
+      ((AddMonoidAlgebra.coeff (q ^ l) A : ℤ) : C) * t * ((mfact A : C) * mfact B) *
         MvPowerSeries.coeff (Finsupp.sumElim A B) (mvExp (mainTerm l (-(l : C)⁻¹))) ∈
       mult O l := by
   classical
@@ -339,7 +339,7 @@ lemma offDiag_mem [CharZero C] [Fintype κ] {l : ℕ} (hl : l.Prime) (O : Subrin
     subst h5
     exact hne (by rw [left_eq_add.1 hsum.symm])
   obtain ⟨z, hz⟩ := coeff_mul_mfact hl q A β h1 h3
-  have hz' : ((MvPolynomial.coeff A (q ^ l) : ℤ) : C) * (mfact A : C) =
+  have hz' : ((AddMonoidAlgebra.coeff (q ^ l) A : ℤ) : C) * (mfact A : C) =
       (-(l : C)) ^ (∑ j, β j) * (l * z) := by exact_mod_cast congrArg (Int.cast : ℤ → C) hz
   refine ⟨(z : C) * t * mfact B * (mfact β : C)⁻¹ * MvPowerSeries.coeff r G, ?_, ?_⟩
   · exact O.mul_mem (O.mul_mem (O.mul_mem (O.mul_mem (intCast_mem O z) (intCast_mem O t))
@@ -353,24 +353,24 @@ lemma offDiag_mem [CharZero C] [Fintype κ] {l : ℕ} (hl : l.Prime) (O : Subrin
 
 lemma diag_mem [CharZero C] [Fintype κ] {l : ℕ} (hl : l.Prime) (O : Subring C)
     (q : MvPolynomial κ ℤ) (B : κ →₀ ℕ) :
-    (∑ A ∈ (q ^ l).support, ((MvPolynomial.coeff A (q ^ l) : ℤ) : C) *
-        (MvPolynomial.coeff B q : ℤ) * ((mfact A : C) * mfact B) *
+    (∑ A ∈ (q ^ l).support, ((AddMonoidAlgebra.coeff (q ^ l) A : ℤ) : C) *
+        (AddMonoidAlgebra.coeff q B : ℤ) * ((mfact A : C) * mfact B) *
         MvPowerSeries.coeff (Finsupp.sumElim A B) (mvExp (mainTerm l (-(l : C)⁻¹)))) -
-      ((MvPolynomial.coeff B q : ℤ) : C) * mfact B * (MvPolynomial.coeff B q : ℤ) ∈ mult O l := by
+      ((AddMonoidAlgebra.coeff q B : ℤ) : C) * mfact B * (AddMonoidAlgebra.coeff q B : ℤ) ∈ mult O l := by
   classical
   simp only [coeff_exp_mainTerm]
   rw [Finset.sum_eq_single (l • B), if_pos rfl]
   · obtain ⟨w, hw, hw'⟩ := mfact_smul hl B
     have h0 := coeff_pow_zmod hl q (l • B)
     rw [MvPolynomial.coeff_expand_smul _ hl.ne_zero, MvPolynomial.coeff_map, eq_intCast] at h0
-    have h1 : ((MvPolynomial.coeff (l • B) (q ^ l) * w - MvPolynomial.coeff B q * mfact B : ℤ) :
+    have h1 : ((AddMonoidAlgebra.coeff (q ^ l) (l • B) * w - AddMonoidAlgebra.coeff q B * mfact B : ℤ) :
         ZMod l) = 0 := by
       push_cast
       rw [h0, hw', sub_self]
     rw [ZMod.intCast_zmod_eq_zero_iff_dvd] at h1
     obtain ⟨z, hz⟩ := h1
-    have hz' : ((MvPolynomial.coeff (l • B) (q ^ l) : ℤ) : C) * w -
-        ((MvPolynomial.coeff B q : ℤ) : C) * mfact B = l * z := by
+    have hz' : ((AddMonoidAlgebra.coeff (q ^ l) (l • B) : ℤ) : C) * w -
+        ((AddMonoidAlgebra.coeff q B : ℤ) : C) * mfact B = l * z := by
       exact_mod_cast congrArg (Int.cast : ℤ → C) hz
     have hw2 : (mfact (l • B) : C) = (-(l : C)) ^ (∑ j, B j) * w := by
       exact_mod_cast congrArg (Int.cast : ℤ → C) hw
@@ -379,12 +379,12 @@ lemma diag_mem [CharZero C] [Fintype κ] {l : ℕ} (hl : l.Prime) (O : Subring C
       refine mul_inv_cancel₀ (Nat.cast_ne_zero.2 ?_)
       rw [mfact_eq]
       exact Finset.prod_ne_zero_iff.2 fun j _ => Nat.factorial_ne_zero _
-    refine ⟨(z : C) * (MvPolynomial.coeff B q : ℤ),
+    refine ⟨(z : C) * (AddMonoidAlgebra.coeff q B : ℤ),
       O.mul_mem (intCast_mem O _) (intCast_mem O _), ?_⟩
     change (l : C) * _ = _
     rw [hw2]
-    generalize ((MvPolynomial.coeff (l • B) (q ^ l) : ℤ) : C) = a at *
-    generalize ((MvPolynomial.coeff B q : ℤ) : C) = b at *
+    generalize ((AddMonoidAlgebra.coeff (q ^ l) (l • B) : ℤ) : C) = a at *
+    generalize ((AddMonoidAlgebra.coeff q B : ℤ) : C) = b at *
     generalize (-(l : C)) ^ (∑ j, B j) = c at *
     generalize (-(l : C)⁻¹) ^ (∑ j, B j) = d at *
     linear_combination (-b) * hz' - (a * b * w) * h3 - (a * b * w * c * d) * h4
@@ -396,7 +396,7 @@ lemma diag_mem [CharZero C] [Fintype κ] {l : ℕ} (hl : l.Prime) (O : Subring C
 
 lemma jetAt0_eq_sum (P : MvPolynomial σ C) (G : MvPowerSeries σ C) (s : Finset (σ →₀ ℕ))
     (hs : P.support ⊆ s) :
-    jetAt0 P G = ∑ m ∈ s, MvPolynomial.coeff m P * (mfact m : C) * MvPowerSeries.coeff m G := by
+    jetAt0 P G = ∑ m ∈ s, AddMonoidAlgebra.coeff P m * (mfact m : C) * MvPowerSeries.coeff m G := by
   unfold jetAt0
   refine Finset.sum_subset hs fun m _ hm => ?_
   rw [MvPolynomial.notMem_support_iff.1 hm]
@@ -429,7 +429,7 @@ lemma jetAt0_rename_mul [Fintype κ] (p q : MvPolynomial κ ℤ) (G : MvPowerSer
     jetAt0 (MvPolynomial.rename Sum.inl (MvPolynomial.map (Int.castRingHom C) p) *
         MvPolynomial.rename Sum.inr (MvPolynomial.map (Int.castRingHom C) q)) G =
       ∑ A ∈ p.support, ∑ B ∈ q.support,
-        ((MvPolynomial.coeff A p : ℤ) : C) * (MvPolynomial.coeff B q : ℤ) *
+        ((AddMonoidAlgebra.coeff p A : ℤ) : C) * (AddMonoidAlgebra.coeff q B : ℤ) *
           ((mfact A : C) * mfact B) * MvPowerSeries.coeff (Finsupp.sumElim A B) G := by
   conv_lhs => rw [p.as_sum, q.as_sum]
   simp only [map_sum, Finset.sum_mul_sum, jetAt0_sum, MvPolynomial.map_monomial,
@@ -450,10 +450,10 @@ lemma jet_sub_mem [CharZero C] [Fintype κ] {l : ℕ} (hl : l.Prime) (O : Subrin
     jetAt0 (MvPolynomial.rename Sum.inl (MvPolynomial.map (Int.castRingHom C) (q ^ l)) *
         MvPolynomial.rename Sum.inr (MvPolynomial.map (Int.castRingHom C) q))
         (mvExp (mainTerm l (-(l : C)⁻¹)) * G) -
-      ∑ B ∈ q.support, ((MvPolynomial.coeff B q : ℤ) : C) * mfact B *
-        (MvPolynomial.coeff B q : ℤ) ∈ mult O l := by
+      ∑ B ∈ q.support, ((AddMonoidAlgebra.coeff q B : ℤ) : C) * mfact B *
+        (AddMonoidAlgebra.coeff q B : ℤ) ∈ mult O l := by
   have h1 := sum_mem fun A hA => sum_mem fun B hB' =>
-    offDiag_mem hl O hO q (MvPolynomial.coeff B q) A B (hB B hB') (hAB A hA B hB') G hG0
+    offDiag_mem hl O hO q (AddMonoidAlgebra.coeff q B) A B (hB B hB') (hAB A hA B hB') G hG0
       (hG A hA B hB')
   have h2 := sum_mem (t := q.support) fun B _ => diag_mem hl O q B
   have h3 := add_mem h1 h2
@@ -583,10 +583,10 @@ theorem ubUnit : UBUnit := by
   rw [← hL] at key
   obtain ⟨o, ho, he⟩ := mem_mult.1 key
   have hcap := GlobalTheory.DetPowPairing.main C n0 y
-  have hsum : (∑ A ∈ (cayDet n0 C ^ y).support, MvPolynomial.coeff A (cayDet n0 C ^ y) *
-      (A.prod fun _ e => (e.factorial : C)) * MvPolynomial.coeff A (cayDet n0 C ^ y)) =
-      ∑ B ∈ q.support, ((MvPolynomial.coeff B q : ℤ) : C) * mfact B *
-        (MvPolynomial.coeff B q : ℤ) := by
+  have hsum : (∑ A ∈ (cayDet n0 C ^ y).support, AddMonoidAlgebra.coeff (cayDet n0 C ^ y) A *
+      (A.prod fun _ e => (e.factorial : C)) * AddMonoidAlgebra.coeff (cayDet n0 C ^ y) A) =
+      ∑ B ∈ q.support, ((AddMonoidAlgebra.coeff q B : ℤ) : C) * mfact B *
+        (AddMonoidAlgebra.coeff q B : ℤ) := by
     rw [← map_cayDet, ← map_pow, ← hq,
       MvPolynomial.support_map_of_injective _ (RingHom.injective_int _)]
     refine Finset.sum_congr rfl fun B _ => ?_

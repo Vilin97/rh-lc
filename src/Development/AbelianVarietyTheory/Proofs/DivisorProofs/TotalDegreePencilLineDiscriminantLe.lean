@@ -108,7 +108,7 @@ theorem coeffDeg_line {D N δ : ℕ} (f : MvPolynomial (Fin (D + 1) × Fin N) F)
       (fun j => C (ξ₀ j)) (fun j => C (ξ₁ j)) f) := by
   rw [line, aeval_def, eval₂_eq']
   refine coeffDeg_sum _ _ fun d hd => ?_
-  have hc : CoeffDeg 0 (algebraMap F (Polynomial (MvPolynomial (Fin D × Fin N) F)) (coeff d f)) := by
+  have hc : CoeffDeg 0 (algebraMap F (Polynomial (MvPolynomial (Fin D × Fin N) F)) (AddMonoidAlgebra.coeff f d)) := by
     rw [Polynomial.algebraMap_apply]
     exact coeffDeg_C (by rw [MvPolynomial.algebraMap_eq, totalDegree_C])
   have hw : ∀ p : Fin (D + 1) × Fin N, CoeffDeg (if p.1 = Fin.last D then 0 else 1)

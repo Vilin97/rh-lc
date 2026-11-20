@@ -194,7 +194,7 @@ theorem gauss_roots {ι : Type} [Fintype ι] (A : PowerSeries K) (hA0 : constant
   have hrest : (1 : ℝ) ≤ ∏ Q ∈ Finset.univ.erase P, ‖d Q‖ := by
     calc (1 : ℝ) = ∏ Q ∈ Finset.univ.erase P, (1 : ℝ) := by rw [Finset.prod_const_one]
       _ ≤ ∏ Q ∈ Finset.univ.erase P, ‖d Q‖ :=
-        Finset.prod_le_prod (fun _ _ => zero_le_one) (fun Q _ => hd1 Q)
+        Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun Q _ => hd1 Q)
   rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ P), hdP] at hc
   have : ‖c P‖ * 1 ≤ ‖c P‖ * ∏ Q ∈ Finset.univ.erase P, ‖d Q‖ :=
     mul_le_mul_of_nonneg_left hrest (norm_nonneg _)

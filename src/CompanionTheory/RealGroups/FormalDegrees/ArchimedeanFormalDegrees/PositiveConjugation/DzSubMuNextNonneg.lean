@@ -86,7 +86,7 @@ theorem phiLe : PhiLe := by
     refine Finset.prod_congr rfl fun i _ => ?_
     rw [hr i, Complex.ofReal_zpow, Complex.ofReal_re]
   rw [hphi, Complex.ofReal_re]
-  refine Finset.prod_le_one (fun i _ => zpow_nonneg (zero_le_one.trans (one_le_lead_exp hP _ i.isLt)) _) fun i _ => ?_
+  refine Finset.prod_le_one₀ (fun i _ => zpow_nonneg (zero_le_one.trans (one_le_lead_exp hP _ i.isLt)) _) fun i _ => ?_
   exact zpow_le_one_of_nonpos₀ (one_le_lead_exp hP _ i.isLt) (neg_nonpos.2 (dz_sub_muNext_nonneg i))
 
 end CompanionTheory.RgFd

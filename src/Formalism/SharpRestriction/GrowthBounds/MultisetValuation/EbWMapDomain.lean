@@ -17,10 +17,10 @@ def eb_w (F : MvPowerSeries σ K) (n : σ →₀ ℕ) : K :=
   (∏ x ∈ n.support, ((n x).factorial : K)) * MvPowerSeries.coeff n F
 
 def eb_J (F : MvPowerSeries σ K) (Q : MvPolynomial σ (MvPolynomial τ K)) : MvPolynomial τ K :=
-  ∑ n ∈ Q.support, eb_w F n • MvPolynomial.coeff n Q
+  ∑ n ∈ Q.support, eb_w F n • AddMonoidAlgebra.coeff Q n
 
 theorem eb_J_subset (F : MvPowerSeries σ K) (Q : MvPolynomial σ (MvPolynomial τ K)) (S : Finset (σ →₀ ℕ))
-    (h : Q.support ⊆ S) : eb_J F Q = ∑ n ∈ S, eb_w F n • MvPolynomial.coeff n Q := by
+    (h : Q.support ⊆ S) : eb_J F Q = ∑ n ∈ S, eb_w F n • AddMonoidAlgebra.coeff Q n := by
   unfold eb_J
   apply Finset.sum_subset h
   intro n _ hn

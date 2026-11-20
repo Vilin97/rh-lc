@@ -38,7 +38,7 @@ theorem term_bound_of_jets (hJ : type_of% @GlobalTheory.T.jets_torsion_translate
   have hvM : padicValNat p M = 0 := padicValNat.eq_zero_of_not_dvd hpM
   have hnQ : ‖(Q : ℂ_[p])‖⁻¹ = (p : ℝ) ^ (padicValNat p Q : ℝ) := norm_natCast_inv p hQ0
   have hnMQ : ‖((M * Q : ℕ) : ℂ_[p])‖⁻¹ = (p : ℝ) ^ (padicValNat p Q : ℝ) := by
-    rw [norm_natCast_inv p (Nat.mul_ne_zero hM0' hQ0), padicValNat.mul hM0' hQ0, hvM, zero_add]
+    rw [norm_natCast_inv p (Nat.mul_ne_zero hM0' hQ0), (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hM0' hQ0, hvM, zero_add]
   have hsplit : p ∣ M * Q → SplitIn D p := fun h =>
     (hpp.dvd_mul.1 h).elim (fun h' => absurd h' hpM) hQ
   set B : ℝ := (p : ℝ) ^ (((P.a * ∑ τ, P.n τ : ℕ) : ℝ) * (dl p + (if p = D.host.d then 1 / 4 else 0) +
@@ -109,7 +109,7 @@ theorem coordInt_of_jets (hJ : type_of% @GlobalTheory.T.jets_torsion_translates_
   have hMN0 : 8 ^ (4 * fF D * N) * (8 * fF D * N).factorial ≠ 0 := by positivity
   have hvle : ∀ m : ℕ, m ∣ 8 ^ (4 * fF D * N) * (8 * fF D * N).factorial →
       padicValNat p m ≤ padicValNat p (8 ^ (4 * fF D * N) * (8 * fF D * N).factorial) := fun m hm =>
-    (padicValNat_dvd_iff_le hMN0).1 ((pow_padicValNat_dvd (p := p) (n := m)).trans hm)
+    (padicValNat_dvd_iff_le hMN0).1 (((fun {p n : ℕ} => _root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat p n)) (p := p) (n := m)).trans hm)
   have hvQ : (padicValNat p Q' : ℝ) ≤ padicValNat p Q := by exact_mod_cast hQ'
   have hite : (0 : ℝ) ≤ (if p = D.host.d then 1 / 4 else 0) := by split_ifs <;> norm_num
   have hX : 0 ≤ dl p + (if p = D.host.d then 1 / 4 else 0) + (padicValNat p Q : ℝ) := by

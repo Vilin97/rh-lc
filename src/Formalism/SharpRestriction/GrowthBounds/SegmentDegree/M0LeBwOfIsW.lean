@@ -193,8 +193,8 @@ theorem restMemD_of (D : Formalism.BasicNotions.D7) (hAdm : AdmB D) (C₀ : ℝ)
     ring
   rw [hfac, MvPolynomial.mem_restrictSupport_iff]
   intro mm hmm i hi c
-  have hmm' : coeff mm (monomial (X.monTau K j q.1.2.2) (1 : O) *
-      (plEmb O r K (X.discPowerTimesMonomial p K O j b * X.memPl K O j q.1.1) * nmEmb O r K (X.memG K O j q.1))) ≠ 0 := by
+  have hmm' : AddMonoidAlgebra.coeff (monomial (X.monTau K j q.1.2.2) (1 : O) *
+      (plEmb O r K (X.discPowerTimesMonomial p K O j b * X.memPl K O j q.1.1) * nmEmb O r K (X.memG K O j q.1))) mm ≠ 0 := by
     rw [← MvPolynomial.mem_support_iff]; exact_mod_cast hmm
   rw [MvPolynomial.coeff_monomial_mul'] at hmm'
   split_ifs at hmm' with hle

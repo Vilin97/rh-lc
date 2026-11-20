@@ -100,8 +100,8 @@ theorem one_le_ringKrullDim_of_relevant (pp : Ideal (Poly k N)) [pp.IsPrime]
     by_contra h0
     have h1 := hh f hf 0
     rw [homogeneousComponent_zero] at h1
-    have h0' : coeff 0 f ≠ 0 := by rwa [← constantCoeff_eq]
-    have hu : IsUnit (C (coeff 0 f) : Poly k N) := (isUnit_iff_ne_zero.mpr h0').map C
+    have h0' : AddMonoidAlgebra.coeff f 0 ≠ 0 := by rwa [← constantCoeff_eq]
+    have hu : IsUnit (C (AddMonoidAlgebra.coeff f 0) : Poly k N) := (isUnit_iff_ne_zero.mpr h0').map C
     exact Ideal.IsPrime.ne_top ‹_› (Ideal.eq_top_of_isUnit_mem _ h1 hu)
   have hlt : pp < RingHom.ker (constantCoeff : Poly k N →+* k) :=
     lt_of_le_of_ne hle fun h => hi (h ▸ by simp [RingHom.mem_ker])

@@ -52,8 +52,8 @@ theorem rowAct_inv_cancel {n : ℕ} (g : GL (Fin n) ℂ) (u : MvPolynomial (Fin 
 
 theorem pair_conj_self {σ : Type} [Fintype σ] (u : MvPolynomial σ ℂ) :
     pair (map (starRingEnd ℂ) u) u =
-      ((∑ α ∈ u.support, (∏ i, ((α i).factorial : ℝ)) * Complex.normSq (coeff α u) : ℝ) : ℂ) := by
-  have hv : map (starRingEnd ℂ) u = ∑ α ∈ u.support, monomial α (starRingEnd ℂ (coeff α u)) := by
+      ((∑ α ∈ u.support, (∏ i, ((α i).factorial : ℝ)) * Complex.normSq (AddMonoidAlgebra.coeff u α) : ℝ) : ℂ) := by
+  have hv : map (starRingEnd ℂ) u = ∑ α ∈ u.support, monomial α (starRingEnd ℂ (AddMonoidAlgebra.coeff u α)) := by
     conv_lhs => rw [u.as_sum]
     rw [map_sum]
     simp only [map_monomial]

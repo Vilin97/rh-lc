@@ -11,7 +11,7 @@ open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.
 
 private theorem nat_dvd_pow (l : ℕ) [hl : Fact l.Prime] (X : ℕ) (h0 : X ≠ 0) :
     ∃ r : ℕ, l ^ r ≤ X ∧ (X : ℤ_[l]) ∣ (l : ℤ_[l]) ^ r := by
-  have hdvd : l ^ padicValNat l X ∣ X := pow_padicValNat_dvd
+  have hdvd : l ^ padicValNat l X ∣ X := (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
   refine ⟨padicValNat l X, Nat.le_of_dvd (Nat.pos_of_ne_zero h0) hdvd, ?_⟩
   obtain ⟨m, hm⟩ := hdvd
   have hm0 : ¬ l ∣ m := by

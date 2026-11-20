@@ -161,9 +161,9 @@ theorem aeval_mul_mem (R : Subalgebra ℤ Ω) (y : (Σ k, ι k) → Ω) (c0 : �
   rw [weight_blockWeight] at hwμ
   obtain ⟨c, hc⟩ := exists_chart_le N μ fun k => by rw [congrFun hwμ k]; exact ha k
   obtain ⟨ν, hν, hfac⟩ := exists_chart_factor (Ω := Ω) N μ c hc
-  have hval : aeval y (monomial μ (coeff μ A) * G) = algebraMap R Ω (coeff μ A) *
+  have hval : aeval y (monomial μ (AddMonoidAlgebra.coeff A μ) * G) = algebraMap R Ω (AddMonoidAlgebra.coeff A μ) *
       ((∏ p, y p ^ ν p) * ((∏ k, y ⟨k, c k⟩) ^ N * aeval y G)) := by
-    rw [show monomial μ (coeff μ A) = C (coeff μ A) * monomial μ 1 by rw [C_mul_monomial, mul_one],
+    rw [show monomial μ (AddMonoidAlgebra.coeff A μ) = C (AddMonoidAlgebra.coeff A μ) * monomial μ 1 by rw [C_mul_monomial, mul_one],
       map_mul, map_mul, aeval_C, aeval_monomial_one, hfac y]
     ring
   by_cases hgood : ∀ k, y ⟨k, c k⟩ ≠ 0
@@ -178,7 +178,7 @@ theorem aeval_mul_mem (R : Subalgebra ℤ Ω) (y : (Σ k, ι k) → Ω) (c0 : �
       omega
     have hmem := mul_mem_relSecM R y (monomial_mem_relSecM R y ν fun k => rfl) hg
     rw [hdeg] at hmem
-    refine ⟨coeff μ A • ((∏ p, y p ^ ν p) * g), Submodule.smul_mem _ _ hmem, ?_⟩
+    refine ⟨AddMonoidAlgebra.coeff A μ • ((∏ p, y p ^ ν p) * g), Submodule.smul_mem _ _ hmem, ?_⟩
     rw [hval, hgv, LinearMap.mulLeft_apply, Algebra.smul_def]
     ring
   · simp only [not_forall, not_not] at hgood

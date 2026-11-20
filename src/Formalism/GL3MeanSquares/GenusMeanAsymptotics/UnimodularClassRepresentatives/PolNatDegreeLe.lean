@@ -119,7 +119,7 @@ theorem exists_node [CharZero K] (hS : IsLocUnif S ϖ) (n : Type*) [Fintype n] [
     simp [Matrix.det_conjTranspose]
   have hsum : R.eval 1 = ∑ k ∈ s, R.eval (v k) * (Lagrange.basis s v k).eval 1 := by
     conv_lhs => rw [Lagrange.eq_interpolate hv hRdeg]
-    rw [Lagrange.interpolate_apply, Polynomial.eval_finset_sum]
+    rw [Lagrange.interpolate_apply, Polynomial.eval_finsetSum]
     simp [Polynomial.eval_mul, Polynomial.eval_C]
   have hX0 : X.det ≠ 0 := hd
   have hR1S : (R.eval 1)⁻¹ ∈ S := by

@@ -28,7 +28,7 @@ def goodSub (w : O) (δ : (σ →₀ ℕ) → ℕ) (h0 : δ 0 = 0) (hadd : ∀ a
   add_mem' := by
     intro P Q hP hQ m
     obtain ⟨a, ha⟩ := hP m; obtain ⟨b, hb⟩ := hQ m
-    exact ⟨a + b, by rw [coeff_add, ha, hb, ← map_add]; congr 1; ring⟩
+    exact ⟨a + b, by rw [MvPolynomial.coeff_add, ha, hb, ← map_add]; congr 1; ring⟩
   algebraMap_mem' := by
     intro c m
     classical

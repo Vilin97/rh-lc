@@ -164,7 +164,7 @@ theorem exists_height_le : ∃ N : ℕ, ∀ y : GL (Fin a) (Cinf E),
   unfold AutomorphicForm.height
   rw [finprod_eq_one_of_forall_eq_one fun v => by rw [finAt_infGL, locHeight_one], mul_one,
     ← Finset.prod_pow_eq_pow_sum]
-  refine Finset.prod_le_prod (fun w _ => (pow_pos (locHeight_pos _) _).le) fun w _ =>
+  refine Finset.prod_le_prod₀ (fun w _ => (pow_pos (locHeight_pos _) _).le) fun w _ =>
     pow_le_pow_left₀ (locHeight_pos _).le ?_ _
   refine locHeight_le (GlobalTheory.CuspRep.one_le_height y) (fun i j => (ent y w i j).trans (norm_le_ht y).1) fun i j => ?_
   have := ent y⁻¹ w i j

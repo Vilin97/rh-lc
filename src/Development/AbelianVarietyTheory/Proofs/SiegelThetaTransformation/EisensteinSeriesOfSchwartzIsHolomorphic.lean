@@ -164,7 +164,7 @@ theorem hFac_inv_bound (n N : ℕ) {δ : ℝ} (hδ : 0 < δ) (B : ℝ) :
     fun γ hγ Z hZ hZ' z z' hB hz hz' => ?_⟩
   rw [EisTrans.hFac_zero, hFac, ← Finset.prod_inv_distrib, ← Finset.prod_inv_distrib, norm_prod,
     norm_prod, ← Finset.prod_mul_distrib]
-  refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun τ _ => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun τ _ => ?_
   have hr := (HermComp.row_rel _ (HAct.map_mem τ.1 hγ)).2
   have hd := (((unitary_act_halfSpace E Ψ N γ hγ).2 Z hZ).1 τ).1
   have hd0 := (((unitary_act_halfSpace E Ψ N γ hγ).2 _ (Base.I_mem_Hn Ψ)).1 τ).1

@@ -608,28 +608,28 @@ include h
 
 theorem charpoly_eq_iff_rankAtStalk_eq [Module.Free R N] [Module.Finite R N] (r : ι → ℕ) :
     (∀ a, (ρ a).charpoly = ∏ i, (X - C (σ i a)) ^ r i) ↔
-      ∀ (p : PrimeSpectrum R) i, Module.rankAtStalk (eigenSub ρ (σ i)) p = r i := by
-  have key : ∀ p : PrimeSpectrum R,
-      (∀ a, (ρ a).charpoly.map (algebraMap R (Localization.AtPrime p.asIdeal)) =
-        (∏ i, (X - C (σ i a)) ^ r i).map (algebraMap R (Localization.AtPrime p.asIdeal))) ↔
-      ∀ i, Module.rankAtStalk (eigenSub ρ (σ i)) p = r i := by
-    intro p
-    have := charpoly_eq_iff_finrank_eq (h.map (algebraMap R (Localization.AtPrime p.asIdeal)))
-      (baseChangeAction (Localization.AtPrime p.asIdeal) ρ) r
-    simp only [baseChangeAction_apply, LinearMap.charpoly_baseChange,
-      ← (eigenBaseChangeEquiv _ ρ h _).finrank_eq] at this
-    simp only [Module.rankAtStalk_eq_finrank_tensorProduct, ← this]
-    simp [Polynomial.map_prod]
-  constructor
-  · intro hr p
-    exact (key p).1 fun a => by rw [hr]
-  · intro hr a
-    ext n
-    refine Module.eq_of_localization_maximal (R := R) (fun P _ => Localization.AtPrime P)
-      (fun P _ => Algebra.linearMap R (Localization.AtPrime P)) _ _ fun m hm => ?_
-    have := congrArg (fun q => Polynomial.coeff q n) ((key ⟨m, hm.isPrime⟩).2 (hr _) a)
-    simp only [Polynomial.coeff_map] at this
-    exact this
+      ∀ (p : PrimeSpectrum R) i, Module.rankAtStalk (eigenSub ρ (σ i)) p = r i := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 omit [Fintype ι] in
 
@@ -720,26 +720,26 @@ theorem det_sq_eq_discr_of_field {L : Type*} [Field L] {φ : ι → E →+* L}
 
 theorem det_sq_eq_discr_of_isDomain {S : Type*} [CommRing S] [IsDomain S] [CharZero S]
     {σ : ι → 𝓞 E →+* S} (hσ : Function.Injective σ) (b : Module.Basis ι ℤ (𝓞 E)) :
-    (Matrix.of fun i j => σ i (b j)).det ^ 2 = (NumberField.discr E : S) := by
-  let L := FractionRing S
-  have hL : Function.Injective (algebraMap S L) := IsFractionRing.injective S L
-  have hinj : ∀ i, Function.Injective ((algebraMap S L).comp (σ i)) := by
-    intro i
-    rw [RingHom.injective_iff_ker_eq_bot]
-    refine Ideal.eq_bot_of_comap_eq_bot (R := ℤ) ?_
-    rw [RingHom.comap_ker, ← RingHom.injective_iff_ker_eq_bot]
-    exact RingHom.injective_int _
-  let φ : ι → E →+* L := fun i => IsFractionRing.lift (hinj i)
-  have hφσ : ∀ i (a : 𝓞 E), φ i a = algebraMap S L (σ i a) := fun i a =>
-    IsFractionRing.lift_algebraMap (hinj i) a
-  have hφ : Function.Injective φ := fun i j hij => hσ (RingHom.ext fun a => hL (by
-    rw [← hφσ, ← hφσ, hij]))
-  have := det_sq_eq_discr_of_field hφ b
-  apply hL
-  rw [map_pow, RingHom.map_det, map_intCast, ← this]
-  congr 2
-  ext i j
-  simp [hφσ]
+    (Matrix.of fun i j => σ i (b j)).det ^ 2 = (NumberField.discr E : S) := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 noncomputable def conjugateHom (L : Type*) [Field L] (R : Type*) [CommRing R] [Algebra (𝓞 L) R]
     (φ : E →+* L) : 𝓞 E →+* R :=

@@ -90,7 +90,7 @@ lemma prod_succ_div_injective_pos_bounds {ι : Type} (I : Finset ι) (y : ι →
   constructor
   · calc (1:ℝ) = ∏ i ∈ I, (1:ℝ) := by simp
       _ ≤ ∏ i ∈ I, (((y i : ℝ) + 1) / (y i : ℝ)) := by
-          refine Finset.prod_le_prod (fun _ _ => zero_le_one) (fun i hi => ?_)
+          refine Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun i hi => ?_)
           have hy : (0:ℝ) < y i := by exact_mod_cast h1 i hi
           rw [le_div_iff₀ hy]
           linarith
@@ -352,7 +352,7 @@ lemma paired_sum_exp_bound {ι κ : Type} [DecidableEq ι] [DecidableEq κ] (I I
   have e1 : ∏ i ∈ I, N i = (∏ i ∈ I \ I', N i) * ∏ i ∈ I', N i := (Finset.prod_sdiff hsub).symm
   have e2 : ∏ i ∈ I \ I', N i ≤ B ^ c := by
     calc ∏ i ∈ I \ I', N i ≤ ∏ _i ∈ I \ I', B :=
-          Finset.prod_le_prod (fun i hi => hN i (Finset.sdiff_subset hi)) hB
+          Finset.prod_le_prod₀ (fun i hi => hN i (Finset.sdiff_subset hi)) hB
       _ = B ^ (I \ I').card := by rw [Finset.prod_const]
       _ ≤ B ^ c := pow_le_pow_right₀ hB1 hc
   have h1 : ∀ a ∈ J, 1 ≤ Real.exp (t a) * D a := fun a ha =>
@@ -363,7 +363,7 @@ lemma paired_sum_exp_bound {ι κ : Type} [DecidableEq ι] [DecidableEq κ] (I I
     exact hφ i hi
   have e3 : ∏ i ∈ I', N i ≤ ∏ a ∈ J, (Real.exp (t a) * D a) := by
     calc ∏ i ∈ I', N i ≤ ∏ i ∈ I', (Real.exp (t (φ i)) * D (φ i)) :=
-          Finset.prod_le_prod (fun i hi => hN i (hsub hi)) hp
+          Finset.prod_le_prod₀ (fun i hi => hN i (hsub hi)) hp
       _ = ∏ a ∈ I'.image φ, (Real.exp (t a) * D a) := (Finset.prod_image (f := fun a => Real.exp (t a) * D a) hinj).symm
       _ ≤ ∏ a ∈ J, (Real.exp (t a) * D a) :=
           Finset.prod_le_prod_of_subset_of_one_le him

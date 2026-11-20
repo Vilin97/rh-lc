@@ -60,8 +60,8 @@ theorem LineUnique_of (h : LineCoeff) : LineUnique := by
     simp only [Finsupp.prod_fintype _ _ (fun i => pow_zero _)]
     exact h1.symm
   have hν : ν ∈ Finset.finsuppAntidiag Finset.univ k := by simp [Finset.mem_finsuppAntidiag, hk]
-  have hc : ∀ S : MvPowerSeries n K, MvPolynomial.coeff ν (∑ μ ∈ Finset.finsuppAntidiag Finset.univ k,
-      MvPolynomial.monomial μ (MvPowerSeries.coeff μ S)) = MvPowerSeries.coeff ν S := by
+  have hc : ∀ S : MvPowerSeries n K, AddMonoidAlgebra.coeff (∑ μ ∈ Finset.finsuppAntidiag Finset.univ k,
+      MvPolynomial.monomial μ (MvPowerSeries.coeff μ S)) ν = MvPowerSeries.coeff ν S := by
     intro S
     rw [MvPolynomial.coeff_sum]
     simp only [MvPolynomial.coeff_monomial]

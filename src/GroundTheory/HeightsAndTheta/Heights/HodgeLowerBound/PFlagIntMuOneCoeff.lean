@@ -14,7 +14,7 @@ noncomputable def rhoPerm (N : ℕ) (σ : Equiv.Perm (Fin N)) : Unit × Fin N �
 
 theorem flagInt_unit_eq (N : ℕ) (P : RootPoly Unit N) :
     flagInt Unit N P =
-      ∑ σ : Equiv.Perm (Fin N), ((Equiv.Perm.sign σ : ℤ) : ℚ) * coeff (rhoPerm N σ) P := by
+      ∑ σ : Equiv.Perm (Fin N), ((Equiv.Perm.sign σ : ℤ) : ℚ) * AddMonoidAlgebra.coeff P (rhoPerm N σ) := by
   unfold flagInt antisym
   rw [coeff_sum, ← (Equiv.funUnique Unit (Equiv.Perm (Fin N))).symm.sum_comp]
   refine Finset.sum_congr rfl fun σ _ => ?_
@@ -41,8 +41,8 @@ theorem muPoly_eq_sum (N j : ℕ) :
   split_ifs <;> simp_all
 
 theorem coeff_muPow_rhoBlock (j m : ℕ) (σ : Equiv.Perm (Fin (j + m))) :
-    coeff (rhoPerm (j + m) σ)
-        (muPoly Unit (j + m) j ^ (j * m) * monomial (rhoBlock Unit (j + m) j) 1) =
+    AddMonoidAlgebra.coeff (muPoly Unit (j + m) j ^ (j * m) * monomial (rhoBlock Unit (j + m) j) 1)
+        (rhoPerm (j + m) σ) =
       ((j * m).factorial : ℚ) * ∏ i, flagMat j m i (σ i) := by
   set d := rhoPerm (j + m) σ with hd
   set s := rhoBlock Unit (j + m) j with hs

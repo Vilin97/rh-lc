@@ -228,7 +228,7 @@ theorem symmetrisation_injective (act : Mat p q →ₗ[ℂ] Module.End ℂ V) (h
     have hdeg : α.degree = k := by
       rw [Finsupp.degree_eq_weight_one]
       exact hP (mem_support_iff.mp hα)
-    have hmon : monomial α (coeff α P) = coeff α P • monomial α (1 : ℂ) := by
+    have hmon : monomial α (AddMonoidAlgebra.coeff P α) = AddMonoidAlgebra.coeff P α • monomial α (1 : ℂ) := by
       rw [smul_monomial, smul_eq_mul, mul_one]
     rw [hmon, map_smul]
     refine Submodule.smul_mem _ _ ?_

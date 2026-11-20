@@ -263,7 +263,7 @@ theorem core (n q : ℕ) (y : Fin n → ℂ) (hy : star y ⬝ᵥ (sgnM n q).mulV
 theorem prod_zpow_le {n : ℕ} (v : Fin n → ℂ) (w : Fin n → ℤ) (M : ℝ) (h : ∀ a, ‖v a‖ ≤ M ∧ ‖v a‖⁻¹ ≤ M) :
     ‖∏ a, v a ^ w a‖ ≤ M ^ (∑ a, (w a).natAbs) := by
   rw [norm_prod, ← Finset.prod_pow_eq_pow_sum]
-  apply Finset.prod_le_prod (fun a _ => norm_nonneg _)
+  apply Finset.prod_le_prod₀ (fun a _ => norm_nonneg _)
   intro a _
   obtain ⟨h1, h2⟩ := h a
   rw [norm_zpow]

@@ -37,7 +37,7 @@ theorem v2con_diag {R : Type*} [CommRing R] {ι : Type*} [Fintype ι] {n : ℕ} 
 
 theorem v2con_coeff_diag {R : Type*} [CommRing R] {ι : Type*} [Fintype ι] {n : ℕ} (LL : Letters ι) (S : Set ι)
     (a : Fin n) (x : MvPolynomial (ι × Fin n) R) (m : ι × Fin n →₀ ℕ) :
-    coeff m (glAct R LL S a a x) = ((wtS LL S m a : ℤ) : R) * coeff m x := by
+    AddMonoidAlgebra.coeff (glAct R LL S a a x) m = ((wtS LL S m a : ℤ) : R) * AddMonoidAlgebra.coeff x m := by
   classical
   induction x using MvPolynomial.induction_on' with
   | monomial m' c =>
@@ -46,7 +46,7 @@ theorem v2con_coeff_diag {R : Type*} [CommRing R] {ι : Type*} [Fintype ι] {n :
     · subst h; rfl
     · simp
   | add p q hp hq =>
-    rw [map_add, coeff_add, coeff_add, hp, hq, mul_add]
+    rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem monomials_are_weight_vectors : MonomialsAreWeightVectors := by
   intro R _ _ ι _ LL n S
@@ -63,10 +63,10 @@ theorem monomials_are_weight_vectors : MonomialsAreWeightVectors := by
     have h := hx a
     rw [LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.smul_apply, Module.End.one_apply,
       sub_eq_zero] at h
-    have h2 := congrArg (coeff m) h
-    change coeff m (glAct R LL S a a x) = _ at h2
+    have h2 := congrArg (AddMonoidAlgebra.coeff · m) h
+    change AddMonoidAlgebra.coeff (glAct R LL S a a x) m = _ at h2
     rw [v2con_coeff_diag, coeff_smul, smul_eq_mul] at h2
-    have hc : coeff m x ≠ 0 := mem_support_iff.mp hm
+    have hc : AddMonoidAlgebra.coeff x m ≠ 0 := mem_support_iff.mp hm
     have h3 := mul_right_cancel₀ hc h2
     exact_mod_cast h3
 

@@ -14,10 +14,10 @@ section Descent
 variable {σ : Type*} {F : Type*} [Field F] {F' : Type*} [Field F'] [Algebra F F']
 
 def coeffFormFun (φ : F' →ₗ[F] F) (f : MvPolynomial σ F') : MvPolynomial σ F :=
-  ∑ μ ∈ f.support, monomial μ (φ (coeff μ f))
+  ∑ μ ∈ f.support, monomial μ (φ (AddMonoidAlgebra.coeff f μ))
 
 theorem coeff_coeffFormFun (φ : F' →ₗ[F] F) (f : MvPolynomial σ F') (ν : σ →₀ ℕ) :
-    coeff ν (coeffFormFun φ f) = φ (coeff ν f) := by
+    AddMonoidAlgebra.coeff (coeffFormFun φ f) ν = φ (AddMonoidAlgebra.coeff f ν) := by
   classical
   simp only [coeffFormFun, coeff_sum, coeff_monomial, Finset.sum_ite_eq']
   split_ifs with h
@@ -31,7 +31,7 @@ def coeffForm (φ : F' →ₗ[F] F) : MvPolynomial σ F' →+ MvPolynomial σ F 
 
 @[simp]
 theorem coeff_coeffForm (φ : F' →ₗ[F] F) (f : MvPolynomial σ F') (ν : σ →₀ ℕ) :
-    coeff ν (coeffForm φ f) = φ (coeff ν f) :=
+    AddMonoidAlgebra.coeff (coeffForm φ f) ν = φ (AddMonoidAlgebra.coeff f ν) :=
   coeff_coeffFormFun φ f ν
 
 theorem coeffForm_monomial (φ : F' →ₗ[F] F) (μ : σ →₀ ℕ) (a : F') :
@@ -112,17 +112,17 @@ theorem mem_map_of_coeffForm {I : Ideal (MvPolynomial σ F)} {f : MvPolynomial �
     (h : ∀ φ : F' →ₗ[F] F, coeffForm φ f ∈ I) : f ∈ I.map (map (algebraMap F F')) := by
   classical
   let b := Module.Basis.ofVectorSpace F F'
-  let J := f.support.biUnion (fun μ => (b.repr (coeff μ f)).support)
+  let J := f.support.biUnion (fun μ => (b.repr (AddMonoidAlgebra.coeff f μ)).support)
   have hf : f = ∑ j ∈ J, C (b j) * map (algebraMap F F') (coeffForm (b.coord j) f) := by
     ext ν
     rw [coeff_sum]
     simp only [coeff_C_mul, coeff_map, coeff_coeffForm, Module.Basis.coord_apply]
-    have hsub : (b.repr (coeff ν f)).support ⊆ J := by
+    have hsub : (b.repr (AddMonoidAlgebra.coeff f ν)).support ⊆ J := by
       by_cases hν : ν ∈ f.support
-      · exact Finset.subset_biUnion_of_mem (fun μ => (b.repr (coeff μ f)).support) hν
+      · exact Finset.subset_biUnion_of_mem (fun μ => (b.repr (AddMonoidAlgebra.coeff f μ)).support) hν
       · rw [MvPolynomial.notMem_support_iff.mp hν, map_zero, Finsupp.support_zero]
         exact Finset.empty_subset _
-    conv_lhs => rw [← b.linearCombination_repr (coeff ν f)]
+    conv_lhs => rw [← b.linearCombination_repr (AddMonoidAlgebra.coeff f ν)]
     rw [Finsupp.linearCombination_apply,
       Finsupp.sum_of_support_subset _ hsub (fun i a => a • b i) (fun j _ => zero_smul _ _)]
     refine Finset.sum_congr rfl fun j _ => ?_
@@ -165,7 +165,7 @@ theorem gradedPiece_eq_span (E : Type*) [Field E] (J : Ideal (MRing ι E)) (m : 
       rw [mem_weightedHomogeneousSubmodule] at hf
       rw [← f.support_sum_monomial_coeff]
       refine Submodule.sum_mem _ fun d hd => ?_
-      have h1 : monomial d (coeff d f) = coeff d f • monomial d (1 : E) := by
+      have h1 : monomial d (AddMonoidAlgebra.coeff f d) = AddMonoidAlgebra.coeff f d • monomial d (1 : E) := by
         rw [smul_monomial, smul_eq_mul, mul_one]
       rw [h1]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨d, hf (mem_support_iff.mp hd), rfl⟩)

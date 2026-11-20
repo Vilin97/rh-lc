@@ -223,7 +223,7 @@ theorem stmtSZP : OrthoNormBoundUniform := by
   unfold Formalism.MainNotions.product_first_zeroth_parts.ptB
   calc ∏ τ, ((D.mem u).A.T : ℝ) ^ (-((D.fm u).deg τ)) * (D.fm u).beOn τ ^ 2
       ≤ ∏ τ, Real.exp (g τ) :=
-        Finset.prod_le_prod (fun τ _ => mul_nonneg (zpow_nonneg hTpos.le _) (sq_nonneg _)) (fun τ _ => hfac τ)
+        Finset.prod_le_prod₀ (fun τ _ => mul_nonneg (zpow_nonneg hTpos.le _) (sq_nonneg _)) (fun τ _ => hfac τ)
     _ = Real.exp (∑ τ, g τ) := (Real.exp_sum _ _).symm
     _ ≤ _ := Real.exp_le_exp.2 hsum
 
@@ -511,7 +511,7 @@ theorem sum_val_log_le (n : ℕ) (hn : 0 < n) (P : Finset ℕ) (hP : ∀ p ∈ P
     | empty => simp
     | insert a s ha ih =>
       rw [Finset.prod_insert ha]
-      refine Nat.Coprime.mul_dvd_of_dvd_of_dvd ?_ pow_padicValNat_dvd
+      refine Nat.Coprime.mul_dvd_of_dvd_of_dvd ?_ (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
         (ih fun p hp => hP p (Finset.mem_insert_of_mem hp))
       refine Nat.Coprime.prod_right fun q hq => ?_
       exact Nat.Coprime.pow _ _ ((Nat.coprime_primes (hP a (Finset.mem_insert_self _ _))

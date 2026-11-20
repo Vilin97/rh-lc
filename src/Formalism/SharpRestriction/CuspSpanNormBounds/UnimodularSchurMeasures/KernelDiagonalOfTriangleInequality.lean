@@ -91,7 +91,7 @@ theorem ConvDecay_of (D : Formalism.BasicNotions.D7) (hdec : DiscreteSeriesDecay
     have hPQ : (∏ v, Real.exp (-(decExp X.h X.qq (cartanDistance (X.I.ε v) (g.1 v))))) *
         (∏ v, Real.exp (-(decExp X.h X.qq (cartanDistance (X.I.ε v) ((g⁻¹ * z).1 v))))) ≤ W ^ 2 := by
       rw [← Finset.prod_mul_distrib, hW, ← Finset.prod_pow]
-      refine Finset.prod_le_prod (fun v _ => by positivity) fun v _ => ?_
+      refine Finset.prod_le_prod₀ (fun v _ => by positivity) fun v _ => ?_
       rw [← Real.exp_add, ← Real.exp_nat_mul]
       apply Real.exp_le_exp.2
       have ht := htri X.I.n (X.I.ε v) (g.1 v) ((g⁻¹ * z).1 v)

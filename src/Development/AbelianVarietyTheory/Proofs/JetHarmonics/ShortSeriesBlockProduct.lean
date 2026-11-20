@@ -202,7 +202,7 @@ def pairing {σ S : Type} [CommRing S] [Algebra k S] (G : (σ →₀ ℕ) → S)
       fun R s hs => Finset.sum_subset hs fun x _ hx => by rw [notMem_support_iff.1 hx, map_zero, zero_mul]
     rw [h _ _ support_add, h P (P.support ∪ Q.support) Finset.subset_union_left,
       h Q (P.support ∪ Q.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
-    simp only [coeff_add, map_add, add_mul]
+    simp only [MvPolynomial.coeff_add, map_add, add_mul]
 
 theorem pairing_monomial {σ S : Type} [CommRing S] [Algebra k S] (G : (σ →₀ ℕ) → S) (mo : σ →₀ ℕ) (a : k) :
     pairing G (monomial mo a) = algebraMap k S a * G mo := by

@@ -58,7 +58,7 @@ theorem sum_padicValNat_mul_le (v : ℕ → ℤ) (hv : ∀ a b, a ≠ 0 → b �
       have : ∀ p ∈ s, (padicValNat p (a * b) : ℤ) * v p = (padicValNat p a : ℤ) * v p + (padicValNat p b : ℤ) * v p := by
         intro p hp
         haveI := Fact.mk (hs p hp)
-        rw [padicValNat.mul ha hb]; push_cast; ring
+        rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) ha hb]; push_cast; ring
       rw [Finset.sum_congr rfl this, Finset.sum_add_distrib, hv a b ha hb]
       exact add_le_add (iha ha) (ihb hb)
   exact key N hN

@@ -40,7 +40,7 @@ theorem degree_tautological_line_projective_line : degFl (X ((), 0) : RP Unit 2)
   linarith
 
 theorem degFl_add (P Q : RP Ψ N) : degFl (P + Q) = degFl P + degFl Q := by
-  simp only [degFl, coeff_add, mul_add, Finset.sum_add_distrib]
+  simp only [degFl, MvPolynomial.coeff_add, mul_add, Finset.sum_add_distrib]
 
 theorem degree_quotient_line_projective_line : degFl (X ((), 1) : RP Unit 2) = 1 := by
   have h := degFl_pk_mul (Ψ := Unit) (N := 2) () 1 le_rfl 1

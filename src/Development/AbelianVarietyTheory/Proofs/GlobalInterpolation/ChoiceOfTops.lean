@@ -409,7 +409,7 @@ theorem marked_ge (h0 : 0 ≤ δ) (h1 : δ ≤ 1) (r u s : ℕ) :
     intro T _
     by_cases hM : Marked T r u s
     · rw [ind_pos hM]
-      exact prod_le_one (fun c' _ => (hind c' _).1) (fun c' _ => (hind c' _).2)
+      exact prod_le_one₀ (fun c' _ => (hind c' _).1) (fun c' _ => (hind c' _).2)
     · rw [ind_neg hM]
       refine le_of_eq (prod_eq_zero_iff.mpr ?_)
       by_contra hall
@@ -442,7 +442,7 @@ theorem marked_ge (h0 : 0 ≤ δ) (h1 : δ ≤ 1) (r u s : ℕ) :
         rw [hm, prod_alternate]
     _ ≤ ∏ c' ∈ range (6 * r + 1), ex δ (cell r u s (c' + 1))
           (fun V => if Even c' then ind (V = ∅) else ind (∃ x, V = {x} ∧ Even x)) := by
-        refine prod_le_prod (fun c' _ => ?_) (fun c' _ => ?_)
+        refine prod_le_prod₀ (fun c' _ => ?_) (fun c' _ => ?_)
         · split_ifs
           · exact hP0
           · exact hX
@@ -571,7 +571,7 @@ theorem tiles_le (h0 : 0 ≤ δ) (h1 : δ ≤ 1) {n r u M₀ i₀ : ℕ} (hu : 1
     _ ≤ ∑ s₀ ∈ range N, (1 - markedBound δ r u) ^ M₀ := by
         refine sum_le_sum fun s₀ _ => ?_
         calc _ ≤ ∏ j ∈ J s₀, (1 - markedBound δ r u) := by
-              refine prod_le_prod (fun j _ => ?_) (fun j _ => ?_)
+              refine prod_le_prod₀ (fun j _ => ?_) (fun j _ => ?_)
               · rw [ex_one_sub]
                 linarith [hex1 ((s₀ + j) % N)]
               · rw [ex_one_sub]

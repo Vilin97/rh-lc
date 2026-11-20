@@ -87,7 +87,7 @@ theorem basisMulGL_repr (b : Basis ι R M) (g : GL ι R) (x : M) (i : ι) :
     rw [h, ← toMatrix_basisMulGL (basisMulGL b g) g⁻¹, h]
   rw [← h']
   conv_lhs => rw [← b.sum_repr x]
-  simp only [map_sum, map_smul, Finsupp.finset_sum_apply, Finsupp.smul_apply, smul_eq_mul,
+  simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul,
     Basis.toMatrix_apply, mul_comm]
 
 @[reducible] def basisMulAction : MulAction (GL ι R)ᵐᵒᵖ (Basis ι R M) where

@@ -45,11 +45,11 @@ theorem cwt_lower (m A c B : ℕ) (μ : Fin m → ℤ) (hμ : Antitone μ) (h0 :
   have hc0 : (0 : ℝ) ≤ c := Nat.cast_nonneg c
   have h1 : (∏ j : Fin m, ((A : ℝ) + ((j : ℕ) : ℝ) + 1) / (((j : ℕ) : ℝ) + 1)) ≤
       ∏ j : Fin m, ((A : ℝ) + c - (μ j : ℝ) + ((j : ℕ) : ℝ) + 1) / (((j : ℕ) : ℝ) + 1) :=
-    Finset.prod_le_prod (fun j _ => by positivity)
+    Finset.prod_le_prod₀ (fun j _ => by positivity)
       (fun j _ => div_le_div_of_nonneg_right (by linarith [hμc j]) (by positivity))
   have h2 : (∏ j : Fin m, ((B : ℝ) + (m : ℝ) - ((j : ℕ) : ℝ)) / ((m : ℝ) - ((j : ℕ) : ℝ))) ≤
       ∏ j : Fin m, ((μ j : ℝ) + B + (m : ℝ) - ((j : ℕ) : ℝ)) / ((m : ℝ) - ((j : ℕ) : ℝ)) :=
-    Finset.prod_le_prod (fun j _ => div_nonneg (by linarith [hj j]) (hj j).le)
+    Finset.prod_le_prod₀ (fun j _ => div_nonneg (by linarith [hj j]) (hj j).le)
       (fun j _ => div_le_div_of_nonneg_right (by linarith [hμc j]) (hj j).le)
   have h3 : ((A : ℝ) + B + m + 1) / ((m : ℝ) + 1) ≤ ((A : ℝ) + c + B + m + 1) / ((m : ℝ) + 1) :=
     div_le_div_of_nonneg_right (by linarith) (by positivity)
@@ -264,13 +264,13 @@ theorem cloud_bound_of_prop_and_weyl_dimension (hP : CloudLowerBoundWeyl) (hW : 
   have P1 : (∏ s : TT, (weylDim mm (cloudAt lam0 s.val) : ℝ)) * ∏ s : TT, (dimHar (mm + 1) (A s) (B s) : ℝ) ≤
       ∏ s : TT, (weylDim (mm + 2) (lamAt lam0 s.val) : ℝ) := by
     rw [← Finset.prod_mul_distrib]
-    exact Finset.prod_le_prod (fun s _ => hc0 s) (fun s _ => (hF s).2.1)
+    exact Finset.prod_le_prod₀ (fun s _ => hc0 s) (fun s _ => (hF s).2.1)
   have P2 : ∏ s : TT, (weylDim (mm + 2) (lamAt lam0 s.val) : ℝ) ≤
       E * ((∏ s : TT, (weylDim mm (cloudAt lam0 s.val) : ℝ)) * ∏ s : TT, (dimHar (mm + 1) (A s) (B s) : ℝ)) := by
     calc ∏ s : TT, (weylDim (mm + 2) (lamAt lam0 s.val) : ℝ)
         ≤ ∏ s : TT, ((1 + t0) ^ (2 * mm + 1) *
             ((weylDim mm (cloudAt lam0 s.val) : ℝ) * (dimHar (mm + 1) (A s) (B s) : ℝ))) :=
-          Finset.prod_le_prod (fun s _ => (hc0 s).trans (hF s).2.1) (fun s _ => (hF s).2.2)
+          Finset.prod_le_prod₀ (fun s _ => (hc0 s).trans (hF s).2.1) (fun s _ => (hF s).2.2)
       _ = E * ((∏ s : TT, (weylDim mm (cloudAt lam0 s.val) : ℝ)) * ∏ s : TT, (dimHar (mm + 1) (A s) (B s) : ℝ)) := by
           rw [Finset.prod_mul_distrib, Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ,
             Fintype.card_coe, ← pow_mul]
@@ -278,7 +278,7 @@ theorem cloud_bound_of_prop_and_weyl_dimension (hP : CloudLowerBoundWeyl) (hW : 
       E * ∏ s : TT, (dimHar (mm + 1) (A s) (B s) : ℝ) := by
     calc ∏ s : TT, (dimHar (mm + 1) (A s + 2 * ccl) (B s + 2 * ccl) : ℝ)
         ≤ ∏ s : TT, ((1 + t0) ^ (2 * mm + 1) * (dimHar (mm + 1) (A s) (B s) : ℝ)) :=
-          Finset.prod_le_prod (fun s _ => Nat.cast_nonneg _) (fun s _ => hG s)
+          Finset.prod_le_prod₀ (fun s _ => Nat.cast_nonneg _) (fun s _ => hG s)
       _ = E * ∏ s : TT, (dimHar (mm + 1) (A s) (B s) : ℝ) := by
           rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_coe, ← pow_mul]
   have hx : (((2 * mm + 1) * TT.card : ℕ) : ℝ) * t0 ≤ ep := by

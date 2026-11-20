@@ -46,7 +46,7 @@ theorem addValuation_natCast_eq_padicValNat :
     exact absurd (lt_of_lt_of_le (lt_min ha hb) h) (lt_irrefl _)
 
   haveI : Fact p.Prime := ⟨hp⟩
-  obtain ⟨m, hm⟩ := pow_padicValNat_dvd (p := p) (n := n)
+  obtain ⟨m, hm⟩ := (fun {p n : ℕ} => _root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat p n)) (p := p) (n := n)
   have hm0 : m ≠ 0 := by
     rintro rfl
     exact hn (by simpa using hm)

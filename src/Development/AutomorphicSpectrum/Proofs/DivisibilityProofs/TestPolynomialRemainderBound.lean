@@ -143,7 +143,7 @@ variable {Ψ : Type} [Fintype Ψ] [DecidableEq Ψ]
 def degFlL (N : ℕ) : RP Ψ N →ₗ[ℝ] ℝ where
   toFun := degFl
   map_add' a b := by
-    simp only [degFl, coeff_add, mul_add, Finset.sum_add_distrib]
+    simp only [degFl, MvPolynomial.coeff_add, mul_add, Finset.sum_add_distrib]
   map_smul' c a := by
     simp only [degFl, coeff_smul, smul_eq_mul, RingHom.id_apply, Finset.mul_sum]
     refine Finset.sum_congr rfl fun _ _ => ?_

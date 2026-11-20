@@ -16,7 +16,7 @@ theorem exc_dvd_prod_range {g e l r : ℕ} (hg : 1 ≤ g) (h1 : 1 ≤ e) (hr : e
   have h3 : g ^ e - 1 ∣ ∏ i ∈ Finset.range r, (g ^ (i + 1) - 1) := by
     have := Finset.dvd_prod_of_mem (fun i => g ^ (i + 1) - 1) (Finset.mem_range.2 (show e - 1 < r by omega))
     rwa [Nat.sub_add_cancel h1] at this
-  exact ((dvd_pow_self l hv).trans pow_padicValNat_dvd).trans h3
+  exact ((dvd_pow_self l hv).trans (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))).trans h3
 
 theorem not_exc_of_cong_sq {M l g e c k : ℕ} (hl : l.Prime) (hM : l ^ k ∣ M) (hM0 : 0 < M)
     (hg : g = 1 + 2 * M + M ^ 2 * c) (hbig : M ^ 8 ≤ g) (h1 : 1 ≤ e) (hk : 2 * e < l ^ k) :
@@ -39,12 +39,12 @@ theorem not_exc_of_cong_sq {M l g e c k : ℕ} (hl : l.Prime) (hM : l ^ k ∣ M)
   have hS0 : S * (2 + M * c) ≠ 0 := by rintro h; exact hnd (h ▸ dvd_zero _)
   have hvS : padicValNat l (S * (2 + M * c)) ≤ k := by
     by_contra hc
-    exact hnd ((pow_dvd_pow l (by omega)).trans pow_padicValNat_dvd)
+    exact hnd ((pow_dvd_pow l (by omega)).trans (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)))
   have hval : padicValNat l (g ^ e - 1) = padicValNat l (S * (2 + M * c)) + padicValNat l M := by
     have : S * x = S * (2 + M * c) * M := by rw [hx]; ring
-    rw [← hgeo, Nat.add_sub_cancel, this, padicValNat.mul hS0 hM0.ne']
+    rw [← hgeo, Nat.add_sub_cancel, this, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hS0 hM0.ne']
   have hle : l ^ (4 * padicValNat l (g ^ e - 1)) ≤ M ^ 8 := by
-    have a1 : l ^ padicValNat l M ≤ M := Nat.le_of_dvd hM0 pow_padicValNat_dvd
+    have a1 : l ^ padicValNat l M ≤ M := Nat.le_of_dvd hM0 (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
     have a2 : l ^ k ≤ M := Nat.le_of_dvd hM0 hM
     calc l ^ (4 * padicValNat l (g ^ e - 1)) ≤ l ^ (k * 4 + padicValNat l M * 4) :=
           Nat.pow_le_pow_right hl.pos (by rw [hval]; omega)

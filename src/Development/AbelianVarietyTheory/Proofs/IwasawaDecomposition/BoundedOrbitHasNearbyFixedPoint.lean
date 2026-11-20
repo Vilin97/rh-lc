@@ -25,7 +25,7 @@ theorem norm_taylor_coeff_le (T : Finset K) (x : K) (r : ℝ) (hr : 0 ≤ r) (h 
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (by positivity) fun t ht => ?_
   rw [Finset.mem_powersetCard] at ht
   rw [norm_prod, ← ht.2, ← Finset.prod_const]
-  refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun z hz => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun z hz => ?_
   rw [norm_sub_rev]
   exact h z (ht.1 hz)
 

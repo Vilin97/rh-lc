@@ -213,11 +213,11 @@ theorem rhoH_toHilb (g : ι → GL (Fin n) ℂ) (x : VV ℂ lam) :
 omit [Fintype ι] in
 theorem continuous_coeff_blockAct {X : Type} [TopologicalSpace X] (M : X → ι → Matrix (Fin n) (Fin n) ℂ)
     (hM : ∀ τ, Continuous fun x => M x τ) (F : MvPolynomial (ι × Fin n × Fin n) ℂ) :
-    ∀ m, Continuous fun x => coeff m (Formalism.GradedWeylDivisibility.blockAct ℂ (M x) F) := by
+    ∀ m, Continuous fun x => AddMonoidAlgebra.coeff (Formalism.GradedWeylDivisibility.blockAct ℂ (M x) F) m := by
   classical
   induction F using MvPolynomial.induction_on with
   | C a => intro m; simp only [algHom_C]; exact continuous_const
-  | add p q hp hq => intro m; simp only [map_add, coeff_add]; exact (hp m).add (hq m)
+  | add p q hp hq => intro m; simp only [map_add, MvPolynomial.coeff_add]; exact (hp m).add (hq m)
   | mul_X p v hp =>
     intro m
     simp only [map_mul, coeff_mul]
@@ -231,7 +231,7 @@ theorem continuous_rhoH {X : Type} [TopologicalSpace X] (A : X → ι → GL (Fi
   obtain ⟨v, rfl⟩ := (toHilb lam hG).surjective v
   let L : Hilb lam hG →ₗ[ℂ] ((ι × Fin n × Fin n →₀ ℕ) → ℂ) :=
     LinearMap.pi fun m => lcoeff ℂ m ∘ₗ (VV ℂ lam).subtype ∘ₗ (toHilb lam hG).symm.toLinearMap
-  have hL : ∀ y m, L (toHilb lam hG y) m = coeff m (y : Pol ℂ ι n) := fun _ _ => rfl
+  have hL : ∀ y m, L (toHilb lam hG y) m = AddMonoidAlgebra.coeff (y : Pol ℂ ι n) m := fun _ _ => rfl
   have hk : LinearMap.ker L = ⊥ := by
     rw [LinearMap.ker_eq_bot']
     intro y hy

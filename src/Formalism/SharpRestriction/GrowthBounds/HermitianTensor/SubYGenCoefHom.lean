@@ -71,8 +71,8 @@ section MAH
 
 variable {R S1 S2 σ : Type} [CommRing R] [CommRing S1] [CommRing S2] [Algebra R S1] [Algebra R S2]
 
-theorem mAH_coeff (f : S1 →ₐ[R] S2) (p : MvPolynomial σ S1) (u : σ →₀ ℕ) : coeff u (mapAlgHom f p) = f (coeff u p) := by
-  show coeff u (map (f : S1 →+* S2) p) = _
+theorem mAH_coeff (f : S1 →ₐ[R] S2) (p : MvPolynomial σ S1) (u : σ →₀ ℕ) : AddMonoidAlgebra.coeff (mapAlgHom f p) u = f (AddMonoidAlgebra.coeff p u) := by
+  show AddMonoidAlgebra.coeff (map (f : S1 →+* S2) p) u = _
   rw [coeff_map]
   rfl
 
@@ -103,7 +103,7 @@ section Coef
 variable {A : Type} [CommRing A] {r : ℕ} {σ : Type}
 
 def CoefHom (μ : Fin r → ℕ) (h : MvPolynomial σ (MvPolynomial (Fin r × Fin r) A)) : Prop :=
-  ∀ u, IsWeightedHomogeneous (colW r r) (coeff u h) μ
+  ∀ u, IsWeightedHomogeneous (colW r r) (AddMonoidAlgebra.coeff h u) μ
 
 theorem CoefHom.sum {ι : Type} (s : Finset ι) (f : ι → MvPolynomial σ (MvPolynomial (Fin r × Fin r) A)) (μ : Fin r → ℕ)
     (h : ∀ i ∈ s, CoefHom μ (f i)) : CoefHom μ (∑ i ∈ s, f i) := by
@@ -205,7 +205,7 @@ theorem subY_coefHom (A : Type) [CommRing A] (r : ℕ) (ν : Fin (r + 1 + 1) →
     intro w _
     rw [map_pow]
     exact (subY_gen_coefHom A r w).pow _
-  have hC : CoefHom (σ := Fin (r + 1 + 1) × Fin (r + 1 + 1)) (0 : Fin r → ℕ) (C (C (coeff m v))) := by
+  have hC : CoefHom (σ := Fin (r + 1 + 1) × Fin (r + 1 + 1)) (0 : Fin r → ℕ) (C (C (AddMonoidAlgebra.coeff v m))) := by
     apply CoefHom.ofC
     intro d hd
     rw [coeff_C] at hd
@@ -226,7 +226,7 @@ theorem subY_coefHom (A : Type) [CommRing A] (r : ℕ) (ν : Fin (r + 1 + 1) →
 theorem subY_inv (A : Type) [CommRing A] (r : ℕ) (v : MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) A)
     (hv : ∀ l j : Fin (r + 1 + 1), l < j → colAddGen A l j v = rename some v) (l j : Fin r) (hlj : l < j)
     (u : Fin (r + 1 + 1) × Fin (r + 1 + 1) →₀ ℕ) :
-    colAddGen A l j (coeff u (subY A r v)) = rename some (coeff u (subY A r v)) := by
+    colAddGen A l j (AddMonoidAlgebra.coeff (subY A r v) u) = rename some (AddMonoidAlgebra.coeff (subY A r v) u) := by
   classical
   let Φ : MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) (MvPolynomial (Fin r × Fin r) A) →ₐ[A]
       MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) (MvPolynomial (Option (Fin r × Fin r)) A) :=
@@ -267,7 +267,7 @@ theorem subY_inv (A : Type) [CommRing A] (r : ℕ) (v : MvPolynomial (Fin (r + 1
     have e2 := congrArg (fun F => F v) h2
     simp only [AlgHom.comp_apply] at e1 e2
     rw [e1, e2, hv _ _ (midI_lt r hlj)]
-  have h4 := congrArg (coeff u) h3
+  have h4 := congrArg (AddMonoidAlgebra.coeff · u) h3
   simp only [Φ, Ψ, mAH_coeff] at h4
   exact h4
 

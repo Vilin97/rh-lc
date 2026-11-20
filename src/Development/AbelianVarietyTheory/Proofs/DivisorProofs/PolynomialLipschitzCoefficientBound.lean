@@ -15,7 +15,7 @@ theorem abs_prod_sub_prod_le_sum_of_le_one {ι : Type} [DecidableEq ι] (s : Fin
     rw [Finset.prod_insert hj, Finset.prod_insert hj, Finset.sum_insert hj]
     have hG : |∏ i ∈ s, g i| ≤ 1 := by
       rw [Finset.abs_prod]
-      exact Finset.prod_le_one (fun i _ => abs_nonneg _) (fun i _ => hg i)
+      exact Finset.prod_le_one₀ (fun i _ => abs_nonneg _) (fun i _ => hg i)
     have e : f j * ∏ i ∈ s, f i - g j * ∏ i ∈ s, g i
         = (f j - g j) * ∏ i ∈ s, g i + f j * (∏ i ∈ s, f i - ∏ i ∈ s, g i) := by ring
     rw [e]

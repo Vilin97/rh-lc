@@ -44,7 +44,7 @@ lemma derivL1Norm_rescaled_difference_le {d : ℕ} (ψ : E d → ℂ) (hψ : Con
     intro j
     show Integrable (fun y =>
       ∑ i ∈ Finset.range (j + 1), (j.choose i : ℝ) * ‖iteratedFDeriv ℝ i ψ y‖ * (1 + ‖y‖))
-    refine integrable_finset_sum _ fun i _ => ?_
+    refine MeasureTheory.integrable_finsetSum _ fun i _ => ?_
     have h0 := integrable_iteratedFDeriv hψ hψc 0 i
     have h1 := integrable_iteratedFDeriv hψ hψc 1 i
     have he : (fun y => (j.choose i : ℝ) * ‖iteratedFDeriv ℝ i ψ y‖ * (1 + ‖y‖)) = fun y =>

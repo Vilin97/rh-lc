@@ -26,7 +26,7 @@ private theorem abs_prod_sub_prod_le_of_bounded_differences {ι : Type*} (S : Fi
     have hCp : 0 ≤ C p := le_trans (abs_nonneg _) hxp
     have hys : |∏ i ∈ s, y i| ≤ ∏ i ∈ s, C i := by
       rw [Finset.abs_prod]
-      exact Finset.prod_le_prod (fun i _ => abs_nonneg _) fun i hi => hy i (Finset.mem_insert_of_mem hi)
+      exact Finset.prod_le_prod₀ (fun i _ => abs_nonneg _) fun i hi => hy i (Finset.mem_insert_of_mem hi)
     have hdiff : |x p - y p| ≤ 2 * C p * d p := by
       by_cases h : x p = y p
       · rw [h, sub_self, abs_zero]

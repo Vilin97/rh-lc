@@ -28,7 +28,7 @@ theorem weight_add_of_mul {σ F : Type} [Field F] (w : σ → ℕ) {P Q : MvPoly
   set j := Finsupp.weight w s
   have hc : weightedHomogeneousComponent w j Q ≠ 0 := by
     intro h0
-    have := congrArg (coeff s) h0
+    have := congrArg (AddMonoidAlgebra.coeff · s) h0
     rw [coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at this
     exact (mem_support_iff.mp hs) this
   have hne : weightedHomogeneousComponent w (k + j) (P * Q) ≠ 0 := by

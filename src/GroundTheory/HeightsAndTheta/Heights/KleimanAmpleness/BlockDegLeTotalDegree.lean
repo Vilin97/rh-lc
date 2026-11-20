@@ -33,7 +33,7 @@ theorem blockDeg_le_totalDegree (g : MvPolynomial (Σ k, ι k) S) :
   · rw [Finsupp.notMem_support_iff.mp hk]; exact Nat.zero_le _
 
 def homog (c : ∀ k, ι k) (D : ℕ) (g : MvPolynomial (Σ k, ι k) S) : MvPolynomial (Σ k, ι k) S :=
-  ∑ e ∈ g.support, monomial e (coeff e g) * ∏ k, X ⟨k, c k⟩ ^ (D - blockDeg e k)
+  ∑ e ∈ g.support, monomial e (AddMonoidAlgebra.coeff g e) * ∏ k, X ⟨k, c k⟩ ^ (D - blockDeg e k)
 
 variable {Ω : Type} [Field Ω] [Algebra S Ω]
 

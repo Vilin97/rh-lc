@@ -149,7 +149,7 @@ theorem logCoordG {ι : Type} [Fintype ι] (cp : ι → Fin n) (uv : ι → Fin 
   rw [tpjet_jetAt0_sum]
   refine Finset.sum_congr rfl (fun m hm => ?_)
   rw [MvPolynomial.aeval_monomial, map_mul, MvPowerSeries.constantCoeff_C, hD m hm, MvPolynomial.algebraMap_eq,
-    mul_comm (MvPolynomial.C (MvPolynomial.coeff m P)), jet_mul_C, Finsupp.prod_fintype _ _ (fun ℓ => pow_zero _)]
+    mul_comm (MvPolynomial.C (AddMonoidAlgebra.coeff P m)), jet_mul_C, Finsupp.prod_fintype _ _ (fun ℓ => pow_zero _)]
 
 end VP
 

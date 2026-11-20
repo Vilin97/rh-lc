@@ -88,7 +88,7 @@ theorem map_le_of_sizes (hX : ∀ v, IsUnit (X v).det) {L S A : Submodule (𝓞 
     exact_mod_cast this
   have hP : (∏ v, opNormAt b X b' X' v (U.mkQ ∘ₗ ψ)) ^ ((1 : ℝ) / (nPl K : ℝ)) ≤ δ := by
     have h1 : ∏ v, opNormAt b X b' X' v (U.mkQ ∘ₗ ψ) ≤ δ ^ nPl K := by
-      calc _ ≤ ∏ _v : InfinitePlace K, δ := Finset.prod_le_prod (fun v _ => norm_nonneg _) fun v _ => hop v
+      calc _ ≤ ∏ _v : InfinitePlace K, δ := Finset.prod_le_prod₀ (fun v _ => norm_nonneg _) fun v _ => hop v
         _ = δ ^ nPl K := by rw [Finset.prod_const, Finset.card_univ]; rfl
     calc _ ≤ (δ ^ nPl K) ^ ((1 : ℝ) / (nPl K : ℝ)) :=
           Real.rpow_le_rpow (Finset.prod_nonneg fun v _ => norm_nonneg _) h1 (by positivity)

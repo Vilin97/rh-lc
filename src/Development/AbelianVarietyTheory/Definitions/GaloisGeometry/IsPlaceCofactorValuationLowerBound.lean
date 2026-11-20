@@ -21,7 +21,7 @@ def phAt {p : ℕ} [Fact p.Prime] (X : Sys p) (be : MvPowerSeries (Fin 2) (K0 p)
 def IsPlaceCofactorValuationLowerBound {p : ℕ} [Fact p.Prime] (X : Sys p) (be : MvPowerSeries (Fin 2) (K0 p)) (j : ℕ) (v : X.Pl) (g : ℝ) : Prop :=
   ∀ U : MvPowerSeries (X.EA j ⊕ X.EA j) (K0 p), IntS p (inParam p U) →
     ∀ (I : X.ColCh j) (n : X.FrI j →₀ ℕ), ∃ a : WW p,
-      MvPolynomial.coeff n (applyD (X.PIv j I v) (X.ThZA (K0 p) j (expS p (-phAt X be j v) * U))) =
+      AddMonoidAlgebra.coeff (applyD (X.PIv j I v) (X.ThZA (K0 p) j (expS p (-phAt X be j v) * U))) n =
         (p : K0 p) ^ ⌈g⌉ * algebraMap (WW p) (K0 p) a
 
 def inE {p : ℕ} [Fact p.Prime] (X : Sys p) (j : ℕ) (v : X.Pl) :

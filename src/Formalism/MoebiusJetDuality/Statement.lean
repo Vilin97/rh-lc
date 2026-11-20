@@ -16,7 +16,7 @@ def linSubst {σ : Type u} {R : Type v} [Fintype σ] [CommRing R] (g : Matrix σ
 
 def IsIntegralJet {σ : Type u} {R : Type v} [CommRing R] (A : Subring R)
     (f : MvPolynomial σ R) : Prop :=
-  ∀ α, coeff α f ∈ A
+  ∀ α, AddMonoidAlgebra.coeff f α ∈ A
 
 def IsIntegralMat {ι κ : Type u} {R : Type v} [CommRing R] (A : Subring R)
     (g : Matrix ι κ R) : Prop :=
@@ -25,7 +25,7 @@ def IsIntegralMat {ι κ : Type u} {R : Type v} [CommRing R] (A : Subring R)
 def mfac {σ : Type u} (α : σ →₀ ℕ) : ℕ := α.prod fun _ k => k.factorial
 
 def evOp {σ : Type u} {R : Type v} [CommRing R] (P F : MvPolynomial σ R) : R :=
-  ∑ α ∈ P.support, (mfac α : R) * coeff α P * coeff α F
+  ∑ α ∈ P.support, (mfac α : R) * AddMonoidAlgebra.coeff P α * AddMonoidAlgebra.coeff F α
 
 def jetTrunc {σ : Type u} {R : Type v} [CommRing R] (N : ℕ) (f : MvPolynomial σ R) :
     MvPolynomial σ R :=
@@ -86,7 +86,7 @@ def IntMul : Prop :=
 def DerivCoeff : Prop :=
   ∀ (σ : Type u) (R : Type v) [DecidableEq σ] [CommRing R] (l : List σ) (f : MvPolynomial σ R),
     constantCoeff (l.foldr (fun i g => pderiv i g) f) =
-      (mfac (Multiset.toFinsupp (l : Multiset σ)) : R) * coeff (Multiset.toFinsupp (l : Multiset σ)) f
+      (mfac (Multiset.toFinsupp (l : Multiset σ)) : R) * AddMonoidAlgebra.coeff f (Multiset.toFinsupp (l : Multiset σ))
 
 def EvMonomial : Prop :=
   ∀ (σ : Type u) (R : Type v) [DecidableEq σ] [CommRing R] (l : List σ) (F : MvPolynomial σ R),

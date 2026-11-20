@@ -7,7 +7,7 @@ namespace GlobalTheory
 private def btPolySub (p : ℕ) (g : ℕ) (W : Type) [CommRing W] :
     Subalgebra W (MvPolynomial (Fin g) W) where
   carrier := {q | ∀ m : Fin g →₀ ℕ, (∃ i, ¬ p ∣ m i) →
-    MvPolynomial.coeff m q ∈ Ideal.span {(p : W)}}
+    AddMonoidAlgebra.coeff q m ∈ Ideal.span {(p : W)}}
   add_mem' := by
     intro a b ha hb m hm
     rw [MvPolynomial.coeff_add]
@@ -86,7 +86,7 @@ theorem fAdd_nsmulF_eq_eval_poly_frob :
   (∀ {R₀ : Type} [CommRing R₀] (p : ℕ) [Fact p.Prime] {g : ℕ} {B : BX R₀} (K : LAlg R₀) (ch : FormalChartAtZero B K g), PSerFrobStatement p K ch) →
   (∀ {R₀ : Type} [CommRing R₀] (p : ℕ) [Fact p.Prime] {g : ℕ} {B : BX R₀} {K : LAlg R₀} (ch : FormalChartAtZero B K g) (W : Type) [CommRing W] [Algebra R₀ W] (c : Fin g → W),
     (∀ i, IsNilpotent (c i)) → ∀ N : ℕ, ∃ Γ : Fin g → MvPolynomial (Fin g) W,
-      (∀ k m, (∃ i, ¬ p ∣ m i) → MvPolynomial.coeff m (Γ k) ∈ Ideal.span {(p : W)}) ∧
+      (∀ k m, (∃ i, ¬ p ∣ m i) → AddMonoidAlgebra.coeff (Γ k) m ∈ Ideal.span {(p : W)}) ∧
       ∀ y : Fin g → W, (∀ i, y i ^ N = 0) → fAdd ch.F c (nsmulF ch.F y p) = fun k => MvPolynomial.eval y (Γ k)) := by
   intro H1 H2 R₀ _ p _ g B K ch W _ _ c hc N
   obtain ⟨G, hG, hGe⟩ := H2 p K ch N
@@ -116,7 +116,7 @@ theorem fAdd_nsmulF_eq_eval_poly_frob :
       · exact Subalgebra.algebraMap_mem (btPolySub p g W) (c i)
       · intro m hm
         obtain ⟨r, hr⟩ := hG i m hm
-        change MvPolynomial.coeff m (MvPolynomial.map (algebraMap R₀ W) (G i)) ∈ _
+        change AddMonoidAlgebra.coeff (MvPolynomial.map (algebraMap R₀ W) (G i)) m ∈ _
         rw [MvPolynomial.coeff_map, hr, map_mul, map_natCast]
         exact Ideal.mul_mem_right _ _ (Ideal.subset_span rfl)
   · funext k

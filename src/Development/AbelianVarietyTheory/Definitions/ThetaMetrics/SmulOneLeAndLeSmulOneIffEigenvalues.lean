@@ -30,7 +30,7 @@ theorem isClosed_coordDivisor [TopologicalSpace X] (S : Finset κ) {w : X → κ
   have : coordDivisor S w = {x | ∏ j ∈ S, w x j = 0} :=
     Set.ext fun _ => mem_coordDivisor_iff_prod_eq_zero
   rw [this]
-  exact isClosed_eq (continuous_finset_prod S hw) continuous_const
+  exact isClosed_eq (continuous_finsetProd S hw) continuous_const
 
 theorem one_le_logWeight (S : Finset κ) (z : κ → ℂ) : 1 ≤ lwP₂ S z :=
   le_add_of_nonneg_right (Finset.sum_nonneg fun _ _ => abs_nonneg _)

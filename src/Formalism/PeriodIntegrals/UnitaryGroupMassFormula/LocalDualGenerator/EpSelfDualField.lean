@@ -54,7 +54,7 @@ theorem differentIdeal_eq_top
     Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P
   have hpeq : P.comap (algebraMap 𝒪[K] C) = 𝓂[K] := IsLocalRing.eq_maximalIdeal hpmax
   haveI : P.LiesOver 𝓂[K] := ⟨hpeq.symm⟩
-  letI := Localization.AtPrime.instAlgebraOfLiesOver 𝓂[K] P
+  letI := Localization.AtPrime.algebraOfLiesOver 𝓂[K] P
   haveI : Localization.AtPrime.IsLiesOverAlgebra 𝓂[K] P :=
     Localization.AtPrime.instIsLiesOverAlgebra 𝓂[K] P
   rw [Algebra.isUnramifiedAt_iff_map_eq 𝒪[K] 𝓂[K] P]

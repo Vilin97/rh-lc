@@ -22,7 +22,7 @@ theorem admissible_general_lattice_tuple (hS : XShape) (hBrS : XBrS) (hBrT : XBr
     (h4 : ∀ v' : Fin (X.Pj (j + 1)).nV, (i0 (X.vB (j + 1) v') = 0 ∧ L'' v' = L' v') ∨
       (1 ≤ i0 (X.vB (j + 1) v') ∧ IsEdge p ((X.Pj (j + 1)).n' v') (i0 (X.vB (j + 1) v')) ⟨L'' v', L' v'⟩)) :
     ∃ φ : Frm X j La (c', L''), ∀ (f : MvPowerSeries (X.ZA j) Kc) (gg : ℝ),
-      (∀ (I : X.ColCh j) (n : X.FrI j →₀ ℕ), geX p Oc (coeff n (applyD (X.PI j I i0) f)) gg) →
+      (∀ (I : X.ColCh j) (n : X.FrI j →₀ ℕ), geX p Oc (AddMonoidAlgebra.coeff (applyD (X.PI j I i0) f) n) gg) →
       ∀ G ∈ (X.Pj j).HtupW La.2,
         ((∏ v : X.Pl, (p : X.G.Kf) ^ (Nprime (X.G.P.lam0 v) (X.w v) (j + 1) (i0 v))) •
           (((∏ v : X.Pl, (p : X.G.Kf) ^ (X.vm v (j + 1) * len X v j La.2)) *

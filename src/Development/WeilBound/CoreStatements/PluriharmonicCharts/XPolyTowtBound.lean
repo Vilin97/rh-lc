@@ -28,18 +28,18 @@ theorem gen {σ : Type} [Fintype σ] (f : σ → MvPolynomial σ ℝ) (hf : ∀ 
       simp only [S, Set.Finite.mem_toFinset, Set.mem_setOf_eq]
       by_contra hne
       exact (mem_support_iff.mp hd) (hQ.coeff_eq_zero (by omega))
-    have e : coeff m (aeval f Q) = ∑ d ∈ Q.support, coeff d Q * coeff m (aeval f (monomial d (1 : ℝ))) := by
+    have e : AddMonoidAlgebra.coeff (aeval f Q) m = ∑ d ∈ Q.support, AddMonoidAlgebra.coeff Q d * AddMonoidAlgebra.coeff (aeval f (monomial d (1 : ℝ))) m := by
       conv_lhs => rw [Q.as_sum]
       rw [map_sum, coeff_sum]
       refine Finset.sum_congr rfl fun d _ => ?_
       rw [← coeff_C_mul]
       congr 1
-      have : monomial d (coeff d Q) = C (coeff d Q) * monomial d (1 : ℝ) := by
+      have : monomial d (AddMonoidAlgebra.coeff Q d) = C (AddMonoidAlgebra.coeff Q d) * monomial d (1 : ℝ) := by
         rw [C_mul_monomial, mul_one]
       rw [this, map_mul, aeval_C]
       rfl
     rw [e]
-    calc _ ≤ ∑ d ∈ Q.support, |coeff d Q * coeff m (aeval f (monomial d (1 : ℝ)))| :=
+    calc _ ≤ ∑ d ∈ Q.support, |AddMonoidAlgebra.coeff Q d * coeff m (aeval f (monomial d (1 : ℝ)))| :=
           Finset.abs_sum_le_sum_abs _ _
       _ ≤ ∑ d ∈ Q.support, B d * M := by
           refine Finset.sum_le_sum fun d _ => ?_

@@ -14,7 +14,7 @@ def Dec (a : K × (ι → ℂ) → ℂ) : Prop := ∀ N : ℕ, ∃ C : ℝ, ∀ 
 
 theorem norm_rationalWeight_le (κ : ι → ℕ) (e : ℕ) (x : ι → ℂ) : ‖r0 κ e x‖ ≤ (1 + ‖x‖) ^ (2 * e * Fintype.card ι) := by
   rw [r0, norm_prod, pow_mul, ← Finset.card_univ, ← Finset.prod_const]
-  refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun w _ => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun w _ => ?_
   rw [norm_mul, norm_pow, norm_pow, norm_div, Complex.norm_real, norm_norm]
   have h1 : (‖x w‖ / ‖x w‖) ^ κ w ≤ 1 := pow_le_one₀ (by positivity) (div_self_le_one _)
   have h2 : ‖x w‖ ^ (2 * e) ≤ (1 + ‖x‖) ^ (2 * e) := pow_le_pow_left₀ (norm_nonneg _) (by linarith [norm_le_pi_norm x w]) _

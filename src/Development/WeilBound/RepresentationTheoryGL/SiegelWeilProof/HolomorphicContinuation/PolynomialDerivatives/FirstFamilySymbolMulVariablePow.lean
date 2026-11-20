@@ -74,7 +74,7 @@ theorem good_mul_monomial {d e : ℕ} {r : Sym m n} (h : Good ε d r) (s : Ix m 
 theorem mem_support_pderiv {u : Sym m n} {i : Ix m n ⊕ Ix m n} {t' : Ix m n ⊕ Ix m n →₀ ℕ}
     (h : t' ∈ (pderiv i u).support) : ∃ t ∈ u.support, t i ≠ 0 ∧ t = t' + Finsupp.single i 1 := by
   classical
-  have hu : pderiv i u = ∑ t ∈ u.support, monomial (t - Finsupp.single i 1) (coeff t u * (t i : ℂ)) := by
+  have hu : pderiv i u = ∑ t ∈ u.support, monomial (t - Finsupp.single i 1) (AddMonoidAlgebra.coeff u t * (t i : ℂ)) := by
     conv_lhs => rw [u.as_sum]
     rw [map_sum]
     refine Finset.sum_congr rfl fun t _ => ?_

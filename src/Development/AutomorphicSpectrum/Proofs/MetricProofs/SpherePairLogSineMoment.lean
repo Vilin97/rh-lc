@@ -137,17 +137,17 @@ theorem map_pp {Ω : Type*} (u v : Ω → Fin 3 → ℝ) (Q : MvPolynomial (Fin 
 
 theorem ell_eq (ℓ : MvPolynomial (Fin 3) ℝ →ₗ[ℝ] ℝ) (R : MvPolynomial (Fin 3) ℝ)
     (S : Finset (Fin 3 →₀ ℕ)) (hS : R.support ⊆ S) :
-    ℓ R = ∑ m ∈ S, coeff m R * ℓ (monomial m 1) := by
+    ℓ R = ∑ m ∈ S, AddMonoidAlgebra.coeff R m * ℓ (monomial m 1) := by
   conv_lhs => rw [R.as_sum]
   rw [map_sum]
   rw [← Finset.sum_subset hS fun m _ hm => by simp [notMem_support_iff.1 hm]]
   refine Finset.sum_congr rfl fun m _ => ?_
-  rw [← mul_one (coeff m R), ← smul_eq_mul, ← smul_monomial, map_smul, smul_eq_mul, smul_eq_mul, mul_one]
+  rw [← mul_one (AddMonoidAlgebra.coeff R m), ← smul_eq_mul, ← smul_monomial, map_smul, smul_eq_mul, smul_eq_mul, mul_one]
 
 theorem ell_pp {Ω : Type*} (ℓ : MvPolynomial (Fin 3) ℝ →ₗ[ℝ] ℝ) (u v : Ω → Fin 3 → ℝ)
     (Q : MvPolynomial (Fin 2) ℝ) (p : Ω) :
     ℓ (aeval ![lin3 (u p), lin3 (v p)] Q) =
-      ∑ m ∈ (pp u v Q).support, coeff m (pp u v Q) p * ℓ (monomial m 1) := by
+      ∑ m ∈ (pp u v Q).support, AddMonoidAlgebra.coeff (pp u v Q) m p * ℓ (monomial m 1) := by
   rw [← map_pp, ell_eq ℓ _ _ (support_map_subset _ _)]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [coeff_map]
@@ -155,7 +155,7 @@ theorem ell_pp {Ω : Type*} (ℓ : MvPolynomial (Fin 3) ℝ →ₗ[ℝ] ℝ) (u 
 
 theorem continuous_coeff_pp {Ω : Type*} [TopologicalSpace Ω] (u v : Ω → Fin 3 → ℝ)
     (hu : Continuous u) (hv : Continuous v) (Q : MvPolynomial (Fin 2) ℝ) (m : Fin 3 →₀ ℕ) :
-    Continuous (coeff m (pp u v Q)) := by
+    Continuous (AddMonoidAlgebra.coeff (pp u v Q) m) := by
   set φ : C(Ω, ℝ) →ₐ[ℝ] (Ω → ℝ) := ContinuousMap.coeFnAlgHom (α := Ω) (A := ℝ) ℝ
   set w : Fin 2 → MvPolynomial (Fin 3) C(Ω, ℝ) :=
     ![∑ i, X i * C ⟨fun q => u q i, (continuous_apply i).comp hu⟩,
@@ -169,7 +169,7 @@ theorem continuous_coeff_pp {Ω : Type*} [TopologicalSpace Ω] (u v : Ω → Fin
         map_mul, map_X, map_C]
       rfl
   rw [pp, hw, ← comp_aeval, AlgHom.comp_apply, mapAlgHom_apply, coeff_map]
-  exact (coeff m (aeval w Q)).continuous
+  exact (AddMonoidAlgebra.coeff (aeval w Q) m).continuous
 
 theorem continuous_ell (ℓ : MvPolynomial (Fin 3) ℝ →ₗ[ℝ] ℝ) (Q : MvPolynomial (Fin 2) ℝ) :
     Continuous fun p : (Fin 3 → ℝ) × (Fin 3 → ℝ) => ℓ (aeval ![lin3 p.1, lin3 p.2] Q) := by
@@ -199,7 +199,7 @@ theorem ell_moment (ℓ : MvPolynomial (Fin 3) ℝ →ₗ[ℝ] ℝ) (Q : MvPolyn
       ∫ p : S2 × S2, wwLogWeight p * ℓ (aeval ![lin3 (crd p.1), lin3 (crd p.2)] Q)
         ∂(sphereMeasure.prod sphereMeasure) := by
   have hI : ∀ m, Integrable (fun p => wwLogWeight p *
-      coeff m (aeval ![dotPoly (Prod.fst : S2 × S2 → S2), dotPoly Prod.snd] Q) p)
+      AddMonoidAlgebra.coeff (aeval ![dotPoly (Prod.fst : S2 × S2 → S2), dotPoly Prod.snd] Q) m p)
       (sphereMeasure.prod sphereMeasure) := fun m =>
     FibreLocal.integrable_mul _ (DiagFibreMoment.continuous_coeff_aeval Q m)
   have h := fun p : S2 × S2 => ell_pp ℓ (fun p : S2 × S2 => crd p.1) (fun p => crd p.2) Q p

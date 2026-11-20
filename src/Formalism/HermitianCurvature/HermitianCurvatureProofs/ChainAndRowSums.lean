@@ -106,9 +106,9 @@ theorem sizesProduct_ok : SizesProduct := by
   have hC0 : 0 ≤ C₄ := by linarith
   have hprodv : 0 ≤ ∏ n ∈ Ico 1 s, vol n := Finset.prod_nonneg (fun n _ => hvol n)
   have h1 : ∏ n ∈ Ico 1 s, M n ≤ ∏ n ∈ Ico 1 s, (B ^ f * vol n) :=
-    Finset.prod_le_prod (fun n hn => (hM n hn).1) (fun n hn => (hM n hn).2)
+    Finset.prod_le_prod₀ (fun n hn => (hM n hn).1) (fun n hn => (hM n hn).2)
   have h2 : ∏ n ∈ Ico 1 s, (B ^ f * vol n) ≤ ∏ n ∈ Ico 1 s, (C₄ ^ f * vol n) :=
-    Finset.prod_le_prod (fun n _ => mul_nonneg (pow_nonneg hB0 _) (hvol n))
+    Finset.prod_le_prod₀ (fun n _ => mul_nonneg (pow_nonneg hB0 _) (hvol n))
       (fun n _ => mul_le_mul_of_nonneg_right (pow_le_pow_left₀ hB0 hBC f) (hvol n))
   have h3 : A ^ f ≤ C₄ ^ f := pow_le_pow_left₀ hA0 hAC f
   have hMp : 0 ≤ ∏ n ∈ Ico 1 s, M n := Finset.prod_nonneg (fun n hn => (hM n hn).1)

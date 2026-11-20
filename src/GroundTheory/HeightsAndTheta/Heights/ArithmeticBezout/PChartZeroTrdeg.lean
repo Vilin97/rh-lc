@@ -14,7 +14,7 @@ namespace ChartZeroTrdeg
 variable {F : Type} [Field F] {n : ℕ}
 
 def homogAt (p : MvPolynomial (Fin n) F) (j : Fin n) (N : ℕ) : MvPolynomial (Fin n) F :=
-  ∑ α ∈ p.support, monomial α (coeff α p) * X j ^ (N - α.sum fun _ e => e)
+  ∑ α ∈ p.support, monomial α (AddMonoidAlgebra.coeff p α) * X j ^ (N - α.sum fun _ e => e)
 
 theorem aeval_homogAt {L : Type} [Field L] [Algebra F L] (p : MvPolynomial (Fin n) F) (j : Fin n)
     (N : ℕ) (hN : p.totalDegree ≤ N) (z : Fin n → L) (hz : z j ≠ 0) :

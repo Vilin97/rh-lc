@@ -107,7 +107,7 @@ theorem powLeMaxMulMax : BlockScalarBound := by
 private theorem one_le_finset_prod_of_forall_one_le {ι : Type*} (s : Finset ι) (y : ι → ℝ) (h : ∀ v ∈ s, 1 ≤ y v) :
     1 ≤ ∏ v ∈ s, y v := by
   calc (1:ℝ) = ∏ v ∈ s, (1:ℝ) := by simp
-    _ ≤ ∏ v ∈ s, y v := Finset.prod_le_prod (fun _ _ => zero_le_one) h
+    _ ≤ ∏ v ∈ s, y v := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) h
 
 theorem ratioPowLeProdMaxPow : Threshold := by
   intro N p D H₂ l hH hD hDl hlt
@@ -118,7 +118,7 @@ theorem ratioPowLeProdMaxPow : Threshold := by
   have hPpos : 0 < ∏ i, max 1 (D i / H₂) := lt_of_lt_of_le one_pos hP1
   have hPQ : ∏ i, max 1 (D i / H₂) ≤ (D l / H₂) ^ N := by
     calc ∏ i, max 1 (D i / H₂) ≤ ∏ _i : Fin N, D l / H₂ :=
-          Finset.prod_le_prod (fun _ _ => zero_le_one.trans (le_max_left _ _))
+          Finset.prod_le_prod₀ (fun _ _ => zero_le_one.trans (le_max_left _ _))
             (fun i _ => max_le hQ1.le (div_le_div_of_nonneg_right (hDl i) hH.le))
       _ = (D l / H₂) ^ N := by rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
   have ha : 0 ≤ 2 * (p:ℝ) / N := by positivity
@@ -272,7 +272,7 @@ theorem prodMaxInvLeSq : LemmaP := by
     finset_prod_real_mono_of_subset_of_one_le _ _ (Finset.subset_univ _) _ (fun v _ => le_max_left _ _)
   refine ⟨?_, hB.trans hA⟩
   calc ∏ v ∈ Sg, max (x v) (1 / x v) ≤ ∏ v ∈ Sg, (max 1 (x v) * max 1 (1 / x v)) :=
-        Finset.prod_le_prod (fun v _ => (hx v).le.trans (le_max_left _ _))
+        Finset.prod_le_prod₀ (fun v _ => (hx v).le.trans (le_max_left _ _))
           (fun v _ => max_self_inv_le_max_one_mul_max_one_inv (hx v))
     _ = (∏ v ∈ Sg, max 1 (x v)) * ∏ v ∈ Sg, max 1 (1 / x v) := Finset.prod_mul_distrib
     _ ≤ (∏ v, max 1 (x v)) * ∏ v, max 1 (x v) :=
@@ -292,7 +292,7 @@ lemma prod_prod_max_le_pow_mul_thresholdSize {ι l : Type} [Fintype ι] (E : Fin
     fun i hi => prodMaxLeProdMaxDiv ι (D i) H₂ hH (fun v => (hD i hi v).le)
   calc ∏ i ∈ E, ∏ v, max 1 (D i v)
         ≤ ∏ i ∈ E, (H₂ ^ Fintype.card ι * ∏ v, max 1 (D i v / H₂)) :=
-        Finset.prod_le_prod (fun i _ => finset_prod_max_one_nonneg _ _) h1
+        Finset.prod_le_prod₀ (fun i _ => finset_prod_max_one_nonneg _ _) h1
     _ = H₂ ^ (Fintype.card ι * E.card) * Formalism.HermitianLatticeCounting.LatticeSumBounds.size E D H₂ := by
         rw [Finset.prod_mul_distrib, Finset.prod_const, ← pow_mul, thresholdSize_eq_prod_comm]
 
@@ -307,7 +307,7 @@ theorem prodMaxMulMaxInvLe : PiProd := by
   have hH0 : 0 ≤ H₂ := by linarith
   calc ∏ i ∈ E, ∏ v, (max 1 (D i v) * max 1 (1 / D i v))
         ≤ ∏ i ∈ E, (∏ v, max 1 (D i v)) ^ 2 :=
-        Finset.prod_le_prod (fun i _ => Finset.prod_nonneg (fun v _ => mul_nonneg
+        Finset.prod_le_prod₀ (fun i _ => Finset.prod_nonneg (fun v _ => mul_nonneg
           (zero_le_one.trans (le_max_left _ _)) (zero_le_one.trans (le_max_left _ _)))) h1
     _ = (∏ i ∈ E, ∏ v, max 1 (D i v)) ^ 2 := Finset.prod_pow _ _ _
     _ ≤ (H₂ ^ (Fintype.card ι * E.card) * Formalism.HermitianLatticeCounting.LatticeSumBounds.size E D H₂) ^ 2 :=
@@ -331,14 +331,14 @@ theorem prodLossBound : LossProd := by
     refine (prodMaxLeProdMaxDiv ι (D l₀) H₂ hH (fun v => (hD l₀ hl₀ v).le)).trans ?_
     apply mul_le_mul_of_nonneg_left _ (pow_nonneg hH0 _)
     unfold Formalism.HermitianLatticeCounting.LatticeSumBounds.size
-    apply Finset.prod_le_prod (fun v _ => zero_le_one.trans (le_max_left _ _))
+    apply Finset.prod_le_prod₀ (fun v _ => zero_le_one.trans (le_max_left _ _))
     intro v _
     rw [← Finset.mul_prod_erase E _ hl₀]
     exact le_mul_of_one_le_right (zero_le_one.trans (le_max_left _ _))
       (one_le_finset_prod_of_forall_one_le _ _ (fun i _ => le_max_left _ _))
   have hGm : ∏ v, max 1 (G v) ≤ (∏ v, max 1 (D l₀ v)) ^ 2 := by
     rw [← Finset.prod_pow]
-    apply Finset.prod_le_prod (fun v _ => zero_le_one.trans (le_max_left _ _))
+    apply Finset.prod_le_prod₀ (fun v _ => zero_le_one.trans (le_max_left _ _))
     intro v _
     exact max_le (one_le_pow₀ (le_max_left _ _))
       ((hGD v).trans (pow_le_pow_left₀ (hD l₀ hl₀ v).le (le_max_right _ _) 2))
@@ -362,10 +362,10 @@ theorem prodLossBound : LossProd := by
       (fun i hi => (hD i hi v).le.trans (le_max_left _ _))))
     calc ∏ v ∈ Sg, ∏ i ∈ E, max (D i v) (1 / D i v)
           ≤ ∏ v ∈ Sg, ∏ i ∈ E, (max 1 (D i v) * max 1 (1 / D i v)) := by
-          apply Finset.prod_le_prod (fun v _ => Finset.prod_nonneg
+          apply Finset.prod_le_prod₀ (fun v _ => Finset.prod_nonneg
             (fun i hi => (hD i hi v).le.trans (le_max_left _ _)))
           intro v _
-          exact Finset.prod_le_prod (fun i hi => (hD i hi v).le.trans (le_max_left _ _))
+          exact Finset.prod_le_prod₀ (fun i hi => (hD i hi v).le.trans (le_max_left _ _))
             (fun i hi => max_self_inv_le_max_one_mul_max_one_inv (hD i hi v))
       _ ≤ ∏ v, ∏ i ∈ E, (max 1 (D i v) * max 1 (1 / D i v)) :=
           finset_prod_real_mono_of_subset_of_one_le _ _ (Finset.subset_univ _) _ (fun v _ => one_le_finset_prod_of_forall_one_le _ _
@@ -637,7 +637,7 @@ theorem unitaryOrderRatioBound : ThetaBound := by
   have hle : ∏ i ∈ Finset.Icc (j - e + 1) j, (1 - η ^ i * (q ^ i)⁻¹) ≤ (3 / 2) ^ e := by
     calc ∏ i ∈ Finset.Icc (j - e + 1) j, (1 - η ^ i * (q ^ i)⁻¹)
           ≤ ∏ _i ∈ Finset.Icc (j - e + 1) j, (3 / 2 : ℝ) :=
-          Finset.prod_le_prod (fun i hi => (hfac i hi).1.le) (fun i hi => (hfac i hi).2)
+          Finset.prod_le_prod₀ (fun i hi => (hfac i hi).1.le) (fun i hi => (hfac i hi).2)
       _ = (3 / 2) ^ e := by rw [Finset.prod_const, hcard]
   refine ⟨Finset.prod_pos (fun i hi => (hfac i hi).1), hle, hle.trans ?_⟩
   exact pow_le_pow_left₀ (by norm_num) (by norm_num) e
@@ -1093,7 +1093,7 @@ theorem prodMinGainBaseLe : ProdMinX := by
     Finset.prod_nonneg (fun v _ => (lt_min (hν v) hT').le)
   calc ∏ v, min 1 (Formalism.HermitianLatticeCounting.LatticeSumBounds.xv k r C (ν v) (t v) g)
         ≤ ∏ v, (min (ν v) T' * t v * (g⁻¹ ^ (2 * r + 2) * ((k:ℝ) ^ r)⁻¹)) :=
-        Finset.prod_le_prod (fun v _ => hnn v) (fun v _ => hpt v)
+        Finset.prod_le_prod₀ (fun v _ => hnn v) (fun v _ => hpt v)
     _ = (∏ v, min (ν v) T') * (∏ v, t v) *
           (g⁻¹ ^ (2 * r + 2) * ((k:ℝ) ^ r)⁻¹) ^ Fintype.card ι := by
         rw [Finset.prod_mul_distrib, Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ]
@@ -1165,7 +1165,7 @@ theorem prodMinLeOfProdRatio : SmallTerm := by
     refine hprod.trans ?_
     calc ∏ v, (ch₁ v + ch₂ v) / (sh₁ v * sh₂ v)
           ≤ ∏ v, (4 / (min 1 (sh₁ v) * min 1 (sh₂ v))) :=
-          Finset.prod_le_prod
+          Finset.prod_le_prod₀
             (fun v _ => div_nonneg (add_nonneg (h₁ v).2.1 (h₂ v).2.1)
               (mul_pos (h₁ v).1 (h₂ v).1).le)
             (fun v _ => hyperbolicPairRatioLe _ _ _ _ (h₁ v).1 (h₁ v).2.1 (h₁ v).2.2
@@ -1308,13 +1308,13 @@ theorem lowerBoundOfProdLengths : LengthLower := by
   have hR : 0 ≤ R := ((hl' b).1.le).trans (hl' b).2
   have h1 : ∏ a, l a ≤ R ^ r := by
     calc ∏ a, l a ≤ ∏ _a : Fin r, R :=
-          Finset.prod_le_prod (fun a _ => (hl a).1.le) (fun a _ => (hl a).2)
+          Finset.prod_le_prod₀ (fun a _ => (hl a).1.le) (fun a _ => (hl a).2)
       _ = R ^ r := by simp
   have h2 : ∏ b', l' b' ≤ l' b * R ^ (r - 1) := by
     rw [← Finset.mul_prod_erase Finset.univ l' (Finset.mem_univ b)]
     apply mul_le_mul_of_nonneg_left _ (hl' b).1.le
     calc ∏ b' ∈ Finset.univ.erase b, l' b' ≤ ∏ _b' ∈ Finset.univ.erase b, R :=
-          Finset.prod_le_prod (fun a _ => (hl' a).1.le) (fun a _ => (hl' a).2)
+          Finset.prod_le_prod₀ (fun a _ => (hl' a).1.le) (fun a _ => (hl' a).2)
       _ = R ^ (r - 1) := by
           rw [Finset.prod_const, Finset.card_erase_of_mem (Finset.mem_univ b), Finset.card_univ,
             Fintype.card_fin]
@@ -1457,7 +1457,7 @@ theorem prodUnitaryOrderRatioBound : ThetaProd := by
     exact ⟨b1, b3.trans (pow_le_pow_right₀ (by norm_num) h1)⟩
   refine ⟨Finset.prod_pos (fun p hp => (hb p hp).1), ?_⟩
   calc ∏ p ∈ P, Formalism.HermitianLatticeCounting.LatticeSumBounds.theta j (ep p) (η p) (q p) ≤ ∏ _p ∈ P, (2:ℝ) ^ e :=
-        Finset.prod_le_prod (fun p hp => (hb p hp).1.le) (fun p hp => (hb p hp).2)
+        Finset.prod_le_prod₀ (fun p hp => (hb p hp).1.le) (fun p hp => (hb p hp).2)
     _ = 2 ^ (e * P.card) := by rw [Finset.prod_const, ← pow_mul]
 
 theorem nondegenerateFactorBound : DeNonDegBound := by
@@ -1532,7 +1532,7 @@ theorem prodHyperbolicRatioSqLe : DegFactorBound := by
   rw [← Finset.prod_pow]
   calc ∏ v, ((1 + ch v) / sh v) ^ 2
         ≤ ∏ v, (9 * (T * T' * max 1 (Dr v ^ 2) * max 1 (1 / G v))) :=
-        Finset.prod_le_prod (fun v _ => sq_nonneg _) (fun v _ => hper v)
+        Finset.prod_le_prod₀ (fun v _ => sq_nonneg _) (fun v _ => hper v)
     _ = 9 ^ Fintype.card ι * ((T * T') ^ Fintype.card ι * (∏ v, max 1 (Dr v ^ 2)) *
           ∏ v, max 1 (1 / G v)) := by
         rw [Finset.prod_mul_distrib, Finset.prod_mul_distrib, Finset.prod_mul_distrib,
@@ -1897,7 +1897,7 @@ lemma prod_factorialPiWeight_le (v : ℝ) (hv : 1 ≤ v) (k s : ℕ) (hs : 2 ≤
       Real.pi ^ (t * (s - 2)) * ∏ j ∈ Finset.Ioc 2 s, s5bA v (j + t) := by
     calc ∏ j ∈ Finset.Ioc 2 s, s5bA v j
           ≤ ∏ j ∈ Finset.Ioc 2 s, (Real.pi ^ t * s5bA v (j + t)) :=
-          Finset.prod_le_prod (fun j _ => (hW j).le)
+          Finset.prod_le_prod₀ (fun j _ => (hW j).le)
             (fun j _ => factorialPiWeight_le_pi_pow_mul v hv j t)
       _ = Real.pi ^ (t * (s - 2)) * ∏ j ∈ Finset.Ioc 2 s, s5bA v (j + t) := by
           rw [Finset.prod_mul_distrib, Finset.prod_const, Nat.card_Ioc, ← pow_mul]
@@ -1958,7 +1958,7 @@ theorem massRatioBound : XiBound := by
     rw [div_le_iff₀ hPB0]; exact hR
   have hLA : ∏ j ∈ Finset.Ioc 2 s, Lv j ≤ Real.exp 0.356 ^ f := by
     calc ∏ j ∈ Finset.Ioc 2 s, Lv j ≤ ∏ j ∈ Finset.Ioc 2 s, Formalism.HermitianLatticeCounting.LatticeSumBounds.zetaR j ^ f :=
-          Finset.prod_le_prod (fun j hj => (hLpos j (hA3 j hj)).le) (fun j hj => (hL j (hA3 j hj)).2)
+          Finset.prod_le_prod₀ (fun j hj => (hLpos j (hA3 j hj)).le) (fun j hj => (hL j (hA3 j hj)).2)
       _ = (∏ j ∈ Finset.Ioc 2 s, Formalism.HermitianLatticeCounting.LatticeSumBounds.zetaR j) ^ f := Finset.prod_pow _ _ _
       _ ≤ Real.exp 0.356 ^ f :=
           pow_le_pow_left₀ (Finset.prod_nonneg (fun j hj => (hzpos j (hA3 j hj)).le))
@@ -1966,7 +1966,7 @@ theorem massRatioBound : XiBound := by
   have hLB : (∏ j ∈ Finset.Ioc (k - s) k, Lv j)⁻¹ ≤ Real.exp 0.356 ^ f := by
     have h1 : ((∏ j ∈ Finset.Ioc (k - s) k, Formalism.HermitianLatticeCounting.LatticeSumBounds.zetaR j) ^ f)⁻¹ ≤ ∏ j ∈ Finset.Ioc (k - s) k, Lv j := by
       rw [← Finset.prod_pow, ← Finset.prod_inv_distrib]
-      exact Finset.prod_le_prod (fun j hj => (inv_pos.mpr (pow_pos (hzpos j (hB3 j hj)) f)).le)
+      exact Finset.prod_le_prod₀ (fun j hj => (inv_pos.mpr (pow_pos (hzpos j (hB3 j hj)) f)).le)
         (fun j hj => (hL j (hB3 j hj)).1)
     have h2 : 0 < (∏ j ∈ Finset.Ioc (k - s) k, Formalism.HermitianLatticeCounting.LatticeSumBounds.zetaR j) ^ f :=
       pow_pos (Finset.prod_pos (fun j hj => hzpos j (hB3 j hj))) f
@@ -2029,13 +2029,13 @@ theorem prodDeltaLossBound : LossPrimeProd := by
       H₂ ^ (Fintype.card ι * E.card) * Formalism.HermitianLatticeCounting.LatticeSumBounds.size E D H₂ := by
     rw [Finset.prod_comm]
     calc ∏ i ∈ E, ∏ v, max 1 (1 / D i v) ≤ ∏ i ∈ E, ∏ v, max 1 (D i v) :=
-          Finset.prod_le_prod (fun i _ => finset_prod_max_one_nonneg _ _)
+          Finset.prod_le_prod₀ (fun i _ => finset_prod_max_one_nonneg _ _)
             (fun i hi => (prodMaxInvLeSq ι (D i) Finset.univ (hD i hi) (hDprod i hi)).2)
       _ ≤ _ := prod_prod_max_le_pow_mul_thresholdSize E D H₂ hH₂ hD
   rw [Finset.prod_pow]
   apply pow_le_pow_left₀ (Finset.prod_nonneg (fun v _ => mul_nonneg hH₁0 (hDe0 v)))
   calc ∏ v ∈ Sg, H₁ * De v ≤ ∏ v ∈ Sg, (H₁ * ∏ i ∈ E, max 1 (1 / D i v)) :=
-        Finset.prod_le_prod (fun v _ => mul_nonneg hH₁0 (hDe0 v))
+        Finset.prod_le_prod₀ (fun v _ => mul_nonneg hH₁0 (hDe0 v))
           (fun v _ => mul_le_mul_of_nonneg_left (hDv v) hH₁0)
     _ = (∏ _v ∈ Sg, H₁) * ∏ v ∈ Sg, ∏ i ∈ E, max 1 (1 / D i v) := Finset.prod_mul_distrib
     _ ≤ H₁ ^ Fintype.card ι * ∏ v, ∏ i ∈ E, max 1 (1 / D i v) := by

@@ -84,7 +84,7 @@ theorem prod_le_of_injective {n k : ℕ} (hk : k ≤ n) (p : Fin n → ℝ) (hp 
       have := ih (by omega)
       omega
   rw [h1]
-  refine Finset.prod_le_prod (fun j _ => hpos _) fun j _ => hp ?_
+  refine Finset.prod_le_prod₀ (fun j _ => hpos _) fun j _ => hp ?_
   rw [Fin.le_iff_val_le_val, Fin.val_castLE]
   exact h3 j.1 j.2
 

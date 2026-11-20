@@ -193,7 +193,7 @@ private theorem fockB_eq_fockS_of_map_conj_eq {σ : Type} (f g : MvPolynomial σ
     Formalism.L2.DIV.fockB f g = Formalism.L2.DIV.fockS f g := by
   unfold Formalism.L2.DIV.fockB Formalism.L2.DIV.fockS
   refine Finset.sum_congr rfl fun m _ => ?_
-  have := congrArg (MvPolynomial.coeff m) hf
+  have := congrArg (AddMonoidAlgebra.coeff · m) hf
   rw [MvPolynomial.coeff_map, starRingEnd_apply] at this
   rw [this]
 

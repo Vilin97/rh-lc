@@ -302,7 +302,7 @@ theorem div_const_on {P W : Ideal (MRing ι)} (hP : P.IsPrime) (hH : IsHorizonta
     divCycle P (C (m : ℤ)) W = padicValNat (charOf W) m * divCycle P (C (charOf W : ℤ)) W := by
   set p := charOf W with hpd
   have : Fact p.Prime := ⟨hp⟩
-  obtain ⟨m', hm'⟩ : p ^ padicValNat p m ∣ m := pow_padicValNat_dvd
+  obtain ⟨m', hm'⟩ : p ^ padicValNat p m ∣ m := (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
   have hm0 : 0 < m' := Nat.pos_of_ne_zero fun h => by rw [h, mul_zero] at hm'; omega
   have hnd : ¬ p ∣ m' := by
     intro hd

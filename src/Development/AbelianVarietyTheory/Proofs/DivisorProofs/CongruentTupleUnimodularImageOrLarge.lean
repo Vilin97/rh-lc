@@ -302,7 +302,7 @@ theorem dichotomy : ∀ (O : Type) [CommRing O] [Module.Finite ℤ O] (bar : O �
       exact_mod_cast h1.trans h2
     have hprod : ∏ j, (β (g (b j)) (g (b j)) : ℝ) ≤ ((D : ℝ) * s0) ^ r := by
       calc ∏ j, (β (g (b j)) (g (b j)) : ℝ) ≤ ∏ _j : Fin r, ((D : ℝ) * s0) :=
-            Finset.prod_le_prod (fun j _ => by exact_mod_cast hp _) (fun j _ => hbj j)
+            Finset.prod_le_prod₀ (fun j _ => by exact_mod_cast hp _) (fun j _ => hbj j)
         _ = _ := by simp
     have hDs0 : (0 : ℝ) ≤ D * s0 := mul_nonneg (by exact_mod_cast hD) (by exact_mod_cast hs0)
     have hDs : (D : ℝ) * s0 ≤ M * lam := by

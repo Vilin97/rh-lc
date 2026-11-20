@@ -101,7 +101,7 @@ theorem wt_bound (M : ℕ) (τ : InfinitePlace F → ℂ) {T : ℝ} (h0 : ∀ w,
     wt M τ ≤ Real.sqrt T ^ (Fintype.card (InfinitePlace F) * M) := by
   unfold wt
   calc ∏ w, Real.sqrt (τ w).im ^ M ≤ ∏ _w : InfinitePlace F, Real.sqrt T ^ M :=
-        Finset.prod_le_prod (fun w _ => by positivity)
+        Finset.prod_le_prod₀ (fun w _ => by positivity)
           (fun w _ => pow_le_pow_left₀ (Real.sqrt_nonneg _) (Real.sqrt_le_sqrt (hT w)) M)
     _ = _ := by rw [Finset.prod_const, Finset.card_univ, ← pow_mul, mul_comm]
 

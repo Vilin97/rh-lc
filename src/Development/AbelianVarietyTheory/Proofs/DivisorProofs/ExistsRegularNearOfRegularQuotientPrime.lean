@@ -151,7 +151,7 @@ theorem _root_.GlobalTheory.RegularAscent.exists_regular_near_of_regular_quotien
   have hTcard : (T.card : WithBot ℕ∞) ≤ (p.map (algebraMap B (Localization.AtPrime q))).height := by
     have h1 : (p.map (algebraMap B (Localization.AtPrime q))).height = p.height := by
       rw [← IsLocalization.height_under q.primeCompl,
-        IsLocalization.comap_map_of_isPrime_disjoint q.primeCompl _ ‹_› hdisj]
+        IsLocalization.under_map_of_isPrime_disjoint q.primeCompl _ ‹_› hdisj]
     have h2 : (p.height : WithBot ℕ∞) = (maximalIdeal (Localization.AtPrime p)).spanFinrank := by
       rw [← IsLocalization.AtPrime.ringKrullDim_eq_height p (Localization.AtPrime p),
         hp.spanFinrank_maximalIdeal]

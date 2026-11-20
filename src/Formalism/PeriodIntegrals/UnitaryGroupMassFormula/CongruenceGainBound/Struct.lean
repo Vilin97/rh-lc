@@ -12,7 +12,7 @@ abbrev UV (Sh : Shape) : Type := Σ v : Fin Sh.nV, Fin (Sh.n' v) × Fin Sh.r1
 abbrev AV (Sh : Shape) : Type := Sh.ZV ⊕ UV Sh
 
 def IntA {σ τ Kc : Type} [Field Kc] (Oc : Subring Kc) (F : MvPowerSeries σ (MvPolynomial τ Kc)) : Prop :=
-  ∀ n m, MvPolynomial.coeff m (MvPowerSeries.coeff n F) ∈ Oc
+  ∀ n m, AddMonoidAlgebra.coeff (MvPowerSeries.coeff n F) m ∈ Oc
 
 def subV (Sh : Shape) (Kc : Type) [Field Kc] (TT : ∀ v, Finset (Fin (Sh.n' v))) :
     Sh.ZV → MvPowerSeries (AV Sh) (MvPolynomial Sh.FrV Kc)
@@ -29,7 +29,7 @@ def abelian₂ {Sh : Shape} {Kc : Type} [Field Kc] (Q : MvPolynomial Sh.ZV (MvPo
     (F : MvPowerSeries (AV Sh) (MvPolynomial Sh.FrV Kc)) : MvPolynomial Sh.FrV Kc :=
   MvPolynomial.C (∏ t ∈ e.support, ((e t).factorial : Kc)) *
     ∑ n ∈ Q.support, MvPolynomial.C (∏ x ∈ n.support, ((n x).factorial : Kc)) *
-      MvPowerSeries.coeff (Finsupp.sumElim n e) F * MvPolynomial.map (Int.castRingHom Kc) (MvPolynomial.coeff n Q)
+      MvPowerSeries.coeff (Finsupp.sumElim n e) F * MvPolynomial.map (Int.castRingHom Kc) (AddMonoidAlgebra.coeff Q n)
 
 def QP (Sh : Shape) (rb : ℕ) (nu : Sh.Wt) (TT : ∀ v, Finset (Fin (Sh.n' v))) (I : Sh.ColCh) :
     MvPolynomial Sh.ZV (MvPolynomial Sh.FrV ℤ) :=

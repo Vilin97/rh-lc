@@ -15,7 +15,7 @@ variable {p : ℕ} [Fact p.Prime] (X : Sys p) (Kc : Type) [Field Kc] [Algebra X.
 theorem coeff_trDY (D : D7) {N N' : ℕ} {ι : ℂ →+* Kc} (e : GL3Theta.Idx D N N' → X.ZA j) (he : Function.Injective e)
     (Φ₀ : MvPolynomial (GL3Theta.FrV D N') ℂ →ₛₗ[ι] XspC (X.Pj (j + 1)) Kc)
     (R : MvPolynomial (GL3Theta.Idx D N N') (MvPolynomial (GL3Theta.FrV D N') ℂ)) (α : GL3Theta.Idx D N N' →₀ ℕ) :
-    MvPolynomial.coeff (α.mapDomain e) (trDY X Kc j D e Φ₀ R) = Φ₀ (MvPolynomial.coeff α R) := by
+    AddMonoidAlgebra.coeff (trDY X Kc j D e Φ₀ R) (α.mapDomain e) = Φ₀ (AddMonoidAlgebra.coeff R α) := by
   classical
   unfold trDY
   rw [MvPolynomial.coeff_sum]
@@ -66,8 +66,8 @@ theorem pairing_dictionary : PairDict := by
   rw [map_sum, Finset.smul_sum]
   refine Finset.sum_congr rfl fun α hα => ?_
   rw [coeff_trDY X Kc j D e he Φ₀ R α]
-  have hC : MvPolynomial.coeff α R * MvPolynomial.C ((α.prod fun _ n => (n.factorial : ℂ)) * TaylorLogMetric.taylor D Θ α) =
-      ((α.prod fun _ n => (n.factorial : ℂ)) * TaylorLogMetric.taylor D Θ α) • MvPolynomial.coeff α R := by
+  have hC : AddMonoidAlgebra.coeff R α * MvPolynomial.C ((α.prod fun _ n => (n.factorial : ℂ)) * TaylorLogMetric.taylor D Θ α) =
+      ((α.prod fun _ n => (n.factorial : ℂ)) * TaylorLogMetric.taylor D Θ α) • AddMonoidAlgebra.coeff R α := by
     rw [MvPolynomial.smul_eq_C_mul]
     exact mul_comm _ _
   rw [hC, LinearMap.map_smulₛₗ, smul_smul]

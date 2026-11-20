@@ -105,7 +105,7 @@ theorem exists_elt_balanced : ∀ (K : Type) [Field K] [NumberField K] (e : Heig
     rw [hnorm]
     have hS' : S = ∑ la ∈ e.support, e la * Real.log (Ideal.absNorm la.asIdeal : ℝ) := rfl
     rw [hS', hA, Finset.mul_sum, ← Finset.sum_add_distrib, Real.exp_sum]
-    refine Finset.prod_le_prod (fun la _ => by positivity) fun la _ => ?_
+    refine Finset.prod_le_prod₀ (fun la _ => by positivity) fun la _ => ?_
     rw [← Real.rpow_intCast, Real.rpow_def_of_pos (hNpos la)]
     refine Real.exp_le_exp.2 ?_
     have h1 : ((m la : ℤ) : ℝ) ≤ τ * e la + 1 := (Int.ceil_lt_add_one _).le

@@ -81,7 +81,7 @@ theorem exists_frame_denom_dominant_pow : ∀ (E : Type) [Field E] [NumberField 
   rw [FractionalIdeal.mem_spanSingleton]
   refine ⟨⟨_, ht F hF hv G (fun y' Y' hY' h' => hG y' Y' hY' h') μ⟩, ?_⟩
   have htK : (t : z.K) ≠ 0 := fun h => ht0 (RingOfIntegers.coe_eq_zero_iff.1 h)
-  change (t : z.K) * MvPolynomial.coeff μ G * (t : z.K)⁻¹ = _
+  change (t : z.K) * AddMonoidAlgebra.coeff G μ * (t : z.K)⁻¹ = _
   field_simp
 
 end GlobalTheory.LatFull.CMInt

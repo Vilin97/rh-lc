@@ -10,7 +10,7 @@ noncomputable section
 
 def momentPoly {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) (w : Ω → ℝ)
     (Q : MvPolynomial (Fin 3) (Ω → ℝ)) : MvPolynomial (Fin 3) ℝ :=
-  ∑ m ∈ Q.support, monomial m (∫ p, w p * coeff m Q p ∂μ)
+  ∑ m ∈ Q.support, monomial m (∫ p, w p * AddMonoidAlgebra.coeff Q m p ∂μ)
 
 def dotPoly {Ω : Type*} (n : Ω → S2) : MvPolynomial (Fin 3) (Ω → ℝ) :=
   ∑ i, X i * C (fun p => (n p : E3) i)

@@ -42,12 +42,12 @@ private theorem lca_coord {K : Type} [Field K] [NumberField K] {ι : Type} [Fint
     refine ⟨GlobalTheory.CoefModel.mapVV (φ.comp (Rat.castHom K)) lam ⟨y, hyV⟩, ?_, fun i => ?_⟩
     · rw [GlobalTheory.CoefModel.mapVV_coe, MvPolynomial.map_map]
     · obtain ⟨z, hz⟩ := UpperTheory.WildA.bvvInt lam (GlobalTheory.CoefModel.mapVV (φ.comp (Rat.castHom K)) lam ⟨y, hyV⟩) (fun m => by
-        refine ⟨Rat.ringOfIntegersEquiv (MvPolynomial.coeff m Q), ?_⟩
+        refine ⟨Rat.ringOfIntegersEquiv (AddMonoidAlgebra.coeff Q m), ?_⟩
         rw [GlobalTheory.CoefModel.mapVV_coe, MvPolynomial.coeff_map]
-        have h2 : MvPolynomial.coeff m y = ((MvPolynomial.coeff m Q : 𝓞 ℚ) : ℚ) := by
+        have h2 : AddMonoidAlgebra.coeff y m = ((AddMonoidAlgebra.coeff Q m : 𝓞 ℚ) : ℚ) := by
           rw [← hQ]; exact MvPolynomial.coeff_map _ _ _
-        change (φ.comp (Rat.castHom K)) (MvPolynomial.coeff m y) = _
-        have h3 : ((MvPolynomial.coeff m Q : 𝓞 ℚ) : ℚ) = ((Rat.ringOfIntegersEquiv (MvPolynomial.coeff m Q) : ℤ) : ℚ) :=
+        change (φ.comp (Rat.castHom K)) (AddMonoidAlgebra.coeff y m) = _
+        have h3 : ((AddMonoidAlgebra.coeff Q m : 𝓞 ℚ) : ℚ) = ((Rat.ringOfIntegersEquiv (AddMonoidAlgebra.coeff Q m) : ℤ) : ℚ) :=
           (Rat.ringOfIntegersEquiv_apply_coe _).symm
         rw [h2, h3, map_intCast]) i
       refine ⟨(z : 𝓞 K), ?_⟩

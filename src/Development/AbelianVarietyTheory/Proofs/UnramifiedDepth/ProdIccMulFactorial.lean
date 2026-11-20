@@ -28,9 +28,9 @@ theorem jetAt0_coe (P Q : MvPolynomial σ C) :
 theorem pair_diffOp [CharZero C] (B : σ →₀ ℕ) (P Q : MvPolynomial σ C) :
     pair (monomial B (1 : C)) (diffOp P Q) = pair (monomial B (1 : C) * P) Q := by
   classical
-  have hinner : ∀ m : σ →₀ ℕ, coeff B (∑ a ∈ Q.support, if m ≤ a then
-      monomial (a - m) (coeff m P * coeff a Q * ((mfact a : C) / (mfact (a - m) : C))) else 0) =
-      coeff m P * coeff (B + m) Q * ((mfact (B + m) : C) / (mfact B : C)) := by
+  have hinner : ∀ m : σ →₀ ℕ, AddMonoidAlgebra.coeff (∑ a ∈ Q.support, if m ≤ a then
+      monomial (a - m) (AddMonoidAlgebra.coeff P m * AddMonoidAlgebra.coeff Q a * ((mfact a : C) / (mfact (a - m) : C))) else 0) B =
+      AddMonoidAlgebra.coeff P m * AddMonoidAlgebra.coeff Q (B + m) * ((mfact (B + m) : C) / (mfact B : C)) := by
     intro m
     rw [coeff_sum, Finset.sum_eq_single (B + m)]
     · rw [if_pos (le_add_self), coeff_monomial, add_tsub_cancel_right, if_pos rfl]
@@ -43,7 +43,7 @@ theorem pair_diffOp [CharZero C] (B : σ →₀ ℕ) (P Q : MvPolynomial σ C) :
     · intro hQ
       rw [notMem_support_iff] at hQ
       rw [hQ, if_pos (le_add_self), coeff_monomial, add_tsub_cancel_right, if_pos rfl, mul_zero, zero_mul]
-  have hP : monomial B (1 : C) * P = ∑ m ∈ P.support, monomial (B + m) (coeff m P) := by
+  have hP : monomial B (1 : C) * P = ∑ m ∈ P.support, monomial (B + m) (AddMonoidAlgebra.coeff P m) := by
     conv_lhs => rw [P.as_sum]
     rw [Finset.mul_sum]
     refine Finset.sum_congr rfl fun m _ => ?_

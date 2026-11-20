@@ -76,7 +76,7 @@ section Op
 variable {K Tp Lw : Type} [Field K]
 
 lemma coeff_jn (e : Tp →₀ ℕ) (n : Lw →₀ ℕ) (R : MvPolynomial Lw K) :
-    MvPolynomial.coeff (jn e n) (topMonoP e * lowPoly R) = MvPolynomial.coeff n R := by
+    AddMonoidAlgebra.coeff (topMonoP e * lowPoly R) (jn e n) = AddMonoidAlgebra.coeff R n := by
   unfold jn topMonoP lowPoly
   rw [MvPolynomial.coeff_monomial_mul, one_mul,
     MvPolynomial.coeff_rename_mapDomain _ Sum.inr_injective]
@@ -104,7 +104,7 @@ lemma support_topLow [DecidableEq Tp] [DecidableEq Lw] (e : Tp →₀ ℕ) (R : 
 lemma jetPair_topLow [Fintype Tp] [Fintype Lw] (e : Tp →₀ ℕ)
     (R : MvPolynomial Lw K) (G : MvPowerSeries (Tp ⊕ Lw) K) :
     jetPair (topMonoP e * lowPoly R) G =
-      ∑ n ∈ R.support, MvPolynomial.coeff n R * ((mfact e * mfact n : ℕ) : K) *
+      ∑ n ∈ R.support, AddMonoidAlgebra.coeff R n * ((mfact e * mfact n : ℕ) : K) *
         MvPowerSeries.coeff (jn e n) G := by
   classical
   rw [jetPair_eq_sum _ _ _ (support_topLow e R), Finset.sum_image (fun a _ c _ h => jn_injective e h)]
@@ -260,7 +260,7 @@ lemma integral_pow {σ : Type} {f : MvPowerSeries σ K} (hf : Integral f) (i : �
 lemma norm_prod_pow_le_one {α : Type} (s : Finset α) (a : α → K) (m : α → ℕ)
     (ha : ∀ i, ‖a i‖ ≤ 1) : ‖∏ i ∈ s, a i ^ m i‖ ≤ 1 := by
   rw [norm_prod]
-  refine Finset.prod_le_one (fun _ _ => norm_nonneg _) fun i _ => ?_
+  refine Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun i _ => ?_
   rw [norm_pow]
   exact pow_le_one₀ (norm_nonneg _) (ha i)
 
@@ -398,7 +398,7 @@ lemma term_bound (h1 : JetPairingHasseIdentity) (h2 : HasseDerivIntegralHomogene
     (aA : Φ → K) (dA : Φ → Tp →₀ ℕ) (aB : κ → K) (dB : κ → Tp →₀ ℕ) (b : κ → Lw → K)
     (e : Tp →₀ ℕ) (Q : MvPolynomial Lw K) (hp : p.Prime) (hpn : ‖(p : K)‖ = (p : ℝ)⁻¹)
     (haA : ∀ φ, ‖aA φ‖ ≤ 1) (haB : ∀ k, ‖aB k‖ ≤ 1) (hb : ∀ k x, ‖b k x‖ ≤ 1) (hZ : Integral Z)
-    (hY : Integral Y) (hZlow : LowGe p Z) (hQ : ∀ n, ‖MvPolynomial.coeff n Q‖ ≤ 1)
+    (hY : Integral Y) (hZlow : LowGe p Z) (hQ : ∀ n, ‖AddMonoidAlgebra.coeff Q n‖ ≤ 1)
     (i : ℕ) (k : Φ ⊕ κ ⊕ Fin 2 → ℕ) (hk : ∑ j, k j = i) (U : MvPowerSeries (Tp ⊕ Lw) K)
     (hU : Integral U) :
     ((p : K) ^ i)⁻¹ * (((Nat.multinomial univ k : ℕ) : K) *
@@ -454,7 +454,7 @@ lemma term_bound (h1 : JetPairingHasseIdentity) (h2 : HasseDerivIntegralHomogene
     omega
   · have hp0 : (0 : ℝ) < p := by exact_mod_cast hp.pos
     set s := ∑ φ, k (Sum.inl φ) + ∑ x, β x + k (Sum.inr (Sum.inr 0)) with hs
-    set cR := MvPolynomial.coeff n (hasseDir b β Q) with hcR
+    set cR := AddMonoidAlgebra.coeff (hasseDir b β Q) n with hcR
     have hx : ((p : K) ^ i)⁻¹ * (((Nat.multinomial univ k : ℕ) : K) *
         (((∏ x, (β x).factorial : ℕ) : K) * (cR * ((mfact e * mfact n : ℕ) : K) *
           (cTot p aA aB k * v)))) =

@@ -291,7 +291,7 @@ theorem logNormT (h : HermNorm n) (C : ℝ) (hC0 : 0 ≤ C)
       set g' := weightedHomogeneousComponent w d0 g with hg'
       have hg'0 : g' ≠ 0 := by
         intro h0
-        have := congrArg (coeff m0) h0
+        have := congrArg (AddMonoidAlgebra.coeff · m0) h0
         rw [hg', coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at this
         exact mem_support_iff.mp hm0 this
       obtain ⟨ih1, ih2⟩ := logNormT_insert_of_homog h C T i hi g' hg'0 d0

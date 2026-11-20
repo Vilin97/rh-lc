@@ -51,10 +51,10 @@ def delta0 (j : ℕ) : Ψ × Fin N →₀ ℕ :=
 
 def deltaFull : Ψ × Fin N →₀ ℕ := Finsupp.equivFunOnFinite.symm fun x => (x.2 : ℕ)
 
-def fdeg (j : ℕ) (hj : j ≤ N) : ℚ := coeff (delta0 j) (antisym (G0 j) (fibV (Ψ := Ψ) j hj))
+def fdeg (j : ℕ) (hj : j ≤ N) : ℚ := AddMonoidAlgebra.coeff (antisym (G0 j) (fibV (Ψ := Ψ) j hj)) (delta0 j)
 
 def Jint (j : ℕ) (hj : j ≤ N) (n : ℕ) : ℚ :=
-  coeff deltaFull (antisym Gfull (muPoly (Ψ := Ψ) (N := N) j ^ n * fib j hj n))
+  AddMonoidAlgebra.coeff (antisym Gfull (muPoly (Ψ := Ψ) (N := N) j ^ n * fib j hj n)) deltaFull
 
 end Roots
 
@@ -69,7 +69,7 @@ def polar (d : ℕ) (Pf : (σ → ℤ) → ℝ) (α : σ →₀ ℕ) : ℝ :=
   else 0
 
 def PP (d : ℕ) (Pf : (σ → ℤ) → ℝ) (F : MvPolynomial σ ℚ) : ℝ :=
-  ∑ α ∈ F.support, ((coeff α F : ℚ) : ℝ) * polar d Pf α
+  ∑ α ∈ F.support, ((AddMonoidAlgebra.coeff F α : ℚ) : ℝ) * polar d Pf α
 
 end Polar
 

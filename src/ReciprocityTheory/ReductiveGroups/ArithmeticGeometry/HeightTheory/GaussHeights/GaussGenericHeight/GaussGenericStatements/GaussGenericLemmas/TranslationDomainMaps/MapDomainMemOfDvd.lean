@@ -23,7 +23,7 @@ theorem diag_monomial (c : σ → K) (m : σ →₀ ℕ) (a : K) :
   simp only [mul_pow, Finsupp.prod, Finset.prod_mul_distrib, map_prod, map_pow]
 
 theorem coeff_diag (c : σ → K) (g : MvPolynomial σ K) (s : σ →₀ ℕ) :
-    coeff s (diag c g) = (s.prod fun t e => c t ^ e) * coeff s g := by
+    AddMonoidAlgebra.coeff (diag c g) s = (s.prod fun t e => c t ^ e) * AddMonoidAlgebra.coeff g s := by
   classical
   induction g using MvPolynomial.induction_on' with
   | monomial m a =>
@@ -32,7 +32,7 @@ theorem coeff_diag (c : σ → K) (g : MvPolynomial σ K) (s : σ →₀ ℕ) :
     · subst h; ring
     · simp
   | add p q hp hq =>
-    rw [map_add, coeff_add, coeff_add, hp, hq, mul_add]
+    rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem support_diag {c : σ → K} (hc : ∀ t, c t ≠ 0) (g : MvPolynomial σ K) :
     (diag c g).support = g.support := by
@@ -112,7 +112,7 @@ theorem bdeg_eq_of_dvd [CharZero K] (b : Fin (D + 1))
   obtain ⟨a, ha⟩ := eq_mul_C_of_dvd hd (totalDegree_diag h2 g) hne
   have key : ∀ r ∈ g.support, (2 : K) ^ bdeg b r = a := by
     intro r hr
-    have h3 := congrArg (coeff r) ha
+    have h3 := congrArg (AddMonoidAlgebra.coeff · r) ha
     rw [coeff_diag, prod_cb, coeff_C_mul] at h3
     exact mul_right_cancel₀ (mem_support_iff.mp hr) h3
   have e := (key s hs).trans (key s' hs').symm
@@ -152,7 +152,7 @@ theorem mapDomain_mem_of_dvd (e : Equiv.Perm (Fin (D + 1)))
     rw [hq, totalDegree_mul_of_isDomain hg hq0]
     omega
   obtain ⟨a, ha⟩ := eq_mul_C_of_dvd hd hdeg hr
-  have h1 := congrArg (coeff (s.mapDomain (eT e))) ha
+  have h1 := congrArg (AddMonoidAlgebra.coeff · (s.mapDomain (eT e))) ha
   rw [coeff_rename_mapDomain _ hinj, coeff_C_mul] at h1
   rw [mem_support_iff] at hs ⊢
   intro h0

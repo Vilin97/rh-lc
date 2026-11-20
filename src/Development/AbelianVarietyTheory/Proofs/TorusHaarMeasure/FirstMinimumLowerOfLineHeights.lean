@@ -31,7 +31,7 @@ theorem exists_min_le_of_le_prod {ι : Type} [Fintype ι] [Nonempty ι] (f : ι 
   · have h1 : ∀ i, f i ≤ 1 := fun i => ((hcon i).trans_le (min_le_left _ _)).le
     have hp : ∏ i, f i ≤ f i0 := by
       rw [← Finset.mul_prod_erase Finset.univ f (Finset.mem_univ i0)]
-      exact mul_le_of_le_one_right (hf i0) (Finset.prod_le_one (fun i _ => hf i) fun i _ => h1 i)
+      exact mul_le_of_le_one_right (hf i0) (Finset.prod_le_one₀ (fun i _ => hf i) fun i _ => h1 i)
     have h2 : f i0 < m := (hcon i0).trans_le (min_le_right _ _)
     linarith
 

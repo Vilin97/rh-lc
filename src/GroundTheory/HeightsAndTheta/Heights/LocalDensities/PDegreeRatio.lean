@@ -13,7 +13,7 @@ theorem one_sub_prod_le_sum {ι : Type*} (s : Finset ι) (g h : ι → ℝ)
   | insert a s ha ih =>
     rw [Finset.prod_insert ha, Finset.sum_insert ha]
     have hP0 : 0 ≤ ∏ i ∈ s, g i := Finset.prod_nonneg fun i _ => hg0 i
-    have hP1 : ∏ i ∈ s, g i ≤ 1 := Finset.prod_le_one (fun i _ => hg0 i) fun i _ => hg1 i
+    have hP1 : ∏ i ∈ s, g i ≤ 1 := Finset.prod_le_one₀ (fun i _ => hg0 i) fun i _ => hg1 i
     have key : 1 - g a * ∏ i ∈ s, g i = (1 - ∏ i ∈ s, g i) + (1 - g a) * ∏ i ∈ s, g i := by ring
     have h1 : (1 - g a) * ∏ i ∈ s, g i ≤ 1 - g a :=
       mul_le_of_le_one_right (by linarith [hg1 a]) hP1
@@ -89,13 +89,13 @@ theorem DegreeRatio.proof : DegreeRatio.Statement := by
   rw [hratio]
   have hin0 : ∀ τ i, 0 ≤ ∏ l, P τ i l := fun τ i => Finset.prod_nonneg fun l _ => (hP0 τ i l).le
   have hin1 : ∀ τ i, ∏ l, P τ i l ≤ 1 :=
-    fun τ i => Finset.prod_le_one (fun l _ => (hP0 τ i l).le) fun l _ => hP1 τ i l
+    fun τ i => Finset.prod_le_one₀ (fun l _ => (hP0 τ i l).le) fun l _ => hP1 τ i l
   have hmid0 : ∀ τ, 0 ≤ ∏ i, ∏ l, P τ i l := fun τ => Finset.prod_nonneg fun i _ => hin0 τ i
   have hmid1 : ∀ τ, ∏ i, ∏ l, P τ i l ≤ 1 :=
-    fun τ => Finset.prod_le_one (fun i _ => hin0 τ i) fun i _ => hin1 τ i
+    fun τ => Finset.prod_le_one₀ (fun i _ => hin0 τ i) fun i _ => hin1 τ i
   refine ⟨rfl, ?_, ?_, ?_⟩
   · exact Finset.prod_pos fun τ _ => Finset.prod_pos fun i _ => Finset.prod_pos fun l _ => hP0 τ i l
-  · exact Finset.prod_le_one (fun τ _ => hmid0 τ) fun τ _ => hmid1 τ
+  · exact Finset.prod_le_one₀ (fun τ _ => hmid0 τ) fun τ _ => hmid1 τ
   · refine one_sub_prod_le_sum _ _ _ hmid0 hmid1 fun τ => ?_
     refine one_sub_prod_le_sum _ _ _ (hin0 τ) (hin1 τ) fun i => ?_
     exact one_sub_prod_le_sum _ _ _ (fun l => (hP0 τ i l).le) (hP1 τ i) (hPH τ i)

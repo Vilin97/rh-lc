@@ -91,12 +91,12 @@ theorem realAt_gen (hS : HidaSetting p n' W Qq O Kf ι σ j w) (φ : WF p n' ≃
       obtain ⟨c1, hc1⟩ := hsym mm
       obtain ⟨c2, hc2⟩ := hint mm
       refine ⟨c2 + w ^ cP * c1, ?_⟩
-      have e1 : coeff mm (subst p n' O w n' r gv Ff) =
-          coeff mm (subst p n' O w n' r gv Ff - C (algebraMap O (KK O) (w ^ o)) * sig) +
-            algebraMap O (KK O) (w ^ o) * coeff mm sig := by
+      have e1 : AddMonoidAlgebra.coeff (subst p n' O w n' r gv Ff) mm =
+          AddMonoidAlgebra.coeff (subst p n' O w n' r gv Ff - C (algebraMap O (KK O) (w ^ o)) * sig) mm +
+            algebraMap O (KK O) (w ^ o) * AddMonoidAlgebra.coeff sig mm := by
         rw [coeff_sub, coeff_C_mul]
         ring
-      show coeff mm (subst p n' O w n' r gv Ff) = _
+      show AddMonoidAlgebra.coeff (subst p n' O w n' r gv Ff) mm = _
       rw [e1, hc1, hc2, ← map_mul, ← map_add]
       congr 1
       ring

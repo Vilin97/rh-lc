@@ -116,8 +116,8 @@ theorem serIn_rename {Lt Lt' γ K : Type*} [CommSemiring K] (φ : Lt ↪ Lt') (T
   · exact hv (Finsupp.embDomain_of_notMem_range _ _ _ h)
 
 theorem norm_coeff_rename_le {σ τ K : Type*} [NormedCommRing K] (f : σ ↪ τ) (A : MvPolynomial σ K) {b : ℝ}
-    (hb : 0 ≤ b) (hA : ∀ m, ‖MvPolynomial.coeff m A‖ ≤ b) (m : τ →₀ ℕ) :
-    ‖MvPolynomial.coeff m (MvPolynomial.rename f A)‖ ≤ b := by
+    (hb : 0 ≤ b) (hA : ∀ m, ‖AddMonoidAlgebra.coeff A m‖ ≤ b) (m : τ →₀ ℕ) :
+    ‖AddMonoidAlgebra.coeff (MvPolynomial.rename f A) m‖ ≤ b := by
   by_cases h : ∃ m', Finsupp.mapDomain f m' = m
   · obtain ⟨m', rfl⟩ := h
     rw [MvPolynomial.coeff_rename_mapDomain f f.injective]

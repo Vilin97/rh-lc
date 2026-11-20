@@ -20,7 +20,7 @@ private theorem two_sided {m : ℕ} {r : Fin (m + 1) → ℝ} {A D : ℝ} (hr : 
       rw [← Finset.mul_prod_erase _ r (Finset.mem_univ i), Finset.prod_inv_distrib,
         mul_inv_cancel_right₀ hQ.ne']
     have h3 : ∏ j ∈ Finset.univ.erase i, (r j)⁻¹ ≤ A ^ (m + 1) := by
-      refine (Finset.prod_le_prod (fun j _ => (inv_pos.2 (hr j)).le) fun j _ => h1 j).trans ?_
+      refine (Finset.prod_le_prod₀ (fun j _ => (inv_pos.2 (hr j)).le) fun j _ => h1 j).trans ?_
       rw [Finset.prod_const]
       exact pow_le_pow_right₀ hA ((Finset.card_le_univ _).trans (by simp))
     rw [e]

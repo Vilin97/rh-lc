@@ -42,7 +42,7 @@ theorem mConeMapOver_eq_of_block (y : (Σ k, ι k) → Ω) {f : MvPolynomial (Σ
   ring
 
 theorem coeff_mConeMapOver (y : (Σ k, ι k) → Ω) (b : K → ℕ) (f : MvPolynomial (Σ k, ι k) S) :
-    coeff (Finsupp.equivFunOnFinite.symm b) (mConeMapOver S y f) =
+    AddMonoidAlgebra.coeff (mConeMapOver S y f) (Finsupp.equivFunOnFinite.symm b) =
       aeval y (weightedHomogeneousComponent (NumbersDVR.blockWeight ι) b f) := by
   classical
   induction f using MvPolynomial.induction_on' with
@@ -64,7 +64,7 @@ theorem coeff_mConeMapOver (y : (Σ k, ι k) → Ω) (b : K → ℕ) (f : MvPoly
     · subst h; simp
     · rw [if_neg h, if_neg (fun h' => h (Finsupp.equivFunOnFinite.symm.injective h').symm)]
       simp
-  | add p q hp hq => rw [map_add, coeff_add, hp, hq, map_add, map_add]
+  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, hp, hq, map_add, map_add]
 
 theorem isMultiHomogIdeal_mIdealOver (y : (Σ k, ι k) → Ω) :
     NumbersDVR.IsMultiHomogIdeal (R := S) (mIdealOver S y) := by

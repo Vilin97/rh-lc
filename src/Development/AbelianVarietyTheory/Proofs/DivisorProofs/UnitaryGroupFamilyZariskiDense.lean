@@ -160,7 +160,7 @@ def numer (v : ι × Fin a × Fin a) : MvPolynomial (ι × Fin a × Fin a) ℂ :
     ∏ τ ∈ Finset.univ.erase v.1, (1 + varMat τ).det
 
 def clearQ (Q : MvPolynomial (ι × Fin a × Fin a) ℂ) : MvPolynomial (ι × Fin a × Fin a) ℂ :=
-  ∑ d ∈ Q.support, C (coeff d Q) * (∏ v ∈ d.support, numer v ^ d v) *
+  ∑ d ∈ Q.support, C (AddMonoidAlgebra.coeff Q d) * (∏ v ∈ d.support, numer v ^ d v) *
     denom ^ (Q.totalDegree - d.sum fun _ e => e)
 
 theorem eval_denom (x : ι × Fin a × Fin a → ℂ) :
@@ -174,7 +174,7 @@ theorem eval_numer (x : ι × Fin a × Fin a → ℂ) (v : ι × Fin a × Fin a)
 
 theorem eval_div_mul_pow_totalDegree_clear_denominators {σ : Type} (Q : MvPolynomial σ ℂ) (p : σ → ℂ) (D : ℂ) (hD : D ≠ 0) :
     eval (fun v => p v / D) Q * D ^ Q.totalDegree =
-      ∑ d ∈ Q.support, coeff d Q * (∏ v ∈ d.support, p v ^ d v) *
+      ∑ d ∈ Q.support, AddMonoidAlgebra.coeff Q d * (∏ v ∈ d.support, p v ^ d v) *
         D ^ (Q.totalDegree - d.sum fun _ e => e) := by
   rw [eval_eq, Finset.sum_mul]
   refine Finset.sum_congr rfl fun d hd => ?_

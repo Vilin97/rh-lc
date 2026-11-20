@@ -53,7 +53,7 @@ theorem dTerm_bound : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (I 
     refine Finset.prod_congr rfl fun i _ => ?_
     rw [pow_mul, inv_pow, inv_pow]
   rw [hN, ← Finset.prod_mul_distrib, dTerm, norm_prod]
-  refine Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i _ => ?_
+  refine Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i _ => ?_
   exact factor_le φ (2 * s) m z x hx i hr (hz i)
 
 end GlobalTheory.DeformedSum.Bound

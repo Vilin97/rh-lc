@@ -22,7 +22,7 @@ namespace GlobalTheory.ArcBdd
 theorem norm_prod_pow_le {ι : Type} [Fintype ι] (f : ι → ℂ) (e : ι → ℕ) (B : ℝ) (hf : ∀ i, ‖f i‖ ≤ B) :
     ‖∏ i, f i ^ e i‖ ≤ B ^ (∑ i, e i) := by
   rw [norm_prod, ← Finset.prod_pow_eq_pow_sum]
-  refine Finset.prod_le_prod (fun i _ => norm_nonneg _) (fun i _ => ?_)
+  refine Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) (fun i _ => ?_)
   rw [norm_pow]
   exact pow_le_pow_left₀ (norm_nonneg _) (hf i) _
 

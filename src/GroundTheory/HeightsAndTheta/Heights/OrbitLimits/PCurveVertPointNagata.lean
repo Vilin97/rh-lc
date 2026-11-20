@@ -82,7 +82,7 @@ theorem coeff_aeval_C_mul_X {S : Type*} [CommRing S] [Algebra ℤ S] [Algebra �
     · rw [if_pos h, comp, ← h, Finsupp.coe_equivFunOnFinite_symm, hw.weightedHomogeneousComponent_same]
     · rw [if_neg h, comp, hw.weightedHomogeneousComponent_ne _ (fun e => h (by
         rw [← e, Finsupp.equivFunOnFinite_symm_coe])), map_zero]
-  | add p q hp hq => rw [map_add, coeff_add, hp, hq, comp, comp, comp, map_add, map_add]
+  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, hp, hq, comp, comp, comp, map_add, map_add]
 
 end CurveVerticalPointNagata
 
@@ -206,7 +206,7 @@ theorem CurveVertPointNagata.proof (hCh : CurveVertPointChart.Statement) : Curve
     · intro h0
       by_contra hf
       obtain ⟨D, hD⟩ := Inter.LocRingPow.exists_component_not_mem hf
-      have h1 := congrArg (fun q => MvPolynomial.coeff (Finsupp.equivFunOnFinite.symm D) q) h0
+      have h1 := congrArg (fun q => AddMonoidAlgebra.coeff q (Finsupp.equivFunOnFinite.symm D)) h0
       simp only [MvPolynomial.coeff_zero] at h1
       rw [hψcoeff, Finsupp.coe_equivFunOnFinite_symm] at h1
       have h2 := congrArg φ h1

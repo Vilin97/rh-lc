@@ -83,8 +83,8 @@ def StatBlockDet : Prop :=
     (d : Type) [Fintype d] [DecidableEq d] (R' : Subalgebra O (X' → Matrix d d (FractionRing O))),
     (∀ (m : ℕ) (r : Fin m → R') (s : Fin m →₀ ℕ), ∃ f ∈ T', ∀ x',
       algebraMap O (FractionRing O) (f x') =
-        MvPolynomial.coeff s (Matrix.det (∑ i, (MvPolynomial.X i : MvPolynomial (Fin m) (FractionRing O)) •
-          ((r i : X' → Matrix d d (FractionRing O)) x').map MvPolynomial.C))) →
+        AddMonoidAlgebra.coeff (Matrix.det (∑ i, (MvPolynomial.X i : MvPolynomial (Fin m) (FractionRing O)) •
+          ((r i : X' → Matrix d d (FractionRing O)) x').map MvPolynomial.C)) s) →
     ∀ (g : Type) [Fintype g] [DecidableEq g] (Θ : Matrix g g R'), ∃ f ∈ T', ∀ x',
       algebraMap O (FractionRing O) (f x') =
         (bigMat (fun r : R' => (r : X' → Matrix d d (FractionRing O)) x') Θ).det

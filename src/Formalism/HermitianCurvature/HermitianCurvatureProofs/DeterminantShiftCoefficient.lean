@@ -9,7 +9,7 @@ noncomputable section
 theorem detShift_prod_coeff {σ ι : Type*} [Fintype ι] (h c : ι → MvPolynomial σ ℂ)
     (hh : ∀ i, (h i).IsHomogeneous 1) (hc : ∀ i, (c i).IsHomogeneous 0)
     (d : σ →₀ ℕ) (hd : d.degree = Fintype.card ι) :
-    coeff d (∏ i, (h i + c i)) = coeff d (∏ i, h i) := by
+    AddMonoidAlgebra.coeff (∏ i, (h i + c i)) d = AddMonoidAlgebra.coeff (∏ i, h i) d := by
   classical
   rw [Finset.prod_add, coeff_sum, Finset.sum_eq_single Finset.univ]
   · simp
@@ -36,13 +36,13 @@ theorem detShift_aeval_monomial (d : Fin 2 →₀ ℕ) (a : ℂ) :
 theorem detShift_aeval_coeff (Q : MvPolynomial (Fin 2) ℂ) (t j : ℕ) (hj : j ≤ t)
     (hQ : Q.IsHomogeneous t) :
     (aeval detShiftSub Q).coeff (t - j) =
-      (-1) ^ j * coeff (Finsupp.single (0 : Fin 2) (t - j) + Finsupp.single (1 : Fin 2) j) Q := by
+      (-1) ^ j * AddMonoidAlgebra.coeff Q (Finsupp.single (0 : Fin 2) (t - j) + Finsupp.single (1 : Fin 2) j) := by
   classical
   set D : Fin 2 →₀ ℕ := Finsupp.single (0 : Fin 2) (t - j) + Finsupp.single (1 : Fin 2) j with hD
   have hD0 : D 0 = t - j := by simp [hD]
   have hD1 : D 1 = j := by simp [hD]
-  have hterm : ∀ d : Fin 2 →₀ ℕ, (aeval detShiftSub (monomial d (coeff d Q))).coeff (t - j) =
-      if t - j = d 0 then coeff d Q * (-1) ^ d 1 else 0 := by
+  have hterm : ∀ d : Fin 2 →₀ ℕ, (aeval detShiftSub (monomial d (AddMonoidAlgebra.coeff Q d))).coeff (t - j) =
+      if t - j = d 0 then AddMonoidAlgebra.coeff Q d * (-1) ^ d 1 else 0 := by
     intro d
     rw [detShift_aeval_monomial, Polynomial.coeff_C_mul_X_pow]
   conv_lhs => rw [Q.as_sum]
@@ -116,9 +116,9 @@ theorem determinant_shift_coefficient : DetShiftCoeff := by
     rw [← map_intCast (C : ℂ →+* MvPolynomial (Fin 2) ℂ)]
     simpa using (isHomogeneous_C (Fin 2) (((Equiv.Perm.sign σ : ℤ) : ℂ))).mul
       (IsHomogeneous.prod (univ : Finset (Fin t)) _ (fun _ => 1) (fun i _ => detShift_hom M σ i))
-  have hPQ : coeff D (∑ σ : Equiv.Perm (Fin t), ((Equiv.Perm.sign σ : ℤ) : MvPolynomial (Fin 2) ℂ) *
-        ∏ i : Fin t, ((if σ i = i then X 0 - C ((i : ℕ) : ℂ) else 0) + X 1 * C (M (σ i) i))) =
-      coeff D Q := by
+  have hPQ : AddMonoidAlgebra.coeff (∑ σ : Equiv.Perm (Fin t), ((Equiv.Perm.sign σ : ℤ) : MvPolynomial (Fin 2) ℂ) *
+        ∏ i : Fin t, ((if σ i = i then X 0 - C ((i : ℕ) : ℂ) else 0) + X 1 * C (M (σ i) i))) D =
+      AddMonoidAlgebra.coeff Q D := by
     rw [hQdef, coeff_sum, coeff_sum]
     refine Finset.sum_congr rfl fun σ _ => ?_
     rw [← map_intCast (C : ℂ →+* MvPolynomial (Fin 2) ℂ), coeff_C_mul, coeff_C_mul]

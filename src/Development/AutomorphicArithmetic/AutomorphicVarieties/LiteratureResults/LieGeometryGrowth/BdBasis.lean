@@ -23,7 +23,7 @@ private theorem absBd {V W F : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] 
   rw [h1, Finset.sum_mul, Finset.sum_mul]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun I _ => ?_)
   rw [norm_smul, norm_prod, mul_right_comm, ← Finset.prod_mul_distrib]
-  refine mul_le_mul (Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => (c (I i)).le_opNorm _)
+  refine mul_le_mul (Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => (c (I i)).le_opNorm _)
     (hT _ (Finset.mem_image_of_mem _ (Finset.mem_univ I))) (norm_nonneg _) (by positivity)
 
 theorem UpperTheory.V.Lit.Geo.bdBasis :

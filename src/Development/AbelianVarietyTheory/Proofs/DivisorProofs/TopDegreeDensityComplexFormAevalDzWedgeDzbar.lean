@@ -133,6 +133,6 @@ theorem dens_aeval_sym (n : ℕ) (P : MvPolynomial (Fin n × Fin n) ℂ) :
     rw [map_add, Subalgebra.coe_add, dens_add', hp, hq, ← add_div]
     congr 1
     unfold topCoeff
-    simp only [coeff_add, mul_add, Finset.sum_add_distrib]
+    simp only [MvPolynomial.coeff_add, mul_add, Finset.sum_add_distrib]
 
 end GlobalTheory.ChernCalc.DensTop

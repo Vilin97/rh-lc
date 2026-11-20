@@ -132,7 +132,7 @@ theorem p1c : NormaliserLowerBound := by
     have hsq : ((Real.sqrt Qw * BBs) ^ K) ^ 2 = ∏ _a : Fin K, (Real.sqrt Qw * BBs) ^ 2 := by
       rw [← pow_mul, mul_comm K 2, pow_mul, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
     rw [← Finset.prod_mul_distrib, ← Finset.prod_div_distrib, hT, hsq]
-    refine Finset.prod_le_prod (fun a _ => ?_) fun a _ => ?_
+    refine Finset.prod_le_prod₀ (fun a _ => ?_) fun a _ => ?_
     · obtain ⟨h1, h2, -, hqw⟩ := hlet j a
       have := hnn _ h1
       have := hnn _ h2
@@ -191,7 +191,7 @@ theorem first_polynomial_corollary_identity : SmallParameterNormBound := by
     have hs : 0 < ‖s‖ := lt_of_le_of_lt hX0 hXs
     have hprod : ∏ a, cg (grid a) * Real.sqrt Qw * BBs ≤ X ^ K := by
       calc ∏ a, cg (grid a) * Real.sqrt Qw * BBs ≤ ∏ _a : Fin K, X :=
-            Finset.prod_le_prod (fun a _ => hfac0 a) fun a _ => hX a
+            Finset.prod_le_prod₀ (fun a _ => hfac0 a) fun a _ => hX a
         _ = X ^ K := by simp
     have hsum : 0 ≤ ∑ j : Fin K → Fin (2 * n + 1), F7.thGrid grid j *
           (N0 ρ QQ nn (Lp sl (fun a => grid a (j a)) ++ w)

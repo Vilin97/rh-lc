@@ -31,7 +31,7 @@ lemma prod_pow_div_dvd_factorial (N : ℕ) :
     · intro p hp
       have hp' := (Finset.mem_filter.1 hp).2
       exact_mod_cast (pow_dvd_pow p (div_le_padicValNat_factorial N p hp')).trans
-        pow_padicValNat_dvd
+        (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
   exact_mod_cast this
 
 theorem MertensUpper.proof : MertensUpper.Statement := by

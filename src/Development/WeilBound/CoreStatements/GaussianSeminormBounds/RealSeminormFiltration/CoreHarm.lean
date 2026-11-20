@@ -19,7 +19,7 @@ theorem hc_hc (d e : ℕ) (P : MvPolynomial σ ℂ) :
 
 theorem hc_ext {P Q : MvPolynomial σ ℂ} (h : ∀ d, homogeneousComponent d P = homogeneousComponent d Q) : P = Q := by
   ext m
-  have := congrArg (coeff m) (h m.degree)
+  have := congrArg (AddMonoidAlgebra.coeff · m) (h m.degree)
   simpa [coeff_homogeneousComponent] using this
 
 theorem mp_hc (A : Module.End ℂ (MvPolynomial σ ℂ)) (P : MvPolynomial σ ℂ) (d : ℕ) :

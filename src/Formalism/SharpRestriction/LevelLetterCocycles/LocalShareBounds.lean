@@ -52,7 +52,7 @@ theorem locShare_le_one (eV : VecAt D) (CL : ℝ) (hL : lawL D eV CL) (k : Fin 2
           (fun t _ _ => Finset.prod_nonneg fun v _ => hw0 v _)
     _ = ∏ v, ∑ f ∈ L0, wtOf D k (eV k v) f :=
         (Finset.prod_univ_sum (fun _ => L0) (fun v f => wtOf D k (eV k v) f)).symm
-    _ ≤ 1 := Finset.prod_le_one (fun v _ => Finset.sum_nonneg fun f _ => hw0 v f)
+    _ ≤ 1 := Finset.prod_le_one₀ (fun v _ => Finset.sum_nonneg fun f _ => hw0 v f)
         (fun v _ => sum_wtOf_le_one k _ L0 hsum0)
 
 def Wk (D : D7) (CL : ℝ) (k : Fin 2) : ℝ :=

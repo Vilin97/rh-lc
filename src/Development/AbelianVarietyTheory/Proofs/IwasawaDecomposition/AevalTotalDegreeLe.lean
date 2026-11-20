@@ -9,14 +9,14 @@ theorem aeval_totalDegree_le {σ : Type u_1} (f : σ → MvPolynomial σ ℂ)
   classical
   conv_lhs => rw [P.as_sum]
   rw [map_sum]
-  refine (totalDegree_finset_sum _ _).trans ?_
+  refine (MvPolynomial.totalDegree_finsetSum _ _).trans ?_
   refine Finset.sup_le fun s hs => ?_
   rw [aeval_monomial, algebraMap_eq]
   refine (totalDegree_mul _ _).trans ?_
   rw [totalDegree_C, zero_add]
   refine le_trans ?_ (le_totalDegree hs)
   unfold Finsupp.prod
-  refine (totalDegree_finset_prod _ _).trans ?_
+  refine (MvPolynomial.totalDegree_finsetProd _ _).trans ?_
   unfold Finsupp.sum
   refine Finset.sum_le_sum fun i _ => ?_
   refine (totalDegree_pow _ _).trans ?_

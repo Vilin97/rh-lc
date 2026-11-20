@@ -63,7 +63,7 @@ theorem bind₁_isMultiHomog_of (Λ : (K₁ → ℕ) →+ (K₂ → ℕ)) (g : (
   refine IsWeightedHomogeneous.sum _ _ _ fun m hm => ?_
   have hmd : Finsupp.weight (blockWeight ι₁) m = d := hq (mem_support_iff.mp hm)
   rw [bind₁_monomial]
-  have := (isWeightedHomogeneous_C (blockWeight ι₂) (coeff m q)).mul
+  have := (isWeightedHomogeneous_C (blockWeight ι₂) (AddMonoidAlgebra.coeff q m)).mul
     (IsWeightedHomogeneous.prod m.support (fun v => g v ^ m v) (fun v => m v • Λ (blockWeight ι₁ v))
       (fun v _ => (hg v).pow (m v)))
   rw [zero_add] at this

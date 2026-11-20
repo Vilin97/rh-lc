@@ -107,7 +107,7 @@ def DetCond [IsAlgClosed k] [CharZero k] (ρ : OAct O G) (t : Spec (CommRingCat.
       HasCharpoly ρ t fun a => (∏ τ ∈ Ψ, (X - C (τ a)) ^ p) * ∏ τ ∈ Ψ', (X - C (τ a)) ^ q
 
 lemma IsRootPair.side [CharZero k] {s : O} {δ : k} (h : IsRootPair s δ) (τ : O →+* k) :
-    Xor' (τ s = δ) (τ s = -δ) := by
+    Xor (τ s = δ) (τ s = -δ) := by
   obtain ⟨d, hd, hs, hδ⟩ := h
   have h0 : δ ≠ 0 := by
     rintro rfl

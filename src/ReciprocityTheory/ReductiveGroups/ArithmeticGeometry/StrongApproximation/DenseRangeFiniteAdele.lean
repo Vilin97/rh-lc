@@ -69,7 +69,7 @@ theorem denseRange_finiteAdele : DenseRange (algebraMap K (FiniteAdeleRing R K))
   rw [mem_closure_iff_nhds]
   intro N hN
   have h0 : (fun y => b + y) ⁻¹' N ∈ 𝓝 (0 : FiniteAdeleRing R K) := by
-    have ht := (continuous_add_left b).tendsto (0 : FiniteAdeleRing R K)
+    have ht := (continuous_const_add b).tendsto (0 : FiniteAdeleRing R K)
     rw [add_zero] at ht
     exact ht hN
   obtain ⟨r, hr, hrN⟩ := nhds_zero_int h0

@@ -18,7 +18,7 @@ lemma det_norm_le {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (R : Fin n → ℝ)
       rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with h | h <;> rw [h] <;> simp
     rw [hs, one_mul, norm_prod]
     calc ∏ i, ‖A (σ i) i‖ ≤ ∏ i, R (σ i) :=
-          Finset.prod_le_prod (fun i _ => norm_nonneg _) (fun i _ => hR _ _)
+          Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) (fun i _ => hR _ _)
       _ = ∏ i, R i := Equiv.prod_comp σ R
   calc ∑ σ : Equiv.Perm (Fin n), ‖Equiv.Perm.sign σ • ∏ i, A (σ i) i‖
       ≤ ∑ _σ : Equiv.Perm (Fin n), ∏ i, R i := Finset.sum_le_sum (fun σ _ => hterm σ)

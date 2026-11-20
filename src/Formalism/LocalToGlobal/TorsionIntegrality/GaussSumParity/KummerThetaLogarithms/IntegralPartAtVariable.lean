@@ -179,7 +179,7 @@ theorem approx_one (hU : UnrOK K l σ) (hF : IsLawOfLog l F) (hB : BetaHyp l F b
       (not_le.2 (hc z (inS_root hU hB ((Polynomial.mem_nthRootsFinset hN 1).1 hz))))
   have h5 : (1 : ℝ) ≤ ‖∏ z ∈ Polynomial.nthRootsFinset (l ^ 2 - 1) (1 : K), (α - z)‖ := by
     rw [norm_prod]
-    have := Finset.prod_le_prod (s := Polynomial.nthRootsFinset (l ^ 2 - 1) (1 : K))
+    have := Finset.prod_le_prod₀ (s := Polynomial.nthRootsFinset (l ^ 2 - 1) (1 : K))
       (f := fun _ => (1 : ℝ)) (g := fun z : K => ‖α - z‖) (fun _ _ => zero_le_one) h4
     simpa using this
   rw [e, norm_mul] at h1

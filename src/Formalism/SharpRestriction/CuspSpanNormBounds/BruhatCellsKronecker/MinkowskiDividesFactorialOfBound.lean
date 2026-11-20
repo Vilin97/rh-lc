@@ -534,7 +534,7 @@ theorem local_theta_factor_pos_le (D : D7) {V : Type} [AddCommGroup V] [Module D
   unfold thP
   refine ⟨Finset.prod_pos fun i hi => (hfac i hi).1, ?_⟩
   calc _ ≤ ∏ _i ∈ Finset.Icc (j - eP h M p + 1) j, (2 : ℝ) :=
-        Finset.prod_le_prod (fun i hi => (hfac i hi).1.le) (fun i hi => (hfac i hi).2)
+        Finset.prod_le_prod₀ (fun i hi => (hfac i hi).1.le) (fun i hi => (hfac i hi).2)
     _ = (2 : ℝ) ^ (Finset.Icc (j - eP h M p + 1) j).card := Finset.prod_const _
     _ ≤ (2 : ℝ) ^ e := pow_le_pow_right₀ (by norm_num) hcard
 
@@ -623,7 +623,7 @@ private theorem mass_bound_lemma (m A P B : ℝ) (L : ℕ) (hm : 0 ≤ m) (hA : 
 private theorem prod_bound_lemma_2 {ι : Type} [Fintype ι] (f : ι → ℝ) (c : ℝ) (hf : ∀ i, 0 < f i ∧ f i ≤ c) :
     0 < ∏ i, f i ∧ ∏ i, f i ≤ c ^ Fintype.card ι := by
   refine ⟨Finset.prod_pos fun i _ => (hf i).1, ?_⟩
-  calc ∏ i, f i ≤ ∏ _i : ι, c := Finset.prod_le_prod (fun i _ => (hf i).1.le) (fun i _ => (hf i).2)
+  calc ∏ i, f i ≤ ∏ _i : ι, c := Finset.prod_le_prod₀ (fun i _ => (hf i).1.le) (fun i _ => (hf i).2)
     _ = c ^ Fintype.card ι := by rw [Finset.prod_const, Finset.card_univ]
 
 theorem lattice_lemma_of_mass_formula (D : D7) (hR : Lem3Mass D) : VanishingOnXAndXPlusMass.Conclusion2 D := by

@@ -104,7 +104,7 @@ theorem eq_diagExp_of_lowerTri (hn : n ≤ r) {ν : Fin n → ℕ} {m : Fin r ×
 
 theorem eval_idFrame_eq_coeff {R : Type*} [CommRing R] {ν : Fin n → ℕ} {F : MvPolynomial (Fin r × Fin n) R}
     (hcol : ∀ m ∈ F.support, ∀ t : Fin n, ∑ a : Fin r, m (a, t) = ν t) :
-    eval (idFrame R r n) F = coeff (diagExp r ν) F := by
+    eval (idFrame R r n) F = AddMonoidAlgebra.coeff F (diagExp r ν) := by
   rw [eval_eq', Finset.sum_eq_single (diagExp r ν)]
   · rw [Finset.prod_eq_one, mul_one]
     rintro ⟨a, s⟩ _
@@ -163,7 +163,7 @@ theorem fockQ_hw : Formalism.GradedWeylDivisibility.FockQHW := by
   rw [Finset.mul_sum]
   refine Finset.sum_congr rfl fun m hm => ?_
   have hw' := hwRowWeight ℚ r n hn ν hν (mem_support_iff.mp hm)
-  have h2 := congrArg (coeff m) h
+  have h2 := congrArg (AddMonoidAlgebra.coeff · m) h
   rw [coeff_weightedHomogeneousComponent, if_pos hw', coeff_smul, smul_eq_mul] at h2
   rw [h2]
   ring

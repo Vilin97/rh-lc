@@ -154,7 +154,7 @@ theorem clearN_le {S : Finset ℕ} (hS : ∀ p ∈ S, p.Prime) (u : GlobalTheory
     rw [Finset.mul_sum, ← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun p _ => by ring
   rw [e, Real.exp_sum, clearN, Nat.cast_prod]
-  refine Finset.prod_le_prod (fun p _ => by positivity) fun p hp => ?_
+  refine Finset.prod_le_prod₀ (fun p _ => by positivity) fun p hp => ?_
   have hp0 : (0 : ℝ) < p := by exact_mod_cast (hS p hp).pos
   have hp1 : (1 : ℝ) ≤ p := by exact_mod_cast (hS p hp).one_le
   have ha : 0 ≤ 2 * exTwo E p * GlobalTheory.CovHt.l1 u :=

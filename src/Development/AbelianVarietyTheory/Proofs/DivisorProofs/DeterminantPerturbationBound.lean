@@ -30,7 +30,7 @@ theorem detClose_norm_prod_sub_lt {C : Type} [NormedField C] [IsUltrametricDist 
         _ < 1 := by simpa using ih
     · rw [norm_mul, norm_prod]
       calc ‖f a - g a‖ * ∏ i ∈ s, ‖g i‖ ≤ ‖f a - g a‖ * 1 :=
-            mul_le_mul_of_nonneg_left (Finset.prod_le_one (fun i _ => norm_nonneg _) (fun i _ => hg i))
+            mul_le_mul_of_nonneg_left (Finset.prod_le_one₀ (fun i _ => norm_nonneg _) (fun i _ => hg i))
               (norm_nonneg _)
         _ < 1 := by simpa using hfg a
 

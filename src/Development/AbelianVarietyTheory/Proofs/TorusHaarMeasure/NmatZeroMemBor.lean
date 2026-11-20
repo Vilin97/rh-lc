@@ -121,7 +121,7 @@ theorem step {T a0 a : ℕ} (ha : a < a0) (ha0 : a0 ≤ T + 1)
     calc ‖∏ k, ζ j v k ^ α k‖
         = ∏ k, ‖ζ j v k‖ ^ α k := by simp only [norm_prod, norm_pow]
       _ ≤ ∏ k, ‖ζ j v‖ ^ α k :=
-          Finset.prod_le_prod (fun k _ => by positivity)
+          Finset.prod_le_prod₀ (fun k _ => by positivity)
             (fun k _ => pow_le_pow_left₀ (norm_nonneg _) (PiLp.norm_apply_le _ _) _)
       _ = 1 * ‖‖ζ j v‖ ^ a‖ := by
           rw [Finset.prod_pow_eq_pow_sum, hsum, one_mul, norm_pow, norm_norm]

@@ -134,7 +134,7 @@ theorem norm_det_le (x : Matrix (Fin a) (Fin a) (Cinf E)) {B : ℝ} (hx : ‖toL
   refine (norm_sum_le _ _).trans ((Finset.sum_le_card_nsmul _ _ (B ^ a) fun σ _ => ?_).trans_eq
     (by simp [Fintype.card_perm]))
   have h : ‖∏ i, x (σ i) i‖ ≤ B ^ a := by
-    refine (Finset.norm_prod_le _ _).trans ((Finset.prod_le_prod (g := fun _ => B) (fun _ _ => norm_nonneg _)
+    refine (Finset.norm_prod_le _ _).trans ((Finset.prod_le_prod₀ (g := fun _ => B) (fun _ _ => norm_nonneg _)
       fun i _ => ?_).trans_eq (by simp))
     exact ((norm_le_pi_norm (toL x (σ i)) i).trans (norm_le_pi_norm (toL x) (σ i))).trans hx
   rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with e | e <;> simpa [e] using h

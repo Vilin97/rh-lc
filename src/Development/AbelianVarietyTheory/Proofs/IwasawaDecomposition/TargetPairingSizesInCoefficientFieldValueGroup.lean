@@ -24,12 +24,12 @@ theorem deX_map {Lt k k' : Type} [Fintype Lt] [CommRing k] [CommRing k'] (f : k 
   simp [map_sum, map_mul, map_C, map_X]
 
 theorem dual_map_eval {σ V k : Type} [Field k] (χ : Module.Dual k (MvPolynomial σ k)) (p : MvPolynomial σ (MvPolynomial V k)) (x : V → k) :
-    MvPolynomial.eval x (∑ m ∈ p.support, coeff m p * C (χ (monomial m 1))) = χ (MvPolynomial.map (MvPolynomial.eval x) p) := by
+    MvPolynomial.eval x (∑ m ∈ p.support, AddMonoidAlgebra.coeff p m * C (χ (monomial m 1))) = χ (MvPolynomial.map (MvPolynomial.eval x) p) := by
   conv_rhs => rw [p.as_sum]
   rw [map_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [map_mul, eval_C, map_monomial]
-  rw [show monomial m (MvPolynomial.eval x (coeff m p)) = (MvPolynomial.eval x (coeff m p)) • (monomial m 1 : MvPolynomial σ k) by
+  rw [show monomial m (MvPolynomial.eval x (AddMonoidAlgebra.coeff p m)) = (MvPolynomial.eval x (AddMonoidAlgebra.coeff p m)) • (monomial m 1 : MvPolynomial σ k) by
     rw [smul_monomial, smul_eq_mul, mul_one]]
   rw [map_smul, smul_eq_mul]
 
@@ -44,7 +44,7 @@ def uFr : Bool × HH D → Fin N → ℕ → MvPolynomial (GL3Theta.FrV D N) (Cw
   fun s a j => if h : j < N then X (tauPl D s, a, ⟨j, h⟩) else 0
 
 def canPol (χ : Module.Dual (Cw D w) (MvPolynomial ((Bool × HH D) × ℕ × Fin N) (Cw D w))) : MvPolynomial (GL3Theta.FrV D N) (Cw D w) :=
-  ∑ m ∈ (GL3Columns.DeX N nu (uFr w N)).support, coeff m (GL3Columns.DeX N nu (uFr w N)) * C (χ (monomial m 1))
+  ∑ m ∈ (GL3Columns.DeX N nu (uFr w N)).support, AddMonoidAlgebra.coeff (GL3Columns.DeX N nu (uFr w N)) m * C (χ (monomial m 1))
 
 theorem canM_apply (χ : Module.Dual (Cw D w) (MvPolynomial ((Bool × HH D) × ℕ × Fin N) (Cw D w))) (y : FrP D w N) :
     canM D w N nu χ y = χ (GL3Columns.DeX N nu fun s => GL3Columns.colsOf (y (tauPl D s))) := rfl

@@ -68,7 +68,7 @@ theorem harmonicProjection_expand (hz : ∀ c, w c ≠ zv ∧ e c ≠ zv) (o n z
 private lemma add_single_mem_support_of_mem_support_pderiv (i : σ) (p : MvPolynomial σ k) (t : σ →₀ ℕ) (ht : t ∈ (pderiv i p).support) :
     t + Finsupp.single i 1 ∈ p.support := by
   classical
-  have hp : pderiv i p = ∑ s ∈ p.support, pderiv i (monomial s (coeff s p)) := by
+  have hp : pderiv i p = ∑ s ∈ p.support, pderiv i (monomial s (AddMonoidAlgebra.coeff p s)) := by
     conv_lhs => rw [p.as_sum]
     rw [map_sum]
   rw [MvPolynomial.mem_support_iff, hp, MvPolynomial.coeff_sum] at ht

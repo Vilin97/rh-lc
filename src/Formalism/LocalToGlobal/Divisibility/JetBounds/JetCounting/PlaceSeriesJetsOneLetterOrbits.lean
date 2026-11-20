@@ -41,7 +41,7 @@ def HostEntryA : Prop :=
     IsHostA l Q σ (cob F (phFF l g2 g3 s2 ε)) N0 N1 ιr P e S x Ψ β →
   ∀ (n : Type) [Fintype n] (f f' : ιr × Fin N0 × Fin N1 → n → MaximalUnramifiedExtension l), IsHypPair σ f f' →
   ∀ Θ : MvPowerSeries n ℂ_[l], HostInt l g2 g3 s2 ε Θ →
-    IsEntryAll l Q β (MvPolynomial.coeff 0 (jetPairPoly S.P (MvPowerSeries.subst x (serAlong e (inHyp l f f' Θ)))))
+    IsEntryAll l Q β (AddMonoidAlgebra.coeff (jetPairPoly S.P (MvPowerSeries.subst x (serAlong e (inHyp l f f' Θ)))) 0)
 
 def PlaceSeriesJetsOneLetterOrbits : Prop :=
   ∀ (l : ℕ) [Fact l.Prime] (Q : OrbSys ℂ_[l] → ℝ → Prop) (g2 g3 s2 ε : MaximalUnramifiedExtension l) (σ : MaximalUnramifiedExtension l →+* MaximalUnramifiedExtension l)
@@ -63,7 +63,7 @@ def HostEntryB : Prop :=
   ∀ (N0 N1 : ℕ) (P : Type) [Fintype P] (S : OrbSys ℂ_[l]) (x : P → MvPowerSeries S.ι ℂ_[l]) (Ψ : MvPowerSeries P ℂ_[l])
     (β : ℝ), IsHostB l σ (cob F (phFF l g2 g3 s2 ε)) (phFF l g2 g3 s2 ε) N0 N1 P S x Ψ β →
   ∀ Θ : MvPowerSeries P ℂ_[l], HostInt l g2 g3 s2 ε Θ →
-    IsEntryAll l Q β (MvPolynomial.coeff 0 (jetPairPoly S.P (MvPowerSeries.subst x Θ)))
+    IsEntryAll l Q β (AddMonoidAlgebra.coeff (jetPairPoly S.P (MvPowerSeries.subst x Θ)) 0)
 
 def HostIntFree : Prop :=
   ∀ (a₀ : ℕ) (b₀ c₀ : ℤ) (dK : ℕ) (ha : 0 < a₀) (hdK : 0 < dK), CmOK a₀ b₀ c₀ dK →
@@ -110,7 +110,7 @@ def HostJetsOdd : Prop :=
     (∀ k, (N : ℂ) • t k ∈ Λ) →
   ∀ (J : Type) [Fintype J] (v : J → n → ℂ), (∀ j, InMul (cmL a₀ b₀ dK ha hdK lam hlam) Λ (v j)) →
   ∀ (ν : Type) [Fintype ν] (A : J → ν → ℂ_[p]), (∀ j x, ‖A j x‖ ≤ 1) →
-  ∀ (Q : OrbSys ℂ_[p] → ℝ → Prop) (R : MvPolynomial ν ℂ_[p]), (∀ k, ‖MvPolynomial.coeff k R‖ ≤ 1) →
+  ∀ (Q : OrbSys ℂ_[p] → ℝ → Prop) (R : MvPolynomial ν ℂ_[p]), (∀ k, ‖AddMonoidAlgebra.coeff R k‖ ≤ 1) →
     IsEntryAll p Q 0 (jetPair R (thetaLin (ι : ℂ →+* ℂ_[p]) h θ r t (frameM (ι : ℂ →+* ℂ_[p]) v A)))
 
 def HostJetsTwo : Prop :=
@@ -122,7 +122,7 @@ def HostJetsTwo : Prop :=
     (∀ k, (N : ℂ) • t k ∈ Λ) →
   ∀ (J : Type) [Fintype J] (v : J → n → ℂ), (∀ j, InMul (cmL a₀ b₀ dK ha hdK lam hlam) Λ (v j)) →
   ∀ (ν : Type) [Fintype ν] (A : J → ν → ℂ_[2]), (∀ j x, ‖A j x‖ ≤ 1) →
-  ∀ (Q : OrbSys ℂ_[2] → ℝ → Prop) (R : MvPolynomial ν ℂ_[2]), (∀ k, ‖MvPolynomial.coeff k R‖ ≤ 1) →
+  ∀ (Q : OrbSys ℂ_[2] → ℝ → Prop) (R : MvPolynomial ν ℂ_[2]), (∀ k, ‖AddMonoidAlgebra.coeff R k‖ ≤ 1) →
     IsEntryAll 2 Q 0 (jetPair R (thetaLin (ι : ℂ →+* ℂ_[2]) h θ r t (frameM (ι : ℂ →+* ℂ_[2]) v A)))
 
 def ThetaZJetsThree : Prop :=
@@ -144,7 +144,7 @@ def HostJetsThree : Prop :=
     (∀ k, (N : ℂ) • t k ∈ Λ) →
   ∀ (J : Type) [Fintype J] (v : J → n → ℂ), (∀ j, InMul (cmL a₀ b₀ dK ha hdK lam hlam) Λ (v j)) →
   ∀ (ν : Type) [Fintype ν] (A : J → ν → ℂ_[3]), (∀ j x, ‖A j x‖ ≤ 1) →
-  ∀ (Q : OrbSys ℂ_[3] → ℝ → Prop) (R : MvPolynomial ν ℂ_[3]), (∀ k, ‖MvPolynomial.coeff k R‖ ≤ 1) →
+  ∀ (Q : OrbSys ℂ_[3] → ℝ → Prop) (R : MvPolynomial ν ℂ_[3]), (∀ k, ‖AddMonoidAlgebra.coeff R k‖ ≤ 1) →
     IsEntryAll 3 Q 0 (jetPair R (thetaLin (ι : ℂ →+* ℂ_[3]) h θ r t (frameM (ι : ℂ →+* ℂ_[3]) v A)))
 
 def HostShapeD : Prop :=

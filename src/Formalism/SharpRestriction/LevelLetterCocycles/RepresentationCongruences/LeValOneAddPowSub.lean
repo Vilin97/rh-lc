@@ -154,7 +154,7 @@ theorem chi_pow_nat_val (l : ℕ) (hl : l.Prime) (hl2 : l ≠ 2) (hvl : v (l : L
   have hcop : Nat.Coprime r l := ((Nat.Prime.coprime_iff_not_dvd hl).mpr hr).symm
   have : Fact l.Prime := ⟨hl⟩
   have hpv : padicValNat l (l ^ k * r) = k := by
-    rw [padicValNat.mul (pow_ne_zero k hl.ne_zero) hr0, padicValNat.prime_pow,
+    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero k hl.ne_zero) hr0, padicValNat.prime_pow,
       padicValNat.eq_zero_of_not_dvd hr, add_zero]
   have hk0 : (0 : WithTop ℚ) ≤ k := by exact_mod_cast (Nat.cast_nonneg k : (0 : ℚ) ≤ k)
   have hlk := pow_lk_val v l hl hl2 hvl (le_refl 1) hχ k

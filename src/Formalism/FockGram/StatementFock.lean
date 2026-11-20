@@ -22,8 +22,8 @@ def symFact {σ : Type*} [DecidableEq σ] {a : ℕ} (s : Sym σ a) : ℕ :=
 
 def symPow {R σ : Type*} [CommRing R] [Fintype σ] [DecidableEq σ] (a : ℕ) (A : Matrix σ σ R) :
     Matrix (Sym σ a) (Sym σ a) R :=
-  Matrix.of fun s t => coeff (Multiset.toFinsupp (t : Multiset σ))
-    (((s : Multiset σ).map fun i => ∑ j, C (A i j) * X j).prod)
+  Matrix.of fun s t => AddMonoidAlgebra.coeff (((s : Multiset σ).map fun i => ∑ j, C (A i j) * X j).prod)
+    (Multiset.toFinsupp (t : Multiset σ))
 
 def symGram {R σ : Type*} [CommRing R] [Fintype σ] [DecidableEq σ] (a : ℕ)
     (G : Matrix σ σ R) : Matrix (Sym σ a) (Sym σ a) R :=

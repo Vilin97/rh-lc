@@ -72,7 +72,7 @@ lemma qh_phi_mono (d : Fin n × Fin n →₀ ℕ) (r : R) :
   rw [e, map_smul, qh_phi_mono1, smul_monomial]
 
 lemma qh_phi_coeff (Q : MvPolynomial (Fin n × Fin n) R) (d0 : Fin n × Fin n →₀ ℕ) :
-    coeff d0 (coeff (Finsupp.mapDomain Prod.snd d0) (qhPhi R n Q)) = coeff d0 Q := by
+    AddMonoidAlgebra.coeff (AddMonoidAlgebra.coeff (qhPhi R n Q) (Finsupp.mapDomain Prod.snd d0)) d0 = AddMonoidAlgebra.coeff Q d0 := by
   induction Q using MvPolynomial.induction_on' with
   | monomial d r =>
     rw [qh_phi_mono]
@@ -82,7 +82,7 @@ lemma qh_phi_coeff (Q : MvPolynomial (Fin n × Fin n) R) (d0 : Fin n × Fin n �
       split_ifs
       · rw [coeff_monomial, if_neg h]
       · simp
-  | add p q hp hq => rw [map_add, coeff_add, coeff_add, coeff_add, hp, hq]
+  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq]
 
 lemma qh_weight (d : Fin n × Fin n →₀ ℕ) :
     Finsupp.weight (Formalism.GradedWeylDivisibility.colW n n) d = ⇑(Finsupp.mapDomain Prod.snd d) := by

@@ -828,7 +828,7 @@ theorem height_constant_first : HeightBoundConstant := by
   have hk : ∀ v, Formalism.HN.opNormAt (Pi.basisFun K (Fin (c 0))) (Xc 0)
       (Pi.basisFun K (Fin (c (Fin.last m)))) (Xc (Fin.last m)) v
         (Matrix.mulVecLin (chainMat Kj (Fin.last m))) ≤ ∏ j, kU j v := fun v =>
-    (hcomp.1 v).trans (Finset.prod_le_prod (fun j _ => opNormAt_nonneg _ _ _ _ _ _)
+    (hcomp.1 v).trans (Finset.prod_le_prod₀ (fun j _ => opNormAt_nonneg _ _ _ _ _ _)
       (fun j _ => hkU j v))
   have hBpos : ∀ v, 0 < Formalism.HN.opNormAt (Pi.basisFun K (Fin (c 0))) (Xc 0)
       (Pi.basisFun K (Fin D)).dualBasis (Formalism.HN.dualFrame XE) v B := by
@@ -872,7 +872,7 @@ theorem height_constant_first : HeightBoundConstant := by
       (successive_minimum_log Ix J (κ v) (fun j p => lamL j p v) (hκ v) fun j p => hlamL j p v).2.2.2
     have hs : ∀ p, κ v * minOver (fun p => ∏ j, lamL j p v) ≤ κ v * ∏ j, lam j p v := fun p =>
       (S2 p).trans (mul_le_mul_of_nonneg_left
-        (Finset.prod_le_prod (fun j _ => (hlamL j p v).le) (fun j _ => hle j p v)) (hκ v).le)
+        (Finset.prod_le_prod₀ (fun j _ => (hlamL j p v).le) (fun j _ => hle j p v)) (hκ v).le)
     have hpl := place_bound (Xc 0) (hXc 0) (Xc (Fin.last m)) (hXc (Fin.last m))
       (chainMat Kj (Fin.last m)) H X0 h0 P hP XQ hQ XE hE ι hι Qp hsup v
       (fun p => κ v * ∏ j, lam j p v) (κ v * minOver (fun p => ∏ j, lamL j p v)) S1 hs

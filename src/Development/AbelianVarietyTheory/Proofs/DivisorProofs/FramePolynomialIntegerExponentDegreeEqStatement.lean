@@ -28,6 +28,6 @@ theorem _root_.GlobalTheory.T.framePolynomial_integerExponent_degree_eq : ∀ (E
       (∀ (y' : FrPt Xo c K) (Y : ∀ b : E →+* ℂ, Matrix (Fin (Dw.mult b)) (Fin (Dw.mult b)) K),
           (∀ b, (Y b).det ≠ 0) → GlobalTheory.Frames.FrChg (fun b => (Y b).transpose) 1 y₀ y' →
           (∏ b, (Y b).det ^ k b) * evR Xo c F y' = Formalism.L2.LamCM.evalFr G Y) →
-      ∀ μ, MvPolynomial.coeff μ G ≠ 0 →
+      ∀ μ, AddMonoidAlgebra.coeff G μ ≠ 0 →
         (μ.degree : ℤ) = ∑ b, ((Dw.mult b : ℤ) * (k b : ℤ) + ∑ i : Fin (Dw.mult b), e (some ⟨b, i⟩)) := by
   first | exact @GlobalTheory.FrameHom.frPoly_secZ_degree_eq | exact GlobalTheory.FrameHom.frPoly_secZ_degree_eq | (intros; apply GlobalTheory.FrameHom.frPoly_secZ_degree_eq <;> assumption)

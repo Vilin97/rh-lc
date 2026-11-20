@@ -28,16 +28,16 @@ def bdeg (m : (Σ k, J k) →₀ ℕ) : K → ℕ := fun k => ∑ i, m ⟨k, i�
 open Classical in
 
 def bcomp (g : MRing J) (d : K → ℕ) : MRing J :=
-  ∑ m ∈ g.support.filter (fun m => bdeg m = d), monomial m (coeff m g)
+  ∑ m ∈ g.support.filter (fun m => bdeg m = d), monomial m (AddMonoidAlgebra.coeff g m)
 
 open Classical in
 theorem coeff_bcomp (g : MRing J) (d : K → ℕ) (m : (Σ k, J k) →₀ ℕ) :
-    coeff m (bcomp g d) = if bdeg m = d then coeff m g else 0 := by
+    AddMonoidAlgebra.coeff (bcomp g d) m = if bdeg m = d then AddMonoidAlgebra.coeff g m else 0 := by
   rw [bcomp, coeff_sum]
   simp only [coeff_monomial]
   rw [Finset.sum_ite_eq']
   simp only [Finset.mem_filter, mem_support_iff]
-  by_cases h : bdeg m = d <;> by_cases h' : coeff m g = 0 <;> simp [h, h']
+  by_cases h : bdeg m = d <;> by_cases h' : AddMonoidAlgebra.coeff g m = 0 <;> simp [h, h']
 
 theorem bcomp_homog (g : MRing J) (d : K → ℕ) : IsMultiHomog (bcomp g d) d := by
   classical
@@ -52,7 +52,7 @@ theorem sum_bcomp [DecidableEq (K → ℕ)] (g : MRing J) : ∑ d ∈ g.support.
   classical
   ext m
   rw [coeff_sum]
-  by_cases h : coeff m g = 0
+  by_cases h : AddMonoidAlgebra.coeff g m = 0
   · rw [h]
     refine Finset.sum_eq_zero fun d _ => ?_
     rw [coeff_bcomp]
@@ -99,7 +99,7 @@ theorem aeval_bcomp_eq_zero (w : (Σ k, J k) → ℂ) (g : MRing J)
     rw [monomial_eq, C_1, _root_.one_mul, Finsupp.prod_fintype _ _ (fun _ => pow_zero _)]
     rfl
   by_cases hd : d ∈ g.support.image bdeg
-  · have h2 := congrArg (coeff (Finsupp.equivFunOnFinite.symm d)) (h1.symm.trans h0)
+  · have h2 := congrArg (AddMonoidAlgebra.coeff · (Finsupp.equivFunOnFinite.symm d)) (h1.symm.trans h0)
     rw [coeff_sum, coeff_zero] at h2
     simp only [hm, coeff_C_mul, coeff_monomial, mul_ite, _root_.mul_one, mul_zero, EmbeddingLike.apply_eq_iff_eq] at h2
     rwa [Finset.sum_ite_eq', if_pos hd] at h2

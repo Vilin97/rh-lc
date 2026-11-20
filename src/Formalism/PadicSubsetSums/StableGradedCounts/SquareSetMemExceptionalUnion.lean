@@ -376,7 +376,7 @@ private theorem two_pow_card_primeFactors_le_add_one (n : ℕ) : 2 ^ n.primeFact
   · simp
   · calc 2 ^ n.primeFactors.card = ∏ _p ∈ n.primeFactors, 2 := by rw [Finset.prod_const]
       _ ≤ ∏ p ∈ n.primeFactors, p :=
-          Finset.prod_le_prod (fun _ _ => by positivity)
+          Finset.prod_le_prod₀ (fun _ _ => by positivity)
             (fun p hp => (Nat.prime_of_mem_primeFactors hp).two_le)
       _ ≤ n := Nat.le_of_dvd hn (Nat.prod_primeFactors_dvd n)
       _ ≤ n + 1 := Nat.le_succ n

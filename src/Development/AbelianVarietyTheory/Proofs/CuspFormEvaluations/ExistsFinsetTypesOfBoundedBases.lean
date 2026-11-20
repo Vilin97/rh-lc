@@ -101,7 +101,7 @@ theorem natAbs_norm_le_pow {x : 𝓞 E} {a : ℝ} (h : ∀ σ : E →+* ℂ, ‖
   have h3 := congrArg norm (Algebra.norm_eq_prod_embeddings ℚ ℂ (x : E))
   have h4 : ∏ σ : E →ₐ[ℚ] ℂ, ‖σ (x : E)‖ ≤ a ^ finrank ℚ E := by
     rw [← AlgHom.card ℚ E ℂ, ← Finset.card_univ, ← Finset.prod_const]
-    exact Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun σ _ => h σ.toRingHom
+    exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun σ _ => h σ.toRingHom
   rw [norm_prod, ← Algebra.coe_norm_int] at h3
   refine le_trans (le_of_eq ?_) (h3 ▸ h4)
   simp [Nat.cast_natAbs]

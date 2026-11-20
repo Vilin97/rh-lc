@@ -24,7 +24,7 @@ lemma norm_iteratedFDeriv_slice_le {U V : Type} [NormedAddCommGroup U] [NormedSp
     iteratedFDeriv_comp_add_right]
   refine (ContinuousMultilinearMap.norm_compContinuousLinearMap_le _ _).trans ?_
   have h1 : ∏ _i : Fin q, ‖(ContinuousLinearMap.inr ℝ U V)‖ ≤ 1 :=
-    Finset.prod_le_one (fun _ _ => norm_nonneg _)
+    Finset.prod_le_one₀ (fun _ _ => norm_nonneg _)
       (fun _ _ => ContinuousLinearMap.norm_inr_le_one ℝ U V)
   have : ContinuousLinearMap.inr ℝ U V t + (u, 0) = (u, t) := by simp
   rw [this]

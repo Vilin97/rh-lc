@@ -128,15 +128,15 @@ theorem _root_.GlobalTheory.degree_ratio_shift_bound : ∀ (Pl : Type) [Fintype 
   have hQ : ∀ τ l, l ∈ Finset.range N →
       0 < ∏ i ∈ Finset.range l, F τ l i ∧ ∏ i ∈ Finset.range l, F τ l i ≤ 1 := fun τ l hl =>
     ⟨Finset.prod_pos fun i hi => (hF01 τ l i hl hi).1,
-      Finset.prod_le_one (fun i hi => (hF01 τ l i hl hi).1.le) fun i hi => (hF01 τ l i hl hi).2⟩
+      Finset.prod_le_one₀ (fun i hi => (hF01 τ l i hl hi).1.le) fun i hi => (hF01 τ l i hl hi).2⟩
   have hR : ∀ τ, 0 < ∏ l ∈ Finset.range N, ∏ i ∈ Finset.range l, F τ l i ∧
       ∏ l ∈ Finset.range N, ∏ i ∈ Finset.range l, F τ l i ≤ 1 := fun τ =>
     ⟨Finset.prod_pos fun l hl => (hQ τ l hl).1,
-      Finset.prod_le_one (fun l hl => (hQ τ l hl).1.le) fun l hl => (hQ τ l hl).2⟩
+      Finset.prod_le_one₀ (fun l hl => (hQ τ l hl).1.le) fun l hl => (hQ τ l hl).2⟩
   have hP0 : 0 < ∏ τ, ∏ l ∈ Finset.range N, ∏ i ∈ Finset.range l, F τ l i :=
     Finset.prod_pos fun τ _ => (hR τ).1
   have hP1 : ∏ τ, ∏ l ∈ Finset.range N, ∏ i ∈ Finset.range l, F τ l i ≤ 1 :=
-    Finset.prod_le_one (fun τ _ => (hR τ).1.le) fun τ _ => (hR τ).2
+    Finset.prod_le_one₀ (fun τ _ => (hR τ).1.le) fun τ _ => (hR τ).2
   have hdeg1 : 0 < deg u1 := by
     simp only [deg]
     exact Finset.prod_pos fun τ _ => Finset.prod_pos fun l hl =>

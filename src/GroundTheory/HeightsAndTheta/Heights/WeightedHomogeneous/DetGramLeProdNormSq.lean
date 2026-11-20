@@ -24,7 +24,7 @@ theorem det_gram_le_prod_norm_sq {V : Type*} [NormedAddCommGroup V] [InnerProduc
     ext i j
     simp [Module.Basis.toMatrix_apply]
   rw [hM, ← Module.Basis.det_apply, hdet, star_trivial, ← sq, ← Finset.prod_pow]
-  refine Finset.prod_le_prod (fun i _ => sq_nonneg _) (fun i _ => ?_)
+  refine Finset.prod_le_prod₀ (fun i _ => sq_nonneg _) (fun i _ => ?_)
   have h1 := abs_real_inner_le_norm (gb i) (w' i)
   rw [gb.orthonormal.1 i, one_mul] at h1
   have h2 : ‖w' i‖ = ‖w i‖ := rfl
@@ -71,7 +71,7 @@ theorem proof : HadamardGramBound.Statement := by
     exact_mod_cast this
   have hHad := det_gram_le_prod_norm_sq v hv
   have hprod : ∏ i, ‖v i‖ ^ 2 ≤ 1 :=
-    Finset.prod_le_one (fun i _ => sq_nonneg _) fun i _ => pow_le_one₀ (norm_nonneg _) (hn i)
+    Finset.prod_le_one₀ (fun i _ => sq_nonneg _) fun i _ => pow_le_one₀ (norm_nonneg _) (hn i)
   change 0 < (Matrix.gram ℝ b).det ∧ (Matrix.gram ℝ b).det ≤ 1
   refine ⟨lt_of_le_of_ne hbnn fun h => ?_, ?_⟩
   · rw [hdet, ← h] at hvpos

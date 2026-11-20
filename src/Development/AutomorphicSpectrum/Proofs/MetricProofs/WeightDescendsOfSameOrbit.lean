@@ -71,7 +71,7 @@ private theorem smul_mem_lemma_2 {K : Type} {ι : K → Type} {Φ : Type} [Field
   have hcomp : ∀ a, (φ f).coeff a ∈ mCoordIdeal y := by
     intro a
     have h1 : (MvPolynomial.aeval (R := ℤ) y).toRingHom ((φ f).coeff a) = 0 := by
-      have := congrArg (MvPolynomial.coeff a) (hA f)
+      have := congrArg (AddMonoidAlgebra.coeff · a) (hA f)
       rw [hf', MvPolynomial.coeff_zero, MvPolynomial.coeff_map] at this
       exact this.symm
     show (φ f).coeff a ∈ RingHom.ker (mConeMap y)

@@ -45,7 +45,7 @@ theorem UpperTheory.V.Lit.Geo.corrBd :
     have : B ^ q * ∏ i, ‖v i‖ = ∏ i, B * ‖v i‖ := by
       rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
     rw [this]
-    refine Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i _ => ?_
+    refine Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i _ => ?_
     simp only [hX, LinearEquiv.apply_symm_apply]
     rw [norm_smul]
     have h3 := m3 (v i)

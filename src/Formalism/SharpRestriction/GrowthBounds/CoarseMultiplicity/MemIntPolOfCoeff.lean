@@ -21,7 +21,7 @@ theorem mem_intPol_of_coeff {O : Type} [CommRing O] [IsDomain O] {σ : Type} (P 
 
 private theorem padicValNat_le_vK_natCast {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {p : ℕ}
     (S : UniformizedDVR p O) (m : ℕ) : (((padicValNat p m : ℚ)) : WithTop ℚ) ≤ vK p (m : KK O) := by
-  obtain ⟨r, hr⟩ := pow_padicValNat_dvd (p := p) (n := m)
+  obtain ⟨r, hr⟩ := (fun {p n : ℕ} => _root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat p n)) (p := p) (n := m)
   have hp0 : (p : O) ≠ 0 := S.p_ne
   have hcast : (m : KK O) = algebraMap O (KK O) ((p : O) ^ padicValNat p m) * algebraMap O (KK O) (r : O) := by
     conv_lhs => rw [hr]
@@ -142,7 +142,7 @@ private theorem exists_algebraMap_eq_of_w_pow_padicVal_mul {O : Type} [CommRing 
     exact hndvd (dvd_zero p)
   have hv : padicValNat p N = e := by
     haveI := Fact.mk hp
-    rw [hN', padicValNat.mul (pow_ne_zero _ hp.ne_zero) hN'0, padicValNat.prime_pow,
+    rw [hN', (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.ne_zero) hN'0, padicValNat.prime_pow,
       padicValNat.eq_zero_of_not_dvd hndvd, add_zero]
   rw [hv] at hz
   obtain ⟨uu, huu⟩ := GLWeightTheory.natCast_isUnit_of_coprime hp DS N' hndvd

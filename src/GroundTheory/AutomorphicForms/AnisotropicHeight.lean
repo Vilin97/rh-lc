@@ -51,7 +51,7 @@ theorem norm_aeval_le_sum (p : MvPolynomial (Fin N) K) (y : Fin N → F) (hy : �
   rw [norm_mul]
   refine mul_le_of_le_one_right (norm_nonneg _) ?_
   rw [norm_prod]
-  refine Finset.prod_le_one (fun i _ => norm_nonneg _) fun i _ => ?_
+  refine Finset.prod_le_one₀ (fun i _ => norm_nonneg _) fun i _ => ?_
   rw [norm_pow]
   exact pow_le_one₀ (norm_nonneg _) ((norm_le_pi_norm y i).trans hy)
 
@@ -62,7 +62,7 @@ theorem norm_aeval_le_one [IsUltrametricDist F] (p : MvPolynomial (Fin N) K)
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun s hs => ?_
   rw [norm_mul, norm_prod]
   exact mul_le_one₀ (hp s hs) (Finset.prod_nonneg fun _ _ => norm_nonneg _)
-    (Finset.prod_le_one (fun i _ => norm_nonneg _) fun i _ => by
+    (Finset.prod_le_one₀ (fun i _ => norm_nonneg _) fun i _ => by
       rw [norm_pow]; exact pow_le_one₀ (norm_nonneg _) ((norm_le_pi_norm y i).trans hy))
 
 end Local
@@ -140,13 +140,13 @@ theorem exists_adelicNorm_le_mul_pow (hd : 0 < d) (Φ : (Fin N → 𝔸[K]) → 
   have hfin_le : ∏ᶠ v, ‖Reduction.finComp v (Φ y)‖ ≤
       (∏ v ∈ S, Bf v) * (∏ᶠ v, ‖Reduction.finComp v y‖) ^ d := by
     rw [hfinΦ, hfiny, ← hST, ← Finset.prod_pow, ← Finset.prod_mul_distrib]
-    refine Finset.prod_le_prod (fun v _ => norm_nonneg _) fun v _ => ?_
+    refine Finset.prod_le_prod₀ (fun v _ => norm_nonneg _) fun v _ => ?_
     rw [hv]
     exact hloc_v v _
   have hinf_le : ∏ w, Reduction.euclidNorm (Reduction.infComp w (Φ y)) ^ w.mult ≤
       (∏ w, cw w ^ w.mult) * (∏ w, Reduction.euclidNorm (Reduction.infComp w y) ^ w.mult) ^ d := by
     rw [← Finset.prod_pow, ← Finset.prod_mul_distrib]
-    refine Finset.prod_le_prod (fun w _ => pow_nonneg (Reduction.euclidNorm_nonneg _) _)
+    refine Finset.prod_le_prod₀ (fun w _ => pow_nonneg (Reduction.euclidNorm_nonneg _) _)
       fun w _ => ?_
     rw [hw]
     calc Reduction.euclidNorm (Φw w (Reduction.infComp w y)) ^ w.mult

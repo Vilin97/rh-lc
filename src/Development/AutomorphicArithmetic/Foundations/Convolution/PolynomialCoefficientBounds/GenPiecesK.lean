@@ -12,7 +12,7 @@ theorem UpperTheory.ConvolutionTheory.FX.gen_piecesK :
       aeval blockE (G k) = piece k (F.coeff β) ∧ (G k).totalDegree ≤ k ∧
         l1 (G k) ≤ K ^ (k + 1) / k.factorial := fun β =>
     UpperTheory.ConvolutionTheory.FX.gen_pieces τ n (F.coeff β) (fun w => by
-      have := congrArg (fun P => MvPolynomial.coeff β P) (hF w)
+      have := congrArg (fun P => AddMonoidAlgebra.coeff P β) (hF w)
       simpa only [coeff_map] using this)
   choose K G hG using h
   have hc : ∀ k β, (∑ γ ∈ F.support, monomial γ (G γ k) :

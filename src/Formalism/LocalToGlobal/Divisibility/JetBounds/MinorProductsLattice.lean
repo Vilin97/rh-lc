@@ -18,7 +18,7 @@ def OrbSys.ap {k : Type} [NormedField k] (S : OrbSys k) (δ : MvPolynomial S.σ 
   σ := Empty
   g := S.g
   E := S.E
-  P := ∑ κ ∈ S.P.support, MvPolynomial.monomial κ (MvPolynomial.C (δ (MvPolynomial.coeff κ S.P)))
+  P := ∑ κ ∈ S.P.support, MvPolynomial.monomial κ (MvPolynomial.C (δ (AddMonoidAlgebra.coeff S.P κ)))
 
 def sysF (l : ℕ) [Fact l.Prime] (d N0 N1 : ℕ) [NeZero d]
     (g : ZV d N0 N1 → MvPowerSeries (ZV d N0 N1) ℂ_[l]) (E : MvPowerSeries (ZV d N0 N1) ℂ_[l]) (colN : ZMod d → ℕ)
@@ -80,14 +80,14 @@ def OneWeyl : Prop :=
   ∀ (k : Type) [NormedField k] [IsUltrametricDist k] (N0 N1 C : ℕ) (p : Fin C → ℕ) (hp : ∀ c, p c ≤ N0)
     (I : ∀ c, Fin (p c) → Fin N1) (Th : MvPowerSeries (Fin N0 × Fin N1) k)
     (δ : MvPolynomial (Fin N0 × Fin N0) k →ₗ[k] k), (∀ Q ∈ minorProductsLattice (k := k) p hp, ‖δ Q‖ ≤ 1) →
-    ∀ B : ℝ, (∀ n, ‖MvPolynomial.coeff n (frameJetOne p hp I Th)‖ ≤ B) → ‖δ (frameJetOne p hp I Th)‖ ≤ B
+    ∀ B : ℝ, (∀ n, ‖AddMonoidAlgebra.coeff (frameJetOne p hp I Th) n‖ ≤ B) → ‖δ (frameJetOne p hp I Th)‖ ≤ B
 
 def AWeyl : Prop :=
   ∀ (k : Type) [NormedField k] [IsUltrametricDist k] (d N0 N1 : ℕ) [NeZero d] (colN : ZMod d → ℕ)
     (p : ∀ s, Fin (colN s) → ℕ) (hp : ∀ s c, p s c ≤ N0) (I : ∀ s c, Fin (p s c) → Fin N1)
     (Th : MvPowerSeries (ZV d N0 N1) k) (δ : MvPolynomial (ZMod d × Fin N0 × Fin N0) k →ₗ[k] k),
     (∀ Q ∈ nablaO (K := k) colN p hp, ‖δ Q‖ ≤ 1) →
-    ∀ B : ℝ, (∀ n, ‖MvPolynomial.coeff n (frameJet colN p hp I Th)‖ ≤ B) → ‖δ (frameJet colN p hp I Th)‖ ≤ B
+    ∀ B : ℝ, (∀ n, ‖AddMonoidAlgebra.coeff (frameJet colN p hp I Th) n‖ ≤ B) → ‖δ (frameJet colN p hp I Th)‖ ≤ B
 
 def SysWBound : Prop :=
   ∀ (l : ℕ) [Fact l.Prime] (Q : OrbSys ℂ_[l] → ℝ → Prop), KnownOk l Q → ∀ (S : OrbSys ℂ_[l]) (β : ℝ), IsSysW l Q S β →

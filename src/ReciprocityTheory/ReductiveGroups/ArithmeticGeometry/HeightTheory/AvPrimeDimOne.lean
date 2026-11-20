@@ -6,7 +6,7 @@ open IsLocalRing
 
 theorem av_no_two_chain {S : Type*} [CommRing S] [IsDomain S] {A B : Ideal S} [A.IsPrime]
     [B.IsPrime] (h1 : ⊥ < A) (h2 : A < B) (hB : B.height ≤ 1) : False := by
-  have hza : (⟨⊥, Ideal.bot_prime⟩ : PrimeSpectrum S) < ⟨A, ‹A.IsPrime›⟩ := h1
+  have hza : (⟨⊥, Ideal.isPrime_bot⟩ : PrimeSpectrum S) < ⟨A, ‹A.IsPrime›⟩ := h1
   have hab : (⟨A, ‹A.IsPrime›⟩ : PrimeSpectrum S) < ⟨B, ‹B.IsPrime›⟩ := h2
   have e1 := Order.height_add_one_le hza
   have e2 := Order.height_add_one_le hab
@@ -105,7 +105,7 @@ theorem av_prime_dim_one {R : Type*} [CommRing R] [IsDomain R] [IsNoetherianRing
 
   obtain ⟨p, ⟨hpP, hhp, hpm⟩, hpmax⟩ := set_has_maximal_iff_noetherian.mpr
     (inferInstance : IsNoetherian R R) {q : Ideal R | q.IsPrime ∧ h ∉ q ∧ q ≠ m}
-    ⟨⊥, Ideal.bot_prime, fun h' => hh ((Submodule.mem_bot R).mp h'), fun e => hm0 e.symm⟩
+    ⟨⊥, Ideal.isPrime_bot, fun h' => hh ((Submodule.mem_bot R).mp h'), fun e => hm0 e.symm⟩
   haveI := hpP
   refine ⟨p, hpP, ?_, hhp⟩
   have hplt : p < m := lt_of_le_of_ne (IsLocalRing.le_maximalIdeal hpP.ne_top) hpm
@@ -162,7 +162,7 @@ theorem av_prime_dim_one {R : Type*} [CommRing R] [IsDomain R] [IsNoetherianRing
     exact a12.ne (hM.eq_of_le (s ⟨2, by omega⟩).isPrime.ne_top a12.le)
   · haveI hMp : (m.map f).IsPrime := Ideal.map_isPrime_of_surjective Ideal.Quotient.mk_surjective
       (by rw [Ideal.mk_ker]; exact hplt.le)
-    have hlt : (⟨⊥, Ideal.bot_prime⟩ : PrimeSpectrum (R ⧸ p)) < ⟨m.map f, hMp⟩ := by
+    have hlt : (⟨⊥, Ideal.isPrime_bot⟩ : PrimeSpectrum (R ⧸ p)) < ⟨m.map f, hMp⟩ := by
       rw [← PrimeSpectrum.asIdeal_lt_asIdeal]
       refine bot_lt_iff_ne_bot.mpr fun e => ?_
       have hy : f y ∈ m.map f := Ideal.mem_map_of_mem f hym

@@ -19,7 +19,7 @@ def wtX {K s : ℕ} (LL : Letters (K + 1)) (c : ℤ) (m : Fin (K + 1) × Fin (s 
 def GXExists : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (K s : ℕ) (LL : Letters (K + 1)) (c : ℤ), LL.vec (Fin.last K) = true →
     ∃ G : GlW ℚ_[p] (MvPolynomial (Fin (K + 1) × Fin (s + 1)) ℚ_[p]) (s + 1),
-      G.E = EX p LL c ∧ ∀ μ x m, coeff m (G.comp μ x) = if wtX LL c m = μ then coeff m x else 0
+      G.E = EX p LL c ∧ ∀ μ x m, AddMonoidAlgebra.coeff (G.comp μ x) m = if wtX LL c m = μ then AddMonoidAlgebra.coeff x m else 0
 
 def UDivInt : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (K r : ℕ) (LL : Letters (K + 1)) (c : ℤ) (Cs : Finset (Fin r)) (a : Fin r) (k : ℕ), a ∈ Cs →

@@ -86,7 +86,7 @@ private theorem principalUnit_pow_eq_one_add_pow_add_padicValNat {u w : ℤ_[l]}
   obtain ⟨w'', hw'', h''⟩ := principalUnit_pow_of_not_dvd (by omega) hw' h' hm
   have hm0 : m ≠ 0 := by rintro rfl; exact hm (dvd_zero l)
   refine ⟨w'', hw'', ?_⟩
-  rw [padicValNat.mul (pow_ne_zero _ (Fact.out : l.Prime).ne_zero) hm0, padicValNat.prime_pow,
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ (Fact.out : l.Prime).ne_zero) hm0, padicValNat.prime_pow,
     padicValNat.eq_zero_of_not_dvd hm, add_zero, pow_mul, h'']
 
 private theorem length_quotient_span_unit_mul_pow_eq {O : Type} [CommRing O] [IsDomain O]

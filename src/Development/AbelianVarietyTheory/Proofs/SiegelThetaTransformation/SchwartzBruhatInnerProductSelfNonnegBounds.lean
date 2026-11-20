@@ -78,7 +78,7 @@ theorem _root_.GlobalTheory.SW.IpPos.classes_finite_card {R : ℕ} (hR : 0 < R) 
     rw [_root_.GlobalTheory.SW.HaarLevel.relIndex_perSub 1 (R * R) one_pos, mul_pow, ← sq]
   let g : L →+ Matrix κ ι K ⧸ _root_.GlobalTheory.SW.perSub K κ ι R :=
     (QuotientAddGroup.mk' _).comp
-      ((DistribMulAction.toAddMonoidHom (Matrix κ ι K) ((R : K)⁻¹)).comp L.subtype)
+      ((DistribSMul.toAddMonoidHom (Matrix κ ι K) ((R : K)⁻¹)).comp L.subtype)
   have hker : H ≤ g.ker := by
     intro z hz
     rw [AddMonoidHom.mem_ker]

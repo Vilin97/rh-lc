@@ -39,7 +39,7 @@ theorem intW_of {l : ℕ} [Fact l.Prime] {ι : Qbar l ≃+* ℂ} {lam : (E →+*
   fun g hg => ⟨(h g hg).1, (h g hg).2.2⟩
 
 def CoefLe {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) {σ : Type} (R : ℝ) (x : MvPolynomial σ ℂ) : Prop :=
-  ∀ m, ‖ι.symm (MvPolynomial.coeff m x)‖ ≤ R
+  ∀ m, ‖ι.symm (AddMonoidAlgebra.coeff x m)‖ ≤ R
 
 def ToPolyX : Prop :=
   ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (l : ℕ) [Fact l.Prime] (ι : Qbar l ≃+* ℂ) (a : ℕ)

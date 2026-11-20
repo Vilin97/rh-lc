@@ -23,7 +23,7 @@ lemma valuation_natCast_le_one' {K : Type*} [Field K] [ValuativeRel K] (n : ℕ)
 
 private theorem isClosed_setOf_valuation_le_one {K : Type} [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] : IsClosed {x : K | valuation K x ≤ 1} := by
-  have h := IsValuativeTopology.isClosed_closedBall (R := K) (v := valuation K) 1
+  have h := Valuation.isClosed_closedBall (R := K) (v := valuation K) 1
   first
   | (convert h using 3 with x; simp)
   | simpa [Valuation.restrict_le_one_iff] using h

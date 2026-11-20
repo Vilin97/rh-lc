@@ -597,26 +597,26 @@ variable {p q r s : ℕ}
 open MvPolynomial
 
 theorem coeff_fockAct1_diag (a : Ix p q) (P : Pol p q r s) (m : Ln p q r s →₀ ℕ) :
-    coeff m (fockAct1 p q r s (Eab a a) P) =
-      (((wt1 m a : ℚ) + sh1 p q r s a : ℚ) : ℂ) * coeff m P := by
+    AddMonoidAlgebra.coeff (fockAct1 p q r s (Eab a a) P) m =
+      (((wt1 m a : ℚ) + sh1 p q r s a : ℚ) : ℂ) * AddMonoidAlgebra.coeff P m := by
   induction P using MvPolynomial.induction_on' with
   | monomial u c =>
     rw [fockAct1_Eab_diag_monomial, coeff_smul, smul_eq_mul, coeff_monomial]
     split_ifs with h
     · rw [h]
     · simp
-  | add P Q hP hQ => simp only [map_add, coeff_add, hP, hQ, mul_add]
+  | add P Q hP hQ => simp only [map_add, MvPolynomial.coeff_add, hP, hQ, mul_add]
 
 theorem coeff_fockAct2_diag (c : Ix r s) (P : Pol p q r s) (m : Ln p q r s →₀ ℕ) :
-    coeff m (fockAct2 p q r s (Eab c c) P) =
-      (((wt2 m c : ℚ) + sh2 p q r s c : ℚ) : ℂ) * coeff m P := by
+    AddMonoidAlgebra.coeff (fockAct2 p q r s (Eab c c) P) m =
+      (((wt2 m c : ℚ) + sh2 p q r s c : ℚ) : ℂ) * AddMonoidAlgebra.coeff P m := by
   induction P using MvPolynomial.induction_on' with
   | monomial u b =>
     rw [fockAct2_Eab_diag_monomial, coeff_smul, smul_eq_mul, coeff_monomial]
     split_ifs with h
     · rw [h]
     · simp
-  | add P Q hP hQ => simp only [map_add, coeff_add, hP, hQ, mul_add]
+  | add P Q hP hQ => simp only [map_add, MvPolynomial.coeff_add, hP, hQ, mul_add]
 
 theorem mem_wtSub1 (μ : Ix p q → ℚ) (P : Pol p q r s) :
     P ∈ wtSub (fockAct1 p q r s) μ ↔ ∀ m ∈ P.support, ∀ a, (wt1 m a : ℚ) + sh1 p q r s a = μ a := by
@@ -624,7 +624,7 @@ theorem mem_wtSub1 (μ : Ix p q → ℚ) (P : Pol p q r s) :
     LinearMap.smul_apply, LinearMap.id_apply, sub_eq_zero]
   constructor
   · intro h m hm a
-    have hc := congrArg (coeff m) (h a)
+    have hc := congrArg (AddMonoidAlgebra.coeff · m) (h a)
     rw [coeff_fockAct1_diag, coeff_smul, smul_eq_mul] at hc
     exact_mod_cast mul_right_cancel₀ (MvPolynomial.mem_support_iff.mp hm) hc
   · intro h a
@@ -632,7 +632,7 @@ theorem mem_wtSub1 (μ : Ix p q → ℚ) (P : Pol p q r s) :
     rw [coeff_fockAct1_diag, coeff_smul, smul_eq_mul]
     by_cases hm : m ∈ P.support
     · rw [h m hm a]
-    · have h0 : coeff m P = 0 := by simpa [MvPolynomial.mem_support_iff] using hm
+    · have h0 : AddMonoidAlgebra.coeff P m = 0 := by simpa [MvPolynomial.mem_support_iff] using hm
       rw [h0, mul_zero, mul_zero]
 
 theorem mem_wtSub2 (μ : Ix r s → ℚ) (P : Pol p q r s) :
@@ -641,7 +641,7 @@ theorem mem_wtSub2 (μ : Ix r s → ℚ) (P : Pol p q r s) :
     LinearMap.smul_apply, LinearMap.id_apply, sub_eq_zero]
   constructor
   · intro h m hm c
-    have hc := congrArg (coeff m) (h c)
+    have hc := congrArg (AddMonoidAlgebra.coeff · m) (h c)
     rw [coeff_fockAct2_diag, coeff_smul, smul_eq_mul] at hc
     exact_mod_cast mul_right_cancel₀ (MvPolynomial.mem_support_iff.mp hm) hc
   · intro h c
@@ -649,7 +649,7 @@ theorem mem_wtSub2 (μ : Ix r s → ℚ) (P : Pol p q r s) :
     rw [coeff_fockAct2_diag, coeff_smul, smul_eq_mul]
     by_cases hm : m ∈ P.support
     · rw [h m hm c]
-    · have h0 : coeff m P = 0 := by simpa [MvPolynomial.mem_support_iff] using hm
+    · have h0 : AddMonoidAlgebra.coeff P m = 0 := by simpa [MvPolynomial.mem_support_iff] using hm
       rw [h0, mul_zero, mul_zero]
 
 theorem ne_of_posC {n k : ℕ} {a b : Ix n k} (h : posC a b) : a ≠ b := by

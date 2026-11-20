@@ -102,7 +102,7 @@ theorem polyPiece_eq_zero_of_neg {N : ℕ} {c : ℤ} (hc : c < 0) {m : Poly ℂ 
 theorem polyPiece_zero_eq_zero_of_eval {c : ℤ} {m : Poly ℂ 0} (hm : m ∈ polyPiece ℂ 0 c)
     (h0 : MvPolynomial.eval (fun _ => (1 : ℂ)) m = 0) : m = 0 := by
   have hw := (mem_weightedHomogeneousSubmodule _ _ _ _).1 hm
-  have key : ∀ d d' : Fin (0 + 1) →₀ ℕ, coeff d m ≠ 0 → coeff d' m ≠ 0 → d = d' := by
+  have key : ∀ d d' : Fin (0 + 1) →₀ ℕ, AddMonoidAlgebra.coeff m d ≠ 0 → AddMonoidAlgebra.coeff m d' ≠ 0 → d = d' := by
     intro d d' hd hd'
     have e1 := hw hd
     have e2 := hw hd'

@@ -53,7 +53,7 @@ private theorem coeff_lemma_3 {D : ℕ} (M : Finset (Fin D → ℕ)) (A : (Fin D
     rw [Finsupp.prod_fintype _ _ (fun i => pow_zero _)]
     simp
   intro α hα
-  have h1 := congrArg (MvPolynomial.coeff (Finsupp.equivFunOnFinite.symm α)) hp
+  have h1 := congrArg (AddMonoidAlgebra.coeff · (Finsupp.equivFunOnFinite.symm α)) hp
   simp only [p, MvPolynomial.coeff_sum, MvPolynomial.coeff_monomial, MvPolynomial.coeff_zero] at h1
   rw [Finset.sum_eq_single α] at h1
   · simpa using h1

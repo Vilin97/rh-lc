@@ -196,7 +196,7 @@ theorem lValEta_le [StarRing K] {M : ℕ} (hM : 3 ≤ M) :
       haveI := P.2; exact two_le_absNorm P.1
     calc ∏ P ∈ s, Formalism.HermitianLatticesTheory.eulerFac K M P.1
         ≤ ∏ P ∈ s, Real.exp (2 * (1 / ((Ideal.absNorm P.1 : ℕ) : ℝ) ^ ((3 : ℝ) / 2))) :=
-          Finset.prod_le_prod (fun P _ => (eulerFac_le hM P.1 (hN P)).1.le) (fun P _ => (eulerFac_le hM P.1 (hN P)).2)
+          Finset.prod_le_prod₀ (fun P _ => (eulerFac_le hM P.1 (hN P)).1.le) (fun P _ => (eulerFac_le hM P.1 (hN P)).2)
       _ = Real.exp (2 * ∑ P ∈ s, 1 / ((Ideal.absNorm P.1 : ℕ) : ℝ) ^ ((3 : ℝ) / 2)) := by
           rw [← Real.exp_sum, Finset.mul_sum]
       _ ≤ Real.exp (2 * ((Module.finrank ℚ K : ℝ) * zetaGL3GL2)) := by

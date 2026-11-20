@@ -92,7 +92,7 @@ theorem fsHerm_monomials (P : Ideal (MRing ι)) (a : K → ℕ) :
   rw [norm_prod, fsHerm_h]
   unfold refNorm
   rw [Fintype.prod_sigma]
-  refine Finset.prod_le_prod (fun k _ => Finset.prod_nonneg fun _ _ => norm_nonneg _) fun k _ => ?_
+  refine Finset.prod_le_prod₀ (fun k _ => Finset.prod_nonneg fun _ _ => norm_nonneg _) fun k _ => ?_
   have hS : 0 ≤ ∑ i, ‖z ⟨k, i⟩‖ ^ 2 := Finset.sum_nonneg fun _ _ => sq_nonneg _
   have hle : ∀ i, ‖z ⟨k, i⟩ ^ μ ⟨k, i⟩‖ ≤ Real.sqrt (∑ i, ‖z ⟨k, i⟩‖ ^ 2) ^ μ ⟨k, i⟩ := fun i => by
     rw [norm_pow]
@@ -100,7 +100,7 @@ theorem fsHerm_monomials (P : Ideal (MRing ι)) (a : K → ℕ) :
     exact Finset.single_le_sum (f := fun i => ‖z ⟨k, i⟩‖ ^ 2) (fun _ _ => sq_nonneg _) (Finset.mem_univ i)
   calc ∏ i, ‖z ⟨k, i⟩ ^ μ ⟨k, i⟩‖
       ≤ ∏ i, Real.sqrt (∑ i, ‖z ⟨k, i⟩‖ ^ 2) ^ μ ⟨k, i⟩ :=
-        Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => hle i
+        Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => hle i
     _ = Real.sqrt (∑ i, ‖z ⟨k, i⟩‖ ^ 2) ^ a k := by
         rw [Finset.prod_pow_eq_pow_sum, hμ k]
     _ = (∑ i, ‖z ⟨k, i⟩‖ ^ 2) ^ (((a k : ℤ) : ℝ) / 2) := by

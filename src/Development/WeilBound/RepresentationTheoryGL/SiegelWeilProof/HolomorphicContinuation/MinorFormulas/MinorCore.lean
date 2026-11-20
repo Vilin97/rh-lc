@@ -13,11 +13,11 @@ def Aop (α : R) (ρ : ℕ) : Matrix (Fin ρ) (Fin ρ) (Algebra.adjoin R (gens �
   fun p q => ⟨opE α p q, Algebra.subset_adjoin ⟨(p, q), rfl⟩⟩
 
 theorem coe_det_sub (α : R) (ρ r : ℕ) (I J : Fin r → Fin ρ) :
-    letI : CommRing (Algebra.adjoin R (gens α ρ)) := Algebra.adjoinCommRingOfComm R (gens_comm α ρ)
+    letI : CommRing (Algebra.adjoin R (gens α ρ)) := Algebra.isMulCommutative_adjoin R (gens_comm α ρ)
     ((((Aop α ρ).submatrix I J).det : Algebra.adjoin R (gens α ρ)) : Module.End R (Pm R ρ)) =
       ∑ σ : Equiv.Perm (Fin r), ((Equiv.Perm.sign σ : ℤ) : R) •
         ((List.finRange r).map (fun k => opE α (I k) (J (σ k)))).prod := by
-  letI : CommRing (Algebra.adjoin R (gens α ρ)) := Algebra.adjoinCommRingOfComm R (gens_comm α ρ)
+  letI : CommRing (Algebra.adjoin R (gens α ρ)) := Algebra.isMulCommutative_adjoin R (gens_comm α ρ)
   rw [← det_transpose, det_apply']
   rw [AddSubmonoidClass.coe_finsetSum]
   refine Finset.sum_congr rfl fun σ _ => ?_
@@ -49,7 +49,7 @@ theorem core : Core := by
     rw [detE_eq_sum]
     simp [Xm]
   | succ ρ ih =>
-    letI : CommRing (Algebra.adjoin R (gens α (ρ + 1))) := Algebra.adjoinCommRingOfComm R (gens_comm α (ρ + 1))
+    letI : CommRing (Algebra.adjoin R (gens α (ρ + 1))) := Algebra.isMulCommutative_adjoin R (gens_comm α (ρ + 1))
     have hfull := coe_det_sub α (ρ + 1) (ρ + 1) id id
     simp only [submatrix_id_id, id] at hfull
     rw [detE_eq_sum, ← hfull, det_succ_row_zero, AddSubmonoidClass.coe_finsetSum, LinearMap.sum_apply]

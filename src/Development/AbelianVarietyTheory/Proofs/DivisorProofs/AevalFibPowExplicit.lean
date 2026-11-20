@@ -25,7 +25,7 @@ theorem eval_fibPow (H : Matrix (Fin 2) (Fin 2) ℂ) (k : ℕ) :
     ring
   simp only [fibPow, map_sum, map_mul, MvPolynomial.eval_C, map_prod, MvPolynomial.eval_X]
   simp_rw [e]
-  rw [integral_finset_sum _ fun f _ => ((Intg.integrable_prod_qCoef_mul_fsDens k f).mul_const _)]
+  rw [MeasureTheory.integral_finsetSum _ fun f _ => ((Intg.integrable_prod_qCoef_mul_fsDens k f).mul_const _)]
   simp only [integral_mul_const]
 
 theorem qMat_diagonal (a b x : ℂ) : qMat (Matrix.diagonal ![a, b]) x =

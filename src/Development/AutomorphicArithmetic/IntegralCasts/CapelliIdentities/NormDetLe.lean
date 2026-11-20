@@ -20,5 +20,5 @@ theorem UpperTheory.Reformulated.B.Qh58.norm_det_le :
     rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with hs | hs <;> simp [hs]
   rw [h1, one_mul]
   calc ∏ i, ‖ι.symm (M (σ i) i)‖ ≤ ∏ _i : Fin n, R :=
-        Finset.prod_le_prod (fun i _ => norm_nonneg _) (fun i _ => h _ _)
+        Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) (fun i _ => h _ _)
     _ = R ^ n := by simp

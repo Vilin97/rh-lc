@@ -48,8 +48,8 @@ def FockPairingHighestWeight : Prop :=
 def LowerTriK : Prop :=
   ∀ (O K : Type) [CommRing O] [IsDomain O] [Field K] [Algebra O K] [IsFractionRing O K] (r n : ℕ) (ν : Fin n → ℕ)
     (Q : MvPolynomial (Fin r × Fin n) K), Q ∈ dualWeyl K r n ν →
-    ((∀ e : Fin r × Fin n →₀ ℕ, LowerTri e → coeff e Q ∈ Set.range (algebraMap O K)) →
+    ((∀ e : Fin r × Fin n →₀ ℕ, LowerTri e → AddMonoidAlgebra.coeff Q e ∈ Set.range (algebraMap O K)) →
       Q ∈ (dualWeyl O r n ν).map (toK O K)) ∧
-    ((∀ e : Fin r × Fin n →₀ ℕ, LowerTri e → coeff e Q = 0) → Q = 0)
+    ((∀ e : Fin r × Fin n →₀ ℕ, LowerTri e → AddMonoidAlgebra.coeff Q e = 0) → Q = 0)
 
 end Formalism.L2.G.Model.TS

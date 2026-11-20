@@ -11,10 +11,10 @@ variable {R : Type} [CommRing R] {σ : Type}
 
 noncomputable def proj (I : Ideal R) (e : ℕ) (P : MvPolynomial σ (reesAlgebra I)) :
     MvPolynomial σ R :=
-  ∑ m ∈ P.support, monomial m (((coeff m P : reesAlgebra I) : Polynomial R).coeff e)
+  ∑ m ∈ P.support, monomial m (((AddMonoidAlgebra.coeff P m : reesAlgebra I) : Polynomial R).coeff e)
 
 theorem coeff_proj (I : Ideal R) (e : ℕ) (P : MvPolynomial σ (reesAlgebra I)) (m : σ →₀ ℕ) :
-    coeff m (proj I e P) = ((coeff m P : reesAlgebra I) : Polynomial R).coeff e := by
+    AddMonoidAlgebra.coeff (proj I e P) m = ((AddMonoidAlgebra.coeff P m : reesAlgebra I) : Polynomial R).coeff e := by
   classical
   simp only [proj, coeff_sum, coeff_monomial, Finset.sum_ite_eq', mem_support_iff]
   split_ifs with h
@@ -55,10 +55,10 @@ theorem liftCoeff_zero (I : Ideal R) (e : ℕ) : liftCoeff I e 0 = 0 := by
 
 noncomputable def liftE (I : Ideal R) (e : ℕ) (F : MvPolynomial σ R) :
     MvPolynomial σ (reesAlgebra I) :=
-  ∑ m ∈ F.support, monomial m (liftCoeff I e (coeff m F))
+  ∑ m ∈ F.support, monomial m (liftCoeff I e (AddMonoidAlgebra.coeff F m))
 
 theorem coeff_liftE (I : Ideal R) (e : ℕ) (F : MvPolynomial σ R) (m : σ →₀ ℕ) :
-    coeff m (liftE I e F) = liftCoeff I e (coeff m F) := by
+    AddMonoidAlgebra.coeff (liftE I e F) m = liftCoeff I e (AddMonoidAlgebra.coeff F m) := by
   classical
   simp only [liftE, coeff_sum, coeff_monomial, Finset.sum_ite_eq', mem_support_iff]
   split_ifs with h
@@ -66,7 +66,7 @@ theorem coeff_liftE (I : Ideal R) (e : ℕ) (F : MvPolynomial σ R) (m : σ →�
   · rw [not_not] at h
     rw [h, liftCoeff_zero]
 
-theorem proj_liftE {I : Ideal R} {e : ℕ} {F : MvPolynomial σ R} (h : ∀ m, coeff m F ∈ I ^ e)
+theorem proj_liftE {I : Ideal R} {e : ℕ} {F : MvPolynomial σ R} (h : ∀ m, AddMonoidAlgebra.coeff F m ∈ I ^ e)
     (e' : ℕ) : proj I e' (liftE I e F) = if e' = e then F else 0 := by
   ext m
   rw [coeff_proj, coeff_liftE, liftCoeff, dif_pos (h m)]
@@ -98,7 +98,7 @@ namespace GlobalTheory
 
 open UniformCocycle in
 
-theorem uniformSerre_cocycle : ∀ (R : Type) [CommRing R] [IsNoetherianRing R] (I : Ideal R), ∀ (n : ℕ) (J : ℕ → Ideal (MvPolynomial (Fin (n + 1)) R)), (∀ (e t : ℕ) (a : R) (F : MvPolynomial (Fin (n + 1)) R), a ∈ I → F.IsHomogeneous t → (∀ m, coeff m F ∈ I ^ e) → F ∈ J e → C a * F ∈ J (e + 1)) → ∃ d₀ : ℕ, ∀ d, d₀ ≤ d → ∀ e : ℕ, ∀ (N : ℕ) (F : Fin (n + 1) → Fin (n + 1) → MvPolynomial (Fin (n + 1)) R), (∀ i j, (F i j).IsHomogeneous (d + 2 * N)) → (∀ i j m, coeff m (F i j) ∈ I ^ e) → (∀ i j l, ∃ L : ℕ, ((X i : MvPolynomial (Fin (n + 1)) R) * X j * X l) ^ L * (X l ^ N * F i j + X i ^ N * F j l - X j ^ N * F i l) ∈ J e) → ∃ (N' : ℕ) (G : Fin (n + 1) → MvPolynomial (Fin (n + 1)) R), (∀ i, (G i).IsHomogeneous (d + N')) ∧ (∀ i m, coeff m (G i) ∈ I ^ e) ∧ ∀ i j, ∃ L : ℕ, ((X i : MvPolynomial (Fin (n + 1)) R) * X j) ^ L * ((X i * X j) ^ N' * F i j - (X i * X j) ^ N * (X j ^ N' * G i - X i ^ N' * G j)) ∈ J e := by
+theorem uniformSerre_cocycle : ∀ (R : Type) [CommRing R] [IsNoetherianRing R] (I : Ideal R), ∀ (n : ℕ) (J : ℕ → Ideal (MvPolynomial (Fin (n + 1)) R)), (∀ (e t : ℕ) (a : R) (F : MvPolynomial (Fin (n + 1)) R), a ∈ I → F.IsHomogeneous t → (∀ m, AddMonoidAlgebra.coeff F m ∈ I ^ e) → F ∈ J e → C a * F ∈ J (e + 1)) → ∃ d₀ : ℕ, ∀ d, d₀ ≤ d → ∀ e : ℕ, ∀ (N : ℕ) (F : Fin (n + 1) → Fin (n + 1) → MvPolynomial (Fin (n + 1)) R), (∀ i j, (F i j).IsHomogeneous (d + 2 * N)) → (∀ i j m, AddMonoidAlgebra.coeff (F i j) m ∈ I ^ e) → (∀ i j l, ∃ L : ℕ, ((X i : MvPolynomial (Fin (n + 1)) R) * X j * X l) ^ L * (X l ^ N * F i j + X i ^ N * F j l - X j ^ N * F i l) ∈ J e) → ∃ (N' : ℕ) (G : Fin (n + 1) → MvPolynomial (Fin (n + 1)) R), (∀ i, (G i).IsHomogeneous (d + N')) ∧ (∀ i m, AddMonoidAlgebra.coeff (G i) m ∈ I ^ e) ∧ ∀ i j, ∃ L : ℕ, ((X i : MvPolynomial (Fin (n + 1)) R) * X j) ^ L * ((X i * X j) ^ N' * F i j - (X i * X j) ^ N * (X j ^ N' * G i - X i ^ N' * G j)) ∈ J e := by
   intro R _ _ I n J hJ
   obtain ⟨𝔞, h𝔞h, h𝔞⟩ := GlobalTheory.T.exists_homogeneous_ideal_over_reesAlgebra R I n J hJ
   obtain ⟨d₀, hd₀⟩ := GlobalTheory.T.exists_coboundary_of_fraction_cocycle_homogeneous_ideal (reesAlgebra I) n 𝔞 h𝔞h
@@ -130,7 +130,7 @@ theorem uniformSerre_cocycle : ∀ (R : Type) [CommRing R] [IsNoetherianRing R] 
   obtain ⟨N', G', hG'h, hG'⟩ := hd₀ d hd N (fun i j => liftE I e (F i j)) hF'h hcoc'
   refine ⟨N', fun i => proj I e (G' i), fun i => isHomogeneous_proj (hG'h i), fun i m => ?_, fun i j => ?_⟩
   · rw [coeff_proj]
-    exact (mem_reesAlgebra_iff I _).mp (coeff m (G' i)).2 e
+    exact (mem_reesAlgebra_iff I _).mp (AddMonoidAlgebra.coeff (G' i) m).2 e
   · obtain ⟨L, hL⟩ := hG' i j
     refine ⟨L, ?_⟩
     have h2 : (1 + 1) * N + (N' + (d + N')) = (1 + 1) * N' + (d + 2 * N) := by ring

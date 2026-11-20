@@ -144,7 +144,7 @@ theorem valR_scaleO (a : R) (k : ℕ) {X : Scheme.{0}} (z : Sp (EpsAlg R k) ⟶ 
     rw [valR, valR, dif_neg hx, dif_neg hx', map_zero]
 
 theorem topCoeff_mk {k : ℕ} (p : MvPolynomial (Fin k) R) :
-    topCoeff R k (Ideal.Quotient.mk _ p) = MvPolynomial.coeff (topMon k) p := rfl
+    topCoeff R k (Ideal.Quotient.mk _ p) = AddMonoidAlgebra.coeff p (topMon k) := rfl
 
 theorem scalePoly_monomial (a : R) {k : ℕ} (u : Fin k →₀ ℕ) (c : R) :
     scalePoly a k (MvPolynomial.monomial u c) = MvPolynomial.monomial u (a ^ (∑ j, u j) * c) := by
@@ -157,7 +157,7 @@ theorem scalePoly_monomial (a : R) {k : ℕ} (u : Fin k →₀ ℕ) (c : R) :
     MvPolynomial.C_mul_monomial, MvPolynomial.C_mul_monomial, _root_.mul_one, _root_.mul_comm c]
 
 theorem coeff_scalePoly (a : R) {k : ℕ} (m : Fin k →₀ ℕ) (p : MvPolynomial (Fin k) R) :
-    MvPolynomial.coeff m (scalePoly a k p) = a ^ (∑ j, m j) * MvPolynomial.coeff m p := by
+    AddMonoidAlgebra.coeff (scalePoly a k p) m = a ^ (∑ j, m j) * AddMonoidAlgebra.coeff p m := by
   induction p using MvPolynomial.induction_on' with
   | monomial u c =>
     rw [scalePoly_monomial, MvPolynomial.coeff_monomial, MvPolynomial.coeff_monomial]

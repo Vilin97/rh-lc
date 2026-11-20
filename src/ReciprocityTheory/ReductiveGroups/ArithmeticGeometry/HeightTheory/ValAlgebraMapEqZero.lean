@@ -50,7 +50,7 @@ theorem exists_rename_notMem {K : Type} [Field K] {σ : Type} (p : Ideal (MvPoly
         simp at hiv
       simp [hd0]
     rw [MvPolynomial.totalDegree_eq_zero_iff_eq_C] at htd
-    have ha : MvPolynomial.coeff 0 g ≠ 0 := by
+    have ha : AddMonoidAlgebra.coeff g 0 ≠ 0 := by
       intro ha0
       apply hg0
       rw [htd, ha0, map_zero]

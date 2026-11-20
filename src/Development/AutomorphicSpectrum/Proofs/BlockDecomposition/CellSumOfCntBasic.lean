@@ -13,7 +13,7 @@ noncomputable def hits (X : Ctx) (S : Set X.G) (x : X.G) : ℝ≥0∞ :=
 theorem measurable_hits (X : Ctx) {S : Set X.G} (hS : MeasurableSet S) :
     Measurable (hits X S) := by
   unfold hits
-  refine Measurable.ennreal_tsum fun γ => ?_
+  refine Measurable.tsum fun γ => ?_
   exact (measurable_one.indicator hS).comp (measurable_const_mul (γ : X.G))
 
 theorem lintegral_hits (X : Ctx) {S : Set X.G} (hS : MeasurableSet S) :

@@ -58,7 +58,7 @@ def levelProj (A B j : ℕ) : PolXY K k →ₗ[K] PolXY K k :=
     (hDiv K k j ∘ₗ harProj K k (A - j) (B - j) ∘ₗ ctrDiv K k j)
 
 def fischer (f g : PolXY K k) : K :=
-  ∑ m ∈ f.support, ((xFact m : K) * (yFact m : K)) * (coeff m f * coeff m g)
+  ∑ m ∈ f.support, ((xFact m : K) * (yFact m : K)) * (AddMonoidAlgebra.coeff f m * AddMonoidAlgebra.coeff g m)
 
 variable {K k}
 
@@ -67,17 +67,17 @@ def glAct (g : GL (Fin k) K) : PolXY K k →ₐ[K] PolXY K k :=
     (fun i : Fin k => ∑ j : Fin k, C ((g : Matrix (Fin k) (Fin k) K) i j) * X (Sum.inl j))
     (fun i : Fin k => ∑ j : Fin k, C (((g⁻¹ : GL (Fin k) K) : Matrix (Fin k) (Fin k) K) j i) * X (Sum.inr j)))
 
-def GaussLat (R : Subring K) : Set (PolXY K k) := {f | ∀ m, coeff m f ∈ R}
+def GaussLat (R : Subring K) : Set (PolXY K k) := {f | ∀ m, AddMonoidAlgebra.coeff f m ∈ R}
 
-def FockLat (R : Subring K) : Set (PolXY K k) := {f | ∀ m, (xFact m : K) * coeff m f ∈ R}
+def FockLat (R : Subring K) : Set (PolXY K k) := {f | ∀ m, (xFact m : K) * AddMonoidAlgebra.coeff f m ∈ R}
 
 def DualLat (R : Subring K) : Set (PolXY K k) :=
-  {f | ∀ m, ((xFact m : K) * (yFact m : K)) * coeff m f ∈ R}
+  {f | ∀ m, ((xFact m : K) * (yFact m : K)) * AddMonoidAlgebra.coeff f m ∈ R}
 
 def SqrtFockLat (R : Subring K) : Set (PolXY K k) :=
-  {f | ∀ m, ((xFact m : K) * (yFact m : K)) * coeff m f ^ 2 ∈ R}
+  {f | ∀ m, ((xFact m : K) * (yFact m : K)) * AddMonoidAlgebra.coeff f m ^ 2 ∈ R}
 
-def SqrtGaussLat (R : Subring K) (n : ℕ) : Set (PolXY K k) := {f | ∀ m, (n : K) * coeff m f ^ 2 ∈ R}
+def SqrtGaussLat (R : Subring K) (n : ℕ) : Set (PolXY K k) := {f | ∀ m, (n : K) * AddMonoidAlgebra.coeff f m ^ 2 ∈ R}
 
 def latOf (g : GL (Fin k) K) (S : Set (PolXY K k)) : Set (PolXY K k) := glAct g '' S
 

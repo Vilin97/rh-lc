@@ -52,7 +52,7 @@ lemma summable_pi_weight (n : ℕ) :
         exact (Finset.prod_univ_sum (fun k => (s.image (fun ν => ν k) : Finset ℤ))
           (fun _ j => 1 / (1 + |(j : ℝ)|) ^ 2)).symm
     _ ≤ _ := by
-        refine Finset.prod_le_prod (fun k _ => by positivity) fun k _ => ?_
+        refine Finset.prod_le_prod₀ (fun k _ => by positivity) fun k _ => ?_
         exact summable_int_weight.sum_le_tsum _ (fun _ _ => by positivity)
 
 lemma Rapid.summable {n : ℕ} {c : (Fin n → ℤ) → ℂ} (h : Rapid c) :
@@ -62,7 +62,7 @@ lemma Rapid.summable {n : ℕ} {c : (Fin n → ℤ) → ℂ} (h : Rapid c) :
     ((summable_pi_weight n).mul_left C)
   have h1 : ∏ k, (1 + |(ν k : ℝ)|) ^ 2 ≤ (1 + ∑ k, |(ν k : ℝ)|) ^ (2 * n) := by
     calc ∏ k, (1 + |(ν k : ℝ)|) ^ 2 ≤ ∏ _k : Fin n, (1 + ∑ k, |(ν k : ℝ)|) ^ 2 := by
-          refine Finset.prod_le_prod (fun k _ => by positivity) fun k _ => ?_
+          refine Finset.prod_le_prod₀ (fun k _ => by positivity) fun k _ => ?_
           gcongr
           exact Finset.single_le_sum (f := fun k => |(ν k : ℝ)|) (fun _ _ => abs_nonneg _)
             (Finset.mem_univ k)

@@ -54,7 +54,7 @@ variable {T i} in
 
 def FieldRay (Lat : Submodule ℤ (VsV D i ℂ)) (C : Cover T ((i : ℕ) + 1) T.σ₀) : Prop :=
   (R.C.mu0 i * R.C.eta⁻¹).ValuesIn (-1 / 2) C.σ₂ ∧
-    (∀ v ∈ Lat, ∀ m, ∃ a, C.σ₂ a = MvPolynomial.coeff m (v : Pol ℂ D.what₂.Tau (Vc D i).rank)) ∧ IntegralSeries.HasRay C
+    (∀ v ∈ Lat, ∀ m, ∃ a, C.σ₂ a = AddMonoidAlgebra.coeff (v : Pol ℂ D.what₂.Tau (Vc D i).rank) m) ∧ IntegralSeries.HasRay C
 
 def SerIntRay (hV : T.V ((i : ℕ) + 1) T.σ₀ = Wc D i) (u : ∀ ρ, lowT (R.MW i (sg0 D A)) ρ)
     (c0 : VsV D i ℂ →ₗ[ℂ] (R.cV i).W) : Prop :=
@@ -107,7 +107,7 @@ variable (u c0 ka J) in
 structure Dict : Prop where
   norm : ‖ka‖ = 1
   rat : ∀ k : Subfield ℂ, (inC T.Q.c).fieldRange ≤ k → ∀ v : VsV D i ℂ,
-    (∀ m, MvPolynomial.coeff m (v : Pol ℂ D.what₂.Tau (Vc D i).rank) ∈ k) ↔ ∀ d, MvPolynomial.coeff d (J v) ∈ k
+    (∀ m, AddMonoidAlgebra.coeff (v : Pol ℂ D.what₂.Tau (Vc D i).rank) m ∈ k) ↔ ∀ d, AddMonoidAlgebra.coeff (J v) d ∈ k
   eq : ∀ f, IsThetaFunO R.ψ (Vc D i) (Wc D i) f → ∀ v,
     IntegralSeries.fock R i (R.BV i) f (R.ioP i (PiTensorProduct.tprod ℂ u) (c0 v)) = ka • IntegralSeries.fock R i (fun _ => 1) f (J v)
 

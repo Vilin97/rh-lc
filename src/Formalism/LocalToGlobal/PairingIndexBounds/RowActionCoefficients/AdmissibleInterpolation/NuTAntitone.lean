@@ -38,7 +38,7 @@ theorem xPair (hS : XShape) (hBrS : XBrS) (hInj : XInj) (hMid : XMid) (hU : XUni
     (hO : ∀ o : X.G.O, algebraMap X.G.Kf Kc (algebraMap X.G.O X.G.Kf o) ∈ Oc)
     (j : ℕ) (La : X.Lt j) (La' : X.Lt (j + 1)) (φ : Frm X j La La') (i0 : X.Pl → ℕ) (h3 : ∀ v, i0 v ≤ X.G.P.r)
     (f : MvPowerSeries (X.ZA j) Kc) (gg : ℝ)
-    (hf : ∀ (I : X.ColCh j) (n : X.FrI j →₀ ℕ), geX p Oc (coeff n (applyD (X.PI j I i0) f)) gg)
+    (hf : ∀ (I : X.ColCh j) (n : X.FrI j →₀ ℕ), geX p Oc (AddMonoidAlgebra.coeff (applyD (X.PI j I i0) f) n) gg)
     (G : (X.Pj j).Xsp) (hG : G ∈ (X.Pj j).HtupW La.2)
     (I : ∀ (b : BX X) (k : Fin (cX X j b)), Fin (szT X j b k) → Fin (NJ X (j + 1))) :
     ∃ a ∈ MG p Oc hval gg,

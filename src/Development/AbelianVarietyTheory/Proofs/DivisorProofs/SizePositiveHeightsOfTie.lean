@@ -92,7 +92,7 @@ theorem polySize_of_tie (D : D7) (Y : ShimX D.what₂.Tau) (T : Real0 Y) (A : Sl
       rwa [div_mul_cancel₀ _ hl2.ne'] at this
     rw [coeff_sub] at h1
     have h5 := hM c m
-    have h6 := abs_add_le (coeff m (A.Ps B c) - coeff m (A.Ps 2 c)) (coeff m (A.Ps 2 c))
+    have h6 := abs_add_le (AddMonoidAlgebra.coeff (A.Ps B c) m - AddMonoidAlgebra.coeff (A.Ps 2 c) m) (AddMonoidAlgebra.coeff (A.Ps 2 c) m)
     rw [sub_add_cancel] at h6
     nlinarith
   · have h1 : Tendsto (fun R => ∑ c, T.fR B c u 0 R) atTop (𝓝 (∑ c, evS Y (A.Ps B c) u 0)) :=

@@ -84,7 +84,7 @@ theorem isMultiHomog_rename [DecidableEq K] {κ : K' → K} {u : (Σ k, ι k) �
     IsMultiHomog (rename u G : MRing J) (pushDeg κ d) := by
   classical
   intro m hm k
-  have e : (rename u G : MRing J) = ∑ m' ∈ G.support, monomial (m'.mapDomain u) (coeff m' G) := by
+  have e : (rename u G : MRing J) = ∑ m' ∈ G.support, monomial (m'.mapDomain u) (AddMonoidAlgebra.coeff G m') := by
     conv_lhs => rw [G.as_sum]
     rw [map_sum]
     simp only [rename_monomial]

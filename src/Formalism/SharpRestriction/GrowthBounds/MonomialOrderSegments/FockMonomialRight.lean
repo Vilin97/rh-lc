@@ -114,7 +114,7 @@ theorem fock_add_left (F F' G : MvPolynomial σ K) : fock (F + F') G = fock F G 
   rw [fock_eq_sum (F + F') G G.support (Or.inr (Finset.Subset.refl _)),
     fock_eq_sum F G G.support (Or.inr (Finset.Subset.refl _)),
     fock_eq_sum F' G G.support (Or.inr (Finset.Subset.refl _)), ← Finset.sum_add_distrib]
-  exact Finset.sum_congr rfl fun α _ => by rw [coeff_add]; ring
+  exact Finset.sum_congr rfl fun α _ => by rw [MvPolynomial.coeff_add]; ring
 
 theorem fock_add_right (F G G' : MvPolynomial σ K) : fock F (G + G') = fock F G + fock F G' := by
   rw [fock_comm, fock_add_left, fock_comm G, fock_comm G']

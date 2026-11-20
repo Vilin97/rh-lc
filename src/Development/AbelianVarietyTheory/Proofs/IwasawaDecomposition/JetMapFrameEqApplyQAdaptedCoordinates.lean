@@ -20,14 +20,14 @@ noncomputable section
 namespace GlobalTheory.JetChain
 
 def fpair {σ K : Type} [CommRing K] (Q : MvPolynomial σ K) (F : MvPowerSeries σ K) : K :=
-  ∑ α ∈ Q.support, MvPolynomial.coeff α Q * (α.prod fun _ n => (n.factorial : K)) * MvPowerSeries.coeff α F
+  ∑ α ∈ Q.support, AddMonoidAlgebra.coeff Q α * (α.prod fun _ n => (n.factorial : K)) * MvPowerSeries.coeff α F
 
 section Pair
 
 variable {σ K : Type} [CommRing K]
 
 theorem fpair_eq_of_subset (Q : MvPolynomial σ K) (F : MvPowerSeries σ K) (s : Finset (σ →₀ ℕ)) (hs : Q.support ⊆ s) :
-    fpair Q F = ∑ α ∈ s, MvPolynomial.coeff α Q * (α.prod fun _ n => (n.factorial : K)) * MvPowerSeries.coeff α F := by
+    fpair Q F = ∑ α ∈ s, AddMonoidAlgebra.coeff Q α * (α.prod fun _ n => (n.factorial : K)) * MvPowerSeries.coeff α F := by
   refine Finset.sum_subset hs fun α _ hα => ?_
   rw [MvPolynomial.mem_support_iff, not_not] at hα
   rw [hα, zero_mul, zero_mul]

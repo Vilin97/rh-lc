@@ -122,10 +122,10 @@ theorem derAt_smul (j : ℕ) (n : X.ZA j →₀ ℕ) (c : X.G.Kf) (f : MvPowerSe
   · rw [smul_zero]
 
 def pairD (j : ℕ) (P : DA X Kc j) (f : MvPowerSeries (X.ZA j) Kc) : XspC (X.Pj (j + 1)) Kc :=
-  ∑ n ∈ P.support, derAt X Kc j n f • MvPolynomial.coeff n P
+  ∑ n ∈ P.support, derAt X Kc j n f • AddMonoidAlgebra.coeff P n
 
 theorem pairD_eq (j : ℕ) (P : DA X Kc j) (f : MvPowerSeries (X.ZA j) Kc) (S : Finset (X.ZA j →₀ ℕ))
-    (hS : P.support ⊆ S) : pairD X Kc j P f = ∑ n ∈ S, derAt X Kc j n f • MvPolynomial.coeff n P := by
+    (hS : P.support ⊆ S) : pairD X Kc j P f = ∑ n ∈ S, derAt X Kc j n f • AddMonoidAlgebra.coeff P n := by
   unfold pairD
   refine Finset.sum_subset hS fun n _ hn => ?_
   simp only [MvPolynomial.mem_support_iff, not_not] at hn

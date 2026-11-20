@@ -181,7 +181,7 @@ theorem norm_minorProd_le {r p : ℕ} (h : p ≤ r) (la : Fin r → ℤ) (n : �
       | empty => simp
       | insert a s ha ih => rw [Finset.sum_insert ha, Finset.prod_insert ha, zpow_add₀ hδ0.ne', ih]
     rw [← Finset.sum_range_sub' M r, hz, Finset.prod_range, minorProd, norm_prod]
-    refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun k _ => ?_
+    refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun k _ => ?_
     have hk := k.isLt
     rw [norm_zpow]
     by_cases hk' : (k : ℕ) + 1 = r
@@ -273,7 +273,7 @@ theorem GlobalTheory.lowest_weight_function_bound : ∀ (E : Type) [Field E] [Nu
     rw [key, norm_mul, mul_right_comm]
     refine mul_le_of_le_one_left (norm_nonneg _) ?_
     rw [hm, norm_prod, ← Finset.prod_mul_distrib]
-    refine Finset.prod_le_one (fun τ _ => by positivity) fun τ _ => ?_
+    refine Finset.prod_le_one₀ (fun τ _ => by positivity) fun τ _ => ?_
     refine LowestBound.norm_minorProd_le X.p0_le (la τ) n (hd τ).1 (hd τ).2.1 (fun i j hi hj => ?_)
       _ ?_
     · obtain ⟨i | i, rfl⟩ := (rowIdx hr).surjective i <;>

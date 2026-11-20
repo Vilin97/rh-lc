@@ -363,12 +363,12 @@ theorem ng_le (T T' : ℕ) (w : Point D.host.E (D.R.rS + 1)) :
     rw [GPt_eq]
     calc ∏ p, (D.host.rdE ^ (2 * D.R.rS * (D.R.rS + 1)))⁻¹ * p (Gglob D T T' w)
         ≤ ∏ p : NumberField.InfinitePlace D.host.E, p (Gglob D T T' w) :=
-          Finset.prod_le_prod (fun p _ => hnn _ _ (apply_nonneg p _)) (fun p _ => hle _ _ (apply_nonneg p _))
+          Finset.prod_le_prod₀ (fun p _ => hnn _ _ (apply_nonneg p _)) (fun p _ => hle _ _ (apply_nonneg p _))
       _ = ∏ v, absV D v (Gglob D T T' w) :=
           (Fintype.prod_bijective (plOf D) (plOf_bij D) _ _ fun v => (plOf_apply D v _).symm).symm
   · unfold NDPt
-    refine (Finset.prod_le_prod (fun a _ => Finset.prod_nonneg fun p _ => hnn _ _ (sq_nonneg _))
-      (fun a _ => Finset.prod_le_prod (fun p _ => hnn _ _ (sq_nonneg _)) (fun p _ => hle _ _ (sq_nonneg _)))).trans
+    refine (Finset.prod_le_prod₀ (fun a _ => Finset.prod_nonneg fun p _ => hnn _ _ (sq_nonneg _))
+      (fun a _ => Finset.prod_le_prod₀ (fun p _ => hnn _ _ (sq_nonneg _)) (fun p _ => hle _ _ (sq_nonneg _)))).trans
       (le_of_eq ?_)
     rw [blockEnds_prod]
     symm

@@ -35,7 +35,7 @@ theorem eval_polOf (φ : Module.Dual ℝ (MvPolynomial σ ℝ)) (d : ℕ) (u : �
   ring
 
 theorem coeff_polOf (φ : Module.Dual ℝ (MvPolynomial σ ℝ)) (d : ℕ) (m : σ →₀ ℕ) (hm : ∑ x, m x = d) :
-    coeff m (polOf φ d) = (Nat.multinomial Finset.univ m : ℝ) * φ (monomial m 1) := by
+    AddMonoidAlgebra.coeff (polOf φ d) m = (Nat.multinomial Finset.univ m : ℝ) * φ (monomial m 1) := by
   rw [polOf, coeff_sum]
   simp only [coeff_monomial]
   rw [Finset.sum_eq_single (⇑m)]
@@ -55,7 +55,7 @@ theorem coeff_polOf (φ : Module.Dual ℝ (MvPolynomial σ ℝ)) (d : ℕ) (m : 
 theorem degreeOf_polOf_le (φ : Module.Dual ℝ (MvPolynomial σ ℝ)) (d : ℕ) (x : σ) :
     (polOf φ d).degreeOf x ≤ d := by
   refine (degreeOf_le_totalDegree _ _).trans ?_
-  refine (totalDegree_finset_sum _ _).trans (Finset.sup_le fun k hk => ?_)
+  refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun k hk => ?_)
   refine (totalDegree_monomial_le _ _).trans ?_
   rw [Finset.mem_piAntidiag] at hk
   rw [Finsupp.sum_fintype _ _ (by simp)]
@@ -78,7 +78,7 @@ theorem homog_kill (φ : Module.Dual ℝ (MvPolynomial σ ℝ)) (d : ℕ) (hP : 
   have hdeg : ∑ x, m x = d := by
     have := hQ (mem_support_iff.mp hm)
     simpa [Finsupp.weight_apply, Finsupp.sum_fintype] using this
-  have : monomial m (coeff m Q) = coeff m Q • monomial m (1 : ℝ) := by
+  have : monomial m (AddMonoidAlgebra.coeff Q m) = AddMonoidAlgebra.coeff Q m • monomial m (1 : ℝ) := by
     rw [smul_monomial, smul_eq_mul, mul_one]
   rw [this, map_smul, monomial_kill φ d hP m hdeg, smul_zero]
 

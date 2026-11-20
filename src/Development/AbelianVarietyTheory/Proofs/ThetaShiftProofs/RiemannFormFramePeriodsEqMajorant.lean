@@ -207,7 +207,7 @@ theorem riemann_eq_majorant : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
     ring
   rw [mul_inv, e1, Data.nfac, ← Fintype.prod_prod_type', ← f.prod_comp, ← Finset.prod_inv_distrib,
     ← Finset.prod_mul_distrib, ← Fintype.prod_sigma']
-  refine Finset.prod_le_prod (fun s _ => by positivity) fun s _ => ?_
+  refine Finset.prod_le_prod₀ (fun s _ => by positivity) fun s _ => ?_
   have h4 := h3 (Uw.e.symm s)
   simp only [Equiv.trans_apply, Equiv.apply_symm_apply] at h4
   have hinv := Function.leftInverse_invFun hbij.1 s.1

@@ -49,9 +49,9 @@ theorem det_bounds_of_rayleigh {j : ℕ} (M : Matrix (Fin j) (Fin j) ℂ) (hM : 
   · rw [hM.det_eq_prod_eigenvalues]
     norm_cast
   · calc a ^ j = ∏ _i : Fin j, a := by simp
-      _ ≤ ∏ i, hM.eigenvalues i := Finset.prod_le_prod (fun _ _ => ha) (fun i _ => (key i).1)
+      _ ≤ ∏ i, hM.eigenvalues i := Finset.prod_le_prod₀ (fun _ _ => ha) (fun i _ => (key i).1)
   · calc ∏ i, hM.eigenvalues i ≤ ∏ _i : Fin j, b :=
-          Finset.prod_le_prod (fun i _ => ha.trans (key i).1) (fun i _ => (key i).2)
+          Finset.prod_le_prod₀ (fun i _ => ha.trans (key i).1) (fun i _ => (key i).2)
       _ = b ^ j := by simp
 
 theorem exists_mul_mul_conjTranspose_eq_one {j : ℕ} {G : Matrix (Fin j) (Fin j) ℂ} (hG : G.PosDef) :

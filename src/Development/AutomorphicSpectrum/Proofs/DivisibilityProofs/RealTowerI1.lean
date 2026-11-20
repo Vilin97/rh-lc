@@ -22,10 +22,10 @@ theorem linA_eq (c : Option (Ψ × Fin N) → ℝ) :
   ring
 
 def scaleNone (u : ℝ) (Q : MvPolynomial (Option (Ψ × Fin N)) ℝ) : MvPolynomial (Option (Ψ × Fin N)) ℝ :=
-  ∑ m ∈ Q.support, monomial m (u ^ m none * coeff m Q)
+  ∑ m ∈ Q.support, monomial m (u ^ m none * AddMonoidAlgebra.coeff Q m)
 
 theorem coeff_scaleNone (u : ℝ) (Q : MvPolynomial (Option (Ψ × Fin N)) ℝ) (m : Option (Ψ × Fin N) →₀ ℕ) :
-    coeff m (scaleNone u Q) = u ^ m none * coeff m Q := by
+    AddMonoidAlgebra.coeff (scaleNone u Q) m = u ^ m none * AddMonoidAlgebra.coeff Q m := by
   classical
   rw [scaleNone, coeff_sum]
   simp only [coeff_monomial]
@@ -55,7 +55,7 @@ theorem abs_le_coeff (d : ℕ) (Φ : RPA Ψ N →ₗ[ℝ] ℝ) (n k : ℕ) (hn :
     refine MvPolynomial.funext fun c => ?_
     have hs : -c none / (k : ℝ) = u * c none := by rw [hu]; ring
     rw [eval_scaleNone, map_mul, eval_C, hev, ← linA_eq, h, PB.eval_toWtS_gapS, hs]
-  have hco := congrArg (coeff m) heq
+  have hco := congrArg (AddMonoidAlgebra.coeff · m) heq
   rw [coeff_C_mul, coeff_scaleNone] at hco
   have hu1 : |u| ≤ 1 := by
     rw [hu, abs_neg, abs_of_pos (inv_pos.2 (by linarith))]
@@ -111,14 +111,14 @@ theorem tower_I1_of_reference_linked : PB.Coefficients → PB.AgreementPos → P
     rw [h1, h2] at hd
     have hsum0 : 0 ≤ ∑ p ∈ Sf, α p * Real.log p :=
       Finset.sum_nonneg fun p hp => mul_nonneg (h4 p hp).2 (Real.log_natCast_nonneg p)
-    have hd2 : |coeff m ((R.tie B c).Re.PBs II) - coeff m (Pfix c)| ≤ |C₂ c| * |Cl| * Real.log B := by
+    have hd2 : |AddMonoidAlgebra.coeff ((R.tie B c).Re.PBs II) m - coeff m (Pfix c)| ≤ |C₂ c| * |Cl| * Real.log B := by
       calc _ ≤ C₂ c * ∑ p ∈ Sf, α p * Real.log p := hd
         _ ≤ |C₂ c| * ∑ p ∈ Sf, α p * Real.log p := mul_le_mul_of_nonneg_right (le_abs_self _) hsum0
         _ ≤ |C₂ c| * (|Cl| * Real.log B) := mul_le_mul_of_nonneg_left
             (h9.trans (mul_le_mul_of_nonneg_right (le_abs_self _) hlog0)) (abs_nonneg _)
         _ = _ := by ring
     have hc1 : |coeff m ((R.tie B c).Re.PBs II)| ≤ A + |C₂ c| * |Cl| * Real.log B := by
-      have := abs_sub_abs_le_abs_sub (coeff m ((R.tie B c).Re.PBs II)) (coeff m (Pfix c))
+      have := abs_sub_abs_le_abs_sub (AddMonoidAlgebra.coeff ((R.tie B c).Re.PBs II) m) (AddMonoidAlgebra.coeff (Pfix c) m)
       linarith [hAle c m]
     have hA2 : A ≤ A / Real.log 2 * Real.log B := by
       calc A = A / Real.log 2 * Real.log 2 := by field_simp

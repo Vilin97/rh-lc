@@ -12,7 +12,7 @@ namespace GlobalTheory.CayleyBlock
 
 theorem coeff_dList_of_nodup {σ : Type} [DecidableEq σ] (l : List σ) (hl : l.Nodup) (m : σ →₀ ℕ)
     (hm : ∀ v ∈ l, m v = 0) (G : MvPolynomial σ ℂ) :
-    coeff m (dList l G) = coeff (m + (l.map fun v => Finsupp.single v 1).sum) G := by
+    AddMonoidAlgebra.coeff (dList l G) m = AddMonoidAlgebra.coeff G (m + (l.map fun v => Finsupp.single v 1).sum) := by
   induction l generalizing m with
   | nil => simp [dList]
   | cons v l ih =>

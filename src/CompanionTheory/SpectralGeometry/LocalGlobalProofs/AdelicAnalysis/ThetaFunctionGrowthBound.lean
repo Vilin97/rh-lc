@@ -157,7 +157,7 @@ theorem ei_bound : ∀ (F : Type) [Field F] [NumberField F] [MeasurableSpace (A 
     rw [hYdef]
     unfold wt
     rw [← Finset.prod_mul_distrib]
-    refine Finset.prod_le_prod (fun w _ => ?_) (fun w _ => place_bound M (by omega) t _ ht (hτ w))
+    refine Finset.prod_le_prod₀ (fun w _ => ?_) (fun w _ => place_bound M (by omega) t _ ht (hτ w))
     have := hτ0 w
     positivity
   calc wt M τ * ∑' b, ‖eiTerm ψ lf B ρ P φ τ b‖

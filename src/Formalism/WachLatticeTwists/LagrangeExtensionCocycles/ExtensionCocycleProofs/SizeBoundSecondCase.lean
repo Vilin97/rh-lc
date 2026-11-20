@@ -31,7 +31,7 @@ lemma sum_range_val (n : ℕ) :
   | zero => simp
   | succ n ih =>
     rw [Finset.sum_range_succ, ih, Nat.factorial_succ,
-      padicValNat.mul (by omega) (Nat.factorial_ne_zero n)]
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by omega) (Nat.factorial_ne_zero n)]
     ring
 
 lemma sum_val_half (n : ℕ) (T : Finset ℤ) (hT : ∀ j ∈ T, j.natAbs ≤ n)

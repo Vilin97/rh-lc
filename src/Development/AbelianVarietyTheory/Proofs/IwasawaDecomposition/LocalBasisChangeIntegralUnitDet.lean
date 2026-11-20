@@ -30,7 +30,7 @@ theorem norm_det_le_one {C : Type} [NormedField C] [IsUltrametricDist C] {n : �
   rw [Matrix.det_apply]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun σ _ => ?_
   have hp : ‖∏ i, M (σ i) i‖ ≤ 1 := by
-    rw [norm_prod]; exact Finset.prod_le_one (fun _ _ => norm_nonneg _) fun i _ => h _ _
+    rw [norm_prod]; exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun i _ => h _ _
   rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with hs | hs <;> rw [hs]
   · rwa [one_smul]
   · rwa [Units.neg_smul, one_smul, norm_neg]

@@ -48,7 +48,7 @@ theorem uni_X {ι : Type} [Fintype ι] {n : ℕ} (g : ι → GL (Fin n) ℂ) (hg
   have hX : ∀ u : ι × Fin n × Fin n, wt ι n (τ, a, c) + 1 ≤ wt ι n u →
       (X u : MvPolynomial (ι × Fin n × Fin n) ℂ) ∈ Ge (wt ι n) (wt ι n (τ, a, c) + 1) := by
     intro u hu
-    show ∀ m, Finsupp.weight (wt ι n) m < _ → coeff m (X u) = 0
+    show ∀ m, Finsupp.weight (wt ι n) m < _ → AddMonoidAlgebra.coeff (X u) m = 0
     intro m hm
     classical
     rw [MvPolynomial.coeff_X', if_neg]
@@ -137,7 +137,7 @@ theorem hwFixedEx_main : HwFixedEx := by
   have hxS' : (x : Pol ℂ ι n) ∈ S' := Submodule.mem_map.mpr ⟨x, hxS, rfl⟩
   have hgood0 : good (Finsupp.weight w m0) := by
     refine ⟨x, hxS', fun h => hm0 ?_⟩
-    have := congrArg (coeff m0) h
+    have := congrArg (AddMonoidAlgebra.coeff · m0) h
     rwa [coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at this
   have hbound : ∀ k, good k → k ≤ D := by
     rintro k ⟨G, hG, hne⟩
@@ -173,7 +173,7 @@ theorem hwFixedEx_main : HwFixedEx := by
     rw [coeff_zero]
     by_cases hm : Finsupp.weight w m < Nat.findGreatest good D + 1
     · exact mem_Ge.1 hd m hm
-    · have := congrArg (coeff m) (hmax (Finsupp.weight w m) (by omega) _ hd')
+    · have := congrArg (AddMonoidAlgebra.coeff · m) (hmax (Finsupp.weight w m) (by omega) _ hd')
       rwa [coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at this
 
 end PI.HwFix.UnitaryGroupMassFormula

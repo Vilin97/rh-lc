@@ -60,7 +60,7 @@ theorem PointChowForm.proof : PointChowForm.Statement := by
     obtain ⟨j, hj⟩ := Function.ne_iff.1 hy
     intro h
     apply hj
-    have := congrArg (coeff (Finsupp.single ((0 : Fin 1), j) 1)) h
+    have := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single ((0 : Fin 1), j) 1)) h
     simpa [hL, coeff_sum, coeff_C_mul, coeff_X, Finsupp.single_left_inj, Prod.ext_iff] using this
   have hk0 : k ≠ 0 := by rintro rfl; exact hL0 (by rw [hk, mul_zero])
   have hLdeg : L.totalDegree ≤ 1 := by

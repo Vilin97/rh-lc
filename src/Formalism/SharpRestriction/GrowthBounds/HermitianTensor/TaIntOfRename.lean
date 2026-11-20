@@ -39,11 +39,11 @@ def ta_Int (O : Type) {K : Type} [CommRing O] [Field K] [Algebra O K] {σ : Type
   ∃ β : MvPolynomial σ O, map (algebraMap O K) β = F
 
 theorem ta_Int_coeff {σ : Type} {F : MvPolynomial σ K} (h : ta_Int O F) (u : σ →₀ ℕ) :
-    coeff u F ∈ Set.range (algebraMap O K) := by
+    AddMonoidAlgebra.coeff F u ∈ Set.range (algebraMap O K) := by
   obtain ⟨β, rfl⟩ := h
-  exact ⟨coeff u β, (coeff_map _ _ _).symm⟩
+  exact ⟨AddMonoidAlgebra.coeff β u, (coeff_map _ _ _).symm⟩
 
-theorem ta_Int_of_coeff {σ : Type} {F : MvPolynomial σ K} (h : ∀ u, coeff u F ∈ Set.range (algebraMap O K)) :
+theorem ta_Int_of_coeff {σ : Type} {F : MvPolynomial σ K} (h : ∀ u, AddMonoidAlgebra.coeff F u ∈ Set.range (algebraMap O K)) :
     ta_Int O F := by
   classical
   choose c hc using h
@@ -92,7 +92,7 @@ theorem ta_exists_pow (w : O) (hw : Irreducible w) {σ : Type} (b : MvPolynomial
     ∃ n : ℕ, ta_Int O ((algebraMap O K w ^ n) • b) := by
   classical
   obtain ⟨⟨s, hs⟩, hsI⟩ := IsLocalization.exist_integer_multiples_of_finset (nonZeroDivisors O)
-    (b.support.image fun u => coeff u b)
+    (b.support.image fun u => AddMonoidAlgebra.coeff b u)
   have hs0 : s ≠ 0 := nonZeroDivisors.ne_zero hs
   obtain ⟨n, v, hv⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible hs0 hw
   refine ⟨n, ta_Int_of_coeff fun u => ?_⟩
@@ -100,7 +100,7 @@ theorem ta_exists_pow (w : O) (hw : Irreducible w) {σ : Type} (b : MvPolynomial
   by_cases hu : u ∈ b.support
   · obtain ⟨r, hr⟩ := hsI _ (Finset.mem_image_of_mem _ hu)
     refine ⟨(↑v⁻¹ : O) * r, ?_⟩
-    have hr' : algebraMap O K r = algebraMap O K s * coeff u b := by
+    have hr' : algebraMap O K r = algebraMap O K s * AddMonoidAlgebra.coeff b u := by
       rw [hr]
       exact Algebra.smul_def _ _
     rw [map_mul, hr', hv, map_mul, map_pow, ← mul_assoc, ← mul_assoc, ← map_mul, Units.inv_mul, map_one, one_mul]
@@ -135,13 +135,13 @@ theorem ta_sat (w : O) (hw : Irreducible w) (m : ℕ) (hm : 1 ≤ m) (b : MvPoly
     have e4 : map (Ideal.Quotient.mk (Ideal.span {w})) β = 0 := hind (by rw [e3, map_zero])
     apply ta_Int_of_coeff
     intro u
-    have hu : coeff u β ∈ Ideal.span {w} := by
+    have hu : AddMonoidAlgebra.coeff β u ∈ Ideal.span {w} := by
       rw [← Ideal.Quotient.eq_zero_iff_mem]
-      have := congrArg (coeff u) e4
+      have := congrArg (AddMonoidAlgebra.coeff · u) e4
       rwa [coeff_map, coeff_zero] at this
     obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.mp hu
     refine ⟨c, ?_⟩
-    have e5 := congrArg (coeff u) hβ
+    have e5 := congrArg (AddMonoidAlgebra.coeff · u) hβ
     rw [coeff_map, ← hc, map_mul, coeff_smul, smul_eq_mul] at e5
     rw [coeff_smul, smul_eq_mul]
     apply mul_right_cancel₀ hW0

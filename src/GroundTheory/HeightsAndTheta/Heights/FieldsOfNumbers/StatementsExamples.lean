@@ -257,7 +257,7 @@ theorem ProductWithProjectiveSpace.hypotheses_example :
 
 theorem eq_monomial_of_isMultiHomog_point {F : Type*} [Field F] (f : MRing (ProjIdx 0) F)
     (b : Unit → ℕ) (hf : IsMultiHomog f b) :
-    f = monomial (Finsupp.single ⟨(), 0⟩ (b ())) (coeff (Finsupp.single ⟨(), 0⟩ (b ())) f) := by
+    f = monomial (Finsupp.single ⟨(), 0⟩ (b ())) (AddMonoidAlgebra.coeff f (Finsupp.single ⟨(), 0⟩ (b ()))) := by
   ext d
   rw [coeff_monomial]
   split_ifs with h
@@ -287,8 +287,8 @@ theorem resDeg_point (F : Type*) [Field F] : resDeg (⊥ : Ideal (MRing (ProjIdx
     have ef := eq_monomial_of_isMultiHomog_point f b hf
     have eg := eq_monomial_of_isMultiHomog_point g b hg
     rw [← C_mul_X_pow_eq_monomial] at ef eg
-    generalize coeff (Finsupp.single ⟨(), 0⟩ (b ())) f = a at ef
-    generalize coeff (Finsupp.single ⟨(), 0⟩ (b ())) g = c at eg
+    generalize AddMonoidAlgebra.coeff f (Finsupp.single ⟨(), 0⟩ (b ())) = a at ef
+    generalize AddMonoidAlgebra.coeff g (Finsupp.single ⟨(), 0⟩ (b ())) = c at eg
     generalize b () = n at ef eg
     set v : (Σ _ : Unit, ProjIdx 0 ()) := ⟨(), 0⟩
     have hc : c ≠ 0 := by

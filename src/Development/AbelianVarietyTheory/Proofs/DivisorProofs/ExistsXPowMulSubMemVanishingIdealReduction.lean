@@ -12,10 +12,10 @@ namespace GlobalTheory.FormalAlg.PolyLoc
 open MvPolynomial
 
 theorem exists_homogeneous_coeff_mem {σ R : Type} [CommRing R] (J : Ideal R) (i : σ) (g : MvPolynomial σ R)
-    (hg : ∀ m, coeff m g ∈ J) : ∃ e : ℕ, ∀ d, e ≤ d → ∃ G : MvPolynomial σ R, G.IsHomogeneous d ∧
-      (∀ m, coeff m G ∈ J) ∧ (X i - 1 : MvPolynomial σ R) ∣ G - g := by
+    (hg : ∀ m, AddMonoidAlgebra.coeff g m ∈ J) : ∃ e : ℕ, ∀ d, e ≤ d → ∃ G : MvPolynomial σ R, G.IsHomogeneous d ∧
+      (∀ m, AddMonoidAlgebra.coeff G m ∈ J) ∧ (X i - 1 : MvPolynomial σ R) ∣ G - g := by
   let Q : MvPolynomial σ R → Prop := fun p => ∃ e : ℕ, ∀ d, e ≤ d → ∃ G : MvPolynomial σ R, G.IsHomogeneous d ∧
-      (∀ m, coeff m G ∈ J) ∧ (X i - 1 : MvPolynomial σ R) ∣ G - p
+      (∀ m, AddMonoidAlgebra.coeff G m ∈ J) ∧ (X i - 1 : MvPolynomial σ R) ∣ G - p
   have h0 : Q 0 := ⟨0, fun d _ => ⟨0, isHomogeneous_zero _ _ _, fun m => by rw [coeff_zero]; exact J.zero_mem,
     by rw [sub_zero]; exact dvd_zero _⟩⟩
   have hadd : ∀ p q, Q p → Q q → Q (p + q) := by
@@ -23,7 +23,7 @@ theorem exists_homogeneous_coeff_mem {σ R : Type} [CommRing R] (J : Ideal R) (i
     refine ⟨max e e', fun d hd => ?_⟩
     obtain ⟨G, hG, hGJ, hGd⟩ := he d (le_of_max_le_left hd)
     obtain ⟨G', hG', hGJ', hGd'⟩ := he' d (le_of_max_le_right hd)
-    refine ⟨G + G', hG.add hG', fun m => by rw [coeff_add]; exact J.add_mem (hGJ m) (hGJ' m), ?_⟩
+    refine ⟨G + G', hG.add hG', fun m => by rw [MvPolynomial.coeff_add]; exact J.add_mem (hGJ m) (hGJ' m), ?_⟩
     rw [add_sub_add_comm]
     exact hGd.add hGd'
   have hmon : ∀ v (c : R), c ∈ J → Q (monomial v c) := by
@@ -90,7 +90,7 @@ end GlobalTheory.FormalAlg.PolyLoc
 
 open GlobalTheory.FormalAlg.PolyLoc MvPolynomial in
 
-theorem GlobalTheory.FormalAlg.exists_X_pow_mul_sub_mem_vanIdeal : ∀ (R : Type) [CommRing R] (J : Ideal R) (X X' : Scheme.{0}) (f : X ⟶ Spec (CommRingCat.of R)) (β : X' ⟶ X) (q : X' ⟶ Spec (CommRingCat.of (R ⧸ J))), IsPullback β q f (Spec.map (CommRingCat.ofHom (Ideal.Quotient.mk J))) → ∀ (H : LB X) (H' : LB X') (w : LB.Iso H' (H.pull β)) (n : ℕ) (s : Fin (n + 1) → LB.Sec H) (s' : Fin (n + 1) → LB.Sec H'), H.IsLB → H'.IsLB → w.IsGen → (∀ j, Rel β w (s j) (s' j)) → VeryAmpleBy f H s → ∀ (t : ℕ) (F : MvPolynomial (Fin (n + 1)) R), F.IsHomogeneous t → F ∈ vanIdeal (β ≫ f) s' → ∀ i, ∃ (N : ℕ) (G : MvPolynomial (Fin (n + 1)) R), G.IsHomogeneous (t + N) ∧ (∀ m, MvPolynomial.coeff m G ∈ J) ∧ MvPolynomial.X i ^ N * F - G ∈ vanIdeal f s := by
+theorem GlobalTheory.FormalAlg.exists_X_pow_mul_sub_mem_vanIdeal : ∀ (R : Type) [CommRing R] (J : Ideal R) (X X' : Scheme.{0}) (f : X ⟶ Spec (CommRingCat.of R)) (β : X' ⟶ X) (q : X' ⟶ Spec (CommRingCat.of (R ⧸ J))), IsPullback β q f (Spec.map (CommRingCat.ofHom (Ideal.Quotient.mk J))) → ∀ (H : LB X) (H' : LB X') (w : LB.Iso H' (H.pull β)) (n : ℕ) (s : Fin (n + 1) → LB.Sec H) (s' : Fin (n + 1) → LB.Sec H'), H.IsLB → H'.IsLB → w.IsGen → (∀ j, Rel β w (s j) (s' j)) → VeryAmpleBy f H s → ∀ (t : ℕ) (F : MvPolynomial (Fin (n + 1)) R), F.IsHomogeneous t → F ∈ vanIdeal (β ≫ f) s' → ∀ i, ∃ (N : ℕ) (G : MvPolynomial (Fin (n + 1)) R), G.IsHomogeneous (t + N) ∧ (∀ m, AddMonoidAlgebra.coeff G m ∈ J) ∧ MvPolynomial.X i ^ N * F - G ∈ vanIdeal f s := by
   intro R _ J X X' f β q hpb H H' w n s s' hH hH' _ hrel hva t F hF h0 i
   obtain ⟨hc, hva⟩ := hva
   choose ha r hr hsur using hva

@@ -192,7 +192,7 @@ theorem exists_prod_le {σ : E →ₐ[F] E} (hσ : IsCMExt F E σ) {n : ℕ} {J 
     calc t i ≤ max 1 c⁻¹ ^ i.val * t i₀ := h1
       _ ≤ L * (H * Q) := mul_le_mul h2 h0 (ht.1 i₀).le (by positivity)
   have hprod : ∏ i, t i ≤ (L * (H * Q)) ^ r := by
-    have := Finset.prod_le_prod (s := (Finset.univ : Finset (Fin r))) (fun i _ => (ht.1 i).le) fun i _ => hb i
+    have := Finset.prod_le_prod₀ (s := (Finset.univ : Finset (Fin r))) (fun i _ => (ht.1 i).le) fun i _ => hb i
     simpa using this
   have h5 : 1 ≤ (L * (H * Q)) ^ r := one_le_pow₀ (one_le_mul_of_one_le_of_one_le hL1 hHQ)
   calc 1 + ∏ i, t i ≤ (L * (H * Q)) ^ r + (L * (H * Q)) ^ r := add_le_add h5 hprod

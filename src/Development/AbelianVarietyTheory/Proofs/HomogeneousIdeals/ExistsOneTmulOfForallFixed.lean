@@ -14,7 +14,7 @@ theorem repr_apply_of_semilinear (s : L →+* L) (b : Basis ι L M) (φ : M →+
   classical
   conv_lhs => rw [← b.linearCombination_repr w, Finsupp.linearCombination_apply, Finsupp.sum,
     map_sum, map_sum]
-  simp only [hφ, map_smul, Basis.repr_self, Finsupp.coe_finset_sum, Finset.sum_apply,
+  simp only [hφ, map_smul, Basis.repr_self, Finsupp.coe_finsetSum, Finset.sum_apply,
     Finsupp.smul_apply, Finsupp.single_apply, smul_eq_mul, mul_ite, mul_one, mul_zero,
     Finset.sum_ite_eq', Finsupp.mem_support_iff]
   split_ifs with h

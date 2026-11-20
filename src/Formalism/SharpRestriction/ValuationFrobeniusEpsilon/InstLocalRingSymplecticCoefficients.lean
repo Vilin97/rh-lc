@@ -1012,7 +1012,7 @@ structure Pair {s : HidaSetting} (r : Resid s) (art : s.ArtAt) (S' : Set (Height
     (D : Formalism.MainNotions.V.Lang.PsR.Det s.n A (MonoidAlgebra A s.GL_) A)
     (ψ : ∀ v : s.Vl, Fin s.n → (s.Gv v →* Aˣ)) : Prop where
   cont : ∀ (m : ℕ) (α : Fin m →₀ ℕ), HidaSetting.ContM A (fun g : Fin m → s.GL_ =>
-    MvPolynomial.coeff α (D.D m (fun i => MonoidAlgebra.single (g i) 1)))
+    AddMonoidAlgebra.coeff (D.D m (fun i => MonoidAlgebra.single (g i) 1)) α)
   lift : ∀ (m : ℕ) (g : Fin m → s.GL_),
     MvPolynomial.map (IsLocalRing.residue A) (D.D m (fun i => MonoidAlgebra.single (g i) 1)) =
       MvPolynomial.map (s.kTo j hj) (Formalism.MainNotions.V.Lang.PsR.detPoly (fun i => HidaSetting.diagRep r.chib (g i)))

@@ -95,7 +95,7 @@ theorem bestChart_finite : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Sp 
     exact le_of_mul_le_mul_right (by simpa using this) hp
   have hP : v (∏ k, ρ k) ≤ 1 := by
     rw [map_prod]
-    exact Finset.prod_le_one (fun _ _ => by positivity) fun k _ => hρ1 k
+    exact Finset.prod_le_one₀ (fun _ _ => by positivity) fun k _ => hρ1 k
   have hsize : v (algebraMap A L r) = 1 := by
     have e := congrArg v hone
     rw [map_mul, map_one] at e

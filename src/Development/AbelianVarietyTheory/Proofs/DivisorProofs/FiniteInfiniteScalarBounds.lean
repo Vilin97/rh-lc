@@ -117,7 +117,7 @@ theorem norm_sqrt_prod {ι : Type} (P : Finset ι) (q : ι → ℕ) (hq : ∀ i 
       rw [← norm_pow, ← map_pow, hs i hi, map_natCast, Complex.norm_natCast]
     rw [← h1, Real.sqrt_sq (norm_nonneg _)]
   rw [map_prod, norm_prod, Real.exp_sum]
-  refine Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i hi => ?_
+  refine Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i hi => ?_
   have hq1 : (1 : ℝ) ≤ q i := by exact_mod_cast Nat.one_le_iff_ne_zero.2 (hq i hi)
   have hpos : 0 < Real.sqrt (q i) := Real.sqrt_pos.2 (by linarith)
   rw [map_zpow₀, norm_zpow, hn i hi]

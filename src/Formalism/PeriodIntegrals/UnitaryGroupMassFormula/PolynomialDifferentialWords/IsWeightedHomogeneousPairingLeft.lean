@@ -20,7 +20,7 @@ theorem homog_of_mul {σ : Type} (w : σ → ℕ) {s g : MvPolynomial σ K} {n :
     split_ifs with hd
     · refine Finset.sum_congr rfl fun x hx => ?_
       rw [coeff_weightedHomogeneousComponent]
-      by_cases h0 : coeff x.1 s = 0
+      by_cases h0 : AddMonoidAlgebra.coeff s x.1 = 0
       · simp [h0]
       · have hx0 := hs h0
         have hsum : x.1 + x.2 = d := by simpa using hx
@@ -31,7 +31,7 @@ theorem homog_of_mul {σ : Type} (w : σ → ℕ) {s g : MvPolynomial σ K} {n :
     · symm
       refine Finset.sum_eq_zero fun x hx => ?_
       rw [coeff_weightedHomogeneousComponent]
-      by_cases h0 : coeff x.1 s = 0
+      by_cases h0 : AddMonoidAlgebra.coeff s x.1 = 0
       · simp [h0]
       · have hx0 := hs h0
         have hsum : x.1 + x.2 = d := by simpa using hx
@@ -43,7 +43,7 @@ theorem homog_of_mul {σ : Type} (w : σ → ℕ) {s g : MvPolynomial σ K} {n :
   by_contra hne
   have hc : weightedHomogeneousComponent w (Finsupp.weight w m) g ≠ 0 := by
     intro h0
-    have h3 := congrArg (coeff m) h0
+    have h3 := congrArg (AddMonoidAlgebra.coeff · m) h0
     rw [coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at h3
     exact hm h3
   apply hc
@@ -217,7 +217,7 @@ theorem divT_one (d : ℕ) (hd : 1 ≤ d) (f : Pol K 1) (hf : f ∈ Bihom K 1 d)
     rw [hs, Finsupp.le_def]
     intro v
     rcases v with i | i <;> obtain rfl := Subsingleton.elim i 0 <;> simp <;> omega
-  have key : monomial m (coeff m f) = tt K 1 * monomial (m - s) (coeff m f) := by
+  have key : monomial m (AddMonoidAlgebra.coeff f m) = tt K 1 * monomial (m - s) (AddMonoidAlgebra.coeff f m) := by
     simp only [tt, Fin.sum_univ_one, X, monomial_mul, one_mul]
     rw [← hs, add_tsub_cancel_of_le hsm]
   rw [key]

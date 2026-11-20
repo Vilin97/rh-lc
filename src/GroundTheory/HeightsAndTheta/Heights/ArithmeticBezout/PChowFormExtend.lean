@@ -87,10 +87,10 @@ def coordPoly (φ : L →ₗ[K] K) : MvPolynomial Y L →+ MvPolynomial Y K wher
     rw [coeff_addMonoidAlgebraMap, coeff_zero, coeff_zero, map_zero]
   map_add' p q := by
     ext m
-    simp only [coeff_addMonoidAlgebraMap, coeff_add, map_add]
+    simp only [coeff_addMonoidAlgebraMap, MvPolynomial.coeff_add, map_add]
 
 theorem coeff_coordPoly (φ : L →ₗ[K] K) (p : MvPolynomial Y L) (m : Y →₀ ℕ) :
-    coeff m (coordPoly φ p) = φ (coeff m p) :=
+    AddMonoidAlgebra.coeff (coordPoly φ p) m = φ (AddMonoidAlgebra.coeff p m) :=
   rfl
 
 theorem coordPoly_C_mul_map (φ : L →ₗ[K] K) (a : L) (q : MvPolynomial Y K) :
@@ -102,7 +102,7 @@ theorem coordPoly_C_mul_map (φ : L →ₗ[K] K) (a : L) (q : MvPolynomial Y K) 
 variable {β : Type*} [DecidableEq β]
 
 def coordSupport (b : Module.Basis β K L) (p : MvPolynomial Y L) : Finset β :=
-  p.support.biUnion fun m => (b.repr (coeff m p)).support
+  p.support.biUnion fun m => (b.repr (AddMonoidAlgebra.coeff p m)).support
 
 theorem sum_coordPoly (b : Module.Basis β K L) (p : MvPolynomial Y L) :
     ∑ c ∈ coordSupport b p, C (b c) * map (algebraMap K L) (coordPoly (b.coord c) p) = p := by
@@ -110,7 +110,7 @@ theorem sum_coordPoly (b : Module.Basis β K L) (p : MvPolynomial Y L) :
   rw [coeff_sum]
   simp_rw [coeff_C_mul, coeff_map, coeff_coordPoly, Module.Basis.coord_apply, mul_comm (b _),
     ← Algebra.smul_def]
-  conv_rhs => rw [← b.linearCombination_repr (coeff m p)]
+  conv_rhs => rw [← b.linearCombination_repr (AddMonoidAlgebra.coeff p m)]
   rw [Finsupp.linearCombination_apply, Finsupp.sum]
   symm
   apply Finset.sum_subset

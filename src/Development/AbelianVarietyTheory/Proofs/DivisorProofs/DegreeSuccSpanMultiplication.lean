@@ -84,12 +84,12 @@ theorem degLE_succ_le : ∀ {ι : Type} [Fintype ι] [DecidableEq ι] {P Q R S :
   refine Submodule.span_le.mpr ?_
   rintro _ ⟨f, hf, rfl⟩
   have hf' : PiTensorProduct.tprod ℂ f = PiTensorProduct.tprod ℂ
-      (fun w => ∑ s ∈ (f w).support, (monomial s (coeff s (f w)) : Formalism.BasicNotions.TH.Pol P Q R S)) := by
+      (fun w => ∑ s ∈ (f w).support, (monomial s (AddMonoidAlgebra.coeff (f w) s) : Formalism.BasicNotions.TH.Pol P Q R S)) := by
     congr 1; funext w; exact (f w).as_sum
   rw [SetLike.mem_coe, hf', MultilinearMap.map_sum_finset]
   refine Submodule.sum_mem _ fun r hr => ?_
   rw [Fintype.mem_piFinset] at hr
-  apply monomial_mem k r (fun w => coeff (r w) (f w))
+  apply monomial_mem k r (fun w => AddMonoidAlgebra.coeff (f w) (r w))
   exact le_trans (Finset.sum_le_sum fun w _ => le_totalDegree (hr w)) hf
 
 end GlobalTheory.KFixIrr.DegSucc

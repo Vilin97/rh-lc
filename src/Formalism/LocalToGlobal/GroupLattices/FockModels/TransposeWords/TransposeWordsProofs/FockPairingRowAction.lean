@@ -120,7 +120,7 @@ lemma tsact_rowAct_X (G : Matrix (Fin r) (Fin r) R) (v : Fin r × Fin n) :
   simp [rowAct]
 
 lemma tsact_coeff_zero (G : Matrix (Fin r) (Fin r) R) (h : MvPolynomial (Fin r × Fin n) R) :
-    coeff 0 (rowAct R G h) = coeff 0 h := by
+    AddMonoidAlgebra.coeff (rowAct R G h) 0 = AddMonoidAlgebra.coeff h 0 := by
   show MvPolynomial.constantCoeff (rowAct R G h) = MvPolynomial.constantCoeff h
   induction h using MvPolynomial.induction_on
   next a => simp [rowAct]

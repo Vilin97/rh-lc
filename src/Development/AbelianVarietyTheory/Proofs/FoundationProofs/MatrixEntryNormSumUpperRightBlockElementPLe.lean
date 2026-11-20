@@ -244,7 +244,7 @@ theorem integrand_le {c : ℝ} (hc : 2 * (((p + q : ℕ) : ℝ) - 1) < c) {k : U
     rw [cartanB_mul_eP hk, Real.rpow_mul_natCast (by norm_num), Finset.mul_sum, ← Finset.sum_neg_distrib,
       Real.exp_sum, ← Finset.card_range (min p q), ← Finset.prod_const, Finset.card_range,
       ← Finset.prod_mul_distrib]
-    refine Finset.prod_le_prod (fun i _ => (Real.rpow_pos_of_pos (Real.cosh_pos _) _).le) fun i hi => ?_
+    refine Finset.prod_le_prod₀ (fun i _ => (Real.rpow_pos_of_pos (Real.cosh_pos _) _).le) fun i hi => ?_
     have hi' := Finset.mem_range.1 hi
     have hc0 : 0 ≤ c := by
       have : (1 : ℝ) ≤ ((p + q : ℕ) : ℝ) := by exact_mod_cast (by omega : 1 ≤ p + q)
@@ -288,7 +288,7 @@ theorem lintegral_coshPow_le (m mK : Measure (UpqT p q)) (C : ℝ) (hC : 0 < C)
   exact ENNReal.ofReal_le_ofReal (integrand_le hc hk B)
 
 theorem coshPow_anti {c c' : ℝ} (h : c ≤ c') (g : UpqT p q) : coshPow c' g ≤ coshPow c g :=
-  Finset.prod_le_prod (fun _ _ => (Real.rpow_pos_of_pos (Real.cosh_pos _) _).le) fun _ _ =>
+  Finset.prod_le_prod₀ (fun _ _ => (Real.rpow_pos_of_pos (Real.cosh_pos _) _).le) fun _ _ =>
     Real.rpow_le_rpow_of_exponent_le (Real.one_le_cosh _) (neg_le_neg h)
 
 theorem coshFinite : CoshFinite := by

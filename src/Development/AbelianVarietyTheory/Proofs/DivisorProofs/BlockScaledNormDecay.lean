@@ -119,7 +119,7 @@ theorem weight_le_majorant : ∀ (F : Type) [Field F] [NumberField F] {κ : Type
   have key : m ^ N * ((∏ i, (1 + t i * ∑ j ∈ blk i, a j) ^ N) * (1 + ∑ j, a j) ^ N) ≤ S ^ ((q + 1) * N) := by
     have h1 : ∏ i, (1 + t i * ∑ j ∈ blk i, a j) ^ N ≤ S ^ (q * N) := by
       calc ∏ i, (1 + t i * ∑ j ∈ blk i, a j) ^ N ≤ ∏ _i : Fin q, S ^ N :=
-            Finset.prod_le_prod (fun i _ => pow_nonneg (hA0 i) N) fun i _ => pow_le_pow_left₀ (hA0 i) (hA i) N
+            Finset.prod_le_prod₀ (fun i _ => pow_nonneg (hA0 i) N) fun i _ => pow_le_pow_left₀ (hA0 i) (hA i) N
         _ = S ^ (q * N) := by rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin, ← pow_mul, mul_comm]
     have h2 : (m * (1 + ∑ j, a j)) ^ N ≤ S ^ N := pow_le_pow_left₀ (mul_nonneg hm0.le hB0.le) hB N
     calc m ^ N * ((∏ i, (1 + t i * ∑ j ∈ blk i, a j) ^ N) * (1 + ∑ j, a j) ^ N)

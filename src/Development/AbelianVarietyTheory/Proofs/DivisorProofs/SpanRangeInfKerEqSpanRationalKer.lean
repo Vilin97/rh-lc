@@ -70,7 +70,7 @@ theorem span_range_inf_ker_eq_span_rational_ker {K : Type} [Field K] (σ : K →
     have h4 : b.repr (∑ k, M l k • c k) i = 0 := by
       have : ∑ k, M l k • c k = 0 := h2 l
       rw [this]; simp
-    rw [map_sum, Finsupp.finset_sum_apply] at h4
+    rw [map_sum, Finsupp.finsetSum_apply] at h4
     simp only [map_smul, Finsupp.smul_apply, smul_eq_mul] at h4
     exact h4
   · rw [Submodule.span_le]

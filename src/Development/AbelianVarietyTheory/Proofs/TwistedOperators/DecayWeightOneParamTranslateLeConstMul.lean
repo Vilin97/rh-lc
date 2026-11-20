@@ -75,7 +75,7 @@ theorem decay_oneP : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (V : HSp 
     nlinarith [hsn_nonneg' (cmp θ τ' (x * oneP θ V τ X t))]
   refine ⟨m ^ (N * Fintype.card D.what₂.Tau), by positivity, fun x t ht => ?_⟩
   rw [pow_mul, ← Finset.card_univ, ← Finset.prod_const, ← Finset.prod_mul_distrib]
-  refine Finset.prod_le_prod (fun τ' _ => inv_nonneg.2 (pow_nonneg (by linarith [hsn_nonneg' (cmp θ τ' (x * oneP θ V τ X t))]) N)) (fun τ' _ => ?_)
+  refine Finset.prod_le_prod₀ (fun τ' _ => inv_nonneg.2 (pow_nonneg (by linarith [hsn_nonneg' (cmp θ τ' (x * oneP θ V τ X t))]) N)) (fun τ' _ => ?_)
   have ha := hsn_nonneg' (cmp θ τ' (x * oneP θ V τ X t))
   have hb := hsn_nonneg' (cmp θ τ' x)
   have hk := hkey x t τ' ht

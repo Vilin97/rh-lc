@@ -122,7 +122,7 @@ theorem primStep_of (hTr : TransStep) (hSub : SubstPol) (C CLa : ℝ) (hSP : SPS
   have hdvd : MvPolynomial.C w ∣ T0 (eI.symm x0.2) := by
     rw [C_dvd_iff_dvd_coeff]
     intro ee
-    have h1 : res (coeff ee (T0 (eI.symm x0.2))) = 0 := by
+    have h1 : res (AddMonoidAlgebra.coeff (T0 (eI.symm x0.2)) ee) = 0 := by
       rw [← coeff_map, hT', coeff_zero]
     rw [IsLocalRing.residue_eq_zero_iff, hwirr.maximalIdeal_eq, Ideal.mem_span_singleton] at h1
     exact h1

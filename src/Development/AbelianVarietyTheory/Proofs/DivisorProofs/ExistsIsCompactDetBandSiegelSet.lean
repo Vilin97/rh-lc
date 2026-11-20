@@ -139,12 +139,12 @@ theorem exists_isCompact_band_siegel : ∀ (E : Type) [Field E] [NumberField E] 
     have hup' : ρ i ^ a ≤ Qa * P := by
       calc ρ i ^ a = ∏ _j : Fin a, ρ i := by simp
         _ ≤ ∏ j : Fin a, (Q ^ a * ρ j) :=
-          Finset.prod_le_prod (fun _ _ => (hρ i).le) fun j _ => hratio i j
+          Finset.prod_le_prod₀ (fun _ _ => (hρ i).le) fun j _ => hratio i j
         _ = Qa * P := by rw [Finset.prod_mul_distrib]; simp [hQadef, hPdef]
     have hlow' : P ≤ Qa * ρ i ^ a := by
       calc P = ∏ j : Fin a, ρ j := rfl
         _ ≤ ∏ _j : Fin a, (Q ^ a * ρ i) :=
-          Finset.prod_le_prod (fun j _ => (hρ j).le) fun j _ => hratio j i
+          Finset.prod_le_prod₀ (fun j _ => (hρ j).le) fun j _ => hratio j i
         _ = Qa * ρ i ^ a := by rw [Finset.prod_mul_distrib]; simp [hQadef]
     constructor
     · rcases le_or_gt 1 (ρ i) with h | h

@@ -181,7 +181,7 @@ theorem c5 (C : Set (Fin k → Ad E)) (hC : IsCompact C) : ∃ B : ℝ, ∀ (g :
       · exact norm_finComp_le_one (hS y hy v hv)
     · rw [finprod_eq_prod_of_mulSupport_subset b' hsub]
       exact Finset.prod_congr rfl fun v hv => by simp only [hb', if_pos hv]
-  refine mul_le_mul (Finset.prod_le_prod (fun w _ => pow_nonneg (euclidNorm_nonneg _) _)
+  refine mul_le_mul (Finset.prod_le_prod₀ (fun w _ => pow_nonneg (euclidNorm_nonneg _) _)
     fun w _ => pow_le_pow_left₀ (euclidNorm_nonneg _) (ha w y hy) _) hfp
     (finprod_nonneg fun _ => norm_nonneg _)
     (Finset.prod_nonneg fun w _ => pow_nonneg (zero_le_one.trans (ha1 w)) _)
@@ -301,7 +301,7 @@ theorem dt_infGL_le (x : GL (Fin k) (Cinf E)) (T : ℝ) (hT : ‖(Matrix.of.symm
     rw [Finset.prod_const, Finset.card_univ]
   have h1 : (∏ w : InfinitePlace E, ‖((GeneralLinearGroup.det x : (Cinf E)ˣ) : Cinf E) w‖ ^ w.mult) ≤
       ∏ _w : InfinitePlace E, ((k.factorial : ℝ) * T ^ k) ^ 2 := by
-    refine Finset.prod_le_prod (fun w _ => by positivity) fun w _ => ?_
+    refine Finset.prod_le_prod₀ (fun w _ => by positivity) fun w _ => ?_
     rw [IsTotallyComplex.mult_eq]
     refine pow_le_pow_left₀ (norm_nonneg _) ((det_norm_le_factorial x w).trans ?_) 2
     gcongr

@@ -21,7 +21,7 @@ theorem wt_add (A B : Fin ν × ι →₀ ℕ) : wt (A + B) = wt A + wt B := by
 def tor (s : ℂ) : Matrix (Fin ν) (Fin ν) ℂ := Matrix.diagonal fun k => s ^ (2 ^ (ν - 1 - (k : ℕ)))
 
 def comp (d : ℕ) (P : MvPolynomial (Fin ν × ι) ℂ) : MvPolynomial (Fin ν × ι) ℂ :=
-  ∑ A ∈ P.support.filter (fun A => wt A = d), monomial A (coeff A P)
+  ∑ A ∈ P.support.filter (fun A => wt A = d), monomial A (AddMonoidAlgebra.coeff P A)
 
 def WtGe (d : ℕ) (P : MvPolynomial (Fin ν × ι) ℂ) : Prop := ∀ A ∈ P.support, d ≤ wt A
 

@@ -59,8 +59,8 @@ theorem vdeg_le (K : FinExt l) {s m : ℕ} (hs : 1 ≤ s) (hm : 1 ≤ m) :
   have key : ∀ j, 1 ≤ j → padicValNat l (Module.finrank ℚ_[l] ↥(Ks K j)) =
       padicValNat l (Module.finrank ℚ_[l] ↥(K0 K)) + (padicValNat l (l - 1) + (j - 1)) := by
     intro j hj
-    rw [GlobalTheory.Cyc.finrank_Ks K j hj, padicValNat.mul h0 (mul_ne_zero h1 (pow_ne_zero _ hp.ne_zero)),
-      padicValNat.mul h1 (pow_ne_zero _ hp.ne_zero), padicValNat.prime_pow]
+    rw [GlobalTheory.Cyc.finrank_Ks K j hj, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) h0 (mul_ne_zero h1 (pow_ne_zero _ hp.ne_zero)),
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) h1 (pow_ne_zero _ hp.ne_zero), padicValNat.prime_pow]
   rw [key m hm, key s hs]
   omega
 

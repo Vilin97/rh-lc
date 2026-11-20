@@ -48,13 +48,13 @@ theorem GenericFibreTor.proof (hGF : GenericFreeness.Statement.{0, 0, 0}) :
     Module.Flat.trans (MvPolynomial σ ℂ) (Localization.Away F) _
   let g := LocalizedModule.mkLinearMap (Submonoid.powers F) (MvPolynomial ι (MvPolynomial σ ℂ) ⧸ L)
   let π := (Ideal.Quotient.mkₐ (MvPolynomial σ ℂ) L).toLinearMap
-  let a : x.support → MvPolynomial σ ℂ := fun m => coeff m.1 x
+  let a : x.support → MvPolynomial σ ℂ := fun m => AddMonoidAlgebra.coeff x m.1
   let e : x.support → MvPolynomial ι (MvPolynomial σ ℂ) := fun m => monomial m.1 1
   have hsum : ∑ m, a m • e m = x := by
-    calc ∑ m, a m • e m = ∑ m : x.support, monomial m.1 (coeff m.1 x) :=
+    calc ∑ m, a m • e m = ∑ m : x.support, monomial m.1 (AddMonoidAlgebra.coeff x m.1) :=
           Finset.sum_congr rfl fun m _ => by simp [a, e, smul_monomial]
       _ = x := by
-          rw [Finset.sum_coe_sort x.support (fun v => monomial v (coeff v x))]
+          rw [Finset.sum_coe_sort x.support (fun v => monomial v (AddMonoidAlgebra.coeff x v))]
           exact (MvPolynomial.as_sum x).symm
   have hrel : ∑ m, a m • g (π (e m)) = 0 := by
     simp_rw [← map_smul, ← map_sum, hsum]

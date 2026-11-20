@@ -29,8 +29,8 @@ theorem cutM_nonneg {s : ℕ} (τ : ℝ) (Z : Mat s) : 0 ≤ cutM τ Z :=
   Finset.prod_nonneg fun _ _ => Finset.prod_nonneg fun _ _ => chi0_nonneg _
 
 theorem cutM_le_one {s : ℕ} (τ : ℝ) (Z : Mat s) : cutM τ Z ≤ 1 :=
-  Finset.prod_le_one (fun _ _ => Finset.prod_nonneg fun _ _ => chi0_nonneg _)
-    fun _ _ => Finset.prod_le_one (fun _ _ => chi0_nonneg _) fun _ _ => smooth_cutoff_le_one _
+  Finset.prod_le_one₀ (fun _ _ => Finset.prod_nonneg fun _ _ => chi0_nonneg _)
+    fun _ _ => Finset.prod_le_one₀ (fun _ _ => chi0_nonneg _) fun _ _ => smooth_cutoff_le_one _
 
 theorem cutM_eq_one {s : ℕ} {τ : ℝ} {Z : Mat s} (hτ : 0 < τ) (h : ‖Z‖ ≤ τ) : cutM τ Z = 1 := by
   refine Finset.prod_eq_one fun i _ => Finset.prod_eq_one fun j _ => extendedCharacter_one ?_
@@ -94,7 +94,7 @@ theorem critCut_nonneg {n : ℕ} (δ : ℝ) (z : ℂ) (x : Fin n → ℂ) : 0 �
   Finset.prod_nonneg fun _ _ => chi0_nonneg _
 
 theorem critCut_le_one {n : ℕ} (δ : ℝ) (z : ℂ) (x : Fin n → ℂ) : critCut δ z x ≤ 1 :=
-  Finset.prod_le_one (fun _ _ => chi0_nonneg _) fun _ _ => smooth_cutoff_le_one _
+  Finset.prod_le_one₀ (fun _ _ => chi0_nonneg _) fun _ _ => smooth_cutoff_le_one _
 
 theorem critCut_eq_one {n : ℕ} {δ : ℝ} {z : ℂ} {x : Fin n → ℂ} (hδ : 0 < δ)
     (h : ‖x - fun _ => z‖ ≤ δ) : critCut δ z x = 1 := by
@@ -439,7 +439,7 @@ theorem product_lower_bound : Formalism.FourierDecayAlt.G.ProdLower := by
         norm_prod]
       refine mul_le_mul_of_nonneg_left ?_ (norm_nonneg _)
       calc ∏ l ∈ Finset.univ.erase k, ‖xOf X B l‖ ≤ ∏ _l ∈ Finset.univ.erase k, L :=
-            Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun l _ => norm_xOf_le hX' hB' l
+            Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun l _ => norm_xOf_le hX' hB' l
         _ = L ^ m := by
             rw [Finset.prod_const, Finset.card_erase_of_mem (Finset.mem_univ k), Finset.card_univ,
               Fintype.card_fin, Nat.add_sub_cancel]

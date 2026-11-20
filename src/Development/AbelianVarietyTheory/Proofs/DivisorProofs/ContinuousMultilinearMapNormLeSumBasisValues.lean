@@ -35,7 +35,7 @@ theorem GlobalTheory.continuousMultilinear_norm_le_basis_sum : ∀ (E : Type) [N
       rw [norm_smul]
       refine mul_le_mul_of_nonneg_right ?_ (norm_nonneg _)
       rw [norm_prod, ← Fin.prod_const, ← Finset.prod_mul_distrib]
-      exact Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun r _ => hcoord (v r) (cs r)
+      exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun r _ => hcoord (v r) (cs r)
     _ = C ^ j * (∑ cs : Fin j → ι, ‖M (fun r => b (cs r))‖) * ∏ r, ‖v r‖ := by
       rw [Finset.mul_sum, Finset.sum_mul]
       refine Finset.sum_congr rfl fun cs _ => ?_

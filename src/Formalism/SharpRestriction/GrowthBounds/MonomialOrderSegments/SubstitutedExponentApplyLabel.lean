@@ -277,7 +277,7 @@ theorem value_monomial {C0 : ℝ} (hD : DVRHyp v p) (h1 : 1 ≤ C0) (hV : D.Vali
       rw [coeff_monomial_mul, one_mul]
     have c2 : (D.GM F (D.tpE ζ)).coeff (D.collapseExponent p ζ') =
         Q0.coeff (eIn D.outP ζ') + E'.coeff (eIn D.outP ζ') := by
-      rw [← D.coeff_digitPart_eIn p hl, D.label_function_same_block hb, ← coeff_add, ← hQ]; rfl
+      rw [← D.coeff_digitPart_eIn p hl, D.label_function_same_block hb, ← MvPolynomial.coeff_add, ← hQ]; rfl
     have hu := D.v_gaP hV hdig hl
     have hu0 := ne_zero_of_v_eq_zero hu
     have c3 : e ζ' = (gm ζ' - (D.gaP p gam ζ')⁻¹) * D.gaP p gam ζ' *

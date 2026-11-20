@@ -72,16 +72,16 @@ theorem jet_moved_vacuum_algebraic : ∀ {D : D7} {T : Type} [Finite T] {L : Lev
       (MvPolynomial.mem_support_iff.1 (e.symm p).2)
   · rw [hjet]
     calc pureTensorO W.ψ W.θ (neg A) WW (fun τ => -X.rA.s τ) X.rW.s X.rA.B X.rW.B X.vac Q 0
-        = ∑ x ∈ Q.support, MvPolynomial.coeff x Q *
+        = ∑ x ∈ Q.support, AddMonoidAlgebra.coeff Q x *
             pureTensorO W.ψ W.θ (neg A) WW (fun τ => -X.rA.s τ) X.rW.s X.rA.B X.rW.B X.vac (MvPolynomial.monomial x 1) 0 := by
           conv_lhs => rw [Q.as_sum]
           rw [map_sum, Finset.sum_apply]
           refine Finset.sum_congr rfl fun x _ => ?_
-          rw [show MvPolynomial.monomial x (MvPolynomial.coeff x Q) = MvPolynomial.coeff x Q • MvPolynomial.monomial x 1 by
+          rw [show MvPolynomial.monomial x (AddMonoidAlgebra.coeff Q x) = AddMonoidAlgebra.coeff Q x • MvPolynomial.monomial x 1 by
             rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one], map_smul, Pi.smul_apply, smul_eq_mul]
       _ = _ := by
           rw [← Finset.sum_coe_sort]
-          exact (Equiv.sum_comp e.symm (fun x : Q.support => MvPolynomial.coeff x.1 Q *
+          exact (Equiv.sum_comp e.symm (fun x : Q.support => AddMonoidAlgebra.coeff Q x.1 *
             pureTensorO W.ψ W.θ (neg A) WW (fun τ => -X.rA.s τ) X.rW.s X.rA.B X.rW.B X.vac (MvPolynomial.monomial x.1 1) 0)).symm
 end GlobalTheory.MovedJet
 end

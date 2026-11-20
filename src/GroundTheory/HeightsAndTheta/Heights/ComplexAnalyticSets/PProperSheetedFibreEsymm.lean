@@ -128,7 +128,7 @@ theorem norm_esymm_map_le {ι : Type*} (S : Finset ι) (f : ι → ℂ) (j : ℕ
         refine Finset.sum_le_sum fun u hu => ?_
         obtain ⟨hu1, hu2⟩ := Finset.mem_powersetCard.1 hu
         rw [norm_prod, ← hu2, ← Finset.prod_const]
-        exact Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun x hx => hC x (hu1 hx)
+        exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun x hx => hC x (hu1 hx)
     _ = _ := by rw [Finset.sum_const, Finset.card_powersetCard, nsmul_eq_mul]
 
 theorem fibreEsymm_locally_bounded (hcount : UnbranchedProperCountConstant.Statement) {σ : Type} [Fintype σ]

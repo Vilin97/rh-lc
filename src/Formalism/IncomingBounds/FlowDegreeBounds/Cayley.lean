@@ -134,30 +134,30 @@ section SupSum
 variable {σ M : Type} [AddCommMonoid M] (f : (σ →₀ ℕ) → K → M)
 
 theorem supp_sum_superset (h0 : ∀ a, f a 0 = 0) (p : MvPolynomial σ K) (S : Finset (σ →₀ ℕ))
-    (hS : p.support ⊆ S) : ∑ a ∈ p.support, f a (coeff a p) = ∑ a ∈ S, f a (coeff a p) := by
+    (hS : p.support ⊆ S) : ∑ a ∈ p.support, f a (AddMonoidAlgebra.coeff p a) = ∑ a ∈ S, f a (AddMonoidAlgebra.coeff p a) := by
   refine Finset.sum_subset hS fun a _ ha => ?_
   rw [MvPolynomial.notMem_support_iff.mp ha, h0]
 
 theorem supp_sum_add (h0 : ∀ a, f a 0 = 0) (hadd : ∀ a x y, f a (x + y) = f a x + f a y)
     (p q : MvPolynomial σ K) :
-    ∑ a ∈ (p + q).support, f a (coeff a (p + q)) =
-      ∑ a ∈ p.support, f a (coeff a p) + ∑ a ∈ q.support, f a (coeff a q) := by
+    ∑ a ∈ (p + q).support, f a (AddMonoidAlgebra.coeff (p + q) a) =
+      ∑ a ∈ p.support, f a (AddMonoidAlgebra.coeff p a) + ∑ a ∈ q.support, f a (AddMonoidAlgebra.coeff q a) := by
   classical
   have hpq : (p + q).support ⊆ p.support ∪ q.support := fun a ha => by
     rw [Finset.mem_union]
     by_contra hn
     rw [not_or] at hn
-    rw [MvPolynomial.mem_support_iff, coeff_add, MvPolynomial.notMem_support_iff.mp hn.1,
+    rw [MvPolynomial.mem_support_iff, MvPolynomial.coeff_add, MvPolynomial.notMem_support_iff.mp hn.1,
       MvPolynomial.notMem_support_iff.mp hn.2, add_zero] at ha
     exact ha rfl
   rw [supp_sum_superset f h0 (p + q) (p.support ∪ q.support) hpq,
     supp_sum_superset f h0 p (p.support ∪ q.support) (fun _ h => Finset.mem_union_left _ h),
     supp_sum_superset f h0 q (p.support ∪ q.support) (fun _ h => Finset.mem_union_right _ h),
     ← Finset.sum_add_distrib]
-  exact Finset.sum_congr rfl fun a _ => by rw [coeff_add, hadd]
+  exact Finset.sum_congr rfl fun a _ => by rw [MvPolynomial.coeff_add, hadd]
 
 theorem supp_sum_monomial (h0 : ∀ a, f a 0 = 0) (s : σ →₀ ℕ) (c : K) :
-    ∑ a ∈ (monomial s c).support, f a (coeff a (monomial s c)) = f s c := by
+    ∑ a ∈ (monomial s c).support, f a (AddMonoidAlgebra.coeff (monomial s c) a) = f s c := by
   classical
   rw [supp_sum_superset f h0 _ {s} MvPolynomial.support_monomial_subset, Finset.sum_singleton,
     coeff_monomial, if_pos rfl]
@@ -166,10 +166,10 @@ end SupSum
 
 def dm {σ : Type} (m : σ →₀ ℕ) (Q : MvPolynomial σ K) : MvPolynomial σ K :=
   ∑ a ∈ Q.support,
-    if m ≤ a then monomial (a - m) (coeff a Q * ((mfact a : K) / (mfact (a - m) : K))) else 0
+    if m ≤ a then monomial (a - m) (AddMonoidAlgebra.coeff Q a * ((mfact a : K) / (mfact (a - m) : K))) else 0
 
 theorem diffOp_eq {σ : Type} (P Q : MvPolynomial σ K) :
-    diffOp P Q = ∑ m ∈ P.support, coeff m P • dm m Q := by
+    diffOp P Q = ∑ m ∈ P.support, AddMonoidAlgebra.coeff P m • dm m Q := by
   unfold Formalism.IncomingBounds.diffOp dm
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [Finset.smul_sum]

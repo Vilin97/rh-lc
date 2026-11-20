@@ -150,7 +150,7 @@ theorem pp_lte {p g k : ℕ} (hp : p.Prime) (hg : 2 ≤ g) (h4 : 4 ∣ g - 1) (h
     · exact lte_two hg h4 hk
     · exact lte_odd hodd hg hpg hk
   rw [Nat.factorization_def _ hp, Nat.factorization_def _ hp, hv, pow_add, mul_comm k]
-  exact Nat.mul_le_mul_left _ (Nat.le_of_dvd (Nat.pos_of_ne_zero hk) pow_padicValNat_dvd)
+  exact Nat.mul_le_mul_left _ (Nat.le_of_dvd (Nat.pos_of_ne_zero hk) (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)))
 
 theorem arith2 {g k : ℕ} (hg : 2 ≤ g) (h4 : 4 ∣ g - 1) (hk : k ≠ 0) :
     ppSum (g ^ k - 1) ≤ k * ppSum (g - 1) + (g ^ k - 1) / (g - 1) := by

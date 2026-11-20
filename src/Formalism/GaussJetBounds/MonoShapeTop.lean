@@ -8,8 +8,8 @@ namespace Formalism.DworkPowerSeriesWeights
 
 theorem thmAJetA : ThmAJetA.{u} := theorem_A_one_monomial_log_loss
 private lemma exists_coeff_ne_zero_of_coeff_prod_ne_zero {ι σ R : Type*} [CommRing R] (s : Finset ι) (f : ι → MvPolynomial σ R) :
-    ∀ d : σ →₀ ℕ, MvPolynomial.coeff d (∏ i ∈ s, f i) ≠ 0 →
-      ∃ g : ι → σ →₀ ℕ, (∀ i ∈ s, MvPolynomial.coeff (g i) (f i) ≠ 0) ∧ d = ∑ i ∈ s, g i := by
+    ∀ d : σ →₀ ℕ, AddMonoidAlgebra.coeff (∏ i ∈ s, f i) d ≠ 0 →
+      ∃ g : ι → σ →₀ ℕ, (∀ i ∈ s, AddMonoidAlgebra.coeff (f i) (g i) ≠ 0) ∧ d = ∑ i ∈ s, g i := by
   classical
   refine Finset.induction_on s ?_ ?_
   · intro d h

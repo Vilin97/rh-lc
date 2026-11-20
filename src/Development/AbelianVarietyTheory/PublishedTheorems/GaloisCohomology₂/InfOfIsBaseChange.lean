@@ -91,7 +91,7 @@ theorem sqRep_one (lam : DomWeight 1) (g : GL (Fin 1) ℂ) (v : nablaSq ℂ 1 la
     simp [DomWeight.natW, DomWeight.detShift, Subsingleton.elim i 0]
   have hv : MvPolynomial.IsWeightedHomogeneous (Formalism.GradedWeylDivisibility.colW 1 1) v.1 lam.natW := v.2.1
   rw [h0] at hv
-  have hc : v.1 = MvPolynomial.C (MvPolynomial.coeff 0 v.1) := by
+  have hc : v.1 = MvPolynomial.C (AddMonoidAlgebra.coeff v.1 0) := by
     classical
     ext d
     rw [MvPolynomial.coeff_C]
@@ -181,7 +181,7 @@ theorem weight_eq_zero (τ : E →+* ℂ) (lam : DomWeight 1) (h : HasWeightAt (
   norm_num at h3
 
 theorem hasWeightAt_zero (τ : E →+* ℂ) : HasWeightAt (constU E 1) τ (zeroWt 1) := by
-  have hv : ∀ v : nablaSq ℂ 1 (zeroWt 1), v.1 = MvPolynomial.C (MvPolynomial.coeff 0 v.1) := fun v => by
+  have hv : ∀ v : nablaSq ℂ 1 (zeroWt 1), v.1 = MvPolynomial.C (AddMonoidAlgebra.coeff v.1 0) := fun v => by
     have h := sqRep_one (zeroWt 1) (CG.oneByOne (Units.mk0 2 two_ne_zero)) v
     have h0 : (zeroWt 1).natW = 0 := by
       funext i

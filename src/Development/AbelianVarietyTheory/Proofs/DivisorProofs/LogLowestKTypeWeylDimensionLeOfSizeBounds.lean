@@ -37,9 +37,9 @@ theorem abs_weylDimU_le {p : ℕ} (lam : Fin p → ℤ) (B : ℝ) (hB : ∀ a b,
       (1 + B) ^ (∑ i : Fin p, (Finset.univ.filter (fun j : Fin p => i < j)).card) := by
   unfold Formalism.IndefR.Mult.weylDimU
   rw [Rat.cast_prod, Finset.abs_prod, ← Finset.prod_pow_eq_pow_sum]
-  refine Finset.prod_le_prod (fun _ _ => abs_nonneg _) fun i _ => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => abs_nonneg _) fun i _ => ?_
   rw [Rat.cast_prod, Finset.abs_prod, ← Finset.prod_const]
-  refine Finset.prod_le_prod (fun _ _ => abs_nonneg _) fun j hj => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => abs_nonneg _) fun j hj => ?_
   have hij : (i : ℕ) < (j : ℕ) := (Finset.mem_filter.1 hj).2
   have := abs_factor_le (lam i - lam j) i j hij
   exact this.trans (by linarith [hB i j])

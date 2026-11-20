@@ -26,12 +26,12 @@ section Poly
 open MvPolynomial
 
 theorem coeff_pderiv_eq {σ : Type} (s : σ) (γ : σ →₀ ℕ) (f : MvPolynomial σ ℂ) :
-    coeff γ (pderiv s f) = ((γ s : ℂ) + 1) * coeff (γ + Finsupp.single s 1) f := by
+    AddMonoidAlgebra.coeff (pderiv s f) γ = ((γ s : ℂ) + 1) * AddMonoidAlgebra.coeff f (γ + Finsupp.single s 1) := by
   rw [coeff_pderiv, mul_comm]
 
 theorem col_le {σ I K : Type} [Fintype I] [Fintype K] (e : I × K → σ) (he : Function.Injective e) (f : MvPolynomial σ ℂ)
-    (k : ℕ) (c₀ : K) (hrow : ∀ α, coeff α f ≠ 0 → ∀ i, α (e (i, c₀)) ≤ k)
-    (hE : ∀ i i', i ≠ i' → ∑ c, X (e (i, c)) * pderiv (e (i', c)) f = 0) (α₀ : σ →₀ ℕ) (hα₀ : coeff α₀ f ≠ 0) :
+    (k : ℕ) (c₀ : K) (hrow : ∀ α, AddMonoidAlgebra.coeff f α ≠ 0 → ∀ i, α (e (i, c₀)) ≤ k)
+    (hE : ∀ i i', i ≠ i' → ∑ c, X (e (i, c)) * pderiv (e (i', c)) f = 0) (α₀ : σ →₀ ℕ) (hα₀ : AddMonoidAlgebra.coeff f α₀ ≠ 0) :
     ∑ i, α₀ (e (i, c₀)) ≤ k := by
   by_contra hlt
   push Not at hlt
@@ -56,7 +56,7 @@ theorem col_le {σ I K : Type} [Fintype I] [Fintype K] (e : I × K → σ) (he :
     by_cases hs : s = e (i, c₀)
     · subst hs; simp [δ]; omega
     · simp [δ, Finsupp.single_apply, Ne.symm hs]
-  have h := congrArg (coeff (Finsupp.single (e (i₀, c₀)) 1 + δ)) (hE i₀ i hi.symm)
+  have h := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single (e (i₀, c₀)) 1 + δ)) (hE i₀ i hi.symm)
   rw [coeff_sum, coeff_zero, Finset.sum_eq_single c₀, coeff_X_mul, coeff_pderiv_eq, hδ] at h
   · refine hα.1 ((mul_eq_zero.1 h).resolve_left ?_)
     exact Nat.cast_add_one_ne_zero _
@@ -84,7 +84,7 @@ theorem col_le {σ I K : Type} [Fintype I] [Fintype K] (e : I × K → σ) (he :
 
 theorem omE_off {P Q R S : ℕ} {a b : Ix P Q} (hab : a ≠ b) (c : Ix R S) (f : Formalism.BasicNotions.TH.Pol P Q R S) :
     (linePos (a, c) = true → linePos (b, c) = true → omE (a, c) (b, c) f = X (a, c) * pderiv (b, c) f) ∧
-    (linePos (a, c) = false → linePos (b, c) = false → (∀ α, coeff α f ≠ 0 → α (a, c) = 0) → omE (a, c) (b, c) f = 0) := by
+    (linePos (a, c) = false → linePos (b, c) = false → (∀ α, AddMonoidAlgebra.coeff f α ≠ 0 → α (a, c) = 0) → omE (a, c) (b, c) f = 0) := by
   have hne : (a, c) ≠ (b, c) := fun h => hab (Prod.ext_iff.1 h).1
   refine ⟨fun h1 h2 => ?_, fun h1 h2 h0 => ?_⟩
   · simp [omE, raiB, lowB, h1, h2, hne]
@@ -106,9 +106,9 @@ theorem lowOne_le_top {P Q R S : ℕ} (x : ℚ) (k k' : ℕ) (hk : x - cPair R S
   intro f hf
   have hun := GlobalTheory.FockLowWt.support_unmixed x k k' hk hk' f hf
   rw [GlobalTheory.KFixIrr.mem_lowOne, GlobalTheory.KFixIrr.mem_chiOne] at hf
-  have hval : ∀ α, coeff α f ≠ 0 → ∀ a : Ix P Q, GlobalTheory.FockLowDeg.cartanVal a α = (x : ℂ) := by
+  have hval : ∀ α, AddMonoidAlgebra.coeff f α ≠ 0 → ∀ a : Ix P Q, GlobalTheory.FockLowDeg.cartanVal a α = (x : ℂ) := by
     intro α hα a
-    have h := congrArg (coeff α) (hf.1 _ (GlobalTheory.FockLowDeg.isKC_Eab_diag a))
+    have h := congrArg (AddMonoidAlgebra.coeff · α) (hf.1 _ (GlobalTheory.FockLowDeg.isKC_Eab_diag a))
     rw [GlobalTheory.FockLowDeg.coeff_cartan, GlobalTheory.FockLowDeg.trace_Eab_diag, mul_one, coeff_smul, smul_eq_mul] at h
     exact mul_right_cancel₀ hα h
   have hkC : (x : ℂ) - ((R : ℂ) - S) / 2 = k := by
@@ -117,7 +117,7 @@ theorem lowOne_le_top {P Q R S : ℕ} (x : ℚ) (k k' : ℕ) (hk : x - cPair R S
   have hk'C : (x : ℂ) + ((R : ℂ) - S) / 2 = k' := by
     have := congrArg (fun t : ℚ => (t : ℂ)) hk'
     simpa [cPair] using this
-  have hP : ∀ α, coeff α f ≠ 0 → ∀ i : Fin P, α (Sum.inl i, Sum.inl r) ≤ k := by
+  have hP : ∀ α, AddMonoidAlgebra.coeff f α ≠ 0 → ∀ i : Fin P, α (Sum.inl i, Sum.inl r) ≤ k := by
     intro α hα i
     have h := hval α hα (Sum.inl i)
     simp only [GlobalTheory.FockLowDeg.cartanVal, Fintype.sum_sum_type, lineSign, one_mul, neg_one_mul, (hun α hα).1,
@@ -128,7 +128,7 @@ theorem lowOne_le_top {P Q R S : ℕ} (x : ℚ) (k k' : ℕ) (hk : x - cPair R S
       linear_combination h + hkC
     rw [← Nat.cast_injective e]
     exact Finset.single_le_sum (f := fun c => α (Sum.inl i, Sum.inl c)) (fun _ _ => Nat.zero_le _) (Finset.mem_univ r)
-  have hQ : ∀ α, coeff α f ≠ 0 → ∀ j : Fin Q, α (Sum.inr j, Sum.inr s) ≤ k' := by
+  have hQ : ∀ α, AddMonoidAlgebra.coeff f α ≠ 0 → ∀ j : Fin Q, α (Sum.inr j, Sum.inr s) ≤ k' := by
     intro α hα j
     have h := hval α hα (Sum.inr j)
     simp only [GlobalTheory.FockLowDeg.cartanVal, Fintype.sum_sum_type, lineSign, one_mul, neg_one_mul, (hun α hα).2,
@@ -162,7 +162,7 @@ theorem lowOne_le_top {P Q R S : ℕ} (x : ℚ) (k k' : ℕ) (hk : x - cPair R S
   rw [← MvPolynomial.support_sum_monomial_coeff f]
   refine Submodule.sum_mem _ fun α hα => ?_
   have hα' := mem_support_iff.mp hα
-  have e : (monomial α (coeff α f) : Formalism.BasicNotions.TH.Pol P Q R S) = coeff α f • monomial α 1 := by
+  have e : (monomial α (AddMonoidAlgebra.coeff f α) : Formalism.BasicNotions.TH.Pol P Q R S) = AddMonoidAlgebra.coeff f α • monomial α 1 := by
     rw [smul_monomial, smul_eq_mul, mul_one]
   rw [e]
   refine Submodule.smul_mem _ _ (Submodule.mem_iSup_of_mem

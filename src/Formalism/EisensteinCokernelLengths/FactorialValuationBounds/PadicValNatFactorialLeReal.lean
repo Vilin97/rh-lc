@@ -14,7 +14,7 @@ lemma sum_range_padicValNat_succ (ℓ : ℕ) [Fact ℓ.Prime] (n : ℕ) :
   | zero => simp
   | succ n ih =>
     rw [Finset.sum_range_succ, ih, Nat.factorial_succ,
-      padicValNat.mul (Nat.succ_ne_zero n) (Nat.factorial_ne_zero n), add_comm]
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.succ_ne_zero n) (Nat.factorial_ne_zero n), add_comm]
 
 lemma padicValNat_factorial_le_real (ℓ : ℕ) [hℓ : Fact ℓ.Prime] (n : ℕ) :
     (padicValNat ℓ n.factorial : ℝ) ≤ (n : ℝ) / ((ℓ : ℝ) - 1) := by

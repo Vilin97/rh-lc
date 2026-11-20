@@ -101,7 +101,7 @@ private theorem mul_prod_mul_le_prod_of_le_one {a : ℕ} (X : ℝ) (u v : Fin a 
   rw [Finset.prod_mul_distrib]
   have hA : 0 ≤ ∏ i, u i := Finset.prod_nonneg fun i _ => hu i
   have hB0 : 0 ≤ ∏ i, v i := Finset.prod_nonneg fun i _ => hv0 i
-  have hB1 : ∏ i, v i ≤ 1 := Finset.prod_le_one (fun i _ => hv0 i) (fun i _ => hv1 i)
+  have hB1 : ∏ i, v i ≤ 1 := Finset.prod_le_one₀ (fun i _ => hv0 i) (fun i _ => hv1 i)
   calc X * ((∏ i, u i) * ∏ i, v i) ≤ 1 * ((∏ i, u i) * ∏ i, v i) :=
         mul_le_mul_of_nonneg_right hX1 (mul_nonneg hA hB0)
     _ ≤ ∏ i, u i := by rw [one_mul]; exact mul_le_of_le_one_right hA hB1

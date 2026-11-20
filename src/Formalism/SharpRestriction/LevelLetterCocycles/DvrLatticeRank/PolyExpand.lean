@@ -423,7 +423,7 @@ theorem caseC {O K : Type*} [CommRing O] [Field K] [Algebra O K] (l : ℕ) [Fact
   obtain ⟨c, hc⟩ : ∃ c, c = b.choose (B - 1) := ⟨_, rfl⟩
   rw [← hc] at ho hy
   have hc0 : c ≠ 0 := by rw [hc]; exact (Nat.choose_pos (by omega)).ne'
-  obtain ⟨c', hc'⟩ := (pow_padicValNat_dvd : l ^ padicValNat l c ∣ c)
+  obtain ⟨c', hc'⟩ := ((_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)) : l ^ padicValNat l c ∣ c)
   have hnd : ¬ l ∣ c' := by
     rintro ⟨d, rfl⟩
     have hd : l ^ (padicValNat l c + 1) ∣ l ^ padicValNat l c * (l * d) := ⟨d, by ring⟩

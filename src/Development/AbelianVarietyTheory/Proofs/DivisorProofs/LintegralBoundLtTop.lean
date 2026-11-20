@@ -180,7 +180,7 @@ theorem bound {s : ℝ} (hs : 1 < s) {U : Set (Fin (Module.finrank F E) → Af F
       have e2 : (1 + bc F E) ^ (k * r) = ∏ _w : InfinitePlace E, (1 + bc F E) ^ k := by
         rw [Finset.prod_const, Finset.card_univ, ← pow_mul]
       rw [e1, e2, ← Finset.prod_inv_distrib, ← Finset.prod_mul_distrib, ← Finset.prod_mul_distrib]
-      refine Finset.prod_le_prod (fun w _ => by positivity) (fun w _ => ?_)
+      refine Finset.prod_le_prod₀ (fun w _ => by positivity) (fun w _ => ?_)
       have h2 : (1 + ‖a w‖) ^ k ≤ (1 + bc F E) ^ k * (1 + S) ^ k := by
         rw [← mul_pow]; exact pow_le_pow_left₀ (by positivity) (ha w) k
       have hP : 0 ≤ ‖a w‖ ^ ((w.mult : ℝ) * s) := by positivity

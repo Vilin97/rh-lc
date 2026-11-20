@@ -76,13 +76,13 @@ private lemma pow_p_teich (wd : WData Tw K) (u s : (wd.W : Type)) :
 
 private lemma coeff_decomp (wd : WData Tw K) {g : ℕ} (G : MvPolynomial (Fin g) (wd.W : Type))
     (hG : ∀ m, (∃ i, ¬ p ∣ m i) →
-      MvPolynomial.coeff m G ∈ Ideal.span {(p : (wd.W : Type))}) (m : Fin g →₀ ℕ) :
-    ∃ d : wd.Rb, ∃ e : (wd.W : Type), MvPolynomial.coeff m G = wd.T d + p * e ∧
+      AddMonoidAlgebra.coeff G m ∈ Ideal.span {(p : (wd.W : Type))}) (m : Fin g →₀ ℕ) :
+    ∃ d : wd.Rb, ∃ e : (wd.W : Type), AddMonoidAlgebra.coeff G m = wd.T d + p * e ∧
       (d = 0 ∨ ∀ i, p ∣ m i) := by
   by_cases h : ∃ i, ¬ p ∣ m i
   · obtain ⟨e, he⟩ := Ideal.mem_span_singleton'.1 (hG m h)
     exact ⟨0, e, by rw [T_zero, zero_add, ← he, mul_comm], Or.inl rfl⟩
-  · obtain ⟨d, e, he⟩ := wd.decomp (MvPolynomial.coeff m G)
+  · obtain ⟨d, e, he⟩ := wd.decomp (AddMonoidAlgebra.coeff G m)
     refine ⟨d, e, he, Or.inr fun i => ?_⟩
     by_contra hi
     exact h ⟨i, hi⟩

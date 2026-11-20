@@ -23,7 +23,7 @@ theorem inv_linear_eval (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N j : ℕ) (l
   obtain ⟨h1, h2⟩ := hl
   rw [homogeneousSubmodule_one_eq_span_X] at h1
   obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun ℝ).1 h1
-  have hcoef : ∀ p, coeff (Finsupp.single p 1) l = c p := by
+  have hcoef : ∀ p, AddMonoidAlgebra.coeff l (Finsupp.single p 1) = c p := by
     intro p
     rw [← hc, coeff_sum, Finset.sum_eq_single p]
     · simp

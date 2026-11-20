@@ -38,12 +38,12 @@ theorem dotPoly_id_eq_map : dotPoly (id : S2 → S2) = MvPolynomial.map coordHom
 
 theorem linear_expand (ℓ : MvPolynomial (Fin 3) ℝ →ₗ[ℝ] ℝ) (S : Finset (Fin 3 →₀ ℕ))
     (Q : MvPolynomial (Fin 3) ℝ) (hQ : Q.support ⊆ S) :
-    ℓ Q = ∑ m ∈ S, coeff m Q * ℓ (monomial m 1) := by
-  calc ℓ Q = ℓ (∑ m ∈ Q.support, monomial m (coeff m Q)) := by rw [support_sum_monomial_coeff]
-    _ = ∑ m ∈ Q.support, coeff m Q * ℓ (monomial m 1) := by
+    ℓ Q = ∑ m ∈ S, AddMonoidAlgebra.coeff Q m * ℓ (monomial m 1) := by
+  calc ℓ Q = ℓ (∑ m ∈ Q.support, monomial m (AddMonoidAlgebra.coeff Q m)) := by rw [support_sum_monomial_coeff]
+    _ = ∑ m ∈ Q.support, AddMonoidAlgebra.coeff Q m * ℓ (monomial m 1) := by
       rw [map_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
-      rw [show monomial m (coeff m Q) = (coeff m Q) • monomial m (1 : ℝ) by
+      rw [show monomial m (AddMonoidAlgebra.coeff Q m) = (AddMonoidAlgebra.coeff Q m) • monomial m (1 : ℝ) by
         rw [smul_monomial, smul_eq_mul, mul_one], map_smul, smul_eq_mul]
     _ = _ := Finset.sum_subset hQ fun m _ hm => by rw [notMem_support_iff.1 hm, zero_mul]
 
@@ -64,14 +64,14 @@ theorem stereo_one : ∀ (ℓ : MvPolynomial (Fin 3) ℝ →ₗ[ℝ] ℝ) (N : �
   have hdot : dotPoly (id : S2 → S2) ^ N = MvPolynomial.map coordHom G := by
     rw [hG, map_pow, dotPoly_id_eq_map]
   rw [hdot]
-  have hf : ∀ m, Continuous fun x : Fin 3 → ℝ => MvPolynomial.eval x (coeff m G) :=
+  have hf : ∀ m, Continuous fun x : Fin 3 → ℝ => MvPolynomial.eval x (AddMonoidAlgebra.coeff G m) :=
     fun m => MvPolynomial.continuous_eval _
   have hcoord : Continuous fun p : S2 => fun i => (p : E3) i := by
     fun_prop
-  have hsph : ∀ m, Integrable (fun p : S2 => MvPolynomial.eval (fun i => (p : E3) i) (coeff m G))
+  have hsph : ∀ m, Integrable (fun p : S2 => MvPolynomial.eval (fun i => (p : E3) i) (AddMonoidAlgebra.coeff G m))
       sphereMeasure := fun m =>
     ((hf m).comp hcoord).integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _)
-  have hpl : ∀ m, Integrable (fun a : ℂ => MvPolynomial.eval (nS a) (coeff m G) *
+  have hpl : ∀ m, Integrable (fun a : ℂ => MvPolynomial.eval (nS a) (AddMonoidAlgebra.coeff G m) *
       (Real.pi⁻¹ / (1 + ‖a‖ ^ 2) ^ 2)) := fun m =>
     (key _ (hf m).measurable).1.2 (hsph m)
   have hsupp : (momentPoly sphereMeasure (fun _ => 1) (MvPolynomial.map coordHom G)).support ⊆ G.support := by
@@ -83,7 +83,7 @@ theorem stereo_one : ∀ (ℓ : MvPolynomial (Fin 3) ℝ →ₗ[ℝ] ℝ) (N : �
     simp
   rw [linear_expand ℓ G.support _ hsupp, Finset.mul_sum]
   have hpt : ∀ a : ℂ, wS a * ℓ (lin3 (nS a) ^ N) = ∑ m ∈ G.support,
-      (MvPolynomial.eval (nS a) (coeff m G) * (Real.pi⁻¹ / (1 + ‖a‖ ^ 2) ^ 2)) *
+      (MvPolynomial.eval (nS a) (AddMonoidAlgebra.coeff G m) * (Real.pi⁻¹ / (1 + ‖a‖ ^ 2) ^ 2)) *
         (Real.pi * ℓ (monomial m 1)) := fun a => by
     rw [hlin, linear_expand ℓ G.support _ (support_map_subset _ _), Finset.mul_sum]
     refine Finset.sum_congr rfl fun m _ => ?_

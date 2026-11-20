@@ -131,7 +131,7 @@ theorem degree_sum_monomial {κ : Type} [Fintype κ] (w : σ → ℕ)
     (h : ∀ k, k ≠ k0 → c k ≠ 0 → Finsupp.weight w (e k) < Finsupp.weight w (e k0)) :
     (∑ k, monomial (e k) (c k)) ≠ 0 ∧ m.degree (∑ k, monomial (e k) (c k)) = e k0 := by
   classical
-  have hc : coeff (e k0) (∑ k, monomial (e k) (c k)) = c k0 := by
+  have hc : AddMonoidAlgebra.coeff (∑ k, monomial (e k) (c k)) (e k0) = c k0 := by
     rw [coeff_sum, Finset.sum_eq_single k0]
     · simp
     · intro k _ hk
@@ -183,14 +183,14 @@ def fock (σ K : Type) [Fintype σ] [Field K] : LinearMap.BilinForm K (MvPolynom
   (basisMonomials σ K).constr K fun m => (fac m : K) • lcoeff K m
 
 theorem fock_monomial (m : σ →₀ ℕ) (c : K) (g : MvPolynomial σ K) :
-    fock σ K (monomial m c) g = c * (fac m * coeff m g) := by
+    fock σ K (monomial m c) g = c * (fac m * AddMonoidAlgebra.coeff g m) := by
   have : (monomial m c : MvPolynomial σ K) = c • basisMonomials σ K m := by
     simp [smul_monomial]
   rw [this, map_smul, fock, Module.Basis.constr_basis]
   simp
 
 theorem fock_eq (f g : MvPolynomial σ K) :
-    fock σ K f g = ∑ m ∈ f.support, coeff m f * (fac m * coeff m g) := by
+    fock σ K f g = ∑ m ∈ f.support, AddMonoidAlgebra.coeff f m * (fac m * AddMonoidAlgebra.coeff g m) := by
   conv_lhs => rw [f.as_sum]
   rw [map_sum, LinearMap.sum_apply]
   simp only [fock_monomial]
@@ -226,8 +226,8 @@ theorem eq_zero_of_fock [CharZero K] (g : MvPolynomial σ K) (h : ∀ m, fock σ
 
 theorem eq_zero_of_fock_conj (g : MvPolynomial σ ℂ) (h : fock σ ℂ g (map (starRingEnd ℂ) g) = 0) : g = 0 := by
   rw [fock_eq] at h
-  have e : ∀ m, coeff m g * (fac m * coeff m (map (starRingEnd ℂ) g)) =
-      ((Complex.normSq (coeff m g) * fac m : ℝ) : ℂ) := by
+  have e : ∀ m, AddMonoidAlgebra.coeff g m * (fac m * AddMonoidAlgebra.coeff (map (starRingEnd ℂ) g) m) =
+      ((Complex.normSq (AddMonoidAlgebra.coeff g m) * fac m : ℝ) : ℂ) := by
     intro m
     rw [coeff_map]
     push_cast
@@ -285,11 +285,11 @@ theorem aeval_scale {A : Type} [CommRing A] [Algebra K A] {w : σ → ρ} {a : �
   rw [aeval_scale_monomial, hP (mem_support_iff.1 hm)]
 
 theorem coeff_scale (w : σ → ρ) (t : ρ → K) (m : σ →₀ ℕ) (P : MvPolynomial σ K) :
-    coeff m (aeval (fun v => (C (t (w v)) * X v : MvPolynomial σ K)) P) =
-      (∏ r, t r ^ (Finsupp.weight (fun v => (Pi.single (w v) 1 : ρ → ℕ)) m r)) * coeff m P := by
+    AddMonoidAlgebra.coeff (aeval (fun v => (C (t (w v)) * X v : MvPolynomial σ K)) P) m =
+      (∏ r, t r ^ (Finsupp.weight (fun v => (Pi.single (w v) 1 : ρ → ℕ)) m r)) * AddMonoidAlgebra.coeff P m := by
   classical
   induction P using MvPolynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, coeff_add, hp, hq, mul_add]
+  | add p q hp hq => simp only [map_add, MvPolynomial.coeff_add, hp, hq, mul_add]
   | monomial m' c =>
     rw [aeval_scale_monomial w (fun r => (C (t r) : MvPolynomial σ K)), aeval_X_left_apply]
     simp only [← C_pow, ← map_prod, coeff_C_mul, coeff_monomial]
@@ -302,7 +302,7 @@ theorem deg_of_scale [CharZero K] {w : σ → ρ} {a : ρ → ℕ} {P : MvPolyno
   classical
   intro m hm
   funext r
-  have h1 := congrArg (coeff m) (h (fun s => if s = r then 2 else 1) (fun s => by split_ifs <;> simp))
+  have h1 := congrArg (AddMonoidAlgebra.coeff · m) (h (fun s => if s = r then 2 else 1) (fun s => by split_ifs <;> simp))
   rw [coeff_scale w (fun s => if s = r then (2 : K) else 1), coeff_C_mul] at h1
   have h2 := mul_right_cancel₀ hm h1
   have h3 : ∀ u : ρ → ℕ, ∏ s, (if s = r then (2 : K) else 1) ^ u s = 2 ^ u r := by
@@ -406,7 +406,7 @@ theorem exists_harm (φ : K →+* ℂ) {ρ : Type} [Fintype ρ] [DecidableEq ρ]
     · rw [fock_eq]
       refine Finset.sum_eq_zero fun d hd' => ?_
       have h1 := hd (mem_support_iff.1 hd')
-      have h2 : coeff d (h : MvPolynomial σ K) = 0 := by
+      have h2 : AddMonoidAlgebra.coeff (h : MvPolynomial σ K) d = 0 := by
         by_contra h3
         exact ha (h1.symm.trans (h.2 h3))
       simp [h2]

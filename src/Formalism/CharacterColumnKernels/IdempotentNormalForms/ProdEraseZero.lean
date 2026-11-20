@@ -92,7 +92,7 @@ theorem deltaVal : StatDeltaVal := by
       rw [prod_range_succ]
       refine ⟨mul_ne_zero ih.1 (hF s).1, ?_⟩
       rw [padicValInt.mul ih.1 (hF s).1, ih.2, (hF s).2, Nat.factorial_succ,
-        padicValNat.mul (Nat.succ_ne_zero s) (Nat.factorial_ne_zero s)]
+        (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.succ_ne_zero s) (Nat.factorial_ne_zero s)]
       ring
   unfold delta
   rw [prod_erase_zero]

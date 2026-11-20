@@ -31,14 +31,14 @@ def OtherFactorFormula.Statement : Prop :=
                 (numStandardTable (rectangle r a) : ℚ) ^ (f - 2) *
                 symmetricGroupCharacter (rectangle r a)
                   ((k - 1) :: List.replicate (r * a - (k - 1)) 1) *
-                coeff (Finsupp.single (⟨k - 1, by omega⟩ : Fin (r + a)) 1) S
+                AddMonoidAlgebra.coeff S (Finsupp.single (⟨k - 1, by omega⟩ : Fin (r + a)) 1)
 
 def SchurSignCoefficient.Statement : Prop :=
   ∀ (N r k : ℕ) (hk1 : 1 ≤ k) (hkN : k ≤ N) (nu : Fin r → ℕ) (s : ℚ), (s = 1 ∨ s = -1) →
     Antitone nu → ∑ i, nu i = k →
     ∃ S : MvPolynomial (Fin N) ℚ,
       powerSumHom N S = aeval (fun i : Fin N => C s * X i) (schur (Fin N) nu) ∧
-      coeff (Finsupp.single (⟨k - 1, by omega⟩ : Fin N) 1) S =
+      AddMonoidAlgebra.coeff S (Finsupp.single (⟨k - 1, by omega⟩ : Fin N) 1) =
         s ^ k * if ∀ i : Fin r, (i : ℕ) ≠ 0 → nu i ≤ 1 then
           (-1 : ℚ) ^ ((Finset.univ.filter fun i : Fin r => (i : ℕ) ≠ 0 ∧ nu i = 1).card) / k
         else 0

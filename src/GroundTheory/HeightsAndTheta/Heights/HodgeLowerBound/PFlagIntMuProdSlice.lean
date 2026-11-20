@@ -44,9 +44,9 @@ theorem sum_mapDomain_sliceEmb (A : Ψ → (Fin N →₀ ℕ)) :
     exact absurd (Finset.mem_univ σ) h
 
 theorem coeff_glue_prod (r : Ψ → MvPolynomial (Fin N) ℚ) (d : Ψ → (Fin N →₀ ℕ)) :
-    coeff (glue d) (∏ τ, rename (sliceEmb τ) (r τ)) = ∏ τ, coeff (d τ) (r τ) := by
+    AddMonoidAlgebra.coeff (∏ τ, rename (sliceEmb τ) (r τ)) (glue d) = ∏ τ, AddMonoidAlgebra.coeff (r τ) (d τ) := by
   have h : ∀ τ, rename (sliceEmb τ) (r τ) =
-      ∑ a ∈ (r τ).support, monomial (Finsupp.mapDomain (sliceEmb τ) a) (coeff a (r τ)) := by
+      ∑ a ∈ (r τ).support, monomial (Finsupp.mapDomain (sliceEmb τ) a) (AddMonoidAlgebra.coeff (r τ) a) := by
     intro τ
     conv_lhs => rw [as_sum (r τ)]
     rw [map_sum]
@@ -70,7 +70,7 @@ def rhoOne : Fin N →₀ ℕ := Finsupp.equivFunOnFinite.symm fun i => N - 1 - 
 variable (N) in
 
 def flagIntOne (q : MvPolynomial (Fin N) ℚ) : ℚ :=
-  ∑ σ : Equiv.Perm (Fin N), (((Equiv.Perm.sign σ : ℤˣ) : ℤ) : ℚ) * coeff (rhoOne N) (rename σ q)
+  ∑ σ : Equiv.Perm (Fin N), (((Equiv.Perm.sign σ : ℤˣ) : ℤ) : ℚ) * AddMonoidAlgebra.coeff (rename σ q) (rhoOne N)
 
 omit [DecidableEq Ψ] in
 theorem rhoMono_eq_glue : rhoMono Ψ N = glue fun _ => rhoOne N := by

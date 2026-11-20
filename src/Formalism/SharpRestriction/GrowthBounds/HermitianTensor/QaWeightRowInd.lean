@@ -100,8 +100,8 @@ theorem subRowP : SubRowP := by
     rw [← support_sum_monomial_coeff v, map_sum]
     refine IsWeightedHomogeneous.sum _ _ _ fun u hu => ?_
     have hd : rowDeg u a = d := hv u (mem_support_iff.1 hu)
-    have e : (monomial u (coeff u v) : MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) A) =
-        C (coeff u v) * ∏ x ∈ u.support, X x ^ u x := monomial_eq
+    have e : (monomial u (AddMonoidAlgebra.coeff v u) : MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) A) =
+        C (AddMonoidAlgebra.coeff v u) * ∏ x ∈ u.support, X x ^ u x := monomial_eq
     rw [e, map_mul (subY A r), qa_subY_C, map_prod]
     have h1 : IsWeightedHomogeneous (rowInd a) (∏ x ∈ u.support, subY A r (X x ^ u x))
         (∑ x ∈ u.support, u x • rowInd a x) :=
@@ -112,7 +112,7 @@ theorem subRowP : SubRowP := by
       have h0 := qa_weight_rowInd a u
       rw [Finsupp.weight_apply] at h0
       exact h0.trans hd
-    have h3 := (isWeightedHomogeneous_C (rowInd a) (C (coeff u v) : MvPolynomial (Fin r × Fin r) A)).mul h1
+    have h3 := (isWeightedHomogeneous_C (rowInd a) (C (AddMonoidAlgebra.coeff v u) : MvPolynomial (Fin r × Fin r) A)).mul h1
     rw [zero_add, h2] at h3
     exact h3
   intro u hu

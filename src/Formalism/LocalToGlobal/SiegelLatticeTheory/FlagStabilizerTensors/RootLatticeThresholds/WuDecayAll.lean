@@ -313,7 +313,7 @@ theorem nuInf_le_prod (x : X.B.I.Ginf) : nuInf X u x ≤ ∏ v, nuLocX X u v (x 
     calc nuInf X u x ≤ normInf X ((fun v => (t v : Formalism.REAL.UJ (X.B.I.ε v))) * x) := nuInf_le X u x _ hmem
       _ = ∏ v, opn (uMat ((t v : Formalism.REAL.UJ (X.B.I.ε v)) * x v)) := rfl
       _ ≤ ∏ v, (nuLocX X u v (x v) + δ) :=
-          Finset.prod_le_prod (fun v _ => opn_nonneg _) (fun v _ => (ht v).le)
+          Finset.prod_le_prod₀ (fun v _ => opn_nonneg _) (fun v _ => (ht v).le)
   have hc : Continuous fun δ : ℝ => ∏ v, (nuLocX X u v (x v) + δ) :=
     continuous_finsetProd _ fun v _ => continuous_const.add continuous_id
   have ht := (hc.tendsto 0).mono_left (nhdsWithin_le_nhds (s := Set.Ioi (0 : ℝ)))
@@ -496,7 +496,7 @@ theorem wuReprod_of_loc {νl : ∀ v, Measure (Formalism.REAL.UJ (X.B.I.ε v))} 
     exact hαs v (z v) ((Finset.prod_ne_zero_iff.1 hz) v (Finset.mem_univ v))
   · intro z
     rw [norm_prod, NNReal.coe_prod]
-    exact Finset.prod_le_prod (fun v _ => norm_nonneg _)
+    exact Finset.prod_le_prod₀ (fun v _ => norm_nonneg _)
       (fun v _ => (hαb v (z v)).trans (Real.le_coe_toNNReal _))
   · intro x
     have hT := integrable_and_integral_pi_apply (InfinitePlace X.B.I.F) (fun v => Formalism.REAL.UJ (X.B.I.ε v))

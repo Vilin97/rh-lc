@@ -62,7 +62,7 @@ lemma div_mem_zpS (p k m : ℕ) [hp : Fact p.Prime] (hm1 : 1 ≤ m) (hm : m ≤ 
   have hpk0 : (p : ℚ) ^ k ≠ 0 := pow_ne_zero _ (by exact_mod_cast hp.out.ne_zero)
 
   have hv : padicValNat p m ≤ k := by
-    have h1 : p ^ padicValNat p m ≤ m := Nat.le_of_dvd (by omega) pow_padicValNat_dvd
+    have h1 : p ^ padicValNat p m ≤ m := Nat.le_of_dvd (by omega) (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
     exact (Nat.pow_le_pow_iff_right hp1).1 (h1.trans hm)
   have hval : padicValRat p ((p : ℚ) ^ k / m) = (k : ℤ) - padicValNat p m := by
     rw [padicValRat.div hpk0 hm0, show ((p : ℚ) ^ k) = ((p ^ k : ℕ) : ℚ) by push_cast; rfl,

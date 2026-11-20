@@ -41,7 +41,7 @@ theorem exists_delta [IsGalois ℚ E] (hv : v.Integers O) {p : ℕ} (hp : p.Prim
   obtain ⟨a, m, hm, hdisc⟩ := Nat.exists_eq_pow_mul_and_not_dvd hd p hp.ne_one
   have hm0 : m ≠ 0 := by rintro rfl; exact hm (dvd_zero _)
   have ha : padicValNat p (discr E).natAbs = a := by
-    rw [hdisc, padicValNat.mul (pow_ne_zero _ hp.ne_zero) hm0, padicValNat.prime_pow,
+    rw [hdisc, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.ne_zero) hm0, padicValNat.prime_pow,
       padicValNat.eq_zero_of_not_dvd hm, add_zero]
   rw [ha]
   set σ := embO hv τ

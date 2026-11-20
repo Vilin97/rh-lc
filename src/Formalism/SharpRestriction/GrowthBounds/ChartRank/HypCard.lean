@@ -30,7 +30,7 @@ theorem noZero_Xsp [IsFractionRing G.O G.Kf] : NoZeroSMulDivisors G.O G.P.Xsp :=
   by_cases hc : c = 0
   · exact Or.inl hc
   refine Or.inr (MvPolynomial.ext _ _ fun m => ?_)
-  have h1 := congrArg (MvPolynomial.coeff m) hx
+  have h1 := congrArg (AddMonoidAlgebra.coeff · m) hx
   rw [MvPolynomial.coeff_smul, MvPolynomial.coeff_zero, Algebra.smul_def] at h1
   rw [MvPolynomial.coeff_zero]
   exact (mul_eq_zero.1 h1).resolve_left fun h0 => hc (IsFractionRing.injective G.O G.Kf (by rw [h0, map_zero]))

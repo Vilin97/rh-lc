@@ -9,7 +9,7 @@ open MvPolynomial
 
 abbrev Ex (D : ℕ) : P D ≃ₐ[ℤ] MvPolynomial (Fin D) (MvPolynomial (Fin D) ℤ) := sumAlgEquiv ℤ (Fin D) (Fin D)
 
-def cmp {D : ℕ} (β : Fin D →₀ ℕ) (f : P D) : P D := rename Sum.inr (coeff β (Ex D f))
+def cmp {D : ℕ} (β : Fin D →₀ ℕ) (f : P D) : P D := rename Sum.inr (AddMonoidAlgebra.coeff (Ex D f) β)
 
 lemma Ex_inl {D : ℕ} (s : S D) :
     Ex D (rename Sum.inl s) = map (C : ℤ →+* MvPolynomial (Fin D) ℤ) s := by
@@ -30,7 +30,7 @@ lemma sum_cmp {D : ℕ} (f : P D) (B : Finset (Fin D →₀ ℕ)) (hB : (Ex D f)
     ∑ β ∈ B, inx (monomial β 1) * cmp β f = f := by
   apply (Ex D).injective
   rw [map_sum]
-  have h : ∀ β ∈ B, Ex D (inx (monomial β 1) * cmp β f) = monomial β (coeff β (Ex D f)) := by
+  have h : ∀ β ∈ B, Ex D (inx (monomial β 1) * cmp β f) = monomial β (AddMonoidAlgebra.coeff (Ex D f) β) := by
     intro β _
     rw [map_mul, inx, cmp, Ex_inl, Ex_inr, map_monomial, map_one, mul_comm, C_mul_monomial, mul_one]
   rw [Finset.sum_congr rfl h]

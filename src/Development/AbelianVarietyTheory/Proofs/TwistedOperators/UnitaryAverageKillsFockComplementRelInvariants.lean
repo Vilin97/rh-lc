@@ -61,19 +61,19 @@ variable {K : Type} [Group K] [MeasurableSpace K] {a d : ℕ}
 
 theorem coeff_colSub_good (ρ : K →* (ι → Matrix.unitaryGroup (Fin a) ℂ))
     (hρ : ∀ τ i j, Measurable fun g => (ρ g τ : Matrix (Fin a) (Fin a) ℂ) i j) (P : Pol ι d a) :
-    ∀ m, Measurable (fun g => coeff m (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) P)) ∧
-      ∃ C : ℝ, ∀ g, ‖coeff m (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) P)‖ ≤ C := by
+    ∀ m, Measurable (fun g => AddMonoidAlgebra.coeff (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) P) m) ∧
+      ∃ C : ℝ, ∀ g, ‖AddMonoidAlgebra.coeff (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) P) m‖ ≤ C := by
   have hmul : ∀ p q : Pol ι d a,
-      (∀ m, Measurable (fun g => coeff m (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) p)) ∧
-        ∃ C : ℝ, ∀ g, ‖coeff m (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) p)‖ ≤ C) →
-      (∀ m, Measurable (fun g => coeff m (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) q)) ∧
-        ∃ C : ℝ, ∀ g, ‖coeff m (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) q)‖ ≤ C) →
-      (∀ m, Measurable (fun g => coeff m (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) (p * q))) ∧
-        ∃ C : ℝ, ∀ g, ‖coeff m (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) (p * q))‖ ≤ C) := by
+      (∀ m, Measurable (fun g => AddMonoidAlgebra.coeff (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) p) m) ∧
+        ∃ C : ℝ, ∀ g, ‖AddMonoidAlgebra.coeff (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) p) m‖ ≤ C) →
+      (∀ m, Measurable (fun g => AddMonoidAlgebra.coeff (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) q) m) ∧
+        ∃ C : ℝ, ∀ g, ‖AddMonoidAlgebra.coeff (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) q) m‖ ≤ C) →
+      (∀ m, Measurable (fun g => AddMonoidAlgebra.coeff (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) (p * q)) m) ∧
+        ∃ C : ℝ, ∀ g, ‖AddMonoidAlgebra.coeff (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) (p * q)) m‖ ≤ C) := by
     intro p q hp hq m
-    have hpb : ∀ m, ∃ C : ℝ, ∀ g, ‖coeff m (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) p)‖ ≤ C :=
+    have hpb : ∀ m, ∃ C : ℝ, ∀ g, ‖AddMonoidAlgebra.coeff (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) p) m‖ ≤ C :=
       fun m => (hp m).2
-    have hqb : ∀ m, ∃ C : ℝ, ∀ g, ‖coeff m (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) q)‖ ≤ C :=
+    have hqb : ∀ m, ∃ C : ℝ, ∀ g, ‖AddMonoidAlgebra.coeff (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) q) m‖ ≤ C :=
       fun m => (hq m).2
     choose Cp hCp using hpb
     choose Cq hCq using hqb
@@ -89,7 +89,7 @@ theorem coeff_colSub_good (ρ : K →* (ι → Matrix.unitaryGroup (Fin a) ℂ))
     simp only [algHom_C, algebraMap_eq]
     exact ⟨measurable_const, _, fun _ => le_rfl⟩
   | add p q hp hq =>
-    simp only [map_add, coeff_add]
+    simp only [map_add, MvPolynomial.coeff_add]
     obtain ⟨hpm, Cp, hCp⟩ := hp m
     obtain ⟨hqm, Cq, hCq⟩ := hq m
     exact ⟨hpm.add hqm, Cp + Cq, fun g => (norm_add_le _ _).trans (add_le_add (hCp g) (hCq g))⟩
@@ -97,7 +97,7 @@ theorem coeff_colSub_good (ρ : K →* (ι → Matrix.unitaryGroup (Fin a) ℂ))
     refine hmul p (X y) hp (fun m' => ?_) m
     simp only [colSub, aeval_X, coeff_sum, coeff_C_mul]
     refine ⟨Finset.measurable_sum _ fun j _ => (hρ _ _ _).mul measurable_const,
-      ∑ j : Fin a, ‖coeff m' (X (y.1, y.2.1, j) : Pol ι d a)‖, fun g => ?_⟩
+      ∑ j : Fin a, ‖AddMonoidAlgebra.coeff (X (y.1, y.2.1, j) : Pol ι d a) m'‖, fun g => ?_⟩
     refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun j _ => ?_)
     rw [norm_mul]
     exact mul_le_of_le_one_left (norm_nonneg _) (entry_norm_bound_of_unitary (ρ g y.1).2 _ _)
@@ -165,7 +165,7 @@ theorem measurable_cc (n : ι → ℕ) (ρ : K →* (ι → Matrix.unitaryGroup 
 theorem integrable_term (ν : Measure K) [IsProbabilityMeasure ν] (n : ι → ℕ)
     (ρ : K →* (ι → Matrix.unitaryGroup (Fin a) ℂ))
     (hρ : ∀ τ i j, Measurable fun g => (ρ g τ : Matrix (Fin a) (Fin a) ℂ) i j) (P : Pol ι d a) (m : Var ι d a →₀ ℕ) :
-    Integrable (fun g => cc n ρ g * coeff m (colSub (Mg ρ g) P)) ν := by
+    Integrable (fun g => cc n ρ g * AddMonoidAlgebra.coeff (colSub (Mg ρ g) P) m) ν := by
   obtain ⟨hm, C, hC⟩ := coeff_colSub_good ρ hρ P m
   refine Integrable.of_bound ((measurable_cc n ρ hρ).mul hm).aestronglyMeasurable C
     (Filter.Eventually.of_forall fun g => ?_)
@@ -177,18 +177,18 @@ theorem integral_eq_lin (ν : Measure K) [IsProbabilityMeasure ν] (n : ι → �
     (hρ : ∀ τ i j, Measurable fun g => (ρ g τ : Matrix (Fin a) (Fin a) ℂ) i j) (P : Pol ι d a)
     (S : Finset (Var ι d a →₀ ℕ)) (hS : ∀ u, (colSub u P).support ⊆ S) (ℓ : Pol ι d a →ₗ[ℂ] ℂ) :
     ∫ g, cc n ρ g * ℓ (colSub (Mg ρ g) P) ∂ν =
-      ℓ (∑ m ∈ S, monomial m (∫ g, cc n ρ g * coeff m (colSub (Mg ρ g) P) ∂ν)) := by
+      ℓ (∑ m ∈ S, monomial m (∫ g, cc n ρ g * AddMonoidAlgebra.coeff (colSub (Mg ρ g) P) m ∂ν)) := by
   have hmono : ∀ (m : Var ι d a →₀ ℕ) (c : ℂ), ℓ (monomial m c) = c * ℓ (monomial m 1) := by
     intro m c
     have : (monomial m c : Pol ι d a) = c • monomial m 1 := by rw [smul_monomial, smul_eq_mul, mul_one]
     rw [this, map_smul, smul_eq_mul]
-  have hexp : ∀ Q : Pol ι d a, Q.support ⊆ S → ℓ Q = ∑ m ∈ S, coeff m Q * ℓ (monomial m 1) := by
+  have hexp : ∀ Q : Pol ι d a, Q.support ⊆ S → ℓ Q = ∑ m ∈ S, AddMonoidAlgebra.coeff Q m * ℓ (monomial m 1) := by
     intro Q hQ
     conv_lhs => rw [Q.as_sum]
     rw [Finset.sum_subset hQ (fun m _ hm => by rw [notMem_support_iff.1 hm, monomial_zero]), map_sum]
     exact Finset.sum_congr rfl fun m _ => hmono m _
   have hL : ∀ g, cc n ρ g * ℓ (colSub (Mg ρ g) P) =
-      ∑ m ∈ S, (cc n ρ g * coeff m (colSub (Mg ρ g) P)) * ℓ (monomial m 1) := by
+      ∑ m ∈ S, (cc n ρ g * AddMonoidAlgebra.coeff (colSub (Mg ρ g) P) m) * ℓ (monomial m 1) := by
     intro g
     rw [hexp _ (hS _), Finset.mul_sum]
     exact Finset.sum_congr rfl fun m _ => by ring
@@ -219,10 +219,10 @@ theorem avg_perp : ∀ {ι : Type} [Fintype ι] (a d : ℕ) (n : ι → ℕ) {K 
       Λ (GlobalTheory.MinorFrame.colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) P) ∂ν = 0 := by
   intro ι _ a d n K _ _ ν hν hinv ρ hρ hsurj Λ P hP
   obtain ⟨S, hS⟩ := support_colSub_bdd P
-  set Q : Pol ι d a := ∑ m ∈ S, monomial m (∫ g, cc n ρ g * coeff m (colSub (Mg ρ g) P) ∂ν) with hQdef
+  set Q : Pol ι d a := ∑ m ∈ S, monomial m (∫ g, cc n ρ g * AddMonoidAlgebra.coeff (colSub (Mg ρ g) P) m ∂ν) with hQdef
   have hav : ∀ ℓ : Pol ι d a →ₗ[ℂ] ℂ, ∫ g, cc n ρ g * ℓ (colSub (Mg ρ g) P) ∂ν = ℓ Q :=
     fun ℓ => integral_eq_lin ν n ρ hρ P S hS ℓ
-  have hcoef : ∀ m, coeff m Q = ∫ g, cc n ρ g * coeff m (colSub (Mg ρ g) P) ∂ν :=
+  have hcoef : ∀ m, AddMonoidAlgebra.coeff Q m = ∫ g, cc n ρ g * AddMonoidAlgebra.coeff (colSub (Mg ρ g) P) m ∂ν :=
     fun m => (hav (lcoeff ℂ m)).symm
   have hQinv : Q ∈ inv a d n := by
     intro u
@@ -233,7 +233,7 @@ theorem avg_perp : ∀ {ι : Type} [Fintype ι] (a d : ℕ) (n : ι → ℕ) {K 
     have h1 := hav ((lcoeff ℂ m).comp (colSub (Mg ρ g0)).toLinearMap)
     simp only [LinearMap.comp_apply, AlgHom.toLinearMap_apply, lcoeff_apply] at h1
     rw [← h1, hcoef m]
-    have hF : Measurable fun g => cc n ρ g * coeff m (colSub (Mg ρ g) P) :=
+    have hF : Measurable fun g => cc n ρ g * AddMonoidAlgebra.coeff (colSub (Mg ρ g) P) m :=
       (measurable_cc n ρ hρ).mul (coeff_colSub_good ρ hρ P m).1
     rw [← integral_mul_left_inv ν _ hF g0, ← integral_const_mul]
     refine integral_congr_ae (Filter.Eventually.of_forall fun g => ?_)

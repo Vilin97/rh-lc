@@ -79,7 +79,7 @@ theorem WeightedIndexBound.proof (E : Type*) [Field E] [NumberField E] [IsTotall
   have hhad : |o.volumeForm (fun i => Φ (a i : E))| ≤ (r * lam) ^ finrank ℚ E := by
     refine (o.abs_volumeForm_apply_le _).trans ?_
     calc ∏ i, ‖Φ (a i : E)‖ ≤ ∏ _i : Fin (finrank ℚ E), r * lam :=
-          Finset.prod_le_prod (fun i _ => norm_nonneg _) (fun i _ => hnorm i)
+          Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) (fun i _ => hnorm i)
       _ = (r * lam) ^ finrank ℚ E := by simp
 
   have hpos : 0 < (lam / Real.sqrt (finrank ℚ E)) ^ finrank ℚ E := pow_pos (div_pos hlam0 hsd) _

@@ -93,7 +93,7 @@ theorem t_BoxSumLattice : BoxSumLattice := by
         apply Finset.sum_le_sum
         intro l _
         simp only [prof]
-        apply Finset.prod_le_prod (fun w _ => hfac x l w (hx w))
+        apply Finset.prod_le_prod₀ (fun w _ => hfac x l w (hx w))
         intro w _
         rw [Real.rpow_natCast]
         apply min_le_min_left
@@ -245,7 +245,7 @@ theorem t_LevelSizesJoint : LevelSizesJoint := by
     refine ⟨mul_nonneg hC4p hP0, ?_⟩
     have hPQ : ∏ s' ∈ Ico 1 s, D.vol (i - s + 1) s' ≤ (((Θ ^ D.f)⁻¹) ^ 2) ^ (s - 1) := by
       calc ∏ s' ∈ Ico 1 s, D.vol (i - s + 1) s' ≤ ∏ s' ∈ Ico 1 s, ((Θ ^ D.f)⁻¹) ^ 2 := by
-            apply Finset.prod_le_prod (fun s' _ => hvol0 s')
+            apply Finset.prod_le_prod₀ (fun s' _ => hvol0 s')
             intro s' hs''
             have h5 := Finset.mem_Ico.mp hs''
             exact hSB.2 _ _ (by omega) h5.1 (by omega)
@@ -380,7 +380,7 @@ theorem t_LevelSizesJointMean : LevelSizesJointMean := by
     refine ⟨mul_nonneg hC4p hP0, ?_⟩
     have hPQ : ∏ s' ∈ Ico 1 s, D.vol (i - s + 1) s' ≤ (((Θ ^ D.f)⁻¹) ^ 2) ^ (s - 1) := by
       calc ∏ s' ∈ Ico 1 s, D.vol (i - s + 1) s' ≤ ∏ s' ∈ Ico 1 s, ((Θ ^ D.f)⁻¹) ^ 2 := by
-            apply Finset.prod_le_prod (fun s' _ => hvol0 s')
+            apply Finset.prod_le_prod₀ (fun s' _ => hvol0 s')
             intro s' hs''
             have h5 := Finset.mem_Ico.mp hs''
             exact hSB.2 _ _ (by omega) h5.1 (by omega)

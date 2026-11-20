@@ -62,7 +62,7 @@ theorem crAlg_comm (c : ℝ) : ∀ a ∈ Set.range (cr (m := m) (n := n) c), ∀
 
 abbrev CrAlg (m n : ℕ) (c : ℝ) : Subalgebra ℂ (Module.End ℂ (PX m n)) := Algebra.adjoin ℂ (Set.range (cr c))
 
-instance instCommRingCrAlg (c : ℝ) : CommRing (CrAlg m n c) := Algebra.adjoinCommRingOfComm ℂ (crAlg_comm c)
+instance instCommRingCrAlg (c : ℝ) : CommRing (CrAlg m n c) := Algebra.isMulCommutative_adjoin ℂ (crAlg_comm c)
 
 def gen (c : ℝ) (k : Ix m n) : CrAlg m n c := ⟨cr c k, Algebra.subset_adjoin ⟨k, rfl⟩⟩
 
@@ -252,10 +252,10 @@ theorem fock_injective (c : ℝ) (hc : 0 < c) : Function.Injective (fock (m := m
   by_contra hr
   have hne : r.support.Nonempty := MvPolynomial.support_nonempty.mpr hr
   obtain ⟨s0, hs0, hmax⟩ := Finset.exists_max_image r.support Finsupp.degree hne
-  have key := congrArg (MvPolynomial.coeff (Finsupp.mapDomain flp s0)) h0
+  have key := congrArg (AddMonoidAlgebra.coeff · (Finsupp.mapDomain flp s0)) h0
   rw [fock_decomp, MvPolynomial.coeff_zero, MvPolynomial.coeff_sum, Finset.sum_eq_single s0] at key
   · rw [MvPolynomial.coeff_smul, MvPolynomial.coeff_add, Sm, MvPolynomial.coeff_monomial, if_pos rfl] at key
-    have herr : MvPolynomial.coeff (Finsupp.mapDomain flp s0) (err c s0) = 0 := by
+    have herr : AddMonoidAlgebra.coeff (err c s0) (Finsupp.mapDomain flp s0) = 0 := by
       by_contra hne'
       have := err_deg c _ s0 rfl _ (MvPolynomial.mem_support_iff.mpr hne')
       rw [degree_mapDomain] at this
@@ -270,7 +270,7 @@ theorem fock_injective (c : ℝ) (hc : 0 < c) : Function.Injective (fock (m := m
     have h1 : Finsupp.mapDomain flp s ≠ Finsupp.mapDomain flp s0 :=
       fun h => hne' (Finsupp.mapDomain_injective flp_injective h)
     rw [if_neg h1]
-    have herr : MvPolynomial.coeff (Finsupp.mapDomain flp s0) (err c s) = 0 := by
+    have herr : AddMonoidAlgebra.coeff (err c s) (Finsupp.mapDomain flp s0) = 0 := by
       by_contra hne''
       have := err_deg c _ s rfl _ (MvPolynomial.mem_support_iff.mpr hne'')
       rw [degree_mapDomain] at this

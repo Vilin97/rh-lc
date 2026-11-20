@@ -82,7 +82,7 @@ theorem injective_chart {Ω : Type} [Field Ω] [CharZero Ω] {D : ℕ} {l : Fin 
 theorem isHomogeneous_of_X_pow_mul {σ : Type*} {k : σ} {a d : ℕ} {H : MvPolynomial σ ℚ}
     (h : (X k ^ a * H).IsHomogeneous (a + d)) : H.IsHomogeneous d := by
   intro μ hμ
-  have h1 : coeff (μ + Finsupp.single k a) (X k ^ a * H) = coeff μ H := by
+  have h1 : AddMonoidAlgebra.coeff (X k ^ a * H) (μ + Finsupp.single k a) = AddMonoidAlgebra.coeff H μ := by
     rw [X_pow_eq_monomial, mul_comm, coeff_mul_monomial, mul_one]
   have h2 := h (by rw [h1]; exact hμ)
   simp only [map_add, Finsupp.weight_single, Pi.one_apply, smul_eq_mul, mul_one] at h2

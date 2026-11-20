@@ -62,15 +62,15 @@ private theorem coef_hom (J : Ideal A) : (GMod.self (reesGr N)).IsHomSub (coefId
   refine le_antisymm (fun p hp => ?_) (Submodule.span_le.2 fun x hx => hx.1)
   rw [eq_sum_mono N p]
   refine Submodule.sum_mem _ fun μ _ => Submodule.subset_span ⟨fun n => ?_, _, mono_mem N μ _ _⟩
-  show MvPolynomial.coeff n (MvPolynomial.monomial μ _) ∈ J
+  show AddMonoidAlgebra.coeff (MvPolynomial.monomial μ _) n ∈ J
   rw [MvPolynomial.coeff_monomial]
   split_ifs
   · exact hp μ
   · exact J.zero_mem
 
 private theorem coeff_alg (b : B) (p : rees N) (n : Fin k →₀ ℕ) :
-    MvPolynomial.coeff n (algebraMap B (rees N) b * p).1 = algebraMap B A b * MvPolynomial.coeff n p.1 := by
-  show MvPolynomial.coeff n (algebraMap B (MvPolynomial (Fin k) A) b * p.1) = _
+    MvPolynomial.coeff n (algebraMap B (rees N) b * p).1 = algebraMap B A b * AddMonoidAlgebra.coeff p.1 n := by
+  show AddMonoidAlgebra.coeff (algebraMap B (MvPolynomial (Fin k) A) b * p.1) n = _
   rw [MvPolynomial.algebraMap_apply, MvPolynomial.coeff_C_mul]
 
 private theorem alg_mem_coef (J : Ideal A) (b : B) (hb : algebraMap B A b ∈ J) :

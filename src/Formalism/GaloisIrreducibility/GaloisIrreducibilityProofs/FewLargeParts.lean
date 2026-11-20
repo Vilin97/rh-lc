@@ -18,7 +18,7 @@ lemma prod_lpart_dvd (n : ℕ) (S : Finset ℕ) (hS : ∀ l ∈ S, l.Prime) :
       have hl'p : l'.Prime := hS l' (Finset.mem_insert_of_mem hl')
       apply Nat.Coprime.pow
       exact (Nat.coprime_primes hlp hl'p).2 (fun h => hl (h ▸ hl'))
-    · exact pow_padicValNat_dvd
+    · exact (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
     · exact ih'
 
 theorem few_large_cycle_parts : FewLargeParts := by

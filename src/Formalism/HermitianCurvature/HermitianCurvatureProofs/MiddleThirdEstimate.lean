@@ -24,7 +24,7 @@ theorem middleThird_ok : MiddleThird := by
   constructor
   · rw [← Finset.prod_div_distrib, Finset.abs_prod]
     calc ∏ s, |(Y + 1 + lam s) / (Y + lam s)| ≤ ∏ _s : Fin n, Real.exp (3 / (β - α)) := by
-          apply Finset.prod_le_prod (fun s _ => abs_nonneg _)
+          apply Finset.prod_le_prod₀ (fun s _ => abs_nonneg _)
           intro s _
           have h1 := key s
           have hpos : 0 < |Y + lam s| := by linarith
@@ -43,7 +43,7 @@ theorem middleThird_ok : MiddleThird := by
           rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin, ← Real.exp_nat_mul]; congr 1; ring
   · rw [← Finset.prod_div_distrib, Finset.abs_prod]
     calc ∏ s, |(Y + lam s) / (Y + 1 + lam s)| ≤ ∏ _s : Fin n, Real.exp (4 / (β - α)) := by
-          apply Finset.prod_le_prod (fun s _ => abs_nonneg _)
+          apply Finset.prod_le_prod₀ (fun s _ => abs_nonneg _)
           intro s _
           have h1 := key2 s
           have hpos : 0 < |Y + 1 + lam s| := by linarith

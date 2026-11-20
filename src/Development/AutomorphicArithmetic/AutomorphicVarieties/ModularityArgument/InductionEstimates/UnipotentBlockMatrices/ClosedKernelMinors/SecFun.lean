@@ -63,7 +63,7 @@ private theorem height_blk {K : Type} [Field K] [NumberField K] (a b : AdelicGLn
   have h1 : ∏ w : InfinitePlace K, locHeight (infAt w g) ^ w.mult ≤
       (∏ w : InfinitePlace K, locHeight (infAt w a) ^ w.mult) * ∏ w : InfinitePlace K, locHeight (infAt w b) ^ w.mult := by
     rw [← Finset.prod_mul_distrib]
-    refine Finset.prod_le_prod (fun w _ => (pow_pos (locHeight_pos _) _).le) fun w _ => ?_
+    refine Finset.prod_le_prod₀ (fun w _ => (pow_pos (locHeight_pos _) _).le) fun w _ => ?_
     rw [← mul_pow, ei]
     exact pow_le_pow_left₀ (locHeight_pos _).le (locHeight_blk _ _) _
   have fa := finite_mulSupport_locHeight_finAt a

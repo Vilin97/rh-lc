@@ -86,7 +86,7 @@ theorem segreLiftMap_of_isWeightedHomogeneous (W : Ideal (MRing ι F)) {f : MRin
     {e : Unit ⊕ K → ℕ} (hf : IsWeightedHomogeneous (NumbersDVR.blockWeight (segreIdx ι)) f e) :
     ∃ a, segreLiftMap ι F W f = Polynomial.X ^ e (Sum.inl ()) * Polynomial.C a := by
   classical
-  choose a ha using fun s => segreLiftMap_monomial W s (coeff s f)
+  choose a ha using fun s => segreLiftMap_monomial W s (AddMonoidAlgebra.coeff f s)
   refine ⟨∑ s ∈ f.support, a s, ?_⟩
   conv_lhs => rw [f.as_sum]
   rw [map_sum, map_sum, Finset.mul_sum]

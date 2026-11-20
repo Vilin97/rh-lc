@@ -10,9 +10,9 @@ theorem BaseChangeColon.cycNum_mul_expansion : ∀ (O : Type) [CommRing O] [IsDo
   intro O _ _ _ K _ _ ι _ σ Z cls H G Q
   classical
   have key : ∀ (P : MvPolynomial σ ℝ) (L : List (K → ℤ)) (s : Finset (σ →₀ ℕ)), P.support ⊆ s →
-      cycNum Z cls P L = ∑ κ ∈ s, MvPolynomial.coeff κ P * (cycList Z (classList cls κ ++ L) : ℝ) := by
+      cycNum Z cls P L = ∑ κ ∈ s, AddMonoidAlgebra.coeff P κ * (cycList Z (classList cls κ ++ L) : ℝ) := by
     intro P L s hs
-    show ∑ κ ∈ P.support, MvPolynomial.coeff κ P * (cycList Z (classList cls κ ++ L) : ℝ) = _
+    show ∑ κ ∈ P.support, AddMonoidAlgebra.coeff P κ * (cycList Z (classList cls κ ++ L) : ℝ) = _
     refine Finset.sum_subset hs (fun κ _ hκ => ?_)
     rw [MvPolynomial.notMem_support_iff.mp hκ, zero_mul]
   have hadd : ∀ P P' : MvPolynomial σ ℝ, cycNum Z cls (P + P') Q = cycNum Z cls P Q + cycNum Z cls P' Q := by

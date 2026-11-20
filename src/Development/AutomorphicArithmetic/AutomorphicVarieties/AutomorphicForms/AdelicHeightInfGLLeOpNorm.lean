@@ -33,7 +33,7 @@ theorem UpperTheory.adelicHeight_infGL_le_opNorm :
   unfold AutomorphicForm.height
   rw [finprod_eq_one_of_forall_eq_one fun v => by rw [finOne, locHeight_one], mul_one,
     ← Finset.prod_pow_eq_pow_sum]
-  refine Finset.prod_le_prod (fun w _ => (pow_pos (locHeight_pos _) _).le) fun w _ =>
+  refine Finset.prod_le_prod₀ (fun w _ => (pow_pos (locHeight_pos _) _).le) fun w _ =>
     pow_le_pow_left₀ (locHeight_pos _).le ?_ _
   unfold TR.height
   refine locHeight_le (by linarith) (fun i j => ?_) fun i j => ?_

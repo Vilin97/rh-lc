@@ -133,8 +133,8 @@ theorem one_letter_gauss_bound : OneLetterGauss7 := by
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (Real.rpow_nonneg hl0.le _)
     fun κ hκ => ?_
   have hdeg := degree_plain p hp I κ hκ
-  have hint : ‖MvPolynomial.coeff κ (minorProd (fun (i : Fin N0) (b : Fin N1) =>
-      (MvPolynomial.X (i, b) : MvPolynomial (Fin N0 × Fin N1) K)) p hp I)‖ ≤ 1 := by
+  have hint : ‖AddMonoidAlgebra.coeff (minorProd (fun (i : Fin N0) (b : Fin N1) =>
+      (MvPolynomial.X (i, b) : MvPolynomial (Fin N0 × Fin N1) K)) p hp I) κ‖ ≤ 1 := by
     refine minorProd_mem_opInt _ (fun i b m => ?_) p hp I κ
     classical
     rw [MvPolynomial.coeff_X]

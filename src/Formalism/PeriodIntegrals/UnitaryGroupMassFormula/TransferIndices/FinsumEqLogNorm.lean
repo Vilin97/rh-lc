@@ -128,7 +128,7 @@ theorem abs_norm_le {K : Type} [Field K] [NumberField K] (x : 𝓞 K) (B : ℝ) 
     | simp
     | norm_cast
   rw [h1, ← InfinitePlace.sum_mult_eq, ← Finset.prod_pow_eq_pow_sum]
-  refine Finset.prod_le_prod (fun w _ => pow_nonneg (AbsoluteValue.nonneg _ _) _) (fun w _ => ?_)
+  refine Finset.prod_le_prod₀ (fun w _ => pow_nonneg (AbsoluteValue.nonneg _ _) _) (fun w _ => ?_)
   refine pow_le_pow_left₀ (AbsoluteValue.nonneg _ _) ?_ _
   rw [← InfinitePlace.norm_embedding_eq]
   exact hσ _

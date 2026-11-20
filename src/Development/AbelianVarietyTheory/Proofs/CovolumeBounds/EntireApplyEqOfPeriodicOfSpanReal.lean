@@ -130,7 +130,7 @@ theorem entire_exists_polynomial_of_poly_bound {F : ℂ → ℂ} (hF : Different
   refine ⟨∑ k ∈ Finset.range (m + 1), Polynomial.monomial k (a k), ?_, fun z => ?_⟩
   · refine Polynomial.natDegree_sum_le_of_forall_le _ _ fun k hk => ?_
     exact (Polynomial.natDegree_monomial_le _).trans (by simpa [Nat.lt_succ_iff] using hk)
-  · rw [ha z, Polynomial.eval_finset_sum]
+  · rw [ha z, Polynomial.eval_finsetSum]
     refine Finset.sum_congr rfl fun k _ => ?_
     simp [mul_comm]
 

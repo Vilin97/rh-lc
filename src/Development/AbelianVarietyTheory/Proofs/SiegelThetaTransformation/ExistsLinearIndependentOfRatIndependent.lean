@@ -45,7 +45,7 @@ theorem prod_pow_le_prod_of_mono (l : ℕ → ℝ) (hl : ∀ i, 0 ≤ l i) (d N 
     refine mul_le_mul (ih fun i j hij hj => hm i j hij (by nlinarith)) ?_ (pow_nonneg (hl _) _)
       (Finset.prod_nonneg fun _ _ => hl _)
     calc l (d * N + 1) ^ d = ∏ _j ∈ Finset.range d, l (d * N + 1) := by simp
-      _ ≤ _ := Finset.prod_le_prod (fun _ _ => hl _) fun j hj => hm _ _ (by omega) (by
+      _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => hl _) fun j hj => hm _ _ (by omega) (by
           have := Finset.mem_range.1 hj
           rw [mul_add]; omega)
 
@@ -115,7 +115,7 @@ theorem exists_linearIndependent_prod_norm_le {E U V ι : Type} [Field E] [Numbe
   refine le_trans ?_ (prod_pow_le_prod_of_mono (succMin L) (succMin_nonneg L) d N
     fun i j hij hj => succMin_mono hij (by rwa [hrR]))
   rw [← Fin.prod_univ_eq_prod_range (fun i => succMin L (d * i + 1) ^ d)]
-  exact Finset.prod_le_prod (fun _ _ => by positivity) fun i _ =>
+  exact Finset.prod_le_prod₀ (fun _ _ => by positivity) fun i _ =>
     pow_le_pow_left₀ (norm_nonneg _) (hS i).2 _
 
 theorem posDef_map_mul_conjTranspose {E m n : Type} [Field E] [Fintype m] [Fintype n]
@@ -234,7 +234,7 @@ theorem exists_short_independent_rows :
   · exact ((Matrix.isUnit_iff_isUnit_det _).1
       (linearIndependent_rows_iff_isUnit.1 (show LinearIndependent E (Matrix.of a).row from ha))).ne_zero
   · rw [hdet, Real.sqrt_sq (by positivity), ← mul_assoc, hΨ.finrank_eq] at hle
-    refine le_trans (Finset.prod_le_prod (fun _ _ => by positivity) fun i _ => ?_) hle
+    refine le_trans (Finset.prod_le_prod₀ (fun _ _ => by positivity) fun i _ => ?_) hle
     rw [pow_mul, EuclideanSpace.norm_sq_eq, Fintype.sum_prod_type]
     refine pow_le_pow_left₀ (by positivity) ?_ _
     rw [Finset.sum_coe_sort Ψ (fun τ => ∑ j, ‖τ ((Matrix.of a * W) i j)‖ ^ 2)]

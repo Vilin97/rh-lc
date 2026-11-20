@@ -185,12 +185,12 @@ theorem UpperTheory.V.Alg.M.locLen_mQ_gr_le_locLen_aPiece :
       ⟨h.1, lattice_le_weight_submodule 𝒜 (Q.hF (Fin.last r)) μ h.2, rfl⟩
   refine localized_length_le_of_surjective σ φ ψ ?_ ?_
   · rintro ⟨_, p, hp', rfl⟩
-    refine ⟨⟨MvPolynomial.coeff μ p.1, p.2 μ⟩, Subtype.ext ?_⟩
+    refine ⟨⟨AddMonoidAlgebra.coeff p.1 μ, p.2 μ⟩, Subtype.ext ?_⟩
     show J.mkQ (mono _ μ _ (p.2 μ)) = J.mkQ p
     congr 1
     apply Subtype.ext
     ext ν
-    show MvPolynomial.coeff ν (MvPolynomial.monomial μ _) = _
+    show AddMonoidAlgebra.coeff (MvPolynomial.monomial μ _) ν = _
     rw [MvPolynomial.coeff_monomial]
     split_ifs with h
     · rw [h]

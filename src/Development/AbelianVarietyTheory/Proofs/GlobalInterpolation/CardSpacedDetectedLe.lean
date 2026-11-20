@@ -76,7 +76,7 @@ private theorem exists_card_divisors_le_mul_rpow (ε : ℝ) (hε : 0 < ε) :
               _ = B := Finset.card_range B
   calc ∏ p ∈ n.primeFactors, ((n.factorization p : ℝ) + 1)
       ≤ ∏ p ∈ n.primeFactors, (f p * ((p : ℝ) ^ n.factorization p) ^ ε) := by
-        apply Finset.prod_le_prod (fun p _ => by positivity)
+        apply Finset.prod_le_prod₀ (fun p _ => by positivity)
         intro p hp
         have h2 := (Nat.prime_of_mem_primeFactors hp).two_le
         obtain ⟨hA, hB⟩ := succ_le_mul_pow_rpow_of_two_le ε hε p (n.factorization p) h2

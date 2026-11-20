@@ -435,7 +435,7 @@ private theorem val_succ (p : ℕ) (hp : p.Prime) (r : ℕ) :
     (r + 1) + padicValNat p (r + 1).factorial =
       (r + padicValNat p r.factorial) + (1 + padicValNat p (r + 1)) := by
   have := Fact.mk hp
-  rw [Nat.factorial_succ, padicValNat.mul (Nat.add_one_ne_zero r) (Nat.factorial_ne_zero r)]
+  rw [Nat.factorial_succ, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.add_one_ne_zero r) (Nat.factorial_ne_zero r)]
   omega
 
 private theorem val_add (p : ℕ) (hp : p.Prime) (a b : ℕ) :
@@ -444,8 +444,8 @@ private theorem val_add (p : ℕ) (hp : p.Prime) (a b : ℕ) :
   have := Fact.mk hp
   have h := Nat.add_choose_mul_factorial_mul_factorial a b
   have h0 : (a + b).choose b ≠ 0 := (Nat.choose_pos (Nat.le_add_left b a)).ne'
-  rw [← h, padicValNat.mul (mul_ne_zero h0 (Nat.factorial_ne_zero a)) (Nat.factorial_ne_zero b),
-    padicValNat.mul h0 (Nat.factorial_ne_zero a)]
+  rw [← h, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (mul_ne_zero h0 (Nat.factorial_ne_zero a)) (Nat.factorial_ne_zero b),
+    (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) h0 (Nat.factorial_ne_zero a)]
   omega
 
 private theorem eY_mono (p : ℕ) (hp : p.Prime) : Monotone (eY p) := by

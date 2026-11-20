@@ -949,7 +949,7 @@ open MvPolynomial Formalism.L2.DIV Formalism.GradedWeylDivisibility
 variable {K : Type} [Field K] {r n : ℕ}
 
 theorem coeff_colSc (t : Fin n) (d : K) (F : MvPolynomial (Fin r × Fin n) K) (m : Fin r × Fin n →₀ ℕ) :
-    coeff m (colSc t d F) = d ^ (∑ a : Fin r, m (a, t)) * coeff m F := by
+    AddMonoidAlgebra.coeff (colSc t d F) m = d ^ (∑ a : Fin r, m (a, t)) * AddMonoidAlgebra.coeff F m := by
   classical
   induction F using MvPolynomial.induction_on' with
   | monomial m' c =>
@@ -957,7 +957,7 @@ theorem coeff_colSc (t : Fin n) (d : K) (F : MvPolynomial (Fin r × Fin n) K) (m
     split_ifs with h
     · rw [h]
     · simp
-  | add f g hf hg => rw [map_add, coeff_add, coeff_add, hf, hg, mul_add]
+  | add f g hf hg => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hf, hg, mul_add]
 
 theorem pow_inj_of_infinite [Infinite K] {a b : ℕ} (h : ∀ x : K, x ≠ 0 → x ^ a = x ^ b) : a = b := by
   have h0 : (Polynomial.X ^ a - Polynomial.X ^ b : Polynomial K) = 0 := by
@@ -1014,7 +1014,7 @@ theorem mem_dualWeyl_of_bor [Infinite K] {ν : Fin n → ℕ} {F : MvPolynomial 
       have h2 := h (Matrix.diagonal fun s => if s = t then x else 1) (fun w s hws => Matrix.diagonal_apply_ne _ hws.ne')
         (fun w => by rw [Matrix.diagonal_apply_eq]; split_ifs; exacts [hx, one_ne_zero])
       rw [colSub1_diag] at h2
-      have h3 := congrArg (coeff m) h2
+      have h3 := congrArg (AddMonoidAlgebra.coeff · m) h2
       rw [coeff_colSc, coeff_smul, smul_eq_mul] at h3
       have h4 : (∏ y, (Matrix.diagonal (fun s => if s = t then x else 1) : Matrix (Fin n) (Fin n) K) y y ^ ν y) = x ^ ν t := by
         rw [Finset.prod_eq_single t]
@@ -1107,7 +1107,7 @@ theorem psi_colSub [Fintype ι] (τ : ι) (β : Matrix (Fin n) (Fin n) K) (Q : P
   exact RingHom.congr_fun e Q
 
 theorem coeff_psi_mem [Fintype ι] [Infinite K] {ν : ι → Fin n → ℕ} {Q : Pol K ι n} (hQ : Q ∈ WtPol K ν) (τ : ι) (r : Off ι n τ →₀ ℕ) :
-    coeff r (psi τ Q) ∈ dualWeyl K n n (ν τ) := by
+    AddMonoidAlgebra.coeff (psi τ Q) r ∈ dualWeyl K n n (ν τ) := by
   classical
   apply mem_dualWeyl_of_bor
   intro β h1 h2
@@ -1119,7 +1119,7 @@ theorem coeff_psi_mem [Fintype ι] [Infinite K] {ν : ι → Fin n → ℕ} {Q :
       exact ⟨h1, h2⟩
     · rw [Function.update_of_ne h]
       exact ⟨fun w s hws => Matrix.one_apply_ne hws.ne', fun w => by simp⟩
-  have h3 := congrArg (fun x => coeff r (psi τ x)) (hQ _ hB)
+  have h3 := congrArg (fun x => AddMonoidAlgebra.coeff (psi τ x) r) (hQ _ hB)
   simp only [psi_colSub, coeff_map, map_smul, coeff_smul] at h3
   have h4 : (∏ σ, ∏ x, (Function.update (1 : ι → Matrix (Fin n) (Fin n) K) τ β) σ x x ^ ν σ x) = ∏ x, β x x ^ ν τ x := by
     rw [Finset.prod_eq_single τ]
@@ -1166,7 +1166,7 @@ def atPos (τ : ι) (π : MvPolynomial (Fin n × Fin n) K →ₗ[K] MvPolynomial
   (basisMonomials _ K).constr K fun m => psi' τ (monomial (rOf τ m) (π (monomial (gOf τ m) 1)))
 
 theorem coeff_psi_atPos (τ : ι) (π : MvPolynomial (Fin n × Fin n) K →ₗ[K] MvPolynomial (Fin n × Fin n) K) (Q : Pol K ι n)
-    (r : Off ι n τ →₀ ℕ) : coeff r (psi τ (atPos τ π Q)) = π (coeff r (psi τ Q)) := by
+    (r : Off ι n τ →₀ ℕ) : AddMonoidAlgebra.coeff (psi τ (atPos τ π Q)) r = π (AddMonoidAlgebra.coeff (psi τ Q) r) := by
   classical
   induction Q using MvPolynomial.induction_on' with
   | monomial m c =>
@@ -1178,10 +1178,10 @@ theorem coeff_psi_atPos (τ : ι) (π : MvPolynomial (Fin n × Fin n) K →ₗ[K
     split_ifs
     · rw [map_smul]
     · rw [smul_zero, map_zero]
-  | add f g hf hg => simp only [map_add, coeff_add, hf, hg]
+  | add f g hf hg => simp only [map_add, MvPolynomial.coeff_add, hf, hg]
 
 theorem atPos_fixed (τ : ι) (π : MvPolynomial (Fin n × Fin n) K →ₗ[K] MvPolynomial (Fin n × Fin n) K) (Q : Pol K ι n)
-    (h : ∀ r, π (coeff r (psi τ Q)) = coeff r (psi τ Q)) : atPos τ π Q = Q := by
+    (h : ∀ r, π (AddMonoidAlgebra.coeff (psi τ Q) r) = AddMonoidAlgebra.coeff (psi τ Q) r) : atPos τ π Q = Q := by
   have e : psi τ (atPos τ π Q) = psi τ Q := MvPolynomial.ext _ _ fun r => by rw [coeff_psi_atPos, h r]
   rw [← psi'_psi τ (atPos τ π Q), e, psi'_psi]
 
@@ -1232,7 +1232,7 @@ theorem mem_TS_empty [Fintype ι] (W : ι → Submodule K (MvPolynomial (Fin n �
       rintro ⟨w, hw⟩
       exact hσ (congrArg Prod.fst hw)
     · intro h; exact absurd (Finset.mem_univ _) h
-  have h : (monomial m (coeff m Q) : Pol K ι n) = coeff m Q • ∏ σ, blockEmb K σ (monomial (gOf σ m) (1 : K)) := by
+  have h : (monomial m (AddMonoidAlgebra.coeff Q m) : Pol K ι n) = AddMonoidAlgebra.coeff Q m • ∏ σ, blockEmb K σ (monomial (gOf σ m) (1 : K)) := by
     rw [ldtensor_prod_monomial, smul_monomial, smul_eq_mul, mul_one, ← hm]
   rw [h]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, fun σ hσ => absurd hσ (Finset.notMem_empty σ), rfl⟩)
@@ -1251,8 +1251,8 @@ theorem wtPol_le_tensor [Fintype ι] [Infinite K] (ν : ι → Fin n → ℕ) :
         (dualWeyl K n n (ν τ)).subtype ∘ₗ Submodule.projectionOnto _ T hT with hπ
       have hfix : atPos τ π Q = Q := by
         refine atPos_fixed τ π Q fun r => ?_
-        have h := Submodule.projectionOnto_apply_left hT (⟨coeff r (psi τ Q), coeff_psi_mem hQ τ r⟩ : dualWeyl K n n (ν τ))
-        have h' : Submodule.projectionOnto _ T hT (coeff r (psi τ Q)) = ⟨coeff r (psi τ Q), coeff_psi_mem hQ τ r⟩ := h
+        have h := Submodule.projectionOnto_apply_left hT (⟨AddMonoidAlgebra.coeff (psi τ Q) r, coeff_psi_mem hQ τ r⟩ : dualWeyl K n n (ν τ))
+        have h' : Submodule.projectionOnto _ T hT (AddMonoidAlgebra.coeff (psi τ Q) r) = ⟨AddMonoidAlgebra.coeff (psi τ Q) r, coeff_psi_mem hQ τ r⟩ := h
         rw [hπ, LinearMap.comp_apply, h']
         rfl
       have hle : TS (fun τ => dualWeyl K n n (ν τ)) S ≤ (TS (fun τ => dualWeyl K n n (ν τ)) (insert τ S)).comap (atPos τ π) := by

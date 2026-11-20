@@ -73,11 +73,11 @@ theorem exists_homog_chart (V : Ideal (MRingOver F ι)) (j : ∀ k, ι k) (b : M
       _ = m.sum fun _ n => n := by rw [Finsupp.sum_fintype _ _ (fun _ => rfl), Fintype.sum_sigma]
       _ ≤ b.totalDegree := MvPolynomial.le_totalDegree hm
       _ ≤ e k := he k
-  refine ⟨∑ m ∈ b.support, monomial m (coeff m b) * ∏ k, X ⟨k, j k⟩ ^ (e k - ∑ i, m ⟨k, i⟩),
+  refine ⟨∑ m ∈ b.support, monomial m (AddMonoidAlgebra.coeff b m) * ∏ k, X ⟨k, j k⟩ ^ (e k - ∑ i, m ⟨k, i⟩),
     ?_, ?_⟩
   · refine Submodule.sum_mem _ fun m hm => ?_
     rw [mem_weightedHomogeneousSubmodule]
-    have h1 : IsWeightedHomogeneous (mw (ι := ι)) (monomial m (coeff m b))
+    have h1 : IsWeightedHomogeneous (mw (ι := ι)) (monomial m (AddMonoidAlgebra.coeff b m))
         (fun k => ∑ i, m ⟨k, i⟩) :=
       isWeightedHomogeneous_monomial _ _ _ (weight_mw m)
     have h2 : IsWeightedHomogeneous (mw (ι := ι))

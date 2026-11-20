@@ -70,7 +70,7 @@ private theorem cg_ext {O R E : Type} [CommRing O] [IsDomain O] [CommRing R] [Al
       have hds : d ∈ s := by
         rw [hs, Set.Finite.mem_toFinset]
         exact hd
-      have hcp : MvPolynomial.coeff d p = k d := by
+      have hcp : AddMonoidAlgebra.coeff p d = k d := by
         rw [hp, MvPolynomial.coeff_sum]
         simp only [MvPolynomial.coeff_monomial]
         rw [Finset.sum_ite_eq' s d (fun e => k e), if_pos hds]

@@ -54,7 +54,7 @@ theorem brStd_norm_le {ι : Type} [Fintype ι] {n N : ℕ} (hN : N = n + 1) (Λ 
   simp only [nrmSq, sumGram_one, brAt, one_zpow, Finset.prod_const_one, one_smul, RingHom.id_apply, brSq, one_mul] at h
   have hp := pairK_pos (RingHom.id ℂ) (fun _ => rfl) Λ (G := fun _ => 1) (fun _ => h1 _) x
   refine h.trans (mul_le_mul_of_nonneg_right ?_ hp)
-  exact Finset.prod_le_prod (fun τ _ => mul_nonneg (sq_nonneg _) (kapBr_pos (hI τ) (hS τ)).le)
+  exact Finset.prod_le_prod₀ (fun τ _ => mul_nonneg (sq_nonneg _) (kapBr_pos (hI τ) (hS τ)).le)
     fun τ _ => const_le (hI τ) (hS τ)
 
 end GlobalTheory.BranchNormBound

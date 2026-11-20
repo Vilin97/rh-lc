@@ -241,7 +241,7 @@ theorem exists_prime_comap_atPrime_quot {R : Type*} [CommRing R] (V Z : Ideal R)
     IsLocalization.isPrime_of_isPrime_disjoint _ _ _ hQV hd, ?_⟩
   rw [IsScalarTower.algebraMap_eq R (R ⧸ V) (Localization.AtPrime (Z.map (Ideal.Quotient.mk V))),
     ← Ideal.comap_comap]
-  have hcm := IsLocalization.comap_map_of_isPrime_disjoint (Z.map (Ideal.Quotient.mk V)).primeCompl
+  have hcm := IsLocalization.under_map_of_isPrime_disjoint (Z.map (Ideal.Quotient.mk V)).primeCompl
     (Localization.AtPrime (Z.map (Ideal.Quotient.mk V))) hQV hd
   rw [show Ideal.comap (algebraMap (R ⧸ V) (Localization.AtPrime (Z.map (Ideal.Quotient.mk V))))
       (Ideal.map (algebraMap (R ⧸ V) (Localization.AtPrime (Z.map (Ideal.Quotient.mk V))))

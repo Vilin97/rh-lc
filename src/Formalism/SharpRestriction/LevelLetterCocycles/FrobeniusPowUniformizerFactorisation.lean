@@ -269,7 +269,7 @@ theorem partR_coreHval {K : FinExt l} {s : ℕ} {LL : FinExt l} (h : Good K s LL
     unfold u₁
     rw [P.PD_p K]
   rw [hu, zl_map_O, v_zl P LL _ hne, hval, hs1, padicValInt.of_nat,
-    padicValNat.mul (by omega) (by omega),
+    (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by omega) (by omega),
     padicValNat.eq_zero_of_not_dvd (fun hd => by have := Nat.le_of_dvd (by omega) hd; omega), zero_add]
 
 theorem partR_coreHleg (p : ℕ) (hp : p.Prime) : coreHleg p := by
@@ -1550,7 +1550,7 @@ theorem frame_red (W : LocWach PD LL O v n) (T : LocLat G Qp LL O) (i : ZMod n)
 theorem frame_aH_succ (p : ℕ) [Fact p.Prime] (s : ℕ) :
     Formalism.RepresentationBoundsCohomology.N2.aH p (s + 1) = Formalism.RepresentationBoundsCohomology.N2.aH p s + (1 + padicValNat p (s + 1)) := by
   unfold Formalism.RepresentationBoundsCohomology.N2.aH
-  rw [Nat.factorial_succ, padicValNat.mul (show s + 1 ≠ 0 by omega) (Nat.factorial_ne_zero s)]
+  rw [Nat.factorial_succ, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (show s + 1 ≠ 0 by omega) (Nat.factorial_ne_zero s)]
   omega
 
 theorem frame_aH_mono (p : ℕ) [Fact p.Prime] {j s : ℕ} (h : j ≤ s) :
@@ -1787,7 +1787,7 @@ theorem arith_eWA_mono (l : ℕ) (hl : 2 ≤ l) {H H' : ℕ} (h : H ≤ H') : eW
 theorem arith_val_fact_mono (l : ℕ) [Fact l.Prime] {a b : ℕ} (h : a ≤ b) :
     padicValNat l a.factorial ≤ padicValNat l b.factorial := by
   exact (padicValNat_dvd_iff_le (Nat.factorial_ne_zero b)).1
-    (dvd_trans pow_padicValNat_dvd (Nat.factorial_dvd_factorial h))
+    (dvd_trans (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)) (Nat.factorial_dvd_factorial h))
 
 theorem arith_eWB_mono (l : ℕ) [Fact l.Prime] (s : ℕ) {H H' : ℕ} (h : H ≤ H') :
     eWB l s H ≤ eWB l s H' := by

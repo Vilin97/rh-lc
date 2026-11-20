@@ -107,7 +107,7 @@ def evP (t : α × P.Tup × ((Σ v : Fin P.nV, Fin (P.n' v) × (Fin (P.m + 1) ×
     FnP P α →ₗ[Kf] Kf :=
   (MvPolynomial.lcoeff Kf t.2.2) ∘ₗ (LinearMap.proj t.2.1) ∘ₗ (LinearMap.proj t.1)
 
-theorem localComponent_apply₂ (i : α) (L : P.Tup) (m) (F : FnP P α) : evP P α (i, L, m) F = coeff m (F i L) := rfl
+theorem localComponent_apply₂ (i : α) (L : P.Tup) (m) (F : FnP P α) : evP P α (i, L, m) F = AddMonoidAlgebra.coeff (F i L) m := rfl
 
 theorem eq_zero_of_forall_evalCoeff_eq_zero (F : FnP P α) (h : ∀ t, evP P α t F = 0) : F = 0 := by
   funext i L
@@ -126,11 +126,11 @@ theorem isRational_iff (F : FnP P α) : RatFnP P α e F ↔ IsRat e (evP P α) F
     exact ⟨_, rfl⟩
   · intro h i L
     obtain ⟨π, -, hπe⟩ := exists_retr e
-    have hc : ∀ n, e (π (coeff n (F i L))) = coeff n (F i L) := fun n => by
+    have hc : ∀ n, e (π (AddMonoidAlgebra.coeff (F i L) n)) = AddMonoidAlgebra.coeff (F i L) n := fun n => by
       obtain ⟨r, hr⟩ := h (i, L, n)
       rw [localComponent_apply₂] at hr
       rw [← hr, hπe]
-    refine ⟨∑ n ∈ (F i L).support, MvPolynomial.monomial n (π (coeff n (F i L))), ?_⟩
+    refine ⟨∑ n ∈ (F i L).support, MvPolynomial.monomial n (π (AddMonoidAlgebra.coeff (F i L) n)), ?_⟩
     rw [map_sum]
     simp only [MvPolynomial.map_monomial, hc]
     exact (MvPolynomial.as_sum (F i L)).symm
@@ -143,7 +143,7 @@ variable {p : ℕ} (G : GAtP p) {LL : Type} [Field LL] (e : LL →+* G.Kf)
 
 abbrev evG := evP G.P G.comp
 
-theorem evG_apply (i : G.comp) (L : G.P.Tup) (m) (F : G.Fn) : evG G (i, L, m) F = coeff m (F i L) := rfl
+theorem evG_apply (i : G.comp) (L : G.P.Tup) (m) (F : G.Fn) : evG G (i, L, m) F = AddMonoidAlgebra.coeff (F i L) m := rfl
 
 theorem evG_sep (F : G.Fn) (h : ∀ t, evG G t F = 0) : F = 0 := eq_zero_of_forall_evalCoeff_eq_zero G.P G.comp F h
 
@@ -166,11 +166,11 @@ def yK (v : Fin G.P.nV) : G.Fn →ₗ[G.Kf] G.Fn where
 
 theorem yv_rat (v : Fin G.P.nV) (F : G.Fn) (h : IsRat e (evG G) F) : IsRat e (evG G) (G.yv v F) := by
   rintro ⟨i, L, m⟩
-  have hF : ∀ L', coeff m (F i L') ∈ e.range := fun L' => by
+  have hF : ∀ L', AddMonoidAlgebra.coeff (F i L') m ∈ e.range := fun L' => by
     obtain ⟨r, hr⟩ := h (i, L', m)
     exact RingHom.mem_range.2 ⟨r, hr.trans (evG_apply G i L' m F)⟩
   have hp : ((p : G.Kf) ^ G.P.ArV v) ∈ e.range := RingHom.mem_range.2 ⟨(p : LL) ^ G.P.ArV v, by simp⟩
-  show coeff m (Level.yv (P := G.P) v (F i) L) ∈ Set.range e
+  show AddMonoidAlgebra.coeff (Level.yv (P := G.P) v (F i) L) m ∈ Set.range e
   rw [LatticeSystems.ef_yv_eq, MvPolynomial.coeff_smul, MvPolynomial.coeff_sum, smul_eq_mul]
   exact RingHom.mem_range.1 (Subring.mul_mem _ hp (Subring.sum_mem _ fun L'' _ => hF _))
 

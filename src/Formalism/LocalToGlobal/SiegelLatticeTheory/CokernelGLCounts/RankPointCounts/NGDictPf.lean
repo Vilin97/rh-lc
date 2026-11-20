@@ -93,7 +93,7 @@ theorem residue_le_height_nonprime (hOK : M.OK) (hR : P.RelG (theta M))
           M.modK (P.Dm l * M.L.cj (P.Dm l)) := by
         rw [← Finset.mul_prod_erase _ _ hl]
         have h1 : ∏ x ∈ P.ends.erase l, M.modK (P.Dm x * M.L.cj (P.Dm x)) ≤ 1 :=
-          Finset.prod_le_one (fun x hx => (hfac x (Finset.mem_of_mem_erase hx)).1.le)
+          Finset.prod_le_one₀ (fun x hx => (hfac x (Finset.mem_of_mem_erase hx)).1.le)
             (fun x hx => (hfac x (Finset.mem_of_mem_erase hx)).2)
         have h0 := (hfac l hl).1.le
         calc _ ≤ M.modK (P.Dm l * M.L.cj (P.Dm l)) * 1 := mul_le_mul_of_nonneg_left h1 h0

@@ -46,7 +46,7 @@ theorem coeff_psiB_ne_zero (b : Fin B) (f : MvPolynomial (Fin B × Fin n) K)
     (s : Fin B × Fin n →₀ ℕ) (hs : s ∈ f.support) : (psiB b f).coeff (bw b s) ≠ 0 := by
   classical
   intro h0
-  have h1 := congrArg (MvPolynomial.coeff s) h0
+  have h1 := congrArg (AddMonoidAlgebra.coeff · s) h0
   conv at h1 => lhs; rw [f.as_sum]
   rw [map_sum, Polynomial.finsetSum_coeff, coeff_sum] at h1
   simp only [psiB_monomial, Polynomial.coeff_C_mul_X_pow, coeff_zero] at h1

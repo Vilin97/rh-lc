@@ -286,7 +286,7 @@ theorem psTrunc_two_twist (G : FGLaw S d) (c : Fin d → Fin d → S) :
       · ext i
         simp
   have hpt : ∀ (g : MvPowerSeries (Fin 2 × Fin d) S) (e : Fin 2 × Fin d →₀ ℕ),
-      MvPolynomial.coeff e (psTrunc 2 g) = if e.degree ≤ 2 then coeff e g else 0 := by
+      AddMonoidAlgebra.coeff (psTrunc 2 g) e = if e.degree ≤ 2 then coeff e g else 0 := by
     intro g e
     rw [psTrunc, MvPolynomial.coeff_sum]
     simp only [MvPolynomial.coeff_monomial, Finset.sum_ite_eq', Finset.sum_ite_eq]

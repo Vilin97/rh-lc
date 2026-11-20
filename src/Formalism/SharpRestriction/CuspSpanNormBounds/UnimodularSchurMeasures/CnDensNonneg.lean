@@ -108,9 +108,9 @@ theorem cn_dens_le {a : ℕ} (j : Fin a → ℕ) (n0 f : ℕ) {t : Fin a → ℝ
   rw [Fintype.prod_sum_type, Fintype.prod_sum_type (f := fun r : Fin a ⊕ Fin a => _)]
   have hA : ∏ r : {p : Fin a × Fin a // p.1 < p.2} ⊕ {p : Fin a × Fin a // p.1 < p.2},
       cn_la t (Sum.inl r) ^ (cn_dim j n0 (Sum.inl r) * f) ≤ 1 :=
-    Finset.prod_le_one (fun r _ => (h1 _).1) fun r _ => (h1 _).2
+    Finset.prod_le_one₀ (fun r _ => (h1 _).1) fun r _ => (h1 _).2
   have hB : ∏ x : Fin a, cn_la t (Sum.inr (Sum.inl x)) ^ (cn_dim j n0 (Sum.inr (Sum.inl x)) * f) ≤ 1 :=
-    Finset.prod_le_one (fun r _ => (h1 _).1) fun r _ => (h1 _).2
+    Finset.prod_le_one₀ (fun r _ => (h1 _).1) fun r _ => (h1 _).2
   have hA0 : 0 ≤ ∏ r : {p : Fin a × Fin a // p.1 < p.2} ⊕ {p : Fin a × Fin a // p.1 < p.2},
       cn_la t (Sum.inl r) ^ (cn_dim j n0 (Sum.inl r) * f) := Finset.prod_nonneg fun r _ => (h1 _).1
   have hB0 : 0 ≤ ∏ x : Fin a, cn_la t (Sum.inr (Sum.inl x)) ^ (cn_dim j n0 (Sum.inr (Sum.inl x)) * f) :=

@@ -249,7 +249,7 @@ theorem _root_.GlobalTheory.exists_summation_kernel_periodic : ∀ (G : Type) [A
   have hsum : ∑ a ∈ s, starRingEnd ℂ (d a) * ((∫ y in 𝓕, Φ y * starRingEnd ℂ (χ a y) ∂μ) * χ a x)
       = ∫ y in 𝓕, Φ (x + y) * starRingEnd ℂ (k y) ∂μ := by
     simp_rw [hconv, ← integral_const_mul]
-    rw [← integral_finset_sum]
+    rw [← MeasureTheory.integral_finsetSum]
     · congr 1
       funext y
       simp only [hkdef, map_sum, map_mul, Complex.conj_conj, Finset.mul_sum]

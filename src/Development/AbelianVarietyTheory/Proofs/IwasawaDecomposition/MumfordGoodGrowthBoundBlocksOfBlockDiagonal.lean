@@ -138,7 +138,7 @@ theorem goodBound_of_blockDiagonal' : ∀ (n : ℕ) (S : Finset (Fin n)) (ι : T
     rw [hnorm, mul_inv, mul_assoc, inv_mul_cancel₀ hP0.ne', mul_one]
   have hPle : P ≤ F * M ^ K := by
     have h1 : P ≤ ∏ τ' ∈ Finset.univ.erase τ, ((m τ').factorial : ℝ) * M ^ m τ' :=
-      Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun τ' _ => hdetle τ'
+      Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun τ' _ => hdetle τ'
     have h2 : ∏ τ' ∈ Finset.univ.erase τ, ((m τ').factorial : ℝ) * M ^ m τ' ≤
         ∏ τ', ((m τ').factorial : ℝ) * M ^ m τ' := by
       rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ τ)]

@@ -367,7 +367,7 @@ theorem crDl_inj (β : (Σ σ : T, Fin (r σ)) → Fin n) : Function.Injective (
 
 theorem crDiagExp_apply (β : (Σ σ : T, Fin (r σ)) → Fin n) (a : T → ℕ → ℕ) (ℓ : Letter T r n) :
     diagExp r n β a ℓ = ∑ p, if crDl β p = ℓ then a p.1 p.2 else 0 := by
-  simp only [diagExp, Finsupp.finset_sum_apply, Finsupp.single_apply]
+  simp only [diagExp, Finsupp.finsetSum_apply, Finsupp.single_apply]
   rfl
 
 theorem crDiagExp_dl (β : (Σ σ : T, Fin (r σ)) → Fin n) (a : T → ℕ → ℕ) (p : Σ σ : T, Fin (r σ)) :
@@ -408,7 +408,7 @@ theorem crRho_monomial (R : Type) [CommRing R] (β : (Σ σ : T, Fin (r σ)) →
 
 theorem crRho_coeff (R : Type) [CommRing R] (β : (Σ σ : T, Fin (r σ)) → Fin n)
     (p : MvPolynomial (Letter T r n) R) (m : Letter T r n →₀ ℕ)
-    (hm : ∀ ℓ ∈ m.support, ℓ.2.2 = β ⟨ℓ.1, ℓ.2.1⟩) : coeff m (crRho R β p) = coeff m p := by
+    (hm : ∀ ℓ ∈ m.support, ℓ.2.2 = β ⟨ℓ.1, ℓ.2.1⟩) : AddMonoidAlgebra.coeff (crRho R β p) m = AddMonoidAlgebra.coeff p m := by
   refine MvPolynomial.induction_on' p ?_ ?_
   · intro u c
     rw [crRho_monomial]
@@ -418,7 +418,7 @@ theorem crRho_coeff (R : Type) [CommRing R] (β : (Σ σ : T, Fin (r σ)) → Fi
       rintro rfl
       exact h hm
   · intro p q hp hq
-    rw [map_add, coeff_add, coeff_add, hp, hq]
+    rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq]
 
 theorem crRho_supported (R : Type) [CommRing R] (β : (Σ σ : T, Fin (r σ)) → Fin n)
     (p : MvPolynomial (Letter T r n) R) : crRho R β p ∈ supported R (crDiag β) := by
@@ -550,7 +550,7 @@ theorem Pmin_good (m : Letter T r n →₀ ℕ) (hm : m ∈ (MvPolynomial.map (I
   rw [crP_map] at hm
   have h1 := crP_mem_supported k β a
   rw [mem_supported] at h1
-  exact h1 ((mem_vars ℓ).mpr ⟨m, hm, Finsupp.mem_support_iff.mpr hℓ⟩)
+  exact h1 ((MvPolynomial.mem_vars_iff_mem_support ℓ).mpr ⟨m, hm, Finsupp.mem_support_iff.mpr hℓ⟩)
 
 theorem Pmin_degree (ha : Dom r a) (m : Letter T r n →₀ ℕ)
     (hm : m ∈ (MvPolynomial.map (Int.castRingHom k) (Pmin r n β a)).support) :

@@ -21,7 +21,7 @@ theorem eq_zero_of_norm_lt_one (z : 𝓞 E) (h : ∀ φ : E →+* ℂ, ‖φ (z 
     calc ∏ σ : E →ₐ[ℚ] ℂ, ‖σ (z : E)‖ ≤ ‖τ.toRatAlgHom (z : E)‖ := by
           rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ τ.toRatAlgHom)]
           exact mul_le_of_le_one_right (norm_nonneg _)
-            (Finset.prod_le_one (fun _ _ => norm_nonneg _) fun σ _ => (h σ.toRingHom).le)
+            (Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun σ _ => (h σ.toRingHom).le)
       _ < 1 := h τ
   rw [← h2] at h3
   simp only [eq_ratCast, Rat.cast_intCast, Complex.norm_intCast] at h3

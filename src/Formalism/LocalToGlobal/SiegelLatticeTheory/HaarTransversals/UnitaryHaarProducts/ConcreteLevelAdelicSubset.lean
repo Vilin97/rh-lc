@@ -348,7 +348,7 @@ theorem nt_int_eq_zero (a : 𝓞 I.E) (h : ∀ v, ‖I.φ v (a : I.E)‖ < 1) : 
   have hlt : ‖∏ σ : I.E →ₐ[ℚ] ℂ, σ (a : I.E)‖ < 1 := by
     rw [norm_prod, ← Finset.mul_prod_erase _ _ (Finset.mem_univ σ0)]
     have hle : ∏ σ ∈ Finset.univ.erase σ0, ‖σ (a : I.E)‖ ≤ 1 :=
-      Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun σ _ => (hσ σ).le)
+      Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun σ _ => (hσ σ).le)
     calc ‖σ0 (a : I.E)‖ * ∏ σ ∈ Finset.univ.erase σ0, ‖σ (a : I.E)‖ ≤ ‖σ0 (a : I.E)‖ * 1 :=
           mul_le_mul_of_nonneg_left hle (norm_nonneg _)
       _ < 1 := by rw [mul_one]; exact hσ σ0

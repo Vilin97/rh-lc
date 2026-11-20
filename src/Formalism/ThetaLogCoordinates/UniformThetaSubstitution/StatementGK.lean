@@ -17,7 +17,7 @@ def GenericExistsK : Prop :=
     ∃ (K : Type) (_ : NormedField K), IsUltrametricDist K ∧ CharZero K ∧
       ∃ (φ : F →+* K) (Y : σ → K), (∀ z, ‖φ z‖ = ‖z‖) ∧
         ∀ P : MvPolynomial σ F,
-          ‖MvPolynomial.eval₂ φ Y P‖ = ⨆ n : σ →₀ ℕ, ‖MvPolynomial.coeff n P‖
+          ‖MvPolynomial.eval₂ φ Y P‖ = ⨆ n : σ →₀ ℕ, ‖AddMonoidAlgebra.coeff P n‖
 
 def GaussBoundNoOperatorGeneric : Prop :=
   ∀ (K : Type) [NormedField K] [IsUltrametricDist K] [CharZero K] (p : ℕ) [Fact p.Prime]
@@ -25,7 +25,7 @@ def GaussBoundNoOperatorGeneric : Prop :=
     (F : MvPowerSeries (ZV ν r0 r1) K) (TT : Finset (ZMod (2 * ν))) (colN : ZMod (2 * ν) → ℕ)
     (hts : ∀ s, Fin (colN s) → ℕ) (hp : ∀ s c, hts s c ≤ r0) (I : ∀ s c, Fin (hts s c) → Fin r1),
     2 < p → ‖(p : K)‖ = (p : ℝ)⁻¹ → (∀ s, ‖u s‖ ≤ 1) → InClass (p : K) (hhS p u) F →
-    ∀ n, ‖MvPolynomial.coeff n (frameJet colN hts hp I F)‖ ≤
+    ∀ n, ‖AddMonoidAlgebra.coeff (frameJet colN hts hp I F) n‖ ≤
       (p : ℝ) ^ (-(excessGain (p : ℝ) TT (dSet TT) (fun s => (alG TT colN hts s : ℝ))
           (fun s => (capG TT colN hts s : ℝ))
           (deLoss p r0 r1 TT (alG TT colN hts) (lsG TT colN hts)) +
@@ -37,7 +37,7 @@ def GaussBoundArbitraryGeneric : Prop :=
     (F : MvPowerSeries (ZV ν r0 r1) K) (TT : Finset (ZMod (2 * ν))) (colN : ZMod (2 * ν) → ℕ)
     (hts : ∀ s, Fin (colN s) → ℕ) (hp : ∀ s c, hts s c ≤ r0) (I : ∀ s c, Fin (hts s c) → Fin r1),
     2 < p → ‖(p : K)‖ = (p : ℝ)⁻¹ → (∀ s, ‖u s‖ ≤ 1) → InClass (p : K) (hhS p u) F →
-    ∀ n, ‖MvPolynomial.coeff n (frameJet colN hts hp I F)‖ ≤
+    ∀ n, ‖AddMonoidAlgebra.coeff (frameJet colN hts hp I F) n‖ ≤
       (p : ℝ) ^ (-(gainG (p : ℝ) TT (oddT TT) (fun s => (alG TT colN hts s : ℝ))
           (fun s => (capG TT colN hts s : ℝ))
           (deLoss p r0 r1 TT (alG TT colN hts) (lsG TT colN hts)) -
@@ -54,7 +54,7 @@ def GaussBK : Prop :=
           (if s.val % 2 = 0 then
             min (hts s c) i - ((univ.image (I s c)) ∩ univ.filter (fun b : Fin r1 => b.val < i)).card
           else ((univ.image (I s c)) ∩ univ.filter (fun b : Fin r1 => b.val < i)).card)) *
-        MvPolynomial.coeff n (frameJet colN hts hp I F)‖ ≤
+        AddMonoidAlgebra.coeff (frameJet colN hts hp I F) n‖ ≤
       (p : ℝ) ^ (-(gainG (p : ℝ) TT (oddT TT) (fun s => (alG TT colN hts s : ℝ))
           (fun s => (capG TT colN hts s : ℝ))
           (deLoss p r0 r1 TT (alG TT colN hts) (lsG TT colN hts)) +
@@ -68,7 +68,7 @@ def KernelValuationBoundUltrametric : Prop :=
     2 < p → ‖(p : K)‖ = (p : ℝ)⁻¹ → ϖ ^ (p ^ 2 - 1) = (p : K) → (∀ s, ‖u s‖ ≤ 1) →
     InClass (p : K) (hhS p u) (MvPowerSeries.subst
       (fun x => MvPowerSeries.C ϖ * (MvPowerSeries.X x : MvPowerSeries (ZV ν r0 r1) K)) Th) →
-    ∀ n, ‖MvPolynomial.coeff n (frameJet colN hts hp I Th)‖ ≤
+    ∀ n, ‖AddMonoidAlgebra.coeff (frameJet colN hts hp I Th) n‖ ≤
       (p : ℝ) ^ (-(excessGain (p : ℝ) TT (dSet TT) (fun s => (alG TT colN hts s : ℝ))
         (fun s => (capG TT colN hts s : ℝ)) (deLoss p r0 r1 TT (alG TT colN hts) (lsG TT colN hts))))
 
@@ -80,7 +80,7 @@ def KernelBoundArbitrarySizes : Prop :=
     2 < p → ‖(p : K)‖ = (p : ℝ)⁻¹ → ϖ ^ (p ^ 2 - 1) = (p : K) → (∀ s, ‖u s‖ ≤ 1) →
     InClass (p : K) (hhS p u) (MvPowerSeries.subst
       (fun x => MvPowerSeries.C ϖ * (MvPowerSeries.X x : MvPowerSeries (ZV ν r0 r1) K)) Th) →
-    ∀ n, ‖MvPolynomial.coeff n (frameJet colN hts hp I Th)‖ ≤
+    ∀ n, ‖AddMonoidAlgebra.coeff (frameJet colN hts hp I Th) n‖ ≤
       (p : ℝ) ^ (-(gainG (p : ℝ) TT (oddT TT) (fun s => (alG TT colN hts s : ℝ))
         (fun s => (capG TT colN hts s : ℝ)) (deLoss p r0 r1 TT (alG TT colN hts) (lsG TT colN hts)) -
         ∑ s ∈ TT \ oddT TT, (alG TT colN hts s : ℝ)))
@@ -97,7 +97,7 @@ def KernelBK : Prop :=
           (if s.val % 2 = 0 then
             min (hts s c) i - ((univ.image (I s c)) ∩ univ.filter (fun b : Fin r1 => b.val < i)).card
           else ((univ.image (I s c)) ∩ univ.filter (fun b : Fin r1 => b.val < i)).card)) *
-        MvPolynomial.coeff n (frameJet colN hts hp I Th)‖ ≤
+        AddMonoidAlgebra.coeff (frameJet colN hts hp I Th) n‖ ≤
       (p : ℝ) ^ (-(gainG (p : ℝ) TT (oddT TT) (fun s => (alG TT colN hts s : ℝ))
         (fun s => (capG TT colN hts s : ℝ)) (deLoss p r0 r1 TT (alG TT colN hts) (lsG TT colN hts))))
 
@@ -119,11 +119,11 @@ def KernelBoundsGeneric : Prop :=
           MvPowerSeries (Bool × EV ν r0 r1) K)) (MvPowerSeries.map j be)) →
     ∀ (TT : Finset (ZMod (2 * ν))) (colN : ZMod (2 * ν) → ℕ) (hts : ∀ s, Fin (colN s) → ℕ)
       (hp : ∀ s c, hts s c ≤ r0) (I : ∀ s c, Fin (hts s c) → Fin r1) n,
-      ‖MvPolynomial.coeff n (frameJet colN hts hp I (thetaLog om oms ϖ μ (mvExp (-Φ) * U0)))‖ ≤
+      ‖AddMonoidAlgebra.coeff (frameJet colN hts hp I (thetaLog om oms ϖ μ (mvExp (-Φ) * U0))) n‖ ≤
           (p : ℝ) ^ (-(excessGain (p : ℝ) TT (dSet TT) (fun s => (alG TT colN hts s : ℝ))
             (fun s => (capG TT colN hts s : ℝ))
             (deLoss p r0 r1 TT (alG TT colN hts) (lsG TT colN hts)))) ∧
-      ‖MvPolynomial.coeff n (frameJet colN hts hp I (thetaLog om oms ϖ μ (mvExp (-Φ) * U0)))‖ ≤
+      ‖AddMonoidAlgebra.coeff (frameJet colN hts hp I (thetaLog om oms ϖ μ (mvExp (-Φ) * U0))) n‖ ≤
           (p : ℝ) ^ (-(gainG (p : ℝ) TT (oddT TT) (fun s => (alG TT colN hts s : ℝ))
             (fun s => (capG TT colN hts s : ℝ))
             (deLoss p r0 r1 TT (alG TT colN hts) (lsG TT colN hts)) -
@@ -134,8 +134,8 @@ def KernelBoundsGeneric : Prop :=
               min (hts s c) i -
                 ((univ.image (I s c)) ∩ univ.filter (fun b : Fin r1 => b.val < i)).card
             else ((univ.image (I s c)) ∩ univ.filter (fun b : Fin r1 => b.val < i)).card)) *
-          MvPolynomial.coeff n
-            (frameJet colN hts hp I (thetaLog om oms ϖ μ (mvExp (-Φ) * U0)))‖ ≤
+          AddMonoidAlgebra.coeff (frameJet colN hts hp I (thetaLog om oms ϖ μ (mvExp (-Φ) * U0)))
+            n‖ ≤
           (p : ℝ) ^ (-(gainG (p : ℝ) TT (oddT TT) (fun s => (alG TT colN hts s : ℝ))
             (fun s => (capG TT colN hts s : ℝ))
             (deLoss p r0 r1 TT (alG TT colN hts) (lsG TT colN hts))))

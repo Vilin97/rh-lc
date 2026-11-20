@@ -10,8 +10,8 @@ theorem int_bezout_derivative_of_separable (f : ℤ[X])
     (hf : (f.map (Int.castRingHom ℚ)).Separable) :
     ∃ A B : ℤ[X], ∃ N : ℤ, N ≠ 0 ∧ A * f + B * derivative f = C N := by
   obtain ⟨a, b, hab⟩ := hf
-  obtain ⟨c1, hc1⟩ := IsLocalization.integerNormalization_map_to_map (nonZeroDivisors ℤ) a
-  obtain ⟨c2, hc2⟩ := IsLocalization.integerNormalization_map_to_map (nonZeroDivisors ℤ) b
+  obtain ⟨c1, hc1⟩ := IsLocalization.integerNormalization_spec (nonZeroDivisors ℤ) a
+  obtain ⟨c2, hc2⟩ := IsLocalization.integerNormalization_spec (nonZeroDivisors ℤ) b
   set A := IsLocalization.integerNormalization (nonZeroDivisors ℤ) a
   set B := IsLocalization.integerNormalization (nonZeroDivisors ℤ) b
   refine ⟨(c2 : ℤ) • A, (c1 : ℤ) • B, (c1 : ℤ) * c2, ?_, ?_⟩

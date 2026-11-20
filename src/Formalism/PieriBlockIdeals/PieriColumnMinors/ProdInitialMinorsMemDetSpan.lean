@@ -139,7 +139,7 @@ theorem lattice_z_zero_columns : LatticeInclusionTrivialWeight := by
   have h1 : hw ℤ hn ν = 1 := by simp [hw]
   have hmem := la_hw_mem ℤ hn ν
   rw [h1] at hmem
-  have hx : x = (coeff 0 x) • (1 : MvPolynomial (Fin r × Fin 0) ℤ) := by
+  have hx : x = (AddMonoidAlgebra.coeff x 0) • (1 : MvPolynomial (Fin r × Fin 0) ℤ) := by
     rw [MvPolynomial.smul_eq_C_mul, mul_one]
     exact MvPolynomial.eq_C_of_isEmpty x
   rw [hx]
@@ -330,7 +330,7 @@ theorem la_mono_inj {n : ℕ} (s : Fin n) {p q p' q' : ℕ} (h : la_mono s p q =
 
 theorem la_coeff_binLat {n : ℕ} (s : Fin n) (d : ℕ) (f : MvPolynomial (Fin 2 × Fin n) ℤ)
     (hf : f ∈ la_binLat ℤ s d) (p q : ℕ) :
-    ((p + q).choose q : ℤ) ∣ coeff (la_mono s p q) f := by
+    ((p + q).choose q : ℤ) ∣ AddMonoidAlgebra.coeff f (la_mono s p q) := by
   rw [la_binLat] at hf
   induction hf using Submodule.span_induction with
   | mem x hx =>
@@ -342,7 +342,7 @@ theorem la_coeff_binLat {n : ℕ} (s : Fin n) (d : ℕ) (f : MvPolynomial (Fin 2
     · simp
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [coeff_add]
+    rw [MvPolynomial.coeff_add]
     exact dvd_add hx hy
   | smul a x _ hx =>
     rw [coeff_smul, smul_eq_mul]
@@ -496,7 +496,7 @@ theorem la_nabla_r2n1 (R : Type) [CommRing R] (ν : Fin 1 → ℕ) :
     rw [x.as_sum]
     refine Submodule.sum_mem _ (fun d hd => ?_)
     obtain ⟨hd', hsum⟩ := la_mono_of_weight (hx' (mem_support_iff.mp hd))
-    have e : monomial d (coeff d x) = coeff d x • la_xy R (0 : Fin 1) (d (0, 0)) (d (1, 0)) := by
+    have e : monomial d (AddMonoidAlgebra.coeff x d) = AddMonoidAlgebra.coeff x d • la_xy R (0 : Fin 1) (d (0, 0)) (d (1, 0)) := by
       rw [la_xy_eq, ← hd', smul_monomial, smul_eq_mul, mul_one]
     rw [e, la_monLat]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, _, hsum, rfl⟩)
@@ -528,7 +528,7 @@ theorem la_binForm_single (R : Type) [CommRing R] (d : ℕ) (i : Fin (d + 1)) (t
     exact absurd (Finset.mem_univ i) h
 
 theorem la_coeff_binForm (R : Type) [CommRing R] (d : ℕ) (c : Fin (d + 1) → R) (i : Fin (d + 1)) :
-    coeff (la_mono (0 : Fin 1) (d - i.val) i.val) (binForm R d c) = c i := by
+    AddMonoidAlgebra.coeff (binForm R d c) (la_mono (0 : Fin 1) (d - i.val) i.val) = c i := by
   rw [la_binForm_apply, coeff_sum, Finset.sum_eq_single i]
   · rw [coeff_smul, la_xy_eq, coeff_monomial, if_pos rfl, smul_eq_mul, mul_one]
   · intro j _ hj
@@ -686,8 +686,8 @@ theorem lattice_z_rank_one : LatticeInclusionRankOne := by
       fin_cases j
       simpa using h0
     have e : monomial (Finsupp.single ((0 : Fin 1), (0 : Fin 1)) (ν 0))
-        (coeff (Finsupp.single ((0 : Fin 1), (0 : Fin 1)) (ν 0)) x) =
-        coeff (Finsupp.single ((0 : Fin 1), (0 : Fin 1)) (ν 0)) x • hw ℤ hn ν := by
+        (AddMonoidAlgebra.coeff x (Finsupp.single ((0 : Fin 1), (0 : Fin 1)) (ν 0))) =
+        AddMonoidAlgebra.coeff x (Finsupp.single ((0 : Fin 1), (0 : Fin 1)) (ν 0)) • hw ℤ hn ν := by
       rw [hhw, X_pow_eq_monomial, smul_monomial, smul_eq_mul, mul_one]
     rw [hd0, e]
     exact Submodule.smul_mem _ _ (la_hw_mem ℤ hn ν)

@@ -111,7 +111,7 @@ theorem wt_inv (N d : ℕ) (hpos : 0 < N) (hle : padicValNat p N ≤ d) :
     exact hm (dvd_zero p)
   have he : e ≤ d := by
     have hv : padicValNat p (p ^ e * m) = e := by
-      rw [padicValNat.mul (pow_ne_zero _ hpp.ne_zero) hm0, padicValNat.prime_pow,
+      rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hpp.ne_zero) hm0, padicValNat.prime_pow,
         padicValNat.eq_zero_of_not_dvd hm, add_zero]
     omega
   have hp := pKc_ne (Y := Y)

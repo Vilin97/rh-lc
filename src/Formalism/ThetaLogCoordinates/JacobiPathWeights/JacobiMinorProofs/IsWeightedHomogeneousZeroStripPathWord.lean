@@ -63,11 +63,11 @@ theorem LeadAt.mul {w : σ → M} {γ δ : M} {f g tf tg : MvPolynomial σ R}
         | exact Finset.mem_antidiagonal.mp hp
         | simpa using hp
       rw [coeff_weightedHomogeneousComponent, coeff_weightedHomogeneousComponent]
-      by_cases hab : coeff p.1 f ≠ 0 ∧ coeff p.2 g ≠ 0
+      by_cases hab : AddMonoidAlgebra.coeff f p.1 ≠ 0 ∧ AddMonoidAlgebra.coeff g p.2 ≠ 0
       · obtain ⟨ha1, ha2⟩ := _root_.Formalism.InvariantFactorPaths.GelfandTsetlinBases.A1.weight_eq_of_le_of_add_eq_lemma (hf1 _ (mem_support_iff.mpr hab.1))
           (hg1 _ (mem_support_iff.mpr hab.2)) (by rw [hp']; exact he)
         rw [if_pos ha1, if_pos ha2]
-      · have h0 : coeff p.1 f * coeff p.2 g = 0 := by
+      · have h0 : AddMonoidAlgebra.coeff f p.1 * AddMonoidAlgebra.coeff g p.2 = 0 := by
           rcases not_and_or.mp hab with h | h
           · rw [not_not.mp h, zero_mul]
           · rw [not_not.mp h, mul_zero]

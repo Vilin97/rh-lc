@@ -9,7 +9,7 @@ private lemma norm_le_one_of_monic_root_lemma {K : Type*} [NormedField K] [IsUlt
   by_contra h
   push_neg at h
   rw [hp.as_sum] at hx
-  simp only [eval_add, eval_pow, eval_X, eval_finset_sum, eval_mul, eval_C] at hx
+  simp only [eval_add, eval_pow, eval_X, Polynomial.eval_finsetSum, eval_mul, eval_C] at hx
   set n := p.natDegree
   have hxn : x ^ n = -∑ i ∈ Finset.range n, p.coeff i * x ^ i := eq_neg_of_add_eq_zero_left hx
   rcases Nat.eq_zero_or_pos n with hn | hn

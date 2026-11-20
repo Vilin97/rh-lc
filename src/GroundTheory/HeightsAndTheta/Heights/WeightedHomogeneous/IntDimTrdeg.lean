@@ -81,7 +81,7 @@ theorem trdeg_zmod_quotient_le {B : Type} [CommRing B] [IsDomain B] [Algebra ℤ
       have hdvd : C (p : ℤ) ∣ P := by
         rw [C_dvd_iff_dvd_coeff]
         intro i
-        have := congrArg (MvPolynomial.coeff i) (hred P hP)
+        have := congrArg (AddMonoidAlgebra.coeff · i) (hred P hP)
         rw [coeff_map, coeff_zero, algebraMap_int_eq, eq_intCast,
           ZMod.intCast_zmod_eq_zero_iff_dvd] at this
         exact this

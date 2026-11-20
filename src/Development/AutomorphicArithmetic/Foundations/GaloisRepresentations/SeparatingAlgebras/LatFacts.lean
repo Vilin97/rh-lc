@@ -34,8 +34,8 @@ theorem UpperTheory.Gal.Gen.latFacts_pf :
       _ = _ := by rw [Finset.sum_mul, Finset.sum_mul]; exact Finset.sum_congr rfl fun m _ => by ring
   · have hl : (1 : ℝ) < l := by exact_mod_cast (Fact.out : l.Prime).one_lt
     have hl0 : (0 : ℝ) < (l : ℝ)⁻¹ := inv_pos.2 (by linarith)
-    set T : ℝ := ∑ m ∈ x.1.support, ‖ι.symm (MvPolynomial.coeff m x.1)‖ + 1 with hTdef
-    have hS : 0 ≤ ∑ m ∈ x.1.support, ‖ι.symm (MvPolynomial.coeff m x.1)‖ :=
+    set T : ℝ := ∑ m ∈ x.1.support, ‖ι.symm (AddMonoidAlgebra.coeff x.1 m)‖ + 1 with hTdef
+    have hS : 0 ≤ ∑ m ∈ x.1.support, ‖ι.symm (AddMonoidAlgebra.coeff x.1 m)‖ :=
       Finset.sum_nonneg fun m _ => norm_nonneg _
     have hT : 0 < T := by linarith
     obtain ⟨k, hk⟩ := exists_pow_lt_of_lt_one (inv_pos.2 hT) (inv_lt_one_of_one_lt₀ hl)
@@ -47,15 +47,15 @@ theorem UpperTheory.Gal.Gen.latFacts_pf :
       exact h
     have hn : ‖ι.symm ((l : ℂ) ^ k)‖ = ((l : ℝ)⁻¹) ^ k := by
       rw [map_pow, map_natCast, norm_pow, hnl]
-    have hc : ‖ι.symm (MvPolynomial.coeff m x.1)‖ ≤ T := by
+    have hc : ‖ι.symm (AddMonoidAlgebra.coeff x.1 m)‖ ≤ T := by
       by_cases hm : m ∈ x.1.support
-      · have := Finset.single_le_sum (f := fun m => ‖ι.symm (MvPolynomial.coeff m x.1)‖)
+      · have := Finset.single_le_sum (f := fun m => ‖ι.symm (AddMonoidAlgebra.coeff x.1 m)‖)
           (fun m _ => norm_nonneg _) hm
         linarith
       · rw [MvPolynomial.notMem_support_iff.1 hm, map_zero, norm_zero]
         exact hT.le
-    have e : MvPolynomial.coeff m (((l : ℂ) ^ k • x : V) : MvPolynomial σ ℂ) =
-        (l : ℂ) ^ k * MvPolynomial.coeff m x.1 := by
+    have e : AddMonoidAlgebra.coeff (((l : ℂ) ^ k • x : V) : MvPolynomial σ ℂ) m =
+        (l : ℂ) ^ k * AddMonoidAlgebra.coeff x.1 m := by
       rw [Submodule.coe_smul, MvPolynomial.coeff_smul, smul_eq_mul]
     rw [e, map_mul, norm_mul, hn]
     calc _ ≤ ((l : ℝ)⁻¹) ^ k * T := mul_le_mul_of_nonneg_left hc (pow_nonneg hl0.le _)

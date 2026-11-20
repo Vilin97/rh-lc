@@ -80,7 +80,7 @@ theorem levi_rhF_nonneg (x0 : Frame X.Ψ r) (ho : IsOrth X x0) {z0 : V (nd X)} (
     intro y hy
     simp only [hP, hHf]
     rw [← Finset.prod_mul_distrib, map_prod]
-    exact Finset.prod_le_prod (fun τ _ => mul_nonneg (det_re_pos_im (hAm y hy τ)).1.le
+    exact Finset.prod_le_prod₀ (fun τ _ => mul_nonneg (det_re_pos_im (hAm y hy τ)).1.le
       (det_re_pos_im (hAm z0 hz0 τ)).1.le)
       (fun τ _ => det_mul_det_le_normSq_det _ _ (hAm y hy τ) (hAm z0 hz0 τ))
   have hself : Complex.normSq (Hf z0) = P z0 * P z0 := by
@@ -154,7 +154,7 @@ private theorem det_one_sub_mul_conjTranspose_mem_Icc {p q : ℕ} (Z : Matrix (F
     rfl
   have h0 : 0 ≤ ∏ i, hH.eigenvalues i := Finset.prod_nonneg fun i _ => (hev i).1
   rw [hd, Complex.ofReal_re, Complex.norm_real, Real.norm_of_nonneg h0]
-  exact ⟨h0, Finset.prod_le_one (fun i _ => (hev i).1) fun i _ => (hev i).2, rfl⟩
+  exact ⟨h0, Finset.prod_le_one₀ (fun i _ => (hev i).1) fun i _ => (hev i).2, rfl⟩
 
 theorem rhF_nonneg (x0 : Frame X.Ψ r) (ho : IsOrth X x0) {z : V (nd X)} (hz : z ∈ OmF X x0) : 0 ≤ rhF X x0 z := by
   rw [rhF_eq_sum X x0 ho z, neg_nonneg]
@@ -231,7 +231,7 @@ theorem isCompact_subF (x0 : Frame X.Ψ r) (ho : IsOrth X x0) (a : ℝ) : IsComp
   · refine (Metric.isBounded_iff_subset_closedBall 0).2 ⟨Real.exp a, fun z hz => ?_⟩
     obtain ⟨hpsd, hle⟩ := hz
     have hP : ∏ τ, (Am X z τ).det.re ≤ 1 :=
-      Finset.prod_le_one (fun τ _ => (det_one_sub_mul_conjTranspose_mem_Icc (Zt X z τ) (hpsd τ)).1)
+      Finset.prod_le_one₀ (fun τ _ => (det_one_sub_mul_conjTranspose_mem_Icc (Zt X z τ) (hpsd τ)).1)
         fun τ _ => (det_one_sub_mul_conjTranspose_mem_Icc (Zt X z τ) (hpsd τ)).2.1
     have h1 : Real.log (1 + ‖z‖ ^ 2) - a ≤ 0 := Real.exp_le_one_iff.1 (le_trans hle hP)
     have h2 : 1 + ‖z‖ ^ 2 ≤ Real.exp a := by

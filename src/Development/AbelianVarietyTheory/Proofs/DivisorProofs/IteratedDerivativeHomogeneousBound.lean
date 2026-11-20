@@ -53,7 +53,7 @@ theorem abs_eval_iterate_pderiv_monomial_le {N k n : ℕ} (m : Fin N →₀ ℕ)
       rw [Nat.abs_cast]
       exact_mod_cast (Nat.descFactorial_le_pow _ _).trans (Nat.pow_le_pow_left hik n)
     refine mul_le_mul (mul_le_mul_of_nonneg_left h3 (abs_nonneg _)) ?_ ?_ (by positivity)
-    · refine Finset.prod_le_prod (fun a _ => abs_nonneg _) fun a _ => ?_
+    · refine Finset.prod_le_prod₀ (fun a _ => abs_nonneg _) fun a _ => ?_
       rw [abs_pow]
       exact pow_le_pow_left₀ (abs_nonneg _) (hv a) _
     · exact Finset.prod_nonneg fun a _ => abs_nonneg _

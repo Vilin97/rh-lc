@@ -169,7 +169,7 @@ theorem product_local_ratios_le {D : D7} {large₂ : SizeData₂ D} {C' Cl Cu C0
     rw [this]
     exact le_abs_self _
   calc ∏ τ, tV D u u' τ ≤ ∏ τ, (Real.sqrt |Tcrit D u τ / Tr D u| * Real.sqrt |Tcrit D u' τ / Tr D u'|) :=
-        Finset.prod_le_prod (fun τ _ => Real.sqrt_nonneg _) (fun τ _ => hle τ)
+        Finset.prod_le_prod₀ (fun τ _ => Real.sqrt_nonneg _) (fun τ _ => hle τ)
     _ = Real.sqrt (∏ τ, |Tcrit D u τ / Tr D u|) * Real.sqrt (∏ τ, |Tcrit D u' τ / Tr D u'|) := by
         rw [Finset.prod_mul_distrib]
         congr 1 <;>

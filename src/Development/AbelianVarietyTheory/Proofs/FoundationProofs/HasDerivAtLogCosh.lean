@@ -212,7 +212,7 @@ theorem norm_dil_le {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] 
   rw [mul_pow]
   conv_lhs => rw [Φ.as_sum]
   conv_rhs => rw [Φ.as_sum]
-  simp only [map_sum, dil_monomial, e _ (MvPolynomial.coeff _ _), smul_smul, map_smul, norm_sq_sum h,
+  simp only [map_sum, dil_monomial, e _ (AddMonoidAlgebra.coeff _ _), smul_smul, map_smul, norm_sq_sum h,
     Finset.mul_sum]
   refine Finset.sum_le_sum fun α _ => ?_
   rw [norm_mul, ← mul_assoc, ← mul_pow (Real.exp _), mul_comm (Real.exp _), Complex.norm_real, Real.norm_eq_abs,

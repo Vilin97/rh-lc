@@ -24,7 +24,7 @@ theorem matRep_diagGL_monomial_colChar {n n' : ℕ} (t : Fin n → ℂˣ) (d : F
 
 theorem coeff_matRep_diagGL_colChar {n n' : ℕ} (t : Fin n → ℂˣ) (v : MvPolynomial (Fin n' × Fin n) ℂ)
     (d : Fin n' × Fin n →₀ ℕ) :
-    coeff d (matRep n n' (diagGL ℂ n t, 1) v) = (d.prod fun x e => (t x.2 : ℂ) ^ e) * coeff d v := by
+    AddMonoidAlgebra.coeff (matRep n n' (diagGL ℂ n t, 1) v) d = (d.prod fun x e => (t x.2 : ℂ) ^ e) * AddMonoidAlgebra.coeff v d := by
   classical
   induction v using MvPolynomial.induction_on' with
   | monomial u a =>
@@ -32,7 +32,7 @@ theorem coeff_matRep_diagGL_colChar {n n' : ℕ} (t : Fin n → ℂˣ) (v : MvPo
     split_ifs with h
     · rw [h]
     · simp
-  | add p q hp hq => rw [map_add, coeff_add, coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem colAdd_eq_matRep_of_transvection {n n' : ℕ} (l j : Fin n) (c : ℂ) (g : GL (Fin n) ℂ)
     (hg : (g : Matrix (Fin n) (Fin n) ℂ) = Matrix.transvection l j c)
@@ -58,7 +58,7 @@ theorem mem_dualWeyl_of_unitriangular_fixed :
   refine ⟨fun d hd => ?_, fun l j hlj c => ?_⟩
   · funext i
     let t : Fin n → ℂˣ := fun s => if s = i then Units.mk0 2 two_ne_zero else 1
-    have h1 := congrArg (coeff d) (hT t)
+    have h1 := congrArg (AddMonoidAlgebra.coeff · d) (hT t)
     rw [coeff_matRep_diagGL_colChar, coeff_smul, smul_eq_mul] at h1
     have h2 := mul_right_cancel₀ hd h1
     have h3 : (∏ a, (t a : ℂ) ^ ν a) = 2 ^ ν i := by

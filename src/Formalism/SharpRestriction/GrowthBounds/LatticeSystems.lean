@@ -1580,7 +1580,7 @@ theorem lb_basis (R : Type) [CommRing R] [IsDomain R] (k n : ℕ) (ν : Fin n �
   have hmem : m.1 ∈ (bideterminant R sz hsz I).support := by
     rw [← hbm, MvPolynomial.mem_support_iff]
     have h3 : (colLex k n).leadingCoeff (b m) =
-        MvPolynomial.coeff ((colLex k n).degree (b m)) (b m) := rfl
+        AddMonoidAlgebra.coeff (b m) ((colLex k n).degree (b m)) := rfl
     rw [hdeg] at h3
     rw [← h3, hlc]
     exact one_ne_zero
@@ -4017,7 +4017,7 @@ theorem jLocal (G : GAtP p) (t : Fin G.P.nV → ℕ) (B : Finset (Fin G.P.nV)) (
           push_cast
           rfl
       _ ≤ ∏ v, ((if v ∈ B then κ v else 1) * (dimV G.Kf (G.P.lam0 v) : ℝ)) := by
-          refine Finset.prod_le_prod (fun v _ => Nat.cast_nonneg _) (fun v _ => ?_)
+          refine Finset.prod_le_prod₀ (fun v _ => Nat.cast_nonneg _) (fun v _ => ?_)
           by_cases hv : v ∈ B
           · simp only [hv, if_true]
             exact (hbad v hv).1

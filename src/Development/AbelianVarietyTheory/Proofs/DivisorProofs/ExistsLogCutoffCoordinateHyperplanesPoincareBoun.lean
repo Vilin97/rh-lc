@@ -209,7 +209,7 @@ theorem _root_.GlobalTheory.GoodTop.exists_logCutoff_hyperplanes {n : ℕ} (S : 
     fun k v hv => ?_, fun v hv => ?_, fun k v b => ?_⟩
   · exact contDiff_prod fun a _ => (_root_.GlobalTheory.GoodTop.contDiff_logCutoff k).comp (hproj a)
   · exact ⟨Finset.prod_nonneg fun a _ => (logCutoff_mem_Icc k _).1,
-      Finset.prod_le_one (fun a _ => (logCutoff_mem_Icc k _).1)
+      Finset.prod_le_one₀ (fun a _ => (logCutoff_mem_Icc k _).1)
         (fun a _ => (logCutoff_mem_Icc k _).2)⟩
   · obtain ⟨a, ha, h0⟩ := hv
     have hopen : IsOpen {w : _root_.ReciprocityTheory.L2DbarEstimates.V n | ‖w a‖ < Real.exp (-2 * ((k : ℝ) + 1))} :=
@@ -256,7 +256,7 @@ theorem _root_.GlobalTheory.GoodTop.exists_logCutoff_hyperplanes {n : ℕ} (S : 
     · set P := ∏ a ∈ S.erase b, _root_.GlobalTheory.GoodTop.logCutoff k (v a)
       have hP : |P| ≤ 1 := by
         rw [abs_of_nonneg (Finset.prod_nonneg fun a _ => (logCutoff_mem_Icc k _).1)]
-        exact Finset.prod_le_one (fun a _ => (logCutoff_mem_Icc k _).1)
+        exact Finset.prod_le_one₀ (fun a _ => (logCutoff_mem_Icc k _).1)
           (fun a _ => (logCutoff_mem_Icc k _).2)
       have hw : 0 ≤ ‖v b‖ * |Real.log ‖v b‖| := by positivity
       have b1 := hM k (v b) 1

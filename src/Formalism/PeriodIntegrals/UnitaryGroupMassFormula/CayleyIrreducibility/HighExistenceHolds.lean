@@ -12,7 +12,7 @@ section Grade
 variable {σ : Type*}
 
 def TGood (w : σ → ℕ) (c d : ℕ) (F : Polynomial (MvPolynomial σ ℂ)) : Prop :=
-  ∀ j m, coeff m (F.coeff j) ≠ 0 → Finsupp.weight w m + j * c = d
+  ∀ j m, AddMonoidAlgebra.coeff (F.coeff j) m ≠ 0 → Finsupp.weight w m + j * c = d
 
 theorem tgood_CC (w : σ → ℕ) (c : ℕ) (r : ℂ) : TGood w c 0 (Polynomial.C (C r)) := by
   classical
@@ -74,8 +74,8 @@ theorem tgood_aeval_monomial (w : σ → ℕ) (c : ℕ) (f : σ → Polynomial (
 
 theorem aeval_support (w : σ → ℕ) (c : ℕ) (f : σ → Polynomial (MvPolynomial σ ℂ))
     (hf : ∀ v, TGood w c (w v) (f v)) (P : MvPolynomial σ ℂ) (j : ℕ) (m' : σ →₀ ℕ)
-    (h : coeff m' ((aeval f P).coeff j) ≠ 0) :
-    ∃ m, coeff m P ≠ 0 ∧ Finsupp.weight w m' + j * c = Finsupp.weight w m := by
+    (h : AddMonoidAlgebra.coeff ((aeval f P).coeff j) m' ≠ 0) :
+    ∃ m, AddMonoidAlgebra.coeff P m ≠ 0 ∧ Finsupp.weight w m' + j * c = Finsupp.weight w m := by
   rw [P.as_sum, map_sum, Polynomial.finsetSum_coeff, coeff_sum] at h
   obtain ⟨m, hm, hm0⟩ := Finset.exists_ne_zero_of_sum_ne_zero h
   exact ⟨m, mem_support_iff.mp hm, tgood_aeval_monomial w c f hf m _ j m' hm0⟩
@@ -89,11 +89,11 @@ theorem tgood_gen {ι : Type} [DecidableEq ι] {n : ℕ} (τ : ι) (a b : Fin n)
         else 0)) := by
   classical
   intro j m h
-  rw [Polynomial.coeff_add, coeff_add] at h
+  rw [Polynomial.coeff_add, MvPolynomial.coeff_add] at h
   by_cases hj : j = 0
   · subst hj
-    have h0 : coeff m ((if v.1 = τ ∧ v.2.1 = b then Polynomial.X * Polynomial.C (X (τ, a, v.2.2))
-        else 0 : Polynomial (MvPolynomial (ι × Fin n × Fin n) ℂ)).coeff 0) = 0 := by
+    have h0 : AddMonoidAlgebra.coeff ((if v.1 = τ ∧ v.2.1 = b then Polynomial.X * Polynomial.C (X (τ, a, v.2.2))
+        else 0 : Polynomial (MvPolynomial (ι × Fin n × Fin n) ℂ)).coeff 0) m = 0 := by
       split_ifs <;> simp
     rw [h0, add_zero, Polynomial.coeff_C_zero, coeff_X] at h
     by_cases hm : Finsupp.single v 1 = m
@@ -118,8 +118,8 @@ theorem tgood_gen {ι : Type} [DecidableEq ι] {n : ℕ} (τ : ι) (a b : Fin n)
 
 theorem bigDiv_support {ι : Type} [DecidableEq ι] {n : ℕ} (τ : ι) (a b : Fin n) (hab : a < b) (k : ℕ)
     (P : MvPolynomial (ι × Fin n × Fin n) ℂ) (m' : ι × Fin n × Fin n →₀ ℕ)
-    (h : coeff m' (bigDiv τ a b k P) ≠ 0) :
-    ∃ m, coeff m P ≠ 0 ∧ Finsupp.weight (fun v : ι × Fin n × Fin n => (v.2.1 : ℕ)) m' + k * ((b : ℕ) - a)
+    (h : AddMonoidAlgebra.coeff (bigDiv τ a b k P) m' ≠ 0) :
+    ∃ m, AddMonoidAlgebra.coeff P m ≠ 0 ∧ Finsupp.weight (fun v : ι × Fin n × Fin n => (v.2.1 : ℕ)) m' + k * ((b : ℕ) - a)
       = Finsupp.weight (fun v : ι × Fin n × Fin n => (v.2.1 : ℕ)) m :=
   aeval_support _ _ _ (tgood_gen τ a b hab) P k m' h
 
@@ -127,7 +127,7 @@ theorem high_existence_holds : HiEx := by
   intro ι _ _ n M hM hne
   classical
   have key : ∀ e : ℕ, ∀ P ∈ M, P ≠ 0 →
-      (∀ m, coeff m P ≠ 0 → Finsupp.weight (fun v : ι × Fin n × Fin n => (v.2.1 : ℕ)) m < e) →
+      (∀ m, AddMonoidAlgebra.coeff P m ≠ 0 → Finsupp.weight (fun v : ι × Fin n × Fin n => (v.2.1 : ℕ)) m < e) →
       ∃ Q ∈ M, Q ≠ 0 ∧ ∀ (τ : ι) (a b : Fin n), a < b → ∀ k, 1 ≤ k → bigDiv τ a b k Q = 0 := by
     intro e
     induction e with

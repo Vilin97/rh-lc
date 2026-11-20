@@ -98,7 +98,7 @@ theorem rowDiv_homog (R : Type*) [CommRing R] {r n : ℕ} (ν : Fin n → ℕ) (
   conv => enter [2, 1, 2]; rw [f.as_sum]
   rw [map_sum, Polynomial.finsetSum_coeff]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
-  have := CoeffHom.rowGen_monomial R a b d (coeff d f) k
+  have := CoeffHom.rowGen_monomial R a b d (AddMonoidAlgebra.coeff f d) k
   rwa [hf (mem_support_iff.mp hd)] at this
 
 def rowGenO (R : Type*) [CommRing R] {r n : ℕ} (a b : Fin r) :

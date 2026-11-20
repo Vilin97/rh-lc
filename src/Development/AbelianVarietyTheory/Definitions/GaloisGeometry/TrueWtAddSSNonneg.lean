@@ -82,7 +82,7 @@ def derPol (cD : ι → K) (Q : Formalism.L2.DIV.Pol K ι a) (y' : ι → Matrix
 
 theorem eval_jetMap (cD : ι → K) (T : (DVar ι a b →₀ ℕ) → K) (Q : Formalism.L2.DIV.Pol K ι a) (y' : ι → Matrix (Fin b) (Fin b) K) :
     eval (fun v : ι × Fin b × Fin b => y' v.1 v.2.1 v.2.2) (jetMap (fun q => (q.prod fun k n => cD k.1 ^ n) * T q) 0 Q) =
-      ∑ q ∈ (derPol cD Q y').support, coeff q (derPol cD Q y') * T q := by
+      ∑ q ∈ (derPol cD Q y').support, AddMonoidAlgebra.coeff (derPol cD Q y') q * T q := by
   let φ : MvPolynomial ((ι × Fin b × Fin b) ⊕ DVar ι a b) K →ₐ[K] MvPolynomial (DVar ι a b) K :=
     aeval (Sum.elim (fun v => C (y' v.1 v.2.1 v.2.2)) fun k => C (cD k.1) * X k)
   let l : MvPolynomial (DVar ι a b) K →ₗ[K] K := (basisMonomials _ K).constr K T
@@ -716,7 +716,7 @@ def chainTh (hc : X.Tau → HCParam R) (cD : X.Tau → ℂ) (Th : A.ThFam) : Col
 theorem chainTh_unf (hc : X.Tau → HCParam R) (cD : X.Tau → ℂ) (Th : A.ThFam) (i : ℕ) (c : (A.F i).Cl) (c' : (A.F (i + 1)).Cl)
     (Q : Formalism.L2.DIV.Pol ℂ X.Tau (R.N i)) (y' : Fr X σ (R.N (i + 1))) :
     (A.chainTh σ hc cD Th).unf i c c' (fun y : Fr X σ (R.N i) => MvPolynomial.eval (fun v => y.1 v.1 v.2.1 v.2.2) Q) y' =
-      ∑ q ∈ (derPol cD Q y'.1).support, MvPolynomial.coeff q (derPol cD Q y'.1) * Formalism.L2.Ker.derivAt0 (Th i c c') q :=
+      ∑ q ∈ (derPol cD Q y'.1).support, AddMonoidAlgebra.coeff (derPol cD Q y'.1) q * Formalism.L2.Ker.derivAt0 (Th i c c') q :=
   (A.chainJet_unf σ hc _ i c c' Q y').trans (eval_jetMap cD _ Q y'.1)
 
 theorem jetTie_of_tables (hc : X.Tau → HCParam R) (cD : X.Tau → ℂ) (Th : A.ThFam)

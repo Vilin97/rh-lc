@@ -54,7 +54,7 @@ theorem form_smul_mem (hM : IsMultigrading ι M piece) {b : K → ℕ} {f : MRin
   refine Submodule.sum_mem _ fun d hd => ?_
   have hw : Finsupp.weight (blockWeight ι) d = b :=
     (mem_weightedHomogeneousSubmodule _ _ _ _).mp hf (mem_support_iff.mp hd)
-  have h := monomial_smul_mem hM d (coeff d f) hy
+  have h := monomial_smul_mem hM d (AddMonoidAlgebra.coeff f d) hy
   rwa [hw] at h
 
 def comp [DirectSum.Decomposition piece] (m : K → ℤ) : M →ₗ[F] M :=
@@ -71,11 +71,11 @@ theorem comp_smul (hM : IsMultigrading ι M piece) [DirectSum.Decomposition piec
     {x : M} (hx : x ∈ piece c) (s : MRing ι F) (m : K → ℤ) :
     comp (piece := piece) m (s • x) =
       (∑ d ∈ s.support with (fun k => (Finsupp.weight (blockWeight ι) d k : ℤ)) = m - c,
-        monomial d (coeff d s)) • x := by
+        monomial d (AddMonoidAlgebra.coeff s d)) • x := by
   conv_lhs => rw [s.as_sum]
   rw [Finset.sum_smul, map_sum, Finset.sum_filter, Finset.sum_smul]
   refine Finset.sum_congr rfl fun d _ => ?_
-  have h := monomial_smul_mem hM d (coeff d s) hx
+  have h := monomial_smul_mem hM d (AddMonoidAlgebra.coeff s d) hx
   rw [comp_apply]
   split_ifs with hd
   · rw [hd, add_sub_cancel] at h

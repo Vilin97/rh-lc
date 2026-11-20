@@ -131,7 +131,7 @@ theorem exists_linear_of_multiadditive : ∀ (k : Type) [CommRing k] (X : Scheme
     rw [Finset.prod_mul_distrib, ← map_prod, prod_X_eq, C_mul', map_smul, hΦ, hφ, smul_eq_mul]
   · rw [P.as_sum, map_sum]
     refine Finset.sum_eq_zero fun s hs => ?_
-    have hm : monomial s (coeff s P) = coeff s P • monomial s (1 : ℝ) := by rw [smul_monomial, smul_eq_mul, mul_one]
+    have hm : monomial s (AddMonoidAlgebra.coeff P s) = AddMonoidAlgebra.coeff P s • monomial s (1 : ℝ) := by rw [smul_monomial, smul_eq_mul, mul_one]
     rw [hm, map_smul, hΦ, smul_eq_mul]
     refine mul_eq_zero_of_right _ (dif_neg ?_)
     rintro ⟨c, rfl⟩

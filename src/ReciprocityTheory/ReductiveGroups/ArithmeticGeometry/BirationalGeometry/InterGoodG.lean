@@ -100,7 +100,7 @@ theorem algebraicIndependent_sumElim (P : Ideal (MRing ι)) (hP : P.IsPrime) (hH
     exact inr_eq_of_weight_eq k0 ((hHd (mem_support_iff.mp hm)).trans
       (hHd (mem_support_iff.mp hn0)).symm) s
   ext n
-  have := congrArg (coeff n) (key (Finsupp.weight (sWt k0 r) n))
+  have := congrArg (AddMonoidAlgebra.coeff · n) (key (Finsupp.weight (sWt k0 r) n))
   rw [coeff_weightedHomogeneousComponent, if_pos rfl] at this
   simpa using this
 

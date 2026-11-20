@@ -30,7 +30,7 @@ private lemma tch_poly (n : ℕ) (R : Type) [CommRing R] {X : Type} (s : Finset 
     rw [MvPolynomial.monomial_eq, Finsupp.prod_fintype _ _ (by simp)]
     simp [map_prod, mul_comm]
   intro j hj
-  have h4 := congrArg (MvPolynomial.coeff (e j)) h3
+  have h4 := congrArg (AddMonoidAlgebra.coeff · (e j)) h3
   rw [MvPolynomial.coeff_sum, Finset.sum_eq_single j] at h4
   · simpa using h4
   · intro k hk hkj

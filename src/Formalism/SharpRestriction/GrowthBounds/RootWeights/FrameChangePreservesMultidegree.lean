@@ -174,7 +174,7 @@ theorem frame_evaluation_monomial_sum {R : Type} [CommRing R] {ι : Type} [Finty
     {k1 : Type} [CommRing k1] (ph : MvPolynomial (ι × Fin r) R →+* k1) (g0 g0inv : Matrix (Fin r) (Fin r) k1)
     (P : MvPolynomial (ι × Fin r) k1) :
     frameCoordinateEvaluation LL S ph g0 g0inv P =
-      ∑ m ∈ P.support, coeff m P * ∏ v, (frameCoordinateEvaluation LL S ph g0 g0inv (X v)) ^ (m v) := by
+      ∑ m ∈ P.support, AddMonoidAlgebra.coeff P m * ∏ v, (frameCoordinateEvaluation LL S ph g0 g0inv (X v)) ^ (m v) := by
   conv_lhs => rw [P.as_sum]
   rw [map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_

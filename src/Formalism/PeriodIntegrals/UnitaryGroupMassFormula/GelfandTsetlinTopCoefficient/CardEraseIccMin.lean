@@ -26,7 +26,7 @@ theorem card_erase_Icc_min (a b c x : ℤ) (hab : a ≤ b) (hc : 0 ≤ c)
 theorem abs_prod_le_prod {α : Type*} (s : Finset α) (f b : α → ℤ) (h : ∀ x ∈ s, |f x| ≤ b x) :
     |∏ x ∈ s, f x| ≤ ∏ x ∈ s, b x := by
   rw [abs_prod]
-  exact Finset.prod_le_prod (fun x _ => abs_nonneg _) h
+  exact Finset.prod_le_prod₀ (fun x _ => abs_nonneg _) h
 
 theorem abs_prod_le_pow {α : Type*} (s : Finset α) (f : α → ℤ) (B : ℤ) (h : ∀ x ∈ s, |f x| ≤ B) :
     |∏ x ∈ s, f x| ≤ B ^ s.card := by

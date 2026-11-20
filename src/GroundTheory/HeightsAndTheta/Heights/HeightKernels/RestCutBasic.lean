@@ -78,10 +78,10 @@ theorem sum_card_Ioi_mul_two (N : ℕ) :
   omega
 
 def psiPolyFun {σ : Type*} (ψ : ℝ →ₗ[ℚ] ℚ) (P : MvPolynomial σ ℝ) : MvPolynomial σ ℚ :=
-  ∑ β ∈ P.support, monomial β (ψ (coeff β P))
+  ∑ β ∈ P.support, monomial β (ψ (AddMonoidAlgebra.coeff P β))
 
 theorem coeff_psiPolyFun {σ : Type*} (ψ : ℝ →ₗ[ℚ] ℚ) (P : MvPolynomial σ ℝ) (β : σ →₀ ℕ) :
-    coeff β (psiPolyFun ψ P) = ψ (coeff β P) := by
+    AddMonoidAlgebra.coeff (psiPolyFun ψ P) β = ψ (AddMonoidAlgebra.coeff P β) := by
   classical
   rw [psiPolyFun, coeff_sum]
   simp only [coeff_monomial]
@@ -94,10 +94,10 @@ theorem coeff_psiPolyFun {σ : Type*} (ψ : ℝ →ₗ[ℚ] ℚ) (P : MvPolynomi
 def psiPoly {σ : Type*} (ψ : ℝ →ₗ[ℚ] ℚ) : MvPolynomial σ ℝ →+ MvPolynomial σ ℚ :=
   AddMonoidHom.mk' (psiPolyFun ψ) fun P Q => by
     ext β
-    simp only [coeff_psiPolyFun, coeff_add, map_add]
+    simp only [coeff_psiPolyFun, MvPolynomial.coeff_add, map_add]
 
 theorem coeff_psiPoly {σ : Type*} (ψ : ℝ →ₗ[ℚ] ℚ) (P : MvPolynomial σ ℝ) (β : σ →₀ ℕ) :
-    coeff β (psiPoly ψ P) = ψ (coeff β P) :=
+    AddMonoidAlgebra.coeff (psiPoly ψ P) β = ψ (AddMonoidAlgebra.coeff P β) :=
   coeff_psiPolyFun ψ P β
 
 theorem psiPoly_map_mul {σ : Type*} (ψ : ℝ →ₗ[ℚ] ℚ) (A : MvPolynomial σ ℚ)

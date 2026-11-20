@@ -99,7 +99,7 @@ lemma exp_jet (r : ℝ) (hr : 1 ≤ r) (ι : Type) [Fintype ι] (S : K) (u : ι 
       field_simp
     rw [hval, norm_mul, norm_mul, norm_pow, norm_neg, norm_prod]
     have h1 : ‖((∏ i, (n i).factorial : ℕ) : K)‖ ≤ 1 := IsUltrametricDist.norm_natCast_le_one K _
-    have h2 : ∏ i, ‖u i ^ n i‖ ≤ 1 := Finset.prod_le_one (fun _ _ => norm_nonneg _) fun i _ => by
+    have h2 : ∏ i, ‖u i ^ n i‖ ≤ 1 := Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun i _ => by
       rw [norm_pow]; exact pow_le_one₀ (norm_nonneg _) (hu i)
     have h3 : ‖S‖ ^ k ≤ r ^ k := pow_le_pow_left₀ (norm_nonneg _) hS k
     have h4 : ∑ i, min (κ (false, i)) (κ (true, i)) = k := by

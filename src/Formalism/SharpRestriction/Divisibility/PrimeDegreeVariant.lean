@@ -1118,7 +1118,7 @@ theorem prod_near_one {ι : Type} (s : Finset ι) (a : ι → ℝ) (x : ℝ) (hx
     exact Finset.prod_le_prod hpos fun i hi => (ha i hi).2
   have hlo : (1 - x) ^ s.card ≤ ∏ i ∈ s, a i := by
     rw [← Finset.prod_const]
-    exact Finset.prod_le_prod (fun _ _ => by linarith) fun i hi => (ha i hi).1
+    exact Finset.prod_le_prod₀ (fun _ _ => by linarith) fun i hi => (ha i hi).1
   have hbern : 1 + (s.card : ℝ) * (-x) ≤ (1 + -x) ^ s.card := one_add_mul_le_pow (by linarith) _
   have hneg : (1 + -x) = 1 - x := by ring
   rw [hneg] at hbern

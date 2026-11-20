@@ -90,7 +90,7 @@ theorem not_rowVal_smul {u : B.Word} {a : I.ι} {G : (I.per l u a).Mt} (hG : Row
   have e2 : t • MvPolynomial.map B.embLL y.1 = MvPolynomial.map B.embLL y'.1 := (congrArg (t • ·) e).symm.trans e'
   have hy : MvPolynomial.map B.embLL y.1 ≠ 0 := fun h1 => hc (e.trans h1)
   obtain ⟨m, hm⟩ := MvPolynomial.ne_zero_iff.1 hy
-  have e3 := congrArg (MvPolynomial.coeff m) e2
+  have e3 := congrArg (AddMonoidAlgebra.coeff · m) e2
   rw [MvPolynomial.coeff_smul, smul_eq_mul] at e3
   rw [MvPolynomial.coeff_map] at hm
   rw [MvPolynomial.coeff_map, MvPolynomial.coeff_map] at e3

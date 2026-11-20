@@ -69,15 +69,15 @@ lemma fact_emb (g : T → σ →₀ ℕ) :
 
 lemma prod_rename_eq (p : T → MvPolynomial σ ℂ) :
     ∏ τ, rename (Prod.mk τ) (p τ) =
-      ∑ g ∈ Fintype.piFinset (fun τ => (p τ).support), monomial (emb g) (∏ τ, coeff (g τ) (p τ)) := by
+      ∑ g ∈ Fintype.piFinset (fun τ => (p τ).support), monomial (emb g) (∏ τ, AddMonoidAlgebra.coeff (p τ) (g τ)) := by
   calc ∏ τ, rename (Prod.mk τ) (p τ)
-      = ∏ τ, ∑ v ∈ (p τ).support, monomial (Finsupp.mapDomain (Prod.mk τ) v) (coeff v (p τ)) := by
+      = ∏ τ, ∑ v ∈ (p τ).support, monomial (Finsupp.mapDomain (Prod.mk τ) v) (AddMonoidAlgebra.coeff (p τ) v) := by
         refine Finset.prod_congr rfl fun τ _ => ?_
         conv_lhs => rw [as_sum (p τ)]
         rw [map_sum]
         simp only [rename_monomial]
     _ = ∑ g ∈ Fintype.piFinset (fun τ => (p τ).support),
-          ∏ τ, monomial (Finsupp.mapDomain (Prod.mk τ) (g τ)) (coeff (g τ) (p τ)) :=
+          ∏ τ, monomial (Finsupp.mapDomain (Prod.mk τ) (g τ)) (AddMonoidAlgebra.coeff (p τ) (g τ)) :=
         Finset.prod_univ_sum _ _
     _ = _ := Finset.sum_congr rfl fun g _ => (monomial_sum_prod _ _ _).symm
 
@@ -99,7 +99,7 @@ theorem TensorFock_holds : TensorFockProduct := by
   rw [prod_rename_eq p, prod_rename_eq q, fischerInner_sum_left]
   simp_rw [fischerInner_sum_right, fock_mono]
   have hR : ∀ τ, fockF (p τ) (q τ) = ∑ m ∈ (p τ).support, ∑ n ∈ (q τ).support,
-      (if m = n then coeff m (p τ) * star (coeff n (q τ)) *
+      (if m = n then AddMonoidAlgebra.coeff (p τ) m * star (AddMonoidAlgebra.coeff (q τ) n) *
         ((∏ k ∈ m.support, (m k).factorial : ℕ) : ℂ) else 0) := by
     intro τ
     conv_lhs => rw [as_sum (p τ), as_sum (q τ)]

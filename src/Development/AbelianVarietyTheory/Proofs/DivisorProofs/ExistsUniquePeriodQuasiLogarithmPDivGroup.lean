@@ -372,7 +372,7 @@ theorem _root_.GlobalTheory.PeriodExists.main : ∀ (p : ℕ) [Fact p.Prime] (C 
           refine ⟨0, fun N' _ => ⟨0, ?_⟩⟩
           simp only [Pi.zero_apply, map_zero, mul_zero, zero_sub, neg_eq_zero]
           rw [show (fun _ : Fin d => (0 : F.Q)) = 0 from rfl, MvPolynomial.eval_zero]
-          show MvPolynomial.coeff 0 _ = 0
+          show AddMonoidAlgebra.coeff _ 0 = 0
           rw [coeff_trunc']
           simp [hf0]
         obtain ⟨b, hb⟩ := hdiff 0 z 0 q 0 hz h0 hq hv0

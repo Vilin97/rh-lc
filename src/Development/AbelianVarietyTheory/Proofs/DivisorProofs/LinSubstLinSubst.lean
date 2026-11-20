@@ -132,9 +132,9 @@ private lemma gaussAbs_pos_of_ne_zero {K σ : Type} [Field K] [NumberField K] (w
     {g : MvPolynomial σ K} (hg : g ≠ 0) : 0 < _root_.ReciprocityTheory.MultiplicativeHeights.gaussAbs w g := by
   obtain ⟨s, hs⟩ := exists_coeff_ne_zero hg
   unfold _root_.ReciprocityTheory.MultiplicativeHeights.gaussAbs
-  have h1 : (w (coeff s g)).toNNReal ≤ g.support.sup fun t => (w (coeff t g)).toNNReal :=
-    Finset.le_sup (f := fun t => (w (coeff t g)).toNNReal) (mem_support_iff.mpr hs)
-  have h2 : 0 < w (coeff s g) := w.pos_iff.mpr hs
+  have h1 : (w (AddMonoidAlgebra.coeff g s)).toNNReal ≤ g.support.sup fun t => (w (AddMonoidAlgebra.coeff g t)).toNNReal :=
+    Finset.le_sup (f := fun t => (w (AddMonoidAlgebra.coeff g t)).toNNReal) (mem_support_iff.mpr hs)
+  have h2 : 0 < w (AddMonoidAlgebra.coeff g s) := w.pos_iff.mpr hs
   exact_mod_cast lt_of_lt_of_le (Real.toNNReal_pos.mpr h2) h1
 
 open CategoryTheory AlgebraicGeometry NumberField MvPolynomial in

@@ -90,13 +90,13 @@ private theorem coeff_eq_of_eval_lemma {σ τ : Type*}
   by_cases hk : k < d
   · refine MvPolynomial.ext _ _ fun m => ?_
     let p : Polynomial ℂ :=
-      ∑ i ∈ Finset.range d, Polynomial.monomial i (MvPolynomial.coeff m (φ (P.coeff i)))
+      ∑ i ∈ Finset.range d, Polynomial.monomial i (AddMonoidAlgebra.coeff (φ (P.coeff i)) m)
     let q : Polynomial ℂ :=
-      ∑ i ∈ Finset.range d, Polynomial.monomial i (MvPolynomial.coeff m (Q.coeff i))
+      ∑ i ∈ Finset.range d, Polynomial.monomial i (AddMonoidAlgebra.coeff (Q.coeff i) m)
     have hpq : p = q := by
       apply Polynomial.funext
       intro t
-      have e := congrArg (MvPolynomial.coeff m) (hPQ t)
+      have e := congrArg (AddMonoidAlgebra.coeff · m) (hPQ t)
       rw [hP t, hQ t, map_sum] at e
       simp only [map_smul, MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, smul_eq_mul] at e
       simp only [p, q, Polynomial.eval_finset_sum, Polynomial.eval_monomial]

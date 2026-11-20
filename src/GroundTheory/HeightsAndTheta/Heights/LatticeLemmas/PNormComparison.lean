@@ -54,7 +54,7 @@ theorem re_det_le_of_posSemidef_smul_sub {n : Type*} [Fintype n] [DecidableEq n]
     change (((∏ i, hBpsd.1.eigenvalues i : ℝ) : ℂ)).re ≤ _
     rw [Complex.ofReal_re]
     calc ∏ i, hBpsd.1.eigenvalues i ≤ ∏ _i : n, c :=
-          Finset.prod_le_prod (fun i _ ↦ hBpsd.eigenvalues_nonneg i) (fun i _ ↦ heig i)
+          Finset.prod_le_prod₀ (fun i _ ↦ hBpsd.eigenvalues_nonneg i) (fun i _ ↦ heig i)
       _ = c ^ Fintype.card n := by rw [Finset.prod_const, Finset.card_univ]
   have hstar : star (det P) * det P = ((Complex.normSq (det P) : ℝ) : ℂ) := by
     rw [mul_comm]; exact Complex.mul_conj (det P)

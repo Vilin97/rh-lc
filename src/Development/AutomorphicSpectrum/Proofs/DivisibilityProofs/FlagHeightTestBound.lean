@@ -89,14 +89,14 @@ theorem negX_monomial (m : Ψ × Fin N →₀ ℕ) (c : ℝ) :
   ring
 
 theorem coeff_negX (m : Ψ × Fin N →₀ ℕ) (F : RP Ψ N) :
-    coeff m (negX F) = (-1) ^ m.degree * coeff m F := by
+    AddMonoidAlgebra.coeff (negX F) m = (-1) ^ m.degree * AddMonoidAlgebra.coeff F m := by
   induction F using MvPolynomial.induction_on' with
   | monomial u c =>
     rw [negX_monomial, coeff_monomial, coeff_monomial]
     split_ifs with h
     · rw [h]
     · simp
-  | add p q hp hq => rw [map_add, coeff_add, coeff_add, hp, hq]; ring
+  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq]; ring
 
 end Poly
 

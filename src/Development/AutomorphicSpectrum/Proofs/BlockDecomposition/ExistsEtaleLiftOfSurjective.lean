@@ -240,7 +240,7 @@ theorem nonempty_lift {O R Λ : Type} [CommRing O] [CommRing R] [CommRing Λ] (a
       rw [RingHom.mem_ker, MvPolynomial.mem_map_C_iff]
       constructor
       · intro hf m
-        have := congrArg (MvPolynomial.coeff m) hf
+        have := congrArg (AddMonoidAlgebra.coeff · m) hf
         rw [MvPolynomial.coeff_map, MvPolynomial.coeff_zero] at this
         exact Ideal.Quotient.eq_zero_iff_mem.mp this
       · intro hf

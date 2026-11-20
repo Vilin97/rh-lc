@@ -119,7 +119,7 @@ theorem paPoly_continuous {c : ℕ} {F : EuclideanSpace ℂ ι → ℂ} (hF : F 
 theorem paMono_norm_le (α : ι →₀ ℕ) (v : EuclideanSpace ℂ ι) : ‖paMono α v‖ ≤ ‖v‖ ^ α.degree := by
   simp only [paMono, paPF, MvPolynomial.eval_monomial, one_mul, Finsupp.prod, norm_prod, norm_pow]
   rw [Finsupp.degree_apply, ← Finset.prod_pow_eq_pow_sum]
-  exact Finset.prod_le_prod (fun i _ => by positivity)
+  exact Finset.prod_le_prod₀ (fun i _ => by positivity)
     (fun i _ => pow_le_pow_left₀ (norm_nonneg _) (PiLp.norm_apply_le v i) _)
 
 theorem paPoly_growth {c : ℕ} {F : EuclideanSpace ℂ ι → ℂ} (hF : F ∈ paPoly c) :
@@ -367,7 +367,7 @@ theorem paPF_diff (p : MvPolynomial ι ℂ) : Differentiable ℂ (paPF p) ∧
       (EuclideanSpace.proj k : EuclideanSpace ℂ ι →L[ℂ] ℂ).fderiv
     rw [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply, ContinuousLinearMap.smul_apply,
       e1, hp.2, Derivation.leibniz, MvPolynomial.pderiv_X]
-    simp only [EuclideanSpace.coe_proj, EuclideanSpace.single_apply, smul_eq_mul, paPF, map_add,
+    simp only [EuclideanSpace.coe_proj, PiLp.single_apply, smul_eq_mul, paPF, map_add,
       map_mul, MvPolynomial.eval_X, Pi.single_apply]
     by_cases h : j = k
     · subst h; simp <;> ring

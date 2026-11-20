@@ -51,7 +51,7 @@ theorem exists_clear_coeff_at_prime : ∀ (E : Type) [Field E] [NumberField E] [
       ∀ G : MvPolynomial (Formalism.L2.LamCM.FrVar Dw.mult) z.K, (∀ (y' : FrPt Xo c z.K) (Y : ∀ b : E →+* ℂ, Matrix (Fin (Dw.mult b)) (Fin (Dw.mult b)) z.K) (s : z.Kˣ),
           (∀ b, (Y b).det ≠ 0) → GlobalTheory.Frames.FrChg (fun b => (Y b).transpose) (s : z.K) z.y y' →
           (∏ b, (Y b).det ^ k b) * evR Xo c F y' = Formalism.L2.LamCM.evalFr G Y) →
-        ∀ μ, p.valuation z.K ((x : z.K) * MvPolynomial.coeff μ G) ≤ 1 := by
+        ∀ μ, p.valuation z.K ((x : z.K) * AddMonoidAlgebra.coeff G μ) ≤ 1 := by
   intro E _ _ _ H Dw l Xo c _ z f La hz e k he p
   classical
   obtain ⟨T, iK, hT, hiK⟩ := GlobalTheory.T.exists_completeDVR_completion_integral_iff z.K p
@@ -105,7 +105,7 @@ theorem exists_clear_coeff_at_prime : ∀ (E : Type) [Field E] [NumberField E] [
   obtain ⟨N, t, hNt⟩ := dvd_pow_of_ne_zero_of_not_isUnit (nonZeroDivisors.ne_zero d.2) hπ0 hπu
   refine ⟨ϖ ^ N, pow_ne_zero _ hϖ0, ?_⟩
   intro F hF hv G hG μ
-  by_cases hμ : MvPolynomial.coeff μ G = 0
+  by_cases hμ : AddMonoidAlgebra.coeff G μ = 0
   · simp [hμ]
   have hG1 : ∀ (y' : FrPt Xo c z.K) (Y : ∀ b : E →+* ℂ, Matrix (Fin (Dw.mult b)) (Fin (Dw.mult b)) z.K),
       (∀ b, (Y b).det ≠ 0) → GlobalTheory.Frames.FrChg (fun b => (Y b).transpose) 1 z.y y' →
@@ -120,7 +120,7 @@ theorem exists_clear_coeff_at_prime : ∀ (E : Type) [Field E] [NumberField E] [
   apply (hiK _).1
   have hP : (∏ v : Formalism.L2.LamCM.FrVar Dw.mult, cl v.1 v.2.2 ^ μ v) ≠ 0 :=
     Finset.prod_ne_zero_iff.2 fun v _ => pow_ne_zero _ ((map_ne_zero iK).2 (hc0 v.1 v.2.2).1)
-  have hc : iK (MvPolynomial.coeff μ G) = yμ μ * algebraMap T.V T.Fr w := by
+  have hc : iK (AddMonoidAlgebra.coeff G μ) = yμ μ * algebraMap T.V T.Fr w := by
     simp only [yμ]
     rw [mul_comm τ, mul_assoc, ← hw]
     field_simp

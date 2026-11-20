@@ -89,19 +89,19 @@ theorem ctsA_sum {κ : Type*} (s : Finset κ) {f : κ → X → E ⊗[F] B} (hf 
     CtsA b (fun x => ∑ i ∈ s, f i x) := by
   unfold CtsA
   simp only [map_sum]
-  exact continuous_finset_sum _ hf
+  exact continuous_finsetSum _ hf
 
 theorem ctsA_mul {f g : X → E ⊗[F] B} (hf : CtsA b f) (hg : CtsA b g) : CtsA b (fun x => f x * g x) := by
   unfold CtsA
   simp only [coord_mul]
-  refine continuous_pi fun k => continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+  refine continuous_pi fun k => continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
   exact cont_smul _ (((continuous_apply i).comp hf).mul ((continuous_apply j).comp hg))
 
 theorem ctsA_map (σ : E →ₐ[F] E) {f : X → E ⊗[F] B} (hf : CtsA b f) :
     CtsA b (fun x => Algebra.TensorProduct.map σ (AlgHom.id F B) (f x)) := by
   unfold CtsA
   simp only [coord_map]
-  exact continuous_pi fun k => continuous_finset_sum _ fun i _ => cont_smul _ ((continuous_apply i).comp hf)
+  exact continuous_pi fun k => continuous_finsetSum _ fun i _ => cont_smul _ ((continuous_apply i).comp hf)
 
 end Topology
 

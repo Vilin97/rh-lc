@@ -81,7 +81,7 @@ theorem lValEta_two_le (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) :
   refine (multipliable_eulerFac hK 2 le_rfl).tprod_le_of_prod_le fun s => ?_
   calc ∏ P ∈ s, Formalism.HermitianLatticesTheory.eulerFac K 2 P.1
       ≤ ∏ P ∈ s, Real.exp (2 * ((resChar P.1 : ℝ) ^ 2)⁻¹) :=
-        Finset.prod_le_prod (fun P _ => (eulerFac_pos hK P.2 2 (by norm_num)).le)
+        Finset.prod_le_prod₀ (fun P _ => (eulerFac_pos hK P.2 2 (by norm_num)).le)
           (fun P _ => eulerFac_two_le hK P.2)
     _ = Real.exp (2 * ∑ P ∈ s, ((resChar P.1 : ℝ) ^ 2)⁻¹) := by
         rw [← Real.exp_sum, Finset.mul_sum]

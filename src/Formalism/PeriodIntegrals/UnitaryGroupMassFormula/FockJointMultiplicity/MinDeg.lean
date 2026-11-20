@@ -72,7 +72,7 @@ theorem low_hc (L : Module.End ℂ (MvPolynomial σ ℂ))
       exact h2.symm
     · simp
   ext m
-  have h3 := congrArg (coeff m) (hz (m.degree))
+  have h3 := congrArg (AddMonoidAlgebra.coeff · m) (hz (m.degree))
   rw [coeff_homogeneousComponent, if_pos rfl] at h3
   simpa using h3
 

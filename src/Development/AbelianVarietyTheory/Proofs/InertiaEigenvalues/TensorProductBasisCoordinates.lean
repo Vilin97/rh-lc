@@ -30,7 +30,7 @@ theorem GlobalTheory.tensorBasisCoords : ∀ (F : Type) [Field F] (B : Type) [Co
       rw [← Finset.sum_smul]
       congr 1
       conv_lhs => rw [← b.sum_repr v]
-      rw [map_sum, map_sum, Finsupp.finset_sum_apply]
+      rw [map_sum, map_sum, Finsupp.finsetSum_apply]
       simp only [map_smul, Finsupp.smul_apply, smul_eq_mul]
       exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
     | add y z hy hz =>

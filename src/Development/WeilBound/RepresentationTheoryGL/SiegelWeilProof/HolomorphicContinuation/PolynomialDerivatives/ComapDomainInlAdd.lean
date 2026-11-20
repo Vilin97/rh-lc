@@ -89,7 +89,7 @@ theorem op_add (u v : Sym m n) (f : PX m n) : op (u + v) f = op u f + op v f := 
     op_eq_of_subset u (u.support ∪ v.support) Finset.subset_union_left,
     op_eq_of_subset v (u.support ∪ v.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun t _ => ?_
-  rw [coeff_add, add_smul]
+  rw [MvPolynomial.coeff_add, add_smul]
 
 theorem op_smul (a : ℂ) (u : Sym m n) (f : PX m n) : op (a • u) f = a • op u f := by
   classical

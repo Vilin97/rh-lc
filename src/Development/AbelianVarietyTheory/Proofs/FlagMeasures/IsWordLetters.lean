@@ -507,7 +507,7 @@ theorem tcrit_low (D : D7) (large₂ : SizeData₂ D) (C' Cl Cg cb Cu cT CT C0 :
     rw [le_div_iff₀ (by linarith [hae.2.2.1])]
     linarith [hae.2.2.2]
   have hP : B ^ D.R.m ≤ c.prodb := by
-    have := prod_le_prod (s := Icc 1 D.R.m) (f := fun _ => B) (g := bOne D τ) (fun _ _ => by linarith)
+    have := prod_le_prod₀ (s := Icc 1 D.R.m) (f := fun _ => B) (g := bOne D τ) (fun _ _ => by linarith)
       fun j hj => hmono j (mem_Icc.1 hj).1 (mem_Icc.1 hj).2
     rw [prod_const, Nat.card_Icc, Nat.add_sub_cancel] at this
     exact this

@@ -165,7 +165,7 @@ theorem clm_apply_eq_integral (L : 𝓢(E, ℂ) →L[ℂ] ℂ) {G : W → 𝓢(E
   haveI : SecondCountableTopology W := inferInstance
   haveI : SecondCountableTopologyEither W (Target E t) := secondCountableTopologyEither_of_left _ _
   have hInt : Integrable (fun w => embed t (G w)) ν :=
-    (integrable_finset_sum t fun i _ => hint i.1 i.2).mono' hcont.aestronglyMeasurable
+    (MeasureTheory.integrable_finsetSum t fun i _ => hint i.1 i.2).mono' hcont.aestronglyMeasurable
       (.of_forall fun w => norm_embed_le t (G w))
   have hemb : embed t g = ∫ w, embed t (G w) ∂ν := by
     funext i

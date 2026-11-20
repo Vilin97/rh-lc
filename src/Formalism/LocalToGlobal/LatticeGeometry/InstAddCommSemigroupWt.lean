@@ -75,7 +75,7 @@ end Weights
 
 theorem one_le_prod_of_one_le {ι : Type} (s : Finset ι) (f : ι → ℝ) (h : ∀ i ∈ s, 1 ≤ f i) : 1 ≤ ∏ i ∈ s, f i := by
   calc (1 : ℝ) = ∏ _i ∈ s, (1 : ℝ) := by simp
-    _ ≤ ∏ i ∈ s, f i := Finset.prod_le_prod (fun _ _ => zero_le_one) h
+    _ ≤ ∏ i ∈ s, f i := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) h
 
 def weylDim {n : ℕ} (a : Fin n → ℤ) : ℝ :=
   ∏ i : Fin n, ∏ k : Fin n,

@@ -14,7 +14,7 @@ theorem infPlace_norm_le {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
   have e : w.embedding (Algebra.norm F y) = ∏ σ : E →ₐ[F] ℂ, σ y := Algebra.norm_eq_prod_embeddings F ℂ y
   rw [e, norm_prod, ← AlgHom.card F E ℂ]
   calc ∏ σ : E →ₐ[F] ℂ, ‖σ y‖ ≤ ∏ _σ : E →ₐ[F] ℂ, (c : ℝ) :=
-        Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun σ _ => by
+        Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun σ _ => by
           exact_mod_cast h ⟨σ.toRingHom, RingHom.ext σ.commutes⟩
     _ = (c : ℝ) ^ Fintype.card (E →ₐ[F] ℂ) := by rw [Finset.prod_const, Finset.card_univ]
 

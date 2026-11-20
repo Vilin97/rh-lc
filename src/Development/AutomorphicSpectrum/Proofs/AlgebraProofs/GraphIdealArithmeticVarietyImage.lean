@@ -39,11 +39,11 @@ theorem graphMap_eq (P : Ideal (MRing ι)) (g : (Σ k, ι₂ k) → MRing ι) (F
   exact congrArg (fun f => f F) this
 
 theorem mem_graphIdeal_iff (P : Ideal (MRing ι)) (g : (Σ k, ι₂ k) → MRing ι) (F : MRing (Sum.elim ι ι₂)) :
-    F ∈ graphIdeal P g ↔ ∀ b, coeff b (graphLift g F) ∈ P := by
+    F ∈ graphIdeal P g ↔ ∀ b, AddMonoidAlgebra.coeff (graphLift g F) b ∈ P := by
   rw [graphIdeal, RingHom.mem_ker, graphMap_eq]
   constructor
   · intro h b
-    have := congrArg (coeff b) h
+    have := congrArg (AddMonoidAlgebra.coeff · b) h
     rwa [coeff_map, coeff_zero, Ideal.Quotient.eq_zero_iff_mem] at this
   · intro h
     ext b
@@ -197,12 +197,12 @@ theorem exists_graphLift_monomial {g : (Σ k, ι₂ k) → MRing ι} {δ : K₂ 
 theorem coeff_graphLift_i2comp {g : (Σ k, ι₂ k) → MRing ι} {δ : K₂ → K → ℕ}
     (hg : ∀ q, IsMultiHomog (g q) (δ q.1)) (c : K ⊕ K₂ → ℕ) (F : MRing (Sum.elim ι ι₂))
     (b : K₂ →₀ ℕ) :
-    coeff b (graphLift g (i2comp c F)) =
-      if b = expDeg c then i2comp (baseDeg δ c) (coeff b (graphLift g F)) else 0 := by
+    AddMonoidAlgebra.coeff (graphLift g (i2comp c F)) b =
+      if b = expDeg c then i2comp (baseDeg δ c) (AddMonoidAlgebra.coeff (graphLift g F) b) else 0 := by
   classical
   induction F using MvPolynomial.induction_on' with
   | add F F' hF hF' =>
-    rw [i2comp_add, map_add, coeff_add, hF, hF', map_add, coeff_add]
+    rw [i2comp_add, map_add, MvPolynomial.coeff_add, hF, hF', map_add, MvPolynomial.coeff_add]
     split_ifs
     · rw [i2comp_add]
     · simp

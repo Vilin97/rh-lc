@@ -93,7 +93,7 @@ def charExt {R Γ : Type} [CommRing R] [Group Γ] (ψ : Γ →* Rˣ) : MonoidAlg
   MonoidAlgebra.lift R R Γ ((Units.coeHom R).comp ψ)
 
 def GDet.coef {n : ℕ} {A G : Type} [CommRing A] [Group G] (D : GDet n A G) (α : G →₀ ℕ) : A :=
-  MvPolynomial.coeff α (D.D (MvPolynomial G A)
-    (∑ g ∈ α.support, MonoidAlgebra.single g (MvPolynomial.X g)))
+  AddMonoidAlgebra.coeff (D.D (MvPolynomial G A)
+    (∑ g ∈ α.support, MonoidAlgebra.single g (MvPolynomial.X g))) α
 
 end GlobalTheory.Pat

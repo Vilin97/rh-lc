@@ -37,7 +37,7 @@ theorem exists_padic (l : ℕ) [hl : Fact l.Prime] (i : ℕ) (hi : i ≠ 0) :
     have h4 : 1 * padicValNat l i.factorial ≤ (l - 1) * padicValNat l i.factorial :=
       Nat.mul_le_mul_right _ (by omega)
     omega
-  obtain ⟨s, hs⟩ : l ^ padicValNat l i.factorial ∣ i.factorial := pow_padicValNat_dvd
+  obtain ⟨s, hs⟩ : l ^ padicValNat l i.factorial ∣ i.factorial := (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
   have hs' : ¬ l ∣ s := by
     intro h
     refine pow_succ_padicValNat_not_dvd (p := l) (Nat.factorial_ne_zero i) ?_

@@ -47,7 +47,7 @@ theorem norm_det_le {p : ℕ} [Fact p.Prime] {r : ℕ} (M : Matrix (Fin r) (Fin 
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun σ _ => ?_
   rw [norm_mul, norm_prod]
   refine mul_le_one₀ (IsUltrametricDist.norm_intCast_le_one ℂ_[p] _) (Finset.prod_nonneg fun _ _ => norm_nonneg _) ?_
-  exact Finset.prod_le_one (fun _ _ => norm_nonneg _) fun i _ => h _ _
+  exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun i _ => h _ _
 
 variable {D : D7} {N N' r : ℕ}
 

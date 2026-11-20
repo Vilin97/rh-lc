@@ -43,7 +43,7 @@ theorem PolarisationDegreeD.proof : PolarisationDegreeD.Statement := by
 
   have hzero : ∀ k ∈ piAntidiag univ D, χ (∏ i, X i ^ k i) = 0 := by
     intro k hk
-    have hc : coeff (Finsupp.equivFunOnFinite.symm k) Q =
+    have hc : AddMonoidAlgebra.coeff Q (Finsupp.equivFunOnFinite.symm k) =
         (Nat.multinomial univ k : K) * χ (∏ i, X i ^ k i) := by
       rw [hQdef, coeff_sum]
       simp_rw [hmono, coeff_C_mul, coeff_monomial, EmbeddingLike.apply_eq_iff_eq]
@@ -61,7 +61,7 @@ theorem PolarisationDegreeD.proof : PolarisationDegreeD.Statement := by
       exact hP (mem_support_iff.mp hd)
     have hmem : (⇑d : Fin r → ℕ) ∈ piAntidiag univ D := by
       simp [hdeg]
-    have hd1 : monomial d (coeff d P) = coeff d P • monomial d (1 : K) := by
+    have hd1 : monomial d (AddMonoidAlgebra.coeff P d) = AddMonoidAlgebra.coeff P d • monomial d (1 : K) := by
       rw [smul_monomial, smul_eq_mul, mul_one]
     rw [hd1, map_smul, smul_eq_mul]
     have := hzero _ hmem

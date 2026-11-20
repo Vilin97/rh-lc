@@ -3782,7 +3782,7 @@ theorem prodRatio {ι : Type} (T : Finset ι) (lam : ι → ℝ) (α β L Y s : 
       rw [div_mul_eq_mul_div, le_div_iff₀ hI]; nlinarith
     nlinarith
   calc ∏ t ∈ T, |Y + lam t| ≤ ∏ t ∈ T, (1 + 3 * L / (β - α)) * |Y + s + lam t| :=
-        Finset.prod_le_prod (fun _ _ => abs_nonneg _) hfac
+        Finset.prod_le_prod₀ (fun _ _ => abs_nonneg _) hfac
     _ = (1 + 3 * L / (β - α)) ^ T.card * ∏ t ∈ T, |Y + s + lam t| := by
         rw [Finset.prod_mul_distrib, Finset.prod_const]
     _ ≤ Real.exp 3 * ∏ t ∈ T, |Y + s + lam t| := by

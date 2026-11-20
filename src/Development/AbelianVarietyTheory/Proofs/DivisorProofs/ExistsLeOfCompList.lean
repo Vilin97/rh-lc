@@ -97,7 +97,7 @@ theorem exists_r_le_at (x x' : ToroidalCompactificationData s) (σ : κ.c.F →+
       classical
       rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ (ι i))]
       exact mul_le_of_le_one_right ((x.nrm_div σ _).1 y).1
-        (Finset.prod_le_one (fun i _ => ((x.nrm_div σ i).1 y).1) fun i _ => ((x.nrm_div σ i).1 y).2)
+        (Finset.prod_le_one₀ (fun i _ => ((x.nrm_div σ i).1 y).1) fun i _ => ((x.nrm_div σ i).1 y).2)
     have h2 : (∏ i, x.nrm σ i y) ^ 2 ≤ K i * x'.nrm σ i y ^ 2 := (pow_le_pow_left₀ hP.le h1 2).trans (hK i y)
     have h3 := Real.log_le_log (pow_pos hP 2) h2
     rw [Real.log_mul (by linarith [hK1 i]) (pow_pos (x'.nrm_pos hy i) 2).ne'] at h3

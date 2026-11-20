@@ -41,7 +41,7 @@ theorem bdInt_sum {a b c d : ℝ} {B : Set ℂ} (h : SidesIn a b c d B) {ι : Ty
   | insert i S hi ih =>
     simp only [Finset.sum_insert hi]
     rw [bdInt_add h (hf i (Finset.mem_insert_self _ _))
-      (continuousOn_finset_sum _ fun j hj => hf j (Finset.mem_insert_of_mem hj)),
+      (continuousOn_finsetSum _ fun j hj => hf j (Finset.mem_insert_of_mem hj)),
       ih fun j hj => hf j (Finset.mem_insert_of_mem hj)]
 
 theorem bdInt_congr {a b c d : ℝ} {B : Set ℂ} (h : SidesIn a b c d B) {f g : ℂ → ℂ}
@@ -203,7 +203,7 @@ theorem residue_rectangle :
   rw [bdInt_congr hB (g := fun s => h s + ∑ q ∈ S, P q s) (fun s hs => by
       have ht' : s ∉ S := hs.2
       simp only [h, if_neg ht']; ring),
-    bdInt_add hB (hh.continuousOn.mono Set.diff_subset) (continuousOn_finset_sum _ hPc), h0,
+    bdInt_add hB (hh.continuousOn.mono Set.diff_subset) (continuousOn_finsetSum _ hPc), h0,
     zero_add, bdInt_sum hB S hPc, Finset.mul_sum]
   refine Finset.sum_congr rfl fun p hp => ?_
   obtain ⟨h1, h2, h3, h4⟩ := hS p hp

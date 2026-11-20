@@ -20,8 +20,8 @@ theorem ker_map {σ τ : Type} (k : Type) [Field k] [Algebra ℚ k] (g : σ → 
     | mul_X f i hf => simp only [map_mul, hf, map_X, aeval_X]
   refine le_antisymm (fun f hf => ?_) (Ideal.map_le_iff_le_comap.2 fun f hf => ?_)
   · let b := Module.Basis.ofVectorSpace ℚ k
-    let T : Finset _ := f.support.biUnion fun m => (b.repr (coeff m f)).support
-    let F : _ → MvPolynomial σ ℚ := fun i => ∑ m ∈ f.support, monomial m (b.repr (coeff m f) i)
+    let T : Finset _ := f.support.biUnion fun m => (b.repr (AddMonoidAlgebra.coeff f m)).support
+    let F : _ → MvPolynomial σ ℚ := fun i => ∑ m ∈ f.support, monomial m (b.repr (AddMonoidAlgebra.coeff f m) i)
     have hf' : f = ∑ i ∈ T, C (b i) * map (algebraMap ℚ k) (F i) := by
       conv_lhs => rw [f.as_sum]
       simp only [F, map_sum, Finset.mul_sum, map_monomial, C_mul_monomial]
@@ -29,8 +29,8 @@ theorem ker_map {σ τ : Type} (k : Type) [Field k] [Algebra ℚ k] (g : σ → 
       refine Finset.sum_congr rfl fun m hm => ?_
       rw [← map_sum (monomial m)]
       congr 1
-      conv_lhs => rw [← b.linearCombination_repr (coeff m f), Finsupp.linearCombination_apply,
-        Finsupp.sum_of_support_subset _ (Finset.subset_biUnion_of_mem (fun m => (b.repr (coeff m f)).support) hm)
+      conv_lhs => rw [← b.linearCombination_repr (AddMonoidAlgebra.coeff f m), Finsupp.linearCombination_apply,
+        Finsupp.sum_of_support_subset _ (Finset.subset_biUnion_of_mem (fun m => (b.repr (AddMonoidAlgebra.coeff f m)).support) hm)
           (fun i a => a • b i) (fun _ _ => zero_smul _ _)]
       exact Finset.sum_congr rfl fun i _ => by rw [Algebra.smul_def, mul_comm]
     have h0 : ∑ i ∈ T, C (b i) * map (algebraMap ℚ k) (aeval g (F i)) = 0 := by
@@ -38,9 +38,9 @@ theorem ker_map {σ τ : Type} (k : Type) [Field k] [Algebra ℚ k] (g : σ → 
       simpa only [map_sum, map_mul, hc, aeval_C, algebraMap_eq] using hf
     have h1 : ∀ i ∈ T, aeval g (F i) = 0 := fun i hi => by
       ext m
-      have := congrArg (coeff m) h0
+      have := congrArg (AddMonoidAlgebra.coeff · m) h0
       simp only [coeff_sum, coeff_C_mul, coeff_map, coeff_zero] at this
-      refine linearIndependent_iff'.1 b.linearIndependent T (fun i => coeff m (aeval g (F i))) ?_ i hi
+      refine linearIndependent_iff'.1 b.linearIndependent T (fun i => AddMonoidAlgebra.coeff (aeval g (F i)) m) ?_ i hi
       rw [← this]
       exact Finset.sum_congr rfl fun i _ => by rw [Algebra.smul_def, mul_comm]
     rw [hf']

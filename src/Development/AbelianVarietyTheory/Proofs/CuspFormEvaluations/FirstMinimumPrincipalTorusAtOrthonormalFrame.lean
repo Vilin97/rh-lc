@@ -415,7 +415,7 @@ theorem norm_orthoJet_le (hs : IsSympl X bas) {d : ℕ} (hP : P.IsHomogeneous d)
     · ring
   · rw [hn, Finset.mul_sum, Real.exp_sum, Function.comp_apply, norm_prod, ← Finset.prod_pow,
       ← Finset.prod_mul_distrib, ← Fin.prod_const n K, ← Finset.prod_mul_distrib, ← Finset.prod_pow]
-    refine Finset.prod_le_prod (fun k _ => by positivity) fun k _ => ?_
+    refine Finset.prod_le_prod₀ (fun k _ => by positivity) fun k _ => ?_
     refine (sup_le_l2_principal_torus _ _ 1 le_rfl _ (canSec_mem_Sec idx hs ho (a k) (b k))
       (φ w k)).trans_eq ?_
     rw [firstMinimum_principalTorusAtOrthonormalFrame, mul_pow, Real.sq_sqrt (l2_canSec_pos idx hs ho _ _).le, hK, mul_pow,

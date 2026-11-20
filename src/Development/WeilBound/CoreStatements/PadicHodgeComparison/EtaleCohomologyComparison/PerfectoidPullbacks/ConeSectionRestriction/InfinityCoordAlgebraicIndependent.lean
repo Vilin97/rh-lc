@@ -215,7 +215,7 @@ theorem infinityCoord_algebraicIndependent (t : Fin (n + 1) → Rˣ) (ht : Algeb
   rw [MvPolynomial.coeff_zero]
   by_contra hβ
   have hβ' : β ∈ f.support := MvPolynomial.mem_support_iff.2 hβ
-  have := congrArg (MvPolynomial.coeff (h β)) hg0
+  have := congrArg (AddMonoidAlgebra.coeff · (h β)) hg0
   rw [MvPolynomial.coeff_zero, MvPolynomial.coeff_sum, Finset.sum_eq_single β] at this
   · rw [MvPolynomial.coeff_monomial, if_pos rfl] at this
     exact hβ this

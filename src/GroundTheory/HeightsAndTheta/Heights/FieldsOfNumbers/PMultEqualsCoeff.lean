@@ -115,7 +115,7 @@ theorem hilbFn_eventually_zero_of_not_relevant (I : Ideal (MRing ι F)) (hI : ¬
         obtain ⟨k', i⟩ := v
         subst hvk
         exact hk i
-      have e : monomial s (coeff s f) = X v * monomial (s - Finsupp.single v 1) (coeff s f) := by
+      have e : monomial s (AddMonoidAlgebra.coeff f s) = X v * monomial (s - Finsupp.single v 1) (AddMonoidAlgebra.coeff f s) := by
         rw [show (X v : MRing ι F) = monomial (Finsupp.single v 1) 1 from rfl, monomial_mul,
           one_mul, add_tsub_cancel_of_le hle]
       rw [e]

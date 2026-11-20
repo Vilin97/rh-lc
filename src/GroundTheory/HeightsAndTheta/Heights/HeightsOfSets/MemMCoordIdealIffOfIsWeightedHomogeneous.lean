@@ -86,7 +86,7 @@ theorem mem_mCoordIdeal_iff {Ω : Type*} [Field Ω] (y : Coord n → Ω)
     by_cases h0 : weightedHomogeneousComponent (coordDeg n) m₀ f = 0
     · rw [h0, map_zero]
     have hm₀ : m₀ ∈ compDegs f := (Set.Finite.mem_toFinset _).mpr h0
-    have hk := congrArg (coeff (Finsupp.equivFunOnFinite.symm m₀))
+    have hk := congrArg (AddMonoidAlgebra.coeff · (Finsupp.equivFunOnFinite.symm m₀))
       (show Geo.mConeMap (ι := blockIdx n) y f = 0 from hf)
     rw [← sum_compDegs f, map_sum, coeff_sum, coeff_zero,
       Finset.sum_eq_single m₀] at hk

@@ -36,7 +36,7 @@ theorem isPrincipal_of_isStablyFree {D : Type u} [CommRing D] [IsDomain D] [IsNo
   obtain ⟨N, _, _, _, _, hfree⟩ := IsStablyFree.exist_free_prod D P
   let n := Module.finrank D N
 
-  let 𝔭 : PrimeSpectrum D := ⟨⊥, Ideal.bot_prime⟩
+  let 𝔭 : PrimeSpectrum D := ⟨⊥, Ideal.isPrime_bot⟩
   have h1 : rankAtStalk P 𝔭 = 1 := by
     let Dp := Localization.AtPrime 𝔭.asIdeal
     let pc := 𝔭.asIdeal.primeCompl
@@ -251,7 +251,7 @@ theorem IsRegularLocalRing.uniqueFactorizationMonoid (R : Type u) [CommRing R]
   let f := Algebra.linearMap S A
   let gQ := Q.toLocalized' A T f
   have hloc : Q.localized' A T f = P := by
-    rw [Ideal.localized'_eq_map]; exact IsLocalization.map_comap T A P
+    rw [Ideal.localized'_eq_map]; exact IsLocalization.map_under T A P
   let eQ : LocalizedModule T Q ≃ₗ[A] P :=
     ((IsLocalizedModule.linearEquiv T (LocalizedModule.mkLinearMap T Q) gQ
       ).extendScalarsOfIsLocalization T A).trans (LinearEquiv.ofEq _ _ hloc)

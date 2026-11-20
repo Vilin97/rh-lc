@@ -93,7 +93,7 @@ lemma finrank_eq_sum_components {σ M K : Type*} [Field K] [AddCommMonoid M] [De
       · exact hS F F.2 m hm
     apply Subtype.ext
     ext d
-    have := congrArg (coeff d) (h0 (Finsupp.weight φ d))
+    have := congrArg (AddMonoidAlgebra.coeff · d) (h0 (Finsupp.weight φ d))
     rw [coeff_weightedHomogeneousComponent, if_pos rfl] at this
     simpa using this
   have hsurj : Function.Surjective Φ := by

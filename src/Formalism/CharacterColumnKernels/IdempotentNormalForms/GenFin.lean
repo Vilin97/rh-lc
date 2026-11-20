@@ -15,9 +15,9 @@ lemma genfin_det_totalDegree {ι K n : Type*} [CommRing K] [Fintype n] [Decidabl
     (A : Matrix n n (MvPolynomial ι K)) (h : ∀ i j, (A i j).totalDegree ≤ 1) :
     A.det.totalDegree ≤ Fintype.card n := by
   rw [Matrix.det_apply]
-  refine (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun σ _ => ?_)
+  refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun σ _ => ?_)
   have hprod : (∏ i, A (σ i) i).totalDegree ≤ Fintype.card n := by
-    refine (MvPolynomial.totalDegree_finset_prod _ _).trans ?_
+    refine (MvPolynomial.totalDegree_finsetProd _ _).trans ?_
     calc ∑ i, (A (σ i) i).totalDegree ≤ ∑ _i : n, 1 := Finset.sum_le_sum fun i _ => h _ _
       _ = Fintype.card n := by simp
   rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with hs | hs

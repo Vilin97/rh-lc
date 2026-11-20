@@ -37,7 +37,7 @@ theorem schwartz_col_bound {T : Type} [Fintype T] {M n : ℕ} (f : SchwartzMap (
     have e : ((1 + ‖b‖) ^ (N * n))⁻¹ = ∏ _j : Fin n, ((1 + ‖b‖) ^ N)⁻¹ := by
       rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin, inv_pow, pow_mul]
     rw [e]
-    refine Finset.prod_le_prod (fun _ _ => by positivity) fun j _ => ?_
+    refine Finset.prod_le_prod₀ (fun _ _ => by positivity) fun j _ => ?_
     have : 0 < 1 + ‖fun τ i => b τ i j‖ := by positivity
     refine inv_anti₀ (by positivity) (pow_le_pow_left₀ this.le ?_ N)
     linarith [hcol j]

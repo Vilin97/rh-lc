@@ -19,7 +19,7 @@ theorem norm_iter_comp_le (A : E →L[ℝ] E₁) (hA : ‖A‖ ≤ 1) (f : Schwa
     A.iteratedFDeriv_comp_right (f := f) (f.smooth n) z le_rfl
   rw [h]
   refine (ContinuousMultilinearMap.norm_compContinuousLinearMap_le _ _).trans ?_
-  have : ∏ _i : Fin n, ‖A‖ ≤ 1 := Finset.prod_le_one (fun _ _ => norm_nonneg _) fun _ _ => hA
+  have : ∏ _i : Fin n, ‖A‖ ≤ 1 := Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun _ _ => hA
   exact mul_le_of_le_one_right (norm_nonneg _) this
 
 def tens (A : E →L[ℝ] E₁) (B : E →L[ℝ] E₂) (hA : ‖A‖ ≤ 1) (hB : ‖B‖ ≤ 1)

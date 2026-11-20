@@ -105,7 +105,7 @@ def kill (p : σ → Prop) [DecidablePred p] : MvPolynomial σ C →ₐ[C] MvPol
   MvPolynomial.aeval fun x => if p x then MvPolynomial.X x else 0
 
 theorem coeff_kill (p : σ → Prop) [DecidablePred p] (m : σ →₀ ℕ) (hm : ∀ x ∈ m.support, p x)
-    (P : MvPolynomial σ C) : MvPolynomial.coeff m (kill p P) = MvPolynomial.coeff m P := by
+    (P : MvPolynomial σ C) : AddMonoidAlgebra.coeff (kill p P) m = AddMonoidAlgebra.coeff P m := by
   classical
   refine MvPolynomial.induction_on' P (fun u a => ?_) (fun P Q hP hQ => ?_)
   · unfold kill
@@ -176,7 +176,7 @@ theorem jet_eq {α : σ →₀ ℕ} {P : MvPolynomial σ C} {g : MvPowerSeries �
   classical
   obtain ⟨hk, hh, hs⟩ := hP
   obtain ⟨h1, h0⟩ := hg
-  have hcoef : MvPolynomial.coeff α P = 1 := by
+  have hcoef : AddMonoidAlgebra.coeff P α = 1 := by
     rw [← coeff_kill p α hs P, hk, MvPolynomial.coeff_monomial, if_pos rfl]
   unfold jetAt0
   rw [Finset.sum_eq_single α]
@@ -467,7 +467,7 @@ theorem val_nat {l : ℕ} (hl : l.Prime) (hv : v (l : C) = 1) {n : ℕ} (hn : n 
     rintro rfl
     exact hm (dvd_zero l)
   have hfact := Fact.mk hl
-  rw [padicValNat.mul (pow_ne_zero _ hl.ne_zero) hm0, padicValNat.prime_pow,
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hl.ne_zero) hm0, padicValNat.prime_pow,
     padicValNat.eq_zero_of_not_dvd hm, add_zero, Nat.cast_mul, Nat.cast_pow, AddValuation.map_mul,
     AddValuation.map_pow, hv, val_coprime v hl hv hm, add_zero, ← WithTop.coe_one, ← WithTop.coe_nsmul,
     nsmul_eq_mul, mul_one]

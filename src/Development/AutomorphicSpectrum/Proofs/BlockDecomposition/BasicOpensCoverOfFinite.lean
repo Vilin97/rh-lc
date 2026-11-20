@@ -78,7 +78,7 @@ theorem X_mem_of_finite {K : Type} [Field K] {n m : ℕ}
   have h3 : MvPolynomial.homogeneousComponent 0 (g * MvPolynomial.X j - 1) ∈ P := by
     rw [← MvPolynomial.decomposition.decompose'_apply]
     exact hP 0 (Ideal.Quotient.eq_zero_iff_mem.1 h2)
-  have h4 : MvPolynomial.coeff 0 (g * MvPolynomial.X j - 1) = -1 := by
+  have h4 : AddMonoidAlgebra.coeff (g * MvPolynomial.X j - 1) 0 = -1 := by
     have : MvPolynomial.constantCoeff (g * MvPolynomial.X j - 1) = -1 := by simp
     rwa [MvPolynomial.constantCoeff_eq] at this
   rw [MvPolynomial.homogeneousComponent_zero, h4, map_neg, map_one] at h3

@@ -11,7 +11,7 @@ noncomputable def dpow (p : ℕ) [Fact p.Prime] {N r : ℕ} [NeZero r] (LL : Let
 def ModCond (p : ℕ) [Fact p.Prime] {N r : ℕ} [NeZero r] (LL : Letters N) (j : ℕ) (M : WithTop ℤ)
     (h : MvPolynomial (Fin N × Fin r) ℚ_[p]) : Prop :=
   ∀ l : List (Fin r × ℕ), (∀ ck ∈ l, ck.1 ≠ 0) → ∀ m : Fin N × Fin r →₀ ℕ, ¬ (((wt LL j 0 m : ℤ) : WithTop ℤ) ≤ M) →
-    ‖coeff m (((l.map fun ck => dpow p LL j ck.1 ck.2).prod) h)‖ < 1
+    ‖AddMonoidAlgebra.coeff (((l.map fun ck => dpow p LL j ck.1 ck.2).prod) h) m‖ < 1
 
 def LiftModP (p : ℕ) [Fact p.Prime] {N r : ℕ} [NeZero r] (LL : Letters N) {q : ℕ} (J : Fin q → ℕ)
     (M : Fin q → WithTop ℤ) : Prop :=

@@ -18,14 +18,14 @@ theorem GlobalTheory.charPolyRat : ∀ (K : Type) [Field K] (A : AbVar K) (f : E
     refine (MvPolynomial.mem_support_iff.mp hd) (hF.coeff_eq_zero ?_)
     rwa [Finsupp.degree_eq_sum, Fin.sum_univ_two]
   let P : Polynomial ℚ := ∑ d ∈ F.support,
-    Polynomial.C (MvPolynomial.coeff d F * (-1) ^ d 1) * Polynomial.X ^ d 0
+    Polynomial.C (AddMonoidAlgebra.coeff F d * (-1) ^ d 1) * Polynomial.X ^ d 0
   have hPeval : ∀ q : ℚ, P.eval q = MvPolynomial.eval ![q, -1] F := by
     intro q
     rw [MvPolynomial.eval_eq', Polynomial.eval_finsetSum]
     refine Finset.sum_congr rfl fun d _ => ?_
     simp [Fin.prod_univ_two]
     ring
-  have hcoef : P.coeff N = MvPolynomial.coeff (Finsupp.single 0 N) F := by
+  have hcoef : P.coeff N = AddMonoidAlgebra.coeff F (Finsupp.single 0 N) := by
     rw [Polynomial.finsetSum_coeff]
     simp only [Polynomial.coeff_C_mul_X_pow]
     rw [Finset.sum_eq_single (Finsupp.single 0 N)]
@@ -43,7 +43,7 @@ theorem GlobalTheory.charPolyRat : ∀ (K : Type) [Field K] (A : AbVar K) (f : E
     apply Polynomial.natDegree_sum_le_of_forall_le
     intro d hd
     exact (Polynomial.natDegree_C_mul_X_pow_le _ _).trans (by have := hsupp d hd; omega)
-  have h10 : MvPolynomial.eval ![1, 0] F = MvPolynomial.coeff (Finsupp.single 0 N) F := by
+  have h10 : MvPolynomial.eval ![1, 0] F = AddMonoidAlgebra.coeff F (Finsupp.single 0 N) := by
     rw [MvPolynomial.eval_eq', Finset.sum_eq_single (Finsupp.single 0 N)]
     · simp [Fin.prod_univ_two]
     · intro d hd hne

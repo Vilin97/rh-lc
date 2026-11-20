@@ -146,8 +146,8 @@ theorem padic_exponent_factorial_bound (p : ℕ) [Fact p.Prime] (m : σ →₀ �
     exact ⟨(m w).choose k * (m v + k).choose k, by ring⟩
   have hne : (m w).choose k ^ 2 * expFact (a + Finsupp.single v k) ≠ 0 :=
     mul_ne_zero (pow_ne_zero _ hC) (exponent_factorial_ne_zero_of _)
-  have hle := (padicValNat_dvd_iff_le (p := p) hne).mp ((pow_padicValNat_dvd (p := p)).trans hdvd)
-  rw [padicValNat.mul (pow_ne_zero _ hC) (exponent_factorial_ne_zero_of _), padicValNat.pow] at hle
+  have hle := (padicValNat_dvd_iff_le (p := p) hne).mp (((fun {p n : ℕ} => _root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat p n)) (p := p)).trans hdvd)
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hC) (exponent_factorial_ne_zero_of _), padicValNat.pow] at hle
   exact hle
 
 end fact

@@ -82,7 +82,7 @@ theorem UpperTheory.Gal.Gen.blockBound_pf :
   have hy : ∀ v, CoefLe ι R (y v) := fun v =>
     coefLe_sum ι _ _ hR0 fun b _ => coefLe_C_mul_X ι hR (hA _ _ _) _
   have e : Formalism.GradedWeylDivisibility.blockAct ℂ A x =
-      ∑ m ∈ x.support, MvPolynomial.C (MvPolynomial.coeff m x) * (m.prod fun v e => y v ^ e) := by
+      ∑ m ∈ x.support, MvPolynomial.C (AddMonoidAlgebra.coeff x m) * (m.prod fun v e => y v ^ e) := by
     conv_lhs => rw [x.as_sum]
     rw [map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_

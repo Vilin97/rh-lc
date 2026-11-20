@@ -18,8 +18,8 @@ def wCoeff (w : Set ι) (M : ι × Fin n →₀ ℕ) (F : MvPolynomial (ι × Fi
   ∑ μ ∈ F.support with μ.filter (fun v => v.1 ∈ w) = M, monomial (μ.filter (fun v => v.1 ∉ w)) (F.coeff μ)
 
 theorem coeff_wCoeff (w : Set ι) (M ν : ι × Fin n →₀ ℕ) (P : MvPolynomial (ι × Fin n) R) :
-    coeff ν (wCoeff w M P) =
-      if ν.filter (fun v => v.1 ∈ w) = 0 ∧ M.filter (fun v => v.1 ∉ w) = 0 then coeff (M + ν) P else 0 := by
+    AddMonoidAlgebra.coeff (wCoeff w M P) ν =
+      if ν.filter (fun v => v.1 ∈ w) = 0 ∧ M.filter (fun v => v.1 ∉ w) = 0 then AddMonoidAlgebra.coeff P (M + ν) else 0 := by
   unfold wCoeff
   rw [coeff_sum]
   simp only [coeff_monomial]
@@ -76,7 +76,7 @@ def WFree {B : Type*} [CommRing B] (w : Set ι) (P : MvPolynomial (ι × Fin n) 
 theorem wCoeff_add (w : Set ι) (M : ι × Fin n →₀ ℕ) (P Q : MvPolynomial (ι × Fin n) R) :
     wCoeff w M (P + Q) = wCoeff w M P + wCoeff w M Q := by
   ext ν
-  simp only [coeff_add, coeff_wCoeff]
+  simp only [MvPolynomial.coeff_add, coeff_wCoeff]
   split_ifs <;> simp
 
 theorem wCoeff_mem {Fl : Formalism.MainNotions.TestSideWords.TwistedFiltration.G1.flt_Fil R} (w : Set ι) (M : ι × Fin n →₀ ℕ) {t : ℤ}
@@ -131,7 +131,7 @@ theorem wCoeff_mul_monomial (w : Set ι) (M M' : ι × Fin n →₀ ℕ) (P : Mv
     intro x hx
     have : (M'.filter (fun v => v.1 ∉ w)) x = 0 := by rw [hM']; rfl
     rwa [Finsupp.filter_apply, if_pos hx] at this
-  have hPz : ∀ ρ : ι × Fin n →₀ ℕ, (∃ x, x.1 ∈ w ∧ ρ x ≠ 0) → coeff ρ P = 0 := by
+  have hPz : ∀ ρ : ι × Fin n →₀ ℕ, (∃ x, x.1 ∈ w ∧ ρ x ≠ 0) → AddMonoidAlgebra.coeff P ρ = 0 := by
     rintro ρ ⟨x, hx, hρ⟩
     by_contra hne
     have h1 := hP ρ (MvPolynomial.mem_support_iff.2 hne)
@@ -260,9 +260,9 @@ theorem twistSub_wCoeff (w : Set ι) (hd : Disjoint S w) (j : Fin n) (M : ι × 
 
 theorem sum_wCoeff (w : Set ι) (F : MvPolynomial (ι × Fin n) R) :
     F = ∑ M ∈ F.support.image (fun μ => μ.filter (fun v => v.1 ∈ w)), monomial M 1 * wCoeff w M F := by
-  calc F = ∑ μ ∈ F.support, monomial μ (coeff μ F) := F.as_sum
+  calc F = ∑ μ ∈ F.support, monomial μ (AddMonoidAlgebra.coeff F μ) := F.as_sum
     _ = ∑ M ∈ F.support.image (fun μ => μ.filter (fun v => v.1 ∈ w)),
-          ∑ μ ∈ F.support with μ.filter (fun v => v.1 ∈ w) = M, monomial μ (coeff μ F) :=
+          ∑ μ ∈ F.support with μ.filter (fun v => v.1 ∈ w) = M, monomial μ (AddMonoidAlgebra.coeff F μ) :=
         (Finset.sum_fiberwise_of_maps_to (fun μ hμ => Finset.mem_image_of_mem _ hμ) _).symm
     _ = _ := by
         refine Finset.sum_congr rfl fun M _ => ?_
@@ -420,7 +420,7 @@ theorem valS_wCoeff_ge (w : Set ι) (hw : ∀ l ∈ w, LL.vec l = true) (hd : Di
       omega
     · have : ¬ (-(dw : ℤ) - (-wDegHom w) m ≤ 0) := by
         rw [AddMonoidHom.neg_apply, wDegHom_eq]; omega
-      have h3 : coeff m (twistSub LL (S ∪ w) (lastIdx n) F) ∈ (⊥ : AddSubgroup (GLLaurent R n)) := by
+      have h3 : AddMonoidAlgebra.coeff (twistSub LL (S ∪ w) (lastIdx n) F) m ∈ (⊥ : AddSubgroup (GLLaurent R n)) := by
         rw [trivFil_F, if_neg this] at h2
         exact h2
       rw [AddSubgroup.mem_bot] at h3

@@ -108,7 +108,7 @@ def intPoly (σ : Type) (W : Subring Ω) : Subring (MvPolynomial σ Ω) where
     exacts [W.one_mem, W.zero_mem]
   add_mem' := by
     intro P Q hP hQ e
-    rw [coeff_add]
+    rw [MvPolynomial.coeff_add]
     exact W.add_mem (hP e) (hQ e)
   zero_mem' := by
     intro e

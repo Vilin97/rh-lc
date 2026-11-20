@@ -25,7 +25,7 @@ theorem normalOrderTwoCentral : NormalOrderTwoCentral := by
 
 lemma v24 : padicValInt 2 ((5 : ℤ) ^ 2 - 1) = 3 := by
   have : ((5 : ℤ) ^ 2 - 1) = ((2 ^ 3 * 3 : ℕ) : ℤ) := by norm_num
-  rw [this, padicValInt.of_nat, padicValNat.mul (by norm_num) (by norm_num),
+  rw [this, padicValInt.of_nat, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by norm_num) (by norm_num),
     padicValNat.prime_pow, padicValNat.eq_zero_of_not_dvd (by norm_num)]
 
 lemma v4 : padicValInt 2 ((5 : ℤ) - 1) = 2 := by
@@ -40,7 +40,7 @@ theorem twistVal : TwistVal := by
   have key := (twoAdicVal 5 h5 h52 (2 ^ s * e) hpos).1
   rw [key]
   split_ifs with hev
-  · rw [v24, padicValNat.mul (by positivity) (by omega), padicValNat.prime_pow]
+  · rw [v24, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by positivity) (by omega), padicValNat.prime_pow]
     omega
   · rw [v4]
     have hs : s = 0 := by
@@ -59,7 +59,7 @@ lemma gcd_two_pow (N k : ℕ) (hk : k ≠ 0) : Nat.gcd (2 ^ N) k = 2 ^ min N (pa
   obtain ⟨v, m, hm, rfl⟩ := Nat.exists_eq_pow_mul_and_not_dvd hk 2 (by norm_num)
   have hm0 : m ≠ 0 := by rintro rfl; simp at hm
   have hv : padicValNat 2 (2 ^ v * m) = v := by
-    rw [padicValNat.mul (by positivity) hm0, padicValNat.prime_pow,
+    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by positivity) hm0, padicValNat.prime_pow,
       padicValNat.eq_zero_of_not_dvd hm, add_zero]
   rw [hv]
   have hcop : Nat.Coprime m (2 ^ N) := by

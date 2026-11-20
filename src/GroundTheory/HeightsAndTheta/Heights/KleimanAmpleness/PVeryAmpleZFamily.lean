@@ -38,7 +38,7 @@ theorem aeval_mem_pow {I : Chart x} {Q : Submodule (chartRing S x I) Ω} (hQ : �
   have hm := hmon d d.support
   rw [hdeg] at hm
   have := Submodule.smul_mem (Q ^ e)
-    (⟨algebraMap S Ω (coeff d f), Subalgebra.algebraMap_mem _ _⟩ : chartRing S x I) hm
+    (⟨algebraMap S Ω (AddMonoidAlgebra.coeff f d), Subalgebra.algebraMap_mem _ _⟩ : chartRing S x I) hm
   rw [chartRing_smul_def] at this
   exact this
 

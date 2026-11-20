@@ -31,7 +31,7 @@ theorem bracket_le (k r : ℕ) (lam v : ℕ → ℝ) (e : ℕ) (c g b Y ε : ℝ
       rw [Nat.card_Icc]
       omega
     rw [← hcard, ← prod_const]
-    refine prod_le_prod (fun s _ => by positivity) fun s hs => ?_
+    refine prod_le_prod₀ (fun s _ => by positivity) fun s hs => ?_
     rw [mem_Icc] at hs
     have h1 := abs_add_le (Y + ε) (lam s)
     have h2 := abs_add_le Y ε

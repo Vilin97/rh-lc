@@ -12,7 +12,7 @@ noncomputable section
 
 theorem SchurSignCoefficient.coeff_aeval_diagonal {N : ℕ} (c : Fin N → ℚ)
     (P : MvPolynomial (Fin N) ℚ) (e : Fin N →₀ ℕ) :
-    coeff e (aeval (fun i : Fin N => C (c i) * X i) P) = (∏ i, c i ^ e i) * coeff e P := by
+    AddMonoidAlgebra.coeff (aeval (fun i : Fin N => C (c i) * X i) P) e = (∏ i, c i ^ e i) * AddMonoidAlgebra.coeff P e := by
   induction P using MvPolynomial.induction_on' with
   | monomial u a =>
     have hmon : aeval (fun i : Fin N => C (c i) * X i) (monomial u a) =
@@ -25,7 +25,7 @@ theorem SchurSignCoefficient.coeff_aeval_diagonal {N : ℕ} (c : Fin N → ℚ)
     split_ifs with hue
     · subst hue; ring
     · simp
-  | add p q hp hq => rw [map_add, coeff_add, coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem SchurSignCoefficient.aeval_smul_powerSumHom (N : ℕ) (s : ℚ)
     (S : MvPolynomial (Fin N) ℚ) :

@@ -107,7 +107,7 @@ lemma exists_fib_eq_one (hH : IsClosed (H : Set G)) (κ : Measure H) [SFinite κ
       first | rfl | simp [Set.indicator_apply]
     have hC : κ {h : H | (h : G) ∈ V⁻¹ * V} < ∞ := measure_coset_lt_top hH κ hVc
     refine ⟨fun x => ∑' n, (2⁻¹ : ℝ≥0∞) ^ n * V.indicator 1 ((d n)⁻¹ * x), ?_, ?_, ?_⟩
-    · exact Measurable.ennreal_tsum (fun n => measurable_const.mul
+    · exact Measurable.tsum (fun n => measurable_const.mul
         ((measurable_one.indicator hVm).comp (measurable_const_mul _)))
     · intro x
       rw [hfib x]

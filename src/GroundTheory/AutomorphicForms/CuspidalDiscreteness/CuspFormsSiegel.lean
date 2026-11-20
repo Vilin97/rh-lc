@@ -123,7 +123,7 @@ theorem exists_norm_le_siegel_root {φ : AdelicGLn.AdelicGL K n → ℂ} (hφ : 
   refine (hC x Y hYY hYT).trans ?_
   have hprod : ∏ i, ‖Y i‖ ≤ (C₁' * gain) ^ k := by
     rw [← Fin.prod_const]
-    exact Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i _ => hYn i
+    exact Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i _ => hYn i
   have hh := pow_nonneg (height_pos x).le N
   calc C * (∏ i, ‖Y i‖) * height x ^ N ≤ max C 0 * (∏ i, ‖Y i‖) * height x ^ N :=
         mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right (le_max_left _ _)

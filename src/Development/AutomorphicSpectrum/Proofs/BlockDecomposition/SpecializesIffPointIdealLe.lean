@@ -294,7 +294,7 @@ theorem ptIdeal_le_of_specializes {x y : MP ℤ m n} (h : x ⤳ y) : ptIdeal x �
   rw [mem_ptIdeal_iff _ hy]
   ext a
   rw [coeff_map, coeff_zero]
-  have := congrArg (coeff a) hf
+  have := congrArg (AddMonoidAlgebra.coeff · a) hf
   rw [coeff_map, coeff_zero] at this
   exact evaluation_eq_zero_of_specializes h hx hy _ this
 

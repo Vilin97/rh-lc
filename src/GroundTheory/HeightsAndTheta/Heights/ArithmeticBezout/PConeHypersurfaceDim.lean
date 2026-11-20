@@ -45,8 +45,8 @@ theorem finite_of_rel {n m : ℕ} (I : Ideal (MvPolynomial (Fin n) ℂ))
         refine Submodule.sum_mem _ fun d hd => ?_
         have hd' : (d.sum fun _ e => e) < N := lt_of_le_of_lt (le_totalDegree hd) hq
         have h1 := ih _ hd' d rfl
-        have : Ideal.Quotient.mk I (monomial d (coeff d q)) =
-            (C (coeff d q) : MvPolynomial (Fin m) ℂ) • Ideal.Quotient.mk I (monomial d 1) := by
+        have : Ideal.Quotient.mk I (monomial d (AddMonoidAlgebra.coeff q d)) =
+            (C (AddMonoidAlgebra.coeff q d) : MvPolynomial (Fin m) ℂ) • Ideal.Quotient.mk I (monomial d 1) := by
           rw [hsmul, aeval_C, algebraMap_eq, C_mul_monomial, mul_one]
         rw [this]
         exact Submodule.smul_mem _ _ h1
@@ -96,8 +96,8 @@ theorem finite_of_rel {n m : ℕ} (I : Ideal (MvPolynomial (Fin n) ℂ))
     obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective x
     rw [p.as_sum, map_sum]
     refine Submodule.sum_mem _ fun d _ => ?_
-    have : Ideal.Quotient.mk I (monomial d (coeff d p)) =
-        (C (coeff d p) : MvPolynomial (Fin m) ℂ) • Ideal.Quotient.mk I (monomial d 1) := by
+    have : Ideal.Quotient.mk I (monomial d (AddMonoidAlgebra.coeff p d)) =
+        (C (AddMonoidAlgebra.coeff p d) : MvPolynomial (Fin m) ℂ) • Ideal.Quotient.mk I (monomial d 1) := by
       rw [hsmul, aeval_C, algebraMap_eq, C_mul_monomial, mul_one]
     rw [this]
     exact Submodule.smul_mem _ _ (hdeg _ d rfl)

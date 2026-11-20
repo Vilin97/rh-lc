@@ -47,7 +47,7 @@ theorem cloudBStep_of_rho (D : Formalism.BasicNotions.D7) (C CK CLa : ℝ) (hR :
       unfold symB toK
       rw [subst_SPtrue w F hF.2.1 hSet.1.even (by omega) hrk hg, ← map_mul]
       intro mm
-      exact ⟨coeff mm _, by rw [coeff_map, pow_zero, one_mul]⟩
+      exact ⟨AddMonoidAlgebra.coeff _ mm, by rw [coeff_map, pow_zero, one_mul]⟩
     have h2 := (hΘ1.2 g hg e hbasis (FsB b) 0).1 h1
     rw [hΘeq]
     obtain ⟨z, hz, hze⟩ := mem_scale.1 h2

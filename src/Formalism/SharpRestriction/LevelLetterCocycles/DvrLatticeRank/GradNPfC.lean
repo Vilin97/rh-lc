@@ -199,7 +199,7 @@ theorem gradNPf_lte (l : ℕ) [hp : Fact l.Prime] (hl2 : l ≠ 2) (hl : v (l : L
       obtain ⟨ε', hε', he'⟩ := lte_pow_prime_step_lemma_7 v ι hι hR l hl2 hl (x ^ m') ε hε
         (padicValNat l m') (by rw [he]; ring)
       have hv : padicValNat l (l * m') = padicValNat l m' + 1 := by
-        rw [padicValNat.mul hp.out.ne_zero hm']
+        rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hp.out.ne_zero hm']
         first
           | rw [padicValNat_self]; ring
           | rw [padicValNat.self hl1]; ring
@@ -219,7 +219,7 @@ theorem gradNPf_sum_val (l : ℕ) [hp : Fact l.Prime] (N : ℕ) :
   | zero => simp
   | succ N ih =>
     rw [sum_Ico_succ_top (by omega : 1 ≤ N + 1), ih, Nat.factorial_succ,
-      padicValNat.mul (Nat.succ_ne_zero N) (Nat.factorial_ne_zero N)]
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.succ_ne_zero N) (Nat.factorial_ne_zero N)]
     ring
 
 include hι hR in

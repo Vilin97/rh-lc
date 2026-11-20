@@ -42,7 +42,7 @@ theorem norm_minor_mul_le {K ι ι' κ : Type} [NormedField K] [IsUltrametricDis
   rw [norm_mul, norm_prod]
   refine mul_le_mul ?_ (le_nF A s) (norm_nonneg _) (pow_nonneg (sz_nonneg g) _)
   calc ∏ i, ‖g (t i) (s i)‖ ≤ ∏ _i : κ, sz g :=
-        Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => le_sz g _ _
+        Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => le_sz g _ _
     _ = sz g ^ Fintype.card κ := by simp
 
 theorem nF_mul_le {K ι ι' κ : Type} [NormedField K] [IsUltrametricDist K] [Fintype ι]

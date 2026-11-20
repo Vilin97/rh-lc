@@ -13,7 +13,7 @@ theorem norm_le_one_of_isIntegral_int {p : ℕ} [Fact p.Prime] {x : ℂ_[p]} (hx
   obtain ⟨f, hf, hfx⟩ := hx
   set n := f.natDegree with hn
   have hsum := hf.as_sum
-  rw [hsum, Polynomial.eval₂_add, Polynomial.eval₂_X_pow, Polynomial.eval₂_finset_sum] at hfx
+  rw [hsum, Polynomial.eval₂_add, Polynomial.eval₂_X_pow, Polynomial.eval₂_finsetSum] at hfx
   have key : x ^ n = -∑ i ∈ Finset.range n,
       Polynomial.eval₂ (algebraMap ℤ ℂ_[p]) x (Polynomial.C (f.coeff i) * Polynomial.X ^ i) := by
     rw [eq_neg_iff_add_eq_zero]

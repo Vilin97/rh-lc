@@ -114,7 +114,7 @@ theorem det_one_add_ge (W : Matrix (Fin n) (Fin n) ℂ) (hW : ‖W.det‖ = 1) :
     calc (2 : ℝ) ^ n = ∏ i, (2 * Real.sqrt (hh.eigenvalues i)) := by
           rw [Finset.prod_mul_distrib, hs, mul_one, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
       _ ≤ ∏ i, (1 + hh.eigenvalues i) := by
-          refine Finset.prod_le_prod (fun i _ => by positivity) fun i _ => ?_
+          refine Finset.prod_le_prod₀ (fun i _ => by positivity) fun i _ => ?_
           have := Real.sq_sqrt (hnn i)
           nlinarith [sq_nonneg (Real.sqrt (hh.eigenvalues i) - 1)]
   · have e : 1 + Wᴴ * W = U * (1 + diagonal (RCLike.ofReal ∘ hh.eigenvalues)) * star U := by

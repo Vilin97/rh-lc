@@ -16,7 +16,7 @@ def JetsIntegral {σ : Type} {l : ℕ} [Fact l.Prime] (F : MvPowerSeries σ ℂ_
 def EntriesIntegral {Lt : Type} [DecidableEq Lt] (N₀ N₁ : ℕ) {l : ℕ} [Fact l.Prime]
     (F : MvPowerSeries (Lt × Fin N₀ × Fin N₁) ℂ_[l]) : Prop :=
   ∀ (P : MvPolynomial (KM.XZ Lt N₀ N₁) ℤ) (m : (Lt × ℕ × Fin N₀) →₀ ℕ),
-    ‖MvPolynomial.coeff m (KM.applyAt0 N₀ N₁ l F P)‖ ≤ 1
+    ‖AddMonoidAlgebra.coeff (KM.applyAt0 N₀ N₁ l F P) m‖ ≤ 1
 
 def CurveTie (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) : Prop :=
   TaylorLogMetric.IsCurveIdeal D cc ∧ TaylorLogMetric.IsDiscriminantTwelfthRootOfIdealLattice D cc δ
@@ -92,8 +92,8 @@ def Concl {D : D7} {Dx : DivX D} {Tw : TwForms D} (E : KerEnt D Dx Tw) (u : D.wh
   JetsIntegral (E.Th u μ w i k k') ∧
   EntriesIntegral (D.R.N i) (D.R.N (i + 1)) (E.Th u μ w i k k') ∧
   ∀ (I : KM.ColChoice (D.R.N (i + 1)) (nuD D u i)) (m : ((Bool × HH D) × ℕ × Fin (D.R.N i)) →₀ ℕ),
-    ‖MvPolynomial.coeff m (KM.applyAt0 (D.R.N i) (D.R.N (i + 1)) (D.what₂.places.resChar w) (E.Th u μ w i k k')
-      (KM.Gxz (D.R.N i) (D.R.N (i + 1)) (nuD D u i) I))‖ ≤ 1
+    ‖AddMonoidAlgebra.coeff (KM.applyAt0 (D.R.N i) (D.R.N (i + 1)) (D.what₂.places.resChar w) (E.Th u μ w i k k')
+      (KM.Gxz (D.R.N i) (D.R.N (i + 1)) (nuD D u i) I)) m‖ ≤ 1
 
 def JetInt_at (D : D7) (Dx : DivX D) (Tw : TwForms D) (E : KerEnt D Dx Tw)
     (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (B : Formalism.L2.Ker.Base D cc δ) (χ : TaylorLogMetric.IdE D → ℂ) : Prop :=

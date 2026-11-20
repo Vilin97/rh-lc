@@ -154,7 +154,7 @@ theorem proj_keeps_letter (d : L → ℕ)
   have h := hcomm a _ hmono
   rw [euler_eq_dg, euler_eq_dg] at h
   simp only [dg_monomial, mul_one] at h
-  have h' := congrArg (fun G => MvPolynomial.coeff ζ' G) h
+  have h' := congrArg (fun G => AddMonoidAlgebra.coeff G ζ') h
   simp only [coeff_dg_eq_mul_coeff] at h'
   have hsm : (monomial ζ ((ζ (i, a) : ℕ) : K) : MvPolynomial (L × Fin r) K) =
       ((ζ (i, a) : ℕ) : K) • monomial ζ (1 : K) := by

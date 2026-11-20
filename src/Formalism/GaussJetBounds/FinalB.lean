@@ -151,7 +151,7 @@ private theorem norm_polar_le_one_of_norm_le_one {K : Type u} [NormedField K] [I
 
 private theorem norm_coeff_prod_linForm_le_one {K : Type u} [NormedField K] [IsUltrametricDist K]
     {ι : Type} [Fintype ι] {n : ℕ} (L : Fin n → ι → K) (hL : ∀ i x, ‖L i x‖ ≤ 1)
-    (s : Finset (Fin n)) : ∀ m, ‖MvPolynomial.coeff m (∏ i ∈ s, linForm (L i))‖ ≤ 1 := by
+    (s : Finset (Fin n)) : ∀ m, ‖AddMonoidAlgebra.coeff (∏ i ∈ s, linForm (L i)) m‖ ≤ 1 := by
   classical
   induction s using Finset.induction_on with
   | empty =>
@@ -191,7 +191,7 @@ theorem matchBound : MatchBound.{u} := by
         pi ^ (-(1 / 2 : ℝ) * ((Finset.univ.filter (fun i => i < σ i)).card : ℝ)) := by
       calc ∏ i ∈ Finset.univ.filter (fun i => i < σ i), ‖-S * polar c (L i) (L (σ i))‖
           ≤ ∏ _i ∈ Finset.univ.filter (fun i => i < σ i), pi ^ (-(1 / 2 : ℝ)) := by
-            refine Finset.prod_le_prod (fun i _ => norm_nonneg _) (fun i _ => ?_)
+            refine Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) (fun i _ => ?_)
             rw [norm_mul, norm_neg]
             calc ‖S‖ * ‖polar c (L i) (L (σ i))‖ ≤ ‖S‖ * 1 :=
                   mul_le_mul_of_nonneg_left

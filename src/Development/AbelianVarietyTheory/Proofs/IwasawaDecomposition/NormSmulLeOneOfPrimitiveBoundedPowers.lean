@@ -39,7 +39,7 @@ theorem norm_factorial_inv_le (p : ℕ) [hp : Fact p.Prime] (h : ‖(p : C)‖ =
     hp.out.ne_one
   have hval : padicValNat p n.factorial = v := by
     have hm0 : m ≠ 0 := by rintro rfl; exact hm (dvd_zero _)
-    rw [hv, padicValNat.mul (pow_ne_zero _ hp.out.ne_zero) hm0, padicValNat.prime_pow,
+    rw [hv, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.out.ne_zero) hm0, padicValNat.prime_pow,
       padicValNat.eq_zero_of_not_dvd hm, add_zero]
   have hle : (p - 1) * v ≤ n := by
     rw [← hval, sub_one_mul_padicValNat_factorial]

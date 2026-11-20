@@ -273,7 +273,7 @@ theorem natAbs_norm_le_pow_of_bounded (K : Type) [Field K] [NumberField K] (d : 
     rfl
   rw [h1, ← prod_norm_embeddings_eq_abs_norm_alt]
   calc ∏ φ : K →+* ℂ, ‖φ (d : K)‖ ≤ ∏ _φ : K →+* ℂ, B :=
-        Finset.prod_le_prod (fun _ _ => norm_nonneg _) (fun φ _ => hd φ)
+        Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) (fun φ _ => hd φ)
     _ = B ^ finrank ℚ K := by rw [Finset.prod_const, Finset.card_univ, NumberField.Embeddings.card]
 
 theorem class_count_plane_bound (K : Type) [Field K] [NumberField K] [StarRing K] (hK : IsCMUnram K) (V : Type)

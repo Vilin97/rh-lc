@@ -357,7 +357,7 @@ theorem arith_pi {E : Type} [Field E] [NumberField E] (p : ℕ) [hp : Fact p.Pri
     rw [h, Ideal.span_singleton_zero] at hI
     exact mul_ne_zero hw0 hI0 hI.symm
   · rw [← Ideal.absNorm_span_singleton, hI, map_mul, Ideal.absNorm_apply w,
-      Submodule.cardQuot_apply, hf, padicValNat.mul (pow_ne_zero _ hp.out.ne_zero) hN0,
+      Submodule.cardQuot_apply, hf, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.out.ne_zero) hN0,
       padicValNat.prime_pow, padicValNat.eq_zero_of_not_dvd hnd, add_zero]
 
 theorem arith_theta {E : Type} [Field E] [NumberField E] (p : ℕ) [hp : Fact p.Prime]

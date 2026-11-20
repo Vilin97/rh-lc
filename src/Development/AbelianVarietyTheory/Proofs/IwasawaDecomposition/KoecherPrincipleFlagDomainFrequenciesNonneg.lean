@@ -201,7 +201,7 @@ theorem freqNonneg_of_thickBdd : OrbitThickSt → ∀ (E : Type) [Field E] [Numb
     simp only [hqe] at hN
     have hN2 : ∏ τ, max (q τ) (q τ)⁻¹ ^ (X.spread la τ / 2) ≤ L ^ ∑ τ, |X.spread la τ / 2| := by
       rw [Real.rpow_sum_of_pos hL0]
-      refine Finset.prod_le_prod (fun τ _ => Real.rpow_nonneg (zero_le_one.trans (hq1 τ)) _) fun τ _ => ?_
+      refine Finset.prod_le_prod₀ (fun τ _ => Real.rpow_nonneg (zero_le_one.trans (hq1 τ)) _) fun τ _ => ?_
       exact (Real.rpow_le_rpow_of_exponent_le (hq1 τ) (le_abs_self _)).trans
         (Real.rpow_le_rpow (zero_le_one.trans (hq1 τ)) (hqm τ) (abs_nonneg _))
     calc ‖P (X.flow ξ s x)‖ ≤ |S| / X.nfac la (X.flow ξ s x) := by

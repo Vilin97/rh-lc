@@ -234,7 +234,7 @@ example : IsRayValue (powMod ℚ 2 1) (fun _ => 1) 2 (1 / 12) ∧ CoprimeTo ℚ 
   refine ⟨h1, ?_, h1, ?_, ?_⟩
   · rw [coprimeTo_powMod_iff le_rfl, coprimeTo_span_rat]; norm_num
   · have h2 : padicValNat 2 12 = 2 := by
-      rw [show 12 = 2 ^ 2 * 3 by norm_num, padicValNat.mul (by norm_num) (by norm_num), padicValNat.prime_pow,
+      rw [show 12 = 2 ^ 2 * 3 by norm_num, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by norm_num) (by norm_num), padicValNat.prime_pow,
         padicValNat.eq_zero_of_not_dvd (by norm_num)]
     have hn : (1 / 12 : ℚ).num = 1 := by norm_num
     have hd : (1 / 12 : ℚ).den = 12 := by norm_num

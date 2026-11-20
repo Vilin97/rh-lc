@@ -124,7 +124,7 @@ theorem one_le_norm_place [IsTotallyComplex L] (x : 𝓞 L) (hx : x ≠ 0) :
   rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ w0)] at hnorm
   have h1 : w0 (x : L) ^ w0.mult < 1 := pow_lt_one₀ (hnn w0) (hlt w0) (by have := w0.mult_pos; omega)
   have h2 : ∏ w ∈ Finset.univ.erase w0, w (x : L) ^ w.mult ≤ 1 :=
-    Finset.prod_le_one (fun w _ => pow_nonneg (hnn w) _) (fun w _ => pow_le_one₀ (hnn w) (hlt w).le)
+    Finset.prod_le_one₀ (fun w _ => pow_nonneg (hnn w) _) (fun w _ => pow_le_one₀ (hnn w) (hlt w).le)
   have h3 : 0 ≤ w0 (x : L) ^ w0.mult := pow_nonneg (hnn w0) _
   nlinarith
 

@@ -77,7 +77,7 @@ theorem facProd_mul_le (p q : ℕ) : facProd p * facProd q ≤ facProd (p + q) :
   unfold facProd
   rw [Finset.prod_range_add]
   apply mul_le_mul_of_nonneg_left _ (Finset.prod_nonneg fun _ _ => by positivity)
-  apply Finset.prod_le_prod (fun _ _ => by positivity)
+  apply Finset.prod_le_prod₀ (fun _ _ => by positivity)
   intro j _
   exact_mod_cast Nat.factorial_le (by omega)
 
@@ -128,17 +128,17 @@ theorem fdegHC_le_dTau {N : ℕ} (s : Fin N → Bool) (lam : Fin N → ℝ) (hla
         ((lam a + rhoN s a) - (lam b + rhoN s b))) *
         lamAbs lam ^ (∑ a : Fin N, (univ.filter (fun b : Fin N => a < b ∧ s a ≠ s b)).card) := by
     rw [← Finset.prod_pow_eq_pow_sum, ← Finset.prod_mul_distrib]
-    refine Finset.prod_le_prod (fun a _ => Finset.prod_nonneg fun b _ => abs_nonneg _) fun a _ => ?_
+    refine Finset.prod_le_prod₀ (fun a _ => Finset.prod_nonneg fun b _ => abs_nonneg _) fun a _ => ?_
     rw [← Finset.prod_filter_mul_prod_filter_not (univ.filter fun b : Fin N => a < b)
       (fun b => s a = s b), Finset.filter_filter, Finset.filter_filter]
     refine mul_le_mul ?_ ?_ (Finset.prod_nonneg fun b _ => abs_nonneg _)
       (Finset.prod_nonneg fun b hb => ?_)
-    · refine Finset.prod_le_prod (fun b _ => abs_nonneg _) fun b hb => ?_
+    · refine Finset.prod_le_prod₀ (fun b _ => abs_nonneg _) fun b hb => ?_
       have h := (Finset.mem_filter.1 hb).2
       rw [abs_of_pos (hpos a b h.1)]
       exact hrho a b h.1 h.2
     · rw [← Finset.prod_const]
-      refine Finset.prod_le_prod (fun b _ => abs_nonneg _) fun b hb => ?_
+      refine Finset.prod_le_prod₀ (fun b _ => abs_nonneg _) fun b hb => ?_
       have h := (Finset.mem_filter.1 hb).2
       rw [abs_of_pos (hpos a b h.1)]
       exact sub_le_lamAbs lam a b

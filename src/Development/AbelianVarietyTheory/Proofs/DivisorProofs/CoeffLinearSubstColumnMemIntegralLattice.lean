@@ -52,7 +52,7 @@ end GlobalTheory.HSShort.CoeffInt
 
 open GlobalTheory.HSShort.CoeffInt in
 
-theorem GlobalTheory.HSShort.colCoeff_mem : ∀ (F A : Type) [Field F] [NumberField F] [AddCommGroup A] [Module F A] [Module (𝓞 F) A] [IsScalarTower (𝓞 F) F A] (S : Sys F A), S.Hyp → ∀ (d : ℕ) (b : Module.Basis (Fin d) F (S.V S.T)) (c : Fin d → A →ₗ[F] F), S.IsCo b c → ∀ κ : S.Col, κ.x ∈ S.M κ.j → ∀ m, ∑ i, coeff m (linSubst S.w (coordP S.mul (c i) κ.β (κ.x : A))) • b i ∈ S.M S.T := by
+theorem GlobalTheory.HSShort.colCoeff_mem : ∀ (F A : Type) [Field F] [NumberField F] [AddCommGroup A] [Module F A] [Module (𝓞 F) A] [IsScalarTower (𝓞 F) F A] (S : Sys F A), S.Hyp → ∀ (d : ℕ) (b : Module.Basis (Fin d) F (S.V S.T)) (c : Fin d → A →ₗ[F] F), S.IsCo b c → ∀ κ : S.Col, κ.x ∈ S.M κ.j → ∀ m, ∑ i, AddMonoidAlgebra.coeff (linSubst S.w (coordP S.mul (c i) κ.β (κ.x : A))) m • b i ∈ S.M S.T := by
   intro F A _ _ _ _ _ _ S hS d b c hco κ hx m
   obtain ⟨-, hM⟩ := GlobalTheory.T.productOfVectorMultiplications_mem_filtration_lattice F A S hS κ.j κ.t (le_of_eq κ.add)
   have tr : ∀ j', j' = S.T → ∀ y' ∈ S.M j', ∃ y ∈ S.M S.T, (y : A) = (y' : A) := by
@@ -66,7 +66,7 @@ theorem GlobalTheory.HSShort.colCoeff_mem : ∀ (F A : Type) [Field F] [NumberFi
   choose Y hY hYeq using key
   choose s hs using fun g : Fin κ.t → Fin S.n =>
     prod_X_monomial (K := F) (fun i => (κ.β i, g i))
-  have hcoef : ∀ i, coeff m (linSubst S.w (coordP S.mul (c i) κ.β (κ.x : A))) =
+  have hcoef : ∀ i, AddMonoidAlgebra.coeff (linSubst S.w (coordP S.mul (c i) κ.β (κ.x : A))) m =
       ∑ g, b.repr (Y g) i * (if s g = m then 1 else 0) := by
     intro i
     rw [linSubst_coordP, coeff_sum]

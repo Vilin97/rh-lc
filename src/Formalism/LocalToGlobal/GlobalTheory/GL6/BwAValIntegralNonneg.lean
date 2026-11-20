@@ -509,7 +509,7 @@ theorem bwA_diag_gen {K : Type} [Field K] {r n : ℕ} (hn : n ≤ r) (ν : Fin n
   have hhom : MvPolynomial.IsWeightedHomogeneous (Formalism.GradedWeylDivisibility.rowW r n) (MvPolynomial.map (Int.castRingHom K) g) μN := by
     intro m' hm'
     rw [MvPolynomial.coeff_map] at hm'
-    have h1 : MvPolynomial.coeff m' g ≠ 0 := fun h => hm' (by rw [h]; simp)
+    have h1 : AddMonoidAlgebra.coeff g m' ≠ 0 := fun h => hm' (by rw [h]; simp)
     have e1 := hμ h1
     have e2 := hμ (MvPolynomial.mem_support_iff.1 hm)
     rw [bwA_weight_cast] at e1 e2

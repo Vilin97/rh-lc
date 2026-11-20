@@ -65,7 +65,7 @@ theorem generic_mono_det {R : Type*} [CommRing R] [Nontrivial R] {d N0 n : ℕ} 
     · rw [if_neg ht] at h1
       exact absurd h1 (hL (σ i))
   intro hdet
-  have hc := congrArg (MvPolynomial.coeff (∑ i, Finsupp.single (t i, z, γ i) (L i))) hdet
+  have hc := congrArg (AddMonoidAlgebra.coeff · (∑ i, Finsupp.single (t i, z, γ i) (L i))) hdet
   rw [Matrix.det_apply, MvPolynomial.coeff_sum, Finset.sum_eq_single (1 : Equiv.Perm (Fin n))] at hc
   · rw [hprod] at hc
     simp at hc

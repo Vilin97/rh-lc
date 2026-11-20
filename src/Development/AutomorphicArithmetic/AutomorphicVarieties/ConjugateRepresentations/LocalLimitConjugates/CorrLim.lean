@@ -20,7 +20,7 @@ private theorem basis_bd {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [
   rw [e, mul_assoc, Finset.sum_mul]
   refine norm_sum_le_of_le _ fun I _ => ?_
   rw [norm_smul, norm_prod, mul_comm δ, ← mul_assoc, ← Finset.prod_mul_distrib]
-  refine mul_le_mul (Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => ?_) (h I) (norm_nonneg _) (by positivity)
+  refine mul_le_mul (Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => ?_) (h I) (norm_nonneg _) (by positivity)
   exact (LinearMap.toContinuousLinearMap (b.coord (I i))).le_opNorm (v i)
 
 private theorem ev_cmp {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a d : ℕ}
@@ -77,7 +77,7 @@ theorem UpperTheory.V.Cj.H.corrLim :
       have : B ^ q * ∏ i, ‖v i‖ = ∏ i, B * ‖v i‖ := by
         rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
       rw [this]
-      refine Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i _ => ?_
+      refine Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i _ => ?_
       rw [norm_smul]
       have h3 := m3 (v i)
       have h4 := norm_nonneg (sand g⁻¹ (v i))

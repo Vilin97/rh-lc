@@ -117,8 +117,8 @@ theorem mem_span_of_isHomogeneous (x y : κ) {N : ℕ} {g : MvPolynomial κ ℝ}
       rw [mul_comm]; exact X_mul_mem_span x y n z hmem
   rw [g.as_sum]
   refine Submodule.sum_mem _ fun v hv => ?_
-  obtain ⟨n, hn, hmem⟩ := key v (coeff v g)
-  have hv' : coeff v g ≠ 0 := mem_support_iff.mp hv
+  obtain ⟨n, hn, hmem⟩ := key v (AddMonoidAlgebra.coeff g v)
+  have hv' : AddMonoidAlgebra.coeff g v ≠ 0 := mem_support_iff.mp hv
   have h1 := hn (by rw [coeff_monomial, if_pos rfl]; exact hv')
   have h2 := hg hv'
   rw [← h1.symm.trans h2]

@@ -98,8 +98,8 @@ def ConjFun (g : ℂ ≃+* ℂ) (ζ : ℂ) (Φ Φ' : GA D (Wc D i) → ℂ) : Pr
 
 def ConjVec (g : ℂ ≃+* ℂ) (w w' : (R.cV i).W) : Prop :=
   ∃ (n : ℕ) (a : Fin n → ℂ) (P : Fin n → VsV D i (O i).c'.F),
-    (∀ k m, g (inC (O i).c' (MvPolynomial.coeff m (P k : Pol (O i).c'.F D.what₂.Tau (Vc D i).rank))) =
-      inC (O i).c' (MvPolynomial.coeff m (P k : Pol (O i).c'.F D.what₂.Tau (Vc D i).rank))) ∧
+    (∀ k m, g (inC (O i).c' (AddMonoidAlgebra.coeff (P k : Pol (O i).c'.F D.what₂.Tau (Vc D i).rank) m)) =
+      inC (O i).c' (AddMonoidAlgebra.coeff (P k : Pol (O i).c'.F D.what₂.Tau (Vc D i).rank) m)) ∧
     w = ∑ k, a k • (O i).c0' (P k) ∧ w' = ∑ k, g (a k) • (O i).c0' (P k)
 
 def ConjForm (g : ℂ ≃+* ℂ) (t t' : T0) (y : (R.HV i t).H) (y' : (R.HV i t').H) : Prop :=

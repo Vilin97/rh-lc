@@ -104,10 +104,10 @@ theorem eproj_comm (LL : Letters N) (j : ℕ) (ρ : Fin r) (w1 w2 : Fin r → �
 
 private theorem coeff_filt_lemma {σ R : Type*} [CommSemiring R] [DecidableEq σ] (P : (σ →₀ ℕ) → Prop)
     (dec : ∀ m, Decidable (P m)) (x : MvPolynomial σ R) (n : σ →₀ ℕ) :
-    coeff n (∑ m ∈ x.support, @ite _ (P m) (dec m) (monomial m (coeff m x)) 0) =
-      @ite _ (P n) (dec n) (coeff n x) 0 := by
+    AddMonoidAlgebra.coeff (∑ m ∈ x.support, @ite _ (P m) (dec m) (monomial m (AddMonoidAlgebra.coeff x m)) 0) n =
+      @ite _ (P n) (dec n) (AddMonoidAlgebra.coeff x n) 0 := by
   rw [MvPolynomial.coeff_sum]
-  simp only [apply_ite (coeff n), MvPolynomial.coeff_monomial, MvPolynomial.coeff_zero]
+  simp only [apply_ite (AddMonoidAlgebra.coeff · n), MvPolynomial.coeff_monomial, MvPolynomial.coeff_zero]
   by_cases hn : n ∈ x.support
   · rw [Finset.sum_eq_single n]
     · simp
@@ -115,7 +115,7 @@ private theorem coeff_filt_lemma {σ R : Type*} [CommSemiring R] [DecidableEq σ
       simp [hb]
     · intro h
       exact absurd hn h
-  · have h0 : coeff n x = 0 := by simpa using hn
+  · have h0 : AddMonoidAlgebra.coeff x n = 0 := by simpa using hn
     rw [h0, ite_self]
     apply Finset.sum_eq_zero
     intro b hb
@@ -168,7 +168,7 @@ private theorem resL_glAct_lemma_3 (LL : Letters N) (j : ℕ) (ρ c d : Fin r) (
     (e : ℕ) (x : MvPolynomial (Fin N × Fin r) ℚ_[p]) :
     resL p (i, ρ) e (glAct p LL j c d x) = glAct p LL j c d (resL p (i, ρ) e x) := by
   have hres : ∀ (y : MvPolynomial (Fin N × Fin r) ℚ_[p]) (n : Fin N × Fin r →₀ ℕ),
-      coeff n (resL p (i, ρ) e y) = if n (i, ρ) = e then coeff n y else 0 := by
+      AddMonoidAlgebra.coeff (resL p (i, ρ) e y) n = if n (i, ρ) = e then AddMonoidAlgebra.coeff y n else 0 := by
     intro y n
     simp only [resL, LinearMap.coe_mk, AddHom.coe_mk]
     unfold initPart
@@ -280,7 +280,7 @@ theorem eproj_pol (LL : Letters N) (j : ℕ) (ρ : Fin r) (w : Fin r → ℤ)
   classical
   intro F hFP hFW
   let Pm : MvPolynomial (Fin N × Fin r) ℚ_[p] →ₗ[ℚ_[p]] MvPolynomial (Fin N × Fin r) ℚ_[p] :=
-    { toFun := fun x => ∑ m ∈ x.support, if MultiDeg LL m then monomial m (coeff m x) else 0
+    { toFun := fun x => ∑ m ∈ x.support, if MultiDeg LL m then monomial m (AddMonoidAlgebra.coeff x m) else 0
       map_add' := fun x y => by
         ext n
         beta_reduce
@@ -293,7 +293,7 @@ theorem eproj_pol (LL : Letters N) (j : ℕ) (ρ : Fin r) (w : Fin r → ℤ)
         rw [MvPolynomial.coeff_smul, coeff_filt_lemma (fun m => MultiDeg LL m) _,
           coeff_filt_lemma (fun m => MultiDeg LL m) _]
         split_ifs <;> simp }
-  have hπ : ∀ y n, coeff n (Pm y) = if MultiDeg LL n then coeff n y else 0 :=
+  have hπ : ∀ y n, AddMonoidAlgebra.coeff (Pm y) n = if MultiDeg LL n then AddMonoidAlgebra.coeff y n else 0 :=
     fun y n => coeff_filt_lemma (fun m => MultiDeg LL m) _ y n
   have hsupp : ∀ (S : Set (Fin N × Fin r →₀ ℕ)) (y : MvPolynomial (Fin N × Fin r) ℚ_[p]),
       y ∈ MvPolynomial.restrictSupport ℚ_[p] S → Pm y ∈ MvPolynomial.restrictSupport ℚ_[p] S := by
@@ -452,7 +452,7 @@ theorem wtComp_int (LL : Letters N) (j : ℕ) (w : Fin r → ℤ) :
   unfold wtComp compP
   refine Submodule.sum_mem _ fun m _ => ?_
   split_ifs
-  · exact ⟨monomial m (coeff m y), by simp [MvPolynomial.coeff_map]⟩
+  · exact ⟨monomial m (AddMonoidAlgebra.coeff y m), by simp [MvPolynomial.coeff_map]⟩
   · exact Submodule.zero_mem _
 
 theorem wtComp_keep_supp (LL : Letters N) (j : ℕ) (w : Fin r → ℤ) (Q : Set (Fin N × Fin r →₀ ℕ)) :

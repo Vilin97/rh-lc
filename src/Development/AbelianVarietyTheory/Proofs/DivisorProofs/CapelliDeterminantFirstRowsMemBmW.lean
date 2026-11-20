@@ -193,7 +193,7 @@ theorem zcomp_comm_rCap (n : ℕ) (β : Fin n → ℤ) (u : ℤ) : Commute (zcom
   capDet_commute_of _ u _ (zcomp_comm_rE n β)
 
 theorem coeff_rowE_self {r m : ℕ} (a : Fin r) (f : MvPolynomial (Fin r × Fin m) K) (μ : Fin r × Fin m →₀ ℕ) :
-    coeff μ (rowE K r m a a f) = (rowDeg μ a : K) * coeff μ f := by
+    AddMonoidAlgebra.coeff (rowE K r m a a f) μ = (rowDeg μ a : K) * AddMonoidAlgebra.coeff f μ := by
   classical
   rw [rowE_apply, coeff_sum, rowDeg, Nat.cast_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun s _ => ?_
@@ -213,17 +213,17 @@ theorem rowWeight_iff [CharZero K] {r m : ℕ} (ρ : Fin r → ℕ) (f : MvPolyn
   · intro h a
     ext μ
     rw [coeff_rowE_self, coeff_smul, smul_eq_mul]
-    by_cases h0 : coeff μ f = 0
+    by_cases h0 : AddMonoidAlgebra.coeff f μ = 0
     · simp [h0]
     · rw [← bm_weight_rowW, h h0]
   · intro h μ h0
     funext a
-    have := congrArg (coeff μ) (h a)
+    have := congrArg (AddMonoidAlgebra.coeff · μ) (h a)
     rw [coeff_rowE_self, coeff_smul, smul_eq_mul] at this
     rw [bm_weight_rowW]
     exact_mod_cast mul_right_cancel₀ h0 this
 
-theorem fockB_eq_zero {σ : Type} (f g : MvPolynomial σ K) (h : ∀ μ, coeff μ f ≠ 0 → coeff μ g = 0) : fockB f g = 0 :=
+theorem fockB_eq_zero {σ : Type} (f g : MvPolynomial σ K) (h : ∀ μ, AddMonoidAlgebra.coeff f μ ≠ 0 → AddMonoidAlgebra.coeff g μ = 0) : fockB f g = 0 :=
   Finset.sum_eq_zero fun μ hμ => by rw [h μ (mem_support_iff.1 hμ)]; simp
 
 theorem fockB_rename {σ τ : Type} {e : σ → τ} (he : Function.Injective e) (f g : MvPolynomial σ K) :

@@ -64,7 +64,7 @@ theorem pderiv_subst [Fintype σ] {a : σ → MvPowerSeries τ S} (ha : HasSubst
     (g := fun f => pderiv S j (subst a f))
     (h := fun f => ∑ i, subst a (pderiv R i f) * pderiv S j (a i))
     ((continuous_pderiv j).comp hc)
-    (continuous_finset_sum _ fun i _ => (hc.comp (continuous_pderiv i)).mul continuous_const)
+    (continuous_finsetSum _ fun i _ => (hc.comp (continuous_pderiv i)).mul continuous_const)
     ?_) f
   funext p
   simp only [Function.comp_apply]

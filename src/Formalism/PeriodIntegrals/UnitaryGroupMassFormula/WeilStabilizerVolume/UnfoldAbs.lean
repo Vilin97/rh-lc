@@ -102,13 +102,13 @@ def cfun (Γ : Subgroup G) (A : Set G) (y0 : Y) (g : G) : ℝ≥0∞ :=
 theorem meas_cntN (Γ : Subgroup G) [Countable Γ] {A : Set G} (hA : MeasurableSet A) :
     Measurable (cntN Γ A) := by
   unfold cntN
-  exact Measurable.ennreal_tsum fun γ =>
+  exact Measurable.tsum fun γ =>
     (measurable_const.indicator hA).comp (measurable_const_mul (γ : G))
 
 theorem meas_cfun (Γ : Subgroup G) (y0 : Y) [Countable (orbS Γ y0)] {A : Set G}
     (hA : MeasurableSet A) : Measurable (cfun Γ A y0) := by
   unfold cfun
-  exact Measurable.ennreal_tsum fun x =>
+  exact Measurable.tsum fun x =>
     (measurable_const.indicator hA).comp ((measurable_const_mul (repO Γ y0 x)).comp measurable_inv)
 
 theorem cntN_mul (Γ : Subgroup G) (A : Set G) {γ : G} (hγ : γ ∈ Γ) (g : G) :

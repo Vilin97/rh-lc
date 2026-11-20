@@ -13,10 +13,10 @@ variable {R S : Type*} [CommRing R] [CommRing S] [Algebra R S] {σ ι : Type*}
 
 noncomputable def basisComponent (b : Module.Basis ι R S) (i : ι) (P : MvPolynomial σ S) :
     MvPolynomial σ R :=
-  ∑ m ∈ P.support, monomial m (b.repr (coeff m P) i)
+  ∑ m ∈ P.support, monomial m (b.repr (AddMonoidAlgebra.coeff P m) i)
 
 theorem coeff_basisComponent (b : Module.Basis ι R S) (i : ι) (P : MvPolynomial σ S)
-    (m : σ →₀ ℕ) : coeff m (basisComponent b i P) = b.repr (coeff m P) i := by
+    (m : σ →₀ ℕ) : AddMonoidAlgebra.coeff (basisComponent b i P) m = b.repr (AddMonoidAlgebra.coeff P m) i := by
   classical
   rw [basisComponent, coeff_sum, Finset.sum_eq_single m]
   · simp
@@ -26,14 +26,14 @@ theorem coeff_basisComponent (b : Module.Basis ι R S) (i : ι) (P : MvPolynomia
 theorem exists_eq_sum_basisComponent (b : Module.Basis ι R S) (P : MvPolynomial σ S) :
     ∃ J : Finset ι, P = ∑ i ∈ J, b i • MvPolynomial.map (algebraMap R S) (basisComponent b i P) := by
   classical
-  refine ⟨P.support.biUnion fun m => (b.repr (coeff m P)).support, ?_⟩
+  refine ⟨P.support.biUnion fun m => (b.repr (AddMonoidAlgebra.coeff P m)).support, ?_⟩
   ext m
   simp only [coeff_sum, coeff_smul, coeff_map, coeff_basisComponent, smul_eq_mul]
-  conv_lhs => rw [← b.linearCombination_repr (coeff m P), Finsupp.linearCombination_apply]
-  rw [Finsupp.sum_of_support_subset (s := P.support.biUnion fun m => (b.repr (coeff m P)).support)]
+  conv_lhs => rw [← b.linearCombination_repr (AddMonoidAlgebra.coeff P m), Finsupp.linearCombination_apply]
+  rw [Finsupp.sum_of_support_subset (s := P.support.biUnion fun m => (b.repr (AddMonoidAlgebra.coeff P m)).support)]
   · exact Finset.sum_congr rfl fun i _ => by rw [Algebra.smul_def, mul_comm]
   · by_cases hm : m ∈ P.support
-    · exact Finset.subset_biUnion_of_mem (fun m => (b.repr (coeff m P)).support) hm
+    · exact Finset.subset_biUnion_of_mem (fun m => (b.repr (AddMonoidAlgebra.coeff P m)).support) hm
     · simp [notMem_support_iff.1 hm]
   · simp
 
@@ -419,10 +419,10 @@ theorem span_pi_one_eq_top : Submodule.span E
   congr 2; funext k; simp
 
 theorem mem_range_map_ringOfIntegers_iff {σ : Type*} {P : MvPolynomial σ K} :
-    (∃ Q, MvPolynomial.map (algebraMap (𝓞 K) K) Q = P) ↔ ∀ m, IsIntegral ℤ (coeff m P) := by
+    (∃ Q, MvPolynomial.map (algebraMap (𝓞 K) K) Q = P) ↔ ∀ m, IsIntegral ℤ (AddMonoidAlgebra.coeff P m) := by
   constructor
   · rintro ⟨Q, rfl⟩ m
-    rw [coeff_map]; exact (coeff m Q).isIntegral_coe
+    rw [coeff_map]; exact (AddMonoidAlgebra.coeff Q m).isIntegral_coe
   · intro h
     refine ⟨∑ m ∈ P.support, monomial m ⟨_, h m⟩, ?_⟩
     conv_rhs => rw [P.as_sum]
@@ -462,7 +462,7 @@ theorem symO_pi_one : symO p q τ (Submodule.pi Set.univ fun _ : Fin n => (1 : S
 
 theorem mem_symO_pi_one_iff :
     P ∈ symO p q τ (Submodule.pi Set.univ fun _ : Fin n => (1 : Submodule (𝓞 E) E)) ↔
-      ∀ m, IsIntegral ℤ (coeff m P) := by
+      ∀ m, IsIntegral ℤ (AddMonoidAlgebra.coeff P m) := by
   rw [symO_pi_one, ← mem_range_map_ringOfIntegers_iff]; rfl
 
 variable (c c') in
@@ -516,7 +516,7 @@ theorem exists_zsmul_mem_Ha (hΛ : Submodule.span E (Λ : Set (Fin n → E)) = �
   obtain ⟨N, hN, h⟩ := exists_zsmul_le (fg_pi_one (E := E)) hΛ
   have : Algebra.IsAlgebraic ℤ K := (IsFractionRing.comap_isAlgebraic_iff (K := ℚ)).2 inferInstance
   obtain ⟨M, hM, hM'⟩ := Algebra.IsAlgebraic.exists_integral_multiples ℤ
-    (P.support.image fun m => coeff m P)
+    (P.support.image fun m => AddMonoidAlgebra.coeff P m)
   have h₀ : M • P ∈ Ha τ c c' (Submodule.pi Set.univ fun _ : Fin n => (1 : Submodule (𝓞 E) E)) := by
     refine ⟨zsmul_mem hP M, (mem_symO_pi_one_iff τ).2 fun m => ?_⟩
     rw [coeff_smul]
@@ -565,7 +565,7 @@ theorem integral_harmonic_on_lattice (hfg : Λ.FG)
     ((Ha τ c c' Λ).FG ∧
       Submodule.span K (Ha τ c c' Λ : Set (Poly K T p q (Fin n))) = rowHighest K c c') ∧
     ((∀ P, P ∈ symO p q τ (Submodule.pi Set.univ fun _ : Fin n => (1 : Submodule (𝓞 E) E)) ↔
-        ∀ m, IsIntegral ℤ (coeff m P)) ∧
+        ∀ m, IsIntegral ℤ (AddMonoidAlgebra.coeff P m)) ∧
       Ha τ c c' (Submodule.pi Set.univ fun _ : Fin n => (1 : Submodule (𝓞 E) E)) =
         Submodule.span (𝓞 K) (MvPolynomial.map (Int.castRingHom K) ''
           (rowHighest ℤ (κ := Fin n) c c' : Set (Poly ℤ T p q (Fin n))))) ∧

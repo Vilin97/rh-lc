@@ -35,14 +35,14 @@ theorem resOntoK_of_resSatL (LL : Letters (K + 1)) {q : ℕ} (J : Fin q → ℕ)
   unfold ResSatL at h
   intro x hx
   obtain ⟨b, hb⟩ := IsLocalization.exist_integer_multiples_of_finset (nonZeroDivisors ℤ_[p])
-    (x.support.image fun m => MvPolynomial.coeff m x)
-  have hb' : ∀ m, ∃ y : ℤ_[p], algebraMap ℤ_[p] ℚ_[p] y = (b : ℤ_[p]) • MvPolynomial.coeff m x := by
+    (x.support.image fun m => AddMonoidAlgebra.coeff x m)
+  have hb' : ∀ m, ∃ y : ℤ_[p], algebraMap ℤ_[p] ℚ_[p] y = (b : ℤ_[p]) • AddMonoidAlgebra.coeff x m := by
     intro m
     by_cases hm : m ∈ x.support
     · obtain ⟨y, hy⟩ := hb _ (Finset.mem_image_of_mem _ hm)
       exact ⟨y, hy⟩
     · refine ⟨0, ?_⟩
-      have h0 : MvPolynomial.coeff m x = 0 := by
+      have h0 : AddMonoidAlgebra.coeff x m = 0 := by
         by_contra hne
         exact hm (MvPolynomial.mem_support_iff.2 hne)
       rw [h0, smul_zero, map_zero]
@@ -347,10 +347,10 @@ theorem divModP_zero {p : ℕ} [Fact p.Prime] {K r : ℕ} [NeZero r] (LL : Lette
   have hbI : initPart (Fin.last K, ρ) 0 b ∈ IntPol p (Fin (K + 1) × Fin r) := by
     obtain ⟨b0, hb0⟩ := LinearMap.mem_range.1 hb
     refine LinearMap.mem_range.2 ⟨∑ m ∈ b0.support,
-      if m (Fin.last K, ρ) = 0 then monomial m (MvPolynomial.coeff m b0) else 0, ?_⟩
+      if m (Fin.last K, ρ) = 0 then monomial m (AddMonoidAlgebra.coeff b0 m) else 0, ?_⟩
     rw [← hb0]
     change MvPolynomial.map (algebraMap ℤ_[p] ℚ_[p]) (∑ m ∈ b0.support,
-        if m (Fin.last K, ρ) = 0 then monomial m (MvPolynomial.coeff m b0) else 0)
+        if m (Fin.last K, ρ) = 0 then monomial m (AddMonoidAlgebra.coeff b0 m) else 0)
       = initPart (Fin.last K, ρ) 0 (MvPolynomial.map (algebraMap ℤ_[p] ℚ_[p]) b0)
     unfold initPart
     rw [MvPolynomial.support_map_of_injective _ (f := algebraMap ℤ_[p] ℚ_[p]) (fun a b h => Subtype.ext h),

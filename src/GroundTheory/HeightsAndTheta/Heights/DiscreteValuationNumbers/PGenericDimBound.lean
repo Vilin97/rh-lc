@@ -26,7 +26,7 @@ theorem GenericDimBound.proof (hmax : MaximalIdealHeightFG.Statement.{u}) :
     intro f hf
     have h0 := hP.multiHomog f hf 0
     rw [weightedHomogeneousComponent_zero] at h0
-    · have : coeff 0 f ∈ P.comap (C : O →+* S) := h0
+    · have : AddMonoidAlgebra.coeff f 0 ∈ P.comap (C : O →+* S) := h0
       rw [hT, Ideal.mem_bot] at this
       rw [constantCoeff_eq]
       exact this

@@ -145,8 +145,8 @@ theorem card_piece_irrelevant_ideal {q : Ideal (MRing ι)} {k : K} (hk : ∀ i, 
     obtain ⟨i, hi⟩ := this
     have hle : Finsupp.single (⟨k, i⟩ : Σ k, ι k) 1 ≤ m :=
       Finsupp.single_le_iff.2 (Nat.one_le_iff_ne_zero.2 hi)
-    have e : monomial m (coeff m h) =
-        X ⟨k, i⟩ * monomial (m - Finsupp.single (⟨k, i⟩ : Σ k, ι k) 1) (coeff m h) := by
+    have e : monomial m (AddMonoidAlgebra.coeff h m) =
+        X ⟨k, i⟩ * monomial (m - Finsupp.single (⟨k, i⟩ : Σ k, ι k) 1) (AddMonoidAlgebra.coeff h m) := by
       rw [X, monomial_mul, one_mul, add_tsub_cancel_of_le hle]
     rw [e]
     exact Ideal.mul_mem_right _ _ (hk i)

@@ -146,7 +146,7 @@ def ThmAGaussOfF : Prop :=
       (∀ s, nu2 s = (Finset.univ.filter (fun c => 2 ≤ p s c)).card) → (∀ s, size s = ∑ c, p s c) →
     ∀ a : ℕ, 1 ≤ a → (∀ s, size s ≤ a) → 2 * Real.logb l a + 2 ≤ (N0 : ℝ) - 1 →
     ∀ n : (ZMod d × Fin N0 × Fin N0) →₀ ℕ,
-      ‖MvPolynomial.coeff n (frameJet colN p hp I (thetaInZ l j σ om oms (mvExp (-Φ) * U0)))‖ ≤
+      ‖AddMonoidAlgebra.coeff (frameJet colN p hp I (thetaInZ l j σ om oms (mvExp (-Φ) * U0))) n‖ ≤
         ‖(l : ℂ_[l])‖ ^ ((∑ s ∈ TT, (topTerm l d TT nu1 nu2 s -
             gam l * (Wcap l d TT nu1 nu2 size s : ℝ))) +
           Fnum l d (fun s => (Dl d TT nu1 size s : ℝ)) -
@@ -166,8 +166,8 @@ def OneLetterGaussOfF : Prop :=
       Simeq Φ (∑ x : Fin N0 × Fin N1, at1 x (PowerSeries.map j ph)) →
     ∀ (p : Fin C → ℕ) (hp : ∀ c, p c ≤ N0) (I : ∀ c, Fin (p c) → Fin N1) (a : ℕ), 1 ≤ a →
       (∑ c, p c) ≤ a → ∀ n : (Fin N0 × Fin N0) →₀ ℕ,
-      ‖MvPolynomial.coeff n (frameJetOne p hp I
-          (MvPowerSeries.subst (fun x => at1 x (expF ℂ_[l] l)) (mvExp (-Φ) * U0)))‖ ≤
+      ‖AddMonoidAlgebra.coeff (frameJetOne p hp I
+          (MvPowerSeries.subst (fun x => at1 x (expF ℂ_[l] l)) (mvExp (-Φ) * U0))) n‖ ≤
         ‖(l : ℂ_[l])‖ ^ (rho l * ((∑ c, p c : ℕ) : ℝ) -
           ((N0 : ℝ) * N1) * (Real.logb l (a : ℝ) + 1))
 

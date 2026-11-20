@@ -53,7 +53,7 @@ theorem moore_step_norm_ge {F : Type*} [NormedField F] (p : ℕ) [Fact p.Prime] 
   rw [moore_step_eq_prod, norm_prod]
   have : r ^ p = ∏ _c : ZMod p, r := by simp
   rw [this]
-  refine Finset.prod_le_prod (fun _ _ => hr) fun c _ => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => hr) fun c _ => ?_
   have := h (-(c.val : ℤ))
   simpa only [Int.cast_neg, Int.cast_natCast, neg_mul, ← sub_eq_add_neg] using this
 

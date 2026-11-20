@@ -10,10 +10,10 @@ theorem mem_span_map_of_eval_mem (k : Type) [Field k] [Infinite k] (σ τ : Type
     P ∈ Submodule.span (MvPolynomial τ k)
       (MvPolynomial.map (algebraMap k (MvPolynomial τ k)) '' (M : Set (MvPolynomial σ k))) := by
   classical
-  let Γ : Finset (τ →₀ ℕ) := P.support.biUnion (fun m => (coeff m P).support)
+  let Γ : Finset (τ →₀ ℕ) := P.support.biUnion (fun m => (AddMonoidAlgebra.coeff P m).support)
   let Q : (τ →₀ ℕ) → MvPolynomial σ k := fun γ =>
-    ∑ m ∈ P.support, monomial m (coeff γ (coeff m P))
-  have hQ : ∀ γ m, coeff m (Q γ) = coeff γ (coeff m P) := by
+    ∑ m ∈ P.support, monomial m (AddMonoidAlgebra.coeff (AddMonoidAlgebra.coeff P m) γ)
+  have hQ : ∀ γ m, AddMonoidAlgebra.coeff (Q γ) m = AddMonoidAlgebra.coeff (AddMonoidAlgebra.coeff P m) γ := by
     intro γ m
     simp only [Q, coeff_sum, coeff_monomial]
     rw [Finset.sum_ite_eq']
@@ -24,11 +24,11 @@ theorem mem_span_map_of_eval_mem (k : Type) [Field k] [Infinite k] (σ τ : Type
     ext m : 1
     rw [coeff_sum]
     simp only [coeff_smul, coeff_map, hQ, smul_eq_mul, MvPolynomial.algebraMap_eq]
-    have : ∀ γ, (monomial γ (1 : k) : MvPolynomial τ k) * C (coeff γ (coeff m P)) = monomial γ (coeff γ (coeff m P)) := by
+    have : ∀ γ, (monomial γ (1 : k) : MvPolynomial τ k) * C (AddMonoidAlgebra.coeff (AddMonoidAlgebra.coeff P m) γ) = monomial γ (AddMonoidAlgebra.coeff (AddMonoidAlgebra.coeff P m) γ) := by
       intro γ; rw [mul_comm, C_mul_monomial, mul_one]
     simp only [this]
     by_cases hm : m ∈ P.support
-    · conv_lhs => rw [as_sum (coeff m P)]
+    · conv_lhs => rw [as_sum (AddMonoidAlgebra.coeff P m)]
       apply Finset.sum_subset
       · intro γ hγ; exact Finset.mem_biUnion.mpr ⟨m, hm, hγ⟩
       · intro γ _ hγ; rw [notMem_support_iff.mp hγ, monomial_zero]
@@ -61,7 +61,7 @@ theorem mem_span_map_of_eval_mem (k : Type) [Field k] [Infinite k] (σ τ : Type
       · rw [hy, mul_zero]
       · rw [hR, LinearMap.mem_ker.mp (hLM (hP y hy)), zero_mul]
     have hR0 : R = 0 := (mul_eq_zero.mp hRD).resolve_right hD
-    have hcoef : coeff β R = L (Q β) := by
+    have hcoef : AddMonoidAlgebra.coeff R β = L (Q β) := by
       simp only [R, coeff_sum, coeff_monomial]
       rw [Finset.sum_ite_eq', if_pos hβ]
     exact hLβ (by rw [← hcoef, hR0, coeff_zero])

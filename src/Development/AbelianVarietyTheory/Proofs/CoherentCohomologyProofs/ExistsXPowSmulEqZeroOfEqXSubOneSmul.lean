@@ -31,7 +31,7 @@ private lemma decompose_X_smul_add_one (y : M) (m : ℤ) :
     · subst hj; exact decompose_of_mem_same ℳ hmem
     · exact decompose_of_mem_ne ℳ hmem (by omega)
   conv_lhs => rw [← sum_support_decompose ℳ y]
-  rw [Finset.smul_sum, decompose_sum, DFinsupp.finset_sum_apply, Submodule.coe_sum]
+  rw [Finset.smul_sum, decompose_sum, DFinsupp.finsetSum_apply, Submodule.coe_sum]
   simp only [key]
   rw [Finset.sum_ite_eq']
   split_ifs with h

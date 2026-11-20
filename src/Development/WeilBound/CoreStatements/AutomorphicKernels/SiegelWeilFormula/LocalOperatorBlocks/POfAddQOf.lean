@@ -147,7 +147,7 @@ theorem locData_of (h : LocHyp sg L) :
       show L 1 (fP (rhoFun h k 1)) 0 = L (1 * k) (fP 1) 0
       rw [h.mul _ _ _ (isSw_fP 1), ← (rhoFun_spec h hk 1).2]
     change sLOf h (rhoFun h k 1) 1 = _ at h1
-    set c := MvPolynomial.coeff 0 (rhoFun h k 1) with hcdef
+    set c := AddMonoidAlgebra.coeff (rhoFun h k 1) 0 with hcdef
     have hc : (MvPolynomial.C c : PX m n) = c • (1 : PX m n) := by rw [MvPolynomial.smul_eq_C_mul, mul_one]
     rw [hd, hc, map_smul, Pi.smul_apply, one_mul, hvac, weight_factor_one, smul_eq_mul, mul_one] at h1
     show rhoFun h k 1 = _

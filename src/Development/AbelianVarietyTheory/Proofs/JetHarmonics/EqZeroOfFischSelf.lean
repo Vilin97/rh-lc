@@ -286,7 +286,7 @@ theorem RowStable.component_mem [Infinite k] {U : Submodule k (MvPolynomial (Let
     rw [map_zero, ← h0, map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [hm, map_smul, smul_eq_mul, eval_monomial, eval_monomial, one_mul, mul_comm]
-  have := congrArg (coeff a) hQ
+  have := congrArg (AddMonoidAlgebra.coeff · a) hQ
   rw [weightedHomogeneousComponent_apply, map_sum, Finset.sum_filter]
   rw [coeff_zero, coeff_sum] at this
   exact (Finset.sum_congr rfl fun m _ => by rw [coeff_monomial]).trans this
@@ -311,7 +311,7 @@ theorem RowStable.exists_top [Infinite k] {U : Submodule k (MvPolynomial (Letter
     · exact absurd rfl hm
   refine ⟨Q, hQU, fun hQ => ?_, fun σ i i' hi t => ?_,
     fun σ i => if hi : i < r σ then Finsupp.weight w m₀ ⟨σ, ⟨i, hi⟩⟩ else 0, fun m hm σ i => ?_⟩
-  · have := congrArg (coeff m₀) hQ
+  · have := congrArg (AddMonoidAlgebra.coeff · m₀) hQ
     rw [coeff_weightedHomogeneousComponent, if_pos rfl] at this
     exact mem_support_iff.1 hm₀ this
   · by_contra hne
@@ -412,8 +412,8 @@ theorem harmK_le_span [CharZero k] (cc : T → T) (isX : T → Prop) :
   intro P hP
   let B := Module.Basis.ofVectorSpace ℚ k
   let L : (k →ₗ[ℚ] ℚ) → MvPolynomial (Letter T r n) k → MvPolynomial (Letter T r n) ℚ := fun φ Q =>
-    ∑ m ∈ Q.support, monomial m (φ (coeff m Q))
-  have hL : ∀ φ Q m, coeff m (L φ Q) = φ (coeff m Q) := by
+    ∑ m ∈ Q.support, monomial m (φ (AddMonoidAlgebra.coeff Q m))
+  have hL : ∀ φ Q m, AddMonoidAlgebra.coeff (L φ Q) m = φ (AddMonoidAlgebra.coeff Q m) := by
     intro φ Q m
     simp only [L, coeff_sum, coeff_monomial, Finset.sum_ite_eq']
     split_ifs with hm
@@ -422,17 +422,17 @@ theorem harmK_le_span [CharZero k] (cc : T → T) (isX : T → Prop) :
   have hLd : ∀ φ Q ℓ, pderiv ℓ (L φ Q) = L φ (pderiv ℓ Q) := by
     intro φ Q ℓ
     ext m
-    rw [coeff_pderiv, hL, hL, coeff_pderiv, mul_comm, ← smul_eq_mul, ← map_smul, mul_comm (coeff _ Q), Algebra.smul_def]
+    rw [coeff_pderiv, hL, hL, coeff_pderiv, mul_comm, ← smul_eq_mul, ← map_smul, mul_comm (AddMonoidAlgebra.coeff Q _), Algebra.smul_def]
     simp
-  let s := P.support.biUnion fun m => (B.repr (coeff m P)).support
+  let s := P.support.biUnion fun m => (B.repr (AddMonoidAlgebra.coeff P m)).support
   have e : P = ∑ i ∈ s, B i • map (algebraMap ℚ k) (L (B.coord i) P) := by
     ext m
     simp only [coeff_sum, coeff_smul, coeff_map, hL, smul_eq_mul, Module.Basis.coord_apply]
-    nth_rewrite 1 [← B.linearCombination_repr (coeff m P)]
+    nth_rewrite 1 [← B.linearCombination_repr (AddMonoidAlgebra.coeff P m)]
     rw [Finsupp.linearCombination_apply, Finsupp.sum_of_support_subset _ (s := s)]
     · exact Finset.sum_congr rfl fun i _ => by rw [Algebra.smul_def, mul_comm]
     · by_cases hm : m ∈ P.support
-      · exact Finset.subset_biUnion_of_mem (fun m => (B.repr (coeff m P)).support) hm
+      · exact Finset.subset_biUnion_of_mem (fun m => (B.repr (AddMonoidAlgebra.coeff P m)).support) hm
       · simp [notMem_support_iff.1 hm]
     · simp
   rw [e]

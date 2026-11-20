@@ -11,10 +11,10 @@ namespace GlobalTheory.WeylRowAll
 
 def coeffMap {R S σ : Type} [CommRing R] [CommRing S] (c : S →+ R) (F : MvPolynomial σ S) :
     MvPolynomial σ R :=
-  ∑ m ∈ F.support, monomial m (c (coeff m F))
+  ∑ m ∈ F.support, monomial m (c (AddMonoidAlgebra.coeff F m))
 
 theorem coeff_coeffMap {R S σ : Type} [CommRing R] [CommRing S] (c : S →+ R)
-    (F : MvPolynomial σ S) (m : σ →₀ ℕ) : coeff m (coeffMap c F) = c (coeff m F) := by
+    (F : MvPolynomial σ S) (m : σ →₀ ℕ) : AddMonoidAlgebra.coeff (coeffMap c F) m = c (AddMonoidAlgebra.coeff F m) := by
   classical
   simp only [coeffMap, coeff_sum, coeff_monomial, Finset.sum_ite_eq']
   split_ifs with h

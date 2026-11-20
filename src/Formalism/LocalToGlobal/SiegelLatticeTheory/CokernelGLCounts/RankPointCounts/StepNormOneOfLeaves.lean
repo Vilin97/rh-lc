@@ -269,7 +269,7 @@ theorem one_le_NDPt (γ : Formalism.FourierDecayAlt.PN.Pts D.host.E D.R.rS)
     1 ≤ NDPt D.host.rdE γ := by
   unfold NDPt
   rw [← Finset.prod_const_one (s := (Finset.univ : Finset (Fin γ.1.length)))]
-  refine Finset.prod_le_prod (fun _ _ => zero_le_one) fun a _ => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => zero_le_one) fun a _ => ?_
   obtain ⟨o, ho, e, h0⟩ := hmin a
   rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Formalism.MainNotions.LatticeGluingRadicals.d_card D]
   have hsq := prod_sq_ge _ o ho (by rw [e]; exact h0)

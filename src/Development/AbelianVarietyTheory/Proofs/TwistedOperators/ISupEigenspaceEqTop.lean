@@ -273,7 +273,7 @@ theorem iSup_eigenspace_eq_top {σ ι : Type*} (g : ι → Module.End ℂ (MvPol
   rw [Submodule.mem_iInf]
   intro i
   rw [Module.End.mem_eigenspace_iff]
-  have h : monomial n (coeff n P) = coeff n P • monomial n (1 : ℂ) := by
+  have h : monomial n (AddMonoidAlgebra.coeff P n) = AddMonoidAlgebra.coeff P n • monomial n (1 : ℂ) := by
     rw [smul_monomial, smul_eq_mul, mul_one]
   rw [h, map_smul, hg, smul_comm]
 
@@ -301,11 +301,11 @@ theorem rowOp_monomial {σ I J : Type*} [Fintype J] (z : I × J → σ) (a : I) 
 
 private theorem coeff_apply_of_diagonal_on_monomials {σ : Type*} (g : MvPolynomial σ ℂ →ₗ[ℂ] MvPolynomial σ ℂ)
     (w : (σ →₀ ℕ) → ℂ) (hg : ∀ n, g (monomial n 1) = w n • monomial n 1)
-    (P : MvPolynomial σ ℂ) (m : σ →₀ ℕ) : coeff m (g P) = w m * coeff m P := by
+    (P : MvPolynomial σ ℂ) (m : σ →₀ ℕ) : AddMonoidAlgebra.coeff (g P) m = w m * AddMonoidAlgebra.coeff P m := by
   classical
-  have hmon : ∀ n, g (monomial n (coeff n P)) = (coeff n P * w n) • monomial n 1 := by
+  have hmon : ∀ n, g (monomial n (AddMonoidAlgebra.coeff P n)) = (AddMonoidAlgebra.coeff P n * w n) • monomial n 1 := by
     intro n
-    have h : monomial n (coeff n P) = coeff n P • monomial n (1 : ℂ) := by
+    have h : monomial n (AddMonoidAlgebra.coeff P n) = AddMonoidAlgebra.coeff P n • monomial n (1 : ℂ) := by
       rw [smul_monomial, smul_eq_mul, mul_one]
     rw [h, map_smul, hg, smul_smul]
   conv_lhs => rw [P.as_sum, map_sum]
@@ -326,7 +326,7 @@ theorem colOp_eq_smul_iff {σ I J : Type*} [Fintype I] (z : I × J → σ) (k : 
     simp only [Nat.cast_sum, Int.cast_sum, Int.cast_natCast]
   constructor
   · intro h m hm
-    have h1 := congrArg (coeff m) h
+    have h1 := congrArg (AddMonoidAlgebra.coeff · m) h
     rw [coeff_apply_of_diagonal_on_monomials _ _ hw, coeff_smul, smul_eq_mul] at h1
     exact mul_right_cancel₀ (mem_support_iff.mp hm) h1
   · intro h
@@ -346,7 +346,7 @@ theorem rowOp_eq_smul_iff {σ I J : Type*} [Fintype J] (z : I × J → σ) (a : 
     simp only [Nat.cast_sum, Int.cast_sum, Int.cast_natCast]
   constructor
   · intro h m hm
-    have h1 := congrArg (coeff m) h
+    have h1 := congrArg (AddMonoidAlgebra.coeff · m) h
     rw [coeff_apply_of_diagonal_on_monomials _ _ hw, coeff_smul, smul_eq_mul] at h1
     exact mul_right_cancel₀ (mem_support_iff.mp hm) h1
   · intro h

@@ -26,8 +26,8 @@ private theorem aeval_killCompl {S B : Type*} [CommRing B] [Algebra ℚ B] (U : 
 
 private theorem coeff_killCompl_comapDomain {S : Type*} (U : Set S) (P : MvPolynomial S ℚ) (m : S →₀ ℕ)
     (hm : ↑m.support ⊆ Set.range (Subtype.val : U → S)) :
-    coeff (m.comapDomain (Subtype.val : U → S) (Subtype.val_injective : Function.Injective (Subtype.val : U → S)).injOn)
-      (killCompl (R := ℚ) (Subtype.val_injective : Function.Injective (Subtype.val : U → S)) P) = coeff m P := by
+    AddMonoidAlgebra.coeff (killCompl (R := ℚ) (Subtype.val_injective : Function.Injective (Subtype.val : U → S)) P)
+      (m.comapDomain (Subtype.val : U → S) (Subtype.val_injective : Function.Injective (Subtype.val : U → S)).injOn) = AddMonoidAlgebra.coeff P m := by
   classical
   induction P using MvPolynomial.induction_on' with
   | monomial n r =>
@@ -45,12 +45,12 @@ private theorem coeff_killCompl_comapDomain {S : Type*} (U : Set S) (P : MvPolyn
     · rw [killCompl_monomial_eq_zero_of_not_subset _ _ hn, coeff_zero, coeff_monomial, if_neg]
       rintro rfl
       exact hn hm
-  | add P Q hP hQ => rw [map_add, coeff_add, coeff_add, hP, hQ]
+  | add P Q hP hQ => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hP, hQ]
 
 theorem coeff_eq_zero_of_aeval_eq_zero {S B : Type*} [CommRing B] [Algebra ℚ B] (U : Set S)
     (φ : S → B) (hind : AlgebraicIndependent ℚ (fun Δ : U => φ Δ)) (h0 : ∀ Δ ∉ U, φ Δ = 0)
     (P : MvPolynomial S ℚ) (hP : aeval φ P = 0) (m : S →₀ ℕ) (hm : ∀ Δ ∈ m.support, Δ ∈ U) :
-    coeff m P = 0 := by
+    AddMonoidAlgebra.coeff P m = 0 := by
   classical
   have hm' : ↑m.support ⊆ Set.range (Subtype.val : U → S) := fun Δ hΔ =>
     ⟨⟨Δ, hm Δ (Finset.mem_coe.1 hΔ)⟩, rfl⟩

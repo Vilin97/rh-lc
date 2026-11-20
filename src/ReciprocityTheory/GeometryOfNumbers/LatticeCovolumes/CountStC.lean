@@ -277,9 +277,9 @@ theorem le_volume_ellS (h : HermFam K V) {r : ℕ} (hr : 0 < r) {v : Fin r → V
       simpa using (Complex.lt_def.mp (gram_posDef h w.1.embedding hli).det_pos).1
     exact div_nonneg (by positivity) hd.le
   apply mul_le_mul
-  · exact Finset.prod_le_prod (fun w _ => ha w)
+  · exact Finset.prod_le_prod₀ (fun w _ => ha w)
       (fun w _ => le_volume_ellipsoidR (gramR_posDef h hli w) hR)
-  · exact Finset.prod_le_prod (fun w _ => hb w)
+  · exact Finset.prod_le_prod₀ (fun w _ => hb w)
       (fun w _ => le_volume_ellipsoidC (gram_posDef h w.1.embedding hli) hR)
   · exact Finset.prod_nonneg fun w _ => hb w
   · exact Finset.prod_nonneg fun w _ => ENNReal.toReal_nonneg

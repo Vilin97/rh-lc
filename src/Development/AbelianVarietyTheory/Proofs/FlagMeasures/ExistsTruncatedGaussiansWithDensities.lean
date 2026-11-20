@@ -48,7 +48,7 @@ theorem prodFun_nonneg {n : ℕ} (y : Fin n → ℂ) : 0 ≤ prodFun g y := Fins
 include h0 h1 in
 theorem prodFun_le {n : ℕ} (y : Fin n → ℂ) : prodFun g y ≤ gauss y := by
   rw [← prodFun_exp]
-  exact Finset.prod_le_prod (fun _ _ => h0 _) fun _ _ => h1 _
+  exact Finset.prod_le_prod₀ (fun _ _ => h0 _) fun _ _ => h1 _
 
 include hc h0 h1 in
 theorem integrable_prodFun (n : ℕ) : Integrable (prodFun g : (Fin n → ℂ) → ℝ) :=
@@ -248,7 +248,7 @@ theorem exists_truncated (n : ℕ) (ε : Fin n → Bool) :
       ∀ β : ℝ, β ≠ 0 → Filter.Tendsto (fun k => D k β) Filter.atTop (nhds (gaussDens ε β)) := by
   have key : ∀ y : Fin n → ℂ, Monotone (fun k => prodFun (cutExp k) y) ∧
       Filter.Tendsto (fun k => prodFun (cutExp k) y) Filter.atTop (nhds (gauss y)) := fun y =>
-    ⟨fun _ _ h => Finset.prod_le_prod (fun _ _ => cutExp_nonneg _ _) fun _ _ => cutExp_mono _ h,
+    ⟨fun _ _ h => Finset.prod_le_prod₀ (fun _ _ => cutExp_nonneg _ _) fun _ _ => cutExp_mono _ h,
       prodFun_exp y ▸ tendsto_prodFun y⟩
   obtain _ | n := n
   · refine ⟨fun k => prodFun (cutExp k), fun _ _ => 0, fun k => ⟨contDiff_prodFun k 0,

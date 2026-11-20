@@ -26,7 +26,7 @@ def T (x : Fin n → R) (s : Set (Fin n)) (k : ℕ) (J : Ideal R) : Ideal R wher
   add_mem' := by
     rintro a b ⟨F, h1, h2, h3, rfl⟩ ⟨G, g1, g2, g3, rfl⟩
     exact ⟨F + G, h1.add g1, add_mem h2 g2,
-      fun m => by rw [coeff_add]; exact add_mem (h3 m) (g3 m), by simp⟩
+      fun m => by rw [MvPolynomial.coeff_add]; exact add_mem (h3 m) (g3 m), by simp⟩
   zero_mem' := ⟨0, isHom_iff.2 (fun d hd => by simp at hd), zero_mem _, fun m => by simp, by simp⟩
   smul_mem' := by
     rintro c a ⟨F, h1, h2, h3, rfl⟩

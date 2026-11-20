@@ -60,7 +60,7 @@ private lemma isUnit_natCast_sp_complex_sections {l m : ℕ} (hl : (l : O) ∈ I
 
 theorem natCast_unit_mul {l : ℕ} [hp : Fact l.Prime] (hl : (l : O) ∈ IsLocalRing.maximalIdeal O)
     {n : ℕ} (hn : n ≠ 0) : ∃ v : Oˣ, (n : O) = v * (l : O) ^ padicValNat l n := by
-  obtain ⟨m, hm⟩ := pow_padicValNat_dvd (p := l) (n := n)
+  obtain ⟨m, hm⟩ := (fun {p n : ℕ} => _root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat p n)) (p := l) (n := n)
   have hnd : ¬ l ∣ m := by
     rintro ⟨c, rfl⟩
     apply pow_succ_padicValNat_not_dvd (p := l) hn

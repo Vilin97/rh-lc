@@ -61,8 +61,8 @@ theorem tanPt_add (F : Germ.FGLaw S d)
     rw [tanV_comp_jetMap]
     congr 1
     funext p
-    have hco : ∀ s : Fin 2 × Fin d, MvPolynomial.coeff (Finsupp.single s 1)
-        (psTrunc 1 (F.F p.2) - MvPolynomial.C (MvPolynomial.constantCoeff (psTrunc 1 (F.F p.2)))) =
+    have hco : ∀ s : Fin 2 × Fin d, AddMonoidAlgebra.coeff (psTrunc 1 (F.F p.2) - MvPolynomial.C (MvPolynomial.constantCoeff (psTrunc 1 (F.F p.2))))
+        (Finsupp.single s 1) =
         if s.2 = p.2 then 1 else 0 := by
       intro s
       rw [MvPolynomial.coeff_sub, MvPolynomial.coeff_C, if_neg (Finsupp.single_ne_zero.2 one_ne_zero).symm,

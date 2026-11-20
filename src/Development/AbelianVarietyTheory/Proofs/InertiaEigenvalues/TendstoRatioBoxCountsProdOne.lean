@@ -25,7 +25,7 @@ theorem ratio_box_counts_tendsto_one (r : ℕ) (c : Fin r → ℕ) (m : ℕ) :
       field_simp
       push_cast
       ring
-  have h := tendsto_finset_prod (Finset.univ : Finset (Fin r)) (fun i _ => key i)
+  have h := tendsto_finsetProd (Finset.univ : Finset (Fin r)) (fun i _ => key i)
   simp only [Finset.prod_const_one] at h
   refine h.congr (fun k => ?_)
   rw [Nat.cast_prod, Nat.cast_prod, Finset.prod_div_distrib]

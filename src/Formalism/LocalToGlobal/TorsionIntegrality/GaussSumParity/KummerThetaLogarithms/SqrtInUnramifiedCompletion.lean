@@ -79,7 +79,7 @@ lemma exists_root_close (r : ℂ_[l]) (h : ‖r ^ (l ^ 2 - 1) - 1‖ < 1) :
   have h1 : (1 : ℝ) ≤ ‖∏ η ∈ Polynomial.nthRootsFinset (l ^ 2 - 1) (1 : ℂ_[l]), (r - η)‖ := by
     rw [norm_prod]
     calc (1 : ℝ) = ∏ _η ∈ Polynomial.nthRootsFinset (l ^ 2 - 1) (1 : ℂ_[l]), (1 : ℝ) := by simp
-      _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one) (fun η hη =>
+      _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun η hη =>
           hcon η ((Polynomial.mem_nthRootsFinset hpos 1).1 hη))
   rw [← hev] at h1
   exact absurd h (not_lt.2 h1)

@@ -102,7 +102,7 @@ theorem UpperTheory.exists_monic_change_of_variables :
     rw [(chart_monomial hb w).natDegree_eq]
     exact hmax w hw
   have hcoeff : (chart A n b f).coeff (wt v) = MvPolynomial.C (f.coeff v) := by
-    rw [hsum, Polynomial.finset_sum_coeff, Finset.sum_eq_single_of_mem v hv]
+    rw [hsum, Polynomial.finsetSum_coeff, Finset.sum_eq_single_of_mem v hv]
     · have h1 := (chart_monomial (A := A) hb v).monic.coeff_natDegree
       rw [(chart_monomial hb v).natDegree_eq] at h1
       rw [Polynomial.coeff_C_mul, h1, mul_one]

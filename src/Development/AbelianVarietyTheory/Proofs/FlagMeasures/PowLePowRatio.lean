@@ -553,10 +553,10 @@ theorem near_count : ∀ (I : AutInst) (x : I.GA) (de : ℝ), 0 < de → de < 1 
     have := ht p
     positivity
   unfold layerProd
-  refine mul_le_mul (Finset.prod_le_prod
+  refine mul_le_mul (Finset.prod_le_prod₀
       (fun i _ => Finset.prod_nonneg fun k _ => mul_nonneg (hpos _ _ _) (hpos _ _ _))
-      fun i _ => Finset.prod_le_prod (fun k _ => mul_nonneg (hpos _ _ _) (hpos _ _ _)) fun k hk => ?_)
-    (Finset.prod_le_prod (fun i _ => mul_nonneg (hpos _ _ _) (hpos _ _ _)) fun i _ => ?_)
+      fun i _ => Finset.prod_le_prod₀ (fun k _ => mul_nonneg (hpos _ _ _) (hpos _ _ _)) fun k hk => ?_)
+    (Finset.prod_le_prod₀ (fun i _ => mul_nonneg (hpos _ _ _) (hpos _ _ _)) fun i _ => ?_)
     (Finset.prod_nonneg fun i _ => mul_nonneg (hpos _ _ _) (hpos _ _ _))
     (Finset.prod_nonneg fun i _ => Finset.prod_nonneg fun k _ => by
       have := hτ i

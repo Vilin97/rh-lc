@@ -109,8 +109,8 @@ theorem UpperTheory.ConvolutionTheory.H.polyAlg :
           rw [Finsupp.degree_eq_sum]
           exact Finset.single_le_sum (f := fun j => s j) (fun _ _ => Nat.zero_le _) (Finset.mem_univ i)
         omega
-      have hm : MvPolynomial.monomial s (MvPolynomial.coeff s p) =
-          MvPolynomial.coeff s p • MvPolynomial.monomial s (1 : ℂ) := by
+      have hm : MvPolynomial.monomial s (AddMonoidAlgebra.coeff p s) =
+          AddMonoidAlgebra.coeff p s • MvPolynomial.monomial s (1 : ℂ) := by
         rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
       rw [hm, map_smul, map_smul]
       refine Submodule.smul_mem _ _ (Submodule.subset_span ?_)

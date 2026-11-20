@@ -219,7 +219,7 @@ theorem sum_over_g {D : D7} {L : SizeData₂ D} {X : ErrX D} {K : Formalism.Main
 theorem padic_log_le (p n : ℕ) (hp : p.Prime) : (padicValNat p n : ℝ) * Real.log p ≤ Real.log n := by
   rcases Nat.eq_zero_or_pos n with rfl | hn
   · simp
-  · have h : p ^ padicValNat p n ≤ n := Nat.le_of_dvd hn pow_padicValNat_dvd
+  · have h : p ^ padicValNat p n ≤ n := Nat.le_of_dvd hn (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
     rw [← Real.log_pow]
     apply Real.log_le_log
     · have := hp.pos

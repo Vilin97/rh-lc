@@ -135,7 +135,7 @@ theorem orthAt (C0 CE1 CE2 : ℝ) : OrthAt C0 CE1 CE2 := by
   have hem := support_monomial_subset he'
   rw [Finset.mem_singleton] at hem
   subst hem
-  have h0 : coeff (ioExp C0 CE1 CE2 X j b μ) (ioBlock (KK O) X.p C0 CE1 CE2 X j b' s') = 0 := by
+  have h0 : AddMonoidAlgebra.coeff (ioBlock (KK O) X.p C0 CE1 CE2 X j b' s') (ioExp C0 CE1 CE2 X j b μ) = 0 := by
     rw [ioBlock_eq_sum C0 CE1 CE2 X j (KK O) b' s', coeff_sum]
     refine Finset.sum_eq_zero fun μ' hμ' => ?_
     rw [coeff_monomial, if_neg]

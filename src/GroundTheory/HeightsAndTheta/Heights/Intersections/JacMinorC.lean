@@ -24,7 +24,7 @@ theorem pderiv_facts_charZero {F : Type*} [Field F] [CharZero F] {σ : Type*} (p
     obtain ⟨m, hm, hmj⟩ := this
     have hle : Finsupp.single j 1 ≤ m := Finsupp.single_le_iff.mpr hmj
     intro h0
-    have hc := congr_arg (coeff (m - Finsupp.single j 1)) h0
+    have hc := congr_arg (AddMonoidAlgebra.coeff · (m - Finsupp.single j 1)) h0
     rw [coeff_pderiv, tsub_add_cancel_of_le hle, coeff_zero] at hc
     rw [mem_support_iff] at hm
     exact mul_ne_zero hm (Nat.cast_add_one_ne_zero _) hc

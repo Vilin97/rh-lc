@@ -14,8 +14,8 @@ theorem qc_midOf_zero (r : ℕ) : midOf (0 : Fin (r + 1 + 1)) = none := by
 theorem qc_rowA_add {K : Type} [CommRing K] {k n : ℕ} (a : Fin k) (f g : MvPolynomial (Fin k × Fin n) K) (d : ℕ)
     (hf : RowA a f d) (hg : RowA a g d) : RowA a (f + g) d := by
   intro u hu
-  rw [coeff_add] at hu
-  by_cases h : coeff u f = 0
+  rw [MvPolynomial.coeff_add] at hu
+  by_cases h : AddMonoidAlgebra.coeff f u = 0
   · rw [h, zero_add] at hu
     exact hg u hu
   · exact hf u h
@@ -64,7 +64,7 @@ private theorem degA_prod_X_eq_card_first_coord_eq {K : Type} [CommRing K] {k n 
 
 private theorem rowA_of_support_subset {K : Type} [CommRing K] {k n : ℕ} (a : Fin k)
     (f g : MvPolynomial (Fin k × Fin n) K) (d : ℕ)
-    (h : ∀ u, coeff u g ≠ 0 → coeff u f ≠ 0) (hf : RowA a f d) : RowA a g d :=
+    (h : ∀ u, AddMonoidAlgebra.coeff g u ≠ 0 → AddMonoidAlgebra.coeff f u ≠ 0) (hf : RowA a f d) : RowA a g d :=
   fun u hu => hf u (h u hu)
 
 theorem qc_rowA_minor (A : Type) [CommRing A] {r n s : ℕ} (I : Fin s → Fin r) (hs : s ≤ n) (a : Fin r) (d : ℕ)

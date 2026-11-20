@@ -251,7 +251,7 @@ theorem poincare_count : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (V : 
     have h3 : (1 : ℝ) ≤ (m : ℝ) ^ f * ∏ τ, hsn (x γ τ - x γ' τ) := by
       calc (1 : ℝ) ≤ ∏ τ, ‖tauE D τ ((m : D.host.E) * z)‖ := h1
         _ ≤ ∏ τ, ((m : ℝ) * hsn (x γ τ - x γ' τ)) :=
-          Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun τ _ => h2 τ
+          Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun τ _ => h2 τ
         _ = (m : ℝ) ^ f * ∏ τ, hsn (x γ τ - x γ' τ) := by
           rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ]
     have hmpos : (0 : ℝ) < (m : ℝ) ^ f := by positivity
@@ -261,7 +261,7 @@ theorem poincare_count : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (V : 
       (B * H) ^ (N * f) * ∏ τ, ((1 + hsn (x γ τ)) ^ N)⁻¹ := by
     intro γ _
     rw [pow_mul, hf, ← Finset.card_univ, ← Finset.prod_const, ← Finset.prod_mul_distrib]
-    refine Finset.prod_le_prod (fun τ _ => inv_nonneg.2 (pow_nonneg (add_nonneg zero_le_one (Real.sqrt_nonneg _)) _)) fun τ _ => ?_
+    refine Finset.prod_le_prod₀ (fun τ _ => inv_nonneg.2 (pow_nonneg (add_nonneg zero_le_one (Real.sqrt_nonneg _)) _)) fun τ _ => ?_
     set h := hsn (cmp θ τ (c * (γ : GA D V) * g)) with hh
     have hh0 : 0 ≤ h := Real.sqrt_nonneg _
     have e : (γ : GA D V) = c⁻¹ * (c * (γ : GA D V) * g) * g⁻¹ := by group

@@ -164,8 +164,8 @@ private theorem mem_gens_span_le_range_of_levelOK (j : Fin D.T.t → ℕ) (jp : 
   rw [g.as_sum, Finset.mul_sum]
   refine Submodule.sum_mem _ fun m hm => ?_
   obtain ⟨hsupp, hsum⟩ := hgS hm
-  have hmono : monomial m (coeff m g) =
-      coeff m g • xiMon (KK O) N r D.T.t (fun c => m (xiVar N r D.T.t c)) := by
+  have hmono : monomial m (AddMonoidAlgebra.coeff g m) =
+      AddMonoidAlgebra.coeff g m • xiMon (KK O) N r D.T.t (fun c => m (xiVar N r D.T.t c)) := by
     rw [xiMon, ← eq_xiExp N r D.T.t m hsupp, MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
   rw [hmono, mul_smul_comm]
   refine Submodule.smul_mem _ _ ?_
@@ -209,7 +209,7 @@ private theorem IF_range_le_span (i : ↥(IF (r := r) D)) (y : MvPolynomial (Fin
     rw [GLWeightTheory.mem_integral_poly_iff_coeff]
     intro m
     by_cases hm : m ∈ y.support
-    · obtain ⟨o, ho⟩ := hb (coeff m y) (MvPolynomial.coeff_mem_coeffs m (MvPolynomial.mem_support_iff.mp hm))
+    · obtain ⟨o, ho⟩ := hb (AddMonoidAlgebra.coeff y m) (MvPolynomial.coeff_mem_coeffs m (MvPolynomial.mem_support_iff.mp hm))
       refine ⟨o, ?_⟩
       rw [ho, MvPolynomial.coeff_smul, smul_eq_mul, Algebra.smul_def]
     · refine ⟨0, ?_⟩

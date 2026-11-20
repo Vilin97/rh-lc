@@ -528,7 +528,7 @@ instance isLattice_smul (g : GL n k) (L : Submodule 𝒪[k] (n → k)) [hL : L.I
   have hx : g⁻¹ • x ∈ Submodule.span k (L : Set (n → k)) := hL.span_eq_top ▸ trivial
   have h : Submodule.span k (L : Set (n → k)) ≤
       (Submodule.span k ((g • L : Submodule 𝒪[k] (n → k)) : Set (n → k))).comap
-        (DistribMulAction.toLinearMap k _ g) :=
+        (DistribSMul.toLinearMap k _ g) :=
     Submodule.span_le.2 fun y hy => Submodule.subset_span (Submodule.smul_mem_pointwise_smul y g L hy)
   have h2 : g • g⁻¹ • x ∈ Submodule.span k ((g • L : Submodule 𝒪[k] (n → k)) : Set (n → k)) := h hx
   rwa [smul_inv_smul] at h2
@@ -541,7 +541,7 @@ instance : SMul (GL n k) (Pair k n) where
   smul g P :=
     { lat := g • P.lat
       isLat := inferInstance
-      fn := P.fn ∘ₗ (DistribMulAction.toLinearMap 𝒪[k] _ g⁻¹).restrict fun _ hx => mem_smul_iff.1 hx
+      fn := P.fn ∘ₗ (DistribSMul.toLinearMap 𝒪[k] _ g⁻¹).restrict fun _ hx => mem_smul_iff.1 hx
       fn_ne := fun h => by
         have h1 := LinearMap.congr_fun h ⟨g • P.vec, Submodule.smul_mem_pointwise_smul _ g _ P.hasVal_vec.mem⟩
         have h2 : P.HasVal (g⁻¹ • g • P.vec) 0 := ⟨_, h1⟩

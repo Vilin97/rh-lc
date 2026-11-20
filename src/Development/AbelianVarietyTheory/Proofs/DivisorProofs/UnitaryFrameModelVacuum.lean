@@ -57,7 +57,7 @@ theorem frameMajorant : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numb
     have hc' := hCm t htc ξ
     have hprod : (∏ i, t i ^ ex i) ≤ Ct * (∏ i, t i) ^ A := by
       rw [hCt, ← Finset.prod_pow, ← Finset.prod_mul_distrib]
-      refine Finset.prod_le_prod (fun i _ => Real.rpow_nonneg (ht0 i).le _) (fun i _ => ?_)
+      refine Finset.prod_le_prod₀ (fun i _ => Real.rpow_nonneg (ht0 i).le _) (fun i _ => ?_)
       have e1 : t i ^ ex i = t i ^ (ex i - A) * t i ^ (A : ℝ) := by
         rw [← Real.rpow_add (ht0 i)]; ring_nf
       rw [e1, Real.rpow_natCast]

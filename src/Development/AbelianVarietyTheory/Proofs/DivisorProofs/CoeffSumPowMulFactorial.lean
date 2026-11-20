@@ -24,7 +24,7 @@ theorem mem_support_mono {σ : Type} [DecidableEq σ] (T : Finset σ) (s : σ) :
   rw [Finsupp.mem_support_iff, mono_apply]; split_ifs with h <;> simp [h]
 
 theorem coeff_mono_X_mul {σ : Type} [DecidableEq σ] (T : Finset σ) (s : σ) (ω : MvPolynomial σ ℝ) :
-    coeff (mono T) (X s * ω) = if s ∈ T then coeff (mono (T.erase s)) ω else 0 := by
+    AddMonoidAlgebra.coeff (X s * ω) (mono T) = if s ∈ T then AddMonoidAlgebra.coeff ω (mono (T.erase s)) else 0 := by
   rw [coeff_X_mul']
   by_cases h : s ∈ T
   · rw [if_pos ((mem_support_mono T s).2 h), if_pos h, mono_sub_single T s h]
@@ -63,14 +63,14 @@ theorem sum_powersetCard_insert {σ : Type} [DecidableEq σ] (A : Finset σ) (k 
     simp [Finset.erase_insert h.2.2]
 
 theorem coeff_mono_sum_pow_mul {σ : Type} [DecidableEq σ] (C R : Finset σ) (k : ℕ) (ω : MvPolynomial σ ℝ) :
-    coeff (mono R) ((∑ s ∈ C, X s) ^ k * ω)
-      = (k.factorial : ℝ) * ∑ U ∈ (R ∩ C).powersetCard k, coeff (mono (R \ U)) ω := by
+    AddMonoidAlgebra.coeff ((∑ s ∈ C, X s) ^ k * ω) (mono R)
+      = (k.factorial : ℝ) * ∑ U ∈ (R ∩ C).powersetCard k, AddMonoidAlgebra.coeff ω (mono (R \ U)) := by
   induction k generalizing ω with
   | zero => simp
   | succ k ih =>
     have hin : ∀ U ∈ (R ∩ C).powersetCard k,
-        coeff (mono (R \ U)) ((∑ s ∈ C, X s) * ω)
-          = ∑ s ∈ (R ∩ C) \ U, coeff (mono (R \ insert s U)) ω := by
+        AddMonoidAlgebra.coeff ((∑ s ∈ C, X s) * ω) (mono (R \ U))
+          = ∑ s ∈ (R ∩ C) \ U, AddMonoidAlgebra.coeff ω (mono (R \ insert s U)) := by
       intro U _
       rw [Finset.sum_mul, coeff_sum]
       simp_rw [coeff_mono_X_mul]
@@ -81,7 +81,7 @@ theorem coeff_mono_sum_pow_mul {σ : Type} [DecidableEq σ] (C R : Finset σ) (k
       refine Finset.sum_congr rfl fun s _ => ?_
       rw [Finset.sdiff_insert]
     rw [pow_succ, mul_assoc, ih, Finset.sum_congr rfl hin,
-      sum_powersetCard_insert (R ∩ C) k (fun V => coeff (mono (R \ V)) ω), Nat.factorial_succ]
+      sum_powersetCard_insert (R ∩ C) k (fun V => AddMonoidAlgebra.coeff ω (mono (R \ V))), Nat.factorial_succ]
     push_cast; ring
 
 end GlobalTheory.MultinomCoeff

@@ -52,7 +52,7 @@ theorem decay_real_bound {A B Z t κ : ℝ} {X : ι → ℝ} {m n r : ℕ} (hA :
       (t ^ r)⁻¹ * (A * B ^ (Fintype.card ι * m) * (κ ^ r)⁻¹ * ∏ j, ((X j) ^ m)⁻¹) := by
   have htκ : 0 < t * κ := mul_pos ht hκ
   have g₁ : ∏ _j : ι, (Z ^ m)⁻¹ ≤ ∏ j, ((X j / B) ^ m)⁻¹ :=
-    Finset.prod_le_prod (fun _ _ ↦ by positivity) fun j _ ↦
+    Finset.prod_le_prod₀ (fun _ _ ↦ by positivity) fun j _ ↦
       inv_anti₀ (pow_pos (div_pos (hX j) hB) m) (pow_le_pow_left₀ (div_pos (hX j) hB).le (h₀ j) m)
   have e₁ : ∏ _j : ι, (Z ^ m)⁻¹ = (Z ^ (Fintype.card ι * m))⁻¹ := by
     rw [Finset.prod_const, Finset.card_univ, inv_pow, ← pow_mul, mul_comm m]

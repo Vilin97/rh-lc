@@ -27,7 +27,7 @@ theorem discreteSubgroup_countable_and_exists_strict_fundamentalDomain : ∀ {G 
   have hcover : ∀ g : G, ∃ W ∈ S, g ∈ W := by
     intro g
     let N : Set G := (fun x => x * g⁻¹) ⁻¹' (V ∩ V⁻¹)
-    have hNo : IsOpen N := (hVo.inter hVo.inv).preimage (continuous_mul_right _)
+    have hNo : IsOpen N := (hVo.inter hVo.inv).preimage (continuous_mul_const _)
     have hgN : g ∈ N := by simp [N, hV1]
     obtain ⟨W, hWb, hgW, hWN⟩ := (isBasis_countableBasis G).exists_subset_of_mem_open hgN hNo
     refine ⟨W, ⟨hWb, ?_⟩, hgW⟩
@@ -54,7 +54,7 @@ theorem discreteSubgroup_countable_and_exists_strict_fundamentalDomain : ∀ {G 
       ext x; simp [Sat]
     rw [this]
     exact isOpen_iUnion fun γ => ((isBasis_countableBasis G).isOpen (hfS m).1).preimage
-      (continuous_mul_left _)
+      (continuous_const_mul _)
   let D : Set G := ⋃ n, (f n ∩ ⋂ m ∈ Finset.range n, (Sat m)ᶜ)
   refine ⟨D, ?_, ?_⟩
   · refine MeasurableSet.iUnion fun n => ?_

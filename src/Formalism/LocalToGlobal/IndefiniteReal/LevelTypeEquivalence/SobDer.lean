@@ -26,7 +26,7 @@ theorem mlin_norm_le {m : ℕ} (M : ContinuousMultilinearMap ℝ (fun _ : Fin m 
   rw [Finset.sum_mul]
   refine Finset.sum_le_sum fun r _ => ?_
   rw [M.map_smul_univ, norm_smul, norm_prod, mul_comm]
-  refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => ?_) (norm_nonneg _)
+  refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => ?_) (norm_nonneg _)
   exact norm_le_pi_norm (v i) (r i)
 
 def Gf (ψ : AddChar (AF D.host.F) ℂ) (L : (Fin k → ℝ) →+ WO S T) (f : WO S T → ℂ) (x : WO S T) :

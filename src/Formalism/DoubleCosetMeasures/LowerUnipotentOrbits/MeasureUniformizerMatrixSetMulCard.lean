@@ -167,7 +167,7 @@ theorem meas_ii (O : Subring F) (hO : IsOpen (O : Set F)) (ϖ : F) (hϖ0 : ϖ �
     simp
   rw [e]
   refine MeasurableSet.iInter fun i => MeasurableSet.iInter fun j => ?_
-  exact ((continuous_mul_left ϖ⁻¹).measurable.comp
+  exact ((continuous_const_mul ϖ⁻¹).measurable.comp
     ((measurable_pi_apply j).comp (measurable_pi_apply i))) hOm
 
 theorem meas_add (n a : ℕ) (x : Matrix (Fin n) (Fin a) F) :

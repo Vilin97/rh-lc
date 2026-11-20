@@ -124,7 +124,7 @@ theorem prod_norm_gramR_le (K : Type) [Field K] [NumberField K] [StarRing K] [Is
     have hsq2 : (∏ v : InfinitePlace K, g v) ^ 2 = ∏ v : InfinitePlace K, (g (Rb.plc v) * g v) := by
       rw [Finset.prod_mul_distrib, hperm, sq]
     rw [← Finset.prod_pow, hsq2]
-    exact Finset.prod_le_prod (fun v _ => by positivity) (fun v _ => hloc v)
+    exact Finset.prod_le_prod₀ (fun v _ => by positivity) (fun v _ => hloc v)
   have ha : 0 ≤ ∏ v : InfinitePlace K, ‖v.embedding (gramR H e)‖ :=
     Finset.prod_nonneg fun v _ => norm_nonneg _
   have hb : 0 ≤ ∏ v : InfinitePlace K, g v := Finset.prod_nonneg fun v _ => hg0 v

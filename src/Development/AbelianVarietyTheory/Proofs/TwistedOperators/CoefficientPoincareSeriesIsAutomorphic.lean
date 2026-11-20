@@ -44,7 +44,7 @@ theorem GlobalTheory.PoinAut.coefR_le_majorant : ∀ (D : D7) (θ : InfFam D), I
       (hC τ 1 (GlobalTheory.PointAtPlaceHom.one_mem_UH _))
   refine ⟨∏ τ, C τ, Finset.prod_nonneg fun τ _ => hC0 τ, fun x u => ?_⟩
   rw [← Finset.prod_mul_distrib, ← Finset.prod_mul_distrib, coefR, norm_prod]
-  refine Finset.prod_le_prod (fun τ _ => norm_nonneg _) fun τ _ => ?_
+  refine Finset.prod_le_prod₀ (fun τ _ => norm_nonneg _) fun τ _ => ?_
   set A := cmp θ τ (x * u)
   set B := cmp θ τ u⁻¹
   have hx : cmp θ τ x = A * B := by

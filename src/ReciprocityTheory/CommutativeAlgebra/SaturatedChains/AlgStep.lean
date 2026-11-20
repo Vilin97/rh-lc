@@ -18,11 +18,11 @@ theorem height_le_one_of_comap_C_eq_bot {A : Type*} [CommRing A] [IsDomain A]
     exact nonZeroDivisors.ne_zero hs h0
   haveI hQ' : (Q.map (algebraMap A[X] (FractionRing A)[X])).IsPrime :=
     IsLocalization.isPrime_of_isPrime_disjoint _ _ Q ‹Q.IsPrime› hd
-  have hcomap := IsLocalization.comap_map_of_isPrime_disjoint
+  have hcomap := IsLocalization.under_map_of_isPrime_disjoint
     (Submonoid.map (C : A →+* A[X]) (nonZeroDivisors A)) (FractionRing A)[X] ‹Q.IsPrime› hd
   have hh : Q.height = (Q.map (algebraMap A[X] (FractionRing A)[X])).height :=
     (congrArg Ideal.height hcomap.symm).trans
-      (IsLocalization.height_comap (Submonoid.map (C : A →+* A[X]) (nonZeroDivisors A)) _)
+      (IsLocalization.height_under (Submonoid.map (C : A →+* A[X]) (nonZeroDivisors A)) _)
   have h1 := Ideal.height_le_ringKrullDim_of_ne_top hQ'.ne_top
   rw [Polynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field, zero_add,
     ← hh] at h1
@@ -44,11 +44,11 @@ theorem height_le_height_comap_C_add_one {R : Type*} [CommRing R] [IsNoetherianR
     exact hs hsP
   haveI hP' : (P.map (algebraMap R[X] (Localization.AtPrime p)[X])).IsPrime :=
     IsLocalization.isPrime_of_isPrime_disjoint _ _ P ‹P.IsPrime› hd
-  have hcomap := IsLocalization.comap_map_of_isPrime_disjoint
+  have hcomap := IsLocalization.under_map_of_isPrime_disjoint
     (Submonoid.map (C : R →+* R[X]) p.primeCompl) (Localization.AtPrime p)[X] ‹P.IsPrime› hd
   have hh : P.height = (P.map (algebraMap R[X] (Localization.AtPrime p)[X])).height :=
     (congrArg Ideal.height hcomap.symm).trans
-      (IsLocalization.height_comap (Submonoid.map (C : R →+* R[X]) p.primeCompl) _)
+      (IsLocalization.height_under (Submonoid.map (C : R →+* R[X]) p.primeCompl) _)
   have h1 := Ideal.height_le_ringKrullDim_of_ne_top hP'.ne_top
   rw [Polynomial.ringKrullDim_of_isNoetherianRing,
     IsLocalization.AtPrime.ringKrullDim_eq_height p (Localization.AtPrime p), ← hh] at h1

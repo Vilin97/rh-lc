@@ -47,8 +47,8 @@ theorem linInd_map {σ P : Type} [Fintype P] (K : Type) [Field K] [CharZero K] (
   convert h3 using 1
   funext i
   ext m
-  have hZ : ∀ f : MvPolynomial σ ℤ, (MvPolynomial.basisMonomials σ ℤ).repr f m = coeff m f := fun _ => rfl
-  have hK : ∀ f : MvPolynomial σ K, (MvPolynomial.basisMonomials σ K).repr f m = coeff m f := fun _ => rfl
+  have hZ : ∀ f : MvPolynomial σ ℤ, (MvPolynomial.basisMonomials σ ℤ).repr f m = AddMonoidAlgebra.coeff f m := fun _ => rfl
+  have hK : ∀ f : MvPolynomial σ K, (MvPolynomial.basisMonomials σ K).repr f m = AddMonoidAlgebra.coeff f m := fun _ => rfl
   simp [hZ, hK, MvPolynomial.coeff_map]
 
 theorem detPol_ne_zero (C : Type) [Field C] (n : ℕ) : detPol C n ≠ 0 :=

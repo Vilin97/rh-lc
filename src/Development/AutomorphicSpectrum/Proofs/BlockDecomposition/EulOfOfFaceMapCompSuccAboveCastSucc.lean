@@ -61,7 +61,7 @@ theorem eulOf_of_faceMap_comp_succAbove_castSucc : E1 → faceMap_comp_succAbove
     set P := ∏ v ∈ T \ S, Cv v with hPdef
     have hPs : ‖∏ v ∈ T \ S, lf3 (D.ν v) (localChar c v) s‖ ≤ P := by
       rw [norm_prod]
-      exact Finset.prod_le_prod (fun _ _ => norm_nonneg _)
+      exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _)
         fun v hv => hCv v hv s (by linarith)
     have ht : 0 ≤ s.im ^ 2 := sq_nonneg _
     have hA0 : 0 ≤ |C₀| := abs_nonneg _

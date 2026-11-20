@@ -126,7 +126,7 @@ theorem factorization_tuple (I : Ideal (𝓞 K)) {P : Ideal (𝓞 K)} (hP : P.Is
       rw [Ne, absNorm_eq_zero_iff]
       exact (prime_ne_bot_of_mem (Multiset.mem_toFinset.mp hQ)).2
     · exact one_ne_zero
-  rw [Finsupp.finset_sum_apply]
+  rw [Finsupp.finsetSum_apply]
   have key : ∀ Q ∈ (normalizedFactors I).toFinset, Q ≠ P →
       (if label K Q = label K P then absNorm Q ^ (normalizedFactors I).count Q else 1).factorization
         (ratPrime K P) = 0 := by

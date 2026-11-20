@@ -243,7 +243,7 @@ theorem norm_sum_altSign_integral_le : ∀ (E : Type) [Field E] [NumberField E] 
       have hv' : ‖v‖ ≤ Rq' := (hRq v hv).trans (le_max_left _ _)
       have hprod : ∏ i, ‖toL (-(Y i * Matrix.of v))‖ ≤ ((a : ℝ) * Rq') ^ m * ∏ i, ‖toL (Y i)‖ := by
         rw [← Fin.prod_const, ← Finset.prod_mul_distrib]
-        refine Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i _ => ?_
+        refine Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i _ => ?_
         have hn : ‖toL (-(Y i * Matrix.of v))‖ = ‖toL (Y i * Matrix.of v)‖ := by
           show ‖-(toL (Y i * Matrix.of v))‖ = _
           exact norm_neg _

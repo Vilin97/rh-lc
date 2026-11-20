@@ -217,7 +217,7 @@ theorem ht_transp_le (hcm : IsCMExt F E σ) (h : IsTransp B W L I g e) :
     exact mul_le_mul (le_max_right _ _) (opNorm_le_exp _) (NNReal.coe_nonneg _) (by positivity)
   rw [ht, heightGL, finprod_eq_one_of_forall_eq_one hfin, mul_one, ← ι.prod_comp, dSum, Real.exp_sum,
     ← Finset.prod_mul_distrib, NNReal.coe_prod]
-  refine Finset.prod_le_prod (fun _ _ => NNReal.coe_nonneg _) fun v _ => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => NNReal.coe_nonneg _) fun v _ => ?_
   rw [htInf, htOf, NNReal.coe_max, NNReal.coe_max]
   refine max_le (one_le_mul_of_one_le_of_one_le (le_max_left _ _) (Real.one_le_exp (dOp_nonneg _))) (max_le (hn y v) ?_)
   have h3 := hn y⁻¹ v

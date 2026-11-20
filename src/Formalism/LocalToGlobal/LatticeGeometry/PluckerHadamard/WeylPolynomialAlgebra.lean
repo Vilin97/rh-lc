@@ -96,7 +96,7 @@ def apol (P g : MvPolynomial σ ℝ) : ℝ :=
   ∑ m ∈ P.support, P.coeff m * g.coeff m * (m.prod fun _ e => (e.factorial : ℝ))
 
 theorem apol_add (P g h : MvPolynomial σ ℝ) : apol P (g + h) = apol P g + apol P h := by
-  unfold apol; rw [← Finset.sum_add_distrib]; refine Finset.sum_congr rfl (fun m _ => ?_); rw [coeff_add]; ring
+  unfold apol; rw [← Finset.sum_add_distrib]; refine Finset.sum_congr rfl (fun m _ => ?_); rw [MvPolynomial.coeff_add]; ring
 
 theorem apol_smul (P g : MvPolynomial σ ℝ) (c : ℝ) : apol P (c • g) = c * apol P g := by
   unfold apol; rw [Finset.mul_sum]; refine Finset.sum_congr rfl (fun m _ => ?_); rw [coeff_smul, smul_eq_mul]; ring

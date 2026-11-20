@@ -26,7 +26,7 @@ theorem constantCoeff_rowSubst (h : Matrix (Fin ν) (Fin ν) ℂ) (Q : MvPolynom
   | mul_X p n hp => simp [map_mul, hp, rowSubst_X]
 
 theorem coeff_zero_rowSubst (h : Matrix (Fin ν) (Fin ν) ℂ) (Q : MvPolynomial (Fin ν × ι) ℂ) :
-    coeff 0 (rowSubst h Q) = coeff 0 Q := by
+    AddMonoidAlgebra.coeff (rowSubst h Q) 0 = AddMonoidAlgebra.coeff Q 0 := by
   exact constantCoeff_rowSubst h Q
 
 theorem pderiv_rowSubst_X (h : Matrix (Fin ν) (Fin ν) ℂ) (k : Fin ν) (a : ι) (s : Fin ν × ι) :

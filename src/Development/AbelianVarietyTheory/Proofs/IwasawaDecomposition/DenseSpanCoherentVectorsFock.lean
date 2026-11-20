@@ -41,7 +41,7 @@ theorem eq_zero_of_hasSum_monomial {σ : Type} [Fintype σ] (c : (σ →₀ ℕ)
       ring
     simpa using congrFun h1 n
   funext α
-  have h3 := congrArg (coeff α) (key α.degree)
+  have h3 := congrArg (AddMonoidAlgebra.coeff · α) (key α.degree)
   rw [coeff_sum, Finset.sum_eq_single α (fun β _ hβ => by simp [coeff_monomial, hβ])
     (fun hα => absurd ((hS _ α).2 rfl) hα)] at h3
   simpa using h3

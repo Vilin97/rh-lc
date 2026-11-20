@@ -109,7 +109,7 @@ theorem secM_fg (y : (Σ k, ι k) → Ω) (d : K → ℕ) : (secM y d).FG := by
     rintro _ ⟨g, hg, rfl⟩
     rw [SetLike.mem_coe, g.as_sum, map_sum]
     refine Submodule.sum_mem _ fun m hm => ?_
-    have hmon : aeval y (monomial m (coeff m g)) = (coeff m g) • aeval y (monomial m (1 : ℤ)) := by
+    have hmon : aeval y (monomial m (AddMonoidAlgebra.coeff g m)) = (AddMonoidAlgebra.coeff g m) • aeval y (monomial m (1 : ℤ)) := by
       rw [aeval_monomial, aeval_monomial, zsmul_eq_mul]
       simp
     rw [hmon]

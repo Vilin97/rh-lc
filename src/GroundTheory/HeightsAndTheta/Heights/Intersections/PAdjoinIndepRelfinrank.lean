@@ -36,12 +36,12 @@ theorem AdjoinIndepRelfinrank.proof : AdjoinIndepRelfinrank.Statement := by
       rw [map_mul, MvPolynomial.aeval_C, MvPolynomial.aeval_map_algebraMap, hp, Subalgebra.smul_def,
         Function.comp_apply, mul_comm]
       rfl
-    have hcoef : ∀ m, ∀ j ∈ s, MvPolynomial.coeff m (p j) = 0 := by
+    have hcoef : ∀ m, ∀ j ∈ s, AddMonoidAlgebra.coeff (p j) m = 0 := by
       intro m
-      have h := congrArg (MvPolynomial.coeff m) hq0
+      have h := congrArg (AddMonoidAlgebra.coeff · m) hq0
       rw [hq, MvPolynomial.coeff_sum, MvPolynomial.coeff_zero] at h
       simp only [MvPolynomial.coeff_C_mul, MvPolynomial.coeff_map] at h
-      have hb := (linearIndependent_iff'.mp b.linearIndependent) s (fun j => MvPolynomial.coeff m (p j))
+      have hb := (linearIndependent_iff'.mp b.linearIndependent) s (fun j => AddMonoidAlgebra.coeff (p j) m)
       apply hb
       rw [← h]
       refine Finset.sum_congr rfl fun j _ => ?_

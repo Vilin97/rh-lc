@@ -467,7 +467,7 @@ theorem lhwline_mono_zero (hn : n ≤ r) (ν : Fin n → ℕ)
 theorem lhwline_diag (hn : n ≤ r) (ν : Fin n → ℕ)
     (g : MvPolynomial (Fin r × Fin n) K) (hg : IsWeightedHomogeneous (colW r n) g ν)
     (D : Fin r × Fin n → K) (hD : ∀ (a : Fin r) (j : Fin n), a.val ≠ j.val → D (a, j) = 0) :
-    eval D g = coeff (lhwline_mnu hn ν) g * ∏ v, D v ^ (lhwline_mnu hn ν) v := by
+    eval D g = AddMonoidAlgebra.coeff g (lhwline_mnu hn ν) * ∏ v, D v ^ (lhwline_mnu hn ν) v := by
   rw [MvPolynomial.eval_eq', Finset.sum_eq_single (lhwline_mnu hn ν)]
   · intro m hm hne
     rw [lhwline_mono_zero hn ν g hg D hD m hm hne, mul_zero]

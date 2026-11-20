@@ -44,7 +44,7 @@ theorem phMaj : PhMaj := by
     unfold ph majPh
     rw [norm_mul, norm_star, norm_prod, Complex.norm_real, Real.norm_of_nonneg hdp]
     exact mul_le_mul_of_nonneg_left
-      (Finset.prod_le_prod (fun v _ => norm_nonneg _) fun v _ => hloc v (g v)) hdp
+      (Finset.prod_le_prod₀ (fun v _ => norm_nonneg _) fun v _ => hloc v (g v)) hdp
   · intro s hs hyp
     have key : (fun g => majPh B d h g * Real.exp (s * dSum B.I g)) = fun g : B.I.Ginf =>
         (∏ v, d v) * ∏ v, (decE (rkR (B.I.ε v)) h (dOp (uMat (g v))) * Real.exp (s * dOp (uMat (g v)))) := by

@@ -110,7 +110,7 @@ theorem HodgeFlagNeZero.proof : HodgeFlagNeZero.Statement := by
     simp [hne] at h2
   have hz : z c0 = 1 :=
     Finset.prod_eq_one fun a _ => if_neg fun h => lt_irrefl _ (h.1.trans_le h.2)
-  have hcoeff : coeff (μ c0) P = g c0 := by
+  have hcoeff : AddMonoidAlgebra.coeff P (μ c0) = g c0 := by
     simp only [P, coeff_sum, coeff_monomial]
     rw [Finset.sum_eq_single c0 (fun c _ hc => if_neg fun h => hc (hμ c h)) (by simp), if_pos rfl, hz, one_mul]
   have hPne : P ≠ 0 := fun h => hm0 (by rw [h, coeff_zero] at hcoeff; exact hcoeff.symm)

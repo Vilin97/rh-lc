@@ -76,7 +76,7 @@ theorem restYbc_of (hF : RestFunY) (hD : RestDecomp) (hC : RestClear) : RestYbc 
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, he, rfl⟩)
 
 theorem coeff_cmap {K L σ : Type} [CommRing K] [CommRing L] (f : K →+ L) (y : MvPolynomial σ K) (m : σ →₀ ℕ) :
-    coeff m (cmap f y) = f (y.coeff m) := by
+    AddMonoidAlgebra.coeff (cmap f y) m = f (y.coeff m) := by
   classical
   unfold cmap
   rw [coeff_sum]

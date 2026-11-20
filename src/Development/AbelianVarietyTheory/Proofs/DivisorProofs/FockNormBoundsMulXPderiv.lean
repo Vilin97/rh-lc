@@ -67,15 +67,15 @@ theorem fock_norm_bounds (σ : Type) [DecidableEq σ] (H : Type) [NormedAddCommG
     intro a ha
     have h1 : a i ≤ P.degreeOf i := monomial_le_degreeOf i ha
     exact_mod_cast h1.trans ((degreeOf_le_totalDegree P i).trans hP)
-  have h0 : ‖ι P‖ ^ 2 = ∑ a ∈ P.support, ‖coeff a P‖ ^ 2 * mfact a := by
+  have h0 : ‖ι P‖ ^ 2 = ∑ a ∈ P.support, ‖AddMonoidAlgebra.coeff P a‖ ^ 2 * mfact a := by
     conv_lhs => rw [P.as_sum]
     exact norm_comb h _ _ id (fun a b hab _ _ => hab)
-  have h1 : X i * P = ∑ a ∈ P.support, monomial (a + Finsupp.single i 1) (coeff a P) := by
+  have h1 : X i * P = ∑ a ∈ P.support, monomial (a + Finsupp.single i 1) (AddMonoidAlgebra.coeff P a) := by
     conv_lhs => rw [P.as_sum]
     rw [Finset.mul_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [X, monomial_mul, add_comm, one_mul]
-  have h2 : pderiv i P = ∑ a ∈ P.support, monomial (a - Finsupp.single i 1) (coeff a P * a i) := by
+  have h2 : pderiv i P = ∑ a ∈ P.support, monomial (a - Finsupp.single i 1) (AddMonoidAlgebra.coeff P a * a i) := by
     conv_lhs => rw [P.as_sum]
     rw [map_sum]
     refine Finset.sum_congr rfl fun a _ => ?_
@@ -89,11 +89,11 @@ theorem fock_norm_bounds (σ : Type) [DecidableEq σ] (H : Type) [NormedAddCommG
     refine Finset.sum_le_sum fun a ha => ?_
     rw [mfact_add]
     have := hd a ha
-    have h3 : 0 ≤ ‖coeff a P‖ ^ 2 * mfact a := mul_nonneg (by positivity) (mfact_nonneg a)
+    have h3 : 0 ≤ ‖AddMonoidAlgebra.coeff P a‖ ^ 2 * mfact a := mul_nonneg (by positivity) (mfact_nonneg a)
     nlinarith
   · rw [h2, norm_comb h, h0, Finset.mul_sum]
     · refine Finset.sum_le_sum fun a ha => ?_
-      have h3 : 0 ≤ ‖coeff a P‖ ^ 2 * mfact a := mul_nonneg (by positivity) (mfact_nonneg a)
+      have h3 : 0 ≤ ‖AddMonoidAlgebra.coeff P a‖ ^ 2 * mfact a := mul_nonneg (by positivity) (mfact_nonneg a)
       by_cases hz : a i = 0
       · simp only [hz, Nat.cast_zero, mul_zero, norm_zero, ne_eq, OfNat.ofNat_ne_zero,
           not_false_eq_true, zero_pow, zero_mul]
@@ -106,9 +106,9 @@ theorem fock_norm_bounds (σ : Type) [DecidableEq σ] (H : Type) [NormedAddCommG
         exact_mod_cast this
       rw [h5] at h4
       rw [norm_mul, Complex.norm_natCast]
-      calc (‖coeff a P‖ * a i) ^ 2 * mfact (a - Finsupp.single i 1)
-          = a i * (‖coeff a P‖ ^ 2 * mfact a) := by rw [h4]; ring
-        _ ≤ d * (‖coeff a P‖ ^ 2 * mfact a) := mul_le_mul_of_nonneg_right (hd a ha) h3
+      calc (‖AddMonoidAlgebra.coeff P a‖ * a i) ^ 2 * mfact (a - Finsupp.single i 1)
+          = a i * (‖AddMonoidAlgebra.coeff P a‖ ^ 2 * mfact a) := by rw [h4]; ring
+        _ ≤ d * (‖AddMonoidAlgebra.coeff P a‖ ^ 2 * mfact a) := mul_le_mul_of_nonneg_right (hd a ha) h3
     · intro a b hab ha hb hh
       have ha' : a i ≠ 0 := fun z => ha (by simp [z])
       have hb' : b i ≠ 0 := fun z => hb (by simp [z])

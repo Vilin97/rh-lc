@@ -203,7 +203,7 @@ theorem deg_aeval [IsIntegral X] {L : ι → HermLB p} {Φ : MvPolynomial ι ℝ
     simp
   · rw [LinearMap.sub_apply, hΦ.2 P e he hP, sub_zero, P.as_sum, map_sum]
     refine Finset.sum_eq_zero fun d hd => ?_
-    rw [← mul_one (coeff d P), ← smul_eq_mul, ← smul_monomial, map_smul, h₀, R.deg_eq_zero e he, smul_zero]
+    rw [← mul_one (AddMonoidAlgebra.coeff P d), ← smul_eq_mul, ← smul_monomial, map_smul, h₀, R.deg_eq_zero e he, smul_zero]
     rw [aeval_monomial, map_one, one_mul, ← hP (mem_support_iff.1 hd), Finsupp.weight_apply]
     exact SetLike.prod_mem_graded R.gr _ _ fun i _ => SetLike.pow_mem_graded _ (R.constant_one_mem_nonvanishing _)
 

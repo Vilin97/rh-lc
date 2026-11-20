@@ -200,7 +200,7 @@ variable [Fintype K] {P W : Ideal (MRing ι R)} [P.IsPrime] [W.IsPrime] (T : ∀
 
 theorem psi_homog_exists {f : MRing ι R} {b : K → ℕ} (hf : IsMultiHomog f b) :
     ∃ a, psi (P := P) T hT f = AddMonoidAlgebra.single (nz b) a := by
-  refine ⟨∑ s ∈ f.support, constHom P W (coeff s f) * s.prod fun v n => uu T hT v ^ n, ?_⟩
+  refine ⟨∑ s ∈ f.support, constHom P W (AddMonoidAlgebra.coeff f s) * s.prod fun v n => uu T hT v ^ n, ?_⟩
   conv_lhs => rw [f.as_sum]
   rw [map_sum, ← AddMonoidAlgebra.singleAddHom_apply, map_sum]
   refine Finset.sum_congr rfl fun s hs => ?_

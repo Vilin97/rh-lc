@@ -87,7 +87,7 @@ theorem op_add (s₁ s₂ : Sym m n) (f : PX m n) : op (s₁ + s₂) f = op s₁
   rw [op_eq_sum_of_subset (s₁ + s₂) f (s₁.support ∪ s₂.support) support_add,
     op_eq_sum_of_subset s₁ f (s₁.support ∪ s₂.support) Finset.subset_union_left,
     op_eq_sum_of_subset s₂ f (s₁.support ∪ s₂.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
-  exact Finset.sum_congr rfl fun t _ => by rw [coeff_add, add_smul]
+  exact Finset.sum_congr rfl fun t _ => by rw [MvPolynomial.coeff_add, add_smul]
 
 theorem op_monomial (t : (Fin m × Fin n × Bool) ⊕ (Fin m × Fin n × Bool) →₀ ℕ) (c : ℂ) (f : PX m n) :
     op (monomial t c) f = c • opMono t f := by

@@ -8,7 +8,7 @@ namespace Formalism.GradedWeylDivisibility
 
 theorem lcpeel_support {B : Type*} [CommRing B] {r n : ℕ} (l j : Fin n) (a0 : Fin r) (k : ℕ)
     (g : MvPolynomial (Fin r × Fin n) B) (d : Fin r × Fin n →₀ ℕ)
-    (hd : coeff d (peel l j a0 k g) ≠ 0) :
+    (hd : AddMonoidAlgebra.coeff (peel l j a0 k g) d ≠ 0) :
     ∃ m ∈ g.support, m (a0, l) = k ∧ d = (m.erase (a0, l)).erase (a0, j) := by
   unfold peel at hd
   rw [coeff_sum] at hd

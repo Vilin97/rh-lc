@@ -20,10 +20,10 @@ theorem X_mem_nonZeroDivisors (W : Type) [CommRing W] {σ : Type} (k : σ) :
     (MvPolynomial.X k : MvPolynomial σ W) ∈ nonZeroDivisors (MvPolynomial σ W) := by
   refine mem_nonZeroDivisors_iff.2 ⟨fun p hp => ?_, fun p hp => ?_⟩
   · ext m
-    have := congrArg (MvPolynomial.coeff (m + Finsupp.single k 1)) hp
+    have := congrArg (AddMonoidAlgebra.coeff · (m + Finsupp.single k 1)) hp
     rwa [mul_comm, MvPolynomial.coeff_mul_X, MvPolynomial.coeff_zero] at this
   · ext m
-    have := congrArg (MvPolynomial.coeff (m + Finsupp.single k 1)) hp
+    have := congrArg (AddMonoidAlgebra.coeff · (m + Finsupp.single k 1)) hp
     rwa [MvPolynomial.coeff_mul_X, MvPolynomial.coeff_zero] at this
 
 theorem monomial_chart : ∀ {o : Type} [CommRing o] {ζ : o} (g n : ℕ) (φ : InvFun ℤ), 1 ≤ n → ∀ C : Taut ζ g n φ,

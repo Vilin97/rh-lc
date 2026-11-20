@@ -26,7 +26,7 @@ theorem tf_add_left (f f' g : MvPolynomial σ ℂ) :
     tf_eq_sum f g (f.support ∪ f'.support) Finset.subset_union_left,
     tf_eq_sum f' g (f.support ∪ f'.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun m _ => ?_
-  rw [coeff_add]
+  rw [MvPolynomial.coeff_add]
   ring
 
 theorem tf_smul_left (c : ℂ) (f g : MvPolynomial σ ℂ) :
@@ -41,7 +41,7 @@ theorem tf_add_right (f g g' : MvPolynomial σ ℂ) :
   unfold Formalism.REAL.fockF
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun m _ => ?_
-  rw [coeff_add, star_add]
+  rw [MvPolynomial.coeff_add, star_add]
   ring
 
 theorem tf_smul_right (c : ℂ) (f g : MvPolynomial σ ℂ) :

@@ -33,7 +33,7 @@ theorem isHomogeneous_specRest {R S : Type*} [CommRing R] [CommRing S] (φ : R �
     rw [← h0]
     refine Finset.sum_congr rfl fun ij _ => ?_
     rw [Pi.smul_apply, smul_eq_mul, mul_comm]
-  have h := (isHomogeneous_C (σ := Fin n) (φ (coeff m g))).mul
+  have h := (isHomogeneous_C (σ := Fin n) (φ (AddMonoidAlgebra.coeff g m))).mul
     (IsHomogeneous.prod m.support _ _ fun ij _ => (hdeg ij).pow (m ij))
   rw [zero_add, hsum] at h
   exact h

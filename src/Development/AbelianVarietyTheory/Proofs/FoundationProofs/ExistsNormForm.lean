@@ -42,7 +42,7 @@ theorem form_bound {k σ : Type} [Field k] [Infinite k] [Fintype σ] (n : ℕ)
     have hcm : c = (F.coeff m0).natDegree :=
       le_antisymm (Finset.sup_le fun m hm => hmax m hm) (hcle m0 hm0)
     intro hG'
-    have h1 := congrArg (MvPolynomial.coeff m0) hG'
+    have h1 := congrArg (AddMonoidAlgebra.coeff · m0) hG'
     rw [hG, MvPolynomial.coeff_sum, Finset.sum_eq_single m0] at h1
     · rw [MvPolynomial.coeff_monomial, if_pos rfl, hcm, MvPolynomial.coeff_zero] at h1
       exact (MvPolynomial.mem_support_iff.mp hm0) (Polynomial.leadingCoeff_eq_zero.mp h1)

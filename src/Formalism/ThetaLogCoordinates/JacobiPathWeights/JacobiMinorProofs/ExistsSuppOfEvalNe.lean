@@ -255,7 +255,7 @@ theorem tw_monomial (g gi : Matrix (Fin n) (Fin n) L) (last : Bool) (e : LVar ι
 theorem tw_coeff (g gi : Matrix (Fin n) (Fin n) L) (last : Bool) (H : MvPolynomial (LVar ι ζ n) L) (j : ℤ) :
     (tw isVec S g gi last H).coeff j =
       sharpHom isVec S g gi
-        (∑ e ∈ H.support.filter (fun e => wExp isVec S last e = j), monomial e (coeff e H)) := by
+        (∑ e ∈ H.support.filter (fun e => wExp isVec S last e = j), monomial e (AddMonoidAlgebra.coeff H e)) := by
   conv_lhs => rw [H.as_sum]
   rw [map_sum, lp_coeff_sum, map_sum, Finset.sum_filter]
   refine Finset.sum_congr rfl fun e _ => ?_
@@ -331,7 +331,7 @@ theorem conjAct_map {k L : Type*} [CommRing k] [CommRing L] (φ : k →+* L) (is
     simp [conjAct]
 
 theorem part_ne_zero {σ L : Type*} [CommRing L] (H : MvPolynomial σ L) (p : (σ →₀ ℕ) → Prop) [DecidablePred p] :
-    (∑ e ∈ H.support.filter p, monomial e (coeff e H)) ≠ 0 ↔ ∃ e ∈ H.support, p e := by
+    (∑ e ∈ H.support.filter p, monomial e (AddMonoidAlgebra.coeff H e)) ≠ 0 ↔ ∃ e ∈ H.support, p e := by
   classical
   constructor
   · intro h
@@ -343,7 +343,7 @@ theorem part_ne_zero {σ L : Type*} [CommRing L] (H : MvPolynomial σ L) (p : (�
       exact hc ⟨e, he, hp⟩
     rw [this, Finset.sum_empty]
   · rintro ⟨e, he, hp⟩ h
-    have := congrArg (coeff e) h
+    have := congrArg (AddMonoidAlgebra.coeff · e) h
     rw [coeff_sum] at this
     simp only [coeff_monomial, Finset.sum_ite_eq', Finset.mem_filter, coeff_zero] at this
     rw [if_pos ⟨he, hp⟩] at this

@@ -47,26 +47,26 @@ theorem fockF_conj {σ : Type} (p q : MvPolynomial σ ℂ) :
     MvPolynomial.support_map_of_injective _ (starRingEnd ℂ).injective
   unfold Formalism.REAL.fockF
   rw [hs]
-  have h1 : ∑ m ∈ p.support, MvPolynomial.coeff m (MvPolynomial.map (starRingEnd ℂ) p) *
-        star (MvPolynomial.coeff m (MvPolynomial.map (starRingEnd ℂ) q)) *
+  have h1 : ∑ m ∈ p.support, AddMonoidAlgebra.coeff (MvPolynomial.map (starRingEnd ℂ) p) m *
+        star (AddMonoidAlgebra.coeff (MvPolynomial.map (starRingEnd ℂ) q) m) *
         ((∏ k ∈ m.support, (m k).factorial : ℕ) : ℂ) =
-      ∑ m ∈ p.support ∪ q.support, MvPolynomial.coeff m q * star (MvPolynomial.coeff m p) *
+      ∑ m ∈ p.support ∪ q.support, AddMonoidAlgebra.coeff q m * star (AddMonoidAlgebra.coeff p m) *
         ((∏ k ∈ m.support, (m k).factorial : ℕ) : ℂ) := by
     refine Finset.sum_subset_zero_on_sdiff Finset.subset_union_left ?_ ?_
     · intro m hm
-      have : MvPolynomial.coeff m p = 0 := by
+      have : AddMonoidAlgebra.coeff p m = 0 := by
         simpa using (Finset.mem_sdiff.1 hm).2
       simp [this]
     · intro m _
       simp only [MvPolynomial.coeff_map]
       simp [mul_comm]
-  have h2 : ∑ m ∈ q.support, MvPolynomial.coeff m q * star (MvPolynomial.coeff m p) *
+  have h2 : ∑ m ∈ q.support, AddMonoidAlgebra.coeff q m * star (AddMonoidAlgebra.coeff p m) *
         ((∏ k ∈ m.support, (m k).factorial : ℕ) : ℂ) =
-      ∑ m ∈ p.support ∪ q.support, MvPolynomial.coeff m q * star (MvPolynomial.coeff m p) *
+      ∑ m ∈ p.support ∪ q.support, AddMonoidAlgebra.coeff q m * star (AddMonoidAlgebra.coeff p m) *
         ((∏ k ∈ m.support, (m k).factorial : ℕ) : ℂ) := by
     refine Finset.sum_subset_zero_on_sdiff Finset.subset_union_right ?_ (fun _ _ => rfl)
     intro m hm
-    have : MvPolynomial.coeff m q = 0 := by
+    have : AddMonoidAlgebra.coeff q m = 0 := by
       simpa using (Finset.mem_sdiff.1 hm).2
     simp [this]
   rw [h1, h2]

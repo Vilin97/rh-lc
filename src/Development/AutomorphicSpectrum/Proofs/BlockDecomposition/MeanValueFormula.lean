@@ -107,11 +107,11 @@ theorem truncSum_tendsto (hE : Equi) (hC : CountBd) (F : Type) [Field F] [Number
     Finset.prod_congr rfl fun v hv => by rw [(hS v hv).2]
   have hlop : (1 - e) ^ (T \ S).card ≤ ∏ v ∈ T \ S, ∫ s, lo v s ∂(lam v) := by
     rw [← Finset.prod_const]
-    exact Finset.prod_le_prod (fun _ _ => by linarith)
+    exact Finset.prod_le_prod₀ (fun _ _ => by linarith)
       fun v hv => (hO v (Finset.mem_sdiff.1 hv).2).2.2.2.2.2.2.1
   have hupp : ∏ v ∈ T \ S, ∫ s, up v s ∂(lam v) ≤ (1 + e) ^ (T \ S).card := by
     rw [← Finset.prod_const]
-    exact Finset.prod_le_prod (fun v _ => hup0 v)
+    exact Finset.prod_le_prod₀ (fun v _ => hup0 v)
       fun v hv => (hO v (Finset.mem_sdiff.1 hv).2).2.2.2.2.2.2.2
   refine ⟨truncSum θ G T lo, truncSum θ G T up, _, _,
     GlobalTheory.T.adelic_sandwich_approximation hE hC F hF θ hθ li lam hli hlam T G lo hG hGc hcl,
@@ -130,7 +130,7 @@ theorem truncSum_tendsto (hE : Equi) (hC : CountBd) (F : Type) [Field F] [Number
       intro β
       by_cases hb : β.1 ∈ IntOut T
       · rw [Set.indicator_of_mem hb, Set.indicator_of_mem hb]
-        exact mul_le_mul_of_nonneg_left (Finset.prod_le_prod (fun v _ => (hpt v _ (hemb v _ β.2)).1)
+        exact mul_le_mul_of_nonneg_left (Finset.prod_le_prod₀ (fun v _ => (hpt v _ (hemb v _ β.2)).1)
           fun v _ => (hpt v _ (hemb v _ β.2)).2.1) (hG0 _)
       · rw [Set.indicator_of_notMem hb, Set.indicator_of_notMem hb]
     have hu : ∀ β : {β : F // β ≠ 0},
@@ -139,7 +139,7 @@ theorem truncSum_tendsto (hE : Equi) (hC : CountBd) (F : Type) [Field F] [Number
       intro β
       by_cases hb : β.1 ∈ IntOut T
       · rw [Set.indicator_of_mem hb, Set.indicator_of_mem hb]
-        exact mul_le_mul_of_nonneg_left (Finset.prod_le_prod (fun v _ => hg0 v _)
+        exact mul_le_mul_of_nonneg_left (Finset.prod_le_prod₀ (fun v _ => hg0 v _)
           fun v _ => (hpt v _ (hemb v _ β.2)).2.2) (hG0 _)
       · rw [Set.indicator_of_notMem hb, Set.indicator_of_notMem hb]
     have hsg := Summable.of_nonneg_of_le hterm hu hsu
@@ -264,7 +264,7 @@ theorem err_bound (hC : CountBd) (F : Type) [Field F] [NumberField F] (hF : IsTo
       have hGS0 : 0 ≤ G (θ δ * algebraMap F (Ainf F) x) * ∏ v ∈ S, g v (algebraMap F (Fv F v) x) :=
         mul_nonneg (hG0 _) (Finset.prod_nonneg fun v _ => hg0 v _)
       have hGS : G (θ δ * algebraMap F (Ainf F) x) * ∏ v ∈ S, g v (algebraMap F (Fv F v) x) ≤ M := by
-        refine mul_le_mul ?_ (Finset.prod_le_prod (fun v _ => hg0 v _) fun v hv => hm v hv _)
+        refine mul_le_mul ?_ (Finset.prod_le_prod₀ (fun v _ => hg0 v _) fun v hv => hm v hv _)
           (Finset.prod_nonneg fun v _ => hg0 v _) (abs_nonneg _)
         exact ((le_abs_self _).trans (hMG _)).trans (le_abs_self _)
       rw [hfac, abs_mul, abs_of_nonneg hGS0]

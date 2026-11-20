@@ -61,9 +61,9 @@ theorem flag_height_power_sum_zero : ∀ II : IntersectionSystem, IsFullIntersec
     rw [Finsupp.degree_eq_weight_one]
     exact this
   obtain ⟨w, hw⟩ := HH.exists_word (dimFl Ψ N) m hdeg
-  have hprod : pk τ 1 * monomial m (coeff m Q) =
+  have hprod : pk τ 1 * monomial m (AddMonoidAlgebra.coeff Q m) =
       ∑ i : Fin N, monomial (∑ k : Fin (dimFl Ψ N + 1),
-        Finsupp.single (Fin.snoc (α := fun _ => Ψ × Fin N) w (τ, i) k) 1) (coeff m Q) := by
+        Finsupp.single (Fin.snoc (α := fun _ => Ψ × Fin N) w (τ, i) k) 1) (AddMonoidAlgebra.coeff Q m) := by
     unfold pk
     rw [Finset.sum_mul]
     apply Finset.sum_congr rfl
@@ -73,7 +73,7 @@ theorem flag_height_power_sum_zero : ∀ II : IntersectionSystem, IsFullIntersec
     rw [← hw, add_comm (Finsupp.single (τ, i) 1)]
   rw [hprod, map_sum,
     Finset.sum_congr rfl (fun i _ => HH.hhFl_word II hII.1 hP
-      (Fin.snoc (α := fun _ => Ψ × Fin N) w (τ, i)) (coeff m Q)),
+      (Fin.snoc (α := fun _ => Ψ × Fin N) w (τ, i)) (AddMonoidAlgebra.coeff Q m)),
     ← Finset.mul_sum, ← Finset.mul_sum, key w, mul_zero, mul_zero]
 
 end RootFieldNumerics

@@ -13,27 +13,27 @@ noncomputable def compW (p : ℕ) [Fact p.Prime] (w : (σ →₀ ℕ) → Fin n 
     MvPolynomial σ ℚ_[p] →ₗ[ℚ_[p]] MvPolynomial σ ℚ_[p] where
   toFun x := compP (fun m => w m = μ) x
   map_add' x y := by
-    ext m; simp only [coeff_compP, coeff_add]; split_ifs <;> simp
+    ext m; simp only [coeff_compP, MvPolynomial.coeff_add]; split_ifs <;> simp
   map_smul' a x := by
     ext m; simp only [coeff_compP, coeff_smul, RingHom.id_apply]; split_ifs <;> simp
 
 theorem coeff_compW (w : (σ →₀ ℕ) → Fin n → ℤ) (μ : Fin n → ℤ) (x : MvPolynomial σ ℚ_[p]) (m : σ →₀ ℕ) :
-    coeff m (compW p w μ x) = if w m = μ then coeff m x else 0 := by
-  show coeff m (compP _ x) = _
+    AddMonoidAlgebra.coeff (compW p w μ x) m = if w m = μ then AddMonoidAlgebra.coeff x m else 0 := by
+  show AddMonoidAlgebra.coeff (compP _ x) m = _
   rw [coeff_compP]
   split_ifs <;> rfl
 
 theorem compW_fix (w : (σ →₀ ℕ) → Fin n → ℤ) (μ ν : Fin n → ℤ) (x : MvPolynomial σ ℚ_[p])
-    (hx : ∀ m, coeff m x ≠ 0 → w m = ν) : compW p w μ x = if ν = μ then x else 0 := by
+    (hx : ∀ m, AddMonoidAlgebra.coeff x m ≠ 0 → w m = ν) : compW p w μ x = if ν = μ then x else 0 := by
   ext m
   rw [coeff_compW]
-  by_cases h0 : coeff m x = 0
+  by_cases h0 : AddMonoidAlgebra.coeff x m = 0
   · split_ifs <;> simp [h0]
   · rw [hx m h0]
     split_ifs <;> simp
 
 theorem compW_isW (w : (σ →₀ ℕ) → Fin n → ℤ) (μ : Fin n → ℤ) (x : MvPolynomial σ ℚ_[p]) :
-    ∀ m, coeff m (compW p w μ x) ≠ 0 → w m = μ := by
+    ∀ m, AddMonoidAlgebra.coeff (compW p w μ x) m ≠ 0 → w m = μ := by
   intro m hm
   rw [coeff_compW] at hm
   by_contra h
@@ -47,7 +47,7 @@ theorem sum_compW (w : (σ →₀ ℕ) → Fin n → ℤ) (x : MvPolynomial σ �
   rw [Finset.sum_ite_eq]
   split_ifs with h
   · rfl
-  · have := congrArg (coeff d) (hS _ h)
+  · have := congrArg (AddMonoidAlgebra.coeff · d) (hS _ h)
     rw [coeff_compW, if_pos rfl, coeff_zero] at this
     exact this.symm
 
@@ -65,24 +65,24 @@ theorem isW_E (E : Fin n → Fin n → MvPolynomial σ ℚ_[p] →ₗ[ℚ_[p]] M
     (w : (σ →₀ ℕ) → Fin n → ℤ)
     (hcomm : ∀ a b c d x, E a b (E c d x) - E c d (E a b x) =
       (if b = c then E a d x else 0) - (if d = a then E c b x else 0))
-    (hdiag : ∀ c x m, coeff m (E c c x) = ((w m c : ℤ) : ℚ_[p]) * coeff m x)
-    (a b : Fin n) (μ : Fin n → ℤ) (x : MvPolynomial σ ℚ_[p]) (hx : ∀ m, coeff m x ≠ 0 → w m = μ) :
-    ∀ m, coeff m (E a b x) ≠ 0 → w m = μ + dl a b := by
+    (hdiag : ∀ c x m, AddMonoidAlgebra.coeff (E c c x) m = ((w m c : ℤ) : ℚ_[p]) * AddMonoidAlgebra.coeff x m)
+    (a b : Fin n) (μ : Fin n → ℤ) (x : MvPolynomial σ ℚ_[p]) (hx : ∀ m, AddMonoidAlgebra.coeff x m ≠ 0 → w m = μ) :
+    ∀ m, AddMonoidAlgebra.coeff (E a b x) m ≠ 0 → w m = μ + dl a b := by
   intro m hm
   funext c
   have h1 : E c c x = ((μ c : ℤ) : ℚ_[p]) • x := by
     ext m'
     rw [hdiag, coeff_smul, smul_eq_mul]
-    by_cases h0 : coeff m' x = 0
+    by_cases h0 : AddMonoidAlgebra.coeff x m' = 0
     · rw [h0, mul_zero, mul_zero]
     · rw [hx m' h0]
-  have h2 := congrArg (coeff m) (hcomm c c a b x)
+  have h2 := congrArg (AddMonoidAlgebra.coeff · m) (hcomm c c a b x)
   rw [h1, map_smul, coeff_sub, hdiag, coeff_smul, smul_eq_mul, coeff_sub] at h2
-  have h3 : coeff m (if c = a then E c b x else 0) = (if c = a then 1 else 0) * coeff m (E a b x) := by
+  have h3 : AddMonoidAlgebra.coeff (if c = a then E c b x else 0) m = (if c = a then 1 else 0) * AddMonoidAlgebra.coeff (E a b x) m := by
     split_ifs with h
     · subst h; rw [one_mul]
     · simp
-  have h4 : coeff m (if b = c then E a c x else 0) = (if c = b then 1 else 0) * coeff m (E a b x) := by
+  have h4 : AddMonoidAlgebra.coeff (if b = c then E a c x else 0) m = (if c = b then 1 else 0) * AddMonoidAlgebra.coeff (E a b x) m := by
     by_cases h : b = c
     · subst h; simp
     · rw [if_neg h, if_neg (Ne.symm h)]; simp
@@ -99,7 +99,7 @@ noncomputable def mkGlW (E : Fin n → Fin n → MvPolynomial σ ℚ_[p] →ₗ[
     (w : (σ →₀ ℕ) → Fin n → ℤ)
     (hcomm : ∀ a b c d x, E a b (E c d x) - E c d (E a b x) =
       (if b = c then E a d x else 0) - (if d = a then E c b x else 0))
-    (hdiag : ∀ c x m, coeff m (E c c x) = ((w m c : ℤ) : ℚ_[p]) * coeff m x) :
+    (hdiag : ∀ c x m, AddMonoidAlgebra.coeff (E c c x) m = ((w m c : ℤ) : ℚ_[p]) * AddMonoidAlgebra.coeff x m) :
     GlW ℚ_[p] (MvPolynomial σ ℚ_[p]) n where
   E := E
   comm := hcomm
@@ -397,9 +397,9 @@ theorem relX (LL : Letters (K + 1)) (hv : LL.vec (Fin.last K) = true) (c0 : ℤ)
 
 theorem coeff_EX_diag (LL : Letters (K + 1)) (c : ℤ) (a : Fin (s + 1))
     (x : MvPolynomial (Fin (K + 1) × Fin (s + 1)) ℚ_[p]) (m : Fin (K + 1) × Fin (s + 1) →₀ ℕ) :
-    coeff m (EX p LL c a a x) = ((wtX LL c m a : ℤ) : ℚ_[p]) * coeff m x := by
+    AddMonoidAlgebra.coeff (EX p LL c a a x) m = ((wtX LL c m a : ℤ) : ℚ_[p]) * AddMonoidAlgebra.coeff x m := by
   refine Fin.cases ?_ (fun i => ?_) a
-  · show coeff m (Aop p K (s + 1) c x) = ((c - ∑ a : Fin (s + 1), (m (Fin.last K, a) : ℤ) : ℤ) : ℚ_[p]) * coeff m x
+  · show AddMonoidAlgebra.coeff (Aop p K (s + 1) c x) m = ((c - ∑ a : Fin (s + 1), (m (Fin.last K, a) : ℤ) : ℤ) : ℚ_[p]) * AddMonoidAlgebra.coeff x m
     rw [Aop_apply, coeff_sub, coeff_smul, ProjS.coeff_eulL, smul_eq_mul]
     push_cast; ring
   · exact coeff_cartan LL (K + 1) _ x m
@@ -413,7 +413,7 @@ theorem GX_E (LL : Letters (K + 1)) (c : ℤ) (hv : LL.vec (Fin.last K) = true) 
 
 theorem coeff_GX_comp (LL : Letters (K + 1)) (c : ℤ) (hv : LL.vec (Fin.last K) = true) (μ : Fin (s + 1) → ℤ)
     (x : MvPolynomial (Fin (K + 1) × Fin (s + 1)) ℚ_[p]) (m : Fin (K + 1) × Fin (s + 1) →₀ ℕ) :
-    coeff m ((GX p LL c hv).comp μ x) = if wtX LL c m = μ then coeff m x else 0 :=
+    AddMonoidAlgebra.coeff ((GX p LL c hv).comp μ x) m = if wtX LL c m = μ then AddMonoidAlgebra.coeff x m else 0 :=
   coeff_compW (wtX LL c) μ x m
 
 end GX

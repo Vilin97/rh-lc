@@ -838,7 +838,7 @@ theorem gl_action_diag_monomial (S : Set (Fin N)) (a : Fin n) (m : Fin N × Fin 
   split_ifs <;> simp [key]
 
 theorem coeff_gl_action_diag (S : Set (Fin N)) (a : Fin n) (m : Fin N × Fin n →₀ ℕ) (G : MvPolynomial (Fin N × Fin n) ℤ) :
-    coeff m (glAct ℤ LL S a a G) = wtS LL S m a * coeff m G := by
+    AddMonoidAlgebra.coeff (glAct ℤ LL S a a G) m = wtS LL S m a * AddMonoidAlgebra.coeff G m := by
   classical
   induction G using MvPolynomial.induction_on' with
   | monomial m' c =>
@@ -846,7 +846,7 @@ theorem coeff_gl_action_diag (S : Set (Fin N)) (a : Fin n) (m : Fin N × Fin n �
     split_ifs with h
     · rw [h]
     · rw [mul_zero]
-  | add p q hp hq => rw [map_add, coeff_add, coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem weight_eq_of_eigen (S : Set (Fin N)) (a : Fin n) (G : MvPolynomial (Fin N × Fin n) ℤ) (lam : ℤ)
     (h : glAct ℤ LL S a a G = lam • G) (m : Fin N × Fin n →₀ ℕ) (hm : m ∈ G.support) : wtS LL S m a = lam := by

@@ -491,7 +491,7 @@ end Real
 
 theorem exists_vec_of_small (j : Fin D.R.m) {lam : D.what₂.Tau → DomWeight (Vc D j).rank} (h : lam = lamV D j)
     (F : VV ↥D.LL0 lam) : ∃ v : VsV D j D.what₂.LL,
-      (∀ m, D.what₂.embLL (MvPolynomial.coeff m (v : Pol D.what₂.LL D.what₂.Tau (Vc D j).rank)) ∈ (embLL0 D).fieldRange) ∧
+      (∀ m, D.what₂.embLL (AddMonoidAlgebra.coeff (v : Pol D.what₂.LL D.what₂.Tau (Vc D j).rank) m) ∈ (embLL0 D).fieldRange) ∧
       coefFn (embLL0 D) lam (F : Pol ↥D.LL0 D.what₂.Tau (Vc D j).rank) =
         coefFn D.what₂.embLL (lamV D j) (v : Pol D.what₂.LL D.what₂.Tau (Vc D j).rank) := by
   subst h

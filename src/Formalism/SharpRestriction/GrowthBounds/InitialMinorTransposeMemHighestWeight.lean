@@ -363,7 +363,7 @@ noncomputable def L (u : ℚ_[p]) : ℚ_[p] := ∑' k : ℕ, (-1 : ℚ_[p]) ^ k 
 lemma inv_norm_le (n : ℕ) (hn : n ≠ 0) : ‖(n : ℚ_[p])‖⁻¹ ≤ (n : ℝ) := by
   have h0 : (n : ℚ_[p]) ≠ 0 := by exact_mod_cast hn
   rw [Padic.norm_eq_zpow_neg_valuation h0, Padic.valuation_natCast, zpow_neg, inv_inv, zpow_natCast]
-  exact_mod_cast Nat.le_of_dvd (Nat.pos_of_ne_zero hn) pow_padicValNat_dvd
+  exact_mod_cast Nat.le_of_dvd (Nat.pos_of_ne_zero hn) (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
 
 lemma choose_tendsto (n : ℕ → ℕ) (hn : Tendsto (fun m => ((n m : ℚ_[p]) + 1)) atTop (𝓝 0)) (k : ℕ) :
     Tendsto (fun m => ((n m).choose k : ℚ_[p])) atTop (𝓝 ((-1) ^ k)) := by
@@ -516,7 +516,7 @@ theorem inv_norm_nat_le (p : ℕ) [hp : Fact p.Prime] (m : ℕ) (hm : m ≠ 0) :
       padicNorm.eq_zpow_of_nonzero h0, padicValRat.of_nat, zpow_neg, zpow_natCast, Rat.cast_inv, Rat.cast_pow,
       Rat.cast_natCast]
   rw [h1, inv_inv]
-  have : p ^ padicValNat p m ≤ m := Nat.le_of_dvd (Nat.pos_of_ne_zero hm) pow_padicValNat_dvd
+  have : p ^ padicValNat p m ≤ m := Nat.le_of_dvd (Nat.pos_of_ne_zero hm) (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
   exact_mod_cast this
 
 theorem summable_log (p : ℕ) [hp : Fact p.Prime] (u : ℚ_[p]) (hu : ‖u‖ < 1) :
@@ -1281,8 +1281,8 @@ theorem isWeightedHomogeneous_of_column_scaling {R : Type} [CommRing R] {m n : �
       rw [mul_pow, mul_comm]
       rfl
     rw [hp, algebraMap_eq, C_mul_monomial, mul_one]
-  have hL : coeff (E d0) (aeval (fun v : Fin m × Fin n =>
-        (X (Sum.inr v.2) * X (Sum.inl v) : MvPolynomial ((Fin m × Fin n) ⊕ Fin n) R)) Q) = coeff d0 Q := by
+  have hL : AddMonoidAlgebra.coeff (aeval (fun v : Fin m × Fin n =>
+        (X (Sum.inr v.2) * X (Sum.inl v) : MvPolynomial ((Fin m × Fin n) ⊕ Fin n) R)) Q) (E d0) = AddMonoidAlgebra.coeff Q d0 := by
     conv_lhs => rw [Q.as_sum]
     rw [map_sum, coeff_sum]
     simp_rw [hmono, coeff_monomial]
@@ -1300,8 +1300,8 @@ theorem isWeightedHomogeneous_of_column_scaling {R : Type} [CommRing R] {m n : �
       monomial ((Finsupp.equivFunOnFinite.symm ν).mapDomain Sum.inr) 1 := by
     rw [monomial_mapDomain_eq_prod, Finsupp.prod_fintype _ _ (fun _ => pow_zero _)]
     simp
-  have hR : coeff (E d0) ((∏ s, X (Sum.inr s) ^ ν s) * rename Sum.inl Q :
-      MvPolynomial ((Fin m × Fin n) ⊕ Fin n) R) ≠ 0 := by
+  have hR : AddMonoidAlgebra.coeff ((∏ s, X (Sum.inr s) ^ ν s) * rename Sum.inl Q :
+      MvPolynomial ((Fin m × Fin n) ⊕ Fin n) R) (E d0) ≠ 0 := by
     rw [← key, hL]; exact hd0
   rw [hprod, coeff_monomial_mul'] at hR
   split_ifs at hR with hle
@@ -1625,7 +1625,7 @@ theorem redKer : RedKer := by
   have h3 : (C w : MvPolynomial (Fin n × Fin n) O) ∣ P := by
     rw [C_dvd_iff_dvd_coeff]
     intro m
-    have h4 : IsLocalRing.residue O (coeff m P) = 0 := by
+    have h4 : IsLocalRing.residue O (AddMonoidAlgebra.coeff P m) = 0 := by
       rw [← coeff_map, h2, coeff_zero]
     rw [IsLocalRing.residue_eq_zero_iff, (IsDiscreteValuationRing.irreducible_iff_uniformizer w).1 hw,
       Ideal.mem_span_singleton] at h4

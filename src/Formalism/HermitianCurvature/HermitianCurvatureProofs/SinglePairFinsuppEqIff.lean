@@ -36,7 +36,7 @@ theorem sum_toList_map {ι M : Type*} [AddCommMonoid M] (s : Finset ι) (F : ι 
   exact Finset.sum_map_toList s F
 
 theorem coeff_listSum {σ' : Type*} {α : Type*} (m : σ' →₀ ℕ) (l : List α) (F : α → MvPolynomial σ' ℂ) :
-    MvPolynomial.coeff m ((l.map F).sum) = (l.map fun a => MvPolynomial.coeff m (F a)).sum := by
+    AddMonoidAlgebra.coeff ((l.map F).sum) m = (l.map fun a => AddMonoidAlgebra.coeff (F a) m).sum := by
   induction l with
   | nil => simp
   | cons a l ih => simp [MvPolynomial.coeff_add, ih]
@@ -127,7 +127,7 @@ def termP (tm : Polynomial ℂ × List (B.Mat k r)) (τ : B.Mat k r → ℂ) (t 
     (Finsupp.single (0 : Fin 2) d + Finsupp.single (1 : Fin 2) tm.2.length) (tm.1.coeff d * (tm.2.map τ).prod)
 
 theorem coeff_termPolynomial (tm : Polynomial ℂ × List (B.Mat k r)) (τ : B.Mat k r → ℂ) (hj : j ≤ t) :
-    MvPolynomial.coeff (Finsupp.single (0 : Fin 2) (t - j) + Finsupp.single (1 : Fin 2) j) (termP tm τ t) =
+    AddMonoidAlgebra.coeff (termP tm τ t) (Finsupp.single (0 : Fin 2) (t - j) + Finsupp.single (1 : Fin 2) j) =
       if tm.2.length = j then tm.1.coeff (t - j) * (tm.2.map τ).prod else 0 := by
   unfold termP
   rw [MvPolynomial.coeff_sum]

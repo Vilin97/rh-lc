@@ -48,7 +48,7 @@ theorem apol_monomial_left (Q : MvPolynomial S ℝ) (m : S →₀ ℕ) (c : ℝ)
     by_cases h : m = u
     · subst h; simp; ring
     · rw [if_neg h, if_neg (Ne.symm h)]; simp
-  | add p q hp hq => rw [map_add, hp, hq, coeff_add]; ring
+  | add p q hp hq => rw [map_add, hp, hq, MvPolynomial.coeff_add]; ring
 
 theorem apol_lin (c : S → ℝ) (P Q : MvPolynomial S ℝ) :
     apol ((∑ s, C (c s) * X s) * P) Q = apol P (∑ s, c s • pderiv s Q) := by

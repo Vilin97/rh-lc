@@ -73,7 +73,7 @@ open MvPolynomial NumberField Module in
 open scoped Matrix in
 variable {K : Type} [Field K] [NumberField K] in
 private theorem gaussAbs_le_of_forall_coeff_le {ι : Type} {v : FinitePlace K} {p : MvPolynomial ι K}
-    {c : ℝ} (hc : 0 ≤ c) (h : ∀ s, v (coeff s p) ≤ c) : _root_.ReciprocityTheory.MultiplicativeHeights.gaussAbs v p ≤ c := by
+    {c : ℝ} (hc : 0 ≤ c) (h : ∀ s, v (AddMonoidAlgebra.coeff p s) ≤ c) : _root_.ReciprocityTheory.MultiplicativeHeights.gaussAbs v p ≤ c := by
   unfold _root_.ReciprocityTheory.MultiplicativeHeights.gaussAbs
   rw [← Real.coe_toNNReal c hc, NNReal.coe_le_coe]
   exact Finset.sup_le fun s _ => Real.toNNReal_le_toNNReal (h s)
@@ -106,12 +106,12 @@ open MvPolynomial NumberField Module in
 open scoped Matrix in
 variable {K : Type} [Field K] [NumberField K] in
 private theorem finitePlace_coeff_le_gaussAbs {ι : Type} (v : FinitePlace K) (p : MvPolynomial ι K)
-    (s : ι →₀ ℕ) : v (coeff s p) ≤ _root_.ReciprocityTheory.MultiplicativeHeights.gaussAbs v p := by
-  by_cases h : coeff s p = 0
+    (s : ι →₀ ℕ) : v (AddMonoidAlgebra.coeff p s) ≤ _root_.ReciprocityTheory.MultiplicativeHeights.gaussAbs v p := by
+  by_cases h : AddMonoidAlgebra.coeff p s = 0
   · rw [h, map_zero]; exact gaussAbs_nonneg' v p
   unfold _root_.ReciprocityTheory.MultiplicativeHeights.gaussAbs
-  have hs := Finset.le_sup (f := fun s => (v (coeff s p)).toNNReal) (mem_support_iff.2 h)
-  calc v (coeff s p) = ((v (coeff s p)).toNNReal : ℝ) :=
+  have hs := Finset.le_sup (f := fun s => (v (AddMonoidAlgebra.coeff p s)).toNNReal) (mem_support_iff.2 h)
+  calc v (AddMonoidAlgebra.coeff p s) = ((v (AddMonoidAlgebra.coeff p s)).toNNReal : ℝ) :=
         (Real.coe_toNNReal _ (apply_nonneg v _)).symm
     _ ≤ _ := NNReal.coe_le_coe.2 hs
 
@@ -202,7 +202,7 @@ private theorem gaussAbs_aeval_le_of_gaussAbs_le_one {ι κ : Type} (v : FiniteP
   refine (gaussAbs_C_mul_le' v _ _).trans ?_
   have hprod : _root_.ReciprocityTheory.MultiplicativeHeights.gaussAbs v (s.prod fun i k => ψ i ^ k) ≤ 1 :=
     gaussAbs_finset_prod_le_one_of_forall_le_one v _ _ fun i _ => gaussAbs_pow_le_one_of_le_one v _ (hψ i) _
-  calc v (coeff s g) * _root_.ReciprocityTheory.MultiplicativeHeights.gaussAbs v (s.prod fun i k => ψ i ^ k) ≤ v (coeff s g) * 1 :=
+  calc v (AddMonoidAlgebra.coeff g s) * _root_.ReciprocityTheory.MultiplicativeHeights.gaussAbs v (s.prod fun i k => ψ i ^ k) ≤ v (AddMonoidAlgebra.coeff g s) * 1 :=
         mul_le_mul_of_nonneg_left hprod (apply_nonneg v _)
     _ ≤ _root_.ReciprocityTheory.MultiplicativeHeights.gaussAbs v g := by rw [mul_one]; exact finitePlace_coeff_le_gaussAbs v g s
 

@@ -11,7 +11,7 @@ namespace GlobalTheory.FlagPoly
 open MvPolynomial Finset in
 private theorem coeff_linearForm_pow_eq_factorial_mul_prod {σ : Type} [Fintype σ] [DecidableEq σ] (c : σ → ℝ) (n : ℕ)
     (d : σ →₀ ℕ) (hd : d.degree = n) :
-    coeff d ((∑ x, C (c x) * X x) ^ n) =
+    AddMonoidAlgebra.coeff ((∑ x, C (c x) * X x) ^ n) d =
       (n.factorial : ℝ) * ∏ x, (c x ^ d x / ((d x).factorial : ℝ)) := by
   rw [Finset.sum_pow_eq_sum_piAntidiag, coeff_sum]
   simp_rw [mul_pow, Finset.prod_mul_distrib, ← map_pow, ← map_prod,

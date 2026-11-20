@@ -54,8 +54,8 @@ theorem lineVert_prod_weight [Fintype K] (m : (Σ k, ι k) →₀ ℕ) :
 theorem lineVert_cone_homog [Fintype K] (y : (Σ k, ι k) → Ω) {h : MRing ι ℤ} {b : K → ℕ}
     (hh : IsMultiHomog h b) :
     pointConeMap ℤ y h = C (aeval y h) * ∏ k, X k ^ b k := by
-  have key : ∀ m ∈ h.support, pointConeMap ℤ y (monomial m (coeff m h)) =
-      C (aeval y (monomial m (coeff m h) : MRing ι ℤ)) * ∏ k, X k ^ b k := by
+  have key : ∀ m ∈ h.support, pointConeMap ℤ y (monomial m (AddMonoidAlgebra.coeff h m)) =
+      C (aeval y (monomial m (AddMonoidAlgebra.coeff h m) : MRing ι ℤ)) * ∏ k, X k ^ b k := by
     intro m hm
     have hw : Finsupp.weight (blockWeight ι) m = b := hh (mem_support_iff.mp hm)
     rw [pointConeMap, aeval_monomial, aeval_monomial, ← hw, ← lineVert_prod_weight]
@@ -64,10 +64,10 @@ theorem lineVert_cone_homog [Fintype K] (y : (Σ k, ι k) → Ω) {h : MRing ι 
       simp only [mul_pow, Finsupp.prod, Finset.prod_mul_distrib, map_prod, map_pow]
     rw [e1]
     simp [mul_assoc]
-  calc pointConeMap ℤ y h = ∑ m ∈ h.support, pointConeMap ℤ y (monomial m (coeff m h)) := by
+  calc pointConeMap ℤ y h = ∑ m ∈ h.support, pointConeMap ℤ y (monomial m (AddMonoidAlgebra.coeff h m)) := by
         conv_lhs => rw [h.as_sum]
         rw [map_sum]
-    _ = ∑ m ∈ h.support, C (aeval y (monomial m (coeff m h) : MRing ι ℤ)) * ∏ k, X k ^ b k :=
+    _ = ∑ m ∈ h.support, C (aeval y (monomial m (AddMonoidAlgebra.coeff h m) : MRing ι ℤ)) * ∏ k, X k ^ b k :=
         Finset.sum_congr rfl key
     _ = C (aeval y h) * ∏ k, X k ^ b k := by
         conv_rhs => rw [h.as_sum]

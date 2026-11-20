@@ -161,7 +161,7 @@ theorem shape (hO : OrbitsMul) (K : Type) [NormedField K] [IsUltrametricDist K]
     (hTh : Th = subst (Sum.elim (fun x => serAlong Sum.inl (g₁ x))
       (fun x => serAlong Sum.inr (g₂ x))) U * (serAlong Sum.inl E₁ * serAlong Sum.inr E₂))
     (n : σ₁ ⊕ σ₂ →₀ ℕ) :
-    ‖MvPolynomial.coeff n (jetPairPoly (opAlong Sum.inl Sum.inl P₁ * opAlong Sum.inr Sum.inr P₂) Th)‖
+    ‖AddMonoidAlgebra.coeff (jetPairPoly (opAlong Sum.inl Sum.inl P₁ * opAlong Sum.inr Sum.inr P₂) Th) n‖
       ≤ B₁ * B₂ := by
   rw [hTh]
   exact hO K ι₁ ι₂ σ₁ σ₂ g₁ g₂ h₁ h₂ E₁ E₂ P₁ P₂ B₁ B₂ b₁ b₂ U hU n

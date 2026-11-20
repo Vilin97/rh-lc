@@ -66,7 +66,7 @@ theorem continuousOn_cosSq {d : ℕ} {O : Set (V (d + 1))} {G : (Fin d → ℂ) 
   have hh : ∀ (b : V (d + 1) → Fin 2 → ℂ), (∀ j, Continuous fun z => b z j) →
       ContinuousOn (fun z => hform (G (base z)) (lineVec s (fib z)) (b z)) O := fun b hb => by
     unfold hform
-    refine continuousOn_finset_sum _ fun i _ => continuousOn_finset_sum _ fun j _ => ?_
+    refine continuousOn_finsetSum _ fun i _ => continuousOn_finsetSum _ fun j _ => ?_
     exact (((hw i).mul ((Complex.continuous_conj).comp (hb j))).continuousOn).mul (he i j)
   have hn : ContinuousOn (fun z => ‖hform (G (base z)) (lineVec s (fib z)) (Pi.single (0 : Fin 2) (1 : ℂ))‖ ^ 2) O :=
     (hh (fun _ => Pi.single (0 : Fin 2) (1 : ℂ)) fun j => continuous_const).norm.pow 2

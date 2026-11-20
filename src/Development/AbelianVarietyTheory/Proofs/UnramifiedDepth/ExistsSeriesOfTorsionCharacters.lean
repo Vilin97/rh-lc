@@ -27,7 +27,7 @@ noncomputable abbrev truncI (R₀ κ : Type) [CommRing R₀] (p N : ℕ) : Ideal
 
 lemma coeff_mem_of_mem_truncI [DecidableEq κ] {p N : ℕ}
     {q : MvPolynomial κ R₀} (hq : q ∈ truncI R₀ κ p N) :
-    ∀ m : κ →₀ ℕ, (∀ j, m j < N) → MvPolynomial.coeff m q ∈ Ideal.span {(p : R₀) ^ N} := by
+    ∀ m : κ →₀ ℕ, (∀ j, m j < N) → AddMonoidAlgebra.coeff q m ∈ Ideal.span {(p : R₀) ^ N} := by
   refine Submodule.span_induction ?_ ?_ ?_ ?_ hq
   · rintro _ (rfl | ⟨j, rfl⟩) m hm
     · have : (p : MvPolynomial κ R₀) ^ N = MvPolynomial.C ((p : R₀) ^ N) := by simp
@@ -66,8 +66,8 @@ lemma truncI_p (p N : ℕ) : (p : MvPolynomial κ R₀ ⧸ truncI R₀ κ p N) ^
 lemma aeval_eq_sum [Fintype κ] [DecidableEq κ]
     {S : Type} [CommRing S] [Algebra R₀ S] {N : ℕ} {a : κ → S} (ha : ∀ i, a i ^ N = 0)
     (q : MvPolynomial κ R₀) :
-    MvPolynomial.aeval a q = ∑ e : κ → Fin N, algebraMap R₀ S (MvPolynomial.coeff
-      (Finsupp.equivFunOnFinite.symm fun i => (e i : ℕ)) q) * ∏ i, a i ^ (e i : ℕ) := by
+    MvPolynomial.aeval a q = ∑ e : κ → Fin N, algebraMap R₀ S (AddMonoidAlgebra.coeff
+      q (Finsupp.equivFunOnFinite.symm fun i => (e i : ℕ))) * ∏ i, a i ^ (e i : ℕ) := by
   induction q using MvPolynomial.induction_on' with
   | add p q hp hq =>
     simp only [map_add, MvPolynomial.coeff_add, add_mul, Finset.sum_add_distrib, hp, hq]
@@ -128,7 +128,7 @@ theorem exists_series [Fintype κ] [DecidableEq κ] (p : ℕ)
     simp only [hφ, MvPolynomial.aeval_X] at h
     exact h.symm
   have compat : ∀ N M : ℕ, N ≤ M → ∀ m : κ →₀ ℕ, (∀ j, m j < N) →
-      MvPolynomial.coeff m (P N) - MvPolynomial.coeff m (P M) ∈ Ideal.span {(p : R₀) ^ N} := by
+      AddMonoidAlgebra.coeff (P N) m - AddMonoidAlgebra.coeff (P M) m ∈ Ideal.span {(p : R₀) ^ N} := by
     intro N M h m hm
     have h1 := key M _ (fun j => Ideal.Quotient.mk (truncI R₀ κ p N) (MvPolynomial.X j))
       (pow_eq_zero_of_le h (truncI_p p N))
@@ -146,10 +146,10 @@ theorem exists_series [Fintype κ] [DecidableEq κ] (p : ℕ)
   have hle : ∀ {n n' : ℕ}, n ≤ n' → Ideal.span {(p : R₀) ^ n'} ≤ Ideal.span {(p : R₀) ^ n} :=
     fun h => Ideal.span_singleton_le_span_singleton.2 (pow_dvd_pow _ h)
   have lim : ∀ m : κ →₀ ℕ, ∃ L : R₀, ∀ n,
-      MvPolynomial.coeff m (P (n + (Finset.univ.sup m + 1))) - L ∈ Ideal.span {(p : R₀) ^ n} := by
+      AddMonoidAlgebra.coeff (P (n + (Finset.univ.sup m + 1))) m - L ∈ Ideal.span {(p : R₀) ^ n} := by
     intro m
     obtain ⟨L, hL⟩ := IsPrecomplete.prec (I := Ideal.span {(p : R₀)}) (M := R₀) inferInstance
-      (f := fun n => MvPolynomial.coeff m (P (n + (Finset.univ.sup m + 1)))) (by
+      (f := fun n => AddMonoidAlgebra.coeff (P (n + (Finset.univ.sup m + 1))) m) (by
         intro n n' h
         rw [hI, SModEq.sub_mem]
         refine hle (Nat.le_add_right _ _) (compat _ _ (by omega) m fun j => ?_)

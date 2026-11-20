@@ -23,7 +23,7 @@ def cartanVal {P Q R S : ℕ} (a : Ix P Q) (α : Ln P Q R S →₀ ℕ) : ℂ :=
   ∑ c, lineSign a c * (((α (a, c) : ℕ) : ℂ) + 1 / 2)
 
 theorem coeff_cartan {P Q R S : ℕ} (a : Ix P Q) (β : Ln P Q R S →₀ ℕ) (f : Pol P Q R S) :
-    coeff β (fockAct1 P Q R S (Eab a a) f) = cartanVal a β * coeff β f := by
+    AddMonoidAlgebra.coeff (fockAct1 P Q R S (Eab a a) f) β = cartanVal a β * AddMonoidAlgebra.coeff f β := by
   induction f using MvPolynomial.induction_on' with
   | monomial α c =>
     have e : (monomial α c : Pol P Q R S) = c • monomial α 1 := by
@@ -33,7 +33,7 @@ theorem coeff_cartan {P Q R S : ℕ} (a : Ix P Q) (β : Ln P Q R S →₀ ℕ) (
     split_ifs with h
     · subst h; ring
     · simp
-  | add p q hp hq => rw [map_add, coeff_add, hp, hq, coeff_add, mul_add]
+  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add, mul_add]
 
 theorem lowerDeg : ∀ (P Q R S : ℕ) (x : ℚ) (k k' : ℕ), x - Formalism.BasicNotions.TH.cPair R S = k →
     x + Formalism.BasicNotions.TH.cPair R S = k' → ∀ f ∈ GlobalTheory.KFixIrr.chiOne P Q R S x, f ≠ 0 →
@@ -43,7 +43,7 @@ theorem lowerDeg : ∀ (P Q R S : ℕ) (x : ℚ) (k k' : ℕ), x - Formalism.Bas
   obtain ⟨α, hα⟩ := MvPolynomial.ne_zero_iff.mp hf0
   have hval : ∀ a : Ix P Q, cartanVal a α = (x : ℂ) := by
     intro a
-    have h := congrArg (coeff α) (hf _ (isKC_Eab_diag a))
+    have h := congrArg (AddMonoidAlgebra.coeff · α) (hf _ (isKC_Eab_diag a))
     rw [coeff_cartan, trace_Eab_diag, mul_one, coeff_smul, smul_eq_mul] at h
     exact mul_right_cancel₀ hα h
   have hkC : (x : ℂ) - ((R : ℂ) - S) / 2 = k := by

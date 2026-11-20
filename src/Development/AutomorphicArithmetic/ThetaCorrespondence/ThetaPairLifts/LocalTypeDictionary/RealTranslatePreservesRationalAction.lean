@@ -97,7 +97,7 @@ theorem rationalAction_real_translate : ∀ {D : D7} {T : Type} [Finite T] {L : 
     rw [map_one]
   have hQs : Q = ∑ k' ∈ Q.support, Q.coeff k' • MvPolynomial.monomial k' (1 : ℂ) := by
     have h1 := MvPolynomial.as_sum Q
-    have h2 : ∑ v ∈ Q.support, MvPolynomial.monomial v (MvPolynomial.coeff v Q) =
+    have h2 : ∑ v ∈ Q.support, MvPolynomial.monomial v (AddMonoidAlgebra.coeff Q v) =
         ∑ k' ∈ Q.support, Q.coeff k' • MvPolynomial.monomial k' (1 : ℂ) :=
       Finset.sum_congr rfl fun k' _ => by rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
     exact h1.trans h2

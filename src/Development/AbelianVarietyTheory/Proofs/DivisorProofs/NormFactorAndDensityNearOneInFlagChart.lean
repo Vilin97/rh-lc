@@ -171,8 +171,8 @@ theorem chart_near_one : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
           = ∏ τ : X.Ψ, ∏ i : Fin r, Real.exp (-(2 * t)) := by
             rw [Finset.prod_const, Finset.prod_const, Finset.card_univ, Finset.card_univ,
               Fintype.card_fin, ← pow_mul, Nat.mul_comm (Fintype.card X.Ψ)]
-        _ ≤ _ := Finset.prod_le_prod (fun τ _ => by positivity) (fun τ _ =>
-            Finset.prod_le_prod (fun i _ => by positivity) (fun i _ => hfac τ i))
+        _ ≤ _ := Finset.prod_le_prod₀ (fun τ _ => by positivity) (fun τ _ =>
+            Finset.prod_le_prod₀ (fun i _ => by positivity) (fun i _ => hfac τ i))
     refine le_trans ?_ hprod
     rw [← Real.exp_nat_mul, QuadraticCoefficientForms.card_Psi X]
     refine Real.exp_le_exp.2 ?_

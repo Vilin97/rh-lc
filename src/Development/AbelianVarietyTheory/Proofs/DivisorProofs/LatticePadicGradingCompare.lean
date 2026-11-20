@@ -146,8 +146,8 @@ theorem padicValNat_relIndex_eq (K : Type) [Field K] [NumberField K] (g p : ℕ)
     · exact hneL' h
   have hneLL : L.toAddSubgroup.relIndex L'.toAddSubgroup ≠ 0 := right_ne_zero_of_mul hprod0
   have hvN := congrArg (padicValNat p) hidx
-  rw [padicValNat.mul (Int.natAbs_ne_zero.mpr hnD) hprod0, padicValNat.mul hneL hneLL, hv1,
-    padicValNat.mul (Int.natAbs_ne_zero.mpr hnG) hneL', hv1'] at hvN
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Int.natAbs_ne_zero.mpr hnD) hprod0, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hneL hneLL, hv1,
+    (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Int.natAbs_ne_zero.mpr hnG) hneL', hv1'] at hvN
 
   set X : Matrix (Fin g) (Fin g) K := Matrix.of fun i k => x k i with hX
   set X' : Matrix (Fin g) (Fin g) K := Matrix.of fun i k => x' k i with hX'

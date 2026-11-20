@@ -143,7 +143,7 @@ theorem prod_le_locFactor_of_isPrime (E : Type) [Field E] [NumberField E] [IsCMF
   rw [le_div_iff₀ (by positivity)]
   refine le_of_le_of_eq ?_ h'.symm
   rw [mul_comm]
-  refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod (fun i _ => ?_) (fun i _ => ?_))
+  refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod₀ (fun i _ => ?_) (fun i _ => ?_))
     (by positivity)
   · exact sub_nonneg.2 (inv_le_one_of_one_le₀ (one_le_pow₀ hq1))
   · have hp : (0 : ℝ) ≤ ((q : ℝ) ^ i)⁻¹ := by positivity

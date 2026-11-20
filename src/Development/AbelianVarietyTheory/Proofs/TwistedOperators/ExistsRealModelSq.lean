@@ -102,12 +102,12 @@ theorem exists_real_model_sq (V : HSp D) (θ : InfFam D) (c : CoefA V) (lam : D.
   refine Subtype.ext (MvPolynomial.ext _ _ fun m => ?_)
   let Lf : c.W →ₗ[ℂ] ℂ := MvPolynomial.lcoeff ℂ m ∘ₗ (VV ℂ lam).subtype ∘ₗ e.symm.toLinearMap
   have hf : Continuous fun h => Lf (c.ρ h (e v)) := Lf.continuous_of_finiteDimensional.comp (hc.2.2.1 _)
-  have hg : Continuous fun h => MvPolynomial.coeff m (actP lam (realGL θ V h) v.1) :=
+  have hg : Continuous fun h => AddMonoidAlgebra.coeff (actP lam (realGL θ V h) v.1) m :=
     GlobalTheory.CoefReal.continuous_coeff_actP lam _ (fun τ => (realGL_laws hθ V).1 τ) _ m
   by_contra hne
   obtain ⟨γ, hγ, k, hk, hU, -⟩ := GlobalTheory.RealApprox.weak_approx_real V u hu _ (isOpen_ne_fun hf hg) hne
   refine hU ?_
-  show Lf (c.ρ (γ * k) (e v)) = MvPolynomial.coeff m (actP lam (realGL θ V (γ * k)) v.1)
+  show Lf (c.ρ (γ * k) (e v)) = AddMonoidAlgebra.coeff (actP lam (realGL θ V (γ * k)) v.1) m
   rw [map_mul, map_mul (realGL θ V), hc.1 k hk, hfin k hk, mul_one, mul_one, hrat ⟨γ, hγ⟩ v]
   simp [Lf, rhoK_coe]
 

@@ -49,21 +49,21 @@ theorem fw_add_single (B : Fin ν × ι →₀ ℕ) (v : Fin ν × ι) :
 
 theorem fischer_eq_sum (P Q : MvPolynomial (Fin ν × ι) ℂ) (S : Finset (Fin ν × ι →₀ ℕ))
     (hS : P.support ⊆ S) :
-    fischer P Q = ∑ A ∈ S, coeff A P * starRingEnd ℂ (coeff A Q) * fw A := by
+    fischer P Q = ∑ A ∈ S, AddMonoidAlgebra.coeff P A * starRingEnd ℂ (AddMonoidAlgebra.coeff Q A) * fw A := by
   have key : ∀ T : Finset (Fin ν × ι →₀ ℕ), P.support ⊆ T →
-      ∑ A ∈ T, coeff A P * starRingEnd ℂ (coeff A Q) * fw A
-        = ∑ A ∈ P.support, coeff A P * starRingEnd ℂ (coeff A Q) * fw A := by
+      ∑ A ∈ T, AddMonoidAlgebra.coeff P A * starRingEnd ℂ (AddMonoidAlgebra.coeff Q A) * fw A
+        = ∑ A ∈ P.support, AddMonoidAlgebra.coeff P A * starRingEnd ℂ (AddMonoidAlgebra.coeff Q A) * fw A := by
     intro T hT
     symm
     apply Finset.sum_subset hT
     intro A _ hA
-    have h0 : coeff A P = 0 := by simpa [MvPolynomial.mem_support_iff] using hA
+    have h0 : AddMonoidAlgebra.coeff P A = 0 := by simpa [MvPolynomial.mem_support_iff] using hA
     simp [h0]
   calc fischer P Q
-      = ∑ A ∈ P.support, coeff A P * starRingEnd ℂ (coeff A Q) * fw A := by
+      = ∑ A ∈ P.support, AddMonoidAlgebra.coeff P A * starRingEnd ℂ (AddMonoidAlgebra.coeff Q A) * fw A := by
         unfold fischer
         exact key _ (fun x hx => Finset.mem_union_left _ hx)
-    _ = ∑ A ∈ S, coeff A P * starRingEnd ℂ (coeff A Q) * fw A := (key S hS).symm
+    _ = ∑ A ∈ S, AddMonoidAlgebra.coeff P A * starRingEnd ℂ (AddMonoidAlgebra.coeff Q A) * fw A := (key S hS).symm
 
 theorem fischer_add_left (P P' Q : MvPolynomial (Fin ν × ι) ℂ) :
     fischer (P + P') Q = fischer P Q + fischer P' Q := by
@@ -136,7 +136,7 @@ theorem fischer_sum_left {α : Type*} (s : Finset α) (f : α → MvPolynomial (
     rw [Finset.sum_insert ha, Finset.sum_insert ha, fischer_add_left, ih]
 
 theorem fischer_C_left (c : ℂ) (Q : MvPolynomial (Fin ν × ι) ℂ) :
-    fischer (C c) Q = c * starRingEnd ℂ (coeff 0 Q) := by
+    fischer (C c) Q = c * starRingEnd ℂ (AddMonoidAlgebra.coeff Q 0) := by
   have hsub : (C c : MvPolynomial (Fin ν × ι) ℂ).support ⊆ {0} := by
     intro A hA
     rw [MvPolynomial.mem_support_iff, MvPolynomial.coeff_C] at hA
@@ -148,25 +148,25 @@ theorem fischer_C_left (c : ℂ) (Q : MvPolynomial (Fin ν × ι) ℂ) :
 
 private theorem fischer_eq_sum_of_support_subset (P Q : MvPolynomial (Fin ν × ι) ℂ)
     (S : Finset (Fin ν × ι →₀ ℕ)) (hS : Q.support ⊆ S) :
-    fischer P Q = ∑ A ∈ S, coeff A P * starRingEnd ℂ (coeff A Q) * fw A := by
+    fischer P Q = ∑ A ∈ S, AddMonoidAlgebra.coeff P A * starRingEnd ℂ (AddMonoidAlgebra.coeff Q A) * fw A := by
   have key : ∀ T : Finset (Fin ν × ι →₀ ℕ), Q.support ⊆ T →
-      ∑ A ∈ T, coeff A P * starRingEnd ℂ (coeff A Q) * fw A
-        = ∑ A ∈ Q.support, coeff A P * starRingEnd ℂ (coeff A Q) * fw A := by
+      ∑ A ∈ T, AddMonoidAlgebra.coeff P A * starRingEnd ℂ (AddMonoidAlgebra.coeff Q A) * fw A
+        = ∑ A ∈ Q.support, AddMonoidAlgebra.coeff P A * starRingEnd ℂ (AddMonoidAlgebra.coeff Q A) * fw A := by
     intro T hT
     symm
     apply Finset.sum_subset hT
     intro A _ hA
-    have h0 : coeff A Q = 0 := by simpa [MvPolynomial.mem_support_iff] using hA
+    have h0 : AddMonoidAlgebra.coeff Q A = 0 := by simpa [MvPolynomial.mem_support_iff] using hA
     simp [h0]
   calc fischer P Q
-      = ∑ A ∈ Q.support, coeff A P * starRingEnd ℂ (coeff A Q) * fw A := by
+      = ∑ A ∈ Q.support, AddMonoidAlgebra.coeff P A * starRingEnd ℂ (AddMonoidAlgebra.coeff Q A) * fw A := by
         unfold fischer
         exact key _ (fun x hx => Finset.mem_union_right _ hx)
-    _ = ∑ A ∈ S, coeff A P * starRingEnd ℂ (coeff A Q) * fw A := (key S hS).symm
+    _ = ∑ A ∈ S, AddMonoidAlgebra.coeff P A * starRingEnd ℂ (AddMonoidAlgebra.coeff Q A) * fw A := (key S hS).symm
 
 private theorem fischer_monomial_right (P : MvPolynomial (Fin ν × ι) ℂ)
     (m : Fin ν × ι →₀ ℕ) (b : ℂ) :
-    fischer P (monomial m b) = coeff m P * starRingEnd ℂ b * fw m := by
+    fischer P (monomial m b) = AddMonoidAlgebra.coeff P m * starRingEnd ℂ b * fw m := by
   rw [fischer_eq_sum_of_support_subset P (monomial m b) {m} MvPolynomial.support_monomial_subset,
     Finset.sum_singleton, MvPolynomial.coeff_monomial, if_pos rfl]
 

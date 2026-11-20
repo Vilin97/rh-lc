@@ -21,12 +21,12 @@ theorem coeff_inv (v : Matrix (Rw ε true) (Rw ε true) ℂ) (Q : PX m n) (hQ : 
     · exact DFunLike.congr_fun (act_emb_same true v) _
     · exact DFunLike.congr_fun (act_emb_other true false (by decide) v) _
   rw [hQ] at h1
-  have h2 := congrArg (fun P => coeff μ (Th ε P)) h1
+  have h2 := congrArg (fun P => AddMonoidAlgebra.coeff (Th ε P) μ) h1
   simp only [map_sum, th_prod, coeff_sum_monomial] at h2
   by_cases hμ : μ ∈ (Th ε Q).support
   · rw [if_pos hμ] at h2
     exact h2.symm
-  · have : coeff μ (Th ε Q) = 0 := notMem_support_iff.1 hμ
+  · have : AddMonoidAlgebra.coeff (Th ε Q) μ = 0 := notMem_support_iff.1 hμ
     rw [this, map_zero]
 
 end PositivityTheory.Rg.Sw.FFTSteps.CycF

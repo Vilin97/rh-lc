@@ -5377,7 +5377,7 @@ private theorem UpperTheory.Reformulated.B.Qi13.key {l : ℕ} [Fact l.Prime] {K 
       intro i
       change algebraMap ℚ_[l] K (g i / g m) * (x i : K) = _
       rw [smul_smul, Algebra.smul_def, div_eq_inv_mul]
-    rw [AddSubmonoidClass.coe_finset_sum]
+    rw [AddSubmonoidClass.coe_finsetSum]
     simp only [h1]
     rw [← Finset.smul_sum, hg, smul_zero]
     rfl

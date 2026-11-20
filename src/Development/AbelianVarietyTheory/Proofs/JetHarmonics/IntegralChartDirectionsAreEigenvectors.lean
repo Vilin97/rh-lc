@@ -41,10 +41,10 @@ theorem tanV_mk (v : κ → S) (P : MvPolynomial κ S) :
 theorem aeval_tan [Fintype κ] [DecidableEq κ] (v : κ → S) (P : MvPolynomial κ S) :
     MvPolynomial.aeval (fun i => v i • (DualNumber.eps : DualNumber S)) P =
       algebraMap S (DualNumber S) (MvPolynomial.constantCoeff P) +
-        (∑ i, MvPolynomial.coeff (Finsupp.single i 1) P * v i) • (DualNumber.eps : DualNumber S) := by
+        (∑ i, AddMonoidAlgebra.coeff P (Finsupp.single i 1) * v i) • (DualNumber.eps : DualNumber S) := by
   induction P using MvPolynomial.induction_on with
   | C a =>
-    have h : ∀ i, MvPolynomial.coeff (Finsupp.single i 1) (MvPolynomial.C a : MvPolynomial κ S) = 0 := fun i => by
+    have h : ∀ i, AddMonoidAlgebra.coeff (MvPolynomial.C a : MvPolynomial κ S) (Finsupp.single i 1) = 0 := fun i => by
       rw [MvPolynomial.coeff_C, if_neg (Finsupp.single_ne_zero.2 one_ne_zero).symm]
     simp [h]
   | add p q hp hq =>
@@ -53,7 +53,7 @@ theorem aeval_tan [Fintype κ] [DecidableEq κ] (v : κ → S) (P : MvPolynomial
     abel
   | mul_X p n hp =>
     rw [map_mul, hp, MvPolynomial.aeval_X]
-    have hc : ∀ i, MvPolynomial.coeff (Finsupp.single i 1) (p * MvPolynomial.X n) =
+    have hc : ∀ i, AddMonoidAlgebra.coeff (p * MvPolynomial.X n) (Finsupp.single i 1) =
         if i = n then MvPolynomial.constantCoeff p else 0 := by
       intro i
       rw [MvPolynomial.coeff_mul_X']
@@ -75,7 +75,7 @@ theorem const_of_mem_orig {P : MvPolynomial κ S} (h : P ∈ orig S κ) : MvPoly
 theorem tanV_comp_jetMap {κ' : Type} [Fintype κ'] [DecidableEq κ'] (φ : κ → MvPolynomial κ' S)
     (hφ : ∀ i, φ i ∈ orig S κ') (v : κ' → S) :
     (tanV v).comp (jetMap φ hφ : Jet S κ (0 + 1) →ₐ[S] Jet S κ' (0 + 1)) =
-      tanV (fun i => ∑ j, MvPolynomial.coeff (Finsupp.single j 1) (φ i) * v j) := by
+      tanV (fun i => ∑ j, AddMonoidAlgebra.coeff (φ i) (Finsupp.single j 1) * v j) := by
   apply Ideal.Quotient.algHom_ext
   apply MvPolynomial.algHom_ext
   intro i
@@ -88,7 +88,7 @@ theorem tanV_comp_jetMap {κ' : Type} [Fintype κ'] [DecidableEq κ'] (φ : κ �
   rw [e, tanV_mk, tanV_mk, aeval_tan, MvPolynomial.aeval_X, const_of_mem_orig (hφ i), map_zero, zero_add]
 
 theorem coeff_psTrunc' {ιt : Type} [Fintype ιt] [DecidableEq ιt] (m : ℕ) (f : MvPowerSeries ιt S) (e : ιt →₀ ℕ)
-    (he : e.degree ≤ m) : MvPolynomial.coeff e (psTrunc m f) = MvPowerSeries.coeff e f := by
+    (he : e.degree ≤ m) : AddMonoidAlgebra.coeff (psTrunc m f) e = MvPowerSeries.coeff e f := by
   have hmem : e ∈ degLE m := by
     rw [degLE, Finset.mem_filter, Finset.mem_image]
     refine ⟨⟨fun i => ⟨e i, Nat.lt_succ_of_le ((Finsupp.le_degree i e).trans he)⟩, Finset.mem_univ _, ?_⟩, ?_⟩
@@ -327,8 +327,8 @@ theorem Tv_add (F : Germ.FGLaw S d)
     rw [tanV_comp_jetMap]
     congr 1
     funext p
-    have hco : ∀ s : Fin 2 × Fin d, MvPolynomial.coeff (Finsupp.single s 1)
-        (psTrunc 1 (F.F p.2) - MvPolynomial.C (MvPolynomial.constantCoeff (psTrunc 1 (F.F p.2)))) =
+    have hco : ∀ s : Fin 2 × Fin d, AddMonoidAlgebra.coeff (psTrunc 1 (F.F p.2) - MvPolynomial.C (MvPolynomial.constantCoeff (psTrunc 1 (F.F p.2))))
+        (Finsupp.single s 1) =
         if s.2 = p.2 then 1 else 0 := by
       intro s
       rw [MvPolynomial.coeff_sub, MvPolynomial.coeff_C, if_neg (Finsupp.single_ne_zero.2 one_ne_zero).symm,
@@ -483,8 +483,8 @@ theorem Tv_act (a : 𝓞 E) (act : Fin d → MvPowerSeries (Fin 1 × Fin d) S)
   rw [tanV_comp_jetMap]
   congr 3
   funext p
-  have hco : ∀ s : Fin 1 × Fin d, MvPolynomial.coeff (Finsupp.single s 1)
-      (psTrunc 1 (act p.2) - MvPolynomial.C (MvPolynomial.constantCoeff (psTrunc 1 (act p.2)))) =
+  have hco : ∀ s : Fin 1 × Fin d, AddMonoidAlgebra.coeff (psTrunc 1 (act p.2) - MvPolynomial.C (MvPolynomial.constantCoeff (psTrunc 1 (act p.2))))
+      (Finsupp.single s 1) =
       MvPowerSeries.coeff (Finsupp.single s 1) (act p.2) := by
     intro s
     rw [MvPolynomial.coeff_sub, MvPolynomial.coeff_C, if_neg (Finsupp.single_ne_zero.2 one_ne_zero).symm,

@@ -75,7 +75,7 @@ def SVan : Prop :=
 def HitGen (Sh : Shape) {Kc : Type} [Field Kc] (Oc : Subring Kc) (rb : ℕ) (nu : Sh.Wt)
     (TT : ∀ v, Finset (Fin (Sh.n' v))) (I : Sh.ColCh) (m : ETI Sh →₀ ℕ) : Set (MvPolynomial Sh.FrV Kc) :=
   {y | ∃ (be : ∀ v : Fin Sh.nV, Fin (Sh.n' v) → Fin Sh.r0 → Fin Sh.r1 → ℕ) (r : MvPolynomial Sh.FrV Kc),
-    (∀ n, MvPolynomial.coeff n r ∈ Oc) ∧
+    (∀ n, AddMonoidAlgebra.coeff r n ∈ Oc) ∧
     (∀ v s, ((∑ a, ∑ b, be v s a b : ℕ) : ℤ) = low rb (TT v) (nu v) s - hitsOf m v s) ∧
     y = MvPolynomial.C ((∏ v, ∏ s, ∏ b, ((eV Sh nu TT I ⟨v, (s, b)⟩).factorial : Kc)) *
       (∏ v, ∏ s, ∏ e ∈ range (NOf m), ((ihOf m v s e).factorial : Kc)) *

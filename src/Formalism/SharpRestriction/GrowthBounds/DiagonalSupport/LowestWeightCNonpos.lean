@@ -56,7 +56,7 @@ private lemma sDegs_smul_subset_sDegs (LL : Letters ι) (S : Set ι) (c : R) (F 
     rw [hs, AddMonoidAlgebra.coeff_single_zero_mul]
   rw [h1, MvPolynomial.coeff_C_mul] at hm hdm
   rw [key] at hdm
-  have hq : (MvPolynomial.coeff m (twistSub LL S j F)).coeff d ≠ 0 := right_ne_zero_of_mul hdm
+  have hq : (AddMonoidAlgebra.coeff (twistSub LL S j F) m).coeff d ≠ 0 := right_ne_zero_of_mul hdm
   refine ⟨m, fun h0 => ?_, hq⟩
   rw [h0] at hq
   exact hq rfl
@@ -127,7 +127,7 @@ private lemma sDegs_subset_sDegs_smul_of_ne_zero (LL : Letters ι) (S : Set ι) 
       rw [LaurentPolynomial.single_eq_C_mul_T, LaurentPolynomial.T_zero, mul_one]
       rfl
     rw [hs, AddMonoidAlgebra.coeff_single_zero_mul]
-  have hq : (coefL O n c * MvPolynomial.coeff m (twistSub LL S j x)).coeff d ≠ 0 := by
+  have hq : (coefL O n c * AddMonoidAlgebra.coeff (twistSub LL S j x) m).coeff d ≠ 0 := by
     rw [key]
     exact fun h0 => hdm (hnz _ h0)
   refine ⟨m, ?_, ?_⟩

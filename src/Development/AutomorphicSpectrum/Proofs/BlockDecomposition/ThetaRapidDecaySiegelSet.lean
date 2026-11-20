@@ -109,7 +109,7 @@ theorem lattice_sum {F E : Type} [Field F] [NumberField F] [Field E] [NumberFiel
         rw [Finset.prod_const, Finset.card_univ, hcard, inv_pow, ← pow_mul]
         refine inv_anti₀ (by positivity) (pow_le_pow_right₀ (by linarith) ?_)
         exact hN
-      exact h5.trans (Finset.prod_le_prod (fun _ _ => by positivity) fun p _ => h1 p)
+      exact h5.trans (Finset.prod_le_prod₀ (fun _ _ => by positivity) fun p _ => h1 p)
     · simp [h, Set.indicator_of_notMem hξ]
   refine (GlobalTheory.T.lattice_sum_decay_bound m b hbp h hinj hh).trans (le_of_eq ?_)
   rw [← ENNReal.ofReal_prod_of_nonneg fun p _ => by have := hbp p; positivity]
@@ -233,9 +233,9 @@ theorem count_main : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (V : HSp 
     rw [hA₂]; nlinarith
   calc (∏ i, (1 + K * (Cn * t i)) ^ f) * ((∏ i, (1 + K * (Cn * (t i)⁻¹)) ^ f) * ∏ _j : Fin V.rank, (1 + K * Cn) ^ f)
       ≤ (∏ i, A₁ ^ f * t i ^ f) * ((∏ _i : Fin r, A₂ ^ f) * ∏ _j : Fin V.rank, A₃ ^ f) := by
-        refine mul_le_mul (Finset.prod_le_prod (fun i _ => by have := ht0 i; positivity) fun i _ => h1 i) ?_ (by
+        refine mul_le_mul (Finset.prod_le_prod₀ (fun i _ => by have := ht0 i; positivity) fun i _ => h1 i) ?_ (by
           refine mul_nonneg (Finset.prod_nonneg fun i _ => by have := ht0 i; positivity) (Finset.prod_nonneg fun i _ => by positivity)) (Finset.prod_nonneg fun i _ => by have := ht0 i; positivity)
-        refine mul_le_mul_of_nonneg_right (Finset.prod_le_prod (fun i _ => by have := ht0 i; positivity) fun i _ => h2 i) (Finset.prod_nonneg fun i _ => by positivity)
+        refine mul_le_mul_of_nonneg_right (Finset.prod_le_prod₀ (fun i _ => by have := ht0 i; positivity) fun i _ => h2 i) (Finset.prod_nonneg fun i _ => by positivity)
     _ = (∏ _i : Fin r, A₁ ^ f) * (∏ _i : Fin r, A₂ ^ f) * (∏ _j : Fin V.rank, A₃ ^ f) * ∏ i, t i ^ f := by
         rw [Finset.prod_mul_distrib]; ring
 

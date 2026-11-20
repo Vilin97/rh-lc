@@ -16,7 +16,7 @@ lemma label_vl_le_one {l : ℕ} (_hl : l.Prime) {n : ℤ} (h0 : 0 < n) (h1 : n <
   have hdvd : (l : ℤ) ^ 2 ∣ n := by
     have h2 : (l : ℤ) ^ 2 ∣ (l : ℤ) ^ vl l n := pow_dvd_pow _ (by omega)
     refine h2.trans ?_
-    have h3 : l ^ padicValNat l n.natAbs ∣ n.natAbs := pow_padicValNat_dvd
+    have h3 : l ^ padicValNat l n.natAbs ∣ n.natAbs := (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
     have h4 : ((l ^ padicValNat l n.natAbs : ℕ) : ℤ) ∣ ((n.natAbs : ℕ) : ℤ) :=
       Int.natCast_dvd_natCast.mpr h3
     rw [Int.natAbs_of_nonneg h0.le] at h4

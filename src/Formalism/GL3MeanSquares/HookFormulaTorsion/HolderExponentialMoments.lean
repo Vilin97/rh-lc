@@ -213,7 +213,7 @@ theorem grassmannian_volume : GrassmannianVolume := by
       ∏ i ∈ range (p + q), (i.factorial : ℝ) := by
     rw [prod_range_add]
     apply mul_le_mul_of_nonneg_left _ (hF p).le
-    apply prod_le_prod (fun i _ => by positivity) (fun i _ => ?_)
+    apply prod_le_prod₀ (fun i _ => by positivity) (fun i _ => ?_)
     exact_mod_cast Nat.factorial_le (by omega)
   have h1 := (hF p).ne'
   have h2 := (hF q).ne'

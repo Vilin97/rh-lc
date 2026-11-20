@@ -35,7 +35,7 @@ theorem norm_iteratedFDeriv_restr_le {V : Type} [NormedAddCommGroup V] [NormedSp
   calc ‖iteratedFDeriv ℝ i f (restr V e x)‖ * ∏ _j : Fin i, ‖restr V e‖
       ≤ ‖iteratedFDeriv ℝ i f (restr V e x)‖ * 1 := by
         gcongr
-        exact Finset.prod_le_one (fun _ _ => norm_nonneg _) fun _ _ => norm_restr_le V e
+        exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun _ _ => norm_restr_le V e
     _ = _ := mul_one _
 
 theorem exists_schwartz_box {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] {κ κ' : Type} [Fintype κ]

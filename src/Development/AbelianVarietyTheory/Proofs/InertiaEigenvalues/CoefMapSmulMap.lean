@@ -33,7 +33,7 @@ theorem coeff_coefFun (p : MvPolynomial σ ℂ) (m : σ →₀ ℕ) : (coefFun F
 def coefMap : MvPolynomial σ ℂ →+ MvPolynomial σ F where
   toFun := coefFun F lam
   map_zero' := by ext m; rw [coeff_coefFun, coeff_zero, coeff_zero, map_zero]
-  map_add' p q := by ext m; rw [coeff_coefFun, coeff_add, coeff_add, coeff_coefFun, coeff_coefFun, map_add]
+  map_add' p q := by ext m; rw [coeff_coefFun, MvPolynomial.coeff_add, MvPolynomial.coeff_add, coeff_coefFun, coeff_coefFun, map_add]
 
 variable {F lam}
 

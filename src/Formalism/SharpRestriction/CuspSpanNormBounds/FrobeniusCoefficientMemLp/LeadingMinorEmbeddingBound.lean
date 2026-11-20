@@ -58,7 +58,7 @@ theorem rhoIJ_pos {j : ℕ} (I J : Fin j ↪o Fin (D.R.rS + 1)) : 0 < rhoIJ D I 
   Finset.prod_pos fun a _ => mul_pos (rhoF_pos' D _) (rhoF_pos' D _)
 
 theorem rhoIJ_le_one {j : ℕ} (I J : Fin j ↪o Fin (D.R.rS + 1)) : rhoIJ D I J ≤ 1 :=
-  Finset.prod_le_one (fun a _ => (mul_pos (rhoF_pos' D _) (rhoF_pos' D _)).le)
+  Finset.prod_le_one₀ (fun a _ => (mul_pos (rhoF_pos' D _) (rhoF_pos' D _)).le)
     (fun a _ => mul_le_one₀ (rhoF_le_one D _) (rhoF_pos' D _).le (rhoF_le_one D _))
 
 theorem rhoIJ_inv_le {j : ℕ} (I J : Fin j ↪o Fin (D.R.rS + 1)) : (rhoIJ D I J)⁻¹ ≤ R0 D := by
@@ -70,7 +70,7 @@ theorem rhoIJ_inv_le {j : ℕ} (I J : Fin j ↪o Fin (D.R.rS + 1)) : (rhoIJ D I 
     unfold rhoIJ
     calc (qS D * qS D) ^ j = ∏ _a : Fin j, (qS D * qS D) := by
           rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
-      _ ≤ _ := Finset.prod_le_prod (fun a _ => (mul_pos hq hq).le)
+      _ ≤ _ := Finset.prod_le_prod₀ (fun a _ => (mul_pos hq hq).le)
           (fun a _ => mul_le_mul (qS_le_rhoF D _) (qS_le_rhoF D _) hq.le (rhoF_pos' D _).le)
   have h2 : (qS D * qS D) ^ (D.R.rS + 1) ≤ (qS D * qS D) ^ j :=
     pow_le_pow_of_le_one (mul_pos hq hq).le (mul_le_one₀ hq1 hq.le hq1) hj
@@ -148,7 +148,7 @@ theorem prod_lead_le (Z : GramM D) (b C : ℝ) (hb : 1 ≤ b) (hC : 0 ≤ C) (τ
   calc ∏ l ∈ Finset.Icc 1 (D.R.rS + 1), max 1 ‖embS D τ (leadMinorE Z l)‖
       ≤ ∏ l ∈ Finset.Icc 1 (D.R.rS + 1),
           ((R1 D * b ^ (C * (D.R.m : ℝ) ^ 2)) * max 1 (absDl D Z l τ / b ^ (C * (D.R.m : ℝ) ^ 2))) :=
-        Finset.prod_le_prod (fun l _ => le_trans zero_le_one (le_max_left _ _)) step
+        Finset.prod_le_prod₀ (fun l _ => le_trans zero_le_one (le_max_left _ _)) step
     _ = (R1 D * b ^ (C * (D.R.m : ℝ) ^ 2)) ^ (Finset.Icc 1 (D.R.rS + 1)).card *
           ∏ l ∈ Finset.Icc 1 (D.R.rS + 1), max 1 (absDl D Z l τ / b ^ (C * (D.R.m : ℝ) ^ 2)) := by
         rw [Finset.prod_mul_distrib, Finset.prod_const]

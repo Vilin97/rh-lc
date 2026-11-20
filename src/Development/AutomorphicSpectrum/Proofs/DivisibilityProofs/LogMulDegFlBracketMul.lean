@@ -12,7 +12,7 @@ namespace DeltaTermLin
 variable {Ψ : Type} [Fintype Ψ] [DecidableEq Ψ] {N : ℕ}
 
 theorem degFl_add (F G : RP Ψ N) : degFl (F + G) = degFl F + degFl G := by
-  simp only [degFl, coeff_add, mul_add, Finset.sum_add_distrib]
+  simp only [degFl, MvPolynomial.coeff_add, mul_add, Finset.sum_add_distrib]
 
 theorem degFl_zero : degFl (0 : RP Ψ N) = 0 := by
   simp [degFl]

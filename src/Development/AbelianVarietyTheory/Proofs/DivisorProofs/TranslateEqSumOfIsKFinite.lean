@@ -31,7 +31,7 @@ theorem translate_eq_sum_of_isKFinite {G : Type} [Group G] [TopologicalSpace G] 
   choose a ha using ha
   refine ⟨_, kk, fun j k => (a j).sum fun i x => x * f (i * k), hkk, fun j => ?_, fun g k hk => ?_⟩
   · simp only [Finsupp.sum]
-    exact continuous_finset_sum _ fun i _ => continuous_const.mul (hf.comp (continuous_mul_left i))
+    exact continuous_finsetSum _ fun i _ => continuous_const.mul (hf.comp (continuous_const_mul i))
   · have hw : (fun g => f (g * k)) ∈ V := by
       have h := Submodule.subset_span (R := ℂ) (s := S) ⟨k, hk, rfl⟩
       rw [← hspan] at h

@@ -137,7 +137,7 @@ theorem span (hcont : Continuous (algebraMap ℚ_[l] K)) (huni : Irreducible ((l
       funext c
       exact Phi_coe K l hcont c
     rw [this]
-    refine continuous_finset_sum _ (fun i _ => ?_)
+    refine continuous_finsetSum _ (fun i _ => ?_)
     exact (hcont.comp (continuous_subtype_val.comp (continuous_apply i))).mul continuous_const
   have hcl : IsClosed (Set.range F) := (isCompact_range hF).isClosed
   have h0 : Filter.Tendsto (fun j => (l : K) ^ j * (y j : K)) Filter.atTop (nhds 0) := by

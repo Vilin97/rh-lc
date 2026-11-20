@@ -211,28 +211,28 @@ theorem dual_int_loc (hC : CoeffWord) (hL : LowerTriIntegral) (l : ℕ) (hl : l.
     ∃ m : ℤ, ¬ (l : ℤ) ∣ m ∧ ∃ g' ∈ dualWeyl ℤ r r ν, (m : ℚ) • g = intQ r r g' := by
   classical
   have hhom : IsWeightedHomogeneous (colW r r) g ν := hg.1
-  have h1 : ∀ e : Fin r × Fin r →₀ ℕ, LowerTri e → coeff e g ∈ Zl l := by
+  have h1 : ∀ e : Fin r × Fin r →₀ ℕ, LowerTri e → AddMonoidAlgebra.coeff g e ∈ Zl l := by
     intro e he
     by_cases hs : ∀ s : Fin r, ∑ a : Fin r, e (a, s) = ν s
     · rw [hC ℚ r r ν g e hhom he hs]
       exact h _
-    · have : coeff e g = 0 := by
+    · have : AddMonoidAlgebra.coeff g e = 0 := by
         by_contra hne
         apply hs
         intro s
         rw [← lccomp_weight_colW_apply, hhom hne]
       rw [this]
       exact (Zl l).zero_mem
-  set M : ℕ := ∏ e ∈ g.support.filter (fun e => LowerTri e), (coeff e g).den with hM
+  set M : ℕ := ∏ e ∈ g.support.filter (fun e => LowerTri e), (AddMonoidAlgebra.coeff g e).den with hM
   have hMc : M.Coprime l := by
     rw [hM]
     refine Nat.Coprime.prod_left fun e he => ?_
     exact h1 e (Finset.mem_filter.1 he).2
-  have h2 : ∀ e : Fin r × Fin r →₀ ℕ, LowerTri e → ∃ z : ℤ, coeff e ((M : ℚ) • g) = z := by
+  have h2 : ∀ e : Fin r × Fin r →₀ ℕ, LowerTri e → ∃ z : ℤ, AddMonoidAlgebra.coeff ((M : ℚ) • g) e = z := by
     intro e he
     rw [coeff_smul, smul_eq_mul]
     by_cases hes : e ∈ g.support
-    · exact lrc_den_dvd_mul _ _ (Finset.dvd_prod_of_mem (fun e => (coeff e g).den) (Finset.mem_filter.2 ⟨hes, he⟩))
+    · exact lrc_den_dvd_mul _ _ (Finset.dvd_prod_of_mem (fun e => (AddMonoidAlgebra.coeff g e).den) (Finset.mem_filter.2 ⟨hes, he⟩))
     · rw [notMem_support_iff.1 hes]
       exact ⟨0, by simp⟩
   have hMg : (M : ℚ) • g ∈ dualWeyl ℚ r r ν := (dualWeyl ℚ r r ν).smul_mem _ hg

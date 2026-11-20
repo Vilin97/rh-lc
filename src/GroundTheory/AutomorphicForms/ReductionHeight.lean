@@ -239,13 +239,13 @@ theorem one_le_adelicNorm_ratVec {x : Fin n → K} (hx : x ≠ 0) : 1 ≤ adelic
     Filter.eventually_cofinite.1 (eventually_norm_eq_one hi₀)
   refine mul_le_mul ?_ ?_ (finprod_nonneg fun _ => norm_nonneg _)
     (Finset.prod_nonneg fun _ _ => pow_nonneg (euclidNorm_nonneg _) _)
-  · exact Finset.prod_le_prod (fun _ _ => pow_nonneg (norm_nonneg _) _) fun w _ =>
+  · exact Finset.prod_le_prod₀ (fun _ _ => pow_nonneg (norm_nonneg _) _) fun w _ =>
       pow_le_pow_left₀ (norm_nonneg _) (norm_le_euclidNorm (infComp w (ratVec x)) i₀) _
   · rw [finprod_eq_prod_of_mulSupport_subset _ (s := hfin'.toFinset ∪ hfin.toFinset)
       (fun v hv => Finset.mem_coe.2 (Finset.mem_union_left _ (hfin'.mem_toFinset.2 hv))),
       finprod_eq_prod_of_mulSupport_subset _ (s := hfin'.toFinset ∪ hfin.toFinset)
       (fun v hv => Finset.mem_coe.2 (Finset.mem_union_right _ (hfin.mem_toFinset.2 hv)))]
-    exact Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun v _ =>
+    exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun v _ =>
       norm_le_pi_norm (finComp v (ratVec x)) i₀
 
 theorem adelicNorm_smul_rat {y : Fin n → 𝔸[K]} (hy : HasFiniteContent y) {c : K} (hc : c ≠ 0) :

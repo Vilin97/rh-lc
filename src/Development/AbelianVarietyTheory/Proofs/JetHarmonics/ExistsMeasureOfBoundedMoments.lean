@@ -155,7 +155,7 @@ theorem exists_measure_of_bounded_moments :
       intro a
       change ‖∏ i, binomC (n i) (a i)‖ ≤ 1
       rw [norm_prod]
-      exact Finset.prod_le_one (fun _ _ => norm_nonneg _) fun _ _ => norm_binomC_le _ _
+      exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun _ _ => norm_binomC_le _ _
     have hv : L P = c n := by
       refine (hsum (fun i => binomC (n i)) P fun _ => rfl).unique ?_
       convert hasSum_single (f := fun m : Fin g → ℕ =>

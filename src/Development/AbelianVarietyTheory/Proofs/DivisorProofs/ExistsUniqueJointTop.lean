@@ -17,7 +17,7 @@ def JointTop (z : Fin k × Fin m → σ) (y : Fin l × Fin m → σ) (κ : Fin m
 theorem row_degree (z : Fin k × Fin m → σ) {P : MvPolynomial σ ℂ} {c : Fin k} {w : ℂ}
     (h : rowOp ℂ z c c P = w • P) {s : σ →₀ ℕ} (hs : s ∈ P.support) :
     ((∑ i, s (z (c, i)) : ℕ) : ℂ) = w := by
-  have := congrArg (coeff s) h
+  have := congrArg (AddMonoidAlgebra.coeff · s) h
   rw [rowOp_apply, coeff_sum, coeff_smul] at this
   simp only [coeff_X_mul_pderiv, ← Finset.sum_mul, smul_eq_mul] at this
   have h2 := mul_right_cancel₀ (mem_support_iff.1 hs) this
@@ -26,7 +26,7 @@ theorem row_degree (z : Fin k × Fin m → σ) {P : MvPolynomial σ ℂ} {c : Fi
 theorem col_degree (z : Fin k × Fin m → σ) (y : Fin l × Fin m → σ) {P : MvPolynomial σ ℂ}
     {i : Fin m} {w : ℂ} (h : mixedOp ℂ z y i i P = w • P) {s : σ →₀ ℕ} (hs : s ∈ P.support) :
     ((∑ c, (s (z (c, i)) : ℤ) - ∑ d, (s (y (d, i)) : ℤ) : ℤ) : ℂ) = w := by
-  have := congrArg (coeff s) h
+  have := congrArg (AddMonoidAlgebra.coeff · s) h
   rw [mixedOp_apply, coeff_sub, coeff_sum, coeff_sum, coeff_smul] at this
   simp only [coeff_X_mul_pderiv, ← Finset.sum_mul, ← sub_mul, smul_eq_mul] at this
   have h2 := mul_right_cancel₀ (mem_support_iff.1 hs) this

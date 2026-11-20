@@ -61,7 +61,7 @@ private theorem le_degree_lemma_4 {τ : Type} (e : τ →₀ ℕ) (i : τ) : e i
       (Finsupp.mem_support_iff.2 h)
 
 private theorem coeff_eq_zero_of_mem_orig_pow_lemma_5 {τ : Type} (n : ℕ) (x : MvPolynomial τ S)
-    (hx : x ∈ orig S τ ^ n) (e : τ →₀ ℕ) (he : e.degree < n) : coeff e x = 0 := by
+    (hx : x ∈ orig S τ ^ n) (e : τ →₀ ℕ) (he : e.degree < n) : AddMonoidAlgebra.coeff x e = 0 := by
   classical
   induction n generalizing x e with
   | zero => exact absurd he (Nat.not_lt_zero _)
@@ -72,7 +72,7 @@ private theorem coeff_eq_zero_of_mem_orig_pow_lemma_5 {τ : Type} (n : ℕ) (x :
     · intro e he
       have hle : orig S τ ≤ RingHom.ker (MvPolynomial.constantCoeff : MvPolynomial τ S →+* S) :=
         Ideal.span_le.2 (by rintro _ ⟨i, rfl⟩; simp)
-      have hb0 : coeff 0 b = 0 := by
+      have hb0 : AddMonoidAlgebra.coeff b 0 = 0 := by
         have h0 : MvPolynomial.constantCoeff b = 0 := RingHom.mem_ker.1 (hle hb)
         exact h0
       rw [coeff_mul]
@@ -88,7 +88,7 @@ private theorem coeff_eq_zero_of_mem_orig_pow_lemma_5 {τ : Type} (n : ℕ) (x :
           omega
         rw [h2, hb0, mul_zero]
     · intro e he
-      rw [coeff_add, hy e he, hz e he, add_zero]
+      rw [MvPolynomial.coeff_add, hy e he, hz e he, add_zero]
 
 private theorem mem_degLE_lemma_6 {τ : Type} [Fintype τ] [DecidableEq τ] (m : ℕ) (e : τ →₀ ℕ) :
     e ∈ degLE m ↔ e.degree ≤ m := by
@@ -107,12 +107,12 @@ private theorem mem_degLE_lemma_6 {τ : Type} [Fintype τ] [DecidableEq τ] (m :
 
 private theorem coeff_psTrunc_lemma_7 {τ : Type} [Fintype τ] [DecidableEq τ] (m : ℕ)
     (f : MvPowerSeries τ S) (e : τ →₀ ℕ) :
-    coeff e (psTrunc m f) = if e.degree ≤ m then MvPowerSeries.coeff e f else 0 := by
+    AddMonoidAlgebra.coeff (psTrunc m f) e = if e.degree ≤ m then MvPowerSeries.coeff e f else 0 := by
   rw [psTrunc, coeff_sum]
   simp only [coeff_monomial, Finset.sum_ite_eq', mem_degLE_lemma_6]
 
 private theorem mem_orig_pow_of_coeff_lemma_8 {τ : Type} (n : ℕ) (p : MvPolynomial τ S)
-    (h : ∀ e : τ →₀ ℕ, e.degree < n → coeff e p = 0) : p ∈ orig S τ ^ n := by
+    (h : ∀ e : τ →₀ ℕ, e.degree < n → AddMonoidAlgebra.coeff p e = 0) : p ∈ orig S τ ^ n := by
   rw [p.as_sum]
   refine Ideal.sum_mem _ fun e he => ?_
   have hn : n ≤ e.degree := by
@@ -125,7 +125,7 @@ private theorem mem_orig_pow_of_coeff_lemma_8 {τ : Type} (n : ℕ) (p : MvPolyn
 
 private theorem psJet_eq_mk_lemma_9 {τ : Type} [Fintype τ] [DecidableEq τ] (m : ℕ)
     (f : MvPowerSeries τ S) (p : MvPolynomial τ S)
-    (h : ∀ e : τ →₀ ℕ, e.degree ≤ m → coeff e p = MvPowerSeries.coeff e f) :
+    (h : ∀ e : τ →₀ ℕ, e.degree ≤ m → AddMonoidAlgebra.coeff p e = MvPowerSeries.coeff e f) :
     psJet m f = Ideal.Quotient.mk _ p := by
   rw [psJet, Ideal.Quotient.eq]
   refine mem_orig_pow_of_coeff_lemma_8 (m + 1) _ fun e he => ?_
@@ -176,7 +176,7 @@ theorem mk_psTrunc_X {τ : Type} [Fintype τ] [DecidableEq τ] (m : ℕ) (q : τ
       by_cases h3 : 1 ≤ m
       · simp [h3, MvPolynomial.coeff_X]
       · simp [h3]
-    · have h4 : coeff e (X q : MvPolynomial τ S) = 0 := by
+    · have h4 : AddMonoidAlgebra.coeff (X q : MvPolynomial τ S) e = 0 := by
         rw [MvPolynomial.coeff_X']
         exact if_neg (Ne.symm h2)
       split_ifs <;> simp [h4, h2]

@@ -40,23 +40,23 @@ theorem exists_C_mul_primitive {σ : Type} (F : MvPolynomial σ O) :
   have h2 : G.coeff m = 1 := by
     apply mul_left_cancel₀ hc
     rw [← h1, mul_one]
-  have h3 := congrArg (MvPolynomial.coeff m) h0
+  have h3 := congrArg (AddMonoidAlgebra.coeff · m) h0
   rw [MvPolynomial.coeff_map, h2] at h3
   simp at h3
 
 theorem length_quot_le_of_coeff_prod {σ J : Type} [Fintype J] (F : J → MvPolynomial σ O) (x : J → σ → O)
-    (I : Ideal O) (h : ∀ m, MvPolynomial.coeff m (∏ j, F j) ∈ I) :
+    (I : Ideal O) (h : ∀ m, AddMonoidAlgebra.coeff (∏ j, F j) m ∈ I) :
     Module.length O (O ⧸ I) ≤ ∑ j, addVal O (MvPolynomial.eval (x j) (F j)) := by
   classical
   choose c G hF hG using fun j => exists_C_mul_primitive (F j)
   have h1 : MvPolynomial.map (IsLocalRing.residue O) (∏ j, G j) ≠ 0 := by
     rw [map_prod]
     exact Finset.prod_ne_zero_iff.2 fun j _ => hG j
-  obtain ⟨m, hm⟩ : ∃ m, MvPolynomial.coeff m (MvPolynomial.map (IsLocalRing.residue O) (∏ j, G j)) ≠ 0 := by
+  obtain ⟨m, hm⟩ : ∃ m, AddMonoidAlgebra.coeff (MvPolynomial.map (IsLocalRing.residue O) (∏ j, G j)) m ≠ 0 := by
     by_contra! hh
     exact h1 (MvPolynomial.ext _ _ fun m => by simpa using hh m)
   rw [MvPolynomial.coeff_map] at hm
-  have hu : IsUnit (MvPolynomial.coeff m (∏ j, G j)) := by
+  have hu : IsUnit (AddMonoidAlgebra.coeff (∏ j, G j) m) := by
     by_contra hn
     exact hm ((IsLocalRing.residue_eq_zero_iff _).2 hn)
   have h2 : (∏ j, F j) = MvPolynomial.C (∏ j, c j) * ∏ j, G j := by
@@ -256,7 +256,7 @@ theorem exists_relations {A : Type} [Ring A] [Algebra O A] {d : ℕ} (ψ : A →
     rw [hc, Fintype.sum_prod_type, Finset.sum_apply]
     rfl
 
-theorem length_quot_le_sum_length : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (A : Type) [Ring A] [Algebra O A] (J : Type) [Fintype J] (d : J → ℕ) (ψ : ∀ j, A →ₐ[O] Matrix (Fin (d j)) (Fin (d j)) O), (∀ j, Function.Surjective (ψ j)) → ∀ (g : ℕ) (Rel : Submodule A (Fin g → A)) (I : Ideal O), (∀ (n : ℕ) (θ : Fin n → Fin g → Fin g → A), (∀ k p, θ k p ∈ Rel) → ∀ m : Fin n →₀ ℕ, MvPolynomial.coeff m (∏ j, Matrix.det (Matrix.of fun (pa qb : Fin g × Fin (d j)) => ∑ k, (MvPolynomial.X k : MvPolynomial (Fin n) O) * MvPolynomial.C (ψ j (θ k pa.1 qb.1) pa.2 qb.2))) ∈ I) → Module.length O (O ⧸ I) ≤ ∑ j, Module.length O ↥(⨅ θ ∈ Rel, LinearMap.ker (∑ q : Fin g, (matKO (ψ j (θ q))).comp (LinearMap.proj q : (Fin g → KOG O (d j)) →ₗ[O] KOG O (d j)))) := by
+theorem length_quot_le_sum_length : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (A : Type) [Ring A] [Algebra O A] (J : Type) [Fintype J] (d : J → ℕ) (ψ : ∀ j, A →ₐ[O] Matrix (Fin (d j)) (Fin (d j)) O), (∀ j, Function.Surjective (ψ j)) → ∀ (g : ℕ) (Rel : Submodule A (Fin g → A)) (I : Ideal O), (∀ (n : ℕ) (θ : Fin n → Fin g → Fin g → A), (∀ k p, θ k p ∈ Rel) → ∀ m : Fin n →₀ ℕ, AddMonoidAlgebra.coeff (∏ j, Matrix.det (Matrix.of fun (pa qb : Fin g × Fin (d j)) => ∑ k, (MvPolynomial.X k : MvPolynomial (Fin n) O) * MvPolynomial.C (ψ j (θ k pa.1 qb.1) pa.2 qb.2))) m ∈ I) → Module.length O (O ⧸ I) ≤ ∑ j, Module.length O ↥(⨅ θ ∈ Rel, LinearMap.ker (∑ q : Fin g, (matKO (ψ j (θ q))).comp (LinearMap.proj q : (Fin g → KOG O (d j)) →ₗ[O] KOG O (d j)))) := by
   intro O _ _ _ A _ _ J _ d ψ hψ g Rel I hI
   classical
   choose Θ hΘ hle using fun j => exists_relations (ψ j) (hψ j) Rel

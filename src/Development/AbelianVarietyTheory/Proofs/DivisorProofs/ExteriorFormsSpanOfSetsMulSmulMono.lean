@@ -62,14 +62,14 @@ theorem forms_mul_smul_mono (A : Subring K) (L : Set V) :
       (AddMonoidHom.mulRight y) (fun a ha u hu => key a ha u hu) hx
   · intro q c y hc hy
     refine forms_le_comap_of_gen (B' := (A : Set K)) (L' := L) (q' := q)
-      (DistribMulAction.toAddMonoidHom _ c) ?_ hy
+      (DistribSMul.toAddMonoidHom _ c) ?_ hy
     intro b hb v hv
     show c • b • ExteriorAlgebra.ιMulti K q v ∈ _
     rw [smul_smul]
     exact forms_gen_mem (A.mul_mem hc hb) v hv
   · intro B q c y hy
     refine forms_le_comap_of_gen (B' := (fun b => c * b) '' B) (L' := L) (q' := q)
-      (DistribMulAction.toAddMonoidHom _ c) ?_ hy
+      (DistribSMul.toAddMonoidHom _ c) ?_ hy
     intro b hb v hv
     show c • b • ExteriorAlgebra.ιMulti K q v ∈ _
     rw [smul_smul]

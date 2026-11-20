@@ -46,7 +46,7 @@ theorem isWeightedHomogeneous_pderiv_int {σ : Type*} {w : σ → ℤ} {f : MvPo
   classical
   intro m hm
   rw [coeff_pderiv] at hm
-  have h1 : coeff (m + Finsupp.single q 1) f ≠ 0 := fun h0 => hm (by rw [h0, zero_mul])
+  have h1 : AddMonoidAlgebra.coeff f (m + Finsupp.single q 1) ≠ 0 := fun h0 => hm (by rw [h0, zero_mul])
   have h2 := h h1
   rw [map_add] at h2
   have h3 : Finsupp.weight w (Finsupp.single q 1) = w q := by

@@ -40,7 +40,7 @@ theorem ramLoss_le_vLa_pPow (D : D7) (K : Type) [Field K] [NumberField K] (la : 
         fun k hk => by exact_mod_cast (padicValNat_dvd_iff_le hN).1 hk
       rcases (D.host.dvd_condN_iff_small hl).1 (Nat.dvd_of_mem_primeFactors hm) with h | h | h
       · have h1 := hle (padicValNat (resCharOf la) D.host.QS * a) (by
-          rw [pow_mul]; exact ((pow_dvd_pow_of_dvd pow_padicValNat_dvd a).mul_right _).mul_right _)
+          rw [pow_mul]; exact ((pow_dvd_pow_of_dvd (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)) a).mul_right _).mul_right _)
         have h2 := (hs _ h).1
         push_cast at h1
         nlinarith [mul_le_mul h2 ha' hD (Nat.cast_nonneg _), mul_nonneg hv0 hD]

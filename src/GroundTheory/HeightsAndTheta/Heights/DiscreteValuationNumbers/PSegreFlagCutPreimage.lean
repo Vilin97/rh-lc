@@ -27,7 +27,7 @@ theorem alg_eq_of_support {σ R A : Type*} [CommSemiring R] [CommSemiring A] [Al
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [monomial_eq, Finsupp.prod, map_mul, map_mul, map_prod, map_prod]
   congr 1
-  · show α (algebraMap R _ (coeff m G)) = β (algebraMap R _ (coeff m G))
+  · show α (algebraMap R _ (AddMonoidAlgebra.coeff G m)) = β (algebraMap R _ (AddMonoidAlgebra.coeff G m))
     rw [α.commutes, β.commutes]
   · refine Finset.prod_congr rfl fun p hp => ?_
     rw [map_pow, map_pow, h m hm p hp]

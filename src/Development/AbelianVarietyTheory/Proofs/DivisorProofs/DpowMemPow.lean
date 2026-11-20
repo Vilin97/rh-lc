@@ -26,7 +26,7 @@ def filt (k : ℕ) : Ideal (MvPolynomial I (K R)) where
   zero_mem' := by intro μ _; simp
   add_mem' := by
     intro p q hp hq μ hμ
-    simp [coeff_add, hp μ hμ, hq μ hμ]
+    simp [MvPolynomial.coeff_add, hp μ hμ, hq μ hμ]
   smul_mem' := by
     intro c p hp μ hμ
     rw [smul_eq_mul, coeff_mul]
@@ -201,7 +201,7 @@ variable (R : Type) [CommRing R] [IsDomain R] [CharZero R] (I : Type) [Fintype I
 
 attribute [local instance] charZero_K
 
-theorem cc (p : MvPolynomial I (K R)) : constantCoeff p = coeff 0 p := congrFun constantCoeff_eq p
+theorem cc (p : MvPolynomial I (K R)) : constantCoeff p = AddMonoidAlgebra.coeff p 0 := congrFun constantCoeff_eq p
 
 def εC : C R I n →+* K R :=
   Ideal.Quotient.lift _ MvPolynomial.constantCoeff fun a ha => by

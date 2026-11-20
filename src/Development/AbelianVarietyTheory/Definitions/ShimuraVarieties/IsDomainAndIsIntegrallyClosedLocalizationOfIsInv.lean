@@ -224,7 +224,7 @@ theorem exists_forall_apply_eq_apply_smul (φ ψ : A →+* k)
     (∑ g, Polynomial.monomial (n g) (a g))
   have := congrArg (fun p ↦ Polynomial.coeff p (n g)) hg
   simp only [Polynomial.coe_mapRingHom, Polynomial.coeff_map, Polynomial.coeff_smul,
-    Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, hn.eq_iff, Finset.sum_ite_eq',
+    Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, hn.eq_iff, Finset.sum_ite_eq',
     Finset.mem_univ, if_true] at this
   exact ha g this
 

@@ -15,7 +15,7 @@ def fct (e : σ →₀ ℕ) : ℕ := ∏ i, (e i).factorial
 def P {d : ℕ} (S : (Fin d → σ) → ℂ) : MvPolynomial σ ℂ := ∑ t, monomial (cnt t) (S t)
 
 lemma coeff_P {d : ℕ} (S : (Fin d → σ) → ℂ) (e : σ →₀ ℕ) :
-    coeff e (P S) = ∑ t, if cnt t = e then S t else 0 := by
+    AddMonoidAlgebra.coeff (P S) e = ∑ t, if cnt t = e then S t else 0 := by
   simp only [P, coeff_sum, coeff_monomial]
 
 lemma prod_X_eq {R : Type*} [CommSemiring R] {d : ℕ} (t : Fin d → σ) :
@@ -31,7 +31,7 @@ lemma pow_sum_X (d : ℕ) :
 
 lemma card_fib {d : ℕ} (e : σ →₀ ℕ) (he : ∑ i, e i = d) :
     (univ.filter fun t : Fin d → σ => cnt t = e).card * fct e = d.factorial := by
-  have h := congrArg (coeff e) (pow_sum_X (σ := σ) d)
+  have h := congrArg (AddMonoidAlgebra.coeff · e) (pow_sum_X (σ := σ) d)
   rw [Finset.sum_pow_eq_sum_piAntidiag] at h
   have hk : ∀ k : σ → ℕ, (∏ i, (X i : MvPolynomial σ ℕ) ^ k i) =
       monomial (Finsupp.equivFunOnFinite.symm k) 1 := by
@@ -39,8 +39,8 @@ lemma card_fib {d : ℕ} (e : σ →₀ ℕ) (he : ∑ i, e i = d) :
     rw [Finsupp.equivFunOnFinite_symm_eq_sum, monomial_sum_one]
     simp [X_pow_eq_monomial]
   simp only [hk, coeff_sum, coeff_monomial] at h
-  have hc : ∀ k : σ → ℕ, coeff e ((Nat.multinomial univ k : MvPolynomial σ ℕ) *
-      monomial (Finsupp.equivFunOnFinite.symm k) 1) =
+  have hc : ∀ k : σ → ℕ, AddMonoidAlgebra.coeff ((Nat.multinomial univ k : MvPolynomial σ ℕ) *
+      monomial (Finsupp.equivFunOnFinite.symm k) 1) e =
       if k = ⇑e then Nat.multinomial univ k else 0 := by
     intro k
     rw [← map_natCast (C : ℕ →+* MvPolynomial σ ℕ), C_mul_monomial, mul_one, coeff_monomial]
@@ -55,7 +55,7 @@ lemma card_fib {d : ℕ} (e : σ →₀ ℕ) (he : ∑ i, e i = d) :
   exact Nat.multinomial_spec _ _
 
 def T (d : ℕ) (F : MvPolynomial σ ℂ) (t : Fin d → σ) : ℂ :=
-  coeff (cnt t) F * (fct (cnt t) : ℂ) / (d.factorial : ℂ)
+  AddMonoidAlgebra.coeff F (cnt t) * (fct (cnt t) : ℂ) / (d.factorial : ℂ)
 
 lemma rep {d : ℕ} (F : MvPolynomial σ ℂ) (hF : ∀ e ∈ F.support, ∑ i, e i = d) :
     P (T d F) = F := by
@@ -63,9 +63,9 @@ lemma rep {d : ℕ} (F : MvPolynomial σ ℂ) (hF : ∀ e ∈ F.support, ∑ i, 
   rw [coeff_P]
   have hsum : (∑ t : Fin d → σ, if cnt t = e then T d F t else 0)
       = ((univ.filter fun t : Fin d → σ => cnt t = e).card : ℂ) *
-        (coeff e F * fct e / d.factorial) := by
+        (AddMonoidAlgebra.coeff F e * fct e / d.factorial) := by
     rw [← Finset.sum_filter]
-    rw [Finset.sum_congr rfl (g := fun _ => coeff e F * fct e / d.factorial)]
+    rw [Finset.sum_congr rfl (g := fun _ => AddMonoidAlgebra.coeff F e * fct e / d.factorial)]
     · simp
     · intro t ht
       simp only [T, (Finset.mem_filter.1 ht).2]
@@ -76,17 +76,17 @@ lemma rep {d : ℕ} (F : MvPolynomial σ ℂ) (hF : ∀ e ∈ F.support, ∑ i, 
         d.factorial := by exact_mod_cast hc
     have hd : (d.factorial : ℂ) ≠ 0 := by exact_mod_cast d.factorial_ne_zero
     calc ((univ.filter fun t : Fin d → σ => cnt t = e).card : ℂ) *
-          (coeff e F * fct e / d.factorial)
-        = coeff e F * (((univ.filter fun t : Fin d → σ => cnt t = e).card : ℂ) * (fct e : ℂ))
+          (AddMonoidAlgebra.coeff F e * fct e / d.factorial)
+        = AddMonoidAlgebra.coeff F e * (((univ.filter fun t : Fin d → σ => cnt t = e).card : ℂ) * (fct e : ℂ))
           / d.factorial := by ring
-      _ = coeff e F := by rw [hc', mul_div_assoc, div_self hd, mul_one]
-  · have hz : coeff e F = 0 := by
+      _ = AddMonoidAlgebra.coeff F e := by rw [hc', mul_div_assoc, div_self hd, mul_one]
+  · have hz : AddMonoidAlgebra.coeff F e = 0 := by
       by_contra h
       exact he (hF e (mem_support_iff.2 h))
     simp [hz]
 
 def ip (F G : MvPolynomial σ ℂ) : ℂ :=
-  ∑ e ∈ F.support, coeff e F * star (coeff e G) * (fct e : ℂ)
+  ∑ e ∈ F.support, AddMonoidAlgebra.coeff F e * star (AddMonoidAlgebra.coeff G e) * (fct e : ℂ)
 
 def sub (V : Matrix σ σ ℂ) : MvPolynomial σ ℂ →ₐ[ℂ] MvPolynomial σ ℂ :=
   aeval fun i => ∑ l, C (V i l) * X l
@@ -110,7 +110,7 @@ lemma sub_sub (V : Matrix σ σ ℂ) (hV : V * star V = 1) (F : MvPolynomial σ 
     simp
   simpa using AlgHom.congr_fun key F
 
-def FR (F : MvPolynomial σ ℂ) : ℝ := ∑ e ∈ F.support, ‖coeff e F‖ ^ 2 * (fct e : ℝ)
+def FR (F : MvPolynomial σ ℂ) : ℝ := ∑ e ∈ F.support, ‖AddMonoidAlgebra.coeff F e‖ ^ 2 * (fct e : ℝ)
 
 lemma ip_self (F : MvPolynomial σ ℂ) : ip F F = (FR F : ℂ) := by
   simp only [ip, FR, Complex.ofReal_sum, Complex.ofReal_mul, Complex.ofReal_pow,

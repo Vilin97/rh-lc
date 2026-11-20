@@ -57,11 +57,11 @@ lemma per_rowX (p : ℕ) [hp : Fact p.Prime] (Xb S o z e Mm : ℕ) (κ κ4 lgv :
   rw [hβ, norm_div, Real.logb_div hA' hB']
   have e1 := neg_logb_norm_natCast_eq_padicValNat p _ hA
   have e2 := neg_logb_norm_natCast_eq_padicValNat p _ hB
-  rw [padicValNat.mul (pow_ne_zero _ hp.out.ne_zero)
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.out.ne_zero)
       (mul_ne_zero (Nat.factorial_ne_zero _) (Nat.choose_pos (Nat.le_add_left e z)).ne'),
-    padicValNat.prime_pow, padicValNat.mul (Nat.factorial_ne_zero _)
+    padicValNat.prime_pow, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.factorial_ne_zero _)
       (Nat.choose_pos (Nat.le_add_left e z)).ne'] at e1
-  rw [padicValNat.mul (Nat.factorial_ne_zero _) (Nat.factorial_ne_zero _)] at e2
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.factorial_ne_zero _) (Nat.factorial_ne_zero _)] at e2
   simp only [Nat.cast_add] at e1 e2
   have hC : (padicValNat p ((z + e).choose e) : ℝ) ≤ Nat.log p Xb := by
     have h := @Nat.factorization_choose_le_log p (z + e) e

@@ -152,7 +152,7 @@ theorem heightOfPoint : HeightOfPoint.Statement := by
       · rw [map_one, mul_one]; exact hleM v k
       · rw [map_zero, mul_zero]; exact hM0 v
     · refine Real.iSup_le (fun k => ?_) (gaussNormOf_nonneg _ _)
-      have hc : coeff (Finsupp.single k 1) (∑ j, C (yv (w j)) * X j : MvPolynomial (Fin n) K) =
+      have hc : AddMonoidAlgebra.coeff (∑ j, C (yv (w j)) * X j : MvPolynomial (Fin n) K) (Finsupp.single k 1) =
           yv (w k) := by
         rw [coeff_sum, Finset.sum_eq_single k]
         · rw [coeff_C_mul, coeff_X, if_pos rfl, mul_one]

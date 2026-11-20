@@ -225,7 +225,7 @@ theorem nrm_prod_sub_prod_le {ι : Type*} (s : Finset ι) (a b : ι → Ω) {δ 
     have h1 := ih (fun i hi ↦ ha i (Finset.mem_insert_of_mem hi))
       (fun i hi ↦ hb i (Finset.mem_insert_of_mem hi)) (fun i hi ↦ h i (Finset.mem_insert_of_mem hi))
     have h2 : ∏ i ∈ s, nrm K (b i) ≤ 1 :=
-      Finset.prod_le_one (fun i _ ↦ nrm_nonneg _) (fun i hi ↦ hb i (Finset.mem_insert_of_mem hi))
+      Finset.prod_le_one₀ (fun i _ ↦ nrm_nonneg _) (fun i hi ↦ hb i (Finset.mem_insert_of_mem hi))
     refine nrm_add_le_of_le ?_ ?_
     · rw [nrm_mul]
       calc nrm K (a j) * nrm K (∏ i ∈ s, a i - ∏ i ∈ s, b i) ≤ 1 * δ :=

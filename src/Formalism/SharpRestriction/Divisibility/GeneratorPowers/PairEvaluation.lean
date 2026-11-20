@@ -60,8 +60,8 @@ lemma aeval_mem_pow (g : σ → MvPolynomial τ S) (hg : ∀ i, g i ∈ Io S τ)
     simpa using hg i
   exact (Ideal.le_comap_pow (f := aeval g) k) (Ideal.pow_right_mono h1 k hp)
 
-lemma sub_C_mem (p : MvPolynomial σ S) : p - C (coeff 0 p) ∈ Io S σ := by
-  have h := (mem_pow_idealOfVars_iff' (σ := σ) (R := S) 1 (p - C (coeff 0 p))).2 (fun x hx => by
+lemma sub_C_mem (p : MvPolynomial σ S) : p - C (AddMonoidAlgebra.coeff p 0) ∈ Io S σ := by
+  have h := (mem_pow_idealOfVars_iff' (σ := σ) (R := S) 1 (p - C (AddMonoidAlgebra.coeff p 0))).2 (fun x hx => by
     have hx0 : x = 0 := (Finsupp.degree_eq_zero_iff x).1 (by omega)
     subst hx0
     simp)
@@ -69,7 +69,7 @@ lemma sub_C_mem (p : MvPolynomial σ S) : p - C (coeff 0 p) ∈ Io S σ := by
 
 lemma aeval_sub_aeval_mem (g g' : σ → MvPolynomial τ S) (hg : ∀ i, g i ∈ Io S τ) (hg' : ∀ i, g' i ∈ Io S τ)
     (p : MvPolynomial σ S) : aeval g p - aeval g' p ∈ Io S τ := by
-  have h0 : p - C (coeff 0 p) ∈ Io S σ ^ 1 := by simpa using sub_C_mem p
+  have h0 : p - C (AddMonoidAlgebra.coeff p 0) ∈ Io S σ ^ 1 := by simpa using sub_C_mem p
   have h1 := aeval_mem_pow g hg 1 h0
   have h2 := aeval_mem_pow g' hg' 1 h0
   have h3 := sub_mem (by simpa using h1) (by simpa using h2)
@@ -418,7 +418,7 @@ theorem unit_eq_one {P : MvPolynomial (Fin 2 × Fin d) S} {m : ℕ}
   have hbase : P - 1 ∈ Io S (Fin 2 × Fin d) ^ 1 := by
     have haW : ∀ i, aW i ∈ Io S _ := fun i => by
       have := add_mem (Ideal.pow_le_self two_ne_zero (hW i)) (lin_mem A 0 i); simpa using this
-    set c := coeff 0 P with hcdef
+    set c := AddMonoidAlgebra.coeff P 0 with hcdef
     have h1 : ev2 (P - C c) (xs S d (0 : Fin 1)) aW ∈ Io S _ := by
       have h0 : P - C c ∈ Io S (Fin 2 × Fin d) ^ 1 := by simpa using sub_C_mem P
       have := aeval_mem_pow (fun p : Fin 2 × Fin d => ![xs S d (0 : Fin 1), aW] p.1 p.2)

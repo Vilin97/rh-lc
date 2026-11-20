@@ -28,7 +28,7 @@ theorem PrimitiveUnit.proof : PrimitiveUnit.Statement := by
   have hsF : algebraMap R F s ≠ 0 := IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors hs
   have key : ∀ m, s * p.coeff m = a * q.coeff m := by
     intro m
-    have h := congrArg (coeff m) hpq
+    have h := congrArg (AddMonoidAlgebra.coeff · m) hpq
     rw [coeff_map, coeff_C_mul, coeff_map] at h
     apply IsFractionRing.injective R F
     rw [map_mul, map_mul, h]

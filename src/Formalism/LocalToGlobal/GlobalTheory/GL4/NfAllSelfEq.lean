@@ -188,12 +188,12 @@ theorem class_norm (c : (D.mem u).C.cls 0) (y : Fin (D.R.N 0) → (D.sp.X 0).V) 
       fockN G / extremalFockNormProduct lam := by
     rw [monH_norm]
     have e1 : ∑ m, monW lam m * ‖v.embedding (cfMap lam g (coE CV (hTV0 D u) x c) m)‖ ^ 2 =
-        (∑ m : MonI lam, ‖coeff m.1 G‖ ^ 2 * (mfact m.1 : ℝ)) / extremalFockNormProduct lam := by
+        (∑ m : MonI lam, ‖AddMonoidAlgebra.coeff G m.1‖ ^ 2 * (mfact m.1 : ℝ)) / extremalFockNormProduct lam := by
       rw [Finset.sum_div]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [hGdef, coeff_map, cfMap_apply, monW]
       ring
-    have e2 : ∑ m : MonI lam, ‖coeff m.1 G‖ ^ 2 * (mfact m.1 : ℝ) ≤ fockN G := by
+    have e2 : ∑ m : MonI lam, ‖AddMonoidAlgebra.coeff G m.1‖ ^ 2 * (mfact m.1 : ℝ) ≤ fockN G := by
       have := fockN_sum_le G ((Finset.univ : Finset (MonI lam)).map ⟨fun m : MonI lam => m.1, fun a b h => Subtype.ext h⟩)
       rwa [Finset.sum_map] at this
     rw [e1]

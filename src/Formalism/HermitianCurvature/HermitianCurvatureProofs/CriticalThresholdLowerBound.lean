@@ -94,7 +94,7 @@ lemma b_ge_one (c : Cfg) (h : c.Ok) (j : ℕ) (hj : 1 ≤ j) (hm : j ≤ c.m) : 
 lemma one_le_prod_real {α : Type} (s : Finset α) (f : α → ℝ) (h : ∀ i ∈ s, 1 ≤ f i) :
     1 ≤ ∏ i ∈ s, f i := by
   have h1 : ∏ i ∈ s, (1:ℝ) ≤ ∏ i ∈ s, f i :=
-    Finset.prod_le_prod (fun i _ => zero_le_one) h
+    Finset.prod_le_prod₀ (fun i _ => zero_le_one) h
   simpa using h1
 
 lemma prodb_ge_one (c : Cfg) (h : c.Ok) : 1 ≤ c.prodb := by

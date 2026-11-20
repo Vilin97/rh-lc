@@ -48,7 +48,7 @@ theorem segForm_weighted {N : ℕ} (E : Fin (N + 1) ≃ ((k : K) → ι k)) {Gz 
     IsWeightedHomogeneous.prod _ _ _ fun j _ => (hseg j).pow _
   have h2 : (∑ j, m j • 1) = n := by simpa using hdeg
   rw [h2] at h1
-  have h3 := (isWeightedHomogeneous_C w (coeff m Gz)).mul h1
+  have h3 := (isWeightedHomogeneous_C w (AddMonoidAlgebra.coeff Gz m)).mul h1
   rw [zero_add] at h3
   convert h3 using 2
   exact RingHom.congr_fun (RingHom.ext_int _ _) _

@@ -17,12 +17,12 @@ variable {K : Type u} [Field K] {ι : Type}
 lemma jetPair_eq_sum (P : MvPolynomial ι K) (F : MvPowerSeries ι K) (S : Finset (ι →₀ ℕ))
     (hS : P.support ⊆ S) :
     jetPair P F =
-      ∑ κ ∈ S, MvPolynomial.coeff κ P * ((mfact κ : ℕ) : K) * MvPowerSeries.coeff κ F := by
+      ∑ κ ∈ S, AddMonoidAlgebra.coeff P κ * ((mfact κ : ℕ) : K) * MvPowerSeries.coeff κ F := by
   classical
   unfold jetPair
   refine Finset.sum_subset hS ?_
   intro κ _ hκ
-  have h0 : MvPolynomial.coeff κ P = 0 := by simpa [MvPolynomial.mem_support_iff] using hκ
+  have h0 : AddMonoidAlgebra.coeff P κ = 0 := by simpa [MvPolynomial.mem_support_iff] using hκ
   simp [h0]
 
 lemma jetPair_add_left (P Q : MvPolynomial ι K) (F : MvPowerSeries ι K) :
@@ -224,7 +224,7 @@ lemma jetPair_poly (A : ι → ι' → K) (P : MvPolynomial ι K) :
 
 lemma jetPair_monomial_right (P : MvPolynomial ι' K) (μ : ι' →₀ ℕ) :
     jetPair P ((MvPolynomial.monomial μ (1 : K) : MvPolynomial ι' K) : MvPowerSeries ι' K) =
-      MvPolynomial.coeff μ P * ((mfact μ : ℕ) : K) := by
+      AddMonoidAlgebra.coeff P μ * ((mfact μ : ℕ) : K) := by
   classical
   rw [jetPair_eq_sum P _ (insert μ P.support) (Finset.subset_insert _ _), Finset.sum_eq_single μ]
   · simp [MvPolynomial.coeff_coe]

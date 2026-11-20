@@ -442,7 +442,7 @@ theorem jetMoments_of (hM : TranslateMomentsAll) (hE : MovesAll) (hL : LatticeFa
       exact Finset.prod_ne_zero_iff.2 fun τ _ => inv_ne_zero ((map_ne_zero _).2 (div_ne_zero h0 (star_ne_zero.2 h0)))
     have hkn : ‖ι k‖ ≤ (D.Pr.T u : ℝ) ^ D.X.f := by
       rw [hk, map_prod, norm_prod]
-      refine (Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun τ _ => ?_).trans_eq
+      refine (Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun τ _ => ?_).trans_eq
         (Finset.prod_const (D.Pr.T u : ℝ))
       rw [map_inv₀]
       exact norm_ratio_le (ι.comp (D.X.emb τ)) hn

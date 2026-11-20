@@ -93,7 +93,7 @@ theorem GenDegAmple.proof (hVar : GenericFibreVar.Statement) (hPos : MultiDegree
   refine lt_of_lt_of_le hH' (Finset.sum_le_sum fun r _ => ?_)
   have hp : (1 : ℤ) ≤ ∏ j, d (r j) := by
     calc (1 : ℤ) = ∏ _j : Fin D, (1 : ℤ) := Finset.prod_const_one.symm
-      _ ≤ ∏ j, d (r j) := Finset.prod_le_prod (fun _ _ => zero_le_one) (fun j _ => hd (r j))
+      _ ≤ ∏ j, d (r j) := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun j _ => hd (r j))
   exact le_mul_of_one_le_left (hN r) hp
 
 end

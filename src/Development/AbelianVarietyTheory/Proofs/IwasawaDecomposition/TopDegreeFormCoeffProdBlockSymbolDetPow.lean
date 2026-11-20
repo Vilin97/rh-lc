@@ -17,7 +17,7 @@ variable {α : Type} [Fintype α] [DecidableEq α]
 def graph (w : Equiv.Perm α) : α × α →₀ ℕ := ∑ a, Finsupp.single (a, w a) 1
 
 def tc (P : MvPolynomial (α × α) ℂ) : ℂ :=
-  ∑ w : Equiv.Perm α, ((Equiv.Perm.sign w : ℤ) : ℂ) * coeff (graph w) P
+  ∑ w : Equiv.Perm α, ((Equiv.Perm.sign w : ℤ) : ℂ) * AddMonoidAlgebra.coeff P (graph w)
 
 theorem topCoeff_eq_tc {n : ℕ} (P : MvPolynomial (Fin n × Fin n) ℂ) : GlobalTheory.GoodMetric.topCoeff P = tc P := rfl
 
@@ -170,9 +170,9 @@ theorem tc_monomial_glue (D : ι → (γ × γ →₀ ℕ)) :
 theorem tc_prod_rename (f : ι → MvPolynomial (γ × γ) ℂ) :
     tc (∏ τ, rename (emb τ) (f τ)) = ∏ τ, tc (f τ) := by
   have hL : ∏ τ, rename (emb τ) (f τ) = ∑ x ∈ Fintype.piFinset fun τ => (f τ).support,
-      monomial (glue x) (∏ τ, coeff (x τ) (f τ)) := by
+      monomial (glue x) (∏ τ, AddMonoidAlgebra.coeff (f τ) (x τ)) := by
     calc ∏ τ, rename (emb τ) (f τ)
-        = ∏ τ, ∑ d ∈ (f τ).support, monomial (d.mapDomain (emb τ)) (coeff d (f τ)) := by
+        = ∏ τ, ∑ d ∈ (f τ).support, monomial (d.mapDomain (emb τ)) (AddMonoidAlgebra.coeff (f τ) d) := by
           refine Finset.prod_congr rfl fun τ _ => ?_
           conv_lhs => rw [(f τ).as_sum]
           rw [map_sum]
@@ -182,7 +182,7 @@ theorem tc_prod_rename (f : ι → MvPolynomial (γ × γ) ℂ) :
           refine Finset.sum_congr rfl fun x _ => ?_
           rw [prod_monomial']
           rfl
-  have hR : ∀ τ, tc (f τ) = ∑ d ∈ (f τ).support, coeff d (f τ) * tc (monomial d (1 : ℂ)) := by
+  have hR : ∀ τ, tc (f τ) = ∑ d ∈ (f τ).support, AddMonoidAlgebra.coeff (f τ) d * tc (monomial d (1 : ℂ)) := by
     intro τ
     conv_lhs => rw [(f τ).as_sum]
     rw [tc_sum]

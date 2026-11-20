@@ -12,7 +12,7 @@ theorem totalDegree_aeval_le {σ τ R A : Type*} [CommSemiring R] [CommSemiring 
   rw [MvPolynomial.aeval_def, MvPolynomial.eval₂_eq]
   refine (MvPolynomial.totalDegree_finset_sum _ _).trans (Finset.sup_le fun d hd => ?_)
   refine (MvPolynomial.totalDegree_mul _ _).trans ?_
-  have h0 : (algebraMap R (MvPolynomial τ A) (coeff d P)).totalDegree = 0 := by
+  have h0 : (algebraMap R (MvPolynomial τ A) (AddMonoidAlgebra.coeff P d)).totalDegree = 0 := by
     rw [MvPolynomial.algebraMap_apply, MvPolynomial.totalDegree_C]
   rw [h0, zero_add]
   refine (MvPolynomial.totalDegree_finset_prod _ _).trans ?_

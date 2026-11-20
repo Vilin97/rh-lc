@@ -96,7 +96,7 @@ theorem UpperTheory.Lit.Cas.prodExp :
       cell_exp hA hC (δ i) (hδ i).1 (hδ i).2 (y i) (hr i) (hyj i) t ht (a i) (ha i)
     have n0 : ‖c 0‖ ≤ 1 := by
       rw [hcj 0, norm_prod]
-      exact Finset.prod_le_one (fun i _ => norm_nonneg _) (fun i _ => (hcell i).1)
+      exact Finset.prod_le_one₀ (fun i _ => norm_nonneg _) (fun i _ => (hcell i).1)
     have n01 : ‖c 0‖ * ‖c 1‖ = 1 := by
       rw [hcj 0, hcj 1, norm_prod, norm_prod, ← Finset.prod_mul_distrib]
       exact Finset.prod_eq_one (fun i _ => (hcell i).2)

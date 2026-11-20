@@ -53,7 +53,7 @@ def taylor {T : Type} [Fintype T] {N N' : ℕ} (G : VC T N N' → ℂ) (α : Mon
     (α.prod fun _ n => (n.factorial : ℂ))
 
 def applyAt0 {T : Type} [Fintype T] {N N' : ℕ} (P : MvPolynomial (Idx T N N') ℂ) (G : VC T N N' → ℂ) : ℂ :=
-  ∑ α ∈ P.support, MvPolynomial.coeff α P * (α.prod fun _ n => (n.factorial : ℂ)) * taylor G α
+  ∑ α ∈ P.support, AddMonoidAlgebra.coeff P α * (α.prod fun _ n => (n.factorial : ℂ)) * taylor G α
 
 def evFr {T : Type} {N : ℕ} (Q : MvPolynomial (FrV T N) ℂ) (y : T → Matrix (Fin N) (Fin N) ℂ) : ℂ :=
   MvPolynomial.eval (fun k : FrV T N => y k.1 k.2.1 k.2.2) Q

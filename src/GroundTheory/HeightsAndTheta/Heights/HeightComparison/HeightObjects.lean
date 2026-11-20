@@ -157,8 +157,8 @@ theorem aeval_div_chart_mem {Ω : Type*} [Field Ω] (y : Coord n → Ω) (c : (k
   rw [aeval_def, eval₂_eq, Finset.sum_mul]
   refine Subalgebra.sum_mem _ fun m hm ↦ ?_
   have hmδ : ∀ k, ∑ i, m ⟨k, i⟩ = δ k := (geoMultiHomog_iff e δ).mpr he m hm
-  have key : (algebraMap ℤ Ω (coeff m e) * ∏ p ∈ m.support, y p ^ m p) * ∏ k, (y ⟨k, c k⟩ ^ δ k)⁻¹ =
-      algebraMap ℤ Ω (coeff m e) * ∏ p, (y p / y ⟨p.1, c p.1⟩) ^ m p := by
+  have key : (algebraMap ℤ Ω (AddMonoidAlgebra.coeff e m) * ∏ p ∈ m.support, y p ^ m p) * ∏ k, (y ⟨k, c k⟩ ^ δ k)⁻¹ =
+      algebraMap ℤ Ω (AddMonoidAlgebra.coeff e m) * ∏ p, (y p / y ⟨p.1, c p.1⟩) ^ m p := by
     rw [mul_assoc]
     congr 1
     rw [Finset.prod_subset (Finset.subset_univ m.support) (fun p _ hp ↦ by

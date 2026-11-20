@@ -197,7 +197,7 @@ theorem exists_series [CompleteSpace H] (hrep : Formalism.QuantumDeterminants.Is
     rw [hq, norm_smul, norm_inv, Real.norm_natCast, inv_mul_le_iff₀ hf]
     refine h.trans ?_
     have h2 : ∏ i, (mnorm ∘ fun i => projL ε (Y i)) i ≤ ((n : ℝ) ^ 2) ^ m * ∏ i, ‖Y i‖ := by
-      refine (Finset.prod_le_prod (fun i _ => mnorm_nonneg _) fun i _ => mnorm_projL_le ε (Y i)).trans (le_of_eq ?_)
+      refine (Finset.prod_le_prod₀ (fun i _ => mnorm_nonneg _) fun i _ => mnorm_projL_le ε (Y i)).trans (le_of_eq ?_)
       rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
     refine (mul_le_mul_of_nonneg_left h2 (by positivity)).trans (le_of_eq (by ring))
   let p : FormalMultilinearSeries ℝ (Fin n → Fin n → ℂ) H := fun m => (q m).mkContinuous _ (hqb m)

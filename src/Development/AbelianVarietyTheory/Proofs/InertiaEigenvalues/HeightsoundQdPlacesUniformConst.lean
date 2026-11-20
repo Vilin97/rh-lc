@@ -62,7 +62,7 @@ theorem jointCond_at_qd (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW)
       padicValNat.eq_zero_of_not_dvd fun h => by
         have := Nat.le_of_dvd (by omega) h
         omega
-    rw [hdegK, padicValNat.mul hpos hK0, hv, zero_add, Nat.sub_self]
+    rw [hdegK, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hpos hK0, hv, zero_add, Nat.sub_self]
   have hvd : ∀ m : ℕ, 0 < m → LocalSituation.vdegMs (LocalSituation.sit D.loc HW (D.nd.l i) (D.locA (D.nd.l i)) (D.nbr i w hw).Kw 1 C.LL hs) m = m - 1 := by
     intro m hm
     unfold LocalSituation.vdegMs

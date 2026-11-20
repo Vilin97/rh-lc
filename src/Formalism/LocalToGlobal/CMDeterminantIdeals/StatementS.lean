@@ -29,7 +29,7 @@ def CoeffIntegralLoc : Prop :=
       ∀ (Y : ∀ b, Matrix (Fin (m b)) (Fin (m b)) KW) (X : ∀ b, Matrix (Fin (m b)) (Fin (m b)) W), (∀ b, IsUnit (X b).det) →
         (∀ b, ((U b).map f).transpose * Y b = (X b).map (algebraMap W KW)) →
         ∃ w : W, evalFr (MvPolynomial.map f G) Y = f τ * algebraMap W KW w) →
-    ∀ μ : FrVar m →₀ ℕ, ∃ w : V, MvPolynomial.coeff μ G * ∏ v : FrVar m, c v.1 v.2.2 ^ μ v = τ * algebraMap V K' w
+    ∀ μ : FrVar m →₀ ℕ, ∃ w : V, AddMonoidAlgebra.coeff G μ * ∏ v : FrVar m, c v.1 v.2.2 ^ μ v = τ * algebraMap V K' w
 
 def gramBlock {K : Type} [Field K] [NumberField K] {g : ℕ} (e : (Σ b, Fin (m b)) ≃ Fin g) (U : Matrix (Fin g) (Fin g) K)
     (H : Matrix (Fin g) (Fin g) ℂ) (σ : K →+* ℂ) (b : B) : Matrix (Fin (m b)) (Fin (m b)) ℂ :=

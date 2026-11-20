@@ -40,7 +40,7 @@ theorem two_zpow_injective {K : Type} [Field K] [CharZero K] {m n : ℤ} (h : (2
 theorem degree_eq_of_scaling_zpow {K σ : Type} [Field K] [CharZero K] (G P : MvPolynomial σ K) (hP : P ≠ 0) (d : ℤ)
     (h : ∀ x : σ → K, MvPolynomial.eval x P ≠ 0 →
       MvPolynomial.eval (fun v => 2 * x v) G = (2 : K) ^ d * MvPolynomial.eval x G)
-    (μ : σ →₀ ℕ) (hμ : MvPolynomial.coeff μ G ≠ 0) : (μ.degree : ℤ) = d := by
+    (μ : σ →₀ ℕ) (hμ : AddMonoidAlgebra.coeff G μ ≠ 0) : (μ.degree : ℤ) = d := by
   have h1 : P * (MvPolynomial.aeval (fun v => MvPolynomial.C (2 : K) * MvPolynomial.X v : σ → MvPolynomial σ K) G -
       MvPolynomial.C ((2 : K) ^ d) * G) = 0 := by
     apply MvPolynomial.funext
@@ -58,7 +58,7 @@ theorem degree_eq_of_scaling_zpow {K σ : Type} [Field K] [CharZero K] (G P : Mv
       rw [map_mul, map_sub, e, h x hx]
       simp
   have h2 := sub_eq_zero.1 ((mul_eq_zero.1 h1).resolve_left hP)
-  have h3 := congrArg (MvPolynomial.coeff μ) h2
+  have h3 := congrArg (AddMonoidAlgebra.coeff · μ) h2
   rw [coeff_aeval_scale, MvPolynomial.coeff_C_mul] at h3
   have h4 : (2 : K) ^ μ.degree = 2 ^ d := mul_right_cancel₀ hμ h3
   rw [← zpow_natCast] at h4
@@ -70,7 +70,7 @@ theorem frPoly_secZ_degree_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
       (∀ (y' : FrPt Xo c K) (Y : ∀ b : E →+* ℂ, Matrix (Fin (Dw.mult b)) (Fin (Dw.mult b)) K),
           (∀ b, (Y b).det ≠ 0) → GlobalTheory.Frames.FrChg (fun b => (Y b).transpose) 1 y₀ y' →
           (∏ b, (Y b).det ^ k b) * evR Xo c F y' = Formalism.L2.LamCM.evalFr G Y) →
-      ∀ μ, MvPolynomial.coeff μ G ≠ 0 →
+      ∀ μ, AddMonoidAlgebra.coeff G μ ≠ 0 →
         (μ.degree : ℤ) = ∑ b, ((Dw.mult b : ℤ) * (k b : ℤ) + ∑ i : Fin (Dw.mult b), e (some ⟨b, i⟩)) := by
   classical
   intro E _ _ _ H Dw l Xo c K _ _ y₀ e k _he0 F hF G hG μ hμ

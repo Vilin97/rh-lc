@@ -9,7 +9,7 @@ theorem UpperTheory.adicNorm_prod_le_prod_of_injective_classes :
   have h1 : ∀ o s, ‖ι.symm (f o s)‖ ≤ 1 := fun o s =>
     GlobalTheory.norm_le_one_of_isIntegral_int (map_isIntegral_int ι.symm (hf o s))
   rw [map_prod, norm_prod]
-  refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) (fun o _ => ?_)
+  refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) (fun o _ => ?_)
   rw [map_prod, norm_prod]
   have h2 : ∏ r : ↥(X o), ‖ι.symm (f o (cl o r))‖
       = ∏ s ∈ Finset.univ.map ⟨cl o, hcl o⟩, ‖ι.symm (f o s)‖ := by

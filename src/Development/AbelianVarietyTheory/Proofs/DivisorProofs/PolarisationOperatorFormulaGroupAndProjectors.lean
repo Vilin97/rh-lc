@@ -49,7 +49,7 @@ theorem comp_of_rowZ {O : Type} [CommRing O] {N : ℕ} (H : Fin N → ℤ) (h : 
   classical
   ext d
   rw [coeff_weightedHomogeneousComponent]
-  by_cases hd : coeff d h = 0
+  by_cases hd : AddMonoidAlgebra.coeff h d = 0
   · split_ifs <;> simp [hd]
   · have e := hh hd
     have key : Finsupp.weight (rowW N N) d = w ↔ (fun c => (w c : ℤ)) = H := by

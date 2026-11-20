@@ -61,7 +61,7 @@ theorem polarizationBihomogeneous : RBihom := by
   · exact iwh_X_pderiv _ _ _ (by simp [wxi]) h2
 
 theorem coeff_X_pderiv_self {σ : Type} {K : Type} [Field K] (i : σ) (f : MvPolynomial σ K)
-    (m : σ →₀ ℕ) : coeff m (X i * pderiv i f) = coeff m f * (m i : K) := by
+    (m : σ →₀ ℕ) : AddMonoidAlgebra.coeff (X i * pderiv i f) m = AddMonoidAlgebra.coeff f m * (m i : K) := by
   classical
   induction f using MvPolynomial.induction_on'
   next u a =>
@@ -80,13 +80,13 @@ theorem coeff_X_pderiv_self {σ : Type} {K : Type} [Field K] (i : σ) (f : MvPol
         rfl
       · simp
   next p q hp hq =>
-    simp only [map_add, mul_add, coeff_add, hp, hq, add_mul]
+    simp only [map_add, mul_add, MvPolynomial.coeff_add, hp, hq, add_mul]
 
 theorem weightOfEigenvector : WtOfEig := by
   intro K _ _ k a w f h m hm
-  have h1 := congrArg (coeff m) h
+  have h1 := congrArg (AddMonoidAlgebra.coeff · m) h
   rw [rop_apply_eq, coeff_sub, coeff_X_pderiv_self, coeff_X_pderiv_self, coeff_smul] at h1
-  have hc : coeff m f ≠ 0 := MvPolynomial.mem_support_iff.1 hm
+  have hc : AddMonoidAlgebra.coeff f m ≠ 0 := MvPolynomial.mem_support_iff.1 hm
   have h2 : (((m (Sum.inl a) : ℤ) - m (Sum.inr a) : ℤ) : K) = (w : K) := by
     apply mul_left_cancel₀ hc
     push_cast
@@ -118,7 +118,7 @@ theorem comp_mul_zero {σ : Type} {K : Type} [Field K] (w : σ → ℤ) {φ : Mv
   split_ifs with hd
   · refine Finset.sum_congr rfl fun x hx => ?_
     rw [coeff_weightedHomogeneousComponent]
-    by_cases h0 : coeff x.1 φ = 0
+    by_cases h0 : AddMonoidAlgebra.coeff φ x.1 = 0
     · simp [h0]
     · have hx0 := hφ h0
       have hsum := by simpa using hx
@@ -128,7 +128,7 @@ theorem comp_mul_zero {σ : Type} {K : Type} [Field K] (w : σ → ℤ) {φ : Mv
   · symm
     refine Finset.sum_eq_zero fun x hx => ?_
     rw [coeff_weightedHomogeneousComponent]
-    by_cases h0 : coeff x.1 φ = 0
+    by_cases h0 : AddMonoidAlgebra.coeff φ x.1 = 0
     · simp [h0]
     · have hx0 := hφ h0
       have hsum := by simpa using hx
@@ -152,7 +152,7 @@ theorem pairingWeightCancel : TTWt := by
   have hk : 0 < k := Fin.pos a
   have hcomp : weightedHomogeneousComponent (va k a) n g ≠ 0 := by
     intro h0
-    have h3 := congrArg (coeff m) h0
+    have h3 := congrArg (AddMonoidAlgebra.coeff · m) h0
     rw [coeff_weightedHomogeneousComponent, if_pos hwm] at h3
     exact (MvPolynomial.mem_support_iff.1 hm) (by simpa using h3)
   have hprod : weightedHomogeneousComponent (va k a) n (tt K k * g) ≠ 0 := by

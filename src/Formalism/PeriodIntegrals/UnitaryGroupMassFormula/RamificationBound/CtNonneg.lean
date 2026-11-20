@@ -33,7 +33,7 @@ def GaussAlg : Prop :=
     gaussGe p Oc (0 : MvPolynomial τ Kc) g ∧
     (∀ y y' : MvPolynomial τ Kc, gaussGe p Oc y g → gaussGe p Oc y' g → gaussGe p Oc (y + y') g) ∧
     (∀ y : MvPolynomial τ Kc, gaussGe p Oc y g → gaussGe p Oc (-y) g) ∧
-    (∀ w y : MvPolynomial τ Kc, (∀ n, coeff n w ∈ Oc) → gaussGe p Oc y g → gaussGe p Oc (w * y) g)
+    (∀ w y : MvPolynomial τ Kc, (∀ n, AddMonoidAlgebra.coeff w n ∈ Oc) → gaussGe p Oc y g → gaussGe p Oc (w * y) g)
 
 def CtNonneg : Prop :=
   ∀ (nH r0 rb : ℕ) (TT : Finset (Fin nH)) (nu : Wt nH),

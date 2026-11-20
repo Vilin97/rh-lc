@@ -71,7 +71,7 @@ theorem resSurj_coreD.{u} :
   letI : Field (R ⧸ m) := Ideal.Quotient.field m
   let π : H →ₗ[R] N := Submodule.linearProjOfIsCompl N F hc.symm
   have hπ : ∀ n : N, π n = n := fun n ↦ Submodule.linearProjOfIsCompl_apply_left hc.symm n
-  have hπF : ∀ x ∈ F, π x = 0 := fun x hx ↦ Submodule.linearProjOfIsCompl_apply_right' hc.symm hx
+  have hπF : ∀ x ∈ F, π x = 0 := fun x hx ↦ Submodule.projectionOnto_apply_of_mem_right hc.symm hx
   haveI : Module.Finite R N := Module.Finite.of_surjective π fun n ↦ ⟨n, hπ n⟩
   have d1 := finrank_res m H
   have d2 := finrank_res m F

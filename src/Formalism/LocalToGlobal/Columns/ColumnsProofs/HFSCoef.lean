@@ -95,7 +95,7 @@ theorem hfsJ_li (F : CoefFrame ι) : LinearIndependent L fun i => hfsJ ι lam (b
   have hK : ∀ k, ∑ j ∈ s, F.c (g j) k • ((bVV K lam j : VV K lam) : Pol K σ n) = 0 := by
     intro k
     ext d
-    have h1 := congrArg (MvPolynomial.coeff d) hpol
+    have h1 := congrArg (AddMonoidAlgebra.coeff · d) hpol
     simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, MvPolynomial.coeff_map, smul_eq_mul,
       MvPolynomial.coeff_zero] at h1 ⊢
     have h2 := congrArg (fun y => F.c y k) h1

@@ -47,7 +47,7 @@ theorem dH_comp_bound {ψ : AddChar (AF D.host.F) ℂ} {f : WO S T → ℂ} {L M
   rw [norm_smul, norm_prod]
   refine mul_le_mul_of_nonneg_right ?_ (norm_nonneg _)
   calc ∏ i, ‖(A (Pi.single (l i) (1 : ℝ))) (r i)‖ ≤ ∏ _i : Fin n, ‖A‖ :=
-        Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i _ => hc i (r i)
+        Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i _ => hc i (r i)
     _ = ‖A‖ ^ n := by simp
 
 theorem continuous_psiT (τ : D.what₂.Tau) : Continuous (psiT D τ) := by

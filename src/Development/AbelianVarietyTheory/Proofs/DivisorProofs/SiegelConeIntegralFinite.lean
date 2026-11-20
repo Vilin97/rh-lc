@@ -95,18 +95,18 @@ theorem pointwise (f n r K : ℕ) (hK : K = 2 * f * (n + 2 * r + 1) + 1) {m : �
       calc m ^ r ≤ m ^ (Finset.univ.erase j).card :=
             pow_le_pow_of_le_one hm.le hm1 ((Finset.card_erase_le).trans (by simp))
         _ = ∏ i ∈ Finset.univ.erase j, m := (Finset.prod_const m).symm
-        _ ≤ _ := Finset.prod_le_prod (fun _ _ => hm.le) (fun i _ => htm i)
+        _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => hm.le) (fun i _ => htm i)
     have := mul_le_mul_of_nonneg_left hQ (hpos j).le
     nlinarith [hpos j]
   have h1 : ∏ j, (m ^ r * (1 + t j)) ^ (K + 2) ≤ (1 + ∏ i, t i) ^ ((K + 2) * r) := by
     calc ∏ j, (m ^ r * (1 + t j)) ^ (K + 2) ≤ ∏ _j : Fin r, (1 + ∏ i, t i) ^ (K + 2) :=
-          Finset.prod_le_prod (fun j _ => pow_nonneg (mul_nonneg ha0.le (by linarith [hpos j])) _)
+          Finset.prod_le_prod₀ (fun j _ => pow_nonneg (mul_nonneg ha0.le (by linarith [hpos j])) _)
             (fun j _ => pow_le_pow_left₀ (mul_nonneg ha0.le (by linarith [hpos j])) (hB j) _)
       _ = (1 + ∏ i, t i) ^ ((K + 2) * r) := by rw [Fin.prod_const, pow_mul]
   have h2 : ((∏ i : Fin r, t i ^ (2 * (f : ℤ) * ((n : ℤ) - 2 * (i.val : ℤ) - 1))) * ∏ i, t i)⁻¹ ≤
       ∏ j, m⁻¹ ^ K * (1 + t j) ^ K := by
     rw [← Finset.prod_mul_distrib, ← Finset.prod_inv_distrib]
-    refine Finset.prod_le_prod (fun i _ => inv_nonneg.2 (mul_nonneg (zpow_nonneg (hpos i).le _) (hpos i).le))
+    refine Finset.prod_le_prod₀ (fun i _ => inv_nonneg.2 (mul_nonneg (zpow_nonneg (hpos i).le _) (hpos i).le))
       (fun i _ => ?_)
     rw [← zpow_add_one₀ (hpos i).ne', ← zpow_neg]
     have hi : (i.val : ℤ) < r := by exact_mod_cast i.isLt
@@ -130,7 +130,7 @@ theorem pointwise (f n r K : ℕ) (hK : K = 2 * f * (n + 2 * r + 1) + 1) {m : �
     _ = ∏ j, ((m ^ r * (1 + t j)) ^ (K + 2))⁻¹ * (m⁻¹ ^ K * (1 + t j) ^ K) := by
         rw [← Finset.prod_inv_distrib, ← Finset.prod_mul_distrib]
     _ ≤ ∏ j, (m⁻¹ ^ K / (m ^ r) ^ (K + 2) * (1 + t j ^ 2)⁻¹) :=
-        Finset.prod_le_prod (fun j _ => mul_nonneg (inv_nonneg.2 (pow_nonneg (mul_nonneg ha0.le
+        Finset.prod_le_prod₀ (fun j _ => mul_nonneg (inv_nonneg.2 (pow_nonneg (mul_nonneg ha0.le
             (by linarith [hpos j])) _)) (mul_nonneg (pow_nonneg (inv_nonneg.2 hm.le) _) (pow_nonneg (by linarith [hpos j]) _)))
           (fun j _ => factor_le ha0 (pow_nonneg (inv_nonneg.2 hm.le) _) (hpos j).le K)
 

@@ -241,7 +241,7 @@ theorem kill_diag (Λ : PX m n →ₗ[ℂ] ℂ) (hΛ : ∀ u ∈ unitaryGroup (F
       rw [kill_charged Λ hΛ s a ha, mul_zero]
   rw [P.as_sum, map_sum, map_sum]
   refine Finset.sum_eq_zero fun s _ => ?_
-  rw [show (monomial s (coeff s P) : PX m n) = coeff s P • monomial s 1 by rw [smul_monomial, smul_eq_mul, mul_one],
+  rw [show (monomial s (AddMonoidAlgebra.coeff P s) : PX m n) = AddMonoidAlgebra.coeff P s • monomial s 1 by rw [smul_monomial, smul_eq_mul, mul_one],
     (dY (diagonal d)).map_smul, map_smul, hmon, smul_zero]
 
 theorem kill_herm (Λ : PX m n →ₗ[ℂ] ℂ) (hΛ : ∀ u ∈ unitaryGroup (Fin m) ℂ, ∀ P, Λ (actU u P) = Λ P)

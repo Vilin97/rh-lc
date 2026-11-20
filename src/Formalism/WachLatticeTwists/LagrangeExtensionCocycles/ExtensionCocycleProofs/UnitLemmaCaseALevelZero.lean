@@ -97,7 +97,7 @@ theorem prod_sub_one_dvd (ℓ : ℕ) [Fact ℓ.Prime] (hℓ : ℓ ≠ 2) (u : �
       rintro rfl
       exact hm (dvd_zero ℓ)
     have hval : padicValNat ℓ i = k := by
-      rw [hkm, padicValNat.mul (pow_ne_zero _ hp.ne_zero) hm0, padicValNat.prime_pow,
+      rw [hkm, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.ne_zero) hm0, padicValNat.prime_pow,
         padicValNat.eq_zero_of_not_dvd hm, add_zero]
     have hdivk : (ℓ : ℤ_[ℓ]) ∣ (u : ℤ_[ℓ]) ^ (ℓ ^ k) - 1 := by
       have := sub_dvd_pow_sub_pow (u : ℤ_[ℓ]) 1 (ℓ ^ k)
@@ -131,7 +131,7 @@ theorem prod_sub_one_dvd (ℓ : ℕ) [Fact ℓ.Prime] (hℓ : ℓ ≠ 2) (u : �
   | zero => simp
   | succ a ih =>
     rw [Finset.prod_Icc_succ_top (by omega), Nat.factorial_succ,
-      padicValNat.mul (by omega) (Nat.factorial_ne_zero a)]
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by omega) (Nat.factorial_ne_zero a)]
     have e : a + 1 + (padicValNat ℓ (a + 1) + padicValNat ℓ a.factorial) =
         (a + padicValNat ℓ a.factorial) + (1 + padicValNat ℓ (a + 1)) := by ring
     rw [e, pow_add (ℓ : ℤ_[ℓ]) (a + padicValNat ℓ a.factorial) (1 + padicValNat ℓ (a + 1))]

@@ -101,7 +101,7 @@ theorem lineEval_eq_zero_iff (hd : d.AxH 𝒜) (c : ι) (n : ℕ) (Q : MvPolynom
   constructor
   · intro h
     ext β
-    have hb := congrArg (MvPolynomial.coeff β) h
+    have hb := congrArg (AddMonoidAlgebra.coeff · β) h
     rw [mul_comm, MvPolynomial.coeff_C_mul, MvPolynomial.coeff_map, MvPolynomial.coeff_zero, mul_comm,
       ← Algebra.smul_def] at hb
     rw [MvPolynomial.coeff_zero]

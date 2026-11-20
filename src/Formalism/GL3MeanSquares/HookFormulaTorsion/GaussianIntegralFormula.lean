@@ -235,18 +235,18 @@ theorem joint_lower_bound : JointLowerBound := by
     have := hlam a b (Finset.mem_filter.mp hb).2.1; linarith))
   have hPn0pos : 0 < Pn0 := Finset.prod_pos (fun a _ => Finset.prod_pos (fun b hb => by
     have := hlam a b (Finset.mem_filter.mp hb).2.1; linarith))
-  have hPcle : Pc0 ≤ Pc := Finset.prod_le_prod
+  have hPcle : Pc0 ≤ Pc := Finset.prod_le_prod₀
     (fun a _ => Finset.prod_nonneg (fun b hb => by
       have := hlam a b (Finset.mem_filter.mp hb).2.1; linarith))
-    (fun a _ => Finset.prod_le_prod (fun b hb => by
+    (fun a _ => Finset.prod_le_prod₀ (fun b hb => by
       have := hlam a b (Finset.mem_filter.mp hb).2.1; linarith)
       (fun b _ => by
         have : (0 : ℝ) ≤ (nab a b : ℝ) := Nat.cast_nonneg _
         linarith))
-  have hPnle : Pn0 ≤ Pn := Finset.prod_le_prod
+  have hPnle : Pn0 ≤ Pn := Finset.prod_le_prod₀
     (fun a _ => Finset.prod_nonneg (fun b hb => by
       have := hlam a b (Finset.mem_filter.mp hb).2.1; linarith))
-    (fun a _ => Finset.prod_le_prod (fun b hb => by
+    (fun a _ => Finset.prod_le_prod₀ (fun b hb => by
       have := hlam a b (Finset.mem_filter.mp hb).2.1; linarith)
       (fun b hb => by
         have h : a < b := (Finset.mem_filter.mp hb).2.1

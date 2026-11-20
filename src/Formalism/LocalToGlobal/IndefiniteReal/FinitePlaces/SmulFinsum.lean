@@ -20,7 +20,7 @@ theorem map_finsum' (φ : M →ₗ[ℂ] M') {f : α → M} (hf : (Function.suppo
 
 theorem smul_finsum' (c : ℂ) {f : α → M} (hf : (Function.support f).Finite) :
     c • ∑ᶠ i, f i = ∑ᶠ i, c • f i := by
-  exact map_finsum (DistribMulAction.toAddMonoidHom M c) hf
+  exact map_finsum (DistribSMul.toAddMonoidHom M c) hf
 
 end FinsumAux
 

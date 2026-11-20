@@ -16,7 +16,7 @@ theorem isDomain_and_isIntegrallyClosed_atPrime_of_isLocalization {B : Type*} [C
   have hq : (p.map (algebraMap B T)).IsPrime :=
     IsLocalization.isPrime_of_isPrime_disjoint M T p hp hM
   have hc : (p.map (algebraMap B T)).comap (algebraMap B T) = p :=
-    IsLocalization.comap_map_of_isPrime_disjoint M T hp hM
+    IsLocalization.under_map_of_isPrime_disjoint M T hp hM
   have h1 := IsLocalization.isLocalization_isLocalization_atPrime_isLocalization M
     (Localization.AtPrime (p.map (algebraMap B T))) (p.map (algebraMap B T))
   have h2 : IsLocalization p.primeCompl (Localization.AtPrime (p.map (algebraMap B T))) := by

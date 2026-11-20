@@ -117,7 +117,7 @@ theorem siegel_GAd (hS : GlobalTheory.Published.SiegelSetUnitary) (h : IsCMExt F
           _ = _ := by ring
       have h7 : Real.exp (∑ i, t i) ≤ (height σ J (a t) : ℝ) ^ r := by
         rw [Real.exp_sum]
-        refine (Finset.prod_le_prod (fun i _ => (Real.exp_pos _).le) fun i _ =>
+        refine (Finset.prod_le_prod₀ (fun i _ => (Real.exp_pos _).le) fun i _ =>
           le_height_of_isTorusElt hW (htor t) i).trans (le_of_eq ?_)
         simp
       have h8 : (1 : ℝ) ≤ height σ J (γ * a t) := by exact_mod_cast one_le_height σ J _

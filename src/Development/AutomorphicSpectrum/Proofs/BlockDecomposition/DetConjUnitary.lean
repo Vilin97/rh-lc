@@ -102,7 +102,7 @@ theorem prod_le_pow {n K : ℕ} (hK : 3 * n ≤ K) {x : Fin n → ℝ} {a : ℝ}
   rw [Finset.prod_inv_distrib]
   refine inv_anti₀ (Finset.prod_pos fun i _ => by have := h0 i; positivity) ?_
   calc ∏ i, (1 + x i) ^ 3 ≤ ∏ _i : Fin n, (1 + a) ^ 3 :=
-        Finset.prod_le_prod (fun i _ => by have := h0 i; positivity)
+        Finset.prod_le_prod₀ (fun i _ => by have := h0 i; positivity)
           fun i _ => pow_le_pow_left₀ (by have := h0 i; positivity) (by linarith [hx i]) 3
     _ = (1 + a) ^ (3 * n) := by
         rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin, ← pow_mul]

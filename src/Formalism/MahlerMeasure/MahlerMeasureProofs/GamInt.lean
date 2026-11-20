@@ -214,8 +214,8 @@ theorem vfact_split {a b T B : ℕ} (h : a + b ≤ T) (hB : Nat.log p T ≤ B) :
   have e := Nat.add_choose_mul_factorial_mul_factorial a b
   have h1 : padicValNat p (a + b).factorial =
       padicValNat p ((a + b).choose b) + padicValNat p a.factorial + padicValNat p b.factorial := by
-    rw [← e, padicValNat.mul (Nat.mul_ne_zero (Nat.choose_pos (by omega)).ne' (Nat.factorial_pos _).ne') (Nat.factorial_pos _).ne',
-      padicValNat.mul (Nat.choose_pos (by omega)).ne' (Nat.factorial_pos _).ne']
+    rw [← e, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.mul_ne_zero (Nat.choose_pos (by omega)).ne' (Nat.factorial_pos _).ne') (Nat.factorial_pos _).ne',
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.choose_pos (by omega)).ne' (Nat.factorial_pos _).ne']
   have := vchoose_le (p := p) (k := b) h hB
   omega
 
@@ -235,7 +235,7 @@ theorem vfact_sum {ι : Type} (s : Finset ι) (α : ι → ℕ) {T B : ℕ} (h :
 theorem vdesc_ge (x a : ℕ) (ha : a ≤ x) :
     padicValNat p a.factorial ≤ padicValNat p (x.descFactorial a) := by
   rw [Nat.descFactorial_eq_factorial_mul_choose,
-    padicValNat.mul (by positivity) (Nat.choose_pos ha).ne']
+    (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by positivity) (Nat.choose_pos ha).ne']
   omega
 
 theorem norm_nat_eq (t : ℕ) (ht : t ≠ 0) : ‖(t : ℚ_[p])‖ = (p : ℝ) ^ (-(padicValNat p t : ℤ)) := by
@@ -318,7 +318,7 @@ theorem fock_add_left (F F' G : MvPolynomial σ ℚ_[p]) :
   rw [fock_eq_sum (F + F') G (F.support ∪ F'.support) support_add,
     fock_eq_sum F G _ (Finset.subset_union_left (s₂ := F'.support)),
     fock_eq_sum F' G _ (Finset.subset_union_right (s₁ := F.support)), ← Finset.sum_add_distrib]
-  exact Finset.sum_congr rfl (fun m _ => by rw [coeff_add]; ring)
+  exact Finset.sum_congr rfl (fun m _ => by rw [MvPolynomial.coeff_add]; ring)
 
 theorem fock_smul_left (c : ℚ_[p]) (F G : MvPolynomial σ ℚ_[p]) :
     Formalism.GM.M.fock p (c • F) G = c * Formalism.GM.M.fock p F G := by
@@ -414,7 +414,7 @@ theorem Dop_commute_sum {ι : Type} (s : Finset ι) (u v : σ) (f g : ι → σ)
   Commute.sum_right _ _ _ (fun i _ => Dop_commute _ _ _ _)
 
 theorem coeff_Dop_pow (u v : σ) (huv : u ≠ v) (a : ℕ) (G : MvPolynomial σ ℚ_[p]) (β : σ →₀ ℕ) :
-    coeff β ((Dop u v ^ a) G) = coeff (β + a • (Finsupp.single u 1 + Finsupp.single v 1)) G *
+    AddMonoidAlgebra.coeff ((Dop u v ^ a) G) β = AddMonoidAlgebra.coeff G (β + a • (Finsupp.single u 1 + Finsupp.single v 1)) *
       (((β u + a).descFactorial a : ℕ) : ℚ_[p]) * (((β v + a).descFactorial a : ℕ) : ℚ_[p]) := by
   induction a generalizing β with
   | zero => simp
@@ -540,14 +540,14 @@ theorem supp_FT_pow (T : Finset (Fin r)) (Q : ℕ → (σ →₀ ℕ) → Prop)
     have := coeff_Dop_pow (w c) (e c) (hwe c) 1 ((FT w e T ^ b) G) β
     rw [pow_one] at this
     rw [this] at hne
-    have hm : coeff (β + 1 • (Finsupp.single (w c) 1 + Finsupp.single (e c) 1)) ((FT w e T ^ b) G) ≠ 0 := by
+    have hm : AddMonoidAlgebra.coeff ((FT w e T ^ b) G) (β + 1 • (Finsupp.single (w c) 1 + Finsupp.single (e c) 1)) ≠ 0 := by
       intro h0'; apply hne; rw [h0']; ring
     rw [one_smul, ← add_assoc] at hm
     exact hstep b β c hc (ih _ (mem_support_iff.mpr hm))
 
 theorem FT_pow_coeff_norm (hwe : ∀ c, w c ≠ e c) (Tb B : ℕ) (hB : Nat.log p Tb ≤ B) (K : ℝ)
-    (G : MvPolynomial σ ℚ_[p]) (hG : ∀ β, ‖coeff β G‖ ≤ K) (T : Finset (Fin r)) :
-    ∀ b ≤ Tb, ∀ β, ‖coeff β ((FT w e T ^ b) G)‖ ≤
+    (G : MvPolynomial σ ℚ_[p]) (hG : ∀ β, ‖AddMonoidAlgebra.coeff G β‖ ≤ K) (T : Finset (Fin r)) :
+    ∀ b ≤ Tb, ∀ β, ‖AddMonoidAlgebra.coeff ((FT w e T ^ b) G) β‖ ≤
       K * (p : ℝ) ^ (((T.card * B : ℕ) : ℤ) - 2 * (padicValNat p b.factorial : ℤ)) := by
   have hK : 0 ≤ K := (norm_nonneg _).trans (hG 0)
   induction T using Finset.induction_on with
@@ -576,12 +576,12 @@ theorem FT_pow_coeff_norm (hwe : ∀ c, w c ≠ e c) (Tb B : ℕ) (hB : Nat.log 
     have hfac : padicValNat p b.factorial = padicValNat p (b.choose a) + padicValNat p a.factorial +
         padicValNat p (b - a).factorial := by
       rw [← Nat.choose_mul_factorial_mul_factorial (show a ≤ b by omega),
-        padicValNat.mul (Nat.mul_ne_zero (Nat.choose_pos (by omega)).ne' (Nat.factorial_pos _).ne')
+        (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.mul_ne_zero (Nat.choose_pos (by omega)).ne' (Nat.factorial_pos _).ne')
           (Nat.factorial_pos _).ne',
-        padicValNat.mul (Nat.choose_pos (by omega)).ne' (Nat.factorial_pos _).ne']
+        (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.choose_pos (by omega)).ne' (Nat.factorial_pos _).ne']
     rw [hC]
     calc (p : ℝ) ^ (-(padicValNat p (b.choose a) : ℤ)) *
-          (‖coeff (β + a • (Finsupp.single (w c) 1 + Finsupp.single (e c) 1)) ((FT w e T ^ (b - a)) G)‖ *
+          (‖AddMonoidAlgebra.coeff ((FT w e T ^ (b - a)) G) (β + a • (Finsupp.single (w c) 1 + Finsupp.single (e c) 1))‖ *
             ‖((((β (w c) + a).descFactorial a) : ℕ) : ℚ_[p])‖ * ‖((((β (e c) + a).descFactorial a) : ℕ) : ℚ_[p])‖)
         ≤ (p : ℝ) ^ (-(padicValNat p (b.choose a) : ℤ)) *
           ((K * (p : ℝ) ^ (((T.card * B : ℕ) : ℤ) - 2 * (padicValNat p (b - a).factorial : ℤ))) *
@@ -695,7 +695,7 @@ end good
 section intP
 variable {σ : Type} [DecidableEq σ]
 
-def IsIntP (P : MvPolynomial σ ℚ_[p]) : Prop := ∀ β, ‖coeff β P‖ ≤ 1
+def IsIntP (P : MvPolynomial σ ℚ_[p]) : Prop := ∀ β, ‖AddMonoidAlgebra.coeff P β‖ ≤ 1
 
 theorem IsIntP.mul {P P' : MvPolynomial σ ℚ_[p]} (h : IsIntP P) (h' : IsIntP P') : IsIntP (P * P') := by
   intro β
@@ -706,7 +706,7 @@ theorem IsIntP.mul {P P' : MvPolynomial σ ℚ_[p]} (h : IsIntP P) (h' : IsIntP 
   exact mul_le_one₀ (h _) (norm_nonneg _) (h' _)
 
 theorem IsIntP.add {P P' : MvPolynomial σ ℚ_[p]} (h : IsIntP P) (h' : IsIntP P') : IsIntP (P + P') := by
-  intro β; rw [coeff_add]; exact (Padic.nonarchimedean _ _).trans (max_le (h β) (h' β))
+  intro β; rw [MvPolynomial.coeff_add]; exact (Padic.nonarchimedean _ _).trans (max_le (h β) (h' β))
 
 theorem IsIntP.neg {P : MvPolynomial σ ℚ_[p]} (h : IsIntP P) : IsIntP (-P) := by
   intro β; rw [coeff_neg, norm_neg]; exact h β
@@ -865,7 +865,7 @@ variable {N r : ℕ}
 
 theorem aeval_expand (LL : Letters (N + 1)) (ρ : Fin r) (f : MvPolynomial (Fin (N + 1) × Fin r) ℚ_[p]) :
     aeval (freezeSub p LL ρ) f = ∑ μ ∈ f.support,
-      C (coeff μ f) * ∏ v : Fin (N + 1) × Fin r, freezeSub p LL ρ v ^ μ v := by
+      C (AddMonoidAlgebra.coeff f μ) * ∏ v : Fin (N + 1) × Fin r, freezeSub p LL ρ v ^ μ v := by
   conv_lhs => rw [f.as_sum]
   rw [map_sum]
   apply sum_congr rfl
@@ -888,14 +888,14 @@ theorem aeval_good (LL : Letters (N + 1)) (ρ : Fin r) (hW : LL.vec (Fin.last N)
   exact h.congr (GoodQ ρ) (sum_dv LL μ hmd)
 
 theorem intPol_coeff {σ : Type} (f : MvPolynomial σ ℚ_[p]) (hf : f ∈ IntPol p σ) :
-    ∀ μ, ‖coeff μ f‖ ≤ 1 := by
+    ∀ μ, ‖AddMonoidAlgebra.coeff f μ‖ ≤ 1 := by
   obtain ⟨f0, rfl⟩ := hf
   intro μ
   simp only [AlgHom.toLinearMap_apply, mapAlgHom_apply, coeff_map]
-  exact PadicInt.norm_le_one (coeff μ f0)
+  exact PadicInt.norm_le_one (AddMonoidAlgebra.coeff f0 μ)
 
 theorem aeval_int (LL : Letters (N + 1)) (ρ : Fin r)
-    (f : MvPolynomial (Fin (N + 1) × Fin r) ℚ_[p]) (hf : ∀ μ, ‖coeff μ f‖ ≤ 1) :
+    (f : MvPolynomial (Fin (N + 1) × Fin r) ℚ_[p]) (hf : ∀ μ, ‖AddMonoidAlgebra.coeff f μ‖ ≤ 1) :
     IsIntP (aeval (freezeSub p LL ρ) f) := by
   rw [aeval_expand]
   apply IsIntP.sum
@@ -1007,7 +1007,7 @@ theorem v_prod {ι : Type} (s : Finset ι) (f : ι → ℕ) (hf : ∀ i ∈ s, f
   induction s using Finset.induction_on with
   | empty => simp
   | insert a s ha ih =>
-    rw [prod_insert ha, sum_insert ha, padicValNat.mul (hf a (mem_insert_self _ _))
+    rw [prod_insert ha, sum_insert ha, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (hf a (mem_insert_self _ _))
       (Finset.prod_ne_zero_iff.mpr (fun i hi => hf i (mem_insert_of_mem hi))),
       ih (fun i hi => hf i (mem_insert_of_mem hi))]
 
@@ -1172,17 +1172,17 @@ theorem term_val (LL : Letters (N + 1)) (hr : 1 ≤ r) (B : ℕ)
       ∏ v : Fin (N + 1 + 1) × Fin r, (δ v).factorial) =
       padicValNat p (j.choose a) + padicValNat p (j.choose a') + padicValNat p d1 + padicValNat p d2 +
         padicValNat p a'.factorial + padicValNat p (∏ v : Fin (N + 1 + 1) × Fin r, (δ v).factorial) := by
-    rw [padicValNat.mul (by positivity) nzW, padicValNat.mul (by positivity) (Nat.factorial_pos _).ne',
-      padicValNat.mul (by positivity) hd2', padicValNat.mul (by positivity) hd1',
-      padicValNat.mul nz1 nz2]
+    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by positivity) nzW, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by positivity) (Nat.factorial_pos _).ne',
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by positivity) hd2', (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by positivity) hd1',
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) nz1 nz2]
 
   have nzC : o.choose j ≠ 0 := (Nat.choose_pos hjo).ne'
   have nzD : (∏ i, (LL.deg i).factorial) ≠ 0 := Finset.prod_ne_zero_iff.mpr (fun v _ => (Nat.factorial_pos _).ne')
   have vD : padicValNat p (o.choose j * j.factorial ^ 2 * S.factorial * ∏ i, (LL.deg i).factorial) =
       padicValNat p (o.choose j) + 2 * padicValNat p j.factorial + padicValNat p S.factorial +
         ∑ i, padicValNat p (LL.deg i).factorial := by
-    rw [padicValNat.mul (by positivity) nzD, padicValNat.mul (by positivity) (Nat.factorial_pos _).ne',
-      padicValNat.mul nzC (by positivity), padicValNat.pow,
+    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by positivity) nzD, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by positivity) (Nat.factorial_pos _).ne',
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) nzC (by positivity), padicValNat.pow,
       v_prod _ _ (fun i _ => (Nat.factorial_pos _).ne')]
   have vDn : ∑ i, padicValNat p (LL.deg i).factorial =
       ∑ k : Fin N, padicValNat p (LL.deg (Fin.castSucc k)).factorial + padicValNat p o.factorial := by
@@ -1432,9 +1432,9 @@ theorem fock_F_pow_expand (hy : ∀ c ∈ univ.erase ρ, w c ≠ e ρ ∧ e c �
           ∑ γ ∈ ((FT w e (univ.erase ρ) ^ (j - a')) G').support,
             (((j.choose a : ℕ) : ℚ_[p]) * ((j.choose a' : ℕ) : ℚ_[p]) *
               Formalism.GM.M.fock p ((Dop (w ρ) (e ρ) ^ a) (X (e ρ) ^ m *
-                        monomial β (coeff β ((FT w e (univ.erase ρ) ^ (j - a)) G))))
+                        monomial β (AddMonoidAlgebra.coeff ((FT w e (univ.erase ρ) ^ (j - a)) G) β)))
                 ((Dop (w ρ) (e ρ) ^ a') (X (e ρ) ^ m *
-                  monomial γ (coeff γ ((FT w e (univ.erase ρ) ^ (j - a')) G'))))) := by
+                  monomial γ (AddMonoidAlgebra.coeff ((FT w e (univ.erase ρ) ^ (j - a')) G') γ)))) := by
   rw [tieF_pow_apply w e ρ, tieF_pow_apply w e ρ, fock_sum_left]
   apply sum_congr rfl; intro a _
   rw [fock_sum_right]
@@ -1475,8 +1475,8 @@ theorem tieGam_expand (LL : Letters (N + 1)) (ρ : Fin r) (z : ℕ)
       ∑ j ∈ range (LL.deg (Fin.last N) + 1), ∑ a ∈ range (j + 1), ∑ a' ∈ range (j + 1),
         ∑ β ∈ ((FT wv ev (univ.erase ρ) ^ (j - a)) (aeval (freezeSub p LL ρ) f)).support,
           ∑ γ ∈ ((FT wv ev (univ.erase ρ) ^ (j - a')) (aeval (freezeSub p LL ρ) f')).support,
-            termF LL ρ z j a a' β γ (coeff β ((FT wv ev (univ.erase ρ) ^ (j - a)) (aeval (freezeSub p LL ρ) f)))
-              (coeff γ ((FT wv ev (univ.erase ρ) ^ (j - a')) (aeval (freezeSub p LL ρ) f'))) m := by
+            termF LL ρ z j a a' β γ (AddMonoidAlgebra.coeff ((FT wv ev (univ.erase ρ) ^ (j - a)) (aeval (freezeSub p LL ρ) f)) β)
+              (AddMonoidAlgebra.coeff ((FT wv ev (univ.erase ρ) ^ (j - a')) (aeval (freezeSub p LL ρ) f')) γ) m := by
   have hdeg1 : (LL.snoc (m + LL.total)).deg (Fin.castSucc (Fin.last N)) = LL.deg (Fin.last N) := by
     simp [Letters.snoc]
   have hdeg2 : (LL.snoc (m + LL.total)).deg (Fin.last (N + 1)) = m + LL.total := by
@@ -1509,7 +1509,7 @@ theorem gamma_integrality_of_contraction : GamInt := by
 
   have facts : ∀ g : MvPolynomial (Fin (N + 1) × Fin r) ℚ_[p], g ∈ PolZ p r LL →
       (∀ b ≤ LL.total + LL.deg (Fin.last N) + r, ∀ β,
-        ‖coeff β ((FT wv ev (univ.erase ρ) ^ b) (aeval (freezeSub p LL ρ) g))‖ ≤
+        ‖AddMonoidAlgebra.coeff ((FT wv ev (univ.erase ρ) ^ b) (aeval (freezeSub p LL ρ) g)) β‖ ≤
           (p : ℝ) ^ ((((r * B : ℕ) : ℤ) - 2 * (padicValNat p b.factorial : ℤ)))) ∧
       (∀ b, ∀ β ∈ ((FT wv ev (univ.erase ρ) ^ b) (aeval (freezeSub p LL ρ) g)).support,
         δv β + b • eWY = (LL.snoc LL.total).deg ∧ β (xW ρ) ≤ β (yE ρ)) := by

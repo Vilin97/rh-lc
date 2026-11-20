@@ -11,7 +11,7 @@ abbrev 𝒜 := MvPolynomial.homogeneousSubmodule (Fin 2) ℤ
 
 lemma zero_surj : Function.Surjective (algebraMap ℤ (𝒜 0)) := by
   rintro ⟨x, hx⟩
-  refine ⟨MvPolynomial.coeff 0 x, ?_⟩
+  refine ⟨AddMonoidAlgebra.coeff x 0, ?_⟩
   apply Subtype.ext
   have h : MvPolynomial.IsHomogeneous x 0 := (MvPolynomial.mem_homogeneousSubmodule _ _).mp hx
   by_cases h0 : x = 0

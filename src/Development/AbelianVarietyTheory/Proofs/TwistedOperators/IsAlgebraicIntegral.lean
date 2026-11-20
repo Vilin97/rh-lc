@@ -19,7 +19,7 @@ theorem mul_avg {F : K → Matrix ι ι ℂ} (hF : Continuous F) (M : Matrix ι 
     M * avg κ F = avg κ fun g => M * F g := by
   ext a b
   simp only [avg, Matrix.mul_apply, Matrix.of_apply]
-  rw [integral_finset_sum]
+  rw [MeasureTheory.integral_finsetSum]
   · exact Finset.sum_congr rfl fun c _ => (integral_const_mul _ _).symm
   · exact fun c _ => integrable_of_continuous κ (by fun_prop)
 
@@ -28,7 +28,7 @@ theorem avg_mul {F : K → Matrix ι ι ℂ} (hF : Continuous F) (M : Matrix ι 
     avg κ F * M = avg κ fun g => F g * M := by
   ext a b
   simp only [avg, Matrix.mul_apply, Matrix.of_apply]
-  rw [integral_finset_sum]
+  rw [MeasureTheory.integral_finsetSum]
   · exact Finset.sum_congr rfl fun c _ => (integral_mul_const _ _).symm
   · exact fun c _ => integrable_of_continuous κ (by fun_prop)
 

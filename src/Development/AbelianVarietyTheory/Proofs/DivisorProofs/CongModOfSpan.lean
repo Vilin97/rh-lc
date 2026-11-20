@@ -214,7 +214,7 @@ theorem GlobalTheory.Poinc.approx_of_fpre : ∀ (O : Type) [CommRing O] [Module.
       Real.exp (-(Φ.sc y * ∑ i, (qW W (Φ.β y) (fun u => μ (i, u)) : ℝ))) := by
     intro y μ
     rw [norm_prod, Finset.mul_sum, ← Finset.sum_neg_distrib, Real.exp_sum]
-    exact Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => hTle y _ _
+    exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => hTle y _ _
   refine ⟨f, ?_, fun y => ?_⟩
   · obtain ⟨h₁, hh₁, hf₁⟩ := hf y₀
     obtain ⟨S, hSo, hSout, hSa⟩ := hf₁ (E₀ / 2) (by positivity)

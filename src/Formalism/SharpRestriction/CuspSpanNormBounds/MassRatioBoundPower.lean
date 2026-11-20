@@ -72,7 +72,7 @@ theorem prod_massRatio_le [StarRing K] (hd : Module.finrank ℚ K ≤ 2 * Formal
   have hY1 : (1 : ℝ) ≤ Y := by linarith
   calc ∏ M ∈ Finset.Icc 3 n, Formalism.HermitianLatticesTheory.massRatioRightSide K M
       ≤ ∏ _M ∈ Finset.Icc 3 n, Y ^ ((2 * n + cZ) * Formalism.HermitianLatticesTheory.fDeg K) :=
-        Finset.prod_le_prod (fun M hM => mass_ratio_rhs_nonneg (Finset.mem_Icc.1 hM).1)
+        Finset.prod_le_prod₀ (fun M hM => mass_ratio_rhs_nonneg (Finset.mem_Icc.1 hM).1)
           (fun M hM => mass_ratio_rhs_le_pow_Y hd (Finset.mem_Icc.1 hM).1 (Finset.mem_Icc.1 hM).2 hY hn hv)
     _ = (Y ^ ((2 * n + cZ) * Formalism.HermitianLatticesTheory.fDeg K)) ^ (Finset.Icc 3 n).card := Finset.prod_const _
     _ ≤ (Y ^ ((2 * n + cZ) * Formalism.HermitianLatticesTheory.fDeg K)) ^ n := by
@@ -147,7 +147,7 @@ theorem lValEta_ge [StarRing K] {M : ℕ} (hM : 3 ≤ M) :
       _ = ∏ P ∈ s, Real.exp (-(2 * (1 / ((Ideal.absNorm P.1 : ℕ) : ℝ) ^ ((3 : ℝ) / 2)))) := by
           rw [← Real.exp_sum]; congr 1; rw [Finset.mul_sum, ← Finset.sum_neg_distrib]
       _ ≤ ∏ P ∈ s, Formalism.HermitianLatticesTheory.eulerFac K M P.1 :=
-          Finset.prod_le_prod (fun P _ => (Real.exp_pos _).le) (fun P _ => eulerFac_ge hM P.1 (hN P))
+          Finset.prod_le_prod₀ (fun P _ => (Real.exp_pos _).le) (fun P _ => eulerFac_ge hM P.1 (hN P))
   · rw [tprod_eq_one_of_not_multipliable hm]
     exact Real.exp_le_one_iff.2 (by have := zeta_three_halves_nonneg; have : (0 : ℝ) ≤ Module.finrank ℚ K := by positivity
                                     nlinarith)

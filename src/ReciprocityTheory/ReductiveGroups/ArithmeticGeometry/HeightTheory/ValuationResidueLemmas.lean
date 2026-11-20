@@ -160,7 +160,7 @@ theorem admissible_over_prime (hd : d.AxH 𝒜) (h : d.S1) (la : IsDedekindDomai
     obtain ⟨Q, ⟨Z, hZ⟩, rfl⟩ := hP
     have e : (⟨_, hα⟩ : (vRing w).comap f) = Q.coeff α := Subtype.ext (MvPolynomial.coeff_map _ _ _)
     rw [e]
-    have := congrArg (MvPolynomial.coeff α) hZ
+    have := congrArg (AddMonoidAlgebra.coeff · α) hZ
     simp only [MvPolynomial.coeff_map] at this
     rw [← this]
     exact (Z.coeff α).2

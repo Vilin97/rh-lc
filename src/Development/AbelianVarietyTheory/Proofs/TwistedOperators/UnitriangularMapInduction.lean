@@ -52,7 +52,7 @@ private theorem map_diagonal_mulVec_pi (D : κ → F) (hD : ∀ i, D i ≠ 0) :
     (fun i => (continuous_const.mul continuous_id).aemeasurable)]
   simp_rw [map_mul_left_eq_smul' ν _ (hD _)]
   refine Measure.pi_eq fun s hs => ?_
-  rw [Measure.coe_nnreal_smul_apply, Measure.pi_pi, ENNReal.coe_finset_prod,
+  rw [Measure.coe_nnreal_smul_apply, Measure.pi_pi, ENNReal.ofNNReal_finsetProd,
     ← Finset.prod_mul_distrib]
   exact Finset.prod_congr rfl fun i _ => Measure.coe_nnreal_smul_apply _ _ _
 
@@ -283,7 +283,7 @@ def chart : (Pos b → k) ≃ₜ radical k b where
     · exact continuous_const.add continuous_coord_symm_val
     · show Continuous fun x : Pos b → k => ∑ i ∈ Finset.range (Finset.univ.sup b + 1),
         (-((coord k b).symm x : Matrix (Fin r) (Fin r) k)) ^ i
-      exact continuous_finset_sum _ fun i _ => (continuous_coord_symm_val (k := k) (b := b)).neg.pow i
+      exact continuous_finsetSum _ fun i _ => (continuous_coord_symm_val (k := k) (b := b)).neg.pow i
   continuous_invFun := continuous_pi fun p => continuous_lg_val.matrix_elem _ _
 
 theorem continuous_linear {ι : Type} [Fintype ι] (L : (ι → k) →ₗ[k] ι → k) : Continuous L := by

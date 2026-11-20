@@ -145,7 +145,7 @@ theorem size_ineq_to_quot (hX : ∀ v, IsUnit (X v).det) (φ : V →ₗ[K] V) {A
   have hP : (∏ v, opNormAt e Y b' X' v ψ) ^ ((1 : ℝ) / (nPl K : ℝ)) ≤
       (∏ v, c v) ^ ((1 : ℝ) / (nPl K : ℝ)) :=
     Real.rpow_le_rpow (Finset.prod_nonneg fun v _ => norm_nonneg _)
-      (Finset.prod_le_prod (fun v _ => norm_nonneg _) fun v _ => hop v) (by positivity)
+      (Finset.prod_le_prod₀ (fun v _ => norm_nonneg _) fun v _ => hop v) (by positivity)
   have hleast : lo ≤ leastSize b' X' Bq := by
     refine le_csInf ⟨_, Bq, le_rfl, hB0, rfl⟩ ?_
     rintro _ ⟨N, hNB, hN0, rfl⟩

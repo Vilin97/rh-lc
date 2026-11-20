@@ -33,7 +33,7 @@ theorem projective_of_veryDense {R : Type} [CommRing R] [IsReduced R] {P : Set (
 
 theorem exists_basis (σ R : Type) [CommRing R] (e : ℕ) :
     ∃ b : Basis {u : σ →₀ ℕ | u.degree = e} R (homogeneousSubmodule σ R e),
-      ∀ F i, b.repr F i = coeff i.1 F.1 := by
+      ∀ F i, b.repr F i = AddMonoidAlgebra.coeff F.1 i.1 := by
   rw [homogeneousSubmodule_eq_finsupp_supported]
   exact ⟨basisRestrictSupport R _, fun F i => rfl⟩
 

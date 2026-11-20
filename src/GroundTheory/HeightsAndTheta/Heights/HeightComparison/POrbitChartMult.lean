@@ -24,7 +24,7 @@ omit [DecidableEq ι] in
 
 theorem coeff_sum_C_mul_prod_X_pow {D : Type*} [CommRing D] (S : Finset (ι → ℕ))
     (a : (ι → ℕ) → D) {d : ι → ℕ} (hd : d ∈ S) :
-    coeff (Finsupp.equivFunOnFinite.symm d) (∑ e ∈ S, C (a e) * ∏ k, (X k : MvPolynomial ι D) ^ e k) =
+    AddMonoidAlgebra.coeff (∑ e ∈ S, C (a e) * ∏ k, (X k : MvPolynomial ι D) ^ e k) (Finsupp.equivFunOnFinite.symm d) =
       a d := by
   classical
   simp only [prod_X_pow_eq_monomial_fintype, coeff_sum, coeff_C_mul, coeff_monomial,

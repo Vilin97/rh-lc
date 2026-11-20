@@ -12,7 +12,7 @@ private theorem injTest_mvInj {A : Type} [CommRing A] {X : Type} (K : X → Type
   ext β
   rw [← sub_eq_zero]
   refine hf _ fun x => ?_
-  have := congrArg (MvPolynomial.coeff β) (h x)
+  have := congrArg (AddMonoidAlgebra.coeff · β) (h x)
   rw [MvPolynomial.coeff_map, MvPolynomial.coeff_map] at this
   rw [map_sub, this, sub_self]
 

@@ -190,7 +190,7 @@ theorem fixed_is_limit : FixedIsLimit := by
       exact absurd (norm_le_inv_of_lt_one hp.one_lt hval (not_le.1 hlt)) (not_le.2 (hc n))
     have h5 : (1 : ℝ) ≤ ‖∏ n ∈ Finset.range l, (x - (n : K))‖ := by
       rw [norm_prod]
-      have := Finset.prod_le_prod (s := Finset.range l) (f := fun _ => (1 : ℝ))
+      have := Finset.prod_le_prod₀ (s := Finset.range l) (f := fun _ => (1 : ℝ))
         (g := fun n : ℕ => ‖x - (n : K)‖) (fun _ _ => zero_le_one) h4
       simpa using this
     linarith

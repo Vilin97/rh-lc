@@ -15,7 +15,7 @@ namespace ShiftSumRule
 
 def flagIntegralLinear (f N : ℕ) : RootRing f N →ₗ[ℚ] ℚ where
   toFun := flagIntegral f N
-  map_add' Φ Ψ := by simp only [flagIntegral, coeff_add, add_mul, Finset.sum_add_distrib]
+  map_add' Φ Ψ := by simp only [flagIntegral, MvPolynomial.coeff_add, add_mul, Finset.sum_add_distrib]
   map_smul' b Φ := by
     simp only [flagIntegral, coeff_smul, smul_eq_mul, RingHom.id_apply, Finset.mul_sum, mul_assoc]
 

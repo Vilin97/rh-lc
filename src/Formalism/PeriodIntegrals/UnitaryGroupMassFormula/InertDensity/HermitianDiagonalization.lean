@@ -58,7 +58,7 @@ theorem diag_orth_family {m q : ℕ} {B : Matrix (Fin m) (Fin m) L}
       · induction i using Fin.cases with
         | zero => simpa using he
         | succ j => simpa using (Submodule.mem_inf.mp (hvW j)).1
-      · rw [linearIndependent_fin_cons]
+      · rw [linearIndependent_finCons]
         refine ⟨hli, fun hmem => hee ?_⟩
         have hle : Submodule.span L (Set.range v) ≤ LinearMap.ker (hfL q B e) := by
           rw [Submodule.span_le]

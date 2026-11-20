@@ -43,7 +43,7 @@ theorem sz_l (l : ℕ) [hl : Fact l.Prime] (lam : algebraicClosure ℚ ℂ →+*
 
 theorem sz_val (l : ℕ) [hl : Fact l.Prime] (lam : algebraicClosure ℚ ℂ →+* ℂ_[l]) (D : ℕ) :
     Sz l lam (-(padicValNat l D : ℝ)) (D : ℂ) := by
-  obtain ⟨m, hm⟩ : l ^ padicValNat l D ∣ D := pow_padicValNat_dvd
+  obtain ⟨m, hm⟩ : l ^ padicValNat l D ∣ D := (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
   have h := sz_mul (sz_pow (sz_l l lam).1 (padicValNat l D)) (sz_nat (l := l) (lam := lam) m)
   have h2 : (D : ℂ) = (l : ℂ) ^ padicValNat l D * m := by exact_mod_cast hm
   rw [← h2] at h
@@ -125,7 +125,7 @@ theorem val_facts (l d : ℕ) (hl : l.Prime) (hd : d.Prime) (h4 : 4 < d) :
   · simp only [h3, if_true, h1, not_true, and_false, if_false]
     split_ifs <;> norm_num
   · simp only [h3, if_false, not_false_iff, and_true]
-    rw [padicValNat.mul (by norm_num) hd.ne_zero, h1, h2]
+    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by norm_num) hd.ne_zero, h1, h2]
     split_ifs <;> norm_num
 
 theorem fin_id (jt Ω p n lp γ pi im r : ℂ) (t f K : ℕ) (hΩ : Ω ≠ 0) (hp : p ≠ 0) (hlp : lp ≠ 0) (hpi : pi ≠ 0) (him : im ≠ 0)

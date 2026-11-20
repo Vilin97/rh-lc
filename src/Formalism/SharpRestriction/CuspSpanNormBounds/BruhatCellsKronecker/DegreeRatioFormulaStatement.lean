@@ -476,7 +476,7 @@ theorem level_ratio_bound (D : D7) (C0 C1 : ℝ) (hD : StandingNumericalData D C
       rw [← mul_pow]
       exact pow_le_pow_left₀ (sza_tcrit_pos D u τ).le this _
     calc P u ≤ ∏ τ, (C1 ^ D.R.k * Tcrit D u' τ ^ D.R.k) :=
-          Finset.prod_le_prod (fun τ _ => (pow_pos (sza_tcrit_pos D u τ) _).le) (fun τ _ => h1 τ)
+          Finset.prod_le_prod₀ (fun τ _ => (pow_pos (sza_tcrit_pos D u τ) _).le) (fun τ _ => h1 τ)
       _ = C1 ^ (D.R.k * D.R.f) * P u' := by
           rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, sza_card_Tau, ← pow_mul]
 

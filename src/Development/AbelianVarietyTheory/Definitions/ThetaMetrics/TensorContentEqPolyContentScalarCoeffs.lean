@@ -180,25 +180,25 @@ variable {R S Γ₀ σ τ : Type*} [CommRing R] [CommRing S] [LinearOrderedCommM
 def gaussVal : Valuation (MvPolynomial σ R) Γ₀ := gaussValAlg v
 
 theorem gaussVal_apply (f : MvPolynomial σ R) :
-    gaussVal v f = f.support.sup fun m => v (coeff m f) := rfl
+    gaussVal v f = f.support.sup fun m => v (AddMonoidAlgebra.coeff f m) := rfl
 
 theorem gaussVal_mul (f g : MvPolynomial σ R) :
     gaussVal v (f * g) = gaussVal v f * gaussVal v g := map_mul _ f g
 
 theorem gaussVal_le_iff {f : MvPolynomial σ R} {γ : Γ₀} :
-    gaussVal v f ≤ γ ↔ ∀ m, v (coeff m f) ≤ γ := gaussValAlg_le_iff v
+    gaussVal v f ≤ γ ↔ ∀ m, v (AddMonoidAlgebra.coeff f m) ≤ γ := gaussValAlg_le_iff v
 
 theorem gaussVal_lt_iff {f : MvPolynomial σ R} {γ : Γ₀} (hγ : γ ≠ 0) :
-    gaussVal v f < γ ↔ ∀ m, v (coeff m f) < γ := coeffSup_lt_iff v.map_zero hγ
+    gaussVal v f < γ ↔ ∀ m, v (AddMonoidAlgebra.coeff f m) < γ := coeffSup_lt_iff v.map_zero hγ
 
-theorem le_gaussVal (f : MvPolynomial σ R) (m : σ →₀ ℕ) : v (coeff m f) ≤ gaussVal v f :=
+theorem le_gaussVal (f : MvPolynomial σ R) (m : σ →₀ ℕ) : v (AddMonoidAlgebra.coeff f m) ≤ gaussVal v f :=
   (gaussVal_le_iff v).mp le_rfl m
 
-theorem exists_gaussVal_eq (f : MvPolynomial σ R) : ∃ m, gaussVal v f = v (coeff m f) :=
+theorem exists_gaussVal_eq (f : MvPolynomial σ R) : ∃ m, gaussVal v f = v (AddMonoidAlgebra.coeff f m) :=
   exists_gaussValAlg_eq v f
 
 theorem gaussVal_eq_zero_iff_forall {f : MvPolynomial σ R} :
-    gaussVal v f = 0 ↔ ∀ m, v (coeff m f) = 0 := gaussValAlg_eq_zero_iff v
+    gaussVal v f = 0 ↔ ∀ m, v (AddMonoidAlgebra.coeff f m) = 0 := gaussValAlg_eq_zero_iff v
 
 @[simp] theorem gaussVal_monomial (m : σ →₀ ℕ) (a : R) :
     gaussVal v (monomial m a) = v a := gaussValAlg_single v m a
@@ -351,8 +351,8 @@ theorem exists_eq_C_mul_gaussVal_eq_one {f : MvPolynomial σ K} (hf : f ≠ 0) :
     ∃ (c : K) (g : MvPolynomial σ K), c ≠ 0 ∧ v c = gaussVal v f ∧ gaussVal v g = 1 ∧
       f = C c * g := by
   obtain ⟨m, hm⟩ := exists_gaussVal_eq v f
-  have hc : coeff m f ≠ 0 := fun h => hf ((gaussVal_eq_zero_iff v).mp (by rw [hm, h, map_zero]))
-  refine ⟨coeff m f, C (coeff m f)⁻¹ * f, hc, hm.symm, ?_, ?_⟩
+  have hc : AddMonoidAlgebra.coeff f m ≠ 0 := fun h => hf ((gaussVal_eq_zero_iff v).mp (by rw [hm, h, map_zero]))
+  refine ⟨AddMonoidAlgebra.coeff f m, C (AddMonoidAlgebra.coeff f m)⁻¹ * f, hc, hm.symm, ?_, ?_⟩
   · rw [map_mul, gaussVal_C, hm, ← map_mul, inv_mul_cancel₀ hc, map_one]
   · rw [← mul_assoc, ← C_mul, mul_inv_cancel₀ hc, C_1, one_mul]
 
@@ -457,7 +457,7 @@ theorem exists_gaussValFrac_eq (x : F) : ∃ c : K, gaussValFrac v σ F x = v c 
   obtain ⟨f, g, -, rfl⟩ := IsFractionRing.div_surjective (A := MvPolynomial σ K) x
   obtain ⟨m, hm⟩ := exists_gaussVal_eq v f
   obtain ⟨n, hn⟩ := exists_gaussVal_eq v g
-  exact ⟨coeff m f / coeff n g, by simp [hm, hn]⟩
+  exact ⟨AddMonoidAlgebra.coeff f m / AddMonoidAlgebra.coeff g n, by simp [hm, hn]⟩
 
 theorem gaussValFrac_le_one_iff {x : F} :
     gaussValFrac v σ F x ≤ 1 ↔ ∃ f g : MvPolynomial σ K, gaussVal v f ≤ 1 ∧ gaussVal v g = 1 ∧
@@ -495,11 +495,11 @@ def gaussAddVal : AddValuation (MvPolynomial σ R) Γ :=
   AddValuation.ofValuation (gaussVal (AddValuation.toValuation v))
 
 theorem le_gaussAddVal_iff {f : MvPolynomial σ R} {γ : Γ} :
-    γ ≤ gaussAddVal v f ↔ ∀ m, γ ≤ v (coeff m f) :=
+    γ ≤ gaussAddVal v f ↔ ∀ m, γ ≤ v (AddMonoidAlgebra.coeff f m) :=
   gaussVal_le_iff (AddValuation.toValuation v) (γ := Multiplicative.ofAdd (OrderDual.toDual γ))
 
 theorem gaussAddVal_apply (f : MvPolynomial σ R) :
-    gaussAddVal v f = f.support.inf fun m => v (coeff m f) := by
+    gaussAddVal v f = f.support.inf fun m => v (AddMonoidAlgebra.coeff f m) := by
   refine eq_of_forall_le_iff fun γ => ?_
   rw [le_gaussAddVal_iff, Finset.le_inf_iff]
   refine ⟨fun h m _ => h m, fun h m => ?_⟩
@@ -507,10 +507,10 @@ theorem gaussAddVal_apply (f : MvPolynomial σ R) :
   · exact h m hm
   · rw [notMem_support_iff.mp hm, v.map_zero]; exact le_top
 
-theorem gaussAddVal_le (f : MvPolynomial σ R) (m : σ →₀ ℕ) : gaussAddVal v f ≤ v (coeff m f) :=
+theorem gaussAddVal_le (f : MvPolynomial σ R) (m : σ →₀ ℕ) : gaussAddVal v f ≤ v (AddMonoidAlgebra.coeff f m) :=
   (le_gaussAddVal_iff v).mp le_rfl m
 
-theorem exists_gaussAddVal_eq (f : MvPolynomial σ R) : ∃ m, gaussAddVal v f = v (coeff m f) :=
+theorem exists_gaussAddVal_eq (f : MvPolynomial σ R) : ∃ m, gaussAddVal v f = v (AddMonoidAlgebra.coeff f m) :=
   exists_gaussVal_eq (AddValuation.toValuation v) f
 
 theorem gaussAddVal_mul (f g : MvPolynomial σ R) :
@@ -587,15 +587,15 @@ theorem gaussAbs_apply (f : MvPolynomial σ R) :
 theorem isNonarchimedean_gaussAbs : IsNonarchimedean (gaussAbs (σ := σ) a ha) :=
   isNonarchimedean_valuationAbs _ _
 
-theorem le_gaussAbs (f : MvPolynomial σ R) (m : σ →₀ ℕ) : a (coeff m f) ≤ gaussAbs a ha f :=
+theorem le_gaussAbs (f : MvPolynomial σ R) (m : σ →₀ ℕ) : a (AddMonoidAlgebra.coeff f m) ≤ gaussAbs a ha f :=
   NNReal.coe_le_coe.mpr (le_gaussVal (absValuation a ha) f m)
 
-theorem exists_gaussAbs_eq (f : MvPolynomial σ R) : ∃ m, gaussAbs a ha f = a (coeff m f) :=
+theorem exists_gaussAbs_eq (f : MvPolynomial σ R) : ∃ m, gaussAbs a ha f = a (AddMonoidAlgebra.coeff f m) :=
   (exists_gaussVal_eq (absValuation a ha) f).imp fun _ h => by
     rw [gaussAbs_apply, h, coe_absValuation]
 
 theorem gaussAbs_le_iff {f : MvPolynomial σ R} {r : ℝ} :
-    gaussAbs a ha f ≤ r ↔ ∀ m, a (coeff m f) ≤ r := by
+    gaussAbs a ha f ≤ r ↔ ∀ m, a (AddMonoidAlgebra.coeff f m) ≤ r := by
   refine ⟨fun h m => (le_gaussAbs a ha f m).trans h, fun h => ?_⟩
   obtain ⟨m, hm⟩ := exists_gaussAbs_eq a ha f
   exact hm ▸ h m
@@ -619,11 +619,11 @@ theorem gaussAbs_eq_gaussNorm (f : MvPolynomial σ R) :
     gaussAbs a ha f = MvPowerSeries.gaussNorm a (fun _ => 1) (f : MvPowerSeries σ R) := by
   obtain ⟨m, hm⟩ := exists_gaussAbs_eq a ha f
   have hb : ∀ t : σ →₀ ℕ, a (MvPowerSeries.coeff t (f : MvPowerSeries σ R)) *
-      t.prod ((fun _ : σ => (1 : ℝ)) · ^ ·) = a (coeff t f) := fun t => by
+      t.prod ((fun _ : σ => (1 : ℝ)) · ^ ·) = a (AddMonoidAlgebra.coeff f t) := fun t => by
     simp [Finsupp.prod]
   rw [MvPowerSeries.gaussNorm]
   simp_rw [hb]
-  refine le_antisymm (hm.le.trans (le_ciSup (f := fun t => a (coeff t f)) ⟨gaussAbs a ha f, ?_⟩ m))
+  refine le_antisymm (hm.le.trans (le_ciSup (f := fun t => a (AddMonoidAlgebra.coeff f t)) ⟨gaussAbs a ha f, ?_⟩ m))
     (ciSup_le fun t => le_gaussAbs a ha f t)
   rintro _ ⟨t, rfl⟩
   exact le_gaussAbs a ha f t
@@ -691,7 +691,7 @@ theorem basisVal_add_le (x y : M) :
 theorem basisVal_sum_le {α : Type*} {s : Finset α} {x : α → M} {γ : Γ₀}
     (h : ∀ a ∈ s, basisVal v b (x a) ≤ γ) : basisVal v b (∑ a ∈ s, x a) ≤ γ :=
   (basisVal_le_iff v b).mpr fun i => by
-    rw [map_sum, Finsupp.finset_sum_apply]
+    rw [map_sum, Finsupp.finsetSum_apply]
     exact v.map_sum_le fun a ha => (le_basisVal v b _ i).trans (h a ha)
 
 theorem basisVal_eq_zero_iff (hv : v.supp = ⊥) {x : M} : basisVal v b x = 0 ↔ x = 0 := by
@@ -841,16 +841,16 @@ def tensorCoeffs : MvPolynomial σ R ⊗[O] M ≃ₗ[R] (σ →₀ ℕ) →₀ R
     (LinearEquiv.refl O M) ≪≫ₗ TensorProduct.finsuppLeft O R R M (σ →₀ ℕ)
 
 @[simp] theorem tensorCoeffs_tmul (f : MvPolynomial σ R) (y : M) (m : σ →₀ ℕ) :
-    tensorCoeffs (f ⊗ₜ[O] y) m = coeff m f ⊗ₜ[O] y := by
+    tensorCoeffs (f ⊗ₜ[O] y) m = AddMonoidAlgebra.coeff f m ⊗ₜ[O] y := by
   simp [tensorCoeffs, coeff]
 
 theorem repr_tensorCoeffs (x : MvPolynomial σ R ⊗[O] M) (m : σ →₀ ℕ) (i : ι) :
     (b.baseChange R).repr (tensorCoeffs x m) i =
-      coeff m ((b.baseChange (MvPolynomial σ R)).repr x i) := by
+      AddMonoidAlgebra.coeff ((b.baseChange (MvPolynomial σ R)).repr x i) m := by
   induction x with
   | zero => simp
   | tmul f y => simp
-  | add y z hy hz => simp only [map_add, Finsupp.add_apply, hy, hz, coeff_add]
+  | add y z hy hz => simp only [map_add, Finsupp.add_apply, hy, hz, MvPolynomial.coeff_add]
 
 theorem tensorContent_eq_polyContent (x : MvPolynomial σ R ⊗[O] M) :
     tensorContent v b x = polyContent v (b.baseChange R) (tensorCoeffs x) :=
@@ -893,18 +893,18 @@ def scalarCoeffs {N : Type*} [AddCommGroup N] [Module R N] :
 
 @[simp] theorem scalarCoeffs_tmul {N : Type*} [AddCommGroup N] [Module R N]
     (f : MvPolynomial σ R) (y : N) (m : σ →₀ ℕ) :
-    scalarCoeffs (f ⊗ₜ[R] y) m = coeff m f • y := by
+    scalarCoeffs (f ⊗ₜ[R] y) m = AddMonoidAlgebra.coeff f m • y := by
   simp [scalarCoeffs]
 
 theorem tensorContent_eq_polyContent_scalarCoeffs {N : Type*} [AddCommGroup N] [Module R N]
     (c : Basis ι R N) (x : MvPolynomial σ R ⊗[R] N) :
     tensorContent v c x = polyContent v c (scalarCoeffs x) := by
   have key : ∀ m i, c.repr (scalarCoeffs x m) i =
-      coeff m ((c.baseChange (MvPolynomial σ R)).repr x i) := fun m i => by
+      AddMonoidAlgebra.coeff ((c.baseChange (MvPolynomial σ R)).repr x i) m := fun m i => by
     induction x with
     | zero => simp
     | tmul f y => simp [mul_comm]
-    | add y z hy hz => simp only [map_add, Finsupp.add_apply, hy, hz, coeff_add]
+    | add y z hy hz => simp only [map_add, Finsupp.add_apply, hy, hz, MvPolynomial.coeff_add]
   refine eq_of_forall_ge_iff fun γ => ?_
   simp only [tensorContent, basisVal_le_iff, gaussVal_le_iff, polyContent_le_iff_coord, key]
   exact forall_comm
@@ -1000,8 +1000,8 @@ theorem finite_gaussVal_ne_one {O K σ : Type*} [CommRing O] [IsDedekindDomain O
     {p : HeightOneSpectrum O | gaussVal (p.valuation K) f ≠ 1}.Finite := by
   obtain ⟨m₀, hm₀⟩ := ne_zero_iff.mp hf
   refine ((f.support.finite_toSet.biUnion fun m _ =>
-    HeightOneSpectrum.Support.finite O (coeff m f)).union
-      (HeightOneSpectrum.Support.finite O (coeff m₀ f)⁻¹)).subset fun p hp => ?_
+    HeightOneSpectrum.Support.finite O (AddMonoidAlgebra.coeff f m)).union
+      (HeightOneSpectrum.Support.finite O (AddMonoidAlgebra.coeff f m₀)⁻¹)).subset fun p hp => ?_
   by_contra h
   simp only [Set.mem_union, Set.mem_iUnion, HeightOneSpectrum.Support, Set.mem_setOf_eq, not_or,
     not_exists, not_lt, map_inv₀] at h

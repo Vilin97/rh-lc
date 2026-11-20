@@ -136,7 +136,7 @@ private theorem exists_coeff_form_and_integral [IsTopologicalAddGroup V] [T2Spac
             rw [← hS]
       _ = ∑ q ∈ S, φ q.out * (μ.real (H : Set V) : ℂ) := by
           simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
-          rw [integral_finset_sum]
+          rw [MeasureTheory.integral_finsetSum]
           · refine Finset.sum_congr rfl fun q _ => ?_
             rw [integral_const_mul,
               integral_add_right_eq_self (fun x => Set.indicator (H : Set V) (fun _ => (1 : ℂ)) x),

@@ -403,7 +403,7 @@ theorem bind₁_ptLift_isUnit (j : Fin 2) (f : MvPolynomial (Σ _ : Unit, Fin 2)
     rw [hc, hv, coe_eval₂Hom, eval₂_id] at h
     exact h
   have hC := eq_C_of_isEmpty (bind₁ (ptLift j) f)
-  have hc : coeff 0 (bind₁ (ptLift j) f) ≠ 0 := by
+  have hc : AddMonoidAlgebra.coeff (bind₁ (ptLift j) f) 0 ≠ 0 := by
     intro h0
     apply hf
     rw [← key2, hC, h0]

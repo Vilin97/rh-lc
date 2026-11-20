@@ -22,7 +22,7 @@ theorem gaussNorm_add_le {ι : Type*} (g g' : MvPolynomial ι L) :
     gaussNormOf (normAbv L) (g + g') ≤
       max (gaussNormOf (normAbv L) g) (gaussNormOf (normAbv L) g') := by
   refine gaussNormOf_le _ ((gaussNormOf_nonneg _ g).trans (le_max_left _ _)) fun m ↦ ?_
-  rw [coeff_add]
+  rw [MvPolynomial.coeff_add]
   exact (isNonarchimedean_normAbv _ _).trans
     (max_le_max (le_gaussNormOf _ g m) (le_gaussNormOf _ g' m))
 

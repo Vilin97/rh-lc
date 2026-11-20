@@ -51,12 +51,12 @@ theorem GlobalFunctionsIntegral.proof : GlobalFunctionsIntegral.Statement := by
       tsub_add_cancel_of_le (Finsupp.single_le_iff.mpr hi)
     have hdeg : m'.degree + e i = E := by
       rw [← hmE, ← hsplit, map_add, Finsupp.degree_single]
-    refine ⟨monomial m' (coeff m g) * f i, ?_, ?_⟩
+    refine ⟨monomial m' (AddMonoidAlgebra.coeff g m) * f i, ?_, ?_⟩
     · refine (mem_homogeneousSubmodule _ _).mpr ?_
       rw [← hdeg]
       exact (isHomogeneous_monomial _ rfl).mul (hf i)
-    · have hmono : (monomial m (coeff m g) : MvPolynomial (Fin (N + 1)) k) =
-          monomial m' (coeff m g) * X i ^ e i := by
+    · have hmono : (monomial m (AddMonoidAlgebra.coeff g m) : MvPolynomial (Fin (N + 1)) k) =
+          monomial m' (AddMonoidAlgebra.coeff g m) * X i ^ e i := by
         rw [X_pow_eq_monomial, monomial_mul, mul_one, hsplit]
       rw [AlgHom.toLinearMap_apply, map_mul, ← hrel i, hmono, map_mul, map_pow, aeval_X]
       ring

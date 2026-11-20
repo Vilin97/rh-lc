@@ -11,7 +11,7 @@ section LC
 variable {K σ ρ : Type} [Field K]
 
 private theorem coeff_lcoef_eq (L : MvPolynomial ρ K →ₗ[K] K) (f : MvPolynomial σ (MvPolynomial ρ K))
-    (w : σ →₀ ℕ) : coeff w (lcoef L f) = L (coeff w f) :=
+    (w : σ →₀ ℕ) : AddMonoidAlgebra.coeff (lcoef L f) w = L (AddMonoidAlgebra.coeff f w) :=
   coeff_sum_monomial_linear L f w
 
 theorem qa_lcoef_monomial (L : MvPolynomial ρ K →ₗ[K] K) (u : σ →₀ ℕ) (b : MvPolynomial ρ K) :
@@ -39,13 +39,13 @@ theorem qa_lcoef_mapC_mul (L : MvPolynomial ρ K →ₗ[K] K) (G : MvPolynomial 
 theorem qa_eval_lcoef (L : MvPolynomial ρ K →ₗ[K] K) (x : σ → K) (h : MvPolynomial σ (MvPolynomial ρ K)) :
     eval x (lcoef L h) = L (eval (fun i => C (x i)) h) := by
   classical
-  rw [show lcoef L h = ∑ u ∈ h.support, monomial u (L (coeff u h)) from rfl, map_sum]
+  rw [show lcoef L h = ∑ u ∈ h.support, monomial u (L (AddMonoidAlgebra.coeff h u)) from rfl, map_sum]
   conv_rhs => rw [h.as_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun u _ => ?_
   rw [eval_monomial, eval_monomial]
   rw [show (u.prod fun n e => (C (x n) : MvPolynomial ρ K) ^ e) = C (u.prod fun n e => x n ^ e) by
     simp [Finsupp.prod, map_prod, map_pow]]
-  rw [mul_comm (coeff u h), MvPolynomial.C_mul', map_smul, smul_eq_mul, mul_comm]
+  rw [mul_comm (AddMonoidAlgebra.coeff h u), MvPolynomial.C_mul', map_smul, smul_eq_mul, mul_comm]
 
 theorem qa_lcoef_rowAct {k n : ℕ} (L : MvPolynomial ρ K →ₗ[K] K) (g : Matrix (Fin k) (Fin k) K)
     (h : MvPolynomial (Fin k × Fin n) (MvPolynomial ρ K)) :
@@ -65,11 +65,11 @@ theorem qa_lcoef_rowAct {k n : ℕ} (L : MvPolynomial ρ K →ₗ[K] K) (g : Mat
   conv_rhs => rw [h.as_sum]
   simp only [map_sum]
   refine Finset.sum_congr rfl fun u _ => ?_
-  have hm : (monomial u (coeff u h) : MvPolynomial (Fin k × Fin n) (MvPolynomial ρ K)) =
-      map C (monomial u 1) * C (coeff u h) := by
+  have hm : (monomial u (AddMonoidAlgebra.coeff h u) : MvPolynomial (Fin k × Fin n) (MvPolynomial ρ K)) =
+      map C (monomial u 1) * C (AddMonoidAlgebra.coeff h u) := by
     rw [map_monomial, map_one, mul_comm, C_mul_monomial, mul_one]
-  have hr1 : rowAct (MvPolynomial ρ K) (n := n) (g.map C) (C (coeff u h)) = C (coeff u h) := by simp [rowAct]
-  have hr2 : rowAct K (n := n) g (C (L (coeff u h))) = C (L (coeff u h)) := by simp [rowAct]
+  have hr1 : rowAct (MvPolynomial ρ K) (n := n) (g.map C) (C (AddMonoidAlgebra.coeff h u)) = C (AddMonoidAlgebra.coeff h u) := by simp [rowAct]
+  have hr2 : rowAct K (n := n) g (C (L (AddMonoidAlgebra.coeff h u))) = C (L (AddMonoidAlgebra.coeff h u)) := by simp [rowAct]
   rw [hm, map_mul, key, hr1, qa_lcoef_mapC_mul, qa_lcoef_mapC_mul, qa_lcoef_C, map_mul, hr2]
 
 end LC

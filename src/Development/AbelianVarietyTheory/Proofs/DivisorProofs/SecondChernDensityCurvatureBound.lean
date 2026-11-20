@@ -205,7 +205,7 @@ theorem dens22_le : ∀ (e : ℕ) (T : Type) [Fintype T] (μ : T → ℕ) (C : �
         K2 ^ e * ∏ i : Fin e, (gnorm G (x i.succ.succ) * gnorm G (y i.succ.succ)) := by
       calc ∏ i : Fin e, ‖atr (x i.succ.succ) (y i.succ.succ)‖
           ≤ ∏ i : Fin e, (K2 * (gnorm G (x i.succ.succ) * gnorm G (y i.succ.succ))) :=
-            Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i _ => hA _ _
+            Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i _ => hA _ _
         _ = K2 ^ e * ∏ i : Fin e, (gnorm G (x i.succ.succ) * gnorm G (y i.succ.succ)) := by
             rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
     simp only [ψ, Θ, norm_mul, norm_prod]

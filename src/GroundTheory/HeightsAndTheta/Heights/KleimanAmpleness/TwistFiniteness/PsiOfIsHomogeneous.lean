@@ -85,7 +85,7 @@ theorem phi_mem_tgr {p : Poly (Sy S r) N} {d : ℕ} (hp : p.IsHomogeneous d) :
     have := hp (mem_support_iff.mp hμ)
     simpa [Finsupp.weight_apply, Finsupp.sum] using this
   rw [phi, coe_eval₂Hom, eval₂_monomial]
-  have h1 := psi_mem_tgr η S (MvPolynomial.coeff μ p)
+  have h1 := psi_mem_tgr η S (AddMonoidAlgebra.coeff p μ)
   have h2 : (∏ i ∈ μ.support, (single ((1 : ℤ), (0 : ℤ)) (x i) : LA Ω) ^ μ i) ∈
       tgr (∑ i ∈ μ.support, ((μ i : ℕ) : ℤ)) := by
     refine SetLike.prod_mem_graded _ _ _ fun i _ => ?_

@@ -108,7 +108,7 @@ theorem chartForm_le (c : ∀ k, J k) (z : (Σ k, J k) → ℂ) :
     simp [chartForm, map_prod]
   rw [e, norm_prod]
   simp only [fsMulti, HermLine.ofMetrics, zpow_one]
-  refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun k _ => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun k _ => ?_
   exact PiLp.norm_apply_le (WithLp.toLp 2 (fun i => z ⟨k, i⟩)) (c k)
 
 theorem exists_chartForm_notMem {Q : Ideal (MRing J)} (hQ : IsMultiProjPrime Q) :

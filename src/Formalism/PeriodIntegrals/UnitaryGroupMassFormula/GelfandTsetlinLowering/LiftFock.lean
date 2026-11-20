@@ -172,7 +172,7 @@ private theorem isWeightedHomogeneous_coeff_rowGen {r n : ℕ} (a b c : Fin r) (
   refine Submodule.sum_mem _ fun m hm => ?_
   rw [mem_weightedHomogeneousSubmodule]
   have hw := hg (mem_support_iff.mp hm)
-  have hC : rowGen ℂ a b (C (coeff m g) : MvPolynomial (Fin r × Fin n) ℂ) = Polynomial.C (C (coeff m g)) := by
+  have hC : rowGen ℂ a b (C (AddMonoidAlgebra.coeff g m) : MvPolynomial (Fin r × Fin n) ℂ) = Polynomial.C (C (AddMonoidAlgebra.coeff g m)) := by
     unfold rowGen
     rw [aeval_C, Polynomial.algebraMap_apply, MvPolynomial.algebraMap_eq]
   rw [monomial_eq, map_mul, Finsupp.prod, map_prod]
@@ -318,7 +318,7 @@ theorem fockDetect_of (h3 : PI.HwIrred) (hD : EqvDiv) : FockDetect := by
         nth_rewrite 1 [← ha]
         rw [← hb, ← Finset.sum_add_distrib]
         refine Finset.sum_congr rfl fun m _ => ?_
-        simp only [coeff_add, star_add]
+        simp only [MvPolynomial.coeff_add, star_add]
         ring
       smul_mem' := by
         intro c a ha

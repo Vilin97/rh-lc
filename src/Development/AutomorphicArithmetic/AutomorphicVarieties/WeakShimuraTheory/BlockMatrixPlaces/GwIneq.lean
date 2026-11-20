@@ -84,7 +84,7 @@ theorem UpperTheory.V.Ws.Bl.gwIneq :
   set P' := ∏ v ∈ Finset.univ.erase v0, Nat.card (H0 (ρ.comp (locFam S Av v)))
   set Q' := ∏ v ∈ Finset.univ.erase v0, Nat.card (L v)
   have hP'pos : 0 < P' := Finset.prod_pos (fun v _ => hH0pos v)
-  have hPQ : P' ≤ Q' := Finset.prod_le_prod (fun v _ => Nat.zero_le _)
+  have hPQ : P' ≤ Q' := Finset.prod_le_prod₀ (fun v _ => Nat.zero_le _)
     (fun v hv => hL v (Finset.ne_of_mem_erase hv))
   rw [← hP, ← hQ] at key
   set a := Nat.card (Sel ρ (locFam S Av) (continuous_locFam S Av) L)

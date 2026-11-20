@@ -57,7 +57,7 @@ private theorem isWeightedHomogeneous_algHom_apply {σ R M : Type*} [CommRing R]
     intro v _
     rw [map_pow]
     exact isWeightedHomogeneous_pow' (hφ v) (d v)
-  have hC : φ (C (coeff d f)) = C (coeff d f) := by
+  have hC : φ (C (AddMonoidAlgebra.coeff f d)) = C (AddMonoidAlgebra.coeff f d) := by
     rw [← MvPolynomial.algebraMap_eq]
     exact φ.commutes _
   rw [monomial_eq, map_mul, hC, ← hdw, ← zero_add (Finsupp.weight w d)]

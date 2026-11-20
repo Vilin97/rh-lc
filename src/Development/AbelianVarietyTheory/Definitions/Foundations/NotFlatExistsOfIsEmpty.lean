@@ -211,10 +211,10 @@ theorem flDefect_vp_cyclotomic (h2 : finrank ℚ E = 12) (hd : (discr E).natAbs 
   haveI : Fact (Nat.Prime 3) := ⟨by norm_num⟩
   haveI : Fact (Nat.Prime 7) := ⟨by norm_num⟩
   have a3 : padicValNat 3 (3 ^ 6 * 7 ^ 10) = 6 := by
-    rw [padicValNat.mul (by norm_num) (by norm_num), padicValNat.prime_pow,
+    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by norm_num) (by norm_num), padicValNat.prime_pow,
       padicValNat.eq_zero_of_not_dvd (by norm_num)]
   have a7 : padicValNat 7 (3 ^ 6 * 7 ^ 10) = 10 := by
-    rw [padicValNat.mul (by norm_num) (by norm_num), padicValNat.prime_pow,
+    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by norm_num) (by norm_num), padicValNat.prime_pow,
       padicValNat.eq_zero_of_not_dvd (by norm_num)]
   simp only [flDefect_vp, different_vp, h2, hd, h7, a3, a7]
   constructor <;> norm_num <;> ring

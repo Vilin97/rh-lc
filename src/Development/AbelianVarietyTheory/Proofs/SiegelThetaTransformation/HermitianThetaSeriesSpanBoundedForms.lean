@@ -64,9 +64,9 @@ theorem norm_bchar_le {Ψ : Finset (E →+* ℂ)} (la : Wt Ψ r) (C : ℝ) {b : 
     ‖bchar la b‖ ≤ ∏ τ, ∏ i, C ^ (la τ i).natAbs := by
   unfold bchar
   rw [norm_prod]
-  refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun τ _ => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun τ _ => ?_
   rw [norm_prod]
-  refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => ?_
   obtain ⟨k, hk | hk⟩ := Int.eq_nat_or_neg (la τ i)
   · rw [hk, zpow_natCast, Int.natAbs_natCast, norm_pow]
     exact pow_le_pow_left₀ (norm_nonneg _) (hb τ i).1 _

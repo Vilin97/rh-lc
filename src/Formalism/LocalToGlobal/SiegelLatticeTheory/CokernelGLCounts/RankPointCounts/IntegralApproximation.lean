@@ -219,9 +219,9 @@ theorem prod_bounds (N : ℕ) (hN : 2 ≤ N) (η : ℝ) (hη : η = 1 ∨ η = -
       _ = ∏ i ∈ Finset.Icc a b, Real.exp (-(2 * x ^ i)) := by
           rw [← Finset.sum_neg_distrib, Real.exp_sum]
       _ ≤ ∏ i ∈ Finset.Icc a b, (1 - η ^ i / (N : ℝ) ^ i) :=
-          Finset.prod_le_prod (fun i _ => (Real.exp_pos _).le) hlo
+          Finset.prod_le_prod₀ (fun i _ => (Real.exp_pos _).le) hlo
   · calc ∏ i ∈ Finset.Icc a b, (1 - η ^ i / (N : ℝ) ^ i) ≤ ∏ i ∈ Finset.Icc a b, Real.exp (2 * x ^ i) :=
-          Finset.prod_le_prod (fun i hi => le_trans (Real.exp_pos _).le (hlo i hi)) hhi
+          Finset.prod_le_prod₀ (fun i hi => le_trans (Real.exp_pos _).le (hlo i hi)) hhi
       _ = Real.exp (∑ i ∈ Finset.Icc a b, 2 * x ^ i) := by rw [Real.exp_sum]
       _ ≤ Real.exp (4 * x ^ k) := Real.exp_le_exp.2 hsum
 

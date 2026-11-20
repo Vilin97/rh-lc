@@ -10,9 +10,9 @@ theorem BaseChangeColon.genNum_mul_expansion : ∀ (F : Type) [Field F] (K : Typ
   intro F _ K _ _ ι _ σ V cls H G Q
   classical
   have key : ∀ (P : MvPolynomial σ ℝ) (L : List (K → ℤ)) (s : Finset (σ →₀ ℕ)), P.support ⊆ s →
-      genNum F V cls P L = ∑ κ ∈ s, MvPolynomial.coeff κ P * (intNumL F V (classList cls κ ++ L) : ℝ) := by
+      genNum F V cls P L = ∑ κ ∈ s, AddMonoidAlgebra.coeff P κ * (intNumL F V (classList cls κ ++ L) : ℝ) := by
     intro P L s hs
-    show ∑ κ ∈ P.support, MvPolynomial.coeff κ P * (intNumL F V (classList cls κ ++ L) : ℝ) = _
+    show ∑ κ ∈ P.support, AddMonoidAlgebra.coeff P κ * (intNumL F V (classList cls κ ++ L) : ℝ) = _
     refine Finset.sum_subset hs (fun κ _ hκ => ?_)
     rw [MvPolynomial.notMem_support_iff.mp hκ, zero_mul]
   have hadd : ∀ P P' : MvPolynomial σ ℝ, genNum F V cls (P + P') Q = genNum F V cls P Q + genNum F V cls P' Q := by

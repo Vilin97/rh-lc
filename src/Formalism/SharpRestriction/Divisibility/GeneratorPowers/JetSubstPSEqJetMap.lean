@@ -36,7 +36,7 @@ theorem jetSubstPS_eq_jetMap (m : ℕ) (Q : κ → MvPowerSeries κ' S) (hQ : �
         simp
       · simp
     rw [← hQ i]
-    change MvPolynomial.coeff 0 (psTrunc m (Q i)) = _
+    change AddMonoidAlgebra.coeff (psTrunc m (Q i)) 0 = _
     unfold psTrunc
     rw [MvPolynomial.coeff_sum]
     simp only [MvPolynomial.coeff_monomial]

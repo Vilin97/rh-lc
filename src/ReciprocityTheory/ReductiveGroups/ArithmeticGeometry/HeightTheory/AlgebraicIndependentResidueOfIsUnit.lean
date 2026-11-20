@@ -62,7 +62,7 @@ theorem trdeg_residue_le {K Ω : Type} [Field K] [Field Ω] [Algebra K Ω] (D : 
     rw [hD] at h
     exact h
   obtain ⟨r, hr⟩ : ∃ r : ℕ, Algebra.trdeg k κ = r :=
-    Cardinal.lt_aleph0.mp (lt_of_le_of_lt hle (Cardinal.nat_lt_aleph0 D))
+    Cardinal.lt_aleph0.mp (lt_of_le_of_lt hle (Cardinal.natCast_lt_aleph0 D))
   haveI : FaithfulSMul k κ :=
     (faithfulSMul_iff_algebraMap_injective k κ).mpr (algebraMap k κ).injective
   obtain ⟨s, hs⟩ := exists_isTranscendenceBasis k κ
@@ -186,10 +186,10 @@ theorem trdeg_eq_of_card {F E C : Type} [Field F] [Field E] [Field C] [Algebra F
   have h1 := ReciprocityTheory.MultiplicativeHeights.gauss_card_le_trdeg_add tb ub hu hmem
   have h2 := ReciprocityTheory.MultiplicativeHeights.gauss_trdeg_adjoin_le (E := E) tb
   obtain ⟨a, ha⟩ : ∃ a : ℕ, Algebra.trdeg F E = a :=
-    Cardinal.lt_aleph0.mp (lt_of_le_of_lt hE (Cardinal.nat_lt_aleph0 n))
+    Cardinal.lt_aleph0.mp (lt_of_le_of_lt hE (Cardinal.natCast_lt_aleph0 n))
   rw [Cardinal.mk_fintype] at h2
   obtain ⟨b, hb⟩ : ∃ b : ℕ, Algebra.trdeg E (Algebra.adjoin E (Set.range tb)) = b :=
-    Cardinal.lt_aleph0.mp (lt_of_le_of_lt h2 (Cardinal.nat_lt_aleph0 _))
+    Cardinal.lt_aleph0.mp (lt_of_le_of_lt h2 (Cardinal.natCast_lt_aleph0 _))
   rw [Cardinal.mk_fintype, hcard, ha, hb] at h1
   rw [ha] at hE
   rw [hb] at h2

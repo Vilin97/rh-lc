@@ -134,7 +134,7 @@ private theorem near {n : ℕ} {B K : Type} [CommRing B] [NormedField K] [IsUltr
   have : (1 : ℝ) ≤ ‖∏ i, (z - x (a i))‖ := by
     rw [norm_prod]
     calc (1 : ℝ) = ∏ _i : Fin n, (1 : ℝ) := by simp
-      _ ≤ ∏ i, ‖z - x (a i)‖ := Finset.prod_le_prod (fun _ _ => zero_le_one) (fun i _ => hne i)
+      _ ≤ ∏ i, ‖z - x (a i)‖ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun i _ => hne i)
   linarith
 
 theorem UpperTheory.V.Ws.Pu.ptRed :

@@ -45,7 +45,7 @@ theorem sAA_mem (ch : Choice R) (h : ch.FieldOK) : ch.S.sAA ∈ D.what₂.embLL.
 
 theorem psiC_rat (ch : Choice R) (a : Fin ch.n) (g : FinPt ch.G (.top 0)) (m) :
     MvPolynomial.coeff m (psiC (ch.Psi a) g).1 ∈ Set.range D.what₂.embLL := by
-  show MvPolynomial.coeff m ((GlobalTheory.CoefModel.mapVV D.what₂.embLL (LaP ch.G) (ch.Psi a (finG (Xp ch.G) g))).1) ∈ _
+  show AddMonoidAlgebra.coeff ((GlobalTheory.CoefModel.mapVV D.what₂.embLL (LaP ch.G) (ch.Psi a (finG (Xp ch.G) g))).1) m ∈ _
   simp [GlobalTheory.CoefModel.mapVV, MvPolynomial.coeff_map]
 
 theorem vK_mem (ch : Choice R) (large₂ : SizeData₂ D) (F : Face D A) (CF b : ℝ) (hS : HidaSetting large₂ R F) (hi : ch.Is)

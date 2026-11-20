@@ -37,8 +37,8 @@ theorem MChartDehomog.proof : MChartDehomog.Statement := by
     simp only [φ, RingHom.comp_apply]
     rw [← MvPolynomial.algebraMap_eq, ← Ideal.Quotient.mkₐ_eq_mk F, AlgHom.commutes,
       ← IsScalarTower.algebraMap_apply]
-  have hmono : ∀ e ∈ f.support, chartMap P u (monomial e (coeff e f)) * ∏ k, w k ^ b k =
-      φ (monomial e (coeff e f)) := by
+  have hmono : ∀ e ∈ f.support, chartMap P u (monomial e (AddMonoidAlgebra.coeff f e)) * ∏ k, w k ^ b k =
+      φ (monomial e (AddMonoidAlgebra.coeff f e)) := by
     intro e he
     have hwe : Finsupp.weight (blockWeight ι) e = b := hf (mem_support_iff.mp he)
     rw [← hwe, prod_pow_blockWeight, chartMap, aeval_monomial, mul_assoc, ← Finsupp.prod_mul,

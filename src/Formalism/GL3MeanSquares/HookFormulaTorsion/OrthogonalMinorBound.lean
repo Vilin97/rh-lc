@@ -80,7 +80,7 @@ private lemma one_le_det_one_add {r : ℕ} (R : Matrix (Fin r) (Fin r) ℂ) (hR 
     have := hR.eigenvalues_nonneg i
     linarith
   calc (1 : ℝ) = ∏ _i : Fin r, (1 : ℝ) := by simp
-    _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one) this
+    _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) this
 
 private lemma minor_le_gram {r n : ℕ} (A : Matrix (Fin r) (Fin n) ℂ) (e : Fin r → Fin n)
     (he : Function.Injective e) :

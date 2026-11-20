@@ -81,12 +81,12 @@ theorem prod_Gz_le {b C B T T' : ℝ} (hb : 1 ≤ b) (hC : 0 ≤ C) (hr : 1 ≤ 
         max 1 (absDl D Z D.R.rS τ / b ^ (C * (D.R.m : ℝ) ^ 2))) ^ 2) :=
     calc ∏ τ, Gz D T T' Z τ ≤ |∏ τ, Gz D T T' Z τ| := le_abs_self _
       _ = ∏ τ, |Gz D T T' Z τ| := Finset.abs_prod _ _
-      _ ≤ _ := Finset.prod_le_prod (fun τ _ => abs_nonneg _) (fun τ _ => hpt τ)
+      _ ≤ _ := Finset.prod_le_prod₀ (fun τ _ => abs_nonneg _) (fun τ _ => hpt τ)
   rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, hcard, Finset.prod_pow] at hprod
   have hsz : ∏ τ, (max 1 (absDl D Z (D.R.rS + 1) τ / b ^ (C * (D.R.m : ℝ) ^ 2)) *
       max 1 (absDl D Z D.R.rS τ / b ^ (C * (D.R.m : ℝ) ^ 2))) ≤ sizeZ D b C Z := by
     unfold sizeZ
-    refine Finset.prod_le_prod (fun τ _ => mul_nonneg (zero_le_one.trans (hM1 _ _)) (zero_le_one.trans (hM1 _ _))) ?_
+    refine Finset.prod_le_prod₀ (fun τ _ => mul_nonneg (zero_le_one.trans (hM1 _ _)) (zero_le_one.trans (hM1 _ _))) ?_
     intro τ _
     have hmem1 : D.R.rS + 1 ∈ Finset.Icc 1 (D.R.rS + 1) := Finset.mem_Icc.2 ⟨by omega, le_rfl⟩
     have hmem2 : D.R.rS ∈ (Finset.Icc 1 (D.R.rS + 1)).erase (D.R.rS + 1) :=

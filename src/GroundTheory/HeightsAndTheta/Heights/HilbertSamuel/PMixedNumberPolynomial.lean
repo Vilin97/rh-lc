@@ -184,7 +184,7 @@ theorem low_dPoly_monomial (b : K → ℤ) (s : K →₀ ℕ) (a : ℚ) :
     exact Nat.zero_lt_one
 
 theorem low_dPoly (b : K → ℤ) (p : MvPolynomial K ℚ) : Low (dPoly b p) p.totalDegree := by
-  have hsum : dPoly b p = ∑ s ∈ p.support, dPoly b (monomial s (coeff s p)) := by
+  have hsum : dPoly b p = ∑ s ∈ p.support, dPoly b (monomial s (AddMonoidAlgebra.coeff p s)) := by
     simp only [dPoly]
     conv_lhs => rw [p.as_sum]
     rw [map_sum, ← Finset.sum_sub_distrib]

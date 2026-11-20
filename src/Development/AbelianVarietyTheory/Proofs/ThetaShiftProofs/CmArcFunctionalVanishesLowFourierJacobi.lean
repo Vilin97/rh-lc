@@ -43,7 +43,7 @@ theorem coeff_eq_zero_of_invBl (S : Finset (ArcLt Dw →₀ ℕ)) (f : (ArcLt Dw
     rw [map_sum, ← h x ((hQe x).1 hx)]
     exact Finset.sum_congr rfl fun mo _ => MvPolynomial.eval_monomial
   intro mo hmo
-  have := congrArg (MvPolynomial.coeff mo) hP
+  have := congrArg (AddMonoidAlgebra.coeff · mo) hP
   rw [MvPolynomial.coeff_sum] at this
   simpa [MvPolynomial.coeff_monomial, hmo] using this
 

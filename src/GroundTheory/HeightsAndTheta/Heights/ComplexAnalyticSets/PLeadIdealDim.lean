@@ -15,7 +15,7 @@ theorem leadForm_ne_zero {f : MvPolynomial (Fin n) ℂ} (hf : f ≠ 0) : leadFor
   obtain ⟨d, hd, hdeg⟩ := Finset.exists_mem_eq_sup f.support (support_nonempty.mpr hf)
     (fun m => m.sum fun _ e => e)
   intro h0
-  have hc := congrArg (coeff d) h0
+  have hc := congrArg (AddMonoidAlgebra.coeff · d) h0
   rw [leadForm, coeff_homogeneousComponent, coeff_zero] at hc
   rw [if_pos (by rw [totalDegree, hdeg]; rfl)] at hc
   exact (mem_support_iff.mp hd) hc

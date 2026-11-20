@@ -109,7 +109,7 @@ theorem span_bound {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) (l
     refine ⟨∏ τ, ‖w τ‖, fun v => ?_⟩
     have : ellT M w (PiTensorProduct.tprod ℂ v) = ∏ τ, inner ℂ (w τ) (v τ) := by simp [ellT]
     rw [this, norm_prod, ← Finset.prod_mul_distrib]
-    exact Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun τ _ => norm_inner_le_norm _ _
+    exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun τ _ => norm_inner_le_norm _ _
   | zero => exact ⟨0, fun v => by simp⟩
   | add l l' _ _ h h' =>
     obtain ⟨c, hc⟩ := h

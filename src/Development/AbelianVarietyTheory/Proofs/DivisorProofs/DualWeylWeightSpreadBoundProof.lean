@@ -79,10 +79,10 @@ theorem nablaBdd : NablaBdd := by
     unfold eV
     rw [dif_pos ⟨hc, hc⟩]
     rfl
-  have hc := congrArg (fun y : dualWeyl ℚ (M + 1) (M + 1) ν => coeff m (y : MvPolynomial (Fin (M + 1) × Fin (M + 1)) ℚ)) hx
+  have hc := congrArg (fun y : dualWeyl ℚ (M + 1) (M + 1) ν => AddMonoidAlgebra.coeff (y : MvPolynomial (Fin (M + 1) × Fin (M + 1)) ℚ) m) hx
   simp only [Submodule.coe_sub, Submodule.coe_smul, hea a ha, hea b hb, coeff_sub,
     Formalism.CohomologicalDescent.LR.coeff_der_diag, coeff_smul, smul_eq_mul, Formalism.GradedWeylDivisibility.ldrow_weight_rowW] at hc
-  have hne : coeff m (x : MvPolynomial (Fin (M + 1) × Fin (M + 1)) ℚ) ≠ 0 := mem_support_iff.mp hm
+  have hne : AddMonoidAlgebra.coeff (x : MvPolynomial (Fin (M + 1) × Fin (M + 1)) ℚ) m ≠ 0 := mem_support_iff.mp hm
   have key : (((rowDeg m ⟨a, ha⟩ : ℕ) : ℚ) - ((rowDeg m ⟨b, hb⟩ : ℕ) : ℚ)) = (n : ℚ) := by
     apply mul_right_cancel₀ hne
     rw [sub_mul]

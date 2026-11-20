@@ -232,7 +232,7 @@ theorem norm_l_le (j : ℕ) : ∀ η : Om l, η ^ l ^ j = 1 → η ≠ 1 → ‖
       obtain ⟨m, hm⟩ : ∃ m, l - 1 = m + 1 := ⟨l - 2, by have := hl.two_le; omega⟩
       rw [hm, Finset.prod_range_succ]
       refine (mul_le_of_le_one_left (norm_nonneg _) ?_).trans (hb _)
-      exact Finset.prod_le_one (fun _ _ => norm_nonneg _) fun k _ =>
+      exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun k _ =>
         (hb _).trans (norm_sub_le_one (by simp) hη)
     · exact (ih (η ^ l) (by rw [← pow_mul, ← h]; ring) h2).trans (hb _)
 
@@ -383,7 +383,7 @@ theorem exists_moved (K : FinExt l) {y : Om l} (hy : ‖y‖ ≤ 1) (n : ℕ) {�
       refine (pow_le_pow_of_le_one (norm_nonneg _) hle1 (show S.card ≤ N by omega)).trans ?_
       refine le_trans ?_ hprod
       rw [← Finset.prod_const]
-      exact Finset.prod_le_prod (fun _ _ => norm_nonneg _) hmin
+      exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) hmin
     by_cases hm : τ (s y) = y
     · refine ⟨σ * τ * s, fun _ => ⟨?_, ?_, ?_⟩⟩
       · simpa [hm] using hσy
@@ -422,7 +422,7 @@ theorem exists_moved (K : FinExt l) {y : Om l} (hy : ‖y‖ ≤ 1) (n : ℕ) {�
   have h2 : c ^ N ≤ ‖(l : Om l)‖ ^ j := by
     refine (pow_le_pow_left₀ hc0.le h1 N).trans ?_
     rw [← Finset.prod_pow, ← norm_pow, ← Nat.cast_pow, ← prod_norm_one_sub (pow_pos hl.pos j) hω]
-    exact Finset.prod_le_prod (fun _ _ => by positivity) fun k hk => (hg k hk).2.2
+    exact Finset.prod_le_prod₀ (fun _ _ => by positivity) fun k hk => (hg k hk).2.2
   have h3 : ‖(l : Om l)‖ ^ j ≤ ‖(l : Om l)‖ ^ j₀ :=
     pow_le_pow_of_le_one (norm_nonneg _) norm_l_lt_one.le (by omega)
   linarith
@@ -499,7 +499,7 @@ theorem exists_trace_norm_ge : ∀ (l : ℕ) [Fact l.Prime] (K L' : FinExt l) (�
   refine (pow_le_pow_of_le_one (by linarith) (by linarith)
     ((Finset.card_erase_le (a := s₀)).trans hcard)).trans ?_
   rw [← Finset.prod_const]
-  refine Finset.prod_le_prod (fun _ _ => by linarith) fun t ht => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => by linarith) fun t ht => ?_
   have ht' := Finset.mem_of_mem_erase ht
   have := hmove (s₀⁻¹ * t) (mul_mem (inv_mem (hS s₀ h₀)) (hS t ht'))
     fun h => Finset.ne_of_mem_erase ht (hsep s₀ h₀ t ht' h).symm

@@ -68,7 +68,7 @@ theorem eq_zero_of_mul_ratio_pow {i j : Fin (N + 1)} (hij : j ≠ i) (k : ℕ) {
     have hle : m i ≤ a := by
       rw [← hdeg]
       exact Finsupp.le_weight _ (s := i) one_ne_zero m
-    have := congrArg (coeff (m + Finsupp.single j (k + 1 + b))) key
+    have := congrArg (AddMonoidAlgebra.coeff · (m + Finsupp.single j (k + 1 + b))) key
     rw [X_pow_eq_monomial, X_pow_eq_monomial, coeff_mul_monomial, coeff_mul_monomial', if_neg] at this
     · exact hm (by simpa using this)
     · intro hle'
@@ -125,7 +125,7 @@ theorem exists_form_of_eq_ratio_pow_mul {i j : Fin (N + 1)} (hij : j ≠ i) (n :
     by_cases hm : Finsupp.single i a ≤ m
     · rw [coeff_modMonomial_of_le _ hm, coeff_zero]
     · rw [coeff_modMonomial_of_not_le _ hm, coeff_zero]
-      have := congrArg (coeff (m + Finsupp.single j b)) key
+      have := congrArg (AddMonoidAlgebra.coeff · (m + Finsupp.single j b)) key
       rw [X_pow_eq_monomial (n := j) (e := b), X_pow_eq_monomial (n := i) (e := a), coeff_mul_monomial,
         coeff_mul_monomial', if_neg] at this
       · simpa using this
@@ -211,7 +211,7 @@ theorem isIso_str_zero : IsIso (PSpace.str R 0) := by
 theorem nilpotent_form (h : (C 2 * X 0 : MvPolynomial (Fin 2) (ZMod 4)).IsHomogeneous 1) :
     formSec 1 _ h ≠ formSec 1 0 (isHomogeneous_zero _ _ 1) ∧ nonzeroLocus (formSec 1 _ h) = ⊥ := by
   refine ⟨fun e => ?_, ?_⟩
-  · have := congrArg (coeff (Finsupp.single 0 1)) ((formSec_inj _ _).1 e)
+  · have := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single 0 1)) ((formSec_inj _ _).1 e)
     rw [coeff_C_mul, coeff_X, if_pos rfl, coeff_zero] at this
     exact absurd this (by decide)
   · rw [nonzeroLocus_formSec]

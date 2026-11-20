@@ -110,7 +110,7 @@ theorem term_bound {D' : 𝓞 F} (hD'0 : D' ≠ 0) (m₁ : ℕ) {Ca B : ℝ} (hB
     have e1 : ∏ p : InfinitePlace F, (if p = w0 F then (t : ℝ)⁻¹ else 1) = (t : ℝ)⁻¹ := by simp
     have e2 : ∏ p, ‖((a⁻¹ : Ideles F) : Ad F).1 p‖ ≤ B ^ n := by
       calc _ ≤ ∏ _p : InfinitePlace F, B :=
-            Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun p _ => ha p
+            Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun p _ => ha p
         _ = B ^ n := by rw [Finset.prod_const, Finset.card_univ]
     rw [Finset.prod_congr rfl fun p _ => hzinv p, Finset.prod_mul_distrib, e1]
     exact mul_le_mul_of_nonneg_left e2 (inv_nonneg.2 ht0.le)
@@ -136,7 +136,7 @@ theorem term_bound {D' : 𝓞 F} (hD'0 : D' ≠ 0) (m₁ : ℕ) {Ca B : ℝ} (hB
   have hP0 : 0 ≤ P := Finset.prod_nonneg fun p _ => hρ0 p
   have h2 : ∏ p, |sig p (ξ j)| ≤ P * ((t : ℝ)⁻¹ * B ^ n) * (1 + m') ^ n := by
     calc ∏ p, |sig p (ξ j)| ≤ ∏ p, (ρ p * ζ p * (1 + m')) :=
-          Finset.prod_le_prod (fun p _ => abs_nonneg _) fun p _ => harch p j
+          Finset.prod_le_prod₀ (fun p _ => abs_nonneg _) fun p _ => harch p j
       _ = P * (∏ p, ζ p) * (1 + m') ^ n := by
           rw [Finset.prod_mul_distrib, Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ]
       _ ≤ P * ((t : ℝ)⁻¹ * B ^ n) * (1 + m') ^ n :=
@@ -160,7 +160,7 @@ theorem term_bound {D' : 𝓞 F} (hD'0 : D' ≠ 0) (m₁ : ℕ) {Ca B : ℝ} (hB
       have h2 : 1 ≤ L ^ 2 := one_le_pow₀ hL1
       nlinarith [sq_nonneg (ρ p)]
     calc _ ≤ ∏ p, ((1 + ρ p ^ 2) * L ^ 2) :=
-          Finset.prod_le_prod (fun p _ => by positivity) fun p _ => hp p
+          Finset.prod_le_prod₀ (fun p _ => by positivity) fun p _ => hp p
       _ = Q * L ^ (2 * n) := by
           rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, ← pow_mul]
   have hC := hCa (UpperTheory.V.TR.pInf F (v 0)) (UpperTheory.V.TR.pInf F (v 1))

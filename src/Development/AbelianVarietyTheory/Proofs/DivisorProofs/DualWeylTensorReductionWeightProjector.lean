@@ -31,7 +31,7 @@ theorem wComp_mul_of_weight_zero {σ R M : Type} [CommSemiring R] [AddCommMonoid
   split_ifs with h
   · refine Finset.sum_congr rfl fun x hx => ?_
     rw [coeff_weightedHomogeneousComponent]
-    by_cases hq : coeff x.2 Q = 0
+    by_cases hq : AddMonoidAlgebra.coeff Q x.2 = 0
     · simp [hq]
     · have h2 := hQ hq
       have hm : x.1 + x.2 = m := Finset.HasAntidiagonal.mem_antidiagonal.1 hx
@@ -40,7 +40,7 @@ theorem wComp_mul_of_weight_zero {σ R M : Type} [CommSemiring R] [AddCommMonoid
   · symm
     refine Finset.sum_eq_zero fun x hx => ?_
     rw [coeff_weightedHomogeneousComponent]
-    by_cases hq : coeff x.2 Q = 0
+    by_cases hq : AddMonoidAlgebra.coeff Q x.2 = 0
     · simp [hq]
     · have h2 := hQ hq
       have hm : x.1 + x.2 = m := Finset.HasAntidiagonal.mem_antidiagonal.1 hx

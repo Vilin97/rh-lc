@@ -79,8 +79,8 @@ theorem eq_monomial_of_dehomog_const (A : MvPolynomial (V D N) K) (m : ℕ) (hA 
     rw [if_neg]
     rintro rfl
     simp at hv
-  have hcoeff : ∀ u, coeff u (ev1 A) =
-      ∑ s ∈ A.support, if s.erase (Sum.inr 0) = u then coeff s A else 0 := by
+  have hcoeff : ∀ u, AddMonoidAlgebra.coeff (ev1 A) u =
+      ∑ s ∈ A.support, if s.erase (Sum.inr 0) = u then AddMonoidAlgebra.coeff A s else 0 := by
     intro u
     conv_lhs => rw [A.as_sum]
     rw [map_sum, coeff_sum]
@@ -120,7 +120,7 @@ theorem eq_monomial_of_dehomog_const (A : MvPolynomial (V D N) K) (m : ℕ) (hA 
       rw [if_pos h0, if_pos h, mul_one]
     · have h0 : ¬ 0 = u.erase (Sum.inr 0) := fun h0 => h (hsingle u hu h0.symm).symm
       rw [if_neg h0, if_neg h, mul_zero]
-  · have hu0 : coeff u A = 0 := by simpa using hu
+  · have hu0 : AddMonoidAlgebra.coeff A u = 0 := by simpa using hu
     rw [hu0]
     by_cases h : Finsupp.single (Sum.inr 0) m = u
     · rw [if_pos h, mul_one]

@@ -74,7 +74,7 @@ theorem partner_determinant_holds : PartnerDet := by
   calc (p : ℝ) ^ (-(D * k)) = ∏ _i : Fin k, (p : ℝ) ^ (-D) := by
         rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin, ← Real.rpow_mul_natCast hp0.le]
         congr 1; ring
-    _ ≤ ∏ i, ‖dg i‖ := Finset.prod_le_prod (fun _ _ => (Real.rpow_pos_of_pos hp0 _).le) fun i _ => hd i
+    _ ≤ ∏ i, ‖dg i‖ := Finset.prod_le_prod₀ (fun _ _ => (Real.rpow_pos_of_pos hp0 _).le) fun i _ => hd i
 
 section Gr
 variable {p : ℕ} [Fact p.Prime] {K r : ℕ} [NeZero r]
@@ -133,8 +133,8 @@ theorem graded_piece_bound_holds : GradedPieceBound := by
   have huI : u ∈ IntPol p (Fin (K + 1) × Fin r) := grLat_le_int LLw J M ρ w _ e hu
   have huP : u ∈ Pol p r LLw := grLat_le_pol LLw J M ρ w _ e hu
   have hne : u.support.Nonempty := by rwa [Finset.nonempty_iff_ne_empty, Ne, support_eq_empty]
-  obtain ⟨m, hm, hmax⟩ := Finset.exists_max_image u.support (fun m => ‖coeff m u‖) hne
-  set a := coeff m u with ha
+  obtain ⟨m, hm, hmax⟩ := Finset.exists_max_image u.support (fun m => ‖AddMonoidAlgebra.coeff u m‖) hne
+  set a := AddMonoidAlgebra.coeff u m with ha
   have ha0 : a ≠ 0 := mem_support_iff.mp hm
   have han : 0 < ‖a‖ := norm_pos_iff.mpr ha0
   have hmD : MultiDeg LLw m := by
@@ -149,7 +149,7 @@ theorem graded_piece_bound_holds : GradedPieceBound := by
     · exact hmax m' hm'
     · rw [notMem_support_iff.mp hm', norm_zero]; exact han.le
   have hu0X : u0 ∈ XX := XX.smul_mem _ (hGX u hu)
-  have hu0c : ‖coeff m u0‖ = 1 := by
+  have hu0c : ‖AddMonoidAlgebra.coeff u0 m‖ = 1 := by
     rw [hu0def, coeff_smul, smul_eq_mul, ← ha, inv_mul_cancel₀ ha0, norm_one]
   have huu0 : u = a • u0 := by rw [hu0def, smul_smul, mul_inv_cancel₀ ha0, one_smul]
   have hy : ((p : ℚ_[p]) ^ c) • u0 ∈ Gr := hSat u0 hu0X hu0I

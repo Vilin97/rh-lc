@@ -113,7 +113,7 @@ theorem GlobalTheory.JR.exists_small_dual_lattices : ∀ (F : Type) [Nontriviall
     rw [LinearMap.BilinForm.dualBasis_repr_apply, hs.eq]
   refine ⟨(stdChar_continuous hψ).comp ?_, fun U hU => ?_⟩
   · simp only [hB]
-    refine continuous_finset_sum _ fun i _ => ?_
+    refine continuous_finsetSum _ fun i _ => ?_
     exact (((continuous_apply i).comp (coordHomeo e).continuous).comp continuous_fst).mul
       (((continuous_apply i).comp (coordHomeo e').continuous).comp continuous_snd)
   · have h0 : (coordHomeo e).symm 0 = 0 := map_zero e.equivFun.symm

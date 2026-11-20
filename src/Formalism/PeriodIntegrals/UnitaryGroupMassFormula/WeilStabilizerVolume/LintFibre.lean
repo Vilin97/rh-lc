@@ -44,7 +44,7 @@ theorem lint_fibre {Γ H : Subgroup G} [Countable Γ] (μ' : Measure H) [μ'.IsM
   have hm : ∀ δ : (Γ ⊓ H).subgroupOf H, Measurable fun k : H =>
       (∑' x : orbS Γ y0, A.indicator (fun _ => (1 : ℝ≥0∞))
           (repO Γ y0 x * ((δ : H) : G) * ((k : G) * s⁻¹))) * ρ ((k : G) * s⁻¹) := fun δ =>
-    (Measurable.ennreal_tsum fun _ => (measurable_const.indicator hA).comp
+    (Measurable.tsum fun _ => (measurable_const.indicator hA).comp
       ((measurable_const_mul _).comp ((measurable_mul_const _).comp measurable_subtype_coe))).mul
       (hρ.comp ((measurable_mul_const _).comp measurable_subtype_coe))
   calc ∫⁻ k, cfun Γ A y0 (s * (k : G)) * ρ ((s * (k : G))⁻¹) ∂μ'

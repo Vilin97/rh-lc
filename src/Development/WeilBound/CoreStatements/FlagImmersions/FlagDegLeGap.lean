@@ -17,7 +17,7 @@ private theorem prod_le_mul_two_pow_card {ι : Type} [Fintype ι] [DecidableEq �
   rw [← Finset.mul_prod_erase Finset.univ f (Finset.mem_univ x₀), hc]
   refine mul_le_mul_of_nonneg_left ?_ (hc ▸ h0 x₀)
   calc ∏ x ∈ Finset.univ.erase x₀, f x ≤ ∏ x ∈ Finset.univ.erase x₀, (2 : ℝ) :=
-        Finset.prod_le_prod (fun x _ => h0 x) (fun x _ => h2 x)
+        Finset.prod_le_prod₀ (fun x _ => h0 x) (fun x _ => h2 x)
     _ = 2 ^ (Finset.univ.erase x₀).card := Finset.prod_const 2
     _ ≤ 2 ^ Fintype.card ι := pow_le_pow_right₀ (by norm_num) (Finset.card_le_univ _)
 

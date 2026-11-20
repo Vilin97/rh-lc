@@ -145,7 +145,7 @@ theorem isHomogeneous_spec {F K : Type} [Field F] [Field K] [Algebra F K] {D N �
     · intro i _ hi
       simp [hi]
     · simp
-  have h2 := (isHomogeneous_C (Fin 1 × Fin N) (algebraMap F K (coeff m f))).mul hprod
+  have h2 := (isHomogeneous_C (Fin 1 × Fin N) (algebraMap F K (AddMonoidAlgebra.coeff f m))).mul hprod
   rw [zero_add, hdeg] at h2
   rw [aeval_monomial, MvPolynomial.algebraMap_apply]
   exact h2

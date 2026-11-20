@@ -89,7 +89,7 @@ section Orders
 
 variable {σ : Type*} {R : Type*} [CommRing R] (wv : σ → ℕ)
 
-def Ord (b : ℕ) (f : MvPolynomial σ R) : Prop := ∀ m, Finsupp.weight wv m < b → coeff m f = 0
+def Ord (b : ℕ) (f : MvPolynomial σ R) : Prop := ∀ m, Finsupp.weight wv m < b → AddMonoidAlgebra.coeff f m = 0
 
 def IsW (y : MvPolynomial σ R) (a : ℕ) : Prop := y = 0 ∨ ∃ v, y = X v ∧ wv v = a
 

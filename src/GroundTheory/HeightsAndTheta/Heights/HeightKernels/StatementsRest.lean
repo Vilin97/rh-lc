@@ -21,7 +21,7 @@ def restTransport (f j k N : ℕ) (e : Fin N ≃ Fin j ⊕ Fin k) :
 
 def realFlagIntegral (f N : ℕ) (P : MvPolynomial (Fin f × Fin N) ℝ) : ℝ :=
   ∑ α ∈ (RestTerms.blockVandermonde f N).support,
-    coeff α P * ((coeff α (RestTerms.blockVandermonde f N) *
+    AddMonoidAlgebra.coeff P α * ((AddMonoidAlgebra.coeff (RestTerms.blockVandermonde f N) α *
       α.prod (fun _ e => (e.factorial : ℚ)) : ℚ) : ℝ)
 
 def restStair (f N : ℕ) : RestTerms.RootRing f N :=

@@ -98,7 +98,7 @@ theorem chowDegree_eq {F : Type*} [Field F] {I : Ideal (MvPolynomial (Fin n) F)}
     obtain ⟨r, hr, rfl⟩ := (isUnit_iff_eq_C_of_isReduced (P := a)).mp (isUnit_iff_exists_inv.mpr ⟨b, hab⟩)
     obtain ⟨d, hd⟩ := ne_zero_iff.mp hf.1
     have h1 := hδ hd
-    have h2 := hδ' (show coeff d (f * C r) ≠ 0 by rw [mul_comm, coeff_C_mul]; exact mul_ne_zero hr.ne_zero hd)
+    have h2 := hδ' (show AddMonoidAlgebra.coeff (f * C r) d ≠ 0 by rw [mul_comm, coeff_C_mul]; exact mul_ne_zero hr.ne_zero hd)
     exact congrFun (h2.symm.trans h1) ⟨0, hk⟩
   exact le_antisymm (Nat.sInf_le ⟨f, hf, hδ⟩) (le_csInf ⟨δ, f, hf, hδ⟩ fun δ' h => (key δ' h).ge)
 

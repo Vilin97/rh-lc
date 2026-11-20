@@ -158,11 +158,11 @@ theorem compSt : CompSt := by
       ext k; simp [Finsupp.comapDomain_apply]
     rw [hδ, op_dvE, op_dvE, mul_assoc, monomial_mul, mul_one, decomp]
   choose! R hR using key
-  refine ⟨∑ t ∈ v.support, coeff t v • R t, ?_, ?_, fun f => ?_⟩
+  refine ⟨∑ t ∈ v.support, AddMonoidAlgebra.coeff v t • R t, ?_, ?_, fun f => ?_⟩
   · exact (good_sum _ _ fun t ht => good_smul _ (hR t ht).1).1
   · exact (good_sum _ _ fun t ht => good_smul _ (hR t ht).1).2
-  · rw [show op v f = ∑ t ∈ v.support, coeff t v • opMono t f from rfl, op_sum_f]
-    have huv : u * v = ∑ t ∈ v.support, coeff t v • (u * monomial t 1) := by
+  · rw [show op v f = ∑ t ∈ v.support, AddMonoidAlgebra.coeff v t • opMono t f from rfl, op_sum_f]
+    have huv : u * v = ∑ t ∈ v.support, AddMonoidAlgebra.coeff v t • (u * monomial t 1) := by
       conv_lhs => rw [v.as_sum]
       rw [Finset.mul_sum]
       refine Finset.sum_congr rfl fun t _ => ?_

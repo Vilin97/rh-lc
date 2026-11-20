@@ -13,10 +13,10 @@ def degB (b : Fin (D + 1)) (s : TVar D N →₀ ℕ) : ℕ := ∑ j, s (b, j)
 
 noncomputable def compB (b : Fin (D + 1)) (k : ℕ) (p : MvPolynomial (TVar D N) K) :
     MvPolynomial (TVar D N) K :=
-  ∑ s ∈ p.support.filter (fun s => degB b s = k), monomial s (coeff s p)
+  ∑ s ∈ p.support.filter (fun s => degB b s = k), monomial s (AddMonoidAlgebra.coeff p s)
 
 theorem coeff_compB (b : Fin (D + 1)) (k : ℕ) (p : MvPolynomial (TVar D N) K) (t : TVar D N →₀ ℕ) :
-    coeff t (compB b k p) = if degB b t = k then coeff t p else 0 := by
+    AddMonoidAlgebra.coeff (compB b k p) t = if degB b t = k then AddMonoidAlgebra.coeff p t else 0 := by
   unfold compB
   rw [coeff_sum]
   simp only [coeff_monomial]
@@ -28,7 +28,7 @@ theorem coeff_compB (b : Fin (D + 1)) (k : ℕ) (p : MvPolynomial (TVar D N) K) 
       rw [if_pos hm]
     · have hn : t ∉ p.support.filter (fun s => degB b s = k) := fun h' => ht (Finset.mem_filter.mp h').1
       rw [if_neg hn]
-      exact (by simpa using ht : coeff t p = 0).symm
+      exact (by simpa using ht : AddMonoidAlgebra.coeff p t = 0).symm
   · have hn : t ∉ p.support.filter (fun s => degB b s = k) := fun h' => h (Finset.mem_filter.mp h').2
     rw [if_neg h, if_neg hn]
 

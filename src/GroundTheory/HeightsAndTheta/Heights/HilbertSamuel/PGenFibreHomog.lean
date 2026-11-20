@@ -23,7 +23,7 @@ theorem isMultiHomog_of_weighted {f : MRing ι} {b : K → ℕ}
   rw [sum_block_eq_weight, hf (mem_support_iff.mp hm)]
 
 theorem coeff_mConeMap {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) (b : K → ℕ) (f : MRing ι) :
-    coeff (Finsupp.equivFunOnFinite.symm b) (mConeMap y f) =
+    AddMonoidAlgebra.coeff (mConeMap y f) (Finsupp.equivFunOnFinite.symm b) =
       aeval y (weightedHomogeneousComponent (NumbersDVR.blockWeight ι) b f) := by
   classical
   induction f using MvPolynomial.induction_on' with
@@ -41,7 +41,7 @@ theorem coeff_mConeMap {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) (b : K �
     · subst h; simp
     · rw [if_neg h, if_neg (fun h' => h (Finsupp.equivFunOnFinite.symm.injective h').symm)]
       simp
-  | add p q hp hq => rw [map_add, coeff_add, hp, hq, map_add, map_add]
+  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, hp, hq, map_add, map_add]
 
 theorem isMultiHomogIdeal_mCoordIdeal {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) :
     NumbersDVR.IsMultiHomogIdeal (R := ℤ) (mCoordIdeal y) := by

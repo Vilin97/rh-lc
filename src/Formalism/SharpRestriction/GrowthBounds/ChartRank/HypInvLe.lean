@@ -77,8 +77,8 @@ theorem ker_desc {σ τ : Type} (Ts : Set (MvPolynomial σ Kf →ₗ[Kf] MvPolyn
     Prod.ext (mapE_smul e a x.1) (mapE_smul e a x.2)
   have hval : ∀ x, IsRat e ev (φ x) := by
     rintro x (m | m)
-    · exact ⟨MvPolynomial.coeff m x.1, by simp [ev, φ, MvPolynomial.coeff_map]⟩
-    · exact ⟨MvPolynomial.coeff m x.2, by simp [ev, φ, MvPolynomial.coeff_map]⟩
+    · exact ⟨AddMonoidAlgebra.coeff x.1 m, by simp [ev, φ, MvPolynomial.coeff_map]⟩
+    · exact ⟨AddMonoidAlgebra.coeff x.2 m, by simp [ev, φ, MvPolynomial.coeff_map]⟩
   let S : Set ((MvPolynomial σ Kf × MvPolynomial τ Kf) →ₗ[Kf] (MvPolynomial σ Kf × MvPolynomial τ Kf)) :=
     {Tm | ∃ T ∈ Ts, Tm = LinearMap.id + (LinearMap.inr Kf _ _).comp (T.comp (LinearMap.fst Kf _ _))}
   have hS : ∀ Tm ∈ S, ∀ x, ∃ y, φ y = Tm (φ x) := by
@@ -285,7 +285,7 @@ theorem inv_le_span {a : H.comp} {L : H.P.Tup} (hL : H.P.IsLatTup L) (h1 : SpanR
     {Tm | ∃ γ : (H.lev a).Γ, (H.lev a).smul γ L = L ∧ Tm = algebraMap H.O H.Kf ((H.lev a).χ γ : H.O) • (H.lev a).actX γ}
   have hsm : ∀ (r : LL) (x : Vr), φ (r • x) = e r • φ x := fun r x => map_smul_e H e r x.1
   have hval : ∀ x : Vr, IsRat e (evX H) (φ x) := fun x m =>
-    ⟨MvPolynomial.coeff m x.1, by simp [φ, evX, MvPolynomial.lcoeff_apply, MvPolynomial.coeff_map]⟩
+    ⟨AddMonoidAlgebra.coeff x.1 m, by simp [φ, evX, MvPolynomial.lcoeff_apply, MvPolynomial.coeff_map]⟩
   have hT : ∀ Tm ∈ Sx, ∀ x : Vr, ∃ y : Vr, φ y = Tm (φ x) := by
     rintro Tm ⟨γ, hγ, rfl⟩ x
     obtain ⟨Q', hQ', e'⟩ := h2 γ hγ x.1 x.2

@@ -65,7 +65,7 @@ theorem genericImageFinite : FieldOfSStatement := by
   have hTB : IsTranscendenceBasis K (sImage (D := D) x) := by
     refine hind.isTranscendenceBasis_of_lift_trdeg_le ?_ ?_
     · rw [htrS]
-      exact Cardinal.nat_lt_aleph0 _
+      exact Cardinal.natCast_lt_aleph0 _
     · rw [htrS]
       simp
   have halg := hTB.isAlgebraic_field

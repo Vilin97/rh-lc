@@ -26,7 +26,7 @@ theorem norm_finsuppProd_pow (t : σ →₀ ℕ) (z : σ → C) :
 
 theorem finsuppProd_pow_mono (t : σ →₀ ℕ) {c d : σ → ℝ} (h0 : ∀ i, 0 ≤ c i) (h : ∀ i, c i ≤ d i) :
     t.prod (c · ^ ·) ≤ t.prod (d · ^ ·) :=
-  Finset.prod_le_prod (fun i _ => pow_nonneg (h0 i) _) fun i _ => pow_le_pow_left₀ (h0 i) (h i) _
+  Finset.prod_le_prod₀ (fun i _ => pow_nonneg (h0 i) _) fun i _ => pow_le_pow_left₀ (h0 i) (h i) _
 
 theorem finsuppProd_const_pow (t : σ →₀ ℕ) (r : ℝ) : t.prod (fun _ n => r ^ n) = r ^ t.degree := by
   simp [Finsupp.prod, Finsupp.degree_apply, Finset.prod_pow_eq_pow_sum]

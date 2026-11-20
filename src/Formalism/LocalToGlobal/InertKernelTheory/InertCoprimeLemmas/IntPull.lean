@@ -104,9 +104,9 @@ theorem eval_RP (G : VC D N N' → ℂ) (n : ℕ) (z : VC D N N') :
   simp [map_prod, mul_comm]
 
 theorem coeff_RP (G : VC D N N' → ℂ) (hG : AnalyticOnNhd ℂ G Set.univ) (n : ℕ) (β : Mono D N N') :
-    coeff β (RP D G n) =
+    AddMonoidAlgebra.coeff (RP D G n) β =
       if (β.sum fun _ m => m) = n then (n.factorial : ℂ) * taylor D G β else 0 := by
-  have h2 : coeff β (RP D G n) = ∑ κ : Fin n → D.what₂.Tau × Fin N' × Fin N,
+  have h2 : AddMonoidAlgebra.coeff (RP D G n) β = ∑ κ : Fin n → D.what₂.Tau × Fin N' × Fin N,
       (if ak D κ = β then (1 : ℂ) else 0) * ((β.prod fun _ n => (n.factorial : ℂ)) * taylor D G β) := by
     rw [RP, coeff_sum]
     refine Finset.sum_congr rfl fun κ _ => ?_
@@ -115,7 +115,7 @@ theorem coeff_RP (G : VC D N N' → ℂ) (hG : AnalyticOnNhd ℂ G Set.univ) (n 
     · rw [iter_eq_taylor D G hG κ β (by rw [← h, toMultiset_ak]), mul_one, one_mul]
     · rw [mul_zero, zero_mul]
   have h3 : (∑ κ : Fin n → D.what₂.Tau × Fin N' × Fin N, (if ak D κ = β then (1 : ℂ) else 0)) =
-      coeff β ((∑ k, X k : MvPolynomial (D.what₂.Tau × Fin N' × Fin N) ℂ) ^ n) := by
+      AddMonoidAlgebra.coeff ((∑ k, X k : MvPolynomial (D.what₂.Tau × Fin N' × Fin N) ℂ) ^ n) β := by
     rw [← Fin.prod_const n (∑ k, X k : MvPolynomial (D.what₂.Tau × Fin N' × Fin N) ℂ),
       Finset.prod_univ_sum, Fintype.piFinset_univ, coeff_sum]
     refine Finset.sum_congr rfl fun κ _ => ?_
@@ -177,10 +177,10 @@ theorem RP_comp (H : VC D N N' → ℂ) (hH : AnalyticOnNhd ℂ H Set.univ)
 theorem taylor_comp (H : VC D N N' → ℂ) (hH : AnalyticOnNhd ℂ H Set.univ)
     (A : VC D N N' →L[ℂ] VC D N N') (α : Mono D N N') :
     taylor D (H ∘ A) α = ∑ β ∈ Finset.finsuppAntidiag Finset.univ (α.sum fun _ m => m),
-      taylor D H β * coeff α (β.prod fun s e => (∑ k, cz D (A (coordV D k)) s • X k) ^ e) := by
+      taylor D H β * AddMonoidAlgebra.coeff (β.prod fun s e => (∑ k, cz D (A (coordV D k)) s • X k) ^ e) α := by
   have hHA : AnalyticOnNhd ℂ (H ∘ A) Set.univ :=
     hH.comp (A.analyticOnNhd _) (Set.mapsTo_univ _ _)
-  have h1 := congrArg (coeff α) (RP_comp D H hH A (α.sum fun _ m => m))
+  have h1 := congrArg (AddMonoidAlgebra.coeff · α) (RP_comp D H hH A (α.sum fun _ m => m))
   rw [coeff_RP D (H ∘ A) hHA, if_pos rfl, RP_eq D H hH, map_sum, coeff_sum] at h1
   simp only [aeval_monomial, algebraMap_eq, coeff_C_mul] at h1
   have h0 : ((α.sum fun _ m => m).factorial : ℂ) ≠ 0 := by exact_mod_cast Nat.factorial_ne_zero _
@@ -275,10 +275,10 @@ theorem pSer_comp (H : VC D N N' → ℂ) (hH : AnalyticOnNhd ℂ H Set.univ)
   show lamC lam (taylor D (H ∘ A) α) = _
   rw [taylor_comp D H hH A α]
   have e1 : (∑ β ∈ Finset.finsuppAntidiag Finset.univ (α.sum fun _ m => m),
-      taylor D H β * MvPolynomial.coeff α (β.prod fun s e =>
-        (∑ k, cz D (A (coordV D k)) s • MvPolynomial.X k) ^ e)) =
+      taylor D H β * AddMonoidAlgebra.coeff (β.prod fun s e =>
+        (∑ k, cz D (A (coordV D k)) s • MvPolynomial.X k) ^ e) α) =
       algebraMap Qbar ℂ (∑ β ∈ Finset.finsuppAntidiag Finset.univ (α.sum fun _ m => m),
-        t' β * MvPolynomial.coeff α (Q' β)) := by
+        t' β * AddMonoidAlgebra.coeff (Q' β) α) := by
     rw [map_sum]
     refine Finset.sum_congr rfl fun β _ => ?_
     rw [map_mul, ← MvPolynomial.coeff_map, hmapC β]

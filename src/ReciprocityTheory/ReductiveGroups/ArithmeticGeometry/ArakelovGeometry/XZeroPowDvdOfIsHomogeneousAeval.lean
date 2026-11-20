@@ -29,7 +29,7 @@ private theorem X_pow_dvd_of_le_degrees {σ : Type*} (i : σ) (m : ℕ) (p : MvP
   rw [p.as_sum]
   refine Finset.dvd_sum fun d hd => ?_
   have hle : Finsupp.single i m ≤ d := Finsupp.single_le_iff.mpr (h d hd)
-  exact ⟨MvPolynomial.monomial (d - Finsupp.single i m) (MvPolynomial.coeff d p), by
+  exact ⟨MvPolynomial.monomial (d - Finsupp.single i m) (AddMonoidAlgebra.coeff p d), by
     rw [MvPolynomial.X_pow_eq_monomial, MvPolynomial.monomial_mul, one_mul, add_tsub_cancel_of_le hle]⟩
 
 theorem X_pow_dvd_homogeneous_one_var {H : MvPolynomial (Fin (0 + 1)) ℤ} {M m : ℕ} (hH : H.IsHomogeneous M)
@@ -93,7 +93,7 @@ theorem X_zero_pow_dvd_of_isHomogeneous_aeval (y : Fin (D + 1) → Ω) (hfree : 
   have hPeq := sub_eq_zero.mp hP0
   apply X_pow_dvd_of_le_degrees
   intro d hd
-  have h1 : MvPolynomial.coeff (d + Finsupp.single ⟨1, by omega⟩ m) (MvPolynomial.X 0 ^ m * H ⟨1, by omega⟩) ≠ 0 := by
+  have h1 : AddMonoidAlgebra.coeff (MvPolynomial.X 0 ^ m * H ⟨1, by omega⟩) (d + Finsupp.single ⟨1, by omega⟩ m) ≠ 0 := by
     rw [← hPeq, MvPolynomial.X_pow_eq_monomial, MvPolynomial.coeff_monomial_mul', if_pos le_add_self,
       add_tsub_cancel_right, one_mul]
     exact MvPolynomial.mem_support_iff.mp hd

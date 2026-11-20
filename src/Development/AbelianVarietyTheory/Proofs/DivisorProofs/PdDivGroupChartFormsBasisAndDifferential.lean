@@ -23,7 +23,7 @@ theorem exists_split (n m : ℕ) (f : MvPowerSeries (Fin d) O) :
     ∃ (P : MvPolynomial (Fin d) O) (a : G.A n),
       c.ev n f = MvPolynomial.aeval (c.x n) P + (p : G.A n) ^ m * a ∧
       MvPolynomial.constantCoeff P = constantCoeff f ∧
-      ∀ i, MvPolynomial.coeff (Finsupp.single i 1) P = lin f i := by
+      ∀ i, AddMonoidAlgebra.coeff P (Finsupp.single i 1) = lin f i := by
   obtain ⟨N, hN⟩ := (c.isEval n).2 m
   set P := trunc' O (Finsupp.equivFunOnFinite.symm fun _ => max N 2) f with hP
   have hle : ∀ α : Fin d →₀ ℕ, α.degree < max N 2 →
@@ -66,7 +66,7 @@ theorem counit_ev [IsAdicComplete (Ideal.span {(p : O)}) O] (n : ℕ)
 
 theorem d_aeval (n : ℕ) (P : MvPolynomial (Fin d) O) :
     PDiv.dUnit O (MvPolynomial.aeval (c.x n) P) =
-      ∑ i, MvPolynomial.coeff (Finsupp.single i 1) P • PDiv.dUnit O (c.x n i) := by
+      ∑ i, AddMonoidAlgebra.coeff P (Finsupp.single i 1) • PDiv.dUnit O (c.x n i) := by
   classical
   induction P using MvPolynomial.induction_on with
   | C a =>
@@ -79,7 +79,7 @@ theorem d_aeval (n : ℕ) (P : MvPolynomial (Fin d) O) :
     rw [map_add, map_add, hP, hQ, ← Finset.sum_add_distrib]
     simp [add_smul]
   | mul_X P j h =>
-    have hc : ∀ i, MvPolynomial.coeff (Finsupp.single i 1) (P * MvPolynomial.X j) =
+    have hc : ∀ i, AddMonoidAlgebra.coeff (P * MvPolynomial.X j) (Finsupp.single i 1) =
         if j = i then MvPolynomial.constantCoeff P else 0 := by
       intro i
       rw [MvPolynomial.coeff_mul_X']

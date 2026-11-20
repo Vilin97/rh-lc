@@ -56,7 +56,7 @@ theorem lineSub_coeff (y : Par e n → R) (m : Fin n) (ij : Fin (e + 1) × Fin n
   | succ i => simp [lineSub, lineTop, groupWeight, Fin.succ_ne_zero]
 
 theorem weight_sum {δ : ℕ} {g : MvPolynomial (Fin (e + 1) × Fin n) k} (hg : IsMultiHomog δ g)
-    {d : Fin (e + 1) × Fin n →₀ ℕ} (hd : coeff d g ≠ 0) :
+    {d : Fin (e + 1) × Fin n →₀ ℕ} (hd : AddMonoidAlgebra.coeff g d ≠ 0) :
     ∑ ij, d ij * groupWeight (e + 1) n ij 0 = δ := by
   have h := congrFun (hg hd) 0
   rw [Finsupp.weight_apply, Finsupp.sum_fintype _ _ (by simp)] at h

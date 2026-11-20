@@ -333,7 +333,7 @@ theorem propABCD_of_rel : ∀ (D : Formalism.BasicNotions.D7) (N : NData D.R D.h
   obtain ⟨m₀, hm₀⟩ : ∃ m₀ : Matrix (Fin n) (Fin n) (X.O i), ∀ a, x • th a = ∑ c, m₀ c a • bs c := by
     obtain ⟨mp, hmp⟩ := exists_coord (A := F.A j b) (e := e) (x := x) hABle (fun q : Empty => q.elim) ∅ 0
       fun a => hx 0 ∅ (by simp) (by simp [ClsQ]) (by simp) a (by simp)
-    refine ⟨mp.map (MvPolynomial.coeff 0), fun a => one_tmul_injective 0 ?_⟩
+    refine ⟨mp.map (AddMonoidAlgebra.coeff · 0), fun a => one_tmul_injective 0 ?_⟩
     have := hmp 0 1 1 (fun x => by rw [Fintype.prod_empty]; rfl) a
     rw [h0, LinearMap.baseChange_tmul, algebraMap_smul, ← TensorProduct.tmul_smul] at this
     rw [this, TensorProduct.tmul_sum]

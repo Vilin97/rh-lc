@@ -16,7 +16,7 @@ private theorem ind_le_one' (q : Prop) : ind q ≤ 1 := by
 private theorem pow_le_prod {p : ℕ → ℝ} {δ : ℝ} (hp : ∀ a, p a ≤ δ) (h1 : δ ≤ 1) (C : Finset ℕ) :
     (1 - δ) ^ C.card ≤ ∏ a ∈ C, (1 - p a) := by
   rw [← Finset.prod_const]
-  exact Finset.prod_le_prod (fun _ _ => by linarith) fun a _ => by linarith [hp a]
+  exact Finset.prod_le_prod₀ (fun _ _ => by linarith) fun a _ => by linarith [hp a]
 
 private theorem one_sub_pow_le_bernoulliExpectation_empty {p : ℕ → ℝ} {δ : ℝ} (hp : ∀ a, p a ≤ δ) (h1 : δ ≤ 1) (C : Finset ℕ) :
     (1 - δ) ^ C.card ≤ exP p C (fun V => ind (V = ∅)) := by
@@ -133,7 +133,7 @@ theorem UpperTheory.BernoulliSumsFrobeniusOrbits.marked_ge :
     · intro T _
       by_cases hM : Marked T r u s
       · rw [ind_pos' hM]
-        exact Finset.prod_le_one (fun j _ => hg0 j _) (fun j _ => hg1 j _)
+        exact Finset.prod_le_one₀ (fun j _ => hg0 j _) (fun j _ => hg1 j _)
       · rw [ind_neg' hM]
         unfold Formalism.G0.Marked at hM
         obtain ⟨c, hc⟩ := Classical.not_forall.1 hM
@@ -176,7 +176,7 @@ theorem UpperTheory.BernoulliSumsFrobeniusOrbits.marked_ge :
         ring
       rw [hAj]
       simpa only [hg, if_neg hj] using le_bernoulliExpectation_singleton_even hp h0 h1 (s * ((6 * r + 1) * u) + j * u) u
-  have hprod := Finset.prod_le_prod (fun j _ => by split_ifs <;> positivity) hlow
+  have hprod := Finset.prod_le_prod₀ (fun j _ => by split_ifs <;> positivity) hlow
   have h6 : 6 * r + 1 = 2 * (3 * r) + 1 := by ring
   rw [h6, GlobalTheory.RandomTops.prod_alternate] at hprod
   rw [h6]

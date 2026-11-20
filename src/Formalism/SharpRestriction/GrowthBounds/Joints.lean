@@ -1355,7 +1355,7 @@ theorem padicValNat_lt_of_lt_pow {p : ℕ} [hp : Fact p.Prime] {y t : ℕ} (hy :
     padicValNat p y ≤ t := by
   by_contra hc
   push_neg at hc
-  have h1 : p ^ (t + 1) ∣ y := (pow_dvd_pow p (Nat.succ_le_of_lt hc)).trans pow_padicValNat_dvd
+  have h1 : p ^ (t + 1) ∣ y := (pow_dvd_pow p (Nat.succ_le_of_lt hc)).trans (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
   have h2 := Nat.le_of_dvd hy h1
   omega
 

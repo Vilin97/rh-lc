@@ -10,7 +10,7 @@ noncomputable section
 namespace GlobalTheory.Branching.RankTwo
 
 theorem coeff_diag {σ : Type} [Fintype σ] (d : σ → ℂ) (f : MvPolynomial σ ℂ) (m : σ →₀ ℕ) :
-    coeff m (aeval (fun v => C (d v) * X v : σ → MvPolynomial σ ℂ) f) = (∏ v, d v ^ m v) * coeff m f := by
+    AddMonoidAlgebra.coeff (aeval (fun v => C (d v) * X v : σ → MvPolynomial σ ℂ) f) m = (∏ v, d v ^ m v) * AddMonoidAlgebra.coeff f m := by
   classical
   induction f using MvPolynomial.induction_on' with
   | monomial s a =>
@@ -23,13 +23,13 @@ theorem coeff_diag {σ : Type} [Fintype σ] (d : σ → ℂ) (f : MvPolynomial �
     split_ifs with h
     · rw [h]
     · simp
-  | add p q hp hq => simp only [map_add, coeff_add, hp, hq, mul_add]
+  | add p q hp hq => simp only [map_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem h12 : 1 + 1 = 2 := rfl
 
 theorem coeff_res (lam : DomWeight 2) (g : GL (Fin 1) ℂ) (f : MvPolynomial (Fin 2 × Fin 2) ℂ) (m : Fin 2 × Fin 2 →₀ ℕ) :
-    coeff m (sqAct ℂ 2 lam (embGL ℂ 1 2 h12 g) f) =
-      (g 0 0) ^ (lam.w 1 + (m (0, 0) + m (0, 1) : ℕ)) * coeff m f := by
+    AddMonoidAlgebra.coeff (sqAct ℂ 2 lam (embGL ℂ 1 2 h12 g) f) m =
+      (g 0 0) ^ (lam.w 1 + (m (0, 0) + m (0, 1) : ℕ)) * AddMonoidAlgebra.coeff f m := by
   have hg : g 0 0 ≠ 0 := by
     have := g.det_ne_zero
     simpa using this
@@ -51,7 +51,7 @@ theorem coeff_res (lam : DomWeight 2) (g : GL (Fin 1) ℂ) (f : MvPolynomial (Fi
   simp [Fintype.prod_prod_type, Fin.prod_univ_two, pow_add, mul_assoc]
 
 theorem small_const (mu : DomWeight 1) (f : nablaSq ℂ 1 mu) :
-    (f : MvPolynomial (Fin 1 × Fin 1) ℂ) = C (coeff 0 f.1) := by
+    (f : MvPolynomial (Fin 1 × Fin 1) ℂ) = C (AddMonoidAlgebra.coeff f.1 0) := by
   have h : IsWeightedHomogeneous (Formalism.GradedWeylDivisibility.colW 1 1) f.1 mu.natW := f.2.1
   ext m
   rw [coeff_C]
@@ -72,7 +72,7 @@ theorem small_act (mu : DomWeight 1) (g : GL (Fin 1) ℂ) (f : nablaSq ℂ 1 mu)
   rw [sqRep_coe, Submodule.coe_smul, small_const mu f]
   simp [sqAct, detPow, DomWeight.detShift, Formalism.GradedWeylDivisibility.rowAct]
 
-theorem big_supp (lam : DomWeight 2) (f : nablaSq ℂ 2 lam) (m : Fin 2 × Fin 2 →₀ ℕ) (hm : coeff m f.1 ≠ 0) :
+theorem big_supp (lam : DomWeight 2) (f : nablaSq ℂ 2 lam) (m : Fin 2 × Fin 2 →₀ ℕ) (hm : AddMonoidAlgebra.coeff f.1 m ≠ 0) :
     ((m (0, 0) + m (1, 0) : ℕ) : ℤ) = lam.w 0 - lam.w 1 ∧ m (0, 1) = 0 ∧ m (1, 1) = 0 := by
   have h : IsWeightedHomogeneous (Formalism.GradedWeylDivisibility.colW 2 2) f.1 lam.natW := f.2.1
   have h0 := congrFun (h hm) 0
@@ -116,7 +116,7 @@ variable {H : Type} [Group H] {ι : H →* GL (Fin 1) ℂ}
 
 def one' (mu : DomWeight 1) : nablaSq ℂ 1 mu := ⟨1, one_mem mu⟩
 
-theorem eq_smul_one (mu : DomWeight 1) (f : nablaSq ℂ 1 mu) : f = coeff 0 f.1 • one' mu := by
+theorem eq_smul_one (mu : DomWeight 1) (f : nablaSq ℂ 1 mu) : f = AddMonoidAlgebra.coeff f.1 0 • one' mu := by
   apply Subtype.ext
   rw [Submodule.coe_smul]
   conv_lhs => rw [small_const mu f]
@@ -130,7 +130,7 @@ theorem supp_image (hs : Separates ι) (lam : DomWeight 2) (mu : DomWeight 1)
   have e := T.isIntertwining _ _ y (one' mu)
   have e1 : smallRep ι mu y (one' mu) = (ι y 0 0) ^ mu.w 0 • one' mu := small_act mu (ι y) _
   rw [e1, map_smul] at e
-  have e2 := congrArg (fun z : nablaSq ℂ 2 lam => coeff m z.1) e
+  have e2 := congrArg (fun z : nablaSq ℂ 2 lam => AddMonoidAlgebra.coeff z.1 m) e
   have e3 : coeff m (resRep ι h12 lam y (T (one' mu))).1 = _ := coeff_res lam (ι y) (T (one' mu)).1 m
   simp only [e3, Submodule.coe_smul, coeff_smul, smul_eq_mul] at e2
   have := mul_right_cancel₀ hm e2
@@ -170,11 +170,11 @@ theorem mult_one (hs : Separates ι) (lam : DomWeight 2) (mu : DomWeight 1) (hn 
   have hmono : (X (0, 0) ^ a * X (1, 0) ^ b : MvPolynomial (Fin 2 × Fin 2) ℂ) = monomial m0 1 := by
     simp [m0, X_pow_eq_monomial, monomial_mul]
   let v : nablaSq ℂ 2 lam := ⟨_, mono_mem lam a b (by push_cast; omega)⟩
-  have hv : ∀ m, coeff m v.1 = if m0 = m then 1 else 0 := fun m => by
+  have hv : ∀ m, AddMonoidAlgebra.coeff v.1 m = if m0 = m then 1 else 0 := fun m => by
     simp only [v, hmono, coeff_monomial]
   let L : nablaSq ℂ 1 mu →ₗ[ℂ] nablaSq ℂ 2 lam :=
     LinearMap.smulRight ((lcoeff ℂ 0).comp (nablaSq ℂ 1 mu).subtype) v
-  have hL : ∀ f, L f = coeff 0 f.1 • v := fun _ => rfl
+  have hL : ∀ f, L f = AddMonoidAlgebra.coeff f.1 0 • v := fun _ => rfl
   have hvy : ∀ y, resRep ι h12 lam y v = (ι y 0 0) ^ mu.w 0 • v := fun y => by
     apply Subtype.ext
     ext m
@@ -290,7 +290,7 @@ def comps (lam : DomWeight 2) [Fintype (Below h12 lam)] [DecidableEq (Below h12 
     (LinearMap.smulRight ((lcoeff ℂ (expo lam mu.1)).comp (nablaSq ℂ 2 lam).subtype) (one' mu.1))
 
 theorem comps_apply (lam : DomWeight 2) [Fintype (Below h12 lam)] [DecidableEq (Below h12 lam)]
-    (f : nablaSq ℂ 2 lam) (mu : Below h12 lam) : comps lam f mu = coeff (expo lam mu.1) f.1 • one' mu.1 := by
+    (f : nablaSq ℂ 2 lam) (mu : Below h12 lam) : comps lam f mu = AddMonoidAlgebra.coeff f.1 (expo lam mu.1) • one' mu.1 := by
   simp only [comps, LinearMap.sum_apply, LinearMap.comp_apply, DirectSum.lof_eq_of]
   rw [DFinsupp.finsetSum_apply, Finset.sum_eq_single mu]
   · rw [DirectSum.of_eq_same]; rfl
@@ -332,7 +332,7 @@ theorem comps_bijective (lam : DomWeight 2) [Fintype (Below h12 lam)] [Decidable
         simp [expo, X_pow_eq_monomial, monomial_mul]
       let v : nablaSq ℂ 2 lam := ⟨_, mono_mem lam (mu.1.w 0 - lam.w 1).toNat (lam.w 0 - mu.1.w 0).toNat
         (by push_cast; omega)⟩
-      refine ⟨coeff 0 x.1 • v, ?_⟩
+      refine ⟨AddMonoidAlgebra.coeff x.1 0 • v, ?_⟩
       ext1 nu
       rw [comps_apply, Submodule.coe_smul, coeff_smul]
       simp only [v, hmono, coeff_monomial]

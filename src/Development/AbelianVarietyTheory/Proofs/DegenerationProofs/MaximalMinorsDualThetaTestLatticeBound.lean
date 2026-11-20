@@ -40,7 +40,7 @@ theorem norm_det_le_pow {C J : Type*} [NormedField C] [IsUltrametricDist C] [Fin
   have hs : ‖(((Equiv.Perm.sign σ : ℤˣ) : ℤ) : C)‖ = 1 := by
     rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with h | h <;> simp [h]
   rw [norm_mul, hs, _root_.one_mul, norm_prod, ← Finset.card_univ, ← Finset.prod_const]
-  exact Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => h _ _
+  exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => h _ _
 
 theorem norm_det_le_of_comb {C J I : Type*} [NormedField C] [IsUltrametricDist C] [Fintype J]
     [DecidableEq J] [Fintype I] (g : I → J → C) (c : J → I → C) (hc : ∀ i m, ‖c i m‖ ≤ 1) {ν : ℝ}
@@ -56,7 +56,7 @@ theorem norm_det_le_of_comb {C J I : Type*} [NormedField C] [IsUltrametricDist C
   rw [e]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg hν fun k _ => ?_
   rw [smul_eq_mul, norm_mul, norm_prod]
-  calc _ ≤ 1 * ν := mul_le_mul (Finset.prod_le_one (fun _ _ => norm_nonneg _) fun i _ => hc _ _) (h k)
+  calc _ ≤ 1 * ν := mul_le_mul (Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun i _ => hc _ _) (h k)
         (norm_nonneg _) zero_le_one
     _ = ν := _root_.one_mul _
 

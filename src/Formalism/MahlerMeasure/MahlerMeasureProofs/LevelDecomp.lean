@@ -15,7 +15,7 @@ theorem ld_biHom_of_euler [CharZero k] {a b : ℕ} {g : MvPolynomial σ k}
   unfold BiHom
   intro m hm
   rw [MvPolynomial.mem_support_iff] at hm
-  have hterm : ∀ i : σ, MvPolynomial.coeff m (X i * pderiv i g) = (m i : k) * MvPolynomial.coeff m g := by
+  have hterm : ∀ i : σ, AddMonoidAlgebra.coeff (X i * pderiv i g) m = (m i : k) * AddMonoidAlgebra.coeff g m := by
     intro i
     rw [MvPolynomial.coeff_X_mul']
     split_ifs with hs
@@ -29,7 +29,7 @@ theorem ld_biHom_of_euler [CharZero k] {a b : ℕ} {g : MvPolynomial σ k}
       simp [hs]
   have key : ∀ (v : Fin r → σ) (n : ℕ), ∑ c, X (v c) * pderiv (v c) g = (n : k) • g → ∑ c, m (v c) = n := by
     intro v n hv
-    have hcoef := congrArg (MvPolynomial.coeff m) hv
+    have hcoef := congrArg (AddMonoidAlgebra.coeff · m) hv
     rw [MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, smul_eq_mul] at hcoef
     simp only [hterm] at hcoef
     rw [← Finset.sum_mul] at hcoef

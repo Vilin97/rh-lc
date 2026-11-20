@@ -96,21 +96,21 @@ theorem prodQ_monomial (f : Fin n → (ι →₀ ℕ)) (a : Fin n → k) :
 
 theorem Mf_prodQ (R : Fin n → MvPolynomial ι k) : Mf mu (prodQ R) = ∏ b, mu b (R b) := by
   classical
-  have hR : ∀ b, colE b (R b) = ∑ α ∈ (R b).support, colE b (monomial α (coeff α (R b))) := by
+  have hR : ∀ b, colE b (R b) = ∑ α ∈ (R b).support, colE b (monomial α (AddMonoidAlgebra.coeff (R b) α)) := by
     intro b
     conv_lhs => rw [as_sum (R b)]
     rw [map_sum]
-  have hmu : ∀ b, mu b (R b) = ∑ α ∈ (R b).support, coeff α (R b) * mu b (monomial α 1) := by
+  have hmu : ∀ b, mu b (R b) = ∑ α ∈ (R b).support, AddMonoidAlgebra.coeff (R b) α * mu b (monomial α 1) := by
     intro b
     conv_lhs => rw [as_sum (R b)]
     rw [map_sum]
     exact Finset.sum_congr rfl fun α _ => by
-      rw [show monomial α (coeff α (R b)) = coeff α (R b) • monomial α (1 : k) by
+      rw [show monomial α (AddMonoidAlgebra.coeff (R b) α) = AddMonoidAlgebra.coeff (R b) α • monomial α (1 : k) by
         rw [smul_monomial, smul_eq_mul, mul_one], map_smul, smul_eq_mul]
   rw [prodQ, Finset.prod_congr rfl (fun b _ => hR b), Finset.prod_univ_sum, Mf_sum,
     Finset.prod_congr rfl (fun b _ => hmu b), Finset.prod_univ_sum]
   refine Finset.sum_congr rfl fun x _ => ?_
-  have hp := prodQ_monomial x (fun b => coeff (x b) (R b))
+  have hp := prodQ_monomial x (fun b => AddMonoidAlgebra.coeff (R b) (x b))
   simp only [prodQ] at hp
   rw [hp, Mf_monomial, Finset.prod_mul_distrib]
   simp only [colM_combine]

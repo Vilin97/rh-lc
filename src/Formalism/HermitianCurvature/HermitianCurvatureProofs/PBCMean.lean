@@ -157,7 +157,7 @@ theorem phi_bound (Y : Finset H) (κ : H → H → ℂ) (K : Fin f → H × ℂ 
   rw [norm_mul, norm_prod]
   gcongr
   calc ∏ v, ‖K v (h, x v) (h', x' v)‖ ≤ ∏ _v : Fin f, B :=
-        Finset.prod_le_prod (fun v _ => norm_nonneg _) (fun v _ => hK v h hh h' hh')
+        Finset.prod_le_prod₀ (fun v _ => norm_nonneg _) (fun v _ => hK v h hh h' hh')
     _ = B ^ f := by simp
 
 end

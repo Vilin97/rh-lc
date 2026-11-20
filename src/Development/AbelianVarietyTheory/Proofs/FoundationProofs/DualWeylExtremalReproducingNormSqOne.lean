@@ -80,7 +80,7 @@ theorem isWeightedHomogeneous_of_torus {f : Pol N ℂ}
   have hz := Complex.isPrimitiveRoot_exp _ hn
   have hz1 := hz.norm'_eq_one hn
   generalize Complex.exp _ = z at hz hz1
-  have h1 := congrArg (coeff m) (h (Function.update 1 a z) fun b => by
+  have h1 := congrArg (AddMonoidAlgebra.coeff · m) (h (Function.update 1 a z) fun b => by
     by_cases hb : b = a
     · subst hb; simpa using hz1
     · simp [Function.update_of_ne hb])

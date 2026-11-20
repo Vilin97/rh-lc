@@ -390,7 +390,7 @@ theorem combine {ι : Type} [Fintype ι] [DecidableEq ι] (K : ℕ) (abelian₂ 
     rw [← Finset.prod_div_distrib]
     exact Finset.prod_congr rfl fun v _ => div_pow _ _ _
   have hLx' : (∏ v ∈ A, abelian₂ v ^ K) ≤ ∏ v ∈ A, x v ^ K :=
-    Finset.prod_le_prod (fun v _ => pow_nonneg (hL v) K) fun v _ => pow_le_pow_left₀ (hL v) (hLx v) K
+    Finset.prod_le_prod₀ (fun v _ => pow_nonneg (hL v) K) fun v _ => pow_le_pow_left₀ (hL v) (hLx v) K
   rw [hq, div_mul_eq_mul_div, le_div_iff₀ hPa]
   calc N * ∏ v ∈ A, a v ^ K = (∏ v ∈ A, a v ^ K) * N := mul_comm _ _
     _ ≤ (∏ v ∈ A, abelian₂ v ^ K) * M := h
@@ -538,7 +538,7 @@ theorem Formalism.FourierDecayAlt.P.off_diagonal_lift_bound_of_places : Formalis
       ring
     rw [hsum]
     refine hmain.trans (mul_le_mul_of_nonneg_right ?_ (by positivity))
-    refine Finset.prod_le_prod (fun v _ => ?_) (fun v _ => ?_)
+    refine Finset.prod_le_prod₀ (fun v _ => ?_) (fun v _ => ?_)
     · unfold PairingProductCorollary.minFac; split_ifs
       · exact pow_nonneg (div_nonneg (by linarith [(hthr v).1]) (norm_nonneg _)) _
       · exact zero_le_one

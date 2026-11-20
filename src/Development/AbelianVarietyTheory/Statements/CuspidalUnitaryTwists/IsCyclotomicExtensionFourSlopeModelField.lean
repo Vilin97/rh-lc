@@ -43,8 +43,8 @@ theorem _root_.GlobalTheory.TestLat.SlopeModel.sumGram_posDef (lam : ι → _roo
   obtain ⟨w, hw⟩ : ∃ w : _root_.Formalism.L2.DIV.VVIdx lam → MvPolynomial (ι × Fin n × Fin n) ℂ,
       w = fun i => _root_.Formalism.GradedWeylDivisibility.blockAct ℂ B (MvPolynomial.map φ (_root_.Formalism.L2.DIV.bVVfun K lam i)) := ⟨_, rfl⟩
   have hcoef : ∀ i (m : ι × Fin n × Fin n →₀ ℕ),
-      φ (star (MvPolynomial.coeff m (_root_.Formalism.L2.DIV.bVVfun K lam i))) =
-        star (φ (MvPolynomial.coeff m (_root_.Formalism.L2.DIV.bVVfun K lam i))) := by
+      φ (star (AddMonoidAlgebra.coeff (_root_.Formalism.L2.DIV.bVVfun K lam i) m)) =
+        star (φ (AddMonoidAlgebra.coeff (_root_.Formalism.L2.DIV.bVVfun K lam i) m)) := by
     intro i m
     obtain ⟨P, hP⟩ := _root_.Formalism.L2.DIV.bVVfun_int K lam i
     rw [hP, MvPolynomial.coeff_map]

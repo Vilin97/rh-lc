@@ -14,7 +14,7 @@ open scoped Matrix
 
 private theorem fock_add_right {σ : Type} (f g g' : MvPolynomial σ ℂ) :
     fockF f (g + g') = fockF f g + fockF f g' := by
-  simp only [fockF, coeff_add, star_add, mul_add, add_mul, Finset.sum_add_distrib]
+  simp only [fockF, MvPolynomial.coeff_add, star_add, mul_add, add_mul, Finset.sum_add_distrib]
 
 private theorem fock_smul_right {σ : Type} (c : ℂ) (f g : MvPolynomial σ ℂ) :
     fockF f (c • g) = star c * fockF f g := by

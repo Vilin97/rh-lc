@@ -196,7 +196,7 @@ theorem reps_and_stabilisers {D : D7} {cc : Ideal (𝓞 D.host.K)} {δ t0 : ℂ}
     exact ⟨γ⁻¹, inv_mem ((mem_ratG γ).2 ⟨γ', h1⟩), 1, one_mem _, by simp [DoubleCoset.out_eq']⟩
   · intro h
     obtain ⟨h0, hd, -⟩ := GlobalTheory.StabOrder.gam_ne_zero_dvd_invariant D P.d P.J P.J_le h
-    exact ⟨h0, (padicValNat_dvd_iff_le (by positivity)).1 (pow_padicValNat_dvd.trans hd)⟩
+    exact ⟨h0, (padicValNat_dvd_iff_le (by positivity)).1 ((_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)).trans hd)⟩
 
 example {p : ℕ} [hp : Fact p.Prime] (e : ℝ) (he : 0 ≤ e) (lam : Qbar →+* ℂ_[p]) :
     (1 : ℂ) ∈ Qbar ∧ ‖lamC lam 1‖ ≤ (p : ℝ) ^ e := by

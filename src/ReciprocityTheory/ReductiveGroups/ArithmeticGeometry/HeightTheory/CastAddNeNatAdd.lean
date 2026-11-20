@@ -46,7 +46,7 @@ theorem countable_mvPoly {σ R : Type*} [Countable σ] [CommSemiring R] [Countab
   classical
   refine Function.Surjective.countable (f := fun f : (σ →₀ ℕ) →₀ R => f.sum fun m a => monomial m a) ?_
   intro p
-  refine ⟨Finsupp.onFinset p.support (fun m => coeff m p) (fun m hm => mem_support_iff.2 hm), ?_⟩
+  refine ⟨Finsupp.onFinset p.support (fun m => AddMonoidAlgebra.coeff p m) (fun m hm => mem_support_iff.2 hm), ?_⟩
   dsimp only
   rw [Finsupp.onFinset_sum _ (fun m => by simp)]
   exact (MvPolynomial.as_sum p).symm
@@ -94,7 +94,7 @@ theorem castAdd_ne_natAdd (j : Fin (N + 1)) (i : Fin D) : Fin.castAdd D j ≠ Fi
 
 theorem homog_coeff_isMH (q : MvPolynomial (Fin (D + 1) × Fin (N + 1)) K) :
     ∀ γ : Fin (N + 1 + D) →₀ ℕ,
-    IsMultiHomogeneous (fun i => γ (Fin.natAdd (N + 1) i)) (coeff γ (homog q)) := by
+    IsMultiHomogeneous (fun i => γ (Fin.natAdd (N + 1) i)) (AddMonoidAlgebra.coeff (homog q) γ) := by
   classical
   induction q using MvPolynomial.induction_on
   · rename_i a
@@ -107,7 +107,7 @@ theorem homog_coeff_isMH (q : MvPolynomial (Fin (D + 1) × Fin (N + 1)) K) :
     · exact isMH_zero _
   · rename_i p q hp hq
     intro γ
-    rw [map_add, coeff_add]; exact isMH_add (hp γ) (hq γ)
+    rw [map_add, MvPolynomial.coeff_add]; exact isMH_add (hp γ) (hq γ)
   · rename_i p v hp
     intro γ
     obtain ⟨i, j⟩ := v
@@ -172,7 +172,7 @@ theorem psi_injective (sg : K →+* ℂ) (tt : Fin D × Fin (N + 1) → ℂ)
   refine MvPolynomial.ext _ _ fun γ => ?_
   rw [coeff_zero]
   by_contra hne
-  have h0 : coeff γ (psi sg tt q) = 0 := by rw [hq, coeff_zero]
+  have h0 : AddMonoidAlgebra.coeff (psi sg tt q) γ = 0 := by rw [hq, coeff_zero]
   rw [psi, RingHom.comp_apply, coeff_map] at h0
   exact hG _ _ (homog_coeff_isMH q γ) hne (by simpa using h0)
 

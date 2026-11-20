@@ -774,7 +774,7 @@ theorem coefLast_blk {N n : ℕ} (hN : N = n + 1) (b : ι → Fin n → ℕ) (τ
     IsWeightedHomogeneous (weylTwoBlockMatrix τ0 n) (coefLast hN b f) d := by
   rw [← mem_weightedHomogeneousSubmodule, f.as_sum, map_sum]
   refine Submodule.sum_mem _ fun m hm => ?_
-  rw [show monomial m (coeff m f) = coeff m f • monomial m (1 : K) by rw [smul_monomial, smul_eq_mul, mul_one],
+  rw [show monomial m (AddMonoidAlgebra.coeff f m) = AddMonoidAlgebra.coeff f m • monomial m (1 : K) by rw [smul_monomial, smul_eq_mul, mul_one],
     map_smul, coefLast_monomial]
   refine Submodule.smul_mem _ _ ?_
   split_ifs with ht
@@ -790,7 +790,7 @@ theorem fockB_eq_zero_of_blk {σ : Type} {w : σ → ℕ} {p q : MvPolynomial σ
   unfold fockB
   refine Finset.sum_eq_zero fun m hm => ?_
   have h1 := hp (mem_support_iff.mp hm)
-  by_cases h : coeff m q = 0
+  by_cases h : AddMonoidAlgebra.coeff q m = 0
   · simp [h]
   · exact absurd (h1.symm.trans (hq h)) hne
 
@@ -954,7 +954,7 @@ theorem lx_isTop_iff (b : ι → Fin n → ℕ) (m : ι × Fin N × Fin N →₀
         lx_zExp_off hN b _ (Or.inl (lx_iC_ne_iL hN _)), add_zero]
 
 theorem lx_coeff_coefLast (b : ι → Fin n → ℕ) (f : Pol K ι N) (m' : ι × Fin n × Fin n →₀ ℕ) :
-    coeff m' (coefLast hN b f) = coeff (Finsupp.mapDomain (upVar hN) m' + zExp hN b) f := by
+    AddMonoidAlgebra.coeff (coefLast hN b f) m' = AddMonoidAlgebra.coeff f (Finsupp.mapDomain (upVar hN) m' + zExp hN b) := by
   classical
   have key : (lcoeff K m').comp (coefLast (K := K) hN b) = lcoeff K (Finsupp.mapDomain (upVar hN) m' + zExp hN b) := by
     refine (basisMonomials (ι × Fin N × Fin N) K).ext fun m => ?_
@@ -1114,7 +1114,7 @@ theorem lx_low_mul {τ : ι} {D : ℤ} {P Q : Pol K ι N} (hP : LxLow hN τ D P)
   exact hP x hx
 
 theorem lx_coeff_low {τ : ι} {D : ℤ} {P : Pol K ι N} (hP : LxLow hN τ D P) (M : ι × Fin N × Fin N →₀ ℕ)
-    (hM : ((Finsupp.weight (lxW hN τ) M : ℕ) : ℤ) = D) : coeff M P = 0 := by
+    (hM : ((Finsupp.weight (lxW hN τ) M : ℕ) : ℤ) = D) : AddMonoidAlgebra.coeff P M = 0 := by
   by_contra h
   have := hP M (mem_support_iff.2 h)
   omega
@@ -2317,7 +2317,7 @@ theorem hwA_key {K : Type} [Field K] [CharZero K] {σ ι' : Type} (S : Finset ι
     ⟨m - Finsupp.single (t s0) 1, (tsub_add_cancel_of_le (Finsupp.single_le_iff.2 (Nat.one_le_iff_ne_zero.2 hne))).symm⟩
   have hw0 : Finsupp.weight w m0 + w (t s0) = d := by
     rw [← hmd, map_add, lx_w_single, one_smul]
-  have hc := congrArg (coeff (Finsupp.single (u s0) 1 + m0)) hD
+  have hc := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single (u s0) 1 + m0)) hD
   rw [coeff_sum, coeff_zero, Finset.sum_eq_single s0] at hc
   · rw [coeff_X_mul, coeff_pderiv] at hc
     rcases mul_eq_zero.1 hc with h | h
@@ -2396,7 +2396,7 @@ theorem hwA_rE_sum {K : Type} [Field K] {r n : ℕ} (a a' : Fin r) (f : MvPolyno
   rw [h, hwA_sum_app]
 
 theorem hwA_coeff_euler {K : Type} [Field K] {r n : ℕ} (a : Fin r) (f : MvPolynomial (Fin r × Fin n) K)
-    (m : Fin r × Fin n →₀ ℕ) : coeff m (rE K r n a a f) = (rowDeg m a : K) * coeff m f := by
+    (m : Fin r × Fin n →₀ ℕ) : AddMonoidAlgebra.coeff (rE K r n a a f) m = (rowDeg m a : K) * AddMonoidAlgebra.coeff f m := by
   classical
   rw [hwA_rE_sum, coeff_sum, rowDeg, Nat.cast_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun s _ => ?_
@@ -2486,7 +2486,7 @@ theorem hwA_top (lam : DomWeight N) (sg : DomWeight n) (f : MvPolynomial (Fin N 
         (Finset.mem_univ _) (by show hwAw hN (iC hN j1, iC hN j1) = hwAw hN (iC hN a1, iC hN j1) + 1; rw [hwAw_diag hN _ hj, hwAw_off hN _ _ haj])
         (by intro s _ hs; show hwAw hN (iC hN j1, s) ≤ _; rw [hwAw_off hN _ s (Ne.symm hs)]; exact Nat.zero_le _) m hm rfl
   · intro a
-    have h := congrArg (coeff m) (hw.2 a)
+    have h := congrArg (AddMonoidAlgebra.coeff · m) (hw.2 a)
     rw [hwA_coeff_euler, coeff_smul, smul_eq_mul] at h
     have := mul_right_cancel₀ (mem_support_iff.1 hm) h
     exact_mod_cast this
@@ -2503,9 +2503,9 @@ theorem hwA_mult_one (lam : DomWeight N) (sg : DomWeight n) (f ξ : MvPolynomial
     (hf : f ∈ nablaSq K N lam) (hw : IsHwRow hN sg f) (hξ : ξ ∈ nablaSq K N lam) (hwξ : IsHwRow hN sg ξ) (hne : ξ ≠ 0) :
     ∃ κ : K, f = κ • ξ := by
   obtain ⟨m, hm, hs⟩ := hwA_top hN lam sg ξ hξ hwξ hne
-  refine ⟨coeff m f / coeff m ξ, ?_⟩
+  refine ⟨AddMonoidAlgebra.coeff f m / AddMonoidAlgebra.coeff ξ m, ?_⟩
   by_contra hcon
-  have hH : f - (coeff m f / coeff m ξ) • ξ ≠ 0 := fun h => hcon (sub_eq_zero.1 h)
+  have hH : f - (AddMonoidAlgebra.coeff f m / AddMonoidAlgebra.coeff ξ m) • ξ ≠ 0 := fun h => hcon (sub_eq_zero.1 h)
   obtain ⟨m', hm', hs'⟩ := hwA_top hN lam sg _ (Submodule.sub_mem _ hf (Submodule.smul_mem _ _ hξ))
     (hwA_isHwRow_sub hN sg f ξ _ hw hwξ) hH
   rw [hwA_slice_unique hN _ _ m' m hs' hs] at hm'
@@ -2629,7 +2629,7 @@ theorem hwB_rE_sum (r n : ℕ) (a a' : Fin r) (f : MvPolynomial (Fin r × Fin n)
       ring
 
 theorem hwB_coeff_X_pderiv {σ : Type} (i : σ) (f : MvPolynomial σ K) (m : σ →₀ ℕ) :
-    coeff m (X i * pderiv i f) = (m i : K) * coeff m f := by
+    AddMonoidAlgebra.coeff (X i * pderiv i f) m = (m i : K) * AddMonoidAlgebra.coeff f m := by
   classical
   rw [coeff_X_mul']
   split_ifs with h
@@ -2649,7 +2649,7 @@ theorem hwB_euler {r n : ℕ} (a : Fin r) (f : MvPolynomial (Fin r × Fin n) K) 
   rw [hwB_rE_sum, coeff_sum, coeff_smul, smul_eq_mul]
   simp only [hwB_coeff_X_pderiv]
   rw [← Finset.sum_mul]
-  by_cases hm : coeff m f = 0
+  by_cases hm : AddMonoidAlgebra.coeff f m = 0
   · rw [hm, mul_zero, mul_zero]
   · have h1 := hf hm
     have h2 := Formalism.BranchingDeterminantCap.bm_weight_rowW m a
@@ -3621,13 +3621,13 @@ lemma inC_ker_rowDiv {n : ℕ} {σ : Type} (sg : Fin n → ℕ)
   set N := (rowGen ℚ a b p).natDegree + k + 1 with hN
   have h1 : (rowGen ℚ a b p).natDegree < N := by omega
   have hk : k ∈ Finset.range N := Finset.mem_range.mpr (by omega)
-  set P : Polynomial ℚ := ∑ i ∈ Finset.range N, Polynomial.monomial i (coeff m (d (rowDiv ℚ a b i p))) with hP
+  set P : Polynomial ℚ := ∑ i ∈ Finset.range N, Polynomial.monomial i (AddMonoidAlgebra.coeff (d (rowDiv ℚ a b i p)) m) with hP
   have hroot : ∀ c : ℚ, c ≠ -1 → P.IsRoot c := by
     intro c hc
     have e := hst (Matrix.GeneralLinearGroup.mkOfDetNeZero (inC_mat a b c) (inC_mat_det a b c hc)) p hp h0
     have e' : d (rowAct ℚ (inC_mat a b c) p) = 0 := e
     rw [← inC_eval_rowGen, inC_eval_C _ N h1, map_sum] at e'
-    have e2 := congrArg (coeff m) e'
+    have e2 := congrArg (AddMonoidAlgebra.coeff · m) e'
     rw [coeff_zero, coeff_sum] at e2
     rw [Polynomial.IsRoot, hP, Polynomial.eval_finsetSum]
     rw [← e2]

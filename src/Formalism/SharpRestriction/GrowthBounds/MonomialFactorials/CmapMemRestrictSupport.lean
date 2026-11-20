@@ -12,7 +12,7 @@ section CMap
 variable {K L σ : Type} [CommRing K] [CommRing L] (f : K →+ L)
 
 theorem cmap_add (y z : MvPolynomial σ K) : cmap f (y + z) = cmap f y + cmap f z := by
-  ext m; simp only [coeff_add, coeff_cmap, map_add]
+  ext m; simp only [MvPolynomial.coeff_add, coeff_cmap, map_add]
 
 theorem cmap_zero : cmap f (0 : MvPolynomial σ K) = 0 := by
   ext m; simp only [coeff_cmap, coeff_zero, map_zero]

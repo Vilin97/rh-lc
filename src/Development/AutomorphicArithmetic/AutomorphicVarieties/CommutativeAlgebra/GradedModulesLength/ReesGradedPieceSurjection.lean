@@ -140,7 +140,7 @@ private theorem gr_eq_range {B A : Type} [CommRing B] [CommRing A] [Algebra B A]
   · intro p hp
     refine ⟨⟨_, p.2 m⟩, Subtype.ext ?_⟩
     ext n
-    show MvPolynomial.coeff n (MvPolynomial.monomial m _) = _
+    show AddMonoidAlgebra.coeff (MvPolynomial.monomial m _) n = _
     rw [MvPolynomial.coeff_monomial]
     split_ifs with h
     · rw [← h]
@@ -176,7 +176,7 @@ private theorem piece_gen {B R L : Type} [CommRing B] [CommRing R] [Algebra B R]
 
 private theorem rees_graded_piece_surjection {B A : Type} [CommRing B] [CommRing A] [Algebra B A] {k : ℕ}
     (N : Fin k → Submodule B A) (μ : Fin k →₀ ℕ) (𝔮 : Ideal (rees N)) (β : B) (T : (Fin k →₀ ℕ) → AddSubgroup A)
-    (hq : ∀ p, p ∈ 𝔮 ↔ ∀ m, MvPolynomial.coeff m p.1 ∈ T m) :
+    (hq : ∀ p, p ∈ 𝔮 ↔ ∀ m, AddMonoidAlgebra.coeff p.1 m ∈ T m) :
     ∃ π : lat N μ →ₗ[B] ((((GMod.self (reesGr N)).quo 𝔮).quot (algebraMap B (rees N) β)).gr (toDeg μ)),
       Function.Surjective π ∧ ∀ f, π f = 0 ↔ ∃ g : lat N μ, (f - β • g).1 ∈ T μ := by
   classical
@@ -184,13 +184,13 @@ private theorem rees_graded_piece_surjection {B A : Type} [CommRing B] [CommRing
   refine ⟨π, hπ, fun f => (hk f).trans ⟨?_, ?_⟩⟩
   · rintro ⟨p, hp⟩
     refine ⟨⟨_, p.2 μ⟩, ?_⟩
-    have h1 : MvPolynomial.coeff μ (MvPolynomial.monomial μ f.1 - β • p.1) ∈ T μ := (hq _).1 hp μ
+    have h1 : AddMonoidAlgebra.coeff (MvPolynomial.monomial μ f.1 - β • p.1) μ ∈ T μ := (hq _).1 hp μ
     rwa [MvPolynomial.coeff_sub, MvPolynomial.coeff_monomial, if_pos rfl, MvPolynomial.coeff_smul] at h1
   · rintro ⟨g, hg⟩
     refine ⟨monoL N μ g, ?_⟩
     rw [← map_smul, ← map_sub, hq]
     intro m
-    show MvPolynomial.coeff m (MvPolynomial.monomial μ (f - β • g).1) ∈ _
+    show AddMonoidAlgebra.coeff (MvPolynomial.monomial μ (f - β • g).1) m ∈ _
     rw [MvPolynomial.coeff_monomial]
     split_ifs with h
     · exact h ▸ hg

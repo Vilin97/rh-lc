@@ -26,7 +26,7 @@ open GlobalTheory.RealLift.PolRangePf GlobalTheory.KFixIrr
 theorem totalDegree_pderiv_le_of {σ : Type} (i : σ) (g : MvPolynomial σ ℂ) :
     (MvPolynomial.pderiv i g).totalDegree ≤ g.totalDegree := by
   refine Finset.sup_le fun m hm => ?_
-  have hc : MvPolynomial.coeff (m + Finsupp.single i 1) g ≠ 0 := by
+  have hc : AddMonoidAlgebra.coeff g (m + Finsupp.single i 1) ≠ 0 := by
     rw [MvPolynomial.mem_support_iff, MvPolynomial.coeff_pderiv] at hm
     intro h
     rw [h, zero_mul] at hm
@@ -74,7 +74,7 @@ theorem degLE_zero_eq {ι : Type} [Fintype ι] [DecidableEq ι] {P Q R S : ℕ} 
     have h0 : ∀ w, (f w).totalDegree = 0 := fun w => by
       have := Finset.single_le_sum (f := fun w => (f w).totalDegree) (fun _ _ => Nat.zero_le _) (Finset.mem_univ w)
       omega
-    have hf' : f = fun w => MvPolynomial.coeff 0 (f w) • (1 : Formalism.BasicNotions.TH.Pol P Q R S) := by
+    have hf' : f = fun w => AddMonoidAlgebra.coeff (f w) 0 • (1 : Formalism.BasicNotions.TH.Pol P Q R S) := by
       funext w
       rw [MvPolynomial.smul_eq_C_mul, mul_one]
       exact MvPolynomial.totalDegree_eq_zero_iff_eq_C.1 (h0 w)

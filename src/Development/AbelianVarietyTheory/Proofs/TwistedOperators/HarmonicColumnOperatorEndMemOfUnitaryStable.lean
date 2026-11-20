@@ -212,7 +212,7 @@ theorem sum_smul_mem_of_sum_pow_smul_mem_on (W : Submodule K V) {U : Set K} (hU 
     intro u hu
     have := hφ _ (h u hu)
     simp only [map_sum, map_smul, smul_eq_mul] at this
-    simpa [Polynomial.eval_finset_sum, mul_comm] using this
+    simpa [Polynomial.eval_finsetSum, mul_comm] using this
   have := congrArg (Polynomial.lsum (R := K) (fun n => f n • (LinearMap.id : K →ₗ[K] K))) hP
   simpa [map_sum, Polynomial.lsum_apply, Polynomial.sum_monomial_index] using this
 
@@ -357,7 +357,7 @@ theorem colLie_diag_mem_of_unitary (W : Submodule ℂ (Poly ℂ T p q κ))
     colLie ℂ p q t k k w ∈ W := by
   have := sum_smul_mem_of_sum_zpow_smul_mem_on W infinite_unit_circle
     (fun u (hu : u * star u = 1) h0 => by rw [h0, zero_mul] at hu; exact zero_ne_one hu)
-    w.support (fun m => colWeight m t k) (fun m => monomial m (coeff m w)) (fun u hu => by
+    w.support (fun m => colWeight m t k) (fun m => monomial m (AddMonoidAlgebra.coeff w m)) (fun u hu => by
       have hu0 : u ≠ 0 := fun h0 => by
         rw [Set.mem_setOf_eq, h0, zero_mul] at hu; exact zero_ne_one hu
       have := hW (Pi.mulSingle t (diagInvAt k (Units.mk0 u hu0)))

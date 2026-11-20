@@ -268,8 +268,8 @@ theorem exists_isFrPoly_field : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
   exact hu.mul_left_cancel h1
 
 theorem coeff_aeval_scale {K σ : Type} [CommRing K] (t : K) (G : MvPolynomial σ K) (m : σ →₀ ℕ) :
-    MvPolynomial.coeff m (MvPolynomial.aeval (fun v => MvPolynomial.C t * MvPolynomial.X v : σ → MvPolynomial σ K) G) =
-      t ^ m.degree * MvPolynomial.coeff m G := by
+    AddMonoidAlgebra.coeff (MvPolynomial.aeval (fun v => MvPolynomial.C t * MvPolynomial.X v : σ → MvPolynomial σ K) G) m =
+      t ^ m.degree * AddMonoidAlgebra.coeff G m := by
   classical
   induction G using MvPolynomial.induction_on' with
   | monomial u r =>
@@ -306,7 +306,7 @@ theorem isHomogeneous_of_scaling {K σ : Type} [Field K] [CharZero K] (G D : MvP
       simp
   have h2 := sub_eq_zero.1 ((mul_eq_zero.1 h1).resolve_left hD)
   intro m hm
-  have h3 := congrArg (MvPolynomial.coeff m) h2
+  have h3 := congrArg (AddMonoidAlgebra.coeff · m) h2
   rw [coeff_aeval_scale, MvPolynomial.coeff_C_mul] at h3
   have h4 : (2 : K) ^ m.degree = 2 ^ d := mul_right_cancel₀ hm h3
   have h5 : (2 : ℕ) ^ m.degree = 2 ^ d := by exact_mod_cast h4

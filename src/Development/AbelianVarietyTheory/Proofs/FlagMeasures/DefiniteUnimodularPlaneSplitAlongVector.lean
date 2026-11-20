@@ -196,7 +196,7 @@ theorem absNorm_le (hE : IsTotallyComplex E) (𝔫 : Ideal (𝓞 E)) (b : 𝓞 E
     rw [← Algebra.coe_norm_int, Nat.cast_natAbs]; simp
   rw [h4, ← Rat.cast_abs, ← InfinitePlace.prod_eq_abs_norm, pow_mul, Formalism.HermitianLatticesTheory.fDeg, ← Finset.card_univ,
     ← Finset.prod_const]
-  refine Finset.prod_le_prod (fun w _ => by positivity) fun w _ => ?_
+  refine Finset.prod_le_prod₀ (fun w _ => by positivity) fun w _ => ?_
   rw [IsTotallyComplex.mult_eq]
   have : w (b : E) ≤ ρ := by rw [← InfinitePlace.norm_embedding_eq]; exact hρ _
   gcongr

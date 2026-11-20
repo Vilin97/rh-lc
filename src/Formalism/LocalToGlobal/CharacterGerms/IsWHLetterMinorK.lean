@@ -29,7 +29,7 @@ theorem isWH_aeval {σ τ : Type} {w : τ → ℕ} {w' : σ → ℕ} (f : σ →
   have h2 : (∑ i ∈ m.support, m i • w' i) = D := by
     rw [← hp (mem_support_iff.1 hm), Finsupp.weight_apply]
     rfl
-  have h3 := (isWeightedHomogeneous_C w (coeff m p)).mul h1
+  have h3 := (isWeightedHomogeneous_C w (AddMonoidAlgebra.coeff p m)).mul h1
   rw [zero_add, h2] at h3
   exact h3
 

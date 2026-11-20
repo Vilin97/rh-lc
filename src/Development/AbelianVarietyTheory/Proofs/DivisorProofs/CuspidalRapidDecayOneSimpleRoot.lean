@@ -253,7 +253,7 @@ theorem oneRoot (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : �
   refine (hdiff f hfc F hF0 hfQ Yv hYY hYR).trans ?_
   have hprod : ∏ i, ‖toL (Yv i)‖ ≤ (K₁ * gain) ^ m := by
     rw [← Fin.prod_const]
-    exact Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i _ => hYn i
+    exact Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i _ => hYn i
   calc c * F * ∏ i, ‖toL (Yv i)‖ ≤ c * F * (K₁ * gain) ^ m := mul_le_mul_of_nonneg_left hprod (by positivity)
     _ = c * C₀' * H' ^ N₀ * K₁ ^ m * gain ^ m * Sr ^ N₀ := by rw [hF]; ring
 

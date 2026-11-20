@@ -103,7 +103,7 @@ theorem multilinear_abs_le {n : ℕ} (f : MultilinearMap ℤ (fun _ : Fin n => K
   refine (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum (fun r _ => ?_))
   rw [abs_mul, Finset.abs_prod]
   refine (mul_comm _ _).trans_le (mul_le_mul_of_nonneg_left ?_ (abs_nonneg _))
-  refine Finset.prod_le_prod (fun i _ => abs_nonneg _) (fun i _ => ?_)
+  refine Finset.prod_le_prod₀ (fun i _ => abs_nonneg _) (fun i _ => ?_)
   exact Finset.single_le_sum (f := fun k => |m i k|) (fun k _ => abs_nonneg _) (Finset.mem_univ _)
 
 end Multilinear

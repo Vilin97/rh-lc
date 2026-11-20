@@ -267,7 +267,7 @@ theorem exists_lowDeg {φ : Mx D V.rank n → ℂ} (hφ : φ ∈ fockA θ V n l 
     obtain ⟨p, g, -, rfl⟩ := h
     refine ⟨p.totalDegree + 1, ?_⟩
     have hsum : (fun x : Mx D V.rank n => evalPoly p (fun τ => compAt θ τ x) * gauss V l s (fun τ => compAt θ τ x) *
-        g (fun i j => finPart D (x i j))) = ∑ e ∈ p.support, coeff e p • gen θ V l s e g := by
+        g (fun i j => finPart D (x i j))) = ∑ e ∈ p.support, AddMonoidAlgebra.coeff p e • gen θ V l s e g := by
       funext x
       rw [Finset.sum_apply]
       simp only [gen, Pi.smul_apply, smul_eq_mul, evalPoly_eq]

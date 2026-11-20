@@ -107,7 +107,7 @@ theorem bc_descent_span {σ κ : Type} [Fintype κ] (v : κ → MvPolynomial σ 
     rw [this, map_smul, smul_eq_mul, mul_comm]
   refine ⟨fun i => π (c i), ?_⟩
   ext m
-  have h1 := congrArg (fun P => π (coeff m P)) h
+  have h1 := congrArg (fun P => π (AddMonoidAlgebra.coeff P m)) h
   simp only [coeff_map, hπ', coeff_sum, coeff_smul, smul_eq_mul, map_sum, hmul] at h1
   rw [h1, coeff_sum]
   simp only [coeff_smul, smul_eq_mul]

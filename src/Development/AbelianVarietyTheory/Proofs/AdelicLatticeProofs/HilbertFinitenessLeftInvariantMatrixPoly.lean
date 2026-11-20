@@ -75,7 +75,7 @@ theorem hilbert_finiteness : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (Γ :
     | _ n ih =>
       intro f hf hn
       rcases Nat.eq_zero_or_pos n with rfl | hpos
-      · have : f = C (coeff 0 f) := by
+      · have : f = C (AddMonoidAlgebra.coeff f 0) := by
           rw [← homogeneousComponent_zero, homogeneousComponent_of_mem hn, if_pos rfl]
         rw [this]
         exact Subalgebra.algebraMap_mem _ _

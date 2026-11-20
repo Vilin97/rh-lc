@@ -74,7 +74,7 @@ theorem summable_exp_neg_l1Norm {g : ℕ} {c : ℝ} (hc : 0 < c) :
         rw [Finset.prod_univ_sum]
         refine Finset.sum_congr rfl fun m _ => ?_
         rw [← Real.exp_sum, l1, Finset.mul_sum]
-    _ ≤ _ := Finset.prod_le_prod (fun _ _ => Finset.sum_nonneg fun _ _ => (Real.exp_pos _).le)
+    _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => Finset.sum_nonneg fun _ _ => (Real.exp_pos _).le)
         fun _ _ => h1.sum_le_tsum _ fun _ _ => (Real.exp_pos _).le
 
 end GlobalTheory.TauPeriod

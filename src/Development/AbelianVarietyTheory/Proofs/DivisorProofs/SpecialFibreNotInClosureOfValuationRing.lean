@@ -67,7 +67,7 @@ theorem exists_eq_C_mul_coeff_one {O σ : Type} [CommRing O] [IsDomain O] [Valua
       exact dvd_zero _
   obtain ⟨a', ha'⟩ := hdvd
   refine ⟨a.coeff d, a', d, hc, ha', ?_⟩
-  have := congrArg (MvPolynomial.coeff d) ha'
+  have := congrArg (AddMonoidAlgebra.coeff · d) ha'
   rw [MvPolynomial.coeff_C_mul] at this
   exact mul_left_cancel₀ hc (by rw [← this, mul_one])
 
@@ -99,7 +99,7 @@ theorem exists_prime_dvd_of_etale {O B : Type} [CommRing O] [IsDomain O] [Valuat
   refine ⟨q', φ a', c, hq', fun x hx => ?_, fun h => ?_, hc, ?_⟩
   · rw [← MvPolynomial.algHom_C φ, ← hmem, RingHom.mem_ker, MvPolynomial.map_C,
       Ideal.Quotient.eq_zero_iff_mem.2 (show x ∈ P from hx), map_zero]
-  · have h0 := congrArg (MvPolynomial.coeff d) (RingHom.mem_ker.1 ((hmem a').2 h))
+  · have h0 := congrArg (AddMonoidAlgebra.coeff · d) (RingHom.mem_ker.1 ((hmem a').2 h))
     rw [MvPolynomial.coeff_map, hd, map_one, MvPolynomial.coeff_zero] at h0
     exact one_ne_zero h0
   · rw [hφ', map_mul, MvPolynomial.algHom_C] at hfa

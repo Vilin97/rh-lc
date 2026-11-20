@@ -556,7 +556,7 @@ theorem pure_le {w : ∀ v : HeightOneSpectrum (𝓞 F), Fv F v → ℝ} (hG0 : 
   set U := (finite_mulSupport_off hw a S).toFinset ∪ (finite_mulSupport_off h1 a S).toFinset with hU
   rw [finprod_eq_prod_of_mulSupport_subset (s := U) _ (fun x hx => by simp [hU, Set.Finite.mem_toFinset] at hx ⊢; exact Or.inl hx),
     finprod_eq_prod_of_mulSupport_subset (s := U) _ (fun x hx => by simp [hU, Set.Finite.mem_toFinset] at hx ⊢; exact Or.inr hx)]
-  exact Finset.prod_le_prod (fun x _ => (hw x.1).2.2.1 _) (fun x _ => (hw x.1).2.2.2 _)
+  exact Finset.prod_le_prod₀ (fun x _ => (hw x.1).2.2.1 _) (fun x _ => (hw x.1).2.2.2 _)
 
 theorem eventually_pure_eq (he : ∀ v, e v = 1 ∨ e v = -1) (a : (AF F)ˣ) :
     ∀ᶠ T : Finset (Off S) in atTop, PositivityTheory.Rg.Base1.pure S G g (wT e S T) a = PositivityTheory.Rg.Base1.pure S G g (fun v => rv v (e v)) a := by
@@ -620,7 +620,7 @@ theorem zi_one_ne_top (hG : Continuous G) (hG0 : ∀ y, 0 ≤ G y) (hg : ∀ v �
       have h1 : Real.exp (-(2 * ∑ x ∈ T, (Ideal.absNorm x.1.asIdeal : ℝ) ^ (-s))) ≤
           ∏ x ∈ T, (1 - (fun _ => (1 : ℝ)) x.1 * (Ideal.absNorm x.1.asIdeal : ℝ) ^ (-s)) := by
         rw [Finset.mul_sum, ← Finset.sum_neg_distrib, Real.exp_sum]
-        refine Finset.prod_le_prod (fun _ _ => (Real.exp_pos _).le) fun x _ => ?_
+        refine Finset.prod_le_prod₀ (fun _ _ => (Real.exp_pos _).le) fun x _ => ?_
         simp only [one_mul]
         exact exp_le_one_sub (by positivity) (q_le_half x.1 hs)
       refine le_trans ?_ h1

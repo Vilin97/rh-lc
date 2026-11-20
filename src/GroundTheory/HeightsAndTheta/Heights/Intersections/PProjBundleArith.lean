@@ -41,7 +41,7 @@ theorem ProjBundleArith.proof (hMH : ProjBundleMultiHomog.Statement) (hDim : Pro
       refine ⟨j, fun h => hj ?_⟩
       have h' : projBundleMap P B (X ⟨Sum.inr u, j⟩) = 0 := h
       rw [projBundleMap_X_inr] at h'
-      have := congrArg (coeff (Finsupp.single 0 1)) h'
+      have := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single 0 1)) h'
       simpa [coeff_X, Finsupp.single_eq_single_iff] using this
   · ext z
     rw [Ideal.mem_comap, Ideal.mem_bot]

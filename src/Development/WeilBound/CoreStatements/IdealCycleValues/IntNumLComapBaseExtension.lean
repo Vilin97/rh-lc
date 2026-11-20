@@ -168,7 +168,7 @@ theorem lift_form [∀ k, Fintype (ι k)] {n : ℕ} (h : ∀ c a, Good (F := F) 
     have hw : Finsupp.weight (blockWeight ι) d = m := hq (mem_support_iff.1 hd)
     obtain ⟨c, hc⟩ := exists_chart (n := n) (d := d) (by rw [hw]; exact hm)
     obtain ⟨d', hd'⟩ := exists_add_of_le (ex_le hc)
-    obtain ⟨G, hG, hV⟩ := h c (coeff d q)
+    obtain ⟨G, hG, hV⟩ := h c (AddMonoidAlgebra.coeff q d)
     refine ⟨G * monomial d' 1, ?_, ?_⟩
     · have h1 := IsWeightedHomogeneous.mul hG
         (isWeightedHomogeneous_monomial (R := F) (blockWeight ι) d' 1 rfl)
@@ -177,8 +177,8 @@ theorem lift_form [∀ k, Fintype (ι k)] {n : ℕ} (h : ∀ c a, Good (F := F) 
       rw [h2] at h1
       exact h1
     · have h1 := V'.mul_mem_right (monomial d' 1) hV
-      have h2 : (monomial d (coeff d q) : MRing ι F') =
-          C (coeff d q) * (∏ k, X ⟨k, c k⟩) ^ n * monomial d' 1 := by
+      have h2 : (monomial d (AddMonoidAlgebra.coeff q d) : MRing ι F') =
+          C (AddMonoidAlgebra.coeff q d) * (∏ k, X ⟨k, c k⟩) ^ n * monomial d' 1 := by
         rw [chart_pow, mul_assoc, monomial_mul, ← hd', C_mul_monomial]
         simp
       rw [h2, map_mul, map_monomial, (algebraMap F F').map_one, ← sub_mul]

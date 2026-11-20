@@ -25,10 +25,10 @@ theorem norm_eval_le (c : MRing ι) (k : ℕ) (hc : IsMultiHomog c (fun _ => k))
   have hmon : ∀ μ ∈ c.support, ‖∏ p, z p ^ μ p‖ ≤ (fsH ι).h z ^ k := by
     intro μ hμ
     rw [hH, norm_prod, Fintype.prod_sigma, ← Finset.prod_pow]
-    refine Finset.prod_le_prod (fun κ _ => Finset.prod_nonneg fun i _ => norm_nonneg _) fun κ _ => ?_
+    refine Finset.prod_le_prod₀ (fun κ _ => Finset.prod_nonneg fun i _ => norm_nonneg _) fun κ _ => ?_
     have hk : ∑ i, μ ⟨κ, i⟩ = k := hc μ hμ κ
     rw [← hk, ← Finset.prod_pow_eq_pow_sum]
-    refine Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i _ => ?_
+    refine Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i _ => ?_
     rw [norm_pow]
     refine pow_le_pow_left₀ (norm_nonneg _) ?_ _
     have := PiLp.norm_apply_le (WithLp.toLp 2 (fun i => z ⟨κ, i⟩)) i

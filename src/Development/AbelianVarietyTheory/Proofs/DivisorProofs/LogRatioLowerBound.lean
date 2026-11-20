@@ -67,7 +67,7 @@ theorem one_le_abs_weylDimU_mul {p : ℕ} (lam : Fin p → ℤ) (h : Formalism.I
     calc c ^ p ≤ c ^ (Finset.univ.filter (fun j : Fin p => i < j)).card := pow_le_pow_of_le_one c0 c1 hcard
       _ = ∏ j ∈ Finset.univ.filter (fun j : Fin p => i < j), c := by rw [Finset.prod_const]
       _ ≤ _ := by
-        apply Finset.prod_le_prod (fun _ _ => c0)
+        apply Finset.prod_le_prod₀ (fun _ _ => c0)
         intro j hj
         exact key i j hj (fun hz => h0 (Finset.prod_eq_zero hj hz))
   have outer : c ^ (p * p) ≤ |∏ i : Fin p, ∏ j ∈ Finset.univ.filter (fun j : Fin p => i < j),
@@ -75,7 +75,7 @@ theorem one_le_abs_weylDimU_mul {p : ℕ} (lam : Fin p → ℤ) (h : Formalism.I
     rw [Finset.abs_prod]
     calc c ^ (p * p) = ∏ _i : Fin p, c ^ p := by rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin, ← pow_mul, mul_comm]
       _ ≤ _ := by
-        apply Finset.prod_le_prod (fun _ _ => pow_nonneg c0 _)
+        apply Finset.prod_le_prod₀ (fun _ _ => pow_nonneg c0 _)
         intro i _
         rcases inner i with h1 | h1
         · exact h1
@@ -139,7 +139,7 @@ theorem log_prod_dimAt (D : D7) (i : Fin D.R.m) :
   have hprod : 1 ≤ |∏ τ, GlobalTheory.IndefiniteRowSideFullHecke.OneMeasureSizes.dimAt D i τ| * R ^ D.R.f := by
     rw [Finset.abs_prod, ← D.what₂.card_Tau, ← Finset.card_univ, ← Finset.prod_const, ← Finset.prod_mul_distrib]
     calc (1 : ℝ) = ∏ _τ : D.what₂.Tau, (1 : ℝ) := by simp
-      _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one) (fun τ _ => one_le_abs_dimAt_mul D i τ (hne τ))
+      _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun τ _ => one_le_abs_dimAt_mul D i τ (hne τ))
   have hpos : 0 < |∏ τ, GlobalTheory.IndefiniteRowSideFullHecke.OneMeasureSizes.dimAt D i τ| := abs_pos.2 h0
   have hl := Real.log_le_log one_pos hprod
   rw [Real.log_one, Real.log_mul hpos.ne' (by positivity), Real.log_abs, Real.log_pow, hR, Real.log_pow] at hl

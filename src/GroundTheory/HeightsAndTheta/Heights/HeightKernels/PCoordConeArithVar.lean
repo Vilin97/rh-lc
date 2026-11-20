@@ -55,11 +55,11 @@ theorem component_mem [DecidableEq K] (y : (Σ k, ι k) → Ω) (f : MRing ι)
     rw [← coe_mapDomain_fst, ← DFunLike.coe_fn_eq, Finsupp.coe_equivFunOnFinite_symm]
   set S := f.support.filter fun e ↦ Finsupp.weight (NumbersDVR.blockWeight ι) e = m
   have himg : φ (weightedHomogeneousComponent (NumbersDVR.blockWeight ι) m f) =
-      monomial m' (∑ e ∈ S, ((coeff e f : ℤ) : Ω) * e.prod fun p n ↦ y p ^ n) := by
+      monomial m' (∑ e ∈ S, ((AddMonoidAlgebra.coeff f e : ℤ) : Ω) * e.prod fun p n ↦ y p ^ n) := by
     rw [weightedHomogeneousComponent_apply, map_sum, map_sum]
     refine Finset.sum_congr rfl fun e he ↦ ?_
     rw [mConeMap_monomial, (hdeg e).2 (Finset.mem_filter.1 he).2]
-  have hcoeff : coeff m' (φ f) = ∑ e ∈ S, ((coeff e f : ℤ) : Ω) * e.prod fun p n ↦ y p ^ n := by
+  have hcoeff : AddMonoidAlgebra.coeff (φ f) m' = ∑ e ∈ S, ((AddMonoidAlgebra.coeff f e : ℤ) : Ω) * e.prod fun p n ↦ y p ^ n := by
     conv_lhs => rw [f.as_sum, map_sum]
     rw [coeff_sum, Finset.sum_filter]
     refine Finset.sum_congr rfl fun e _ ↦ ?_

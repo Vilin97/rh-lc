@@ -22,7 +22,7 @@ theorem finrank_le_two_mul_padicValInt_discr (E : Type) [Field E] [NumberField E
     rintro rfl
     exact hm (dvd_zero p)
   have ha : padicValInt p (discr E) = a := by
-    rw [padicValInt, hdisc, padicValNat.mul (pow_ne_zero _ hp.ne_zero) hm0, padicValNat.prime_pow,
+    rw [padicValInt, hdisc, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.ne_zero) hm0, padicValNat.prime_pow,
       padicValNat.eq_zero_of_not_dvd hm, add_zero]
   have ha0 : a ≠ 0 := by
     rintro rfl

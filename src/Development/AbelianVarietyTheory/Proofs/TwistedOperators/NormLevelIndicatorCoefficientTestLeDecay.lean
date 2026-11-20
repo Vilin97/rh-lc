@@ -26,7 +26,7 @@ theorem norm_coef_le : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (V : HS
   split_ifs
   · unfold coefR
     rw [norm_prod, ← Finset.prod_mul_distrib]
-    refine Finset.prod_le_prod (fun τ _ => norm_nonneg _) fun τ _ => ?_
+    refine Finset.prod_le_prod₀ (fun τ _ => norm_nonneg _) fun τ _ => ?_
     rw [← div_eq_mul_inv, le_div_iff₀ (hpos τ x)]
     exact hle τ x
   · rw [norm_zero]

@@ -79,7 +79,7 @@ def CoordChangeCoeff : Prop :=
       (conjAct (RingHom.id k₁) isVec S (↑g₀ : Matrix _ _ k₁) (↑g₀⁻¹ : Matrix _ _ k₁) true
           (sharpHom isVec S (↑g₀ : Matrix _ _ k₁) (↑g₀⁻¹ : Matrix _ _ k₁) H)).coeff j =
         sharpHom isVec S (↑g₀ : Matrix _ _ k₁) (↑g₀⁻¹ : Matrix _ _ k₁)
-          (∑ e ∈ H.support.filter (fun e => lastExp isVec S e = j), monomial e (coeff e H))) ∧
+          (∑ e ∈ H.support.filter (fun e => lastExp isVec S e = j), monomial e (AddMonoidAlgebra.coeff H e))) ∧
     Function.Bijective (sharpHom (ζ := ζ) (n := n) isVec S (↑g₀ : Matrix (Fin n) (Fin n) k₁)
       (↑g₀⁻¹ : Matrix (Fin n) (Fin n) k₁))
 

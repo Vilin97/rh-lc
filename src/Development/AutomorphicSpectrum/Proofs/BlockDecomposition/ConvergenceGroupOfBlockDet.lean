@@ -332,7 +332,7 @@ theorem conv_top {G : Type} [Group G] (Γ P : Subgroup G) (hP : P = ⊤) (l : G 
     change QuotientGroup.rightRel _ _ _
     rw [QuotientGroup.rightRel_apply, Subgroup.mem_subgroupOf]
     trivial⟩
-  exact summable_of_finite_support (Set.toFinite _)
+  exact summable_of_hasFiniteSupport (Set.toFinite _)
 
 end Ht
 

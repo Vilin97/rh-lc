@@ -333,7 +333,7 @@ theorem op_inj {s : Sym m n} (h : ∀ f, op s f = 0) : s = 0 := by
   have h1 := h (monomial (t0.comapDomain Sum.inr Sum.inr_injective.injOn) 1)
   unfold op at h1
   simp only [opMono_monomial] at h1
-  have h2 := congrArg (coeff (t0.comapDomain Sum.inl Sum.inl_injective.injOn)) h1
+  have h2 := congrArg (AddMonoidAlgebra.coeff · (t0.comapDomain Sum.inl Sum.inl_injective.injOn)) h1
   rw [coeff_sum, coeff_zero] at h2
   simp only [coeff_smul, coeff_monomial, smul_eq_mul] at h2
   rw [Finset.sum_eq_single t0] at h2

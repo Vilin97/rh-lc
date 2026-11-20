@@ -18,10 +18,10 @@ theorem RestCutPsiFlag.proof : RestCutPsiFlag.Statement := by
     rw [map_sum]
     refine Finset.sum_congr rfl fun α _ => ?_
     rw [KRest.coeff_psiPoly]
-    have h : coeff α P * ((coeff α (RestTerms.blockVandermonde f N) *
+    have h : AddMonoidAlgebra.coeff P α * ((AddMonoidAlgebra.coeff (RestTerms.blockVandermonde f N) α *
         α.prod (fun _ e => (e.factorial : ℚ)) : ℚ) : ℝ) =
-        (coeff α (RestTerms.blockVandermonde f N) *
-          α.prod (fun _ e => (e.factorial : ℚ))) • coeff α P := by
+        (AddMonoidAlgebra.coeff (RestTerms.blockVandermonde f N) α *
+          α.prod (fun _ e => (e.factorial : ℚ))) • AddMonoidAlgebra.coeff P α := by
       rw [Rat.smul_def, mul_comm]
     rw [h, ψ.map_smul, smul_eq_mul]
     ring

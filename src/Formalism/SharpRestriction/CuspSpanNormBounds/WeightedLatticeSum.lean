@@ -252,7 +252,7 @@ theorem latSum (ι : Type) [Fintype ι] (P : Finset (ι → ℂ)) (R : ℝ) (hR 
     · exact hne (funext fun i => hι.elim i)
     · obtain ⟨i0⟩ := hι
       have hE : ∏ i ∈ Finset.univ.erase i0, ‖p i - q i‖ ≤ 1 :=
-        Finset.prod_le_one (fun i _ => norm_nonneg _) (fun i _ => (hlt i).le)
+        Finset.prod_le_one₀ (fun i _ => norm_nonneg _) (fun i _ => (hlt i).le)
       have hE0 : 0 ≤ ∏ i ∈ Finset.univ.erase i0, ‖p i - q i‖ :=
         Finset.prod_nonneg (fun i _ => norm_nonneg _)
       have hsplit : ‖p i0 - q i0‖ * ∏ i ∈ Finset.univ.erase i0, ‖p i - q i‖ = ∏ i, ‖p i - q i‖ :=

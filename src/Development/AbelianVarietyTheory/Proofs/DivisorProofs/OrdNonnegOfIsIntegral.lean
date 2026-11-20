@@ -112,7 +112,7 @@ theorem ord_natCast (P : HeightOneSpectrum (𝓞 E)) {ℓ : ℕ} (hℓ : ℓ.Pri
     (hP : (ℓ : 𝓞 E) ∈ P.asIdeal) {n : ℕ} (hn : n ≠ 0) :
     ord P (n : E) = padicValNat ℓ n * ord P (ℓ : E) := by
   haveI := Fact.mk hℓ
-  obtain ⟨m, hm⟩ := pow_padicValNat_dvd (p := ℓ) (n := n)
+  obtain ⟨m, hm⟩ := (fun {p n : ℕ} => _root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat p n)) (p := ℓ) (n := n)
   have hmd : ¬ ℓ ∣ m := fun h =>
     (pow_succ_padicValNat_not_dvd (p := ℓ) hn) (by conv_rhs => rw [hm]
                                                    rw [pow_succ]; exact mul_dvd_mul_left _ h)

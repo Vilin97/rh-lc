@@ -301,7 +301,7 @@ theorem psi_monomial (μ : product_zeroth_first_parts.XZ Lt N0 N1 →₀ ℕ) (c
 theorem applyAt0_eq_sum (Th : MvPowerSeries (Lt × Fin N0 × Fin N1) ℂ_[l])
     (P : MvPolynomial (product_zeroth_first_parts.XZ Lt N0 N1) ℤ) (S : Finset (product_zeroth_first_parts.XZ Lt N0 N1 →₀ ℕ)) (hS : P.support ⊆ S) :
     product_zeroth_first_parts.applyAt0 N0 N1 l Th P = ∑ μ ∈ S, MvPolynomial.monomial (Finsupp.sumFinsuppEquivProdFinsupp μ).1
-      (((MvPolynomial.coeff μ P : ℤ) : ℂ_[l]) *
+      (((AddMonoidAlgebra.coeff P μ : ℤ) : ℂ_[l]) *
         ((Finsupp.sumFinsuppEquivProdFinsupp μ).2.prod fun _ n => (n.factorial : ℂ_[l])) *
         MvPowerSeries.coeff (Finsupp.sumFinsuppEquivProdFinsupp μ).2 Th) := by
   unfold product_zeroth_first_parts.applyAt0
@@ -426,7 +426,7 @@ theorem tieFrame : TieFrame := by
   have hhom : Pop.IsHomogeneous (∑ s : ZMod d, ∑ c : Fin ((nu s).rowLen 0), (nu s).colLen c) :=
     MvPolynomial.IsHomogeneous.prod _ _ _ fun s _ => minorProd_hom _ (fun i b =>
       MvPolynomial.IsHomogeneous.sum _ _ _ fun a _ => MvPolynomial.isHomogeneous_C_mul_X _ _) _ _ _
-  have hbound : ∀ n, ‖MvPolynomial.coeff n (jetPairPoly Pop Th)‖ ≤ (l : ℝ) ^ (-B) := by
+  have hbound : ∀ n, ‖AddMonoidAlgebra.coeff (jetPairPoly Pop Th) n‖ ≤ (l : ℝ) ^ (-B) := by
     intro n
     have h := hyp (fun s c => ⇑(I s c)) n
     unfold frameJet at h
@@ -552,7 +552,7 @@ theorem tieFrameOne : TieFrameOne := by
     congr 1
     funext v
     rw [MvPowerSeries.subst_X (hasSubst_CX ep0)]
-  have hbound : ∀ n, ‖MvPolynomial.coeff n (jetPairPoly Pop ThF)‖ ≤ (l : ℝ) ^ (-B) := by
+  have hbound : ∀ n, ‖AddMonoidAlgebra.coeff (jetPairPoly Pop ThF) n‖ ≤ (l : ℝ) ^ (-B) := by
     intro n
     have h := hyp (fun c => ⇑(I default c)) n
     unfold frameJetOne at h

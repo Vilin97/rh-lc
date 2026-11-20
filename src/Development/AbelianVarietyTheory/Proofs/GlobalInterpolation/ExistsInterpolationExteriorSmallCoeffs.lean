@@ -32,7 +32,7 @@ theorem exists_coeffs (l : ℕ) (z : Fin l → ℂ) (hz : ∀ i, ‖z i‖ ≤ 1
                 apply norm_sum_le_of_le
                 intro t _
                 rw [norm_prod]
-                exact Finset.prod_le_one (fun i _ => norm_nonneg _)
+                exact Finset.prod_le_one₀ (fun i _ => norm_nonneg _)
                   (fun i _ => by rw [norm_neg]; exact hz i)
             _ = ((l.choose (l - k) : ℕ) : ℝ) := by
                 simp [Finset.card_powersetCard, Finset.card_univ]

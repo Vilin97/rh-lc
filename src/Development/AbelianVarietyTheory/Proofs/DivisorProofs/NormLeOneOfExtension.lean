@@ -44,7 +44,7 @@ theorem norm_le_one_of_extension {p : ℕ} [Fact p.Prime] {A B : Type} [CommRing
   have hcomp : ev'.comp (algebraMap A B) = ev := RingHom.ext hev
   have hq' := congrArg ev' hq
   rw [map_zero, Polynomial.hom_eval₂, hcomp, hqm.as_sum, Polynomial.eval₂_add,
-    Polynomial.eval₂_X_pow, Polynomial.eval₂_finset_sum] at hq'
+    Polynomial.eval₂_X_pow, Polynomial.eval₂_finsetSum] at hq'
   simp only [Polynomial.eval₂_mul, Polynomial.eval₂_C, Polynomial.eval₂_X_pow] at hq'
   set y := ev' b
   by_contra hy

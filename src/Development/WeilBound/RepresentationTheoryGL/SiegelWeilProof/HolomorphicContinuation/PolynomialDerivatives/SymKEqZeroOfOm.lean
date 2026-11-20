@@ -34,7 +34,7 @@ theorem psi_add_right (p q₁ q₂ : Sym m n) : psi p (q₁ + q₂) = psi p q₁
       (Finset.union_subset (Finset.subset_union_left.trans Finset.subset_union_left) Finset.subset_union_right),
     ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun u _ => ?_
-  rw [coeff_add]; ring
+  rw [MvPolynomial.coeff_add]; ring
 
 theorem psi_smul_right (p q : Sym m n) (r : ℂ) : psi p (r • q) = r * psi p q := by
   classical

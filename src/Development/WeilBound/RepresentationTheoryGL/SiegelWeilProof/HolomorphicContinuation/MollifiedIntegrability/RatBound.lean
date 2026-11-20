@@ -73,7 +73,7 @@ theorem ratBound (hC : CauchyW) (hI : Invar) (hB : PBound) (hL : Link) (s : ℂ)
     exact_mod_cast h2
   have hdP : dP y ≤ W ^ (2 : ℝ) := by
     rw [dP_of_spectral y k hk lam hy, Real.rpow_two, hW, ← Finset.prod_pow]
-    refine Finset.prod_le_prod (fun i _ => by positivity) fun i _ => ?_
+    refine Finset.prod_le_prod₀ (fun i _ => by positivity) fun i _ => ?_
     simp only [hw]
     have : lam i ^ 2 = |lam i| ^ 2 := (sq_abs _).symm
     nlinarith [abs_nonneg (lam i)]

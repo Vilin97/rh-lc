@@ -75,11 +75,11 @@ theorem exists_prod_functional : ∀ (k : Type) [CommRing k] (ι : Type) [Fintyp
     rw [← smul_eq_mul, ← map_smul, smul_monomial, smul_eq_mul, mul_one]
   refine ⟨Φ, fun f => ?_⟩
   have h1 : ∀ τ, rename (fun s : σ => ((τ, s) : ι × σ)) (f τ) =
-      ∑ m ∈ (f τ).support, monomial (Finsupp.mapDomain (fun s : σ => ((τ, s) : ι × σ)) m) (coeff m (f τ)) := by
+      ∑ m ∈ (f τ).support, monomial (Finsupp.mapDomain (fun s : σ => ((τ, s) : ι × σ)) m) (AddMonoidAlgebra.coeff (f τ) m) := by
     intro τ
     conv_lhs => rw [as_sum (f τ)]
     simp only [map_sum, rename_monomial]
-  have h2 : ∀ τ, φ τ (f τ) = ∑ m ∈ (f τ).support, coeff m (f τ) * φ τ (monomial m 1) := by
+  have h2 : ∀ τ, φ τ (f τ) = ∑ m ∈ (f τ).support, AddMonoidAlgebra.coeff (f τ) m * φ τ (monomial m 1) := by
     intro τ
     conv_lhs => rw [as_sum (f τ)]
     rw [map_sum]

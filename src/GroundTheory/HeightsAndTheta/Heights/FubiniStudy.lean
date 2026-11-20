@@ -145,7 +145,7 @@ theorem fsNormPoly_le {n : ℕ} {P : MvPolynomial (Fin (N + 1)) ℂ} (hP : P.IsH
     rw [this]
     exact (Finset.sum_subset (Finset.subset_univ _) fun i _ hi => by simpa using hi).symm
   calc ∏ i, ‖x.rep i ^ d i‖ ≤ ∏ i, norm2 x.rep ^ d i := by
-        refine Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i _ => ?_
+        refine Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i _ => ?_
         rw [norm_pow]
         exact pow_le_pow_left₀ (norm_nonneg _) (norm_le_norm2 _ i) _
     _ = norm2 x.rep ^ n := by rw [Finset.prod_pow_eq_pow_sum, hdeg]

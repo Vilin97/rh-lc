@@ -18,11 +18,11 @@ noncomputable instance instFintypeCC {Lt : Type} [Fintype Lt] [DecidableEq Lt] (
   unfold ColChoice; infer_instance
 
 def linW {σ : Type} (w : (σ →₀ ℕ) → ℂ) : MvPolynomial σ ℂ →ₗ[ℂ] ℂ where
-  toFun P := ∑ α ∈ P.support, coeff α P * w α
+  toFun P := ∑ α ∈ P.support, AddMonoidAlgebra.coeff P α * w α
   map_add' P Q := by
     classical
     have key : ∀ (R : MvPolynomial σ ℂ) (S : Finset (σ →₀ ℕ)), R.support ⊆ S →
-        ∑ α ∈ R.support, coeff α R * w α = ∑ α ∈ S, coeff α R * w α := by
+        ∑ α ∈ R.support, AddMonoidAlgebra.coeff R α * w α = ∑ α ∈ S, AddMonoidAlgebra.coeff R α * w α := by
       intro R S hS
       refine Finset.sum_subset hS (fun α _ hα => ?_)
       rw [MvPolynomial.mem_support_iff, not_not] at hα
@@ -31,7 +31,7 @@ def linW {σ : Type} (w : (σ →₀ ℕ) → ℂ) : MvPolynomial σ ℂ →ₗ[
       key P (P.support ∪ Q.support) subset_union_left,
       key Q (P.support ∪ Q.support) subset_union_right, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl (fun α _ => ?_)
-    rw [coeff_add, add_mul]
+    rw [MvPolynomial.coeff_add, add_mul]
   map_smul' c P := by
     simp only [RingHom.id_apply, smul_eq_mul]
     rw [Finset.mul_sum]
@@ -42,7 +42,7 @@ def linW {σ : Type} (w : (σ →₀ ℕ) → ℂ) : MvPolynomial σ ℂ →ₗ[
       rw [coeff_smul, smul_eq_mul, mul_assoc]
 
 theorem linW_apply {σ : Type} (w : (σ →₀ ℕ) → ℂ) (P : MvPolynomial σ ℂ) :
-    linW w P = ∑ α ∈ P.support, coeff α P * w α := rfl
+    linW w P = ∑ α ∈ P.support, AddMonoidAlgebra.coeff P α * w α := rfl
 
 def wTh {T : Type} [Fintype T] {N N' : ℕ} (Θ : VC T N N' → ℂ) (α : Mono T N N') : ℂ :=
   (α.prod fun _ n => (n.factorial : ℂ)) * taylor Θ α

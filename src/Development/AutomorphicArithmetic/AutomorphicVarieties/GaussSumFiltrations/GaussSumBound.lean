@@ -76,7 +76,7 @@ theorem prod_bound {T : Type} [Fintype T] {s : ℝ} (hs : 0 < s) (S : Finset (T 
     _ = ∏ t : T, ∑ n ∈ I, Real.exp (-s * (n : ℝ) ^ 2) :=
         (Finset.prod_univ_sum (fun _ => I) (fun _ n => Real.exp (-s * (n : ℝ) ^ 2))).symm
     _ ≤ ∏ t : T, (2 + 2 / s) :=
-        Finset.prod_le_prod (fun _ _ => Finset.sum_nonneg fun _ _ => by positivity) (fun _ _ => geo_bound hs I)
+        Finset.prod_le_prod₀ (fun _ _ => Finset.sum_nonneg fun _ _ => by positivity) (fun _ _ => geo_bound hs I)
     _ = (2 + 2 / s) ^ Fintype.card T := by simp
 
 section

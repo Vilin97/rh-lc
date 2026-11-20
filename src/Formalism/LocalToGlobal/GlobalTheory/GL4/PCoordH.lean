@@ -98,7 +98,7 @@ theorem prod_le_of_mean (S : HSpace E) {k : ℕ} (x : Fin k → S.V) {ρ : ℝ} 
       _ ≤ ρ ^ Fintype.card (E →+* ℂ) := pow_le_pow_left₀ (Real.rpow_nonneg hP _) (hg.trans hmean) _
   rw [Finset.prod_comm]
   calc ∏ c, ∏ φ : E →+* ℂ, ‖φ (S.hT (x c) (x c))‖ ≤ ∏ _c : Fin k, ρ ^ Module.finrank ℚ E :=
-        Finset.prod_le_prod (fun c _ => Finset.prod_nonneg fun _ _ => norm_nonneg _) (fun c _ => key c)
+        Finset.prod_le_prod₀ (fun c _ => Finset.prod_nonneg fun _ _ => norm_nonneg _) (fun c _ => key c)
     _ = ρ ^ (Module.finrank ℚ E * k) := by
       rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin, ← pow_mul]
 
@@ -208,7 +208,7 @@ theorem coordCount_of (S : HSpace E) (q : ℕ) (ρ B2 : ℝ) (hρ : 0 ≤ ρ) (h
       exact RingHom.map_det (algebraMap (𝓞 E) E) Gm
     have h2 : ((Algebra.norm ℤ Gm.det).natAbs : ℝ) ≤ ρ ^ (Module.finrank ℚ E * S.rank) := by
       rw [natAbs_norm_eq_prod, hdetE]
-      refine le_trans (Finset.prod_le_prod (fun _ _ ↦ norm_nonneg _) fun φ _ ↦ had_gram S hF φ b G fun i j ↦ rfl) ?_
+      refine le_trans (Finset.prod_le_prod₀ (fun _ _ ↦ norm_nonneg _) fun φ _ ↦ had_gram S hF φ b G fun i j ↦ rfl) ?_
       exact prod_le_of_mean S b hρ hbs
     refine h1.trans (le_trans ?_ hB)
     rw [pow_mul]

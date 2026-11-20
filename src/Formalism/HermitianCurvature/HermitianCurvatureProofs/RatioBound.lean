@@ -261,7 +261,7 @@ theorem ratio_bound {K : ℕ} (ys : Fin K → ℝ) (Pv qv : ℝ → ℝ) (Λ T �
   rw [e]
   have hprod : ∏ b, (|Pv (ys b) * Pv (ys b + 1)| / qv (ys b)) ≤ (B ^ 2) ^ K := by
     calc ∏ b, (|Pv (ys b) * Pv (ys b + 1)| / qv (ys b)) ≤ ∏ _b : Fin K, B ^ 2 :=
-          Finset.prod_le_prod (fun b _ => div_nonneg (abs_nonneg _) (hq b).le) fun b _ => hnode b
+          Finset.prod_le_prod₀ (fun b _ => div_nonneg (abs_nonneg _) (hq b).le) fun b _ => hnode b
       _ = (B ^ 2) ^ K := by simp
   have h0 : 0 ≤ Λ * T ^ K * B ^ K := by positivity
   calc (Λ * T ^ K) ^ 2 * ∏ b, (|Pv (ys b) * Pv (ys b + 1)| / qv (ys b)) ≤ (Λ * T ^ K) ^ 2 * (B ^ 2) ^ K :=

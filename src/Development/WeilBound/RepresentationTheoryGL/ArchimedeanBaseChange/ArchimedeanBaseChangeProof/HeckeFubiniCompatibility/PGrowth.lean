@@ -88,7 +88,7 @@ theorem exists_den (α : E) (S : Finset (HeightOneSpectrum (𝓞 E)))
   · refine ⟨1, one_pos, ?_, 0, by simp [hα]⟩
     rw [Nat.cast_one]
     calc (1 : ℝ) = ∏ _w ∈ S, (1 : ℝ) := Finset.prod_const_one.symm
-      _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one) (fun _ _ => le_max_left _ _)
+      _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun _ _ => le_max_left _ _)
   set N : HeightOneSpectrum (𝓞 E) → ℕ := fun w => Ideal.absNorm w.asIdeal with hNdef
   have hN1 : ∀ w, (1 : ℝ) < N w := fun w => by exact_mod_cast HeightOneSpectrum.one_lt_absNorm w
   choose z hz using fun w => adicAbv_eq_zpow w hα
@@ -117,7 +117,7 @@ theorem exists_den (α : E) (S : Finset (HeightOneSpectrum (𝓞 E)))
       by_cases hw0 : w0 ∈ S
       · rw [← Finset.mul_prod_erase S _ hw0]
         have h1 : ∏ w ∈ S.erase w0, A ((N w : E) ^ k w) ≤ 1 :=
-          Finset.prod_le_one (fun w _ => hnn w) (fun w _ => hle1 w)
+          Finset.prod_le_one₀ (fun w _ => hnn w) (fun w _ => hle1 w)
         have h2 : A ((N w0 : E) ^ k w0) ≤ ((N w0 : ℝ)⁻¹) ^ k w0 := by
           rw [map_pow]
           exact pow_le_pow_left₀ (A.nonneg _) (adicAbv_absNorm_le w0) _
@@ -131,7 +131,7 @@ theorem exists_den (α : E) (S : Finset (HeightOneSpectrum (𝓞 E)))
                 (A.nonneg _) (mul_nonneg (pow_nonneg (inv_nonneg.2 (Nat.cast_nonneg _)) _) zero_le_one)
           _ = 1 := by rw [mul_one, h4]
       · have h1 : ∏ w ∈ S, A ((N w : E) ^ k w) ≤ 1 :=
-          Finset.prod_le_one (fun w _ => hnn w) (fun w _ => hle1 w)
+          Finset.prod_le_one₀ (fun w _ => hnn w) (fun w _ => hle1 w)
         calc (∏ w ∈ S, A ((N w : E) ^ k w)) * A α ≤ 1 * 1 :=
               mul_le_mul h1 (hS w0 hw0) (A.nonneg _) zero_le_one
           _ = 1 := one_mul 1

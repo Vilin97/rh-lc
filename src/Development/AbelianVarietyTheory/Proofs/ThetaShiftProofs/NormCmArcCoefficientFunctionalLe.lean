@@ -195,9 +195,9 @@ theorem const_le (r : ℕ) {La c₁ T C : ℝ} (hLa : 1 ≤ La) (hT : 0 < T) (hC
       _ = _ := by ring
   have b2 : ∏ τ : E →+* ℂ, ∏ i : Fin (Dw.mult τ), h τ i ^ ((a (τ, (i : ℕ)) : ℝ) / 2) ≤ e ^ absA Dw a := by
     rw [absA, ← Finset.prod_pow_eq_pow_sum]
-    refine Finset.prod_le_prod (fun τ _ => Finset.prod_nonneg fun i _ => Real.rpow_nonneg (h0 τ i) _) fun τ _ => ?_
+    refine Finset.prod_le_prod₀ (fun τ _ => Finset.prod_nonneg fun i _ => Real.rpow_nonneg (h0 τ i) _) fun τ _ => ?_
     rw [← Finset.prod_pow_eq_pow_sum]
-    refine Finset.prod_le_prod (fun i _ => Real.rpow_nonneg (h0 τ i) _) fun i _ => ?_
+    refine Finset.prod_le_prod₀ (fun i _ => Real.rpow_nonneg (h0 τ i) _) fun i _ => ?_
     exact hsq _ _ _ (h0 τ i) he0.le ((hh τ i).trans (by gcongr))
   refine (mul_le_mul b1 b2 (Finset.prod_nonneg fun τ _ => Finset.prod_nonneg fun i _ =>
     Real.rpow_nonneg (h0 τ i) _) (by positivity)).trans (le_of_eq ?_)

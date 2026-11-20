@@ -64,7 +64,7 @@ theorem UpperTheory.holomorphic_ball_inner_region :
     rw [hG, ← Finset.prod_pow, Finset.prod_congr rfl fun i _ => heq i (y z) (hpy i), Finset.prod_mul_distrib,
       norm_prod, Finset.prod_pow]
   have hE : ∏ i, Real.exp (-f i (y z)) ≤ Q :=
-    Finset.prod_le_prod (fun i _ => (Real.exp_pos _).le) fun i _ => Real.exp_le_exp.2 (by linarith [hfyy i])
+    Finset.prod_le_prod₀ (fun i _ => (Real.exp_pos _).le) fun i _ => Real.exp_le_exp.2 (by linarith [hfyy i])
   have hPle : ∏ i, x.nrm σ i (y z) ≤ ‖G z‖ * √Q := by
     refine (pow_le_pow_iff_left₀ hP0.le (by positivity) two_ne_zero).1 ?_
     rw [hPeq, mul_pow, Real.sq_sqrt hQ0.le]

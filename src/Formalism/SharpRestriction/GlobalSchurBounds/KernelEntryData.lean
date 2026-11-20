@@ -82,7 +82,7 @@ structure ValR : Prop where
 def geV (x : Kc) (g : ℝ) : Prop :=
   ∀ (a : ℤ) (b : ℕ), 0 < b → (a : ℝ) ≤ g * b → x ^ b * (p : Kc) ^ (-a) ∈ Oc
 
-def gaussGe {τ : Type} (y : MvPolynomial τ Kc) (g : ℝ) : Prop := ∀ n, geV p Oc (MvPolynomial.coeff n y) g
+def gaussGe {τ : Type} (y : MvPolynomial τ Kc) (g : ℝ) : Prop := ∀ n, geV p Oc (AddMonoidAlgebra.coeff y n) g
 
 def IntSer {σ : Type} (f : MvPowerSeries σ Kc) : Prop := ∀ n, MvPowerSeries.coeff n f ∈ Oc
 
@@ -125,7 +125,7 @@ def PI (rb : ℕ) (nu : Sh.Wt) (I : Sh.ColCh) : MvPolynomial Sh.ZV (MvPolynomial
 variable {Kc : Type} [Field Kc] (Oc : Subring Kc)
 
 def KG (rb : ℕ) (nu : Sh.Wt) (Th : MvPowerSeries Sh.ZV Kc) : AddSubgroup (MvPolynomial Sh.FrV Kc) :=
-  AddSubgroup.closure {y | ∃ (I : Sh.ColCh) (g : MvPolynomial Sh.FrV Kc), (∀ n, MvPolynomial.coeff n g ∈ Oc) ∧
+  AddSubgroup.closure {y | ∃ (I : Sh.ColCh) (g : MvPolynomial Sh.FrV Kc), (∀ n, AddMonoidAlgebra.coeff g n ∈ Oc) ∧
     y = g * FormalGroupSystem.applyD (Sh.PI rb nu I) Th}
 
 variable (p : ℕ)
@@ -668,7 +668,7 @@ theorem admissible_valuation_zero (D : Formalism.BasicNotions.D7) (Y : FormalGro
     (X.Pj j).IsLatTup La.2 → (X.Pj (j + 1)).IsLatTup L' → (∀ v', L'' v' = L' v') →
     ∃ φ : Y.Frm j La (c', L''), ∀ (f : MvPowerSeries (X.ZA j) Y.Kc) (g : ℝ),
       (∀ (I : X.ColCh j) (n : X.FrI j →₀ ℕ),
-        Y.geC (MvPolynomial.coeff n (FormalGroupSystem.applyD (X.PI j I (fun _ => 0)) f)) g) →
+        Y.geC (AddMonoidAlgebra.coeff (FormalGroupSystem.applyD (X.PI j I (fun _ => 0)) f) n) g) →
       ∀ G ∈ (X.Pj j).HtupW La.2, Y.inLatC (j + 1) g L'
         ((∏ v : X.Pl, (p : X.G.Kf) ^ (FormalGroupSystem.Nprime (X.G.P.lam0 v) (X.w v) (j + 1) 0)) •
           Y.kerF j La (c', L'') (FormalGroupSystem.linSub (Y.bc j La (c', L'') φ) f) G) := by

@@ -20,7 +20,7 @@ theorem SumBd.det_le (hc : SumBd E c) {M : Matrix (Fin 3) (Fin 3) E} {m : ℝ} (
   have hp : ‖∏ i, M (σ i) i‖ ≤ m ^ 3 := by
     rw [norm_prod]
     calc ∏ i, ‖M (σ i) i‖ ≤ ∏ _i : Fin 3, m :=
-          Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i _ => hM _ _
+          Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i _ => hM _ _
       _ = m ^ 3 := by simp
   rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with h | h <;> rw [h]
   · simpa using hp

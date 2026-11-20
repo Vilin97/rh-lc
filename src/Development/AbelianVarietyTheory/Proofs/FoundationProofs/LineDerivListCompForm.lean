@@ -54,7 +54,7 @@ theorem summable_prod_half_pow : Summable fun α : σ →₀ ℕ => ∏ j, (1 / 
         (Finset.le_sup (f := fun α => Finset.univ.sup α) hα)
     refine (Finset.sum_le_sum_of_subset_of_nonneg hsub fun _ _ _ => by positivity).trans ?_
     rw [← Finset.prod_univ_sum (fun _ : σ => Finset.range (n + 1)) (fun _ k => (1 / 2 : ℝ) ^ k)]
-    exact Finset.prod_le_prod (fun _ _ => by positivity) fun _ _ => sum_geometric_two_le _
+    exact Finset.prod_le_prod₀ (fun _ _ => by positivity) fun _ _ => sum_geometric_two_le _
   exact h.comp_injective (i := fun α : σ →₀ ℕ => (α : σ → ℕ)) DFunLike.coe_injective
 
 theorem tsum_of_entire {f : (σ → ℂ) → ℂ} (hf : Differentiable ℂ f) (c : (σ →₀ ℕ) → ℂ)
@@ -79,7 +79,7 @@ theorem tsum_of_entire {f : (σ → ℂ) → ℂ} (hf : Differentiable ℂ f) (c
       exact_mod_cast Nat.factorial_pos _)
     rw [norm_mul, norm_prod]
     calc ‖c α‖ * ∏ j, ‖w j ^ α j‖ ≤ (C / ∏ k, (2 * R) ^ α k) * ∏ j, R ^ α j := by
-          refine mul_le_mul h2 (Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun j _ => ?_)
+          refine mul_le_mul h2 (Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun j _ => ?_)
             (by positivity) (by positivity)
           rw [norm_pow]
           exact pow_le_pow_left₀ (norm_nonneg _)

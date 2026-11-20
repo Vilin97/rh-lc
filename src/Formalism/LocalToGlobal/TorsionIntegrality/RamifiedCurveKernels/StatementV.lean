@@ -28,7 +28,7 @@ def IntUnram : Prop :=
       tens4 Th = toZ linv (mvExp (-(phIso τ l linv ph δ)) * G) →
     JetsIntegral Th ∧
     ∀ (ν : Type) [Fintype ν] (A : n → ν → K), (∀ i x, ‖A i x‖ ≤ 1) →
-    ∀ P : MvPolynomial ν K, (∀ k, ‖MvPolynomial.coeff k P‖ ≤ 1) →
+    ∀ P : MvPolynomial ν K, (∀ k, ‖AddMonoidAlgebra.coeff P k‖ ≤ 1) →
       ‖jetPair P (linSub A Th)‖ ≤ 1
 
 def CurveJetsUnram : Prop :=

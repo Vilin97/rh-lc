@@ -35,7 +35,7 @@ theorem linearIndependent_laurentMonomial :
     rw [map_sum, ← hg]
     refine Finset.sum_congr rfl fun a ha => ?_
     rw [hv a k (m a) (hm a ha), LinearMap.map_smul_of_tower]
-  have h1 := congrArg (coeff (m j))
+  have h1 := congrArg (AddMonoidAlgebra.coeff · (m j))
     ((map_eq_zero_iff _ (awayFrac_injective (xProd_smul_injective s) k)).1 h0)
   rw [coeff_sum, Finset.sum_eq_single j, coeff_smul, coeff_monomial, if_pos rfl, coeff_zero,
     smul_eq_mul, mul_one] at h1

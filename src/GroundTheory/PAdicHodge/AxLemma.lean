@@ -79,7 +79,7 @@ theorem inv_le_norm_natCast_padicAlgCl {n : ℕ} (hn : n ≠ 0) (h : ¬ p ^ 2 �
     (p : ℝ)⁻¹ ≤ ‖(n : PadicAlgCl p)‖ := by
   have hv : padicValNat p n ≤ 1 := by
     by_contra hv
-    exact h ((pow_dvd_pow p (by omega)).trans pow_padicValNat_dvd)
+    exact h ((pow_dvd_pow p (by omega)).trans (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)))
   rw [norm_natCast_padicAlgCl hn, ← zpow_neg_one]
   have hp1 : (1 : ℝ) ≤ p := by exact_mod_cast hp.out.one_lt.le
   exact zpow_le_zpow_right₀ hp1 (by omega)

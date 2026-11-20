@@ -84,7 +84,7 @@ private lemma polyDeriv_mul_sum_pairs_eq_sum_lineDerivList {σ ι W : Type*} [Fi
     (A : MvPolynomial σ ℂ) (i j : ι → σ) (u : σ → W) {F : W → ℂ} {x : W}
     (hF : ∀ᶠ y in 𝓝 x, AnalyticAt ℂ F y) :
     _root_.ReciprocityTheory.ChartRestriction.G.I2.polyDeriv (A * ∑ k, MvPolynomial.X (i k) * MvPolynomial.X (j k)) u F x =
-      ∑ m ∈ A.support, MvPolynomial.coeff m A * _root_.GlobalTheory.lineDerivList ℂ ((Finsupp.toMultiset m).toList.map u)
+      ∑ m ∈ A.support, AddMonoidAlgebra.coeff A m * _root_.GlobalTheory.lineDerivList ℂ ((Finsupp.toMultiset m).toList.map u)
         (fun y => ∑ k, _root_.GlobalTheory.lineDerivList ℂ [u (i k), u (j k)] F y) x := by
   have hFx : AnalyticAt ℂ F x := hF.self_of_nhds
   conv_lhs => rw [MvPolynomial.as_sum A, Finset.sum_mul]
@@ -95,8 +95,8 @@ private lemma polyDeriv_mul_sum_pairs_eq_sum_lineDerivList {σ ι W : Type*} [Fi
     _root_.GlobalTheory.analyticAt_lineDerivList hFx _
   rw [_root_.GlobalTheory.lineDerivList_sum Finset.univ (fun k _ => hG k), Finset.mul_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
-  have hmon : MvPolynomial.monomial m (MvPolynomial.coeff m A) * (MvPolynomial.X (i k) * MvPolynomial.X (j k)) =
-      MvPolynomial.coeff m A • MvPolynomial.monomial (m + Finsupp.single (i k) 1 + Finsupp.single (j k) 1) 1 := by
+  have hmon : MvPolynomial.monomial m (AddMonoidAlgebra.coeff A m) * (MvPolynomial.X (i k) * MvPolynomial.X (j k)) =
+      AddMonoidAlgebra.coeff A m • MvPolynomial.monomial (m + Finsupp.single (i k) 1 + Finsupp.single (j k) 1) 1 := by
     simp only [MvPolynomial.X, MvPolynomial.monomial_mul, MvPolynomial.smul_monomial, smul_eq_mul, mul_one, add_assoc]
   rw [hmon, _root_.ReciprocityTheory.ChartRestriction.G.I2.polyDeriv_smul]
   congr 1
@@ -113,7 +113,7 @@ open scoped ComplexConjugate ComplexOrder Real Classical in
 private lemma polyDeriv_eq_sum_coeff_lineDerivList_of_analyticAt {σ W : Type*} [NormedAddCommGroup W] [NormedSpace ℂ W]
     (P : MvPolynomial σ ℂ) (u : σ → W) {F : W → ℂ} {x : W} (hF : AnalyticAt ℂ F x) :
     _root_.ReciprocityTheory.ChartRestriction.G.I2.polyDeriv P u F x = ∑ m ∈ P.support,
-      MvPolynomial.coeff m P * _root_.GlobalTheory.lineDerivList ℂ ((Finsupp.toMultiset m).toList.map u) F x := by
+      AddMonoidAlgebra.coeff P m * _root_.GlobalTheory.lineDerivList ℂ ((Finsupp.toMultiset m).toList.map u) F x := by
   rw [_root_.GlobalTheory.dirPolyDeriv_eq_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [_root_.GlobalTheory.dirPolyDeriv_monomial_eq_lineDerivList (Multiset.coe_toList _) u hF]
@@ -123,18 +123,18 @@ open scoped ComplexConjugate ComplexOrder Real Classical in
 private lemma sum_coeff_lineDerivList_eq_lineDeriv_polyDeriv {σ W : Type*} [NormedAddCommGroup W] [NormedSpace ℂ W]
     (A : MvPolynomial σ ℂ) (u : σ → W) {F : W → ℂ} {x : W} (z : W)
     (hF : ∀ᶠ y in 𝓝 x, AnalyticAt ℂ F y) :
-    ∑ m ∈ A.support, MvPolynomial.coeff m A * _root_.GlobalTheory.lineDerivList ℂ ((Finsupp.toMultiset m).toList.map u)
+    ∑ m ∈ A.support, AddMonoidAlgebra.coeff A m * _root_.GlobalTheory.lineDerivList ℂ ((Finsupp.toMultiset m).toList.map u)
         (_root_.GlobalTheory.lineDerivList ℂ [z] F) x = lineDeriv ℂ (fun y => _root_.ReciprocityTheory.ChartRestriction.G.I2.polyDeriv A u F y) x z := by
   have hFx : AnalyticAt ℂ F x := hF.self_of_nhds
   have heq : (fun y => _root_.ReciprocityTheory.ChartRestriction.G.I2.polyDeriv A u F y) =ᶠ[𝓝 x] fun y => ∑ m ∈ A.support,
-      MvPolynomial.coeff m A * _root_.GlobalTheory.lineDerivList ℂ ((Finsupp.toMultiset m).toList.map u) F y :=
+      AddMonoidAlgebra.coeff A m * _root_.GlobalTheory.lineDerivList ℂ ((Finsupp.toMultiset m).toList.map u) F y :=
     hF.mono fun y hy => polyDeriv_eq_sum_coeff_lineDerivList_of_analyticAt A u hy
   have h1 := (_root_.GlobalTheory.lineDerivList_congr (𝕜 := ℂ) heq [z]).self_of_nhds
   have hl : lineDeriv ℂ (fun y => _root_.ReciprocityTheory.ChartRestriction.G.I2.polyDeriv A u F y) x z = _root_.GlobalTheory.lineDerivList ℂ [z] (fun y => _root_.ReciprocityTheory.ChartRestriction.G.I2.polyDeriv A u F y) x := by
     simp [_root_.GlobalTheory.lineDerivList_cons, _root_.GlobalTheory.lineDerivList_nil]
-  rw [hl, h1, _root_.GlobalTheory.lineDerivList_sum A.support (F := fun m y => MvPolynomial.coeff m A * _root_.GlobalTheory.lineDerivList ℂ ((Finsupp.toMultiset m).toList.map u) F y) (fun m _ => analyticAt_const.mul (_root_.GlobalTheory.analyticAt_lineDerivList hFx _))]
+  rw [hl, h1, _root_.GlobalTheory.lineDerivList_sum A.support (F := fun m y => AddMonoidAlgebra.coeff A m * _root_.GlobalTheory.lineDerivList ℂ ((Finsupp.toMultiset m).toList.map u) F y) (fun m _ => analyticAt_const.mul (_root_.GlobalTheory.analyticAt_lineDerivList hFx _))]
   refine Finset.sum_congr rfl fun m _ => ?_
-  have hc := congrFun (_root_.GlobalTheory.lineDerivList_const_smul (𝕜 := ℂ) [z] (MvPolynomial.coeff m A)
+  have hc := congrFun (_root_.GlobalTheory.lineDerivList_const_smul (𝕜 := ℂ) [z] (AddMonoidAlgebra.coeff A m)
     (_root_.GlobalTheory.lineDerivList ℂ ((Finsupp.toMultiset m).toList.map u) F)) x
   simp only [smul_eq_mul] at hc
   rw [hc]

@@ -85,7 +85,7 @@ private theorem exp_bounds_prod_one_sub_pow_div (q η : ℝ) (hq : 2 ≤ q) (hη
           linarith
       _ = ∏ i ∈ Finset.Icc a N, Real.exp (-(2 * q⁻¹ ^ i)) := Real.exp_sum _ _
       _ ≤ ∏ i ∈ Finset.Icc a N, (1 - η ^ i / q ^ i) :=
-          Finset.prod_le_prod (fun i _ => (Real.exp_pos _).le) hfac
+          Finset.prod_le_prod₀ (fun i _ => (Real.exp_pos _).le) hfac
   · have hfac : ∀ i ∈ Finset.Icc a N, 1 - η ^ i / q ^ i ≤ Real.exp (q⁻¹ ^ i) := by
       intro i _
       have := (abs_le.mp (le_of_eq (hterm i))).1

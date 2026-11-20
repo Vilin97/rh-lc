@@ -18,7 +18,7 @@ private lemma circleIntegral_finset_sum_of_continuousOn {E ι : Type*} [NormedAd
     have hs : ∀ i ∈ s, ContinuousOn (f i) (Metric.sphere c R) :=
       fun i hi => hf i (Finset.mem_insert_of_mem hi)
     have hsum : ContinuousOn (fun z => ∑ i ∈ s, f i z) (Metric.sphere c R) :=
-      continuousOn_finset_sum s hs
+      continuousOn_finsetSum s hs
     simp only [Finset.sum_insert ha]
     rw [circleIntegral.integral_add (ha'.circleIntegrable hR) (hsum.circleIntegrable hR), ih hs]
 

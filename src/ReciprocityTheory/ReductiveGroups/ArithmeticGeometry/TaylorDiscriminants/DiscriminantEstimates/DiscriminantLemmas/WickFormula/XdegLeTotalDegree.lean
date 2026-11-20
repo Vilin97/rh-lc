@@ -180,15 +180,15 @@ theorem claim (h1 : OrdLin) (h2 : OrdX) (h3 : Base) (h4 : BComm) (g1 : Gen.PowXL
         have := xdeg_add (Finsupp.single (Sum.inl i : Fin r ⊕ Fin s) 1) m'
         rw [← hm', xdeg_single] at this
         omega
-      have hmon : monomial m (coeff m R) = X (Sum.inl i) * monomial m' (coeff m R) := by
+      have hmon : monomial m (AddMonoidAlgebra.coeff R m) = X (Sum.inl i) * monomial m' (AddMonoidAlgebra.coeff R m) := by
         rw [X, monomial_mul, one_mul, ← hm']
       rw [hmon, phi_X h1 h2 h4 H, psi_X h1 h2 g1 g2 H]
-      have e1 := ih (monomial m' (coeff m R)) (fun u hu => by
+      have e1 := ih (monomial m' (AddMonoidAlgebra.coeff R m)) (fun u hu => by
         have hu' := MvPolynomial.support_monomial_subset hu
         rw [Finset.mem_singleton] at hu'
         rw [hu']
         exact hxm') (N' + 1) (by omega)
-      have e2 := ih (Gen.dL κ i (monomial m' (coeff m R)))
+      have e2 := ih (Gen.dL κ i (monomial m' (AddMonoidAlgebra.coeff R m)))
         (fun u hu => (dL_monomial_support κ i m' _ u hu).trans hxm') N' (by omega)
       rw [e1, e2]
 

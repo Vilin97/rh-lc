@@ -226,7 +226,7 @@ theorem GenericFibreRadicalPrime.proof (hT : GenericFibreTor.Statement)
   have hψD : ψ D ≠ 0 := by
     intro h0'
     apply ht₂
-    have := congrArg (MvPolynomial.coeff μ) h0'
+    have := congrArg (AddMonoidAlgebra.coeff · μ) h0'
     simpa [ψ, MvPolynomial.coeff_map] using this
 
   have hnzd : ∀ (k : ℕ) (g : MvPolynomial ι ℂ), φ (aeval y D) ^ k * g ∈ K.map φ → g ∈ K.map φ := by

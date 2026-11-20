@@ -23,9 +23,9 @@ theorem weighted_component_mul_lowest {f g : MvPolynomial σ R} {a b : ℕ}
     rw [coeff_weightedHomogeneousComponent, coeff_weightedHomogeneousComponent]
     have hx' : x.1 + x.2 = m := Finset.HasAntidiagonal.mem_antidiagonal.1 hx
     have hw : Finsupp.weight wt x.1 + Finsupp.weight wt x.2 = a + b := by rw [← map_add, hx', h]
-    by_cases h1 : coeff x.1 f = 0
+    by_cases h1 : AddMonoidAlgebra.coeff f x.1 = 0
     · simp [h1]
-    by_cases h2 : coeff x.2 g = 0
+    by_cases h2 : AddMonoidAlgebra.coeff g x.2 = 0
     · simp [h2]
     have e1 := hf x.1 (mem_support_iff.2 h1)
     have e2 := hg x.2 (mem_support_iff.2 h2)
@@ -68,7 +68,7 @@ end Low
 
 theorem depth_filtration_rename {O : Type*} [CommRing O] [IsDomain O] {σ τ : Type*} {w : O} (f : σ → τ)
     {P : MvPolynomial σ (KK O)} {j : ℕ} (hP : InWj w P j) : InWj w (rename f P) j := by
-  have h : rename f P = ∑ m ∈ P.support, rename f (monomial m (coeff m P)) := by
+  have h : rename f P = ∑ m ∈ P.support, rename f (monomial m (AddMonoidAlgebra.coeff P m)) := by
     conv_lhs => rw [P.as_sum]
     rw [map_sum]
   rw [h]
@@ -200,7 +200,7 @@ theorem segment_substitution_weighted_homog (hn : Even n') (Y : MvPolynomial (Fi
   rw [segment_substitution_aeval]
   have h : aeval (fun v => (X (rho F j (r + K) v) : RRing O n' (r + K)) ^ omL F j p v.1) Y =
       ∑ m ∈ Y.support,
-        aeval (fun v => (X (rho F j (r + K) v) : RRing O n' (r + K)) ^ omL F j p v.1) (monomial m (coeff m Y)) := by
+        aeval (fun v => (X (rho F j (r + K) v) : RRing O n' (r + K)) ^ omL F j p v.1) (monomial m (AddMonoidAlgebra.coeff Y m)) := by
     conv_lhs => rw [Y.as_sum]
     rw [map_sum]
   rw [h]
@@ -208,7 +208,7 @@ theorem segment_substitution_weighted_homog (hn : Even n') (Y : MvPolynomial (Fi
   rw [aeval_monomial]
   have hw : Finsupp.weight (symWt (r := r) (K := K) (LLs F j).toLetters (omL F j p)) m = o :=
     hY (mem_support_iff.1 hm)
-  have hC : algebraMap O (RRing O n' (r + K)) (coeff m Y) = C (coeff m Y) := rfl
+  have hC : algebraMap O (RRing O n' (r + K)) (AddMonoidAlgebra.coeff Y m) = C (AddMonoidAlgebra.coeff Y m) := rfl
   rw [hC]
   apply IsWeightedHomogeneous.C_mul
   rw [← hw, Finsupp.weight_apply, Finsupp.sum, Finsupp.prod]

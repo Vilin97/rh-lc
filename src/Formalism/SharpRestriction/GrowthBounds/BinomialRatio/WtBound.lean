@@ -223,7 +223,7 @@ theorem wtBound_of (hCD : ChainDimAt) : WtBoundAt := by
         rw [hN]
         apply le_of_eq; congr 2; omega
   have hprod : ∏ t : Fin r, (sdXi r (lam t).natAbs : ℚ) ≤ ∏ t : Fin r, g t :=
-    Finset.prod_le_prod (fun t _ => wb_sdXi_nonneg _ _) (fun t _ => hle t)
+    Finset.prod_le_prod₀ (fun t _ => wb_sdXi_nonneg _ _) (fun t _ => hle t)
   refine le_trans hprod (le_of_eq ?_)
   rw [Fin.prod_univ_eq_prod_range (fun t => g t) r]
   have hsplit1 : Finset.range r = Finset.range 1 ∪ Finset.Ico 1 r := by

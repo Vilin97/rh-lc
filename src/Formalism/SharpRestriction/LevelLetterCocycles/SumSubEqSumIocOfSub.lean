@@ -12,7 +12,7 @@ theorem sum_Ioc_zero_eq_factorial (y : ℕ) :
   | zero => simp
   | succ n ih =>
     rw [Finset.sum_Ioc_succ_top (Nat.zero_le n), ih, Nat.factorial_succ,
-      padicValNat.mul (by omega) (Nat.factorial_ne_zero n)]
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by omega) (Nat.factorial_ne_zero n)]
     ring
 
 theorem padicValNat_factorial_le_div_sub_one (y : ℕ) :
@@ -55,8 +55,8 @@ theorem sum_Ioc_padicValNat_le_div_sub_one_add_logb (k0 k1 : ℕ) (h : k0 ≤ k1
     mul_ne_zero (Nat.choose_pos h).ne' (Nat.factorial_ne_zero k0)
   have hfac : k1.factorial = k1.choose k0 * k0.factorial * (k1 - k0).factorial :=
     (Nat.choose_mul_factorial_mul_factorial h).symm
-  rw [hfac, padicValNat.mul hA (Nat.factorial_ne_zero _),
-    padicValNat.mul (Nat.choose_pos h).ne' (Nat.factorial_ne_zero k0)] at hsplit
+  rw [hfac, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hA (Nat.factorial_ne_zero _),
+    (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.choose_pos h).ne' (Nat.factorial_ne_zero k0)] at hsplit
   have heq : ∑ m ∈ Ioc k0 k1, padicValNat l m
       = padicValNat l (k1.choose k0) + padicValNat l (k1 - k0).factorial := by omega
   rw [heq, Nat.cast_add]

@@ -16,8 +16,8 @@ private theorem aeval_cons_monomial {A : Type} [CommRing A] {k : ℕ} (c : MvPol
 
 private theorem coeff_cons_eq {A : Type} [CommRing A] {k n : ℕ} (P : MvPolynomial (Fin (k + 1)) A)
     (hP : P.IsHomogeneous n) (α : Fin k →₀ ℕ) (hα : α.degree = n) :
-    MvPolynomial.coeff α (MvPolynomial.aeval (Fin.cons 0 MvPolynomial.X : Fin (k + 1) → MvPolynomial (Fin k) A) P) =
-    MvPolynomial.coeff α (MvPolynomial.aeval (Fin.cons 1 MvPolynomial.X : Fin (k + 1) → MvPolynomial (Fin k) A) P) := by
+    AddMonoidAlgebra.coeff (MvPolynomial.aeval (Fin.cons 0 MvPolynomial.X : Fin (k + 1) → MvPolynomial (Fin k) A) P) α =
+    AddMonoidAlgebra.coeff (MvPolynomial.aeval (Fin.cons 1 MvPolynomial.X : Fin (k + 1) → MvPolynomial (Fin k) A) P) α := by
   classical
   rw [P.as_sum]
   simp only [map_sum, MvPolynomial.coeff_sum, aeval_cons_monomial]
@@ -37,7 +37,7 @@ private theorem coeff_cons_eq {A : Type} [CommRing A] {k n : ℕ} (P : MvPolynom
 
 private theorem coef_mem_fin {n : ℕ} {A E : Type} [CommRing A] [Ring E] [Algebra A E] (D : Det n A E)
     (M : Submonoid E) (A₀ : Subring A) (h : ∀ x ∈ M, ∀ i, 1 ≤ i → i ≤ n → D.lam i x ∈ A₀) {k : ℕ}
-    (x : Fin k → E) (hx : ∀ a, x a ∈ M) (α : Fin k →₀ ℕ) : MvPolynomial.coeff α (D.poly x) ∈ A₀ := by
+    (x : Fin k → E) (hx : ∀ a, x a ∈ M) (α : Fin k →₀ ℕ) : AddMonoidAlgebra.coeff (D.poly x) α ∈ A₀ := by
   classical
   by_cases hα : α.degree = n
   swap
@@ -48,8 +48,8 @@ private theorem coef_mem_fin {n : ℕ} {A E : Type} [CommRing A] [Ring E] [Algeb
   rw [Fin.sum_univ_succ] at h0 h1
   simp only [Fin.cons_zero, Fin.cons_succ, zero_tmul, zero_add] at h0 h1
   obtain ⟨P, hv, -, hP⟩ := d_amitsur n k α
-  have e : MvPolynomial.coeff α (D.poly x) =
-      MvPolynomial.coeff α (D.D (MvPolynomial (Fin k) A) (1 + Det.gen x)) := by
+  have e : AddMonoidAlgebra.coeff (D.poly x) α =
+      AddMonoidAlgebra.coeff (D.D (MvPolynomial (Fin k) A) (1 + Det.gen x)) α := by
     unfold Det.poly Det.gen
     rw [Algebra.TensorProduct.one_def, h0, h1]
     exact coeff_cons_eq _ hh α hα
@@ -63,7 +63,7 @@ private theorem coef_mem_fin {n : ℕ} {A E : Type} [CommRing A] [Ring E] [Algeb
   exact hx a
 
 theorem UpperTheory.V.CA.d_coef_mem :
-    ∀ {n : ℕ} {A E : Type} [CommRing A] [Ring E] [Algebra A E] (D : Det n A E) (M : Submonoid E) (A₀ : Subring A), (∀ x ∈ M, ∀ i, 1 ≤ i → i ≤ n → D.lam i x ∈ A₀) → ∀ {ι : Type} [Fintype ι] (x : ι → E), (∀ a, x a ∈ M) → ∀ α, MvPolynomial.coeff α (D.poly x) ∈ A₀ := by
+    ∀ {n : ℕ} {A E : Type} [CommRing A] [Ring E] [Algebra A E] (D : Det n A E) (M : Submonoid E) (A₀ : Subring A), (∀ x ∈ M, ∀ i, 1 ≤ i → i ≤ n → D.lam i x ∈ A₀) → ∀ {ι : Type} [Fintype ι] (x : ι → E), (∀ a, x a ∈ M) → ∀ α, AddMonoidAlgebra.coeff (D.poly x) α ∈ A₀ := by
   intro n A E _ _ _ D M A₀ h ι _ x hx α
   let e := (Fintype.equivFin ι).symm
   have h1 := (d_poly D (x ∘ e)).2 (MvPolynomial ι A) (MvPolynomial.X ∘ e)

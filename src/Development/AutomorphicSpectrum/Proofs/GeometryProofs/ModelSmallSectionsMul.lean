@@ -109,8 +109,8 @@ private theorem mConeMap_monomial' (y : (Σ k, ι k) → Ω) (m : (Σ k, ι k) �
 theorem cone_form (y : (Σ k, ι k) → Ω) {h : MRing ι} {d : K → ℕ} (hh : IsMultiHomog h d) :
     mConeMap y h = MvPolynomial.C (aeval y h) * ∏ k, (MvPolynomial.X k : MvPolynomial K Ω) ^ d k := by
   classical
-  have key : ∀ m ∈ MvPolynomial.support h, mConeMap y (MvPolynomial.monomial m (MvPolynomial.coeff m h)) =
-      MvPolynomial.C (aeval y (MvPolynomial.monomial m (MvPolynomial.coeff m h) : MRing ι)) *
+  have key : ∀ m ∈ MvPolynomial.support h, mConeMap y (MvPolynomial.monomial m (AddMonoidAlgebra.coeff h m)) =
+      MvPolynomial.C (aeval y (MvPolynomial.monomial m (AddMonoidAlgebra.coeff h m) : MRing ι)) *
         ∏ k, (MvPolynomial.X k : MvPolynomial K Ω) ^ d k := by
     intro m hm
     rw [mConeMap_monomial']

@@ -73,7 +73,7 @@ theorem phi_monomial (d : ℕ) (s : Fin (N + 1) →₀ ℕ) (b : reesAlgebra I) 
 
 theorem coeff_phi (d : ℕ) (p : MvPolynomial (Fin (N + 1)) (reesAlgebra I))
     (s : Fin (N + 1) →₀ ℕ) :
-    coeff s (phi I N d p) = ((coeff s p : reesAlgebra I) : Polynomial R).coeff d := by
+    AddMonoidAlgebra.coeff (phi I N d p) s = ((AddMonoidAlgebra.coeff p s : reesAlgebra I) : Polynomial R).coeff d := by
   induction p using MvPolynomial.induction_on' with
   | monomial u b =>
     rw [GlobalTheory.CompanionTheory.GE.Lift.phi_monomial, MvPolynomial.coeff_monomial, MvPolynomial.coeff_monomial]
@@ -87,7 +87,7 @@ theorem phi_mem_map (d : ℕ) (p : MvPolynomial (Fin (N + 1)) (reesAlgebra I)) :
   rw [mem_map_C_iff]
   intro s
   rw [coeff_phi]
-  exact (mem_reesAlgebra_iff I _).1 (coeff s p).2 d
+  exact (mem_reesAlgebra_iff I _).1 (AddMonoidAlgebra.coeff p s).2 d
 
 theorem phi_isHomogeneous (d n : ℕ) {p : MvPolynomial (Fin (N + 1)) (reesAlgebra I)}
     (hp : p.IsHomogeneous n) : (phi I N d p).IsHomogeneous n := by
@@ -107,8 +107,8 @@ theorem phi_homogeneousComponent (d e : ℕ) (p : MvPolynomial (Fin (N + 1)) (re
 theorem exists_lift (d : ℕ) (t : MvPolynomial (Fin (N + 1)) R)
     (ht : t ∈ (I ^ d).map (C : R →+* MvPolynomial (Fin (N + 1)) R)) :
     ∃ τ : MvPolynomial (Fin (N + 1)) (reesAlgebra I),
-      ∀ s, ((coeff s τ : reesAlgebra I) : Polynomial R) = Polynomial.monomial d (coeff s t) := by
-  have hmem : ∀ s, Polynomial.monomial d (coeff s t) ∈ reesAlgebra I := by
+      ∀ s, ((AddMonoidAlgebra.coeff τ s : reesAlgebra I) : Polynomial R) = Polynomial.monomial d (AddMonoidAlgebra.coeff t s) := by
+  have hmem : ∀ s, Polynomial.monomial d (AddMonoidAlgebra.coeff t s) ∈ reesAlgebra I := by
     intro s
     rw [mem_reesAlgebra_iff]
     intro i
@@ -117,7 +117,7 @@ theorem exists_lift (d : ℕ) (t : MvPolynomial (Fin (N + 1)) R)
     · subst h
       exact MvPolynomial.mem_map_C_iff.1 ht s
     · exact zero_mem _
-  refine ⟨∑ s ∈ t.support, monomial s (⟨Polynomial.monomial d (coeff s t), hmem s⟩ : reesAlgebra I),
+  refine ⟨∑ s ∈ t.support, monomial s (⟨Polynomial.monomial d (AddMonoidAlgebra.coeff t s), hmem s⟩ : reesAlgebra I),
     fun s => ?_⟩
   rw [MvPolynomial.coeff_sum]
   simp only [MvPolynomial.coeff_monomial, Finset.sum_ite_eq']
@@ -128,7 +128,7 @@ theorem exists_lift (d : ℕ) (t : MvPolynomial (Fin (N + 1)) R)
 
 theorem phi_lift {d : ℕ} {t : MvPolynomial (Fin (N + 1)) R}
     {τ : MvPolynomial (Fin (N + 1)) (reesAlgebra I)}
-    (h : ∀ s, ((coeff s τ : reesAlgebra I) : Polynomial R) = Polynomial.monomial d (coeff s t))
+    (h : ∀ s, ((AddMonoidAlgebra.coeff τ s : reesAlgebra I) : Polynomial R) = Polynomial.monomial d (AddMonoidAlgebra.coeff t s))
     (d' : ℕ) : phi I N d' τ = if d' = d then t else 0 := by
   ext s
   rw [GlobalTheory.CompanionTheory.GE.Lift.coeff_phi, h, Polynomial.coeff_monomial]
@@ -139,7 +139,7 @@ theorem phi_lift {d : ℕ} {t : MvPolynomial (Fin (N + 1)) R}
 
 theorem lift_isHomogeneous {d n : ℕ} {t : MvPolynomial (Fin (N + 1)) R}
     {τ : MvPolynomial (Fin (N + 1)) (reesAlgebra I)}
-    (h : ∀ s, ((coeff s τ : reesAlgebra I) : Polynomial R) = Polynomial.monomial d (coeff s t))
+    (h : ∀ s, ((AddMonoidAlgebra.coeff τ s : reesAlgebra I) : Polynomial R) = Polynomial.monomial d (AddMonoidAlgebra.coeff t s))
     (ht : t.IsHomogeneous n) : τ.IsHomogeneous n := by
   intro s hs
   apply ht

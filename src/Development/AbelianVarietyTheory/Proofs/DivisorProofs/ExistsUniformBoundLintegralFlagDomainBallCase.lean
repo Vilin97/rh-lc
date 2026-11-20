@@ -27,7 +27,7 @@ theorem prod_inv_sq_mul_rpow_le {q : ℕ} {t s : ℝ} (d g : Fin q → ℝ) (ht 
     (hs : 2 * (q : ℝ) ≤ s) (hg : ∀ k, 0 < g k) (hdg : ∀ k, t * g k ≤ d k) :
     (∏ k, (d k ^ 2)⁻¹) * t ^ s ≤ ∏ k, g k ^ (-2 : ℤ) := by
   have h1 : ∏ k, (d k ^ 2)⁻¹ ≤ ∏ k, (t ^ 2)⁻¹ * (g k ^ 2)⁻¹ := by
-    refine Finset.prod_le_prod (fun k _ => by positivity) fun k _ => ?_
+    refine Finset.prod_le_prod₀ (fun k _ => by positivity) fun k _ => ?_
     rw [← mul_inv, ← mul_pow]
     exact inv_anti₀ (by have := hg k; positivity) (pow_le_pow_left₀ (by have := hg k; positivity) (hdg k) 2)
   have h2 : t ^ s ≤ t ^ (2 * (q : ℝ)) := Real.rpow_le_rpow_of_exponent_ge ht ht1 hs
@@ -82,7 +82,7 @@ theorem density_mul_exp_le (X : Data E r) (h1 : 0 < X.p0) (h2 : X.p0 < r) (h3 : 
   have hle : ∀ τ, zDet X z τ ≤ 1 := GlobalTheory.T.detOneSubOffDiagonalBlockGram_le_one_ball E r X hcase z hz
   unfold density bnd
   rw [exp_neg_rho hz, ← Finset.prod_mul_distrib]
-  refine Finset.prod_le_prod (fun τ _ => mul_nonneg (Finset.prod_nonneg fun _ _ => by positivity)
+  refine Finset.prod_le_prod₀ (fun τ _ => mul_nonneg (Finset.prod_nonneg fun _ _ => by positivity)
     (Real.rpow_nonneg (zDet_pos X hz τ).le s)) fun τ _ => ?_
   rw [prod_fin_split (by omega)]
   simp only [Fin.castSucc_mk]

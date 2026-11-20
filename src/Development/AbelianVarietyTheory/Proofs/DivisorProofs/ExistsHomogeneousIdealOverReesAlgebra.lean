@@ -23,12 +23,12 @@ theorem homogeneousComponent_mul_of_homogeneous_left {S : Type} [CommRing S] {k 
 
 noncomputable def piece (I : Ideal R) (e : ℕ) (F : MvPolynomial σ (reesAlgebra I)) :
     MvPolynomial σ R :=
-  ∑ m ∈ F.support, monomial m (((coeff m F : reesAlgebra I) : Polynomial R).coeff e)
+  ∑ m ∈ F.support, monomial m (((AddMonoidAlgebra.coeff F m : reesAlgebra I) : Polynomial R).coeff e)
 
 variable {I : Ideal R}
 
 @[simp] theorem coeff_piece (e : ℕ) (F : MvPolynomial σ (reesAlgebra I)) (m : σ →₀ ℕ) :
-    coeff m (piece I e F) = (coeff m F).1.coeff e := by
+    AddMonoidAlgebra.coeff (piece I e F) m = (AddMonoidAlgebra.coeff F m).1.coeff e := by
   classical
   simp only [piece, coeff_sum, coeff_monomial, Finset.sum_ite_eq']
   split_ifs with h
@@ -65,9 +65,9 @@ theorem piece_isHomogeneous (e : ℕ) {d : ℕ} {F : MvPolynomial σ (reesAlgebr
   simp
 
 theorem coeff_piece_mem (e : ℕ) (F : MvPolynomial σ (reesAlgebra I)) (m : σ →₀ ℕ) :
-    coeff m (piece I e F) ∈ I ^ e := by
+    AddMonoidAlgebra.coeff (piece I e F) m ∈ I ^ e := by
   rw [coeff_piece]
-  exact (mem_reesAlgebra_iff I _).1 (coeff m F).2 e
+  exact (mem_reesAlgebra_iff I _).1 (AddMonoidAlgebra.coeff F m).2 e
 
 end GlobalTheory.ReesHomogeneous
 
@@ -77,9 +77,9 @@ variable {σ : Type} {R : Type} [CommRing R] {I : Ideal R}
 
 theorem C_mul_mem_of_pow (J : ℕ → Ideal (MvPolynomial σ R))
     (H : ∀ (e t : ℕ) (a : R) (F : MvPolynomial σ R), a ∈ I → F.IsHomogeneous t →
-      (∀ m, coeff m F ∈ I ^ e) → F ∈ J e → C a * F ∈ J (e + 1)) :
+      (∀ m, AddMonoidAlgebra.coeff F m ∈ I ^ e) → F ∈ J e → C a * F ∈ J (e + 1)) :
     ∀ (k : ℕ) (b : R), b ∈ I ^ k → ∀ (l t : ℕ) (P : MvPolynomial σ R), P.IsHomogeneous t →
-      (∀ m, coeff m P ∈ I ^ l) → P ∈ J l → C b * P ∈ J (l + k) := by
+      (∀ m, AddMonoidAlgebra.coeff P m ∈ I ^ l) → P ∈ J l → C b * P ∈ J (l + k) := by
   intro k
   induction k with
   | zero =>
@@ -91,7 +91,7 @@ theorem C_mul_mem_of_pow (J : ℕ → Ideal (MvPolynomial σ R))
     refine Submodule.mul_induction_on hb ?_ ?_
     · intro x hx y hy
       have h1 := ih x hx l t P hPh hPc hP
-      have h2 : ∀ m, coeff m (C x * P) ∈ I ^ (l + k) := by
+      have h2 : ∀ m, AddMonoidAlgebra.coeff (C x * P) m ∈ I ^ (l + k) := by
         intro m
         rw [coeff_C_mul, pow_add, mul_comm (I ^ l)]
         exact Ideal.mul_mem_mul hx (hPc m)
@@ -104,7 +104,7 @@ theorem C_mul_mem_of_pow (J : ℕ → Ideal (MvPolynomial σ R))
 
 def reesIdeal (I : Ideal R) (J : ℕ → Ideal (MvPolynomial σ R))
     (H : ∀ (e t : ℕ) (a : R) (F : MvPolynomial σ R), a ∈ I → F.IsHomogeneous t →
-      (∀ m, coeff m F ∈ I ^ e) → F ∈ J e → C a * F ∈ J (e + 1)) :
+      (∀ m, AddMonoidAlgebra.coeff F m ∈ I ^ e) → F ∈ J e → C a * F ∈ J (e + 1)) :
     Ideal (MvPolynomial σ (reesAlgebra I)) where
   carrier := {F | ∀ d e, piece I e (homogeneousComponent d F) ∈ J e}
   zero_mem' := by intro d e; simp
@@ -145,7 +145,7 @@ end GlobalTheory.ReesHomogeneous
 
 namespace GlobalTheory.ReesHomogeneous
 
-theorem exists_homogeneous_ideal : ∀ (R : Type) [CommRing R] (I : Ideal R) (n : ℕ) (J : ℕ → Ideal (MvPolynomial (Fin (n + 1)) R)), (∀ (e t : ℕ) (a : R) (F : MvPolynomial (Fin (n + 1)) R), a ∈ I → F.IsHomogeneous t → (∀ m, coeff m F ∈ I ^ e) → F ∈ J e → C a * F ∈ J (e + 1)) → ∃ 𝔞 : Ideal (MvPolynomial (Fin (n + 1)) (reesAlgebra I)), (∀ F ∈ 𝔞, ∀ d, homogeneousComponent d F ∈ 𝔞) ∧ ∀ (t : ℕ) (F : MvPolynomial (Fin (n + 1)) (reesAlgebra I)), F.IsHomogeneous t → (F ∈ 𝔞 ↔ ∀ (e : ℕ) (G : MvPolynomial (Fin (n + 1)) R), (∀ m, coeff m G = (coeff m F).1.coeff e) → G ∈ J e) := by
+theorem exists_homogeneous_ideal : ∀ (R : Type) [CommRing R] (I : Ideal R) (n : ℕ) (J : ℕ → Ideal (MvPolynomial (Fin (n + 1)) R)), (∀ (e t : ℕ) (a : R) (F : MvPolynomial (Fin (n + 1)) R), a ∈ I → F.IsHomogeneous t → (∀ m, AddMonoidAlgebra.coeff F m ∈ I ^ e) → F ∈ J e → C a * F ∈ J (e + 1)) → ∃ 𝔞 : Ideal (MvPolynomial (Fin (n + 1)) (reesAlgebra I)), (∀ F ∈ 𝔞, ∀ d, homogeneousComponent d F ∈ 𝔞) ∧ ∀ (t : ℕ) (F : MvPolynomial (Fin (n + 1)) (reesAlgebra I)), F.IsHomogeneous t → (F ∈ 𝔞 ↔ ∀ (e : ℕ) (G : MvPolynomial (Fin (n + 1)) R), (∀ m, AddMonoidAlgebra.coeff G m = (AddMonoidAlgebra.coeff F m).1.coeff e) → G ∈ J e) := by
   intro R _ I n J H
   refine ⟨reesIdeal I J H, ?_, ?_⟩
   · intro F hF d d' e
@@ -156,7 +156,7 @@ theorem exists_homogeneous_ideal : ∀ (R : Type) [CommRing R] (I : Ideal R) (n 
     · simp
   · intro t F hFt
     have hG : ∀ (e : ℕ) (G : MvPolynomial (Fin (n + 1)) R),
-        (∀ m, coeff m G = (coeff m F).1.coeff e) → G = piece I e F := by
+        (∀ m, AddMonoidAlgebra.coeff G m = (AddMonoidAlgebra.coeff F m).1.coeff e) → G = piece I e F := by
       intro e G hG
       ext m
       rw [hG, coeff_piece]

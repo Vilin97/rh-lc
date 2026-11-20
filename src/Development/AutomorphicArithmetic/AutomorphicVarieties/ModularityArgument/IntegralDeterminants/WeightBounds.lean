@@ -76,7 +76,7 @@ theorem coreU : CoreU := by
   have hvne : ∀ t ∈ Ov ι w, nu ι (t (unif w : E)) ≠ 0 := fun t ht => (hv t ht).1.ne'
   have hq1 : nu ι (normV w : ℂ) ≤ 1 := by
     rw [← hprod]
-    exact Finset.prod_le_one (fun t ht => (hv t ht).1.le) fun t ht => (hv t ht).2.le
+    exact Finset.prod_le_one₀ (fun t ht => (hv t ht).1.le) fun t ht => (hv t ht).2.le
   have hq0 : 0 < nu ι (normV w : ℂ) := by
     rw [← hprod]
     exact Finset.prod_pos fun t ht => (hv t ht).1

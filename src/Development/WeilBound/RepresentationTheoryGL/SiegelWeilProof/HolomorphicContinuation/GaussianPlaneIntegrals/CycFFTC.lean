@@ -65,7 +65,7 @@ theorem decomp (Q : PX m n) :
   exact (Th ε Q).as_sum
 
 theorem coeff_sum_monomial {σ R : Type*} [CommSemiring R] [DecidableEq σ] (S : Finset (σ →₀ ℕ)) (f : (σ →₀ ℕ) → R) (μ : σ →₀ ℕ) :
-    coeff μ (∑ ν ∈ S, monomial ν (f ν)) = if μ ∈ S then f μ else 0 := by
+    AddMonoidAlgebra.coeff (∑ ν ∈ S, monomial ν (f ν)) μ = if μ ∈ S then f μ else 0 := by
   rw [coeff_sum]
   simp only [coeff_monomial]
   split_ifs with h
@@ -87,10 +87,10 @@ theorem indep {J : Type} [Fintype J] (b : J → PV (Rw ε true) (Fin n) (Fin n))
   simp_rw [map_mul, th_embT, th_embF] at h2
   intro j
   ext μ
-  have h3 := congrArg (coeff μ) h2
+  have h3 := congrArg (AddMonoidAlgebra.coeff · μ) h2
   rw [coeff_sum, coeff_zero] at h3
   simp_rw [coeff_C_mul, coeff_map] at h3
-  have h4 : ∑ i, (coeff μ (t i)) • b i = 0 := by
+  have h4 : ∑ i, (AddMonoidAlgebra.coeff (t i) μ) • b i = 0 := by
     rw [← h3]
     refine Finset.sum_congr rfl (fun i _ => ?_)
     rw [Algebra.smul_def, mul_comm]

@@ -71,7 +71,7 @@ private lemma memA {D a : ℕ} {f : P D} (h1 : NoX f) (h2 : YHom a f) :
     · rw [mon_inr]
   have hmem : monomial m (1 : ℤ) ∈ yp '' {α : Fin D → ℕ | ∑ i, α i = a} :=
     ⟨fun i => m (Sum.inr i), h2 m hm, by rw [yp_eq, ← hmon]⟩
-  have : monomial m (coeff m f) = coeff m f • monomial m (1 : ℤ) := by
+  have : monomial m (AddMonoidAlgebra.coeff f m) = AddMonoidAlgebra.coeff f m • monomial m (1 : ℤ) := by
     rw [smul_monomial, smul_eq_mul, mul_one]
   rw [this]
   exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)

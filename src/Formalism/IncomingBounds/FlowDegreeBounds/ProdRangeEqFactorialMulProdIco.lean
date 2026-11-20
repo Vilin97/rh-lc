@@ -63,7 +63,7 @@ theorem primeDvdChooseIff : BinomGcd := by
   · rintro ⟨k, hk0, hkn, hndvd⟩ ⟨e, rfl⟩
     exact hndvd (hl.dvd_choose_pow (by omega) (by omega))
   · intro hnp
-    have hd1 : l ^ padicValNat l n ∣ n := pow_padicValNat_dvd
+    have hd1 : l ^ padicValNat l n ∣ n := (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
     have hd2 : ¬ l ^ (padicValNat l n + 1) ∣ n := pow_succ_padicValNat_not_dvd (by omega)
     generalize padicValNat l n = v at hd1 hd2
     obtain ⟨m, rfl⟩ := hd1
@@ -111,7 +111,7 @@ theorem padicValFactorialBounds : FactValBounds := by
     have := List.le_sum_of_mem (List.getLast_mem hne)
     omega
   have hdig : (l.digits N).sum ≤ (Nat.log l N + 1) * (l - 1) := by
-    have hlen := Nat.digits_len l N hl.one_lt (by omega)
+    have hlen := Nat.length_digits l N hl.one_lt (by omega)
     have := List.sum_le_card_nsmul (l.digits N) (l - 1)
       (fun x hx => by have := Nat.digits_lt_base hl.one_lt hx; omega)
     rwa [smul_eq_mul, hlen] at this
@@ -185,7 +185,7 @@ lemma num_one_add_four_mul_le (v : ℕ) : 1 + 4 * v ≤ 5 ^ v := by
 theorem logCoeffValuation : LogCoeffVal := by
   intro l hl hl5 s hs
   haveI := Fact.mk hl
-  have hdvd : l ^ padicValNat l s ∣ s := pow_padicValNat_dvd
+  have hdvd : l ^ padicValNat l s ∣ s := (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
   have hle : l ^ padicValNat l s ≤ s := Nat.le_of_dvd (by omega) hdvd
   have h5 : 5 ^ padicValNat l s ≤ l ^ padicValNat l s := Nat.pow_le_pow_left hl5 _
   have h4 := num_one_add_four_mul_le (padicValNat l s)

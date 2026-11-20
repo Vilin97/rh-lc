@@ -245,11 +245,11 @@ private theorem linearIndependent_of_degree_injective {σ ι F : Type} [Field F]
   obtain ⟨i0, hi0, hmax⟩ := Finset.exists_max_image (s.filter fun j => g j ≠ 0)
     (fun j => M.toSyn (M.degree (v j))) hne'
   rw [Finset.mem_filter] at hi0
-  have hc := congrArg (MvPolynomial.coeff (M.degree (v i0))) hg
+  have hc := congrArg (AddMonoidAlgebra.coeff · (M.degree (v i0))) hg
   rw [MvPolynomial.coeff_sum, MvPolynomial.coeff_zero] at hc
   rw [Finset.sum_eq_single i0] at hc
   · rw [MvPolynomial.coeff_smul, smul_eq_mul] at hc
-    have hlc : MvPolynomial.coeff (M.degree (v i0)) (v i0) ≠ 0 := M.leadingCoeff_ne_zero_iff.mpr (hv i0)
+    have hlc : AddMonoidAlgebra.coeff (v i0) (M.degree (v i0)) ≠ 0 := M.leadingCoeff_ne_zero_iff.mpr (hv i0)
     exact mul_ne_zero hi0.2 hlc hc
   · intro j hj hji0
     rw [MvPolynomial.coeff_smul, smul_eq_mul]

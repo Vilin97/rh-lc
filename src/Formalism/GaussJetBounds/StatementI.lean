@@ -11,7 +11,7 @@ namespace Formalism.DworkPowerSeriesWeights
 open Formalism.IncomingBounds
 
 def jetPair {K : Type u} [Field K] {ι : Type} (P : MvPolynomial ι K) (Th : MvPowerSeries ι K) : K :=
-  ∑ κ ∈ P.support, MvPolynomial.coeff κ P * ((mfact κ : ℕ) : K) * MvPowerSeries.coeff κ Th
+  ∑ κ ∈ P.support, AddMonoidAlgebra.coeff P κ * ((mfact κ : ℕ) : K) * MvPowerSeries.coeff κ Th
 
 def rowOp {K : Type u} [Field K] {d N0 N1 : ℕ} (TT : Finset (ZMod d))
     (T : ZMod d → Fin N0 → Fin N0 → K) (s : ZMod d) (i : Fin N0) (b : Fin N1) :

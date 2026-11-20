@@ -78,7 +78,7 @@ theorem card_monicSet (N : ℕ) : (monicSet g N).card = g ^ N := by
     have h' := add_left_cancel h
     funext i
     have := congrArg (fun p => coeff p i) h'
-    simpa [finset_sum_coeff, coeff_X_pow, Fin.val_inj] using this
+    simpa [Polynomial.finsetSum_coeff, coeff_X_pow, Fin.val_inj] using this
 
 theorem monic_divX {k : Type} [Field k] {a : k[X]} (ha : a.Monic) (hd : 1 ≤ a.natDegree) : a.divX.Monic := by
   rw [Monic, leadingCoeff, natDegree_divX_eq_natDegree_tsub_one, coeff_divX, Nat.sub_add_cancel hd]

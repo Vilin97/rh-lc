@@ -22,11 +22,11 @@ theorem mdeg_add (m n : (Σ k, ι k) →₀ ℕ) : mdeg (m + n) = mdeg m + mdeg 
 open Classical in
 
 def part (b : K → ℕ) (s : MvPolynomial (Σ k, ι k) ℂ) : MvPolynomial (Σ k, ι k) ℂ :=
-  ∑ m ∈ s.support.filter (fun m => mdeg m = b), monomial m (coeff m s)
+  ∑ m ∈ s.support.filter (fun m => mdeg m = b), monomial m (AddMonoidAlgebra.coeff s m)
 
 open Classical in
 theorem coeff_part (b : K → ℕ) (s : MvPolynomial (Σ k, ι k) ℂ) (m : (Σ k, ι k) →₀ ℕ) :
-    coeff m (part b s) = if mdeg m = b then coeff m s else 0 := by
+    AddMonoidAlgebra.coeff (part b s) m = if mdeg m = b then AddMonoidAlgebra.coeff s m else 0 := by
   unfold part
   rw [coeff_sum]
   simp only [coeff_monomial]
@@ -34,7 +34,7 @@ theorem coeff_part (b : K → ℕ) (s : MvPolynomial (Σ k, ι k) ℂ) (m : (Σ 
   by_cases h : mdeg m = b
   · by_cases hs : m ∈ s.support
     · simp [h, hs]
-    · have : coeff m s = 0 := by simpa using hs
+    · have : AddMonoidAlgebra.coeff s m = 0 := by simpa using hs
       simp [this]
   · simp [h]
 
@@ -66,7 +66,7 @@ theorem isMultiHomog_mul {s f : MvPolynomial (Σ k, ι k) ℂ} {b a : K → ℕ}
 
 theorem coeff_mul_eq_zero {r f : MvPolynomial (Σ k, ι k) ℂ} {b a : K → ℕ}
     (hr : ∀ m ∈ r.support, mdeg m ≠ b) (hf : IsMultiHomog f a) {m : (Σ k, ι k) →₀ ℕ}
-    (hm : mdeg m = b + a) : coeff m (r * f) = 0 := by
+    (hm : mdeg m = b + a) : AddMonoidAlgebra.coeff (r * f) m = 0 := by
   classical
   by_contra h
   obtain ⟨m₁, h₁, m₂, h₂, rfl⟩ := Finset.mem_add.1 (support_mul r f (mem_support_iff.2 h))
@@ -97,7 +97,7 @@ theorem part_mul_mem [DecidableEq K] {I : Ideal (MvPolynomial (Σ k, ι k) ℂ)}
         rw [mem_support_iff, coeff_sub, coeff_part, if_pos hb, sub_self] at hm'
         exact hm' rfl
       have e2 : s * f = part b s * f + (s - part b s) * f := by ring
-      rw [e2, coeff_add, coeff_mul_eq_zero hr hf hm, add_zero]
+      rw [e2, MvPolynomial.coeff_add, coeff_mul_eq_zero hr hf hm, add_zero]
     · have e : ¬ ∀ k ∈ (Finset.univ : Finset K), ∑ i, m ⟨k, i⟩ = (b + a) k :=
         fun h' => hm (funext fun k => h' k (Finset.mem_univ k))
       rw [if_neg e]

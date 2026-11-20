@@ -35,7 +35,7 @@ theorem padicValInt_mul_pow {p : ℕ} (hp : p.Prime) {i : ℤ} (hi : i ≠ 0) (e
     padicValInt p (i * (p : ℤ) ^ ell) = padicValInt p i + ell := by
   have := Fact.mk hp
   simp only [padicValInt, Int.natAbs_mul, Int.natAbs_pow, Int.natAbs_natCast]
-  rw [padicValNat.mul (Int.natAbs_ne_zero.2 hi) (pow_ne_zero _ hp.ne_zero), padicValNat.prime_pow]
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Int.natAbs_ne_zero.2 hi) (pow_ne_zero _ hp.ne_zero), padicValNat.prime_pow]
 
 theorem eval_PPO (W : LocWach PD LL O v n) (ell : ℕ) (JS : Finset ℤ) :
     algebraMap O LL ((PPO W ell JS).eval 1) =

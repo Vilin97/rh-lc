@@ -54,10 +54,10 @@ theorem ind_der_mem (hy : ∀ l l', Δ l (y l') = if l = l' then 1 else 0) (hθ 
   have hd : m.degree = a := by
     by_contra h
     exact (MvPolynomial.mem_support_iff.mp hm) (hp.coeff_eq_zero h)
-  obtain ⟨c', hc'⟩ := hK l (coeff m p)
-  have e1 : Δ l (aeval y (monomial m (coeff m p)) * θ i) =
-      c' • (aeval y (monomial m (1 : K)) * θ i) + aeval y (pderiv l (monomial m (coeff m p))) * θ i := by
-    have e2 : pderiv l (monomial m (coeff m p)) = coeff m p • pderiv l (monomial m (1 : K)) := by
+  obtain ⟨c', hc'⟩ := hK l (AddMonoidAlgebra.coeff p m)
+  have e1 : Δ l (aeval y (monomial m (AddMonoidAlgebra.coeff p m)) * θ i) =
+      c' • (aeval y (monomial m (1 : K)) * θ i) + aeval y (pderiv l (monomial m (AddMonoidAlgebra.coeff p m))) * θ i := by
+    have e2 : pderiv l (monomial m (AddMonoidAlgebra.coeff p m)) = AddMonoidAlgebra.coeff p m • pderiv l (monomial m (1 : K)) := by
       rw [← Derivation.map_smul, smul_monomial, smul_eq_mul, mul_one]
     rw [e2, map_smul, aeval_monomial_eq_smul, Algebra.smul_def, Derivation.leibniz, hθ, smul_zero, zero_add,
       Derivation.leibniz, hc', ind_mono y Δ hy]
@@ -86,7 +86,7 @@ theorem ind_claim (hy : ∀ l l', Δ l (y l') = if l = l' then 1 else 0) (hθ : 
     intro c hc hmem
     rcases Nat.eq_zero_or_pos a with rfl | ha
     ·
-      have hC : ∀ i, c i = C (coeff 0 (c i)) := by
+      have hC : ∀ i, c i = C (AddMonoidAlgebra.coeff (c i) 0) := by
         intro i
         ext m
         rw [coeff_C]
@@ -95,14 +95,14 @@ theorem ind_claim (hy : ∀ l l', Δ l (y l') = if l = l' then 1 else 0) (hθ : 
         · by_contra h'
           have := hc i m (MvPolynomial.mem_support_iff.mpr h')
           exact h ((Finsupp.degree_eq_zero_iff m).mp (by omega)).symm
-      have h0 := hbase (fun i => coeff 0 (c i)) (by
-        have e : ∑ i, aeval y (c i) * θ i = ∑ i, coeff 0 (c i) • θ i :=
+      have h0 := hbase (fun i => AddMonoidAlgebra.coeff (c i) 0) (by
+        have e : ∑ i, aeval y (c i) * θ i = ∑ i, AddMonoidAlgebra.coeff (c i) 0 • θ i :=
           Finset.sum_congr rfl fun i _ => by
             conv_lhs => rw [hC i]
             rw [aeval_C, Algebra.smul_def]
         rw [← e]; exact hmem)
       funext i
-      have h0i : coeff 0 (c i) = 0 := congrFun h0 i
+      have h0i : AddMonoidAlgebra.coeff (c i) 0 = 0 := congrFun h0 i
       rw [hC i, h0i, map_zero]
       rfl
     ·
@@ -329,7 +329,7 @@ theorem frac_phiN (θ : B.Cusp j wF) (p : MvPolynomial (Fin (WeightFamilies.dimY
     refine Finset.sum_congr rfl fun m hm => ?_
     rw [phiN_monomial, map_smul, frac_gN X la w wF T θ m (hs m hm), aeval_monomial_eq_smul (ySec X la w) m (f m),
       smul_mul_assoc]
-  have := key p.support (fun m => coeff m p) hp
+  have := key p.support (fun m => AddMonoidAlgebra.coeff p m) hp
   rwa [support_sum_monomial_coeff] at this
 
 end Final

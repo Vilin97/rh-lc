@@ -189,7 +189,7 @@ theorem val_deg (K : FinExt l) {i j : ℕ} (hi : 1 ≤ i) (hij : i ≤ j) :
       = j - i := by
   have hl : l.Prime := Fact.out
   obtain ⟨h1, h2⟩ := deg_Ks K hi hij
-  rw [h1, padicValNat.mul (pow_ne_zero _ hl.ne_zero) h2, padicValNat.prime_pow]
+  rw [h1, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hl.ne_zero) h2, padicValNat.prime_pow]
   omega
 
 theorem free_finite (K LL : FinExt l) (T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)) :

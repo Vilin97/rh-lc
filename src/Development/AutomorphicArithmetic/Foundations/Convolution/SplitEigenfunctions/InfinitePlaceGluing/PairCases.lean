@@ -82,7 +82,7 @@ private theorem arith (T : ℕ → PowerSeries ℂ) (h0 : ∀ p : ℕ, p.Prime �
       rw [Nat.prod_factorization_pow_eq_self hn]
     simp only [a, if_neg hn, Finsupp.prod]
     rw [norm_prod, ← hprod, Finsupp.prod, Nat.cast_prod, ← Finset.prod_pow]
-    refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun p hp => ?_
+    refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun p hp => ?_
     have pp : p.Prime := Nat.prime_of_mem_primeFactors (by simpa using hp)
     have h2 : (2 : ℝ) ≤ p := by exact_mod_cast pp.two_le
     refine (hM p pp _).trans ?_

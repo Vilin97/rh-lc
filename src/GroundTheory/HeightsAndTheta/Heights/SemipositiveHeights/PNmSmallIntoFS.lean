@@ -96,7 +96,7 @@ theorem coord_le_fs (z : (Σ k, ι k) → ℂ) (k : K) (i : ι k) :
 theorem prod_le_fsH_pow (z : (Σ k, ι k) → ℂ) (c : ∀ k, ι k) (d : ℕ) :
     ∏ k, ‖z ⟨k, c k⟩‖ ^ d ≤ (fsH ι).h z ^ d := by
   rw [fsH_h_eq, ← Finset.prod_pow]
-  exact Finset.prod_le_prod (fun k _ => pow_nonneg (norm_nonneg _) _) fun k _ =>
+  exact Finset.prod_le_prod₀ (fun k _ => pow_nonneg (norm_nonneg _) _) fun k _ =>
     pow_le_pow_left₀ (norm_nonneg _) (coord_le_fs z k (c k)) d
 
 theorem norm_eval_le_fs {z : (Σ k, ι k) → ℂ} (hz : ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) {G : MRing ι} {d : ℕ}
@@ -124,7 +124,7 @@ theorem mon_mul_h_le (A : HermLine ι) {CA : ℝ} (hCA0 : 0 ≤ CA)
     exact this
   have hm : ‖eval z (map (Int.castRingHom ℂ) (chartMon i₀ e))‖ ≤ ∏ k, ‖z ⟨k, c k⟩‖ ^ e k := by
     rw [eval_chartMon, norm_prod]
-    exact Finset.prod_le_prod (fun k _ => norm_nonneg _) fun k _ => by
+    exact Finset.prod_le_prod₀ (fun k _ => norm_nonneg _) fun k _ => by
       rw [norm_pow]
       exact pow_le_pow_left₀ (norm_nonneg _) (hc k _) _
   have hprod : (∏ k, ‖z ⟨k, c k⟩‖ ^ e k) * ∏ k, ‖z ⟨k, c k⟩‖ ^ A.a k = ∏ k, ‖z ⟨k, c k⟩‖ ^ M := by

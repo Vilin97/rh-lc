@@ -253,7 +253,7 @@ theorem eis_bdd (hΨ : IsType Ψ) (hn : Even n) (hN : 4 * N < n) {R : ℕ} {δ :
       simp only [hFac, h0, zero_dotProduct, Finset.sum_const_zero, mul_zero, Complex.exp_zero,
         mul_one, hmd]
       rw [← Finset.prod_mul_distrib, ← Finset.prod_inv_distrib, norm_prod]
-      refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun τ _ => ?_
+      refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun τ _ => ?_
       obtain ⟨p1, p2, p3⟩ := pair (hU (σ U)) τ
       have hb : (β.map τ.1)ᴴ = β.map τ.1 := by rw [← Base.ccT_map, hβ]
       have h3 := (hcomp _ _ (Z τ - β.map τ.1) p1 p2

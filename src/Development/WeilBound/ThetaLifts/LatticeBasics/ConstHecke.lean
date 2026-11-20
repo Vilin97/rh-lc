@@ -67,7 +67,7 @@ theorem hchar_eq_one (H : GlobalTheory.Published.HeckeLEntireAndNonzeroAtOne) (�
           show χ.val w = 1 from hl _, xc]
         simpa using exp_le_inv (x1 w)
     refine le_trans (Real.exp_le_exp.2 ?_) (le_of_tendsto_of_tendsto' s1.rexp (hP s hs).norm fun T =>
-      Finset.prod_le_prod (fun _ _ => (Real.exp_pos _).le) fun w _ => le w)
+      Finset.prod_le_prod₀ (fun _ _ => (Real.exp_pos _).le) fun w _ => le w)
     have e1 : ∑' w : A, x w ≤ C := hC s hs
     have e2 : ∑ w ∈ hS.toFinset, x w ≤ hS.toFinset.card := by
       simpa using Finset.sum_le_card_nsmul _ _ 1 fun w _ => (x1 w).le

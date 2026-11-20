@@ -65,7 +65,7 @@ theorem UpperTheory.V.AlgebraTools.Det.polarInj :
       change D.D _ (MonoidAlgebra.mapRingHom F.G₀ (φ : MvPolynomial F.G₀ R →+* MvPolynomial F.G₀ (K x)) (F.star O _ n u)) = D.D _ (MonoidAlgebra.mapRingHom F.G₀ (φ : MvPolynomial F.G₀ R →+* MvPolynomial F.G₀ (K x)) u) at hx
       rw [D.nat _ _ φ, D.nat _ _ φ] at hx
       exact hx
-    have hc := congrArg (MvPolynomial.coeff m) hz
+    have hc := congrArg (AddMonoidAlgebra.coeff · m) hz
     rw [MvPolynomial.coeff_map] at hc
     simpa using hc
   rw [← hev, star_mapRingHom_eq_mapRingHom_star F O _ _ n _ hevO, D.nat _ _ ev, D.nat _ _ ev, key]

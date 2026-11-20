@@ -76,7 +76,7 @@ theorem holFn_eq_zero {n : ℕ} {ι : Type} [Fintype ι] [DecidableEq ι] {Hm : 
   rw [pow_mul, Real.sq_sqrt hq.le] at h2
   have h3 : ‖∏ τ, ∏ a, b τ a a ^ w τ a‖ ≤ (∏ τ, C τ) * (1 + t) ^ (∑ τ, A τ) := by
     rw [norm_prod, ← Finset.prod_pow_eq_pow_sum, ← Finset.prod_mul_distrib]
-    exact Finset.prod_le_prod (fun τ _ => norm_nonneg _) fun τ _ => hchi τ
+    exact Finset.prod_le_prod₀ (fun τ _ => norm_nonneg _) fun τ _ => hchi τ
   have h4 : ‖f u‖ ≤ (∏ τ, C τ) * (1 + t) ^ (∑ τ, A τ) * (K * (C' / (1 + t)) ^ (∑ τ, A τ + 1)) := by
     rw [h1, norm_mul]
     exact mul_le_mul h3 h2 (norm_nonneg _) ((norm_nonneg _).trans h3)

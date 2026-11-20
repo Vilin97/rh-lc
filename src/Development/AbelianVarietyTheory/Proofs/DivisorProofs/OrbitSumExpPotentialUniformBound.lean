@@ -170,7 +170,7 @@ theorem harnack (X : Data E r) {x0 : Frame X.Ψ r} (h0 : IsOrth X x0) :
     have hc8 : (∏ _τ : X.Ψ, (1 / 8 : ℝ)) = (1 / 8) ^ X.Ψ.card := by
       rw [Finset.prod_const, Finset.card_univ, Fintype.card_coe]
     rw [← hc8, ← Finset.prod_mul_distrib]
-    exact Finset.prod_le_prod (fun τ _ => by have := hapos τ; positivity) fun τ _ => hab τ
+    exact Finset.prod_le_prod₀ (fun τ _ => by have := hapos τ; positivity) fun τ _ => hab τ
   have hA : 0 < ∏ τ, a τ := Finset.prod_pos fun τ _ => hapos τ
   have hl := Real.log_le_log (by positivity) hprod
   rw [Real.log_mul (by positivity) hA.ne', Real.log_pow] at hl

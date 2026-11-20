@@ -24,11 +24,11 @@ theorem derivation_aeval_eq {K R ι : Type*} [CommRing K] [CommRing R] [Algebra 
 theorem totalDegree_pderiv_lt {K ι : Type*} [CommRing K] (P : MvPolynomial ι K) (i : ι)
     (hP : 0 < P.totalDegree) : (pderiv i P).totalDegree < P.totalDegree := by
   classical
-  have hsum : pderiv i P = ∑ m ∈ P.support, pderiv i (monomial m (coeff m P)) := by
+  have hsum : pderiv i P = ∑ m ∈ P.support, pderiv i (monomial m (AddMonoidAlgebra.coeff P m)) := by
     conv_lhs => rw [P.as_sum]
     rw [map_sum]
   rw [hsum]
-  refine lt_of_le_of_lt (totalDegree_finset_sum _ _) ?_
+  refine lt_of_le_of_lt (MvPolynomial.totalDegree_finsetSum _ _) ?_
   rw [Finset.sup_lt_iff hP]
   intro m hm
   rw [pderiv_monomial]
@@ -62,7 +62,7 @@ theorem eq_C_of_pderiv_eq_zero {K ι : Type*} [Field K] [CharZero K] (P : MvPoly
     by_contra hc
     push_neg at hc
     exact hm0 (Finsupp.ext hc)
-  have hc := congrArg (coeff (m - Finsupp.single i 1)) (h i)
+  have hc := congrArg (AddMonoidAlgebra.coeff · (m - Finsupp.single i 1)) (h i)
   rw [coeff_pderiv, coeff_zero] at hc
   have hm' : m - Finsupp.single i 1 + Finsupp.single i 1 = m := by
     ext k
@@ -98,7 +98,7 @@ theorem algebraicIndependent_of_derivations {K R ι J : Type*} [Field K] [CharZe
   have h0 := eq_C_of_pderiv_eq_zero P hd
   rw [totalDegree_eq_zero_iff_eq_C] at h0
   rw [h0, aeval_C] at hP
-  have hc : coeff 0 P = 0 := (algebraMap K R).injective (hP.trans (map_zero _).symm)
+  have hc : AddMonoidAlgebra.coeff P 0 = 0 := (algebraMap K R).injective (hP.trans (map_zero _).symm)
   rw [h0, hc, map_zero]
 
 end DerivationAlgebraicIndependence

@@ -55,7 +55,7 @@ theorem continuous_torusPoint {ι : Type} : Continuous (fun θ : ι → ℝ => t
 theorem continuous_torusMono {ι : Type} [Fintype ι] (s : ι →₀ ℕ) :
     Continuous (fun θ : ι → ℝ => torusMono θ s) := by
   unfold torusMono
-  exact continuous_finset_prod _ fun i _ => ((continuous_apply i).comp continuous_torusPoint).pow _
+  exact continuous_finsetProd _ fun i _ => ((continuous_apply i).comp continuous_torusPoint).pow _
 
 theorem torus_orth {ι : Type} [Fintype ι] (s t : ι →₀ ℕ) :
     ∫ θ, torusMono θ t * conj (torusMono θ s) ∂(torusProb ι) = if t = s then 1 else 0 := by

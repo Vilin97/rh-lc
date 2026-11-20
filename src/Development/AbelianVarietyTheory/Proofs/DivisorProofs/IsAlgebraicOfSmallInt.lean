@@ -173,14 +173,14 @@ theorem algComb_of_ratScalar (hRF : GlobalTheory.NT.RayField) {F : Face D A3.A} 
       exact Submodule.subset_span ⟨GlobalTheory.CoefModel.mapVV (embLL0 D) _ G, (Scale.coefFn_map _ _ _).symm⟩
     exact h3
   · obtain ⟨G', hG', hPG'⟩ : ∃ G' : VV D.what₂.LL (FWT.lamV D j),
-        (∀ m, D.what₂.embLL (MvPolynomial.coeff m (G' : Pol D.what₂.LL D.what₂.Tau (Vc D j).rank)) ∈ (embLL0 D).fieldRange) ∧
+        (∀ m, D.what₂.embLL (AddMonoidAlgebra.coeff (G' : Pol D.what₂.LL D.what₂.Tau (Vc D j).rank) m) ∈ (embLL0 D).fieldRange) ∧
         harmFn (Wc D j).rank (ρ.B i j b).w (ρ.B i j b).F.BS P =
           coefFn D.what₂.embLL (FWT.lamV D j) (G' : Pol D.what₂.LL D.what₂.Tau (Vc D j).rank) := by
       rw [hPG]
       have hlam := hBo.lam
       generalize (ρ.B i j b).w.lam = lam at G hlam
       subst hlam
-      refine ⟨⟨_, GlobalTheory.Proof.TensorMapDescent.map_mem_VV D.LL0.val.toRingHom _ _ G.2⟩, fun m => ⟨MvPolynomial.coeff m G.1, ?_⟩, ?_⟩
+      refine ⟨⟨_, GlobalTheory.Proof.TensorMapDescent.map_mem_VV D.LL0.val.toRingHom _ _ G.2⟩, fun m => ⟨AddMonoidAlgebra.coeff G.1 m, ?_⟩, ?_⟩
       · exact congrArg D.what₂.embLL (MvPolynomial.coeff_map D.LL0.val.toRingHom G.1 m).symm
       · rw [← Scale.coefFn_map, ← Scale.coefFn_map D.what₂.embLL]
         exact congrArg _ (MvPolynomial.map_map _ _ _).symm

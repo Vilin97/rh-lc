@@ -31,8 +31,8 @@ theorem psTrunc_expand {σ : Type} [Fintype σ] [DecidableEq σ] (p : ℕ) (hp :
     psTrunc p (MvPowerSeries.expand p hp V) =
       ∑ j, MvPolynomial.C (MvPowerSeries.coeff (Finsupp.single j 1) V) * MvPolynomial.X j ^ p := by
   ext e
-  have hR : MvPolynomial.coeff e
-      (∑ j, MvPolynomial.C (MvPowerSeries.coeff (Finsupp.single j 1) V) * MvPolynomial.X j ^ p : MvPolynomial σ k) =
+  have hR : AddMonoidAlgebra.coeff (∑ j, MvPolynomial.C (MvPowerSeries.coeff (Finsupp.single j 1) V) * MvPolynomial.X j ^ p : MvPolynomial σ k)
+      e =
       ∑ j, if Finsupp.single j p = e then MvPowerSeries.coeff (Finsupp.single j 1) V else 0 := by
     rw [MvPolynomial.coeff_sum]
     refine Finset.sum_congr rfl fun j _ => ?_

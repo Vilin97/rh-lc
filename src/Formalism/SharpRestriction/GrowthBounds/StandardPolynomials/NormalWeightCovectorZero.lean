@@ -37,7 +37,7 @@ theorem wh_sub {wt : σ → ℕ} {n : ℕ} {P Q : MvPolynomial σ K} (hP : IsWei
     (hQ : IsWeightedHomogeneous wt Q n) : IsWeightedHomogeneous wt (P - Q) n := by
   intro d hd
   rw [coeff_sub] at hd
-  by_cases h : coeff d P = 0
+  by_cases h : AddMonoidAlgebra.coeff P d = 0
   · rw [h, zero_sub, neg_ne_zero] at hd
     exact hQ hd
   · exact hP h

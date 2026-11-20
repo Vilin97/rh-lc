@@ -8,7 +8,7 @@ namespace Formalism.DworkPowerSeriesWeights
 def HasJetBound {K : Type} [NormedField K] {ι σ : Type} (g : ι → MvPowerSeries ι K)
     (E : MvPowerSeries ι K) (P : MvPolynomial ι (MvPolynomial σ K)) (B : ℝ) : Prop :=
   ∀ U : MvPowerSeries ι K, Integral U → ∀ n : σ →₀ ℕ,
-    ‖MvPolynomial.coeff n (jetPairPoly P (MvPowerSeries.subst g U * E))‖ ≤ B
+    ‖AddMonoidAlgebra.coeff (jetPairPoly P (MvPowerSeries.subst g U * E)) n‖ ≤ B
 
 def serAlong {K : Type} [Field K] {ι κ : Type} (e : ι → κ) (f : MvPowerSeries ι K) :
     MvPowerSeries κ K :=

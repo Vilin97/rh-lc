@@ -176,7 +176,7 @@ theorem exists_rep [CharZero Ω] {y : (Σ k, J k) → Ω} {p : ℕ} [hp : Fact p
     push_cast; ring
   · exact ⟨1, 0, hp.out.not_dvd_one, hom_zero _, by simp⟩
   · intro m hm
-    obtain ⟨a, b, hb, hab⟩ := (ho _).1 ⟨coeff m U, rfl⟩
+    obtain ⟨a, b, hb, hab⟩ := (ho _).1 ⟨AddMonoidAlgebra.coeff U m, rfl⟩
     have hb0 : (b : Ω) ≠ 0 := by
       rw [Nat.cast_ne_zero]; rintro rfl; exact hb (dvd_zero _)
     refine ⟨b, C a * ∏ v ∈ m.support, dropVar v ^ m v, hb, ?_, ?_⟩

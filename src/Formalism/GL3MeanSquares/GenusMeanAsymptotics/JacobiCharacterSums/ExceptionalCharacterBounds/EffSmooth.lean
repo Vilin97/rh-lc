@@ -33,7 +33,7 @@ theorem one_le_zetaMul_sq {q : ℕ} {χ : DirichletCharacter ℂ q} (hχ : χ ^ 
   unfold Finsupp.prod
   calc (1 : ℂ) = ∏ _p ∈ (k ^ 2).factorization.support, (1 : ℂ) := by simp
     _ ≤ _ := by
-      refine Finset.prod_le_prod (fun _ _ => zero_le_one) (fun p hp => ?_)
+      refine Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun p hp => ?_)
       have hpp : p.Prime := Nat.prime_of_mem_primeFactors (by simpa using hp)
       rw [Nat.factorization_pow]
       simpa using one_le_zetaMul_prime_pow_even hχ hpp (k.factorization p)

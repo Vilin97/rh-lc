@@ -128,7 +128,7 @@ theorem Dbound (N : ℕ) (Ψ : M23 → ℂ) (B : ℝ)
   have hA : ‖iteratedFDeriv ℝ n Ψ (Pm h x) (fun _ => E0)‖ ≤ ‖iteratedFDeriv ℝ n Ψ (Pm h x)‖ := by
     refine ((iteratedFDeriv ℝ n Ψ (Pm h x)).le_opNorm _).trans ?_
     refine mul_le_of_le_one_right (norm_nonneg _) ?_
-    exact Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun _ _ => hE)
+    exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun _ _ => hE)
   have hP : (1 + ‖h‖) ^ N * (1 + ‖Matrix.of h *ᵥ x‖) ^ 8 ≤ (1 + ‖Pm h x‖) ^ (N + 8) := by
     rw [pow_add]; gcongr
   have key : ‖iteratedFDeriv ℝ n Ψ (Pm h x) (fun _ => E0)‖ *

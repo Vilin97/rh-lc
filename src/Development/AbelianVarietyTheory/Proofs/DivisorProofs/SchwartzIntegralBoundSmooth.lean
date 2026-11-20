@@ -105,7 +105,7 @@ theorem continuous_jacInf : Continuous (jacInf : Matrix (Fin n) (Fin n) (Cinf E)
 theorem one_le_htInf' (y : GL (Fin n) (Cinf E)) : 1 ≤ htInf y := by
   unfold htInf
   calc (1 : ℝ) = ∏ _w : InfinitePlace E, (1 : ℝ) := by simp
-    _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one) fun w _ => one_le_htGL _
+    _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) fun w _ => one_le_htGL _
 
 theorem htGL_le_htInf' (y : GL (Fin n) (Cinf E)) (w : InfinitePlace E) :
     htGL (Matrix.GeneralLinearGroup.map (Pi.evalRingHom (fun _ : InfinitePlace E => ℂ) w) y) ≤ htInf y := by
@@ -114,7 +114,7 @@ theorem htGL_le_htInf' (y : GL (Fin n) (Cinf E)) (w : InfinitePlace E) :
   rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ w)]
   refine le_mul_of_one_le_right (htGL_pos _).le ?_
   calc (1 : ℝ) = ∏ _w ∈ Finset.univ.erase w, (1 : ℝ) := by simp
-    _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one) fun w _ => one_le_htGL _
+    _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) fun w _ => one_le_htGL _
 
 theorem norm_entry_le_htInf' (y : GL (Fin n) (Cinf E)) (i j : Fin n) (w : InfinitePlace E) :
     ‖(y : Matrix (Fin n) (Fin n) (Cinf E)) i j w‖ ≤ htInf y ∧
@@ -182,7 +182,7 @@ theorem jacInf_inv_le (q : GL (Fin n) (Cinf E)) :
       ((((n.factorial : ℝ) * htInf q ^ n) ^ 2) ^ n) ^ Fintype.card (InfinitePlace E) := by
   unfold jacInf
   rw [← Finset.card_univ, ← Finset.prod_const]
-  refine Finset.prod_le_prod (fun w _ => pow_nonneg (Complex.normSq_nonneg _) _) fun w _ => ?_
+  refine Finset.prod_le_prod₀ (fun w _ => pow_nonneg (Complex.normSq_nonneg _) _) fun w _ => ?_
   set M := ((q⁻¹ : GL (Fin n) (Cinf E)) : Matrix (Fin n) (Fin n) (Cinf E)) with hM
   have hdw : M.det w = ((Pi.evalRingHom (fun _ : InfinitePlace E => ℂ) w).mapMatrix M).det :=
     RingHom.map_det (Pi.evalRingHom (fun _ : InfinitePlace E => ℂ) w) M

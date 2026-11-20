@@ -2538,7 +2538,7 @@ theorem int_eq_one_of_small {c : 𝓞 E}
       simp
     rw [e1, Algebra.norm_eq_prod_embeddings, norm_prod, ← AlgHom.card ℚ E ℂ, ← Finset.card_univ,
       ← Finset.prod_const]
-    refine Finset.prod_le_prod (fun σ _ => norm_nonneg _) fun σ _ => ?_
+    refine Finset.prod_le_prod₀ (fun σ _ => norm_nonneg _) fun σ _ => ?_
     rw [map_sub, map_sub, map_one, map_one]
     calc ‖σ (algebraMap (𝓞 E) E c) - 1‖ ≤ ‖σ (algebraMap (𝓞 E) E c)‖ + ‖(1 : ℂ)‖ := norm_sub_le _ _
       _ ≤ 1 + 1 := by rw [norm_one]; linarith [hc σ]

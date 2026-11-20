@@ -13,7 +13,7 @@ section Top
 variable {σ A : Type} [CommRing A] (w : σ → ℕ)
 
 def TopTerm (f : MvPolynomial σ A) (d : σ →₀ ℕ) (c : A) : Prop :=
-  coeff d f = c ∧ ∀ m ∈ f.support, m = d ∨ Finsupp.weight w m < Finsupp.weight w d
+  AddMonoidAlgebra.coeff f d = c ∧ ∀ m ∈ f.support, m = d ∨ Finsupp.weight w m < Finsupp.weight w d
 
 variable {w}
 
@@ -180,7 +180,7 @@ theorem coefLast_xi : ∀ (K : Type) [Field K] (N n : ℕ) (hN : N = n + 1) (lam
   have hsp : ∀ i : Fin n, _ := fun i : Fin n =>
     split_lp K hN (k := i.val + 1) i.2 (by have := i.2; omega) (by have := i.2; omega)
   simp only [hsp]
-  refine Eq.trans (congrArg (fun e => coeff e _) ?_) (key.trans ?_)
+  refine Eq.trans (congrArg (fun e => AddMonoidAlgebra.coeff _ e) ?_) (key.trans ?_)
   · ext ⟨u, s⟩
     simp [Br.bExp, Finsupp.finset_sum_apply, Finsupp.single_apply]
   · rw [Finset.prod_mul_distrib, prod_shift (lp K n) (lp_zero K) fun s => (Br.bBr hN lam sg s).toNat,

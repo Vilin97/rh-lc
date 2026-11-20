@@ -28,7 +28,7 @@ theorem desc_scalar {K σ : Type} [Field K] (j : K →+* ℂ) (Q F : MvPolynomia
       push Not at hc
       exact hF (MvPolynomial.ext _ _ fun m => by rw [hc m, coeff_zero])
     have hc : j (Q.coeff m) = χ⁻¹ * j (F.coeff m) := by
-      have := congrArg (coeff m) h
+      have := congrArg (AddMonoidAlgebra.coeff · m) h
       rwa [coeff_map, coeff_smul, coeff_map, smul_eq_mul] at this
     have hjm : j (F.coeff m) ≠ 0 := (map_ne_zero j).2 hm
     have ha : j (Q.coeff m / F.coeff m) = χ⁻¹ := by

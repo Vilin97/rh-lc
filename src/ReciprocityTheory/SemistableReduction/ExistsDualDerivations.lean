@@ -13,10 +13,10 @@ section CoeffDer
 variable {K Ω σ : Type*} [CommRing K] [CommRing Ω] [Algebra K Ω]
 
 noncomputable def coeffMap (δ : Derivation K Ω Ω) (P : MvPolynomial σ Ω) : MvPolynomial σ Ω :=
-  ∑ n ∈ P.support, monomial n (δ (coeff n P))
+  ∑ n ∈ P.support, monomial n (δ (AddMonoidAlgebra.coeff P n))
 
 theorem coeff_coeffMap (δ : Derivation K Ω Ω) (P : MvPolynomial σ Ω) (n : σ →₀ ℕ) :
-    coeff n (coeffMap δ P) = δ (coeff n P) := by
+    AddMonoidAlgebra.coeff (coeffMap δ P) n = δ (AddMonoidAlgebra.coeff P n) := by
   classical
   unfold coeffMap
   rw [coeff_sum]
@@ -27,7 +27,7 @@ theorem coeff_coeffMap (δ : Derivation K Ω Ω) (P : MvPolynomial σ Ω) (n : �
       rw [coeff_monomial, if_neg hb]
     · intro hn
       exact absurd h hn
-  · have h0 : coeff n P = 0 := by
+  · have h0 : AddMonoidAlgebra.coeff P n = 0 := by
       by_contra hc
       exact h (mem_support_iff.mpr hc)
     rw [h0, map_zero]
@@ -46,7 +46,7 @@ theorem coeffMap_monomial (δ : Derivation K Ω Ω) (n : σ →₀ ℕ) (a : Ω)
 theorem coeffMap_add (δ : Derivation K Ω Ω) (P Q : MvPolynomial σ Ω) :
     coeffMap δ (P + Q) = coeffMap δ P + coeffMap δ Q := by
   ext m
-  simp only [coeff_add, coeff_coeffMap, map_add]
+  simp only [MvPolynomial.coeff_add, coeff_coeffMap, map_add]
 
 theorem coeffMap_smul (δ : Derivation K Ω Ω) (k : K) (P : MvPolynomial σ Ω) :
     coeffMap δ (k • P) = k • coeffMap δ P := by

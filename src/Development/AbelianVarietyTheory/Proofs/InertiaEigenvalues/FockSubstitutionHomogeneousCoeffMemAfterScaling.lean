@@ -27,7 +27,7 @@ def coeffSub (O : Subring ℂ) (σ : Type) : Subring (MvPolynomial σ ℂ) where
     rw [coeff_one]; split_ifs
     · exact O.one_mem
     · exact O.zero_mem
-  add_mem' {a b} ha hb mo := by rw [coeff_add]; exact O.add_mem (ha mo) (hb mo)
+  add_mem' {a b} ha hb mo := by rw [MvPolynomial.coeff_add]; exact O.add_mem (ha mo) (hb mo)
   zero_mem' mo := by rw [coeff_zero]; exact O.zero_mem
   neg_mem' {a} ha mo := by rw [coeff_neg]; exact O.neg_mem (ha mo)
 

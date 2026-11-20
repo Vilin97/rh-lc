@@ -119,7 +119,7 @@ theorem red_inf (E : Type) [Field E] [NumberField E] (R : Type) [NormedCommRing 
   have h6 : ∏ p : κ, (2 : ℝ) ^ (l p.1 + 1) ≤ (2 ^ finrank ℚ E) ^ n * ∏ i, ‖φ (w i)‖ ^ finrank ℚ E := by
     rw [Fintype.prod_sigma]
     simp only [Finset.prod_const, Finset.card_univ, ← finrank_eq_card_chooseBasisIndex, RingOfIntegers.rank]
-    calc _ ≤ ∏ i, (2 * ‖φ (w i)‖) ^ finrank ℚ E := Finset.prod_le_prod (fun _ _ => by positivity) fun i _ =>
+    calc _ ≤ ∏ i, (2 * ‖φ (w i)‖) ^ finrank ℚ E := Finset.prod_le_prod₀ (fun _ _ => by positivity) fun i _ =>
           pow_le_pow_left₀ (by positivity) (by rw [zpow_add_one₀ two_ne_zero]; linarith [(hl i).1]) _
       _ = _ := by simp [mul_pow, Finset.prod_mul_distrib]
   have h7 : (∏ p : κ, (2 : ℝ) ^ (l p.1 + 1)) ^ 2 ≤ c₁ * (gram ℝ fun k => φ (u k)).det := by

@@ -109,8 +109,8 @@ def gen {m : ℕ} (y : Fin m → MonoidAlgebra A G) : MonoidAlgebra (MvPolynomia
 
 def CH : Set (MonoidAlgebra A G) :=
   {z | ∃ (m : ℕ) (y : Fin m → MonoidAlgebra A G) (β : Fin m →₀ ℕ), ∀ g : G,
-    z.coeff g = MvPolynomial.coeff β
-      ((Polynomial.aeval (gen y) ((D.map (MvPolynomial.C : A →+* MvPolynomial (Fin m) A)).chi (gen y))).coeff g)}
+    z.coeff g = AddMonoidAlgebra.coeff ((Polynomial.aeval (gen y) ((D.map (MvPolynomial.C : A →+* MvPolynomial (Fin m) A)).chi (gen y))).coeff g)
+      β}
 
 variable [TopologicalSpace G]
 

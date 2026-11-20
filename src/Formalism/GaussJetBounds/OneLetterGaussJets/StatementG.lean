@@ -25,7 +25,7 @@ def ThmAGauss7 : Prop :=
       (∀ s, nu2 s = (Finset.univ.filter (fun c => 2 ≤ p s c)).card) → (∀ s, size s = ∑ c, p s c) →
     (∀ s, JnumOneLetter l d TT nu1 size s + (if s ∈ TT then 1 else 0) ≤ N0) →
     ∀ n : (ZMod d × Fin N0 × Fin N0) →₀ ℕ,
-      ‖MvPolynomial.coeff n (frameJet colN p hp I (thetaZ g U ε be))‖ ≤
+      ‖AddMonoidAlgebra.coeff (frameJet colN p hp I (thetaZ g U ε be)) n‖ ≤
         ‖(l : ℂ_[l])‖ ^ ((∑ s ∈ TT, (topTerm l d TT nu1 nu2 s -
             gam l * (WcapOneLetter l d TT nu1 nu2 size s : ℝ))) +
           Fnum l d (fun s => (Dl d TT nu1 size s : ℝ)) -
@@ -109,7 +109,7 @@ def OneLetterGauss7 : Prop :=
     ∀ (sgn : ℂ_[l]), (sgn = 1 ∨ sgn = -1) →
     ∀ (p : Fin C → ℕ) (hp : ∀ c, p c ≤ N0) (I : ∀ c, Fin (p c) → Fin N1),
       ∀ n : (Fin N0 × Fin N0) →₀ ℕ,
-      ‖MvPolynomial.coeff n (frameJetOne p hp I (thetaOne g U sgn ep be))‖ ≤
+      ‖AddMonoidAlgebra.coeff (frameJetOne p hp I (thetaOne g U sgn ep be)) n‖ ≤
         ‖(l : ℂ_[l])‖ ^ (rho l * ((∑ c, p c : ℕ) : ℝ) -
           ((N0 : ℝ) * N1) * (Real.logb l (C : ℝ) + 1))
 

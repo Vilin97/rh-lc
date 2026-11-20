@@ -53,7 +53,7 @@ theorem exists_mulHeight_coeff_minpoly_le : ∀ (F E : Type) [Field F] [NumberFi
         _ = 4 ^ m * A w ^ (2 * m) := by
           rw [mul_pow, ← pow_mul, ← pow_mul, mul_comm m 2, pow_mul, mul_comm 2 m, pow_mul]; norm_num
     calc (∏ w : InfinitePlace F, max (w c) 1 ^ w.mult) ≤ ∏ w : InfinitePlace F, (4 ^ m * A w ^ (2 * m)) :=
-          Finset.prod_le_prod (fun w _ => pow_nonneg (le_trans zero_le_one (le_max_right _ _)) _) fun w _ => h1 w
+          Finset.prod_le_prod₀ (fun w _ => pow_nonneg (le_trans zero_le_one (le_max_right _ _)) _) fun w _ => h1 w
       _ = _ := by
         rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, ← pow_mul, Finset.prod_pow]
 

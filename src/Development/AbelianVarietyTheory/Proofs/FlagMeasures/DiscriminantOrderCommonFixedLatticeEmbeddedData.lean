@@ -112,7 +112,7 @@ theorem norm_le {K : Type} [Field K] [NumberField K] (a : K) (c : ℝ) (h : ∀ 
   have e := congrArg norm (Algebra.norm_eq_prod_embeddings ℚ ℂ a)
   rw [norm_prod, eq_ratCast, Complex.norm_ratCast] at e
   rw [Rat.cast_abs, e, ← AlgHom.card ℚ K ℂ, ← Finset.card_univ, ← Finset.prod_const]
-  exact Finset.prod_le_prod (fun _ _ => norm_nonneg _) (fun σ _ => h σ.toRingHom)
+  exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) (fun σ _ => h σ.toRingHom)
 
 theorem det_one_sub_le {K U : Type} [Field K] [StarRing K] [AddCommGroup U] [Module K U]
     [FiniteDimensional K U] (σ : K →+* ℂ) (h : U →ₗ[K] U →ₗ⋆[K] K) (η : U →ₗ[K] U)

@@ -49,7 +49,7 @@ theorem passl : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (l : ℕ)
   have hM0 : M ≠ 0 := by rintro rfl; exact hMl (dvd_zero l)
   have hR : 0 < M₁ * l ^ a0 𝔣 l := Nat.pos_of_ne_zero (mul_ne_zero hM₁0 (pow_ne_zero _ hl.ne_zero))
   obtain ⟨M₂, hM₂l, hM₂⟩ := GlobalTheory.T.nat_mul_integral_mem_cmLattice_prime_to E l c y (M₁ * l ^ a0 𝔣 l) hl hy hR hM₁c
-  obtain ⟨D', hD'⟩ := pow_padicValNat_dvd (p := l) (n := D)
+  obtain ⟨D', hD'⟩ := (fun {p n : ℕ} => _root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat p n)) (p := l) (n := D)
   have hD'l : ¬ l ∣ D' := by
     rintro ⟨e, he⟩
     apply pow_succ_padicValNat_not_dvd (p := l) hD.ne'

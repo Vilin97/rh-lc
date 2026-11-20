@@ -126,7 +126,7 @@ theorem ideleModule_infId_det_le (y : GL (Fin 2) (UpperTheory.V.TR.Rinf F)) :
   rw [ideleModule_infId]
   calc ∏ w, |((Matrix.GeneralLinearGroup.det y : (UpperTheory.V.TR.Rinf F)ˣ) : UpperTheory.V.TR.Rinf F) w|
       ≤ ∏ _w : InfinitePlace F, 2 * UpperTheory.V.TR.height y ^ 2 :=
-        Finset.prod_le_prod (fun _ _ => abs_nonneg _) fun w _ => abs_det_apply_le y w
+        Finset.prod_le_prod₀ (fun _ _ => abs_nonneg _) fun w _ => abs_det_apply_le y w
     _ = _ := by rw [Finset.prod_const, Finset.card_univ, mul_pow, ← pow_mul, mul_comm 2 (Fintype.card _)]
 
 theorem absD_mul_infGL_le (g : GA F 2) : ∃ (C : ℝ) (N : ℕ), ∀ y : GL (Fin 2) (UpperTheory.V.TR.Rinf F),

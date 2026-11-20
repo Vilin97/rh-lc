@@ -130,7 +130,7 @@ theorem mem_pow_ker_of_isBigO {k : ℕ} {q : MvPolynomial σ ℂ}
     simpa using hc
   have hmem : q' ∈ idealOfVars σ ℂ ^ k := by
     refine (mem_pow_idealOfVars_iff' k q').mpr fun x hx => ?_
-    have := congrArg (coeff x) (hcomp _ hx)
+    have := congrArg (AddMonoidAlgebra.coeff · x) (hcomp _ hx)
     rwa [coeff_homogeneousComponent, if_pos rfl, coeff_zero] at this
   have hback : bind₁ (fun i => X i - C (w i)) q' = q := by
     rw [hq'def, bind₁_bind₁]

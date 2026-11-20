@@ -227,7 +227,7 @@ theorem genericMass_le_heightPow_mul_glueSum : ∀ (D : D7) (X : HidaSetting D) 
       calc Fm.V0 * ∏ p ∈ Fm.P, (wp p * (locSum G G'' p (Fm.R p) (Fm.d0 p)).toReal)
           ≤ Fm.V0 * ∏ p ∈ Fm.P, ((Fm.FP p).Hp ^ (3 * (D.R.rS + 1) ^ 2) *
               (locSum G G'' p (Fm.R p) (Fm.d0 p)).toReal) := by
-            refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod (fun p hp => ?_) (fun p hp => ?_)) hV0.le
+            refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod₀ (fun p hp => ?_) (fun p hp => ?_)) hV0.le
             · exact mul_nonneg (hwp0 p hp).le ENNReal.toReal_nonneg
             · exact mul_le_mul_of_nonneg_right (hwpH p hp) ENNReal.toReal_nonneg
         _ = _ := by rw [Finset.prod_mul_distrib]; ring

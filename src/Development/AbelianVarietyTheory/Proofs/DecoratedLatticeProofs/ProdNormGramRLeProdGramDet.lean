@@ -104,7 +104,7 @@ theorem prod_norm_gramR_le_prod_gram_det :
     calc (∏ v : InfinitePlace K, ‖v.embedding (gramR G e)‖) ^ 2
         = ∏ v : InfinitePlace K, ‖v.embedding (gramR G e)‖ ^ 2 := (Finset.prod_pow _ _ _).symm
       _ ≤ ∏ v : InfinitePlace K, ((gram X (Rb.plc v) e).det.re * (gram X v e).det.re) :=
-        Finset.prod_le_prod (fun v _ => by positivity) (fun v _ => place_sq_le K0 hK0 G X hX e v)
+        Finset.prod_le_prod₀ (fun v _ => by positivity) (fun v _ => place_sq_le K0 hK0 G X hX e v)
       _ = (∏ v : InfinitePlace K, (gram X v e).det.re) ^ 2 := by
         rw [Finset.prod_mul_distrib, hperm, sq]
   exact (pow_le_pow_iff_left₀ (Finset.prod_nonneg fun v _ => norm_nonneg _)

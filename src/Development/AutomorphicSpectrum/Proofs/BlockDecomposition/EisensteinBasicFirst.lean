@@ -105,7 +105,7 @@ theorem summable_norm_mulExt (h : ℕ → ℕ → ℂ) (σ : ℝ) (hσ : 1 < σ)
   refine h1.trans ?_
   calc ∏ p ∈ N.primesBelow, ∑' n : ℕ, F (p ^ n)
       ≤ ∏ p ∈ N.primesBelow, Real.exp (cst * (p : ℝ) ^ (-σ)) := by
-        refine Finset.prod_le_prod (fun p _ => tsum_nonneg fun n => norm_nonneg _) fun p hp => ?_
+        refine Finset.prod_le_prod₀ (fun p _ => tsum_nonneg fun n => norm_nonneg _) fun p hp => ?_
         have hpp := Nat.prime_of_mem_primesBelow hp
         refine (hloc hpp).2.trans ?_
         have := Real.add_one_le_exp (cst * (p : ℝ) ^ (-σ))

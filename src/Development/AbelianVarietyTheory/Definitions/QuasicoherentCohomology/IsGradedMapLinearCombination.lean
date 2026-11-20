@@ -49,7 +49,7 @@ theorem weight_one_int (a : ι →₀ ℕ) :
   simp [Finsupp.weight_apply, Finsupp.degree_apply, Finsupp.sum]
 
 theorem mem_polyGrading_iff {p : MvPolynomial ι R} {n : ℤ} :
-    p ∈ polyGrading ι R n ↔ ∀ a, coeff a p ≠ 0 → (a.degree : ℤ) = n := by
+    p ∈ polyGrading ι R n ↔ ∀ a, AddMonoidAlgebra.coeff p a ≠ 0 → (a.degree : ℤ) = n := by
   simp only [polyGrading, mem_weightedHomogeneousSubmodule, IsWeightedHomogeneous, weight_one_int]
 
 theorem mem_polyGrading_natCast {p : MvPolynomial ι R} {d : ℕ} :

@@ -58,7 +58,7 @@ theorem logNorm_fsH_nonpos (c : ∀ k, ι k) {z : (Σ k, ι k) → ℂ} (hz : �
       rw [fsH, GroundTheory.Heights₂.Heights.Inter.ofMetrics_fs_h]
       simp
     rw [hfs]
-    refine Finset.prod_le_prod (fun k _ => norm_nonneg _) fun k _ => Real.le_sqrt_of_sq_le ?_
+    refine Finset.prod_le_prod₀ (fun k _ => norm_nonneg _) fun k _ => Real.le_sqrt_of_sq_le ?_
     exact Finset.single_le_sum (f := fun i => ‖z ⟨k, i⟩‖ ^ 2) (fun i _ => sq_nonneg _) (Finset.mem_univ (c k))
   unfold logNorm
   apply Real.log_nonpos (div_nonneg (norm_nonneg _) hpos.le)

@@ -37,9 +37,9 @@ theorem one_le_gram_size_generic (C : ℝ) (Z : GramM D) : 1 ≤ sizeZ D large�
       max 1 (absDl D Z l τ / large₂.sc.b ^ (C * (D.R.m : ℝ) ^ 2)) := by
     intro τ
     calc (1 : ℝ) = ∏ l ∈ Finset.Icc 1 (D.R.rS + 1), (1 : ℝ) := by simp
-      _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one) (fun _ _ => le_max_left _ _)
+      _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun _ _ => le_max_left _ _)
   calc (1 : ℝ) = ∏ τ : D.what₂.Tau, (1 : ℝ) := by simp
-    _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one) (fun τ _ => h τ)
+    _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun τ _ => h τ)
 
 theorem pow_le_gram_height (C : ℝ) (Z : GramM D) :
     large₂.sc.b ^ (C ^ 2 * (D.R.m : ℝ) ^ 3 * D.R.f) ≤ HHZ D large₂.sc.b C Z := by

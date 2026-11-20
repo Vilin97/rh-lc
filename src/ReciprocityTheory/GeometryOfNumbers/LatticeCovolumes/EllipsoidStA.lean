@@ -53,7 +53,7 @@ lemma sqBall_isBounded (r : ℕ) (R : ℝ) : Bornology.IsBounded (sqBall r E R) 
 
 lemma sqBall_isClosed (r : ℕ) (R : ℝ) : IsClosed (sqBall r E R) := by
   unfold sqBall
-  exact isClosed_le (continuous_finset_sum _ fun k _ => (continuous_apply k).norm.pow 2)
+  exact isClosed_le (continuous_finsetSum _ fun k _ => (continuous_apply k).norm.pow 2)
     continuous_const
 
 lemma box_subset_sqBall (r : ℕ) {R : ℝ} :

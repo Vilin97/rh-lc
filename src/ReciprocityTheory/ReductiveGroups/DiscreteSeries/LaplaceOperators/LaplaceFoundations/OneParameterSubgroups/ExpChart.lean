@@ -628,7 +628,7 @@ theorem exp_chart_embedding (hF : IsFil F L) :
       funext Y
       exact hF.exp_eq (hY0 Y)
     rw [e]
-    exact continuous_const.add (continuous_subtype_val.add (continuous_finset_sum _ fun k _ =>
+    exact continuous_const.add (continuous_subtype_val.add (continuous_finsetSum _ fun k _ =>
       (continuous_subtype_val.pow _).const_smul _))
   haveI : ProperSpace (lieN F st) := FiniteDimensional.proper_real _
   exact hcont.measurableEmbedding fun Y Y' h => Subtype.ext (exp_injOn hF (hY0 Y) (hY0 Y') h)
@@ -657,7 +657,7 @@ theorem exp_chart_haar (hF : IsFil F L) (hst : IsAdj F st) (μ : Measure (lieN F
     obtain ⟨Φ, hΦm, hΦ⟩ := exp_chart_invariant hF hst μ hs
     show Measure.map (s * ·) (Measure.map (fun Y : lieN F st => NormedSpace.exp (Y : A)) μ) =
       Measure.map (fun Y : lieN F st => NormedSpace.exp (Y : A)) μ
-    rw [Measure.map_map (continuous_mul_left s).measurable hemb.measurable]
+    rw [Measure.map_map (continuous_const_mul s).measurable hemb.measurable]
     have hcomp : (s * ·) ∘ (fun Y : lieN F st => NormedSpace.exp (Y : A)) =
         (fun Y : lieN F st => NormedSpace.exp (Y : A)) ∘ Φ := by
       funext Y

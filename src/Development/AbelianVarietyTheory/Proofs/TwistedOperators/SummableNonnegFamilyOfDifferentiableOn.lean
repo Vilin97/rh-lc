@@ -82,7 +82,7 @@ theorem summable_nonneg_family_of_differentiableOn {ι : Type} (c : ι → ℝ) 
     rw [← NNReal.coe_lt_coe, coe_nnnorm, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hx0]
     show x < ρ
     linarith
-  have hxmem : (x : ℂ) ∈ EMetric.ball (0 : ℂ) (ρn : ENNReal) := by
+  have hxmem : (x : ℂ) ∈ Metric.eball (0 : ℂ) (ρn : ENNReal) := by
     show edist (x : ℂ) 0 < ρn
     rw [edist_zero_right, enorm_eq_nnnorm]
     exact_mod_cast hxn

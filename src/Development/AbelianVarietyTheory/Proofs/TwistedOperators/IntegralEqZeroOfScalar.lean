@@ -53,8 +53,8 @@ variable {D : D7}
 
 def substMat (θ : InfFam D) (V : HSp D) (m : ℕ) (d : D.what₂.Tau →₀ ℕ) (g : GA D V) :
     Matrix (Mon D m V.rank d) (Mon D m V.rank d) ℂ :=
-  fun k' k => coeff k'.1 (GlobalTheory.CompactHowe.substF (fun _ => (1 : Matrix (Fin m) (Fin m) ℂ))
-    (fun τ => compAt θ τ (Formalism.L2.Theta.mt V g)) (monomial k.1 1))
+  fun k' k => AddMonoidAlgebra.coeff (GlobalTheory.CompactHowe.substF (fun _ => (1 : Matrix (Fin m) (Fin m) ℂ))
+    (fun τ => compAt θ τ (Formalism.L2.Theta.mt V g)) (monomial k.1 1)) k'.1
 
 open MvPolynomial
 
@@ -72,8 +72,8 @@ theorem substF_one {ι : Type} {N n : ℕ} (P : MvPolynomial (ι × Fin N × Fin
   rw [key]; rfl
 
 theorem eq_sum_mon {D : D7} {m n : ℕ} {d : D.what₂.Tau →₀ ℕ} (P : MvPolynomial (FVar D m n) ℂ)
-    (hP : ∀ k', coeff k' P ≠ 0 → k' ∈ Mon D m n d) :
-    P = ∑ k : Mon D m n d, coeff k.1 P • monomial k.1 (1 : ℂ) := by
+    (hP : ∀ k', AddMonoidAlgebra.coeff P k' ≠ 0 → k' ∈ Mon D m n d) :
+    P = ∑ k : Mon D m n d, AddMonoidAlgebra.coeff P k.1 • monomial k.1 (1 : ℂ) := by
   classical
   ext k'
   rw [coeff_sum]

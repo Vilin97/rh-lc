@@ -25,7 +25,7 @@ theorem p3bOfA_ok : LeadingBlockBoundFromRecursion := by
     rw [le_div_iff₀ ho0]; nlinarith [mul_le_mul_of_nonneg_left hto hLam]
   have hprod : ∏ a, c a ≤ (abelian₂ ^ 2) ^ K := by
     calc ∏ a, c a ≤ ∏ _a : Fin K, abelian₂ ^ 2 :=
-          Finset.prod_le_prod (fun a _ => (hc a).1) (fun a _ => (hc a).2)
+          Finset.prod_le_prod₀ (fun a _ => (hc a).1) (fun a _ => (hc a).2)
       _ = (abelian₂ ^ 2) ^ K := by simp
   have hT : 0 < ‖t‖ ^ (2 * K) := pow_pos htpos _
   have e : ‖t‖ ^ (-(2 * K : ℤ)) = (‖t‖ ^ (2 * K))⁻¹ := by
@@ -141,14 +141,14 @@ theorem third_polynomial_prime_combination : LeadingBlockSeveralPlacesBound := b
   have hPA : (∏ v ∈ univ.filter (fun v => 2 * abelian₂ v < oAbs t t' v ∧ ‖t v‖ ≤ ‖t' v‖),
       (‖t v‖ * abelian₂ v) ^ (2 * K)) ≤
       ∏ v ∈ univ.filter (fun v => 2 * abelian₂ v < oAbs t t' v ∧ ‖t v‖ ≤ ‖t' v‖), m v ^ 2 :=
-    Finset.prod_le_prod (fun v _ => pow_nonneg (mul_nonneg (norm_nonneg _) (hLam v)) _)
+    Finset.prod_le_prod₀ (fun v _ => pow_nonneg (mul_nonneg (norm_nonneg _) (hLam v)) _)
       (fun v hv => by
         obtain ⟨hv1, hv2⟩ := (Finset.mem_filter.mp hv).2
         exact key v _ (norm_nonneg _) (hto v hv2) hv1)
   have hPB : (∏ v ∈ univ.filter (fun v => 2 * abelian₂ v < oAbs t t' v ∧ ¬ ‖t v‖ ≤ ‖t' v‖),
       (‖t' v‖ * abelian₂ v) ^ (2 * K)) ≤
       ∏ v ∈ univ.filter (fun v => 2 * abelian₂ v < oAbs t t' v ∧ ¬ ‖t v‖ ≤ ‖t' v‖), m v ^ 2 :=
-    Finset.prod_le_prod (fun v _ => pow_nonneg (mul_nonneg (norm_nonneg _) (hLam v)) _)
+    Finset.prod_le_prod₀ (fun v _ => pow_nonneg (mul_nonneg (norm_nonneg _) (hLam v)) _)
       (fun v hv => by
         obtain ⟨hv1, hv2⟩ := (Finset.mem_filter.mp hv).2
         exact key v _ (norm_nonneg _) (hto' v hv2) hv1)
@@ -237,7 +237,7 @@ theorem p2cOfParts_ok : LowerBlockNormalisedBoundFromComponents := by
       rw [Finset.prod_mul_distrib, Finset.prod_mul_distrib, Finset.prod_const, Finset.prod_const,
         Finset.card_univ, Fintype.card_fin]
     rw [e]
-    refine Finset.prod_le_prod (fun a _ => ?_) (fun a _ => ?_)
+    refine Finset.prod_le_prod₀ (fun a _ => ?_) (fun a _ => ?_)
     · rw [add_zero]; exact mul_nonneg (hpos a (j a)).2.2.1.le (hpos a (j a)).2.2.2.le
     · rw [add_zero]
       have h1 := (div_le_iff₀ (hpos a (j a)).1).mp (hnn a (j a))

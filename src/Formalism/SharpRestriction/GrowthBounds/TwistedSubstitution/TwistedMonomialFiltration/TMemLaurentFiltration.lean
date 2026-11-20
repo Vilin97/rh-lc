@@ -89,11 +89,11 @@ theorem T_mem_laurentFiltration {A : Type*} [CommRing A] (e k : ℤ) : (LaurentP
 def flt_lift {B : Type*} [CommRing B] {σ : Type*} (Fl : flt_Fil B) (wt : (σ →₀ ℕ) →+ ℤ) :
     flt_Fil (MvPolynomial σ B) where
   F t :=
-    { carrier := {P | ∀ m, coeff m P ∈ Fl.F (t - wt m)}
+    { carrier := {P | ∀ m, AddMonoidAlgebra.coeff P m ∈ Fl.F (t - wt m)}
       zero_mem' := by intro m; simp
       add_mem' := by
         intro a b ha hb m
-        rw [coeff_add]
+        rw [MvPolynomial.coeff_add]
         exact (Fl.F _).add_mem (ha m) (hb m)
       neg_mem' := by
         intro a ha m
@@ -122,7 +122,7 @@ def flt_lift {B : Type*} [CommRing B] {σ : Type*} (Fl : flt_Fil B) (wt : (σ �
     exact Fl.anti (by linarith) (hP m)
 
 theorem flt_lift_mem {B : Type*} [CommRing B] {σ : Type*} {Fl : flt_Fil B} {wt : (σ →₀ ℕ) →+ ℤ} {t : ℤ}
-    {P : MvPolynomial σ B} : P ∈ (flt_lift Fl wt).F t ↔ ∀ m, coeff m P ∈ Fl.F (t - wt m) := Iff.rfl
+    {P : MvPolynomial σ B} : P ∈ (flt_lift Fl wt).F t ↔ ∀ m, AddMonoidAlgebra.coeff P m ∈ Fl.F (t - wt m) := Iff.rfl
 
 theorem flt_monomial_mem {B : Type*} [CommRing B] {σ : Type*} {Fl : flt_Fil B} {wt : (σ →₀ ℕ) →+ ℤ} {t : ℤ}
     {m : σ →₀ ℕ} {a : B} (ha : a ∈ Fl.F (t - wt m)) : monomial m a ∈ (flt_lift Fl wt).F t := by
@@ -174,7 +174,7 @@ theorem flt_hom_mem {B₀ B' : Type*} [CommRing B₀] [CommRing B'] {σ : Type*}
   classical
   rw [P.as_sum, map_sum]
   refine (Fl'.F t).sum_mem fun m _ => ?_
-  have e : monomial m (coeff m P) = C (coeff m P) * monomial m 1 := by
+  have e : monomial m (AddMonoidAlgebra.coeff P m) = C (AddMonoidAlgebra.coeff P m) * monomial m 1 := by
     rw [C_mul_monomial, mul_one]
   rw [e, map_mul]
   have := Fl'.mul_mem (hC _ _ ((flt_lift_mem.1 hP) m)) (flt_hom_monomial Fl' φ wt hX m)

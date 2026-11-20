@@ -24,7 +24,7 @@ def topExp (ι : Type) [Fintype ι] (N : ℕ) : Root (fun _ : ι => N) →₀ �
   Finsupp.equivFunOnFinite.symm fun x => N - 1 - (x.2 : ℕ)
 
 theorem coeff_rename_equiv {α β : Type} (e : α ≃ β) (p : MvPolynomial α ℝ) (d : β →₀ ℕ) :
-    coeff d (rename e p) = coeff (Finsupp.equivMapDomain e.symm d) p := by
+    AddMonoidAlgebra.coeff (rename e p) d = AddMonoidAlgebra.coeff p (Finsupp.equivMapDomain e.symm d) := by
   have hd : d = Finsupp.mapDomain e (Finsupp.equivMapDomain e.symm d) := by
     rw [Finsupp.equivMapDomain_eq_mapDomain, ← Finsupp.mapDomain_comp]
     simp
@@ -32,12 +32,12 @@ theorem coeff_rename_equiv {α β : Type} (e : α ≃ β) (p : MvPolynomial α �
   exact coeff_rename_mapDomain _ e.injective _ _
 
 theorem coeff_mul_of_isHomogeneous {σ : Type} (P A : MvPolynomial σ ℝ) (d : σ →₀ ℕ)
-    (hA : A.IsHomogeneous d.degree) : coeff d (P * A) = constantCoeff P * coeff d A := by
+    (hA : A.IsHomogeneous d.degree) : AddMonoidAlgebra.coeff (P * A) d = constantCoeff P * AddMonoidAlgebra.coeff A d := by
   rw [coeff_mul, Finset.sum_eq_single ((0 : σ →₀ ℕ), d)]
   · rfl
   · rintro ⟨a, b⟩ hab hne
     rw [Finset.HasAntidiagonal.mem_antidiagonal] at hab
-    have hb : coeff b A = 0 := by
+    have hb : AddMonoidAlgebra.coeff A b = 0 := by
       refine hA.coeff_eq_zero fun h1 => ?_
       have h2 : a.degree + b.degree = d.degree := by rw [← hab, map_add]
       have ha : a = 0 := (Finsupp.degree_eq_zero_iff a).1 (by omega)
@@ -96,7 +96,7 @@ theorem rootDiscr_isHomogeneous (ι : Type) [Fintype ι] (N : ℕ) :
 
 theorem degFl_rename_eq {ι : Type} [Fintype ι] {N : ℕ} (Q : MvPolynomial (Root (fun _ : ι => N)) ℝ) :
     degFl ι N (rename (fun x : Root (fun _ : ι => N) => (x.1, x.2)) Q) =
-      (-1) ^ dimFl ι N * coeff (topExp ι N) (GoodMetric.antisymm Q) := by
+      (-1) ^ dimFl ι N * AddMonoidAlgebra.coeff (GoodMetric.antisymm Q) (topExp ι N) := by
   unfold degFl GoodMetric.antisymm
   congr 1
   rw [coeff_sum]
@@ -114,7 +114,7 @@ theorem degFl_rename_eq {ι : Type} [Fintype ι] {N : ℕ} (Q : MvPolynomial (Ro
   simp [zsmul_eq_mul]
 
 theorem coeff_topExp_rootDiscr (ι : Type) [Fintype ι] (N : ℕ) :
-    coeff (topExp ι N) (rootDiscr (fun _ : ι => N)) = (-1) ^ dimFl ι N := by
+    AddMonoidAlgebra.coeff (rootDiscr (fun _ : ι => N)) (topExp ι N) = (-1) ^ dimFl ι N := by
   have h := degFl_rename_eq (ι := ι) (N := N) (fibrePoint _)
   rw [FibreAntisymm.antisymm_fibrePoint] at h
   have hp : rename (fun x : Root (fun _ : ι => N) => (x.1, x.2)) (fibrePoint (fun _ : ι => N)) =
@@ -126,10 +126,10 @@ theorem coeff_topExp_rootDiscr (ι : Type) [Fintype ι] (N : ℕ) :
   have hpt : degFl ι N (∏ x : ι × Fin N, (-X x) ^ (N - 1 - (x.2 : ℕ))) = 1 := degreePoint ι N
   rw [hp, hpt] at h
   have h2 : ((-1 : ℝ) ^ dimFl ι N) * (-1) ^ dimFl ι N = 1 := by rw [← mul_pow]; simp
-  calc coeff (topExp ι N) (rootDiscr (fun _ : ι => N))
-      = ((-1) ^ dimFl ι N * (-1) ^ dimFl ι N) * coeff (topExp ι N) (rootDiscr (fun _ : ι => N)) := by
+  calc AddMonoidAlgebra.coeff (rootDiscr (fun _ : ι => N)) (topExp ι N)
+      = ((-1) ^ dimFl ι N * (-1) ^ dimFl ι N) * AddMonoidAlgebra.coeff (rootDiscr (fun _ : ι => N)) (topExp ι N) := by
         rw [h2, one_mul]
-    _ = (-1) ^ dimFl ι N * ((-1) ^ dimFl ι N * coeff (topExp ι N) (rootDiscr (fun _ : ι => N))) := by ring
+    _ = (-1) ^ dimFl ι N * ((-1) ^ dimFl ι N * AddMonoidAlgebra.coeff (rootDiscr (fun _ : ι => N)) (topExp ι N)) := by ring
     _ = (-1) ^ dimFl ι N := by rw [← h, mul_one]
 
 theorem eval_chernRoots_eq_degFl : ∀ (ι : Type) [Fintype ι] (N : ℕ) (Q : MvPolynomial (GlobalTheory.GoodMetric.Root (fun _ : ι => N)) ℝ) (R : MvPolynomial (ι × ℕ) ℝ), GlobalTheory.GoodMetric.antisymm Q = GlobalTheory.GoodMetric.chernRoots (fun _ : ι => N) R * GlobalTheory.GoodMetric.rootDiscr (fun _ : ι => N) → MvPolynomial.eval (fun x : ι × ℕ => if x.2 = 0 then (1 : ℝ) else 0) R = degFl ι N (MvPolynomial.rename (fun x : GlobalTheory.GoodMetric.Root (fun _ : ι => N) => (x.1, x.2)) Q) := by

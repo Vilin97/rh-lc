@@ -92,7 +92,7 @@ theorem polyAverages_finiteWeightStableSubspace : PolyAvg := by
   · rintro μ s ⟨Q, hQ, rfl⟩ hs0 hsw
     by_contra hμ
     rw [SetLike.mem_coe, mem_restrictTotalDegree] at hQ
-    have hsum : Xu u Q = ∑ m ∈ Q.support, coeff m Q • Xu u (monomial m 1) := by
+    have hsum : Xu u Q = ∑ m ∈ Q.support, AddMonoidAlgebra.coeff Q m • Xu u (monomial m 1) := by
       conv_lhs => rw [Q.as_sum]
       rw [map_sum]
       refine Finset.sum_congr rfl fun m _ => ?_
@@ -103,7 +103,7 @@ theorem polyAverages_finiteWeightStableSubspace : PolyAvg := by
       exact ⟨m, (le_totalDegree hm).trans hQ, h.symm⟩
     apply hs0
     rw [← inner_self_eq_zero (𝕜 := ℂ)]
-    calc inner ℂ (Xu u Q) (Xu u Q) = inner ℂ (Xu u Q) (∑ m ∈ Q.support, coeff m Q • Xu u (monomial m 1)) := by
+    calc inner ℂ (Xu u Q) (Xu u Q) = inner ℂ (Xu u Q) (∑ m ∈ Q.support, AddMonoidAlgebra.coeff Q m • Xu u (monomial m 1)) := by
           rw [← hsum]
       _ = 0 := by
           rw [inner_sum]

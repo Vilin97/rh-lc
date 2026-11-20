@@ -377,7 +377,7 @@ theorem t_BoxSumLattice : BoxSumLattice := by
           M ^ Fintype.card (InfinitePlace E) := by
         calc ∏ w ∈ ({w₀}ᶜ : Finset (InfinitePlace E)), max (x w) ε
             ≤ ∏ w ∈ ({w₀}ᶜ : Finset (InfinitePlace E)), M := by
-              apply Finset.prod_le_prod (fun w _ => le_trans hεpos.le (le_max_right _ _))
+              apply Finset.prod_le_prod₀ (fun w _ => le_trans hεpos.le (le_max_right _ _))
               intro w _
               apply max_le
               · have h3 : x w ≤ ∑ v, x v := Finset.single_le_sum (fun v _ => hx v) (Finset.mem_univ w)

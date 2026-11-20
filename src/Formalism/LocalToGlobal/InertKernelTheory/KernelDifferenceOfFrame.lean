@@ -66,7 +66,7 @@ def polDY (D : D7) {N N' : ℕ} (s : D.what₂.Tau → ℂ) (Q : MvPolynomial (G
 def framePol (D : D7) {N N' : ℕ} (s : D.what₂.Tau → ℂ) (Q : MvPolynomial (GL3Theta.FrV D N) ℂ) (G : TaylorLogMetric.VC D N N' → ℂ) :
     MvPolynomial (GL3Theta.FrV D N') ℂ :=
   ∑ α ∈ (polDY D s Q (N' := N')).support,
-    coeff α (polDY D s Q) * C ((α.prod fun _ n => (n.factorial : ℂ)) * TaylorLogMetric.taylor D G α)
+    AddMonoidAlgebra.coeff (polDY D s Q) α * C ((α.prod fun _ n => (n.factorial : ℂ)) * TaylorLogMetric.taylor D G α)
 
 end Frame
 

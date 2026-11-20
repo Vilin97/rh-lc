@@ -249,7 +249,7 @@ theorem map_segreFlat_homog (m₀ : ℕ) (m : K → ℕ) :
     rw [f.as_sum]
     refine Submodule.sum_mem _ fun e he => ?_
     obtain ⟨g, hg, hge⟩ := exists_segreFlat_eq_monomial (R := F) m₀ m e (hf (mem_support_iff.mp he))
-    refine ⟨coeff e f • g, Submodule.smul_mem _ _ hg, ?_⟩
+    refine ⟨AddMonoidAlgebra.coeff f e • g, Submodule.smul_mem _ _ hg, ?_⟩
     simp [hge, smul_monomial]
 
 theorem finrank_gradedPiece_segreLift (W : Ideal (MRing ι F)) (m₀ : ℕ) (m : K → ℕ) :

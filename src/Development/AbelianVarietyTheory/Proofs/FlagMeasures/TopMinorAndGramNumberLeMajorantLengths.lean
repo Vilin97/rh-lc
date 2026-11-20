@@ -40,7 +40,7 @@ theorem det_change {V₁ V₂ : Type} [AddCommGroup V₁] [Module ℂ V₁] [Add
 
 theorem prod_le_pow' {n : ℕ} (f : Fin n → ℝ) (R : ℝ) (h0 : ∀ i, 0 ≤ f i) (h : ∀ i, f i ≤ R) :
     ∏ i, f i ≤ R ^ n := by
-  calc _ ≤ ∏ _a : Fin n, R := Finset.prod_le_prod (fun i _ => h0 i) fun i _ => h i
+  calc _ ≤ ∏ _a : Fin n, R := Finset.prod_le_prod₀ (fun i _ => h0 i) fun i _ => h i
     _ = _ := by simp
 
 def formE {n : ℕ} (H : Matrix (Fin n) (Fin n) ℂ) :

@@ -209,7 +209,7 @@ theorem smallGen_fsH (y : (Σ k, ι k) → Ω) : SmallGen y (fsH ι) := by
     have hH : (fsH ι).h z = ∏ k, ‖WithLp.toLp 2 (fun i => z ⟨k, i⟩)‖ := by
       simp [fsH, HermLine.ofMetrics, fsMetric]
     rw [hH]
-    refine Finset.prod_le_prod (fun k _ => norm_nonneg _) fun k _ => ?_
+    refine Finset.prod_le_prod₀ (fun k _ => norm_nonneg _) fun k _ => ?_
     have := PiLp.norm_apply_le (WithLp.toLp 2 (fun i => z ⟨k, i⟩)) ((e.symm j) k)
     rwa [PiLp.toLp_apply] at this
 

@@ -41,7 +41,7 @@ theorem mem_smul_of_isHomogeneous_of_coeff_mem {J : Ideal R} {Q : Submodule R (M
     (hp : p.IsHomogeneous n) (hJ : ∀ m, p.coeff m ∈ J) : p ∈ J • Q := by
   rw [p.as_sum]
   refine Submodule.sum_mem _ fun m hm => ?_
-  have h1 : monomial m (coeff m p) = coeff m p • monomial m (1 : R) := by
+  have h1 : monomial m (AddMonoidAlgebra.coeff p m) = AddMonoidAlgebra.coeff p m • monomial m (1 : R) := by
     rw [smul_monomial, smul_eq_mul, mul_one]
   rw [h1]
   refine Submodule.smul_mem_smul (hJ m) (hQ m ?_)
@@ -239,7 +239,7 @@ theorem map_algebraMap_quotient_ne_top [IsDomain o] (I : Ideal (MvPolynomial σ 
     intro p hp
     have h1 := homogeneousComponent_mem_of_mem hI hp 0
     rw [homogeneousComponent_zero, ← Ideal.Quotient.eq_zero_iff_mem] at h1
-    have h2 : coeff 0 p • (1 : MvPolynomial σ o ⧸ I) = 0 := by
+    have h2 : AddMonoidAlgebra.coeff p 0 • (1 : MvPolynomial σ o ⧸ I) = 0 := by
       rw [← Algebra.algebraMap_eq_smul_one]; exact h1
     exact (smul_eq_zero.mp h2).resolve_right one_ne_zero
   intro h

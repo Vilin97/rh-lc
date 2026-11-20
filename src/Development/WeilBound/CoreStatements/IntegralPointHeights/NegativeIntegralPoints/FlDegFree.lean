@@ -63,7 +63,7 @@ theorem base (II : IntersectionSystem) (hII : IsFullIntersectionSystem II) [Fint
 theorem coeff_formPoly_sym {σ : Type} [Fintype σ] [DecidableEq σ] (n : ℕ) (a : (Fin n → σ) → ℝ)
     (hsym : ∀ (π : Equiv.Perm (Fin n)) (w : Fin n → σ), a (w ∘ π) = a w) (w₀ : Fin n → σ) (m : σ →₀ ℕ)
     (hm : ∀ p, m p = (Finset.univ.filter fun r => w₀ r = p).card) :
-    coeff m (PB.formPoly n a) * ∏ p, ((m p).factorial : ℝ) = (n.factorial : ℝ) * a w₀ :=
+    AddMonoidAlgebra.coeff (PB.formPoly n a) m * ∏ p, ((m p).factorial : ℝ) = (n.factorial : ℝ) * a w₀ :=
   GlobalTheory.T.symmetric_form_polynomial_coeff σ n a hsym w₀ m hm
 
 theorem toWt_injective (Ψ : Type) (N : ℕ) :
@@ -72,7 +72,7 @@ theorem toWt_injective (Ψ : Type) (N : ℕ) :
 theorem toWt_gapDelta (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) :
     PB.toWt (gapDelta Ψ N) = GroundTheory.Heights₂.Heights.antisymDelta Ψ N := GlobalTheory.T.weight_gap_delta_eq_antisymmetric Ψ N
 
-theorem coeff_gapDelta (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) : coeff (rhoM Ψ N) (gapDelta Ψ N) = 1 :=
+theorem coeff_gapDelta (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) : AddMonoidAlgebra.coeff (gapDelta Ψ N) (rhoM Ψ N) = 1 :=
   GlobalTheory.T.rho_coeff_gap_delta_one Ψ N
 
 theorem prod_rhoM (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) :

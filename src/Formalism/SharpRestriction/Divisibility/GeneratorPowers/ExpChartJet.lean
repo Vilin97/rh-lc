@@ -56,7 +56,7 @@ private lemma mono_mem_lemma_2 {κ : Type} (m : ℕ) (e : κ →₀ ℕ) (c : R)
   exact Ideal.prod_mem_prod fun j _ => Ideal.pow_mem_pow (hX j) _
 
 private lemma mem_of_coeff_lemma_3 {κ : Type} (m : ℕ) (Q : MvPolynomial κ R)
-    (h : ∀ e : κ →₀ ℕ, (e.sum fun _ k => k) ≤ m → MvPolynomial.coeff e Q = 0) : Q ∈ orig R κ ^ (m + 1) := by
+    (h : ∀ e : κ →₀ ℕ, (e.sum fun _ k => k) ≤ m → AddMonoidAlgebra.coeff Q e = 0) : Q ∈ orig R κ ^ (m + 1) := by
   rw [MvPolynomial.as_sum Q]
   refine Ideal.sum_mem _ fun e he => mono_mem_lemma_2 m e _ ?_
   by_contra hlt
@@ -81,7 +81,7 @@ private lemma mem_degLE_lemma_5 {κ : Type} [Fintype κ] [DecidableEq κ] (m : �
 
 private lemma coeff_psTrunc_lemma_4 {κ : Type} [Fintype κ] [DecidableEq κ] (m : ℕ) (f : MvPowerSeries κ R)
     (e : κ →₀ ℕ) :
-    MvPolynomial.coeff e (psTrunc m f) = if e ∈ degLE m then MvPowerSeries.coeff e f else 0 := by
+    AddMonoidAlgebra.coeff (psTrunc m f) e = if e ∈ degLE m then MvPowerSeries.coeff e f else 0 := by
   unfold psTrunc
   rw [MvPolynomial.coeff_sum]
   simp only [MvPolynomial.coeff_monomial]

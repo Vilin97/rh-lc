@@ -236,7 +236,7 @@ def fibrePoly (k : ℕ) : MvPolynomial (Fin 3) ℝ :=
         X i * C (fun p : Sphere2 × Sphere2 => ((if r = 0 then p.1 else p.2 : Sphere2) : E3) i))
       (gMixed k)
   ∑ μ ∈ Q.support,
-    monomial μ (∫ p, kernelL ⟪(p.1 : E3), (p.2 : E3)⟫_ℝ * coeff μ Q p ∂pairMeasure)
+    monomial μ (∫ p, kernelL ⟪(p.1 : E3), (p.2 : E3)⟫_ℝ * AddMonoidAlgebra.coeff Q μ p ∂pairMeasure)
 
 def FibreIntegralInvariant.Statement : Prop :=
   (∀ (k : ℕ) (a : E3),

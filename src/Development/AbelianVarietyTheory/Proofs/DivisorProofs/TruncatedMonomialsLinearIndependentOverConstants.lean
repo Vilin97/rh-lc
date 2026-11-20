@@ -30,17 +30,17 @@ theorem truncMono_eq_zero {p : ℕ} [Fact p.Prime] {k A : Type} [Field k] [CommR
     (hB : ∀ i, ∀ b ∈ B, E i b = 0) :
     ∀ n : ℕ, ∀ F : MvPolynomial (Fin d) B,
       (∀ m ∈ F.support, (∀ i, m i < p) ∧ ∑ i, m i ≤ n) → aeval x F = 0 → F = 0 := by
-  have hconst : ∀ F : MvPolynomial (Fin d) B, (∀ m, m ≠ 0 → coeff m F = 0) →
+  have hconst : ∀ F : MvPolynomial (Fin d) B, (∀ m, m ≠ 0 → AddMonoidAlgebra.coeff F m = 0) →
       aeval x F = 0 → F = 0 := by
     intro F hc hF
-    have hFC : F = C (coeff 0 F) := by
+    have hFC : F = C (AddMonoidAlgebra.coeff F 0) := by
       refine MvPolynomial.ext _ _ (fun m => ?_)
       rw [coeff_C]
       by_cases hm : m = 0
       · subst hm; simp
       · rw [if_neg (Ne.symm hm)]; exact hc m hm
     rw [hFC, aeval_C] at hF
-    have h0 : coeff 0 F = 0 := Subtype.ext (by simpa using hF)
+    have h0 : AddMonoidAlgebra.coeff F 0 = 0 := Subtype.ext (by simpa using hF)
     rw [hFC, h0, C_0]
   intro n
   induction n with
@@ -110,7 +110,7 @@ theorem truncMono_linearIndependent : ∀ (p : ℕ) [Fact p.Prime] (k A : Type) 
     have := congrArg (fun f : Fin d →₀ ℕ => f i) hab
     simpa [toF] using this
   let F : MvPolynomial (Fin d) B := ∑ a, monomial (toF a) (g a)
-  have hcoeff : ∀ m, coeff m F = ∑ a, if toF a = m then g a else 0 := by
+  have hcoeff : ∀ m, AddMonoidAlgebra.coeff F m = ∑ a, if toF a = m then g a else 0 := by
     intro m
     simp only [F, coeff_sum, coeff_monomial]
   have hF : aeval x F = 0 := by

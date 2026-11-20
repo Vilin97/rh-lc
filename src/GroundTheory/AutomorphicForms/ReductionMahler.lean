@@ -299,7 +299,7 @@ theorem exists_isCompact_forall_of_pos_le_height {ε : ℝ} (hε : 0 < ε) :
                   rw [Finset.prod_const, Finset.card_erase_of_mem (Finset.mem_univ i),
                     Finset.card_univ, Fintype.card_fin, Nat.add_sub_cancel]
               _ ≤ ∏ j ∈ Finset.univ.erase i, r j ^ d :=
-                  Finset.prod_le_prod (fun _ _ => hLρ0.le) fun j _ => hlow j
+                  Finset.prod_le_prod₀ (fun _ _ => hLρ0.le) fun j _ => hlow j
         _ = ∏ j, r j ^ d := Finset.mul_prod_erase _ (fun j => r j ^ d) (Finset.mem_univ i)
         _ ≤ m₀⁻¹ := hprod
     have hbox : ∀ i, r i ∈ Icc Lb Ub := fun i => by

@@ -352,7 +352,7 @@ theorem rows_term_L2dec {C' Cl Cg cb Cu cT CT C0 A Cpr C C2 Ch CV δ δm : ℝ}
     have h1 : 0 ≤ nV D (Tu D u) (Tu D u') (ZhatL (X.fl t) (X.fl' t)) τ := by
       unfold nV; exact D.R.k_even.pow_nonneg _
     exact div_nonneg (mul_nonneg h1 (d_hsNormSq_nonneg _)) (Nat.cast_nonneg _)
-  have P := Finset.prod_le_prod (s := Finset.univ) (fun τ _ => nn τ) (fun τ _ => each τ)
+  have P := Finset.prod_le_prod₀ (s := Finset.univ) (fun τ _ => nn τ) (fun τ _ => each τ)
   rw [Finset.prod_div_distrib, Finset.prod_mul_distrib, Finset.prod_mul_distrib, Finset.prod_mul_distrib,
     Finset.prod_inv_distrib, d_dims Y hH.1 ha hb,
     Real.finsetProd_rpow _ _ (fun τ _ => rows_sizeV_nonneg _ _ _ _), d_size_eq Y hrd hCh t] at P
@@ -469,7 +469,7 @@ theorem rows_term_MINdec {C' Cl Cg cb Cu cT CT C0 A Cpr C C2 Ch CV δm : ℝ}
       unfold nV; exact D.R.k_even.pow_nonneg _
     exact div_nonneg (mul_nonneg (mul_nonneg (mul_nonneg h1 (d_hsNormSq_nonneg _)) ((even_two_mul _).pow_nonneg _))
       (inv_nonneg.2 (D.R.k_even.pow_nonneg _))) (Nat.cast_nonneg _)
-  have P := Finset.prod_le_prod (s := Finset.univ) (fun τ _ => nn τ) (fun τ _ => each τ)
+  have P := Finset.prod_le_prod₀ (s := Finset.univ) (fun τ _ => nn τ) (fun τ _ => each τ)
   rw [rows_prod4, rows_prod4', D.what₂.card_Tau, d_dims Y hH.1 ha hb,
     Real.finsetProd_rpow _ _ (fun τ _ => rows_sizeV_nonneg _ _ _ _), d_size_eq Y hrd hCh t] at P
   have e : aT X t ^ 2 = Y.volR t ^ 2 * ∏ τ, hsNormSq ((Y.A τ).J (Y.νR t τ) (Y.γ t τ)) := by
@@ -544,7 +544,7 @@ theorem rows_term_MINIdec {C' Cl Cg cb Cu cT CT C0 A Cpr C C2 Ch CV δ δm : ℝ
     have h1 : 0 ≤ nV D (Tu D u) (Tu D u') (ZhatL (X.fl t) (X.fl' t)) τ := by
       unfold nV; exact D.R.k_even.pow_nonneg _
     exact div_nonneg (mul_nonneg h1 (d_hsNormSq_nonneg _)) (Nat.cast_nonneg _)
-  have P := Finset.prod_le_prod (s := Finset.univ) (fun τ _ => nn τ) (fun τ _ => each τ)
+  have P := Finset.prod_le_prod₀ (s := Finset.univ) (fun τ _ => nn τ) (fun τ _ => each τ)
   rw [rows_prod5, Finset.prod_div_distrib, Finset.prod_mul_distrib, d_dims Y hH.1 ha hb,
     Real.finsetProd_rpow _ _ (fun τ _ => rows_sizeV_nonneg _ _ _ _), d_size_eq Y hrd hCh t] at P
   have e : aT X t ^ 2 = Y.volR t ^ 2 * ∏ τ, hsNormSq ((Y.A τ).J (Y.νR t τ) (Y.γ t τ)) := by
@@ -876,7 +876,7 @@ theorem rowsT_small_one {ι : Type*} [Fintype ι] (s : ι → ℝ) (T T' g : ℝ
       _ = T' / g * g := by rw [h3]
       _ = T' := by field_simp
   calc ∏ v, min (T' * s v ^ 2) T' ≤ ∏ v, (T' * s v) :=
-        Finset.prod_le_prod (fun v _ => le_min (mul_nonneg hT'.le (sq_nonneg _)) hT'.le)
+        Finset.prod_le_prod₀ (fun v _ => le_min (mul_nonneg hT'.le (sq_nonneg _)) hT'.le)
           (fun v _ => hv v)
     _ = T' ^ Fintype.card ι * ∏ v, s v := by
         rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ]
@@ -1112,7 +1112,7 @@ theorem rowsT_Mt_small {C δ C₁ C₂ : ℝ} (hrd : 0 < D.host.rdE) (t : D.s.Te
     unfold ampMinF
     rw [if_neg fun h => hD ((rows_Dr_zero_iff Y hrd t τ).1 h)]
     exact le_min zero_le_one (by have := hν τ; have := htv τ; positivity)
-  have P := Finset.prod_le_prod (s := Finset.univ) (fun τ _ => nn τ) (fun τ _ => each τ)
+  have P := Finset.prod_le_prod₀ (s := Finset.univ) (fun τ _ => nn τ) (fun τ _ => each τ)
   rw [Finset.prod_mul_distrib, Finset.prod_mul_distrib, Finset.prod_mul_distrib, Finset.prod_const, Finset.prod_const,
     Finset.card_univ, D.what₂.card_Tau] at P
   unfold rows_Mt

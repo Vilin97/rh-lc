@@ -57,7 +57,7 @@ theorem hasSum_fderiv_series {f : (σ → ℂ) → ℂ} {c : (σ →₀ ℕ) →
       simp only [Pi.add_apply, Pi.smul_apply]
       fun_prop) Metric.isOpen_ball (fun α t ht => by
       rw [norm_mul, norm_prod]
-      refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun j _ => ?_)
+      refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun j _ => ?_)
         (norm_nonneg _)
       rw [norm_pow]
       exact pow_le_pow_left₀ (norm_nonneg _) ((norm_le_pi_norm _ j).trans (hn t ht).le) _)
@@ -146,7 +146,7 @@ theorem eventually_summable_of_ne_zero {c : (σ →₀ ℕ) → ℂ}
   filter_upwards [hev] with z hz
   refine Summable.of_norm_bounded hs.norm fun α => ?_
   rw [norm_mul, norm_mul, norm_prod, norm_prod]
-  refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun j _ => ?_)
+  refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun j _ => ?_)
     (norm_nonneg _)
   rw [norm_pow, norm_pow]
   exact pow_le_pow_left₀ (norm_nonneg _) (hz j).le _
@@ -193,7 +193,7 @@ theorem taylor_tsum (D : D7) {N N' : ℕ} (c : Mono D N N' → ℂ)
   exact hz.hasSum
 
 theorem coeff_minorPol_int (D : D7) {N N' : ℕ} {n : D.what₂.Tau → ℕ} (T : Tup D N N' n)
-    (α : Mono D N N') : ∃ k : ℤ, MvPolynomial.coeff α (minorPol D T) = k := by
+    (α : Mono D N N') : ∃ k : ℤ, AddMonoidAlgebra.coeff (minorPol D T) α = k := by
   have h : minorPol D T = MvPolynomial.map (Int.castRingHom ℂ)
       (∏ τ, ∏ j, (Matrix.of fun i i' : Fin N =>
         (MvPolynomial.X (τ, (T τ j).1 i, i') : MvPolynomial (GL3Theta.Idx D N N') ℤ)).det) := by

@@ -138,18 +138,18 @@ theorem diagMul_pow_apply (i : Fin k) (n : ℕ) (f : PolXY K k) :
   rw [this, h3e, LinearMap.pow_mulLeft, LinearMap.mulLeft_apply]
 
 theorem coeff_diagMul_pow (i : Fin k) (n : ℕ) (f : PolXY K k) (m : XY k →₀ ℕ) :
-    coeff m ((h3e K i ^ n) f) = if h3s i n ≤ m then coeff (m - h3s i n) f else 0 := by
+    AddMonoidAlgebra.coeff ((h3e K i ^ n) f) m = if h3s i n ≤ m then AddMonoidAlgebra.coeff f (m - h3s i n) else 0 := by
   rw [diagMul_pow_apply, coeff_monomial_mul', one_mul]
 
 theorem coeff_diagLaplacian_pow (i : Fin k) (n : ℕ) : ∀ (f : PolXY K k) (m : XY k →₀ ℕ),
-    coeff m ((h3d K i ^ n) f) = coeff (m + h3s i n) f *
+    AddMonoidAlgebra.coeff ((h3d K i ^ n) f) m = AddMonoidAlgebra.coeff f (m + h3s i n) *
       (((m (Sum.inl i) + n).descFactorial n : ℕ) * ((m (Sum.inr i) + n).descFactorial n : ℕ)) := by
   induction n with
   | zero => intro f m; simp [h3s]
   | succ n ih =>
     intro f m
     rw [pow_succ, Module.End.mul_apply, ih]
-    have h1 : coeff (m + h3s i n) (h3d K i f) = coeff (m + h3s i (n + 1)) f *
+    have h1 : AddMonoidAlgebra.coeff (h3d K i f) (m + h3s i n) = AddMonoidAlgebra.coeff f (m + h3s i (n + 1)) *
         (((m (Sum.inl i) + n + 1 : ℕ) : K) * ((m (Sum.inr i) + n + 1 : ℕ) : K)) := by
       simp only [diagLaplacian_apply, coeff_pderiv]
       have e : m + h3s i n + Finsupp.single (Sum.inl i) 1 + Finsupp.single (Sum.inr i) 1 = m + h3s i (n + 1) := by
@@ -205,7 +205,7 @@ theorem zero_mem_fockLattice (R : Subring K) : (0 : PolXY K k) ∈ FockLat R := 
 theorem add_mem_fockLattice (R : Subring K) (f g : PolXY K k) (hf : f ∈ FockLat R) (hg : g ∈ FockLat R) :
     f + g ∈ FockLat R := by
   intro m
-  rw [coeff_add, mul_add]
+  rw [MvPolynomial.coeff_add, mul_add]
   exact R.add_mem (hf m) (hg m)
 
 theorem smul_mem_fockLattice (R : Subring K) (r : K) (hr : r ∈ R) (f : PolXY K k) (hf : f ∈ FockLat R) :
@@ -222,8 +222,8 @@ theorem diagMul_divPow_mem_fockLattice (R : Subring K) (i : Fin k) (n : ℕ) (f 
   · obtain ⟨m', rfl⟩ : ∃ m', m = m' + h3s i n := ⟨m - h3s i n, (tsub_add_cancel_of_le h).symm⟩
     rw [add_tsub_cancel_right, xFactorial_add_diagExponent]
     have hn : (n.factorial : K) ≠ 0 := Nat.cast_ne_zero.2 (Nat.factorial_ne_zero n)
-    have : (((m' (Sum.inl i) + n).descFactorial n * xFact m' : ℕ) : K) * ((n.factorial : K)⁻¹ * coeff m' f) =
-        (((m' (Sum.inl i) + n).choose n : ℕ) : K) * ((xFact m' : K) * coeff m' f) := by
+    have : (((m' (Sum.inl i) + n).descFactorial n * xFact m' : ℕ) : K) * ((n.factorial : K)⁻¹ * AddMonoidAlgebra.coeff f m') =
+        (((m' (Sum.inl i) + n).choose n : ℕ) : K) * ((xFact m' : K) * AddMonoidAlgebra.coeff f m') := by
       rw [Nat.cast_mul, descFactorial_cast_eq]
       field_simp
     rw [this]
@@ -237,10 +237,10 @@ theorem diagLaplacian_divPow_mem_fockLattice (R : Subring K) (i : Fin k) (n : �
   have hn : (n.factorial : K) ≠ 0 := Nat.cast_ne_zero.2 (Nat.factorial_ne_zero n)
   have h1 := hf (m + h3s i n)
   rw [xFactorial_add_diagExponent] at h1
-  have : (xFact m : K) * ((n.factorial : K)⁻¹ * (coeff (m + h3s i n) f *
+  have : (xFact m : K) * ((n.factorial : K)⁻¹ * (AddMonoidAlgebra.coeff f (m + h3s i n) *
         ((((m (Sum.inl i) + n).descFactorial n : ℕ) : K) * (((m (Sum.inr i) + n).descFactorial n : ℕ) : K)))) =
       (((m (Sum.inr i) + n).choose n : ℕ) : K) *
-        ((((m (Sum.inl i) + n).descFactorial n * xFact m : ℕ) : K) * coeff (m + h3s i n) f) := by
+        ((((m (Sum.inl i) + n).descFactorial n * xFact m : ℕ) : K) * AddMonoidAlgebra.coeff f (m + h3s i n)) := by
     rw [Nat.cast_mul, descFactorial_cast_eq (m (Sum.inr i))]
     field_simp
   rw [this]

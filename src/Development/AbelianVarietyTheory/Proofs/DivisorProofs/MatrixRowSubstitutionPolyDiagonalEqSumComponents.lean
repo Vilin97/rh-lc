@@ -42,7 +42,7 @@ theorem rowSubst_diagonal_eq_sum_components : ∀ (O : Type) [CommRing O] (N : �
   intro O _ N R _ _ d D f hf
   classical
   have hL : rowSubst O N R (Matrix.diagonal d) f = ∑ m ∈ f.support,
-      monomial m (algebraMap O R (coeff m f) * ∏ a, d a ^ Finsupp.weight (rowW N N) m a) := by
+      monomial m (algebraMap O R (AddMonoidAlgebra.coeff f m) * ∏ a, d a ^ Finsupp.weight (rowW N N) m a) := by
     conv_lhs => rw [f.as_sum]
     rw [map_sum]
     simp_rw [mono]

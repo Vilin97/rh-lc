@@ -159,7 +159,7 @@ private lemma exists_segre_poly_lemma_6 [DecidableEq K] [∀ k, DecidableEq (ι 
       exact ⟨μ, fun _ => ⟨h1, h2⟩⟩
     · exact ⟨0, fun h => absurd h hm⟩
   choose μ hμ using hex
-  refine ⟨∑ m ∈ b.support, monomial (μ m) (coeff m b), ?_, fun z => ?_⟩
+  refine ⟨∑ m ∈ b.support, monomial (μ m) (AddMonoidAlgebra.coeff b m), ?_, fun z => ?_⟩
   · refine (totalDegree_finsetSum _ _).trans (Finset.sup_le fun m hm => ?_)
     refine (totalDegree_monomial_le _ _).trans (le_of_eq ?_)
     rw [← (hμ m hm).1, Finsupp.degree_eq_sum, Finsupp.sum_fintype]
@@ -302,8 +302,8 @@ private lemma finite_zeros_lemma_9 {V : Type} [Fintype V] [DecidableEq V] (r : V
         rw [← hαβ, monomial_add_single, map_mul, hXr, ← map_mul, (H v).as_sum, Finset.mul_sum,
           map_sum]
         refine M.sum_mem (fun γ hγ => ?_)
-        have e1 : monomial β (1 : ℂ) * monomial γ (coeff γ (H v)) =
-            coeff γ (H v) • monomial (β + γ) (1 : ℂ) := by
+        have e1 : monomial β (1 : ℂ) * monomial γ (AddMonoidAlgebra.coeff (H v) γ) =
+            AddMonoidAlgebra.coeff (H v) γ • monomial (β + γ) (1 : ℂ) := by
           rw [monomial_mul, one_mul, smul_monomial, smul_eq_mul, mul_one]
         rw [e1, map_smul]
         refine M.smul_mem _ (ih _ ?_ _ rfl)
@@ -317,7 +317,7 @@ private lemma finite_zeros_lemma_9 {V : Type} [Fintype V] [DecidableEq V] (r : V
     obtain ⟨p, rfl⟩ := Ideal.Quotient.mkₐ_surjective ℂ I x
     rw [p.as_sum, map_sum]
     refine M.sum_mem (fun α _ => ?_)
-    have e1 : monomial α (coeff α p) = coeff α p • monomial α (1 : ℂ) := by
+    have e1 : monomial α (AddMonoidAlgebra.coeff p α) = AddMonoidAlgebra.coeff p α • monomial α (1 : ℂ) := by
       rw [smul_monomial, smul_eq_mul, mul_one]
     rw [e1, map_smul]
     exact M.smul_mem _ (hstep _ α rfl)

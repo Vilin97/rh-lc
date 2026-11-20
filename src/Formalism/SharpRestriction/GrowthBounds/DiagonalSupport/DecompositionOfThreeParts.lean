@@ -183,7 +183,7 @@ theorem CoefGe.mono {F : MvPolynomial σ (KK O)} {s t : ℝ} (h : s ≤ t) (hF :
 theorem CoefGe.add {F G : MvPolynomial σ (KK O)} {t : ℝ} (hF : CoefGe p F t) (hG : CoefGe p G t) :
     CoefGe p (F + G) t := by
   intro mo
-  rw [coeff_add]
+  rw [MvPolynomial.coeff_add]
   exact geQ_add _ _ (hF mo) (hG mo)
 
 theorem CoefGe.zero (t : ℝ) : CoefGe p (0 : MvPolynomial σ (KK O)) t := by
@@ -257,7 +257,7 @@ theorem fock_add_right {σ : Type} (G T₁ T₂ : MvPolynomial σ (KK O)) : fock
   unfold fock
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun m _ => ?_
-  rw [coeff_add]; ring
+  rw [MvPolynomial.coeff_add]; ring
 
 theorem geQ_expFact [hp : Fact p.Prime] (S : UniformizedDVR p O) {n' k : ℕ} (d : Fin n' → ℕ) (α : Fin n' × Fin k →₀ ℕ)
     (hα : ∀ s, multideg α s = d s) :

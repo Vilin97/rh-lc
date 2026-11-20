@@ -71,7 +71,7 @@ theorem layer_group : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ), K.1
     omega
   refine ⟨normal_layer K s, ⟨hidx⟩, ?_, ?_⟩
   · exact (IntermediateField.fixingSubgroup_isOpen (Ks K s)).preimage continuous_subtype_val
-  · rw [hKs, ← hmul, ← hK, padicValNat.mul hidx hKpos.ne']
+  · rw [hKs, ← hmul, ← hK, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hidx hKpos.ne']
     omega
 
 end GlobalTheory.Cyc.LayerGroup

@@ -140,7 +140,7 @@ theorem core (F : Type) [Field F] [NumberField F] (hF : IsTotallyReal F) (ψ : A
     exact (hT k).2.1
   · rw [hintP, hint k]
   · rw [hfou, hintP, norm_pow, norm_prod, ← Finset.card_univ, ← Finset.prod_const]
-    exact Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => hb k _
+    exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => hb k _
   · have e : ∀ k, fouP ψ Bm P (powT (testT (ρ k) S (U k))) y / ∫ x, powT (testT (ρ k) S (U k)) x ∂P =
         ∏ i, fouA ψ ν (testT (ρ k) S (U k)) (Bm.mulVec y i) / ∫ w, testT (ρ k) S (U k) w ∂ν := fun k => by
       rw [hfou, hintP, ← Finset.card_univ, ← Finset.prod_const, Finset.prod_div_distrib]

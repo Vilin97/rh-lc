@@ -20,7 +20,7 @@ theorem eval_pairing (y : Fin n → ℂ) (u : Fin 1 × Fin n → ℂ) :
   simp [pairing]
 
 theorem coeff_pairing (y : Fin n → ℂ) (j : Fin n) :
-    coeff (Finsupp.single ((0 : Fin 1), j) 1) (pairing y) = y j := by
+    AddMonoidAlgebra.coeff (pairing y) (Finsupp.single ((0 : Fin 1), j) 1) = y j := by
   classical
   simp [pairing, coeff_sum, coeff_C_mul, coeff_X, Finsupp.single_eq_single_iff]
 
@@ -102,7 +102,7 @@ theorem eq_smul_of_associated {x y : Fin n → ℂ} (h : Associated (pairing y) 
   obtain ⟨u, hu⟩ := h
   obtain ⟨c, -, hc⟩ := (isUnit_iff_eq_C_of_isReduced).mp u.isUnit
   refine ⟨c, funext fun j => ?_⟩
-  have h := congrArg (coeff (Finsupp.single ((0 : Fin 1), j) 1)) hu
+  have h := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single ((0 : Fin 1), j) 1)) hu
   rw [hc, mul_comm, coeff_C_mul, coeff_pairing, coeff_pairing] at h
   rw [← h, Pi.smul_apply, smul_eq_mul, mul_comm]
 

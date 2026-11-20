@@ -13,7 +13,7 @@ def Ed (K : Type) [Field K] (k d : ℕ) (a b : Fin k) :
     rw [mem_homogeneousSubmodule]
     rcases Nat.eq_zero_or_pos d with h0 | h0
     · subst h0
-      have : (F : MvPolynomial (Fin k) K) = C (coeff 0 (F : MvPolynomial (Fin k) K)) :=
+      have : (F : MvPolynomial (Fin k) K) = C (AddMonoidAlgebra.coeff (F : MvPolynomial (Fin k) K) 0) :=
         (totalDegree_eq_zero_iff_eq_C).1 (Nat.le_zero.1 hF.totalDegree_le)
       rw [this, pderiv_C, mul_zero]
       exact isHomogeneous_zero _ _ _

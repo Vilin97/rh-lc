@@ -22,7 +22,7 @@ theorem ker_aeval_zero (k : Type) [Field k] (d : ℕ) :
     have hm0 : m = 0 := by ext i; simpa using h i (Set.mem_univ i)
     subst hm0
     rw [RingHom.mem_ker] at hp
-    have : aeval (R := k) (fun _ : Fin d ↦ (0 : k)) p = coeff 0 p := by
+    have : aeval (R := k) (fun _ : Fin d ↦ (0 : k)) p = AddMonoidAlgebra.coeff p 0 := by
       rw [show (fun _ : Fin d ↦ (0 : k)) = 0 from rfl, MvPolynomial.aeval_zero]
       simp [MvPolynomial.constantCoeff_eq]
     exact (mem_support_iff.mp hm) (this ▸ hp)

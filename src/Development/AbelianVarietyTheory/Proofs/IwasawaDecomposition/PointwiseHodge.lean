@@ -13,7 +13,7 @@ namespace GlobalTheory.PointHodge
 
 theorem chernTop_add {n : ℕ} {ι : Type} {m : ι → ℕ} (G : ReciprocityTheory.L2DbarEstimates.V n → FlagBundle.Mat m ℂ) (v : ReciprocityTheory.L2DbarEstimates.V n)
     (P Q : MvPolynomial (ι × ℕ) ℝ) : chernTop (P + Q) G v = chernTop P G v + chernTop Q G v := by
-  simp only [chernTop, map_add, topCoeff, coeff_add, mul_add, Finset.sum_add_distrib, Complex.add_re]
+  simp only [chernTop, map_add, topCoeff, MvPolynomial.coeff_add, mul_add, Finset.sum_add_distrib, Complex.add_re]
 
 theorem chernTop_smul {n : ℕ} {ι : Type} {m : ι → ℕ} (G : ReciprocityTheory.L2DbarEstimates.V n → FlagBundle.Mat m ℂ) (v : ReciprocityTheory.L2DbarEstimates.V n)
     (r : ℝ) (P : MvPolynomial (ι × ℕ) ℝ) : chernTop (r • P) G v = r * chernTop P G v := by

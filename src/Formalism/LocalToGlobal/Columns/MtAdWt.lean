@@ -151,7 +151,7 @@ theorem mtwUniv_map (M : ι → Matrix (Fin n) (Fin n) ℂ) (F : Pol ℂ ι n) :
 
 def mtwCf (ℓ : Pol ℂ ι n →ₗ[ℂ] ℂ)
     (Q : MvPolynomial (ι × Fin n × Fin n) (MvPolynomial (ι × Fin n × Fin n) ℂ)) : MvPolynomial (ι × Fin n × Fin n) ℂ :=
-  ∑ m ∈ Q.support, coeff m Q * C (ℓ (monomial m 1))
+  ∑ m ∈ Q.support, AddMonoidAlgebra.coeff Q m * C (ℓ (monomial m 1))
 
 theorem mtwCf_eval (ℓ : Pol ℂ ι n →ₗ[ℂ] ℂ) (y : ι × Fin n × Fin n → ℂ)
     (Q : MvPolynomial (ι × Fin n × Fin n) (MvPolynomial (ι × Fin n × Fin n) ℂ)) :
@@ -159,8 +159,8 @@ theorem mtwCf_eval (ℓ : Pol ℂ ι n →ₗ[ℂ] ℂ) (y : ι × Fin n × Fin 
   conv_rhs => rw [Q.as_sum]
   simp only [mtwCf, map_sum, MvPolynomial.map_monomial, map_mul, MvPolynomial.eval_C]
   refine Finset.sum_congr rfl fun m _ => ?_
-  have hm : (monomial m (eval y (coeff m Q)) : MvPolynomial (ι × Fin n × Fin n) ℂ) =
-      eval y (coeff m Q) • monomial m 1 := by
+  have hm : (monomial m (eval y (AddMonoidAlgebra.coeff Q m)) : MvPolynomial (ι × Fin n × Fin n) ℂ) =
+      eval y (AddMonoidAlgebra.coeff Q m) • monomial m 1 := by
     rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
   rw [hm, LinearMap.map_smul, smul_eq_mul]
 

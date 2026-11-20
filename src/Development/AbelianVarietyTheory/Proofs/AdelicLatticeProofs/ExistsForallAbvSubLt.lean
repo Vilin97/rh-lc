@@ -18,7 +18,7 @@ theorem _root_.GlobalTheory.LocalQuad.Approx.exists_forall_abv_sub_lt {F : Type*
     (fun i ↦ WithAbs.toAbs (v i) (z i)) hε
   refine ⟨x, fun i ↦ ?_⟩
   have hi := (dist_pi_lt_iff hε).1 hx i
-  rw [dist_eq_norm, WithAbs.norm_eq_abv] at hi
+  rw [dist_eq_norm, WithAbs.norm_eq_apply_ofAbs] at hi
   convert hi using 2
   rfl
 

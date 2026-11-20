@@ -338,9 +338,9 @@ theorem pol_iff_eul {N r : ℕ} (LL : Letters N) (x : MvPolynomial (Fin N × Fin
   · intro h i
     exact ProjS.eulL_of_support _ _ _ (fun m hm => h (Finset.mem_coe.mpr hm) i)
   · intro h m hm i
-    have hc := congrArg (coeff m) (h i)
+    have hc := congrArg (AddMonoidAlgebra.coeff · m) (h i)
     rw [ProjS.coeff_eulL, coeff_smul, smul_eq_mul] at hc
-    have hne : coeff m x ≠ 0 := mem_support_iff.mp hm
+    have hne : AddMonoidAlgebra.coeff x m ≠ 0 := mem_support_iff.mp hm
     have h2 : (∑ c, (m (i, c) : ℚ_[p])) = (LL.deg i : ℚ_[p]) :=
       mul_left_cancel₀ hne (hc.trans (mul_comm _ _))
     exact_mod_cast h2
@@ -730,7 +730,7 @@ section Wt
 variable {p : ℕ} [Fact p.Prime] {N r : ℕ}
 
 private theorem coeff_XD_lemma (v : Fin N × Fin r) (x : MvPolynomial (Fin N × Fin r) ℚ_[p])
-    (m : Fin N × Fin r →₀ ℕ) : coeff m (X v * pderiv v x) = (m v : ℚ_[p]) * coeff m x := by
+    (m : Fin N × Fin r →₀ ℕ) : AddMonoidAlgebra.coeff (X v * pderiv v x) m = (m v : ℚ_[p]) * AddMonoidAlgebra.coeff x m := by
   induction x using MvPolynomial.induction_on'
   · rename_i n a
     rw [pderiv_monomial, X, monomial_mul, one_mul, coeff_monomial, coeff_monomial]
@@ -750,22 +750,22 @@ private theorem coeff_XD_lemma (v : Fin N × Fin r) (x : MvPolynomial (Fin N × 
       · subst h; ring
       · simp
   · rename_i f g hf hg
-    simp only [map_add, mul_add, coeff_add, hf, hg]
+    simp only [map_add, mul_add, MvPolynomial.coeff_add, hf, hg]
 
 theorem coeff_cartan (LL : Letters N) (j : ℕ) (c : Fin r) (x : MvPolynomial (Fin N × Fin r) ℚ_[p])
-    (m : Fin N × Fin r →₀ ℕ) : coeff m (glAct p LL j c c x) = ((wt LL j c m : ℤ) : ℚ_[p]) * coeff m x := by
+    (m : Fin N × Fin r →₀ ℕ) : AddMonoidAlgebra.coeff (glAct p LL j c c x) m = ((wt LL j c m : ℤ) : ℚ_[p]) * AddMonoidAlgebra.coeff x m := by
   unfold glAct
   rw [LinearMap.sum_apply, coeff_sum, wt_eq, Int.cast_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun i _ => ?_
   by_cases h : (i : ℕ) < j
   · by_cases hv : LL.vec i = true
     · simp only [if_pos h, if_pos hv]
-      show coeff m (X (i, c) * pderiv (i, c) x) = _
+      show AddMonoidAlgebra.coeff (X (i, c) * pderiv (i, c) x) m = _
       rw [coeff_XD_lemma]
       push_cast
       ring
     · simp only [if_pos h, if_neg hv, LinearMap.neg_apply, coeff_neg]
-      show -coeff m (X (i, c) * pderiv (i, c) x) = _
+      show -AddMonoidAlgebra.coeff (X (i, c) * pderiv (i, c) x) m = _
       rw [coeff_XD_lemma]
       push_cast
       ring
@@ -778,7 +778,7 @@ theorem cartan_eig (LL : Letters N) (j : ℕ) (μ : Fin r → ℤ) (x : MvPolyno
   rw [MvPolynomial.mem_restrictSupport_iff] at hx
   ext m
   rw [coeff_cartan, coeff_smul, smul_eq_mul]
-  by_cases hm : coeff m x = 0
+  by_cases hm : AddMonoidAlgebra.coeff x m = 0
   · rw [hm, mul_zero, mul_zero]
   · have h2 : ∀ c ∈ univ, wt LL j c m = μ c := hx (MvPolynomial.mem_support_iff.mpr hm)
     rw [h2 c (Finset.mem_univ c)]
@@ -789,7 +789,7 @@ theorem eig_supp (LL : Letters N) (j : ℕ) (c : Fin r) (k : ℤ) (y : MvPolynom
   rw [MvPolynomial.mem_restrictSupport_iff]
   intro m hm
   simp only [Finset.mem_coe, MvPolynomial.mem_support_iff] at hm
-  have h1 := congrArg (coeff m) hy
+  have h1 := congrArg (AddMonoidAlgebra.coeff · m) hy
   rw [coeff_cartan, coeff_smul, smul_eq_mul] at h1
   have h2 : ((wt LL j c m : ℤ) : ℚ_[p]) = ((k : ℤ) : ℚ_[p]) := mul_right_cancel₀ hm h1
   show wt LL j c m = k
@@ -819,13 +819,13 @@ theorem comm_preserves_weight_le [NeZero r] (LL : Letters N) (j : ℕ) (Mt : Wit
   intro x hx
   rw [x.as_sum, map_sum]
   refine Submodule.sum_mem _ fun m hm => ?_
-  have hmon : glAct p LL j 0 0 (monomial m (coeff m x)) = ((wt LL j 0 m : ℤ) : ℚ_[p]) • monomial m (coeff m x) := by
+  have hmon : glAct p LL j 0 0 (monomial m (AddMonoidAlgebra.coeff x m)) = ((wt LL j 0 m : ℤ) : ℚ_[p]) • monomial m (AddMonoidAlgebra.coeff x m) := by
     ext m'
     rw [coeff_cartan, coeff_smul, coeff_monomial, smul_eq_mul]
     split_ifs with h
     · rw [h]
     · simp
-  have h1 : glAct p LL j 0 0 (T (monomial m (coeff m x))) = ((wt LL j 0 m : ℤ) : ℚ_[p]) • T (monomial m (coeff m x)) := by
+  have h1 : glAct p LL j 0 0 (T (monomial m (AddMonoidAlgebra.coeff x m))) = ((wt LL j 0 m : ℤ) : ℚ_[p]) • T (monomial m (AddMonoidAlgebra.coeff x m)) := by
     rw [← hT, hmon, map_smul]
   have h2 := eig_supp LL j 0 _ _ h1
   rw [mem_restrictSupport_iff] at h2 ⊢
@@ -1286,11 +1286,11 @@ variable {K σ : Type} [Field K]
 open Classical in
 
 noncomputable def compP (Pr : (σ →₀ ℕ) → Prop) (x : MvPolynomial σ K) : MvPolynomial σ K :=
-  ∑ m ∈ x.support, if Pr m then monomial m (coeff m x) else 0
+  ∑ m ∈ x.support, if Pr m then monomial m (AddMonoidAlgebra.coeff x m) else 0
 
 open Classical in
 theorem coeff_compP (Pr : (σ →₀ ℕ) → Prop) (x : MvPolynomial σ K) (m : σ →₀ ℕ) :
-    coeff m (compP Pr x) = if Pr m then coeff m x else 0 := by
+    AddMonoidAlgebra.coeff (compP Pr x) m = if Pr m then AddMonoidAlgebra.coeff x m else 0 := by
   classical
   unfold compP
   rw [coeff_sum, Finset.sum_eq_single m]
@@ -1317,7 +1317,7 @@ theorem compP_congr (Pr Qr : (σ →₀ ℕ) → Prop) (h : ∀ m, Pr m ↔ Qr m
   rfl
 
 theorem vdm (H : MvPolynomial σ K →ₗ[K] MvPolynomial σ K) (f : (σ →₀ ℕ) → ℤ) [CharZero K]
-    (hH : ∀ x m, coeff m (H x) = ((f m : ℤ) : K) * coeff m x) (S : Submodule K (MvPolynomial σ K))
+    (hH : ∀ x m, AddMonoidAlgebra.coeff (H x) m = ((f m : ℤ) : K) * AddMonoidAlgebra.coeff x m) (S : Submodule K (MvPolynomial σ K))
     (hS : ∀ x ∈ S, H x ∈ S) : ∀ x ∈ S, ∀ k : ℤ, compP (fun m => f m = k) x ∈ S := by
   intro x hx k
   suffices key : ∀ t : Finset ℤ, ∀ x ∈ S, (∀ m ∈ x.support, f m ∈ t) →
@@ -1341,14 +1341,14 @@ theorem vdm (H : MvPolynomial σ K →ₗ[K] MvPolynomial σ K) (f : (σ →₀ 
   | @insert a t ha ih =>
     intro x hx hsupp
     have hyS : H x - ((a : ℤ) : K) • x ∈ S := S.sub_mem (hS x hx) (S.smul_mem _ hx)
-    have hy : ∀ m, coeff m (H x - ((a : ℤ) : K) • x) = (((f m : ℤ) : K) - ((a : ℤ) : K)) * coeff m x := by
+    have hy : ∀ m, AddMonoidAlgebra.coeff (H x - ((a : ℤ) : K) • x) m = (((f m : ℤ) : K) - ((a : ℤ) : K)) * AddMonoidAlgebra.coeff x m := by
       intro m
       rw [coeff_sub, coeff_smul, smul_eq_mul, hH]
       ring
     have hysupp : ∀ m ∈ (H x - ((a : ℤ) : K) • x).support, f m ∈ t := by
       intro m hm
       rw [MvPolynomial.mem_support_iff, hy] at hm
-      have hxm : coeff m x ≠ 0 := right_ne_zero_of_mul hm
+      have hxm : AddMonoidAlgebra.coeff x m ≠ 0 := right_ne_zero_of_mul hm
       have hfa : f m ≠ a := by
         intro h
         apply hm
@@ -1376,7 +1376,7 @@ theorem vdm (H : MvPolynomial σ K →ₗ[K] MvPolynomial σ K) (f : (σ →₀ 
       have hdec : compP (fun m => f m = a) x = x - ∑ k' ∈ t, compP (fun m => f m = k') x := by
         ext m
         simp only [coeff_sub, coeff_sum, coeff_compP]
-        by_cases hc : coeff m x = 0
+        by_cases hc : AddMonoidAlgebra.coeff x m = 0
         · simp [hc]
         · have hm := hsupp m (MvPolynomial.mem_support_iff.mpr hc)
           rw [Finset.mem_insert] at hm
@@ -1467,7 +1467,7 @@ theorem exists_hw (LL : Letters N) (j : ℕ) (S : Submodule ℚ_[p] (MvPolynomia
   have hne : (hWfin.toFinset).Nonempty := by
     refine ⟨wv m0, hWfin.mem_toFinset.mpr ⟨_, wcomp_mem LL j S (fun c => hS c c) (wv m0) x hx, ?_, ?_⟩⟩
     · intro h0
-      have := congrArg (coeff m0) h0
+      have := congrArg (AddMonoidAlgebra.coeff · m0) h0
       rw [coeff_compP, if_pos (fun c => rfl), coeff_zero] at this
       exact (mem_support_iff.mp hm0) this
     · rw [WtSpC, mem_restrictSupport_iff]
@@ -1553,7 +1553,7 @@ theorem ycond_min [NeZero r] (LL : Letters N) (j : ℕ) (Mt : WithTop ℤ) :
   rw [h1, wt_min LL j 0]
 
 theorem intPol_norm {σ : Type} (x : MvPolynomial σ ℚ_[p]) (hx : x ∈ IntPol p σ) (m : σ →₀ ℕ) :
-    ‖coeff m x‖ ≤ 1 := by
+    ‖AddMonoidAlgebra.coeff x m‖ ≤ 1 := by
   obtain ⟨P, rfl⟩ := LinearMap.mem_range.mp hx
   simp only [AlgHom.toLinearMap_apply, mapAlgHom_apply, coeff_map]
   exact PadicInt.norm_le_one _
@@ -1561,20 +1561,20 @@ theorem intPol_norm {σ : Type} (x : MvPolynomial σ ℚ_[p]) (hx : x ∈ IntPol
 theorem prim_unit_coeff [NeZero r] (LL : Letters N) {q : ℕ} (J : Fin q → ℕ) (M : Fin q → WithTop ℤ)
     (z : MvPolynomial (Fin N × Fin r) ℚ_[p]) (hz : z ∈ YZ p (r := r) LL J M)
     (hprim : ∀ (c : ℤ_[p]) (x : MvPolynomial (Fin N × Fin r) ℚ_[p]), x ∈ YZ p (r := r) LL J M → z = c • x → IsUnit c) :
-    ∃ m, ‖coeff m z‖ = 1 := by
+    ∃ m, ‖AddMonoidAlgebra.coeff z m‖ = 1 := by
   have hzI : z ∈ IntPol p (Fin N × Fin r) := (Submodule.mem_inf.mp (Submodule.mem_inf.mp hz).2).2
   by_contra hc
   push Not at hc
-  have hlt : ∀ m, ‖coeff m z‖ < 1 := fun m => lt_of_le_of_ne (intPol_norm z hzI m) (hc m)
+  have hlt : ∀ m, ‖AddMonoidAlgebra.coeff z m‖ < 1 := fun m => lt_of_le_of_ne (intPol_norm z hzI m) (hc m)
   have hp0 : (p : ℚ_[p]) ≠ 0 := by exact_mod_cast (Fact.out : p.Prime).ne_zero
   set x := (p : ℚ_[p])⁻¹ • z with hx
   have hxI : x ∈ IntPol p (Fin N × Fin r) := by
     refine mem_intPol_of_norm _ fun m => ?_
     rw [hx, coeff_smul, smul_eq_mul, norm_mul, norm_inv, Padic.norm_p, inv_inv]
-    have h1 := (Padic.norm_le_pow_iff_norm_lt_pow_add_one (coeff m z) (-1)).mpr (by simpa using hlt m)
+    have h1 := (Padic.norm_le_pow_iff_norm_lt_pow_add_one (AddMonoidAlgebra.coeff z m) (-1)).mpr (by simpa using hlt m)
     have hp : (0 : ℝ) < p := by exact_mod_cast (Fact.out : p.Prime).pos
     rw [zpow_neg_one] at h1
-    calc (p : ℝ) * ‖coeff m z‖ ≤ p * (p : ℝ)⁻¹ := mul_le_mul_of_nonneg_left h1 hp.le
+    calc (p : ℝ) * ‖AddMonoidAlgebra.coeff z m‖ ≤ p * (p : ℝ)⁻¹ := mul_le_mul_of_nonneg_left h1 hp.le
       _ = 1 := mul_inv_cancel₀ hp.ne'
   have hxY : x ∈ YZ p (r := r) LL J M := by
     have hzY := (Submodule.mem_inf.mp hz).1
@@ -1603,7 +1603,7 @@ section E2
 variable {p : ℕ} [Fact p.Prime] {N r : ℕ}
 
 theorem fock_monomial {σ : Type} (z : MvPolynomial σ ℚ_[p]) (m0 : σ →₀ ℕ) (hm0 : m0 ∈ z.support) :
-    fock p z (monomial m0 1) = coeff m0 z * (m0.prod fun _ k => (k.factorial : ℚ_[p])) := by
+    fock p z (monomial m0 1) = AddMonoidAlgebra.coeff z m0 * (m0.prod fun _ k => (k.factorial : ℚ_[p])) := by
   classical
   unfold fock
   rw [Finset.sum_eq_single m0]
@@ -1612,9 +1612,9 @@ theorem fock_monomial {σ : Type} (z : MvPolynomial σ ℚ_[p]) (m0 : σ →₀ 
   · intro h; exact absurd hm0 h
 
 theorem fockN_monomial_ge (LL : Letters N) (z : MvPolynomial (Fin N × Fin r) ℚ_[p]) (m0 : Fin N × Fin r →₀ ℕ)
-    (hm0 : MultiDeg LL m0) (hc : ‖coeff m0 z‖ = 1) : 1 ≤ ‖fockN p LL z (monomial m0 1)‖ := by
+    (hm0 : MultiDeg LL m0) (hc : ‖AddMonoidAlgebra.coeff z m0‖ = 1) : 1 ≤ ‖fockN p LL z (monomial m0 1)‖ := by
   classical
-  have hne : coeff m0 z ≠ 0 := by intro h; rw [h, norm_zero] at hc; exact zero_ne_one hc
+  have hne : AddMonoidAlgebra.coeff z m0 ≠ 0 := by intro h; rw [h, norm_zero] at hc; exact zero_ne_one hc
   have hmem : m0 ∈ z.support := mem_support_iff.mpr hne
   unfold fockN
   rw [fock_monomial z m0 hmem]

@@ -17,7 +17,7 @@ namespace StarEntryOperators
 
 theorem lowOp_int {K : Type} [NormedField K] [IsUltrametricDist K] {ν r0 r1 C : ℕ} (l : Fin C → ℕ)
     (sf : Fin C → ZMod (2 * ν)) (T : ∀ c, Fin (l c) → Fin r0 → K) (I : ∀ c, Fin (l c) → Fin r1)
-    (hT : ∀ c i a, ‖T c i a‖ ≤ 1) : ∀ n, ‖MvPolynomial.coeff n (lowOp l sf T I)‖ ≤ 1 := by
+    (hT : ∀ c i a, ‖T c i a‖ ≤ 1) : ∀ n, ‖AddMonoidAlgebra.coeff (lowOp l sf T I) n‖ ≤ 1 := by
   have h : lowOp l sf T I ∈ opInt K (ZV ν r0 r1) := by
     unfold lowOp minorAt
     refine Subring.prod_mem _ fun c _ => ?_

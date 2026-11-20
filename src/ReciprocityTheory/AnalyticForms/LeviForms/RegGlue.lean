@@ -116,7 +116,7 @@ lemma polydiscCutoff_nonneg {e : ℕ} (z : Fin e → ℂ) : 0 ≤ cutP z := by
 
 lemma cutP_le_one {e : ℕ} (z : Fin e → ℂ) : cutP z ≤ 1 := by
   unfold cutP
-  exact Finset.prod_le_one (fun i _ => sub_nonneg.mpr (cutψ_le_one _))
+  exact Finset.prod_le_one₀ (fun i _ => sub_nonneg.mpr (cutψ_le_one _))
     (fun i _ => by linarith [cutψ_nonneg (‖z i‖ ^ 2)])
 
 lemma polydiscCutoff_eq_one_of_mem_ball {e : ℕ} {z : Fin e → ℂ} (hz : z ∈ ball (0 : Fin e → ℂ) 1) : cutP z = 1 := by

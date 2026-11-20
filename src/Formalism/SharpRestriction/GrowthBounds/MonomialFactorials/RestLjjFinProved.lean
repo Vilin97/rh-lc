@@ -46,14 +46,14 @@ theorem xi_mem_spanZ (n : ℕ) (g : MvPolynomial (Formalism.GM.M.BVar N r G.T.t)
   obtain ⟨hs, hint⟩ := Submodule.mem_inf.1 hg
   rw [Submodule.restrictScalars_mem, MvPolynomial.mem_restrictSupport_iff] at hs
   obtain ⟨g0, hg0⟩ := hint
-  have hc : ∀ m, coeff m g = algebraMap ℤ_[p] ℚ_[p] (coeff m g0) := by
+  have hc : ∀ m, AddMonoidAlgebra.coeff g m = algebraMap ℤ_[p] ℚ_[p] (AddMonoidAlgebra.coeff g0 m) := by
     intro m
     rw [← hg0]
     simp [MvPolynomial.coeff_map]
   rw [g.as_sum]
   refine Submodule.sum_mem _ fun m hm => ?_
   obtain ⟨hsupp, hsum⟩ := hs hm
-  have hmono : monomial m (coeff m g) = (coeff m g0) • monomial m (1 : ℚ_[p]) := by
+  have hmono : monomial m (AddMonoidAlgebra.coeff g m) = (AddMonoidAlgebra.coeff g0 m) • monomial m (1 : ℚ_[p]) := by
     rw [hc m, smul_monomial, Algebra.smul_def, mul_one]
   rw [hmono]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨m, mem_xiMons_of G n m hsupp hsum, rfl⟩)

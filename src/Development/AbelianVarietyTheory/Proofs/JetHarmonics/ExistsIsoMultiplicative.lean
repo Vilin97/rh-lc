@@ -59,7 +59,7 @@ theorem norm_le_pow_of_primitive {K : Type} [NormedField K] [IsUltrametricDist K
     rw [h]; push_cast; ring
   rw [h2, norm_prod, Nat.add_sub_cancel]
   calc ∏ k ∈ Finset.range m, ‖1 - z ^ (k + 1)‖ ≤ ∏ _k ∈ Finset.range m, ‖z - 1‖ :=
-        Finset.prod_le_prod (fun _ _ => norm_nonneg _) (fun _ _ => hle _)
+        Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) (fun _ _ => hle _)
     _ = _ := by simp
 
 theorem exists_iso_multiplicative (K : Type) [NormedField K] [IsUltrametricDist K]

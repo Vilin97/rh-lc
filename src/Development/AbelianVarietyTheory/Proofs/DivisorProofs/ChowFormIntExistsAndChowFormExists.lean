@@ -168,15 +168,15 @@ theorem comap_map_eq {L σ : Type} [Field L] [Algebra K L] (I : Ideal (MvPolynom
   obtain ⟨r, hr⟩ := (Algebra.linearMap K L).exists_leftInverse_of_injective
     (LinearMap.ker_eq_bot.2 (algebraMap K L).injective)
   have hr' : ∀ c : K, r (algebraMap K L c) = c := fun c => LinearMap.congr_fun hr c
-  let ρ : MvPolynomial σ L → MvPolynomial σ K := fun p => ∑ s ∈ p.support, monomial s (r (coeff s p))
-  have hρ : ∀ p s, coeff s (ρ p) = r (coeff s p) := fun p s => by
+  let ρ : MvPolynomial σ L → MvPolynomial σ K := fun p => ∑ s ∈ p.support, monomial s (r (AddMonoidAlgebra.coeff p s))
+  have hρ : ∀ p s, AddMonoidAlgebra.coeff (ρ p) s = r (AddMonoidAlgebra.coeff p s) := fun p s => by
     classical
     simp only [ρ, coeff_sum, coeff_monomial, Finset.sum_ite_eq']
     split_ifs with h
     · rfl
     · rw [notMem_support_iff.1 h, map_zero]
   have hadd : ∀ p q, ρ (p + q) = ρ p + ρ q := fun p q => MvPolynomial.ext _ _ fun s => by
-    simp only [hρ, coeff_add, map_add]
+    simp only [hρ, MvPolynomial.coeff_add, map_add]
   have hmul : ∀ p (g : MvPolynomial σ K), ρ (p * map (algebraMap K L) g) = ρ p * g := fun p g =>
     MvPolynomial.ext _ _ fun s => by
       classical

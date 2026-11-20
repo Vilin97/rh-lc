@@ -1128,7 +1128,7 @@ theorem lifta_core (ℓ : ℕ) [Fact ℓ.Prime] (hℓ : ℓ ≠ 2) (A : Type) [C
   have hfac : a + padicValNat ℓ a.factorial ≤
       Formalism.RepresentationBoundsCohomology.N2.aStar ℓ M + padicValNat ℓ (Formalism.RepresentationBoundsCohomology.N2.aStar ℓ M).factorial := by
     have : padicValNat ℓ (a + 1).factorial = padicValNat ℓ (a + 1) + padicValNat ℓ a.factorial := by
-      rw [Nat.factorial_succ, padicValNat.mul (Nat.succ_ne_zero a) (Nat.factorial_ne_zero _)]
+      rw [Nat.factorial_succ, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.succ_ne_zero a) (Nat.factorial_ne_zero _)]
     simp only [Formalism.RepresentationBoundsCohomology.N2.aStar, ← ha]
     omega
   refine Formalism.RepresentationBoundsCohomology.N2.lifts_of_dvd S ?_ hL0

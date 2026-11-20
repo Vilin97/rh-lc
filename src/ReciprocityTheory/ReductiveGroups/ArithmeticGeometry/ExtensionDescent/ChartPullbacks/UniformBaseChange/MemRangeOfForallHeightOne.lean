@@ -175,7 +175,7 @@ theorem finite_height_one [IsNoetherianRing A] {a : A} (ha : a ≠ 0) :
       rw [← h1']
       exact Order.height_strictMono hlt'
         (lt_of_le_of_lt (Order.height_mono (le_of_lt hlt')) (by rw [h1']; exact ENat.one_lt_top))
-    have hne' : (⟨⊥, Ideal.bot_prime⟩ : PrimeSpectrum A) < ⟨Q, hQprime⟩ :=
+    have hne' : (⟨⊥, Ideal.isPrime_bot⟩ : PrimeSpectrum A) < ⟨Q, hQprime⟩ :=
       (PrimeSpectrum.asIdeal_lt_asIdeal _ _).mp hQne
     have hQ0 := Order.height_strictMono hne'
       (lt_of_le_of_lt (Order.height_mono (le_of_lt hne')) (lt_trans hQ1 ENat.one_lt_top))

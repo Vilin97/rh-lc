@@ -17,7 +17,7 @@ open MvPolynomial
 variable {R R' : Type} [CommRing R] [CommRing R']
 
 theorem topCoeff_mk {k : ℕ} (p : MvPolynomial (Fin k) R) :
-    topCoeff R k (Ideal.Quotient.mk _ p) = coeff (topMon k) p := rfl
+    topCoeff R k (Ideal.Quotient.mk _ p) = AddMonoidAlgebra.coeff p (topMon k) := rfl
 
 def aug (R : Type) [CommRing R] (k : ℕ) : EpsAlg R k →ₐ[R] R :=
   Ideal.Quotient.liftₐ _ (aeval fun _ => 0) fun p hp => by
@@ -26,7 +26,7 @@ def aug (R : Type) [CommRing R] (k : ℕ) : EpsAlg R k →ₐ[R] R :=
     rintro _ ⟨a, rfl⟩
     simp [RingHom.mem_ker]
 
-theorem aug_mk {k : ℕ} (p : MvPolynomial (Fin k) R) : aug R k (Ideal.Quotient.mk _ p) = coeff 0 p := by
+theorem aug_mk {k : ℕ} (p : MvPolynomial (Fin k) R) : aug R k (Ideal.Quotient.mk _ p) = AddMonoidAlgebra.coeff p 0 := by
   show aeval (fun _ => 0) p = _
   simp [constantCoeff_eq]
 
@@ -157,7 +157,7 @@ theorem ker_aug_le {k : ℕ} (q : Ideal (EpsAlg R k)) [hq : q.IsPrime] :
     RingHom.ker (aug R k : EpsAlg R k →+* R) ≤ q := by
   intro z hz
   obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective z
-  have h0 : coeff 0 p = 0 := (aug_mk p).symm.trans hz
+  have h0 : AddMonoidAlgebra.coeff p 0 = 0 := (aug_mk p).symm.trans hz
   have hp : p ∈ Ideal.span (X '' Set.univ : Set (MvPolynomial (Fin k) R)) := by
     rw [mem_ideal_span_X_image]
     intro m hm

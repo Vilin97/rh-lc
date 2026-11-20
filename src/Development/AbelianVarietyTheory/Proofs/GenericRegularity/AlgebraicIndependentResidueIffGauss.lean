@@ -61,7 +61,7 @@ theorem algebraicIndependent_residue_iff_gauss (F U : Type) [Field F] [Field U] 
     rw [MvPolynomial.coeff_map] at hα
     rw [← coe_eval₂_comapInclusion_eq_eval₂_map f v σ t ht q, ← residue_valuationSubring_ne_zero_iff, residue_eval₂_comap]
     intro h0
-    have hq := congrArg (MvPolynomial.coeff α) (hind _ h0)
+    have hq := congrArg (AddMonoidAlgebra.coeff · α) (hind _ h0)
     rw [MvPolynomial.coeff_map, MvPolynomial.coeff_zero] at hq
     exact (residue_comap_ne_zero_iff_valuation_eq_one f v (q.coeff α)).mpr hα hq
   · intro hg r hr

@@ -85,7 +85,7 @@ theorem harmL_std (n : ℕ) (a : (E →+* ℂ) × ℕ → ℕ) :
   constructor
   · rintro ⟨Q, rfl⟩ m
     rw [coeff_map]
-    exact (coeff m Q).2
+    exact (AddMonoidAlgebra.coeff Q m).2
   · intro h
     refine mem_range_map_iff_coeffs_subset.2 fun x hx => ?_
     obtain ⟨m, -, rfl⟩ := mem_coeffs_iff.1 hx

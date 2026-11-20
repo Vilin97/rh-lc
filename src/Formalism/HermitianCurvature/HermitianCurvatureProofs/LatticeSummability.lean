@@ -85,7 +85,7 @@ theorem latticeSummable : LatticeSummable := by
   have hdom : ∀ σ z : V f, dist z σ < δ → mL K L σ ≤ mL K (fun v => L v + δ) z := by
     intro σ z hz
     unfold mL
-    apply Finset.prod_le_prod (fun v _ => mfac_nonneg K (hL v).le _ (norm_nonneg _))
+    apply Finset.prod_le_prod₀ (fun v _ => mfac_nonneg K (hL v).le _ (norm_nonneg _))
     intro v _
     have h1 : ‖z v‖ ≤ ‖σ v‖ + δ := by
       have h3 := norm_le_pi_norm (z - σ) v

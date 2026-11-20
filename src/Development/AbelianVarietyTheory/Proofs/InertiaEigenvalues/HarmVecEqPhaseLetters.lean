@@ -13,7 +13,7 @@ namespace GlobalTheory.SerLetters
 
 theorem coord_mem_fieldRange {ι K J : Type} [Field K] [Fintype J] (σ : K →+* ℂ) (e : J → MvPolynomial ι K)
     (hli : LinearIndependent ℂ fun j => MvPolynomial.map σ (e j)) (a : J → ℂ)
-    (hx : ∀ m, MvPolynomial.coeff m (∑ j, a j • MvPolynomial.map σ (e j)) ∈ σ.fieldRange) (j : J) :
+    (hx : ∀ m, AddMonoidAlgebra.coeff (∑ j, a j • MvPolynomial.map σ (e j)) m ∈ σ.fieldRange) (j : J) :
     a j ∈ σ.fieldRange := by
   classical
   by_contra hj
@@ -34,7 +34,7 @@ theorem coord_mem_fieldRange {ι K J : Type} [Field K] [Fintype J] (σ : K →+*
     simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, smul_eq_mul, MvPolynomial.coeff_zero]
     rw [← h1]
     refine Finset.sum_congr rfl fun k _ => ?_
-    have e1 : a k * σ (MvPolynomial.coeff m (e k)) = MvPolynomial.coeff m (e k) • a k := by
+    have e1 : a k * σ (AddMonoidAlgebra.coeff (e k) m) = AddMonoidAlgebra.coeff (e k) m • a k := by
       rw [Algebra.smul_def]; exact mul_comm _ _
     rw [e1, map_smul, smul_eq_mul, mul_comm]
   have h2 : ∑ k, σ (π (a k)) • MvPolynomial.map σ (e k) = 0 := by

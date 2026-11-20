@@ -93,7 +93,7 @@ theorem _root_.GlobalTheory.PolarJacBound.polarJac_le_exp : ∀ (p q : ℕ) (h :
   set k := max p q - min p q with hk
   have hA : ∏ i ∈ r, _root_.Formalism.MainNotions.SchurIrreducible.shc (2 * h i) * _root_.Formalism.MainNotions.SchurIrreducible.shc (h i) ^ (2 * k) ≤
       ∏ i ∈ r, Real.exp ((2 + 2 * (k : ℝ)) * |h i|) := by
-    refine Finset.prod_le_prod
+    refine Finset.prod_le_prod₀
       (fun i _ => mul_nonneg (shc_nonneg' _) (pow_nonneg (shc_nonneg' _) _)) fun i _ => ?_
     calc _root_.Formalism.MainNotions.SchurIrreducible.shc (2 * h i) * _root_.Formalism.MainNotions.SchurIrreducible.shc (h i) ^ (2 * k)
         ≤ Real.exp |2 * h i| * Real.exp |h i| ^ (2 * k) :=
@@ -105,8 +105,8 @@ theorem _root_.GlobalTheory.PolarJacBound.polarJac_le_exp : ∀ (p q : ℕ) (h :
   have hB : (∏ i ∈ r, ∏ j ∈ r,
         if i < j then (_root_.Formalism.MainNotions.SchurIrreducible.shc (h i - h j) * _root_.Formalism.MainNotions.SchurIrreducible.shc (h i + h j)) ^ 2 else 1) ≤
       ∏ i ∈ r, ∏ j ∈ r, Real.exp (if i < j then 4 * (|h i| + |h j|) else 0) := by
-    refine Finset.prod_le_prod (fun i _ => Finset.prod_nonneg fun j _ => ?_) fun i _ =>
-      Finset.prod_le_prod (fun j _ => ?_) fun j _ => ?_
+    refine Finset.prod_le_prod₀ (fun i _ => Finset.prod_nonneg fun j _ => ?_) fun i _ =>
+      Finset.prod_le_prod₀ (fun j _ => ?_) fun j _ => ?_
     · split_ifs
       · exact sq_nonneg _
       · exact zero_le_one

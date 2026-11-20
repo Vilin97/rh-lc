@@ -175,7 +175,7 @@ theorem ae_exists_lift [CompactSpace X] [Algebra.FiniteType ℤ R₀]
       rw [← r₂.2, ← hρ]
       exact RingHom.congr_fun hγ r
   have c2 := ae_pt_eq_of_pt_eq U hfp (rep_alg U (K := K) r₂) rP (by rw [← map_pt, e2])
-  filter_upwards [r₂.1, c1, c2, ha] with i ⟨p, hp⟩ d1 d2 ⟨q, hq, eq⟩
+  filter_upwards [r₂.1, c1, c2, ha] with i ⟨p, hp⟩ d1 d2 ⟨q, hq, CategoryTheory.kleisliCatEquivKleisli⟩
   have hb : p.comp (baseHom f₀ W₂) = (β i).comp (ψ i) := by
     refine RingHom.ext fun r => ?_
     have := congrFun d1 r

@@ -77,7 +77,7 @@ section Forms
 variable {n : ℕ} {r : Type} [Fintype r] [DecidableEq r]
 
 def topCoeff (P : MvPolynomial (Fin n × Fin n) ℂ) : ℂ :=
-  ∑ w : Equiv.Perm (Fin n), ((Equiv.Perm.sign w : ℤ) : ℂ) * coeff (∑ a, Finsupp.single (a, w a) 1) P
+  ∑ w : Equiv.Perm (Fin n), ((Equiv.Perm.sign w : ℤ) : ℂ) * AddMonoidAlgebra.coeff P (∑ a, Finsupp.single (a, w a) 1)
 
 abbrev coordVec (a : Fin n) : V n := EuclideanSpace.single a 1
 

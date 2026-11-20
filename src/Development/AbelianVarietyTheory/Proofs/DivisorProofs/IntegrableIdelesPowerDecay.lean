@@ -208,7 +208,7 @@ theorem decay_bound (k : ℕ) (x : ι → ℝ) (hx : ∀ i, 0 < x i) :
     linarith
   rw [← Finset.prod_pow, pow_mul, ← Finset.card_univ, ← Finset.prod_const, ← Finset.prod_div_distrib,
     ← Finset.prod_mul_distrib]
-  refine Finset.prod_le_prod (fun i _ => by have := hx i; positivity) fun i _ => ?_
+  refine Finset.prod_le_prod₀ (fun i _ => by have := hx i; positivity) fun i _ => ?_
   have hxi := hx i
   have hxS : x i ≤ S := by linarith [hS i]
   have e1 : (x i ^ 2)⁻¹ * ((x i ^ 2) ^ (k + 1) / S ^ (2 * k + 3)) = (x i ^ 2) ^ k / S ^ (2 * k + 3) := by

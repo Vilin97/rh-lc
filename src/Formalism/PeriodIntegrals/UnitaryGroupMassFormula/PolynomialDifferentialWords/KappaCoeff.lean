@@ -37,7 +37,7 @@ lemma exists_sumElim (n : Fin k ⊕ Fin k →₀ ℕ) : ∃ m g : Fin k →₀ �
   rcases v with i | i <;> simp [Finsupp.comapDomain_apply]
 
 lemma pol_ext {P Q : Pol K k}
-    (h : ∀ m g : Fin k →₀ ℕ, coeff (Finsupp.sumElim m g) P = coeff (Finsupp.sumElim m g) Q) : P = Q := by
+    (h : ∀ m g : Fin k →₀ ℕ, AddMonoidAlgebra.coeff P (Finsupp.sumElim m g) = AddMonoidAlgebra.coeff Q (Finsupp.sumElim m g)) : P = Q := by
   ext n
   obtain ⟨m, g, rfl⟩ := exists_sumElim n
   exact h m g
@@ -53,8 +53,8 @@ lemma sumElim_add_single_inr (m g : Fin k →₀ ℕ) (b : Fin k) :
   rcases v with i | i <;> simp [Finsupp.single_apply]
 
 lemma coeff_term (P : MvPolynomial (Fin k) K) (m g g' : Fin k →₀ ℕ) :
-    coeff (Finsupp.sumElim m g) (rename Sum.inl P * monomial (g'.mapDomain Sum.inr) (1 : K)) =
-      if g' = g then coeff m P else 0 := by
+    AddMonoidAlgebra.coeff (rename Sum.inl P * monomial (g'.mapDomain Sum.inr) (1 : K)) (Finsupp.sumElim m g) =
+      if g' = g then AddMonoidAlgebra.coeff P m else 0 := by
   classical
   induction P using MvPolynomial.induction_on'
   next u c =>
@@ -62,8 +62,8 @@ lemma coeff_term (P : MvPolynomial (Fin k) K) (m g g' : Fin k →₀ ℕ) :
     simp only [coeff_monomial, sumElim_inj, mul_one]
     by_cases h1 : u = m <;> by_cases h2 : g' = g <;> simp [h1, h2]
   next p q hp hq =>
-    rw [map_add, add_mul, coeff_add, hp, hq]
-    split_ifs <;> simp [coeff_add]
+    rw [map_add, add_mul, MvPolynomial.coeff_add, hp, hq]
+    split_ifs <;> simp [MvPolynomial.coeff_add]
 
 lemma mono_val (g : Fin k →₀ ℕ) :
     (mono K k d g : MvPolynomial (Fin k) K) = if g.degree = d then monomial g 1 else 0 := by
@@ -82,8 +82,8 @@ lemma kappa_apply (A : Module.End K ↥(homogeneousSubmodule (Fin k) K d)) :
   simp [kappa]
 
 lemma coeff_kappa (A : Module.End K ↥(homogeneousSubmodule (Fin k) K d)) (m g : Fin k →₀ ℕ) :
-    coeff (Finsupp.sumElim m g) (kappa K k d A) =
-      invFact K g * coeff m (A (mono K k d g) : MvPolynomial (Fin k) K) := by
+    AddMonoidAlgebra.coeff (kappa K k d A) (Finsupp.sumElim m g) =
+      invFact K g * AddMonoidAlgebra.coeff (A (mono K k d g) : MvPolynomial (Fin k) K) m := by
   classical
   rw [kappa_apply, coeff_sum]
   simp only [coeff_smul, coeff_term, smul_eq_mul, mul_ite, mul_zero, Finset.sum_ite_eq']
@@ -97,14 +97,14 @@ lemma coeff_kappa (A : Module.End K ↥(homogeneousSubmodule (Fin k) K d)) (m g 
     simp
 
 lemma degree_of_coeff_ne (F : ↥(homogeneousSubmodule (Fin k) K d)) {m : Fin k →₀ ℕ}
-    (h : coeff m (F : MvPolynomial (Fin k) K) ≠ 0) : m.degree = d := by
+    (h : AddMonoidAlgebra.coeff (F : MvPolynomial (Fin k) K) m ≠ 0) : m.degree = d := by
   have hF := (mem_homogeneousSubmodule d _).1 F.2
   rw [Finsupp.degree_eq_weight_one]
   exact hF h
 
 lemma eq_sum_mono (F : ↥(homogeneousSubmodule (Fin k) K d)) :
     F = ∑ g ∈ (F : MvPolynomial (Fin k) K).support,
-      coeff g (F : MvPolynomial (Fin k) K) • mono K k d g := by
+      AddMonoidAlgebra.coeff (F : MvPolynomial (Fin k) K) g • mono K k d g := by
   apply Subtype.ext
   rw [Submodule.coe_sum]
   conv_lhs => rw [(F : MvPolynomial (Fin k) K).as_sum]

@@ -127,4 +127,4 @@ noncomputable def UpperTheory.Reformulated.B.Yfa1.cycNum :
     fun {K : Type} {ι : K → Type} {σ : Type} [DecidableEq K] {O : Type} [CommRing O] [IsDomain O]
         [IsDiscreteValuationRing O] (Z : Ideal (UpperTheory.Reformulated.B.Yfa1.MRing ι O) → ℤ) (cls : σ → K → ℤ) (H : MvPolynomial σ ℝ)
         (Q : List (K → ℤ)) ↦
-      ∑ μ ∈ H.support, MvPolynomial.coeff μ H * (↑(UpperTheory.Reformulated.B.Yfa1.cycList Z (UpperTheory.Reformulated.B.Yfa1.classList cls μ ++ Q)) : ℝ)
+      ∑ μ ∈ H.support, AddMonoidAlgebra.coeff H μ * (↑(UpperTheory.Reformulated.B.Yfa1.cycList Z (UpperTheory.Reformulated.B.Yfa1.classList cls μ ++ Q)) : ℝ)

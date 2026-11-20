@@ -329,7 +329,7 @@ theorem closureIntegral : ClosureIntegral := by
       (fun τ => (GlobalTheory.ExtLatMatrix.extLat_matrix_integral K w L Γ v σ hσ).2 a b (M τ) (MW τ) (B τ) (BW τ) (hM τ).2 (hMW τ).2 (ap τ) (hap τ))
       F fun m => (hσ _).mpr (hF m)
     refine ⟨Z.coeff p, hZ p, ?_⟩
-    have h1 := congrArg (coeff p) hZ'
+    have h1 := congrArg (AddMonoidAlgebra.coeff · p) hZ'
     rw [← sum_ptTable, map_sum, coeff_sum, coeff_smul, smul_eq_mul] at h1
     rw [← h1]
     refine Finset.sum_congr rfl fun μ _ => ?_

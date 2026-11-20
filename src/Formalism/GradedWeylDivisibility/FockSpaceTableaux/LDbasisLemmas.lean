@@ -16,7 +16,7 @@ theorem ldbasis_linearIndependent {σ R ι : Type*} [CommRing R] (o : MonomialOr
   have htne : (s.filter fun j => g j ≠ 0).Nonempty := ⟨i, Finset.mem_filter.mpr ⟨hi, hgi⟩⟩
   obtain ⟨j, hj, hjmax⟩ :=
     (s.filter fun j => g j ≠ 0).exists_max_image (fun j => o.toSyn (o.degree (v j))) htne
-  have hcoeff := congrArg (MvPolynomial.coeff (o.degree (v j))) hsum
+  have hcoeff := congrArg (AddMonoidAlgebra.coeff · (o.degree (v j))) hsum
   rw [coeff_zero, coeff_sum, Finset.sum_eq_single j] at hcoeff
   · rw [coeff_smul, smul_eq_mul] at hcoeff
     have hone : (v j).coeff (o.degree (v j)) = 1 := hlc j
@@ -53,8 +53,8 @@ theorem ldbasis_initMinor_rowHom (R : Type*) [CommRing R] {r n s : ℕ} (I : Fin
   apply hprod
   intro h0
   apply hd
-  show coeff d ((Equiv.Perm.sign σ) •
-    ∏ i, (X (I (σ i), Fin.castLE hs i) : MvPolynomial (Fin r × Fin n) R)) = 0
+  show AddMonoidAlgebra.coeff ((Equiv.Perm.sign σ) •
+    ∏ i, (X (I (σ i), Fin.castLE hs i) : MvPolynomial (Fin r × Fin n) R)) d = 0
   rw [Units.smul_def, coeff_smul, h0, smul_zero]
 
 theorem ldbasis_bidet_rowHom (R : Type*) [CommRing R] {r n K : ℕ} (sz : Fin K → ℕ) (hsz : ∀ k, sz k ≤ n)

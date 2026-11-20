@@ -138,7 +138,7 @@ theorem summable_norm_of_lattice {Y : Type} {n : ℕ} (T : Y → ℂ) (ℓ : Y �
       Finset.mem_image_of_mem _ hk
     calc ∑ k ∈ s, b k ≤ ∑ k ∈ Fintype.piFinset t, b k := Finset.sum_le_sum_of_subset_of_nonneg hsub fun _ _ _ => hb0 _
       _ = ∏ i, ∑ k ∈ t i, g k := (Finset.prod_univ_sum t fun _ => g).symm
-      _ ≤ ∏ _i : Fin n, ∑' k, g k := Finset.prod_le_prod (fun i _ => Finset.sum_nonneg fun _ _ => hg0 _)
+      _ ≤ ∏ _i : Fin n, ∑' k, g k := Finset.prod_le_prod₀ (fun i _ => Finset.sum_nonneg fun _ _ => hg0 _)
           fun i _ => hg.sum_le_tsum _ fun _ _ => hg0 _
       _ = (∑' k, g k) ^ n := by simp
   have hsupp : ∀ y : Function.support T, ∃ k : Fin n → ℤ, ∀ i, ℓ y i = k i := fun y => by

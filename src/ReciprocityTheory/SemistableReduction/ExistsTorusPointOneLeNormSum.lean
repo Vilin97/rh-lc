@@ -99,7 +99,7 @@ theorem exists_torus_point_one_le_norm_sum {K : Type*} [NormedField K] [IsUltram
     omega
   let aO : (Fin n → ℤ) → unitBallRing K := fun χ => ⟨a χ, (mem_unitBallRing _).2 (ha χ)⟩
   let P : MvPolynomial (Fin n) (unitBallRing K) := ∑ χ ∈ F, monomial (e χ) (aO χ)
-  have hcoeff : coeff (e χ₀) P = aO χ₀ := by
+  have hcoeff : AddMonoidAlgebra.coeff P (e χ₀) = aO χ₀ := by
     simp only [P, coeff_sum, coeff_monomial]
     rw [Finset.sum_eq_single_of_mem χ₀ hχ₀]
     · simp
@@ -108,7 +108,7 @@ theorem exists_torus_point_one_le_norm_sum {K : Type*} [NormedField K] [IsUltram
       exact fun h => hne (he χ hχ χ₀ hχ₀ h)
   have hQ : MvPolynomial.map (IsLocalRing.residue (unitBallRing K)) P ≠ 0 := by
     intro h0
-    have h4 := congrArg (coeff (e χ₀)) h0
+    have h4 := congrArg (AddMonoidAlgebra.coeff · (e χ₀)) h0
     rw [coeff_map, hcoeff, coeff_zero, residue_eq_zero_iff_norm_lt_one] at h4
     exact absurd ha₀ (ne_of_lt h4)
   obtain ⟨y, hy, hyne⟩ : ∃ y ∈ Set.pi Set.univ (fun _ : Fin n =>

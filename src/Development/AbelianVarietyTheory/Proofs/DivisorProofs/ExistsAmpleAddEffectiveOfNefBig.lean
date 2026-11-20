@@ -35,7 +35,7 @@ theorem prod_le {d : ℕ} (q : ℤ) (hq : 1 ≤ q) (n : Fin (d + 1) → Fin 2 �
     (a : Fin (d + 1) → Fin 2) : ∏ i, n i (a i) ≤ 2 * q ^ d := by
   rw [Fin.prod_univ_succ]
   have hp : ∏ i : Fin d, n i.succ (a i.succ) ≤ ∏ _i : Fin d, q :=
-    Finset.prod_le_prod (fun i _ => (hs i _).1) fun i _ => (hs i _).2
+    Finset.prod_le_prod₀ (fun i _ => (hs i _).1) fun i _ => (hs i _).2
   rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin] at hp
   exact mul_le_mul (h0 _).2 hp (Finset.prod_nonneg fun i _ => (hs i _).1) (by norm_num)
 

@@ -35,7 +35,7 @@ theorem psTrunc_eq {ι : Type} [Fintype ι] [DecidableEq ι] (m : ℕ) (f : MvPo
       refine ⟨⟨fun i => ⟨e i, by have := hle i; omega⟩, ?_⟩, by omega⟩
       ext i
       simp
-  have hL : MvPolynomial.coeff e (psTrunc m f) =
+  have hL : AddMonoidAlgebra.coeff (psTrunc m f) e =
       if e ∈ degLE m then MvPowerSeries.coeff e f else 0 := by
     unfold psTrunc
     rw [MvPolynomial.coeff_sum]
@@ -58,7 +58,7 @@ theorem psTrunc_eq {ι : Type} [Fintype ι] [DecidableEq ι] (m : ℕ) (f : MvPo
     | (simp [MvPowerSeries.truncTotal, h]; done)
 
 private lemma mem_orig_pow_lemma_6 {ι : Type} (m : ℕ) (Q : MvPolynomial ι R)
-    (hQ : ∀ e : ι →₀ ℕ, e.degree < m + 1 → MvPolynomial.coeff e Q = 0) :
+    (hQ : ∀ e : ι →₀ ℕ, e.degree < m + 1 → AddMonoidAlgebra.coeff Q e = 0) :
     Q ∈ orig R ι ^ (m + 1) := by
   rw [Q.as_sum]
   refine Ideal.sum_mem _ fun e he => ?_
@@ -139,7 +139,7 @@ theorem psJet_mul {ι : Type} [Fintype ι] [DecidableEq ι] (m : ℕ) (f g : MvP
   have h2 := low_mul_lemma (F := (psTrunc m f : MvPowerSeries ι R)) (p := 0)
     (fun d hd => absurd hd (Nat.not_lt_zero _)) (low_trunc_lemma_5 m g) e (by omega)
   have h3 := low_trunc_lemma_5 m (f * g) e he
-  have hcoe : MvPolynomial.coeff e (psTrunc m (f * g) - psTrunc m f * psTrunc m g) =
+  have hcoe : AddMonoidAlgebra.coeff (psTrunc m (f * g) - psTrunc m f * psTrunc m g) e =
       MvPowerSeries.coeff e ((f - (psTrunc m f : MvPowerSeries ι R)) * g +
         (psTrunc m f : MvPowerSeries ι R) * (g - (psTrunc m g : MvPowerSeries ι R)) -
         (f * g - (psTrunc m (f * g) : MvPowerSeries ι R))) := by
@@ -318,8 +318,8 @@ theorem psJet_subst {σ τ : Type} [Fintype σ] [DecidableEq σ] [Fintype τ] [D
   have hA := low_aeval_lemma_4 (m + 1) a (fun i => (psTrunc m (a i) : MvPowerSeries τ R))
     (fun i => low_trunc_lemma_5 m (a i)) (psTrunc m f) e he
   have hT := low_trunc_lemma_5 m (MvPowerSeries.subst a f) e he
-  have hcoe : MvPolynomial.coeff e (psTrunc m (MvPowerSeries.subst a f) -
-        MvPolynomial.aeval (fun i => psTrunc m (a i)) (psTrunc m f)) =
+  have hcoe : AddMonoidAlgebra.coeff (psTrunc m (MvPowerSeries.subst a f) -
+        MvPolynomial.aeval (fun i => psTrunc m (a i)) (psTrunc m f)) e =
       MvPowerSeries.coeff e ((MvPolynomial.aeval a (psTrunc m f) -
           MvPolynomial.aeval (fun i => (psTrunc m (a i) : MvPowerSeries τ R)) (psTrunc m f)) +
         MvPowerSeries.subst a (f - (psTrunc m f : MvPowerSeries σ R)) -

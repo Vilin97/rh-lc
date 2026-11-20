@@ -250,12 +250,12 @@ theorem _root_.GlobalTheory.LogCris.model_mul_eq_zero {m r : ℕ} (hϖ : ϖ ∈ 
     exact h
   obtain ⟨p, hp⟩ := Ideal.mem_span_singleton'.mp h2
   rw [hX] at hp
-  have hc : ∀ s, ϖ ∣ MvPolynomial.coeff s p := by
+  have hc : ∀ s, ϖ ∣ AddMonoidAlgebra.coeff p s := by
     intro s
-    have := congrArg (MvPolynomial.coeff (d + s)) hp
+    have := congrArg (AddMonoidAlgebra.coeff · (d + s)) hp
     rw [mul_sub, MvPolynomial.coeff_sub, mul_comm p (MvPolynomial.monomial d 1), mul_comm p (MvPolynomial.C ϖ),
       MvPolynomial.coeff_monomial_mul, one_mul, MvPolynomial.coeff_C_mul, MvPolynomial.coeff_C_mul] at this
-    exact ⟨MvPolynomial.coeff (d + s) g + MvPolynomial.coeff (d + s) p, by rw [mul_add, ← this]; ring⟩
+    exact ⟨AddMonoidAlgebra.coeff g (d + s) + AddMonoidAlgebra.coeff p (d + s), by rw [mul_add, ← this]; ring⟩
   obtain ⟨q, hq⟩ : MvPolynomial.C ϖ ∣ p := by
     rw [← Ideal.mem_span_singleton, ← Set.image_singleton, ← Ideal.map_span, MvPolynomial.mem_map_C_iff]
     intro s
@@ -263,7 +263,7 @@ theorem _root_.GlobalTheory.LogCris.model_mul_eq_zero {m r : ℕ} (hϖ : ϖ ∈ 
   refine ⟨q, ?_⟩
   rw [hX]
   ext s
-  have e := congrArg (MvPolynomial.coeff s)
+  have e := congrArg (AddMonoidAlgebra.coeff · s)
     (show MvPolynomial.C ϖ * (q * (MvPolynomial.monomial d 1 - MvPolynomial.C ϖ)) = MvPolynomial.C ϖ * g by
       rw [← hp, hq]; ring)
   rw [MvPolynomial.coeff_C_mul, MvPolynomial.coeff_C_mul] at e

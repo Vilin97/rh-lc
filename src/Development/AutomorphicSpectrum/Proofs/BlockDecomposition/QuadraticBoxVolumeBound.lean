@@ -12,7 +12,7 @@ theorem pi_smul_const_family {P : Type} [Fintype P] {X : P → Type} [∀ i, Mea
   haveI : ∀ i, SigmaFinite (c i • μ i) := fun i => inferInstance
   refine Measure.pi_eq fun s _ => ?_
   simp only [Measure.smul_apply, Measure.pi_pi, ENNReal.smul_def, smul_eq_mul,
-    Finset.prod_mul_distrib, ENNReal.coe_finset_prod]
+    Finset.prod_mul_distrib, ENNReal.ofNNReal_finsetProd]
 
 theorem map_pi_smul {P : Type} [Fintype P] (E : Type) [NormedAddCommGroup E] [NormedSpace ℝ E]
     [MeasureSpace E] [BorelSpace E] [FiniteDimensional ℝ E]
@@ -47,7 +47,7 @@ theorem continuous_qR0 [Fintype ι] (A : P → Matrix ι ι ℝ) : Continuous (q
 theorem continuous_gaussR [Fintype P] [Fintype ι] (Pm : P → Matrix ι ι ℝ) :
     Continuous (gaussR Pm) := by
   unfold gaussR
-  exact Real.continuous_exp.comp (continuous_const.mul (continuous_finset_sum _ fun w _ =>
+  exact Real.continuous_exp.comp (continuous_const.mul (continuous_finsetSum _ fun w _ =>
     Continuous.dotProduct (continuous_apply w)
       (Continuous.matrix_mulVec continuous_const (continuous_apply w))))
 

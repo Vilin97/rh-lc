@@ -184,8 +184,8 @@ theorem algebraMap_zero_surjective : Function.Surjective (algebraMap ℂ (quotGr
   rintro ⟨a, h, hh, rfl⟩
   have hC := (mem_homogeneousSubmodule 0 h).mp hh
   rw [← totalDegree_zero_iff_isHomogeneous, totalDegree_eq_zero_iff_eq_C] at hC
-  refine ⟨coeff 0 h, Subtype.ext ?_⟩
-  show algebraMap ℂ (MvPolynomial σ ℂ ⧸ I) (coeff 0 h) = Ideal.Quotient.mkₐ ℂ I h
+  refine ⟨AddMonoidAlgebra.coeff h 0, Subtype.ext ?_⟩
+  show algebraMap ℂ (MvPolynomial σ ℂ ⧸ I) (AddMonoidAlgebra.coeff h 0) = Ideal.Quotient.mkₐ ℂ I h
   conv_rhs => rw [hC]
   rfl
 

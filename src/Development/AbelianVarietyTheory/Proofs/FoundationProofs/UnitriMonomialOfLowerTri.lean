@@ -35,7 +35,7 @@ theorem single_monomial (p : Fin r × Fin n) (m : Fin r × Fin n →₀ ℕ) (c 
 
 theorem coeff_single (p : Fin r × Fin n) (e : Fin r × Fin n →₀ ℕ) (he : e p = 0) (k : ℕ)
     (G : MvPolynomial (Fin r × Fin n) R) :
-    coeff e ((single R p G).coeff k) = coeff (e + Finsupp.single p k) G := by
+    AddMonoidAlgebra.coeff ((single R p G).coeff k) e = AddMonoidAlgebra.coeff G (e + Finsupp.single p k) := by
   classical
   induction G using MvPolynomial.induction_on' with
   | add G H hG hH => simp [hG, hH]

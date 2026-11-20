@@ -328,7 +328,7 @@ theorem prod_bound (hN : N2) (h2 : 2 ∣ M) (c : DirichletCharacter ℂ M) {n : 
     simp only [Nat.cast_pow] at h'
     rw [h', Nat.cast_natAbs, Int.cast_abs]
   rw [norm_prod, ← hprod, ← Finset.prod_pow]
-  refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun p hpS => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun p hpS => ?_
   have hp := Nat.prime_of_mem_primeFactors hpS
   have hv : 1 ≤ n.natAbs.factorization p :=
     (hp.dvd_iff_one_le_factorization hn0).1 (Nat.dvd_of_mem_primeFactors hpS)

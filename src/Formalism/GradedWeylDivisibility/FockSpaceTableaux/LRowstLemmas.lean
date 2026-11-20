@@ -30,7 +30,7 @@ theorem isWH_algHom (φ : MvPolynomial σ R →ₐ[R] MvPolynomial τ R) (w : σ
     (hf : IsWeightedHomogeneous w f d) : IsWeightedHomogeneous w' (φ f) d := by
   rw [f.as_sum, map_sum]
   refine IsWeightedHomogeneous.sum _ _ _ fun s hs => ?_
-  have h := isWH_algHom_monomial φ w w' hφ s (coeff s f)
+  have h := isWH_algHom_monomial φ w w' hφ s (AddMonoidAlgebra.coeff f s)
   rwa [hf (mem_support_iff.mp hs)] at h
 
 private theorem weightedHomogeneousComponent_self_of_isWH {w : σ → M} {p : MvPolynomial σ R} {m : M}
@@ -61,9 +61,9 @@ theorem algHom_weightedHomogeneousComponent (φ : MvPolynomial σ R →ₐ[R] Mv
   conv_rhs => rw [f.as_sum]
   simp only [map_sum]
   refine Finset.sum_congr rfl fun s _ => ?_
-  have hs := isWH_algHom_monomial φ w w' hφ s (coeff s f)
-  have hm : IsWeightedHomogeneous w (monomial s (coeff s f)) (Finsupp.weight w s) :=
-    isWeightedHomogeneous_monomial w s (coeff s f) rfl
+  have hs := isWH_algHom_monomial φ w w' hφ s (AddMonoidAlgebra.coeff f s)
+  have hm : IsWeightedHomogeneous w (monomial s (AddMonoidAlgebra.coeff f s)) (Finsupp.weight w s) :=
+    isWeightedHomogeneous_monomial w s (AddMonoidAlgebra.coeff f s) rfl
   by_cases h : Finsupp.weight w s = μ
   · subst h
     rw [weightedHomogeneousComponent_self_of_isWH hm, weightedHomogeneousComponent_self_of_isWH hs]

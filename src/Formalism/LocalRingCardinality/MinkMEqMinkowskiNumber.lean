@@ -22,7 +22,7 @@ theorem padicValNat_prod_primes (p : ℕ) (hp : p.Prime) (S : Finset ℕ) (hS : 
     have := Fact.mk hap
     have h1 : a ^ e a ≠ 0 := pow_ne_zero _ hap.ne_zero
     have h2 : ∏ q ∈ S, q ^ e q ≠ 0 := Finset.prod_ne_zero_iff.2 fun q hq => pow_ne_zero _ (hS' q hq).ne_zero
-    rw [Finset.prod_insert ha, padicValNat.mul h1 h2, ih hS', padicValNat.pow]
+    rw [Finset.prod_insert ha, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) h1 h2, ih hS', padicValNat.pow]
     by_cases hpa : p = a
     · subst hpa
       simp [ha]

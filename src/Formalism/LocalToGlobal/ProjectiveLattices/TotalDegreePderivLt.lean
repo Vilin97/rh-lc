@@ -128,7 +128,7 @@ theorem algIndep_of_der {E : Type} [Field E] [CharZero E] [Algebra E F] {N : ℕ
       exact hs ((mul_eq_zero.mp hc.symm).resolve_right h2)
     rw [MvPolynomial.totalDegree_eq_zero_iff_eq_C] at hdeg0
     rw [hdeg0, MvPolynomial.aeval_C] at hP
-    have hc0 : MvPolynomial.coeff 0 P = 0 := (map_eq_zero (algebraMap E F)).mp hP
+    have hc0 : AddMonoidAlgebra.coeff P 0 = 0 := (map_eq_zero (algebraMap E F)).mp hP
     rw [hdeg0, hc0, MvPolynomial.C_0]
   exact (injective_iff_map_eq_zero (MvPolynomial.aeval (R := E) t)).mpr fun P hP => main _ P le_rfl hP
 
@@ -398,7 +398,7 @@ theorem gauss_direct {F K : Type} [Field F] [Field K] [CharZero K] [Algebra K F]
     ∑ k, MvPolynomial.C (abar k) * MvPolynomial.X k
   have hLp : Lp ≠ 0 := by
     intro h0
-    have := congrArg (fun P => MvPolynomial.coeff (Finsupp.single j0 1) P) h0
+    have := congrArg (fun P => AddMonoidAlgebra.coeff P (Finsupp.single j0 1)) h0
     simp only [Lp, MvPolynomial.coeff_sum, MvPolynomial.coeff_C_mul, MvPolynomial.coeff_X',
       MvPolynomial.coeff_zero] at this
     rw [Finset.sum_eq_single j0] at this

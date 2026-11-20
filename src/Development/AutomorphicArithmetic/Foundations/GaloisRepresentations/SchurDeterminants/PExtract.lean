@@ -42,7 +42,7 @@ theorem extract : Extract := by
     refine LinearMap.ext fun u => ?_
     rw [hφv, LinearMap.zero_apply]
     refine Finset.sum_eq_zero fun m _ => ?_
-    have hc := congrArg (coeff (E m)) hQ
+    have hc := congrArg (AddMonoidAlgebra.coeff · (E m)) hQ
     simp only [Q, coeff_sum, coeff_monomial, coeff_zero, hE.eq_iff] at hc
     simp at hc
     rw [hc, mul_zero]

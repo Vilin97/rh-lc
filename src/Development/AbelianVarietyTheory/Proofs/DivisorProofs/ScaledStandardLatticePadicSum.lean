@@ -59,7 +59,7 @@ theorem log_inv_norm_natCast (p : ℕ) [Fact p.Prime] (D : ℕ) (hD : 0 < D) :
   obtain ⟨e, n, hn, rfl⟩ := Nat.exists_eq_pow_mul_and_not_dvd hD.ne' p hpp.ne_one
   have hn0 : n ≠ 0 := by rintro rfl; exact hn (dvd_zero p)
   have hv : padicValNat p (p ^ e * n) = e := by
-    rw [padicValNat.mul (pow_ne_zero _ hpp.ne_zero) hn0, padicValNat.prime_pow,
+    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hpp.ne_zero) hn0, padicValNat.prime_pow,
       padicValNat.eq_zero_of_not_dvd hn, add_zero]
   have hnorm : ‖((p ^ e * n : ℕ) : ℚ_[p])‖ = ((p : ℝ)⁻¹) ^ e := by
     rw [Nat.cast_mul, Nat.cast_pow, norm_mul, norm_pow, Padic.norm_p,

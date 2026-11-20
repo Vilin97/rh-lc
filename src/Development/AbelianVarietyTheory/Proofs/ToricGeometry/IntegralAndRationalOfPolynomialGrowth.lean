@@ -175,7 +175,7 @@ theorem exists_local_roots {d : ℕ} (p : Polynomial (MvPolynomial (Fin d) ℂ))
 theorem norm_prod_le_pow {ι : Type*} (s : Finset ι) (f : ι → ℂ) (B : ℝ) (n : ℕ) (hB : 1 ≤ B)
     (hs : s.card ≤ n) (h : ∀ i ∈ s, ‖f i‖ ≤ B) : ‖∏ i ∈ s, f i‖ ≤ B ^ n := by
   rw [norm_prod]
-  refine (Finset.prod_le_prod (fun _ _ => norm_nonneg _) h).trans ?_
+  refine (Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) h).trans ?_
   rw [Finset.prod_const]
   exact pow_le_pow_right₀ hB hs
 

@@ -41,8 +41,8 @@ def PlaneAlgebraInvariant : Prop :=
 def ScaleHeavyCoeff : Prop :=
   ∀ (ι O : Type) [CommRing O] (r K : ℕ) (isVec : ι → Bool) (w : O)
     (f : MvPolynomial (ι × Fin (r + K)) O),
-    (∀ m, coeff m (planeEmb r K isVec w f) = w ^ heavyDeg r K isVec m * coeff m f) ∧
-    ∀ j : ℕ, (C w) ^ j ∣ planeEmb r K isVec w f ↔ ∀ m, w ^ j ∣ w ^ heavyDeg r K isVec m * coeff m f
+    (∀ m, AddMonoidAlgebra.coeff (planeEmb r K isVec w f) m = w ^ heavyDeg r K isVec m * AddMonoidAlgebra.coeff f m) ∧
+    ∀ j : ℕ, (C w) ^ j ∣ planeEmb r K isVec w f ↔ ∀ m, w ^ j ∣ w ^ heavyDeg r K isVec m * AddMonoidAlgebra.coeff f m
 
 def PlaneRingFacts : Prop :=
   ∀ (ι O : Type) [CommRing O] [IsDomain O] (r K : ℕ) (isVec : ι → Bool) (w : O), w ≠ 0 →

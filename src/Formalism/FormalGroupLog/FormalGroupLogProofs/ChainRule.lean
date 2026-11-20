@@ -44,7 +44,7 @@ theorem agree_iff [Finite σ] {N : ℕ} {f g : MvPowerSeries σ R} :
     · exact h d hd
     · rfl
   · intro h d hd
-    have := congrArg (MvPolynomial.coeff d) h
+    have := congrArg (AddMonoidAlgebra.coeff · d) h
     rwa [coeff_truncTotal _ hd, coeff_truncTotal _ hd] at this
 
 theorem agree_truncTotal [Finite σ] (N : ℕ) (f : MvPowerSeries σ R) :

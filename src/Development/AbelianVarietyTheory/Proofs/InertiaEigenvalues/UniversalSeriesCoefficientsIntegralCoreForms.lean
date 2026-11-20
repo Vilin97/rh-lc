@@ -182,8 +182,8 @@ theorem xi_int_of_ties (hRF : GlobalTheory.NT.RayField) (hSI : GlobalTheory.Inde
     refine ⟨GlobalTheory.Member.character_quotient_values_in_embedding_field.small_quot_values D Γ Pl0 T0 A3.A _ Rl.toRealDat j _ C.σ₂ hG.2.2.2.1, fun w hw m => ?_,
       hM ▸ containsRayField_of_rayIn C.σ₂ hG.2.2.2.2⟩
     obtain ⟨r, rfl⟩ := Submodule.mem_span_singleton.1 hw
-    have h1 : MvPolynomial.coeff m (v' : Pol ℂ D.what₂.Tau (Vc D j).rank) ∈ C.σ₂.fieldRange := by
-      change MvPolynomial.coeff m (MvPolynomial.map D.what₂.embLL v.1) ∈ _
+    have h1 : AddMonoidAlgebra.coeff (v' : Pol ℂ D.what₂.Tau (Vc D j).rank) m ∈ C.σ₂.fieldRange := by
+      change AddMonoidAlgebra.coeff (MvPolynomial.map D.what₂.embLL v.1) m ∈ _
       rw [MvPolynomial.coeff_map]
       exact hL0 (hvc m)
     have h2 := zsmul_mem h1 r

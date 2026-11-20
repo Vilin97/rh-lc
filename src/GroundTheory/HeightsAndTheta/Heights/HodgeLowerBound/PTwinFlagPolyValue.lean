@@ -33,7 +33,7 @@ omit [Fintype K] in
 theorem valPoly_add {y : (Σ k, ι k) → Ω} {z : (Σ k, ι k) → ℂ} {σ : Type} {P P' : MvPolynomial σ Ω}
     {Q Q' : MvPolynomial σ ℂ} (h : ValPoly y z P Q) (h' : ValPoly y z P' Q') :
     ValPoly y z (P + P') (Q + Q') := fun μ => by
-  rw [coeff_add, coeff_add]; exact isValueAt_add (h μ) (h' μ)
+  rw [MvPolynomial.coeff_add, MvPolynomial.coeff_add]; exact isValueAt_add (h μ) (h' μ)
 
 theorem valPoly_mul {y : (Σ k, ι k) → Ω} {z : (Σ k, ι k) → ℂ} {σ : Type} {P P' : MvPolynomial σ Ω}
     {Q Q' : MvPolynomial σ ℂ} (h : ValPoly y z P Q) (h' : ValPoly y z P' Q') :

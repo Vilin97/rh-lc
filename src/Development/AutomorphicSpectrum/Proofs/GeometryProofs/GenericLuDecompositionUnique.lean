@@ -19,11 +19,11 @@ theorem affine_form_ne_zero {K L : Type} [Field K] [Field L] [Algebra K L] {n : 
     exact this P hP
   rcases hab with ha | ⟨j, hj⟩
   · apply ha
-    have := congrArg (MvPolynomial.coeff 0) hP0
+    have := congrArg (AddMonoidAlgebra.coeff · 0) hP0
     simpa [P, MvPolynomial.coeff_add, MvPolynomial.coeff_sum, MvPolynomial.coeff_C_mul,
       MvPolynomial.coeff_C, MvPolynomial.coeff_X'] using this
   · apply hj
-    have := congrArg (MvPolynomial.coeff (Finsupp.single j 1)) hP0
+    have := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single j 1)) hP0
     have hne : (0 : Fin n →₀ ℕ) ≠ Finsupp.single j 1 :=
       (Finsupp.single_ne_zero.mpr one_ne_zero).symm
     simpa [P, hne, MvPolynomial.coeff_add, MvPolynomial.coeff_sum, MvPolynomial.coeff_C_mul,

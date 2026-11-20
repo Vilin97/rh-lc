@@ -15,7 +15,7 @@ section proj
 variable {K : Type*} [Field K] {ι : Type*} {r : ℕ}
 
 theorem coeff_multidegreeProj_of_multidegree_eq (d : ι → ℕ) (H : MvPolynomial (ι × Fin r) K) (m : ι × Fin r →₀ ℕ)
-    (h : ∀ i, multideg m i = d i) : coeff m (polProj K d H) = coeff m H := by
+    (h : ∀ i, multideg m i = d i) : AddMonoidAlgebra.coeff (polProj K d H) m = AddMonoidAlgebra.coeff H m := by
   classical
   conv_lhs => rw [H.as_sum]
   rw [map_sum, MvPolynomial.coeff_sum]

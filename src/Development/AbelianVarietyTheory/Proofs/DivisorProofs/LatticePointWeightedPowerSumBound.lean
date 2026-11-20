@@ -63,7 +63,7 @@ theorem tsum_rpow_prod_add_le_of_box_count : ∀ (ι : Type) [Fintype ι] (s : �
     intro c
     apply ENNReal.ofReal_le_ofReal
     have hle : ∏ w, (A w * 2 ^ (mc c w)) ≤ ∏ w, (A w + f c w) := by
-      apply Finset.prod_le_prod (fun w _ => by have := hA w; positivity)
+      apply Finset.prod_le_prod₀ (fun w _ => by have := hA w; positivity)
       intro w _
       have : A w + f c w = A w * (1 + x c w) := by
         simp only [hxdef]; field_simp [(hA w).ne']

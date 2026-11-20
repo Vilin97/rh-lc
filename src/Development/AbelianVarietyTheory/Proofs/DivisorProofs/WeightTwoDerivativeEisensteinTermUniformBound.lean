@@ -19,7 +19,7 @@ theorem eTerm_bound : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (I 
   have hN : |(Algebra.norm ℚ x : ℝ)| ^ (-(1 + σ.re)) = ∏ i, (‖φ i x‖ ^ 2) ^ (-(1 + σ.re)) := by
     rw [← TermUnit.prod_norm_sq hφ x, Real.finsetProd_rpow _ _ (fun i _ => by positivity)]
   rw [hN, ← Finset.prod_mul_distrib, eTerm, norm_prod]
-  refine Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i _ => ?_
+  refine Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i _ => ?_
   have hp : 0 < ‖φ i x‖ := norm_pos_iff.2 ((map_ne_zero (φ i)).2 hx)
   have hl := GlobalTheory.DeformedSum.Bound.defCoord_lower φ z x i (hz i)
   have hd : 0 < ‖defCoord φ z x i‖ := lt_of_lt_of_le (mul_pos hr' hp) hl

@@ -102,7 +102,7 @@ theorem ker_baseChange {k B K σ Φ Φ' : Type} [Field k] [CommRing B] [Algebra 
       rw [monomial_eq, map_mul, hαC]
       refine Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ ?_)
       rw [RingHom.mem_ker]
-      have hv := congrArg (coeff v) hQ0
+      have hv := congrArg (AddMonoidAlgebra.coeff · v) hQ0
       rw [coeff_map, coeff_zero] at hv
       exact hv
     have hqne : algebraMap (MvPolynomial K k) Φ q ≠ 0 :=

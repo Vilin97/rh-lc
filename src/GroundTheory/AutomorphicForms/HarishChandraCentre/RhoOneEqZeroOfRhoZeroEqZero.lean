@@ -164,8 +164,8 @@ theorem rho_one_eq_zero_of_rho_zero_eq_zero (u : U n) (h : rho 0 u = 0) : rho 1 
   rw [rho_one_shift, h, LinearMap.zero_apply, map_zero, LinearMap.zero_apply]
 
 def geDeg (t : ℕ) : Submodule ℂ (Poly n) where
-  carrier := {f | ∀ s : Fin n × Fin n →₀ ℕ, s.degree < t → coeff s f = 0}
-  add_mem' {f g} hf hg s hs := by rw [coeff_add, hf s hs, hg s hs, add_zero]
+  carrier := {f | ∀ s : Fin n × Fin n →₀ ℕ, s.degree < t → AddMonoidAlgebra.coeff f s = 0}
+  add_mem' {f g} hf hg s hs := by rw [MvPolynomial.coeff_add, hf s hs, hg s hs, add_zero]
   zero_mem' s _ := coeff_zero s
   smul_mem' r f hf s hs := by rw [coeff_smul, hf s hs, smul_zero]
 
@@ -181,7 +181,7 @@ theorem monomial_mem_geDeg {t : ℕ} (s : Fin n × Fin n →₀ ℕ) (c : ℂ) (
 
 theorem constantCoeff_eq_zero_of_mem_geDeg {f : Poly n} (hf : f ∈ geDeg 1) :
     constantCoeff f = 0 := by
-  have h0 : constantCoeff f = coeff 0 f := by rw [constantCoeff_eq]
+  have h0 : constantCoeff f = AddMonoidAlgebra.coeff f 0 := by rw [constantCoeff_eq]
   rw [h0]
   exact hf 0 (by simp)
 
@@ -193,7 +193,7 @@ theorem mem_geDeg_of_isHomogeneous {f : Poly n} {d : ℕ} (hf : f.IsHomogeneous 
   omega
 
 theorem map_mem_of_monomial (L : Poly n →ₗ[ℂ] Poly n) (P : Submodule ℂ (Poly n))
-    (Q : (Fin n × Fin n →₀ ℕ) → Prop) {f : Poly n} (hf : ∀ s, coeff s f ≠ 0 → Q s)
+    (Q : (Fin n × Fin n →₀ ℕ) → Prop) {f : Poly n} (hf : ∀ s, AddMonoidAlgebra.coeff f s ≠ 0 → Q s)
     (h : ∀ s (c : ℂ), Q s → L (monomial s c) ∈ P) : L f ∈ P := by
   rw [f.as_sum, map_sum]
   exact Submodule.sum_mem _ fun s hs => h s _ (hf s (mem_support_iff.1 hs))

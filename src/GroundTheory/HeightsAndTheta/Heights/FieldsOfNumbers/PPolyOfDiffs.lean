@@ -153,7 +153,7 @@ theorem proof : PolyOfDiffs.Statement := by
       (h (Function.update x k t) : ℚ) - eval (fun j => (Function.update x k t j : ℚ)) (P k) =
       (h x : ℚ) - eval (fun j => (x j : ℚ)) (P k) := by
     intro k x hx hxk t ht
-    induction t, ht using Int.le_induction with
+    induction t, ht using Int.leInduction with
     | base => rw [← hxk, Function.update_eq_self]
     | succ t ht ih =>
       have hy : N ≤ Function.update x k (t + 1) := by

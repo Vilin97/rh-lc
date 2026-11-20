@@ -137,9 +137,9 @@ theorem exists_bchar_bound (la : Wt X.Ψ r) (C : ℝ) : ∃ D : ℝ, 0 ≤ D ∧
     (∀ τ i j, ‖b τ i j‖ ≤ C ∧ ‖(b τ i i)⁻¹‖ ≤ C) → ‖bchar la b‖ ≤ D := by
   refine ⟨∏ τ, ∏ i, |C| ^ (la τ i).natAbs, by positivity, fun b hb => ?_⟩
   rw [bchar, norm_prod]
-  refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun τ _ => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun τ _ => ?_
   rw [norm_prod]
-  refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => ?_
   obtain ⟨n, h | h⟩ := Int.eq_nat_or_neg (la τ i)
   · rw [h, zpow_natCast, norm_pow, Int.natAbs_natCast]
     exact pow_le_pow_left₀ (norm_nonneg _) ((hb τ i i).1.trans (le_abs_self C)) n

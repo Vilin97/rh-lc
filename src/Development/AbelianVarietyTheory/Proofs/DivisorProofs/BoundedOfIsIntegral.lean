@@ -10,7 +10,7 @@ namespace GlobalTheory.LocBounded
 theorem isIntegral_mul_of_commute {R A : Type} [CommRing R] [Ring A] [Algebra R A] {x y : A}
     (hc : Commute x y) (hx : IsIntegral R x) (hy : IsIntegral R y) : IsIntegral R (x * y) := by
   let S := Algebra.adjoin R ({x, y} : Set A)
-  letI : CommRing S := Algebra.adjoinCommRingOfComm R (by
+  letI : CommRing S := Algebra.isMulCommutative_adjoin R (by
     intro a ha b hb
     simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at ha hb
     rcases ha with rfl | rfl <;> rcases hb with rfl | rfl

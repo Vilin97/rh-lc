@@ -108,7 +108,7 @@ theorem sum_padicValNat_range (p : ℕ) [Fact p.Prime] (n : ℕ) :
   | zero => simp
   | succ m ih =>
     rw [Finset.sum_range_succ, ih, Nat.factorial_succ,
-      padicValNat.mul (Nat.succ_ne_zero m) (Nat.factorial_ne_zero m), add_comm]
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.succ_ne_zero m) (Nat.factorial_ne_zero m), add_comm]
 
 theorem vdel_le (i : D.nd.Loc) :
     D.nd.vdel i ≤ (D.R.t : ℚ) * (D.nd.s0 i : ℚ) + (padicValNat (D.nd.l i) D.R.t.factorial : ℚ) := by
@@ -126,7 +126,7 @@ theorem vdel_le (i : D.nd.Loc) :
     · simp [h0]
     · obtain ⟨m, hm⟩ := Nat.exists_eq_succ_of_ne_zero hpos.ne'
       rw [hm, Nat.succ_eq_add_one, sum_padicValNat_range, Nat.factorial_succ,
-        padicValNat.mul (Nat.succ_ne_zero m) (Nat.factorial_ne_zero m)]
+        (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.succ_ne_zero m) (Nat.factorial_ne_zero m)]
       exact Nat.le_add_left _ _
   have h3 : (∑ k ∈ Finset.range D.R.t, ((D.nd.s0 i : ℚ) + (padicValNat (D.nd.l i) k : ℚ))) =
       (D.R.t : ℚ) * (D.nd.s0 i : ℚ) + ((∑ k ∈ Finset.range D.R.t, padicValNat (D.nd.l i) k : ℕ) : ℚ) := by

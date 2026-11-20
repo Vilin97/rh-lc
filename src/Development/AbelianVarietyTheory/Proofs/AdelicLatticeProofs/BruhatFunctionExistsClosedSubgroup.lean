@@ -118,7 +118,7 @@ private lemma exists_nonneg_continuous_ne_zero_on_cosets {G : Type*} [Group G] [
     intro y
     obtain ⟨m, hm⟩ := hyU y
     have hc : Continuous fun z => ∑ n ∈ Finset.range (m + 2), φ (σ y) n z :=
-      continuous_finset_sum _ fun n _ => (φ (σ y) n).continuous
+      continuous_finsetSum _ fun n _ => (φ (σ y) n).continuous
     refine hc.continuousAt.congr ?_
     filter_upwards [(hUo _ m).mem_nhds hm] with z hz
     exact (hfeq y m z hz).symm

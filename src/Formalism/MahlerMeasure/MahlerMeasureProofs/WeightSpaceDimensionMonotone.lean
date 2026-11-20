@@ -1084,7 +1084,7 @@ theorem glAct_wh (LL : Letters N) (j : ℕ) (a b : Fin r) {ν : Fin r → ℤ} {
   rw [LinearMap.sum_apply]
   refine Submodule.sum_mem _ fun i _ => ?_
   split_ifs with h1 h2
-  · have h3 := wh_XD (K := ℚ_[p]) (wv LL j) (i, b) (i, a) d (coeff d x)
+  · have h3 := wh_XD (K := ℚ_[p]) (wv LL j) (i, b) (i, a) d (AddMonoidAlgebra.coeff x d)
     have e : ν + dl a b = Finsupp.weight (wv LL j) d - wv LL j (i, b) + wv LL j (i, a) := by
       rw [hwd]
       funext c
@@ -1093,7 +1093,7 @@ theorem glAct_wh (LL : Letters N) (j : ℕ) (a b : Fin r) {ν : Fin r → ℤ} {
       split_ifs <;> omega
     rw [e]
     exact h3
-  · have h3 := wh_XD (K := ℚ_[p]) (wv LL j) (i, a) (i, b) d (coeff d x)
+  · have h3 := wh_XD (K := ℚ_[p]) (wv LL j) (i, a) (i, b) d (AddMonoidAlgebra.coeff x d)
     have e : ν + dl a b = Finsupp.weight (wv LL j) d - wv LL j (i, a) + wv LL j (i, b) := by
       rw [hwd]
       funext c
@@ -1126,7 +1126,7 @@ noncomputable def GA (p : ℕ) [Fact p.Prime] (LL : Letters N) (j : ℕ) :
     rw [Finset.sum_ite_eq]
     split_ifs with h
     · rfl
-    · have := congrArg (coeff d) (hS _ h)
+    · have := congrArg (AddMonoidAlgebra.coeff · d) (hS _ h)
       rw [coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at this
       exact this.symm
   idem := by
@@ -1283,14 +1283,14 @@ theorem indep_B (j0 : ℕ) (s : Finset (Fin N × Fin r →₀ ℕ)) (a : (Fin N 
   rw [coeff_zero]
   by_contra hne
   have hmA : ∀ v : Fin N × Fin r, j0 ≤ (v.1 : ℕ) → m v = 0 := ha b0 hb0 m (mem_support_iff.mpr hne)
-  have := congrArg (coeff (m + b0)) h0
+  have := congrArg (AddMonoidAlgebra.coeff · (m + b0)) h0
   rw [coeff_zero, coeff_sum, Finset.sum_eq_single b0] at this
   · rw [coeff_mul_monomial', if_pos le_add_self, add_tsub_cancel_right, mul_one] at this
     exact hne this
   · intro b hb hbne
     rw [coeff_mul_monomial']
     split_ifs with hle
-    · have : coeff (m + b0 - b) (a b) = 0 := by
+    · have : AddMonoidAlgebra.coeff (a b) (m + b0 - b) = 0 := by
         by_contra hc
         have hA := ha b hb (m + b0 - b) (mem_support_iff.mpr hc)
         apply hbne
@@ -1346,13 +1346,13 @@ theorem glAct_wL (LL : Letters N) (j : ℕ) (a b : Fin r) {D : Fin N → ℤ} {x
   rw [LinearMap.sum_apply]
   refine Submodule.sum_mem _ fun i _ => ?_
   split_ifs with h1 h2
-  · have h3 := wh_XD (K := ℚ_[p]) (wL N r) (i, b) (i, a) d (coeff d x)
+  · have h3 := wh_XD (K := ℚ_[p]) (wL N r) (i, b) (i, a) d (AddMonoidAlgebra.coeff x d)
     have e : D = Finsupp.weight (wL N r) d - wL N r (i, b) + wL N r (i, a) := by
       rw [hwd]
       simp [wL]
     rw [e]
     exact h3
-  · have h3 := wh_XD (K := ℚ_[p]) (wL N r) (i, a) (i, b) d (coeff d x)
+  · have h3 := wh_XD (K := ℚ_[p]) (wL N r) (i, a) (i, b) d (AddMonoidAlgebra.coeff x d)
     have e : D = Finsupp.weight (wL N r) d - wL N r (i, a) + wL N r (i, b) := by
       rw [hwd]
       simp [wL]
@@ -1397,7 +1397,7 @@ theorem glAct_wh' (LL : Letters N) {j J : ℕ} (hjJ : j ≤ J) (a b : Fin r) {ν
   refine Submodule.sum_mem _ fun i _ => ?_
   split_ifs with h1' h2
   · have h1 : (i : ℕ) < J := by omega
-    have h3 := wh_XD (K := ℚ_[p]) (wv LL J) (i, b) (i, a) d (coeff d x)
+    have h3 := wh_XD (K := ℚ_[p]) (wv LL J) (i, b) (i, a) d (AddMonoidAlgebra.coeff x d)
     have e : ν + dl a b = Finsupp.weight (wv LL J) d - wv LL J (i, b) + wv LL J (i, a) := by
       rw [hwd]
       funext c
@@ -1407,7 +1407,7 @@ theorem glAct_wh' (LL : Letters N) {j J : ℕ} (hjJ : j ≤ J) (a b : Fin r) {ν
     rw [e]
     exact h3
   · have h1 : (i : ℕ) < J := by omega
-    have h3 := wh_XD (K := ℚ_[p]) (wv LL J) (i, a) (i, b) d (coeff d x)
+    have h3 := wh_XD (K := ℚ_[p]) (wv LL J) (i, a) (i, b) d (AddMonoidAlgebra.coeff x d)
     have e : ν + dl a b = Finsupp.weight (wv LL J) d - wv LL J (i, a) + wv LL J (i, b) := by
       rw [hwd]
       funext c
@@ -1573,14 +1573,14 @@ theorem midAct_wh (LL : Letters N) (J j0 : ℕ) (c d : Fin r) {ν : Fin r → �
   refine Submodule.sum_mem _ fun i _ => ?_
   split_ifs with h1 h2
   · have hnJ : ¬ ((i : ℕ) < J) := by omega
-    have h3 := wh_XD (K := ℚ_[p]) (wv LL J) (i, d) (i, c) m (coeff m x)
+    have h3 := wh_XD (K := ℚ_[p]) (wv LL J) (i, d) (i, c) m (AddMonoidAlgebra.coeff x m)
     have e : ν = Finsupp.weight (wv LL J) m - wv LL J (i, d) + wv LL J (i, c) := by
       rw [hwd]
       simp [wv, hnJ]
     rw [e]
     exact h3
   · have hnJ : ¬ ((i : ℕ) < J) := by omega
-    have h3 := wh_XD (K := ℚ_[p]) (wv LL J) (i, c) (i, d) m (coeff m x)
+    have h3 := wh_XD (K := ℚ_[p]) (wv LL J) (i, c) (i, d) m (AddMonoidAlgebra.coeff x m)
     have e : ν = Finsupp.weight (wv LL J) m - wv LL J (i, c) + wv LL J (i, d) := by
       rw [hwd]
       simp [wv, hnJ]
@@ -1660,12 +1660,12 @@ theorem glAct_lw {M : Type} [AddCommGroup M] (LL : Letters N) (j : ℕ) (a b : F
   rw [LinearMap.sum_apply]
   refine Submodule.sum_mem _ fun i _ => ?_
   split_ifs with h1 h2
-  · have h3 := wh_XD (K := ℚ_[p]) w (i, b) (i, a) d (coeff d x)
+  · have h3 := wh_XD (K := ℚ_[p]) w (i, b) (i, a) d (AddMonoidAlgebra.coeff x d)
     have e : D = Finsupp.weight w d - w (i, b) + w (i, a) := by
       rw [hwd, hw i b a, sub_add_cancel]
     rw [e]
     exact h3
-  · have h3 := wh_XD (K := ℚ_[p]) w (i, a) (i, b) d (coeff d x)
+  · have h3 := wh_XD (K := ℚ_[p]) w (i, a) (i, b) d (AddMonoidAlgebra.coeff x d)
     have e : D = Finsupp.weight w d - w (i, a) + w (i, b) := by
       rw [hwd, hw i a b, sub_add_cancel]
     rw [LinearMap.neg_apply, e]
@@ -1764,7 +1764,7 @@ theorem pol_fd (LL : Letters N) : FiniteDimensional ℚ_[p] (Pol p r LL) := by
   rw [MvPolynomial.mem_restrictSupport_iff] at hx
   rw [x.as_sum]
   refine Submodule.sum_mem _ fun m hm => ?_
-  rw [show monomial m (coeff m x) = coeff m x • monomial m (1 : ℚ_[p]) by rw [smul_monomial, smul_eq_mul, mul_one]]
+  rw [show monomial m (AddMonoidAlgebra.coeff x m) = AddMonoidAlgebra.coeff x m • monomial m (1 : ℚ_[p]) by rw [smul_monomial, smul_eq_mul, mul_one]]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨m, hx hm, rfl⟩)
 
 theorem pol_finW (LL : Letters N) (j : ℕ) : (GA p LL j).FinW (Pol p r LL) := by
@@ -2264,7 +2264,7 @@ theorem comp_mul_hom {σ M K : Type} [AddCommGroup M] [CommRing K] (w : σ → M
   split_ifs with hd
   · refine Finset.sum_congr rfl fun ab hab => ?_
     rw [coeff_weightedHomogeneousComponent]
-    by_cases h0 : coeff ab.1 φ = 0
+    by_cases h0 : AddMonoidAlgebra.coeff φ ab.1 = 0
     · rw [h0, zero_mul, zero_mul]
     · have h1 : Finsupp.weight w ab.1 = κ := hφ h0
       have hab' : ab.1 + ab.2 = d := by simpa using hab
@@ -2277,7 +2277,7 @@ theorem comp_mul_hom {σ M K : Type} [AddCommGroup M] [CommRing K] (w : σ → M
   · symm
     refine Finset.sum_eq_zero fun ab hab => ?_
     rw [coeff_weightedHomogeneousComponent]
-    by_cases h0 : coeff ab.1 φ = 0
+    by_cases h0 : AddMonoidAlgebra.coeff φ ab.1 = 0
     · rw [h0, zero_mul]
     · have h1 : Finsupp.weight w ab.1 = κ := hφ h0
       have hab' : ab.1 + ab.2 = d := by simpa using hab
@@ -2363,7 +2363,7 @@ theorem rep_span (VF : Submodule ℚ_[p] (MvPolynomial (Fin N × Fin r) ℚ_[p])
   induction hz using Submodule.span_induction with
   | mem x hx =>
     obtain ⟨g, hg, q, hq, rfl⟩ := hx
-    refine ⟨q.support, fun b => coeff b q • g, ?_, fun b => VF.smul_mem _ hg, ?_⟩
+    refine ⟨q.support, fun b => AddMonoidAlgebra.coeff q b • g, ?_, fun b => VF.smul_mem _ hg, ?_⟩
     · intro b hb v hv
       by_contra hne
       have := supp_of_supported hq b hb v hne
@@ -2459,12 +2459,12 @@ theorem weight_zero_span_highest [NeZero r] (LL : Letters N) (j0 : ℕ) (iK : Fi
     exact_mod_cast this
   set wm : Fin r → ℤ := fun c => -((m (iK, c) : ℕ) : ℤ) with hwm
   have hwmm : Finsupp.weight (wv LL j0) m = wm := weight_cov_monomial LL j0 iK hiK hvK m hm1
-  have hy : G.comp ν g * monomial m (coeff m s) ∈ weightedHomogeneousSubmodule ℚ_[p] (wv LL j0) (ν + wm) := by
+  have hy : G.comp ν g * monomial m (AddMonoidAlgebra.coeff s m) ∈ weightedHomogeneousSubmodule ℚ_[p] (wv LL j0) (ν + wm) := by
     have := (weightedHomogeneousComponent_isWeightedHomogeneous (w := wv LL j0) ν g).mul
-      (isWeightedHomogeneous_monomial (wv LL j0) m (coeff m s) hwmm)
+      (isWeightedHomogeneous_monomial (wv LL j0) m (AddMonoidAlgebra.coeff s m) hwmm)
     exact this
-  have hcomp : ∀ μ, G.comp μ (G.comp ν g * monomial m (coeff m s)) =
-      if μ = ν + wm then G.comp ν g * monomial m (coeff m s) else 0 := fun μ =>
+  have hcomp : ∀ μ, G.comp μ (G.comp ν g * monomial m (AddMonoidAlgebra.coeff s m)) =
+      if μ = ν + wm then G.comp ν g * monomial m (AddMonoidAlgebra.coeff s m) else 0 := fun μ =>
     weightedHomogeneousComponent_of_mem hy
   by_cases h0 : G.comp ν g = 0
   · rw [h0, zero_mul]; exact Ωs.zero_mem
@@ -2528,7 +2528,7 @@ theorem weight_zero_span_highest [NeZero r] (LL : Letters N) (j0 : ℕ) (iK : Fi
         · simp [hmc c hc, hc]
       have hνla : ν = la := by rw [hν', hwmρ, hla']; abel
       obtain ⟨c', hc'⟩ := G.comp_top_of_mem hF hg
-      have hmono : monomial m (coeff m s) = coeff m s • (X (iK, ρ) ^ u : MvPolynomial (Fin N × Fin r) ℚ_[p]) := by
+      have hmono : monomial m (AddMonoidAlgebra.coeff s m) = AddMonoidAlgebra.coeff s m • (X (iK, ρ) ^ u : MvPolynomial (Fin N × Fin r) ℚ_[p]) := by
         rw [hmeq, X_pow_eq_monomial, smul_monomial, smul_eq_mul, mul_one]
       rw [hνla, hc', hmono, smul_mul_smul_comm, mul_comm F]
       exact Submodule.smul_mem _ _ (Submodule.mem_span_singleton_self _)

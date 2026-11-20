@@ -76,7 +76,7 @@ theorem measure_of_products : ∀ (d q : ℕ) [Fact q.Prime] (ι : ℂ ≃+* ℂ
     ⟨∑ j, ‖ι (c j)‖, fun ν => (norm_sum_le _ _).trans (Finset.sum_le_sum fun j _ => by
       rw [norm_mul, norm_prod]
       exact mul_le_of_le_one_right (norm_nonneg _)
-        (Finset.prod_le_one (fun _ _ => norm_nonneg _) fun i _ => hS j i _))⟩
+        (Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun i _ => hS j i _))⟩
   refine ⟨μ, hμ1, ?_⟩
   intro n s y hs hst hy k ys F hF
   have hl : constantCoeff (C ω * logS : ℂ_[q]⟦X⟧) = 0 := by

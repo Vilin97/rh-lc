@@ -11,11 +11,11 @@ open Formalism.MainNotions.G Formalism.MainNotions.TestSideWords.TwistedFiltrati
 variable {R : Type*} [CommRing R] {ι : Type} {n : ℕ} [NeZero n] (LL : Letters ι) (S : Set ι)
 
 theorem coeff_divDer (be μ : ι × Fin n →₀ ℕ) (F : MvPolynomial (ι × Fin n) R) :
-    coeff μ (divDer be F) = coeff (μ + be) F * ((be.prod fun k j => ((μ + be) k).choose j : ℕ) : R) := by
+    AddMonoidAlgebra.coeff (divDer be F) μ = AddMonoidAlgebra.coeff F (μ + be) * ((be.prod fun k j => ((μ + be) k).choose j : ℕ) : R) := by
   classical
   rw [divDer, coeff_sum]
   rw [Finset.sum_congr rfl (g := fun m => if m = μ + be then
-      coeff m F * ((be.prod fun k j => (m k).choose j : ℕ) : R) else 0)]
+      AddMonoidAlgebra.coeff F m * ((be.prod fun k j => (m k).choose j : ℕ) : R) else 0)]
   · rw [Finset.sum_ite_eq']
     split_ifs with h
     · rfl
@@ -63,7 +63,7 @@ theorem divDer_single_one (v : ι × Fin n) (F : MvPolynomial (ι × Fin n) R) :
   | add p q hp hq =>
     rw [map_add, ← hp, ← hq]
     ext μ
-    rw [coeff_add, coeff_divDer, coeff_divDer, coeff_divDer, coeff_add, add_mul]
+    rw [MvPolynomial.coeff_add, coeff_divDer, coeff_divDer, coeff_divDer, MvPolynomial.coeff_add, add_mul]
 
 theorem vecDeg_zero' (S : Set ι) : vecDeg LL S (0 : ι × Fin n →₀ ℕ) = 0 := by
   simp [vecDeg]

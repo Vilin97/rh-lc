@@ -50,8 +50,8 @@ private theorem hpq_minor {K : Type} [Field K] [NumberField K] {n : ℕ} (h : Ad
       simp only [Set.Finite.coe_toFinset, Set.mem_union]; exact Or.inr hv
   rw [GroundTheory.Global.IdeleGroup.ideleModule_eq, AutomorphicForm.height, h1, h2, mul_pow, ← mul_assoc, ← Finset.prod_pow, ← Finset.prod_pow,
     ← Finset.prod_mul_distrib]
-  refine mul_le_mul (Finset.prod_le_prod (fun w _ => by positivity) fun w _ => ?_)
-    (Finset.prod_le_prod (fun v _ => norm_nonneg _) fun v _ => hf v) (Finset.prod_nonneg fun v _ => norm_nonneg _)
+  refine mul_le_mul (Finset.prod_le_prod₀ (fun w _ => by positivity) fun w _ => ?_)
+    (Finset.prod_le_prod₀ (fun v _ => norm_nonneg _) fun v _ => hf v) (Finset.prod_nonneg fun v _ => norm_nonneg _)
     (Finset.prod_nonneg fun w _ => by positivity)
   rw [← pow_mul, mul_comm w.mult 2, pow_mul, ← mul_pow]
   exact pow_le_pow_left₀ (norm_nonneg _) (hi w) _

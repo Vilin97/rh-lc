@@ -11,7 +11,7 @@ open Polynomial UpperTheory.V.W
 private theorem exists_isCompact_preimage_eq_of_isLimit_of_isAffineHom {n : ℕ} {A G : Type} [CommRing A] [Group G] {A' : Type} [CommRing A']
     (ι : A →+* A') (D' : GDet n A' G)
     (hc : ∀ (m : ℕ) (g : Fin m → G) (β : Fin m →₀ ℕ),
-      MvPolynomial.coeff β (D'.D (MvPolynomial (Fin m) A') (GDet.gen fun j => MonoidAlgebra.single (g j) 1)) ∈ ι.range)
+      AddMonoidAlgebra.coeff (D'.D (MvPolynomial (Fin m) A') (GDet.gen fun j => MonoidAlgebra.single (g j) 1)) β ∈ ι.range)
     (σ : Type) (x : MonoidAlgebra (MvPolynomial σ A) G) :
     D'.D (MvPolynomial σ A') (MonoidAlgebra.mapRingHom G (MvPolynomial.map ι) x) ∈ Set.range (MvPolynomial.map ι) := by
   obtain ⟨m, g, b, rfl⟩ := UpperTheory.V.AlgebraTools.Det.genSpan (A := A) (G := G) (MvPolynomial σ A) x
@@ -39,7 +39,7 @@ private theorem mapRingHom_gdet_gen_single_eq_gen_single {A G : Type} [CommRing 
 theorem UpperTheory.V.AlgebraTools.Det.descend :
     ∀ {n : ℕ} {A G : Type} [CommRing A] [Group G] {A' : Type} [CommRing A'] (ι : A →+* A') (D' : GDet n A' G), Function.Injective ι →
     (∀ (m : ℕ) (g : Fin m → G) (β : Fin m →₀ ℕ),
-      MvPolynomial.coeff β (D'.D (MvPolynomial (Fin m) A') (GDet.gen fun j => MonoidAlgebra.single (g j) 1)) ∈ ι.range) →
+      AddMonoidAlgebra.coeff (D'.D (MvPolynomial (Fin m) A') (GDet.gen fun j => MonoidAlgebra.single (g j) 1)) β ∈ ι.range) →
     ∃! D : GDet n A G, D.map ι = D' := by
   intro n A G _ _ A' _ ι D' hι hc
   have hr := fun σ x => exists_isCompact_preimage_eq_of_isLimit_of_isAffineHom ι D' hc σ x

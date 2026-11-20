@@ -87,10 +87,10 @@ theorem LocalBound.mMin_eq {k : ℕ} {z : ClassGroup (𝓞 F) → ℚ} {l : ℕ}
 
 example : denomExp 2 (-1 / 24) = 3 ∧ denomExp 3 (-1 / 24) = 1 ∧ denomExp 2 0 = 0 := by
   have h2 : padicValNat 2 24 = 3 := by
-    rw [show 24 = 2 ^ 3 * 3 by norm_num, padicValNat.mul (by norm_num) (by norm_num), padicValNat.prime_pow,
+    rw [show 24 = 2 ^ 3 * 3 by norm_num, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by norm_num) (by norm_num), padicValNat.prime_pow,
       padicValNat.eq_zero_of_not_dvd (by norm_num)]
   have h3 : padicValNat 3 24 = 1 := by
-    rw [show 24 = 3 ^ 1 * 8 by norm_num, padicValNat.mul (by norm_num) (by norm_num), padicValNat.prime_pow,
+    rw [show 24 = 3 ^ 1 * 8 by norm_num, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by norm_num) (by norm_num), padicValNat.prime_pow,
       padicValNat.eq_zero_of_not_dvd (by norm_num)]
   have hn : (-1 / 24 : ℚ).num = -1 := by norm_num
   have hd : (-1 / 24 : ℚ).den = 24 := by norm_num

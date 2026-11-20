@@ -95,7 +95,7 @@ theorem coeff_subGen_mem {ν : Fin a → ℕ} {ν' : Fin b → ℕ} (hν : Antit
     · exact Submodule.subset_span ⟨w, rfl⟩
     · exact zero_mem _
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, coeff_add]; exact add_mem (hx α) (hy α)
+  | add x y _ _ hx hy => rw [map_add, MvPolynomial.coeff_add]; exact add_mem (hx α) (hy α)
   | smul c x _ hx =>
     classical
     rw [smul_eq_C_mul, map_mul, coeff_mul]

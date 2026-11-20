@@ -35,14 +35,14 @@ theorem glAct_whe (LL : Letters N) (j : ℕ) (e : Fin n ↪o Fin r) (a b : Fin n
   · rw [if_pos hij]
     by_cases hv : LL.vec i
     · rw [if_pos hv]
-      have := wh_XD (K := ℚ_[p]) (fun x => (wv LL j x) ∘ e) (i, e b) (i, e a) d (coeff d x)
+      have := wh_XD (K := ℚ_[p]) (fun x => (wv LL j x) ∘ e) (i, e b) (i, e a) d (AddMonoidAlgebra.coeff x d)
       have e' : ν + dl a b = Finsupp.weight (fun x => (wv LL j x) ∘ e) d - (wv LL j (i, e b)) ∘ e
           + (wv LL j (i, e a)) ∘ e := by
         rw [hdw]; simp only [wv, hij, hv, if_true, dl, single_comp_emb]; abel
       rw [e']; exact this
     · rw [if_neg hv]
       refine Submodule.neg_mem _ ?_
-      have := wh_XD (K := ℚ_[p]) (fun x => (wv LL j x) ∘ e) (i, e a) (i, e b) d (coeff d x)
+      have := wh_XD (K := ℚ_[p]) (fun x => (wv LL j x) ∘ e) (i, e a) (i, e b) d (AddMonoidAlgebra.coeff x d)
       have hn : ∀ c : Fin n, (-(Pi.single (e c) (1 : ℤ) : Fin r → ℤ)) ∘ e = -Pi.single c 1 := by
         intro c; rw [← single_comp_emb e c]; rfl
       have e' : ν + dl a b = Finsupp.weight (fun x => (wv LL j x) ∘ e) d - (wv LL j (i, e a)) ∘ e
@@ -74,7 +74,7 @@ noncomputable def GAe (p : ℕ) [Fact p.Prime] (LL : Letters N) (j : ℕ) (e : F
     rw [Finset.sum_ite_eq]
     split_ifs with h
     · rfl
-    · have := congrArg (coeff d) (hS _ h)
+    · have := congrArg (AddMonoidAlgebra.coeff · d) (hS _ h)
       rw [coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at this
       exact this.symm
   idem := by
@@ -136,7 +136,7 @@ theorem GAe_isWt_iff (LL : Letters N) (j : ℕ) (e : Fin n ↪o Fin r) (μ : Fin
   rw [GAe_comp]
   constructor
   · intro h m hm a
-    have hm' : coeff m x ≠ 0 := mem_support_iff.mp hm
+    have hm' : AddMonoidAlgebra.coeff x m ≠ 0 := mem_support_iff.mp hm
     rw [← h, coeff_weightedHomogeneousComponent] at hm'
     have hw : Finsupp.weight (fun x => (wv LL j x) ∘ e) m = μ := by
       by_contra hne; exact hm' (if_neg hne)

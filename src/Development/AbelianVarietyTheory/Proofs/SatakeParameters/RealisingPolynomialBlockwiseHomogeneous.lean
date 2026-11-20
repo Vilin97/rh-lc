@@ -91,7 +91,7 @@ open Classical in
 theorem valZ_scale {p : ℕ} [Fact p.Prime] (X : Sys p) (D : D7) (pos : (Σ v : X.Pl, Fin (X.G.P.n' v)) ≃ D.what₂.Tau) (i : ℕ) {n : ℕ}
     (h : (X.Pj i).m + 1 = n) (R : XR (X.Pj i) ℂ) (f f' : D.what₂.Tau → Matrix (Fin n) (Fin n) ℂ) (hf : ∀ τ, IsUnit (f τ).det)
     (τ₀ : D.what₂.Tau) (hf' : ∀ τ, f' τ = if τ = τ₀ then (if IsOddPos (pos.symm τ₀).2 then (2:ℂ)⁻¹ else 2) • f τ else f τ) :
-    valZ X D pos i h R f' = valZ X D pos i h (∑ m ∈ R.support, monomial m (coeff m R * 2 ^ (dg X D pos i τ₀ m))) f := by
+    valZ X D pos i h R f' = valZ X D pos i h (∑ m ∈ R.support, monomial m (AddMonoidAlgebra.coeff R m * 2 ^ (dg X D pos i τ₀ m))) f := by
   have hg : ∀ x : Var (X.Pj i), zT X D pos f' (posJ X D pos i ⟨x.1, x.2.1⟩) (Fin.cast h x.2.2.1) (Fin.cast h x.2.2.2) =
       (2:ℂ) ^ (if (⟨x.1, x.2.1⟩ : Σ v : Fin (X.Pj i).nV, Fin ((X.Pj i).n' v)) = (posJ X D pos i).symm τ₀ then 1 else 0) *
         zT X D pos f (posJ X D pos i ⟨x.1, x.2.1⟩) (Fin.cast h x.2.2.1) (Fin.cast h x.2.2.2) := by
@@ -130,7 +130,7 @@ theorem realises_blockHom : ∀ {p : ℕ} [Fact p.Prime] (X : Sys p) (D : D7) (p
   have htε : t = (2:ℂ) ^ ε := by
     rw [ht, hε]; split_ifs <;> simp
   have ht0 : t ≠ 0 := by rw [htε]; exact zpow_ne_zero _ two_ne_zero
-  obtain ⟨R2, hR2⟩ : ∃ R2 : XR (X.Pj i) ℂ, R2 = ∑ m ∈ R.support, monomial m (coeff m R * 2 ^ (dg X D pos i τ₀ m)) := ⟨_, rfl⟩
+  obtain ⟨R2, hR2⟩ : ∃ R2 : XR (X.Pj i) ℂ, R2 = ∑ m ∈ R.support, monomial m (AddMonoidAlgebra.coeff R m * 2 ^ (dg X D pos i τ₀ m)) := ⟨_, rfl⟩
   obtain ⟨c, hc⟩ : ∃ c : ℂ, c = (((2:ℂ) ^ n) ^ eT X D pos i τ₀)⁻¹ * ((t ^ n) ^ (-(a τ₀)) * t ^ (∑ r, ν τ₀ r)) := ⟨_, rfl⟩
   have key : ∀ f : Fr1 D n, ev1 X D pos i h R2 f = c * ev1 X D pos i h R f := by
     intro f
@@ -175,16 +175,16 @@ theorem realises_blockHom : ∀ {p : ℕ} [Fact p.Prime] (X : Sys p) (D : D7) (p
     intro f
     rw [map_sub, map_smul]
     simp [key f]
-  have hcoef : coeff m R2 = coeff m R * 2 ^ (dg X D pos i τ₀ m) := by
+  have hcoef : AddMonoidAlgebra.coeff R2 m = AddMonoidAlgebra.coeff R m * 2 ^ (dg X D pos i τ₀ m) := by
     rw [hR2, coeff_sum]
     rw [Finset.sum_eq_single m]
     · simp
     · intro b _ hb
       rw [coeff_monomial, if_neg hb]
     · intro hm'; exact absurd hm hm'
-  have hm0 : coeff m R ≠ 0 := (mem_support_iff.mp hm)
+  have hm0 : AddMonoidAlgebra.coeff R m ≠ 0 := (mem_support_iff.mp hm)
   have h2 : (2:ℂ) ^ (dg X D pos i τ₀ m) = c := by
-    have := congrArg (coeff m) hz
+    have := congrArg (AddMonoidAlgebra.coeff · m) hz
     rw [coeff_sub, coeff_smul, hcoef, coeff_zero, sub_eq_zero, smul_eq_mul] at this
     exact mul_left_cancel₀ hm0 (by rw [this]; ring)
   have hcz : c = (2:ℂ) ^ (-((n : ℤ) * eT X D pos i τ₀) + (ε * ((n : ℤ) * (-(a τ₀))) + ε * ((∑ r, ν τ₀ r : ℕ) : ℤ))) := by

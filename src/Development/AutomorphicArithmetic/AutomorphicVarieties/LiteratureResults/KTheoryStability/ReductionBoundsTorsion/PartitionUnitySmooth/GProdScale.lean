@@ -162,12 +162,12 @@ theorem pf_GNrm : GNrm := by
     have hPup : gP k ≤ (1 + δ) ^ (N * Module.finrank ℚ L) * gP h := by
       unfold gP
       rw [← g_prod_scale]
-      exact Finset.prod_le_prod (fun w _ => pow_nonneg (g_det_pos hk w).le _)
+      exact Finset.prod_le_prod₀ (fun w _ => pow_nonneg (g_det_pos hk w).le _)
         (fun w _ => pow_le_pow_left₀ (g_det_pos hk w).le (hup w) _)
     have hPlo : (1 - δ) ^ (N * Module.finrank ℚ L) * gP h ≤ gP k := by
       unfold gP
       rw [← g_prod_scale]
-      exact Finset.prod_le_prod (fun w _ => pow_nonneg (mul_nonneg (pow_nonneg h1δ.le N) (g_det_pos hh w).le) _)
+      exact Finset.prod_le_prod₀ (fun w _ => pow_nonneg (mul_nonneg (pow_nonneg h1δ.le N) (g_det_pos hh w).le) _)
         (fun w _ => pow_le_pow_left₀ (mul_nonneg (pow_nonneg h1δ.le N) (g_det_pos hh w).le) (hlo w) _)
     have hPh := g_gP_pos hh
     have hPk := g_gP_pos hk

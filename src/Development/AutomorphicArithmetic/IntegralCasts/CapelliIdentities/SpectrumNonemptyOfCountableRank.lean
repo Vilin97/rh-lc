@@ -40,7 +40,7 @@ private lemma spectrum_nonempty_of_countable_rank {V : Type} [AddCommGroup V] [_
   have hp0 : p ≠ 0 := by
     intro h0
     have h1 : eval i p = m i * ∏ j ∈ s.erase i, (i - j) := by
-      simp only [p, eval_finset_sum, eval_mul, eval_C]
+      simp only [p, Polynomial.eval_finsetSum, eval_mul, eval_C]
       rw [Finset.sum_eq_single_of_mem i hi]
       · simp [q, eval_prod]
       · intro b hb hbi

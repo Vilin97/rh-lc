@@ -117,7 +117,7 @@ theorem estimates_mono : Formalism.FourierDecayAlt.J.EstimatesMono := by
     refine le_trans (H Y hY κ hκ t₀ S hS) ?_
     exact mul_le_mul_of_nonneg_right
       (mul_le_mul_of_nonneg_left
-        (Finset.prod_le_prod (fun s' _ => (hV _ s').1) (fun s' _ => (hV _ s').2)) (pow_nonneg hC4 _))
+        (Finset.prod_le_prod₀ (fun s' _ => (hV _ s').1) (fun s' _ => (hV _ s').2)) (pow_nonneg hC4 _))
       (Finset.sum_nonneg fun w' _ => mul_nonneg (hθ.1 w') (baseGram_nonneg D hG hW hε _ w' Y hκ))
 
 theorem product_of_energies : Formalism.FourierDecayAlt.J.ProductOfE := by

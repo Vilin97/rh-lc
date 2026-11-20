@@ -50,7 +50,7 @@ theorem slope_line_le_neg_log (b : Basis ι K V) (X : InfinitePlace K → Matrix
       rw [Formalism.ExtensionFiltration.majAt_self_re]
       exact hn v
     calc c ^ (nPl K) = ∏ _v : InfinitePlace K, c := by rw [Finset.prod_const, Finset.card_univ]; rfl
-      _ ≤ ∏ v, (gramPl b X v (fun _ : Fin 1 => x)).det.re := Finset.prod_le_prod (fun v _ => hc.le) (fun v _ => h1 v)
+      _ ≤ ∏ v, (gramPl b X v (fun _ : Fin 1 => x)).det.re := Finset.prod_le_prod₀ (fun v _ => hc.le) (fun v _ => h1 v)
   have hlog : (nPl K : ℝ) * Real.log c ≤ Real.log (ht b X L) := by
     rw [← Real.log_pow]
     exact Real.log_le_log (by positivity) hht

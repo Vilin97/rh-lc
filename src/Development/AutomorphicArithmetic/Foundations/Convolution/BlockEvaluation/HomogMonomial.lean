@@ -48,10 +48,10 @@ private theorem cm_sb {κ κ' R R' T T' : Type} [CommRing R] [CommRing R'] [Comm
   | add p q hp hq =>
     have e : cm φ (p + q) = cm φ p + cm φ q := by
       ext γ
-      rw [coeff_add, coeff_cm h0, coeff_cm h0, coeff_cm h0, coeff_add, ha]
+      rw [MvPolynomial.coeff_add, coeff_cm h0, coeff_cm h0, coeff_cm h0, MvPolynomial.coeff_add, ha]
     rw [e, map_add, map_add, ← hp, ← hq]
     ext γ
-    rw [coeff_add, coeff_cm h0', coeff_cm h0', coeff_cm h0', coeff_add, ha']
+    rw [MvPolynomial.coeff_add, coeff_cm h0', coeff_cm h0', coeff_cm h0', MvPolynomial.coeff_add, ha']
 
 private theorem homog_eq {ι : Type} (d : ℕ) (p : MvPolynomial ι ℂ) (s : Finset (ι →₀ ℕ)) (hs : p.support ⊆ s) :
     homog d p = ∑ α ∈ s, X none ^ (d - α.degree) * rename some (monomial α (p.coeff α)) := by
@@ -64,7 +64,7 @@ private theorem homog_add {ι : Type} (d : ℕ) (p q : MvPolynomial ι ℂ) : ho
   rw [homog_eq d _ _ support_add, homog_eq d p _ Finset.subset_union_left, homog_eq d q _ Finset.subset_union_right,
     ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun α _ => ?_
-  rw [coeff_add, map_add, map_add, mul_add]
+  rw [MvPolynomial.coeff_add, map_add, map_add, mul_add]
 
 private theorem homog_monomial {ι : Type} (d : ℕ) (α : ι →₀ ℕ) (c : ℂ) :
     homog d (monomial α c) = X none ^ (d - α.degree) * rename some (monomial α c) := by

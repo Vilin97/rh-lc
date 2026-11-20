@@ -96,14 +96,14 @@ theorem io_rowDiv_gen (R : Type) [CommRing R] [IsDomain R] [Infinite R] {n : ℕ
     rw [smul_eq_C_mul]
     rfl
   ext m
-  set P : Polynomial R := ∑ i ∈ Finset.range N, Polynomial.monomial i (coeff m (io ⟨_, hmem i⟩)) with hP
+  set P : Polynomial R := ∑ i ∈ Finset.range N, Polynomial.monomial i (AddMonoidAlgebra.coeff (io ⟨_, hmem i⟩) m) with hP
   set Q : Polynomial R := ∑ i ∈ Finset.range N,
-    Polynomial.monomial i (coeff m (rowDiv R a.castSucc b.castSucc i (io f))) with hQ
+    Polynomial.monomial i (AddMonoidAlgebra.coeff (rowDiv R a.castSucc b.castSucc i (io f)) m) with hQ
   have hPQ : P = Q := by
     apply Polynomial.funext
     intro t
     simp only [hP, hQ, Polynomial.eval_finsetSum, Polynomial.eval_monomial]
-    have := congrArg (coeff m) (key t)
+    have := congrArg (AddMonoidAlgebra.coeff · m) (key t)
     simp only [coeff_sum, coeff_smul, smul_eq_mul] at this
     simpa [mul_comm] using this
   have := congrArg (fun p => Polynomial.coeff p k) hPQ

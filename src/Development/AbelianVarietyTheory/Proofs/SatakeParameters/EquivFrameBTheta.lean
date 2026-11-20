@@ -333,8 +333,8 @@ variable {p : ℕ} [Fact p.Prime] {X : Sys p} {Kc : Type} [Field Kc] [Algebra (F
 
 theorem coeff_cD_mapT (W : ∀ v : X.Pl, Fin (X.G.P.n' v) → Matrix (Fin (NN X.G.P.m X.t (j + 1))) (Fin (NN X.G.P.m X.t (j + 1))) Kc)
     (k : Kc) (P : DA X Kc j) (n : X.ZA j →₀ ℕ) :
-    MvPolynomial.coeff n (cD X Kc j k * mapT X Kc j W P) = (k • (tau0 X Kc j W).toLinearMap) (MvPolynomial.coeff n P) := by
-  show MvPolynomial.coeff n (MvPolynomial.C _ * MvPolynomial.map _ P) = _
+    AddMonoidAlgebra.coeff (cD X Kc j k * mapT X Kc j W P) n = (k • (tau0 X Kc j W).toLinearMap) (AddMonoidAlgebra.coeff P n) := by
+  show AddMonoidAlgebra.coeff (MvPolynomial.C _ * MvPolynomial.map _ P) n = _
   rw [MvPolynomial.coeff_C_mul, MvPolynomial.coeff_map, LinearMap.smul_apply, Algebra.smul_def]
   rfl
 

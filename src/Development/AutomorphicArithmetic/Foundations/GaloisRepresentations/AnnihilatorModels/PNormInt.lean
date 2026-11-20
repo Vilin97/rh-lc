@@ -26,7 +26,7 @@ theorem UpperTheory.Gal.crystallineComparison.normInt_of :
     have := hs.map (((z i).restrictScalars R).comp
       (Algebra.TensorProduct.includeRight : S →ₐ[R] (Localization.Away (l : R) ⊗[R] S)))
     simpa using this
-  have hco : ∀ (a : ℕ) (mm : ι →₀ ℕ), ∃ r, algebraMap R (Localization.Away (l : R)) r = MvPolynomial.coeff mm (N'.coeff a) := by
+  have hco : ∀ (a : ℕ) (mm : ι →₀ ℕ), ∃ r, algebraMap R (Localization.Away (l : R)) r = AddMonoidAlgebra.coeff (N'.coeff a) mm := by
     intro a mm
     apply hcl
     have h1 := hCI R T ι (Fin m) (fun i k => z i (1 ⊗ₜ s k)) hint a mm

@@ -250,7 +250,7 @@ theorem fd_fj_near_sup_of (h1 : FlowDomainCriterion (E := E)) (h2 : FjHolo (E :=
     refine hhi.trans ?_
     have h3ρ : 0 ≤ 1 + 3 * d6rh c1 w := by linarith
     calc _ ≤ ∏ τ : X.Ψ, (1 + 3 * d6rh c1 w) ^ (X.spread la τ / 2) := by
-          refine Finset.prod_le_prod (fun τ _ => ?_) (fun τ _ => ?_)
+          refine Finset.prod_le_prod₀ (fun τ _ => ?_) (fun τ _ => ?_)
           · dsimp only
             rw [hq τ, inv_inv]
             exact Real.rpow_nonneg (le_max_of_le_right (ttpos τ).le) _

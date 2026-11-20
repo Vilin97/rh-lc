@@ -250,8 +250,8 @@ theorem weighted_homogeneous_cancel {σ : Type} {n : ℕ} (w : σ → Fin n → 
   intro d hd
   by_contra hne
   have key : ∀ e : σ →₀ ℕ,
-      coeff e (D * weightedHomogeneousComponent w (Finsupp.weight w d) g) =
-        if Finsupp.weight w e = δ + Finsupp.weight w d then coeff e (D * g) else 0 := by
+      AddMonoidAlgebra.coeff (D * weightedHomogeneousComponent w (Finsupp.weight w d) g) e =
+        if Finsupp.weight w e = δ + Finsupp.weight w d then AddMonoidAlgebra.coeff (D * g) e else 0 := by
     intro e
     rw [coeff_mul, coeff_mul]
     split_ifs with he
@@ -266,7 +266,7 @@ theorem weighted_homogeneous_cancel {σ : Type} {n : ℕ} (w : σ → Fin n → 
       rw [coeff_weightedHomogeneousComponent]
       split_ifs with hy
       · rfl
-      · by_cases hx : coeff x D = 0
+      · by_cases hx : AddMonoidAlgebra.coeff D x = 0
         · simp [hx]
         · exfalso
           apply hy
@@ -283,7 +283,7 @@ theorem weighted_homogeneous_cancel {σ : Type} {n : ℕ} (w : σ → Fin n → 
       dsimp only
       rw [coeff_weightedHomogeneousComponent]
       split_ifs with hy
-      · by_cases hx : coeff x D = 0
+      · by_cases hx : AddMonoidAlgebra.coeff D x = 0
         · simp [hx]
         · exfalso
           apply he
@@ -302,7 +302,7 @@ theorem weighted_homogeneous_cancel {σ : Type} {n : ℕ} (w : σ → Fin n → 
   rcases mul_eq_zero.mp hz with h0 | h0
   · exact hD0 h0
   · apply hd
-    have h4 := congrArg (coeff d) h0
+    have h4 := congrArg (AddMonoidAlgebra.coeff · d) h0
     rw [coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at h4
     exact h4
 

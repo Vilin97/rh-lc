@@ -21,13 +21,13 @@ theorem bal {ι : Type} [Fintype ι] [Nonempty ι] (a : ι → ℝ) {K P1 P2 : �
   have hKn : 0 < K ^ Fintype.card ι := pow_pos hK _
   have hup : a v ^ Fintype.card ι ≤ K ^ Fintype.card ι * P2 := by
     calc a v ^ Fintype.card ι = ∏ _v' : ι, a v := by rw [Finset.prod_const, Finset.card_univ]
-      _ ≤ ∏ v' : ι, K * a v' := Finset.prod_le_prod (fun _ _ => (ha v).le) fun v' _ => hb v v'
+      _ ≤ ∏ v' : ι, K * a v' := Finset.prod_le_prod₀ (fun _ _ => (ha v).le) fun v' _ => hb v v'
       _ = K ^ Fintype.card ι * ∏ v', a v' := by rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ]
       _ ≤ K ^ Fintype.card ι * P2 := mul_le_mul_of_nonneg_left h2 hKn.le
   have hlo : P1 / K ^ Fintype.card ι ≤ a v ^ Fintype.card ι := by
     rw [div_le_iff₀ hKn]
     calc P1 ≤ ∏ v', a v' := h1
-      _ ≤ ∏ _v' : ι, K * a v := Finset.prod_le_prod (fun v' _ => (ha v').le) fun v' _ => hb v' v
+      _ ≤ ∏ _v' : ι, K * a v := Finset.prod_le_prod₀ (fun v' _ => (ha v').le) fun v' _ => hb v' v
       _ = a v ^ Fintype.card ι * K ^ Fintype.card ι := by
         rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.prod_const, Finset.card_univ, mul_comm]
   have hm : 0 < min 1 (P1 / K ^ Fintype.card ι) := lt_min one_pos (div_pos hP1 hKn)

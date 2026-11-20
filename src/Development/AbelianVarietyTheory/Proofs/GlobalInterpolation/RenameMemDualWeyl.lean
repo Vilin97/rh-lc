@@ -138,8 +138,8 @@ private theorem isWeightedHomogeneous_colW_rowAct_of_isWeightedHomogeneous {R : 
   rw [← support_sum_monomial_coeff f, map_sum]
   refine Submodule.sum_mem _ fun d hd => ?_
   rw [mem_weightedHomogeneousSubmodule, ← hf (mem_support_iff.1 hd)]
-  have e : _root_.Formalism.GradedWeylDivisibility.rowAct R g (monomial d (coeff d f)) =
-      C (coeff d f) * d.prod (fun v k => (_root_.Formalism.GradedWeylDivisibility.rowAct R g (X v)) ^ k) := by
+  have e : _root_.Formalism.GradedWeylDivisibility.rowAct R g (monomial d (AddMonoidAlgebra.coeff f d)) =
+      C (AddMonoidAlgebra.coeff f d) * d.prod (fun v k => (_root_.Formalism.GradedWeylDivisibility.rowAct R g (X v)) ^ k) := by
     simp only [_root_.Formalism.GradedWeylDivisibility.rowAct, aeval_monomial, aeval_X, algebraMap_eq]
   rw [e, Finsupp.weight_apply, ← zero_add (d.sum fun i c => c • _root_.Formalism.GradedWeylDivisibility.colW r n i)]
   exact (isWeightedHomogeneous_C _ _).mul

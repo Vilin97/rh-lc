@@ -182,7 +182,7 @@ variable {chi : ∀ n : ℕ, Submodule (𝓞 X.E) (Sp X.E n) → ℂ} {hX : X.Ok
 theorem twChain_unf (i : ℕ) (x : (twFam W Ch sel mu cst L u m2 b hY P c i).Cl) (x' : (twFam W Ch sel mu cst L u m2 b hY P c (i + 1)).Cl)
     (Q : Formalism.L2.DIV.Pol ℂ X.Tau (R.N i)) (y' : ChSrc.Fr X A.σ₀ (R.N (i + 1))) :
     (twChain chi hX hm hF hK hρ).unf i x x' (fun y : ChSrc.Fr X A.σ₀ (R.N i) => MvPolynomial.eval (fun v => y.1 v.1 v.2.1 v.2.2) Q) y' =
-      ∑ q ∈ (derPol A.cD Q y'.1).support, MvPolynomial.coeff q (derPol A.cD Q y'.1) * derivAt0 (twTh chi hX hm hF hK hρ i x x') q :=
+      ∑ q ∈ (derPol A.cD Q y'.1).support, AddMonoidAlgebra.coeff (derPol A.cD Q y'.1) q * derivAt0 (twTh chi hX hm hF hK hρ i x x') q :=
   (twSrc chi hX hm hF hK hρ).chainTh_unf A.σ₀ (W.hc u) A.cD _ i x x' Q y'
 
 variable (hT : 0 < Pr.T u) (hχ : ChiSplit chi A) (hs : ∀ i < R.m, A.ESmooth (R.N i) (R.N (i + 1))) (hJ : TwJets W sel mu cst A u)

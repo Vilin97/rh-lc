@@ -21,7 +21,7 @@ theorem slm_sq_lintegral_le {f : ℝ → ENNReal} (hf : AEMeasurable f (volume.r
 
 private lemma eLpNorm_two_rpow_two_eq_lintegral {Y : Type*} [MeasurableSpace Y] {ν : Measure Y} (f : Y → ℂ) :
     eLpNorm f 2 ν ^ (2:ℝ) = ∫⁻ x, ‖f x‖ₑ ^ (2:ℝ) ∂ν := by
-  rw [eLpNorm_eq_lintegral_rpow_enorm (by norm_num) (by norm_num), ← ENNReal.rpow_mul]
+  rw [MeasureTheory.eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num), ← ENNReal.rpow_mul]
   norm_num
 
 theorem slm_eLpNorm_le {X : Type*} [MeasurableSpace X] {μ : Measure X} [SFinite μ]

@@ -17,7 +17,7 @@ theorem norm_singular_value_bound : Formalism.HermitianLatticeCounting.S6.NormSg
     have := hD v
     rw [div_le_iff₀ hp0] at this; rw [mul_comm]; exact this
   calc ∏ v, D v ^ 2 ≤ ∏ v, ((2 * H₁) ^ (2 * r) * sg v) ^ 2 :=
-        Finset.prod_le_prod (fun v _ => by positivity) (fun v _ => pow_le_pow_left₀ (hD0 v) (h1 v) 2)
+        Finset.prod_le_prod₀ (fun v _ => by positivity) (fun v _ => pow_le_pow_left₀ (hD0 v) (h1 v) 2)
     _ = (2 * H₁) ^ (4 * r * f) * ∏ v, sg v ^ 2 := by
         simp_rw [mul_pow]
         rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, hf, ← pow_mul, ← pow_mul]
@@ -76,7 +76,7 @@ lemma norm_det_le (n : ℕ) (M : Matrix (Fin n) (Fin n) ℂ) (β : ℝ) (hM : �
           rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with h | h <;> simp [h]
         rw [h1, norm_prod]
         calc ∏ i, ‖M (σ i) i‖ ≤ ∏ _i : Fin n, β :=
-              Finset.prod_le_prod (fun _ _ => norm_nonneg _) (fun i _ => hM _ _)
+              Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) (fun i _ => hM _ _)
           _ = β ^ n := by simp
     _ = (n.factorial : ℝ) * β ^ n := by
         simp [Fintype.card_perm]
@@ -607,7 +607,7 @@ theorem det_form_bound_field : Formalism.HermitianLatticeCounting.S6.DetBBoundK 
     have hfin : ‖N'.det‖ ^ 2 ≤ (2 ^ s) ^ 2 * ∏ a, (σ (h (g' a) (g' a))).re := by
       refine le_trans hH ?_
       calc ∏ b, ∑ a, ‖N'ᵀ b a‖ ^ 2 ≤ ∏ b, (4 * (σ (h (g' b) (g' b))).re) :=
-            Finset.prod_le_prod (fun b _ => Finset.sum_nonneg (fun a _ => by positivity)) (fun b _ => hrow b)
+            Finset.prod_le_prod₀ (fun b _ => Finset.sum_nonneg (fun a _ => by positivity)) (fun b _ => hrow b)
         _ = (2 ^ s) ^ 2 * ∏ a, (σ (h (g' a) (g' a))).re := by
             rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin, ← pow_mul,
               mul_comm s 2, pow_mul]

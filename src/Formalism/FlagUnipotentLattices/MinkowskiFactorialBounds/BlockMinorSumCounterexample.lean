@@ -210,7 +210,7 @@ lemma separated_sum_le_prod_integrals (hd : SeparatedPolydiscsDisjoint) {ι : Ty
         rw [← h1]
         apply setIntegral_mono_on _ hF.integrableOn (measurableSet_E1polydisc ro D)
         · intro x hx
-          exact Finset.prod_le_prod (fun v _ => hφ v _) (fun v _ => hcmp v _ _ (hx v))
+          exact Finset.prod_le_prod₀ (fun v _ => hφ v _) (fun v _ => hcmp v _ _ (hx v))
         · rw [integrableOn_const_iff]
           right
           have : (volume : Measure (ι → ℂ)) (CenteredPolydisc ro D) ≠ ⊤ := by
@@ -666,7 +666,7 @@ lemma integral_minors_weight_sum_le (hf : BlockEndMinorFibreFinite) (hs : IdealI
     intro x hx
     obtain ⟨t, ht, rfl⟩ := Finset.mem_image.mp hx
     exact (hT t ht a).1
-  refine (Finset.prod_le_prod (fun a _ => Finset.sum_nonneg fun x _ => hφ0 x) e4).trans ?_
+  refine (Finset.prod_le_prod₀ (fun a _ => Finset.sum_nonneg fun x _ => hφ0 x) e4).trans ?_
   rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin, ← pow_mul]
 
 theorem block_minor_sum_explicit_of_fibre_finite_of_prod_bound (hf : BlockEndMinorFibreFinite) (hb : CompositionBlockProdBound) (hs : IdealInversePowerSum) : BlockMinorSumExplicit := by

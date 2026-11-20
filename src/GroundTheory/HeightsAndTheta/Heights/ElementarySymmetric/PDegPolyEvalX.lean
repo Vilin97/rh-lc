@@ -16,7 +16,7 @@ theorem polarPoly_eval {σ R : Type*} [CommRing R] [Fintype σ]
     eval₂Hom (RingHom.id _) (fun v => C (u v))
   have hψ : ψ P = (-∑ v : σ, C (u v) * X v) ^ n := by
     simp [P, ψ, outerDot, map_pow, map_neg, map_sum]
-  have hψ' : ψ P = ∑ m ∈ P.support, C (∏ i, u i ^ m i) * coeff m P := by
+  have hψ' : ψ P = ∑ m ∈ P.support, C (∏ i, u i ^ m i) * AddMonoidAlgebra.coeff P m := by
     change eval₂ (RingHom.id _) (fun v => C (u v)) P = _
     rw [eval₂_eq']
     refine sum_congr rfl fun m _ => ?_

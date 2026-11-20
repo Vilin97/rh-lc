@@ -101,11 +101,11 @@ theorem jac_ge_one {ε : Fin n → Bool} (z : PCoord ε → ℂ) : 1 ≤ Jac z :
     intro a
     have h1 : ∏ _b ∈ univ.filter (fun b : Fin n => a < b), (1 : ℝ)
         ≤ ∏ b ∈ univ.filter (fun b : Fin n => a < b), shc (pev z a - pev z b) :=
-      Finset.prod_le_prod (fun _ _ => zero_le_one) (fun b _ => (shc_bounds _).1)
+      Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun b _ => (shc_bounds _).1)
     simpa using h1
   have h2 : ∏ _a : Fin n, (1 : ℝ)
       ≤ ∏ a : Fin n, ∏ b ∈ univ.filter (fun b : Fin n => a < b), shc (pev z a - pev z b) :=
-    Finset.prod_le_prod (fun _ _ => zero_le_one) (fun a _ => h a)
+    Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun a _ => h a)
   simpa using h2
 
 private theorem sum_pev_sq_le_hs_pmat {ε : Fin n → Bool} (z : PCoord ε → ℂ) :

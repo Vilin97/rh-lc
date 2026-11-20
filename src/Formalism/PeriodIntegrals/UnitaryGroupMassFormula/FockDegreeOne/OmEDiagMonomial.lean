@@ -96,7 +96,7 @@ theorem fockAct1_monomial (p q r s : ℕ) (a : Ix p q) (β : Ln p q r s →₀ �
 theorem coeff_of_diag {σ : Type*} (T : Module.End ℂ (MvPolynomial σ ℂ)) (f : (σ →₀ ℕ) → ℂ)
     (hT : ∀ β, T (MvPolynomial.monomial β 1) = f β • MvPolynomial.monomial β 1)
     (P : MvPolynomial σ ℂ) (α : σ →₀ ℕ) :
-    MvPolynomial.coeff α (T P) = f α * MvPolynomial.coeff α P := by
+    AddMonoidAlgebra.coeff (T P) α = f α * AddMonoidAlgebra.coeff P α := by
   classical
   induction P using MvPolynomial.induction_on' with
   | monomial u a =>

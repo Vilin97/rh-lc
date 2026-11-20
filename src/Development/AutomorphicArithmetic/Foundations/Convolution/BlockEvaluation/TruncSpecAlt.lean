@@ -148,7 +148,7 @@ theorem UpperTheory.ConvolutionTheory.Ci.truncSpec :
       intro k β hβ
       rw [← eval_blockE]
       congr 1
-      have := congrArg (coeff β) (hG k)
+      have := congrArg (AddMonoidAlgebra.coeff · β) (hG k)
       rw [coeff_map, pieceK, coeff_sum] at this
       simp only [coeff_monomial, Finset.sum_ite_eq', if_pos hβ] at this
       exact this

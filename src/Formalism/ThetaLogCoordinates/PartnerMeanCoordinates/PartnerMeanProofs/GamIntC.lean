@@ -33,7 +33,7 @@ theorem term_valE (LL : Letters (N + 1)) (hr : 1 ≤ r) (B : ℕ)
   have hpp : p.Prime := hp.out
   have hF : ∀ n : ℕ, n.factorial ≠ 0 := fun n => Nat.factorial_ne_zero n
   have hmul : ∀ x y : ℕ, x ≠ 0 → y ≠ 0 → padicValNat p (x * y) = padicValNat p x + padicValNat p y :=
-    fun x y hx hy => padicValNat.mul hx hy
+    fun x y hx hy => (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hx hy
   have hprod : ∀ {ι : Type} (s : Finset ι) (f : ι → ℕ), (∀ i, f i ≠ 0) →
       padicValNat p (∏ i ∈ s, f i) = ∑ i ∈ s, padicValNat p (f i) := by
     intro ι s f hf
@@ -308,7 +308,7 @@ theorem gamma_integral_holds : GamIntC := by
 
   have facts : ∀ g : MvPolynomial (Fin (N + 1) × Fin r) ℚ_[p], g ∈ PolZ p r LL →
       (∀ b ≤ LL.total + LL.deg (Fin.last N) + r, ∀ β,
-        ‖coeff β ((FT wv ev (univ.erase ρ) ^ b) (aeval (freezeSub p LL ρ) g))‖ ≤
+        ‖AddMonoidAlgebra.coeff ((FT wv ev (univ.erase ρ) ^ b) (aeval (freezeSub p LL ρ) g)) β‖ ≤
           (p : ℝ) ^ ((((r * B : ℕ) : ℤ) - 2 * (padicValNat p b.factorial : ℤ)))) ∧
       (∀ b, ∀ β ∈ ((FT wv ev (univ.erase ρ) ^ b) (aeval (freezeSub p LL ρ) g)).support,
         δv β + b • eWY = (LL.snoc LL.total).deg ∧ β (xW ρ) ≤ β (yE ρ)) := by

@@ -101,7 +101,7 @@ theorem mem_delW_act (p : ℕ) [Fact p.Prime] (T : Type) [Fintype T] (N : ℕ) (
       ?_, fun τ => Submodule.subset_span ⟨x τ, rfl⟩, rfl⟩
   rw [norm_mul, norm_mul, norm_prod]
   exact mul_le_one₀ (mul_le_one₀ hc (norm_nonneg _) hr) (Finset.prod_nonneg fun _ _ => norm_nonneg _)
-    (Finset.prod_le_one (fun _ _ => norm_nonneg _) fun τ _ => ho τ _)
+    (Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun τ _ => ho τ _)
 
 theorem exists_int_inv (p : ℕ) [Fact p.Prime] {N : ℕ} (g : Matrix (Fin N) (Fin N) ℂ_[p])
     (hg : ∀ a b, ‖g a b‖ ≤ 1) (hdet : ‖g.det‖ = 1) :

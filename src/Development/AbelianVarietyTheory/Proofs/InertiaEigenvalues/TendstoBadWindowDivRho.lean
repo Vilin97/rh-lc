@@ -40,7 +40,7 @@ theorem card_piFinset_badWinBox_le {ι : Type} [Fintype ι] (S I : Finset ι) (L
     (Fintype.piFinset (badWinBox S I L k i₀)).card ≤
       (2 * (2 * L + 1)) ^ Fintype.card ι * (k + 1) ^ (Fintype.card ι - S.card - 1) := by
   rw [Fintype.card_piFinset]
-  refine (Finset.prod_le_prod (fun _ _ => Nat.zero_le _) fun i _ => card_badWinBox_le S I L k i₀ i).trans ?_
+  refine (Finset.prod_le_prod₀ (fun _ _ => Nat.zero_le _) fun i _ => card_badWinBox_le S I L k i₀ i).trans ?_
   rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Finset.prod_ite, Finset.prod_const_one,
     one_mul, Finset.prod_const]
   have : (Finset.univ.filter fun i => i ∉ insert i₀ S).card = Fintype.card ι - S.card - 1 := by

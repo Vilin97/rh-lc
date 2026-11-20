@@ -114,7 +114,7 @@ private lemma centralBinom_le_pow_mul_four_pow_mul_prod_large_primes (m : ℕ) (
         (Nat.prod_pow_factorization_centralBinom m).symm
     _ ≤ ∏ p ∈ Finset.range (2 * m + 1), ((if p ≤ s then 2 * m else 1) *
           (if p.Prime ∧ p ≤ 2 * m / 3 then p else 1) * (if p.Prime ∧ m < p then p else 1)) :=
-        Finset.prod_le_prod (fun _ _ => Nat.zero_le _) key
+        Finset.prod_le_prod₀ (fun _ _ => Nat.zero_le _) key
     _ = (∏ p ∈ Finset.range (2 * m + 1), (if p ≤ s then 2 * m else 1)) *
           (∏ p ∈ Finset.range (2 * m + 1), (if p.Prime ∧ p ≤ 2 * m / 3 then p else 1)) *
           (∏ p ∈ Finset.range (2 * m + 1), (if p.Prime ∧ m < p then p else 1)) := by
@@ -142,7 +142,7 @@ private lemma centralBinom_le_pow_mul_four_pow_mul_prod_large_primes (m : ℕ) (
                   exact ⟨by omega, h2⟩
                 · rintro ⟨h1, h2⟩
                   exact ⟨by omega, h2, by omega⟩
-            _ ≤ 4 ^ (2 * m / 3) := primorial_le_4_pow _
+            _ ≤ 4 ^ (2 * m / 3) := primorial_le_four_pow _
         · rw [← Finset.prod_filter]
 
 open Polynomial Classical in

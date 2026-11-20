@@ -198,7 +198,7 @@ theorem thmPExp_valNat : ValNat := by
   | mul a b ha hb =>
     have ha0 : a ≠ 0 := fun h => hN (by simp [h])
     have hb0 : b ≠ 0 := fun h => hN (by simp [h])
-    rw [Nat.cast_mul, AddValuation.map_mul, ha ha0, hb hb0, padicValNat.mul ha0 hb0]
+    rw [Nat.cast_mul, AddValuation.map_mul, ha ha0, hb hb0, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) ha0 hb0]
     push_cast
     rfl
 

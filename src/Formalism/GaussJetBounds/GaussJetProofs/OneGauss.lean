@@ -253,8 +253,8 @@ theorem one_letter_gauss_sum : OneLetterGauss := by
     split_ifs
     · exact hYn _
     · simp
-  have hmin : ∀ κ, ‖MvPolynomial.coeff κ (minorProd (fun (i : Fin N0) (b : Fin N1) =>
-      (MvPolynomial.X (i, b) : MvPolynomial (Fin N0 × Fin N1) K)) p hp I)‖ ≤ 1 := by
+  have hmin : ∀ κ, ‖AddMonoidAlgebra.coeff (minorProd (fun (i : Fin N0) (b : Fin N1) =>
+      (MvPolynomial.X (i, b) : MvPolynomial (Fin N0 × Fin N1) K)) p hp I) κ‖ ≤ 1 := by
     have hm := minorProd_mem_opInt (K := K) (σ := Fin N0 × Fin N1)
       (fun (i : Fin N0) (b : Fin N1) => (MvPolynomial.X (i, b) : MvPolynomial (Fin N0 × Fin N1) K))
       (fun i b κ => by

@@ -849,7 +849,7 @@ theorem summable_antidiag_of_growth {n : ℕ} (Q : Fin n → ℝ) (hQ : ∀ i, 1
   have hTle : ∀ a : Fin n → ℕ, ‖T a‖ ≤ (∏ i, Q i ^ a i) * B := fun a => by
     rw [hT a, norm_mul, norm_prod]
     refine mul_le_mul ?_ (hBle a) (norm_nonneg _) (Finset.prod_nonneg fun i _ => pow_nonneg (hQ0 i) _)
-    refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => ?_
+    refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => ?_
     rw [norm_pow, Complex.norm_real, Real.norm_of_nonneg (hQ0 i)]
     exact pow_le_pow_right₀ (hQ i) (Nat.sub_le _ _)
   have hs := (summable_geom_coeff (fun i => ((r * Q i : ℝ) : ℂ)) fun i => by

@@ -115,7 +115,7 @@ theorem exists_hookR_eq_mul_detE_rho : ∀ (N k : ℕ), 1 ≤ k → k ≤ N → 
       push_cast
       ring
     calc ∑ m ∈ s, |coeff m (∑ r ∈ range k, C ((-1 : ℝ) ^ r * (P0 / P r)) * S r)|
-        ≤ ∑ m ∈ s, ∑ r ∈ range k, P0 / P r * coeff m (S r) := by
+        ≤ ∑ m ∈ s, ∑ r ∈ range k, P0 / P r * AddMonoidAlgebra.coeff (S r) m := by
           refine Finset.sum_le_sum fun m _ => ?_
           rw [coeff_sum]
           refine (Finset.abs_sum_le_sum_abs _ _).trans (le_of_eq ?_)
@@ -123,7 +123,7 @@ theorem exists_hookR_eq_mul_detE_rho : ∀ (N k : ℕ), 1 ≤ k → k ≤ N → 
           rw [coeff_C_mul, abs_mul, abs_mul, abs_pow, abs_neg, abs_one, one_pow, one_mul,
             abs_of_pos (div_pos P0pos (Ppos r)),
             abs_of_nonneg ((hS r (Finset.mem_range.1 hr)).2.1 m)]
-      _ = ∑ r ∈ range k, P0 / P r * ∑ m ∈ s, coeff m (S r) := by
+      _ = ∑ r ∈ range k, P0 / P r * ∑ m ∈ s, AddMonoidAlgebra.coeff (S r) m := by
           rw [Finset.sum_comm]
           simp only [Finset.mul_sum]
       _ ≤ ∑ r ∈ range k, P0 / P r * eval (fun _ => 1) (S r) := by

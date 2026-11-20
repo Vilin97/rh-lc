@@ -42,7 +42,7 @@ theorem bnd_le (x y : FiniteAdeleRing (𝓞 ℚ) ℚ) (h : ∀ v : Pl, y v - x v
   set S := (finite_mulSupport_bnd x).toFinset ∪ (finite_mulSupport_bnd y).toFinset with hS
   rw [bnd, bnd, finprod_eq_prod_of_mulSupport_subset _ (s := S) (by simp [hS]),
     finprod_eq_prod_of_mulSupport_subset _ (s := S) (by simp [hS])]
-  exact Finset.prod_le_prod (fun v _ => by positivity) fun v _ => local_le _ _ (h v)
+  exact Finset.prod_le_prod₀ (fun v _ => by positivity) fun v _ => local_le _ _ (h v)
 
 theorem finiteModule_le_bnd (a : IdeleGroup ℚ) : IdeleGroup.finiteModule a ≤ bnd (a : 𝔸[ℚ]).2 := by
   classical
@@ -50,7 +50,7 @@ theorem finiteModule_le_bnd (a : IdeleGroup ℚ) : IdeleGroup.finiteModule a ≤
     (finite_mulSupport_bnd (a : 𝔸[ℚ]).2).toFinset with hS
   rw [IdeleGroup.finiteModule, bnd, finprod_eq_prod_of_mulSupport_subset _ (s := S) (by simp [hS]),
     finprod_eq_prod_of_mulSupport_subset _ (s := S) (by simp [hS])]
-  exact Finset.prod_le_prod (fun v _ => norm_nonneg _) fun v _ => le_max_left _ _
+  exact Finset.prod_le_prod₀ (fun v _ => norm_nonneg _) fun v _ => le_max_left _ _
 
 theorem nhds_mem (x : FiniteAdeleRing (𝓞 ℚ) ℚ) :
     {y : FiniteAdeleRing (𝓞 ℚ) ℚ | ∀ v : Pl, y v - x v ∈ v.adicCompletionIntegers ℚ} ∈ 𝓝 x := by

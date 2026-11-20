@@ -135,7 +135,7 @@ theorem UpperTheory.one_le_entry_bound_of_borel_diagonal_decomp :
         (AutomorphicForm.height b * AutomorphicForm.height m * AutomorphicForm.height b') := by
     calc _ ≤ ∏ w : InfinitePlace K, ((n : ℝ) ^ 2 * ε * (AutomorphicForm.locHeight (infAt w b) *
           AutomorphicForm.locHeight (infAt w m) * AutomorphicForm.locHeight (infAt w b'))) ^ w.mult :=
-          Finset.prod_le_prod (fun _ _ => pow_nonneg (norm_nonneg _) _)
+          Finset.prod_le_prod₀ (fun _ _ => pow_nonneg (norm_nonneg _) _)
             fun w _ => pow_le_pow_left₀ (norm_nonneg _) (hw w) _
       _ = ((n : ℝ) ^ 2 * ε) ^ Module.finrank ℚ K *
           ((∏ w : InfinitePlace K, AutomorphicForm.locHeight (infAt w b) ^ w.mult) *

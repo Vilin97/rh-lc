@@ -14,6 +14,6 @@ theorem bad_primes_divides : BBDivides := by
     have h6 : (l : ℝ) ^ (4 * padicValNat l (g ^ d - 1)) ≤ (g : ℝ) := h5.trans hY
     have h7 : l ^ (4 * padicValNat l (g ^ d - 1)) ≤ g := by exact_mod_cast h6
     omega
-  exact (pow_dvd_pow l hj).trans pow_padicValNat_dvd
+  exact (pow_dvd_pow l hj).trans (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
 
 end Formalism.IrreducibleCountingLemmas.GaloisIrreducibility

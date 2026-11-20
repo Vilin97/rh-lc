@@ -259,7 +259,7 @@ theorem _root_.GlobalTheory.HL.BadPlaces.bad_places : ∀ {F E : Type} [Field F]
       intro p hp
       simpa [hmemOm] using hp
     rw [hHt, Set.ncard_eq_toFinset_card _ hfin, ← Finset.prod_const]
-    apply Finset.prod_le_prod (fun _ _ => by norm_num)
+    apply Finset.prod_le_prod₀ (fun _ _ => by norm_num)
     intro p hp
     have hb := hbad p (hfin.mem_toFinset.1 hp)
     calc (2 : ℝ) ≤ (G.S p).q := by exact_mod_cast hb.1

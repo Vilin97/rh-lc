@@ -16,7 +16,7 @@ theorem dimension_mass_joint_bound : DimensionMassJointBound := by
   intro f Dstar volY massr Isig dsig dimV hm hI hv h2 h3 hD
   rw [hD, h2]
   have hp : ∏ ρ ∈ range f, ((1 - 1 / 3 : ℝ) * dimV ρ) ≤ ∏ ρ ∈ range f, dsig ρ :=
-    Finset.prod_le_prod (fun ρ hρ => mul_nonneg (by norm_num) (hv ρ (Finset.mem_range.1 hρ)))
+    Finset.prod_le_prod₀ (fun ρ hρ => mul_nonneg (by norm_num) (hv ρ (Finset.mem_range.1 hρ)))
       (fun ρ hρ => h3 ρ (Finset.mem_range.1 hρ))
   rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_range] at hp
   have e : (1 - 1 / 3 : ℝ) = 2 / 3 := by norm_num
@@ -94,10 +94,10 @@ private lemma prod_half_to_one_bounds (f : ℕ) (t : Fin 2 → ℕ → ℝ) (h :
           simp only [Finset.prod_const, Finset.card_range, Finset.card_univ, Fintype.card_fin]
           rw [← pow_mul, one_div, inv_pow, mul_comm]
       _ ≤ ∏ i, ∏ ρ ∈ range f, t i ρ :=
-          Finset.prod_le_prod (fun i _ => Finset.prod_nonneg fun ρ _ => by norm_num)
-            (fun i _ => Finset.prod_le_prod (fun ρ _ => by norm_num) (fun ρ _ => (h i ρ).1))
-  · exact Finset.prod_le_one (fun i _ => Finset.prod_nonneg fun ρ _ => h0 i ρ)
-      (fun i _ => Finset.prod_le_one (fun ρ _ => h0 i ρ) (fun ρ _ => (h i ρ).2))
+          Finset.prod_le_prod₀ (fun i _ => Finset.prod_nonneg fun ρ _ => by norm_num)
+            (fun i _ => Finset.prod_le_prod₀ (fun ρ _ => by norm_num) (fun ρ _ => (h i ρ).1))
+  · exact Finset.prod_le_one₀ (fun i _ => Finset.prod_nonneg fun ρ _ => h0 i ρ)
+      (fun i _ => Finset.prod_le_one₀ (fun ρ _ => h0 i ρ) (fun ρ _ => (h i ρ).2))
 
 theorem index_ratio_bound : IndexRatioComparison := by
   intro f k m g₁ g₂ Ipi Isig θ θ' hm hme hg1 hg2 hθ

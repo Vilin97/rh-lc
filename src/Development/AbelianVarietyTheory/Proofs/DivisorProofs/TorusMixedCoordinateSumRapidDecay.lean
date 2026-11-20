@@ -168,7 +168,7 @@ theorem prod_mul_sum_mixS_le : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ), Is
     rw [← hs] at hb hti ⊢
     have hprod : ∏ i, t i ^ e ≤ (L : ℝ) ^ (r * e) * s ^ (r * e) := by
       calc ∏ i, t i ^ e ≤ ∏ _i : Fin r, ((L : ℝ) * s) ^ e :=
-            Finset.prod_le_prod (fun i _ => pow_nonneg (ht.1 i).le _)
+            Finset.prod_le_prod₀ (fun i _ => pow_nonneg (ht.1 i).le _)
               (fun i _ => pow_le_pow_left₀ (ht.1 i).le (hti i) _)
         _ = _ := by
             rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin, ← pow_mul, mul_pow, mul_comm e r]

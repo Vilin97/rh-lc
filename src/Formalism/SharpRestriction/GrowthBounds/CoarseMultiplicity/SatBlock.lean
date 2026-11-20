@@ -63,7 +63,7 @@ theorem ppi_be (P : MvPolynomial (BVar N r D.T.t) (KK O)) :
   exact DFunLike.congr_fun h P
 
 theorem ppi_int (q : MvPolynomial (BVar N r D.T.t) O) (e : (Fin (D.T.t + 1) ⊕ Fin r) →₀ ℕ) :
-    coeff e (ppi (O := O) (r := r) D (map (algebraMap O (KK O)) q)) ∈ IntAlg O (Fin N × Fin r) := by
+    AddMonoidAlgebra.coeff (ppi (O := O) (r := r) D (map (algebraMap O (KK O)) q)) e ∈ IntAlg O (Fin N × Fin r) := by
   classical
   induction q using MvPolynomial.induction_on generalizing e with
   | C a =>
@@ -75,7 +75,7 @@ theorem ppi_int (q : MvPolynomial (BVar N r D.T.t) O) (e : (Fin (D.T.t + 1) ⊕ 
     · exact ⟨C a, by simp⟩
     · exact (IntAlg O _).zero_mem
   | add p q hp hq =>
-    rw [map_add, map_add, coeff_add]
+    rw [map_add, map_add, MvPolynomial.coeff_add]
     exact (IntAlg O _).add_mem (hp e) (hq e)
   | mul_X p v hp =>
     rw [map_mul, map_mul, map_X]

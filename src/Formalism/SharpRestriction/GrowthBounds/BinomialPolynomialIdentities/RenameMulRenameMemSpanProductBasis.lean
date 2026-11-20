@@ -179,7 +179,7 @@ theorem span_productBasis_eq_multihomogeneous (R : Type) [CommRing R] (N r K : �
     set m1 := m.comapDomain plVar (headVar_injective N r K).injOn with hm1
     set m2 := m.comapDomain tanVar (tailVar_injective N r K).injOn with hm2
     have hs : m = m1.mapDomain plVar + m2.mapDomain tanVar := finsupp_eq_head_add_tail m
-    have hmon : monomial m (coeff m G) = coeff m G •
+    have hmon : monomial m (AddMonoidAlgebra.coeff G m) = AddMonoidAlgebra.coeff G m •
         (rename (plVar (K := K)) (monomial m1 (1 : R)) * rename (tanVar (r := r)) (monomial m2 (1 : R))) := by
       rw [rename_monomial, rename_monomial, monomial_mul, ← hs, smul_monomial, one_mul, smul_eq_mul, mul_one]
     rw [hmon]

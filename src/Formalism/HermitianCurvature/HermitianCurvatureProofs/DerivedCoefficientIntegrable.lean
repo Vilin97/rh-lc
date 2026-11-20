@@ -477,7 +477,7 @@ theorem Formalism.FourierDecayAlt.P.ratio_middle_range : Formalism.FourierDecayA
   have hprod : |∏ t, (Y + lam t)| ≤ (1 + L / D) ^ n * |∏ t, (Y + s + lam t)| := by
     rw [Finset.abs_prod, Finset.abs_prod]
     calc ∏ t, |Y + lam t| ≤ ∏ t, ((1 + L / D) * |Y + s + lam t|) :=
-          Finset.prod_le_prod (fun t _ => abs_nonneg _) (fun t _ => hrat t)
+          Finset.prod_le_prod₀ (fun t _ => abs_nonneg _) (fun t _ => hrat t)
       _ = (1 + L / D) ^ n * ∏ t, |Y + s + lam t| := by
           rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
   have hx : 1 + L / D ≤ Real.exp (L / D) := by linarith [Real.add_one_le_exp (L / D)]

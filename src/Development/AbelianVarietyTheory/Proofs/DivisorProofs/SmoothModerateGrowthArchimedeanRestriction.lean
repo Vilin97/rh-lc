@@ -94,7 +94,7 @@ theorem height_bridge_le (I : AutInst) :
     fun v => by rw [mem_infPts_iff_forall.1 (mem_infPts_bridge I y) v, map_one, htFin_one]
   rw [height_eq, finprod_eq_one_of_forall_eq_one hfin, mul_one, GlobalTheory.Dec.dSum, Real.exp_sum,
     ← Finset.prod_mul_distrib, NNReal.coe_prod]
-  refine Finset.prod_le_prod (fun _ _ => NNReal.coe_nonneg _) fun v _ => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => NNReal.coe_nonneg _) fun v _ => ?_
   rw [htInf, htOf, NNReal.coe_max, NNReal.coe_max]
   refine max_le (one_le_mul_of_one_le_of_one_le (le_max_left _ _) (Real.one_le_exp (dOp_nonneg _)))
     (max_le (normInf_bridge_le I y v) ?_)

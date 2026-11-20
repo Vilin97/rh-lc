@@ -156,7 +156,7 @@ private theorem padicValInt_eq_card_filter_pow_dvd (l : ℕ) [hl : Fact l.Prime]
       | exact Int.ofNat_dvd_left
       | exact Int.coe_nat_dvd_left
   have hle : padicValNat l t.natAbs ≤ Nat.log l N := by
-    have h1 : l ^ padicValNat l t.natAbs ∣ t.natAbs := pow_padicValNat_dvd
+    have h1 : l ^ padicValNat l t.natAbs ∣ t.natAbs := (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
     have h2 : l ^ padicValNat l t.natAbs ≤ N := le_trans (Nat.le_of_dvd (Nat.pos_of_ne_zero hn) h1) htN
     first
       | exact Nat.le_log_of_pow_le hl.out.one_lt h2

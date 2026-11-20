@@ -17,7 +17,7 @@ def IntOpTwoOrth : Prop :=
   ∀ (n : Type) [Fintype n] (κ : Type) [Fintype κ] (r : κ → ℂ_[2]) (s : κ → n → ℂ) (N : ℕ),
     (∀ k, ‖r k‖ ≤ 1) → 0 < N → ¬ 2 ∣ N → (∀ k i, (N : ℂ) * s k i ∈ L.lattice) →
     JetsIntegral (thetaZ 2 L ι ω₀ r s) ∧
-    ∀ P : MvPolynomial n ℂ_[2], (∀ m, ‖MvPolynomial.coeff m P‖ ≤ 1) →
+    ∀ P : MvPolynomial n ℂ_[2], (∀ m, ‖AddMonoidAlgebra.coeff P m‖ ≤ 1) →
       ‖jetPair P (thetaZ 2 L ι ω₀ r s)‖ ≤ 1
 
 def GoodModelTwo : Prop :=

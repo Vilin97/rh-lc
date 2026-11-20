@@ -18,7 +18,7 @@ private theorem finprod_le_mul_finprod_pow {ι : Type*} {N b : ι → ℝ} (hN :
     finprod_eq_prod_of_mulSupport_subset b (s := s)
       (fun v hv => by simp only [hs, Finset.coe_union, Set.Finite.coe_toFinset]; exact Or.inl (Or.inr hv)),
     ← Finset.mul_prod_erase s N hi, ← Finset.mul_prod_erase s b hi, hi₀, one_mul, ← Finset.prod_pow]
-  exact mul_le_mul h0 (Finset.prod_le_prod (fun i _ => N0 i) fun i hi' => h i (Finset.ne_of_mem_erase hi'))
+  exact mul_le_mul h0 (Finset.prod_le_prod₀ (fun i _ => N0 i) fun i hi' => h i (Finset.ne_of_mem_erase hi'))
     (Finset.prod_nonneg fun i _ => N0 i) ((N0 _).trans h0)
 
 theorem UpperTheory.one_le_mul_heightConst_heightOff_pow_of_small_at_place :
@@ -63,7 +63,7 @@ theorem UpperTheory.one_le_mul_heightConst_heightOff_pow_of_small_at_place :
       refine Finset.prod_congr rfl fun w _ => ?_
       rw [← mul_pow, ← pow_mul, ← pow_mul, mul_comm n]
     rw [e]
-    exact Finset.prod_le_prod (fun _ _ => pow_nonneg (norm_nonneg _) _) fun w _ =>
+    exact Finset.prod_le_prod₀ (fun _ _ => pow_nonneg (norm_nonneg _) _) fun w _ =>
       pow_le_pow_left₀ (norm_nonneg _) (hinf w) _
   have hoff : heightOff q g = A * ∏ᶠ v, b v := by
     simp only [heightOff, hA, hb, finprod_eq_if]

@@ -355,7 +355,7 @@ theorem kappaAssembly_of (hV : VRatio) : KappaAssembly := by
     linarith
   have sC : ∏ x, volGL x ≤ C ^ (Q * f) * v ^ ((Q : ℝ) * f) * res ^ a * C ^ (a * f) := by
     calc ∏ x, volGL x ≤ ∏ x, ((C * v) ^ (j x ^ 2 * f) * res * C ^ f) :=
-          Finset.prod_le_prod (fun x _ => (hGL x).1) (fun x _ => (hGL x).2)
+          Finset.prod_le_prod₀ (fun x _ => (hGL x).1) (fun x _ => (hGL x).2)
       _ = _ := by
           rw [Finset.prod_mul_distrib, Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum,
             Finset.prod_const, Finset.prod_const, Finset.card_univ, Fintype.card_fin, ← Finset.sum_mul,

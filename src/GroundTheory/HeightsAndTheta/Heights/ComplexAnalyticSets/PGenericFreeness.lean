@@ -60,8 +60,8 @@ theorem isGenericallyFree_quotient (hNN : GenericNoetherNormalisation.Statement.
     · have hq : q = ⊥ := by
         rw [eq_bot_iff]
         intro x hx
-        have hx' : C (coeff 0 x) ∈ q := by rwa [← eq_C_of_isEmpty x]
-        have : coeff 0 x ∈ q.comap (C : A →+* MvPolynomial (Fin 0) A) := hx'
+        have hx' : C (AddMonoidAlgebra.coeff x 0) ∈ q := by rwa [← eq_C_of_isEmpty x]
+        have : AddMonoidAlgebra.coeff x 0 ∈ q.comap (C : A →+* MvPolynomial (Fin 0) A) := hx'
         rw [hc, Ideal.mem_bot] at this
         rw [Ideal.mem_bot, eq_C_of_isEmpty x, this, map_zero]
       subst hq

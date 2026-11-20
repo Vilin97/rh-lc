@@ -62,7 +62,7 @@ theorem hadamard_unit_diagonal_det_le_one (N : ℕ) (H : Matrix (Fin N) (Fin N) 
     simpa using h3
   rw [h4]
   calc ∏ i, hh.eigenvalues i ≤ ∏ i, Real.exp (hh.eigenvalues i - 1) :=
-        Finset.prod_le_prod (fun i _ => hnn i)
+        Finset.prod_le_prod₀ (fun i _ => hnn i)
           (fun i _ => by linarith [Real.add_one_le_exp (hh.eigenvalues i - 1)])
     _ = Real.exp (∑ i, (hh.eigenvalues i - 1)) := (Real.exp_sum _ _).symm
     _ = 1 := by rw [Finset.sum_sub_distrib, htr']; simp
@@ -244,7 +244,7 @@ theorem third_zeta_minor_bound : UnitaryMinorNormLeOne := by
       intro c; rw [hentry c]; positivity
     have h5 : ‖(U.submatrix e e').det‖ ^ 2 ≤ 1 := by
       rw [← hdet]
-      exact h1.trans (Finset.prod_le_one (fun c _ => hcol0 c) (fun c _ => hcol c))
+      exact h1.trans (Finset.prod_le_one₀ (fun c _ => hcol0 c) (fun c _ => hcol c))
     exact (sq_le_one_iff₀ (norm_nonneg _)).mp h5
   · obtain ⟨a, b, hab, hne⟩ : ∃ a b, e a = e b ∧ a ≠ b := by
       simpa [Function.Injective] using he

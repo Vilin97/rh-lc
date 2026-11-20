@@ -16,7 +16,7 @@ theorem finrank_mul_padicValInt_discr_le (K L : Type) [Field K] [NumberField K] 
   have hL : (discr L).natAbs ≠ 0 := Int.natAbs_ne_zero.2 (discr_ne_zero L)
   rw [h] at hL
   unfold padicValInt
-  rw [h, padicValNat.mul (left_ne_zero_of_mul hL) (right_ne_zero_of_mul hL), padicValNat.pow]
+  rw [h, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (left_ne_zero_of_mul hL) (right_ne_zero_of_mul hL), padicValNat.pow]
   omega
 
 theorem padicValInt_discr_div_le_delta_vp :

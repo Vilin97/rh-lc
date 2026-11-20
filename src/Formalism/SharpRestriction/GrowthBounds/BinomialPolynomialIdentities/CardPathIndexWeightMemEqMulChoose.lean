@@ -243,10 +243,10 @@ theorem restSplit : RestSplit := by
     have := DominanceOrderLemmas.vars_act isVec (Formalism.InvariantFactorPaths.GelfandTsetlinBases.genMat k n) (Formalism.InvariantFactorPaths.GelfandTsetlinBases.genMat k n)⁻¹ hv0 x
       ((mem_vars_iff_mem_support (i := x)).2 ⟨d, hd, Finsupp.mem_support_iff.2 hne⟩)
     omega
-  have hcoef : coeff (e + β₀) (actI isVec i (Formalism.InvariantFactorPaths.GelfandTsetlinBases.genMat k n) (Formalism.InvariantFactorPaths.GelfandTsetlinBases.genMat k n)⁻¹
-        (map (algebraMap k (GenField k n)) G)) =
-      coeff e (actI isVec i (Formalism.InvariantFactorPaths.GelfandTsetlinBases.genMat k n) (Formalism.InvariantFactorPaths.GelfandTsetlinBases.genMat k n)⁻¹
-        (map (algebraMap k (GenField k n)) (Gc β₀))) := by
+  have hcoef : AddMonoidAlgebra.coeff (actI isVec i (Formalism.InvariantFactorPaths.GelfandTsetlinBases.genMat k n) (Formalism.InvariantFactorPaths.GelfandTsetlinBases.genMat k n)⁻¹
+        (map (algebraMap k (GenField k n)) G)) (e + β₀) =
+      AddMonoidAlgebra.coeff (actI isVec i (Formalism.InvariantFactorPaths.GelfandTsetlinBases.genMat k n) (Formalism.InvariantFactorPaths.GelfandTsetlinBases.genMat k n)⁻¹
+        (map (algebraMap k (GenField k n)) (Gc β₀))) e := by
     rw [hexp, coeff_sum, Finset.sum_eq_single β₀]
     · rw [coeff_mul_monomial, mul_one]
     · intro β hβ hne

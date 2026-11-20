@@ -128,7 +128,7 @@ def psi (m : ℕ) : MvPolynomial (Fin m) K →+* PowerSeries K :=
 
 lemma coeff_psi (m : ℕ) (P : MvPolynomial (Fin m) K) :
     PowerSeries.coeff m (psi m P) =
-      ∑ e ∈ Finset.Iic (bnd m), if wt e = m then MvPolynomial.coeff e P else 0 := by
+      ∑ e ∈ Finset.Iic (bnd m), if wt e = m then AddMonoidAlgebra.coeff P e else 0 := by
   classical
   have hbnd : ∀ e : Fin m →₀ ℕ, wt e = m → e ∈ Finset.Iic (bnd m) := by
     intro e he
@@ -151,13 +151,13 @@ lemma coeff_psi (m : ℕ) (P : MvPolynomial (Fin m) K) :
   conv_lhs => rw [P.as_sum]
   rw [map_sum, map_sum]
   simp only [hpsi, PowerSeries.coeff_C_mul_X_pow]
-  have h1 : ∑ e ∈ P.support, (if m = wt e then MvPolynomial.coeff e P else 0) =
-      ∑ e ∈ P.support ∪ Finset.Iic (bnd m), (if m = wt e then MvPolynomial.coeff e P else 0) :=
+  have h1 : ∑ e ∈ P.support, (if m = wt e then AddMonoidAlgebra.coeff P e else 0) =
+      ∑ e ∈ P.support ∪ Finset.Iic (bnd m), (if m = wt e then AddMonoidAlgebra.coeff P e else 0) :=
     Finset.sum_subset Finset.subset_union_left (fun e _ he => by
       rw [MvPolynomial.notMem_support_iff.1 he]
       simp)
-  have h2 : ∑ e ∈ Finset.Iic (bnd m), (if wt e = m then MvPolynomial.coeff e P else 0) =
-      ∑ e ∈ P.support ∪ Finset.Iic (bnd m), (if wt e = m then MvPolynomial.coeff e P else 0) :=
+  have h2 : ∑ e ∈ Finset.Iic (bnd m), (if wt e = m then AddMonoidAlgebra.coeff P e else 0) =
+      ∑ e ∈ P.support ∪ Finset.Iic (bnd m), (if wt e = m then AddMonoidAlgebra.coeff P e else 0) :=
     Finset.sum_subset Finset.subset_union_right (fun e _ he => if_neg (fun h => he (hbnd e h)))
   rw [h1, h2]
   refine Finset.sum_congr rfl fun e _ => ?_
@@ -173,8 +173,8 @@ def HypDet (T' : Subalgebra O (X' → O)) (R' : Subalgebra O (X' → Matrix d d 
     Prop :=
   ∀ (m : ℕ) (r : Fin m → R') (s : Fin m →₀ ℕ), ∃ f ∈ T', ∀ x',
     algebraMap O (FractionRing O) (f x') =
-      MvPolynomial.coeff s (Matrix.det (∑ i, (MvPolynomial.X i : MvPolynomial (Fin m) (FractionRing O)) •
-        ((r i : X' → Matrix d d (FractionRing O)) x').map MvPolynomial.C))
+      AddMonoidAlgebra.coeff (Matrix.det (∑ i, (MvPolynomial.X i : MvPolynomial (Fin m) (FractionRing O)) •
+        ((r i : X' → Matrix d d (FractionRing O)) x').map MvPolynomial.C)) s
 
 lemma coeff_det_eq (R' : Subalgebra O (X' → Matrix d d (FractionRing O)))
     (a : Matrix d d (PowerSeries (X' → FractionRing O))) (ha : a ∈ goodM R') (n : ℕ) (x' : X') :

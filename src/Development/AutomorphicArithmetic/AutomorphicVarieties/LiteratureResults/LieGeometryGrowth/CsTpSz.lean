@@ -29,7 +29,7 @@ theorem UpperTheory.V.Lit.Geo.Cs.tpSz :
     refine ContinuousAlternatingMap.opNorm_le_bound _ (by positivity) fun v => ?_
     have a1 : ‖m fun i => A (v i)‖ ≤ ‖m‖ * ∏ i, ‖A (v i)‖ := m.le_opNorm _
     have a2 : ∏ i, ‖A (v i)‖ ≤ ∏ i, (|c| * ‖v i‖) :=
-      Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => A.le_of_opNorm_le hA' _
+      Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => A.le_of_opNorm_le hA' _
     rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin] at a2
     calc ‖L₀ m v‖ = ‖B (m fun i => A (v i))‖ := rfl
       _ ≤ |c| * ‖m fun i => A (v i)‖ := B.le_of_opNorm_le hB' _

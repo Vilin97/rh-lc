@@ -68,7 +68,7 @@ theorem cn_norm_φ_le (X : CData) {n₀ : ℕ} {A : ℝ} (hX : X.HypB n₀ A) (y
   unfold CData.φ phe phOf
   rw [norm_mul, norm_mul, norm_star, norm_prod, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg X.fdegAll_nonneg]
   have h1 : ∏ v, ‖coefOn (X.σ v) (X.w v) (X.w v) (y.1 v)‖ ≤ 1 :=
-    Finset.prod_le_one (fun v _ => norm_nonneg _) fun v _ => hm v
+    Finset.prod_le_one₀ (fun v _ => norm_nonneg _) fun v _ => hm v
   have h2 := X.fdegAll_nonneg
   have h3 : 0 ≤ ∏ v, ‖coefOn (X.σ v) (X.w v) (X.w v) (y.1 v)‖ := Finset.prod_nonneg fun v _ => norm_nonneg _
   calc fdegAll X.I X.σ X.w * (∏ v, ‖coefOn (X.σ v) (X.w v) (X.w v) (y.1 v)‖) * ‖X.e y.2‖

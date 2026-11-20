@@ -91,7 +91,7 @@ def outerDot (σ R : Type*) [CommRing R] [Fintype σ] : MvPolynomial σ (MvPolyn
 
 def polarPoly {σ R : Type*} [CommRing R] [Fintype σ] (Φ : MvPolynomial σ R →ₗ[R] R) (n : ℕ) :
     MvPolynomial σ R :=
-  ∑ m ∈ ((-outerDot σ R) ^ n).support, monomial m (Φ (coeff m ((-outerDot σ R) ^ n)))
+  ∑ m ∈ ((-outerDot σ R) ^ n).support, monomial m (Φ (AddMonoidAlgebra.coeff ((-outerDot σ R) ^ n) m))
 
 def degPoly : MvPolynomial (Idx d) ℚ := polarPoly (intFl d) d.D
 
@@ -186,7 +186,7 @@ def PolarisationCoeff.Statement : Prop :=
   ∀ (σ : Type) [Fintype σ] (Φ : MvPolynomial σ ℝ →ₗ[ℝ] ℝ) (n : ℕ) (m : σ →₀ ℕ),
     (m.sum fun _ e => e) = n →
     Φ (monomial m 1) =
-      (-1) ^ n * ((m.prod fun _ e => (e.factorial : ℝ)) / (n.factorial : ℝ)) * coeff m (polarPoly Φ n)
+      (-1) ^ n * ((m.prod fun _ e => (e.factorial : ℝ)) / (n.factorial : ℝ)) * AddMonoidAlgebra.coeff (polarPoly Φ n) m
 
 def PolarisationBound.Statement : Prop :=
   ∀ (σ : Type) [Fintype σ] (n : ℕ),

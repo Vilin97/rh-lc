@@ -81,7 +81,7 @@ theorem determinant_shift_norm : DetShiftNormOf := by
     intro a
     ext m
     rw [lgraded_coeff_euler, MvPolynomial.coeff_smul, smul_eq_mul]
-    by_cases hm : coeff m (hw ℚ le_rfl (fun i : Fin N => ν i + 1)) = 0
+    by_cases hm : AddMonoidAlgebra.coeff (hw ℚ le_rfl (fun i : Fin N => ν i + 1)) m = 0
     · simp [hm]
     · have hW := hwRowWeight ℚ N N le_rfl _ hν' hm
       have hWa := congrFun hW a

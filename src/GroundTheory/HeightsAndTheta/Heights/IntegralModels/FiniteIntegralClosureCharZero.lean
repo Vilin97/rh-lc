@@ -105,9 +105,9 @@ theorem exists_pow_smul_mem_of_isMaximal
     ext m
     rw [MvPolynomial.coeff_zero]
     by_contra hc
-    obtain ⟨G, hG⟩ := hpow (MvPolynomial.coeff m F).natAbs F hF
-    have hdvd : (p : ℤ) ^ (MvPolynomial.coeff m F).natAbs ∣ MvPolynomial.coeff m F :=
-      ⟨MvPolynomial.coeff m G, by conv_lhs => rw [hG]
+    obtain ⟨G, hG⟩ := hpow (AddMonoidAlgebra.coeff F m).natAbs F hF
+    have hdvd : (p : ℤ) ^ (AddMonoidAlgebra.coeff F m).natAbs ∣ AddMonoidAlgebra.coeff F m :=
+      ⟨AddMonoidAlgebra.coeff G m, by conv_lhs => rw [hG]
                                   rw [MvPolynomial.coeff_C_mul]⟩
     have h1 := Int.natAbs_dvd_natAbs.mpr hdvd
     rw [Int.natAbs_pow, Int.natAbs_natCast] at h1

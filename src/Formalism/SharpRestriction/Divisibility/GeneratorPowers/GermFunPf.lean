@@ -160,14 +160,14 @@ theorem orig_pow_le (R ι : Type) [CommRing R] (n : ℕ) : orig R ι ^ n ≤ ord
       exact Ideal.mul_mem_left _ a hx
 
 theorem coeff_eq_zero_of_mem {R ι : Type} [CommRing R] {n : ℕ} {p : MvPolynomial ι R}
-    (hp : p ∈ orig R ι ^ n) {e : ι →₀ ℕ} (he : e.degree < n) : MvPolynomial.coeff e p = 0 := by
+    (hp : p ∈ orig R ι ^ n) {e : ι →₀ ℕ} (he : e.degree < n) : AddMonoidAlgebra.coeff p e = 0 := by
   by_contra hne
   have h1 := (mem_ordGE.1 (orig_pow_le R ι n hp)) e (MvPolynomial.mem_support_iff.2 hne)
   omega
 
 theorem coeff_psTrunc {R ι : Type} [CommRing R] [Fintype ι] [DecidableEq ι] (m : ℕ)
     (f : MvPowerSeries ι R) (e : ι →₀ ℕ) (he : e.degree ≤ m) :
-    MvPolynomial.coeff e (psTrunc m f) = MvPowerSeries.coeff e f := by
+    AddMonoidAlgebra.coeff (psTrunc m f) e = MvPowerSeries.coeff e f := by
   unfold psTrunc
   rw [MvPolynomial.coeff_sum, Finset.sum_eq_single e]
   · rw [MvPolynomial.coeff_monomial, if_pos rfl]

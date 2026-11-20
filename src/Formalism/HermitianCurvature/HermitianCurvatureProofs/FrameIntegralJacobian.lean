@@ -62,7 +62,7 @@ theorem weightLower_ok : WeightLower := by
   have ht0 : 0 ≤ 1 - 1 / (N:ℝ) ^ 2 := by linarith
   have ht1 : 1 - 1 / (N:ℝ) ^ 2 ≤ 1 := by linarith
   have hprod : ∏ _i : Fin m, (1 - 1 / (N:ℝ) ^ 2) ≤ ∏ i, f i :=
-    Finset.prod_le_prod (fun i _ => ht0) (fun i _ => hf i)
+    Finset.prod_le_prod₀ (fun i _ => ht0) (fun i _ => hf i)
   rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin] at hprod
   have hpow : (1 - 1 / (N:ℝ) ^ 2) ^ N ≤ (1 - 1 / (N:ℝ) ^ 2) ^ m :=
     pow_le_pow_of_le_one ht0 ht1 hm

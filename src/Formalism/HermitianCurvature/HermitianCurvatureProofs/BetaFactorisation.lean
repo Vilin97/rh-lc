@@ -272,7 +272,7 @@ theorem nodeBound : NodeBound := by
     exact s1.trans s2
   simp only [Cfg.Nd, Cfg.prodb]
   calc ∏ j ∈ Icc 1 c.m, Real.sqrt ((c.b j + y) * (c.b j + y - 1))
-      ≤ ∏ j ∈ Icc 1 c.m, (c.b j * E) := prod_le_prod (fun _ _ => Real.sqrt_nonneg _) hterm
+      ≤ ∏ j ∈ Icc 1 c.m, (c.b j * E) := prod_le_prod₀ (fun _ _ => Real.sqrt_nonneg _) hterm
     _ = (∏ j ∈ Icc 1 c.m, c.b j) * E ^ c.m := by
         rw [prod_mul_distrib, prod_const, Nat.card_Icc]; simp
     _ = Real.exp c.vth * ∏ j ∈ Icc 1 c.m, c.b j := by

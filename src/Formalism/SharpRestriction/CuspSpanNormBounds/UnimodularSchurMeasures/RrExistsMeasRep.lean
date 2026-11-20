@@ -240,7 +240,7 @@ theorem rr_rep_self [μ.IsMulLeftInvariant] [Countable Γ] (h : rr_FD μ Γ D) :
   rw [ae_restrict_iff' h.meas, ae_iff]
   refine measure_mono_null (fun x hx => ?_) (rr_N_null h)
   by_contra hxM
-  simp only [Set.mem_setOf_eq, _root_.not_imp] at hx
+  simp only [Set.mem_setOf_eq, Classical.not_imp] at hx
   obtain ⟨hxD, hne⟩ := hx
   apply hne
   rw [mul_one]

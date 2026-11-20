@@ -73,7 +73,7 @@ theorem card_torsion_pow_log_concave : ∀ (F : Type) [Field F] [NumberField F] 
       rw [pow_succ]
       exact Ideal.mul_mem_mul hb haP
   let π : M →+ M ⧸ C := QuotientAddGroup.mk' C
-  let g : A →+ M ⧸ C := (π.comp (DistribMulAction.toAddMonoidHom M a)).comp A.subtype
+  let g : A →+ M ⧸ C := (π.comp (DistribSMul.toAddMonoidHom M a)).comp A.subtype
   let h : B →+ M ⧸ C := π.comp B.subtype
   have hg : Nat.card g.ker = Nat.card B := by
     have : g.ker = B.addSubgroupOf A := by

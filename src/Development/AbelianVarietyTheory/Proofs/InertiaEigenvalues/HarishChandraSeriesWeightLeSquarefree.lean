@@ -68,7 +68,7 @@ theorem comb_bound {g : ℕ} (L : List (Pc g)) (hg : 1 ≤ g) (hpos : ∀ p ∈ 
     rw [hw, Finset.prod_pow_eq_pow_sum]
   have h5 : ∏ j : Fin L.length, (1 + x ^ (L.get j).1) ≤ (1 + x) ^ degL L := by
     rw [← sum_get_fst, ← Finset.prod_pow_eq_pow_sum]
-    refine Finset.prod_le_prod (fun j _ => by positivity) fun j _ => ?_
+    refine Finset.prod_le_prod₀ (fun j _ => by positivity) fun j _ => ?_
     have hj : 0 < (L.get j).1 := hpos _ (List.get_mem L j)
     have := pow_add_pow_le (zero_le_one' ℝ) hx0 hj.ne'
     simpa using this

@@ -56,7 +56,7 @@ theorem rows_Dr_le_HHZ (D : D7) (large₂ : SizeData₂ D) (hrd : 0 < D.host.rdE
   have hs1 := rows_one_le_sizeZ (D := D) large₂.sc.b c Z
   calc ∏ τ, max 1 (absDl D Z D.R.rS τ ^ 2)
       ≤ ∏ τ : D.what₂.Tau, (H2 * max 1 (absDl D Z D.R.rS τ / H2)) ^ 2 :=
-        Finset.prod_le_prod (fun τ _ => le_trans zero_le_one (le_max_left _ _)) fun τ _ => each τ
+        Finset.prod_le_prod₀ (fun τ _ => le_trans zero_le_one (le_max_left _ _)) fun τ _ => each τ
     _ = (H2 ^ D.R.f * ∏ τ : D.what₂.Tau, max 1 (absDl D Z D.R.rS τ / H2)) ^ 2 := by
         rw [Finset.prod_pow, Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, D.what₂.card_Tau]
     _ ≤ (H2 ^ D.R.f * sizeZ D large₂.sc.b c Z) ^ 2 := by
@@ -64,7 +64,7 @@ theorem rows_Dr_le_HHZ (D : D7) (large₂ : SizeData₂ D) (hrd : 0 < D.host.rdE
           (Finset.prod_nonneg fun τ _ => le_trans zero_le_one (le_max_left _ _)))
         apply mul_le_mul_of_nonneg_left _ (by positivity)
         unfold sizeZ
-        exact Finset.prod_le_prod (fun τ _ => le_trans zero_le_one (le_max_left _ _)) fun τ _ => single τ
+        exact Finset.prod_le_prod₀ (fun τ _ => le_trans zero_le_one (le_max_left _ _)) fun τ _ => single τ
     _ = (H2 ^ D.R.f) ^ 2 * sizeZ D large₂.sc.b c Z ^ 2 := by ring
     _ ≤ large₂.sc.b ^ (c ^ 2 * (D.R.m : ℝ) ^ 3 * D.R.f) * sizeZ D large₂.sc.b c Z ^ 4 := by
         apply mul_le_mul _ (pow_le_pow_right₀ hs1 (by norm_num)) (by positivity) (by positivity)

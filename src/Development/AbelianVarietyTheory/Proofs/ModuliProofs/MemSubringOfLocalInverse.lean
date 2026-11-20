@@ -239,9 +239,9 @@ theorem vAmp_prod {K σ₁ σ₂ : Type} [Field K] {p₁ : X₁ ⟶ Sp K} {p₂ 
     change (a₁.appLE _ _ l₁).hom _ ∈ S
     rw [MvPolynomial.eval₂_comp_left]
     refine MvPolynomial.eval₂_mem (fun d _ => ?_) fun j => ?_
-    · exact ⟨MvPolynomial.C (MvPolynomial.coeff d F), (MvPolynomial.eval₂Hom_C _ _ _).trans
+    · exact ⟨MvPolynomial.C (AddMonoidAlgebra.coeff F d), (MvPolynomial.eval₂Hom_C _ _ _).trans
         (RepBC.appLE_appLE a₁ p₁ (U := ⊤) le_top l₁ le_top
-          ((Scheme.ΓSpecIso (CommRingCat.of K)).inv.hom (MvPolynomial.coeff d F))).symm⟩
+          ((Scheme.ΓSpecIso (CommRingCat.of K)).inv.hom (AddMonoidAlgebra.coeff F d))).symm⟩
     · have := hr (j, i')
       simpa only [r, o₂, map_one, _root_.mul_one, Function.comp_apply] using this
   · obtain ⟨k, hk⟩ := m₂ (a₂ y)

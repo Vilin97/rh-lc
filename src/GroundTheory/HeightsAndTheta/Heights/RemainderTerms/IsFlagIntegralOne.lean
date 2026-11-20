@@ -32,8 +32,8 @@ def schurPoly (m : ℕ) {r : ℕ} (la : Fin r → ℕ) : MvPolynomial (Fin m) �
 def staircase (r : ℕ) : Fin r → ℕ := fun a => r - 1 - a
 
 def frobChar {r : ℕ} (la : Fin r → ℕ) (q m : ℕ) : ℚ :=
-  coeff (Finsupp.equivFunOnFinite.symm (la + staircase r))
-    (psum (Fin r) ℚ q * psum (Fin r) ℚ 1 ^ m * alternant (staircase r))
+  AddMonoidAlgebra.coeff (psum (Fin r) ℚ q * psum (Fin r) ℚ 1 ^ m * alternant (staircase r))
+    (Finsupp.equivFunOnFinite.symm (la + staircase r))
 
 def hookShape (k b : ℕ) : Fin (b + 1) → ℕ := fun a => if (a : ℕ) = 0 then k - b else 1
 

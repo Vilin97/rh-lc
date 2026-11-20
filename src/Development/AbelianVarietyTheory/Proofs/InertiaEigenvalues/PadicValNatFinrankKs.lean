@@ -21,9 +21,9 @@ theorem padicValNat_finrank_Ks : ∀ (l : ℕ) [Fact l.Prime] (K : Loc.FinExt l)
   refine ⟨fun m hm => ?_, fun hK => ?_⟩
   ·
     rw [finrank_Ks_eq l K m hm, finrank_Ks_eq l K 1 one_pos,
-      padicValNat.mul hk0 (Nat.mul_ne_zero (hpow _) hl1),
-      padicValNat.mul hk0 (Nat.mul_ne_zero (hpow _) hl1),
-      padicValNat.mul (hpow _) hl1, padicValNat.mul (hpow _) hl1,
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hk0 (Nat.mul_ne_zero (hpow _) hl1),
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hk0 (Nat.mul_ne_zero (hpow _) hl1),
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (hpow _) hl1, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (hpow _) hl1,
       padicValNat.prime_pow, padicValNat.prime_pow]
     omega
   ·
@@ -31,8 +31,8 @@ theorem padicValNat_finrank_Ks : ∀ (l : ℕ) [Fact l.Prime] (K : Loc.FinExt l)
     have hK1 : finrank ℚ_[l] ↥K.1 ≠ 0 := Module.finrank_pos.ne'
     have hv : padicValNat l (l - 1) = 0 :=
       padicValNat.eq_zero_of_not_dvd (Nat.not_dvd_of_pos_of_lt (by omega) (by omega))
-    rw [finrank_Ks_eq l K 1 one_pos, heq, padicValNat.mul hK1 (Nat.mul_ne_zero (hpow _) hl1),
-      padicValNat.mul (hpow _) hl1, padicValNat.prime_pow, hv]
+    rw [finrank_Ks_eq l K 1 one_pos, heq, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hK1 (Nat.mul_ne_zero (hpow _) hl1),
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (hpow _) hl1, padicValNat.prime_pow, hv]
     omega
 
 end GlobalTheory.HubLoc

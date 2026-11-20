@@ -19,10 +19,10 @@ def detPoly {R ι : Type*} [CommRing R] [Fintype ι] [DecidableEq ι] {k : ℕ} 
 
 def Inv (n : ℕ) (G : Type*) : Subring (GenRing n G) :=
   Subring.closure {c | ∃ (k : ℕ) (w : Fin k → FreeMonoid G) (α : Fin k →₀ ℕ),
-    c = coeff α (detPoly fun j => genWord n (w j))}
+    c = AddMonoidAlgebra.coeff (detPoly fun j => genWord n (w j)) α}
 
 def invCoef (n : ℕ) {G : Type*} {k : ℕ} (w : Fin k → FreeMonoid G) (α : Fin k →₀ ℕ) : Inv n G :=
-  ⟨coeff α (detPoly fun j => genWord n (w j)), Subring.subset_closure ⟨k, w, α, rfl⟩⟩
+  ⟨AddMonoidAlgebra.coeff (detPoly fun j => genWord n (w j)) α, Subring.subset_closure ⟨k, w, α, rfl⟩⟩
 
 def evalW {G : Type*} [Monoid G] (w : FreeMonoid G) : G := FreeMonoid.lift id w
 
@@ -37,7 +37,7 @@ structure Det (n : ℕ) (A E B : Type*) [CommRing A] [Ring E] [Algebra A E] [Com
     bind₁ (fun l => ∑ j, C (algebraMap A B (c j l)) * X j) (D k' y)
   Θ : Inv n E →+* B
   inv : ∀ (k : ℕ) (w : Fin k → FreeMonoid E) (α : Fin k →₀ ℕ),
-    coeff α (D k fun j => evalW (w j)) = Θ (invCoef n w α)
+    AddMonoidAlgebra.coeff (D k fun j => evalW (w j)) α = Θ (invCoef n w α)
 
 namespace Det
 variable {n : ℕ} {A E B : Type*} [CommRing A] [Ring E] [Algebra A E] [CommRing B] [Algebra A B] (D : Det n A E B)

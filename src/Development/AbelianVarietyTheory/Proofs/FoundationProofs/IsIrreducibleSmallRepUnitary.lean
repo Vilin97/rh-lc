@@ -49,13 +49,13 @@ theorem height_rowDiv_le {n k : ℕ} (H : ℤ) (a b : Fin n) (j : ℕ) (f : MvPo
     (hf : ∀ d ∈ f.support, Finsupp.weight (lhwinHt n k) d ≤ H) :
     ∀ d ∈ (rowDiv ℂ a b j f).support, Finsupp.weight (lhwinHt n k) d ≤ H + j * ((a.val : ℤ) - b.val) := by
   intro e he
-  have hs : rowDiv ℂ a b j f = ∑ d ∈ f.support, (rowGen ℂ a b (monomial d (coeff d f))).coeff j := by
+  have hs : rowDiv ℂ a b j f = ∑ d ∈ f.support, (rowGen ℂ a b (monomial d (AddMonoidAlgebra.coeff f d))).coeff j := by
     unfold rowDiv
     conv_lhs => rw [f.as_sum]
     rw [map_sum, Polynomial.finsetSum_coeff]
   rw [mem_support_iff, hs, coeff_sum] at he
   obtain ⟨d, hd, hne⟩ := Finset.exists_ne_zero_of_sum_ne_zero he
-  have h1 := lhwinShift_rowGen_monomial ℂ a b d (coeff d f) j hne
+  have h1 := lhwinShift_rowGen_monomial ℂ a b d (AddMonoidAlgebra.coeff f d) j hne
   have h2 := hf d hd
   omega
 

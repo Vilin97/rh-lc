@@ -88,7 +88,7 @@ theorem lift_K (hB : KB.IsLeadingFormSetting Cb Cc S p f χ A₀) (v : Fin S.f) 
   have hTf0 : 0 ≤ Tf := by positivity
   have hprod : (∏ c, ∑ i, |F7.lagCo (grid c) i|) ≤ cg ^ K := by
     calc (∏ c, ∑ i, |F7.lagCo (grid c) i|) ≤ ∏ _c : Fin K, cg :=
-          Finset.prod_le_prod (fun c _ => Finset.sum_nonneg fun i _ => abs_nonneg _) fun c _ => hl1' c
+          Finset.prod_le_prod₀ (fun c _ => Finset.sum_nonneg fun i _ => abs_nonneg _) fun c _ => hl1' c
       _ = cg ^ K := by simp
   have h1 : 0 ≤ Tf ^ K * (Real.exp 1 * A) ^ K := by positivity
   calc (∏ c, ∑ i, |F7.lagCo (grid c) i|) * Tf ^ K * (Real.exp 1 * A) ^ K

@@ -36,7 +36,7 @@ theorem md_le_of_bounds {F : Type} [Field F] [NumberField F] (S : Finset (Height
   have hfp : ∏ᶠ v : HeightOneSpectrum (𝓞 F), ‖(b : AF F).2 v‖ ≤ ∏ v ∈ S, c v := by
     rw [finprod_eq_prod_of_mulSupport_subset _ hsub]
     calc ∏ v ∈ T, ‖(b : AF F).2 v‖ ≤ ∏ v ∈ T, (if v ∈ S then c v else 1) := by
-          refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun v _ => ?_
+          refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun v _ => ?_
           by_cases hv : v ∈ S
           · simpa [hv] using hS v hv
           · simpa [hv] using (Valued.toNormedField.norm_le_one_iff).2

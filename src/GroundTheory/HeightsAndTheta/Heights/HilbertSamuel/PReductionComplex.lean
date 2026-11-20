@@ -81,10 +81,10 @@ theorem homog_monomial_one_of_zmod [Fact p.Prime] {d : (Σ k, ι k) →₀ ℕ} 
   exact GenOnFibres.homog_monomial d 1 e fun k => h d (by rw [mem_support_iff, coeff_monomial, if_pos rfl]; exact one_ne_zero) k
 
 def liftPoly (F : MRingOver (ZMod p) ι) : MRingOver ℤ ι :=
-  ∑ d ∈ F.support, monomial d ((coeff d F).val : ℤ)
+  ∑ d ∈ F.support, monomial d ((AddMonoidAlgebra.coeff F d).val : ℤ)
 
 theorem coeff_liftPoly (F : MRingOver (ZMod p) ι) (d : (Σ k, ι k) →₀ ℕ) :
-    coeff d (liftPoly p F) = ((coeff d F).val : ℤ) := by
+    AddMonoidAlgebra.coeff (liftPoly p F) d = ((AddMonoidAlgebra.coeff F d).val : ℤ) := by
   classical
   rw [liftPoly, coeff_sum]
   simp only [coeff_monomial]

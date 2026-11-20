@@ -44,7 +44,7 @@ theorem mConeMap_of_homog (y : (Σ κ, ι κ) → Ω) {g : MRing ι} {d : K → 
   rw [hμd]
 
 def formRing (y : (Σ κ, ι κ) → Ω) : Subalgebra ℤ (MvPolynomial K Ω) where
-  carrier := {F | ∀ m : K →₀ ℕ, coeff m F ∈ secM y ⇑m}
+  carrier := {F | ∀ m : K →₀ ℕ, AddMonoidAlgebra.coeff F m ∈ secM y ⇑m}
   mul_mem' := by
     classical
     intro F G hF hG m
@@ -55,7 +55,7 @@ def formRing (y : (Σ κ, ι κ) → Ω) : Subalgebra ℤ (MvPolynomial K Ω) wh
     exact secM_mul_mem y (hF x.1) (hG x.2)
   add_mem' := by
     intro F G hF hG m
-    rw [coeff_add]
+    rw [MvPolynomial.coeff_add]
     exact add_mem (hF m) (hG m)
   algebraMap_mem' := by
     classical
@@ -148,9 +148,9 @@ theorem proof (h : KH.CondStatement) : NmSectionsFinite.Statement := by
     obtain ⟨g, hg⟩ := (f F).2
     rw [← hg]
     exact mConeMap_mem_formRing y g
-  refine ⟨fun j => coeff (expo fun κ => (τ - d j) * a κ) ((f j : R) : MvPolynomial K Ω), fun j => ?_, ?_⟩
+  refine ⟨fun j => AddMonoidAlgebra.coeff ((f j : R) : MvPolynomial K Ω) (expo fun κ => (τ - d j) * a κ), fun j => ?_, ?_⟩
   · simpa using hR j (expo fun κ => (τ - d j) * a κ)
-  · have hc' := congrArg (coeff (expo fun κ => τ * a κ)) hf
+  · have hc' := congrArg (AddMonoidAlgebra.coeff · (expo fun κ => τ * a κ)) hf
     rw [coeff_monomial, if_pos rfl] at hc'
     rw [← hc', coeff_sum, ← Finset.sum_coe_sort t]
     refine Finset.sum_congr rfl fun j _ => ?_

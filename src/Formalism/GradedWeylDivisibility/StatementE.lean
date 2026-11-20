@@ -50,7 +50,7 @@ def intQ (r n : ℕ) : MvPolynomial (Fin r × Fin n) ℤ →ₗ[ℤ] MvPolynomia
 def CoeffWord : Prop :=
   ∀ (R : Type) [CommRing R] (r n : ℕ) (ν : Fin n → ℕ) (F : MvPolynomial (Fin r × Fin n) R) (e : Fin r × Fin n →₀ ℕ),
     IsWeightedHomogeneous (colW r n) F ν → LowerTri e → (∀ s : Fin n, ∑ a : Fin r, e (a, s) = ν s) →
-      coeff e F = eval (idFrame R r n) (applyWord R (wordOf e) F)
+      AddMonoidAlgebra.coeff F e = eval (idFrame R r n) (applyWord R (wordOf e) F)
 
 def FockQHW : Prop :=
   ∀ (r n : ℕ) (hn : n ≤ r) (ν : Fin n → ℕ), Antitone ν → ∀ F ∈ dualWeyl ℚ r n ν,
@@ -62,7 +62,7 @@ def FockQWordAdj : Prop :=
 
 def LowerTriIntegral : Prop :=
   ∀ (r n : ℕ) (ν : Fin n → ℕ) (Q : MvPolynomial (Fin r × Fin n) ℚ), Q ∈ dualWeyl ℚ r n ν →
-    (∀ e : Fin r × Fin n →₀ ℕ, LowerTri e → ∃ z : ℤ, coeff e Q = z) →
+    (∀ e : Fin r × Fin n →₀ ℕ, LowerTri e → ∃ z : ℤ, AddMonoidAlgebra.coeff Q e = z) →
       ∃ Q' : MvPolynomial (Fin r × Fin n) ℤ, Q = intQ r n Q'
 
 def NablaEqDualWeyl : Prop :=

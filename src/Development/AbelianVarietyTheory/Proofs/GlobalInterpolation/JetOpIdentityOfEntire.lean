@@ -49,8 +49,8 @@ theorem jetLin_congr (J J' : (DVar ι a b →₀ ℕ) → K) (Q : MvPolynomial (
       J' (μ.comapDomain Sum.inr Sum.inr_injective.injOn)) : jetLin J Q = jetLin J' Q := by
   rw [Q.as_sum, map_sum, map_sum]
   refine Finset.sum_congr rfl fun μ hμ => ?_
-  have e : (monomial μ (coeff μ Q) : MvPolynomial ((ι × Fin b × Fin b) ⊕ DVar ι a b) K) =
-      coeff μ Q • basisMonomials _ K μ := by
+  have e : (monomial μ (AddMonoidAlgebra.coeff Q μ) : MvPolynomial ((ι × Fin b × Fin b) ⊕ DVar ι a b) K) =
+      AddMonoidAlgebra.coeff Q μ • basisMonomials _ K μ := by
     simp [coe_basisMonomials, smul_monomial]
   rw [e, map_smul, map_smul]
   simp only [jetLin, Module.Basis.constr_basis, h μ hμ]

@@ -75,7 +75,7 @@ theorem exists_frame_denom_dominant : ∀ (E : Type) [Field E] [NumberField E] [
   refine hint G hGh fun μ => ?_
   rw [FractionalIdeal.mem_spanSingleton]
   refine ⟨⟨_, ht F hF hv G (fun y' Y' s' hY' h' => hG y' Y' s' hY' h') μ⟩, ?_⟩
-  change (t : z.K) * MvPolynomial.coeff μ G * (t : z.K)⁻¹ = _
+  change (t : z.K) * AddMonoidAlgebra.coeff G μ * (t : z.K)⁻¹ = _
   field_simp
 
 end GlobalTheory.LatFull.CMInt

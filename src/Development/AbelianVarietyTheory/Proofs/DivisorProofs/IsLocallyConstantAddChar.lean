@@ -122,7 +122,7 @@ theorem smul_map_mulVec_pi (M : Matrix κ κ F) (u : Fˣ) (hu : (u : F) = M.det)
       ext f
       simp only [Set.mem_preimage, Set.mem_univ_pi, mulVec_diagonal]
       exact forall_congr' fun i => (Set.mem_inv_smul_set_iff (a := Units.mk0 (D i) (A i))).symm
-    rw [this, Measure.pi_pi, hu', map_prod, ENNReal.coe_finset_prod, smul_eq_mul, ← Finset.prod_mul_distrib]
+    rw [this, Measure.pi_pi, hu', map_prod, ENNReal.ofNNReal_finsetProd, smul_eq_mul, ← Finset.prod_mul_distrib]
     refine Finset.prod_congr rfl fun i _ => ?_
     rw [distribHaarChar_mul, smul_inv_smul]
   · intro t u hu

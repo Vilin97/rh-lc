@@ -33,7 +33,7 @@ private theorem chi_ofRep {n : ℕ} {A E ι : Type} [CommRing A] [Ring E] [Algeb
 private theorem coeff_repS {σ A E ι : Type} [CommRing A] [Ring E] [Algebra A E] [Fintype ι] [DecidableEq ι]
     (r : E →ₐ[A] Matrix ι ι A) (α : σ →₀ ℕ) (z : MvPolynomial σ A ⊗[A] E) :
     r (TensorProduct.lid A E ((MvPolynomial.lcoeff A α).rTensor E z)) =
-      (Det.repS r (MvPolynomial σ A) z).map (MvPolynomial.coeff α) := by
+      (Det.repS r (MvPolynomial σ A) z).map (AddMonoidAlgebra.coeff · α) := by
   induction z with
   | zero => ext a b; simp
   | tmul s z =>

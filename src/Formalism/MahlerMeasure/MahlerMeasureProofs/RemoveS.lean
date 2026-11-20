@@ -13,7 +13,7 @@ theorem fockK_eq (F G : MvPolynomial σ k) :
     M.fockK F G = ∑ m ∈ F.support, F.coeff m * G.coeff m * mfac m := rfl
 
 private theorem mvPolynomial_coeff_eq_zero_of_not_mem_support {p : MvPolynomial σ k} {m : σ →₀ ℕ} (h : m ∉ p.support) :
-    coeff m p = 0 := by
+    AddMonoidAlgebra.coeff p m = 0 := by
   simpa [MvPolynomial.mem_support_iff] using h
 
 theorem fockK_superset (F G : MvPolynomial σ k) (s : Finset (σ →₀ ℕ)) (hs : F.support ⊆ s) :
@@ -116,7 +116,7 @@ theorem mfac_add_single (m : σ →₀ ℕ) (v : σ) :
   ring
 
 private theorem coeff_pderiv_eq_coeff_add_single_mul' (v : σ) (h : MvPolynomial σ k) (m : σ →₀ ℕ) :
-    coeff m (pderiv v h) = coeff (m + Finsupp.single v 1) h * ((m v : k) + 1) := by
+    AddMonoidAlgebra.coeff (pderiv v h) m = AddMonoidAlgebra.coeff h (m + Finsupp.single v 1) * ((m v : k) + 1) := by
   have h1 := Formalism.GM.coeff_X_mul_pderiv' v h (m + Finsupp.single v 1)
   rw [mul_comm (X v), MvPolynomial.coeff_mul_X] at h1
   rw [h1]
@@ -175,7 +175,7 @@ theorem eulL_apply {s : ℕ} (t : Fin s → σ) (g : MvPolynomial σ k) :
   rfl
 
 theorem coeff_eulL {s : ℕ} (t : Fin s → σ) (g : MvPolynomial σ k) (m : σ →₀ ℕ) :
-    coeff m (eulL t g) = coeff m g * ∑ c, (m (t c) : k) := by
+    AddMonoidAlgebra.coeff (eulL t g) m = AddMonoidAlgebra.coeff g m * ∑ c, (m (t c) : k) := by
   rw [eulL_apply, MvPolynomial.coeff_sum, Finset.mul_sum]
   exact Finset.sum_congr rfl (fun c _ => Formalism.GM.coeff_X_mul_pderiv' (t c) g m)
 
@@ -192,7 +192,7 @@ theorem eq_zero_of_eulL {s : ℕ} (t : Fin s → σ) (a b : ℕ) (hab : a < b) (
   ext m
   rw [MvPolynomial.coeff_zero]
   by_contra hne
-  have h1 := congrArg (coeff m) h
+  have h1 := congrArg (AddMonoidAlgebra.coeff · m) h
   rw [coeff_eulL, MvPolynomial.coeff_smul, smul_eq_mul, mul_comm ((a : k) - b)] at h1
   have h2 : (∑ c, (m (t c) : k)) = (a : k) - b := mul_left_cancel₀ hne h1
   have h3 : ((∑ c, m (t c) + b : ℕ) : k) = ((a : ℕ) : k) := by
@@ -511,7 +511,7 @@ theorem mix_e' (hv : M.TieVars w e zv sv) :
 theorem pderiv_of_free (v : σ) (y : MvPolynomial σ k) (h : ∀ m ∈ y.support, m v = 0) : pderiv v y = 0 := by
   ext m
   rw [coeff_pderiv_eq_coeff_add_single_mul', MvPolynomial.coeff_zero]
-  have h0 : coeff (m + Finsupp.single v 1) y = 0 := by
+  have h0 : AddMonoidAlgebra.coeff y (m + Finsupp.single v 1) = 0 := by
     by_contra hne
     have h1 := h _ (MvPolynomial.mem_support_iff.mpr hne)
     simp at h1

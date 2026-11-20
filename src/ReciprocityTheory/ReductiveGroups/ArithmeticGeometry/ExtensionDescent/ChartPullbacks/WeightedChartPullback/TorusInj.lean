@@ -155,7 +155,7 @@ lemma coeff_sum_single {A : Type} [CommRing A] (s : Finset X) (g : X → A) (χ�
     (∑ c ∈ s, AddMonoidAlgebra.single c (g c)).coeff χ₀ = g χ₀ := by
   classical
   first
-  | simp [AddMonoidAlgebra.coeff, Finsupp.finset_sum_apply, Finsupp.single_apply, h]
+  | simp [AddMonoidAlgebra.coeff, Finsupp.finsetSum_apply, Finsupp.single_apply, h]
   | simp [Finsupp.finset_sum_apply, Finsupp.single_apply, h]
   | simp [AddMonoidAlgebra.coeff_sum, AddMonoidAlgebra.coeff_single, h]
 

@@ -108,7 +108,7 @@ theorem exists_LL_max (hκ : Function.Injective κ) {ι : Type*} (d : ι → σ 
 variable {R : Type*} [CommRing R] (κ)
 
 def Lead (f : MvPolynomial σ R) (d : σ →₀ ℕ) : Prop :=
-  coeff d f = 1 ∧ ∀ e ∈ f.support, e ≠ d → LL κ e d
+  AddMonoidAlgebra.coeff f d = 1 ∧ ∀ e ∈ f.support, e ≠ d → LL κ e d
 
 variable {κ}
 
@@ -183,7 +183,7 @@ theorem linearIndependent_of_Lead (hκ : Function.Injective κ) {k : Type*} [Fie
   obtain ⟨i₁, hi₁, hg₁⟩ := hcon
   have hne : (s.filter fun i => g i ≠ 0).Nonempty := ⟨i₁, Finset.mem_filter.2 ⟨hi₁, hg₁⟩⟩
   obtain ⟨i₀, hi₀, hmax⟩ := exists_LL_max hκ d hd _ hne
-  have hc : coeff (d i₀) (∑ i ∈ s, g i • v i) = 0 := by rw [hsum]; simp
+  have hc : AddMonoidAlgebra.coeff (∑ i ∈ s, g i • v i) (d i₀) = 0 := by rw [hsum]; simp
   rw [MvPolynomial.coeff_sum, Finset.sum_eq_single i₀] at hc
   · rw [MvPolynomial.coeff_smul, (hv i₀).1, smul_eq_mul, mul_one] at hc
     exact (Finset.mem_filter.1 hi₀).2 hc
@@ -303,7 +303,7 @@ theorem Lead_det (k : Type*) [CommRing k] {m : ℕ} (r c : Fin m → Fin n) (hr 
     rw [MvPolynomial.monomial_sum_one]
     refine Finset.prod_congr rfl fun i _ => ?_
     simp [genX, Matrix.transpose_apply, Matrix.submatrix_apply, MvPolynomial.X]
-  have hcoeff : ∀ e, coeff e (((genX k n).submatrix r c).det) =
+  have hcoeff : ∀ e, AddMonoidAlgebra.coeff (((genX k n).submatrix r c).det) e =
       ∑ π : Equiv.Perm (Fin m), ((Equiv.Perm.sign π : ℤ) : k) * (if mon r c π = e then (1 : k) else 0) := by
     intro e
     rw [hdet, MvPolynomial.coeff_sum]

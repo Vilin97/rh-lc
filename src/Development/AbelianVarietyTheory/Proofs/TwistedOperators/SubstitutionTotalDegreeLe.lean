@@ -14,7 +14,7 @@ theorem totalDegree_aeval_le {σ κ : Type*} (f : σ → MvPolynomial κ ℂ) (h
   refine MvPolynomial.totalDegree_finsetSum_le fun s hs => ?_
   rw [MvPolynomial.aeval_monomial]
   refine (MvPolynomial.totalDegree_mul _ _).trans ?_
-  have h0 : (algebraMap ℂ (MvPolynomial κ ℂ) (MvPolynomial.coeff s P)).totalDegree = 0 :=
+  have h0 : (algebraMap ℂ (MvPolynomial κ ℂ) (AddMonoidAlgebra.coeff P s)).totalDegree = 0 :=
     MvPolynomial.totalDegree_C _
   rw [h0, zero_add]
   refine le_trans ?_ (MvPolynomial.le_totalDegree hs)

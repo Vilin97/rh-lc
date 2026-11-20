@@ -16,6 +16,6 @@ variable {Xo : Moduli Dw l} {c : Coeff l}
 
 noncomputable def cfOf {K₁ : Type} [Field K₁] [Algebra c.F (ArcS Dw K₁)]
     (yF : FrPt Xo c (ArcS Dw K₁)) (μ : ArcLt Dw →₀ ℕ) (j : ℤ) (F : Rul Xo c) : K₁ :=
-  (MvPolynomial.coeff μ (arcNum (evR Xo c F yF))).coeff j
+  (AddMonoidAlgebra.coeff (arcNum (evR Xo c F yF)) μ).coeff j
 
 end Formalism.L2.Pj.QAt

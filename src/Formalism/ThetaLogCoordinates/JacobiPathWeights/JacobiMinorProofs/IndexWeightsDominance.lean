@@ -623,8 +623,8 @@ theorem polynomial_b_rank : PolBRank := by
         rw [← weight_letter]
         exact ((MvPolynomial.mem_weightedHomogeneousSubmodule _ _ _ _).mp (hp i))
           (MvPolynomial.mem_support_iff.mp he)
-      rw [show MvPolynomial.monomial e (MvPolynomial.coeff e p) =
-          MvPolynomial.coeff e p • MvPolynomial.monomial e (1 : R) by
+      rw [show MvPolynomial.monomial e (AddMonoidAlgebra.coeff p e) =
+          AddMonoidAlgebra.coeff p e • MvPolynomial.monomial e (1 : R) by
         rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]]
       exact Submodule.smul_mem _ _ (Submodule.subset_span
         (Set.mem_image_of_mem (fun e => MvPolynomial.monomial e (1 : R)) heS))

@@ -20,7 +20,7 @@ theorem norm_det_le_one {m : ℕ} (B : Matrix (Fin m) (Fin m) K) (hB : ∀ i j, 
   rw [Matrix.det_apply]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun σ _ => ?_
   rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with h | h <;> simp only [h, one_smul, Units.neg_smul, norm_neg] <;>
-  · rw [norm_prod]; exact Finset.prod_le_one (fun _ _ => norm_nonneg _) fun i _ => hB _ _
+  · rw [norm_prod]; exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun i _ => hB _ _
 
 theorem norm_prod_sub_prod_le {Idx : Type*} (s : Finset Idx) (x y : Idx → K) {ε : ℝ} (hε : 0 ≤ ε)
     (hx : ∀ i, ‖x i‖ ≤ 1) (hy : ∀ i, ‖y i‖ ≤ 1) (hxy : ∀ i, ‖x i - y i‖ ≤ ε) :
@@ -36,7 +36,7 @@ theorem norm_prod_sub_prod_le {Idx : Type*} (s : Finset Idx) (x y : Idx → K) {
     refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ?_ ?_)
     · rw [norm_mul]; nlinarith [hx a, ih, norm_nonneg (x a), norm_nonneg (∏ i ∈ s, x i - ∏ i ∈ s, y i)]
     · rw [norm_mul, norm_prod]
-      have h1 : ∏ i ∈ s, ‖y i‖ ≤ 1 := Finset.prod_le_one (fun _ _ => norm_nonneg _) fun i _ => hy i
+      have h1 : ∏ i ∈ s, ‖y i‖ ≤ 1 := Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun i _ => hy i
       nlinarith [hxy a, norm_nonneg (x a - y a), Finset.prod_nonneg fun i (_ : i ∈ s) => norm_nonneg (y i)]
 
 theorem norm_det_sub_det_le {m : ℕ} (B C : Matrix (Fin m) (Fin m) K) {ε : ℝ} (hε : 0 ≤ ε)
@@ -97,7 +97,7 @@ theorem exists_minor_ge (p : ℕ) [hp : Fact p.Prime] (n m g : ℕ) (d : ℂ_[p]
     refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (norm_nonneg _) fun κ _ => ?_
     rw [norm_mul, norm_prod]
     have hP : ∏ i, ‖Matrix.of M i (κ i)‖ ≤ 1 :=
-      Finset.prod_le_one (fun _ _ => norm_nonneg _) fun i _ => hM _ _
+      Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun i _ => hM _ _
     calc (∏ i, ‖Matrix.of M i (κ i)‖) * ‖(Matrix.of fun k j => Matrix.of A (κ k) j).det‖
         ≤ 1 * ‖(Matrix.of fun k j => A (κ k) j).det‖ :=
           mul_le_mul_of_nonneg_right hP (norm_nonneg _)

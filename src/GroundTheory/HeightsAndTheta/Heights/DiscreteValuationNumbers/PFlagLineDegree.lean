@@ -115,7 +115,7 @@ theorem subst_homog {K : Type*} [DecidableEq K] {ι : K → Type} {M : ℕ} {F :
   apply IsWeightedHomogeneous.sum
   intro μ hμ
   rw [aeval_monomial, algebraMap_eq, Finsupp.prod]
-  have := (isWeightedHomogeneous_C (blockWeight ι) (coeff μ h)).mul (IsWeightedHomogeneous.prod
+  have := (isWeightedHomogeneous_C (blockWeight ι) (AddMonoidAlgebra.coeff h μ)).mul (IsWeightedHomogeneous.prod
     μ.support (fun v => substVar A v ^ μ v) (fun v => μ v • L (blockWeight _ v))
     (fun v _ => (hω v).pow (μ v)))
   rw [zero_add] at this

@@ -85,7 +85,7 @@ private theorem adelic_hadamard_inequality {K : Type*} [Field K] [NumberField K]
     rw [AdelicGLn.coe_det, Matrix.det_of_isUpperTriangular hb, Units.coe_prod]
     rfl
   rw [map_mul, map_mul, Positive.val_mul, hk1, mul_one, hdet, map_prod, coe_finset_prod_pos]
-  refine Finset.prod_le_prod (fun i _ => (ideleModule K (hu i).unit).2.le) fun i _ => ?_
+  refine Finset.prod_le_prod₀ (fun i _ => (ideleModule K (hu i).unit).2.le) fun i _ => ?_
   rw [Units.val_mul, ← vecMul_vecMul, adelicNorm_vecMul_maxCompact _ hk, ← adelicNorm_single_units i]
   have he : (Pi.single i (((hu i).unit : IdeleGroup K) : 𝔸[K]) : Fin n → 𝔸[K]) =
       (((hu i).unit : IdeleGroup K) : 𝔸[K]) • (Pi.single i (1 : 𝔸[K]) : Fin n → 𝔸[K]) := by
@@ -201,7 +201,7 @@ theorem UpperTheory.ConvolutionTheory.G.elliptic_centralizer_quotient_compact :
       krylov_mul_commute (hcom t)] at h1
     have h2 : ∏ i : Fin n, adelicNorm ((Pi.single i (1 : 𝔸[F]) : Fin n → 𝔸[F]) ᵥ*
         krylovMatrixOfRowVector M (ratVec x ᵥ* (τ : Matrix (Fin n) (Fin n) 𝔸[F]))) ≤ ∏ _i : Fin n, P * height τ x := by
-      refine Finset.prod_le_prod (fun _ _ => adelicNorm_nonneg _) fun i _ => ?_
+      refine Finset.prod_le_prod₀ (fun _ _ => adelicNorm_nonneg _) fun i _ => ?_
       have := hPle _ ⟨i, rfl⟩ _ (hasFiniteContent_height τ hx)
       rw [single_one_vecMul]
       rw [Units.val_pow_eq_pow_val] at this

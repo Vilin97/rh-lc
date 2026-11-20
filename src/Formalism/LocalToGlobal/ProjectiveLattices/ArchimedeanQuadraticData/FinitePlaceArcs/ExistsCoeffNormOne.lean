@@ -78,10 +78,10 @@ private theorem eval_map_detZ_lemma {K : Type} [CommRing K] (D : Datum H) (x : A
   simp
 
 theorem exists_coeff_norm_one {K : Type} [NormedField K] [IsUltrametricDist K] (Dw : Datum H) :
-    ∃ ν, ‖coeff ν (map (Int.castRingHom K) (detZ Dw))‖ = 1 := by
+    ∃ ν, ‖AddMonoidAlgebra.coeff (map (Int.castRingHom K) (detZ Dw)) ν‖ = 1 := by
   by_contra hne
   push_neg at hne
-  have hlt : ∀ ν, ‖coeff ν (map (Int.castRingHom K) (detZ Dw))‖ < 1 := fun ν =>
+  have hlt : ∀ ν, ‖AddMonoidAlgebra.coeff (map (Int.castRingHom K) (detZ Dw)) ν‖ < 1 := fun ν =>
     lt_of_le_of_ne (by rw [coeff_map]; exact IsUltrametricDist.norm_intCast_le_one K _) (hne ν)
   have hev : eval (fun x : ArcLt Dw => if x.2.1 = x.2.2 then (1 : K) else 0)
       (map (Int.castRingHom K) (detZ Dw)) = 1 := by
@@ -94,7 +94,7 @@ theorem exists_coeff_norm_one {K : Type} [NormedField K] [IsUltrametricDist K] (
   rw [MvPolynomial.eval_eq] at hev
   obtain ⟨ν, -, hν⟩ := IsUltrametricDist.exists_norm_finsetSum_le
     (map (Int.castRingHom K) (detZ Dw)).support
-    (fun d => coeff d (map (Int.castRingHom K) (detZ Dw)) *
+    (fun d => AddMonoidAlgebra.coeff (map (Int.castRingHom K) (detZ Dw)) d *
       ∏ i ∈ d.support, (if i.2.1 = i.2.2 then (1 : K) else 0) ^ d i)
   beta_reduce at hν
   rw [hev, norm_one, norm_mul] at hν
@@ -107,13 +107,13 @@ theorem exists_coeff_norm_one {K : Type} [NormedField K] [IsUltrametricDist K] (
       nlinarith [norm_nonneg (y ^ k), norm_nonneg y]
   have hp : ‖∏ i ∈ ν.support, (if i.2.1 = i.2.2 then (1 : K) else 0) ^ ν i‖ ≤ 1 := by
     rw [norm_prod]
-    refine Finset.prod_le_one (fun _ _ => norm_nonneg _) fun i _ => hpow _ ?_ _
+    refine Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun i _ => hpow _ ?_ _
     split_ifs <;> simp
   linarith [hlt ν, mul_le_of_le_one_right
-    (norm_nonneg (coeff ν (map (Int.castRingHom K) (detZ Dw)))) hp]
+    (norm_nonneg (AddMonoidAlgebra.coeff (map (Int.castRingHom K) (detZ Dw)) ν)) hp]
 
 private theorem coeff_lcoeffPoly_lemma_2 {σ K₁ : Type} [Field K₁] (P : MvPolynomial σ (LaurentSeries K₁))
-    (k : ℤ) (ν : σ →₀ ℕ) : coeff ν (lcoeffPoly P k) = (P.coeff ν).coeff k := by
+    (k : ℤ) (ν : σ →₀ ℕ) : AddMonoidAlgebra.coeff (lcoeffPoly P k) ν = (P.coeff ν).coeff k := by
   classical
   rw [lcoeffPoly, MvPolynomial.coeff_sum]
   simp only [MvPolynomial.coeff_monomial, Finset.sum_ite_eq', Finset.sum_ite_eq]
@@ -124,7 +124,7 @@ private theorem coeff_lcoeffPoly_lemma_2 {σ K₁ : Type} [Field K₁] (P : MvPo
 
 private theorem coeff_bind_scale_lemma_3 {σ K : Type} [NormedField K] (s : σ → K) (Q : MvPolynomial σ K)
     (ν : σ →₀ ℕ) :
-    coeff ν (bind₁ (fun x => C (s x) * X x) Q) = (ν.prod fun x e => s x ^ e) * coeff ν Q := by
+    AddMonoidAlgebra.coeff (bind₁ (fun x => C (s x) * X x) Q) ν = (ν.prod fun x e => s x ^ e) * AddMonoidAlgebra.coeff Q ν := by
   classical
   induction Q using MvPolynomial.induction_on'
   next u a =>
@@ -205,9 +205,9 @@ private theorem coeff_subst_lemma_8 {K : Type} [NormedField K]
     (A Bm : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) K) (hAB : ∀ τ, A τ * Bm τ = 1)
     (lam : ∀ τ : E →+* ℂ, Fin (Dw.mult τ) → K) (c : K) (Q : MvPolynomial (ArcLt Dw) K)
     (μ : ArcLt Dw →₀ ℕ) :
-    coeff μ (bind₁ (fun i => ∑ k : ArcLt Dw, C (subA A i k) * (X k : MvPolynomial (ArcLt Dw) K))
-        (C c * bind₁ (frameLin Bm lam) Q)) =
-      c * ((μ.prod fun x e => (lam x.1 x.2.2)⁻¹ ^ e) * coeff μ Q) := by
+    AddMonoidAlgebra.coeff (bind₁ (fun i => ∑ k : ArcLt Dw, C (subA A i k) * (X k : MvPolynomial (ArcLt Dw) K))
+        (C c * bind₁ (frameLin Bm lam) Q)) μ =
+      c * ((μ.prod fun x e => (lam x.1 x.2.2)⁻¹ ^ e) * AddMonoidAlgebra.coeff Q μ) := by
   have hfun : (fun y => bind₁ (fun i => ∑ k : ArcLt Dw, C (subA A i k) *
       (X k : MvPolynomial (ArcLt Dw) K)) (frameLin Bm lam y)) = fun x => C (lam x.1 x.2.2)⁻¹ * X x :=
     funext fun x => by
@@ -267,7 +267,7 @@ theorem coeff_bound (hFC : FinCoreStatement) (hBC : BasisChangeStatement)
       eval x (R k) = (γ ^ n)⁻¹ * eval (frameSub Bm lam x) (map ι (lcoeffPoly P k)) := fun k x => by
     rw [hRdef]
     exact eval_frame_lemma_7 Bm lam _ _ x
-  have hδ1 : ∀ ν, ‖coeff ν (map (Int.castRingHom K) (detZ Dw))‖ ≤ 1 := fun ν => by
+  have hδ1 : ∀ ν, ‖AddMonoidAlgebra.coeff (map (Int.castRingHom K) (detZ Dw)) ν‖ ≤ 1 := fun ν => by
     rw [MvPolynomial.coeff_map]
     exact IsUltrametricDist.norm_intCast_le_one K _
   have hframe : ∀ t ∈ S, ∀ x : ArcLt Dw → K, (∀ i, x i ∈ K₀ ∧ ‖x i‖ ≤ 1) →

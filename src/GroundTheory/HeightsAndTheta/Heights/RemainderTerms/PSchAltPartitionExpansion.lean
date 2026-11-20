@@ -42,9 +42,9 @@ theorem SchAltPartitionExpansion.proof (h1 : SchStrictAntiSplit.Statement) :
     omega
 
   have hR : ∑ lam ∈ partitionsOf r n,
-      C (coeff (e lam) P) *
+      C (AddMonoidAlgebra.coeff P (e lam)) *
         (vandermondeOf (fun i : Fin r => (X i : MvPolynomial (Fin r) ℚ)) * schur (Fin r) lam) =
-      ∑ d ∈ (partitionsOf r n).image e, coeff d P • Comb.alt (⇑d) := by
+      ∑ d ∈ (partitionsOf r n).image e, AddMonoidAlgebra.coeff P d • Comb.alt (⇑d) := by
     rw [Finset.sum_image e_inj]
     refine Finset.sum_congr rfl fun lam _ => ?_
     rw [C_mul', ← SchAltPartitionExpansion.alt_partition_add_stair_eq]
@@ -66,7 +66,7 @@ theorem SchAltPartitionExpansion.proof (h1 : SchStrictAntiSplit.Statement) :
     omega
   · intro d hd hnot
     obtain ⟨lam, hlam, rfl⟩ := Finset.mem_image.mp hd
-    have hz : coeff (e lam) P = 0 := by
+    have hz : AddMonoidAlgebra.coeff P (e lam) = 0 := by
       by_contra hne
       apply hnot
       rw [Finset.mem_filter]

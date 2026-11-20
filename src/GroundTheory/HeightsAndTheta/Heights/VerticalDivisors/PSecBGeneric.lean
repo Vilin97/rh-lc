@@ -40,7 +40,7 @@ theorem map_integralModel {n : ℕ} (I : Ideal (MvPolynomial (Fin n) K)) :
     intro x hx
     obtain ⟨m, hm, rfl⟩ := mem_coeffs_iff.mp hx
     rw [coeff_C_mul]
-    by_cases h0 : coeff m f = 0
+    by_cases h0 : AddMonoidAlgebra.coeff f m = 0
     · rw [h0, mul_zero]; exact ⟨0, map_zero _⟩
     · obtain ⟨y, hy⟩ := hb _ (coeff_mem_coeffs m h0)
       exact ⟨y, by rw [hy, Algebra.smul_def]⟩

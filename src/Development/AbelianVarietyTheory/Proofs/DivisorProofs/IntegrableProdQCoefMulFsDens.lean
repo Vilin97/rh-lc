@@ -48,9 +48,9 @@ theorem norm_qCoef_le (x : ℂ) (ab : Fin 2 × Fin 2) : ‖qCoef x ab‖ ≤ 1 :
 theorem integrable_prod_qCoef_mul_fsDens (k : ℕ) (f : Fin k → Fin 2 × Fin 2) :
     Integrable (fun x : ℂ => (∏ i, qCoef x (f i)) * (fsDens x : ℂ)) := by
   have h : Integrable (fun x : ℂ => (fsDens x : ℂ)) := integrable_fsDens.ofReal
-  refine h.bdd_mul (c := 1) (continuous_finset_prod _ fun i _ => continuous_qCoef (f i)).aestronglyMeasurable
+  refine h.bdd_mul (c := 1) (continuous_finsetProd _ fun i _ => continuous_qCoef (f i)).aestronglyMeasurable
     (Filter.Eventually.of_forall fun x => ?_)
   rw [norm_prod]
-  exact Finset.prod_le_one (fun i _ => norm_nonneg _) fun i _ => norm_qCoef_le x (f i)
+  exact Finset.prod_le_one₀ (fun i _ => norm_nonneg _) fun i _ => norm_qCoef_le x (f i)
 
 end GlobalTheory.FibLine.Intg

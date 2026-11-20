@@ -70,7 +70,7 @@ theorem not_exc {g e l k : ℕ} (hl : 1 < l) (he : 1 ≤ e) (hg : l ^ (4 * k) �
   rintro ⟨-, hlt⟩
   have hv : padicValNat l (g ^ e - 1) ≤ k := by
     by_contra hc
-    exact h ((pow_dvd_pow l (by omega)).trans pow_padicValNat_dvd)
+    exact h ((pow_dvd_pow l (by omega)).trans (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)))
   have h1 : l ^ (4 * padicValNat l (g ^ e - 1)) ≤ l ^ (4 * k) := Nat.pow_le_pow_right (by omega) (by omega)
   have h2 : g ≤ g ^ e := Nat.le_self_pow (by omega) g
   omega

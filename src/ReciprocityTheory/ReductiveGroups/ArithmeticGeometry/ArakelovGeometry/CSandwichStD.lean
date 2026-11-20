@@ -119,7 +119,7 @@ theorem eq_zero_of_sum_mono {y : Fin (D + 1) → Ω} (hy : coordIdeal ℤ y = �
     have := mem_coordIdeal_of_isHomogeneous (o := ℤ) (x := y) hph hpa
     rwa [hy, Ideal.mem_bot] at this
   funext i
-  have hc := congrArg (coeff (Finsupp.equivFunOnFinite.symm (adtEnum D N i))) hp0
+  have hc := congrArg (AddMonoidAlgebra.coeff · (Finsupp.equivFunOnFinite.symm (adtEnum D N i))) hp0
   rw [hp, coeff_sum, coeff_zero] at hc
   rw [Finset.sum_eq_single i (fun j _ hji => ?_) (by simp)] at hc
   · simpa using hc
@@ -130,7 +130,7 @@ theorem eq_zero_of_sum_mono {y : Fin (D + 1) → Ω} (hy : coordIdeal ℤ y = �
 theorem norm_monoC_sq_le {N : ℕ} (a : Fin N → ℕ) (w : Fin N → ℂ) :
     ‖monoC a w‖ ^ 2 ≤ sqN w ^ (∑ i, a i) := by
   rw [monoC, norm_prod, ← Finset.prod_pow, ← Finset.prod_pow_eq_pow_sum]
-  refine Finset.prod_le_prod (fun i _ => by positivity) fun i _ => ?_
+  refine Finset.prod_le_prod₀ (fun i _ => by positivity) fun i _ => ?_
   rw [norm_pow, ← pow_mul, mul_comm, pow_mul]
   refine pow_le_pow_left₀ (by positivity) ?_ _
   exact Finset.single_le_sum (f := fun j => ‖w j‖ ^ 2) (fun j _ => by positivity) (Finset.mem_univ i)

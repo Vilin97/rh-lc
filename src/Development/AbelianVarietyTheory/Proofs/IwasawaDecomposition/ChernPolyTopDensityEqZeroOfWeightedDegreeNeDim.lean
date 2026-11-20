@@ -76,7 +76,7 @@ theorem aeval_isWeightedHomogeneous {σ τ : Type} {w : σ → ℕ} {w' : τ →
   have h2 : (∑ i ∈ d.support, d i • w i) = m := by
     rw [← hdeg, Finsupp.weight_apply, Finsupp.sum]
   rw [h2] at h1
-  have h3 := (isWeightedHomogeneous_C w' (algebraMap ℝ ℂ (coeff d φ))).mul h1
+  have h3 := (isWeightedHomogeneous_C w' (algebraMap ℝ ℂ (AddMonoidAlgebra.coeff φ d))).mul h1
   rw [zero_add] at h3
   rw [MvPolynomial.algebraMap_apply]
   exact h3

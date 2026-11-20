@@ -94,9 +94,9 @@ section Deg
 variable {F : Type*} [Field F] {N m k : ℕ} (LL : Letters (Fin N)) (S : Set (Fin N)) (e : Fin m → Fin k)
 
 lemma coeff_XD {σ : Type*} (i j : σ) (f : MvPolynomial σ F) (mm : σ →₀ ℕ) :
-    coeff mm (X i * pderiv j f) =
+    AddMonoidAlgebra.coeff (X i * pderiv j f) mm =
       if mm i = 0 then 0 else
-        coeff (mm - Finsupp.single i 1 + Finsupp.single j 1) f * (((mm - Finsupp.single i 1 : σ →₀ ℕ) j : ℕ) + 1 : F) := by
+        AddMonoidAlgebra.coeff f (mm - Finsupp.single i 1 + Finsupp.single j 1) * (((mm - Finsupp.single i 1 : σ →₀ ℕ) j : ℕ) + 1 : F) := by
   classical
   rw [coeff_X_mul']
   by_cases h : mm i = 0
@@ -104,7 +104,7 @@ lemma coeff_XD {σ : Type*} (i j : σ) (f : MvPolynomial σ F) (mm : σ →₀ �
   · rw [if_pos (by simpa using h), if_neg h, coeff_pderiv]
 
 lemma coeff_XDii {σ : Type*} (i : σ) (f : MvPolynomial σ F) (mm : σ →₀ ℕ) :
-    coeff mm (X i * pderiv i f) = (mm i : F) * coeff mm f := by
+    AddMonoidAlgebra.coeff (X i * pderiv i f) mm = (mm i : F) * AddMonoidAlgebra.coeff f mm := by
   rw [coeff_XD]
   by_cases h : mm i = 0
   · rw [if_pos h, h]; simp
@@ -126,7 +126,7 @@ def wtA (mm : Fin N × Fin k →₀ ℕ) (a : Fin m) : ℤ :=
 def tot (mm : Fin N × Fin k →₀ ℕ) : ℤ := ∑ a, wtA LL S e mm a
 
 lemma coeff_Eaa (a : Fin m) (f : MvPolynomial (Fin N × Fin k) F) (mm : Fin N × Fin k →₀ ℕ) :
-    coeff mm (glOpsE F LL S e a a f) = (wtA LL S e mm a : F) * coeff mm f := by
+    AddMonoidAlgebra.coeff (glOpsE F LL S e a a f) mm = (wtA LL S e mm a : F) * AddMonoidAlgebra.coeff f mm := by
   simp only [glOpsE, LinearMap.sum_apply, coeff_sum, wtA]
   push_cast
   rw [Finset.sum_mul]
@@ -179,7 +179,7 @@ lemma XD_mem (he : Function.Injective e) (s : ℤ) (l : Fin N) (c d : Fin m) (f 
   by_cases h : mm (l, e c) = 0
   · rw [if_pos h] at hmm; exact absurd rfl hmm
   · rw [if_neg h] at hmm
-    have h0 : coeff (mm - Finsupp.single (l, e c) 1 + Finsupp.single (l, e d) 1) f ≠ 0 := left_ne_zero_of_mul hmm
+    have h0 : AddMonoidAlgebra.coeff f (mm - Finsupp.single (l, e c) 1 + Finsupp.single (l, e d) 1) ≠ 0 := left_ne_zero_of_mul hmm
     have h1 := hf (Finset.mem_coe.2 (mem_support_iff.2 h0))
     have h2 : Finsupp.single (l, e c) 1 ≤ mm := Finsupp.single_le_iff.2 (Nat.one_le_iff_ne_zero.2 h)
     simp only [Set.mem_ofPred_eq] at h1 ⊢
@@ -220,7 +220,7 @@ lemma hwv_mem [CharZero F] (lam : Fin m → ℤ) (v : MvPolynomial (Fin N × Fin
   intro a _
   simp only [weightSp, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.smul_apply,
     Module.End.one_apply] at hv
-  have h1 := congrArg (coeff mm) (hv a)
+  have h1 := congrArg (AddMonoidAlgebra.coeff · mm) (hv a)
   rw [coeff_sub, coeff_Eaa, coeff_smul, coeff_zero, smul_eq_mul, ← sub_mul] at h1
   rcases mul_eq_zero.1 h1 with h | h
   · exact_mod_cast sub_eq_zero.1 h

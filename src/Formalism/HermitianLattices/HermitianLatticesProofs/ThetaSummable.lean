@@ -47,7 +47,7 @@ lemma thetaSummable_pi {ι : Type*} [Fintype ι] [DecidableEq ι] {g : ℤ → �
           (fun c _ _ => Finset.prod_nonneg (fun i _ => hg0 (c i)))
     _ = ∏ i, ∑ n ∈ S i, g n := (Finset.prod_univ_sum S (fun _ n => g n)).symm
     _ ≤ ∏ i : ι, ∑' n, g n :=
-        Finset.prod_le_prod (fun i _ => Finset.sum_nonneg (fun n _ => hg0 n))
+        Finset.prod_le_prod₀ (fun i _ => Finset.sum_nonneg (fun n _ => hg0 n))
           (fun i _ => hg.sum_le_tsum _ (fun n _ => hg0 n))
 
 section Alg

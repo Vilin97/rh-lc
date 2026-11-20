@@ -89,7 +89,7 @@ theorem morse_A_sq : ∀ (k : Type) [Field k] [Infinite k] (X : Scheme.{0}) [Alg
         simp only [Matrix.cons_val_zero, one_mul]
         calc (∏ i : Fin d, (![(b : ℤ), (q : ℤ)] : Fin 2 → ℤ) (a i.succ))
             ≤ ∏ i : Fin d, ((q : ℤ) * (![(c : ℤ), 1] : Fin 2 → ℤ) (a i.succ)) :=
-              Finset.prod_le_prod (fun i _ => hent0 _) (fun i _ => hent1 _)
+              Finset.prod_le_prod₀ (fun i _ => hent0 _) (fun i _ => hent1 _)
           _ = (q : ℤ) ^ d * ∏ i : Fin d, (![(c : ℤ), 1] : Fin 2 → ℤ) (a i.succ) := by
               rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
       calc (∏ i, nL i (a i)) * interNum k F (Lv ∘ a)

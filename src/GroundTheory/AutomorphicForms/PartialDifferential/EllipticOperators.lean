@@ -305,7 +305,7 @@ theorem derivSymb_hasTemperateGrowth {k : ℕ} (w : Fin k → E) : (derivSymb w)
 theorem norm_derivSymb_le {k : ℕ} (w : Fin k → E) (ξ : E) :
     ‖derivSymb w ξ‖ ≤ (∏ j, (2 * Real.pi * ‖w j‖)) * ‖ξ‖ ^ k := by
   rw [derivSymb, norm_prod, ← Fin.prod_const k ‖ξ‖, ← Finset.prod_mul_distrib]
-  refine Finset.prod_le_prod (fun j _ ↦ norm_nonneg _) fun j _ ↦ ?_
+  refine Finset.prod_le_prod₀ (fun j _ ↦ norm_nonneg _) fun j _ ↦ ?_
   have h2 : ‖(2 : ℂ)‖ = 2 := by simp
   rw [norm_mul, norm_mul, norm_mul, Complex.norm_real, Complex.norm_real, Real.norm_eq_abs,
     Complex.norm_I, mul_one, Real.norm_eq_abs, abs_of_pos Real.pi_pos, h2]

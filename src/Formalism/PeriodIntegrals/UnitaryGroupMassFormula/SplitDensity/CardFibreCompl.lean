@@ -130,9 +130,9 @@ theorem fiber_card {K V U : Type} [Field K] [Fintype K] [AddCommGroup V] [Module
         Σ z' : {z' : Fin k → V // LinearIndependent K z' ∧ ∀ j, φ (z' j) = gk j},
           {x : V // x ∉ span K (Set.range z'.1) ∧ φ x = g (Fin.last k)} :=
       { toFun := fun z =>
-          have hs := linearIndependent_fin_snoc.mp (by rw [Fin.snoc_init_self]; exact z.2.1)
+          have hs := linearIndependent_finSnoc.mp (by rw [Fin.snoc_init_self]; exact z.2.1)
           ⟨⟨Fin.init z.1, hs.1, fun j => z.2.2 _⟩, ⟨z.1 (Fin.last k), hs.2, z.2.2 _⟩⟩
-        invFun := fun p => ⟨Fin.snoc p.1.1 p.2.1, linearIndependent_fin_snoc.mpr ⟨p.1.2.1, p.2.2.1⟩,
+        invFun := fun p => ⟨Fin.snoc p.1.1 p.2.1, linearIndependent_finSnoc.mpr ⟨p.1.2.1, p.2.2.1⟩,
           fun j => by
             refine Fin.lastCases ?_ (fun i => ?_) j
             · rw [Fin.snoc_last]; exact p.2.2.2

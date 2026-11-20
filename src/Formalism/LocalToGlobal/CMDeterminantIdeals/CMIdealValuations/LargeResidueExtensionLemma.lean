@@ -78,7 +78,7 @@ theorem coeff_integral_local : CoeffIntegralLoc := by
   classical
   have hUu : ∀ b, IsUnit (U b).det := fun b => isUnit_iff_ne_zero.mpr (hU b)
   set P : MvPolynomial (FrVar m) K' := C τ⁻¹ * substFr (fun b => (U b)⁻¹) G with hP
-  have hPc : ∀ ν, coeff ν P ∈ Set.range (algebraMap V K') := by
+  have hPc : ∀ ν, AddMonoidAlgebra.coeff P ν ∈ Set.range (algebraMap V K') := by
     refine large_residue_extension_lemma V K' B m P hV hfin ?_
     intro W KW _ _ _ _ _ _ _ f hW hWf hloc hcomp X hX
     obtain ⟨w, hw⟩ := hG W KW f hW hWf hloc hcomp

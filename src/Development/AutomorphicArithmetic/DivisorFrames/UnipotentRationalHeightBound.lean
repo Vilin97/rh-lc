@@ -173,7 +173,7 @@ theorem UpperTheory.unipotent_rational_height_bound :
     calc _ = ∏ i, ((1 + (absE F E (τ i) : ℝ)) * (absE F E t : ℝ)) := by
           rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
       _ ≤ ∏ _i : Fin q, (c₂ + c₁) :=
-          Finset.prod_le_prod (fun i _ => by positivity) fun i _ => by nlinarith [ht1 i]
+          Finset.prod_le_prod₀ (fun i _ => by positivity) fun i _ => by nlinarith [ht1 i]
       _ = _ := by rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
   have hP0 : (0 : ℝ) ≤ ∏ i, (1 + (absE F E (τ i) : ℝ)) := Finset.prod_nonneg fun i _ => by positivity
   calc _ ≤ (max C₀ 0 * (∏ i, (1 + (absE F E (τ i) : ℝ))) ^ A) * (absE F E t : ℝ) ^ (q * A) :=

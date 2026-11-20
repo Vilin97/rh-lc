@@ -75,7 +75,7 @@ theorem ideleModule_det_infGL_le (z : GL (Fin a) (Cinf E)) :
       rw [this]
       exact norm_one
   rw [h2, mul_one, pow_mul, ← Finset.card_univ, ← Finset.prod_const]
-  refine Finset.prod_le_prod (fun _ _ => by positivity) fun w _ => ?_
+  refine Finset.prod_le_prod₀ (fun _ _ => by positivity) fun w _ => ?_
   have h1 : ‖(u : Ad E).1 w‖ ≤ a.factorial * height z ^ a := by
     rw [← norm_pInf_apply, hinf]
     exact (norm_le_pi_norm _ w).trans (norm_det_le _ (by unfold height; linarith [norm_nonneg (toL (z⁻¹).val)]))

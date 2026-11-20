@@ -66,7 +66,7 @@ theorem exists_sum_eq (K : OpenSubgroup G) (hKc : IsCompact (K : Set G)) (f : SB
   set t := (finite_image_mk_tsupport K hf).toFinset with ht
   have key : f = ∑ x ∈ t, ((f : G → ℂ) x.out) • transl x.out (ind K hKc) := by
     apply Subtype.ext
-    rw [AddSubmonoidClass.coe_finset_sum]
+    rw [AddSubmonoidClass.coe_finsetSum]
     refine (eq_sum_indicator_coset K hf hK).trans (Finset.sum_congr rfl fun x _ => ?_)
     funext y
     show (x.out • (K : Set G)).indicator (fun _ => (f : G → ℂ) x.out) y =

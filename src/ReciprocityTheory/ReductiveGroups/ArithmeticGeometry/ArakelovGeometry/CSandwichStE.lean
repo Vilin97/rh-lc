@@ -169,15 +169,15 @@ theorem sec_le_span_prod {x : Ix κ → Ω} {e : Fin (D + 1) → Ix κ} {n k₀ 
   have hpa' : pa.IsHomogeneous (n - k₀) := (mem_homogeneousSubmodule _ _).mp hpa
   rw [← htb.2.2, Submodule.mem_span_range_iff_exists_fun] at ht
   obtain ⟨cc, rfl⟩ := ht
-  have ea : (aeval (x ∘ e)).toLinearMap pa = ∑ i, (coeff (Finsupp.equivFunOnFinite.symm
-      (adtEnum D (n - k₀) i)) pa : ℤ) • ∏ t, (x ∘ e) t ^ adtEnum D (n - k₀) i t := by
+  have ea : (aeval (x ∘ e)).toLinearMap pa = ∑ i, (AddMonoidAlgebra.coeff pa (Finsupp.equivFunOnFinite.symm
+      (adtEnum D (n - k₀) i)) : ℤ) • ∏ t, (x ∘ e) t ^ adtEnum D (n - k₀) i t := by
     rw [AlgHom.toLinearMap_apply, aeval_eq_sum_adt pa hpa', ← sum_adtEnum]
     simp only [zsmul_eq_mul]
   rw [ea, Finset.sum_mul_sum]
   refine Submodule.sum_mem _ fun i _ => Submodule.sum_mem _ fun i₀ _ => ?_
-  have : (coeff (Finsupp.equivFunOnFinite.symm (adtEnum D (n - k₀) i)) pa : ℤ) •
+  have : (AddMonoidAlgebra.coeff pa (Finsupp.equivFunOnFinite.symm (adtEnum D (n - k₀) i)) : ℤ) •
       (∏ t, (x ∘ e) t ^ adtEnum D (n - k₀) i t) * cc i₀ • aeval x (tb i₀) =
-      (coeff (Finsupp.equivFunOnFinite.symm (adtEnum D (n - k₀) i)) pa * cc i₀) •
+      (AddMonoidAlgebra.coeff pa (Finsupp.equivFunOnFinite.symm (adtEnum D (n - k₀) i)) * cc i₀) •
         aeval x (prodForm e (adtEnum D (n - k₀) i) (Tf i₀)) := by
     rw [aeval_prodForm, hTfb i₀, aeval_map_intQ]
     simp only [zsmul_eq_mul]; push_cast; ring

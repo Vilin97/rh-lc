@@ -38,14 +38,14 @@ theorem continuous_omS_prod (l : Type) [Fintype l] [DecidableEq l] (G : Type) [G
       exact hjoint.comp (continuous_fst.prodMk ((schwartzToL2 l).continuous.comp continuous_snd))
     · intro A w ih
       simp only [toLp_dRho_omS h3 h4]
-      refine continuous_finset_sum _ fun a _ => ?_
+      refine continuous_finsetSum _ fun a _ => ?_
       have hih : Continuous fun x : G × Sch l => schwartzToL2 l (A (omS x.1 (dRho (Pi.single a 1) x.2))) :=
         ih.comp (continuous_fst.prodMk ((dRho (Pi.single a 1)).continuous.comp continuous_snd))
       refine Continuous.smul (M := ℂ) ?_ hih
       refine continuous_ofReal.comp ?_
       simp only [mulVec, dotProduct, Matrix.neg_apply, Matrix.mul_apply, transpose_apply]
-      exact continuous_finset_sum _ fun b _ => Continuous.mul (Continuous.neg (continuous_finset_sum _ fun c _ =>
-        Continuous.mul (continuous_finset_sum _ fun d _ => continuous_const.mul
+      exact continuous_finsetSum _ fun b _ => Continuous.mul (Continuous.neg (continuous_finsetSum _ fun c _ =>
+        Continuous.mul (continuous_finsetSum _ fun d _ => continuous_const.mul
           ((hentry _ _).comp continuous_fst)) continuous_const)) continuous_const
     · simp only [ContinuousLinearMap.zero_apply, map_zero]
       exact continuous_const
@@ -65,7 +65,7 @@ theorem continuous_omS_prod (l : Type) [Fintype l] [DecidableEq l] (G : Type) [G
       (nhds x0) (nhds 0) := by
     have : (0 : ℝ) = ∑ r : Fin n → l, ‖schwartzToL2 l (A r (omS x0.1 x0.2)) - schwartzToL2 l (A r (omS x0.1 x0.2))‖ := by simp
     rw [this]
-    exact tendsto_finset_sum _ fun r _ => ((((key (hA r)).sub continuous_const).norm).tendsto x0)
+    exact tendsto_finsetSum _ fun r _ => ((((key (hA r)).sub continuous_const).norm).tendsto x0)
   filter_upwards [ht.eventually (gt_mem_nhds hε)] with x hx
   refine lt_of_le_of_lt ?_ hx
   rw [SchwartzMap.schwartzSeminormFamily_apply]

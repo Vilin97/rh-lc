@@ -22,7 +22,7 @@ theorem IsIntegralMat.det_le_one {U : Matrix ι ι K} (hU : IsIntegralMat v U) :
   have hs : v ((Equiv.Perm.sign σ : ℤ) : K) = 1 := by
     rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with h | h <;> rw [h] <;> simp
   rw [hs, one_mul]
-  exact Finset.prod_le_one (fun _ _ => zero_le) fun i _ => hU _ _
+  exact Finset.prod_le_one₀ (fun _ _ => zero_le) fun i _ => hU _ _
 
 private theorem nnreal_mul_le_one {a b : NNReal} (ha : a ≤ 1) (hb : b ≤ 1) : a * b ≤ 1 := by
   simpa using mul_le_mul ha hb (zero_le) zero_le_one

@@ -39,7 +39,7 @@ theorem span_laurentMonomial_eq_homLoc :
     rw [p.as_sum, map_sum]
     refine Submodule.sum_mem _ fun m hm => ?_
     have hd := mem_polyGrading_iff.1 hp m (mem_support_iff.1 hm)
-    have e : monomial m (coeff m p) = coeff m p • (monomial m 1 : MvPolynomial ι R) := by
+    have e : monomial m (AddMonoidAlgebra.coeff p m) = AddMonoidAlgebra.coeff p m • (monomial m 1 : MvPolynomial ι R) := by
       rw [smul_monomial, smul_eq_mul, mul_one]
     rw [e, LinearMap.map_smul_of_tower]
     refine Submodule.smul_mem _ _ (Submodule.subset_span

@@ -114,7 +114,7 @@ lemma wt_nonneg (N : ℕ) (τ : Fin d → ℤ) : 0 ≤ wt N τ :=
   Finset.prod_nonneg fun j _ => fac_nonneg N (τ j)
 
 lemma wt_le_one (N : ℕ) (τ : Fin d → ℤ) : wt N τ ≤ 1 :=
-  Finset.prod_le_one (fun j _ => fac_nonneg N (τ j)) (fun j _ => fac_le_one N (τ j))
+  Finset.prod_le_one₀ (fun j _ => fac_nonneg N (τ j)) (fun j _ => fac_le_one N (τ j))
 
 lemma fac_tendsto (t : ℤ) : Tendsto (fun N : ℕ => fac N t) atTop (𝓝 1) := by
   have h : ∀ᶠ N : ℕ in atTop, 1 - (|(t : ℝ)|) / N = fac N t := by
@@ -136,7 +136,7 @@ lemma fac_tendsto (t : ℤ) : Tendsto (fun N : ℕ => fac N t) atTop (𝓝 1) :=
 
 lemma wt_tendsto (τ : Fin d → ℤ) : Tendsto (fun N : ℕ => wt N τ) atTop (𝓝 1) := by
   unfold wt
-  simpa using tendsto_finset_prod Finset.univ (fun j _ => fac_tendsto (τ j))
+  simpa using tendsto_finsetProd Finset.univ (fun j _ => fac_tendsto (τ j))
 
 lemma wt_eq (N : ℕ) (hN : N ≠ 0) (τ : Fin d → ℤ) :
     (((N : ℝ) ^ d)⁻¹ * (((box d N ×ˢ box d N).filter (fun p => p.1 - p.2 = τ)).card : ℝ))

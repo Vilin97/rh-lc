@@ -80,8 +80,8 @@ theorem sum_scalAt_eq_zero {d a : ℕ} (τ₀ : ι) (N : ℕ) (hN : 0 < N) (P : 
       omega
     rw [geom_sum_eq hne, ← pow_mul, mul_comm, pow_mul, hω.pow_eq_one, one_pow, sub_self, zero_div]
   have : ∀ k ∈ Finset.range M,
-      (ω ^ k) ^ N • (monomial t (coeff t P * (ω ^ k) ^ degAt τ₀ t) : Pol ι d a) =
-        monomial t (coeff t P * (ω ^ (N + degAt τ₀ t)) ^ k) := by
+      (ω ^ k) ^ N • (monomial t (AddMonoidAlgebra.coeff P t * (ω ^ k) ^ degAt τ₀ t) : Pol ι d a) =
+        monomial t (AddMonoidAlgebra.coeff P t * (ω ^ (N + degAt τ₀ t)) ^ k) := by
     intro k _
     rw [smul_monomial, smul_eq_mul]
     congr 1

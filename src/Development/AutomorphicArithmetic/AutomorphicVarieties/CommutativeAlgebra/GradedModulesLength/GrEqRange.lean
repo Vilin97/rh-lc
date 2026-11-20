@@ -16,11 +16,11 @@ private noncomputable def monoL (m : Fin k →₀ ℕ) : lat N m →ₗ[B] rees 
     rw [MvPolynomial.smul_monomial])
 
 private theorem eq_mono {m : Fin k →₀ ℕ} {p : rees N} (hp : p ∈ reesGr N (toDeg m)) :
-    p = mono N m (MvPolynomial.coeff m p.1) (p.2 m) := by
+    p = mono N m (AddMonoidAlgebra.coeff p.1 m) (p.2 m) := by
   classical
   apply Subtype.ext
   ext n
-  show _ = MvPolynomial.coeff n (MvPolynomial.monomial m _)
+  show _ = AddMonoidAlgebra.coeff (MvPolynomial.monomial m _) n
   rw [MvPolynomial.coeff_monomial]
   split_ifs with h
   · rw [h]
@@ -44,11 +44,11 @@ private theorem gr_add (m m' : Fin k →₀ ℕ) :
     reesGr N (toDeg (m + m')) = reesGr N (toDeg m) * reesGr N (toDeg m') := by
   apply le_antisymm
   · intro p hp
-    have hf : MvPolynomial.coeff (m + m') p.1 ∈ lat N m * lat N m' := by
+    have hf : AddMonoidAlgebra.coeff p.1 (m + m') ∈ lat N m * lat N m' := by
       rw [← lat_add]
       exact p.2 (m + m')
     obtain ⟨q, hq, hqv⟩ : ∃ q ∈ reesGr N (toDeg m) * reesGr N (toDeg m'),
-        q.1 = MvPolynomial.monomial (m + m') (MvPolynomial.coeff (m + m') p.1) := by
+        q.1 = MvPolynomial.monomial (m + m') (AddMonoidAlgebra.coeff p.1 (m + m')) := by
       refine Submodule.mul_induction_on hf ?_ ?_
       · intro a ha b hb
         refine ⟨mono N m a ha * mono N m' b hb,
@@ -67,7 +67,7 @@ private theorem gr_add (m m' : Fin k →₀ ℕ) :
     exact hq
   · rw [Submodule.mul_le]
     intro a ha b hb
-    have hab : MvPolynomial.coeff m a.1 * MvPolynomial.coeff m' b.1 ∈ lat N (m + m') := by
+    have hab : AddMonoidAlgebra.coeff a.1 m * AddMonoidAlgebra.coeff b.1 m' ∈ lat N (m + m') := by
       rw [lat_add]
       exact Submodule.mul_mem_mul (a.2 m) (b.2 m')
     have h : a * b = mono N (m + m') _ hab := by

@@ -77,14 +77,14 @@ lemma aeval_scale_monomial {σ : Type*} [Fintype σ] [DecidableEq σ] (w : σ �
   ring
 
 lemma coeff_scale {σ : Type*} [Fintype σ] [DecidableEq σ] (w : σ → ℂ) (f : MvPolynomial σ ℂ) (m : σ →₀ ℕ) :
-    coeff m (aeval (fun v : σ => C (w v) * X v) f) = coeff m f * ∏ v, w v ^ m v := by
+    AddMonoidAlgebra.coeff (aeval (fun v : σ => C (w v) * X v) f) m = AddMonoidAlgebra.coeff f m * ∏ v, w v ^ m v := by
   induction f using MvPolynomial.induction_on' with
   | monomial u c =>
     rw [aeval_scale_monomial, coeff_monomial, coeff_monomial]
     split_ifs with h
     · subst h; rfl
     · simp
-  | add p q hp hq => rw [map_add, coeff_add, coeff_add, hp, hq, add_mul]
+  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, add_mul]
 
 lemma prod_exp {N : ℕ} (m : Fin N × Fin N →₀ ℕ) (θ : Fin N → ℝ) :
     ∏ v : Fin N × Fin N, Complex.exp ((θ v.2 : ℂ) * Complex.I) ^ m v =
@@ -171,12 +171,12 @@ lemma Fq_scale (μ : Fin N → ℤ) (K : ℕ)
 lemma Fq_deg (μ : Fin N → ℤ) (K : ℕ)
     (htor : ∀ (θ : Fin N → ℝ) (x : V), ⟪v0, P (torus θ) x⟫_ℂ =
       Complex.exp (((∑ a, ((μ a : ℝ) + K) * θ a : ℝ) : ℂ) * Complex.I) * ⟪v0, x⟫_ℂ)
-    (x : V) (m : Fin N × Fin N →₀ ℕ) (hm : coeff m (Fq hP v0 x) ≠ 0) (s : Fin N) :
+    (x : V) (m : Fin N × Fin N →₀ ℕ) (hm : AddMonoidAlgebra.coeff (Fq hP v0 x) m ≠ 0) (s : Fin N) :
     (((∑ v : Fin N × Fin N, if v.2 = s then m v else 0 : ℕ)) : ℤ) = μ s + K := by
   have key : ((∑ v : Fin N × Fin N, if v.2 = s then m v else 0 : ℕ) : ℝ) = (μ s : ℝ) + K := by
     apply real_eq_of_exp
     intro τ
-    have h1 := congrArg (coeff m) (Fq_scale hP v0 μ K htor (fun s' => if s' = s then τ else 0) x)
+    have h1 := congrArg (AddMonoidAlgebra.coeff · m) (Fq_scale hP v0 μ K htor (fun s' => if s' = s then τ else 0) x)
     rw [coeff_scale, coeff_C_mul, mul_comm (Complex.exp _), prod_exp m (fun s' => if s' = s then τ else 0)] at h1
     have h2 := mul_left_cancel₀ hm h1
     have e1 : (∑ v : Fin N × Fin N, (m v : ℝ) * (if v.2 = s then τ else 0)) =

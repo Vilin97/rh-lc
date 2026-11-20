@@ -212,7 +212,7 @@ theorem exists_inf {ψ : AddChar (AF F) ℂ} (hψ : IsCharAF F ψ) (w : Infinite
   have ha0 := trace_mul_ne_zero hψ ha
   let T : Ainf F → ℝ := fun z => ∑ u : InfinitePlace F,
     u.mult * (u.embedding a * InfinitePlace.Completion.extensionEmbedding u (z u)).re
-  have hT : Continuous T := continuous_finset_sum _ fun u _ => continuous_const.mul
+  have hT : Continuous T := continuous_finsetSum _ fun u _ => continuous_const.mul
     (Complex.continuous_re.comp (continuous_const.mul
       ((InfinitePlace.Completion.isometry_extensionEmbedding u).continuous.comp (continuous_apply u))))
   have hemb : ∀ (u : InfinitePlace F) (x : F),

@@ -361,7 +361,7 @@ theorem prod_le_HH (D : D7) (b C x : ℝ) (hb : 1 ≤ b) (Z : GramM D) (hx : x �
     exact GlobalTheory.LoopC.GramSize.one_le_prod'' _ _ (fun τ _ => one_le_locSize D b C Z τ)
   have hsz : sizeZ D b C Z = ∏ τ, locSize D b C Z τ := rfl
   calc ∏ τ, X τ ≤ ∏ τ, (b ^ x * locSize D b C Z τ ^ 2) :=
-        Finset.prod_le_prod (fun τ _ => h0 τ) (fun τ _ => h τ)
+        Finset.prod_le_prod₀ (fun τ _ => h0 τ) (fun τ _ => h τ)
     _ = b ^ (x * D.R.f) * sizeZ D b C Z ^ 2 := by
         rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, hcard, Finset.prod_pow, ← hsz,
           ← Real.rpow_natCast (b ^ x) D.R.f, ← Real.rpow_mul hb0.le]

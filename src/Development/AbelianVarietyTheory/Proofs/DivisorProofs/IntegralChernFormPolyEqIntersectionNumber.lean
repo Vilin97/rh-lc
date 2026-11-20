@@ -35,7 +35,7 @@ theorem interPoly_eq_zero {F : Type} [Field F] (Y : Var F) {κ : Type} (Δ : κ 
     first
     | (rw [Finsupp.degree_eq_weight_one]; exact this)
     | exact this
-  rw [show monomial m (coeff m Q) = coeff m Q • basisMonomials κ ℝ m by
+  rw [show monomial m (AddMonoidAlgebra.coeff Q m) = AddMonoidAlgebra.coeff Q m • basisMonomials κ ℝ m by
     rw [coe_basisMonomials, smul_monomial, smul_eq_mul, mul_one]]
   rw [map_smul, Var.interPoly, Module.Basis.constr_basis, dif_neg, smul_zero]
   rintro ⟨s, hs⟩

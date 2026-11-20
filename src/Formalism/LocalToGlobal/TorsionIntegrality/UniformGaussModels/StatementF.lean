@@ -67,8 +67,8 @@ def GaussFormCM : Prop :=
       (∀ s, nu2 s = (Finset.univ.filter (fun c => 2 ≤ p s c)).card) → (∀ s, size s = ∑ c, p s c) →
     ∀ a : ℕ, 1 ≤ a → (∀ s, size s ≤ a) → 2 * Real.logb l a + 2 ≤ (N0 : ℝ) - 1 →
     ∀ n : (ZMod d × Fin N0 × Fin N0) →₀ ℕ,
-      ‖MvPolynomial.coeff n (frameJet colN p hp I
-          (thetaInZ l (MaximalUnramifiedExtension l).subtype σ om oms (inHyp l f f' Θ)))‖ ≤
+      ‖AddMonoidAlgebra.coeff (frameJet colN p hp I
+          (thetaInZ l (MaximalUnramifiedExtension l).subtype σ om oms (inHyp l f f' Θ))) n‖ ≤
         ‖(l : ℂ_[l])‖ ^ ((∑ s ∈ TT, (topTerm l d TT nu1 nu2 s -
             gam l * (Wcap l d TT nu1 nu2 size s : ℝ))) +
           Fnum l d (fun s => (Dl d TT nu1 size s : ℝ)) -
@@ -90,8 +90,8 @@ def OneLetterGaussCMReformulated : Prop :=
     uniformGaussModelCondition l g2 g3 s2 ε Θ γ →
   ∀ (p : Fin C → ℕ) (hp : ∀ c, p c ≤ N0) (I : ∀ c, Fin (p c) → Fin N1) (a : ℕ), 1 ≤ a →
     (∑ c, p c) ≤ a → ∀ n : (Fin N0 × Fin N0) →₀ ℕ,
-    ‖MvPolynomial.coeff n (frameJetOne p hp I
-        (MvPowerSeries.subst (fun x => at1 x (expF ℂ_[l] l)) Θ))‖ ≤
+    ‖AddMonoidAlgebra.coeff (frameJetOne p hp I
+        (MvPowerSeries.subst (fun x => at1 x (expF ℂ_[l] l)) Θ)) n‖ ≤
       ‖(l : ℂ_[l])‖ ^ (rho l * ((∑ c, p c : ℕ) : ℝ) -
         ((N0 : ℝ) * N1) * (Real.logb l (a : ℝ) + 1))
 
@@ -113,11 +113,11 @@ def ThreeBoundsCM : Prop :=
     uniformGaussModelCondition l g2 g3 s2 ε Θ γ →
     ∀ (TT : Finset (ZMod (2 * ν))) (colN : ZMod (2 * ν) → ℕ) (hts : ∀ s, Fin (colN s) → ℕ)
       (hp : ∀ s c, hts s c ≤ r0) (I : ∀ s c, Fin (hts s c) → Fin r1) n,
-      ‖MvPolynomial.coeff n (frameJet colN hts hp I (thetaInZ (d := 2 * ν) l (MaximalUnramifiedExtension l).subtype σ om oms (inHyp l f f' Θ)))‖ ≤
+      ‖AddMonoidAlgebra.coeff (frameJet colN hts hp I (thetaInZ (d := 2 * ν) l (MaximalUnramifiedExtension l).subtype σ om oms (inHyp l f f' Θ))) n‖ ≤
           (l : ℝ) ^ (-(excessGain (l : ℝ) TT (dSet TT) (fun s => (alG TT colN hts s : ℝ))
             (fun s => (capG TT colN hts s : ℝ))
             (deLoss l r0 r1 TT (alG TT colN hts) (lsG TT colN hts)))) ∧
-      ‖MvPolynomial.coeff n (frameJet colN hts hp I (thetaInZ (d := 2 * ν) l (MaximalUnramifiedExtension l).subtype σ om oms (inHyp l f f' Θ)))‖ ≤
+      ‖AddMonoidAlgebra.coeff (frameJet colN hts hp I (thetaInZ (d := 2 * ν) l (MaximalUnramifiedExtension l).subtype σ om oms (inHyp l f f' Θ))) n‖ ≤
           (l : ℝ) ^ (-(gainG (l : ℝ) TT (oddT TT) (fun s => (alG TT colN hts s : ℝ))
             (fun s => (capG TT colN hts s : ℝ))
             (deLoss l r0 r1 TT (alG TT colN hts) (lsG TT colN hts)) -
@@ -128,8 +128,8 @@ def ThreeBoundsCM : Prop :=
               min (hts s c) i -
                 ((univ.image (I s c)) ∩ univ.filter (fun b : Fin r1 => b.val < i)).card
             else ((univ.image (I s c)) ∩ univ.filter (fun b : Fin r1 => b.val < i)).card)) *
-          MvPolynomial.coeff n
-            (frameJet colN hts hp I (thetaInZ (d := 2 * ν) l (MaximalUnramifiedExtension l).subtype σ om oms (inHyp l f f' Θ)))‖ ≤
+          AddMonoidAlgebra.coeff (frameJet colN hts hp I (thetaInZ (d := 2 * ν) l (MaximalUnramifiedExtension l).subtype σ om oms (inHyp l f f' Θ)))
+            n‖ ≤
           (l : ℝ) ^ (-(gainG (l : ℝ) TT (oddT TT) (fun s => (alG TT colN hts s : ℝ))
             (fun s => (capG TT colN hts s : ℝ))
             (deLoss l r0 r1 TT (alG TT colN hts) (lsG TT colN hts))))

@@ -187,7 +187,7 @@ theorem homog_linForm (k₀ : K) (hK : ∀ a : K, a = k₀) (c : (Σ k, ι k) �
 
 theorem eq_linForm (k₀ : K) (hK : ∀ a : K, a = k₀) {f : MRingOver F ι}
     (hf : IsMultiHomog f fun _ => 1) :
-    f = linForm fun p => coeff (Finsupp.single p 1) f := by
+    f = linForm fun p => AddMonoidAlgebra.coeff f (Finsupp.single p 1) := by
   classical
   have hsupp : ∀ m ∈ f.support, ∃ q : Σ k, ι k, m = Finsupp.single q 1 := by
     intro m hm

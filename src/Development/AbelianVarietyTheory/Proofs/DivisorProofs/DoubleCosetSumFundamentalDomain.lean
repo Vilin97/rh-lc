@@ -65,7 +65,7 @@ theorem GlobalTheory.doubleCosetSum_adjoint : ∀ {H : Type} [Group H] [Topologi
     simp only [hu, mul_assoc, lF γ hγ, lF' γ hγ]
   have iu : IntegrableOn u 𝓕 μ := by
     refine integrableOn_star_mul μ 𝓕 (fun h => F (h * x)) F'
-      (cF.comp (continuous_mul_right x)) cF' ?_ iF'
+      (cF.comp (continuous_mul_const x)) cF' ?_ iF'
     exact integrableOn_mul_right μ Γ 𝓕 h𝓕 (fun h => star (F h) * F h)
       (fun γ hγ h => by simp only [lF γ hγ]) x iF
   have eA : ∀ a ∈ A, ∃ y, ∀ h, star (F (h * a)) * F' h = u (h * y) := by
@@ -81,7 +81,7 @@ theorem GlobalTheory.doubleCosetSum_adjoint : ∀ {H : Type} [Group H] [Topologi
   have key : ∀ (B : Finset H) (t : H → H → ℂ), (∀ a ∈ B, ∃ y, ∀ h, t a h = u (h * y)) →
       ∫ h in 𝓕, ∑ a ∈ B, t a h ∂μ = B.card • ∫ h in 𝓕, u h ∂μ := by
     intro B t ht
-    rw [integral_finset_sum, ← Finset.sum_const]
+    rw [MeasureTheory.integral_finsetSum, ← Finset.sum_const]
     · refine Finset.sum_congr rfl fun a ha => ?_
       obtain ⟨y, hy⟩ := ht a ha
       simp only [hy]

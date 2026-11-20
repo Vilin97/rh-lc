@@ -93,7 +93,7 @@ theorem bdSec_of_divNorm : ∀ (F : Type) [Field F] [NumberField F] (Y : Var F) 
     GlobalTheory.DivSec.isSNC_pullback hA (GlobalTheory.T.divisor_potential_isSNC_boundary F Y _ m C n hn _ (GlobalTheory.DivSec.isAlgAtlas_algAtlas hA) hsnc)⟩
   · rw [hlog]
     exact Real.log_nonpos (Finset.prod_nonneg fun i _ => ((hn i).1 _).1)
-      (Finset.prod_le_one (fun i _ => ((hn i).1 _).1) fun i _ => ((hn i).1 _).2)
+      (Finset.prod_le_one₀ (fun i _ => ((hn i).1 _).1) fun i _ => ((hn i).1 _).2)
   · ext z
     rw [hZ z]
     exact (GlobalTheory.DivSec.divSec_eq_zero_iff hn (I.pt a z)).symm

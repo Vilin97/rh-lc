@@ -46,7 +46,7 @@ theorem bnd_le (x y : FiniteAdeleRing (𝓞 K) K) (h : ∀ v : PlK K, y v - x v 
   set S := (finite_mulSupport_bnd x).toFinset ∪ (finite_mulSupport_bnd y).toFinset with hS
   rw [bnd, bnd, finprod_eq_prod_of_mulSupport_subset _ (s := S) (by simp [hS]),
     finprod_eq_prod_of_mulSupport_subset _ (s := S) (by simp [hS])]
-  exact Finset.prod_le_prod (fun v _ => by positivity) fun v _ => local_le _ _ (h v)
+  exact Finset.prod_le_prod₀ (fun v _ => by positivity) fun v _ => local_le _ _ (h v)
 
 theorem finiteModule_le_bnd (a : IdeleGroup K) : IdeleGroup.finiteModule a ≤ bnd (a : 𝔸[K]).2 := by
   classical
@@ -54,7 +54,7 @@ theorem finiteModule_le_bnd (a : IdeleGroup K) : IdeleGroup.finiteModule a ≤ b
     (finite_mulSupport_bnd (a : 𝔸[K]).2).toFinset with hS
   rw [IdeleGroup.finiteModule, bnd, finprod_eq_prod_of_mulSupport_subset _ (s := S) (by simp [hS]),
     finprod_eq_prod_of_mulSupport_subset _ (s := S) (by simp [hS])]
-  exact Finset.prod_le_prod (fun v _ => norm_nonneg _) fun v _ => le_max_left _ _
+  exact Finset.prod_le_prod₀ (fun v _ => norm_nonneg _) fun v _ => le_max_left _ _
 
 theorem nhds_mem (x : FiniteAdeleRing (𝓞 K) K) :
     {y : FiniteAdeleRing (𝓞 K) K | ∀ v : PlK K, y v - x v ∈ v.adicCompletionIntegers K} ∈ 𝓝 x := by
@@ -90,14 +90,14 @@ theorem module_le (Ω : Set (FiniteAdeleRing (𝓞 K) K)) (hΩ : IsCompact Ω) :
   rw [IdeleGroup.ideleModule_apply, mul_comm]
   have h1 := (finiteModule_le_bnd a).trans (h _ ha)
   have h2 : IdeleGroup.infiniteModule a ≤ ∏ w : InfinitePlace K, (1 + ‖(a : 𝔸[K]).1 w‖) ^ w.mult := by
-    refine Finset.prod_le_prod (fun w _ => by positivity) fun w _ => ?_
+    refine Finset.prod_le_prod₀ (fun w _ => by positivity) fun w _ => ?_
     exact pow_le_pow_left₀ (norm_nonneg _) (by linarith) _
   exact mul_le_mul h1 h2 (IdeleGroup.infiniteModule_pos a).le hB.le
 
 theorem prod_le_pow (f : InfinitePlace K → ℝ) (M : ℝ) (h0 : ∀ w, 0 ≤ f w) (hM : ∀ w, f w ≤ M) :
     ∏ w : InfinitePlace K, f w ^ w.mult ≤ M ^ ∑ w : InfinitePlace K, w.mult := by
   rw [← Finset.prod_pow_eq_pow_sum]
-  exact Finset.prod_le_prod (fun w _ => pow_nonneg (h0 w) _) fun w _ => pow_le_pow_left₀ (h0 w) (hM w) _
+  exact Finset.prod_le_prod₀ (fun w _ => pow_nonneg (h0 w) _) fun w _ => pow_le_pow_left₀ (h0 w) (hM w) _
 
 def GaugeAt (W : G3K K → ℂ) (Ω : Set (FiniteAdeleRing (𝓞 K) K)) (T : ℕ) : Prop :=
   ∀ N : ℕ, ∃ C : ℝ, ∀ a b : (𝔸[K])ˣ,

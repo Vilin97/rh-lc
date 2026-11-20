@@ -64,7 +64,7 @@ theorem classNum_add_poly {σ : Type*} [DecidableEq σ] (cls : σ → K → ℤ)
   rw [classNum_eq_sum cls (H₁ + H₂) Q W support_add,
     classNum_eq_sum cls H₁ Q W (S := H₁.support ∪ H₂.support) Finset.subset_union_left,
     classNum_eq_sum cls H₂ Q W (S := H₁.support ∪ H₂.support) Finset.subset_union_right]
-  simp only [coeff_add, add_mul, Finset.sum_add_distrib]
+  simp only [MvPolynomial.coeff_add, add_mul, Finset.sum_add_distrib]
 
 def classNumAddHom {σ : Type*} [DecidableEq σ] (cls : σ → K → ℤ) (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) :
     MvPolynomial σ ℤ →+ ℤ where

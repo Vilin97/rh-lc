@@ -57,7 +57,7 @@ theorem exists_monic_rel (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e 
       intro f hf
       rw [f.as_sum, map_sum]
       refine N.sum_mem fun s hs => ?_
-      rw [show monomial s (coeff s f) = C (coeff s f) * monomial s 1 by
+      rw [show monomial s (AddMonoidAlgebra.coeff f s) = C (AddMonoidAlgebra.coeff f s) * monomial s 1 by
         rw [C_mul_monomial, mul_one], map_mul]
       apply hC
       have hsdeg : (s.sum fun _ e => e) ≤ d := (le_totalDegree hs).trans hf

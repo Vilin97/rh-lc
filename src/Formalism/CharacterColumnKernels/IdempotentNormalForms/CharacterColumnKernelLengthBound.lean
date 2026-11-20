@@ -107,7 +107,7 @@ theorem idempotentNormalForms_fact : characterColumnKernelBlockBound := by
       rw [Finset.prod_range_succ]
       refine ⟨mul_ne_zero ih.1 (hg k).1, ?_⟩
       rw [padicValInt.mul ih.1 (hg k).1, ih.2, (hg k).2, Nat.factorial_succ,
-        padicValNat.mul (by omega) (Nat.factorial_ne_zero k)]
+        (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by omega) (Nat.factorial_ne_zero k)]
       ring
   have hd : delta (fun i : Fin (t + 1) ↦ u * x ^ (w + (i : ℕ))) =
       ∏ i ∈ Finset.range t, (u * x ^ w - u * x ^ (w + (i + 1))) := by

@@ -36,7 +36,7 @@ theorem mem_ell {z : Fin M → ℂ} : z ∈ ell a ↔ ∑ i, a i * Complex.normS
 
 theorem isClosed_ell : IsClosed (ell a) := by
   unfold ell
-  exact isClosed_le (continuous_finset_sum _ fun i _ =>
+  exact isClosed_le (continuous_finsetSum _ fun i _ =>
     continuous_const.mul (Complex.continuous_normSq.comp (continuous_apply i))) continuous_const
 
 variable {a}

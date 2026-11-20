@@ -54,10 +54,10 @@ theorem fct_add_single (α : σ →₀ ℕ) (v : σ) : fct (α + Finsupp.single 
   ring
 
 def form0 (P Q : MvPolynomial σ ℂ) : ℂ :=
-  ∑ α ∈ Q.support, (fct α : ℂ) * (star (coeff α P) * coeff α Q)
+  ∑ α ∈ Q.support, (fct α : ℂ) * (star (AddMonoidAlgebra.coeff P α) * AddMonoidAlgebra.coeff Q α)
 
 theorem fischerSumSupport_eq_sum_factorial_coeff (P Q : MvPolynomial σ ℂ) (s : Finset (σ →₀ ℕ)) (h : Q.support ⊆ s) :
-    form0 P Q = ∑ α ∈ s, (fct α : ℂ) * (star (coeff α P) * coeff α Q) := by
+    form0 P Q = ∑ α ∈ s, (fct α : ℂ) * (star (AddMonoidAlgebra.coeff P α) * AddMonoidAlgebra.coeff Q α) := by
   unfold form0
   apply Finset.sum_subset h
   intro α _ hα
@@ -69,7 +69,7 @@ def form : MvPolynomial σ ℂ →ₗ⋆[ℂ] MvPolynomial σ ℂ →ₗ[ℂ] �
       rw [fischerSumSupport_eq_sum_factorial_coeff (P + P') Q Q.support subset_rfl, fischerSumSupport_eq_sum_factorial_coeff P Q Q.support subset_rfl,
         fischerSumSupport_eq_sum_factorial_coeff P' Q Q.support subset_rfl, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun α _ => ?_
-      simp only [coeff_add, star_add]; ring)
+      simp only [MvPolynomial.coeff_add, star_add]; ring)
     (fun c P Q => by
       rw [fischerSumSupport_eq_sum_factorial_coeff (c • P) Q Q.support subset_rfl, fischerSumSupport_eq_sum_factorial_coeff P Q _ subset_rfl, smul_eq_mul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun α _ => ?_
@@ -81,7 +81,7 @@ def form : MvPolynomial σ ℂ →ₗ⋆[ℂ] MvPolynomial σ ℂ →ₗ[ℂ] �
         fischerSumSupport_eq_sum_factorial_coeff P Q' (Q.support ∪ Q'.support) Finset.subset_union_right,
         ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun α _ => ?_
-      simp only [coeff_add]; ring)
+      simp only [MvPolynomial.coeff_add]; ring)
     (fun c P Q => by
       rw [fischerSumSupport_eq_sum_factorial_coeff P (c • Q) Q.support support_smul, fischerSumSupport_eq_sum_factorial_coeff P Q _ subset_rfl, smul_eq_mul,
         Finset.mul_sum]
@@ -89,7 +89,7 @@ def form : MvPolynomial σ ℂ →ₗ⋆[ℂ] MvPolynomial σ ℂ →ₗ[ℂ] �
       simp only [coeff_smul, smul_eq_mul, RingHom.id_apply]; ring)
 
 theorem form_eq (P Q : MvPolynomial σ ℂ) (s : Finset (σ →₀ ℕ)) (h : Q.support ⊆ s) :
-    form P Q = ∑ α ∈ s, (fct α : ℂ) * (star (coeff α P) * coeff α Q) := fischerSumSupport_eq_sum_factorial_coeff P Q s h
+    form P Q = ∑ α ∈ s, (fct α : ℂ) * (star (AddMonoidAlgebra.coeff P α) * AddMonoidAlgebra.coeff Q α) := fischerSumSupport_eq_sum_factorial_coeff P Q s h
 
 theorem form_symm (P Q : MvPolynomial σ ℂ) : form P Q = star (form Q P) := by
   classical
@@ -99,7 +99,7 @@ theorem form_symm (P Q : MvPolynomial σ ℂ) : form P Q = star (form Q P) := by
   simp [star_mul', mul_comm]
 
 theorem form_self (P : MvPolynomial σ ℂ) :
-    form P P = ((∑ α ∈ P.support, (fct α : ℝ) * Complex.normSq (coeff α P) : ℝ) : ℂ) := by
+    form P P = ((∑ α ∈ P.support, (fct α : ℝ) * Complex.normSq (AddMonoidAlgebra.coeff P α) : ℝ) : ℂ) := by
   rw [form_eq P P P.support subset_rfl]
   push_cast
   refine Finset.sum_congr rfl fun α _ => ?_

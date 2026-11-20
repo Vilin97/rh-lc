@@ -22,7 +22,7 @@ theorem dv_of_le {k e : ℕ} (h : k ≤ e) (v : ℝ) :
 
 theorem coeff_X_pow_mul_lin_pow {α : Type} [Fintype α] [DecidableEq α] (e : α →₀ ℕ) (a : α → ℝ)
     (x₀ : α) (m M : ℕ) (h : M + m = ∑ x, e x) :
-    coeff e (X x₀ ^ m * (∑ x, a x • X x : MvPolynomial α ℝ) ^ M) =
+    AddMonoidAlgebra.coeff (X x₀ ^ m * (∑ x, a x • X x : MvPolynomial α ℝ) ^ M) e =
       (M.factorial : ℝ) * ∏ x, dv (Finsupp.single x₀ m x) (e x) (a x) := by
   rw [X_pow_eq_monomial, coeff_monomial_mul']
   split_ifs with hle
@@ -117,8 +117,8 @@ theorem altCoeff_X_pow_mul_linRoot_pow (ι : Type) [Fintype ι] [DecidableEq ι]
   set F : ι → Equiv.Perm (Fin N) → ℝ := fun τ σ => ((Equiv.Perm.sign σ : ℤ) : ℝ) *
     ∏ j, dv (Finsupp.single (τ', i) m (τ, j)) (n τ (σ j)) (u τ j) with hF
   have hc : ∀ σ : ι → Equiv.Perm (Fin N), (∏ τ, ((Equiv.Perm.sign (σ τ) : ℤ) : ℝ)) *
-      coeff (Finsupp.equivFunOnFinite.symm (fun x : ι × Fin N => n x.1 (σ x.1 x.2)))
-        (X (τ', i) ^ m * linRoot u ^ M : MvPolynomial (ι × Fin N) ℝ) =
+      AddMonoidAlgebra.coeff (X (τ', i) ^ m * linRoot u ^ M : MvPolynomial (ι × Fin N) ℝ)
+        (Finsupp.equivFunOnFinite.symm (fun x : ι × Fin N => n x.1 (σ x.1 x.2))) =
       (-1) ^ M * (M.factorial : ℝ) * ∏ τ, F τ (σ τ) := by
     intro σ
     rw [hl, coeff_C_mul, coeff_X_pow_mul_lin_pow _ (fun x : ι × Fin N => u x.1 x.2)]

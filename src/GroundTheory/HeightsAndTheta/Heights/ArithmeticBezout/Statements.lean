@@ -273,7 +273,7 @@ theorem X_dvd_iff_constantCoeff_eq_zero {R : Type*} [CommRing R]
   rw [X_dvd_iff_modMonomial_eq_zero]
   constructor
   · intro h
-    have h0 := congrArg (coeff 0) h
+    have h0 := congrArg (AddMonoidAlgebra.coeff · 0) h
     rw [coeff_modMonomial_of_not_le _ (by simp)] at h0
     simpa [constantCoeff_eq] using h0
   · intro h

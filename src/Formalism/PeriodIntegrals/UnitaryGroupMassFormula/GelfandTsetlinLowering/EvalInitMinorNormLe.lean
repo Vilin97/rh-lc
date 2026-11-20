@@ -334,7 +334,7 @@ theorem xi_unitary {n N : ℕ} (h : n + 1 = N) (lam : DomWeight N) (sg : DomWeig
     ‖MvPolynomial.eval (fun v : Fin N × Fin N => x v.1 v.2) (xi ℂ h lam sg)‖ ≤ 1 := by
   unfold xi
   rw [map_prod, norm_prod]
-  apply Finset.prod_le_one (fun i _ => norm_nonneg _)
+  apply Finset.prod_le_one₀ (fun i _ => norm_nonneg _)
   intro i _
   rw [map_mul, map_pow, map_pow, norm_mul, norm_pow, norm_pow]
   apply mul_le_one₀ (pow_le_one₀ (norm_nonneg _) ?_) (pow_nonneg (norm_nonneg _) _)

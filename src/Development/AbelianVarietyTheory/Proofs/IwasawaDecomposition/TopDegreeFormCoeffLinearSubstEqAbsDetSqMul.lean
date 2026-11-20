@@ -21,7 +21,7 @@ def rowSel (c : Fin n → Fin n) : Matrix (Fin n) (Fin n) ℂ := Matrix.of fun i
 
 theorem topCoeff_add (P Q : MvPolynomial (Fin n × Fin n) ℂ) :
     topCoeff (P + Q) = topCoeff P + topCoeff Q := by
-  simp [topCoeff, coeff_add, mul_add, Finset.sum_add_distrib]
+  simp [topCoeff, MvPolynomial.coeff_add, mul_add, Finset.sum_add_distrib]
 
 theorem topCoeff_C_mul (a : ℂ) (P : MvPolynomial (Fin n × Fin n) ℂ) : topCoeff (C a * P) = a * topCoeff P := by
   simp only [topCoeff, coeff_C_mul, Finset.mul_sum]

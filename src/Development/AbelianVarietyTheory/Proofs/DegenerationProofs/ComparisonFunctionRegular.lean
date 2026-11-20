@@ -69,7 +69,7 @@ theorem ratio_le_one {I : Type} [Fintype I] {δ a a' f' : ℝ} {t v : I → ℝ}
   have h1 : f' / δ ≤ Real.exp (-a') := by rwa [div_le_iff₀' hδ]
   have h2 : ∏ x, t x / δ ≤ Real.exp (-∑ x, v x) := by
     rw [← Finset.sum_neg_distrib, Real.exp_sum]
-    refine Finset.prod_le_prod (fun x _ => div_nonneg (ht0 x) hδ.le) fun x _ => ?_
+    refine Finset.prod_le_prod₀ (fun x _ => div_nonneg (ht0 x) hδ.le) fun x _ => ?_
     rw [div_le_iff₀' hδ]
     exact ht x
   have h3 : 0 ≤ ∏ x, t x / δ := Finset.prod_nonneg fun x _ => div_nonneg (ht0 x) hδ.le

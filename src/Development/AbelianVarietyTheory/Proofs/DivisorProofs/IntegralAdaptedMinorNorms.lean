@@ -64,7 +64,7 @@ theorem norm_det_le_one_of_ultra {K : Type} [NormedField K] [IsUltrametricDist K
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun σ _ => ?_
   rw [norm_mul, norm_prod]
   exact mul_le_one₀ (IsUltrametricDist.norm_intCast_le_one _ _)
-    (Finset.prod_nonneg fun _ _ => norm_nonneg _) (Finset.prod_le_one (fun _ _ => norm_nonneg _) fun _ _ => hM _ _)
+    (Finset.prod_nonneg fun _ _ => norm_nonneg _) (Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun _ _ => hM _ _)
 
 theorem norm_eq_one_of_mul {K : Type} [NormedField K] {a b : K} (ha : ‖a‖ ≤ 1) (hb : ‖b‖ ≤ 1)
     (h : 1 ≤ ‖a‖ * ‖b‖) : ‖b‖ = 1 := by

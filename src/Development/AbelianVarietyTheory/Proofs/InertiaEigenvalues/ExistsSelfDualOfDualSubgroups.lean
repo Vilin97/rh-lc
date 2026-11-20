@@ -173,7 +173,7 @@ theorem _root_.GlobalTheory.JR.AbsInv.fourB_fourB (μ : Measure V) [μ.IsAddHaar
       · rw [Set.indicator_of_notMem hy]
         ring
   have hpre : MeasurableSet ((fun x => x + z) ⁻¹' (M : Set V)) :=
-    (hMo.preimage (continuous_add_right z)).measurableSet
+    (hMo.preimage (continuous_add_const z)).measurableSet
   calc _root_.GlobalTheory.JR.fourB μ B (_root_.GlobalTheory.JR.fourB μ B f) z
       = ∫ y, _root_.GlobalTheory.JR.fourB μ B f y * B y z ∂μ := rfl
     _ = ∫ y, ∫ x, P x y ∂μ ∂μ := integral_congr_ae (Eventually.of_forall fun y => (hPy y).symm)

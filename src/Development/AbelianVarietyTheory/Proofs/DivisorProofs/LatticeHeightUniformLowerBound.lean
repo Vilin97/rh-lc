@@ -177,7 +177,7 @@ theorem GlobalTheory.EisMidHt.ht_adVec_lower_bound : ∀ (F E : Type) [Field F] 
     have h2 : (∏ w, κ w) * |((Algebra.norm ℚ (y i) : ℚ) : ℝ)| ≤
         ∏ w, normInf a w (fun j => compInf F E w (adVec F y j)) := by
       rw [← prod_place_norm h (y i), ← Finset.prod_mul_distrib]
-      exact Finset.prod_le_prod (fun w _ => mul_nonneg (hκ w).le (by positivity)) fun w _ => hκb w y i
+      exact Finset.prod_le_prod₀ (fun w _ => mul_nonneg (hκ w).le (by positivity)) fun w _ => hκb w y i
     have hIpos : 0 < (FractionalIdeal.absNorm I : ℝ) := by
       by_contra hneg
       push_neg at hneg

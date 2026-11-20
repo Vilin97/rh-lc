@@ -24,7 +24,7 @@ theorem norm_iteratedFDeriv_dilate_le (f : 𝓢(E, ℝ)) {a : ℝ} (ha0 : 0 ≤ 
     (by exact_mod_cast le_top)]
   refine (ContinuousMultilinearMap.norm_compContinuousLinearMap_le _ _).trans ?_
   refine mul_le_of_le_one_right (norm_nonneg _) ?_
-  exact Finset.prod_le_one (fun _ _ ↦ norm_nonneg _) fun _ _ ↦ hle
+  exact Finset.prod_le_one₀ (fun _ _ ↦ norm_nonneg _) fun _ _ ↦ hle
 
 theorem exists_schwartz_majorant [FiniteDimensional ℝ E] (φ : 𝓢(E, ℂ)) :
     ∃ Φ : 𝓢(E, ℂ), ∃ r : E → ℝ, (∀ y, Φ y = (r y : ℂ)) ∧ ∀ y, ‖φ y‖ ≤ r y := by

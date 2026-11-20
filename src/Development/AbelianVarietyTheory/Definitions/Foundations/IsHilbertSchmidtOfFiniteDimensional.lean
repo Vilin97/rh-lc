@@ -626,7 +626,7 @@ theorem map_lcIntegral {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] [C
     intro x
     simp [Set.indicator_apply]
   simp only [h1, h2, map_sum, map_smul]
-  rw [integral_finset_sum]
+  rw [MeasureTheory.integral_finsetSum]
   · refine Finset.sum_congr rfl fun w _ => ?_
     rw [integral_indicator_const _ (hF _).measurableSet, Complex.coe_smul]
   · intro w _

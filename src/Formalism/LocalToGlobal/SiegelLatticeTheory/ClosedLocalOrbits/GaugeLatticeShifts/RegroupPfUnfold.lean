@@ -201,7 +201,7 @@ theorem orbit_unfold (μ : Measure H) [μ.IsMulLeftInvariant]
     exact ((hasum.hasSum.prod_fiberwise fun j => (hasum.prod_factor j).hasSum).tsum_eq).symm
   refine ⟨?_, ?_⟩
   · have hEm : Measurable fun y => ∑' c, ‖F c y‖ₑ :=
-      Measurable.ennreal_tsum fun c => (hFm c).enorm
+      Measurable.tsum fun c => (hFm c).enorm
     have hfin_ae : ∀ᵐ y ∂(μ.restrict Ω), ∑' c, ‖F c y‖ₑ < ⊤ := ae_lt_top hEm hint.ne
     have hsN : ∀ y, ∑' c, ‖F c y‖ₑ < ⊤ → Summable fun c => ‖F c y‖ := by
       intro y hy

@@ -74,7 +74,7 @@ theorem weightsFam_of (hS : PI.VolStabS.MassDataS.SWXS) : GlobalTheory.SnFam.Wei
   set HP := HPt D.host.rdE (X.B.g : ℝ) ((Tu D u : ℕ) * (Tu D u' : ℕ)) (toPts w) with hHPdef
   have hHt1 : 1 ≤ Fm.toL.Htot := by
     show 1 ≤ ∏ p : {p // p ∈ Fm.P}, (Fm.FP p.1).Hp
-    have := Finset.prod_le_prod (s := Finset.univ) (f := fun _ : {p // p ∈ Fm.P} => (1 : ℝ))
+    have := Finset.prod_le_prod₀ (s := Finset.univ) (f := fun _ : {p // p ∈ Fm.P} => (1 : ℝ))
       (g := fun p => (Fm.FP p.1).Hp) (fun _ _ => zero_le_one) (fun p _ => hHp p.1 p.2)
     simpa using this
   have hH1 : 1 ≤ HP := by rw [hHT]; exact hHt1

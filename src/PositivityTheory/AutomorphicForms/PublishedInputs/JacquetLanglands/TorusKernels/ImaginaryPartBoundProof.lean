@@ -176,7 +176,7 @@ theorem bound_im [Nonempty I] {C c : ℝ} (hc : 0 < c) (z : X I) (hz : Sg C c z)
   · push Not at hle
     have hP : |(z v0).1.im| ^ (Finset.univ : Finset I).card ≤ ∏ u, |(z u).1.im| := by
       calc |(z v0).1.im| ^ (Finset.univ : Finset I).card = ∏ _u : I, |(z v0).1.im| := (Finset.prod_const _).symm
-        _ ≤ ∏ u, |(z u).1.im| := Finset.prod_le_prod (fun _ _ => abs_nonneg _) (fun u _ => hv0 u)
+        _ ≤ ∏ u, |(z u).1.im| := Finset.prod_le_prod₀ (fun _ _ => abs_nonneg _) (fun u _ => hv0 u)
     have hcard : (Finset.univ : Finset I).card ≠ 0 := Finset.card_ne_zero.mpr Finset.univ_nonempty
     have hself : |(z v0).1.im| ≤ |(z v0).1.im| ^ (Finset.univ : Finset I).card := by
       exact le_self_pow₀ hle.le hcard

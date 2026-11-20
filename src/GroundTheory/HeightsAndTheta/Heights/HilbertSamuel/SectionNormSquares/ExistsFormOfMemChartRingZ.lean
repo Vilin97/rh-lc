@@ -376,7 +376,7 @@ def blockDeg (μ : (Σ k, ι k) →₀ ℕ) : K → ℕ := fun k => ∑ i, μ �
 open Classical in
 
 def comp (g : MRing ι) (δ : K → ℕ) : MRing ι :=
-  ∑ μ ∈ g.support.filter (fun μ => blockDeg μ = δ), monomial μ (coeff μ g)
+  ∑ μ ∈ g.support.filter (fun μ => blockDeg μ = δ), monomial μ (AddMonoidAlgebra.coeff g μ)
 
 theorem homog_comp (g : MRing ι) (δ : K → ℕ) : IsMultiHomog (comp g δ) δ := by
   classical
@@ -423,7 +423,7 @@ theorem comp_mem {y : (Σ k, ι k) → Ω} {g : MRing ι} (hg : g ∈ mCoordIdea
         MvPolynomial.C (aeval y (comp g δ')) * monomial (Finsupp.equivFunOnFinite.symm δ') 1 := fun δ' _ => by
       erw [mConeMap_homog y (homog_comp g δ'), prod_X_pow_eq_monomial']
     rw [Finset.sum_congr rfl h1] at h0
-    have h2 := congrArg (MvPolynomial.coeff (Finsupp.equivFunOnFinite.symm δ)) h0
+    have h2 := congrArg (AddMonoidAlgebra.coeff · (Finsupp.equivFunOnFinite.symm δ)) h0
     rw [MvPolynomial.coeff_sum, MvPolynomial.coeff_zero] at h2
     simp only [MvPolynomial.coeff_C_mul, MvPolynomial.coeff_monomial, mul_ite, mul_one, mul_zero,
       EmbeddingLike.apply_eq_iff_eq] at h2

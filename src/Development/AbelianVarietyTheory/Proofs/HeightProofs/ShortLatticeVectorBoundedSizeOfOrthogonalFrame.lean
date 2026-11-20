@@ -21,7 +21,7 @@ theorem one_le_norm_mul_pow {E : Type} [Field E] [NumberField E] {a : E} (ha : I
     exact_mod_cast Int.one_le_abs hm0
   rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ ψ)] at h1
   refine h1.trans (mul_le_mul_of_nonneg_left ?_ (norm_nonneg _))
-  refine (Finset.prod_le_prod (g := fun _ => T) (fun _ _ => norm_nonneg _)
+  refine (Finset.prod_le_prod₀ (g := fun _ => T) (fun _ _ => norm_nonneg _)
     fun φ _ => (norm_le_pi_norm (canonicalEmbedding E a) φ).trans haT).trans ?_
   rw [Finset.prod_const, ← Embeddings.card E ℂ]
   exact pow_le_pow_right₀ hT (Finset.card_le_univ _)

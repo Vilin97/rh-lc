@@ -54,7 +54,7 @@ theorem GramContraction.proof : GramContraction.Statement := by
       Matrix.det_fromBlocks_zero₂₁, Matrix.det_one]
     ring
   have hP : ∏ i, ‖Ψ (e i)‖ ^ 2 ≤ 1 :=
-    Finset.prod_le_one (fun _ _ => sq_nonneg _) fun i _ => by
+    Finset.prod_le_one₀ (fun _ _ => sq_nonneg _) fun i _ => by
       have := hΨ (e i); rw [e.orthonormal.1 i] at this
       nlinarith [norm_nonneg (Ψ (e i))]
   have hW : 0 ≤ ∏ j, ‖w j‖ ^ 2 := Finset.prod_nonneg fun _ _ => sq_nonneg _

@@ -89,7 +89,7 @@ theorem card_support_le_and_sum_two_pow_le {g c : ℕ} (p : MvPolynomial (Fin g)
       _ ≤ 2 ^ c * ∏ _i : Fin g, ∑ k ∈ Finset.range (c + 1), (1 / 2 : ℝ) ^ k :=
           mul_le_mul_of_nonneg_left h2 (by positivity)
       _ ≤ 2 ^ c * ∏ _i : Fin g, (2 : ℝ) :=
-          mul_le_mul_of_nonneg_left (Finset.prod_le_prod (fun _ _ => by positivity)
+          mul_le_mul_of_nonneg_left (Finset.prod_le_prod₀ (fun _ _ => by positivity)
             (fun _ _ => sum_geometric_two_le _)) (by positivity)
       _ = 2 ^ (g + c) := by
           rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin, pow_add]

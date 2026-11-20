@@ -36,7 +36,7 @@ theorem op_add_sym (s₁ s₂ : Sym m n) (f : PX m n) : op (s₁ + s₂) f = op 
   classical
   rw [op_eq (s₁ + s₂) (s₁.support ∪ s₂.support) support_add, op_eq s₁ (s₁.support ∪ s₂.support)
     Finset.subset_union_left, op_eq s₂ (s₁.support ∪ s₂.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
-  exact Finset.sum_congr rfl fun t _ => by rw [coeff_add, add_smul]
+  exact Finset.sum_congr rfl fun t _ => by rw [MvPolynomial.coeff_add, add_smul]
 
 theorem op_smul_sym (s : Sym m n) (r : ℂ) (f : PX m n) : op (r • s) f = r • op s f := by
   classical

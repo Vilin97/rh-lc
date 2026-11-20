@@ -70,8 +70,8 @@ def ThmAGaussOrth7 : Prop :=
       (∀ s, nu2 s = (Finset.univ.filter (fun c => 2 ≤ p s c)).card) → (∀ s, size s = ∑ c, p s c) →
     (∀ s, JnumOneLetter l d TT nu1 size s + (if s ∈ TT then 1 else 0) ≤ N0) →
     ∀ n : (ZMod d × Fin N0 × Fin N0) →₀ ℕ,
-      ‖MvPolynomial.coeff n (frameJet colN p hp I
-          (thetaInZ l (MaximalUnramifiedExtension l).subtype σ om oms (thetaHyp l (Formalism.L2.Th1.F.scalePair L c hc) ι (ε : ℂ_[l]) ω₀ f f' r s)))‖ ≤
+      ‖AddMonoidAlgebra.coeff (frameJet colN p hp I
+          (thetaInZ l (MaximalUnramifiedExtension l).subtype σ om oms (thetaHyp l (Formalism.L2.Th1.F.scalePair L c hc) ι (ε : ℂ_[l]) ω₀ f f' r s))) n‖ ≤
         ‖(l : ℂ_[l])‖ ^ ((∑ s ∈ TT, (topTerm l d TT nu1 nu2 s -
             gam l * (WcapOneLetter l d TT nu1 nu2 size s : ℝ))) +
           Fnum l d (fun s => (Dl d TT nu1 size s : ℝ)) -
@@ -94,8 +94,8 @@ def OneLetterGaussOrth7 : Prop :=
     ¬ l ∣ N → (∀ k i, (N : ℂ) * s k i ∈ (Formalism.L2.Th1.F.scalePair L c hc).lattice) →
   ∀ (p : Fin C → ℕ) (hp : ∀ c, p c ≤ N0) (I : ∀ c, Fin (p c) → Fin N1),
     ∀ n : (Fin N0 × Fin N0) →₀ ℕ,
-    ‖MvPolynomial.coeff n (frameJetOne p hp I
-        (MvPowerSeries.subst (fun x => at1 x (expF ℂ_[l] l)) (thetaOrth l (Formalism.L2.Th1.F.scalePair L c hc) ι (ε : ℂ_[l]) ω₀ r s)))‖ ≤
+    ‖AddMonoidAlgebra.coeff (frameJetOne p hp I
+        (MvPowerSeries.subst (fun x => at1 x (expF ℂ_[l] l)) (thetaOrth l (Formalism.L2.Th1.F.scalePair L c hc) ι (ε : ℂ_[l]) ω₀ r s))) n‖ ≤
       ‖(l : ℂ_[l])‖ ^ (rho l * ((∑ c, p c : ℕ) : ℝ) -
         ((N0 : ℝ) * N1) * (Real.logb l (C : ℝ) + 1))
 
@@ -154,8 +154,8 @@ def ThmAGaussEveryOrth7 : Prop :=
       (∀ s, nu2 s = (Finset.univ.filter (fun c => 2 ≤ p s c)).card) → (∀ s, size s = ∑ c, p s c) →
     (∀ s, JnumOneLetter l d TT nu1 size s + (if s ∈ TT then 1 else 0) ≤ N0) →
     ∀ n : (ZMod d × Fin N0 × Fin N0) →₀ ℕ,
-      ‖MvPolynomial.coeff n (frameJet colN p hp I
-          (thetaInZ l (MaximalUnramifiedExtension l).subtype σ om oms (thetaHyp l (Formalism.L2.Th1.F.scalePair L c hc) ι (ε : ℂ_[l]) ω₀ f f' r s)))‖ ≤
+      ‖AddMonoidAlgebra.coeff (frameJet colN p hp I
+          (thetaInZ l (MaximalUnramifiedExtension l).subtype σ om oms (thetaHyp l (Formalism.L2.Th1.F.scalePair L c hc) ι (ε : ℂ_[l]) ω₀ f f' r s))) n‖ ≤
         ‖(l : ℂ_[l])‖ ^ ((∑ s ∈ TT, (topTerm l d TT nu1 nu2 s -
             gam l * (WcapOneLetter l d TT nu1 nu2 size s : ℝ))) +
           Fnum l d (fun s => (Dl d TT nu1 size s : ℝ)) -
@@ -178,8 +178,8 @@ def OneLetterGaussEveryOrth7 : Prop :=
     ¬ l ∣ N → (∀ k i, (N : ℂ) * s k i ∈ (Formalism.L2.Th1.F.scalePair L c hc).lattice) →
   ∀ (p : Fin C → ℕ) (hp : ∀ c, p c ≤ N0) (I : ∀ c, Fin (p c) → Fin N1),
     ∀ n : (Fin N0 × Fin N0) →₀ ℕ,
-    ‖MvPolynomial.coeff n (frameJetOne p hp I
-        (MvPowerSeries.subst (fun x => at1 x (expF ℂ_[l] l)) (thetaOrth l (Formalism.L2.Th1.F.scalePair L c hc) ι (ε : ℂ_[l]) ω₀ r s)))‖ ≤
+    ‖AddMonoidAlgebra.coeff (frameJetOne p hp I
+        (MvPowerSeries.subst (fun x => at1 x (expF ℂ_[l] l)) (thetaOrth l (Formalism.L2.Th1.F.scalePair L c hc) ι (ε : ℂ_[l]) ω₀ r s))) n‖ ≤
       ‖(l : ℂ_[l])‖ ^ (rho l * ((∑ c, p c : ℕ) : ℝ) -
         ((N0 : ℝ) * N1) * (Real.logb l (C : ℝ) + 1))
 
@@ -236,8 +236,8 @@ def ThmAGaussEveryPh7 : Prop :=
       (∀ s, nu2 s = (Finset.univ.filter (fun c => 2 ≤ p s c)).card) → (∀ s, size s = ∑ c, p s c) →
     (∀ s, JnumOneLetter l d TT nu1 size s + (if s ∈ TT then 1 else 0) ≤ N0) →
     ∀ n : (ZMod d × Fin N0 × Fin N0) →₀ ℕ,
-      ‖MvPolynomial.coeff n (frameJet colN p hp I
-          (thetaInZ l (MaximalUnramifiedExtension l).subtype σ om oms (inHyp l f f' Θ)))‖ ≤
+      ‖AddMonoidAlgebra.coeff (frameJet colN p hp I
+          (thetaInZ l (MaximalUnramifiedExtension l).subtype σ om oms (inHyp l f f' Θ))) n‖ ≤
         ‖(l : ℂ_[l])‖ ^ ((∑ s ∈ TT, (topTerm l d TT nu1 nu2 s -
             gam l * (WcapOneLetter l d TT nu1 nu2 size s : ℝ))) +
           Fnum l d (fun s => (Dl d TT nu1 size s : ℝ)) -
@@ -259,8 +259,8 @@ def OneLetterGaussEveryPh7 : Prop :=
       (Formalism.L2.Th1.E.phSum (phL l g2 g3 s2 ε) : MvPowerSeries (Fin N0 × Fin N1) ℂ_[l]) * Θ) →
   ∀ (p : Fin C → ℕ) (hp : ∀ c, p c ≤ N0) (I : ∀ c, Fin (p c) → Fin N1),
     ∀ n : (Fin N0 × Fin N0) →₀ ℕ,
-    ‖MvPolynomial.coeff n (frameJetOne p hp I
-        (MvPowerSeries.subst (fun x => at1 x (expF ℂ_[l] l)) Θ))‖ ≤
+    ‖AddMonoidAlgebra.coeff (frameJetOne p hp I
+        (MvPowerSeries.subst (fun x => at1 x (expF ℂ_[l] l)) Θ)) n‖ ≤
       ‖(l : ℂ_[l])‖ ^ (rho l * ((∑ c, p c : ℕ) : ℝ) -
         ((N0 : ℝ) * N1) * (Real.logb l (C : ℝ) + 1))
 
@@ -317,8 +317,8 @@ def GaussFormSharpCM : Prop :=
       (∀ s, nu2 s = (Finset.univ.filter (fun c => 2 ≤ p s c)).card) → (∀ s, size s = ∑ c, p s c) →
     (∀ s, JnumOneLetter l d TT nu1 size s + (if s ∈ TT then 1 else 0) ≤ N0) →
     ∀ n : (ZMod d × Fin N0 × Fin N0) →₀ ℕ,
-      ‖MvPolynomial.coeff n (frameJet colN p hp I
-          (thetaInZ l (MaximalUnramifiedExtension l).subtype σ om oms (inHyp l f f' Θ)))‖ ≤
+      ‖AddMonoidAlgebra.coeff (frameJet colN p hp I
+          (thetaInZ l (MaximalUnramifiedExtension l).subtype σ om oms (inHyp l f f' Θ))) n‖ ≤
         ‖(l : ℂ_[l])‖ ^ ((∑ s ∈ TT, (topTerm l d TT nu1 nu2 s -
             gam l * (WcapOneLetter l d TT nu1 nu2 size s : ℝ))) +
           Fnum l d (fun s => (Dl d TT nu1 size s : ℝ)) -
@@ -340,8 +340,8 @@ def OneLetterGaussSharpCM : Prop :=
     uniformGaussModelCondition l g2 g3 s2 ε Θ γ →
   ∀ (p : Fin C → ℕ) (hp : ∀ c, p c ≤ N0) (I : ∀ c, Fin (p c) → Fin N1),
     ∀ n : (Fin N0 × Fin N0) →₀ ℕ,
-    ‖MvPolynomial.coeff n (frameJetOne p hp I
-        (MvPowerSeries.subst (fun x => at1 x (expF ℂ_[l] l)) Θ))‖ ≤
+    ‖AddMonoidAlgebra.coeff (frameJetOne p hp I
+        (MvPowerSeries.subst (fun x => at1 x (expF ℂ_[l] l)) Θ)) n‖ ≤
       ‖(l : ℂ_[l])‖ ^ (rho l * ((∑ c, p c : ℕ) : ℝ) -
         ((N0 : ℝ) * N1) * (Real.logb l (C : ℝ) + 1))
 

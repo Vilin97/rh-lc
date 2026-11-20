@@ -17,7 +17,7 @@ def wjSub (w : O) (j : ℕ) : Submodule O (MvPolynomial σ (KK O)) where
     intro P Q hP hQ m
     obtain ⟨a, ha⟩ := hP m
     obtain ⟨b, hb⟩ := hQ m
-    exact ⟨a + b, by rw [coeff_add, ha, hb, ← map_add, mul_add]⟩
+    exact ⟨a + b, by rw [MvPolynomial.coeff_add, ha, hb, ← map_add, mul_add]⟩
   zero_mem' := fun m => ⟨0, by simp⟩
   smul_mem' := by
     intro c P hP m

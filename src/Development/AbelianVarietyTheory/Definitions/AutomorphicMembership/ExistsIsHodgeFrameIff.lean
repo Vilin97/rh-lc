@@ -70,7 +70,7 @@ theorem OddPrimesWithRootsOfUnity.smoothOn_eigMet : (x.eigMet σ).SmoothOn (mani
 theorem OddPrimesWithRootsOfUnity.exp_le_r (y : CxPts (genStr Z) σ) : Real.exp 1 ≤ x.r σ y :=
   le_sub_self_iff _ |>.2 (Real.log_nonpos (sq_nonneg _) (pow_le_one₀
     (Finset.prod_nonneg fun i _ => ((x.nrm_div σ i).1 y).1)
-    (Finset.prod_le_one (fun i _ => ((x.nrm_div σ i).1 y).1) fun i _ => ((x.nrm_div σ i).1 y).2)))
+    (Finset.prod_le_one₀ (fun i _ => ((x.nrm_div σ i).1 y).1) fun i _ => ((x.nrm_div σ i).1 y).2)))
 
 end Free
 

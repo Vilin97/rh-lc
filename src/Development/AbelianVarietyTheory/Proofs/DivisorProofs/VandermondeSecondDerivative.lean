@@ -25,7 +25,7 @@ variable {ν : Type} [Fintype ν]
 
 theorem apolar_add_left' (P Q D : MvPolynomial ν ℝ) : apolar (P + Q) D = apolar P D + apolar Q D := by
   induction D using MvPolynomial.induction_on' with
-  | monomial u a => simp only [GlobalTheory.FlagFormDeg.apolar_monomial, coeff_add]; ring
+  | monomial u a => simp only [GlobalTheory.FlagFormDeg.apolar_monomial, MvPolynomial.coeff_add]; ring
   | add p q hp hq => simp only [map_add, hp, hq]; ring
 
 theorem apolar_comm' (P Q : MvPolynomial ν ℝ) : apolar P Q = apolar Q P := by

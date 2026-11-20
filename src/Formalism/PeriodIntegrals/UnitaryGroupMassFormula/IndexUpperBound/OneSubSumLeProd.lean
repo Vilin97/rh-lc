@@ -15,7 +15,7 @@ theorem one_sub_sum_le_prod {ι : Type*} [DecidableEq ι] (s : Finset ι) (P b :
     have hm : ∀ i ∈ s, i ∈ insert a s := fun i hi => Finset.mem_insert_of_mem hi
     have hQ0 : 0 ≤ ∏ i ∈ s, P i := Finset.prod_nonneg fun i hi => hP0 i (hm i hi)
     have hQ1 : ∏ i ∈ s, P i ≤ 1 :=
-      Finset.prod_le_one (fun i hi => hP0 i (hm i hi)) (fun i hi => hP1 i (hm i hi))
+      Finset.prod_le_one₀ (fun i hi => hP0 i (hm i hi)) (fun i hi => hP1 i (hm i hi))
     have h := ih (fun i hi => hP0 i (hm i hi)) (fun i hi => hP1 i (hm i hi))
       (fun i hi => hb i (hm i hi)) (fun i hi => hPb i (hm i hi))
     have ha1 := hP1 a (Finset.mem_insert_self a s)

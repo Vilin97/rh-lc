@@ -166,7 +166,7 @@ theorem exists_omegaLeb : ∃ lam : Measure (lieU P Q), IsOmegaLeb lam := by
 
 theorem isOpen_ballU (r : ℝ) : IsOpen (ballU P Q r) := by
   have : Continuous (fun X : lieU P Q => ∑ i, ∑ j, ‖(X : MM P Q) i j‖) :=
-    continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+    continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
       (continuous_subtype_val.matrix_elem i j).norm
   exact isOpen_lt this continuous_const
 

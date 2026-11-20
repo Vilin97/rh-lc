@@ -92,7 +92,7 @@ private theorem smul_left_cancel_of_ne_zero (G : GAtP p) (v : Fin G.P.nV) (r : G
     (map_ne_zero_iff _ (IsFractionRing.injective G.O G.Kf)).2 hr
   funext i L
   ext n
-  have h' := congrArg (fun F : G.Fn => MvPolynomial.coeff n (F i L)) h
+  have h' := congrArg (fun F : G.Fn => AddMonoidAlgebra.coeff (F i L) n) h
   simp only [Pi.smul_apply, Algebra.smul_def, MvPolynomial.algebraMap_apply, MvPolynomial.coeff_C_mul] at h'
   exact mul_left_cancel₀ hr0 h'
 

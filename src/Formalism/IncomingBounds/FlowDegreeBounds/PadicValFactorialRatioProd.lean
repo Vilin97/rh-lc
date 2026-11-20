@@ -48,7 +48,7 @@ theorem padicValuationGain : ValGain := by
   have hB : 0 < (l : ℝ) - 1 := by linarith
   refine ⟨?_, ?_⟩
   · intro n hn
-    have hle : l ^ padicValNat l n ≤ n := Nat.le_of_dvd (by omega) pow_padicValNat_dvd
+    have hle : l ^ padicValNat l n ≤ n := Nat.le_of_dvd (by omega) (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
     have hleR : (l : ℝ) ^ padicValNat l n ≤ n := by exact_mod_cast hle
     have hb := one_add_mul_le_one_add_pow ((l : ℝ) - 1) hB.le (padicValNat l n)
     rw [show (1 : ℝ) + ((l : ℝ) - 1) = l by ring] at hb
@@ -147,7 +147,7 @@ private theorem digits_sum_le_sub_one_mul_logb_add_one (l a : ℕ) (hl : 2 ≤ l
   · subst h0
     simp only [Nat.digits_zero, List.sum_nil, Nat.cast_zero]
     exact mul_nonneg (by linarith) (by linarith)
-  · have hlen : (l.digits a).length = Nat.log l a + 1 := Nat.digits_len l a (by omega) (by omega)
+  · have hlen : (l.digits a).length = Nat.log l a + 1 := Nat.length_digits l a (by omega) (by omega)
     have hsum : (l.digits a).sum ≤ (l.digits a).length • (l - 1) :=
       List.sum_le_card_nsmul (l.digits a) (l - 1) (fun x hx => by
         have := Nat.digits_lt_base (by omega) hx
@@ -175,7 +175,7 @@ private theorem padicValNat_factorial_div_factorial_le (l : ℕ) (hl : l.Prime) 
     (Nat.mul_div_cancel' hdvd).symm
   have hv : padicValNat l (y + a).factorial =
       padicValNat l a.factorial + padicValNat l ((y + a).factorial / a.factorial) := by
-    rw [← padicValNat.mul (Nat.factorial_ne_zero a) hq0, ← hsplit]
+    rw [← (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.factorial_ne_zero a) hq0, ← hsplit]
   have hv' : (padicValNat l (y + a).factorial : ℝ) =
       (padicValNat l a.factorial : ℝ) + (padicValNat l ((y + a).factorial / a.factorial) : ℝ) := by
     exact_mod_cast hv
@@ -213,7 +213,7 @@ theorem padicValFactorialRatioProd : CapVal := by
           capNat m y * ((y + m).factorial / m.factorial) := by
         unfold capNat
         rw [Finset.prod_range_succ]
-      rw [hsplit, padicValNat.mul hne1 hne2]
+      rw [hsplit, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hne1 hne2]
       push_cast
       have h1 := ih (by omega)
       have h2 := padicValNat_factorial_div_factorial_le l hl y m n (by omega)

@@ -32,7 +32,7 @@ theorem weight_blockWeight (d : (Σ o, E o) →₀ ℕ) :
 
 theorem coeff_eval₂_C_mul_X_fst {B : Type*} [CommRing B] (f : R →+* B) (a : (Σ o, E o) → B)
     (p : MvPolynomial (Σ o, E o) R) (e : κ →₀ ℕ) :
-    coeff e (eval₂ (C.comp f) (fun v => C (a v) * X v.1) p) =
+    AddMonoidAlgebra.coeff (eval₂ (C.comp f) (fun v => C (a v) * X v.1) p) e =
       eval₂ f a (weightedHomogeneousComponent (blockWeight E) ⇑e p) := by
   classical
   induction p using MvPolynomial.induction_on' with
@@ -54,7 +54,7 @@ theorem coeff_eval₂_C_mul_X_fst {B : Type*} [CommRing B] (f : R →+* B) (a : 
     · subst hd
       simp
     · rw [if_neg hd, if_neg (fun h => hd (DFunLike.coe_injective h)), mul_zero, eval₂_zero]
-  | add p q hp hq => simp only [eval₂_add, map_add, coeff_add, hp, hq]
+  | add p q hp hq => simp only [eval₂_add, map_add, MvPolynomial.coeff_add, hp, hq]
 
 theorem eval₂_C_mul_X_fst_of_homog [Fintype κ] {B : Type*} [CommRing B] (f : R →+* B)
     (a : (Σ o, E o) → B) {p : MvPolynomial (Σ o, E o) R} {b : κ → ℕ}
@@ -252,7 +252,7 @@ theorem BlowUpOverLocInChart.proof : BlowUpOverLocInChart.Statement.{u} := by
       intro o l h1 hmem
       rw [hQdef, RingHom.mem_ker, RingHom.comp_apply] at hmem
       simp only [hψ, coe_eval₂Hom, eval₂_X, map_mul, map_C, map_X] at hmem
-      have h2 := congrArg (coeff (Finsupp.single o 1)) hmem
+      have h2 := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single o 1)) hmem
       simp only [coeff_C_mul, coeff_X, coeff_X', if_true, mul_one, coeff_zero] at h2
       rw [Ideal.Quotient.eq_zero_iff_mem] at h2
       have h1' : aC ⟨o, l⟩ = 1 := Subtype.ext (by rw [haC]; exact h1)

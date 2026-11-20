@@ -442,7 +442,7 @@ theorem exists_isSecBasisM (y : (Σ k, ι k) → Ω) (k₀ : K) (n : ℕ) :
     rintro _ ⟨g, hg, rfl⟩
     rw [g.as_sum, map_sum]
     refine Submodule.sum_mem _ fun m hm => ?_
-    rw [← mul_one (coeff m g), ← smul_eq_mul, ← smul_monomial, map_zsmul]
+    rw [← mul_one (AddMonoidAlgebra.coeff g m), ← smul_eq_mul, ← smul_monomial, map_zsmul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨m, fun k => hg m hm k, rfl⟩)
   have : IsNoetherian ℤ (Submodule.span ℤ T) := isNoetherian_span_of_finite ℤ hTf
   have : IsNoetherian ℤ N := isNoetherian_of_le hle

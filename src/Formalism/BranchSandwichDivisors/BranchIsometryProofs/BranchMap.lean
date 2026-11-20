@@ -406,7 +406,7 @@ theorem lastRowDeriv_eq_X_mul_pderiv (R : Type*) [CommRing R] (n : ℕ) (s t : F
 
 theorem lastRowDiagDeriv_coeff (R : Type*) [CommRing R] (n : ℕ) (s : Fin n) (F : BP R n)
     (m : Fin (n + 1) × Fin n →₀ ℕ) :
-    coeff m (bmZ R n s s F) = (m (Fin.last n, s) : R) * coeff m F := by
+    AddMonoidAlgebra.coeff (bmZ R n s s F) m = (m (Fin.last n, s) : R) * AddMonoidAlgebra.coeff F m := by
   classical
   rw [lastRowDeriv_eq_X_mul_pderiv, coeff_X_mul']
   split_ifs with h
@@ -430,7 +430,7 @@ theorem bmZ_euler (R : Type*) [CommRing R] (n : ℕ) (β : Fin n → ℤ) (s : F
     (hF : IsWeightedHomogeneous (zW n) F β) : bmZ R n s s F = ((β s : ℤ) : R) • F := by
   ext m
   rw [lastRowDiagDeriv_coeff, coeff_smul, smul_eq_mul]
-  by_cases hc : coeff m F = 0
+  by_cases hc : AddMonoidAlgebra.coeff F m = 0
   · rw [hc, mul_zero, mul_zero]
   · have h1 := hF hc
     have h2 := bm_weight_zW m s
@@ -948,7 +948,7 @@ theorem bmC_eq_rename_of_pderiv {R : Type*} [CommRing R] [IsDomain R] [CharZero 
     have hle : Finsupp.single none 1 ≤ m := by
       rw [Finsupp.single_le_iff]; exact Nat.one_le_iff_ne_zero.2 hne
     have hm' : m = (m - Finsupp.single none 1) + Finsupp.single none 1 := (tsub_add_cancel_of_le hle).symm
-    have h1 := congrArg (coeff (m - Finsupp.single none 1)) h
+    have h1 := congrArg (AddMonoidAlgebra.coeff · (m - Finsupp.single none 1)) h
     rw [coeff_pderiv, ← hm', coeff_zero] at h1
     rcases mul_eq_zero.1 h1 with h2 | h2
     · exact (mem_support_iff.1 hm) h2
@@ -975,7 +975,7 @@ theorem bm_mem_dualWeyl_iff {R : Type} [CommRing R] [IsDomain R] [CharZero R] {r
     refine ⟨?_, fun l j hlj => ?_⟩
     · intro m hm
       funext s
-      have h1 := congrArg (coeff m) (heul s)
+      have h1 := congrArg (AddMonoidAlgebra.coeff · m) (heul s)
       rw [ndEul_coeff, coeff_smul, smul_eq_mul] at h1
       have h2 := mul_right_cancel₀ hm h1
       rw [← nd_weight_apply]
@@ -1077,7 +1077,7 @@ theorem bmE_eq_zero_of_comp {R σ B : Type*} [CommRing R] [AddCommMonoid B] (w :
     (G : MvPolynomial σ R) (h : ∀ β, weightedHomogeneousComponent w β G = 0) : G = 0 := by
   classical
   ext d
-  have := congrArg (coeff d) (h (Finsupp.weight w d))
+  have := congrArg (AddMonoidAlgebra.coeff · d) (h (Finsupp.weight w d))
   rw [coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at this
   rw [this, coeff_zero]
 
@@ -1095,7 +1095,7 @@ theorem bmE_comp_ne_iff {R σ B : Type*} [CommRing R] [AddCommMonoid B] [Decidab
   · intro h
     obtain ⟨d, hd, hw⟩ := Finset.mem_image.mp h
     intro h0
-    have := congrArg (coeff d) h0
+    have := congrArg (AddMonoidAlgebra.coeff · d) h0
     rw [coeff_weightedHomogeneousComponent, if_pos hw, coeff_zero] at this
     exact mem_support_iff.mp hd this
 
@@ -1515,13 +1515,13 @@ theorem bm_eig {R : Type} [CommRing R] [IsDomain R] [CharZero R] {n : ℕ} (lam 
   classical
   constructor
   ·
-    obtain ⟨m, hm⟩ : ∃ m, coeff m (zcomp R n β G) ≠ 0 := by
+    obtain ⟨m, hm⟩ : ∃ m, AddMonoidAlgebra.coeff (zcomp R n β G) m ≠ 0 := by
       by_contra hcon
       refine hβ (MvPolynomial.ext _ _ fun m => ?_)
       rw [coeff_zero]
       by_contra hm0
       exact hcon ⟨m, hm0⟩
-    have hm' : Finsupp.weight (zW n) m = β ∧ coeff m G ≠ 0 := by
+    have hm' : Finsupp.weight (zW n) m = β ∧ AddMonoidAlgebra.coeff G m ≠ 0 := by
       unfold zcomp at hm
       rw [coeff_weightedHomogeneousComponent] at hm
       by_cases hw : Finsupp.weight (zW n) m = β
@@ -1601,7 +1601,7 @@ theorem bm_isLow_iff {R : Type*} [CommRing R] {n : ℕ} (D : ℤ) (L : BP R n) :
   · intro h m hm
     by_contra hc
     have h0 := h _ (not_lt.mp hc)
-    have := congrArg (coeff m) h0
+    have := congrArg (AddMonoidAlgebra.coeff · m) h0
     rw [zcomp, coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at this
     exact mem_support_iff.mp hm this
 
@@ -1954,7 +1954,7 @@ theorem bmF_rowAct_WH (R : Type*) [CommRing R] {n : ℕ} {B : Type*} [AddCommMon
     IsWeightedHomogeneous w (rowAct R (extM R g) F) β := by
   rw [F.as_sum, map_sum]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
-  have := bmF_rowAct_monomial_WH R w hw g d (coeff d F)
+  have := bmF_rowAct_monomial_WH R w hw g d (AddMonoidAlgebra.coeff F d)
   rwa [hF (mem_support_iff.mp hd)] at this
 
 theorem bmF_rowAct_low (R : Type*) [CommRing R] {n : ℕ} (g : Matrix (Fin n) (Fin n) R) (D : ℤ) (L : BP R n)
@@ -1964,7 +1964,7 @@ theorem bmF_rowAct_low (R : Type*) [CommRing R] {n : ℕ} (g : Matrix (Fin n) (F
   rw [L.as_sum, map_sum] at hm'
   obtain ⟨d, hd, hmd⟩ := Finset.mem_biUnion.mp (MvPolynomial.support_sum hm')
   have hW := bmF_rowAct_monomial_WH R (zW n)
-    (fun a b s => by rw [bmF_zW_castSucc, bmF_zW_castSucc]) g d (coeff d L)
+    (fun a b s => by rw [bmF_zW_castSucc, bmF_zW_castSucc]) g d (AddMonoidAlgebra.coeff L d)
   rw [hW (mem_support_iff.mp hmd)]
   exact hL d hd
 

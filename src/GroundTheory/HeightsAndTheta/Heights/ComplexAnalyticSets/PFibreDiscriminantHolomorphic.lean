@@ -82,7 +82,7 @@ theorem fibreDiscr_eq_pairProd {Y : Set (σ → ℂ)} {d : ℕ} {A : (σ → ℂ
 theorem norm_prod_le_pow {ι : Type*} (s : Finset ι) (F : ι → ℂ) {C : ℝ} (hC : 1 ≤ C) {n : ℕ}
     (hs : s.card ≤ n) (hF : ∀ i ∈ s, ‖F i‖ ≤ C) : ‖∏ i ∈ s, F i‖ ≤ C ^ n := by
   rw [norm_prod]
-  calc ∏ i ∈ s, ‖F i‖ ≤ ∏ _i ∈ s, C := Finset.prod_le_prod (fun i _ => norm_nonneg _) hF
+  calc ∏ i ∈ s, ‖F i‖ ≤ ∏ _i ∈ s, C := Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) hF
     _ = C ^ s.card := Finset.prod_const C
     _ ≤ C ^ n := pow_le_pow_right₀ hC hs
 

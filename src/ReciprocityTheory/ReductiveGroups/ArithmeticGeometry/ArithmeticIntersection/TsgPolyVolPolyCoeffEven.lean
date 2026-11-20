@@ -17,7 +17,7 @@ theorem volPoly_coeff (D : ℕ) (J : ℕ → ℝ) (n : ℕ) :
       C ((D.choose j : ℝ) * J j * (-1) ^ j) * X ^ j := by
     intro j
     rw [neg_X_pow_eq_C_neg_one_pow_mul_X_pow, ← mul_assoc, ← map_mul]
-  rw [volPoly, Finset.sum_congr rfl fun j _ => h j, Polynomial.finset_sum_coeff]
+  rw [volPoly, Finset.sum_congr rfl fun j _ => h j, Polynomial.finsetSum_coeff]
   simp only [Polynomial.coeff_C_mul_X_pow]
   rw [Finset.sum_ite_eq]
   split_ifs with hn
@@ -26,14 +26,14 @@ theorem volPoly_coeff (D : ℕ) (J : ℕ → ℝ) (n : ℕ) :
     simp
 
 theorem tsgPoly_coeff_zero (D : ℕ) (κ : ℕ → ℝ) (P : ℝ[X]) : (tsgPoly D κ P).coeff 0 = 0 := by
-  rw [tsgPoly, Polynomial.finset_sum_coeff]
+  rw [tsgPoly, Polynomial.finsetSum_coeff]
   refine Finset.sum_eq_zero fun n _ => ?_
   split_ifs <;> simp [Polynomial.coeff_C_mul_X_pow]
 
 theorem tsgPoly_coeff_succ (D : ℕ) (κ : ℕ → ℝ) (P : ℝ[X]) (m : ℕ) :
     (tsgPoly D κ P).coeff (m + 1) =
       if Odd m then ((D : ℝ) + 1) * κ ((m + 1) / 2) / (((m + 1) / 2 : ℕ) : ℝ) * P.coeff m else 0 := by
-  rw [tsgPoly, Polynomial.finset_sum_coeff, Finset.sum_eq_single m]
+  rw [tsgPoly, Polynomial.finsetSum_coeff, Finset.sum_eq_single m]
   · by_cases ho : Odd m
     · rw [if_pos ho, if_pos ho, Polynomial.coeff_C_mul_X_pow, if_pos rfl]
     · rw [if_neg ho, if_neg ho, Polynomial.coeff_zero]

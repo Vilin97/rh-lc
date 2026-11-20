@@ -518,7 +518,7 @@ theorem _root_.GlobalTheory.DegCnt.Absorb.exists_absorbing_ideal : ∀ (K V : Ty
     ring
   · unfold _root_.GlobalTheory.DegCnt.NF.Db
     calc (1 : ℝ) = ∏ l ∈ S, (1 : ℝ) := by simp
-      _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one) hge
+      _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) hge
   · unfold _root_.GlobalTheory.DegCnt.NF.Del
     have hj : N.j ≤ r + 1 := by omega
     have hDj : _root_.Formalism.HermitianLatticeCounting.S6.Dl N.F N.F' N.j hj ≠ 0 := by

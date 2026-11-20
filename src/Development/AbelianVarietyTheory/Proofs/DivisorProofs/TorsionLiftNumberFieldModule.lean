@@ -7,7 +7,7 @@ theorem nsmul_surjective_torsion_lift (M : Type) [AddCommGroup M] (N e : ℕ) (h
     (h : ∀ j : ℕ, Nat.card {x : M // (N ^ j) • x = 0} = (N ^ j) ^ e)
     (j : ℕ) (y : M) (hy : (N ^ j) • y = 0) :
     ∃ z : M, (N ^ (j + 1)) • z = 0 ∧ N • z = y := by
-  let A : ℕ → AddSubgroup M := fun k => (DistribMulAction.toAddMonoidHom M (N ^ k)).ker
+  let A : ℕ → AddSubgroup M := fun k => (DistribSMul.toAddMonoidHom M (N ^ k)).ker
   have hA : ∀ k x, x ∈ A k ↔ (N ^ k) • x = 0 := fun k x => by
     simp [A, AddMonoidHom.mem_ker]
   have hcard : ∀ k, Nat.card (A k) = (N ^ k) ^ e := fun k => by
@@ -15,7 +15,7 @@ theorem nsmul_surjective_torsion_lift (M : Type) [AddCommGroup M] (N e : ℕ) (h
   have hpos : ∀ k, 0 < (N ^ k) ^ e := fun k => by positivity
   have hfin : ∀ k, Finite (A k) := fun k =>
     Nat.finite_of_card_ne_zero (by rw [hcard k]; exact (hpos k).ne')
-  let ψ : A (j + 1) →+ M := (DistribMulAction.toAddMonoidHom M N).comp (A (j + 1)).subtype
+  let ψ : A (j + 1) →+ M := (DistribSMul.toAddMonoidHom M N).comp (A (j + 1)).subtype
   have hψ : ∀ z : A (j + 1), ψ z = N • (z : M) := fun z => rfl
   have hN1 : ∀ x : M, x ∈ A 1 ↔ N • x = 0 := fun x => by rw [hA 1 x, pow_one]
   have hker : Nat.card ψ.ker = Nat.card (A 1) := by

@@ -18,7 +18,7 @@ theorem UpperTheory.Gal.Gen.rhoBound_pf :
       = Formalism.L2.DIV.detTwK W A • Formalism.L2.DIV.trAct A (x : MvPolynomial (InfinitePlace E × Fin a × Fin a) ℂ) := rfl
   rw [hcoe, MvPolynomial.coeff_smul, smul_eq_mul, map_mul, norm_mul]
   have hR0 : (0 : ℝ) ≤ R := le_trans zero_le_one hR
-  calc ‖ι.symm (Formalism.L2.DIV.detTwK W A)‖ * ‖ι.symm (MvPolynomial.coeff m (Formalism.L2.DIV.trAct A (x : MvPolynomial _ ℂ)))‖
+  calc ‖ι.symm (Formalism.L2.DIV.detTwK W A)‖ * ‖ι.symm (AddMonoidAlgebra.coeff (Formalism.L2.DIV.trAct A (x : MvPolynomial _ ℂ)) m)‖
       ≤ R ^ (∑ τ, a * (W τ).detShift.natAbs) * R ^ (∑ τ, ∑ i, (W τ).natW i) :=
         mul_le_mul hd hb (norm_nonneg _) (pow_nonneg hR0 _)
     _ = R ^ (∑ τ, ∑ i, (W τ).natW i + ∑ τ, a * (W τ).detShift.natAbs) := by

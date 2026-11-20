@@ -49,7 +49,7 @@ theorem part1 (w : HeightOneSpectrum (𝓞 K)) (n : ℕ) (hn : n ≠ 0) :
     vw w ((n : ℕ) : K) = ramw w * (padicValNat (plc w) n : ℤ) := by
   have hp := plc_prime w
   haveI : Fact (plc w).Prime := ⟨hp⟩
-  obtain ⟨m, hm⟩ := pow_padicValNat_dvd (p := plc w) (n := n)
+  obtain ⟨m, hm⟩ := (fun {p n : ℕ} => _root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat p n)) (p := plc w) (n := n)
   have hm0 : m ≠ 0 := by
     rintro rfl
     exact hn (by simpa using hm)
@@ -88,7 +88,7 @@ theorem part2 (w : HeightOneSpectrum (𝓞 K)) (g₁ g₂ a : ℕ) (h1 : g₁.Pr
   haveI : Fact (plc w).Prime := ⟨hp⟩
   have ha1 : g₁ ^ a ≠ 0 := pow_ne_zero _ h1.ne_zero
   have ha2 : g₂ ^ a ≠ 0 := pow_ne_zero _ h2.ne_zero
-  rw [part1 w _ (mul_ne_zero ha1 ha2), padicValNat.mul ha1 ha2, padicValNat.pow g₁ a,
+  rw [part1 w _ (mul_ne_zero ha1 ha2), (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) ha1 ha2, padicValNat.pow g₁ a,
     padicValNat.pow g₂ a, pv_prime _ _ hp h1, pv_prime _ _ hp h2]
   by_cases e1 : plc w = g₁
   · have e2 : plc w ≠ g₂ := fun e => h12 (e1.symm.trans e)

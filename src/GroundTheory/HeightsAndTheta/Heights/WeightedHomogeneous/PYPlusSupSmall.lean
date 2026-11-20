@@ -61,7 +61,7 @@ theorem subst_homog {τ : ℕ} {f : MvPolynomial (Coord D.extSizes) ℤ}
     rw [← Finset.sum_smul, Fintype.sum_sigma, Fintype.sum_option]
     simp [h0, hτ]
   rw [hs] at hp
-  have hC : IsWeightedHomogeneous (coordDeg n) (algebraMap ℤ (MvPolynomial (Coord n) ℤ) (coeff m f)) 0 := by
+  have hC : IsWeightedHomogeneous (coordDeg n) (algebraMap ℤ (MvPolynomial (Coord n) ℤ) (AddMonoidAlgebra.coeff f m)) 0 := by
     rw [algebraMap_eq]
     exact isWeightedHomogeneous_C _ _
   simpa using hC.mul hp

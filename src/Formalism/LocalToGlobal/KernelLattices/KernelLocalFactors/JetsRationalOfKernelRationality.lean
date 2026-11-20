@@ -53,7 +53,7 @@ theorem aeval_scale_monomial {σ : Type} (u : σ → K) (s : σ →₀ ℕ) (c :
   rw [h, monomial_eq, C_mul, algebraMap_eq, mul_assoc]
 
 theorem coeff_scale {σ : Type} (u : σ → K) (R : MvPolynomial σ K) (s : σ →₀ ℕ) :
-    coeff s (aeval (fun i => C (u i) * X i : σ → MvPolynomial σ K) R) = coeff s R * s.prod fun i k => u i ^ k := by
+    AddMonoidAlgebra.coeff (aeval (fun i => C (u i) * X i : σ → MvPolynomial σ K) R) s = AddMonoidAlgebra.coeff R s * s.prod fun i k => u i ^ k := by
   classical
   induction R using MvPolynomial.induction_on' with
   | monomial m c =>
@@ -61,7 +61,7 @@ theorem coeff_scale {σ : Type} (u : σ → K) (R : MvPolynomial σ K) (s : σ �
     split_ifs with h
     · subst h; rfl
     · simp
-  | add f g hf hg => rw [map_add, coeff_add, coeff_add, hf, hg, add_mul]
+  | add f g hf hg => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hf, hg, add_mul]
 
 open Classical in
 theorem degAt_eq (m : DVar ι a b →₀ ℕ) (τ : ι) : degAt m τ = ∑ k : DVar ι a b, if k.1 = τ then m k else 0 := by
@@ -138,9 +138,9 @@ theorem deg_of_wt [Infinite K] {ν : ι → Fin a → ℕ} {Q : Pol K ι a} (hQ 
   have h1 := hQ (bSc a τ x) (isBor_bSc τ hx)
   have h2 := subD_colSub_bSc (b := b) τ x Q
   rw [h1, map_smul] at h2
-  have h3 := congrArg (coeff s) h2
+  have h3 := congrArg (AddMonoidAlgebra.coeff · s) h2
   rw [coeff_scale, scale_prod, coeff_smul, smul_eq_mul, mul_comm] at h3
-  have hc : coeff s (subD K ι a b Q) ≠ 0 := mem_support_iff.1 hs
+  have hc : AddMonoidAlgebra.coeff (subD K ι a b Q) s ≠ 0 := mem_support_iff.1 hs
   have h4 := mul_left_cancel₀ hc h3
   rw [← h4]
   have h5 : (∏ τ', ∏ r, bSc a τ x τ' r r ^ ν τ' r) = x ^ ∑ r, ν τ r := by

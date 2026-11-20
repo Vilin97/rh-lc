@@ -130,7 +130,7 @@ theorem exists_isSubvar_primeOf (hx : x ≠ 0) : ∃ d : ℕ, IsSubvar x (primeO
     have hmem : X i * g - 1 ∈ primeOf (S := k) x := by
       rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_mul, hb, map_one, sub_self]
     have h0' := homogeneousComponent_mem_primeOf x hmem 0
-    have hc : coeff 0 (X i * g - 1 : Poly k N) = -1 := by
+    have hc : AddMonoidAlgebra.coeff (X i * g - 1 : Poly k N) 0 = -1 := by
       rw [← congrFun constantCoeff_eq]
       simp
     rw [homogeneousComponent_zero, hc] at h0'

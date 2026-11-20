@@ -104,7 +104,7 @@ theorem norm_det_le_of_loewner {H A : Matrix n n ℂ} {c : ℝ} (hc : 0 < c)
       ring
     have hdM : ‖M.det‖ ≤ c ^ Fintype.card n := by
       rw [hM.det_eq_prod_eigenvalues, norm_prod]
-      refine (Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => ?_).trans_eq
+      refine (Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => ?_).trans_eq
         (by rw [Finset.prod_const, Finset.card_univ] : ∏ _i : n, c = c ^ Fintype.card n)
       have := hb i
       rwa [RCLike.norm_ofReal]

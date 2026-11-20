@@ -42,7 +42,7 @@ theorem vsize_seen_mul_le (V : HSp D) (a b : GA D V) {ξ : Fin V.rank → D.host
   have hprodI : (∏ w, vInf w (M *ᵥ x)) ≤ ((V.rank : ℝ≥0) + 1) ^ Fintype.card (InfinitePlace D.host.F) *
       (∏ w, hI w) * ∏ w, vInf w x := by
     calc (∏ w, vInf w (M *ᵥ x)) ≤ ∏ w, (((V.rank : ℝ≥0) + 1) * hI w * vInf w x) :=
-          Finset.prod_le_prod (fun _ _ => zero_le) (fun w _ => hIle w)
+          Finset.prod_le_prod₀ (fun _ _ => zero_le) (fun w _ => hIle w)
       _ = _ := by rw [Finset.prod_mul_distrib, Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ]
   have hsuppF : (Function.mulSupport hF).Finite := finite_mulSupport_htFin D.host.F (matHom V b⁻¹)
   have hsuppx : (Function.mulSupport fun v => vFin v x).Finite := Filter.eventually_cofinite.mp hfx
@@ -214,7 +214,7 @@ theorem exists_vsize_le (V : HSp D) (fr : UI.Frames D V) (B : ℝ) : ∃ A : ℝ
       (fun v => vFin_seen_le_one V ha hu v)
   have hinf : (∏ w, (vInf w (seen V a u) : ℝ)) ≤ Q * r ^ Fintype.card (InfinitePlace D.host.F) := by
     calc (∏ w, (vInf w (seen V a u) : ℝ)) ≤ ∏ w, ((∑ i, ∑ j, ‖fr.P w i j‖) * r) :=
-          Finset.prod_le_prod (fun _ _ => NNReal.coe_nonneg _) (fun w _ => vInf_seen_le V fr y u w)
+          Finset.prod_le_prod₀ (fun _ _ => NNReal.coe_nonneg _) (fun w _ => vInf_seen_le V fr y u w)
       _ = Q * r ^ Fintype.card (InfinitePlace D.host.F) := by
           rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ]
   have hcard : Fintype.card (InfinitePlace D.host.F) ≠ 0 := Fintype.card_ne_zero

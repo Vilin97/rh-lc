@@ -148,7 +148,7 @@ theorem Gen.zOf_mem (hx0 : x (e 0) ≠ 0) (hw : G.Good w) {ρ : ℂ}
 
 private theorem sum_coeff_homogenize_eq_pow_mul_eval₂ {S : Type*} [Field S] (F : MvPolynomial ι ℤ) (v a : ι → S) (d : S)
     (hv : ∀ i, v i = a i / d) (hd : d ≠ 0) (N : ℕ) (hN : F.totalDegree ≤ N) :
-    ∑ m ∈ F.support, ((MvPolynomial.coeff m F : ℤ) : S) * d ^ (N - ∑ i ∈ m.support, m i) *
+    ∑ m ∈ F.support, ((AddMonoidAlgebra.coeff F m : ℤ) : S) * d ^ (N - ∑ i ∈ m.support, m i) *
       ∏ i ∈ m.support, a i ^ m i = d ^ N * MvPolynomial.eval₂ (Int.castRingHom S) v F := by
   rw [MvPolynomial.eval₂_eq, Finset.mul_sum]
   refine Finset.sum_congr rfl (fun m hm => ?_)
@@ -163,7 +163,7 @@ private theorem sum_coeff_homogenize_eq_pow_mul_eval₂ {S : Type*} [Field S] (F
 
 private theorem map_homogenized_sub_dd_pow_X_eq {S : Type*} [Field S] (φ : MvPolynomial (Fin (D + 1)) ℤ →+* S) (t : S)
     (hd : φ G.dd ≠ 0) :
-    Polynomial.eval₂ φ t ((∑ m ∈ G.Θ.support, Polynomial.C (MvPolynomial.C (MvPolynomial.coeff m G.Θ) *
+    Polynomial.eval₂ φ t ((∑ m ∈ G.Θ.support, Polynomial.C (MvPolynomial.C (AddMonoidAlgebra.coeff G.Θ m) *
         G.dd ^ (G.Θ.totalDegree - ∑ i ∈ m.support, m i)) * ∏ i ∈ m.support, G.Q i ^ m i) -
       Polynomial.C (G.dd ^ G.Θ.totalDegree) * Polynomial.X) =
       φ G.dd ^ G.Θ.totalDegree * (MvPolynomial.eval₂ (Int.castRingHom S) (G.evQ φ t) G.Θ - t) := by
@@ -197,14 +197,14 @@ private theorem deh_eq_zero_of_mem_pts_of_deh_eq_zero (hx0 : x (e 0) ≠ 0) (F :
     {z : ι → ℂ} (hz : z ∈ pts (coordIdeal ℤ x)) (hz0 : z (e 0) ≠ 0) : deh z (e 0) F = 0 := by
   have hz' : z ≠ 0 ∧ ∀ f ∈ coordIdeal ℤ x,
       MvPolynomial.eval z (MvPolynomial.map (Int.castRingHom ℂ) f) = 0 := hz
-  have hmem : (∑ m ∈ F.support, MvPolynomial.C (MvPolynomial.coeff m F) *
+  have hmem : (∑ m ∈ F.support, MvPolynomial.C (AddMonoidAlgebra.coeff F m) *
       X (e 0) ^ (F.totalDegree - ∑ i ∈ m.support, m i) * ∏ i ∈ m.support, X i ^ m i) ∈ coordIdeal ℤ x := by
     show _ ∈ RingHom.ker (coneMap ℤ x)
     rw [RingHom.mem_ker, coneMap, map_sum]
     have h1 : ∀ m ∈ F.support, (aeval fun i => Polynomial.C (x i) * Polynomial.X)
-        (MvPolynomial.C (MvPolynomial.coeff m F) * X (e 0) ^ (F.totalDegree - ∑ i ∈ m.support, m i) *
+        (MvPolynomial.C (AddMonoidAlgebra.coeff F m) * X (e 0) ^ (F.totalDegree - ∑ i ∈ m.support, m i) *
           ∏ i ∈ m.support, X i ^ m i) =
-        Polynomial.C (((MvPolynomial.coeff m F : ℤ) : Ω) * x (e 0) ^ (F.totalDegree - ∑ i ∈ m.support, m i) *
+        Polynomial.C (((AddMonoidAlgebra.coeff F m : ℤ) : Ω) * x (e 0) ^ (F.totalDegree - ∑ i ∈ m.support, m i) *
           ∏ i ∈ m.support, x i ^ m i) * Polynomial.X ^ F.totalDegree := by
       intro m hm
       have hs : ∑ i ∈ m.support, m i ≤ F.totalDegree := MvPolynomial.le_totalDegree hm

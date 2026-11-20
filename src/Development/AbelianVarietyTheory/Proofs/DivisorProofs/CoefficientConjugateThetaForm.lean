@@ -90,7 +90,7 @@ theorem exists_real_model (V : HSp D) (θ : InfFam D) (c : CoefA V) (lam : D.wha
   refine Subtype.ext (MvPolynomial.ext _ _ fun m => ?_)
   let L : c.W →ₗ[ℂ] ℂ := MvPolynomial.lcoeff ℂ m ∘ₗ (VV ℂ lam).subtype ∘ₗ e.symm.toLinearMap
   have hf : Continuous fun h => L (c.ρ h (e v)) := L.continuous_of_finiteDimensional.comp (hc.2.2.1 _)
-  have hg : Continuous fun h => MvPolynomial.coeff m (actP lam (invTrK fun τ => realGL θ V h (l.symm τ)) v.1) := by
+  have hg : Continuous fun h => AddMonoidAlgebra.coeff (actP lam (invTrK fun τ => realGL θ V h (l.symm τ)) v.1) m := by
     refine continuous_coeff_actP lam _ (fun τ => ?_) _ m
     refine (((realGL_laws hθ V).1 (l.symm τ)).comp continuous_inv).matrix_transpose.congr fun h => ?_
     show (realGL θ V h⁻¹ (l.symm τ) : Matrix (Fin V.rank) (Fin V.rank) ℂ)ᵀ = _
@@ -99,7 +99,7 @@ theorem exists_real_model (V : HSp D) (θ : InfFam D) (c : CoefA V) (lam : D.wha
   by_contra hne
   obtain ⟨γ, hγ, k, hk, hU, -⟩ := GlobalTheory.RealApprox.weak_approx_real V u hu _ (isOpen_ne_fun hf hg) hne
   refine hU ?_
-  show L (c.ρ (γ * k) (e v)) = MvPolynomial.coeff m (actP lam (invTrK fun τ => realGL θ V (γ * k) (l.symm τ)) v.1)
+  show L (c.ρ (γ * k) (e v)) = AddMonoidAlgebra.coeff (actP lam (invTrK fun τ => realGL θ V (γ * k) (l.symm τ)) v.1) m
   rw [map_mul, map_mul (realGL θ V), hc.1 k hk, hfin k hk, mul_one, mul_one, hrat ⟨γ, hγ⟩ v]
   simp [L, rhoK_coe]
 

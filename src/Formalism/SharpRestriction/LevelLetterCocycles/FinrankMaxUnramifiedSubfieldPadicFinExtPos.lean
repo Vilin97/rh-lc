@@ -106,7 +106,7 @@ theorem vdeg (K : FinExt l) {m : ℕ} (hm : 0 < m) :
   have h0 : finrank ℚ_[l] ↥(Ks K 1) ≠ 0 := by
     rw [finrank_Ks K one_pos]
     exact Nat.mul_ne_zero hp.ne' (Nat.mul_ne_zero (pow_pos (Fact.out : l.Prime).pos _).ne' h1.ne')
-  rw [e, padicValNat.mul (pow_pos (Fact.out : l.Prime).pos _).ne' h0, padicValNat.prime_pow]
+  rw [e, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_pos (Fact.out : l.Prime).pos _).ne' h0, padicValNat.prime_pow]
   omega
 
 theorem gK_zero (K : FinExt l) (h2 : finrank ℚ_[l] ↥K.1 = finrank ℚ_[l] ↥(K0 K) * 2) :
@@ -116,7 +116,7 @@ theorem gK_zero (K : FinExt l) (h2 : finrank ℚ_[l] ↥K.1 = finrank ℚ_[l] �
   have h1 : padicValNat l (l - 1) = 0 := padicValNat.eq_zero_of_not_dvd (Nat.not_dvd_of_pos_of_lt (by omega) (by omega))
   rw [finrank_Ks K one_pos, h2]
   simp only [Nat.sub_self, pow_zero, one_mul]
-  rw [padicValNat.mul hp.ne' (by omega), padicValNat.mul hp.ne' (by omega), h1]
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hp.ne' (by omega), (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hp.ne' (by omega), h1]
   omega
 
 end Formalism.MainNotions.N.PreambleDegrees

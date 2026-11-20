@@ -30,7 +30,7 @@ theorem htInf_pos' (g : GL (Fin n) (Cinf E)) : 0 < htInf g := by
 theorem htInf_mul_le (g h : GL (Fin n) (Cinf E)) : htInf (g * h) ≤ htInf g * htInf h := by
   unfold htInf
   rw [← Finset.prod_mul_distrib]
-  refine Finset.prod_le_prod (fun w _ => (htGL_pos _).le) fun w _ => ?_
+  refine Finset.prod_le_prod₀ (fun w _ => (htGL_pos _).le) fun w _ => ?_
   rw [map_mul]
   exact htGL_mul_le _ _
 

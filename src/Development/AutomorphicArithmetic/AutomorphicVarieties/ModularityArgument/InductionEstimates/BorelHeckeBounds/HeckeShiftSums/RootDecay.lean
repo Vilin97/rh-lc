@@ -181,7 +181,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.rootDecay :
         refine (hc Y hYY hYR Cε hCε2 w).trans ?_
         have hprod : ∏ i, ‖Y i‖ ≤ (C₁' * gain) ^ (k + 1) := by
           rw [← Fin.prod_const]
-          exact Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i _ => hYn i
+          exact Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i _ => hYn i
         have hprod' : ∏ i, ‖Y i‖ ≤ (C₁' * gain) ^ k * R₁ := by
           refine hprod.trans ?_
           rw [pow_succ]

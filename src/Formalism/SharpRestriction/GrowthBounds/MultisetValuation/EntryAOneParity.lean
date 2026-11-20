@@ -122,27 +122,27 @@ structure ea_Cls (X : Sys p) (j : ℕ) (v : X.Pl) (K' : Type) [Field K'] [Algebr
 def SeriesGaussValuationFirst (X : Sys p) : Prop :=
   ∀ (v : X.Pl), ∀ j < X.mm, ∀ (K' : Type) [Field K'] [Algebra (K0 p) K'] (R' : Subring K') (vp : K')
     (F : MvPowerSeries (X.ZA j) K'), ea_Cls X j v K' R' vp F → ∀ (I : X.ColCh j) (n : X.FrI j →₀ ℕ),
-      ea_geR p R' (MvPolynomial.coeff n (applyD (X.PIv j I v) F)) (X.g0v v (j + 1))
+      ea_geR p R' (AddMonoidAlgebra.coeff (applyD (X.PIv j I v) F) n) (X.g0v v (j + 1))
 
 def SeriesGaussValuationSecond (X : Sys p) : Prop :=
   ∀ (v : X.Pl), ∀ j < X.mm, ∀ (K' : Type) [Field K'] [Algebra (K0 p) K'] (R' : Subring K') (vp : K')
     (F : MvPowerSeries (X.ZA j) K'), ea_Cls X j v K' R' vp F → ∀ (I : X.ColCh j) (n : X.FrI j →₀ ℕ),
-      ea_geR p R' (MvPolynomial.coeff n (applyD (X.PIv j I v) F)) (X.gv v (j + 1) - X.alEven v)
+      ea_geR p R' (AddMonoidAlgebra.coeff (applyD (X.PIv j I v) F) n) (X.gv v (j + 1) - X.alEven v)
 
 def ea_RestKerB (X : Sys p) : Prop :=
   ∀ (v : X.Pl), ∀ j < X.mm, ∀ i ∈ Icc 1 X.G.P.r, ∀ (K' : Type) [Field K'] [Algebra (K0 p) K'] (R' : Subring K')
     (vp : K') (F : MvPowerSeries (X.ZA j) K'), ea_Cls X j v K' R' vp F → ∀ (I : X.ColCh j) (n : X.FrI j →₀ ℕ),
-      ea_geR p R' (MvPolynomial.coeff n (applyD (PIvS X j I (fun _ => i) v) F)) (X.gv v (j + 1))
+      ea_geR p R' (AddMonoidAlgebra.coeff (applyD (PIvS X j I (fun _ => i) v) F) n) (X.gv v (j + 1))
 
 theorem ea_low (D : Formalism.BasicNotions.D7) (Y : Pend X) (hS : ea_RestSU X Y) (hA : admitted D X Y) (v : X.Pl) (j : ℕ)
     (P : X.ColCh j → MvPolynomial (X.ZA j) (MvPolynomial (X.FrI j) ℤ)) (g : ℝ)
     (hK : ∀ (K' : Type) [Field K'] [Algebra (K0 p) K'] (R' : Subring K') (vp : K')
       (F : MvPowerSeries (X.ZA j) K'), ea_Cls X j v K' R' vp F → ∀ (I : X.ColCh j) (n : X.FrI j →₀ ℕ),
-      ea_geR p R' (MvPolynomial.coeff n (applyD (P I) F)) g) :
+      ea_geR p R' (AddMonoidAlgebra.coeff (applyD (P I) F) n) g) :
     ∀ U : MvPowerSeries (X.EA j ⊕ X.EA j) Y.Kc, IntR Y.Oc (inParamK p Y.Kc U) →
       ∀ (I : X.ColCh j) (n : X.FrI j →₀ ℕ),
-        Y.geC (MvPolynomial.coeff n (applyD (P I)
-          (X.ThZA Y.Kc j (MvPowerSeries.map (algebraMap (K0 p) Y.Kc) (expS p (-Y.PhAt j v)) * U)))) g := by
+        Y.geC (AddMonoidAlgebra.coeff (applyD (P I)
+          (X.ThZA Y.Kc j (MvPowerSeries.map (algebraMap (K0 p) Y.Kc) (expS p (-Y.PhAt j v)) * U))) n) g := by
   intro U hU I n
   obtain ⟨R', vp, hvp, hRp, hval, htr⟩ := ea_ext Y
   have hcls := hS (hA.1 p) hA.2.2.2.1 v j U hU (ea_K Y) R' vp hvp hRp fun x hx => (htr x).2 hx

@@ -510,7 +510,7 @@ theorem minor_line : GlobalTheory.GapIn.Hyp → GlobalTheory.GapIn.AmpKF0 → Ce
       have h1 : ∀ a, ‖s a‖ ≤ large₂.sc.b ^ ((2 * Cg + 2) * (D.R.m : ℝ)) := fun a =>
         (hs1 a).trans (pow_le_rpow hb1 (le_max_of_le_left (by positivity)) hQ (by linarith) (by linarith))
       rw [norm_prod]
-      refine (Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun a _ => h1 _).trans ?_
+      refine (Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun a _ => h1 _).trans ?_
       rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
       refine (pow_le_rpow (β := D.R.m) hb1 (by positivity) le_rfl
         (mul_nonneg (by linarith) (by linarith)) (by linarith)).trans (le_of_eq ?_)

@@ -127,7 +127,7 @@ local notation "𝔭" => Ideal.span {(p : ACris K p)}
 omit [IsPerfectoidField K p] in
 
 theorem pow_dvd_factorial {k n : ℕ} (h : p * k ≤ n) : p ^ k ∣ n.factorial :=
-  ((pow_dvd_pow p (by rw [padicValNat_factorial_mul]; omega)).trans pow_padicValNat_dvd).trans
+  ((pow_dvd_pow p (by rw [padicValNat_factorial_mul]; omega)).trans (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))).trans
     (Nat.factorial_dvd_factorial h)
 
 theorem natCast_mem_pow {k n : ℕ} (h : p ^ k ∣ n) :

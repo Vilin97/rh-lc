@@ -185,12 +185,12 @@ theorem diag_le {n q : ℕ} (hq : 2 ≤ q) {s : ℂ} (hs : 1 < s.re) (z : Fin n 
   rw [norm_prod]
   calc ∏ a, ‖∏ b, (1 - (z a : ℂ) * conj (z b : ℂ) * (((q : ℝ) ^ (-s.re) : ℝ) : ℂ))⁻¹‖
       ≤ ∏ _a : Fin n, ((1 - (q : ℝ) ^ (1 - s.re))⁻¹) ^ n := by
-        apply Finset.prod_le_prod (fun _ _ => norm_nonneg _)
+        apply Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _)
         intro a _
         rw [norm_prod]
         calc ∏ b, ‖(1 - (z a : ℂ) * conj (z b : ℂ) * (((q : ℝ) ^ (-s.re) : ℝ) : ℂ))⁻¹‖
             ≤ ∏ _b : Fin n, (1 - (q : ℝ) ^ (1 - s.re))⁻¹ :=
-              Finset.prod_le_prod (fun _ _ => norm_nonneg _) (fun b _ => hfac a b)
+              Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) (fun b _ => hfac a b)
           _ = ((1 - (q : ℝ) ^ (1 - s.re))⁻¹) ^ n := by simp
     _ = ((1 - (q : ℝ) ^ (1 - s.re))⁻¹) ^ (n * n) := by simp [pow_mul]
 

@@ -86,7 +86,7 @@ theorem norm_term_le {γ : M2 E N} (hγ : γ ∈ UU E N) {Z : CM Ψ N N} (hZ : Z
   simp only [eisTerm, EisTrans.hFac_zero, norm_mul, norm_inv, norm_prod, norm_pow]
   refine mul_le_mul_of_nonneg_left (inv_anti₀ ?_ ?_) (norm_nonneg _)
   · exact Finset.prod_pos fun τ _ => pow_pos (norm_pos_iff.2 (hDen_growth Ψ hγ hZ v τ).1) _
-  · refine Finset.prod_le_prod (fun _ _ => by positivity) fun τ _ => ?_
+  · refine Finset.prod_le_prod₀ (fun _ _ => by positivity) fun τ _ => ?_
     obtain ⟨-, c, h1, -, h3⟩ := hDen_growth Ψ hγ hZ v τ
     refine pow_le_pow_left₀ (norm_nonneg _) (le_trans ?_ (h3 t)) _
     exact le_mul_of_one_le_right (norm_nonneg _) (by nlinarith [mul_nonneg ht h1])

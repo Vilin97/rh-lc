@@ -95,8 +95,8 @@ theorem character_value_formula_holds : StatChiVal := by
     have ht0 : t' ≠ 0 := by
       rintro rfl
       exact ht' (dvd_zero _)
-    rw [padicValNat.mul hl1 (mul_ne_zero (pow_ne_zero _ (Fact.out : ℓ.Prime).ne_zero) ht0),
-      padicValNat.mul (pow_ne_zero _ (Fact.out : ℓ.Prime).ne_zero) ht0, padicValNat.prime_pow,
+    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hl1 (mul_ne_zero (pow_ne_zero _ (Fact.out : ℓ.Prime).ne_zero) ht0),
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ (Fact.out : ℓ.Prime).ne_zero) ht0, padicValNat.prime_pow,
       padicValNat.eq_zero_of_not_dvd ht',
       padicValNat.eq_zero_of_not_dvd (Nat.not_dvd_of_pos_of_lt (by omega) (by omega))]
     ring

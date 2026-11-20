@@ -27,14 +27,14 @@ theorem UpperTheory.V.Alg.M.lk_holds :
   let 𝔮 : Ideal (mR Q) :=
     { carrier := leadKer Q wt φ
       add_mem' := fun {p q} hp hq μ => by
-        show φ (MvPolynomial.coeff μ (p.1 + q.1)) ∈ _
+        show φ (AddMonoidAlgebra.coeff (p.1 + q.1) μ) ∈ _
         rw [MvPolynomial.coeff_add, map_add]
         exact add_mem (hp μ) (hq μ)
       zero_mem' := fun μ => by
         show φ 0 ∈ _
         rw [map_zero φ]; exact zero_mem _
       smul_mem' := fun c p hp μ => by
-        show φ (MvPolynomial.coeff μ (c.1 * p.1)) ∈ _
+        show φ (AddMonoidAlgebra.coeff (c.1 * p.1) μ) ∈ _
         rw [MvPolynomial.coeff_mul, map_sum]
         refine Submodule.sum_mem _ fun d hd => ?_
         rw [map_mul]
@@ -56,12 +56,12 @@ theorem UpperTheory.V.Alg.M.lk_holds :
     exact Submodule.sum_mem _ fun μ _ =>
       Submodule.subset_span ⟨hmono μ _ _ rfl (hp μ), toDeg μ, mono_mem _ μ _ _⟩
   · intro p hp μ
-    have : φ (MvPolynomial.coeff μ p.1) = 0 := hp μ
+    have : φ (AddMonoidAlgebra.coeff p.1 μ) = 0 := hp μ
     rw [this]; exact zero_mem _
   · intro b hb
     exact hmono 0 _ b.1 rfl (hsat.2 b.1 b.2 hb)
   · intro c hc p hp μ
-    have h1 : φ (MvPolynomial.coeff μ (MvPolynomial.C (algebraMap O A c) * p.1)) ∈ _ := hp μ
+    have h1 : φ (AddMonoidAlgebra.coeff (MvPolynomial.C (algebraMap O A c) * p.1) μ) ∈ _ := hp μ
     rw [MvPolynomial.coeff_C_mul, map_mul, AlgHom.commutes, ← Algebra.smul_def,
       ← algebraMap_smul (FractionRing O)] at h1
     have hc' : algebraMap O (FractionRing O) c ≠ 0 := by

@@ -35,7 +35,7 @@ lemma fockR_add_left (f f' g : MvPolynomial σ R) :
     fockR_eq_sum f' g (f.support ∪ f'.support) Finset.subset_union_right,
     ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun m _ => ?_
-  simp only [coeff_add]; ring
+  simp only [MvPolynomial.coeff_add]; ring
 
 lemma fockR_smul_left (c : R) (f g : MvPolynomial σ R) :
     fockR (c • f) g = c * fockR f g := by
@@ -135,19 +135,19 @@ lemma prod_blockEmb_monomial (p : S → (Fin k × Fin n →₀ ℕ)) (a : S → 
 
 lemma prod_blockEmb_expand [DecidableEq S] (F : S → MvPolynomial (Fin k × Fin n) K) :
     ∏ s, blockEmb K s (F s) = ∑ p ∈ Fintype.piFinset (fun s => (F s).support),
-      monomial (glue p) (∏ s, coeff (p s) (F s)) := by
+      monomial (glue p) (∏ s, AddMonoidAlgebra.coeff (F s) (p s)) := by
   calc ∏ s, blockEmb K s (F s)
-      = ∏ s, ∑ m ∈ (F s).support, blockEmb K s (monomial m (coeff m (F s))) := by
+      = ∏ s, ∑ m ∈ (F s).support, blockEmb K s (monomial m (AddMonoidAlgebra.coeff (F s) m)) := by
         refine Finset.prod_congr rfl fun s _ => ?_
         conv_lhs => rw [(F s).as_sum]
         rw [map_sum]
     _ = ∑ p ∈ Fintype.piFinset (fun s => (F s).support),
-          ∏ s, blockEmb K s (monomial (p s) (coeff (p s) (F s))) := Finset.prod_univ_sum _ _
+          ∏ s, blockEmb K s (monomial (p s) (AddMonoidAlgebra.coeff (F s) (p s))) := Finset.prod_univ_sum _ _
     _ = _ := Finset.sum_congr rfl fun p _ => prod_blockEmb_monomial _ _
 
 lemma fockR_expand {τ : Type*} (f g : MvPolynomial τ K) :
     fockR f g = ∑ m ∈ f.support, ∑ m' ∈ g.support,
-      fockR (monomial m (coeff m f)) (monomial m' (coeff m' g)) := by
+      fockR (monomial m (AddMonoidAlgebra.coeff f m)) (monomial m' (AddMonoidAlgebra.coeff g m')) := by
   conv_lhs => rw [f.as_sum, g.as_sum]
   rw [fockR_sum_left]
   exact Finset.sum_congr rfl fun m _ => fockR_sum_right _ _ _

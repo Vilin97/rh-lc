@@ -198,7 +198,7 @@ theorem near_terms_one_type : GlobalTheory.FlagMeas.FlagMeasureBound → GlobalT
         (2 * B.I.f * q * (11 * q * Real.log (bigX B b))) ^ a := by
       calc ∏ i, 2 * (B.I.f : ℝ) * j i * Real.log (1 / (2 * lo))
           ≤ ∏ _i : Fin a, 2 * (B.I.f : ℝ) * q * (11 * q * Real.log (bigX B b)) := by
-            refine Finset.prod_le_prod (fun i _ => by positivity) fun i _ => ?_
+            refine Finset.prod_le_prod₀ (fun i _ => by positivity) fun i _ => ?_
             have hji : (j i : ℝ) ≤ q := by
               exact_mod_cast le_trans (Finset.single_le_sum (fun k _ => Nat.zero_le (j k))
                 (Finset.mem_univ i)) hjq

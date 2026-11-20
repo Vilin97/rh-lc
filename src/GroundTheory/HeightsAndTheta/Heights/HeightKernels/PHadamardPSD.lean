@@ -44,7 +44,7 @@ theorem le_of_diag_pos {n : ℕ} {A : Matrix (Fin n) (Fin n) ℂ} (hA : A.PosSem
     simpa using (congrArg Complex.re h).symm
   have hprod : ∏ i, hB.1.eigenvalues i ≤ 1 := by
     calc ∏ i, hB.1.eigenvalues i ≤ ∏ i, Real.exp (hB.1.eigenvalues i - 1) :=
-          prod_le_prod (fun i _ => hB.eigenvalues_nonneg i)
+          prod_le_prod₀ (fun i _ => hB.eigenvalues_nonneg i)
             (fun i _ => by linarith [Real.add_one_le_exp (hB.1.eigenvalues i - 1)])
       _ = Real.exp (∑ i, (hB.1.eigenvalues i - 1)) := (Real.exp_sum _ _).symm
       _ = 1 := by simp [sum_sub_distrib, htr]

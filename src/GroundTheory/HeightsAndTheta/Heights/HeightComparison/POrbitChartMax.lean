@@ -45,7 +45,7 @@ def homDeg (F : MvPolynomial (Coord n) ℤ) : ι → ℕ :=
 
 def homogenize (c : (k : ι) → Fin (n k + 1)) (F : MvPolynomial (Coord n) ℤ) :
     MvPolynomial (Coord n) ℤ :=
-  ∑ m ∈ F.support, monomial m (coeff m F) *
+  ∑ m ∈ F.support, monomial m (AddMonoidAlgebra.coeff F m) *
     chartMonomial c (homDeg F - Finsupp.weight (coordDeg n) m)
 
 theorem isWeightedHomogeneous_homogenize (c : (k : ι) → Fin (n k + 1))
@@ -54,7 +54,7 @@ theorem isWeightedHomogeneous_homogenize (c : (k : ι) → Fin (n k + 1))
   refine IsWeightedHomogeneous.sum _ _ _ fun m hm ↦ ?_
   have hle : Finsupp.weight (coordDeg n) m ≤ homDeg F := fun k ↦
     Finset.le_sup (f := fun m ↦ Finsupp.weight (coordDeg n) m k) hm
-  have h := (isWeightedHomogeneous_monomial (coordDeg n) m (coeff m F) rfl).mul
+  have h := (isWeightedHomogeneous_monomial (coordDeg n) m (AddMonoidAlgebra.coeff F m) rfl).mul
     (isWeightedHomogeneous_chartMonomial c (homDeg F - Finsupp.weight (coordDeg n) m))
   rwa [add_tsub_cancel_of_le hle] at h
 

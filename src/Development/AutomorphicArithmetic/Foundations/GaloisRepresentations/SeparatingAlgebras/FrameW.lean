@@ -100,8 +100,8 @@ theorem UpperTheory.Gal.Gen.frameW_pf :
     have hx : CoefLe ι 1 ((t j h • y : W.Sp) : Formalism.L2.DIV.Pol ℂ (InfinitePlace E) a) := by
       intro q
       have hq := hyc q
-      have e1 : MvPolynomial.coeff q ((t j h • y : W.Sp) : Formalism.L2.DIV.Pol ℂ (InfinitePlace E) a) =
-          t j h * MvPolynomial.coeff q (y : Formalism.L2.DIV.Pol ℂ (InfinitePlace E) a) := by
+      have e1 : AddMonoidAlgebra.coeff ((t j h • y : W.Sp) : Formalism.L2.DIV.Pol ℂ (InfinitePlace E) a) q =
+          t j h * AddMonoidAlgebra.coeff (y : Formalism.L2.DIV.Pol ℂ (InfinitePlace E) a) q := by
         simp [MvPolynomial.coeff_smul]
       rw [e1, map_mul, norm_mul]
       have hlpos : (0 : ℝ) < (l : ℝ) := by linarith

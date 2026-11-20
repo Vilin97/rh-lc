@@ -225,7 +225,7 @@ theorem rpow_neg_le_inv {s m N : ℝ} (hs : 1 ≤ s) (hm : 1 ≤ m) (hN : m ≤ 
 theorem pow_le_norm_of_le {z : mixedSpace E} {b : ℝ} (hb : 0 ≤ b) (h : ∀ w, b ≤ normAtPlace w z) :
     b ^ Module.finrank ℚ E ≤ mixedEmbedding.norm z := by
   rw [mixedEmbedding.norm_apply, ← sum_mult_eq, ← Finset.prod_pow_eq_pow_sum]
-  exact Finset.prod_le_prod (fun w _ => pow_nonneg hb _) (fun w _ => pow_le_pow_left₀ hb (h w) _)
+  exact Finset.prod_le_prod₀ (fun w _ => pow_nonneg hb _) (fun w _ => pow_le_pow_left₀ hb (h w) _)
 
 theorem norm_Gs_add_sub_le_core {l : ℕ} (χ : DirichletCharacter ℂ l) {s : ℝ} (hs : s ∈ Set.Icc (1 : ℝ) 2)
     {A : ℝ} (hA : 0 ≤ A)

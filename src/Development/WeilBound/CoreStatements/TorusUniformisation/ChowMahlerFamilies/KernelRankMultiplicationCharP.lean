@@ -761,10 +761,10 @@ open MvPolynomial Formalism.L2.Pj
 variable {k R : Type} [CommRing k] [CommRing R] [Algebra k R]
 
 theorem aeval_one {I : Type} [Fintype I] [DecidableEq I] (c : I → R) (hc : ∀ i j, c i * c j = 0) (P : MvPolynomial I k) :
-    aeval c P = algebraMap k R (coeff 0 P) + ∑ i, coeff (Finsupp.single i 1) P • c i := by
+    aeval c P = algebraMap k R (AddMonoidAlgebra.coeff P 0) + ∑ i, AddMonoidAlgebra.coeff P (Finsupp.single i 1) • c i := by
   induction P using MvPolynomial.induction_on with
   | C a => simp [coeff_C, (Finsupp.single_ne_zero.2 one_ne_zero).symm]
-  | add P Q hP hQ => simp only [map_add, hP, hQ, coeff_add, add_smul, Finset.sum_add_distrib]; abel
+  | add P Q hP hQ => simp only [map_add, hP, hQ, MvPolynomial.coeff_add, add_smul, Finset.sum_add_distrib]; abel
   | mul_X P n hP =>
     rw [map_mul, hP, aeval_X, add_mul, Finset.sum_mul]
     simp only [smul_mul_assoc, hc, smul_zero, Finset.sum_const_zero, add_zero, coeff_mul_X']
@@ -775,9 +775,9 @@ theorem aeval_one {I : Type} [Fintype I] [DecidableEq I] (c : I → R) (hc : ∀
 
 theorem aeval_two {d : ℕ} (a b : Fin d → R) (ha : ∀ i j, a i * a j = 0) (hb : ∀ i j, b i * b j = 0)
     (P : MvPolynomial (Fin 2 × Fin d) k) :
-    aeval (fun q : Fin 2 × Fin d => ![a, b] q.1 q.2) P = algebraMap k R (coeff 0 P) +
-      ∑ i, coeff (Finsupp.single (0, i) 1) P • a i + ∑ j, coeff (Finsupp.single (1, j) 1) P • b j +
-      ∑ i, ∑ j, coeff (Finsupp.single (0, i) 1 + Finsupp.single (1, j) 1) P • (a i * b j) := by
+    aeval (fun q : Fin 2 × Fin d => ![a, b] q.1 q.2) P = algebraMap k R (AddMonoidAlgebra.coeff P 0) +
+      ∑ i, AddMonoidAlgebra.coeff P (Finsupp.single (0, i) 1) • a i + ∑ j, AddMonoidAlgebra.coeff P (Finsupp.single (1, j) 1) • b j +
+      ∑ i, ∑ j, AddMonoidAlgebra.coeff P (Finsupp.single (0, i) 1 + Finsupp.single (1, j) 1) • (a i * b j) := by
   have h3 : ∀ i j l, a i * b j * a l = 0 := fun i j l => by rw [mul_right_comm, ha, zero_mul]
   have h4 : ∀ i j l, a i * b j * b l = 0 := fun i j l => by rw [_root_.mul_assoc, hb, mul_zero]
   induction P using MvPolynomial.induction_on with
@@ -785,7 +785,7 @@ theorem aeval_two {d : ℕ} (a b : Fin d → R) (ha : ∀ i j, a i * a j = 0) (h
     have : ∀ i j : Fin d, ¬ (0 : Fin 2 × Fin d →₀ ℕ) = Finsupp.single (0, i) 1 + Finsupp.single (1, j) 1 := fun i j h => by
       simpa using DFunLike.congr_fun h (0, i)
     simp [coeff_C, (Finsupp.single_ne_zero.2 one_ne_zero).symm, this]
-  | add P Q hP hQ => simp only [map_add, hP, hQ, coeff_add, add_smul, Finset.sum_add_distrib]; abel
+  | add P Q hP hQ => simp only [map_add, hP, hQ, MvPolynomial.coeff_add, add_smul, Finset.sum_add_distrib]; abel
   | mul_X P n hP =>
     rw [map_mul, hP, aeval_X]
     obtain ⟨l, n⟩ := n
@@ -859,7 +859,7 @@ theorem second_jet_expansion {d : ℕ} (a b : Fin d → R) (ha : ∀ i j, a i * 
     (f : Germ.PS k 2 d) : ∃ α β : Fin d → k, th2 k a b ha hb (psJet 3 f) =
       algebraMap k R (MvPowerSeries.constantCoeff f) + ∑ i, α i • a i + ∑ j, β j • b j +
       ∑ i, ∑ j, bil f 1 1 i j • (a i * b j) := by
-  refine ⟨fun i => coeff (Finsupp.single (0, i) 1) (psTrunc 3 f), fun i => coeff (Finsupp.single (1, i) 1) (psTrunc 3 f),
+  refine ⟨fun i => AddMonoidAlgebra.coeff (psTrunc 3 f) (Finsupp.single (0, i) 1), fun i => AddMonoidAlgebra.coeff (psTrunc 3 f) (Finsupp.single (1, i) 1),
     (aeval_two a b ha hb _).trans ?_⟩
   rw [Formalism.MainNotions.ModuliIntegralCharts.H1.GermFun.coeff_psTrunc _ _ _ (by simp), MvPowerSeries.coeff_zero_eq_constantCoeff_apply]
   congr 1

@@ -19,7 +19,7 @@ theorem mono_apply {σ : Type} [DecidableEq σ] (R : Finset σ) (s : σ) : mono 
   simp [Finsupp.single_apply]
 
 theorem coeff_mono_X_mul {σ : Type} [DecidableEq σ] (R : Finset σ) (p : σ) (hp : p ∈ R)
-    (ω : MvPolynomial σ ℝ) : coeff (mono R) (X p * ω) = coeff (mono (R.erase p)) ω := by
+    (ω : MvPolynomial σ ℝ) : AddMonoidAlgebra.coeff (X p * ω) (mono R) = AddMonoidAlgebra.coeff ω (mono (R.erase p)) := by
   have : mono R = mono (R.erase p) + Finsupp.single p 1 := by
     unfold mono; rw [Finset.sum_erase_add _ _ hp]
   rw [this, add_comm, coeff_X_mul]
@@ -67,13 +67,13 @@ theorem toForm_pLow_eq (N j : ℕ) (τ : ι) :
     (toForm (pLow j τ 1 : Pol ι N)) = -∑ s ∈ (crSet ι N j).filter (fun s => s.1 = τ), X s :=
   GlobalTheory.T.form_low_poly_eq_neg_sum_crossing ι N j τ
 theorem coeff_mono_sum_pow_mul {σ : Type} [DecidableEq σ] (C R : Finset σ) (k : ℕ)
-    (ω : MvPolynomial σ ℝ) : coeff (mono R) ((∑ s ∈ C, X s) ^ k * ω) =
-      (k.factorial : ℝ) * ∑ U ∈ (R ∩ C).powersetCard k, coeff (mono (R \ U)) ω := GlobalTheory.T.coeff_sum_pow_mul_factorial C R k ω
+    (ω : MvPolynomial σ ℝ) : AddMonoidAlgebra.coeff ((∑ s ∈ C, X s) ^ k * ω) (mono R) =
+      (k.factorial : ℝ) * ∑ U ∈ (R ∩ C).powersetCard k, AddMonoidAlgebra.coeff ω (mono (R \ U)) := GlobalTheory.T.coeff_sum_pow_mul_factorial C R k ω
 theorem card_crSet (N j : ℕ) (hj : j ≤ N) : (crSet ι N j).card = dimGr ι N j := GlobalTheory.T.card_crossing_set_eq_grassmannian_dim ι N j hj
 theorem core_sum (N j : ℕ) (h1 : 1 ≤ j) (h2 : j < N) :
     ∑ p ∈ winSet ι N j, ∑ q ∈ crSet ι N j,
-      coeff (mono (insert q ((winSet ι N j).erase p))) (toForm (fibPt ι N j)) =
-      (Fintype.card ι : ℝ) * (2 * (j : ℝ) - N) * coeff (mono (winSet ι N j)) (toForm (fibPt ι N j)) :=
+      AddMonoidAlgebra.coeff (toForm (fibPt ι N j)) (mono (insert q ((winSet ι N j).erase p))) =
+      (Fintype.card ι : ℝ) * (2 * (j : ℝ) - N) * AddMonoidAlgebra.coeff (toForm (fibPt ι N j)) (mono (winSet ι N j)) :=
   GlobalTheory.T.sum_coeff_window_crossing_fiber_point ι N j h1 h2
 end GlobalTheory.FlagCurve
 
@@ -170,9 +170,9 @@ theorem toForm_curveCl (N j : ℕ) :
 
 theorem coeff_curveCl_win (N j : ℕ) (hj : j ≤ N) (hne : (crSet ι N j).Nonempty) {p : ι × Fin N × Fin N}
     (hp : p ∈ winSet ι N j) :
-    coeff (mono ((winSet ι N j ∪ crSet ι N j).erase p)) (toForm (curveCl ι N j) : FormPol ι N) =
+    AddMonoidAlgebra.coeff (toForm (curveCl ι N j) : FormPol ι N) (mono ((winSet ι N j ∪ crSet ι N j).erase p)) =
       2 ^ (dimGr ι N j - 1) * ((dimGr ι N j - 1).factorial : ℝ) *
-        ∑ q ∈ crSet ι N j, coeff (mono (insert q ((winSet ι N j).erase p))) (toForm (fibPt ι N j)) := by
+        ∑ q ∈ crSet ι N j, AddMonoidAlgebra.coeff (toForm (fibPt ι N j)) (mono (insert q ((winSet ι N j).erase p))) := by
   rw [toForm_curveCl, coeff_C_mul, coeff_mono_sum_pow_mul,
     erase_inter_of_mem_left (disjoint_win_cr N j) hp, ← card_crSet N j hj, sum_powersetCard_pred _ hne,
     mul_assoc]
@@ -181,9 +181,9 @@ theorem coeff_curveCl_win (N j : ℕ) (hj : j ≤ N) (hne : (crSet ι N j).Nonem
   rw [erase_sdiff_erase (disjoint_win_cr N j) hp hq]
 
 theorem coeff_curveCl_cr (N j : ℕ) (hj : j ≤ N) {q : ι × Fin N × Fin N} (hq : q ∈ crSet ι N j) :
-    coeff (mono ((winSet ι N j ∪ crSet ι N j).erase q)) (toForm (curveCl ι N j) : FormPol ι N) =
+    AddMonoidAlgebra.coeff (toForm (curveCl ι N j) : FormPol ι N) (mono ((winSet ι N j ∪ crSet ι N j).erase q)) =
       2 ^ (dimGr ι N j - 1) * ((dimGr ι N j - 1).factorial : ℝ) *
-        coeff (mono (winSet ι N j)) (toForm (fibPt ι N j)) := by
+        AddMonoidAlgebra.coeff (toForm (fibPt ι N j)) (mono (winSet ι N j)) := by
   rw [toForm_curveCl, coeff_C_mul, coeff_mono_sum_pow_mul, erase_inter_of_mem_right,
     ← card_crSet N j hj, ← Finset.card_erase_of_mem hq, Finset.powersetCard_self, Finset.sum_singleton,
     erase_sdiff_erase_self (disjoint_win_cr N j) hq, mul_assoc]
@@ -202,22 +202,22 @@ theorem blk_curve_main (ι : Type) [Fintype ι] [DecidableEq ι] (N j : ℕ) (h1
     have : 0 < N - j := Nat.sub_pos_of_lt h2
     positivity
   set K : ℝ := 2 ^ (dimGr ι N j - 1) * ((dimGr ι N j - 1).factorial : ℝ) with hK
-  set c : ℝ := coeff (mono (winSet ι N j)) (toForm (fibPt ι N j) : FormPol ι N) with hc
+  set c : ℝ := AddMonoidAlgebra.coeff (toForm (fibPt ι N j) : FormPol ι N) (mono (winSet ι N j)) with hc
   have hL : ∑ τ : ι, formDeg (blkForm j τ * toForm (curveCl ι N j)) =
       K * ((Fintype.card ι : ℝ) * (2 * (j : ℝ) - N) * c) / (superFact N : ℝ) ^ Fintype.card ι := by
     simp only [formDeg, volExp_eq N j (ι := ι)]
     rw [← Finset.sum_div]
     congr 1
-    have step : ∀ τ : ι, coeff (mono (winSet ι N j ∪ crSet ι N j)) (blkForm j τ * toForm (curveCl ι N j)) =
+    have step : ∀ τ : ι, AddMonoidAlgebra.coeff (blkForm j τ * toForm (curveCl ι N j)) (mono (winSet ι N j ∪ crSet ι N j)) =
         ∑ p ∈ (winSet ι N j).filter (fun s => s.1 = τ),
-          coeff (mono ((winSet ι N j ∪ crSet ι N j).erase p)) (toForm (curveCl ι N j) : FormPol ι N) := by
+          AddMonoidAlgebra.coeff (toForm (curveCl ι N j) : FormPol ι N) (mono ((winSet ι N j ∪ crSet ι N j).erase p)) := by
       intro τ
       rw [blkForm_eq, Finset.sum_mul, coeff_sum]
       refine Finset.sum_congr rfl fun p hp => ?_
       exact coeff_mono_X_mul _ _ (Finset.mem_union_left _ (Finset.mem_filter.mp hp).1) _
     simp only [step]
     rw [Finset.sum_fiberwise (winSet ι N j) (fun s => s.1)
-      (fun p => coeff (mono ((winSet ι N j ∪ crSet ι N j).erase p)) (toForm (curveCl ι N j) : FormPol ι N))]
+      (fun p => AddMonoidAlgebra.coeff (toForm (curveCl ι N j) : FormPol ι N) (mono ((winSet ι N j ∪ crSet ι N j).erase p)))]
     rw [Finset.sum_congr rfl fun p hp => coeff_curveCl_win N j h2.le hCr hp, ← Finset.mul_sum,
       core_sum N j h1 h2]
   have hR : ∑ τ : ι, formDeg (toForm (pLow j τ 1 * curveCl ι N j) : FormPol ι N) =
@@ -225,10 +225,10 @@ theorem blk_curve_main (ι : Type) [Fintype ι] [DecidableEq ι] (N j : ℕ) (h1
     simp only [formDeg, volExp_eq N j (ι := ι)]
     rw [← Finset.sum_div]
     congr 1
-    have step : ∀ τ : ι, coeff (mono (winSet ι N j ∪ crSet ι N j))
-        (toForm (pLow j τ 1 * curveCl ι N j) : FormPol ι N) =
+    have step : ∀ τ : ι, AddMonoidAlgebra.coeff (toForm (pLow j τ 1 * curveCl ι N j) : FormPol ι N)
+        (mono (winSet ι N j ∪ crSet ι N j)) =
         -∑ q ∈ (crSet ι N j).filter (fun s => s.1 = τ),
-          coeff (mono ((winSet ι N j ∪ crSet ι N j).erase q)) (toForm (curveCl ι N j) : FormPol ι N) := by
+          AddMonoidAlgebra.coeff (toForm (curveCl ι N j) : FormPol ι N) (mono ((winSet ι N j ∪ crSet ι N j).erase q)) := by
       intro τ
       rw [show (toForm (pLow j τ 1 * curveCl ι N j) : FormPol ι N) =
           toForm (pLow j τ 1 : Pol ι N) * toForm (curveCl ι N j) from map_mul _ _ _]
@@ -238,7 +238,7 @@ theorem blk_curve_main (ι : Type) [Fintype ι] [DecidableEq ι] (N j : ℕ) (h1
       exact coeff_mono_X_mul _ _ (Finset.mem_union_right _ (Finset.mem_filter.mp hp).1) _
     simp only [step]
     rw [Finset.sum_neg_distrib, Finset.sum_fiberwise (crSet ι N j) (fun s => s.1)
-      (fun p => coeff (mono ((winSet ι N j ∪ crSet ι N j).erase p)) (toForm (curveCl ι N j) : FormPol ι N))]
+      (fun p => AddMonoidAlgebra.coeff (toForm (curveCl ι N j) : FormPol ι N) (mono ((winSet ι N j ∪ crSet ι N j).erase p)))]
     rw [Finset.sum_congr rfl fun q hq => coeff_curveCl_cr N j h2.le hq, Finset.sum_const, hd, nsmul_eq_mul, hK, hc]
     ring
   rw [hL, hR]

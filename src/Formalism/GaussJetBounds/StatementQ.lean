@@ -9,7 +9,7 @@ namespace Formalism.DworkPowerSeriesWeights
 
 def IntOp : Prop :=
   ∀ (K : Type u) [NormedField K] [IsUltrametricDist K] (ι : Type) (Th : MvPowerSeries ι K),
-    JetsIntegral Th → ∀ P : MvPolynomial ι K, (∀ n, ‖MvPolynomial.coeff n P‖ ≤ 1) →
+    JetsIntegral Th → ∀ P : MvPolynomial ι K, (∀ n, ‖AddMonoidAlgebra.coeff P n‖ ≤ 1) →
       ‖jetPair P Th‖ ≤ 1
 
 def MatchBound : Prop :=

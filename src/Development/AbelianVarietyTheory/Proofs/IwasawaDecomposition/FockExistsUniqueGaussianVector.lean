@@ -84,7 +84,7 @@ variable {σ : Type} [DecidableEq σ] (F : Fock σ)
 
 theorem isFockIP : GlobalTheory.FockAlg.IsFockIP F.ι := fun α β => by convert F.fockIP α β
 
-def DegLt (k : ℕ) (f : MvPolynomial σ ℂ) : Prop := ∀ α : σ →₀ ℕ, k ≤ α.degree → coeff α f = 0
+def DegLt (k : ℕ) (f : MvPolynomial σ ℂ) : Prop := ∀ α : σ →₀ ℕ, k ≤ α.degree → AddMonoidAlgebra.coeff f α = 0
 
 omit [DecidableEq σ] in
 theorem DegLt.eq_zero {f : MvPolynomial σ ℂ} (h : DegLt 0 f) : f = 0 := by
@@ -116,7 +116,7 @@ theorem DegLt.smul {k : ℕ} {f : MvPolynomial σ ℂ} (h : DegLt k f) (c : ℂ)
 
 omit [DecidableEq σ] in
 theorem DegLt.add {k : ℕ} {f g : MvPolynomial σ ℂ} (h : DegLt k f) (h' : DegLt k g) : DegLt k (f + g) :=
-  fun α hα => by rw [coeff_add, h α hα, h' α hα, add_zero]
+  fun α hα => by rw [MvPolynomial.coeff_add, h α hα, h' α hα, add_zero]
 
 omit [DecidableEq σ] in
 theorem DegLt.sum {k : ℕ} {I : Type} [Fintype I] {f : I → MvPolynomial σ ℂ} (h : ∀ i, DegLt k (f i)) :
@@ -125,15 +125,15 @@ theorem DegLt.sum {k : ℕ} {I : Type} [Fintype I] {f : I → MvPolynomial σ �
 
 theorem inner_eq_sum (f g : MvPolynomial σ ℂ) :
     inner ℂ (F.ι f) (F.ι g) =
-      ∑ α ∈ f.support, (starRingEnd ℂ) (coeff α f) * ((GlobalTheory.FockSeq.mfact α : ℂ) * coeff α g) := by
+      ∑ α ∈ f.support, (starRingEnd ℂ) (AddMonoidAlgebra.coeff f α) * ((GlobalTheory.FockSeq.mfact α : ℂ) * AddMonoidAlgebra.coeff g α) := by
   conv_lhs => rw [f.as_sum]
   rw [map_sum, sum_inner]
   refine Finset.sum_congr rfl fun α _ => ?_
-  have e : (monomial α (coeff α f) : MvPolynomial σ ℂ) = coeff α f • monomial α 1 := by simp [smul_monomial]
+  have e : (monomial α (AddMonoidAlgebra.coeff f α) : MvPolynomial σ ℂ) = AddMonoidAlgebra.coeff f α • monomial α 1 := by simp [smul_monomial]
   rw [e, map_smul, inner_smul_left, hasCoeff_coe F g α, GlobalTheory.FockSeq.mfact_cast, MvPolynomial.coeff_coe]
 
 theorem coeff_X_mul_pderiv (l : σ) (f : MvPolynomial σ ℂ) (α : σ →₀ ℕ) :
-    coeff α (X l * pderiv l f) = (α l : ℂ) * coeff α f := by
+    AddMonoidAlgebra.coeff (X l * pderiv l f) α = (α l : ℂ) * AddMonoidAlgebra.coeff f α := by
   rw [coeff_X_mul']
   split_ifs with hl
   · have h0 := Nat.pos_of_ne_zero (Finsupp.mem_support_iff.1 hl)
@@ -144,12 +144,12 @@ theorem coeff_X_mul_pderiv (l : σ) (f : MvPolynomial σ ℂ) (α : σ →₀ �
 theorem sum_sq_pderiv_le [Fintype σ] {k : ℕ} {f : MvPolynomial σ ℂ} (h : DegLt k f) :
     ∑ l, ‖F.ι (pderiv l f)‖ ^ 2 ≤ k * ‖F.ι f‖ ^ 2 := by
   have h1 : ∀ l, ‖F.ι (pderiv l f)‖ ^ 2 =
-      ∑ α ∈ f.support, (α l : ℝ) * (GlobalTheory.FockSeq.mfact α * Complex.normSq (coeff α f)) := fun l => by
+      ∑ α ∈ f.support, (α l : ℝ) * (GlobalTheory.FockSeq.mfact α * Complex.normSq (AddMonoidAlgebra.coeff f α)) := fun l => by
     rw [← inner_self_eq_norm_sq (𝕜 := ℂ), GlobalTheory.Oscillator.inner_pderiv (isFockIP F), inner_eq_sum, map_sum]
     refine Finset.sum_congr rfl fun α _ => ?_
     rw [coeff_X_mul_pderiv]
     simp [Complex.normSq_apply]; ring
-  have h2 : ‖F.ι f‖ ^ 2 = ∑ α ∈ f.support, (GlobalTheory.FockSeq.mfact α * Complex.normSq (coeff α f)) := by
+  have h2 : ‖F.ι f‖ ^ 2 = ∑ α ∈ f.support, (GlobalTheory.FockSeq.mfact α * Complex.normSq (AddMonoidAlgebra.coeff f α)) := by
     rw [← inner_self_eq_norm_sq (𝕜 := ℂ), inner_eq_sum, map_sum]
     refine Finset.sum_congr rfl fun α _ => ?_
     simp [Complex.normSq_apply]; ring
@@ -334,8 +334,8 @@ theorem summable_pow (h : (1 - Aᴴ * A).PosDef) :
 
 end Quad
 
-theorem coeff_pow_eq_zero {σ : Type} {q : MvPolynomial σ ℂ} (hq : coeff 0 q = 0) (n : ℕ) :
-    ∀ α : σ →₀ ℕ, α.degree < n → coeff α (q ^ n) = 0 := by
+theorem coeff_pow_eq_zero {σ : Type} {q : MvPolynomial σ ℂ} (hq : AddMonoidAlgebra.coeff q 0 = 0) (n : ℕ) :
+    ∀ α : σ →₀ ℕ, α.degree < n → AddMonoidAlgebra.coeff (q ^ n) α = 0 := by
   classical
   induction n with
   | zero => intro α hα; omega

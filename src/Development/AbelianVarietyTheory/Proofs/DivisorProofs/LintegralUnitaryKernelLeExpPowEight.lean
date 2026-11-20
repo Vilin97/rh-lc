@@ -224,7 +224,7 @@ theorem one_div_flagConst_le (m : ℕ) : 1 / flagConst m ≤ Real.pi ^ (m * m) :
     have e : (Real.pi ^ (m * m))⁻¹ = ∏ _i ∈ Finset.range m, (Real.pi ^ m)⁻¹ := by
       rw [Finset.prod_const, Finset.card_range, pow_mul, inv_pow]
     rw [e, flagConst]
-    refine Finset.prod_le_prod (fun _ _ => by positivity) fun i hi => ?_
+    refine Finset.prod_le_prod₀ (fun _ _ => by positivity) fun i hi => ?_
     have hi' : i ≤ m := (Finset.mem_range.1 hi).le
     have h1 : (1 : ℝ) ≤ i.factorial := by exact_mod_cast i.factorial_pos
     calc (Real.pi ^ m)⁻¹ ≤ (Real.pi ^ i)⁻¹ :=

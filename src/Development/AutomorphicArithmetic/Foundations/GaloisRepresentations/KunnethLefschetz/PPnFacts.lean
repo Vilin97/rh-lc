@@ -46,7 +46,7 @@ private theorem chart_holds : LPdCut.LChart := by
     rw [Proj.awayι_toSpecZero_assoc, ← Spec.map_comp, ← Spec.map_comp]
     congr 1
     ext a
-    exact congrArg (MvPolynomial.coeff _) (chartE_C k N i a)
+    exact congrArg (AddMonoidAlgebra.coeff · _) (chartE_C k N i a)
   · have h := Scheme.Hom.opensRange_comp_of_isIso (Spec.map (CommRingCat.ofHom e.toRingHom)) ι
     rw [Proj.opensRange_awayι] at h
     exact congrArg (fun U : (PN k N).Opens => (U : Set (PN k N))) h

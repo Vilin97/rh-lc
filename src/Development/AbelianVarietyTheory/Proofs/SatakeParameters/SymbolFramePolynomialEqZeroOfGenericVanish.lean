@@ -189,7 +189,7 @@ theorem GlobalTheory.TwV.DelA.eq_zero_of_evD_generic : ∀ {p : ℕ} [Fact p.Pri
     have h2 : yv X D pos hN ι (fOf X D pos (blkOf X D pos hN w)) = ι ∘ w := by
       funext y
       simp only [yv, zT_fOf X D pos _ hg, Function.comp_apply, blkOf_read]
-    have h3 := congrArg (MvPolynomial.coeff m) h1
+    have h3 := congrArg (AddMonoidAlgebra.coeff · m) h1
     rw [MvPolynomial.coeff_map, h2, MvPolynomial.coeff_zero] at h3
     exact h3
 

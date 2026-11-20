@@ -58,11 +58,11 @@ section
 variable {K : Type} [Field K] (R : Subring K)
 
 theorem mem_range_map_subtype_iff {σ : Type} (P : MvPolynomial σ K) :
-    P ∈ (MvPolynomial.map (σ := σ) R.subtype).range ↔ ∀ m, coeff m P ∈ R := by
+    P ∈ (MvPolynomial.map (σ := σ) R.subtype).range ↔ ∀ m, AddMonoidAlgebra.coeff P m ∈ R := by
   constructor
   · rintro ⟨Q, rfl⟩ m
     rw [coeff_map]
-    exact (coeff m Q).2
+    exact (AddMonoidAlgebra.coeff Q m).2
   · intro h
     rw [P.as_sum]
     exact sum_mem fun m _ => ⟨monomial m ⟨_, h m⟩, by rw [map_monomial]; rfl⟩
@@ -92,7 +92,7 @@ theorem blockAct_mem_range_map_subtype {ι : Type} [Fintype ι] {n : ℕ}
 
 end
 
-theorem vw_fockS_blockAct_nonneg : ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (ι : Type) [Fintype ι] (n : ℕ) (w : HeightOneSpectrum (𝓞 K)) (F F' : Pol K ι n) (U : ι → Matrix (Fin n) (Fin n) K), (∀ mo, 0 ≤ vw (conjPl w) (coeff mo F)) → (∀ mo, 0 ≤ vw w (coeff mo F')) → (∀ τ a b, 0 ≤ vw w (U τ a b)) → 0 ≤ vw w (fockS F (Formalism.GradedWeylDivisibility.blockAct K U F')) := by
+theorem vw_fockS_blockAct_nonneg : ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (ι : Type) [Fintype ι] (n : ℕ) (w : HeightOneSpectrum (𝓞 K)) (F F' : Pol K ι n) (U : ι → Matrix (Fin n) (Fin n) K), (∀ mo, 0 ≤ vw (conjPl w) (AddMonoidAlgebra.coeff F mo)) → (∀ mo, 0 ≤ vw w (AddMonoidAlgebra.coeff F' mo)) → (∀ τ a b, 0 ≤ vw w (U τ a b)) → 0 ≤ vw w (fockS F (Formalism.GradedWeylDivisibility.blockAct K U F')) := by
   intro K _ _ _ ι _ n w F F' U hF hF' hU
   have h := (mem_range_map_subtype_iff (nonnegRing_vw w) _).1
     (blockAct_mem_range_map_subtype (nonnegRing_vw w) U hU
@@ -100,7 +100,7 @@ theorem vw_fockS_blockAct_nonneg : ∀ (K : Type) [Field K] [NumberField K] [Sta
   change fockS F (Formalism.GradedWeylDivisibility.blockAct K U F') ∈ nonnegRing_vw w
   unfold fockS
   refine sum_mem fun m _ => mul_mem (mul_mem ?_ (h m)) (natCast_mem _ _)
-  change 0 ≤ vw w (star (coeff m F))
+  change 0 ≤ vw w (star (AddMonoidAlgebra.coeff F m))
   rw [ValuationRepresentative.vw_star]
   exact hF m
 

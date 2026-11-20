@@ -137,7 +137,7 @@ theorem fock_minorPol_zero : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (θ :
   have hmono := GlobalTheory.FockPos.fock_monomial_zero_of_on ψ θ S T 1 1 hstd hinf (hon S hgS) (hon T hgT) f _ hΦ hrd.2
   rw [hfr, hfr] at hmono
   set P := minorPol D t with hPdef
-  have hP : P = ∑ v ∈ P.support, MvPolynomial.coeff v P • MvPolynomial.monomial v (1 : ℂ) := by
+  have hP : P = ∑ v ∈ P.support, AddMonoidAlgebra.coeff P v • MvPolynomial.monomial v (1 : ℂ) := by
     conv_lhs => rw [MvPolynomial.as_sum P]
     exact Finset.sum_congr rfl fun v _ => by rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
   conv_lhs => rw [hP, map_sum, Finset.sum_apply]

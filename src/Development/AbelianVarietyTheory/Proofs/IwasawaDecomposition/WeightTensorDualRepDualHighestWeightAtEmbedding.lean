@@ -164,7 +164,7 @@ theorem univ_map (M : ι → Matrix (Fin n) (Fin n) K) (F : Pol K ι n) :
 
 def cf (ℓ : Pol K ι n →ₗ[K] K)
     (Q : MvPolynomial (ι × Fin n × Fin n) (MvPolynomial (ι × Fin n × Fin n) K)) : MvPolynomial (ι × Fin n × Fin n) K :=
-  ∑ m ∈ Q.support, coeff m Q * C (ℓ (monomial m 1))
+  ∑ m ∈ Q.support, AddMonoidAlgebra.coeff Q m * C (ℓ (monomial m 1))
 
 theorem cf_eval (ℓ : Pol K ι n →ₗ[K] K) (y : ι × Fin n × Fin n → K)
     (Q : MvPolynomial (ι × Fin n × Fin n) (MvPolynomial (ι × Fin n × Fin n) K)) :
@@ -173,7 +173,7 @@ theorem cf_eval (ℓ : Pol K ι n →ₗ[K] K) (y : ι × Fin n × Fin n → K)
   rw [map_sum, map_sum, cf, map_sum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [MvPolynomial.map_monomial, eval_mul, eval_C,
-    show monomial m (eval y (coeff m Q)) = eval y (coeff m Q) • (monomial m 1 : Pol K ι n) by
+    show monomial m (eval y (AddMonoidAlgebra.coeff Q m)) = eval y (AddMonoidAlgebra.coeff Q m) • (monomial m 1 : Pol K ι n) by
       rw [smul_monomial, smul_eq_mul, mul_one], map_smul, smul_eq_mul]
 
 def coord (lam : ι → DomWeight n) (i : VVIdx lam) : Pol K ι n →ₗ[K] K :=

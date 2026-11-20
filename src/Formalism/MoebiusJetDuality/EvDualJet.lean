@@ -11,16 +11,16 @@ universe u v
 def EvDualJet : Prop :=
   ∀ (σ : Type u) (R : Type v) [CommRing R] (A : Subring R) (F : MvPolynomial σ R),
     (∀ P : MvPolynomial σ R, IsIntegralJet A P → evOp P F ∈ A) ↔
-      ∀ α, (mfac α : R) * coeff α F ∈ A
+      ∀ α, (mfac α : R) * AddMonoidAlgebra.coeff F α ∈ A
 
 def EvDualOp : Prop :=
   ∀ (σ : Type u) (R : Type v) [CommRing R] (A : Subring R) (P : MvPolynomial σ R),
     (∀ F : MvPolynomial σ R, IsIntegralJet A F → evOp P F ∈ A) ↔
-      ∀ α, (mfac α : R) * coeff α P ∈ A
+      ∀ α, (mfac α : R) * AddMonoidAlgebra.coeff P α ∈ A
 
 def EvKernel : Prop :=
   ∀ (σ : Type u) (R : Type v) [CommRing R] (F : MvPolynomial σ R),
-    (∀ P : MvPolynomial σ R, evOp P F = 0) ↔ ∀ α, (mfac α : R) * coeff α F = 0
+    (∀ P : MvPolynomial σ R, evOp P F = 0) ↔ ∀ α, (mfac α : R) * AddMonoidAlgebra.coeff F α = 0
 
 def EvSymm : Prop :=
   ∀ (σ : Type u) (R : Type v) [CommRing R] (P F : MvPolynomial σ R), evOp P F = evOp F P

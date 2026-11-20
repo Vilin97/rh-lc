@@ -22,7 +22,7 @@ theorem norm_coeff_mul_le {w : ℕ → ℝ} (hw : ∀ n, 0 ≤ w n) (hm : ∀ i 
     {f g : K⟦X⟧} {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) (hf : ∀ n, ‖coeff n f‖ * w n ≤ a)
     (hg : ∀ n, ‖coeff n g‖ * w n ≤ b) (n : ℕ) : ‖coeff n (f * g)‖ * w n ≤ a * b := by
   rw [coeff_mul]
-  obtain ⟨p, hp, h⟩ := IsUltrametricDist.exists_norm_finset_sum_le_of_nonempty
+  obtain ⟨p, hp, h⟩ := IsUltrametricDist.exists_norm_finsetSum_le_of_nonempty
     (Finset.HasAntidiagonal.nonempty_antidiagonal n) (fun p : ℕ × ℕ => coeff p.1 f * coeff p.2 g)
   have hp' := Finset.HasAntidiagonal.mem_antidiagonal.mp hp
   calc _ ≤ ‖coeff p.1 f * coeff p.2 g‖ * (w p.1 * w p.2) :=
@@ -40,7 +40,7 @@ theorem tendsto_coeff_mul {w : ℕ → ℝ} (hw : ∀ n, 0 ≤ w n) (hm : ∀ i 
       (tendsto_mul_cofinite_nhds_zero hf hg))
     (fun x ↦ mul_nonneg (by simp) (hw x)) fun n ↦ ?_
   rw [coeff_mul]
-  obtain ⟨p, hp, h⟩ := IsUltrametricDist.exists_norm_finset_sum_le_of_nonempty
+  obtain ⟨p, hp, h⟩ := IsUltrametricDist.exists_norm_finsetSum_le_of_nonempty
     (Finset.HasAntidiagonal.nonempty_antidiagonal n) (fun p : ℕ × ℕ => coeff p.1 f * coeff p.2 g)
   have hp' := Finset.HasAntidiagonal.mem_antidiagonal.mp hp
   refine le_trans ?_ (Finset.le_sup' _ hp)

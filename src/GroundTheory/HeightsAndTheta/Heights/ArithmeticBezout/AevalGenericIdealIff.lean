@@ -127,9 +127,9 @@ theorem proof : ComplexChowFormToChowForm.Statement := by
   obtain ⟨m, hm⟩ := ne_zero_iff.mp hg0
   classical
   let b := Module.Basis.ofVectorSpace ℚ ℂ
-  obtain ⟨c, hc⟩ : ∃ c, b.coord c (coeff m g) ≠ 0 := by
+  obtain ⟨c, hc⟩ : ∃ c, b.coord c (AddMonoidAlgebra.coeff g m) ≠ 0 := by
     by_contra! h
-    have h0 : b.repr (coeff m g) = 0 := Finsupp.ext fun c => by rw [← Module.Basis.coord_apply]; exact h c
+    have h0 : b.repr (AddMonoidAlgebra.coeff g m) = 0 := Finsupp.ext fun c => by rw [← Module.Basis.coord_apply]; exact h c
     exact hm (b.repr.map_eq_zero_iff.mp h0)
   have hcS : c ∈ coordSupport b g :=
     Finset.mem_biUnion.2 ⟨m, mem_support_iff.2 hm,
@@ -147,7 +147,7 @@ theorem proof : ComplexChowFormToChowForm.Statement := by
     have hmem := coordPoly_mem_of_mem_map b R (e' ▸ (hC g).mp dvd_rfl j) c
     rwa [coordPoly_sum, if_pos hcS] at hmem
   obtain ⟨q, hq⟩ := hh
-  have hmh : coeff m (map (algebraMap ℚ ℂ) h) ≠ 0 := by
+  have hmh : AddMonoidAlgebra.coeff (map (algebraMap ℚ ℂ) h) m ≠ 0 := by
     rw [coeff_map, hh_def, coeff_coordPoly]
     exact (map_ne_zero _).mpr hc
   have hmh0 : map (algebraMap ℚ ℂ) h ≠ 0 := fun h0 => hmh (by rw [h0, coeff_zero])

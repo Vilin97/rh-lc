@@ -15,7 +15,7 @@ theorem volgU_le (N : ℕ) : volgU N ≤ 7 ^ (N * N) := by
   unfold volgU
   calc ∏ i ∈ Finset.range N, (2 * Real.pi) ^ (i + 1) / ((i.factorial : ℕ) : ℝ)
       ≤ ∏ _i ∈ Finset.range N, (7 : ℝ) ^ N := by
-        refine Finset.prod_le_prod (fun i _ => by positivity) fun i hi => ?_
+        refine Finset.prod_le_prod₀ (fun i _ => by positivity) fun i hi => ?_
         have hi' : i + 1 ≤ N := Finset.mem_range.1 hi
         have hf : (1 : ℝ) ≤ ((i.factorial : ℕ) : ℝ) := by exact_mod_cast Nat.one_le_iff_ne_zero.2 (Nat.factorial_ne_zero i)
         have h2pi : 2 * Real.pi ≤ 7 := by linarith [Real.pi_lt_d2]

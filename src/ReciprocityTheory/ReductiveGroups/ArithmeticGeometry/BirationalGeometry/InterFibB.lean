@@ -106,8 +106,8 @@ theorem diag_of_homog (d : ℕ) {f : MvPolynomial (Σ k, ι k) ℂ}
       exact ⟨G, fun _ => ⟨h1, h2⟩⟩
     · exact ⟨0, fun h => absurd h hm⟩
   choose Gf hGf using hG
-  refine ⟨∑ m ∈ f.support, C (coeff m f) * Gf m, ?_, fun z => ?_⟩
-  · refine (totalDegree_finset_sum _ _).trans (Finset.sup_le fun m hm => ?_)
+  refine ⟨∑ m ∈ f.support, C (AddMonoidAlgebra.coeff f m) * Gf m, ?_, fun z => ?_⟩
+  · refine (MvPolynomial.totalDegree_finsetSum _ _).trans (Finset.sup_le fun m hm => ?_)
     refine (totalDegree_mul _ _).trans ?_
     rw [totalDegree_C, zero_add]
     exact (hGf m hm).1
@@ -126,7 +126,7 @@ theorem comp_mul_homog {σ : Type*} {M : Type*} [AddCancelCommMonoid M] [Decidab
   split_ifs with hx
   · refine Finset.sum_congr rfl fun ab hab => ?_
     rw [coeff_weightedHomogeneousComponent]
-    by_cases hb : coeff ab.2 ψ = 0
+    by_cases hb : AddMonoidAlgebra.coeff ψ ab.2 = 0
     · simp [hb]
     · have hwb := hψ hb
       have hsum : Finsupp.weight w ab.1 + Finsupp.weight w ab.2 = Finsupp.weight w x := by
@@ -140,7 +140,7 @@ theorem comp_mul_homog {σ : Type*} {M : Type*} [AddCancelCommMonoid M] [Decidab
     refine Finset.sum_eq_zero fun ab hab => ?_
     rw [coeff_weightedHomogeneousComponent]
     split_ifs with ha
-    · by_cases hb : coeff ab.2 ψ = 0
+    · by_cases hb : AddMonoidAlgebra.coeff ψ ab.2 = 0
       · simp [hb]
       · exfalso
         apply hx

@@ -363,10 +363,10 @@ theorem vanish_new {N : ℕ} (y : (Σ k, ι k) → Ω) (v : Fin N → Ω) (E : K
   have hcoef : MvPolynomial.map ψ (Γ f) = 0 := by
     ext μ
     rw [coeff_map, coeff_zero]
-    have hm : coeff μ (Γ f) ∈ mCoordIdeal y := by
+    have hm : AddMonoidAlgebra.coeff (Γ f) μ ∈ mCoordIdeal y := by
       show _ ∈ RingHom.ker (mConeMap y)
       rw [RingHom.mem_ker]
-      have := congrArg (coeff μ) hzero
+      have := congrArg (AddMonoidAlgebra.coeff · μ) hzero
       rwa [coeff_map, coeff_zero] at this
     exact hx.2 _ hm
 

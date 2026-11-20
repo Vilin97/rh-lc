@@ -9,7 +9,7 @@ def geV (p : ℕ) {Kc : Type} [Field Kc] (Oc : Subring Kc) (x : Kc) (g : ℝ) : 
   ∀ (a : ℤ) (b : ℕ), 0 < b → (a : ℝ) ≤ g * b → x ^ b * (p : Kc) ^ (-a) ∈ Oc
 
 def gaussGe (p : ℕ) {Kc : Type} [Field Kc] (Oc : Subring Kc) {τ : Type} (y : MvPolynomial τ Kc) (g : ℝ) : Prop :=
-  ∀ n, geV p Oc (MvPolynomial.coeff n y) g
+  ∀ n, geV p Oc (AddMonoidAlgebra.coeff y n) g
 
 def JetInt {Kc : Type} [Field Kc] (Oc : Subring Kc) {σ : Type} (f : MvPowerSeries σ Kc) : Prop :=
   ∀ n : σ →₀ ℕ, (∏ x ∈ n.support, ((n x).factorial : Kc)) * MvPowerSeries.coeff n f ∈ Oc
@@ -43,11 +43,11 @@ def prodP {nH r0 r1 : ℕ} (rb : ℕ) (nu : Wt nH) (I : ColCh nH r1) : MvPolynom
 def applyD {σ τ Kc : Type} [Field Kc] (P : MvPolynomial σ (MvPolynomial τ ℤ)) (f : MvPowerSeries σ Kc) :
     MvPolynomial τ Kc :=
   ∑ n ∈ P.support, ((∏ x ∈ n.support, ((n x).factorial : Kc)) * MvPowerSeries.coeff n f) •
-    MvPolynomial.map (Int.castRingHom Kc) (MvPolynomial.coeff n P)
+    MvPolynomial.map (Int.castRingHom Kc) (AddMonoidAlgebra.coeff P n)
 
 def KG {Kc : Type} [Field Kc] (Oc : Subring Kc) (nH r0 r1 rb : ℕ) (nu : Wt nH) (Th : MvPowerSeries (ZV nH r0 r1) Kc) :
     AddSubgroup (MvPolynomial (FrV nH r0) Kc) :=
-  AddSubgroup.closure {y | ∃ (I : ColCh nH r1) (g : MvPolynomial (FrV nH r0) Kc), (∀ n, MvPolynomial.coeff n g ∈ Oc) ∧
+  AddSubgroup.closure {y | ∃ (I : ColCh nH r1) (g : MvPolynomial (FrV nH r0) Kc), (∀ n, AddMonoidAlgebra.coeff g n ∈ Oc) ∧
     y = g * applyD (prodP (r0 := r0) rb nu I) Th}
 
 def beD {Kc : Type} [Field Kc] (nH r0 r1 : ℕ) (u : Fin nH → Kc) : MvPowerSeries (ZV nH r0 r1) Kc :=

@@ -69,7 +69,7 @@ theorem length_le {l : ℕ} (hl : l.Prime) (hu : ∀ p : ℕ, p.Prime → p ≠ 
       ev.surjective_rangeRestrict (by
         rw [LinearMap.exact_iff, LinearMap.ker_rangeRestrict, Submodule.range_subtype])
   have hr' := Module.length_le_of_injective (Submodule.inclusion hr) (Submodule.inclusion_injective hr)
-  rw [hsum, hk, ← hi, padicValNat.mul hp.ne_zero hi0, Nat.cast_add, mul_add, add_comm (L * _)]
+  rw [hsum, hk, ← hi, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hp.ne_zero hi0, Nat.cast_add, mul_add, add_comm (L * _)]
   refine add_le_add hC' (hr'.trans ?_)
   by_cases hpl : p = l
   · subst hpl
@@ -198,7 +198,7 @@ theorem length_le_classNumber : GlobalTheory.Published.GlobalArtinReciprocity �
     rw [hres v, Submodule.mem_bot] at h1
     exact congrArg Multiplicative.ofAdd (congrFun h1 ⟨τ, hτ⟩)
   · refine mul_le_mul_right (Nat.cast_le.2 ?_) _
-    exact (padicValNat_dvd_iff_le hh).1 (pow_padicValNat_dvd.trans hd)
+    exact (padicValNat_dvd_iff_le hh).1 ((_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)).trans hd)
 
 end GlobalTheory.UnramHom
 

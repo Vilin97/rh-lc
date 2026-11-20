@@ -140,8 +140,8 @@ private theorem zm_f {B A : Type} [CommRing B] [CommRing A] [Algebra B A] {k : �
   apply hp
   refine hle.trans (Ideal.span_le.mpr ?_)
   intro s hs
-  have hs' : ∀ m : Fin k →₀ ℕ, toDeg m ≠ e i → MvPolynomial.coeff m s.1 = 0 := hs
-  have hc : MvPolynomial.coeff (Finsupp.single i 1) s.1 ∈ N i := by
+  have hs' : ∀ m : Fin k →₀ ℕ, toDeg m ≠ e i → AddMonoidAlgebra.coeff s.1 m = 0 := hs
+  have hc : AddMonoidAlgebra.coeff s.1 (Finsupp.single i 1) ∈ N i := by
     rw [← lat_single N i]
     exact s.2 _
   have hval : s = sec N i _ hc := by

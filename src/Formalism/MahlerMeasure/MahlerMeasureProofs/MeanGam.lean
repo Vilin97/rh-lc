@@ -69,7 +69,7 @@ noncomputable def initL (p : ℕ) [Fact p.Prime] (v : σ) (e : ℕ) :
     MvPolynomial σ ℚ_[p] →ₗ[ℤ_[p]] MvPolynomial σ ℚ_[p] where
   toFun := initPart v e
   map_add' x y := by
-    ext m; simp only [coeff_initPart, coeff_add]; split_ifs <;> simp
+    ext m; simp only [coeff_initPart, MvPolynomial.coeff_add]; split_ifs <;> simp
   map_smul' a x := by
     ext m
     simp only [coeff_initPart, RingHom.id_apply]
@@ -166,7 +166,7 @@ lemma det_block_norm {F : Type} [NormedField F] {n : ℕ} (B G : Matrix (Fin n) 
   rw [hBT.det, norm_prod]
   have hc := Finset.prod_comp (s := Finset.univ) (fun a => ‖β a‖ * c) e
   rw [hc]
-  apply Finset.prod_le_prod (fun a _ => by positivity)
+  apply Finset.prod_le_prod₀ (fun a _ => by positivity)
   intro a _
   rw [hblock, Matrix.det_smul, norm_mul, norm_pow, mul_pow]
   have hcard : Fintype.card {i // e i = a} = (Finset.univ.filter fun b => e b = a).card := by
@@ -256,8 +256,8 @@ lemma negLog_beta (p : ℕ) [hp : Fact p.Prime] (M e z o S : ℕ) :
   have hB : o.factorial * S.factorial ≠ 0 :=
     Nat.mul_ne_zero (Nat.factorial_ne_zero _) (Nat.factorial_ne_zero _)
   rw [norm_div, norm_mul, norm_pow, Padic.norm_p, norm_nat p _ hA, norm_nat p _ hB,
-    padicValNat.mul (Nat.factorial_ne_zero _) (Nat.choose_pos (Nat.le_add_left e z)).ne',
-    padicValNat.mul (Nat.factorial_ne_zero _) (Nat.factorial_ne_zero _)]
+    (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.factorial_ne_zero _) (Nat.choose_pos (Nat.le_add_left e z)).ne',
+    (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.factorial_ne_zero _) (Nat.factorial_ne_zero _)]
   rw [show ((p : ℝ)⁻¹) ^ M = (p : ℝ) ^ (-(M : ℤ)) by rw [zpow_neg, zpow_natCast, inv_pow],
     ← zpow_add₀ hp0.ne', ← zpow_sub₀ hp0.ne', neg_logb_zpow_self]
   simp only [Int.cast_sub, Int.cast_add, Int.cast_neg, Int.cast_natCast, Nat.cast_add]
@@ -486,7 +486,7 @@ lemma lead_part (hDeg : GamDeg) (hLead : GamLead) {p : ℕ} [hp : Fact p.Prime] 
     rcases Nat.lt_or_eq_of_le h3 with h | h
     · exact h
     · exfalso
-      have hc := congrArg (MvPolynomial.coeff mm) h0
+      have hc := congrArg (AddMonoidAlgebra.coeff · mm) h0
       rw [coeff_initPart, if_pos h.symm, MvPolynomial.coeff_zero] at hc
       exact (MvPolynomial.mem_support_iff.mp hmm) hc
 

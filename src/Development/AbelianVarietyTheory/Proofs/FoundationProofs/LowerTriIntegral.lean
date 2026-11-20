@@ -42,7 +42,7 @@ theorem lowerTriIntegral : Formalism.GradedWeylDivisibility.LowerTriIntegral := 
   intro r n ν
   suffices key : ∀ d : (colLex r n).syn, ∀ f ∈ dualWeyl ℚ r n ν,
       (colLex r n).toSyn ((colLex r n).degree f) = d →
-      (∀ e : Fin r × Fin n →₀ ℕ, LowerTri e → ∃ z : ℤ, coeff e f = z) →
+      (∀ e : Fin r × Fin n →₀ ℕ, LowerTri e → ∃ z : ℤ, AddMonoidAlgebra.coeff f e = z) →
       ∃ Q' : MvPolynomial (Fin r × Fin n) ℤ, f = intQ r n Q' by
     intro f hf hint
     exact key _ f hf rfl hint
@@ -75,7 +75,7 @@ theorem lowerTriIntegral : Formalism.GradedWeylDivisibility.LowerTriIntegral := 
       have hlt := lcassem_sub_lt (colLex r n) (f := f) (g := bideterminant ℚ sz hsz I) (hdeg.trans hexp) hlc h0
       refine ih _ (hd ▸ hlt) f' hf'mem rfl fun e he => ?_
       obtain ⟨w, hw⟩ := hz e he
-      refine ⟨w - coeff e (z • bideterminant ℤ sz hsz I), ?_⟩
+      refine ⟨w - AddMonoidAlgebra.coeff (z • bideterminant ℤ sz hsz I) e, ?_⟩
       rw [hf', hb, coeff_sub, hw, intQ_apply, coeff_map]
       simp only [Int.cast_sub, eq_intCast]
     obtain ⟨Q', hQ'⟩ := hQ

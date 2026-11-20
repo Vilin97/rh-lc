@@ -15,7 +15,7 @@ theorem desc_fun (ℓ : Kf →ₗ[LL] LL) (t : Finset (MvPolynomial ι LL)) (c :
     (h : ∑ x ∈ t, C (c x) * map (algebraMap LL Kf) x = C c0 * map (algebraMap LL Kf) Q) :
     ∑ x ∈ t, ℓ (c x) • x = ℓ c0 • Q := by
   ext m
-  have hm := congrArg (fun P => ℓ (coeff m P)) h
+  have hm := congrArg (fun P => ℓ (AddMonoidAlgebra.coeff P m)) h
   simp only [coeff_sum, coeff_C_mul, coeff_map, map_sum] at hm
   simp only [coeff_sum, coeff_smul, smul_eq_mul]
   have e : ∀ (a : Kf) (r : LL), ℓ (a * algebraMap LL Kf r) = ℓ a * r := by

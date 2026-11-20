@@ -34,7 +34,7 @@ lemma monomialBasisGrading_apply (A : Type u) [CommRing A] (N n : ℕ)
     ext b
     simp only [monomialBasisGrading, MvPolynomial.basisRestrictSupport, Module.Basis.map_repr,
       Finsupp.single_apply, Subtype.ext_iff]
-    change MvPolynomial.coeff b.1 (MvPolynomial.monomial a.1 (1 : A)) = _
+    change AddMonoidAlgebra.coeff (MvPolynomial.monomial a.1 (1 : A)) b.1 = _
     rw [MvPolynomial.coeff_monomial]
   rw [h]
 

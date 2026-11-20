@@ -58,7 +58,7 @@ theorem isMultiHomog_C (a : ℤ) : IsMultiHomog (C a : MRing ι) 0 := by
   simp
 
 def homogN (c : ∀ k, ι k) (N : ℕ) (f : MRing ι) : MRing ι :=
-  ∑ m ∈ f.support, C (coeff m f) * ∏ p : Σ k, ι k, X p ^ m p * X ⟨p.1, c p.1⟩ ^ (N - m p)
+  ∑ m ∈ f.support, C (AddMonoidAlgebra.coeff f m) * ∏ p : Σ k, ι k, X p ^ m p * X ⟨p.1, c p.1⟩ ^ (N - m p)
 
 theorem isMultiHomog_homogN [DecidableEq K] (c : ∀ k, ι k) (N : ℕ) (f : MRing ι)
     (hN : f.totalDegree ≤ N) :
@@ -66,7 +66,7 @@ theorem isMultiHomog_homogN [DecidableEq K] (c : ∀ k, ι k) (N : ℕ) (f : MRi
   refine AvoidRing.isMultiHomog_sum _ _ fun m hm ↦ ?_
   have hle : ∀ p, m p ≤ N := fun p ↦
     ((monomial_le_degreeOf p hm).trans (degreeOf_le_totalDegree f p)).trans hN
-  have h := AvoidRing.isMultiHomog_mul (isMultiHomog_C (ι := ι) (coeff m f))
+  have h := AvoidRing.isMultiHomog_mul (isMultiHomog_C (ι := ι) (AddMonoidAlgebra.coeff f m))
     (AvoidRing.isMultiHomog_prod Finset.univ
       (fun p : Σ k, ι k ↦ (X p : MRing ι) ^ m p * X ⟨p.1, c p.1⟩ ^ (N - m p))
       (fun p ↦ N • (Pi.single p.1 1 : K → ℕ)) fun p _ ↦ by
@@ -82,7 +82,7 @@ theorem aeval_homogN {F : Type} [Field F] (c : ∀ k, ι k) (N : ℕ) (f : MRing
       aeval (fun p ↦ w p / w ⟨p.1, c p.1⟩) f := by
   classical
   have hsum : aeval (fun p ↦ w p / w ⟨p.1, c p.1⟩) f =
-      ∑ m ∈ f.support, aeval (fun p ↦ w p / w ⟨p.1, c p.1⟩) (monomial m (coeff m f)) := by
+      ∑ m ∈ f.support, aeval (fun p ↦ w p / w ⟨p.1, c p.1⟩) (monomial m (AddMonoidAlgebra.coeff f m)) := by
     conv_lhs => rw [f.as_sum]
     rw [map_sum]
   rw [hsum, Finset.mul_sum, homogN, map_sum]

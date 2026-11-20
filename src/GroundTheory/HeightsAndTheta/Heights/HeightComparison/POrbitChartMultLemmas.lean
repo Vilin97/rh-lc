@@ -55,8 +55,8 @@ theorem chartCone_of_isWeightedHomogeneous (D : Type*) [CommRing D] [Algebra (ch
   refine Finset.sum_congr rfl fun m hm ↦ ?_
   have hm' : ∀ k, ∑ i, m ⟨k, i⟩ = d k := fun k ↦ by
     rw [← weight_coordDeg_apply, hF (mem_support_iff.mp hm)]
-  have hε : chartEval x c (monomial m (coeff m F)) =
-      algebraMap ℤ _ (coeff m F) * ∏ p, chartEval x c (X p) ^ m p := by
+  have hε : chartEval x c (monomial m (AddMonoidAlgebra.coeff F m)) =
+      algebraMap ℤ _ (AddMonoidAlgebra.coeff F m) * ∏ p, chartEval x c (X p) ^ m p := by
     rw [chartEval, aeval_monomial, Finsupp.prod_fintype _ _ (fun _ ↦ pow_zero _)]
     simp only [aeval_X]
   have hX : ∏ p : Coord n, (X p.1 : MvPolynomial ι D) ^ m p = ∏ k, X k ^ d k := by

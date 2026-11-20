@@ -53,7 +53,7 @@ theorem exists_basis (F E : Type) [Field F] [NumberField F] [Field E] [NumberFie
       rw [map_sum]
       simp [β, map_zsmul]
     rw [hxe]
-    simp only [map_sum, map_zsmul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.coe_smul,
+    simp only [map_sum, map_zsmul, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.coe_smul,
       Pi.smul_apply, Finset.mul_sum, mul_smul_comm]
     exact Subring.sum_mem _ fun j _ => Subring.zsmul_mem _ (key j) _
 

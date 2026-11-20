@@ -53,17 +53,17 @@ theorem third_zeta_dimension_bound : WeylDimensionBounds := by
     unfold weylDim
     calc (1:ℝ) = ∏ i : Fin (n + 1), ∏ j ∈ univ.filter (fun j => i < j), (1:ℝ) := by simp
       _ ≤ _ := by
-        refine Finset.prod_le_prod (fun i _ => by simp) fun i _ => ?_
-        refine Finset.prod_le_prod (fun j _ => zero_le_one) fun j hj => ?_
+        refine Finset.prod_le_prod₀ (fun i _ => by simp) fun i _ => ?_
+        refine Finset.prod_le_prod₀ (fun j _ => zero_le_one) fun j hj => ?_
         exact (weyl_factor_bounds lam h i j (Finset.mem_filter.1 hj).2).1
   refine ⟨hlow, ?_⟩
   have hup : weylDim lam ≤ (Wnum lam : ℝ) ^ ((n + 1) * (n + 1)) := by
     unfold weylDim
     calc _ ≤ ∏ _i : Fin (n + 1), (Wnum lam : ℝ) ^ (n + 1) := by
-          refine Finset.prod_le_prod (fun i _ => Finset.prod_nonneg fun j hj => ?_) fun i _ => ?_
+          refine Finset.prod_le_prod₀ (fun i _ => Finset.prod_nonneg fun j hj => ?_) fun i _ => ?_
           · exact le_trans zero_le_one (weyl_factor_bounds lam h i j (Finset.mem_filter.1 hj).2).1
           · calc _ ≤ ∏ j ∈ univ.filter (fun j => i < j), (Wnum lam : ℝ) := by
-                  refine Finset.prod_le_prod (fun j hj => ?_) fun j hj => ?_
+                  refine Finset.prod_le_prod₀ (fun j hj => ?_) fun j hj => ?_
                   · exact le_trans zero_le_one (weyl_factor_bounds lam h i j (Finset.mem_filter.1 hj).2).1
                   · exact (weyl_factor_bounds lam h i j (Finset.mem_filter.1 hj).2).2
               _ = (Wnum lam : ℝ) ^ (univ.filter (fun j => i < j)).card := by simp

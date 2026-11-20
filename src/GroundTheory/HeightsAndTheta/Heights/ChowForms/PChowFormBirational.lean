@@ -56,9 +56,9 @@ theorem not_dvd_pderiv_of_degreeOf_pos {F σ : Type*} [Field F] [CharZero F] {g 
     rw [← degreeOf_eq_sup] at hsd
     have hle : Finsupp.single i 1 ≤ s := Finsupp.single_le_iff.2 (by omega)
     intro h0
-    have := congrArg (coeff (s - Finsupp.single i 1)) h0
+    have := congrArg (AddMonoidAlgebra.coeff · (s - Finsupp.single i 1)) h0
     rw [coeff_pderiv, coeff_zero, tsub_add_cancel_of_le hle] at this
-    have hcs : coeff s g ≠ 0 := mem_support_iff.1 hs
+    have hcs : AddMonoidAlgebra.coeff g s ≠ 0 := mem_support_iff.1 hs
     have hsi : (((s - Finsupp.single i 1 : σ →₀ ℕ) i : ℕ) : F) + 1 ≠ 0 := by
       exact Nat.cast_add_one_ne_zero _
     exact mul_ne_zero hcs hsi this

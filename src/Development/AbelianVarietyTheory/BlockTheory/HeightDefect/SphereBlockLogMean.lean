@@ -84,14 +84,14 @@ def blockLogMean {B N : ℕ} (P : MvPolynomial (Fin B × Fin (N + 1)) ℂ) : ℝ
 
 def IsBlockHomogeneous {R : Type} [CommSemiring R] {B n : ℕ}
     (ω : MvPolynomial (Fin B × Fin n) R) (a : Fin B → ℕ) : Prop :=
-  ∀ d : Fin B × Fin n →₀ ℕ, coeff d ω ≠ 0 → ∀ b : Fin B, ∑ j : Fin n, d (b, j) = a b
+  ∀ d : Fin B × Fin n →₀ ℕ, AddMonoidAlgebra.coeff ω d ≠ 0 → ∀ b : Fin B, ∑ j : Fin n, d (b, j) = a b
 
 section NumberField
 
 variable {K : Type} [Field K] [NumberField K]
 
 def gaussAbsValue {ι : Type} (w : FinitePlace K) (ω : MvPolynomial ι K) : ℝ :=
-  ((ω.support.sup fun d => Real.toNNReal (w (coeff d ω)) : ℝ≥0) : ℝ)
+  ((ω.support.sup fun d => Real.toNNReal (w (AddMonoidAlgebra.coeff ω d)) : ℝ≥0) : ℝ)
 
 theorem finitePlace_eq_absNorm_zpow (w : FinitePlace K) {c : K} (hc : c ≠ 0) :
     w c = (Ideal.absNorm w.maximalIdeal.asIdeal : ℝ) ^
@@ -105,17 +105,17 @@ theorem finitePlace_eq_absNorm_zpow (w : FinitePlace K) {c : K} (hc : c ≠ 0) :
   rfl
 
 theorem le_gaussAbsValue {ι : Type} (w : FinitePlace K) (ω : MvPolynomial ι K) (d : ι →₀ ℕ) :
-    w (coeff d ω) ≤ gaussAbsValue w ω := by
+    w (AddMonoidAlgebra.coeff ω d) ≤ gaussAbsValue w ω := by
   by_cases h : d ∈ ω.support
-  · have := Finset.le_sup (f := fun d => Real.toNNReal (w (coeff d ω))) h
+  · have := Finset.le_sup (f := fun d => Real.toNNReal (w (AddMonoidAlgebra.coeff ω d))) h
     exact Real.toNNReal_le_iff_le_coe.1 this
   · rw [notMem_support_iff.1 h]
     simp [gaussAbsValue]
 
 theorem exists_gaussAbsValue_eq {ι : Type} (w : FinitePlace K) {ω : MvPolynomial ι K}
-    (h : ω ≠ 0) : ∃ d ∈ ω.support, gaussAbsValue w ω = w (coeff d ω) := by
+    (h : ω ≠ 0) : ∃ d ∈ ω.support, gaussAbsValue w ω = w (AddMonoidAlgebra.coeff ω d) := by
   obtain ⟨d, hd, e⟩ := Finset.exists_mem_eq_sup ω.support (support_nonempty.2 h)
-    fun d => Real.toNNReal (w (coeff d ω))
+    fun d => Real.toNNReal (w (AddMonoidAlgebra.coeff ω d))
   exact ⟨d, hd, by rw [gaussAbsValue, e, Real.coe_toNNReal _ (apply_nonneg w _)]⟩
 
 theorem gaussAbsValue_pos {ι : Type} (w : FinitePlace K) {ω : MvPolynomial ι K}
@@ -126,7 +126,7 @@ theorem gaussAbsValue_pos {ι : Type} (w : FinitePlace K) {ω : MvPolynomial ι 
 
 theorem finite_support_log_gaussAbsValue {ι : Type} {ω : MvPolynomial ι K} (h : ω ≠ 0) :
     (Function.support fun w : FinitePlace K => Real.log (gaussAbsValue w ω)).Finite := by
-  have hf : (⋃ d ∈ ω.support, Function.mulSupport fun w : FinitePlace K => w (coeff d ω)).Finite :=
+  have hf : (⋃ d ∈ ω.support, Function.mulSupport fun w : FinitePlace K => w (AddMonoidAlgebra.coeff ω d)).Finite :=
     ω.support.finite_toSet.biUnion fun d hd =>
       FinitePlace.hasFiniteMulSupport (mem_support_iff.1 hd)
   refine hf.subset fun w hw => ?_

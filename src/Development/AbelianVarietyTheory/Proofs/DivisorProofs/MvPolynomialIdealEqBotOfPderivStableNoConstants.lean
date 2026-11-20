@@ -36,7 +36,7 @@ theorem mvPolynomial_ideal_eq_bot_of_pderiv_stable :
         intro h0
         have hc := coeff_pderiv (i := i) P (m - single i 1)
         rw [h0, coeff_zero, sub_add_single_one_cancel hi] at hc
-        have hcm : coeff m P ≠ 0 := MvPolynomial.mem_support_iff.mp hm
+        have hcm : AddMonoidAlgebra.coeff P m ≠ 0 := MvPolynomial.mem_support_iff.mp hm
         have hk : (((m - single i 1 : Fin r →₀ ℕ) i : ℕ) : R) + 1 ≠ 0 :=
           Nat.cast_add_one_ne_zero _
         exact (mul_ne_zero hcm hk) hc.symm

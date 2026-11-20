@@ -136,7 +136,7 @@ theorem locally_normal_prodTerm (v : A.V) :
     (continuous_add_right (a i)).continuousAt (ht i), fun m => ∏ i, u i (m i),
     (summable_norm_pi_prod_and_tsum n u fun i => (hu i).norm).1.of_norm, fun m v' hv' => ?_⟩
   rw [prodTerm, norm_prod]
-  exact Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ => hb i _ _ (Set.mem_iInter.1 hv' i)
+  exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ => hb i _ _ (Set.mem_iInter.1 hv' i)
 
 variable {a}
 

@@ -16,7 +16,7 @@ section Hom
 variable {n : ℕ} (De : MvPolynomial (Fin n) ℂ)
 
 def fnHom (a : ℂ) (b : Fin n → ℂ) : ℂ :=
-  ∑ m ∈ De.support, MvPolynomial.coeff m De *
+  ∑ m ∈ De.support, AddMonoidAlgebra.coeff De m *
     (a ^ (De.totalDegree + 1 - ∑ k, m k) * ∏ k, b k ^ m k)
 
 theorem fn_sum_le_totalDegree {m : Fin n →₀ ℕ} (hm : m ∈ De.support) :
@@ -68,15 +68,15 @@ theorem fn_diffOn_hom {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] {S 
     (hb : ∀ k, DifferentiableOn ℂ (b k) S) :
     DifferentiableOn ℂ (fun x => fnHom De (a x) (fun k => b k x)) S := by
   unfold fnHom
-  have hterm : ∀ m ∈ De.support, DifferentiableOn ℂ (fun x => MvPolynomial.coeff m De *
+  have hterm : ∀ m ∈ De.support, DifferentiableOn ℂ (fun x => AddMonoidAlgebra.coeff De m *
       (a x ^ (De.totalDegree + 1 - ∑ k, m k) * ∏ k, (fun k => b k x) k ^ m k)) S := fun m _ =>
     ((ha.pow _).mul (fn_diffOn_prod Finset.univ (fun k x => b k x ^ m k) (fun k => (hb k).pow _))).const_mul _
   first
     | exact DifferentiableOn.fun_sum hterm
     | exact DifferentiableOn.sum hterm
-    | (have e : (fun x => ∑ m ∈ De.support, MvPolynomial.coeff m De *
+    | (have e : (fun x => ∑ m ∈ De.support, AddMonoidAlgebra.coeff De m *
           (a x ^ (De.totalDegree + 1 - ∑ k, m k) * ∏ k, (fun k => b k x) k ^ m k)) =
-          ∑ m ∈ De.support, fun x => MvPolynomial.coeff m De *
+          ∑ m ∈ De.support, fun x => AddMonoidAlgebra.coeff De m *
           (a x ^ (De.totalDegree + 1 - ∑ k, m k) * ∏ k, (fun k => b k x) k ^ m k) := by
          ext x; simp [Finset.sum_apply]
        rw [e]

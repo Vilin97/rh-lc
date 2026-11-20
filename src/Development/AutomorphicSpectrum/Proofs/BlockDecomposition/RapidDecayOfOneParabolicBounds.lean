@@ -60,7 +60,7 @@ theorem le_of_ratio_le {n : ℕ} {ρ : Fin n → ℝ} (hρ : ∀ i, 0 < ρ i) (h
   have h2 : ρ i ^ n ≤ R ^ n := by
     rw [h1]
     calc ∏ j, ρ i / ρ j ≤ ∏ _j : Fin n, R :=
-          Finset.prod_le_prod (fun j _ => (div_pos (hρ i) (hρ j)).le) (fun j _ => h i j)
+          Finset.prod_le_prod₀ (fun j _ => (div_pos (hρ i) (hρ j)).le) (fun j _ => h i j)
       _ = R ^ n := by simp
   exact (pow_le_pow_iff_left₀ (hρ i).le (by linarith) hn).1 h2
 
@@ -80,7 +80,7 @@ theorem one_le_rpow_mul_prod {n : ℕ} {ρ : Fin n → ℝ} (hρ : ∀ i, 0 < ρ
   have hR0 : 0 < R := by linarith
   rw [Real.rpow_sum_of_pos hR0, ← Finset.prod_mul_distrib]
   calc (1 : ℝ) = ∏ _i : Fin n, (1 : ℝ) := by simp
-    _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one) (fun i _ => ?_)
+    _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun i _ => ?_)
   rcases le_total 0 (lam i) with hl | hl
   · rw [abs_of_nonneg hl, ← Real.mul_rpow hR0.le (hρ i).le]
     refine Real.one_le_rpow ?_ hl

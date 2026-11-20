@@ -16,11 +16,11 @@ variable {e : ℕ} {ι : Type*} [Fintype ι] [DecidableEq ι]
 def monOf (f : Fin e → ι) : ι →₀ ℕ := ∑ j, Finsupp.single (f j) 1
 
 def polyWt (F : MvPolynomial ι ℝ) (f : Fin e → ι) : ℝ :=
-  coeff (monOf f) F * ((monOf f).prod fun _ n => (n.factorial : ℝ)) / e.factorial
+  AddMonoidAlgebra.coeff F (monOf f) * ((monOf f).prod fun _ n => (n.factorial : ℝ)) / e.factorial
 
 theorem polyWt_add (F G : MvPolynomial ι ℝ) (f : Fin e → ι) :
     polyWt (F + G) f = polyWt F f + polyWt G f := by
-  simp only [polyWt, coeff_add]; ring
+  simp only [polyWt, MvPolynomial.coeff_add]; ring
 
 theorem polyWt_smul (c : ℝ) (F : MvPolynomial ι ℝ) (f : Fin e → ι) :
     polyWt (c • F) f = c * polyWt F f := by

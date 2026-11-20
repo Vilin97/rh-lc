@@ -61,7 +61,7 @@ theorem map_diagonal (lam : Measure R) [lam.IsAddHaarMeasure] (d : ι → Rˣ) :
     simp [mulVec_diagonal]
   have hm : ∀ i, Measurable fun x : R => (d i : R) * x := fun i =>
     (continuous_const.mul continuous_id).measurable
-  rw [h1, Measure.pi_pi, map_prod, ENNReal.smul_def, smul_eq_mul, ENNReal.coe_finset_prod,
+  rw [h1, Measure.pi_pi, map_prod, ENNReal.smul_def, smul_eq_mul, ENNReal.ofNNReal_finsetProd,
     ← Finset.prod_mul_distrib]
   refine Finset.prod_congr rfl fun i _ => ?_
   have h2 := congrArg (fun m : Measure R => m (s i)) (char_smul_map lam (d i))

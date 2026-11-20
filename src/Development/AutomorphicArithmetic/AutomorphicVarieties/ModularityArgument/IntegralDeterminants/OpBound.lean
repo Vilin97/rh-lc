@@ -348,7 +348,7 @@ private theorem core (hn : 1 ≤ n) (σ : Submodule ℂ (UA E n → ℂ)) (hσ :
   have hKb : ∀ k ∈ K, ∀ i j, nu ι (tens M k i j) ≤ ∏ v, D v := by
     intro k hk i j
     rw [tens_apply, nu_prod]
-    refine Finset.prod_le_prod (fun _ _ => nu_nonneg _ _) fun v _ => ?_
+    refine Finset.prod_le_prod₀ (fun _ _ => nu_nonneg _ _) fun v _ => ?_
     have hg := intDet_of_KGL (hKl k hk (u v))
     have h0 : nu ι (ψ v (cLoc (u v) k.1).val.det) = 1 := by
       have h1 := nu_of_val ι (u v) (ψ v) (φ v) (hψ v) (hint v) _ 0 hg.2
@@ -381,7 +381,7 @@ private theorem core (hn : 1 ≤ n) (σ : Submodule ℂ (UA E n → ℂ)) (hσ :
       rw [hp]
       exact Subgroup.list_prod_mem _ fun x hx => hsU x (hL' x hx)
     rw [tens_apply, nu_prod, hprod, ← Finset.prod_mul_distrib]
-    refine Finset.prod_le_prod (fun _ _ => nu_nonneg _ _) fun v _ => ?_
+    refine Finset.prod_le_prod₀ (fun _ _ => nu_nonneg _ _) fun v _ => ?_
     by_cases h : u v = w
     · have h1 := hW _ hL' (u v) h (φ v) ((hOv v).2 h) (ψ v) (hψ v) (hint v) (d v) (e v) (C0 v) (hRB v) (j v) (i v)
       rw [← hp, List.length_map] at h1

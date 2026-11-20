@@ -27,7 +27,7 @@ theorem geom_prod_sum_le {ι : Type} [Fintype ι] (q : ℝ) (hq0 : 0 ≤ q) (hq1
     _ = ∏ i : ι, ∑ n ∈ Finset.range M, q ^ n := by
         rw [Finset.prod_univ_sum]
     _ ≤ ∏ _i : ι, (1 / (1 - q)) :=
-        Finset.prod_le_prod (fun _ _ => Finset.sum_nonneg fun n _ => pow_nonneg hq0 n)
+        Finset.prod_le_prod₀ (fun _ _ => Finset.sum_nonneg fun n _ => pow_nonneg hq0 n)
           (fun _ _ => hgeom)
     _ = (1 / (1 - q)) ^ Fintype.card ι := by rw [Finset.prod_const, Finset.card_univ]
 
@@ -36,7 +36,7 @@ variable {E : Type} [Field E] [NumberField E]
 theorem term_le (x : InfinitePlace E → ℝ) (hx : ∀ w, 0 < x w) (Kx : ℝ) (hK : 0 ≤ Kx) (l : E)
     (hl0 : l ≠ 0) :
     ∏ w, min 1 ((x w / w l) ^ Kx) ≤ ∏ w, ((1 / 2 : ℝ) ^ Kx) ^ (Nat.log 2 ⌊w l / x w⌋₊) := by
-  apply Finset.prod_le_prod (fun w _ => le_min zero_le_one
+  apply Finset.prod_le_prod₀ (fun w _ => le_min zero_le_one
     (Real.rpow_nonneg (div_nonneg (hx w).le (by positivity)) _))
   intro w _
   have hpos : 0 < x w / w l := div_pos (hx w) (InfinitePlace.pos_iff.2 hl0)

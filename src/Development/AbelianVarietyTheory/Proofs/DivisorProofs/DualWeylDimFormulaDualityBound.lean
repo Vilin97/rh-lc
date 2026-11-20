@@ -66,8 +66,8 @@ theorem weylDim_le (n : ℕ) (la : Fin n → ℕ) (hla : Antitone la) (w : ℤ) 
     rw [← Finset.sum_pair (f := fun k => |((la k : ℤ) : ℝ) - w|) hij]
     exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ _) fun k _ _ => abs_nonneg _
   rw [hcast, ← prod_ite_lt]
-  refine Finset.prod_le_prod (fun i _ => Finset.prod_nonneg fun j _ => ?_)
-    fun i _ => Finset.prod_le_prod (fun j _ => ?_) fun j _ => ?_
+  refine Finset.prod_le_prod₀ (fun i _ => Finset.prod_nonneg fun j _ => ?_)
+    fun i _ => Finset.prod_le_prod₀ (fun j _ => ?_) fun j _ => ?_
   · split_ifs with hij
     · have hd : ((i : ℕ) : ℝ) + 1 ≤ ((j : ℕ) : ℝ) := by exact_mod_cast (Fin.lt_def.mp hij)
       have ha : (la j : ℝ) ≤ la i := by exact_mod_cast hla hij.le

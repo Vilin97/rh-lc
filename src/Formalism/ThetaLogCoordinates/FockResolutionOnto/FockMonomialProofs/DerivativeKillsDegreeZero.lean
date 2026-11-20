@@ -222,7 +222,7 @@ theorem wtot_fd (hs : 1 ≤ s) (hv : LL.vec (Fin.last K) = true) (k0 : Fin q) (h
   exact Submodule.finiteDimensional_of_le hle
 
 theorem isWt_supp (G : GlW ℚ_[p] (MvPolynomial (Fin (K + 1) × Fin (s + 1)) ℚ_[p]) (s + 1))
-    (hcomp : ∀ μ x m, coeff m (G.comp μ x) = if wtX LL c m = μ then coeff m x else 0)
+    (hcomp : ∀ μ x m, AddMonoidAlgebra.coeff (G.comp μ x) m = if wtX LL c m = μ then AddMonoidAlgebra.coeff x m else 0)
     (μ : Fin (s + 1) → ℤ) (x : MvPolynomial (Fin (K + 1) × Fin (s + 1)) ℚ_[p]) (hx : G.IsWt μ x) :
     ∀ m ∈ x.support, wtX LL c m = μ := by
   intro m hm
@@ -292,7 +292,7 @@ theorem wtX_range (hv : LL.vec (Fin.last K) = true) (m : Fin (K + 1) × Fin (s +
 theorem wtot_bound (hs : 1 ≤ s) (hv : LL.vec (Fin.last K) = true) (k0 : Fin q) (hk0 : K + 1 ≤ J k0)
     (hc : M k0 = ((c : ℤ) : WithTop ℤ)) (hcd : c < LL.total)
     (G : GlW ℚ_[p] (MvPolynomial (Fin (K + 1) × Fin (s + 1)) ℚ_[p]) (s + 1))
-    (hcomp : ∀ μ x m, coeff m (G.comp μ x) = if wtX LL c m = μ then coeff m x else 0) :
+    (hcomp : ∀ μ x m, AddMonoidAlgebra.coeff (G.comp μ x) m = if wtX LL c m = μ then AddMonoidAlgebra.coeff x m else 0) :
     ∀ (μ ν : Fin (s + 1) → ℤ) (x y : MvPolynomial (Fin (K + 1) × Fin (s + 1)) ℚ_[p]), x ≠ 0 → y ≠ 0 →
       x ∈ Wtot p LL J M (Fin.last s) → y ∈ Wtot p LL J M (Fin.last s) → G.IsWt μ x → G.IsWt ν y →
       ∀ i, |ν i - μ i| ≤ ((4 * LL.total : ℕ) : ℤ) := by
@@ -316,14 +316,14 @@ theorem wtot_bound (hs : 1 ≤ s) (hv : LL.vec (Fin.last K) = true) (k0 : Fin q)
 theorem wtot_finW (hs : 1 ≤ s) (hv : LL.vec (Fin.last K) = true) (k0 : Fin q) (hk0 : K + 1 ≤ J k0)
     (hc : M k0 = ((c : ℤ) : WithTop ℤ))
     (G : GlW ℚ_[p] (MvPolynomial (Fin (K + 1) × Fin (s + 1)) ℚ_[p]) (s + 1))
-    (hcomp : ∀ μ x m, coeff m (G.comp μ x) = if wtX LL c m = μ then coeff m x else 0) :
+    (hcomp : ∀ μ x m, AddMonoidAlgebra.coeff (G.comp μ x) m = if wtX LL c m = μ then AddMonoidAlgebra.coeff x m else 0) :
     G.FinW (Wtot p LL J M (Fin.last s)) := by
   refine ⟨Fintype.piFinset fun _ => Finset.Icc (-dEarly LL) (2 * dEarly LL + c), ?_⟩
   intro x hx μ hμ
   by_contra hne
   obtain ⟨m, hm⟩ := Finset.nonempty_iff_ne_empty.2 (mt MvPolynomial.support_eq_empty.1 hne)
   have h1 := hcomp μ x m
-  have hcm : coeff m (G.comp μ x) ≠ 0 := MvPolynomial.mem_support_iff.1 hm
+  have hcm : AddMonoidAlgebra.coeff (G.comp μ x) m ≠ 0 := MvPolynomial.mem_support_iff.1 hm
   by_cases hw : wtX LL c m = μ
   · rw [if_pos hw] at h1
     have hmx : m ∈ x.support := MvPolynomial.mem_support_iff.2 (by rwa [h1] at hcm)
@@ -341,7 +341,7 @@ theorem latData (hU : UDivInt) (hD : DWDivInt) (hs : 1 ≤ s) (hv : LL.vec (Fin.
     (hk0 : K + 1 ≤ J k0) (hc : M k0 = ((c : ℤ) : WithTop ℤ)) (hmin : ∀ k, K + 1 ≤ J k → M k0 ≤ M k)
     (hcd : c < LL.total)
     (G : GlW ℚ_[p] (MvPolynomial (Fin (K + 1) × Fin (s + 1)) ℚ_[p]) (s + 1)) (hE : G.E = EX p LL c)
-    (hcomp : ∀ μ x m, coeff m (G.comp μ x) = if wtX LL c m = μ then coeff m x else 0) :
+    (hcomp : ∀ μ x m, AddMonoidAlgebra.coeff (G.comp μ x) m = if wtX LL c m = μ then AddMonoidAlgebra.coeff x m else 0) :
     LatData p G (Wtot p LL J M (Fin.last s)) (IntPol p (Fin (K + 1) × Fin (s + 1))).toAddSubgroup (4 * LL.total) where
   stable := wtot_stable LL J M c hs hv k0 hk0 hc hmin G hE
   fd := wtot_fd LL J M c hs hv k0 hk0 hc
@@ -382,7 +382,7 @@ theorem latData (hU : UDivInt) (hD : DWDivInt) (hs : 1 ≤ s) (hv : LL.vec (Fin.
 theorem wtot_le_iso (hs : 1 ≤ s) (hv : LL.vec (Fin.last K) = true) (k0 : Fin q)
     (hk0 : K + 1 ≤ J k0) (hc : M k0 = ((c : ℤ) : WithTop ℤ)) (hmin : ∀ k, K + 1 ≤ J k → M k0 ≤ M k)
     (G : GlW ℚ_[p] (MvPolynomial (Fin (K + 1) × Fin (s + 1)) ℚ_[p]) (s + 1)) (hE : G.E = EX p LL c)
-    (hcomp : ∀ μ x m, coeff m (G.comp μ x) = if wtX LL c m = μ then coeff m x else 0) :
+    (hcomp : ∀ μ x m, AddMonoidAlgebra.coeff (G.comp μ x) m = if wtX LL c m = μ then AddMonoidAlgebra.coeff x m else 0) :
     Wtot p LL J M (Fin.last s) ≤ ⨆ la, IsoW G (Wtot p LL J M (Fin.last s)) la := by
   obtain ⟨S, hS⟩ := wtot_finW LL J M c hs hv k0 hk0 hc G hcomp
   have hst := wtot_stable LL J M c hs hv k0 hk0 hc hmin G hE
@@ -402,7 +402,7 @@ theorem wtot_le_iso (hs : 1 ≤ s) (hv : LL.vec (Fin.last K) = true) (k0 : Fin q
   exact G.subset_gS _ ⟨z.2.1, z.2.2.1⟩
 
 theorem hw_deg_zero (G : GlW ℚ_[p] (MvPolynomial (Fin (K + 1) × Fin (s + 1)) ℚ_[p]) (s + 1)) (hE : G.E = EX p LL c)
-    (hcomp : ∀ μ x m, coeff m (G.comp μ x) = if wtX LL c m = μ then coeff m x else 0)
+    (hcomp : ∀ μ x m, AddMonoidAlgebra.coeff (G.comp μ x) m = if wtX LL c m = μ then AddMonoidAlgebra.coeff x m else 0)
     (la : Fin (s + 1) → ℤ) (h : MvPolynomial (Fin (K + 1) × Fin (s + 1)) ℚ_[p]) (hh : G.IsHW la h)
     (hW : h ∈ Wtot p LL J M (Fin.last s)) : h ∈ XSp p (setLast LL 0) J M (Fin.last s) := by
   by_cases h0 : h = 0

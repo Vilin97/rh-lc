@@ -24,7 +24,7 @@ theorem splitAt_C (z : σ) (a : ℝ) : splitAt z (C a) = Polynomial.C (C a) := b
   simp [splitAt, Polynomial.algebraMap_apply]
 
 theorem coeff_splitAt (z : σ) (Q : MvPolynomial σ ℝ) (e : σ →₀ ℕ) (he : e z = 0) (k : ℕ) :
-    coeff (e + Finsupp.single z k) Q = coeff e ((splitAt z Q).coeff k) := by
+    AddMonoidAlgebra.coeff Q (e + Finsupp.single z k) = AddMonoidAlgebra.coeff ((splitAt z Q).coeff k) e := by
   induction Q using MvPolynomial.induction_on generalizing e k with
   | C a =>
     rw [splitAt_C, Polynomial.coeff_C]
@@ -105,8 +105,8 @@ def chExp (blk : σ → β) (pos : σ → ℕ) (s : Finset σ) : σ →₀ ℕ :
 
 theorem chain_coeff (blk : σ → β) (pos : σ → ℕ) (hinj : ∀ a b, blk a = blk b → pos a = pos b → a = b)
     (s : Finset σ) :
-    coeff (chExp blk pos s) (∏ p ∈ chPairs blk pos s, dif p) = 1 ∧
-      ∀ c : β → ℝ, coeff (chExp blk pos s) ((∑ x ∈ s, C (c (blk x)) * X x) * coProd (chPairs blk pos s) dif) =
+    AddMonoidAlgebra.coeff (∏ p ∈ chPairs blk pos s, dif p) (chExp blk pos s) = 1 ∧
+      ∀ c : β → ℝ, AddMonoidAlgebra.coeff ((∑ x ∈ s, C (c (blk x)) * X x) * coProd (chPairs blk pos s) dif) (chExp blk pos s) =
         ∑ x ∈ s, c (blk x) - ∑ b ∈ s.image blk, c b := by
   induction s using Finset.induction_on_min_value pos with
   | empty => simp [chExp, chPairs]
@@ -177,7 +177,7 @@ theorem chain_coeff (blk : σ → β) (pos : σ → ℕ) (hinj : ∀ a b, blk a 
       rw [hE, coeff_splitAt _ _ _ hE0, hW, coProd_union hdisj, Finset.sum_insert hz, Finset.sum_insert hz, map_mul,
         map_add, map_add, map_mul, map_mul, map_mul, hD, hM, hG, hGP, hL, splitAt_C, splitAt_self, add_mul,
         Polynomial.coeff_add, Polynomial.coeff_C_mul, Polynomial.coeff_add, Polynomial.coeff_C_mul,
-        Polynomial.coeff_C_mul, coeff_prod_card, coeff_coProd_card, mul_one, mul_zero, add_zero, coeff_add, ih2,
+        Polynomial.coeff_C_mul, coeff_prod_card, coeff_coProd_card, mul_one, mul_zero, add_zero, MvPolynomial.coeff_add, ih2,
         mul_assoc, Polynomial.coeff_C_mul, coeff_C_mul, Finset.image_insert]
       rcases P.eq_empty_or_nonempty with h0 | h0
       · have hn : blk z ∉ s.image blk := by
@@ -201,14 +201,14 @@ theorem chain_coeff (blk : σ → β) (pos : σ → ℕ) (hinj : ∀ a b, blk a 
           rw [← Polynomial.coeff_X_mul F, Nat.sub_add_cancel hpos]
         rw [Finset.insert_eq_of_mem hn, h5,
           Polynomial.coeff_add, Polynomial.coeff_C_mul, Polynomial.coeff_C_mul,
-          Polynomial.prod_X_sub_C_coeff_card_pred _ _ hpos, coeff_coProd_pred, coeff_add, mul_neg, coeff_neg,
+          Polynomial.prod_X_sub_C_coeff_card_pred _ _ hpos, coeff_coProd_pred, MvPolynomial.coeff_add, mul_neg, coeff_neg,
           mul_comm (coProd _ _), h3, mul_comm _ (P.card : MvPolynomial σ ℝ), ← map_natCast C, coeff_C_mul, ih1]
         ring
 
 end General
 
 theorem apolar_monomial_left {V : Type} [Fintype V] [DecidableEq V] (e : V →₀ ℕ) (k : ℝ) (Q : MvPolynomial V ℝ) :
-    apolar (monomial e k) Q = (k * ∏ x, ((e x).factorial : ℝ)) * coeff e Q := by
+    apolar (monomial e k) Q = (k * ∏ x, ((e x).factorial : ℝ)) * AddMonoidAlgebra.coeff Q e := by
   induction Q using MvPolynomial.induction_on' with
   | monomial u a =>
     rw [apolar_monomial, coeff_monomial, coeff_monomial]
@@ -282,7 +282,7 @@ theorem exists_fibPt {j : ℕ} (hj : j < N) :
   rw [← chExp_eq hj, neg_pow, map_pow, map_neg, map_one]
 
 theorem coeff_toForm (P : Pol ι N) (S : Finset (ι × Fin N × Fin N)) (hS : ∀ e ∈ S, e.2.1 < e.2.2) :
-    coeff (mono S) (toForm P : FormPol ι N) = (-1) ^ S.card * apolar P (∏ e ∈ S, dif (ends e)) := by
+    AddMonoidAlgebra.coeff (toForm P : FormPol ι N) (mono S) = (-1) ^ S.card * apolar P (∏ e ∈ S, dif (ends e)) := by
   rw [mono, toForm, coeff_aeval_lin rootForm inc pderiv_rootForm constantCoeff_rootForm, ← smul_eq_mul, ← map_smul]
   congr 1
   rw [← C_mul', map_pow, ← Finset.prod_const, ← Finset.prod_mul_distrib]
@@ -326,8 +326,8 @@ theorem sum_cr {M : Type} [AddCommGroup M] [Module ℝ M] {j : ℕ} (hj : j < N)
 
 theorem sum_coeff_fibPt (ι : Type) [Fintype ι] [DecidableEq ι] (N j : ℕ) (h1 : 1 ≤ j) (hj : j < N) :
     ∑ p ∈ winSet ι N j, ∑ q ∈ crSet ι N j,
-        coeff (mono (insert q ((winSet ι N j).erase p))) (toForm (fibPt ι N j) : FormPol ι N) =
-      (Fintype.card ι : ℝ) * (2 * (j : ℝ) - N) * coeff (mono (winSet ι N j)) (toForm (fibPt ι N j) : FormPol ι N) := by
+        AddMonoidAlgebra.coeff (toForm (fibPt ι N j) : FormPol ι N) (mono (insert q ((winSet ι N j).erase p))) =
+      (Fintype.card ι : ℝ) * (2 * (j : ℝ) - N) * AddMonoidAlgebra.coeff (toForm (fibPt ι N j) : FormPol ι N) (mono (winSet ι N j)) := by
   obtain ⟨k, hk⟩ := exists_fibPt (ι := ι) hj
   obtain ⟨hD, hG⟩ := chain_coeff (blkOf j) (fun x : ι × Fin N => (x.2 : ℕ))
     (fun a b h h' => Prod.ext (Prod.mk.inj h).1 (Fin.ext h')) Finset.univ
@@ -351,9 +351,9 @@ theorem sum_coeff_fibPt (ι : Type) [Fintype ι] [DecidableEq ι] (N j : ℕ) (h
   rw [coeff_toForm _ _ hw, hk, apolar_monomial_left, hD]
   rw [Finset.sum_congr rfl (g := fun p => (-1) ^ (winSet ι N j).card * ((k * ∏ x,
     ((chExp (blkOf j) (fun x : ι × Fin N => (x.2 : ℕ)) Finset.univ x).factorial : ℝ)) *
-      coeff (chExp (blkOf j) (fun x : ι × Fin N => (x.2 : ℕ)) Finset.univ)
-        ((∑ q ∈ crSet ι N j, (X (q.1, q.2.1) - X (q.1, q.2.2) : Pol ι N)) *
-          ∏ q ∈ (winSet ι N j).erase p, dif (ends q)))), ← Finset.mul_sum, ← Finset.mul_sum, hG]
+      AddMonoidAlgebra.coeff ((∑ q ∈ crSet ι N j, (X (q.1, q.2.1) - X (q.1, q.2.2) : Pol ι N)) *
+          ∏ q ∈ (winSet ι N j).erase p, dif (ends q))
+        (chExp (blkOf j) (fun x : ι × Fin N => (x.2 : ℕ)) Finset.univ))), ← Finset.mul_sum, ← Finset.mul_sum, hG]
   · ring
   · intro p hp
     rw [Finset.sum_mul, coeff_sum, Finset.mul_sum, Finset.mul_sum]

@@ -166,7 +166,7 @@ theorem free_of_pderiv [CharZero k] {v : σ} {y : MvPolynomial σ k} (h : pderiv
   intro m hm
   by_contra hne
   have hle : Finsupp.single v 1 ≤ m := Finsupp.single_le_iff.mpr (Nat.one_le_iff_ne_zero.mpr hne)
-  have hc := congrArg (coeff (m - Finsupp.single v 1)) h
+  have hc := congrArg (AddMonoidAlgebra.coeff · (m - Finsupp.single v 1)) h
   rw [coeff_pderiv, tsub_add_cancel_of_le hle, coeff_zero] at hc
   have h1 : ((((m - Finsupp.single v 1 : σ →₀ ℕ)) v : ℕ) : k) + 1 ≠ 0 := Nat.cast_add_one_ne_zero _
   exact (mem_support_iff.mp hm) ((mul_eq_zero.mp hc).resolve_right h1)

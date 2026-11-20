@@ -15,7 +15,7 @@ abbrev SgIxV (ε : Fin n → Bool) (s : Bool) : Type := {a : Fin n // ε a = s}
 
 lemma hs_contVG : Continuous (hs : Matrix (Fin n) (Fin n) ℂ → ℝ) := by
   unfold hs
-  exact continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+  exact continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
     (continuous_id.matrix_elem i j).norm.pow 2
 
 lemma hs_nonnegVG (A : Matrix (Fin n) (Fin n) ℂ) : 0 ≤ hs A := by
@@ -145,7 +145,7 @@ def signedIdentityColumns (ε : Fin n → Bool) (s : Bool) : Matrix (Fin n) (SgI
 
 lemma hsRV_cont {Q : Type} [Fintype Q] : Continuous (hsRV : Matrix (Fin n) Q ℂ → ℝ) := by
   unfold hsRV
-  exact continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+  exact continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
     (continuous_id.matrix_elem i j).norm.pow 2
 
 lemma hsRV_entry_le {Q : Type} [Fintype Q] (g : Matrix (Fin n) Q ℂ) (i : Fin n) (j : Q) : ‖g i j‖ ^ 2 ≤ hsRV g := by

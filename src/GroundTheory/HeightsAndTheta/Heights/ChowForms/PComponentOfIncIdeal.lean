@@ -31,7 +31,7 @@ theorem one_le_ringKrullDim_quot {F : Type} [Field F] {n : ℕ} {W : Ideal (MvPo
     by_contra h
     have h0 := hW.isHomog f hf 0
     rw [homogeneousComponent_zero] at h0
-    have hc : coeff 0 f ≠ 0 := by rwa [← constantCoeff_eq]
+    have hc : AddMonoidAlgebra.coeff f 0 ≠ 0 := by rwa [← constantCoeff_eq]
     exact hWp.ne_top (Ideal.eq_top_of_isUnit_mem _ h0 ((Ne.isUnit hc).map C))
   have hne : W ≠ m := by
     obtain ⟨j, hj⟩ := hW.isRelevant

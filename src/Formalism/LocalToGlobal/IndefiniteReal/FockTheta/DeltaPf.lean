@@ -374,7 +374,7 @@ theorem fockDeltaLow_core (m n : ℕ) (p q : D.what₂.Tau → ℕ) (ap am : D.w
   rw [fockF_prod Finset.univ (fun τ => {v : FVar D m n | v.1 = τ}) hA _ (fun τ => (hD τ).2),
     Finset.prod_congr rfl fun τ _ => (hD τ).1]
   simp only [← Complex.ofReal_mul, ← Complex.ofReal_prod, Complex.ofReal_re]
-  refine Finset.prod_le_prod (fun τ _ => by positivity) (fun τ _ => ?_)
+  refine Finset.prod_le_prod₀ (fun τ _ => by positivity) (fun τ _ => ?_)
   have hp := hw_low (p τ) (fun s : Fin (p τ) => ap τ s) (fun a b hab => (h3 τ).1 hab)
   have hq := hw_low (q τ) (fun s : Fin (q τ) => am τ s) (fun a b hab => (h3 τ).2 hab)
   rw [Finset.prod_range (fun i => ((ap τ i).factorial : ℝ)), Finset.prod_range (fun i => ((am τ i).factorial : ℝ))]

@@ -41,7 +41,7 @@ theorem eq_zero_of_isIntegral_mul_of_small :
       rw [map_mul, map_natCast, norm_mul, Complex.norm_natCast]
       exact mul_le_mul_of_nonneg_left (hε φ) (Nat.cast_nonneg d)
     calc ∏ φ : E →+* ℂ, ‖φ ((d : E) * y)‖ ≤ ∏ _φ : E →+* ℂ, (d : ℝ) * ε :=
-          Finset.prod_le_prod (fun _ _ => norm_nonneg _) hle
+          Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) hle
       _ = ((d : ℝ) * ε) ^ Module.finrank ℚ E := by
           rw [Finset.prod_const, Finset.card_univ, NumberField.Embeddings.card E ℂ]
   linarith

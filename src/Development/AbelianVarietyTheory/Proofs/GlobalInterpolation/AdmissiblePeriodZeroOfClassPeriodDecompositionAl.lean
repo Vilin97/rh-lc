@@ -137,7 +137,7 @@ theorem vAdd_nat (D : D7) (w : D.what₂.places.Pl) (n : ℕ) (hn : n ≠ 0) :
     pow_ne_zero _ (Nat.cast_ne_zero.mpr hp.ne_zero)
   have hrL : (r : D.what₂.LL) ≠ 0 := Nat.cast_ne_zero.mpr hr0
   have hv : padicValNat (D.what₂.places.resChar w) ((D.what₂.places.resChar w) ^ k * r) = k := by
-    rw [padicValNat.mul (pow_ne_zero _ hp.ne_zero) hr0, padicValNat.prime_pow,
+    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hp.ne_zero) hr0, padicValNat.prime_pow,
       padicValNat.eq_zero_of_not_dvd hr, add_zero]
   rw [hv]
   have e1 : (((D.what₂.places.resChar w ^ k * r : ℕ)) : D.what₂.LL) =
@@ -174,7 +174,7 @@ theorem vAdd_card_le (D : D7) (w : D.what₂.places.Pl) (n d : ℕ) (hn : n ≠ 
   have h2 := vAdd_nat D w d hd0
   have h3 : padicValNat (D.what₂.places.resChar w) n ≤ padicValNat (D.what₂.places.resChar w) d := by
     have : Fact (D.what₂.places.resChar w).Prime := ⟨D.what₂.places.resChar_prime w⟩
-    exact (padicValNat_dvd_iff_le hd0).mp (dvd_trans pow_padicValNat_dvd hd)
+    exact (padicValNat_dvd_iff_le hd0).mp (dvd_trans (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)) hd)
   rw [h1, Int.cast_mul, Int.cast_natCast, Int.cast_natCast]
   exact mul_le_mul_of_nonneg_left (Nat.cast_le.mpr h3) (by positivity)
 

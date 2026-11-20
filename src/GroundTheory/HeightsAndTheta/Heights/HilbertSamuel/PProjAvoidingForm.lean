@@ -12,7 +12,7 @@ noncomputable section
 
 theorem ProjAvoidingForm.constantCoeff_homogeneousComponent {σ : Type} {G : MvPolynomial σ ℚ} {d : ℕ}
     (hd : 0 < d) : constantCoeff (homogeneousComponent d G) = 0 := by
-  show coeff 0 (homogeneousComponent d G) = 0
+  show AddMonoidAlgebra.coeff (homogeneousComponent d G) 0 = 0
   rw [coeff_homogeneousComponent]
   split_ifs with h
   · simp at h
@@ -125,7 +125,7 @@ theorem ProjAvoidingForm.proof (hSeg : SegreArith.Statement) : ProjAvoidingForm.
         rw [Finset.mem_range] at hk
         rw [if_pos (by omega), aeval_zero, constantCoeff_homogeneousComponent (by omega), map_zero, mul_zero],
         zero_add, if_pos (by omega), one_mul, Nat.sub_self, aeval_zero, homogeneousComponent_zero, constantCoeff_C] at hrel
-      have htop : coeff 0 (g (minpoly R₀ (coneMap ℚ x (X p))).natDegree) = 1 := by
+      have htop : AddMonoidAlgebra.coeff (g (minpoly R₀ (coneMap ℚ x (X p))).natDegree) 0 = 1 := by
         have h1 := congrArg (fun q => Polynomial.coeff q 0) (hg (minpoly R₀ (coneMap ℚ x (X p))).natDegree)
         simp only [coeff_coneMap, homogeneousComponent_zero, aeval_C] at h1
         rw [(minpoly.monic hα).coeff_natDegree] at h1

@@ -152,7 +152,7 @@ theorem nonempty_algHom_of_smooth_of_isSepClosed [IsSepClosed K] [Algebra.Smooth
     IsLocalization.isPrime_of_isPrime_disjoint (.powers f) _ _ ‹_› hdisj⟩
   have hp' : p'.asIdeal.comap (algebraMap R S) = RingHom.ker (algebraMap R K) := by
     rw [IsScalarTower.algebraMap_eq R A S, ← Ideal.comap_comap, ← hp]
-    exact congrArg _ (IsLocalization.comap_map_of_isPrime_disjoint (.powers f) _ ‹_› hdisj)
+    exact congrArg _ (IsLocalization.under_map_of_isPrime_disjoint (.powers f) _ ‹_› hdisj)
   have hopen := (PrimeSpectrum.isOpenMap_comap_of_hasGoingDown_of_finitePresentation
     (R := P) (S := S)).isOpen_range
   obtain ⟨_, ⟨_, ⟨h, rfl⟩, rfl⟩, hh, hsub⟩ := PrimeSpectrum.isBasis_basic_opens

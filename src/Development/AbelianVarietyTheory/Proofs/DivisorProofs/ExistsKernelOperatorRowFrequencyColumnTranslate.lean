@@ -172,7 +172,7 @@ theorem dualVecInf_spec (ζ : (Fin n → Cinf E) →L[ℝ] ℝ) (v : Fin n → C
 theorem one_le_htInf_nf (y : GL (Fin n) (Cinf E)) : 1 ≤ htInf y := by
   unfold htInf
   calc (1 : ℝ) = ∏ _w : InfinitePlace E, (1 : ℝ) := by simp
-    _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one) fun w _ => one_le_htGL _
+    _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) fun w _ => one_le_htGL _
 
 theorem compGL_colGL (w : InfinitePlace E) (r : ℕ) (ξ : Fin n → Cinf E) :
     compGL w (colGL r ξ) = colGL r (fun i => ξ i w) := by
@@ -187,7 +187,7 @@ theorem htInf_colGL_le (r : ℕ) (ξ : Fin n → Cinf E) :
     htInf (colGL r ξ) ≤ (1 + 2 * (n : ℝ) ^ 2 * (1 + ‖ξ‖)) ^ Fintype.card (InfinitePlace E) := by
   unfold htInf
   rw [← Finset.card_univ, ← Finset.prod_const]
-  refine Finset.prod_le_prod (fun w _ => (htGL_pos _).le) fun w _ => ?_
+  refine Finset.prod_le_prod₀ (fun w _ => (htGL_pos _).le) fun w _ => ?_
   change htGL (compGL w (colGL r ξ)) ≤ _
   rw [compGL_colGL]
   refine (htGL_colGL_le r _).trans ?_

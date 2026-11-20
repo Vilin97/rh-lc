@@ -160,7 +160,7 @@ theorem HasTriangularWeight.of_continuous [∀ s, AddCommGroup (V s)] [∀ s, Mo
   have h1 : Continuous fun t => P (frameMul x (c t)) := hc.comp hcc
   have h2 : Continuous fun t => (∏ s, ∏ i, c t s i i ^ a s i) • P x := by
     refine Continuous.smul ?_ continuous_const
-    refine continuous_finset_prod _ fun s _ => continuous_finset_prod _ fun i _ => ?_
+    refine continuous_finsetProd _ fun s _ => continuous_finsetProd _ fun i _ => ?_
     exact (((continuous_apply s).comp hcc).matrix_elem i i).pow _
   have h3 := Continuous.ext_on hd h1 h2 (fun t ht => by
     refine hP x (c t) (fun s => (hb s).add (Matrix.blockTriangular_diagonal _)) fun s i h => ht ?_

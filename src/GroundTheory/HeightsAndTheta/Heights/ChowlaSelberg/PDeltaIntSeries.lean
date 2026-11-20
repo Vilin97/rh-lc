@@ -86,7 +86,7 @@ theorem norm_prod_one_sub_pow_le {x : ℂ} (hx : ‖x‖ < 1) (k n : ℕ) :
   rw [norm_prod]
   calc ∏ i ∈ range (n + 1), ‖1 - x ^ (k + i + 1)‖
       ≤ ∏ i ∈ range (n + 1), Real.exp (‖x‖ ^ i) := by
-        refine prod_le_prod (fun _ _ ↦ norm_nonneg _) fun i _ ↦ ?_
+        refine prod_le_prod₀ (fun _ _ ↦ norm_nonneg _) fun i _ ↦ ?_
         calc ‖1 - x ^ (k + i + 1)‖ ≤ ‖(1 : ℂ)‖ + ‖x ^ (k + i + 1)‖ := norm_sub_le _ _
           _ = ‖x‖ ^ (k + i + 1) + 1 := by rw [norm_one, norm_pow, add_comm]
           _ ≤ ‖x‖ ^ i + 1 := by

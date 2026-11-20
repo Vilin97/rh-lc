@@ -117,7 +117,7 @@ theorem zeta_le_two (i : ℕ) (hi : 2 ≤ i) : ∑' n : ℕ, 1 / ((n : ℝ) + 1)
 
 theorem zprod_le (r : ℕ) : ∏ i ∈ Finset.Icc 2 r, ∑' n : ℕ, 1 / ((n : ℝ) + 1) ^ i ≤ 2 ^ r := by
   calc ∏ i ∈ Finset.Icc 2 r, ∑' n : ℕ, 1 / ((n : ℝ) + 1) ^ i ≤ ∏ _i ∈ Finset.Icc 2 r, (2 : ℝ) :=
-        Finset.prod_le_prod (fun i _ => tsum_nonneg fun n => by positivity)
+        Finset.prod_le_prod₀ (fun i _ => tsum_nonneg fun n => by positivity)
           fun i hi => zeta_le_two i (Finset.mem_Icc.1 hi).1
     _ = 2 ^ (Finset.Icc 2 r).card := Finset.prod_const _
     _ ≤ 2 ^ r := pow_le_pow_right₀ (by norm_num) (by simp)

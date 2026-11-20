@@ -4,7 +4,7 @@ namespace Formalism.MainNotions.RamifiedCoefficientChains.S9.ExtensionLemmaAlt
 
 theorem padicValNat_factorial_succ (p : ℕ) [Fact p.Prime] (M : ℕ) :
     padicValNat p (M + 1).factorial = padicValNat p M.factorial + padicValNat p (M + 1) := by
-  rw [Nat.factorial_succ, padicValNat.mul (Nat.add_one_ne_zero M) (Nat.factorial_ne_zero M)]
+  rw [Nat.factorial_succ, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.add_one_ne_zero M) (Nat.factorial_ne_zero M)]
   omega
 
 theorem padicValNat_sum_Ioc_add_factorial (p : ℕ) [Fact p.Prime] (K M : ℕ) (h : K ≤ M) :

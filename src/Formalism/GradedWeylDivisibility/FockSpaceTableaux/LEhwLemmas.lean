@@ -15,9 +15,9 @@ theorem lehw_dom {r n : ℕ} (ν : Fin n → ℕ) (hnr : n ≤ r) (hν : Antiton
       (∑ a : Fin r with a.val < k, rowDeg m a) ≤ ∑ a : Fin r with a.val < k, rowNu (r := r) ν a := by
   classical
   intro m hm k
-  let N : ℕ := ∏ d ∈ f.support, (coeff d f).den
+  let N : ℕ := ∏ d ∈ f.support, (AddMonoidAlgebra.coeff f d).den
   let u : MvPolynomial (Fin r × Fin n) ℤ := ∑ d ∈ f.support,
-    monomial d ((∏ d' ∈ f.support.erase d, ((coeff d' f).den : ℤ)) * (coeff d f).num)
+    monomial d ((∏ d' ∈ f.support.erase d, ((AddMonoidAlgebra.coeff f d').den : ℤ)) * (AddMonoidAlgebra.coeff f d).num)
   have hu : map (Int.castRingHom ℚ) u = (N : ℚ) • f := by
     conv_rhs => rw [f.as_sum]
     rw [Finset.smul_sum]
@@ -25,7 +25,7 @@ theorem lehw_dom {r n : ℕ} (ν : Fin n → ℕ) (hnr : n ≤ r) (hν : Antiton
     refine Finset.sum_congr rfl fun d hd => ?_
     congr 1
     push_cast
-    have hN : (N : ℚ) = (∏ d' ∈ f.support.erase d, ((coeff d' f).den : ℚ)) * (coeff d f).den := by
+    have hN : (N : ℚ) = (∏ d' ∈ f.support.erase d, ((AddMonoidAlgebra.coeff f d').den : ℚ)) * (AddMonoidAlgebra.coeff f d).den := by
       simp only [N]
       push_cast
       rw [Finset.prod_erase_mul _ _ hd]
@@ -34,13 +34,13 @@ theorem lehw_dom {r n : ℕ} (ν : Fin n → ℕ) (hnr : n ≤ r) (hν : Antiton
   have hN0 : (N : ℚ) ≠ 0 := by
     simp only [N]
     push_cast
-    exact Finset.prod_ne_zero_iff.mpr fun d _ => Nat.cast_ne_zero.mpr (coeff d f).den_nz
+    exact Finset.prod_ne_zero_iff.mpr fun d _ => Nat.cast_ne_zero.mpr (AddMonoidAlgebra.coeff f d).den_nz
   have huD : u ∈ dualWeyl ℤ r n ν :=
     (dualWeylIntRat r n ν u).mpr (by rw [hu]; exact (dualWeyl ℚ r n ν).smul_mem _ hf)
   have hmu : m ∈ u.support := by
     rw [mem_support_iff]
     intro h0
-    have e := congrArg (coeff m) hu
+    have e := congrArg (AddMonoidAlgebra.coeff · m) hu
     rw [coeff_map, h0, map_zero, coeff_smul, smul_eq_mul] at e
     exact (mem_support_iff.mp hm) ((mul_eq_zero.mp e.symm).resolve_left hN0)
   exact (dualWeylDominanceZ r n ν hnr hν u huD m hmu).1 k
@@ -162,7 +162,7 @@ theorem lehw_rowDiv_shift (R : Type*) [CommRing R] {r n : ℕ} (w : Fin r × Fin
   rw [f.as_sum, map_sum, Polynomial.finset_sum_coeff]
   refine (mem_weightedHomogeneousSubmodule _ _ _ _).mp (Submodule.sum_mem _ fun d hd => ?_)
   refine (mem_weightedHomogeneousSubmodule _ _ _ _).mpr ?_
-  have h := lehwShift_rowGen_monomial R w δ a b hstep d (coeff d f) k
+  have h := lehwShift_rowGen_monomial R w δ a b hstep d (AddMonoidAlgebra.coeff f d) k
   rw [hf (mem_support_iff.mp hd)] at h
   exact h
 

@@ -54,7 +54,7 @@ theorem a_norm_inv {n : ℕ} (c : ℕ) (k : Fin n) (x : Fin n → ℂ) (hx : x k
   refine (ContinuousMultilinearMap.norm_compContinuousLinearMap_le _ _).trans ?_
   rw [hgx, norm_iteratedFDeriv_inv c _ hx]
   have h3 : ∏ _i : Fin c, ‖g‖ ≤ 1 :=
-    Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun _ _ => hg ▸ a_norm_proj_le k)
+    Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun _ _ => hg ▸ a_norm_proj_le k)
   exact mul_le_of_le_one_right (by positivity) h3
 
 theorem a_lin_zero {n : ℕ} (j : ℕ) (hj : 1 ≤ j) (x : Fin n → ℂ) :
@@ -109,7 +109,7 @@ theorem a_prod_bound {n : ℕ} (N : ℕ) (x : Fin n → ℂ) (hx : ∀ k, x k �
           (fun y : Fin n → ℂ => (y k)⁻¹) {x : Fin n → ℂ | ∀ k, x k ≠ 0} x‖
       ≤ ∏ k, (((Multiset.count k (p : Multiset (Fin n))).factorial : ℝ) *
           (‖x k‖⁻¹ * b ^ (Multiset.count k (p : Multiset (Fin n))))) := by
-        refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun k _ => ?_
+        refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun k _ => ?_
         rw [iteratedFDerivWithin_of_isOpen _ hS hxS]
         refine (a_norm_inv _ k x (hx k)).trans ?_
         gcongr
@@ -377,7 +377,7 @@ theorem phase_near_critical : Formalism.FourierDecayAlt.G.PhaseFunctionNearCriti
       linarith
     have h2 : (‖z‖ / 2) ^ (m + 1) ≤ ‖∏ k, x k‖ := by
       rw [norm_prod]
-      have := Finset.prod_le_prod (s := Finset.univ) (f := fun _ : Fin (m + 1) => ‖z‖ / 2)
+      have := Finset.prod_le_prod₀ (s := Finset.univ) (f := fun _ : Fin (m + 1) => ‖z‖ / 2)
         (g := fun k => ‖x k‖) (fun _ _ => by positivity) (fun k _ => (hball x hx k).1)
       rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin] at this
       exact this

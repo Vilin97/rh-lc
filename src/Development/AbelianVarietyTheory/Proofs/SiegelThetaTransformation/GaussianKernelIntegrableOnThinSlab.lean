@@ -176,9 +176,9 @@ theorem GlobalTheory.SW.kern_integrableOn_slab : ∀ (E : Type) [Field E] [Numbe
       exact (one_le_sq_iff_one_le_abs _).1 this |>.trans_eq (abs_norm _)
     have h3 : ‖bchar la b‖ ≤ ∏ τ, ∏ i, C ^ (la τ i).natAbs := by
       rw [bchar, norm_prod]
-      refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun τ _ => ?_
+      refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun τ _ => ?_
       rw [norm_prod]
-      exact Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun i _ =>
+      exact Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun i _ =>
         KernInt.norm_zpow_le (hbC τ i i).1 (hbC τ i i).2 _
     have h4 : ‖kern X hr idx P (rmul x₀ b₁) (rmul x' b)‖ ≤ K * ‖f x'‖ := by
       rw [(hhol _ hxd).2 x₀ h₀ b₁ hb₁, hsym _ hxd _ h₀, (hhol _ h₀).2 x' hx'd b hb, norm_mul,
@@ -187,7 +187,7 @@ theorem GlobalTheory.SW.kern_integrableOn_slab : ∀ (E : Type) [Field E] [Numbe
     have hK0 : 0 ≤ K := mul_nonneg (norm_nonneg _) ((norm_nonneg _).trans h3)
     have h5 : ‖f x'‖ * ∏ τ, D x' τ ^ n ≤ ‖f x₀‖ := hbd x' hx'
     have h6 : 1 ≤ ∏ τ, D x' τ ^ n := by
-      refine le_of_eq_of_le ?_ (Finset.prod_le_prod (f := fun _ => (1 : ℝ)) (fun _ _ => zero_le_one)
+      refine le_of_eq_of_le ?_ (Finset.prod_le_prod₀ (f := fun _ => (1 : ℝ)) (fun _ _ => zero_le_one)
         fun τ _ => one_le_pow₀ (h1 τ))
       simp
     have h7 : ∀ τ, D (rmul x' b) τ = D x' τ * ∏ j : Fin X.p0,
@@ -203,12 +203,12 @@ theorem GlobalTheory.SW.kern_integrableOn_slab : ∀ (E : Type) [Field E] [Numbe
     have h9 : ∀ τ, D (rmul x' b) τ ≤ D x' τ * C ^ X.p0 := fun τ => by
       rw [h7]
       refine mul_le_mul_of_nonneg_left ?_ (norm_nonneg _)
-      refine (Finset.prod_le_prod (fun _ _ => norm_nonneg _)
+      refine (Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _)
         (g := fun _ => C) fun j _ => (hbC τ _ _).1).trans_eq ?_
       simp
     have h10 : ∏ τ, D (rmul x' b) τ ^ n ≤ (∏ τ, D x' τ ^ n) * ∏ _τ : X.Ψ, (C ^ X.p0) ^ n := by
       rw [← Finset.prod_mul_distrib]
-      refine Finset.prod_le_prod (fun τ _ => (pow_pos (h8 τ) n).le) fun τ _ => ?_
+      refine Finset.prod_le_prod₀ (fun τ _ => (pow_pos (h8 τ) n).le) fun τ _ => ?_
       rw [← mul_pow]
       exact pow_le_pow_left₀ (h8 τ).le (h9 τ) n
     have h11 : 0 < ∏ τ, D (rmul x' b) τ ^ n := Finset.prod_pos fun τ _ => pow_pos (h8 τ) n

@@ -33,7 +33,7 @@ def lamL (W : (σ →₀ ℕ) → k) : MvPolynomial σ k →ₗ[k] k where
       lam_eq W P (P.support ∪ Q.support) subset_union_left,
       lam_eq W Q (P.support ∪ Q.support) subset_union_right, ← sum_add_distrib]
     refine sum_congr rfl fun m _ => ?_
-    rw [coeff_add, add_mul]
+    rw [MvPolynomial.coeff_add, add_mul]
   map_smul' r P := by
     simp only [RingHom.id_apply, smul_eq_mul]
     rw [lam_eq W (r • P) P.support support_smul, lam, mul_sum]
@@ -143,7 +143,7 @@ private lemma totalDegree_pderiv_le_of_le_succ {σ : Type} (l : σ) (q : MvPolyn
   · refine le_trans (b := (s - Finsupp.single l 1).sum fun _ e => e) ?_ ?_
     · first
       | exact MvPolynomial.totalDegree_monomial_le _ _
-      | (by_cases hc : coeff s q * (s l : k) = 0
+      | (by_cases hc : AddMonoidAlgebra.coeff q s * (s l : k) = 0
          · rw [hc, MvPolynomial.monomial_zero, MvPolynomial.totalDegree_zero]
            exact Nat.zero_le _
          · rw [MvPolynomial.totalDegree_monomial _ hc])

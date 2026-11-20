@@ -67,7 +67,7 @@ theorem integral_shifted_eq_ker_cv (hc : CvTest) (X : Ctx) (φ ψ : X.G → ℂ)
       hφ.1.mul (hψ.1.comp (continuous_inv.mul continuous_const))
     exact hcont.integrable_of_hasCompactSupport (HasCompactSupport.mul_right hφ.2)
   simp only [h1]
-  rw [integral_finset_sum _ fun γ _ => hint _, ker,
+  rw [MeasureTheory.integral_finsetSum _ fun γ _ => hint _, ker,
     finsum_eq_sum_of_support_subset (s := s)]
   · rfl
   · intro γ hγ

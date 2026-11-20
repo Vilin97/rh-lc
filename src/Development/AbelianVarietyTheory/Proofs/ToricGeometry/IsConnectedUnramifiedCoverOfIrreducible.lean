@@ -111,7 +111,7 @@ theorem eq_of_map_eval_eq_of_dense {a b : Polynomial (MvPolynomial (Fin d) ℂ)}
     intro x hx
     have := congrArg (fun P => Polynomial.coeff P i) (h x hx)
     simpa [Polynomial.coeff_map] using this
-  exact congrArg (fun c => MvPolynomial.coeff _ c) (MvPolynomial.funext fun x => congrFun hfun x)
+  exact congrArg (fun c => AddMonoidAlgebra.coeff c _) (MvPolynomial.funext fun x => congrFun hfun x)
 
 end GlobalTheory.SimpleRoots
 

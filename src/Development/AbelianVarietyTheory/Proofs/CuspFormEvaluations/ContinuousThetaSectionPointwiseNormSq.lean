@@ -290,10 +290,10 @@ theorem isogeny_sum_mem_and_norm {ι : Type} [Fintype ι] (U : ℕ → Euclidean
       integrableOn_fundamentalDomain_of_continuous volume b _
         (continuous_const.mul (pairing_density_continuous U hU hF.1 y y'))
     rw [integral_congr_ae (Filter.Eventually.of_forall hpt)]
-    rw [integral_finset_sum _ fun y _ => integrable_finset_sum _ fun y' _ => hint y y',
+    rw [MeasureTheory.integral_finsetSum _ fun y _ => MeasureTheory.integrable_finsetSum _ fun y' _ => hint y y',
       Complex.ofReal_sum]
     refine Finset.sum_congr rfl fun y hy => ?_
-    rw [integral_finset_sum _ fun y' _ => hint y y', Finset.sum_eq_single_of_mem y hy]
+    rw [MeasureTheory.integral_finsetSum _ fun y' _ => hint y y', Finset.sum_eq_single_of_mem y hy]
     · have hk : Y'.ka y * (starRingEnd ℂ) (Y'.ka y) = 1 := by
         rw [Complex.mul_conj, Complex.normSq_eq_norm_sq, Y'.ka_abs y (hR y hy)]; simp
       rw [hk, ← integral_complex_ofReal]

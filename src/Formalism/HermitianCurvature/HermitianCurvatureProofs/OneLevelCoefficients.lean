@@ -156,7 +156,7 @@ lemma coef (D : Data E W) (Θ C₄ C₀ a e : ℝ) (hΘ : 1 ≤ Θ) (h4 : 1 ≤ 
   have hC0 : 0 ≤ C₀ := by linarith
   have hP : ∏ s' ∈ Ico 1 s, D.vol (i - s + 1) s' ≤ (q ^ 2) ^ (s - 1) := by
     calc ∏ s' ∈ Ico 1 s, D.vol (i - s + 1) s' ≤ ∏ _s' ∈ Ico 1 s, q ^ 2 := by
-          apply Finset.prod_le_prod (fun s' _ => hS.1 _ _)
+          apply Finset.prod_le_prod₀ (fun s' _ => hS.1 _ _)
           intro s' hs'
           rw [Finset.mem_Ico] at hs'
           exact hS.2 _ _ (by omega) hs'.1 (by omega)

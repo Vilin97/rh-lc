@@ -75,11 +75,11 @@ theorem T_mem_laurentFiltration {A : Type*} [CommRing A] (e k : ℤ) : (LaurentP
 def flt_lift {B : Type*} [CommRing B] {σ : Type*} (Fl : flt_Fil B) (wt : (σ →₀ ℕ) →+ ℤ) :
     flt_Fil (MvPolynomial σ B) where
   F t :=
-    { carrier := {P | ∀ m, coeff m P ∈ Fl.F (t - wt m)}
+    { carrier := {P | ∀ m, AddMonoidAlgebra.coeff P m ∈ Fl.F (t - wt m)}
       zero_mem' := by intro m; simp
       add_mem' := by
         intro a b ha hb m
-        rw [coeff_add]
+        rw [MvPolynomial.coeff_add]
         exact (Fl.F _).add_mem (ha m) (hb m)
       neg_mem' := by
         intro a ha m
@@ -108,7 +108,7 @@ def flt_lift {B : Type*} [CommRing B] {σ : Type*} (Fl : flt_Fil B) (wt : (σ �
     exact Fl.anti (by linarith) (hP m)
 
 theorem flt_lift_mem {B : Type*} [CommRing B] {σ : Type*} {Fl : flt_Fil B} {wt : (σ →₀ ℕ) →+ ℤ} {t : ℤ}
-    {P : MvPolynomial σ B} : P ∈ (flt_lift Fl wt).F t ↔ ∀ m, coeff m P ∈ Fl.F (t - wt m) := Iff.rfl
+    {P : MvPolynomial σ B} : P ∈ (flt_lift Fl wt).F t ↔ ∀ m, AddMonoidAlgebra.coeff P m ∈ Fl.F (t - wt m) := Iff.rfl
 
 theorem flt_monomial_mem {B : Type*} [CommRing B] {σ : Type*} {Fl : flt_Fil B} {wt : (σ →₀ ℕ) →+ ℤ} {t : ℤ}
     {m : σ →₀ ℕ} {a : B} (ha : a ∈ Fl.F (t - wt m)) : monomial m a ∈ (flt_lift Fl wt).F t := by
@@ -158,7 +158,7 @@ theorem flt_hom_mem {B₀ B' : Type*} [CommRing B₀] [CommRing B'] {σ : Type*}
     (hP : P ∈ (flt_lift Fl wt).F t) : φ P ∈ Fl'.F t := by
   rw [P.as_sum, _root_.map_sum]
   refine (Fl'.F t).sum_mem fun m _ => ?_
-  have e : monomial m (coeff m P) = C (coeff m P) * monomial m 1 := by
+  have e : monomial m (AddMonoidAlgebra.coeff P m) = C (AddMonoidAlgebra.coeff P m) * monomial m 1 := by
     rw [MvPolynomial.C_mul_monomial, mul_one]
   rw [e, _root_.map_mul]
   have h := Fl'.mul_mem (hC _ _ ((flt_lift_mem.1 hP) m)) (flt_hom_monomial Fl' φ wt hX m)
@@ -556,10 +556,10 @@ theorem flt_g_pascal (R : Type*) [CommRing R] {σ : Type*} (m be : σ →₀ ℕ
     rw [hx, hp]
 
 theorem flt_tay_monomial (R : Type*) [CommRing R] {σ : Type*} (m : σ →₀ ℕ) :
-    ∀ be, coeff be (flt_tay R σ (monomial m 1)) = flt_g R m be := by
+    ∀ be, AddMonoidAlgebra.coeff (flt_tay R σ (monomial m 1)) be = flt_g R m be := by
   classical
   suffices H : ∀ d : ℕ, ∀ m : σ →₀ ℕ, (m.sum fun _ e => e) = d →
-      ∀ be, coeff be (flt_tay R σ (monomial m 1)) = flt_g R m be from H _ m rfl
+      ∀ be, AddMonoidAlgebra.coeff (flt_tay R σ (monomial m 1)) be = flt_g R m be from H _ m rfl
   intro d
   induction d with
   | zero =>
@@ -613,14 +613,14 @@ theorem flt_tay_monomial (R : Type*) [CommRing R] {σ : Type*} (m : σ →₀ �
     all_goals (first | ring | (split_ifs <;> ring))
 
 theorem flt_tay_coeff (R : Type*) [CommRing R] {σ : Type*} (F : MvPolynomial σ R) (be : σ →₀ ℕ) :
-    coeff be (flt_tay R σ F) = divDer be F := by
+    AddMonoidAlgebra.coeff (flt_tay R σ F) be = divDer be F := by
   conv_lhs => rw [F.as_sum]
   rw [_root_.map_sum, MvPolynomial.coeff_sum]
   simp only [divDer]
   refine Finset.sum_congr rfl fun m _ => ?_
-  have e1 : monomial m (coeff m F) = C (coeff m F) * monomial m 1 := by
+  have e1 : monomial m (AddMonoidAlgebra.coeff F m) = C (AddMonoidAlgebra.coeff F m) * monomial m 1 := by
     rw [MvPolynomial.C_mul_monomial, mul_one]
-  have e2 : flt_tay R σ (C (coeff m F)) = C (C (coeff m F)) := by
+  have e2 : flt_tay R σ (C (AddMonoidAlgebra.coeff F m)) = C (C (AddMonoidAlgebra.coeff F m)) := by
     simp only [flt_tay, eval₂Hom_C, RingHom.coe_comp, Function.comp_apply]
   rw [e1, _root_.map_mul, e2, MvPolynomial.coeff_C_mul, flt_tay_monomial, flt_g, MvPolynomial.C_mul_monomial]
   split_ifs with h

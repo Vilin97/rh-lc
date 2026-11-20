@@ -49,7 +49,7 @@ private lemma homogeneousComponent_mem_of_isPrime_of_X_pow_saturation {K : Type}
       exact hX j
     intro g hg n
     rcases Nat.eq_zero_or_pos n with rfl | hn
-    · have hsub : g - C (coeff 0 g) ∈ Q := by
+    · have hsub : g - C (AddMonoidAlgebra.coeff g 0) ∈ Q := by
         apply hspan
         rw [mem_ideal_span_X_image]
         intro e he
@@ -134,8 +134,8 @@ private lemma exists_homogeneous_mem_of_X_pow_mul_mem_of_homogeneous {K : Type} 
   · exact hI _ (hkey g hgG e hdeg _) n
   · rw [homogeneousComponent_eq_zero]
     · exact I.zero_mem
-    · have h1 := totalDegree_mul (monomial e (coeff e (f g))) g
-      have h2 := totalDegree_monomial_le e (coeff e (f g))
+    · have h1 := totalDegree_mul (monomial e (AddMonoidAlgebra.coeff (f g) e)) g
+      have h2 := totalDegree_monomial_le e (AddMonoidAlgebra.coeff (f g) e)
       have h3 : g.totalDegree ≤ D := Finset.le_sup (f := totalDegree) hgG
       have h4 : (e.sum fun _ => id) = (e.sum fun _ k => k) := rfl
       omega

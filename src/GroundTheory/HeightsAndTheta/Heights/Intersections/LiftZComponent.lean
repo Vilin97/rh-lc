@@ -81,7 +81,7 @@ theorem liftZ_component [Fintype K'] [∀ k, Fintype (ι' k)] [DecidableEq K'] {
       simp only [cycBlockWt, Subtype.ext_iff]
     have h0 : IsWeightedHomogeneous (cycBlockWt (ι := ι') k.1) (rename v a) 0 := by
       intro d hd
-      obtain ⟨u, rfl, -⟩ : ∃ u, u.mapDomain v = d ∧ coeff u a ≠ 0 := by
+      obtain ⟨u, rfl, -⟩ : ∃ u, u.mapDomain v = d ∧ AddMonoidAlgebra.coeff a u ≠ 0 := by
         by_contra! h
         exact hd (coeff_rename_eq_zero _ _ _ h)
       rw [Finsupp.weight_apply, Finsupp.sum_mapDomain_index (by simp) (by intros; simp [add_mul])]

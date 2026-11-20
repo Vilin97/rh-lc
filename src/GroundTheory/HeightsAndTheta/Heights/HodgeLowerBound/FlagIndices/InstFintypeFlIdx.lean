@@ -64,7 +64,7 @@ def hFlMono (II : IntersectionSystem) (m : (Ψ × Fin N) →₀ ℕ) : ℝ :=
   else 0
 
 def hFl (II : IntersectionSystem) (F : RootPoly Ψ N) : ℝ :=
-  ∑ m ∈ F.support, ((coeff m F : ℚ) : ℝ) * hFlMono Ψ N II m
+  ∑ m ∈ F.support, ((AddMonoidAlgebra.coeff F m : ℚ) : ℝ) * hFlMono Ψ N II m
 
 end Flag
 

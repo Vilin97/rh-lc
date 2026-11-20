@@ -16,7 +16,7 @@ namespace HighestUnique
 variable {K σ : Type*} [Field K]
 
 theorem coeff_X_mul_pderiv (u : σ) (m : σ →₀ ℕ) (P : MvPolynomial σ K) :
-    coeff m (X u * pderiv u P) = (m u : K) * coeff m P := by
+    AddMonoidAlgebra.coeff (X u * pderiv u P) m = (m u : K) * AddMonoidAlgebra.coeff P m := by
   classical
   induction P using MvPolynomial.induction_on' with
   | monomial d r =>
@@ -24,7 +24,7 @@ theorem coeff_X_mul_pderiv (u : σ) (m : σ →₀ ℕ) (P : MvPolynomial σ K) 
     split_ifs with h
     · subst h; simp
     · simp
-  | add P Q hP hQ => simp only [map_add, mul_add, coeff_add, hP, hQ]
+  | add P Q hP hQ => simp only [map_add, mul_add, MvPolynomial.coeff_add, hP, hQ]
 
 theorem eval_congr_vars {P : MvPolynomial σ K} {x x' : σ → K} (h : ∀ s ∈ P.vars, x s = x' s) :
     eval x P = eval x' P :=
@@ -68,7 +68,7 @@ theorem weight_of_mem_support (z : Fin p × Fin n → σ) (y : Fin q × Fin n �
     {P : MvPolynomial σ K} {k : Fin n} {w : ℤ} (h : mixedOp K z y k k P = (w : K) • P)
     {m : σ →₀ ℕ} (hm : m ∈ P.support) :
     ∑ a, (m (z (a, k)) : ℤ) - ∑ b, (m (y (b, k)) : ℤ) = w := by
-  have := congrArg (coeff m) h
+  have := congrArg (AddMonoidAlgebra.coeff · m) h
   rw [mixedOp_apply, coeff_sub, coeff_sum, coeff_sum, coeff_smul] at this
   simp only [coeff_X_mul_pderiv, ← Finset.sum_mul, ← sub_mul, smul_eq_mul] at this
   have h2 := mul_right_cancel₀ (mem_support_iff.1 hm) this

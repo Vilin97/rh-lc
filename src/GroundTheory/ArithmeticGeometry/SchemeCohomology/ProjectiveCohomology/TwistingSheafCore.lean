@@ -302,7 +302,7 @@ instance isIso_unitToTwistZero : IsIso (unitToTwistZero (grading A n)) := by
 instance isNoetherianRing_gradeZero [IsNoetherianRing A] : IsNoetherianRing (grading A n 0) := by
   refine isNoetherianRing_of_surjective A _ (algebraMap A (grading A n 0)) ?_
   rintro ⟨p, hp⟩
-  refine ⟨coeff 0 p, Subtype.ext ?_⟩
+  refine ⟨AddMonoidAlgebra.coeff p 0, Subtype.ext ?_⟩
   rw [SetLike.GradeZero.coe_algebraMap, MvPolynomial.algebraMap_eq]
   by_cases h0 : p = 0
   · subst h0

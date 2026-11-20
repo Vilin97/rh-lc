@@ -114,16 +114,16 @@ theorem bNormSq_eq (μ : Measure X) {r : ℕ} (s : Fin r → X → ℂ) (w : X �
     ring
   have hJ : ∀ i ∈ (Finset.univ : Finset (Fin r)), Integrable (fun x => ∑ j, starRingEnd ℂ (c i) * c j *
       (starRingEnd ℂ (s i x) * s j x * (w x : ℂ))) μ :=
-    fun i _ => integrable_finset_sum _ fun j _ => (hI i j).const_mul _
+    fun i _ => MeasureTheory.integrable_finsetSum _ fun j _ => (hI i j).const_mul _
   have hK : ∀ i, ∀ j ∈ (Finset.univ : Finset (Fin r)), Integrable (fun x => starRingEnd ℂ (c i) * c j *
       (starRingEnd ℂ (s i x) * s j x * (w x : ℂ))) μ :=
     fun i j _ => (hI i j).const_mul _
   unfold bNormSq
   rw [← integral_complex_ofReal]
   simp only [hpt]
-  rw [integral_finset_sum _ hJ]
+  rw [MeasureTheory.integral_finsetSum _ hJ]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [integral_finset_sum _ (hK i)]
+  rw [MeasureTheory.integral_finsetSum _ (hK i)]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [integral_const_mul]
   rfl

@@ -8,7 +8,7 @@ open Formalism.DegreeFormula
 
 theorem degFl_add {ι : Type} [Fintype ι] [DecidableEq ι] {N : ℕ} (P Q : MvPolynomial (ι × Fin N) ℝ) :
     degFl ι N (P + Q) = degFl ι N P + degFl ι N Q := by
-  simp only [degFl, coeff_add, mul_add, Finset.sum_add_distrib]
+  simp only [degFl, MvPolynomial.coeff_add, mul_add, Finset.sum_add_distrib]
 
 theorem degFl_C_mul {ι : Type} [Fintype ι] [DecidableEq ι] {N : ℕ} (c : ℝ) (P : MvPolynomial (ι × Fin N) ℝ) :
     degFl ι N (C c * P) = c * degFl ι N P := by

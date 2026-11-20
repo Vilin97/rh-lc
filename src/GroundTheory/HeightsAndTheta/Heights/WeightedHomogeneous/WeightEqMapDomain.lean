@@ -40,7 +40,7 @@ theorem extMap_monomial (s : Coord D.extSizes →₀ ℕ) (a : ℤ) :
 theorem extMap_component (m : Option ι → ℕ) (f : MvPolynomial (Coord D.extSizes) ℤ) :
     D.extMap (weightedHomogeneousComponent (coordDeg D.extSizes) m f) =
       monomial (Finsupp.equivFunOnFinite.symm m)
-        (coeff (Finsupp.equivFunOnFinite.symm m) (D.extMap f)) := by
+        (AddMonoidAlgebra.coeff (D.extMap f) (Finsupp.equivFunOnFinite.symm m)) := by
   induction f using MvPolynomial.induction_on' with
   | monomial s a =>
     have hh := isWeightedHomogeneous_monomial (coordDeg D.extSizes) s a rfl
@@ -57,7 +57,7 @@ theorem extMap_component (m : Option ι → ℕ) (f : MvPolynomial (Coord D.extS
         rfl
       rw [if_neg h, if_neg h', map_zero, monomial_zero]
   | add p q hp hq =>
-    rw [map_add, map_add, hp, hq, map_add, coeff_add, map_add]
+    rw [map_add, map_add, hp, hq, map_add, MvPolynomial.coeff_add, map_add]
 
 end AddBlockData
 

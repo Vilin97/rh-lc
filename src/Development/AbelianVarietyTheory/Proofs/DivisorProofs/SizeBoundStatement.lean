@@ -21,7 +21,7 @@ theorem prod_near_one {ι : Type} (s : Finset ι) (a : ι → ℝ) (e : ℝ) (n 
     (h : ∀ i ∈ s, 0 ≤ a i ∧ a i ≤ 1 ∧ 1 - a i ≤ e) :
     0 ≤ ∏ i ∈ s, a i ∧ ∏ i ∈ s, a i ≤ 1 ∧ 1 - ∏ i ∈ s, a i ≤ n * e := by
   classical
-  refine ⟨Finset.prod_nonneg fun i hi => (h i hi).1, Finset.prod_le_one (fun i hi => (h i hi).1) fun i hi => (h i hi).2.1, ?_⟩
+  refine ⟨Finset.prod_nonneg fun i hi => (h i hi).1, Finset.prod_le_one₀ (fun i hi => (h i hi).1) fun i hi => (h i hi).2.1, ?_⟩
   refine le_trans ?_ (mul_le_mul_of_nonneg_right (Nat.cast_le.2 hn) he)
   clear hn
   induction s using Finset.induction_on with
@@ -29,7 +29,7 @@ theorem prod_near_one {ι : Type} (s : Finset ι) (a : ι → ℝ) (e : ℝ) (n 
   | insert j s hj ih =>
     rw [Finset.prod_insert hj, Finset.card_insert_of_notMem hj]
     have ih' := ih fun i hi => h i (Finset.mem_insert_of_mem hi)
-    have hP1 : ∏ i ∈ s, a i ≤ 1 := Finset.prod_le_one (fun i hi => (h i (Finset.mem_insert_of_mem hi)).1)
+    have hP1 : ∏ i ∈ s, a i ≤ 1 := Finset.prod_le_one₀ (fun i hi => (h i (Finset.mem_insert_of_mem hi)).1)
       fun i hi => (h i (Finset.mem_insert_of_mem hi)).2.1
     obtain ⟨-, h1, h2⟩ := h j (Finset.mem_insert_self _ _)
     push_cast

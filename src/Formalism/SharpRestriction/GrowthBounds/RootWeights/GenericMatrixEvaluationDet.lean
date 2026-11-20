@@ -127,7 +127,7 @@ theorem mul_dl_monomial (m : ι × Fin r →₀ ℕ) (c : k1) :
   rw [Finsupp.prod, prod_T_eq_T_sum, ← mul_eWt_eq, ← mul_assoc, RingHom.comp_apply, ← map_mul, C_mul_monomial, mul_one]
 
 theorem mul_dl_coeff (H : MvPolynomial (ι × Fin r) k1) (m : ι × Fin r →₀ ℕ) (k : ℤ) :
-    coeff m ((mul_dl LL S H).coeff k) = if eWt LL S m = k then coeff m H else 0 := by
+    AddMonoidAlgebra.coeff ((mul_dl LL S H).coeff k) m = if eWt LL S m = k then AddMonoidAlgebra.coeff H m else 0 := by
   classical
   induction H using MvPolynomial.induction_on' with
   | monomial d c =>
@@ -138,7 +138,7 @@ theorem mul_dl_coeff (H : MvPolynomial (ι × Fin r) k1) (m : ι × Fin r →₀
       by_cases hk : eWt LL S d = k <;> simp [hk]
     · by_cases hk : eWt LL S d = k <;> simp [hk, hdm]
   | add p q hp hq =>
-    simp only [map_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply, coeff_add, hp, hq]
+    simp only [map_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply, MvPolynomial.coeff_add, hp, hq]
     split_ifs <;> simp
 
 def mul_Dg (B : Type*) [CommRing B] (r : ℕ) [NeZero r] (k : ℤ) : Matrix (Fin r) (Fin r) (LaurentPolynomial B) :=

@@ -54,7 +54,7 @@ theorem fd_count_ae {Γ : Subgroup G} [Countable Γ] {μ : Measure G} {s : Set G
     · have hd := h.aedisjoint (show γ⁻¹ ≠ γ'⁻¹ from fun e => hg (inv_injective e))
       refine ae_iff.mpr (measure_mono_null ?_ hd)
       intro x hx
-      simp only [Set.mem_setOf_eq, _root_.not_imp] at hx
+      simp only [Set.mem_setOf_eq, Classical.not_imp] at hx
       obtain ⟨h1, h2, -⟩ := hx
       refine ⟨Set.mem_smul_set_iff_inv_smul_mem.mpr ?_, Set.mem_smul_set_iff_inv_smul_mem.mpr ?_⟩
       · simpa [Subgroup.smul_def] using h1
@@ -107,12 +107,12 @@ def cfun (Γ : Subgroup G) (A : Set G) (y0 : Y) (g : G) : ℝ≥0∞ :=
 theorem meas_cntN (Γ : Subgroup G) [Countable Γ] {A : Set G} (hA : MeasurableSet A) :
     Measurable (cntN Γ A) := by
   unfold cntN
-  exact Measurable.ennreal_tsum fun γ => (measurable_const.indicator hA).comp (measurable_const_mul _)
+  exact Measurable.tsum fun γ => (measurable_const.indicator hA).comp (measurable_const_mul _)
 
 theorem meas_cfun (Γ : Subgroup G) (y0 : Y) [Countable (orbS Γ y0)] {A : Set G}
     (hA : MeasurableSet A) : Measurable (cfun Γ A y0) := by
   unfold cfun
-  exact Measurable.ennreal_tsum fun x =>
+  exact Measurable.tsum fun x =>
     (measurable_const.indicator hA).comp ((measurable_const_mul _).comp measurable_inv)
 
 theorem cntN_mul (Γ : Subgroup G) (A : Set G) {γ : G} (hγ : γ ∈ Γ) (g : G) :

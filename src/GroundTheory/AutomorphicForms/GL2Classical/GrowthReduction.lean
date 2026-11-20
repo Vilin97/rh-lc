@@ -109,7 +109,7 @@ theorem ideleModule_det_le_height_sq (g : AdelicGLn.AdelicGL K 2) :
       (∏ w : InfinitePlace K, (2 : ℝ) ^ w.mult) *
         (∏ w : InfinitePlace K, locHeight (infAt w g) ^ w.mult) ^ 2 := by
     rw [← Finset.prod_pow, ← Finset.prod_mul_distrib]
-    refine Finset.prod_le_prod (fun w _ => pow_nonneg (norm_nonneg _) _) fun w _ => ?_
+    refine Finset.prod_le_prod₀ (fun w _ => pow_nonneg (norm_nonneg _) _) fun w _ => ?_
     rw [det_infAt_eq]
     calc ‖(infAt w g : Matrix (Fin 2) (Fin 2) w.Completion).det‖ ^ w.mult
         ≤ (2 * locHeight (infAt w g) ^ 2) ^ w.mult :=

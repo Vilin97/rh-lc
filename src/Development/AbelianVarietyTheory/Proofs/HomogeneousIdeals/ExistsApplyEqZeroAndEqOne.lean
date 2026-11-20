@@ -74,7 +74,7 @@ theorem isProperMap_comap (φ : A →ₐ[ℂ] B) (hφ : φ.toRingHom.IsIntegral)
     obtain ⟨h, hm, hb⟩ := hφ b
     let M : (A →ₐ[ℂ] ℂ) → ℝ := fun r => ∑ i ∈ Finset.range h.natDegree, ‖r (h.coeff i)‖ + 1
     have hM : Continuous M :=
-      (continuous_finset_sum _ fun i _ => (continuous_eval _).norm).add continuous_const
+      (continuous_finsetSum _ fun i _ => (continuous_eval _).norm).add continuous_const
     have hbd : ∀ q : B →ₐ[ℂ] ℂ, ‖q b‖ ≤ M (comap φ q) := by
       intro q
       have hr : (h.map (comap φ q).toRingHom).IsRoot (q b) := by

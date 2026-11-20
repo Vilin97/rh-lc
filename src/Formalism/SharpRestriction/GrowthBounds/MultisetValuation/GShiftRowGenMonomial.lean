@@ -135,7 +135,7 @@ theorem g_rowDiv_shift (R : Type*) [CommRing R] {n : ℕ} (H : ℤ) (a b : Fin r
   conv => enter [2, 1, 2]; rw [f.as_sum]
   rw [map_sum, Polynomial.finsetSum_coeff]
   refine IsWeightedHomogeneous.sum _ _ _ fun d hd => ?_
-  have := gShift_rowGen_monomial (ht := ht) R a b d (coeff d f) k
+  have := gShift_rowGen_monomial (ht := ht) R a b d (AddMonoidAlgebra.coeff f d) k
   rwa [hf (mem_support_iff.mp hd)] at this
 
 theorem g_weight {n : ℕ} (d : Fin r × Fin n →₀ ℕ) :
@@ -292,7 +292,7 @@ theorem weyl_diag (O Kf : Type) [CommRing O] [IsDomain O] [Field Kf] [Algebra O 
       obtain ⟨z, hz⟩ := g_applyWord (ht := fun a : Fin k => if a.val < r then (1 : ℤ) else 0) O (le_refl k) ν hν wd
       have hπ : ∀ d' ∈ (map (algebraMap O Kf) Wd).support, piR r d' = piR r d := by
         intro d' hd'
-        have h1 : coeff d' Wd ≠ 0 := by
+        have h1 : AddMonoidAlgebra.coeff Wd d' ≠ 0 := by
           intro h
           rw [mem_support_iff, coeff_map, h, map_zero] at hd'
           exact hd' rfl

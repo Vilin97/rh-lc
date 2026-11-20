@@ -115,11 +115,11 @@ section Coeff
 variable {R : Type*} [CommRing R] {d p : ℕ}
 
 def LowRed (p m : ℕ) (P : MvPolynomial (Fin d) R) : Prop :=
-  ∀ β : Fin d →₀ ℕ, (∀ j, β j < p) → β.degree < m → coeff β P = 0
+  ∀ β : Fin d →₀ ℕ, (∀ j, β j < p) → β.degree < m → AddMonoidAlgebra.coeff P β = 0
 
 lemma lowRed_mul {m : ℕ} {F G : MvPolynomial (Fin d) R} (hF : LowRed p m F)
     (hG : constantCoeff G = 0) (β : Fin d →₀ ℕ) (hβ : ∀ j, β j < p) (hdeg : β.degree ≤ m) :
-    coeff β (F * G) = 0 := by
+    AddMonoidAlgebra.coeff (F * G) β = 0 := by
   classical
   rw [coeff_mul]
   refine Finset.sum_eq_zero fun y hy => ?_
@@ -179,7 +179,7 @@ section Core
 variable {R A : Type*} [CommRing R] [CommRing A] [Algebra R A] {d p : ℕ}
 
 lemma mem_span_pow_of_coeff {P : MvPolynomial (Fin d) R}
-    (h : ∀ β : Fin d →₀ ℕ, (∀ j, β j < p) → coeff β P = 0) :
+    (h : ∀ β : Fin d →₀ ℕ, (∀ j, β j < p) → AddMonoidAlgebra.coeff P β = 0) :
     P ∈ Ideal.span (Set.range fun j : Fin d => (X j : MvPolynomial (Fin d) R) ^ p) := by
   classical
   rw [P.as_sum]
@@ -187,7 +187,7 @@ lemma mem_span_pow_of_coeff {P : MvPolynomial (Fin d) R}
   have hnot : ¬ ∀ j, β j < p := fun h' => (mem_support_iff.1 hβ) (h β h')
   push Not at hnot
   obtain ⟨j, hj⟩ := hnot
-  have e : monomial β (coeff β P) = X j ^ p * monomial (β - Finsupp.single j p) (coeff β P) := by
+  have e : monomial β (AddMonoidAlgebra.coeff P β) = X j ^ p * monomial (β - Finsupp.single j p) (AddMonoidAlgebra.coeff P β) := by
     have hs : Finsupp.single j p + (β - Finsupp.single j p) = β := by
       ext l
       by_cases hl : j = l
@@ -218,7 +218,7 @@ theorem coeff_eq_zero_of_stable (ε : A →ₐ[R] R) (x : Fin d → A) (hx : ∀
     (hp0 : (p : R) = 0) (hunit : ∀ n, 0 < n → n < p → IsUnit (n : R))
     (K : Set A) (hK : ∀ a ∈ K, ε a = 0) (hKD : ∀ i, ∀ a ∈ K, D i a ∈ K)
     (P : MvPolynomial (Fin d) R) (hP : aeval x P ∈ K) :
-    ∀ β : Fin d →₀ ℕ, (∀ j, β j < p) → coeff β P = 0 := by
+    ∀ β : Fin d →₀ ℕ, (∀ j, β j < p) → AddMonoidAlgebra.coeff P β = 0 := by
   classical
   have hε : ∀ Q : MvPolynomial (Fin d) R, ε (aeval x Q) = constantCoeff Q := by
     intro Q
@@ -227,7 +227,7 @@ theorem coeff_eq_zero_of_stable (ε : A →ₐ[R] R) (x : Fin d → A) (hx : ∀
     rw [← AlgHom.comp_apply, e, aeval_zero']
     rfl
   have Z : ∀ m, ∀ Q : MvPolynomial (Fin d) R, aeval x Q ∈ K → LowRed p m Q →
-      ∀ α : Fin d →₀ ℕ, (∀ j, α j < p) → α.degree = m → coeff α Q = 0 := by
+      ∀ α : Fin d →₀ ℕ, (∀ j, α j < p) → α.degree = m → AddMonoidAlgebra.coeff Q α = 0 := by
     intro m
     induction m with
     | zero =>
@@ -262,10 +262,10 @@ theorem coeff_eq_zero_of_stable (ε : A →ₐ[R] R) (x : Fin d → A) (hx : ∀
           rw [map_mul, hT]
         rw [e]; exact hKD i _ hQ
       have hsplit : ∀ j (γ : Fin d →₀ ℕ), γ.degree ≤ m → (∀ l, γ l < p) →
-          coeff γ (pderiv j Q * T j) = coeff γ (pderiv j Q) * (if i = j then 1 else 0) := by
+          AddMonoidAlgebra.coeff (pderiv j Q * T j) γ = AddMonoidAlgebra.coeff (pderiv j Q) γ * (if i = j then 1 else 0) := by
         intro j γ hγd hγ
         have e : T j = C (constantCoeff (T j)) + (T j - C (constantCoeff (T j))) := by ring
-        rw [e, mul_add, coeff_add, mul_comm (pderiv j Q) (C _), coeff_C_mul,
+        rw [e, mul_add, MvPolynomial.coeff_add, mul_comm (pderiv j Q) (C _), coeff_C_mul,
           lowRed_mul (G := T j - C (constantCoeff (T j))) (lowRed_pderiv hp0 hlow j) (by simp) γ hγ hγd,
           add_zero, hTc, mul_comm]
       have hlow' : LowRed p m Q' := by

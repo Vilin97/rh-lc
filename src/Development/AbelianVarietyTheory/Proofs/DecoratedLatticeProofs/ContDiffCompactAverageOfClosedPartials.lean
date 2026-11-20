@@ -57,7 +57,7 @@ theorem hasFDerivAt_avg (μ : Measure K) [IsFiniteMeasure μ] {F : K → (Fin n 
       rw [clm_expand (fderiv ℝ (F k) t)] at h
       simpa only [he] using h)
   refine key.congr_fderiv ?_
-  rw [integral_finset_sum _ fun i _ => (integrable_cont μ (hGk i t₀)).smul_const _]
+  rw [MeasureTheory.integral_finsetSum _ fun i _ => (integrable_cont μ (hGk i t₀)).smul_const _]
   exact Finset.sum_congr rfl fun i _ => integral_smul_const _ _
 
 end GlobalTheory.AvgSmooth

@@ -58,7 +58,7 @@ theorem subst_coeff_totalDegree {r : ℕ} (lam : Fin r → k) (F : MvPolynomial 
     (subst lam F).coeff F.totalDegree =
       C (eval (Fin.cons (1 : k) lam) (homogeneousComponent F.totalDegree F)) := by
   classical
-  rw [show subst lam F = ∑ v ∈ F.support, subst lam (monomial v (coeff v F)) by
+  rw [show subst lam F = ∑ v ∈ F.support, subst lam (monomial v (AddMonoidAlgebra.coeff F v)) by
     rw [← map_sum, ← F.as_sum]]
   rw [homogeneousComponent_apply, map_sum, map_sum, Polynomial.finsetSum_coeff,
     Finset.sum_filter]
@@ -74,7 +74,7 @@ theorem homogeneousComponent_totalDegree_ne_zero {σ : Type*} {F : MvPolynomial 
   obtain ⟨m, hm, hmax⟩ := Finset.exists_mem_eq_sup F.support (support_nonempty.mpr hF)
     (fun s => s.sum fun _ e => e)
   intro h0
-  have := congrArg (coeff m) h0
+  have := congrArg (AddMonoidAlgebra.coeff · m) h0
   rw [coeff_homogeneousComponent, if_pos (by rw [totalDegree, hmax]; rfl), coeff_zero] at this
   exact (mem_support_iff.mp hm) this
 

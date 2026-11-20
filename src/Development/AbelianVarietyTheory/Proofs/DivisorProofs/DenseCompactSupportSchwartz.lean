@@ -15,7 +15,7 @@ lemma norm_iteratedFDeriv_comp_smul_le_seminorm {V : Type} [NormedAddCommGroup V
     (by exact_mod_cast le_top)]
   refine (ContinuousMultilinearMap.norm_compContinuousLinearMap_le _ _).trans ?_
   have h1 : ∏ _j : Fin i, ‖(t • ContinuousLinearMap.id ℝ V)‖ ≤ 1 :=
-    Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun _ _ => by
+    Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun _ _ => by
       refine (norm_smul_le _ _).trans ?_
       rw [Real.norm_eq_abs]
       exact mul_le_one₀ ht (norm_nonneg _) ContinuousLinearMap.norm_id_le)

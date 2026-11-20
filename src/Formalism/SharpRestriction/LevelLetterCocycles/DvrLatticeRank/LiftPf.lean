@@ -15,7 +15,7 @@ theorem padicValNat_le_of_dvd' (p : ℕ) {a b : ℕ} (hab : a ∣ b) (hb : b ≠
       | simp [padicValNat]
       | (unfold padicValNat; simp)
   · rw [padicValNat_def' hp1 hb]
-    have hd : p ^ padicValNat p a ∣ b := pow_padicValNat_dvd.trans hab
+    have hd : p ^ padicValNat p a ∣ b := (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)).trans hab
     have hf : FiniteMultiplicity p b := Nat.finiteMultiplicity_iff.2 ⟨hp1, Nat.pos_of_ne_zero hb⟩
     first
       | exact hf.le_multiplicity_of_pow_dvd hd

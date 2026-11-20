@@ -33,7 +33,7 @@ theorem blockSpecial_monomial (ρ : MRing ι F →+* κ) (d : (Σ k, ι k) →�
   rw [Finsupp.prod_mul, mul_assoc]
 
 theorem coeff_blockSpecial (ρ : MRing ι F →+* κ) (f : MRing ι F) (e : K →₀ ℕ) :
-    coeff e (blockSpecial ρ f) = ρ (weightedHomogeneousComponent (blockWeight ι) (⇑e) f) := by
+    AddMonoidAlgebra.coeff (blockSpecial ρ f) e = ρ (weightedHomogeneousComponent (blockWeight ι) (⇑e) f) := by
   classical
   conv_lhs => rw [f.as_sum]
   rw [weightedHomogeneousComponent_apply, map_sum, coeff_sum, map_sum, Finset.sum_filter]
@@ -99,7 +99,7 @@ theorem ValuativeCentre.proof : ValuativeCentre.Statement.{u} := by
     rw [RingHom.mem_ker]
     constructor
     · intro h b
-      have := congrArg (coeff (Finsupp.equivFunOnFinite.symm b)) h
+      have := congrArg (AddMonoidAlgebra.coeff · (Finsupp.equivFunOnFinite.symm b)) h
       rwa [coeff_blockSpecial, coeff_zero, Finsupp.coe_equivFunOnFinite_symm] at this
     · intro h
       ext e

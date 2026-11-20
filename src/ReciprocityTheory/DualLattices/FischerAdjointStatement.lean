@@ -44,7 +44,7 @@ open scoped Classical in
 
 def fischer (P Q : MvPolynomial (Fin ν × ι) ℂ) : ℂ :=
   ∑ A ∈ P.support ∪ Q.support,
-    coeff A P * starRingEnd ℂ (coeff A Q) * ((A.prod fun _ e => e.factorial : ℕ) : ℂ)
+    AddMonoidAlgebra.coeff P A * starRingEnd ℂ (AddMonoidAlgebra.coeff Q A) * ((A.prod fun _ e => e.factorial : ℕ) : ℂ)
 
 def IsUpperUnitri (g : Matrix (Fin ν) (Fin ν) ℂ) : Prop :=
   (∀ i, g i i = 1) ∧ ∀ i j, j < i → g i j = 0

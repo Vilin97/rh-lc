@@ -43,12 +43,12 @@ theorem commuting_multiplier_eq_const_smul_generator
   have eqV : ∀ f : V, (⟨rd f, hV _ f.2⟩ : R) = ∑ j, σ (bV.repr f j) • gV j := by
     intro f
     apply Subtype.ext
-    simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul, gV]
+    simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, gV]
     exact expand V f
   have eqV' : ∀ f : V', (⟨rd f, hV' _ f.2⟩ : R) = ∑ j, σ (bV'.repr f j) • gV' j := by
     intro f
     apply Subtype.ext
-    simp only [AddSubmonoidClass.coe_finset_sum, SetLike.val_smul, gV']
+    simp only [AddSubmonoidClass.coe_finsetSum, SetLike.val_smul, gV']
     exact expand V' f
   have memW : ∀ f : V, (⟨rd f, hV _ f.2⟩ : R) ∈ W := by
     intro f
@@ -71,7 +71,7 @@ theorem commuting_multiplier_eq_const_smul_generator
     rw [e1, map_sum]
     simp only [map_smul, Tc, Module.Basis.constr_basis]
     apply Subtype.ext; apply Subtype.ext
-    simp only [Submodule.coe_sum, Submodule.coe_smul, AddSubmonoidClass.coe_finset_sum,
+    simp only [Submodule.coe_sum, Submodule.coe_smul, AddSubmonoidClass.coe_finsetSum,
       SetLike.val_smul, img]
     conv_rhs => rw [← bV.sum_repr f]
     simp only [map_sum, map_smul, Submodule.coe_sum, Submodule.coe_smul, hsemi]

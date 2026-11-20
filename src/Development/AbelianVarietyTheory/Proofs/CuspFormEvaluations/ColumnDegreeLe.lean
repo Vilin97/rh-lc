@@ -55,7 +55,7 @@ theorem eval_scale_eq {K σ : Type*} [Field K] (w : σ → ℕ) (P : MvPolynomia
     (t : K) :
     eval (fun s => t ^ w s * x s) P =
       (∑ m ∈ P.support, Polynomial.monomial (∑ s ∈ m.support, w s * m s)
-        (coeff m P * ∏ s ∈ m.support, x s ^ m s)).eval t := by
+        (AddMonoidAlgebra.coeff P m * ∏ s ∈ m.support, x s ^ m s)).eval t := by
   rw [eval_eq, Polynomial.eval_finsetSum]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [Polynomial.eval_monomial]
@@ -113,8 +113,8 @@ theorem column_degree_le {K σ : Type*} [Field K] [CharZero K] [DecidableEq σ] 
   push Not at hcon
   set j := ∑ a, ∑ k ∈ S, m0 (z (a, k)) with hj
   let R : MvPolynomial σ K :=
-    ∑ m ∈ P.support.filter (fun m => ∑ a, ∑ k ∈ S, m (z (a, k)) = j), monomial m (coeff m P)
-  have hR0 : coeff m0 R ≠ 0 := by
+    ∑ m ∈ P.support.filter (fun m => ∑ a, ∑ k ∈ S, m (z (a, k)) = j), monomial m (AddMonoidAlgebra.coeff P m)
+  have hR0 : AddMonoidAlgebra.coeff R m0 ≠ 0 := by
     have hmem : m0 ∈ P.support.filter (fun m => ∑ a, ∑ k ∈ S, m (z (a, k)) = j) :=
       Finset.mem_filter.2 ⟨hm0, rfl⟩
     simp only [R, coeff_sum, coeff_monomial]
@@ -161,9 +161,9 @@ theorem column_degree_le {K σ : Type*} [Field K] [CharZero K] [DecidableEq σ] 
     rw [h2, Matrix.det_one] at h1
     exact zero_ne_one h1
   let Q : (σ → K) → Polynomial K := fun y => ∑ m ∈ P.support,
-    Polynomial.monomial (∑ s ∈ m.support, w s * m s) (coeff m P * ∏ s ∈ m.support, y s ^ m s)
+    Polynomial.monomial (∑ s ∈ m.support, w s * m s) (AddMonoidAlgebra.coeff P m * ∏ s ∈ m.support, y s ^ m s)
   have hQcoeff : ∀ y : σ → K, (Q y).coeff j = ∑ m ∈ P.support,
-      if ∑ a, ∑ k ∈ S, m (z (a, k)) = j then coeff m P * ∏ s ∈ m.support, y s ^ m s else 0 := by
+      if ∑ a, ∑ k ∈ S, m (z (a, k)) = j then AddMonoidAlgebra.coeff P m * ∏ s ∈ m.support, y s ^ m s else 0 := by
     intro y
     simp only [Q, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, he]
   have key : ∀ x : σ → K, eval x D ≠ 0 → eval x R = 0 := by

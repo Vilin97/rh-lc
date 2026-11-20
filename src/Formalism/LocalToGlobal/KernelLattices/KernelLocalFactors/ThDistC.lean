@@ -641,7 +641,7 @@ theorem atZero_monomial (G : VCx ι a b → ℂ) (α : DVar ι a b →₀ ℕ) (
   rw [Module.Basis.constr_basis, smul_eq_mul]
 
 theorem atZero_eq_sum (G : VCx ι a b → ℂ) (P : MvPolynomial (DVar ι a b) ℂ) :
-    atZero G P = ∑ α ∈ P.support, coeff α P * derivAt0 G α := by
+    atZero G P = ∑ α ∈ P.support, AddMonoidAlgebra.coeff P α * derivAt0 G α := by
   conv_lhs => rw [P.as_sum]
   rw [map_sum]
   simp only [atZero_monomial]
@@ -699,7 +699,7 @@ theorem eval_jetLin (cD : ι → ℂ) (y' : ι × Fin b × Fin b → ℂ) (G : V
 
 theorem jetMap_eval (cD : ι → ℂ) (G : VCx ι a b → ℂ) (Q : Pol ℂ ι a) (y' : ι × Fin b × Fin b → ℂ) :
     eval y' (jetMap (jetC cD G) (fun _ => 0) Q) =
-      ∑ α ∈ (polDx cD y' Q).support, coeff α (polDx cD y' Q) * derivAt0 G α := by
+      ∑ α ∈ (polDx cD y' Q).support, AddMonoidAlgebra.coeff (polDx cD y' Q) α * derivAt0 G α := by
   unfold jetMap
   simp only [LinearMap.comp_apply, LinearMap.mulRight_apply, pow_zero, Finset.prod_const_one, mul_one,
     AlgHom.toLinearMap_apply]

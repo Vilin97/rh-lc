@@ -11,8 +11,8 @@ theorem moduli_index_formula : Ms_index := by
   have hy : ∀ c τ, y c τ ≤ R2 := fun c τ =>
     le_trans (Finset.single_le_sum (fun i _ => h0 c i) (Finset.mem_univ τ)) (hs c)
   have hP : ∏ τ, ∏ c, y c τ ≤ ∏ _τ : Fin f, ∏ _c : Fin N, R2 :=
-    Finset.prod_le_prod (fun τ _ => Finset.prod_nonneg fun c _ => h0 c τ)
-      (fun τ _ => Finset.prod_le_prod (fun c _ => h0 c τ) (fun c _ => hy c τ))
+    Finset.prod_le_prod₀ (fun τ _ => Finset.prod_nonneg fun c _ => h0 c τ)
+      (fun τ _ => Finset.prod_le_prod₀ (fun c _ => h0 c τ) (fun c _ => hy c τ))
   simp only [Finset.prod_const, Finset.card_univ, Fintype.card_fin] at hP
   have hP0 : 0 ≤ ∏ τ, ∏ c, y c τ := Finset.prod_nonneg fun τ _ => Finset.prod_nonneg fun c _ => h0 c τ
   calc (∏ τ, ∏ c, y c τ) ^ 2 ≤ ((R2 ^ N) ^ f) ^ 2 := pow_le_pow_left₀ hP0 hP 2

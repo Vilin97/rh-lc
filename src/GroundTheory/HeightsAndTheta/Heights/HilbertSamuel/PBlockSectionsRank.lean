@@ -45,7 +45,7 @@ def back (k₀ : K) (M : Matrix (Ix (Fin r)) (ι k₀) ℤ) : MvPolynomial (Ix (
   bind₁ (blockLin k₀ M)
 
 theorem fst_eq_of_mem_support {f : MRing ι} {k₀ : K} {n : ℕ} (hf : IsMultiHomog f (blockDeg k₀ n))
-    {c : (Σ k, ι k) →₀ ℕ} (hc : coeff c f ≠ 0) {p : Σ k, ι k} (hp : p ∈ c.support) : p.1 = k₀ := by
+    {c : (Σ k, ι k) →₀ ℕ} (hc : AddMonoidAlgebra.coeff f c ≠ 0) {p : Σ k, ι k} (hp : p ∈ c.support) : p.1 = k₀ := by
   by_contra hne
   have h := hf c (mem_support_iff.mpr hc) p.1
   rw [blockDeg, if_neg hne, Finset.sum_eq_zero_iff] at h

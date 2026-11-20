@@ -595,7 +595,7 @@ theorem exists_le_infNorm_of_isInBox (hn : 0 < n) (I : (FractionalIdeal (𝓞 K)
       ((n.factorial : ℝ) * X ^ n) ^ d := by
     calc ∏ w : InfinitePlace K, ‖((u : 𝔸[K])).1 w‖ ^ w.mult
         ≤ ∏ w : InfinitePlace K, ((n.factorial : ℝ) * X ^ n) ^ w.mult :=
-          Finset.prod_le_prod (fun w _ => pow_nonneg (norm_nonneg _) _)
+          Finset.prod_le_prod₀ (fun w _ => pow_nonneg (norm_nonneg _) _)
             (fun w _ => pow_le_pow_left₀ (norm_nonneg _) (hinf w) _)
       _ = ((n.factorial : ℝ) * X ^ n) ^ d := by
           rw [Finset.prod_pow_eq_pow_sum, InfinitePlace.sum_mult_eq]

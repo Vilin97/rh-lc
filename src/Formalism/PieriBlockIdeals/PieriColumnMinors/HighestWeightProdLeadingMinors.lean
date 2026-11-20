@@ -701,7 +701,7 @@ theorem divided_power_weight_vector {r : ℕ} (a b : Fin r) (k : ℕ) (μ : Fin 
   by_cases h0 : rowDiv ℤ a b k y = 0
   · exact ⟨0, by rw [h0]; exact isWeightedHomogeneous_zero _ _ _⟩
   · obtain ⟨d0, hd0⟩ := MvPolynomial.support_nonempty.mpr h0
-    have key : ∀ c : Fin r, ∀ d, coeff d (rowDiv ℤ a b k y) ≠ 0 →
+    have key : ∀ c : Fin r, ∀ d, AddMonoidAlgebra.coeff (rowDiv ℤ a b k y) d ≠ 0 →
         ((Finsupp.weight (rowW r r) d c : ℕ) : ℤ) =
           (μ c : ℤ) + k * ((if a = c then 1 else 0) - (if b = c then 1 else 0)) := by
       intro c d hd

@@ -32,7 +32,7 @@ omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem eq_zero_of_monomial_mul (e : (Σ k, ι k) →₀ ℕ) {p : MRingOver S ι}
     (h : monomial e (1 : S) * p = 0) : p = 0 := by
   ext d
-  have := congrArg (coeff (e + d)) h
+  have := congrArg (AddMonoidAlgebra.coeff · (e + d)) h
   rw [coeff_monomial_mul, one_mul, coeff_zero] at this
   rw [this, coeff_zero]
 
@@ -100,7 +100,7 @@ theorem eq_zero_of_sum_smul_monoFrac (I : ∀ k, Finset (ι k)) (A : Finset ((Σ
     rw [e1, ← Finset.sum_congr rfl hterm, ← Finset.smul_sum, h, smul_zero]
   intro a ha
   by_cases hI : ∀ k, negSet a k ⊆ I k
-  · have hk := congrArg (coeff (c a)) key
+  · have hk := congrArg (AddMonoidAlgebra.coeff · (c a)) key
     rw [coeff_sum, Finset.sum_eq_single a, coeff_monomial, if_pos rfl, coeff_zero] at hk
     · exact hk
     · intro b hb hba

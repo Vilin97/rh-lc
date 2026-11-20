@@ -386,7 +386,7 @@ theorem near_region_product : NearProduct := by
     linarith
   calc ∏ r, (1 + k * de / la r) ^ (d r * f) * la r ^ (d r * f)
       ≤ ∏ r, Real.exp (k * de * (d r * f : ℕ)) :=
-        Finset.prod_le_prod (fun r _ => by
+        Finset.prod_le_prod₀ (fun r _ => by
           have h := hla r
           have h2 := div_nonneg (mul_nonneg hk hde) h.1.le
           exact mul_nonneg (pow_nonneg (by linarith) _) (pow_nonneg h.1.le _))
@@ -940,7 +940,7 @@ lemma sfac_mul_le (a b : ℕ) : sfac a * sfac b ≤ sfac (a + b) := by
   unfold sfac
   rw [Finset.prod_range_add]
   apply mul_le_mul_of_nonneg_left _ (by positivity)
-  apply Finset.prod_le_prod (fun i _ => by positivity)
+  apply Finset.prod_le_prod₀ (fun i _ => by positivity)
   intro i _
   exact_mod_cast Nat.factorial_le (by omega)
 
@@ -967,7 +967,7 @@ lemma inv_sfac_le_vsph (k : ℕ) : (sfac k)⁻¹ ≤ Vsph k := by
   rw [h]
   unfold sfac
   rw [← Finset.prod_inv_distrib]
-  apply Finset.prod_le_prod (fun i _ => by positivity)
+  apply Finset.prod_le_prod₀ (fun i _ => by positivity)
   intro i _
   rw [zero_add, div_eq_mul_inv]
   have := one_le_two_pi_pow (i + 1)
@@ -1015,7 +1015,7 @@ theorem volume_ratio : VRatio := by
     calc (sfac (∑ x, j x))⁻¹ ≤ (∏ x, sfac (j x))⁻¹ := by
           apply inv_anti₀ (Finset.prod_pos fun x _ => sfac_pos _) (sfac_prod_le _ _)
       _ = ∏ x, (sfac (j x))⁻¹ := (Finset.prod_inv_distrib _).symm
-      _ ≤ _ := Finset.prod_le_prod (fun x _ => (inv_pos.mpr (sfac_pos _)).le)
+      _ ≤ _ := Finset.prod_le_prod₀ (fun x _ => (inv_pos.mpr (sfac_pos _)).le)
           (fun x _ => inv_sfac_le_vsph _)
   generalize (∏ x, Vsph (j x)) = Pj at *
   generalize (∑ x, j x) = J at *
@@ -1036,7 +1036,7 @@ theorem volume_ratio : VRatio := by
   have b1 : P1 ≤ (2 * Real.pi ^ (k + J) / (k.factorial : ℝ)) ^ J := by
     rw [hP1]
     conv_rhs => rw [← Finset.card_range J, ← Finset.prod_const, Finset.card_range]
-    apply Finset.prod_le_prod (fun i _ => by positivity)
+    apply Finset.prod_le_prod₀ (fun i _ => by positivity)
     intro i hi
     have hi' := Finset.mem_range.mp hi
     have h1 : Real.pi ^ (k + i + 1) ≤ Real.pi ^ (k + J) :=
@@ -1051,7 +1051,7 @@ theorem volume_ratio : VRatio := by
     rw [← Finset.prod_inv_distrib]
     conv_rhs => rw [← Finset.card_range J, ← Finset.prod_const, Finset.card_range]
     rw [← Finset.prod_mul_distrib]
-    apply Finset.prod_le_prod (fun i _ => by positivity)
+    apply Finset.prod_le_prod₀ (fun i _ => by positivity)
     intro i hi
     have hi' := Finset.mem_range.mp hi
     have h1 : Real.pi ^ (k' + i + 1) ≤ Real.pi ^ (k' + J) :=
@@ -1552,7 +1552,7 @@ theorem far_region_sum : FarSum := by
   have hw0 : ∀ γ, 0 ≤ ∏ v, Real.exp (-(decExp h q (d γ v))) :=
     fun γ => Finset.prod_nonneg fun v _ => (Real.exp_pos _).le
   have hwW : ∀ γ ∈ S, ∏ v, Real.exp (-(decExp h q (d γ v))) ≤ ∏ v, farW h ε (idx (d γ v)) :=
-    fun γ hγ => Finset.prod_le_prod (fun v _ => (Real.exp_pos _).le) (fun v _ => hW _ (hd0 γ hγ v))
+    fun γ hγ => Finset.prod_le_prod₀ (fun v _ => (Real.exp_pos _).le) (fun v _ => hW _ (hd0 γ hγ v))
   generalize hwdef : (fun γ => ∏ v, Real.exp (-(decExp h q (d γ v)))) = w at *
   have hw0' : ∀ γ, 0 ≤ w γ := fun γ => by rw [← hwdef]; exact hw0 γ
   have hwW' : ∀ γ ∈ S, w γ ≤ ∏ v, farW h ε (idx (d γ v)) := fun γ hγ => by

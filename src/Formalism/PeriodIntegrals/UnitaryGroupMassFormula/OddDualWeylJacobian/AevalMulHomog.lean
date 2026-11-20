@@ -137,11 +137,11 @@ lemma rowAct_homog (g : Matrix (Fin k) (Fin k) R) {p : MvPolynomial (Fin k × Fi
   apply IsHomogeneous.sum
   intro m hm
   have hsum := sum_support_eq_degree_of_isHomogeneous' hp hm
-  have hmon : PI.OddDualWeyl.rowAct R g (monomial m (coeff m p)) =
-      C (coeff m p) * ∏ i ∈ m.support, (∑ b : Fin k, C (g i.1 b) * X (b, i.2)) ^ m i := by
+  have hmon : PI.OddDualWeyl.rowAct R g (monomial m (AddMonoidAlgebra.coeff p m)) =
+      C (AddMonoidAlgebra.coeff p m) * ∏ i ∈ m.support, (∑ b : Fin k, C (g i.1 b) * X (b, i.2)) ^ m i := by
     rw [PI.OddDualWeyl.rowAct, aeval_monomial, algebraMap_eq, Finsupp.prod]
   rw [hmon]
-  have hC : IsHomogeneous (C (coeff m p) : MvPolynomial (Fin k × Fin k) R) 0 := by
+  have hC : IsHomogeneous (C (AddMonoidAlgebra.coeff p m) : MvPolynomial (Fin k × Fin k) R) 0 := by
     first | exact isHomogeneous_C _ _ | exact isHomogeneous_C _
   have hprod := IsHomogeneous.prod m.support (fun i => (∑ b : Fin k, C (g i.1 b) * X (b, i.2)) ^ m i)
     (fun i => 1 * m i) (fun i _ => (hL i).pow (m i))

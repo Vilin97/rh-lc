@@ -130,20 +130,20 @@ theorem _root_.GlobalTheory.HAtBasis.mem_HAt_iff : ∀ (K : Type) [Field K]
   rw [step1, hloc, _root_.GlobalTheory.TransLoc.mem_map_actP, _root_.GlobalTheory.HAtBasis.polyAction_invTranspose_inv]
   set G : _root_.Formalism.L2.DIV.Pol K ι a := (∏ τ, (B τ : Matrix (Fin a) (Fin a) K).det ^ (lam τ).detShift) •
     _root_.Formalism.GradedWeylDivisibility.blockAct K (fun τ => (B τ : Matrix (Fin a) (Fin a) K)) (F : _root_.Formalism.L2.DIV.Pol K ι a) with hG
-  have hcoeff : ∀ (s : 𝓞 K) m, coeff m (s • G) = (s : K) * coeff m G := by
+  have hcoeff : ∀ (s : 𝓞 K) m, AddMonoidAlgebra.coeff (s • G) m = (s : K) * AddMonoidAlgebra.coeff G m := by
     intro s m
     erw [Algebra.smul_def, MvPolynomial.algebraMap_apply, coeff_C_mul]
   constructor
   · intro hGm m
     obtain ⟨s, hs, hsG⟩ := (_root_.PI.LocGlobInclWork.mem_localization_iff _ _ _).1 hGm
     obtain ⟨P, hP⟩ := _root_.GlobalTheory.LocInt.exists_map_eq_of_mem_nabStd lam hsG
-    have hc : coeff m (s • G) = ((coeff m P : 𝓞 K) : K) := by
-      have h' : coeff m (_root_.Formalism.L2.DIV.toK K _ P) = coeff m (s • G) := congrArg (coeff m) hP
+    have hc : AddMonoidAlgebra.coeff (s • G) m = ((AddMonoidAlgebra.coeff P m : 𝓞 K) : K) := by
+      have h' : AddMonoidAlgebra.coeff (_root_.Formalism.L2.DIV.toK K _ P) m = AddMonoidAlgebra.coeff (s • G) m := congrArg (AddMonoidAlgebra.coeff · m) hP
       rw [← h']
       simp [_root_.Formalism.L2.DIV.toK, coeff_map]
     rw [hcoeff] at hc
     have hs0 : (s : K) ≠ 0 := _root_.GlobalTheory.LatBasisAt.algebraMap_ne_zero w hs
-    have e : coeff m G = (s : K)⁻¹ * ((coeff m P : 𝓞 K) : K) := by
+    have e : AddMonoidAlgebra.coeff G m = (s : K)⁻¹ * ((AddMonoidAlgebra.coeff P m : 𝓞 K) : K) := by
       rw [← hc, ← mul_assoc, inv_mul_cancel₀ hs0, one_mul]
     rw [e, map_mul, map_inv₀, valuation_coe_eq_one_of_notMem w hs, inv_one, one_mul]
     exact HeightOneSpectrum.valuation_le_one w _
@@ -158,7 +158,7 @@ theorem _root_.GlobalTheory.HAtBasis.mem_HAt_iff : ∀ (K : Type) [Field K]
       refine _root_.GlobalTheory.DetSat.mem_nabStd_of_det_mul_integral K ι a lam (fun _ => 0) _
         (Submodule.smul_of_tower_mem _ _ hGV) fun m => ?_
       simp only [pow_zero, Finset.prod_const_one, one_mul]
-      change IsIntegral ℤ (coeff m ((∏ m ∈ G.support, sf m) • G))
+      change IsIntegral ℤ (AddMonoidAlgebra.coeff ((∏ m ∈ G.support, sf m) • G) m)
       rw [hcoeff]
       by_cases hm : m ∈ G.support
       · rw [← Finset.mul_prod_erase _ _ hm]

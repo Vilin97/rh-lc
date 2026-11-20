@@ -36,7 +36,7 @@ def pair : MvPolynomial σ ℂ →ₗ[ℂ] MvPolynomial σ ℂ →ₗ[ℂ] ℂ :
   (basisMonomials σ ℂ).constr ℂ fun α => wt α • lcoeff ℂ α
 
 theorem pair_monomial_one (α : σ →₀ ℕ) (Q : MvPolynomial σ ℂ) :
-    pair (monomial α 1) Q = wt α * coeff α Q := by
+    pair (monomial α 1) Q = wt α * AddMonoidAlgebra.coeff Q α := by
   have := (basisMonomials σ ℂ).constr_basis ℂ (fun α => wt α • lcoeff ℂ α) α
   rw [coe_basisMonomials] at this
   unfold pair
@@ -44,7 +44,7 @@ theorem pair_monomial_one (α : σ →₀ ℕ) (Q : MvPolynomial σ ℂ) :
   simp
 
 theorem pair_monomial (α : σ →₀ ℕ) (c : ℂ) (Q : MvPolynomial σ ℂ) :
-    pair (monomial α c) Q = c * (wt α * coeff α Q) := by
+    pair (monomial α c) Q = c * (wt α * AddMonoidAlgebra.coeff Q α) := by
   have : (monomial α c : MvPolynomial σ ℂ) = c • monomial α 1 := by
     rw [smul_monomial, smul_eq_mul, mul_one]
   rw [this, map_smul, LinearMap.smul_apply, pair_monomial_one, smul_eq_mul]
@@ -87,7 +87,7 @@ theorem pderiv_lin (A : σ → σ → ℂ) (v : σ) (Q : MvPolynomial σ ℂ) :
       simp [pderiv_X, Pi.single_apply, hw, Ne.symm hw]
     · simp
 
-theorem coeff_zero_lin (A : σ → σ → ℂ) (Q : MvPolynomial σ ℂ) : coeff 0 (lin A Q) = coeff 0 Q := by
+theorem coeff_zero_lin (A : σ → σ → ℂ) (Q : MvPolynomial σ ℂ) : AddMonoidAlgebra.coeff (lin A Q) 0 = AddMonoidAlgebra.coeff Q 0 := by
   change constantCoeff (lin A Q) = constantCoeff Q
   induction Q using MvPolynomial.induction_on with
   | C c => simp [lin]

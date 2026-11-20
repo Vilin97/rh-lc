@@ -58,7 +58,7 @@ private lemma norm_mono_le {n : ℕ} (w : Fin n → Fin d) (ξ : E d) :
     nlinarith
   calc ∏ l, ‖(2 * Real.pi * Complex.I * ((ξ (w l) : ℝ) : ℂ))‖
       ≤ ∏ _l : Fin n, 2 * Real.pi * (1 + ‖ξ‖ ^ 2) ^ ((1 : ℝ) / 2) :=
-        Finset.prod_le_prod (fun _ _ => norm_nonneg _) (fun l _ => hj (w l))
+        Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) (fun l _ => hj (w l))
     _ = (2 * Real.pi) ^ n * (1 + ‖ξ‖ ^ 2) ^ ((n : ℝ) / 2) := by
         rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin, mul_pow, ← Real.rpow_mul_natCast (jb_pos ξ).le]
         congr 2; ring

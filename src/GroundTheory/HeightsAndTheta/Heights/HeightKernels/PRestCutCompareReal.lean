@@ -21,7 +21,7 @@ theorem realFlagIntegral_monomial (f N : ℕ) (α : Fin f × Fin N →₀ ℕ) (
 
 theorem realFlagIntegral_eq_sum (f N : ℕ) (P : MvPolynomial (Fin f × Fin N) ℝ) :
     realFlagIntegral f N P =
-      ∑ α ∈ P.support, realFlagIntegral f N (monomial α (coeff α P)) := by
+      ∑ α ∈ P.support, realFlagIntegral f N (monomial α (AddMonoidAlgebra.coeff P α)) := by
   unfold realFlagIntegral
   conv_lhs => rw [P.as_sum]
   simp only [coeff_sum, Finset.sum_mul]
@@ -42,8 +42,8 @@ open RestCutCompareReal in
 
 theorem RestCutCompareReal.proof : RestCutCompareReal.Statement := by
   intro f j k N e I c d hI P hP
-  have hmono : ∀ α ∈ P.support, I (restRename f j k N e (monomial α (coeff α P))) =
-      c * realFlagIntegral f N (monomial α (coeff α P)) := by
+  have hmono : ∀ α ∈ P.support, I (restRename f j k N e (monomial α (AddMonoidAlgebra.coeff P α))) =
+      c * realFlagIntegral f N (monomial α (AddMonoidAlgebra.coeff P α)) := by
     intro α hα
     have hdeg : (monomial α (1 : ℚ) : RestTerms.RootRing f N).IsHomogeneous d :=
       isHomogeneous_monomial 1 (by
@@ -52,7 +52,7 @@ theorem RestCutCompareReal.proof : RestCutCompareReal.Statement := by
     rw [restRename_monomial, map_smul, hI _ hdeg, realFlagIntegral_monomial, smul_eq_mul]
     ring
   have hL : I (restRename f j k N e P) =
-      ∑ α ∈ P.support, I (restRename f j k N e (monomial α (coeff α P))) := by
+      ∑ α ∈ P.support, I (restRename f j k N e (monomial α (AddMonoidAlgebra.coeff P α))) := by
     conv_lhs => rw [P.as_sum]
     rw [map_sum, map_sum]
   rw [hL, realFlagIntegral_eq_sum, Finset.mul_sum]

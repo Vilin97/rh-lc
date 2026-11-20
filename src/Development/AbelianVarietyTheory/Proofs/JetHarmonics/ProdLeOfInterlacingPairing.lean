@@ -78,12 +78,12 @@ theorem prod_le_of_interlacing_pairing :
     rw [← Finset.prod_sdiff hsub]
     refine le_mul_of_one_le_left (Finset.prod_nonneg fun _ _ => abs_nonneg _) ?_
     calc (1 : ℝ) = ∏ i ∈ Finset.Icc 1 k \ (Finset.Icc 1 (k - 1)).image φ, 1 := by simp
-      _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one)
+      _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one)
           (fun i hi => hW i (Finset.mem_sdiff.mp hi).1)
   calc ∏ s ∈ Finset.Icc 1 (k - 1), a s
       ≤ ∏ s ∈ Finset.Icc 1 (k - 1), ((if φ s = l then B else 1) *
         (1 + (1 + c) / max |lam s + Y| 1) * |Y + 1 / 2 + v (φ s)|) :=
-        Finset.prod_le_prod (fun s hs => (ha s hs).1) hkey
+        Finset.prod_le_prod₀ (fun s hs => (ha s hs).1) hkey
     _ = _ := by rw [Finset.prod_mul_distrib, Finset.prod_mul_distrib]
     _ ≤ _ := by
       have h1 : 0 ≤ ∏ s ∈ Finset.Icc 1 (k - 1), (1 + (1 + c) / max |lam s + Y| 1) :=

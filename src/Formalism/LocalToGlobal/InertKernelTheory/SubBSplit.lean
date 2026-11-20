@@ -125,8 +125,8 @@ def DelYEqH {p : ℕ} [Fact p.Prime] {X : Sys p} (Y : Pend X) (V : ∀ j, X.Lt (
     Prop :=
   ∀ (c' : X.Lv.comp (j + 1)) (L' : (X.Pj (j + 1)).Tup), (X.Pj (j + 1)).IsLatTup L' →
     ∀ G : (X.Pj j).Xsp, Formalism.L2.G.Pend.GoodG X Y.Kc j G → Formalism.L2.G.Pend.OddDeg X j G → ∀ n : X.ZA j →₀ ℕ,
-      MvPolynomial.coeff n (trSub X Y.Kc j (V j (c', L')) (Formalism.L2.G.Pend.polDel X Y.Kc j G)) =
-        τ j c' L' (MvPolynomial.coeff n (Formalism.L2.G.Pend.polDel X Y.Kc j G))
+      AddMonoidAlgebra.coeff (trSub X Y.Kc j (V j (c', L')) (Formalism.L2.G.Pend.polDel X Y.Kc j G)) n =
+        τ j c' L' (AddMonoidAlgebra.coeff (Formalism.L2.G.Pend.polDel X Y.Kc j G) n)
 
 def phiH {p : ℕ} [Fact p.Prime] {X : Sys p} {Kc : Type} [Field Kc] [Algebra X.G.Kf Kc] (D : D7) {ι : ℂ →+* Kc}
     (Φ₀ : ∀ j, MvPolynomial (GL3Theta.FrV D (D.R.N (j + 1))) ℂ →ₛₗ[ι] XspC (X.Pj (j + 1)) Kc)

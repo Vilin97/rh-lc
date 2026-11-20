@@ -76,7 +76,7 @@ theorem normFin_eq_prod_absNorm_of_valAt : ∀ (F E : Type) [Field F] [NumberFie
     refine ⟨⟨l0, (hmem l0).2 fun w hw => (hl0 w hw).le, rfl⟩, ?_⟩
     rintro c ⟨l, hl, rfl⟩
     rw [← NNReal.coe_le_coe, GlobalTheory.UnrTate.absEv_eq_prod_absNorm, GlobalTheory.UnrTate.absEv_eq_prod_absNorm]
-    refine Finset.prod_le_prod (fun w _ => zpow_nonneg (zero_le_one.trans (hN1 w)) _) fun w hw => ?_
+    refine Finset.prod_le_prod₀ (fun w _ => zpow_nonneg (zero_le_one.trans (hN1 w)) _) fun w hw => ?_
     rw [hl0 w hw, neg_neg]
     exact zpow_le_zpow_right₀ (hN1 w) (by have := (hmem l).1 hl w hw; omega)
   have hinf : normFin F L v y = GlobalTheory.Doubling.absEv F E v l0 := hleast.csInf_eq

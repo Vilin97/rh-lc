@@ -72,7 +72,7 @@ theorem EntryLe.norm_det_le [DecidableEq K] (h : EntryLe M x) :
           rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with hσ | hσ <;> simp [hσ, norm_prod]
         rw [hs]
         calc ∏ i, ‖M (σ i) i‖ ≤ ∏ _i : K, x :=
-              Finset.prod_le_prod (fun i _ => norm_nonneg _) fun i _ => h _ _
+              Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) fun i _ => h _ _
           _ = x ^ Fintype.card K := by rw [Finset.prod_const, Finset.card_univ]
     _ = _ := by rw [Finset.sum_const, Finset.card_univ, Fintype.card_perm, nsmul_eq_mul]
 

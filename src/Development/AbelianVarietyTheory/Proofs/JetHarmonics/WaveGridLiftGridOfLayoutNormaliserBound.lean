@@ -86,7 +86,7 @@ private theorem sum_abs_lagCo_le_one_of_five_separated {d : ℕ} (y : Fin (d + 1
     unfold _root_.Formalism.FourierDecayAlt.F7.lagCo
     rw [Finset.abs_prod]
     calc ∏ i ∈ Finset.univ.erase j, |(y j - y i)⁻¹| ≤ ∏ i ∈ Finset.univ.erase j, (1 / 5 : ℝ) :=
-          Finset.prod_le_prod (fun _ _ => abs_nonneg _) (fun i hi => by
+          Finset.prod_le_prod₀ (fun _ _ => abs_nonneg _) (fun i hi => by
             rw [abs_inv, one_div]
             exact inv_anti₀ (by norm_num) (hy j i (Finset.ne_of_mem_erase hi).symm))
       _ = (1 / 5) ^ d := by
@@ -256,7 +256,7 @@ private theorem exists_grid_of_layout_lemma {P : _root_.Formalism.FourierDecayAl
       rw [hys]
       simp only [List.map_ofFn, List.prod_ofFn, Function.comp_def]
       rw [← Finset.prod_mul_distrib, ← Finset.prod_div_distrib]
-      calc _ ≤ √(∏ _a : Fin K, Λ ^ 2) := Real.sqrt_le_sqrt (Finset.prod_le_prod
+      calc _ ≤ √(∏ _a : Fin K, Λ ^ 2) := Real.sqrt_le_sqrt (Finset.prod_le_prod₀
               (fun a _ => (hF _ (hgY a (n a)) (hgB a (n a))).1)
               (fun a _ => (hF _ (hgY a (n a)) (hgB a (n a))).2))
         _ = Λ ^ K := by
@@ -267,7 +267,7 @@ private theorem exists_grid_of_layout_lemma {P : _root_.Formalism.FourierDecayAl
     simp_rw [Finset.abs_prod]
     rw [← Fintype.piFinset_univ, ← Finset.prod_univ_sum (t := fun _ => Finset.univ) (f := fun a j => |_root_.Formalism.FourierDecayAlt.F7.lagCo (grid a) j|)]
     calc (∏ a, ∑ j, |_root_.Formalism.FourierDecayAlt.F7.lagCo (grid a) j|) * Λ ^ K ≤ 1 * Λ ^ K :=
-          mul_le_mul_of_nonneg_right (Finset.prod_le_one
+          mul_le_mul_of_nonneg_right (Finset.prod_le_one₀
             (fun a _ => Finset.sum_nonneg fun _ _ => abs_nonneg _)
             (fun a _ => sum_abs_lagCo_le_one_of_five_separated _ (fun i j hij =>
               hsep _ (hgY a i) _ (hgY a j) (fun h => hij (Prod.mk.inj (hginj a i a j h)).2))))

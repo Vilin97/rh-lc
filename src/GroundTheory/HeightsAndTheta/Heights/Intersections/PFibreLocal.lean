@@ -96,7 +96,7 @@ theorem sphere_moment (a : E3) (m : ℕ) :
     ring
 
 theorem eval_momentPoly {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω) (w : Ω → ℝ)
-    (Q : MvPolynomial (Fin 3) (Ω → ℝ)) (hQ : ∀ m, Integrable (fun p => w p * coeff m Q p) μ)
+    (Q : MvPolynomial (Fin 3) (Ω → ℝ)) (hQ : ∀ m, Integrable (fun p => w p * AddMonoidAlgebra.coeff Q m p) μ)
     (a : Fin 3 → ℝ) :
     eval a (momentPoly μ w Q) = ∫ p, w p * eval₂ (Pi.evalRingHom (fun _ : Ω => ℝ) p) a Q ∂μ := by
   rw [momentPoly, map_sum]
@@ -124,12 +124,12 @@ theorem pushMomentPoly_eq (k : ℕ) (hk : 1 ≤ k) :
     pushMomentPoly k = -(∑ i, X i ^ 2) ^ (k - 1) := by
   apply MvPolynomial.funext
   intro a
-  have hQ : ∀ m, Integrable (fun p : S2 => (1 : ℝ) * coeff m ((dotPoly (id : S2 → S2)) ^ (2 * k - 2)) p)
+  have hQ : ∀ m, Integrable (fun p : S2 => (1 : ℝ) * AddMonoidAlgebra.coeff ((dotPoly (id : S2 → S2)) ^ (2 * k - 2)) m p)
       sphereMeasure := by
     intro m
     rw [dotPoly_id_pow, coeff_map]
     simp only [one_mul]
-    exact (ContinuousMap.continuous (coeff m ((∑ i, X i * C (coordS i)) ^ (2 * k - 2)))).integrable_of_hasCompactSupport
+    exact (ContinuousMap.continuous (AddMonoidAlgebra.coeff ((∑ i, X i * C (coordS i)) ^ (2 * k - 2)) m)).integrable_of_hasCompactSupport
       (HasCompactSupport.of_compactSpace _)
   rw [pushMomentPoly, smul_eval, eval_momentPoly _ _ _ hQ]
   have he : ∀ p : S2, eval₂ (Pi.evalRingHom (fun _ : S2 => ℝ) p) a ((dotPoly id) ^ (2 * k - 2)) =

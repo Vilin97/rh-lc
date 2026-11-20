@@ -197,7 +197,7 @@ theorem log_det_append_le (h' : HermFam K V') (h : HermFam K V) (α : V' →ₗ[
     (Complex.pos_iff.mp hGu.diag_pos).1
   have h2 : ∏ j, ((h.gram σ u) (Fin.natAdd a j) (Fin.natAdd a j)).re ≤ (l ^ 2) ^ m := by
     calc _ ≤ ∏ _j : Fin m, l ^ 2 :=
-          Finset.prod_le_prod (fun j _ => (hdpos j).le) (fun j _ => hdiag j)
+          Finset.prod_le_prod₀ (fun j _ => (hdpos j).le) (fun j _ => hdiag j)
       _ = _ := by simp
   have h3 := det_re_le_of_sub_posSemidef hGav hnorm
   rw [Matrix.det_smul, Fintype.card_fin,

@@ -65,7 +65,7 @@ theorem GlobalTheory.ClassFin.exists_energy_min : ∀ (ι : Type) [Fintype ι] [
   choose H₀ hH₀ using fun s => GlobalTheory.T.exists_isHermitianLogOfPosDef_gram ι (g s) (hg s)
   let En : Matrix ι ι ℂ × (σ → Matrix ι ι ℂ) → ℝ := fun p => ∑ s, (Matrix.trace (p.2 s * p.2 s)).re
   have hEn : Continuous En := by
-    refine continuous_finset_sum _ fun s _ => Complex.continuous_re.comp ?_
+    refine continuous_finsetSum _ fun s _ => Complex.continuous_re.comp ?_
     have h : Continuous fun p : Matrix ι ι ℂ × (σ → Matrix ι ι ℂ) => p.2 s :=
       (continuous_apply s).comp continuous_snd
     exact (h.matrix_mul h).matrix_trace

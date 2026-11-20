@@ -550,7 +550,7 @@ variable {E : Type} [Field E] [NumberField E] in
 theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.continuous_ideleNorm : Continuous (_root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.ideleNorm (E := E)) := by
   have hinf : Continuous (_root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.infiniteIdeleNorm (E := E)) := by
     show Continuous fun x : _root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.Idele E => ∏ v : InfinitePlace E, ‖x.val.1 v‖ ^ v.mult
-    exact continuous_finset_prod _ fun v _ =>
+    exact continuous_finsetProd _ fun v _ =>
       (((continuous_apply v).comp (continuous_fst.comp (Units.continuous_val (M := AdeleRing (𝓞 E) E)))).norm).pow _
   have hfin : Continuous (_root_.GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.finiteIdeleNorm (E := E)) := by
     refine continuous_of_continuousAt_one _ ?_

@@ -38,7 +38,7 @@ theorem special_det_monomial_ne_zero {n σ R : Type*} [Fintype n] [DecidableEq n
     (Matrix.of fun r c => (MvPolynomial.monomial (E r c) (1 : R))).det ≠ 0 := by
   classical
   intro h
-  have h2 := congrArg (MvPolynomial.coeff (∑ c, E c c)) h
+  have h2 := congrArg (AddMonoidAlgebra.coeff · (∑ c, E c c)) h
   rw [Matrix.det_apply, MvPolynomial.coeff_sum, MvPolynomial.coeff_zero] at h2
   simp only [Matrix.of_apply, ← MvPolynomial.monomial_sum_one] at h2
   rw [Finset.sum_eq_single (1 : Equiv.Perm n)] at h2

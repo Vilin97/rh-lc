@@ -13,7 +13,7 @@ section Scale
 variable {σ K : Type*} [Field K]
 
 theorem coeff_aeval_scale (c : σ → K) (f : MvPolynomial σ K) (m : σ →₀ ℕ) :
-    coeff m (aeval (fun x => C (c x) * X x) f) = (m.prod fun x n => c x ^ n) * coeff m f := by
+    AddMonoidAlgebra.coeff (aeval (fun x => C (c x) * X x) f) m = (m.prod fun x n => c x ^ n) * AddMonoidAlgebra.coeff f m := by
   classical
   induction f using MvPolynomial.induction_on' with
   | monomial d a =>
@@ -25,7 +25,7 @@ theorem coeff_aeval_scale (c : σ → K) (f : MvPolynomial σ K) (m : σ →₀ 
     split_ifs with h
     · subst h; ring
     · simp
-  | add f g hf hg => rw [map_add, coeff_add, coeff_add, hf, hg, mul_add]
+  | add f g hf hg => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hf, hg, mul_add]
 
 end Scale
 
@@ -72,8 +72,8 @@ theorem isWH_of_eigen (e E : P.Xsp) (hE0 : E ≠ 0) (hE : IsWeightedHomogeneous 
   intro m hm
   funext y
   obtain ⟨v0, a0⟩ := y
-  have h1 := congrArg (coeff m) (he v0 a0)
-  have h2 := congrArg (coeff mE) (hEt v0 a0)
+  have h1 := congrArg (AddMonoidAlgebra.coeff · m) (he v0 a0)
+  have h2 := congrArg (AddMonoidAlgebra.coeff · mE) (hEt v0 a0)
   rw [subst_Gtor, coeff_aeval_scale, prod_tor, coeff_smul, smul_eq_mul] at h1 h2
   have h3 : (2 : Kf)⁻¹ ^ (Finsupp.weight (om P) m (v0, a0)) = t v0 a0 := mul_right_cancel₀ hm h1
   have h4 : (2 : Kf)⁻¹ ^ (Finsupp.weight (om P) mE (v0, a0)) = t v0 a0 := mul_right_cancel₀ hmE h2

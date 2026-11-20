@@ -252,19 +252,19 @@ section Expand
 variable {K ι κ : Type} [Field K] [Fintype κ]
 
 lemma shiftPoly_expand (b : κ → ι → K) (Q : MvPolynomial ι K) :
-    shiftPoly b Q = ∑ d ∈ Q.support, MvPolynomial.C (MvPolynomial.C (MvPolynomial.coeff d Q)) *
+    shiftPoly b Q = ∑ d ∈ Q.support, MvPolynomial.C (MvPolynomial.C (AddMonoidAlgebra.coeff Q d)) *
       ∏ i ∈ d.support, shiftGen b i ^ d i := by
   rw [shiftPoly_eq, MvPolynomial.aeval_def, MvPolynomial.eval₂_eq]
   rfl
 
 def biHom (d : ℕ) (F : MvPolynomial κ (MvPolynomial ι K)) : Prop :=
-  ∀ β n, MvPolynomial.coeff n (MvPolynomial.coeff β F) ≠ 0 → n.degree + β.degree = d
+  ∀ β n, AddMonoidAlgebra.coeff (AddMonoidAlgebra.coeff F β) n ≠ 0 → n.degree + β.degree = d
 
 lemma biHom_add {d : ℕ} {F G : MvPolynomial κ (MvPolynomial ι K)} (hF : biHom d F)
     (hG : biHom d G) : biHom d (F + G) := by
   intro β n h
   rw [MvPolynomial.coeff_add, MvPolynomial.coeff_add] at h
-  by_cases h1 : MvPolynomial.coeff n (MvPolynomial.coeff β F) = 0
+  by_cases h1 : AddMonoidAlgebra.coeff (AddMonoidAlgebra.coeff F β) n = 0
   · rw [h1, zero_add] at h
     exact hG β n h
   · exact hF β n h1
@@ -356,7 +356,7 @@ lemma biHom_shiftPoly (b : κ → ι → K) {d : ℕ} {Q : MvPolynomial ι K} (h
   have h1 : n.degree = d := by
     rw [← weight_one_eq]
     exact hQ (MvPolynomial.mem_support_iff.mp hn)
-  have h2 := biHom_mul (biHom_C (κ := κ) (MvPolynomial.isHomogeneous_C ι (MvPolynomial.coeff n Q)))
+  have h2 := biHom_mul (biHom_C (κ := κ) (MvPolynomial.isHomogeneous_C ι (AddMonoidAlgebra.coeff Q n)))
     (biHom_prod n.support (fun i => n i * 1) (fun i => shiftGen b i ^ n i)
       fun i _ => biHom_pow (biHom_shiftGen b i) (n i))
   simp only [mul_one, zero_add] at h2
@@ -370,7 +370,7 @@ section Integral
 variable (K ι κ : Type) [NormedField K] [IsUltrametricDist K]
 
 def biInt : Subring (MvPolynomial κ (MvPolynomial ι K)) where
-  carrier := {F | ∀ β, MvPolynomial.coeff β F ∈ Formalism.DworkPowerSeriesWeights.opInt K ι}
+  carrier := {F | ∀ β, AddMonoidAlgebra.coeff F β ∈ Formalism.DworkPowerSeriesWeights.opInt K ι}
   mul_mem' := by
     intro P Q hP hQ β
     classical
@@ -432,7 +432,7 @@ lemma X_mem_opInt (x : ι) : (MvPolynomial.X x : MvPolynomial ι K) ∈ Formalis
   split_ifs <;> simp
 
 lemma shiftPoly_mem_biInt [Fintype κ] (b : κ → ι → K) (Q : MvPolynomial ι K)
-    (hQ : ∀ n, ‖MvPolynomial.coeff n Q‖ ≤ 1) (hb : ∀ k x, ‖b k x‖ ≤ 1) :
+    (hQ : ∀ n, ‖AddMonoidAlgebra.coeff Q n‖ ≤ 1) (hb : ∀ k x, ‖b k x‖ ≤ 1) :
     shiftPoly b Q ∈ biInt K ι κ := by
   rw [shiftPoly_expand]
   refine Subring.sum_mem _ fun n _ => Subring.mul_mem _ (C_mem_biInt (C_mem_opInt (hQ n)))
@@ -462,7 +462,7 @@ section DegLE
 variable {κ R : Type} [CommRing R]
 
 def degLE (W : Finset κ) (n : ℕ) (F : MvPolynomial κ R) : Prop :=
-  ∀ β, MvPolynomial.coeff β F ≠ 0 → ∑ k ∈ W, β k ≤ n
+  ∀ β, AddMonoidAlgebra.coeff F β ≠ 0 → ∑ k ∈ W, β k ≤ n
 
 lemma degLE_zero (W : Finset κ) (n : ℕ) : degLE W n (0 : MvPolynomial κ R) := by
   intro β h
@@ -475,7 +475,7 @@ lemma degLE_add {W : Finset κ} {n : ℕ} {F G : MvPolynomial κ R} (hF : degLE 
     (hG : degLE W n G) : degLE W n (F + G) := by
   intro β h
   rw [MvPolynomial.coeff_add] at h
-  by_cases h1 : MvPolynomial.coeff β F = 0
+  by_cases h1 : AddMonoidAlgebra.coeff F β = 0
   · rw [h1, zero_add] at h
     exact hG β h
   · exact hF β h1

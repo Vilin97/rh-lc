@@ -56,7 +56,7 @@ theorem cyc_isHomogeneous_of_mem_minimalPrimes {A : Type*} [CommRing A] [Algebra
 theorem cyc_exists_blockComponent [DecidableEq K] {W : Ideal (MRingOver R ι)}
     (hW : ∀ k, W.IsHomogeneous (weightedHomogeneousSubmodule R (cycBlockWt (ι := ι) k)))
     (a : K → ℕ) (T : Finset K) {f : MRingOver R ι} (hf : f ∈ W) :
-    ∃ g ∈ W, ∀ m, coeff m g = if (∀ k ∈ T, ∑ i, m ⟨k, i⟩ = a k) then coeff m f else 0 := by
+    ∃ g ∈ W, ∀ m, AddMonoidAlgebra.coeff g m = if (∀ k ∈ T, ∑ i, m ⟨k, i⟩ = a k) then AddMonoidAlgebra.coeff f m else 0 := by
   induction T using Finset.induction_on with
   | empty => exact ⟨f, hf, fun m => by simp⟩
   | @insert k T hk ih =>
@@ -77,7 +77,7 @@ theorem cyc_isMultiHomogIdeal_of_isHomogeneous [DecidableEq K] {W : Ideal (MRing
     ext m
     rw [coeff_sum]
     have e : ∀ a : K → ℕ,
-        coeff m (g a) = if (fun k => ∑ i, m ⟨k, i⟩) = a then coeff m f else 0 := by
+        AddMonoidAlgebra.coeff (g a) m = if (fun k => ∑ i, m ⟨k, i⟩) = a then AddMonoidAlgebra.coeff f m else 0 := by
       intro a
       rw [hg a]
       by_cases h : (fun k => ∑ i, m ⟨k, i⟩) = a

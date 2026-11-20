@@ -18,7 +18,7 @@ def bideg (m : (Σ κ, stackedBlocks T κ) →₀ ℕ) : ℕ × ℕ :=
   (∑ t : T, m ⟨Sum.inl (), t⟩, ∑ t : T, m ⟨Sum.inr (), t⟩)
 
 def bipart (f : MRing (stackedBlocks T)) (p : ℕ × ℕ) : MRing (stackedBlocks T) :=
-  ∑ m ∈ f.support.filter (fun m => bideg m = p), monomial m (coeff m f)
+  ∑ m ∈ f.support.filter (fun m => bideg m = p), monomial m (AddMonoidAlgebra.coeff f m)
 
 theorem sum_bipart (f : MRing (stackedBlocks T)) : f = ∑ p ∈ f.support.image bideg, bipart f p := by
   classical
@@ -131,7 +131,7 @@ variable {K : Type} [Field K] [NumberField K] {i : ℕ} {F F' : HermLattice K i}
   [DecidableEq T]
 
 theorem coeff_C_mul_X_pow_unit {R : Type*} [CommSemiring R] (r : R) (n e : ℕ) :
-    coeff (Finsupp.single () e) (C r * X () ^ n : MvPolynomial Unit R) = if n = e then r else 0 := by
+    AddMonoidAlgebra.coeff (C r * X () ^ n : MvPolynomial Unit R) (Finsupp.single () e) = if n = e then r else 0 := by
   rw [C_mul_X_pow_eq_monomial, coeff_monomial]
   by_cases h : n = e
   · simp [h]
@@ -149,8 +149,8 @@ theorem stackedFormEval_bipart (b : Module.Basis T ℤ (dualLattice F))
   have h0 := biEval_eq_zero b b' hb hf
   rw [← support_sum_monomial_coeff f, map_sum] at h0
   simp_rw [biEval_monomial] at h0
-  have h1 := congrArg (fun q => coeff (Finsupp.single () (p.1 + p.2)) (coeff (Finsupp.single () p.2) q)) h0
-  simp only [coeff_sum, coeff_C_mul_X_pow_unit, apply_ite (coeff (Finsupp.single () (p.1 + p.2))),
+  have h1 := congrArg (fun q => AddMonoidAlgebra.coeff (AddMonoidAlgebra.coeff q (Finsupp.single () p.2)) (Finsupp.single () (p.1 + p.2))) h0
+  simp only [coeff_sum, coeff_C_mul_X_pow_unit, apply_ite (AddMonoidAlgebra.coeff · (Finsupp.single () (p.1 + p.2))),
     coeff_zero] at h1
   rw [← h1, bipart, map_sum, Finset.sum_filter]
   refine Finset.sum_congr rfl fun m _ => ?_

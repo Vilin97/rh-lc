@@ -17,7 +17,7 @@ theorem UpperTheory.Reformulated.B.Qi39.det_norm_le.{u_1} :
       · rw [h1, Units.neg_smul, one_smul, norm_neg]
     rw [hs, norm_prod]
     calc ∏ i, ‖A (σ i) i‖ ≤ ∏ _i : n, m :=
-          Finset.prod_le_prod (fun i _ => norm_nonneg _) (fun i _ => h (σ i) i)
+          Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) (fun i _ => h (σ i) i)
       _ = m ^ Fintype.card n := by rw [Finset.prod_const, Finset.card_univ]
   rw [Matrix.det_apply]
   calc ‖∑ σ : Equiv.Perm n, Equiv.Perm.sign σ • ∏ i, A (σ i) i‖

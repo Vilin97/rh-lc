@@ -11,7 +11,7 @@ variable {LL : Type} [Field LL] {D : Type} [AddCommGroup D] [Module LL D]
 
 theorem fil_le_fil_of_le (F : FilPhi LL D n Emb) (τ : Emb) {b a : ℤ} (hba : b ≤ a) :
     F.Fil τ a ≤ F.Fil τ b := by
-  induction a, hba using Int.le_induction with
+  induction a, hba using Int.leInduction with
   | base => exact le_rfl
   | succ k _ ih => exact (F.Fil_anti τ k).trans ih
 

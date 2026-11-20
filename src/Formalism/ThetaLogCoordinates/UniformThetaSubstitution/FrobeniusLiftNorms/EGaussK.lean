@@ -47,7 +47,7 @@ theorem reduce (K₁ : Type) [NormedField K₁] [IsUltrametricDist K₁] [CharZe
         (sf : Fin C → ZMod (2 * ν)) (T : ∀ c, Fin (l c) → Fin r0 → K)
         (I' : ∀ c, Fin (l c) → Fin r1),
         EntryHyp p ν r0 r1 C u' F' TT ξ e l T ∧
-        (∀ n, ‖MvPolynomial.coeff n (frameJet colN hts hp I F)‖ ≤
+        (∀ n, ‖AddMonoidAlgebra.coeff (frameJet colN hts hp I F) n‖ ≤
           ‖jetPair (entryOp ξ e l sf T I') F'‖) ∧
         alN e = alG TT colN hts ∧ capN sf = capG TT colN hts ∧ lsN l sf = lsG TT colN hts ∧
         ∀ (J : Finset (Fin r1)) (i : ℕ), 1 ≤ i →

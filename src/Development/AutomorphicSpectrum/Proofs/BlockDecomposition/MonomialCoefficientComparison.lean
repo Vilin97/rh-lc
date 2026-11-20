@@ -108,7 +108,7 @@ theorem coeff_zero_of_torus {n : ℕ} (S : Finset (Fin n → ℤ)) (h : (Fin n �
       ring
     rw [map_sum, Finset.sum_congr rfl hterm, ← Finset.mul_sum, H z hz hi, mul_zero]
   intro m hm
-  have h1 := congrArg (MvPolynomial.coeff (s m)) hp
+  have h1 := congrArg (AddMonoidAlgebra.coeff · (s m)) hp
   rw [MvPolynomial.coeff_sum, Finset.sum_eq_single m] at h1
   · simpa [MvPolynomial.coeff_monomial] using h1
   · intro b hb hne

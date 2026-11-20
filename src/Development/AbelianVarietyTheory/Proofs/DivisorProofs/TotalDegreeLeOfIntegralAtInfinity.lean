@@ -122,7 +122,7 @@ theorem GlobalTheory.totalDegree_le_of_integral_at_infinity : ∀ {K : Type} [Fi
   have hpos : 0 < N * n + n * T₀.totalDegree := by
     have := Nat.mul_pos hnpos (show 0 < T₀.totalDegree by omega); omega
   have hBdeg : B.totalDegree < N * n + n * T₀.totalDegree := by
-    refine lt_of_le_of_lt (totalDegree_finset_sum _ _) ?_
+    refine lt_of_le_of_lt (MvPolynomial.totalDegree_finsetSum _ _) ?_
     rw [Finset.sup_lt_iff (by simpa using hpos)]
     intro k hk
     have hk' := Finset.mem_range.mp hk

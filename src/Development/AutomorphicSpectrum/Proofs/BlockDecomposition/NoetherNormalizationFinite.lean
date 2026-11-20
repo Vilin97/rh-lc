@@ -79,16 +79,16 @@ theorem isIntegral_torusS : ∀ {K : Type} [Field K] {X : Scheme.{0}} {N d e : �
     have hf0 : f.IsHomogeneous 0 := by
       have := (MvPolynomial.mem_homogeneousSubmodule _ _).1 hf
       simpa [hS0] using this
-    have hfC : f = MvPolynomial.C (MvPolynomial.coeff 0 f) :=
+    have hfC : f = MvPolynomial.C (AddMonoidAlgebra.coeff f 0) :=
       MvPolynomial.totalDegree_eq_zero_iff_eq_C.1 (Nat.le_zero.1 hf0.totalDegree_le)
-    have hc : (MvPolynomial.C (MvPolynomial.coeff 0 f) : MvPolynomial (Fin (d + 1)) K).IsHomogeneous (r * S.card) := by
+    have hc : (MvPolynomial.C (AddMonoidAlgebra.coeff f 0) : MvPolynomial (Fin (d + 1)) K).IsHomogeneous (r * S.card) := by
       rw [hS0, Nat.mul_zero]
       exact MvPolynomial.isHomogeneous_C _ _
     have hmem := GlobalTheory.CompanionTheory.GeoTorus.aeval_mem_torusS i y hy hV he q hq S hS ht _ hc
-    have hfe : MvPolynomial.aeval y (MvPolynomial.C (MvPolynomial.coeff 0 f) : MvPolynomial (Fin (d + 1)) K) = f := by
+    have hfe : MvPolynomial.aeval y (MvPolynomial.C (AddMonoidAlgebra.coeff f 0) : MvPolynomial (Fin (d + 1)) K) = f := by
       rw [MvPolynomial.aeval_C]
       exact hfC.symm
-    have heq : HomogeneousLocalization.Away.mk (grK K N) hg r (MvPolynomial.aeval y (MvPolynomial.C (MvPolynomial.coeff 0 f) : MvPolynomial (Fin (d + 1)) K)) (aeval_mem y hy S _ hc) = HomogeneousLocalization.Away.mk (grK K N) hg r f hf := by
+    have heq : HomogeneousLocalization.Away.mk (grK K N) hg r (MvPolynomial.aeval y (MvPolynomial.C (AddMonoidAlgebra.coeff f 0) : MvPolynomial (Fin (d + 1)) K)) (aeval_mem y hy S _ hc) = HomogeneousLocalization.Away.mk (grK K N) hg r f hf := by
       simp only [hfe]
     rw [heq] at hmem
     exact isIntegral_algebraMap (R := torusS K (fun k => (ht k).unit) S) (x := ⟨_, hmem⟩)

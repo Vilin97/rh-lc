@@ -40,8 +40,8 @@ theorem mono_wh_A (A : X.ZA j → X.ZA j → Kc) (hA : BlockDiag X Kc j A) (v : 
   exact MvPolynomial.IsWeightedHomogeneous.prod _ _ _ fun x _ => (isWeightedHomogeneous_linearForm_of_blockDiagonal X Kc j A hA v s x).pow _
 
 theorem hGd_A (A : X.ZA j → X.ZA j → Kc) (hA : BlockDiag X Kc j A) (m n : X.ZA j →₀ ℕ)
-    (h : MvPolynomial.coeff n (MvPolynomial.aeval (linP fun x y => algebraMap Kc (XspC (X.Pj (j + 1)) Kc) (A x y))
-        (MvPolynomial.monomial m (1 : XspC (X.Pj (j + 1)) Kc))) ≠ 0) : GoodDeg X j n ↔ GoodDeg X j m := by
+    (h : AddMonoidAlgebra.coeff (MvPolynomial.aeval (linP fun x y => algebraMap Kc (XspC (X.Pj (j + 1)) Kc) (A x y))
+        (MvPolynomial.monomial m (1 : XspC (X.Pj (j + 1)) Kc))) n ≠ 0) : GoodDeg X j n ↔ GoodDeg X j m := by
   have key : ∀ (v : X.Pl) (s : Fin (X.G.P.n' v)), ∑ a, ∑ b, n ⟨v, (s, a, b)⟩ = ∑ a, ∑ b, m ⟨v, (s, a, b)⟩ := by
     intro v s
     rw [← wt_eq, ← wt_eq]
@@ -119,7 +119,7 @@ theorem blockDiag_mul {U V : X.ZA j → X.ZA j → Kc} (hV : BlockDiag X Kc j V)
   rw [hU x y (right_ne_zero_of_mul hx), hV z x (left_ne_zero_of_mul hx)]
 
 theorem pairD_lin (τ : XspC (X.Pj (j + 1)) Kc →ₗ[Kc] XspC (X.Pj (j + 1)) Kc) (P P' : DA X Kc j)
-    (h : ∀ n, MvPolynomial.coeff n P' = τ (MvPolynomial.coeff n P)) (f : MvPowerSeries (X.ZA j) Kc) :
+    (h : ∀ n, AddMonoidAlgebra.coeff P' n = τ (AddMonoidAlgebra.coeff P n)) (f : MvPowerSeries (X.ZA j) Kc) :
     pairD X Kc j P' f = τ (pairD X Kc j P f) := by
   classical
   rw [pairD_eq X Kc j P' f (P.support ∪ P'.support) Finset.subset_union_right,
@@ -152,7 +152,7 @@ theorem chain_core [Algebra (Formalism.L2.G.Pend.K0 p) Kc] (V : X.ZA j → X.ZA 
     (A : ∀ v : Fin (X.Pj j).nV, GL (Fin ((X.Pj j).m + 1)) ((X.Pj j).Qq v))
     (Gm : (X.Pj j).Xsp) (hG : GoodG X Kc j Gm) (hO : OddDeg X j Gm)
     (τ : XspC (X.Pj (j + 1)) Kc →ₗ[Kc] XspC (X.Pj (j + 1)) Kc)
-    (hτ : ∀ n, MvPolynomial.coeff n (trSub X Kc j V (polDel X Kc j Gm)) = τ (MvPolynomial.coeff n (polDel X Kc j Gm)))
+    (hτ : ∀ n, AddMonoidAlgebra.coeff (trSub X Kc j V (polDel X Kc j Gm)) n = τ (AddMonoidAlgebra.coeff (polDel X Kc j Gm) n))
     (g : MvPowerSeries (X.ZA j) Kc) :
     pairD X Kc j (polDel X Kc j ((X.Pj j).natAct A Gm))
         (linSub (fun z y => ∑ x, V z x * LkB X Kc j (glAt X j A) x y) g) =

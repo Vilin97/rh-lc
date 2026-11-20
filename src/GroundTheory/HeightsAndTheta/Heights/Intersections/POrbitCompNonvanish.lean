@@ -64,7 +64,7 @@ theorem OrbitCompNonvanish.proof : OrbitCompNonvanish.Statement := by
     ring
   have hQ0 : Q ≠ 0 := by
     intro h0
-    have hc := congrArg (coeff δ) h0
+    have hc := congrArg (AddMonoidAlgebra.coeff · δ) h0
     simp only [Q, coeff_sum, coeff_monomial, coeff_zero] at hc
     rw [Finset.sum_ite_eq' T δ, if_pos (Finset.mem_insert_self _ _)] at hc
     exact hz hc

@@ -45,7 +45,7 @@ theorem emb_monomial (α : σ →₀ ℕ) (c : ℂ) : emb σ (monomial α c) = l
     rw [coe_basisMonomials, smul_monomial, smul_eq_mul, mul_one]
   rw [h, map_smul, emb, Module.Basis.constr_basis, ← smul_eq_mul, lp.single_smul]
 
-theorem emb_apply (f : MvPolynomial σ ℂ) (α : σ →₀ ℕ) : emb σ f α = coeff α f * wt α := by
+theorem emb_apply (f : MvPolynomial σ ℂ) (α : σ →₀ ℕ) : emb σ f α = AddMonoidAlgebra.coeff f α * wt α := by
   induction f using MvPolynomial.induction_on' with
   | monomial β c =>
     rw [emb_monomial, lp.single_apply, coeff_monomial]
@@ -54,7 +54,7 @@ theorem emb_apply (f : MvPolynomial σ ℂ) (α : σ →₀ ℕ) : emb σ f α =
       simp
     · simp [h]
   | add f g hf hg =>
-    rw [map_add, lp.coeFn_add, Pi.add_apply, hf, hg, coeff_add, add_mul]
+    rw [map_add, lp.coeFn_add, Pi.add_apply, hf, hg, MvPolynomial.coeff_add, add_mul]
 
 theorem emb_injective : Function.Injective (emb σ) := by
   rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']

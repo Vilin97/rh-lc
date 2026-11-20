@@ -110,7 +110,7 @@ theorem vAdd_natCast {ℓ n : ℕ} (hℓ : ℓ.Prime) (hn : n ≠ 0) {la : Heigh
     exact la.isPrime.ne_top ((Ideal.eq_top_iff_one _).2
       (hab ▸ add_mem (Ideal.mul_mem_left _ _ hm) (Ideal.mul_mem_left _ _ hmm)))
   have h1' : la.valuation K (m : K) = 1 := by simpa using h1
-  rw [padicValNat.mul (pow_ne_zero _ hℓ.ne_zero) hm0, padicValNat.prime_pow, padicValNat.eq_zero_of_not_dvd hnd]
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hℓ.ne_zero) hm0, padicValNat.prime_pow, padicValNat.eq_zero_of_not_dvd hnd]
   simp [vAdd, h1']
 
 variable {E : Type} [Field E] [NumberField E]

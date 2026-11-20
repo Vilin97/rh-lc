@@ -90,7 +90,7 @@ theorem herm_top : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberF
     refine Continuous.subtype_mk ?_ _
     refine continuous_matrix fun a b => ?_
     simp only [gramR, hR, hform]
-    refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+    refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
     refine ((hs.comp ?_).mul continuous_const).mul ?_
     · exact (continuous_apply i).comp (continuous_apply a)
     · exact (continuous_apply j).comp (continuous_apply b)

@@ -22,7 +22,7 @@ theorem norm_det_inner_le_pow {E : Type} [NormedAddCommGroup E] [InnerProductSpa
     simp [Matrix.mul_apply, sum_inner, inner_smul_left, mul_comm]
   rw [e, Matrix.det_mul, Matrix.det_conjTranspose, hs, star_one, one_mul] at h
   have h1 : ∀ {f : Fin l → E} {S : ℝ}, (∀ a, ‖f a‖ ≤ S) → ∏ a, ‖f a‖ ≤ S ^ l := fun {f S} hf => by
-    have := Finset.prod_le_prod (s := Finset.univ) (fun a _ => norm_nonneg (f a)) (fun a _ => hf a)
+    have := Finset.prod_le_prod₀ (s := Finset.univ) (fun a _ => norm_nonneg (f a)) (fun a _ => hf a)
     simpa using this
   have h0 : ∀ f : Fin l → E, 0 ≤ ∏ a, ‖f a‖ := fun f => Finset.prod_nonneg fun a _ => norm_nonneg _
   exact h.trans (mul_le_mul (h1 hu) (h1 hv) (h0 _) ((h0 _).trans (h1 hu)))

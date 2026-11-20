@@ -14,7 +14,7 @@ theorem sum_one_le_bin (r K n : ℕ) : 1 ≤ sumBin r K n := by
 
 theorem sum_one_le_prod {ι : Type*} (s : Finset ι) (f : ι → ℝ) (h1 : ∀ i ∈ s, 1 ≤ f i) : 1 ≤ ∏ i ∈ s, f i := by
   calc (1 : ℝ) = ∏ _i ∈ s, (1 : ℝ) := by simp
-    _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one) h1
+    _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) h1
 
 theorem sum_single_le_prod {ι : Type*} (s : Finset ι) (f : ι → ℝ) (h1 : ∀ i ∈ s, 1 ≤ f i) {a : ι} (ha : a ∈ s) :
     f a ≤ ∏ i ∈ s, f i := by

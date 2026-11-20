@@ -134,7 +134,7 @@ variable (M : WithTop ℤ)
 
 theorem modCond_of_stable (S : Set (MvPolynomial (Fin N × Fin r) ℚ_[p]))
     (hS : ∀ x ∈ S, ∀ c : Fin r, c ≠ 0 → ∀ k, dpow p LL j c k x ∈ S)
-    (hs : ∀ x ∈ S, ∀ m : Fin N × Fin r →₀ ℕ, ¬ (((wt LL j 0 m : ℤ) : WithTop ℤ) ≤ M) → ‖coeff m x‖ < 1) :
+    (hs : ∀ x ∈ S, ∀ m : Fin N × Fin r →₀ ℕ, ¬ (((wt LL j 0 m : ℤ) : WithTop ℤ) ≤ M) → ‖AddMonoidAlgebra.coeff x m‖ < 1) :
     ∀ x ∈ S, ModCond p LL j M x := by
   intro x hx l hl
   have : dw p LL j l x ∈ S := by
@@ -146,7 +146,7 @@ theorem modCond_of_stable (S : Set (MvPolynomial (Fin N × Fin r) ℚ_[p]))
   exact hs _ this
 
 theorem modCond_small (h : MvPolynomial (Fin N × Fin r) ℚ_[p]) (hh : ModCond p LL j M h) :
-    ∀ m : Fin N × Fin r →₀ ℕ, ¬ (((wt LL j 0 m : ℤ) : WithTop ℤ) ≤ M) → ‖coeff m h‖ < 1 :=
+    ∀ m : Fin N × Fin r →₀ ℕ, ¬ (((wt LL j 0 m : ℤ) : WithTop ℤ) ≤ M) → ‖AddMonoidAlgebra.coeff h m‖ < 1 :=
   hh [] (by simp)
 
 theorem modCond_dpow (h : MvPolynomial (Fin N × Fin r) ℚ_[p]) (hh : ModCond p LL j M h) (c : Fin r) (hc : c ≠ 0)
@@ -169,7 +169,7 @@ theorem modCond_zero : ModCond p LL j M (0 : MvPolynomial (Fin N × Fin r) ℚ_[
 theorem modCond_add (f g : MvPolynomial (Fin N × Fin r) ℚ_[p]) (hf : ModCond p LL j M f)
     (hg : ModCond p LL j M g) : ModCond p LL j M (f + g) := by
   intro l hl m hm
-  rw [map_add, coeff_add]
+  rw [map_add, MvPolynomial.coeff_add]
   exact lt_of_le_of_lt (Padic.nonarchimedean _ _) (max_lt (hf l hl m hm) (hg l hl m hm))
 
 theorem modCond_neg (f : MvPolynomial (Fin N × Fin r) ℚ_[p]) (hf : ModCond p LL j M f) :
@@ -196,7 +196,7 @@ theorem modCond_p_smul (b : MvPolynomial (Fin N × Fin r) ℚ_[p]) (hb : b ∈ I
   intro l hl m _
   rw [map_smul, coeff_smul, smul_eq_mul, norm_mul]
   have h1 := intPol_norm _ (dw_int p LL j l hl b hb) m
-  calc ‖(p : ℚ_[p])‖ * ‖coeff m (dw p LL j l b)‖ ≤ ‖(p : ℚ_[p])‖ * 1 :=
+  calc ‖(p : ℚ_[p])‖ * ‖AddMonoidAlgebra.coeff (dw p LL j l b) m‖ ≤ ‖(p : ℚ_[p])‖ * 1 :=
         mul_le_mul_of_nonneg_left h1 (norm_nonneg _)
     _ < 1 := by rw [mul_one]; exact Padic.norm_p_lt_one
 
@@ -220,7 +220,7 @@ theorem mod_p_of_conditions : ModOfY := by
   · intro x hx m hm
     have h1 := ycond_le_supp LL j M hx
     rw [mem_restrictSupport_iff] at h1
-    have : coeff m x = 0 := by
+    have : AddMonoidAlgebra.coeff x m = 0 := by
       by_contra hne
       exact hm (h1 (Finset.mem_coe.mpr (mem_support_iff.mpr hne)))
     rw [this, norm_zero]
@@ -246,9 +246,9 @@ variable (p : ℕ) [Fact p.Prime] {K r : ℕ} [NeZero r] (LL : Letters (K + 1)) 
 theorem small_last_mul (hj : K + 1 ≤ j) (hv : LL.vec (Fin.last K) = true) (c' : Fin r)
     (g : MvPolynomial (Fin (K + 1) × Fin r) ℚ_[p])
     (hg : ∀ m : Fin (K + 1) × Fin r →₀ ℕ, ¬ (((wt LL j 0 m : ℤ) : WithTop ℤ) ≤ M + ((-1 : ℤ) : WithTop ℤ)) →
-      ‖coeff m g‖ < 1) :
+      ‖AddMonoidAlgebra.coeff g m‖ < 1) :
     ∀ m : Fin (K + 1) × Fin r →₀ ℕ, ¬ (((wt LL j 0 m : ℤ) : WithTop ℤ) ≤ M) →
-      ‖coeff m (X (Fin.last K, c') * g)‖ < 1 := by
+      ‖AddMonoidAlgebra.coeff (X (Fin.last K, c') * g) m‖ < 1 := by
   classical
   intro m hm
   rw [coeff_X_mul']
@@ -285,7 +285,7 @@ theorem modCond_last_fwd (hj : K + 1 ≤ j) (hv : LL.vec (Fin.last K) = true) (c
           dpow_succ_mul p LL j a _ _ (glAct_sq_X p LL j a ha _), last_X p LL j hj hv, last_X p LL j hj hv, if_neg ha]
         split_ifs <;> ring
   · rintro x ⟨g, g', hg, hg', rfl⟩ m hm
-    rw [coeff_add]
+    rw [MvPolynomial.coeff_add]
     exact lt_of_le_of_lt (Padic.nonarchimedean _ _)
       (max_lt (small_last_mul p LL j M hj hv _ _ (modCond_small p LL j _ _ hg) m hm)
         (small_last_mul p LL j M hj hv _ _ (modCond_small p LL j _ _ hg') m hm))
@@ -359,9 +359,9 @@ theorem divided_power_mod_p_of : DivModPOf := by
   rw [mem_restrictSupport_iff] at hpol
   have heq' : h = X (Fin.last K, ρ) * a' + (p : ℚ_[p]) • b' := by
     ext m
-    have h0 := congrArg (coeff m) heq
-    rw [coeff_add, coeff_smul, coeff_X_mul'] at h0
-    rw [coeff_add, coeff_smul, coeff_X_mul', coeff_compP, coeff_compP]
+    have h0 := congrArg (AddMonoidAlgebra.coeff · m) heq
+    rw [MvPolynomial.coeff_add, coeff_smul, coeff_X_mul'] at h0
+    rw [MvPolynomial.coeff_add, coeff_smul, coeff_X_mul', coeff_compP, coeff_compP]
     by_cases hm : MultiDeg LL m
     · rw [h0, if_pos hm]
       congr 1
@@ -373,7 +373,7 @@ theorem divided_power_mod_p_of : DivModPOf := by
           (Nat.one_le_iff_ne_zero.mpr (Finsupp.mem_support_iff.mp hs)))]
         exact hm
       · rfl
-    · have hz : coeff m h = 0 := by
+    · have hz : AddMonoidAlgebra.coeff h m = 0 := by
         by_contra hne
         exact hm (hpol (Finset.mem_coe.mpr (mem_support_iff.mpr hne)))
       rw [hz, if_neg hm, smul_zero, add_zero]

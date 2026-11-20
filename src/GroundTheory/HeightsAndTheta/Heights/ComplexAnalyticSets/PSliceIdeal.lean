@@ -73,7 +73,7 @@ theorem SliceIdeal.proof : SliceIdeal.Statement := by
     refine mem_nonZeroDivisors_of_ne_zero fun h => hP.ne_top ?_
     have h0 := hJ.isHomog _ (Ideal.Quotient.eq_zero_iff_mem.mp h) 0
     rw [homogeneousComponent_zero] at h0
-    have hc : coeff 0 (linForm ℓ - 1) = -1 := by
+    have hc : AddMonoidAlgebra.coeff (linForm ℓ - 1) 0 = -1 := by
       simp [linForm, coeff_sum, coeff_C_mul, coeff_X]
     rw [hc, map_neg, map_one, Ideal.neg_mem_iff] at h0
     exact (Ideal.eq_top_iff_one J).mpr h0

@@ -146,7 +146,7 @@ theorem arch_le (a z : InfinitePlace F → ℝ) :
       2 ^ Fintype.card (InfinitePlace F) *
         ‖∏ v, (((a v : ℂ) + Complex.I * (z v : ℂ)) * Complex.exp (-(Real.pi : ℂ) * ((a v : ℂ) ^ 2 + (z v : ℂ) ^ 2)))‖ := by
   rw [norm_prod, norm_prod, ← Finset.card_univ, ← Finset.prod_const, ← Finset.prod_mul_distrib]
-  refine Finset.prod_le_prod (fun v _ => norm_nonneg _) fun v _ => ?_
+  refine Finset.prod_le_prod₀ (fun v _ => norm_nonneg _) fun v _ => ?_
   rw [norm_mul, norm_mul, ← mul_assoc]
   refine mul_le_mul_of_nonneg_right ?_ (norm_nonneg _)
   have hre : ((a v : ℂ) + Complex.I * (z v : ℂ)).re = a v := by simp

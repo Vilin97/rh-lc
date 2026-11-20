@@ -42,7 +42,7 @@ private lemma sub_one_pow_pred {p : ℕ} [hp : Fact p.Prime] {R : Type*} [CommRi
     rw [← pow_succ', Nat.sub_add_cancel hp.out.one_lt.le, sub_pow_char, one_pow, mul_comm,
       geom_sum_mul]
   have h := congrArg (Polynomial.eval₂ (ZMod.castHom (dvd_refl p) R) x) hX
-  simpa [Polynomial.eval₂_finset_sum, Polynomial.eval₂_pow, Polynomial.eval₂_sub,
+  simpa [Polynomial.eval₂_finsetSum, Polynomial.eval₂_pow, Polynomial.eval₂_sub,
     Polynomial.eval₂_X, Polynomial.eval₂_one] using h
 
 private lemma val_sub_one_le {C : Type*} [Field C] (v : Valuation C NNReal) {p : ℕ}

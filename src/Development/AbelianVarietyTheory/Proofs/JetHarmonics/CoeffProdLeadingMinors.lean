@@ -86,7 +86,7 @@ theorem _root_.GlobalTheory.LeadingMinors.coeff_prod_leading_minors : ∀ (k : T
   have hmap : Finsupp.mapDomain
       (fun l : Σ τ : T, Fin (r τ) => ((l, col l.1 l.2) : (Σ τ : T, Fin (r τ)) × Fin n)) B = al := by
     rw [hal, hBdef]
-    simp [Finsupp.mapDomain_finset_sum, Finsupp.mapDomain_smul, Finsupp.mapDomain_single]
+    simp [Finsupp.mapDomain_finsetSum, Finsupp.mapDomain_smul, Finsupp.mapDomain_single]
   have hdeg : al.degree = ∑ τ, ∑ s : Fin (r τ), m τ s * (s.val + 1) := by
     rw [hal]
     simp [map_sum, Finsupp.degree_single]
@@ -111,7 +111,7 @@ theorem _root_.GlobalTheory.LeadingMinors.coeff_prod_leading_minors : ∀ (k : T
   refine ⟨?_, by rw [hdeg]; exact hhom, hdeg, fun mo hmo l b hlb => ?_⟩
   · rw [← hmap, ← MvPolynomial.coeff_killCompl hf, hkill, MvPolynomial.coeff_monomial, if_pos rfl]
   · have hv : (l, b) ∈ P.vars :=
-      (MvPolynomial.mem_vars _).2 ⟨mo, hmo, Finsupp.mem_support_iff.2 hlb⟩
+      (MvPolynomial.mem_vars_iff_mem_support _).2 ⟨mo, hmo, Finsupp.mem_support_iff.2 hlb⟩
     exact MvPolynomial.mem_supported.1 hsupp hv
 
 end GlobalTheory.LeadingMinors

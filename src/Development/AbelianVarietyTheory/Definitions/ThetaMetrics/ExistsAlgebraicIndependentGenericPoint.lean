@@ -104,7 +104,7 @@ theorem injective_of_constantCoeff {R S V : Type*} [CommRing R] [CommRing S]
   have hmon (b : V →₀ ℕ) (r : R) : ψ (monomial b r) = ψ (C r) * monomial b 1 := by
     rw [monomial_eq, monomial_eq, map_mul, C_1, one_mul, map_finsuppProd]
     simp [hX]
-  have : coeff a (ψ P) = constantCoeff (ψ (C (coeff a P))) := by
+  have : AddMonoidAlgebra.coeff (ψ P) a = constantCoeff (ψ (C (AddMonoidAlgebra.coeff P a))) := by
     conv_lhs => rw [P.as_sum, map_sum, coeff_sum]
     rw [Finset.sum_eq_single a]
     · rw [hmon, coeff_mul_monomial', if_pos le_rfl, tsub_self, mul_one, constantCoeff_eq]

@@ -15,7 +15,7 @@ variable {R : Type*} [CommRing R] {κ : Type*}
 
 def wt (R : Type*) [CommRing R] (A : κ →₀ ℕ) : R := A.prod fun _ e => (e.factorial : R)
 
-def pair (P Q : MvPolynomial κ R) : R := ∑ A ∈ P.support, coeff A P * wt R A * coeff A Q
+def pair (P Q : MvPolynomial κ R) : R := ∑ A ∈ P.support, AddMonoidAlgebra.coeff P A * wt R A * AddMonoidAlgebra.coeff Q A
 
 theorem wt_add_single (B : κ →₀ ℕ) (v : κ) :
     wt R (B + Finsupp.single v 1) = wt R B * ((B v : R) + 1) := by
@@ -47,7 +47,7 @@ theorem wt_add_single (B : κ →₀ ℕ) (v : κ) :
   ring
 
 theorem pair_eq_sum (P Q : MvPolynomial κ R) (S : Finset (κ →₀ ℕ)) (hS : P.support ⊆ S) :
-    pair P Q = ∑ A ∈ S, coeff A P * wt R A * coeff A Q := by
+    pair P Q = ∑ A ∈ S, AddMonoidAlgebra.coeff P A * wt R A * AddMonoidAlgebra.coeff Q A := by
   unfold pair
   apply Finset.sum_subset hS
   intro A _ hA
@@ -62,7 +62,7 @@ theorem pair_add_left (P P' Q : MvPolynomial κ R) : pair (P + P') Q = pair P Q 
     ← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl
   intro A _
-  simp only [coeff_add]
+  simp only [MvPolynomial.coeff_add]
   ring
 
 theorem pair_C_mul_left (c : R) (P Q : MvPolynomial κ R) : pair (C c * P) Q = c * pair P Q := by
@@ -176,8 +176,8 @@ theorem pair_subst (g : κ → κ → R) (P Q : MvPolynomial κ R) :
 
 theorem main :
   (∀ (C : Type) [Field C] [CharZero C] (κ : Type) [Fintype κ] [DecidableEq κ] (g : Matrix κ κ C) (P Q : MvPolynomial κ C),
-    (∑ A ∈ (P).support, MvPolynomial.coeff A (P) * (A.prod fun _ e => (e.factorial : C)) * MvPolynomial.coeff A (MvPolynomial.aeval (fun i => ∑ j, MvPolynomial.C (g i j) * MvPolynomial.X j) Q)) =
-    (∑ A ∈ (MvPolynomial.aeval (fun i => ∑ j, (MvPolynomial.C (g j i) * MvPolynomial.X j : MvPolynomial κ C)) P).support, MvPolynomial.coeff A (MvPolynomial.aeval (fun i => ∑ j, (MvPolynomial.C (g j i) * MvPolynomial.X j : MvPolynomial κ C)) P) * (A.prod fun _ e => (e.factorial : C)) * MvPolynomial.coeff A (Q))) := by
+    (∑ A ∈ (P).support, AddMonoidAlgebra.coeff (P) A * (A.prod fun _ e => (e.factorial : C)) * AddMonoidAlgebra.coeff (MvPolynomial.aeval (fun i => ∑ j, MvPolynomial.C (g i j) * MvPolynomial.X j) Q) A) =
+    (∑ A ∈ (MvPolynomial.aeval (fun i => ∑ j, (MvPolynomial.C (g j i) * MvPolynomial.X j : MvPolynomial κ C)) P).support, AddMonoidAlgebra.coeff (MvPolynomial.aeval (fun i => ∑ j, (MvPolynomial.C (g j i) * MvPolynomial.X j : MvPolynomial κ C)) P) A * (A.prod fun _ e => (e.factorial : C)) * AddMonoidAlgebra.coeff (Q) A)) := by
   intro C _ _ κ _ _ g P Q
   exact pair_subst (fun i j => g i j) P Q
 

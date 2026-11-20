@@ -339,7 +339,7 @@ theorem log_r_le {m : ℕ} {n : Fin m → ℝ} (h : ∀ i, 0 ≤ n i ∧ n i ≤
       rw [Finset.prod_eq_zero (Finset.mem_univ i) (not_not.1 hi)]
       simpa using Finset.sum_nonneg fun i (_ : i ∈ Finset.univ) => ht i
   have h₃ : Real.log ((∏ i, n i) ^ 2) ≤ 0 := Real.log_nonpos (sq_nonneg _) (pow_le_one₀
-    (Finset.prod_nonneg fun i _ => (h i).1) (Finset.prod_le_one (fun i _ => (h i).1) fun i _ => (h i).2))
+    (Finset.prod_nonneg fun i _ => (h i).1) (Finset.prod_le_one₀ (fun i _ => (h i).1) fun i _ => (h i).2))
   have h₄ := Finset.sum_nonneg fun i (_ : i ∈ Finset.univ) => ht i
   rw [← Real.log_prod fun i _ => by linarith [ht i], ← Real.log_exp 1, Real.exp_log (by linarith),
     ← Real.log_mul (by linarith) (by linarith [h₁ Finset.univ])]

@@ -13,13 +13,13 @@ noncomputable def evW (w : Fin (N + 1) → B) :
   aeval (Sum.elim X fun i => ∑ j, X (i, j) * C (w j))
 
 def CoeffIn (W : Submodule R B) (m : ℕ) (p : MvPolynomial (Fin (D + 2) × Fin (N + 1)) B) : Prop :=
-  ∀ β, coeff β p ∈ W ^ m
+  ∀ β, AddMonoidAlgebra.coeff p β ∈ W ^ m
 
 variable (W : Submodule R B)
 
 theorem coeffIn_add {m : ℕ} {p q : MvPolynomial (Fin (D + 2) × Fin (N + 1)) B}
     (hp : CoeffIn W m p) (hq : CoeffIn W m q) : CoeffIn W m (p + q) := fun β => by
-  rw [coeff_add]
+  rw [MvPolynomial.coeff_add]
   exact Submodule.add_mem _ (hp β) (hq β)
 
 theorem coeffIn_mul {m m' : ℕ} {p q : MvPolynomial (Fin (D + 2) × Fin (N + 1)) B}
@@ -86,7 +86,7 @@ theorem coeffIn_evW (w : Fin (N + 1) → B) (hw : ∀ j, w j ∈ W) {n : ℕ}
   intro β
   rw [Q.as_sum, map_sum, coeff_sum]
   refine Submodule.sum_mem _ fun s hs => ?_
-  have hterm : CoeffIn W n (evW w (monomial s (coeff s Q))) := by
+  have hterm : CoeffIn W n (evW w (monomial s (AddMonoidAlgebra.coeff Q s))) := by
     rw [evW, aeval_monomial, MvPolynomial.algebraMap_apply]
     apply coeffIn_smul
     rw [Finsupp.prod, ← hx s hs, ← sum_support_inr_eq_xDeg s]
@@ -98,7 +98,7 @@ theorem coeffIn_evW (w : Fin (N + 1) → B) (hw : ∀ j, w j ∈ W) {n : ℕ}
 
 theorem coeff_evW_mem (w : Fin (N + 1) → B) {n : ℕ} (Q : MvPolynomial (UXVar D N) R)
     (hx : XHom n Q) (β : Fin (D + 2) × Fin (N + 1) →₀ ℕ) :
-    coeff β (evW w Q) ∈
+    AddMonoidAlgebra.coeff (evW w Q) β ∈
       Submodule.span R (Set.range fun s : Fin n → Fin (N + 1) => ∏ k, w (s k)) := by
   have h := coeffIn_evW (Submodule.span R (Set.range w)) w (fun j => Submodule.subset_span ⟨j, rfl⟩) Q hx β
   rw [Submodule.span_pow] at h

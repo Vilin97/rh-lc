@@ -30,7 +30,7 @@ noncomputable def resL (p : ℕ) [Fact p.Prime] (v : σ) (e : ℕ) :
     MvPolynomial σ ℚ_[p] →ₗ[ℚ_[p]] MvPolynomial σ ℚ_[p] where
   toFun := initPart v e
   map_add' x y := by
-    ext m; simp only [coeff_initPart, coeff_add]; split_ifs <;> simp
+    ext m; simp only [coeff_initPart, MvPolynomial.coeff_add]; split_ifs <;> simp
   map_smul' a x := by
     ext m
     simp only [coeff_initPart, RingHom.id_apply, coeff_smul]
@@ -41,7 +41,7 @@ theorem resL_apply (v : σ) (e : ℕ) (f : MvPolynomial σ ℚ_[p]) : resL p v e
 theorem initPart_add (v : σ) (e : ℕ) (f g : MvPolynomial σ ℚ_[p]) :
     initPart v e (f + g) = initPart v e f + initPart v e g := by
   ext m
-  simp only [coeff_initPart, coeff_add]
+  simp only [coeff_initPart, MvPolynomial.coeff_add]
   split_ifs <;> simp
 
 theorem initPart_smul (v : σ) (e : ℕ) (c : ℚ_[p]) (f : MvPolynomial σ ℚ_[p]) :

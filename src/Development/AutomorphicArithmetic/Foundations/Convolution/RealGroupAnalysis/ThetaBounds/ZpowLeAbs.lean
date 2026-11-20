@@ -279,7 +279,7 @@ private theorem h_bound {B : ℝ} {n : ℕ} (hB1 : 1 ≤ B) (hb : ∀ i : Infini
     exact Finset.prod_congr rfl fun i _ => (_root_.inv_zpow _ _).symm
   rw [e1, mul_inv, e2, e3, mul_comm (∏ i, (ab (rho i))⁻¹ ^ k i), mul_assoc, ← Finset.prod_mul_distrib]
   refine mul_le_mul_of_nonneg_left ?_ (inv_pos.2 hc0).le
-  refine Finset.prod_le_prod (fun i _ => by have := hp i; positivity) fun v _ => ?_
+  refine Finset.prod_le_prod₀ (fun i _ => by have := hp i; positivity) fun v _ => ?_
   have hx := hom_tau (nuH v) rho k c
   rw [tau_nu] at hx
   have hcp := nu_pos v c

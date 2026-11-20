@@ -106,7 +106,7 @@ theorem PullGradedAlgebraic.proof : PullGradedAlgebraic.Statement := by
     by_cases hn : n ≤ n₀
     · rw [g.as_sum, map_sum, Finset.sum_div]
       refine Submodule.sum_mem _ fun m hm => ?_
-      have hmono : monomial m (coeff m g) = coeff m g • monomial m (1 : ℚ) := by
+      have hmono : monomial m (AddMonoidAlgebra.coeff g m) = AddMonoidAlgebra.coeff g m • monomial m (1 : ℚ) := by
         rw [smul_monomial, smul_eq_mul, mul_one]
       rw [hmono, map_smul, smul_div_assoc]
       exact Submodule.smul_of_tower_mem _ _ (Submodule.subset_span ⟨n, hn, m, fun k => hg m hm k, rfl⟩)

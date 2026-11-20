@@ -74,7 +74,7 @@ theorem PlueckerNeZero.proof : PlueckerNeZero.Statement := by
       Finset.sum_eq_single a (fun a' _ h' => if_neg fun h'' => h' h''.1) (by simp)] at h2
     by_contra hne
     simp [hne] at h2
-  have hcoeff : coeff (μ c0) P = g c0 := by
+  have hcoeff : AddMonoidAlgebra.coeff P (μ c0) = g c0 := by
     simp only [P, coeff_sum, coeff_monomial]
     rw [Finset.sum_eq_single c0 (fun c _ hc => if_neg fun h => hc (hμ c h)) (by simp), if_pos rfl]
   have hPne : P ≠ 0 := fun h => hc0 (by rw [h, coeff_zero] at hcoeff; exact hcoeff.symm)

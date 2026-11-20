@@ -128,7 +128,7 @@ theorem multiplicity_product : MultProd := by
   · have hprod1 : 1 - ∑ v, 1 / q v ≤ ∏ v, (1 - 1 / q v) :=
       one_sub_sum_le_prod Finset.univ (fun v => 1 / q v) (fun v _ => hinv0 v) (fun v _ => hinv1 v)
     have hlow : ∏ v, (q v ^ k * (1 - 1 / q v)) ≤ ∏ v, nn v :=
-      Finset.prod_le_prod (fun v _ => mul_nonneg (pow_nonneg (hqpos v).le k) (sub_nonneg.2 (hinv1 v)))
+      Finset.prod_le_prod₀ (fun v _ => mul_nonneg (pow_nonneg (hqpos v).le k) (sub_nonneg.2 (hinv1 v)))
         (fun v _ => (hb v).1)
     rw [Finset.prod_mul_distrib] at hlow
     have h8 : 8 * f * r / g - 2 * f / g = (8 * f * r - 2 * f) / g := by rw [sub_div]
@@ -140,13 +140,13 @@ theorem multiplicity_product : MultProd := by
       _ ≤ ∏ v, nn v := hlow
   · have ha0 : ∀ v, 0 ≤ (2 * r - 1) / q v := fun v => div_nonneg (by linarith) (hqpos v).le
     have hup : ∏ v, nn v ≤ ∏ v, (q v ^ k * (1 + (2 * r - 1) / q v)) :=
-      Finset.prod_le_prod
+      Finset.prod_le_prod₀
         (fun v _ => le_trans (mul_nonneg (pow_nonneg (hqpos v).le k) (sub_nonneg.2 (hinv1 v))) (hb v).1)
         (fun v _ => (hb v).2)
     rw [Finset.prod_mul_distrib] at hup
     have hexp1 : ∏ v, (1 + (2 * r - 1) / q v) ≤ Real.exp (∑ v, (2 * r - 1) / q v) := by
       rw [Real.exp_sum]
-      exact Finset.prod_le_prod (fun v _ => by linarith [ha0 v])
+      exact Finset.prod_le_prod₀ (fun v _ => by linarith [ha0 v])
         (fun v _ => by linarith [Real.add_one_le_exp ((2 * r - 1) / q v)])
     have hsum_a : ∑ v, (2 * r - 1) / q v ≤ 4 * f * r / g := by
       have e : ∑ v, (2 * r - 1) / q v = (2 * r - 1) * ∑ v, 1 / q v := by
@@ -268,12 +268,12 @@ theorem capacity_constant_bound : CapConst := by
             |((v - (i : ℤ)) - (sg j - (j : ℤ)))|
         ≤ ∏ i : Fin n, ∏ v ∈ (rset lam sg i).erase (sg i), ∏ _j : Fin n,
             (lam 0 - lam (Fin.last n) + (n : ℤ) - 1) := by
-          apply Finset.prod_le_prod
+          apply Finset.prod_le_prod₀
             (fun i _ => Finset.prod_nonneg (fun v _ => Finset.prod_nonneg (fun j _ => abs_nonneg _)))
           intro i _
-          apply Finset.prod_le_prod (fun v _ => Finset.prod_nonneg (fun j _ => abs_nonneg _))
+          apply Finset.prod_le_prod₀ (fun v _ => Finset.prod_nonneg (fun j _ => abs_nonneg _))
           intro v hv
-          apply Finset.prod_le_prod (fun j _ => abs_nonneg _)
+          apply Finset.prod_le_prod₀ (fun j _ => abs_nonneg _)
           intro j _
           exact (cap_factor h i j v hv).2
       _ = (lam 0 - lam (Fin.last n) + (n : ℤ) - 1) ^ (n * (d1 lam sg).toNat) := by
@@ -359,11 +359,11 @@ theorem weyl_dimension_bound : WeylDimBound := by
   constructor
   · calc (1:ℝ) = ∏ p ∈ (Finset.univ : Finset (Fin (n + 1) × Fin (n + 1))).filter
           (fun p => p.1 < p.2), (1:ℝ) := by simp
-      _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one)
+      _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one)
           (fun p hp => (weyl_factor h p (Finset.mem_filter.mp hp).2).1)
   · calc _ ≤ ∏ p ∈ (Finset.univ : Finset (Fin (n + 1) × Fin (n + 1))).filter
           (fun p => p.1 < p.2), (((nu 0 - nu (Fin.last n) : ℤ) : ℝ) + (n : ℝ)) :=
-          Finset.prod_le_prod
+          Finset.prod_le_prod₀
             (fun p hp => le_trans zero_le_one (weyl_factor h p (Finset.mem_filter.mp hp).2).1)
             (fun p hp => (weyl_factor h p (Finset.mem_filter.mp hp).2).2)
       _ = _ := by rw [Finset.prod_const, card_pairs_lt]

@@ -133,7 +133,7 @@ theorem colAct_map_of_mem [IsDomain S] (φ : R →+* S) {la : Fin N → ℕ} {f 
   colAct_of_mem (Formalism.GradedWeylDivisibility.dualWeylMap R S φ N N la f hf) b hb
 
 theorem coeff_colAct_diagonal (t : Fin N → R) (f : Pol N R) (m : Fin N × Fin N →₀ ℕ) :
-    coeff m (colAct (Matrix.diagonal t) f) = (∏ s, t s ^ (Finsupp.weight (colW N N) m s)) * coeff m f := by
+    AddMonoidAlgebra.coeff (colAct (Matrix.diagonal t) f) m = (∏ s, t s ^ (Finsupp.weight (colW N N) m s)) * AddMonoidAlgebra.coeff f m := by
   classical
   have h1 : ∀ v : Fin N × Fin N,
       (∑ s : Fin N, X (v.1, s) * C (Matrix.diagonal t s v.2) : Pol N R) = C (t v.2) * X v := by
@@ -164,7 +164,7 @@ theorem coeff_colAct_diagonal (t : Fin N → R) (f : Pol N R) (m : Fin N × Fin 
     split_ifs with h
     · subst h; simp
     · simp
-  | add p q hp hq => rw [map_add, coeff_add, hp, hq, coeff_add, mul_add]
+  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add, mul_add]
 
 theorem mem_nabla_iff [IsDomain R] [Infinite R] {la : Fin N → ℕ} {f : Pol N R} :
     f ∈ nabla la R ↔ ∀ b : Matrix (Fin N) (Fin N) R, b.BlockTriangular id → (∀ i, b i i ≠ 0) →
@@ -177,7 +177,7 @@ theorem mem_nabla_iff [IsDomain R] [Infinite R] {la : Fin N → ℕ} {f : Pol N 
     have h1 : ∀ t : Fin N → R, ∏ s, t s ^ (Finsupp.weight (colW N N) m s + 1) = ∏ s, t s ^ (la s + 1) := by
       intro t
       by_cases ht : ∀ s, t s ≠ 0
-      · have h2 := congrArg (coeff m) (h (Matrix.diagonal t) (Matrix.blockTriangular_diagonal t) (by simpa using ht))
+      · have h2 := congrArg (AddMonoidAlgebra.coeff · m) (h (Matrix.diagonal t) (Matrix.blockTriangular_diagonal t) (by simpa using ht))
         rw [coeff_colAct_diagonal, coeff_smul, smul_eq_mul] at h2
         have h3 := mul_right_cancel₀ hm h2
         simp only [pow_succ, Finset.prod_mul_distrib, h3, diagChar, Matrix.diagonal_apply_eq]
@@ -663,12 +663,12 @@ theorem mem_stdLat {f : nabla la K} :
   ⟨fun ⟨g, hg, h⟩ => ⟨⟨g, hg⟩, Subtype.ext h⟩, fun ⟨g, h⟩ => h ▸ baseChange_mem_stdLat g⟩
 
 theorem mem_stdLat_iff_coeff {f : nabla la K} :
-    f ∈ stdLat la K ↔ ∀ m, coeff m f.1 ∈ (algebraMap (𝓞 K) K).range := by
+    f ∈ stdLat la K ↔ ∀ m, AddMonoidAlgebra.coeff f.1 m ∈ (algebraMap (𝓞 K) K).range := by
   have hinj := FaithfulSMul.algebraMap_injective (𝓞 K) K
   rw [mem_stdLat]
   constructor
   · rintro ⟨g, rfl⟩ m
-    exact ⟨coeff m g.1, by rw [coe_baseChange, coeff_map]⟩
+    exact ⟨AddMonoidAlgebra.coeff g.1 m, by rw [coe_baseChange, coeff_map]⟩
   · intro h
     obtain ⟨g, hg⟩ : f.1 ∈ Set.range (map (algebraMap (𝓞 K) K)) := by
       rw [mem_range_map_iff_coeffs_subset]
@@ -716,7 +716,7 @@ theorem stdLat_eq_span : stdLat la K = Submodule.span (𝓞 K) (Set.range (basis
     exact h g hg f hgf
   · rw [Submodule.span_le]
     rintro _ ⟨i, rfl⟩
-    refine mem_stdLat_iff_coeff.mpr fun m => ⟨(coeff m (intVec la i) : ℤ), ?_⟩
+    refine mem_stdLat_iff_coeff.mpr fun m => ⟨(AddMonoidAlgebra.coeff (intVec la i) m : ℤ), ?_⟩
     rw [coe_basis, coeff_map]
     simp
 

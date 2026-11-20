@@ -183,7 +183,7 @@ theorem exists_summable_bound_tensor_cosetIndicator (φ : 𝓢(ι → mixedSpace
           rw [hprod, ht', mul_inv, ← mul_assoc, mul_assoc A, mul_inv_cancel₀ hB0, mul_one]
       _ ≤ A * B' ^ (k * n) * ∏ i, ((1 + ‖mixedEmbedding K (ξ i)‖) ^ k)⁻¹ := by
           refine mul_le_mul_of_nonneg_left ?_ (by positivity)
-          exact Finset.prod_le_prod (fun _ _ ↦ by positivity) fun i _ ↦ hinv i
+          exact Finset.prod_le_prod₀ (fun _ _ ↦ by positivity) fun i _ ↦ hinv i
   · push_neg at hm
     obtain ⟨i, hi⟩ := hm
     have hz : ∏ i, cosetIndicator I (b i) (finPartPi Y i) = 0 :=

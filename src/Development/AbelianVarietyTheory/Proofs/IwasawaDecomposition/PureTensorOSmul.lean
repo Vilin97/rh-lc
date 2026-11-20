@@ -62,8 +62,8 @@ abbrev sub {m n : ℕ} (c : D.what₂.Tau → Matrix (Fin m) (Fin m) ℂ) : PolF
   MvPolynomial.aeval fun v : FVar D m n => ∑ b, c v.1 b v.2.1 • (MvPolynomial.X (v.1, b, v.2.2) : PolF D m n)
 
 theorem coeff_scale {ι : Type} (t : ι → ℂ) (s : ι →₀ ℕ) (y : MvPolynomial ι ℂ) :
-    MvPolynomial.coeff s (MvPolynomial.aeval (fun v => t v • (MvPolynomial.X v : MvPolynomial ι ℂ)) y) =
-      (s.prod fun v k => t v ^ k) * MvPolynomial.coeff s y := by
+    AddMonoidAlgebra.coeff (MvPolynomial.aeval (fun v => t v • (MvPolynomial.X v : MvPolynomial ι ℂ)) y) s =
+      (s.prod fun v k => t v ^ k) * AddMonoidAlgebra.coeff y s := by
   classical
   induction y using MvPolynomial.induction_on' with
   | monomial k c =>
@@ -320,7 +320,7 @@ theorem delta_weights {m n : ℕ} (p q : D.what₂.Tau → ℕ) (ap am : D.what�
         ∑ a : Fin m, κ a * (if ε a then -((a : ℕ) : ℝ) else ((a : ℕ) : ℝ)) -
           ((∑ a : Fin m, ∑ j : Fin n, (a : ℕ) * s (τ, a, j) : ℕ) : ℝ) := by
       refine eq_of_exp_eq fun r => ?_
-      have h := congrArg (MvPolynomial.coeff s) (hw fun a => r * (if ε a then -((a : ℕ) : ℝ) else ((a : ℕ) : ℝ)))
+      have h := congrArg (AddMonoidAlgebra.coeff · s) (hw fun a => r * (if ε a then -((a : ℕ) : ℝ) else ((a : ℕ) : ℝ)))
       rw [hπ, tw_diag, sub_diag, hχ, MvPolynomial.coeff_smul, MvPolynomial.coeff_smul, coeff_scale, smul_eq_mul,
         smul_eq_mul, ← mul_assoc] at h
       have h' := mul_right_cancel₀ hs h

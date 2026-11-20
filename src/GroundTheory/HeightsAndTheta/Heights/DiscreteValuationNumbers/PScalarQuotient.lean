@@ -33,7 +33,7 @@ theorem classNum_add {σ : Type*} (cls : σ → K → ℤ) (H₁ H₂ : MvPolyno
     ext H₁ (H₁.support ∪ H₂.support) Finset.subset_union_left,
     ext H₂ (H₁.support ∪ H₂.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun μ _ => ?_
-  rw [coeff_add, add_mul]
+  rw [MvPolynomial.coeff_add, add_mul]
 
 def classNumHom {σ : Type*} (cls : σ → K → ℤ) (Q : List (K → ℤ)) (W : Ideal (MRing ι O)) :
     MvPolynomial σ ℤ →+ ℤ where

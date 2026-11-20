@@ -20,11 +20,11 @@ def lrfc_iota : MvPolynomial (Fin r × Fin n) R →+*
 def lrfc_coeffT (d : Fin r × Fin n →₀ ℕ)
     (G : MvPolynomial (Fin r × Fin n) (MvPolynomial (Fin r × Fin n) R)) :
     MvPolynomial (Fin r × Fin n) R :=
-  ∑ m ∈ G.support, monomial m (coeff d (coeff m G))
+  ∑ m ∈ G.support, monomial m (AddMonoidAlgebra.coeff (AddMonoidAlgebra.coeff G m) d)
 
 theorem lrfc_coeff_coeffT (d m : Fin r × Fin n →₀ ℕ)
     (G : MvPolynomial (Fin r × Fin n) (MvPolynomial (Fin r × Fin n) R)) :
-    coeff m (lrfc_coeffT d G) = coeff d (coeff m G) := by
+    AddMonoidAlgebra.coeff (lrfc_coeffT d G) m = AddMonoidAlgebra.coeff (AddMonoidAlgebra.coeff G m) d := by
   classical
   unfold lrfc_coeffT
   rw [coeff_sum]
@@ -52,7 +52,7 @@ theorem lrfc_coeffT_sum {ι : Type*} (s : Finset ι) (d : Fin r × Fin n →₀ 
   simp [lrfc_coeff_coeffT, coeff_sum]
 
 theorem lrfc_coeffT_monomial (d u : Fin r × Fin n →₀ ℕ) (c : MvPolynomial (Fin r × Fin n) R) :
-    lrfc_coeffT d (monomial u c) = monomial u (coeff d c) := by
+    lrfc_coeffT d (monomial u c) = monomial u (AddMonoidAlgebra.coeff c d) := by
   classical
   ext m
   rw [lrfc_coeff_coeffT, coeff_monomial, coeff_monomial]
@@ -409,14 +409,14 @@ theorem lrf_eval_Phi (F : MvPolynomial (Fin r × Fin n) R) :
 
 theorem lrf_eval_coeffT (d : Fin r × Fin n →₀ ℕ)
     (G : MvPolynomial (Fin r × Fin n) (MvPolynomial (Fin r × Fin n) R)) :
-    eval (idFrame R r n) (lrfc_coeffT d G) = coeff d (eval (lrf_idS R r n) G) := by
+    eval (idFrame R r n) (lrfc_coeffT d G) = AddMonoidAlgebra.coeff (eval (lrf_idS R r n) G) d := by
   induction G using MvPolynomial.induction_on' with
   | monomial u c =>
     rw [lrfc_coeffT_monomial, eval_monomial, eval_monomial]
     have h : (u.prod fun i k => lrf_idS R r n i ^ k) = C (u.prod fun i k => idFrame R r n i ^ k) := by
       simp only [lrf_idS, Finsupp.prod, map_prod, map_pow]
     rw [h, mul_comm c, coeff_C_mul, mul_comm]
-  | add p q hp hq => rw [lrfc_coeffT_add, map_add, map_add, coeff_add, hp, hq]
+  | add p q hp hq => rw [lrfc_coeffT_add, map_add, map_add, MvPolynomial.coeff_add, hp, hq]
 
 def lrf_off (m : Fin r × Fin n →₀ ℕ) : Fin r × Fin n →₀ ℕ := m.filter fun v => v.2.val < v.1.val
 
@@ -480,11 +480,11 @@ theorem lrf_unique (m e : Fin r × Fin n →₀ ℕ) (hm : LowerTri m) (he : Low
 
 theorem lrf_coeff_ell (ν : Fin n → ℕ) (F : MvPolynomial (Fin r × Fin n) R) (e : Fin r × Fin n →₀ ℕ)
     (hF : IsWeightedHomogeneous (colW r n) F ν) (he : LowerTri e) (hcol : ∀ s : Fin n, ∑ a : Fin r, e (a, s) = ν s) :
-    coeff (lrf_off e) (eval₂ C (lrf_ell R r n) F) = coeff e F := by
+    AddMonoidAlgebra.coeff (eval₂ C (lrf_ell R r n) F) (lrf_off e) = AddMonoidAlgebra.coeff F e := by
   classical
   rw [eval₂_eq', coeff_sum]
-  have key : ∀ m ∈ F.support, coeff (lrf_off e) (C (coeff m F) * ∏ i, lrf_ell R r n i ^ m i) =
-      if m = e then coeff m F else 0 := by
+  have key : ∀ m ∈ F.support, AddMonoidAlgebra.coeff (C (AddMonoidAlgebra.coeff F m) * ∏ i, lrf_ell R r n i ^ m i) (lrf_off e) =
+      if m = e then AddMonoidAlgebra.coeff F m else 0 := by
     intro m hm
     have hp : (∏ i, lrf_ell R r n i ^ m i) = m.prod fun v k => lrf_ell R r n v ^ k := by
       rw [Finsupp.prod_fintype _ _ (fun i => pow_zero _)]

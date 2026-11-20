@@ -128,7 +128,7 @@ theorem coeffη_monomial (b : Fin r →₀ ℕ) (m : Fin (N + 1) × Fin r →₀
 
 private theorem coeff_coeffη_eq_coeff_comb (b : Fin r →₀ ℕ) (m : Fin N × Fin r →₀ ℕ)
     (F : MvPolynomial (Fin (N + 1) × Fin r) K) :
-    coeff m (coeffη b F) = coeff (comb b m) F := by
+    AddMonoidAlgebra.coeff (coeffη b F) m = AddMonoidAlgebra.coeff F (comb b m) := by
   refine MvPolynomial.induction_on' F (fun n a => ?_) (fun p q hp hq => ?_)
   · rw [coeffη_monomial]
     by_cases h : etaPart n = b
@@ -140,14 +140,14 @@ private theorem coeff_coeffη_eq_coeff_comb (b : Fin r →₀ ℕ) (m : Fin N ×
     · rw [if_neg h, coeff_zero, coeff_monomial, if_neg]
       rintro rfl
       exact h (etaPart_comb b m)
-  · simp only [map_add, coeff_add, hp, hq]
+  · simp only [map_add, MvPolynomial.coeff_add, hp, hq]
 
 theorem coeff_coeffη (m : Fin (N + 1) × Fin r →₀ ℕ) (F : MvPolynomial (Fin (N + 1) × Fin r) K) :
-    coeff (llPart m) (coeffη (etaPart m) F) = coeff m F := by
+    AddMonoidAlgebra.coeff (coeffη (etaPart m) F) (llPart m) = AddMonoidAlgebra.coeff F m := by
   rw [coeff_coeffη_eq_coeff_comb, comb_parts]
 
 theorem coeff_coeffη' (b : Fin r →₀ ℕ) (m : Fin N × Fin r →₀ ℕ) (F : MvPolynomial (Fin (N + 1) × Fin r) K) :
-    coeff m (coeffη b F) = coeff (comb b m) F :=
+    AddMonoidAlgebra.coeff (coeffη b F) m = AddMonoidAlgebra.coeff F (comb b m) :=
   coeff_coeffη_eq_coeff_comb b m F
 
 end Coeff
@@ -389,7 +389,7 @@ variable {K : Type*} [CommRing K] {σ : Type*}
 
 theorem X_mul_pderiv_eq_sum [DecidableEq σ] (a b : σ) (F : MvPolynomial σ K) :
     X a * pderiv b F = ∑ m0 ∈ F.support,
-      monomial (m0 - Finsupp.single b 1 + Finsupp.single a 1) (coeff m0 F * m0 b) := by
+      monomial (m0 - Finsupp.single b 1 + Finsupp.single a 1) (AddMonoidAlgebra.coeff F m0 * m0 b) := by
   conv_lhs => rw [F.as_sum]
   rw [map_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl (fun m0 _ => ?_)
@@ -907,9 +907,9 @@ theorem hom_aeval {σ τ : Type*} (w : τ → ℕ) (v : σ → ℕ) (g : σ → 
   classical
   rw [f.as_sum, map_sum]
   refine isWeightedHomogeneous_finset_sum _ _ (fun m hm => ?_)
-  show IsWeightedHomogeneous w (aeval g (monomial m (coeff m f))) d
+  show IsWeightedHomogeneous w (aeval g (monomial m (AddMonoidAlgebra.coeff f m))) d
   have hmd : Finsupp.weight v m = d := hf (mem_support_iff.1 hm)
-  have h1 := (isWeightedHomogeneous_C w (coeff m f)).mul
+  have h1 := (isWeightedHomogeneous_C w (AddMonoidAlgebra.coeff f m)).mul
     (isWeightedHomogeneous_finset_prod w m.support (fun x => g x ^ m x) (fun x => m x * v x) (fun x _ => isWeightedHomogeneous_pow w (g x) (v x) (hg x) (m x)))
   have e : 0 + ∑ x ∈ m.support, m x * v x = d := by
     first
@@ -935,7 +935,7 @@ private theorem isWeightedHomogeneous_sub {τ : Type*} {w : τ → ℕ} {φ ψ :
     IsWeightedHomogeneous w (φ - ψ) n := by
   intro d hd
   rw [coeff_sub] at hd
-  by_cases h1 : coeff d φ = 0
+  by_cases h1 : AddMonoidAlgebra.coeff φ d = 0
   · rw [h1, zero_sub, neg_ne_zero] at hd
     exact hψ hd
   · exact hφ h1

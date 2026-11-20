@@ -215,10 +215,10 @@ theorem translate_sub_mem_polyLE (c : Fin n → ℂ) :
         rw [hss, Finsupp.sum_add_index' (fun _ => rfl) (fun _ _ _ => rfl),
           Finsupp.sum_single_index rfl]
       omega
-    have hmono : monomial s (coeff s p) = monomial (s' + Finsupp.single i 1) (coeff s p) := by
+    have hmono : monomial s (AddMonoidAlgebra.coeff p s) = monomial (s' + Finsupp.single i 1) (AddMonoidAlgebra.coeff p s) := by
       rw [← hss]
     rw [hmono, monomial_add_single, pow_one, map_mul, translate_X]
-    set m' := monomial s' (coeff s p)
+    set m' := monomial s' (AddMonoidAlgebra.coeff p s)
     have hm' : m' ∈ polyLE n d := mem_polyLE.2 ((totalDegree_monomial_le _ _).trans hs'd)
     have hT : translate c m' - m' ∈ polyLE n (d - 1) := ih m' hm'
     have hT' : translate c m' ∈ polyLE n d := by

@@ -37,7 +37,7 @@ lemma ldrow_aeval_monomial {R : Type*} [CommRing R] {k n : ℕ} (t : Fin k → R
 
 lemma ldrow_coeff_rowAct_diag {R : Type*} [CommRing R] {k n : ℕ} (t : Fin k → R)
     (f : MvPolynomial (Fin k × Fin n) R) (m : Fin k × Fin n →₀ ℕ) :
-    coeff m (rowAct R (Matrix.diagonal t) f) = coeff m f * ∏ a : Fin k, t a ^ rowDeg m a := by
+    AddMonoidAlgebra.coeff (rowAct R (Matrix.diagonal t) f) m = AddMonoidAlgebra.coeff f m * ∏ a : Fin k, t a ^ rowDeg m a := by
   rw [ldrow_rowAct_diag_eq]
   induction f using MvPolynomial.induction_on' with
   | monomial u c =>
@@ -47,7 +47,7 @@ lemma ldrow_coeff_rowAct_diag {R : Type*} [CommRing R] {k n : ℕ} (t : Fin k �
       rfl
     · simp
   | add p q hp hq =>
-    rw [map_add, coeff_add, coeff_add, hp, hq, add_mul]
+    rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, add_mul]
 
 lemma ldrow_weight_rowW {k n : ℕ} (m : Fin k × Fin n →₀ ℕ) (a : Fin k) :
     Finsupp.weight (rowW k n) m a = rowDeg m a := by

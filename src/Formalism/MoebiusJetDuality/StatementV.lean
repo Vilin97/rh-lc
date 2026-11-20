@@ -37,7 +37,7 @@ def AJetPolyV : Prop :=
 
 def AJetPolyCoeff : Prop :=
   ∀ (n N : ℕ) (f : (Fin n → ℂ) → ℂ) (α : Fin n →₀ ℕ), AnalyticAt ℂ f 0 →
-    coeff α (ajetPoly N f) = if α.degree ≤ N then ajetCoeff f α else 0
+    AddMonoidAlgebra.coeff (ajetPoly N f) α = if α.degree ≤ N then ajetCoeff f α else 0
 
 def AJetSubstV : Prop :=
   ∀ (σ : Type) [Fintype σ] [DecidableEq σ] (N : ℕ) (g : Matrix σ σ ℂ) (f : (σ → ℂ) → ℂ),

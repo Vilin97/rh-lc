@@ -345,10 +345,10 @@ theorem jetOp_le (lam : ι → DomWeight a) (lam' : ι → DomWeight b) (n : ι 
   have hQV : jetMap J n (v : Pol ℂ ι a) ∈ Formalism.L2.DIV.VV ℂ lam' := hV J _ hPV
   rw [GlobalTheory.JetPoint.coe_jetOp lam lam' J n v hQV]
   have hone : ∀ lm : ι → DomWeight a, (1 : ℝ) ≤ ∏ τ, eNorm (lm τ) := fun lm => by
-    simpa using Finset.prod_le_prod (s := Finset.univ) (f := fun _ => (1 : ℝ))
+    simpa using Finset.prod_le_prod₀ (s := Finset.univ) (f := fun _ => (1 : ℝ))
       (g := fun τ => eNorm (lm τ)) (fun _ _ => zero_le_one) (fun τ _ => one_le_eNorm _)
   have hone' : (1 : ℝ) ≤ ∏ τ, eNorm (lam' τ) := by
-    simpa using Finset.prod_le_prod (s := Finset.univ) (f := fun _ => (1 : ℝ))
+    simpa using Finset.prod_le_prod₀ (s := Finset.univ) (f := fun _ => (1 : ℝ))
       (g := fun τ => eNorm (lam' τ)) (fun _ _ => zero_le_one) (fun τ _ => one_le_eNorm _)
   have hEpos : (0 : ℝ) < ∏ τ, eNorm (lam τ) := lt_of_lt_of_le zero_lt_one (hone lam)
   have hPh : (v : Pol ℂ ι a).IsHomogeneous (∑ τ, ∑ i, (lam τ).natW i) :=

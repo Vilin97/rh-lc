@@ -244,12 +244,12 @@ private lemma polynomial_value_over_prime_lemma_4 {K Ω : Type} [Field K] [Numbe
       rw [this]; exact zero_mem _
     set P : MvPolynomial (Fin D) K :=
       MvPolynomial.C (a : K)⁻¹ * MvPolynomial.map (algebraMap (𝓞 K) K) p
-    have hcoeffP : ∀ β, MvPolynomial.coeff β P = (a : K)⁻¹ * p.coeff β := fun β => by
+    have hcoeffP : ∀ β, AddMonoidAlgebra.coeff P β = (a : K)⁻¹ * p.coeff β := fun β => by
       simp [P, MvPolynomial.coeff_C_mul, MvPolynomial.coeff_map]
-    have hnn : ∀ β, 0 ≤ v (algebraMap K Ω (MvPolynomial.coeff β P)) := fun β => by
+    have hnn : ∀ β, 0 ≤ v (algebraMap K Ω (AddMonoidAlgebra.coeff P β)) := fun β => by
       rw [hcoeffP, map_mul, v.map_mul, map_inv₀, v.map_inv, ha0, neg_zero, zero_add]
       exact addValuation_algebraMap_ringOfIntegers_nonneg v _
-    have h1 : MvPolynomial.coeff m P = 1 := by rw [hcoeffP]; exact inv_mul_cancel₀ hane
+    have h1 : AddMonoidAlgebra.coeff P m = 1 := by rw [hcoeffP]; exact inv_mul_cancel₀ hane
     have hzero := _root_.ReciprocityTheory.ChartRestriction.G.T0.ValuationResidueLemmas.val_eval_eq_zero v x hx hind P hnn m h1
     have heval : MvPolynomial.eval₂ ((algebraMap K Ω).comp (algebraMap (𝓞 K) K)) x p =
         algebraMap K Ω a * MvPolynomial.aeval x P := by

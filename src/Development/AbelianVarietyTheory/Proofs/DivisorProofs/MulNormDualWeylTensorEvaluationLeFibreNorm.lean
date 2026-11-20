@@ -69,7 +69,7 @@ theorem mul_norm_tval_le_fibNorm : ∀ (T : Type) [Fintype T] [DecidableEq T] (N
       refine Finset.sum_congr rfl fun J _ => ?_
       simp only [hE, norm_prod, Finset.prod_pow]
     rw [this]
-    exact Finset.prod_le_one (fun t _ => Finset.sum_nonneg fun _ _ => by positivity)
+    exact Finset.prod_le_one₀ (fun t _ => Finset.sum_nonneg fun _ _ => by positivity)
       (fun t _ => GlobalTheory.T.dualWeyl_orthonormal_basis_values_at_unitary_sum_sq_le_one (N t) (la t) (hla t) (u t))
   have h4 : s * ‖tval la x (fun t => X t * (u t).1)‖ = ‖(s : ℂ) * tval la x (fun t => X t * (u t).1)‖ := by
     rw [norm_mul, Complex.norm_real, Real.norm_of_nonneg hs]

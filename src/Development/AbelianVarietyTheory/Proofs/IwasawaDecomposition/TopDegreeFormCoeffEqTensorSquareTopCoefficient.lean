@@ -43,7 +43,7 @@ theorem toMultiset_injective' {α : Type*} [DecidableEq α] :
   rw [← Finsupp.toMultiset_toFinsupp f, h, Finsupp.toMultiset_toFinsupp]
 
 theorem coeff_prod_X {m : ℕ} (x : Fin m → Fin n × Fin n) (d : Fin n × Fin n →₀ ℕ) :
-    coeff d (∏ j, X (x j) : MvPolynomial (Fin n × Fin n) ℂ) =
+    AddMonoidAlgebra.coeff (∏ j, X (x j) : MvPolynomial (Fin n × Fin n) ℂ) d =
       if Finset.univ.val.map x = Finsupp.toMultiset d then 1 else 0 := by
   classical
   have e : (∏ j, X (x j) : MvPolynomial (Fin n × Fin n) ℂ) = monomial (∑ j, Finsupp.single (x j) 1) 1 :=
@@ -165,6 +165,6 @@ theorem topCoeff_eq_topBig (n : ℕ) (P : MvPolynomial (Fin n × Fin n) ℂ) :
   | add p q hp hq =>
     rw [map_add, Subalgebra.coe_add, map_add, ← hp, ← hq]
     unfold GlobalTheory.GoodMetric.topCoeff
-    simp only [coeff_add, mul_add, Finset.sum_add_distrib]
+    simp only [MvPolynomial.coeff_add, mul_add, Finset.sum_add_distrib]
 
 end GlobalTheory.GrassModel.TopRead

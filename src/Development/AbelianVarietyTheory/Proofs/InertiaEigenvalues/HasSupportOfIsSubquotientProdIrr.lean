@@ -412,8 +412,8 @@ theorem exists_hasSupport (hZ : GlobalTheory.Published.ZelevinskyPolynomialRing)
     have h3 : Ψ.symm P x = 0 := by
       rw [MvPolynomial.as_sum P, map_sum, Finsupp.finset_sum_apply]
       refine Finset.sum_eq_zero fun m _ => ?_
-      have h4 : MvPolynomial.monomial m (MvPolynomial.coeff m P) =
-          (MvPolynomial.coeff m P) • MvPolynomial.monomial m (1 : ℤ) := by
+      have h4 : MvPolynomial.monomial m (AddMonoidAlgebra.coeff P m) =
+          (AddMonoidAlgebra.coeff P m) • MvPolynomial.monomial m (1 : ℤ) := by
         rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
       rw [h4, map_zsmul, Finsupp.smul_apply, hne m, smul_zero]
     rw [← h2, Finsupp.single_eq_same] at h3

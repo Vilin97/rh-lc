@@ -32,7 +32,7 @@ theorem PolarisationBound.proof (hC : PolarisationCoeff.Statement) : Polarisatio
     have hdeg : (m.sum fun _ e => e) = n := by
       have := hF (mem_support_iff.1 hmF)
       simpa [Finsupp.weight_apply, Finsupp.sum] using this
-    have hsm : monomial m (coeff m F) = coeff m F • monomial m (1 : ℝ) := by
+    have hsm : monomial m (AddMonoidAlgebra.coeff F m) = AddMonoidAlgebra.coeff F m • monomial m (1 : ℝ) := by
       rw [smul_monomial, smul_eq_mul, mul_one]
     rw [hsm, map_smul, map_smul, hmono m hdeg]
   · have hc := hM m

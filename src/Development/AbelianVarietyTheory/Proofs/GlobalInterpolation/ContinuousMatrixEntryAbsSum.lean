@@ -73,7 +73,7 @@ theorem weightAbsEntrySum_nonneg (Z : Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q)
   Finset.sum_nonneg fun _ _ => Finset.sum_nonneg fun _ _ => norm_nonneg _
 
 theorem continuous_matrixEntryAbsSum : Continuous (l1 : Matrix (Fin P ⊕ Fin Q) (Fin P ⊕ Fin Q) ℂ → ℝ) :=
-  continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ =>
+  continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>
     (continuous_id.matrix_elem i j).norm
 
 theorem continuous_gauge : Continuous (gauge : UpqT P Q → ℝ) :=

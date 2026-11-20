@@ -42,7 +42,7 @@ theorem norms_of_relevant : ∀ (Cg cb Cw cT CT C0 CH C' Cl : ℝ), 0 ≤ CH →
       ≤ ∏ _l ∈ k2ends D (jT t) (labT t),
           Hb large₂.sc.b (2 * (CH + 1)) D.R.m D.R.f * k2S D (H1C large₂ CH) (jT t) (labT t) ^ 2 := by
         unfold DbL
-        refine Finset.prod_le_prod (fun l _ => ?_) (fun l hl => localNorm_le_height_sq hPF large₂ hCH hC t l hl)
+        refine Finset.prod_le_prod₀ (fun l _ => ?_) (fun l hl => localNorm_le_height_sq hPF large₂ hCH hC t l hl)
         unfold Nloc
         exact_mod_cast FractionalIdeal.absNorm_nonneg _
     _ = _ ^ (k2ends D (jT t) (labT t)).card := Finset.prod_const _

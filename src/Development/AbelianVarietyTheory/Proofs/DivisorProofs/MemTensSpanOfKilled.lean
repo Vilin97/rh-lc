@@ -234,8 +234,8 @@ theorem le_deg_of_hw {μ : Ix R S → ℚ} {f : Formalism.BasicNotions.TH.Pol P 
     intro c
     have h := hmem.1 c
     rw [sub_eq_zero] at h
-    have hd : ∀ g : Formalism.BasicNotions.TH.Pol P Q R S, coeff α (fockAct2 P Q R S (Eab c c) g) =
-        (∑ a, lineSign a c * (((α (a, c) : ℕ) : ℂ) + 1 / 2)) * coeff α g := by
+    have hd : ∀ g : Formalism.BasicNotions.TH.Pol P Q R S, AddMonoidAlgebra.coeff (fockAct2 P Q R S (Eab c c) g) α =
+        (∑ a, lineSign a c * (((α (a, c) : ℕ) : ℂ) + 1 / 2)) * AddMonoidAlgebra.coeff g α := by
       intro g
       induction g using MvPolynomial.induction_on' with
       | monomial β z =>
@@ -244,7 +244,7 @@ theorem le_deg_of_hw {μ : Ix R S → ℚ} {f : Formalism.BasicNotions.TH.Pol P 
         by_cases h : β = α
         · subst h; simp only [if_true, smul_eq_mul]; ring
         · simp [h]
-      | add p q hp hq => rw [map_add, coeff_add, coeff_add, hp, hq, mul_add]
+      | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
     have h' := hd f
     rw [h, coeff_smul, smul_eq_mul] at h'
     exact (mul_right_cancel₀ hα h').symm

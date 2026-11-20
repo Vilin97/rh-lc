@@ -50,10 +50,10 @@ lemma sat_prod_monomial {R α σ : Type} [CommSemiring R] (s : Finset α) (a : �
 
 lemma sat_coeff_prod_rename {R S τ σ : Type} [CommSemiring R] [Fintype S] [DecidableEq S] (e : S → τ → σ)
     (he : ∀ s t v w, e s v = e t w → s = t ∧ v = w) (f : S → MvPolynomial τ R) (m : S → τ →₀ ℕ) :
-    coeff (∑ s, (m s).mapDomain (e s)) (∏ s, rename (e s) (f s)) = ∏ s, coeff (m s) (f s) := by
+    AddMonoidAlgebra.coeff (∏ s, rename (e s) (f s)) (∑ s, (m s).mapDomain (e s)) = ∏ s, AddMonoidAlgebra.coeff (f s) (m s) := by
   classical
   have h1 : ∀ s, rename (e s) (f s) =
-      ∑ n ∈ (f s).support, monomial (n.mapDomain (e s)) (coeff n (f s)) := by
+      ∑ n ∈ (f s).support, monomial (n.mapDomain (e s)) (AddMonoidAlgebra.coeff (f s) n) := by
     intro s
     conv_lhs => rw [← support_sum_monomial_coeff (f s)]
     rw [map_sum]
@@ -256,16 +256,16 @@ theorem slope_bound_saturation : ∀ (K : Type) [NormedField K] [IsUltrametricDi
   let _ : PartialOrder (∀ s : ZMod d, ssIdx N0 N0 (shapeDeg (p s) : Fin N0 → ℕ)) := PartialOrder.lift f hf
   let E : (∀ s : ZMod d, ssIdx N0 N0 (shapeDeg (p s) : Fin N0 → ℕ)) → (ZMod d × Fin N0 × Fin N0 →₀ ℕ) :=
     fun M => ∑ s, ((M s).1).mapDomain (satEmb d N0 s)
-  have hT : ∀ M' M, coeff (E M') (B M) = ∏ s, φ (coeff (M' s).1 (b s (M s))) := by
+  have hT : ∀ M' M, AddMonoidAlgebra.coeff (B M) (E M') = ∏ s, φ (coeff (M' s).1 (b s (M s))) := by
     intro M' M
     simp only [E, B]
     rw [sat_coeff_prod_rename (satEmb d N0) (satEmb_inj d N0)]
     simp only [coeff_map]
   have hcint : ∀ M, ‖c M‖ ≤ 1 := by
-    refine sat_tri_integral (fun M' M => coeff (E M') (B M)) ?_ ?_ ?_ c ?_
+    refine sat_tri_integral (fun M' M => AddMonoidAlgebra.coeff (B M) (E M')) ?_ ?_ ?_ c ?_
     · intro M' M
       rw [hT, norm_prod]
-      exact Finset.prod_le_one (fun _ _ => norm_nonneg _) fun s _ => (coeff (M' s).1 (b s (M s))).2
+      exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun s _ => (coeff (M' s).1 (b s (M s))).2
     · intro M
       rw [hT]
       refine Finset.prod_eq_one fun s _ => ?_
@@ -284,7 +284,7 @@ theorem slope_bound_saturation : ∀ (K : Type) [NormedField K] [IsUltrametricDi
       rw [(hb2 s (M s)).1]
       exact not_le.mp hs
     · intro M'
-      have h1 : ∑ M, c M * coeff (E M') (B M) = coeff (E M') P := by
+      have h1 : ∑ M, c M * AddMonoidAlgebra.coeff (B M) (E M') = AddMonoidAlgebra.coeff P (E M') := by
         rw [← hc, coeff_sum]
         exact Finset.sum_congr rfl fun M _ => by rw [coeff_smul, smul_eq_mul]
       rw [h1]

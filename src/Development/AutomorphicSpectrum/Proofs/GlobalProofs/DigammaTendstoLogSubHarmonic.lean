@@ -34,7 +34,7 @@ theorem norm_GammaSeq_le {w : ℂ} (hw : 0 < w.re) {n : ℕ} (hn : n ≠ 0) :
   rw [GammaSeq, norm_div, norm_mul, Complex.norm_natCast_cpow_of_pos (Nat.pos_of_ne_zero hn),
     norm_prod, Complex.norm_natCast]
   apply div_le_div_of_nonneg_left (by positivity) (Finset.prod_pos fun j _ => by positivity)
-  apply Finset.prod_le_prod (fun j _ => by positivity)
+  apply Finset.prod_le_prod₀ (fun j _ => by positivity)
   intro j _
   have := Complex.abs_re_le_norm (w + j)
   simp only [add_re, natCast_re] at this
@@ -58,7 +58,7 @@ theorem differentiableAt_GammaSeq {z : ℂ} (hz : 0 < z.re) {n : ℕ} (hn : n �
   simp only [GammaSeq]
   refine DifferentiableAt.div ?_ ?_ (Finset.prod_ne_zero_iff.2 hP)
   · exact (differentiableAt_id.const_cpow (Or.inl hn')).mul_const _
-  · exact DifferentiableAt.fun_finset_prod fun j _ => by fun_prop
+  · exact DifferentiableAt.fun_finsetProd fun j _ => by fun_prop
 
 theorem logDeriv_GammaSeq {z : ℂ} (hz : 0 < z.re) {n : ℕ} (hn : n ≠ 0) :
     logDeriv (fun w => GammaSeq w n) z =
@@ -70,7 +70,7 @@ theorem logDeriv_GammaSeq {z : ℂ} (hz : 0 < z.re) {n : ℕ} (hn : n ≠ 0) :
   have hfac : ((n ! : ℕ) : ℂ) ≠ 0 := Nat.cast_ne_zero.2 (Nat.factorial_ne_zero n)
   have hcp : (n : ℂ) ^ z ≠ 0 := by simp [Complex.cpow_eq_zero_iff, hn']
   have hd2 : DifferentiableAt ℂ (fun w : ℂ => ∏ j ∈ Finset.range (n + 1), (w + (j : ℂ))) z :=
-    DifferentiableAt.fun_finset_prod fun j _ => by fun_prop
+    DifferentiableAt.fun_finsetProd fun j _ => by fun_prop
   have e1 : (fun w => GammaSeq w n) =
       fun w => ((n : ℂ) ^ w * (n ! : ℂ)) / ∏ j ∈ Finset.range (n + 1), (w + (j : ℂ)) := rfl
   have l1 : logDeriv (fun w : ℂ => (n : ℂ) ^ w) z = Complex.log n := by

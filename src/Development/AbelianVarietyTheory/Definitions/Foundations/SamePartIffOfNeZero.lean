@@ -153,7 +153,7 @@ theorem _root_.GlobalTheory.BadShare.samePart_iff (hl : l.Prime) {x y : k} (hx :
     have hcy : (orderOf y / l ^ (orderOf y).factorization l).Coprime l :=
       (Nat.coprime_ordCompl hl hy.orderOf_pos.ne').symm
     refine _root_.GlobalTheory.BadShare.eq_of_pow_eq
-      (a := max a (max ((orderOf x).factorization l) ((orderOf y).factorization l))) (hcx.mul hcy) ?_ ?_
+      (a := max a (max ((orderOf x).factorization l) ((orderOf y).factorization l))) (hcx.Nat.Coprime.mul_left hcy) ?_ ?_
       (mul_ne_zero (Nat.ordCompl_pos l hx.orderOf_pos.ne').ne' (Nat.ordCompl_pos l hy.orderOf_pos.ne').ne') ?_
     · rw [pow_mul, primeToPart_pow_orderOf_div_prime_pow_eq_one, one_pow]
     · rw [mul_comm, pow_mul, primeToPart_pow_orderOf_div_prime_pow_eq_one, one_pow]

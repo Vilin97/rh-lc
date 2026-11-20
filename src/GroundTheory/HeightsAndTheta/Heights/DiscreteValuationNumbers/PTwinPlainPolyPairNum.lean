@@ -23,7 +23,7 @@ theorem rename_divDiff_add {r : ℕ} (l : Fin r) (A B : MvPolynomial (Fin r) ℤ
     rename_divDiff_eq_sum l A Finset.subset_union_left,
     rename_divDiff_eq_sum l B Finset.subset_union_right, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun μ _ => ?_
-  rw [coeff_add, map_add, add_mul]
+  rw [MvPolynomial.coeff_add, map_add, add_mul]
 
 theorem term_tail {N q : ℕ} (i : Fin N) (μ : Fin N →₀ ℕ) (t : Fin q →₀ ℕ) (ν : Fin (N + q) →₀ ℕ)
     (hc : ∀ j, ν (Fin.castAdd q j) = μ j) (hn : ∀ j, ν (Fin.natAdd N j) = t j) :

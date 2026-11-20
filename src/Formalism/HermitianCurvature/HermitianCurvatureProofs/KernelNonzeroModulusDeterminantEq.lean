@@ -136,12 +136,12 @@ theorem lat_mulR (ho : IsOpen (R : Set K)) (hc : IsCompact (R : Set K)) (x : Kˣ
       · intro hy
         exact ⟨_, hy, by simp⟩
     rw [h]
-    exact ho.preimage (continuous_mul_left _)
+    exact ho.preimage (continuous_const_mul _)
   · have h : ((mulR R (x : K)) : Set K) = (fun y => (x : K) * y) '' (R : Set K) := by
       ext y
       simp [mulR]
     rw [h]
-    exact hc.image (continuous_mul_left _)
+    exact hc.image (continuous_const_mul _)
 
 theorem modK_pos (ho : IsOpen (R : Set K)) (hc : IsCompact (R : Set K)) (x : Kˣ) :
     0 < modK R (x : K) := by

@@ -43,7 +43,7 @@ theorem _root_.GlobalTheory.not_dvd_coeff_aeval_oneAddX_pow_sub_one :
   set g : σ → Polynomial O := fun q => (1 + Polynomial.X : Polynomial O) ^ (l ^ e q) - 1 with hgdef
   set c : (σ →₀ ℕ) → O := fun m => (∏ q, g q ^ m q).coeff W with hc
   have hexp : (MvPolynomial.aeval g F).coeff W = ∑ m ∈ F.support, F.coeff m * c m := by
-    rw [MvPolynomial.aeval_def, MvPolynomial.eval₂_eq', Polynomial.finset_sum_coeff]
+    rw [MvPolynomial.aeval_def, MvPolynomial.eval₂_eq', Polynomial.finsetSum_coeff]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [Polynomial.algebraMap_eq, Polynomial.coeff_C_mul]
   have hcong : ∀ m : σ →₀ ℕ, ϖ ∣ c m - if W = ∑ q, m q * l ^ e q then 1 else 0 := by

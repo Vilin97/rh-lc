@@ -124,10 +124,10 @@ theorem trivialLocalData_rank (p : ℕ) : (trivialLocalData p).d = 1 := by
   have hinj : Function.Injective f := by
     intro a b h
     have h1 := congrFun (congrFun (congrArg Subtype.val h) ()) default
-    have h2 := congrArg (MvPolynomial.coeff 0) h1
+    have h2 := congrArg (AddMonoidAlgebra.coeff · 0) h1
     simp only [f] at h2
-    change MvPolynomial.coeff 0 (a • (1 : (emptyPlaces p).Xsp)) =
-      MvPolynomial.coeff 0 (b • (1 : (emptyPlaces p).Xsp)) at h2
+    change AddMonoidAlgebra.coeff (a • (1 : (emptyPlaces p).Xsp)) 0 =
+      AddMonoidAlgebra.coeff (b • (1 : (emptyPlaces p).Xsp)) 0 at h2
     rw [MvPolynomial.coeff_smul, MvPolynomial.coeff_smul, MvPolynomial.coeff_zero_one,
       Algebra.smul_def, Algebra.smul_def, mul_one, mul_one] at h2
     exact IsFractionRing.injective ℤ_[3] ℚ_[3] h2

@@ -90,7 +90,7 @@ theorem ker_alg (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (e : FamE D) (h
       exact ⟨a, ha0, hat⟩
 
 theorem jet_alg (D : D7) {N N' : ℕ} (G : VC D N N' → ℂ) (hG : CoefIn D G Qbar) (P : MvPolynomial (GL3Theta.Idx D N N') ℂ)
-    (hP : ∀ α, MvPolynomial.coeff α P ∈ Qbar) : GL3Theta.applyAt0 D P G ∈ Qbar := by
+    (hP : ∀ α, AddMonoidAlgebra.coeff P α ∈ Qbar) : GL3Theta.applyAt0 D P G ∈ Qbar := by
   unfold GL3Theta.applyAt0
   refine sum_mem fun α _ => mul_mem (mul_mem (hP α) ?_) (hG α)
   exact prod_mem fun i _ => natCast_mem _ _
@@ -101,11 +101,11 @@ variable {D : D7} {u : D.what₂.Word} {C : ColumnChain D.R D.what₂.Tau (D.hcW
   (M : MemberForms D.what₂.LL D.what₂.embLL D.what₂.places D.what₂.Tau (D.hcW u) C A P) (O : GL3Theta.LiftObj D C)
 
 def RegIn (i : ℕ) (S : Set ℂ) (f : C.Y i → ℂ) : Prop :=
-  ∃ (n : D.what₂.Tau → ℕ) (Q : MvPolynomial (GL3Theta.FrV D (D.R.N i)) ℂ), (∀ α, MvPolynomial.coeff α Q ∈ S) ∧
+  ∃ (n : D.what₂.Tau → ℕ) (Q : MvPolynomial (GL3Theta.FrV D (D.R.N i)) ℂ), (∀ α, AddMonoidAlgebra.coeff Q α ∈ S) ∧
     ∀ y, (∏ τ, C.de i y τ ^ n τ) * f y = GL3Theta.evFr D Q (O.frm i y)
 
 def SrcTie (i : ℕ) (dg : D.what₂.Tau → ℕ) : Prop :=
-  ∀ a c, ∃ Q : MvPolynomial (GL3Theta.FrV D (D.R.N i)) ℂ, (∀ α, MvPolynomial.coeff α Q ∈ Set.range D.what₂.embLL) ∧ GL3Columns.HomDeg D Q dg ∧
+  ∀ a c, ∃ Q : MvPolynomial (GL3Theta.FrV D (D.R.N i)) ℂ, (∀ α, AddMonoidAlgebra.coeff Q α ∈ Set.range D.what₂.embLL) ∧ GL3Columns.HomDeg D Q dg ∧
     C.sharp i (M.emb i ((M.lat i).b a) c) = fun y => GL3Theta.evFr D Q (O.frm i y)
 
 def TgtTie (j : ℕ) : Prop :=
@@ -131,17 +131,17 @@ theorem evenN (R : Ranks) (j : ℕ) : Even (R.N j) := by
   show Even (R.k + j * (R.t + 1))
   exact R.k_even.add (Even.mul_left R.t_odd.add_one j)
 
-theorem exists_map_eq {σ : Type} (F : IntermediateField ℚ ℂ) (Q : MvPolynomial σ ℂ) (h : ∀ α, MvPolynomial.coeff α Q ∈ F) :
+theorem exists_map_eq {σ : Type} (F : IntermediateField ℚ ℂ) (Q : MvPolynomial σ ℂ) (h : ∀ α, AddMonoidAlgebra.coeff Q α ∈ F) :
     ∃ Q₀ : MvPolynomial σ F, MvPolynomial.map (algebraMap F ℂ) Q₀ = Q := by
-  refine ⟨∑ α ∈ Q.support, MvPolynomial.monomial α (⟨MvPolynomial.coeff α Q, h α⟩ : F), ?_⟩
+  refine ⟨∑ α ∈ Q.support, MvPolynomial.monomial α (⟨AddMonoidAlgebra.coeff Q α, h α⟩ : F), ?_⟩
   conv_rhs => rw [Q.as_sum]
   simp only [map_sum, MvPolynomial.map_monomial]
   rfl
 
 theorem coeff_map_mem {σ : Type} (F : IntermediateField ℚ ℂ) (Q₀ : MvPolynomial σ F) (α : σ →₀ ℕ) :
-    MvPolynomial.coeff α (MvPolynomial.map (algebraMap F ℂ) Q₀) ∈ F := by
+    AddMonoidAlgebra.coeff (MvPolynomial.map (algebraMap F ℂ) Q₀) α ∈ F := by
   rw [MvPolynomial.coeff_map]
-  exact (MvPolynomial.coeff α Q₀).2
+  exact (AddMonoidAlgebra.coeff Q₀ α).2
 
 def evF (D : D7) (F : IntermediateField ℚ ℂ) {N : ℕ} (f : D.what₂.Tau → Matrix (Fin N) (Fin N) ℂ) :
     MvPolynomial (GL3Theta.FrV D N) F →+* ℂ :=
@@ -182,7 +182,7 @@ theorem exists_jetPoly (D : D7) (F : IntermediateField ℚ ℂ) {N N' : ℕ} (s 
   have hc : ∀ α : GL3Theta.Idx D N N' →₀ ℕ, (α.prod fun _ n => (n.factorial : ℂ)) * taylor D G α ∈ F :=
     fun α => mul_mem (prod_mem fun i _ => natCast_mem _ _) (hG α)
   refine ⟨∑ α ∈ (polG D F s Q₀).support,
-    MvPolynomial.coeff α (polG D F s Q₀) * MvPolynomial.C (⟨_, hc α⟩ : F), fun f => ?_⟩
+    AddMonoidAlgebra.coeff (polG D F s Q₀) α * MvPolynomial.C (⟨_, hc α⟩ : F), fun f => ?_⟩
   rw [polD_eq]
   unfold GL3Theta.applyAt0
   rw [Finset.sum_subset (MvPolynomial.support_map_subset _ _) ?hz]
@@ -191,7 +191,7 @@ theorem exists_jetPoly (D : D7) (F : IntermediateField ℚ ℂ) {N N' : ℕ} (s 
     rw [mul_assoc]
     exact congrArg₂ (· * ·) rfl (MvPolynomial.eval₂Hom_C _ _ _)
   · intro α _ hα
-    have h0 : MvPolynomial.coeff α (MvPolynomial.map (evF D F f) (polG D F s Q₀)) = 0 := by
+    have h0 : AddMonoidAlgebra.coeff (MvPolynomial.map (evF D F f) (polG D F s Q₀)) α = 0 := by
       simpa [MvPolynomial.mem_support_iff] using hα
     rw [h0]
     ring

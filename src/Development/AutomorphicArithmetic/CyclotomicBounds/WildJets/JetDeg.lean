@@ -56,13 +56,13 @@ private theorem weight_der (τ : ι) (μ : (ι × Fin b × Fin b) ⊕ DVar ι a 
 
 omit [DecidableEq ι] in
 private theorem jetLin_eq (J : (DVar ι a b →₀ ℕ) → K) (Q : MvPolynomial ((ι × Fin b × Fin b) ⊕ DVar ι a b) K) :
-    jetLin J Q = ∑ μ ∈ Q.support, coeff μ Q • (monomial (μ.comapDomain Sum.inl Sum.inl_injective.injOn)
+    jetLin J Q = ∑ μ ∈ Q.support, AddMonoidAlgebra.coeff Q μ • (monomial (μ.comapDomain Sum.inl Sum.inl_injective.injOn)
       (J (μ.comapDomain Sum.inr Sum.inr_injective.injOn)) : Pol K ι b) := by
   classical
   conv_lhs => rw [Q.as_sum, map_sum]
   refine Finset.sum_congr rfl fun μ _ => ?_
-  have e : (monomial μ (coeff μ Q) : MvPolynomial ((ι × Fin b × Fin b) ⊕ DVar ι a b) K) =
-      coeff μ Q • (basisMonomials _ K) μ := by
+  have e : (monomial μ (AddMonoidAlgebra.coeff Q μ) : MvPolynomial ((ι × Fin b × Fin b) ⊕ DVar ι a b) K) =
+      AddMonoidAlgebra.coeff Q μ • (basisMonomials _ K) μ := by
     rw [MvPolynomial.coe_basisMonomials, smul_monomial, smul_eq_mul, mul_one]
   rw [e, map_smul]
   simp only [jetLin, Module.Basis.constr_basis]

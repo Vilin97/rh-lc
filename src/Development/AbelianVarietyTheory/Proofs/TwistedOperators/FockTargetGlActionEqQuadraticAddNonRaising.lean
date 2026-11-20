@@ -43,7 +43,7 @@ theorem totalDegree_X_mul_pderiv (x y : σ) (P : MvPolynomial σ ℂ) :
     refine (totalDegree_mul _ _).trans ?_
     rw [totalDegree_X]
     refine le_trans ?_ (le_totalDegree hs)
-    have h1 := totalDegree_monomial_le (s - Finsupp.single y 1) (coeff s P * (s y : ℂ))
+    have h1 := totalDegree_monomial_le (s - Finsupp.single y 1) (AddMonoidAlgebra.coeff P s * (s y : ℂ))
     have h2 : (s.sum fun _ e => e) = 1 + (s - Finsupp.single y 1).sum fun _ e => e := by
       conv_lhs => rw [← hs']
       rw [Finsupp.sum_add_index' (fun _ => rfl) (fun _ _ _ => rfl), Finsupp.sum_single_index rfl]

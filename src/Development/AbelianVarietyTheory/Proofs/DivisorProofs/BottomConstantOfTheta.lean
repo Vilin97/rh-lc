@@ -87,7 +87,7 @@ theorem botConst_of_inputs : GlobalTheory.FunPr.Hypotheses₂ → GlobalTheory.I
   have hlev : padicValNat p (levQ G.pl * Qn G t) ≤ padicValNat p (levQ G.pl) := by
     have h0 : levQ G.pl ≠ 0 := Finset.prod_ne_zero_iff.2 fun v _ =>
       pow_ne_zero _ (Ideal.absNorm_eq_zero_iff.not.2 v.ne_bot)
-    rw [padicValNat.mul h0 (Model.Qn_ne_zero G t), padicValNat.eq_zero_of_not_dvd hpQ, add_zero]
+    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) h0 (Model.Qn_ne_zero G t), padicValNat.eq_zero_of_not_dvd hpQ, add_zero]
   have e1 := hB.rank
   have e2 := hB₀.rank
   have s1 := hSm δ t0 _ P P' t i j _ hB

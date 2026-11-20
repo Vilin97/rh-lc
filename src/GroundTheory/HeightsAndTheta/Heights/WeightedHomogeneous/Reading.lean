@@ -297,11 +297,11 @@ theorem form_eq_zero_of_unitPoint {f : MvPolynomial (Coord fun _ : Unit ↦ 0) �
     refine Finset.eq_singleton_iff_unique_mem.mpr ⟨?_, hm⟩
     rw [← hm m hmem]
     exact hmem
-  have hc : coeff (Finsupp.single ⟨(), 0⟩ (δ ())) f ≠ 0 :=
+  have hc : AddMonoidAlgebra.coeff f (Finsupp.single ⟨(), 0⟩ (δ ())) ≠ 0 :=
     mem_support_iff.mp (by rw [hs]; exact Finset.mem_singleton_self _)
   rw [aeval_def, eval₂_eq, hs, Finset.sum_singleton] at h
   simp only [unitPoint, one_pow, Finset.prod_const_one, mul_one] at h
-  have h3 : ((coeff (Finsupp.single ⟨(), 0⟩ (δ ())) f : ℤ) : ℚ) = 0 := by simpa using h
+  have h3 : ((AddMonoidAlgebra.coeff f (Finsupp.single ⟨(), 0⟩ (δ ())) : ℤ) : ℚ) = 0 := by simpa using h
   exact hc (by exact_mod_cast h3)
 
 theorem reads_unitPoint :
@@ -437,7 +437,7 @@ theorem isSupSmallBlock_one {κ : Type} [Fintype κ] [DecidableEq κ] {n' : κ �
     [CharZero Ω] (y : Coord n' → Ω) (k₀ : κ) (A : Geo.HermLine (blockIdx n')) :
     (1 : Ω) ∈ Geo.secM (ι := blockIdx n') y (Pi.single k₀ 0) ∧ IsSupSmallBlock y k₀ A 0 1 := by
   have hz : ∀ f : MvPolynomial (Coord n') ℤ, Geo.IsMultiHomog (ι := blockIdx n') f (Pi.single k₀ 0) →
-      f = C (coeff 0 f) := by
+      f = C (AddMonoidAlgebra.coeff f 0) := by
     intro f hf
     ext m
     rw [coeff_C]
@@ -456,9 +456,9 @@ theorem isSupSmallBlock_one {κ : Type} [Fintype κ] [DecidableEq κ] {n' : κ �
     simp [hm0]
   · intro f hf hs z _
     rw [hz f hf] at hs ⊢
-    have h1 : coeff 0 f = 1 := by
+    have h1 : AddMonoidAlgebra.coeff f 0 = 1 := by
       rw [aeval_C] at hs
-      exact_mod_cast (by simpa using hs : ((coeff 0 f : ℤ) : Ω) = 1)
+      exact_mod_cast (by simpa using hs : ((AddMonoidAlgebra.coeff f 0 : ℤ) : Ω) = 1)
     simp [h1]
 
 omit [Fintype ι] in

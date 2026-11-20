@@ -20,7 +20,7 @@ theorem defect_mem {R : Type} [CommRing R] (S : Subring R) (a b : R)
   choose A hAS hA using ha
   choose B hBS hB using hb
   have hD : ∀ d : Fin 2 →₀ ℕ, ∃ D : ℤ, (((d 0).factorial * (d 1).factorial : ℕ) : ℤ) *
-      MvPolynomial.coeff d (logDefect n) = ((n.factorial * ((n - 1) / 2).factorial : ℕ) : ℤ) * D := by
+      AddMonoidAlgebra.coeff (logDefect n) d = ((n.factorial * ((n - 1) / 2).factorial : ℕ) : ℤ) * D := by
     intro d
     have hd : Finsupp.single 0 (d 0) + Finsupp.single 1 (d 1) = d := by
       ext x; fin_cases x <;> simp

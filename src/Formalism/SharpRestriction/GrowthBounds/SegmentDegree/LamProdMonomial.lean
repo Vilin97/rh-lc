@@ -24,9 +24,9 @@ abbrev lam_ph (g : Fin J → σ → τ) (e : Fin J → σ → ℕ) (j : Fin J) :
 
 theorem lam_expand (g : Fin J → σ → τ) (e : Fin J → σ → ℕ) (y : Fin J → MvPolynomial σ R) :
     ∏ j, lam_ph g e j (y j) = ∑ m ∈ Fintype.piFinset (fun j => (y j).support),
-      monomial (∑ j, imgMon (g j) (e j) (m j)) (∏ j, coeff (m j) (y j)) := by
+      monomial (∑ j, imgMon (g j) (e j) (m j)) (∏ j, AddMonoidAlgebra.coeff (y j) (m j)) := by
   classical
-  have h : ∀ j, lam_ph g e j (y j) = ∑ m ∈ (y j).support, monomial (imgMon (g j) (e j) m) (coeff m (y j)) := by
+  have h : ∀ j, lam_ph g e j (y j) = ∑ m ∈ (y j).support, monomial (imgMon (g j) (e j) m) (AddMonoidAlgebra.coeff (y j) m) := by
     intro j
     conv_lhs => rw [(y j).as_sum]
     rw [map_sum]
@@ -39,8 +39,8 @@ theorem lam_coeff (g : Fin J → σ → τ) (e : Fin J → σ → ℕ) (l : τ �
       ∑ j, imgMon (g j) (e j) (m j) = ∑ j, imgMon (g j) (e j) (m' j) → m = m')
     (y : Fin J → MvPolynomial σ F) (hy : ∀ j, y j ∈ restrictSupport F (S j)) (s : Fin J → σ →₀ ℕ)
     (hs : ∀ j, s j ∈ S j) :
-    coeff (l + ∑ j, imgMon (g j) (e j) (s j)) (monomial l (1 : F) * ∏ j, lam_ph g e j (y j)) =
-      ∏ j, coeff (s j) (y j) := by
+    AddMonoidAlgebra.coeff (monomial l (1 : F) * ∏ j, lam_ph g e j (y j)) (l + ∑ j, imgMon (g j) (e j) (s j)) =
+      ∏ j, AddMonoidAlgebra.coeff (y j) (s j) := by
   classical
   rw [coeff_monomial_mul, one_mul, lam_expand, coeff_sum, Finset.sum_eq_single s]
   · rw [coeff_monomial, if_pos rfl]
@@ -80,10 +80,10 @@ theorem lam_li_fixed (g : Fin J → σ → τ) (e : Fin J → σ → ℕ) (l : �
   classical
   rw [Fintype.linearIndependent_iff]
   intro c hc b
-  have hstar : ∀ s : Fin J → σ →₀ ℕ, ∑ a, c a * ∏ j, coeff (s j) (u j (a j)) = 0 := by
+  have hstar : ∀ s : Fin J → σ →₀ ℕ, ∑ a, c a * ∏ j, AddMonoidAlgebra.coeff (u j (a j)) (s j) = 0 := by
     intro s
     by_cases hs : ∀ j, s j ∈ S j
-    · have h1 := congrArg (coeff (l + ∑ j, imgMon (g j) (e j) (s j))) hc
+    · have h1 := congrArg (AddMonoidAlgebra.coeff · (l + ∑ j, imgMon (g j) (e j) (s j))) hc
       rw [coeff_sum, coeff_zero] at h1
       rw [← h1]
       refine Finset.sum_congr rfl fun a _ => ?_
@@ -95,14 +95,14 @@ theorem lam_li_fixed (g : Fin J → σ → τ) (e : Fin J → σ → ℕ) (l : �
   choose ψ hψ using fun j => lam_dual (u j) (hu j)
   let supp : ∀ j, Finset (σ →₀ ℕ) := fun j => Finset.univ.biUnion fun a => (u j a).support
   let w : ∀ j, (σ →₀ ℕ) → F := fun j m => ψ j (monomial m 1) (b j)
-  have hexp : ∀ j (a : I j), (ψ j (u j a)) (b j) = ∑ m ∈ supp j, coeff m (u j a) * w j m := by
+  have hexp : ∀ j (a : I j), (ψ j (u j a)) (b j) = ∑ m ∈ supp j, AddMonoidAlgebra.coeff (u j a) m * w j m := by
     intro j a
     conv_lhs => rw [(u j a).as_sum]
     rw [map_sum, Finsupp.finsetSum_apply]
     have hsub : (u j a).support ⊆ supp j := fun m hm => Finset.mem_biUnion.mpr ⟨a, Finset.mem_univ _, hm⟩
     rw [← Finset.sum_subset hsub]
     · refine Finset.sum_congr rfl fun m _ => ?_
-      have : (monomial m (coeff m (u j a)) : MvPolynomial σ F) = coeff m (u j a) • monomial m (1 : F) := by
+      have : (monomial m (AddMonoidAlgebra.coeff (u j a) m) : MvPolynomial σ F) = AddMonoidAlgebra.coeff (u j a) m • monomial m (1 : F) := by
         rw [smul_monomial, smul_eq_mul, mul_one]
       rw [this, map_smul, Finsupp.smul_apply, smul_eq_mul]
     · intro m _ hm
@@ -116,7 +116,7 @@ theorem lam_li_fixed (g : Fin J → σ → τ) (e : Fin J → σ → ℕ) (l : �
     · intro h; exact absurd (Finset.mem_univ _) h
   have h2 : ∑ a, c a * ∏ j, (ψ j (u j (a j))) (b j) = 0 := by
     have e1 : ∀ a : ∀ j, I j, c a * ∏ j, (ψ j (u j (a j))) (b j) =
-        ∑ s ∈ Fintype.piFinset supp, (c a * ∏ j, coeff (s j) (u j (a j))) * ∏ j, w j (s j) := by
+        ∑ s ∈ Fintype.piFinset supp, (c a * ∏ j, AddMonoidAlgebra.coeff (u j (a j)) (s j)) * ∏ j, w j (s j) := by
       intro a
       rw [Finset.prod_congr rfl fun j _ => hexp j (a j), Finset.prod_univ_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun s _ => ?_
@@ -142,7 +142,7 @@ theorem lam_li_all {Φ : Type} (g : Fin J → σ → τ) (e : Fin J → σ → �
   · intro x
     rw [MvPolynomial.mem_restrictSupport_iff]
     intro n hn
-    have hn' : coeff n (monomial (l x.1) (1 : F) * ∏ j, lam_ph g e j (u x.1 j (x.2 j))) ≠ 0 :=
+    have hn' : AddMonoidAlgebra.coeff (monomial (l x.1) (1 : F) * ∏ j, lam_ph g e j (u x.1 j (x.2 j))) n ≠ 0 :=
       MvPolynomial.mem_support_iff.mp (Finset.mem_coe.mp hn)
     rw [coeff_monomial_mul'] at hn'
     split_ifs at hn' with hle

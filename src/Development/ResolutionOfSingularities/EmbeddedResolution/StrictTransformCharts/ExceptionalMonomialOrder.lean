@@ -271,7 +271,7 @@ private theorem C_coeff_mem_of_minimal_prime {R : Type*} [CommRing R] {σ : Type
     (Pp : Ideal (MvPolynomial σ R)) [Pp.IsPrime]
     (hmin : ∀ K : Ideal (MvPolynomial σ R), K.IsPrime → K ≤ Pp → Pp ≤ K)
     {p : MvPolynomial σ R} (hp : p ∈ Pp) (d : σ →₀ ℕ) :
-    MvPolynomial.C (MvPolynomial.coeff d p) ∈ Pp := by
+    MvPolynomial.C (AddMonoidAlgebra.coeff p d) ∈ Pp := by
   have hq : (Ideal.comap (MvPolynomial.C : R →+* MvPolynomial σ R) Pp).IsPrime :=
     Ideal.comap_isPrime (MvPolynomial.C : R →+* MvPolynomial σ R) Pp
   have hle : Ideal.map (MvPolynomial.C : R →+* MvPolynomial σ R)
@@ -455,14 +455,14 @@ theorem ideal_le_comap_pow_succ_of_map_le_span_pow_mul {A B : Type*} [CommRing A
     rw [map_mul, hΨC, map_powProd, hfun]
     exact C_mul_powProd_X_eq_monomial (fsel i) _
   have hcoeff : ∀ g₀ ∈ cf.support,
-      MvPolynomial.coeff (fsel g₀)
-          (∑ i ∈ cf.support, MvPolynomial.monomial (fsel i)
+      AddMonoidAlgebra.coeff (∑ i ∈ cf.support, MvPolynomial.monomial (fsel i)
             (Ideal.Quotient.mk (Ideal.span (x '' (S : Set (Fin m)))) (cf i)))
+          (fsel g₀)
         = Ideal.Quotient.mk (Ideal.span (x '' (S : Set (Fin m)))) (cf g₀) := by
     intro g₀ hg₀
     have hstep : ∀ g ∈ cf.support, g ≠ g₀ →
-        MvPolynomial.coeff (fsel g₀) (MvPolynomial.monomial (fsel g)
-          (Ideal.Quotient.mk (Ideal.span (x '' (S : Set (Fin m)))) (cf g))) = 0 := by
+        AddMonoidAlgebra.coeff (MvPolynomial.monomial (fsel g)
+          (Ideal.Quotient.mk (Ideal.span (x '' (S : Set (Fin m)))) (cf g))) (fsel g₀) = 0 := by
       intro g hg hne
       have hne' : fsel g ≠ fsel g₀ := fun hh => hne (hinj g hg g₀ hg₀ hh)
       rw [MvPolynomial.coeff_monomial, if_neg hne']

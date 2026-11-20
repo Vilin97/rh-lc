@@ -81,7 +81,7 @@ theorem PositivityTheory.UnitarySelfGeneration.UnitProductCombination.irreducibl
   have hunit : ∀ {σ : Type} (q : MvPolynomial σ K), q ≠ 0 → q.totalDegree = 0 → IsUnit q := by
     intro σ q hq hd
     rw [totalDegree_eq_zero_iff_eq_C] at hd
-    refine isUnit_iff_eq_C_of_isReduced.mpr ⟨coeff 0 q, isUnit_iff_ne_zero.mpr ?_, hd⟩
+    refine isUnit_iff_eq_C_of_isReduced.mpr ⟨AddMonoidAlgebra.coeff q 0, isUnit_iff_ne_zero.mpr ?_, hd⟩
     intro h0
     apply hq
     rw [hd, h0, C_0]

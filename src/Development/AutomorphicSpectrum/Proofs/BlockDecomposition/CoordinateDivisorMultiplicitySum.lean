@@ -94,11 +94,11 @@ theorem gam_of_form {Z : Scheme.{0}} (f : Z ⟶ MP ℤ m n) (c : ∀ k, Bk n k) 
     refine Finset.prod_congr rfl fun k _ => ?_
     show ∏ i, (X k : MvPolynomial (Fin (m + 1)) Γ(Z, f ⁻¹ᵁ mchart c)) ^ e ⟨k, i⟩ = _
     rw [← he' k, Finset.prod_pow_eq_pow_sum]
-  have hm : (monomial e (coeff e F) : Pol n) = C (coeff e F) * ∏ p, X p ^ e p := by
+  have hm : (monomial e (AddMonoidAlgebra.coeff F e) : Pol n) = C (AddMonoidAlgebra.coeff F e) * ∏ p, X p ^ e p := by
     rw [monomial_eq, Finsupp.prod_fintype _ _ (fun _ => pow_zero _)]
   rw [hm]
   simp only [map_mul, map_prod, map_pow, gam_X, mul_pow, Finset.prod_mul_distrib, hX]
-  have hc : gam f c (C (coeff e F)) = C (eps f c (C (coeff e F))) := by
+  have hc : gam f c (C (AddMonoidAlgebra.coeff F e)) = C (eps f c (C (AddMonoidAlgebra.coeff F e))) := by
     simp [gam, eps, Phi, dehomog]
   rw [hc]
   ring

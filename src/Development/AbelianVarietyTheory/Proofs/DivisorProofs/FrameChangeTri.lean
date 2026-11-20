@@ -40,7 +40,7 @@ theorem det_le (hw : IsNonarchimedean w) {n : Type} [Fintype n] [DecidableEq n] 
   refine sum_le w hw _ _ zero_le_one fun σ _ => ?_
   have hp : w (∏ i, A (σ i) i) ≤ 1 := by
     rw [map_prod]
-    exact Finset.prod_le_one (fun i _ => w.nonneg _) fun i _ => hA _ _
+    exact Finset.prod_le_one₀ (fun i _ => w.nonneg _) fun i _ => hA _ _
   rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with h | h <;> rw [h]
   · rwa [one_smul]
   · rwa [Units.neg_smul, one_smul, w.map_neg]

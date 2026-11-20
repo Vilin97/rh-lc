@@ -70,7 +70,7 @@ theorem topTens_props : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
     · exact continuous_id.matrix_elem a b
   · refine continuous_pi fun a => continuous_pi fun b => ?_
     unfold gramR hR hform
-    refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun j _ => ?_
+    refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ => ?_
     exact ((hs.comp ((continuous_apply i).comp (continuous_apply a))).mul continuous_const).mul
       ((continuous_apply j).comp (continuous_apply b))
 

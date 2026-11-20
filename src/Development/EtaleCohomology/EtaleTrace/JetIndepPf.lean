@@ -37,7 +37,7 @@ theorem jetIndep_dvd {n p : ℕ} [CharP k p] (F : MvPolynomial (Fin n) k) (h : �
     (α : Fin n →₀ ℕ) (hα : α ∈ F.support) (i : Fin n) : p ∣ α i := by
   rcases Nat.eq_zero_or_pos (α i) with h0 | hpos
   · simp [h0]
-  have hc := congrArg (coeff (α - Finsupp.single i 1)) (h i)
+  have hc := congrArg (AddMonoidAlgebra.coeff · (α - Finsupp.single i 1)) (h i)
   rw [coeff_pderiv, coeff_zero] at hc
   have hα' : α - Finsupp.single i 1 + Finsupp.single i 1 = α := by
     ext l
@@ -45,7 +45,7 @@ theorem jetIndep_dvd {n p : ℕ} [CharP k p] (F : MvPolynomial (Fin n) k) (h : �
     · subst hl; simp; omega
     · simp [hl]
   rw [hα'] at hc
-  have hne : coeff α F ≠ 0 := mem_support_iff.1 hα
+  have hne : AddMonoidAlgebra.coeff F α ≠ 0 := mem_support_iff.1 hα
   have h1 : (((α - Finsupp.single i 1 : Fin n →₀ ℕ) i : ℕ) : k) + 1 = 0 := (mul_eq_zero.1 hc).resolve_left hne
   have e : (α - Finsupp.single i 1 : Fin n →₀ ℕ) i + 1 = α i := by simp; omega
   rw [← CharP.cast_eq_zero_iff k p, ← e]
@@ -58,7 +58,7 @@ theorem jetIndep_root {n p : ℕ} [Fact p.Prime] [CharP k p] [PerfectRing k p]
   let q : (Fin n →₀ ℕ) → (Fin n →₀ ℕ) := fun α => Finsupp.mapRange (· / p) (Nat.zero_div p) α
   have hq : ∀ α ∈ F.support, p • q α = α := by
     intro α hα; ext i; simp [q, Nat.mul_div_cancel' (hd α hα i)]
-  refine ⟨∑ α ∈ F.support, monomial (q α) ((frobeniusEquiv k p).symm (coeff α F)), ?_, ?_⟩
+  refine ⟨∑ α ∈ F.support, monomial (q α) ((frobeniusEquiv k p).symm (AddMonoidAlgebra.coeff F α)), ?_, ?_⟩
   · apply IsHomogeneous.sum
     intro α hα
     apply isHomogeneous_monomial

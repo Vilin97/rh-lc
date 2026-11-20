@@ -48,7 +48,7 @@ theorem coeff_zero {n : ℕ} (A : Finset (Fin n → ℕ)) (b : (Fin n → ℕ) �
     rw [MvPolynomial.eval_monomial, Finsupp.prod_fintype _ _ (fun i => pow_zero _)]
     simp
   intro α hα
-  have := congrArg (MvPolynomial.coeff (Finsupp.equivFunOnFinite.symm α)) hp
+  have := congrArg (AddMonoidAlgebra.coeff · (Finsupp.equivFunOnFinite.symm α)) hp
   rw [hpdef, MvPolynomial.coeff_sum, MvPolynomial.coeff_zero] at this
   rw [Finset.sum_eq_single α] at this
   · simpa [MvPolynomial.coeff_monomial] using this

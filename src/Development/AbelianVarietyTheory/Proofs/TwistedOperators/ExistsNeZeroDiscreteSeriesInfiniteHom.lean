@@ -140,7 +140,7 @@ theorem norm_le_apply_unit (hδ : ∀ i, IsIrrUnitary (δ i)) (hρ : IsUnitaryRe
     ‖Φ‖ ≤ ‖Φ fun i => unitVec (Hs i)‖ := by
   refine ContinuousMultilinearMap.opNorm_le_bound (norm_nonneg _) fun y => ?_
   rw [norm_apply_eq hδ hρ hΦ y, mul_assoc, ← Finset.prod_mul_prod_compl s fun i => ‖y i‖]
-  refine mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left (Finset.prod_le_prod (fun i _ => norm_nonneg _)
+  refine mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left (Finset.prod_le_prod₀ (fun i _ => norm_nonneg _)
     fun i _ => ?_) (Finset.prod_nonneg fun i _ => norm_nonneg _)) (norm_nonneg _)
   have := (hδ i).irred.1
   exact (norm_inner_le_norm _ _).trans (by rw [norm_unitVec, one_mul])

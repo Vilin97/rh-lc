@@ -69,9 +69,9 @@ theorem MChartHomog.proof : MChartHomog.Statement.{u} := by
     ⟨fun k => p.support.sup fun e => Finsupp.weight (blockWeight ι) e k, fun e he k =>
       Finset.le_sup (f := fun e => Finsupp.weight (blockWeight ι) e k) he⟩
   refine ⟨b, ∑ e ∈ p.support,
-    monomial e (coeff e p) * chartMonomial u (b - Finsupp.weight (blockWeight ι) e), ?_, ?_⟩
+    monomial e (AddMonoidAlgebra.coeff p e) * chartMonomial u (b - Finsupp.weight (blockWeight ι) e), ?_, ?_⟩
   · refine IsWeightedHomogeneous.sum _ _ _ fun e he => ?_
-    have := (isWeightedHomogeneous_monomial (blockWeight ι) e (coeff e p) rfl).mul
+    have := (isWeightedHomogeneous_monomial (blockWeight ι) e (AddMonoidAlgebra.coeff p e) rfl).mul
       (chartMonomial_isMultiHomog (F := F) u (b - Finsupp.weight (blockWeight ι) e))
     rwa [add_tsub_cancel_of_le (hle e he)] at this
   · intro P _ hu

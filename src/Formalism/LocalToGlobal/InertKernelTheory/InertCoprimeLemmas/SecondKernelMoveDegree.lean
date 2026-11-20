@@ -117,7 +117,7 @@ theorem aeval_CX_monomial {σ R : Type} [CommRing R] (c : σ → R) (s : σ →�
   ring
 
 theorem coeff_aeval_CX {σ R : Type} [CommRing R] (c : σ → R) (Q : MvPolynomial σ R) (n : σ →₀ ℕ) :
-    coeff n (aeval (fun i => C (c i) * X i) Q) = (n.prod fun i k => c i ^ k) * coeff n Q := by
+    AddMonoidAlgebra.coeff (aeval (fun i => C (c i) * X i) Q) n = (n.prod fun i k => c i ^ k) * AddMonoidAlgebra.coeff Q n := by
   classical
   induction Q using MvPolynomial.induction_on' with
   | monomial s a =>
@@ -125,7 +125,7 @@ theorem coeff_aeval_CX {σ R : Type} [CommRing R] (c : σ → R) (Q : MvPolynomi
     split_ifs with h
     · subst h; ring
     · rw [mul_zero]
-  | add P Q hP hQ => rw [map_add, coeff_add, coeff_add, hP, hQ, mul_add]
+  | add P Q hP hQ => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hP, hQ, mul_add]
 
 theorem colSub_diag {N : ℕ} (d : D.what₂.Tau → ℂ) :
     colSub (fun τ' => Matrix.diagonal fun _ : Fin N => d τ') =
@@ -143,7 +143,7 @@ theorem two_pow_ite (b : Prop) [Decidable b] (k : ℕ) :
   split_ifs <;> simp
 
 theorem wt_deg {N : ℕ} (ν : D.what₂.Tau → Fin N → ℕ) (Q : MvPolynomial (GL3Theta.FrV D N) ℂ) (hQ : Q ∈ WtPol ℂ ν)
-    (τ : D.what₂.Tau) (m : GL3Theta.FrV D N →₀ ℕ) (hm : coeff m Q ≠ 0) :
+    (τ : D.what₂.Tau) (m : GL3Theta.FrV D N →₀ ℕ) (hm : AddMonoidAlgebra.coeff Q m ≠ 0) :
     Finsupp.weight (wF τ) m = ∑ r, ν τ r := by
   classical
   set d : D.what₂.Tau → ℂ := fun τ' => if τ' = τ then 2 else 1 with hd
@@ -156,7 +156,7 @@ theorem wt_deg {N : ℕ} (ν : D.what₂.Tau → Fin N → ℕ) (Q : MvPolynomia
     split_ifs <;> norm_num
   have h1 := hQ (fun τ' => Matrix.diagonal fun _ : Fin N => d τ') hB
   rw [colSub_diag] at h1
-  have h2 := congrArg (coeff m) h1
+  have h2 := congrArg (AddMonoidAlgebra.coeff · m) h1
   rw [coeff_aeval_CX, coeff_smul, smul_eq_mul] at h2
   have h3 := mul_right_cancel₀ hm h2
   have hl : (m.prod fun k e => d k.1 ^ e) = (2 : ℂ) ^ Finsupp.weight (wF τ) m := by
@@ -193,7 +193,7 @@ theorem polDY_wh {N N' : ℕ} (s : D.what₂.Tau → ℂ) (ν : D.what₂.Tau �
   rw [map_sum]
   refine IsWeightedHomogeneous.sum _ _ _ fun m hm => ?_
   rw [aeval_monomial, MvPolynomial.algebraMap_apply, ← wt_deg ν Q hQ τ m (mem_support_iff.1 hm), Finsupp.weight_apply]
-  have := (isWeightedHomogeneous_C (wI (N := N) (N' := N') τ) (algebraMap ℂ (MvPolynomial (GL3Theta.FrV D N') ℂ) (coeff m Q))).mul
+  have := (isWeightedHomogeneous_C (wI (N := N) (N' := N') τ) (algebraMap ℂ (MvPolynomial (GL3Theta.FrV D N') ℂ) (AddMonoidAlgebra.coeff Q m))).mul
     (IsWeightedHomogeneous.prod _ _ _ fun x _ => (hf x).pow (m x) : IsWeightedHomogeneous (wI (N := N) (N' := N') τ)
       (m.prod fun x e => (∑ b : Fin N', C (C (s x.1) * (if h : (x.2.2 : ℕ) < N' then (X (x.1, b, ⟨x.2.2, h⟩) : MvPolynomial (GL3Theta.FrV D N') ℂ) else 0)) *
         X ((x.1, b, x.2.1) : GL3Theta.Idx D N N')) ^ e) (m.sum fun x e => e • wF τ x))

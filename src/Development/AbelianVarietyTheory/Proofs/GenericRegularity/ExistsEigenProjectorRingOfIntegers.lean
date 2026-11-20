@@ -49,7 +49,7 @@ theorem _root_.GlobalTheory.exists_eigen_projector_ringOfIntegers : ∀ (E K : T
     have hb : (b : E) ∈ Algebra.adjoin ℚ {α0} := hadj ▸ Algebra.mem_top
     rw [Algebra.adjoin_singleton_eq_range_aeval] at hb
     obtain ⟨p, hp⟩ := hb
-    obtain ⟨c, hc⟩ := IsLocalization.integerNormalization_map_to_map (nonZeroDivisors ℤ)
+    obtain ⟨c, hc⟩ := IsLocalization.integerNormalization_spec (nonZeroDivisors ℤ)
       (p.comp (C ((y : ℚ)⁻¹) * X))
     refine ⟨c, nonZeroDivisors.ne_zero c.2, IsLocalization.integerNormalization (nonZeroDivisors ℤ)
       (p.comp (C ((y : ℚ)⁻¹) * X)), ?_⟩

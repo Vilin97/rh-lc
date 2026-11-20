@@ -311,7 +311,7 @@ theorem flag_mul_pull : Hypotheses2 → ∀ (k : Type) [CommRing k] (B Y : Schem
   rw [VertForm.FormEx.arFun_eq_rename hP.p4 hY hΨ' hΨ (Sum.map s id) (by rintro (a | a) <;> rfl)] at e₁
   have e₂ := Var.inter_eq_of_toPic_eq (Δ := gr ∘ s) (fun i => LB.isLB_pull ((fl (s i).1).isLB_root (s i).2) j)
     fun i => (hgr (s i)).trans (lbIso_root_sqFlag hj.w (fl (s i).1) (s i).2)
-  rw [show monomial m (coeff m Q) = coeff m Q • monomial m 1 by rw [smul_monomial, smul_eq_mul, mul_one], e₀, map_smul,
+  rw [show monomial m (AddMonoidAlgebra.coeff Q m) = AddMonoidAlgebra.coeff Q m • monomial m 1 by rw [smul_monomial, smul_eq_mul, mul_one], e₀, map_smul,
     smul_mul_assoc, map_smul, map_smul, smul_eq_mul, smul_eq_mul, mul_assoc, Var.interPoly_prod, e₂]
   congr 1
   refine Eq.trans (congrArg Ψ ?_) e₁

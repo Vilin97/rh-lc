@@ -74,11 +74,11 @@ noncomputable def sumPoly {A : Type} [CommRing A] (c : ℕ → A) (n : ℕ) : A[
 
 lemma sumPoly_eval {A : Type} [CommRing A] (c : ℕ → A) (n : ℕ) (x : A) :
     (sumPoly c n).eval x = ∑ k ∈ Finset.range (n + 1), c k * x ^ k := by
-  simp [sumPoly, eval_finset_sum]
+  simp [sumPoly, Polynomial.eval_finsetSum]
 
 lemma sumPoly_coeff {A : Type} [CommRing A] (c : ℕ → A) (n m : ℕ) :
     (sumPoly c n).coeff m = if m < n + 1 then c m else 0 := by
-  simp [sumPoly, finset_sum_coeff, coeff_C_mul_X_pow]
+  simp [sumPoly, Polynomial.finsetSum_coeff, coeff_C_mul_X_pow]
 
 lemma sumPoly_monic {A : Type} [CommRing A] (c : ℕ → A) (n : ℕ) (h : c n = 1) :
     (sumPoly c n).Monic := by
@@ -98,7 +98,7 @@ theorem monic_relations_to_blocks : ∀ (V : Type) [AddCommGroup V] [Module ℂ 
     · exact (hRS u v).eq
     · exact (hRS v u).eq.symm
     · exact (hSS u v).eq
-  letI : CommRing (Algebra.adjoin ℂ s) := Algebra.adjoinCommRingOfComm ℂ hcomm
+  letI : CommRing (Algebra.adjoin ℂ s) := Algebra.isMulCommutative_adjoin ℂ hcomm
   have hpres : Algebra.adjoin ℂ s ≤ preserving I := by
     rw [Algebra.adjoin_le_iff]
     rintro x (⟨u, rfl⟩ | ⟨u, rfl⟩)

@@ -92,7 +92,7 @@ theorem product_bound_forces_pos (D : D7) (large₂ : SizeData₂ D) (C' Cl Cg c
   have hrest : 1 ≤ ∏ s' ∈ (Finset.univ.erase (0 : Fin (2 * D.R.rS + D.R.k + 1))).erase
       (Fin.last (2 * D.R.rS + D.R.k)),
       (lamD D τ 0 + 1 - lamD D τ s') / (lamD D τ 0 - lamD D τ s') := by
-    have := Finset.prod_le_prod
+    have := Finset.prod_le_prod₀
       (s := (Finset.univ.erase (0 : Fin (2 * D.R.rS + D.R.k + 1))).erase (Fin.last (2 * D.R.rS + D.R.k)))
       (f := fun _ => (1 : ℝ))
       (g := fun s' => (lamD D τ 0 + 1 - lamD D τ s') / (lamD D τ 0 - lamD D τ s'))

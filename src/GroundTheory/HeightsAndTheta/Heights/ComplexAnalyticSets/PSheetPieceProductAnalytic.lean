@@ -178,7 +178,7 @@ theorem isBounded_prodFn {σ : Type} [Fintype σ] {X : Set (σ → ℂ)} {w : σ
   unfold prodFn
   rw [finprod_mem_eq_finite_toFinset_prod _ hsfin]
   calc ‖∏ x ∈ hsfin.toFinset, (p 0 - ℓ x)‖ ≤ ∏ x ∈ hsfin.toFinset, ‖p 0 - ℓ x‖ := Finset.norm_prod_le _ _
-    _ ≤ ∏ _x ∈ hsfin.toFinset, C := Finset.prod_le_prod (fun _ _ => norm_nonneg _) hbd
+    _ ≤ ∏ _x ∈ hsfin.toFinset, C := Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) hbd
     _ = C ^ hsfin.toFinset.card := Finset.prod_const C
     _ ≤ C ^ N := pow_le_pow_right₀ (le_max_left _ _) hcardle
 

@@ -51,7 +51,7 @@ theorem term_bound (b : E → ℂ) (hb : ContDiff ℝ ∞ b) (A : ℕ → ℝ) (
   rw [iter_term b hb, norm_smul]
   refine mul_le_mul_of_nonneg_left ?_ (norm_nonneg _)
   refine (ContinuousMultilinearMap.norm_compContinuousLinearMap_le _ _).trans ?_
-  have h : ∏ _i : Fin n, ‖sc E k‖ ≤ 1 := Finset.prod_le_one (fun _ _ => norm_nonneg _) fun _ _ => norm_sc_le k
+  have h : ∏ _i : Fin n, ‖sc E k‖ ≤ 1 := Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun _ _ => norm_sc_le k
   exact (mul_le_of_le_one_right (norm_nonneg _) h).trans (hA n _)
 
 theorem term_zero (b : E → ℂ) (hb : ContDiff ℝ ∞ b) (hs : ∀ n x, 2 < ‖x‖ → iteratedFDeriv ℝ n b x = 0)

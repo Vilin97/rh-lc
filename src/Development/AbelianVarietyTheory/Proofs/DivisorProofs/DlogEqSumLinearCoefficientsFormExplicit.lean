@@ -70,14 +70,14 @@ theorem dUnit_ev_of_two (n : ℕ) (f : MvPowerSeries (Fin d) O)
   rw [hsplit, map_add, dUnit, map_add, ← dUnit, ← dUnit]
   rw [c.dUnit_ev_of_high n N hN (f - P) fun α hα => ?_, add_zero]
   · rw [MvPolynomial.as_sum P]
-    have : ((∑ v ∈ P.support, MvPolynomial.monomial v (MvPolynomial.coeff v P) :
+    have : ((∑ v ∈ P.support, MvPolynomial.monomial v (AddMonoidAlgebra.coeff P v) :
         MvPolynomial (Fin d) O) : MvPowerSeries (Fin d) O) =
-        ∑ v ∈ P.support, monomial v (MvPolynomial.coeff v P) := by
+        ∑ v ∈ P.support, monomial v (AddMonoidAlgebra.coeff P v) := by
       rw [← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_sum]
       simp only [MvPolynomial.coeToMvPowerSeries.ringHom_apply, MvPolynomial.coe_monomial]
     rw [this, map_sum, dUnit, map_sum]
     refine Finset.sum_eq_zero fun v hv => ?_
-    have hv' : MvPolynomial.coeff v P ≠ 0 := MvPolynomial.mem_support_iff.1 hv
+    have hv' : AddMonoidAlgebra.coeff P v ≠ 0 := MvPolynomial.mem_support_iff.1 hv
     have h2 : 2 ≤ v.degree := by
       by_contra hc
       apply hv'

@@ -261,7 +261,7 @@ theorem Dsrc_monomial (l : Fin n) (d : FinalTheorems m n →₀ ℕ) (r : ℂ) :
       _ = _ := by rw [hX]; ring
 
 theorem coeff_Dsrc (l : Fin n) (p : MvPolynomial (FinalTheorems m n) ℂ) (d : FinalTheorems m n →₀ ℕ) :
-    coeff d (Dsrc (m := m) l l p) = ((wgt l d : ℤ) : ℂ) * coeff d p := by
+    AddMonoidAlgebra.coeff (Dsrc (m := m) l l p) d = ((wgt l d : ℤ) : ℂ) * AddMonoidAlgebra.coeff p d := by
   conv_lhs => rw [p.as_sum]
   rw [map_sum, coeff_sum]
   simp only [Dsrc_monomial, coeff_C_mul, coeff_monomial]
@@ -296,9 +296,9 @@ theorem act_diag (D : Fin n → ℂ) (hD : ∀ l, D l ≠ 0) (p : MvPolynomial (
     ring
   have hw : ∀ d ∈ p.support, ∀ l, wgt l d = 0 := by
     intro d hd l
-    have h := congrArg (coeff d) (hp l)
+    have h := congrArg (AddMonoidAlgebra.coeff · d) (hp l)
     rw [coeff_Dsrc, coeff_zero] at h
-    have hc : coeff d p ≠ 0 := mem_support_iff.mp hd
+    have hc : AddMonoidAlgebra.coeff p d ≠ 0 := mem_support_iff.mp hd
     exact_mod_cast (mul_eq_zero.mp h).resolve_right hc
   have hprod : ∀ d ∈ p.support, (d.prod fun v k => cv v ^ k) = 1 := by
     intro d hd

@@ -32,7 +32,7 @@ theorem OtherFactorBound.coeff_bound (hS : SchurSignCoefficient.Statement)
   have hex : ∀ nu : Fin r → ℕ, ∃ T : MvPolynomial (Fin (r + a)) ℚ, nu ∈ partitionsOf r k →
       powerSumHom (r + a) T = aeval (fun i : Fin (r + a) => C c.sign * X i)
           (schur (Fin (r + a)) nu) ∧
-        coeff e T = c.sign ^ k * if ∀ i : Fin r, (i : ℕ) ≠ 0 → nu i ≤ 1 then
+        AddMonoidAlgebra.coeff T e = c.sign ^ k * if ∀ i : Fin r, (i : ℕ) ≠ 0 → nu i ≤ 1 then
           (-1 : ℚ) ^ ((Finset.univ.filter fun i : Fin r => (i : ℕ) ≠ 0 ∧ nu i = 1).card) / k
         else 0 := by
     intro nu
@@ -112,7 +112,7 @@ theorem OtherFactorBound.proof (hO : OtherFactorFormula.Statement)
       simp only [List.mem_cons, List.mem_replicate] at hq
       omega)
   rw [hTk, hJ]
-  set y := coeff (Finsupp.single (⟨k - 1, by omega⟩ : Fin (r + a)) 1) S
+  set y := AddMonoidAlgebra.coeff S (Finsupp.single (⟨k - 1, by omega⟩ : Fin (r + a)) 1)
   set z := symmetricGroupCharacter (rectangle r a) ((k - 1) :: List.replicate (r * a - (k - 1)) 1)
   set P : ℚ := (numStandardTable (rectangle r a) : ℚ) with hPdef
   obtain ⟨g, rfl⟩ : ∃ g, f = g + 2 := ⟨f - 2, by omega⟩

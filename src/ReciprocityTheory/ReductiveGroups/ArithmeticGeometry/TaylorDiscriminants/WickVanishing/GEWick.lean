@@ -81,11 +81,11 @@ theorem dmonOf_zero (m : ι →₀ ℕ) : DmonOf F u m (0 : PS k 1 d) = 0 := by
 
 theorem dpolyOf_eq_sum_of_subset (P : MvPolynomial ι k) (S : Finset (ι →₀ ℕ)) (hS : P.support ⊆ S)
     (f : PS k 1 d) :
-    DpolyOf F u P f = ∑ m ∈ S, C (MvPolynomial.coeff m P) * DmonOf F u m f := by
+    DpolyOf F u P f = ∑ m ∈ S, C (AddMonoidAlgebra.coeff P m) * DmonOf F u m f := by
   unfold DpolyOf
   refine Finset.sum_subset hS ?_
   intro m _ hm
-  have h0 : MvPolynomial.coeff m P = 0 := by simpa [MvPolynomial.mem_support_iff] using hm
+  have h0 : AddMonoidAlgebra.coeff P m = 0 := by simpa [MvPolynomial.mem_support_iff] using hm
   simp [h0]
 
 theorem dpolyOf_add_P (P Q : MvPolynomial ι k) (f : PS k 1 d) :
@@ -149,7 +149,7 @@ section deg
 
 variable {ι : Type} [Fintype ι]
 
-def DegLt (n : ℕ) (P : MvPolynomial ι k) : Prop := ∀ m : ι →₀ ℕ, n ≤ m.degree → MvPolynomial.coeff m P = 0
+def DegLt (n : ℕ) (P : MvPolynomial ι k) : Prop := ∀ m : ι →₀ ℕ, n ≤ m.degree → AddMonoidAlgebra.coeff P m = 0
 
 theorem degLt_mono {a b : ℕ} (hab : a ≤ b) {P : MvPolynomial ι k} (h : DegLt a P) : DegLt b P :=
   fun m hm => h m (le_trans hab hm)
@@ -163,7 +163,7 @@ theorem degLt_pderiv {n : ℕ} {P : MvPolynomial ι k} (h : DegLt (n + 1) P) (l 
   rw [MvPolynomial.pderiv_monomial, MvPolynomial.coeff_monomial]
   by_cases hsm : s - Finsupp.single l 1 = m
   · rw [if_pos hsm]
-    have hc : MvPolynomial.coeff s P ≠ 0 := MvPolynomial.mem_support_iff.mp hs
+    have hc : AddMonoidAlgebra.coeff P s ≠ 0 := MvPolynomial.mem_support_iff.mp hs
     rcases Nat.eq_zero_or_pos (s l) with h0 | hpos
     · simp [h0]
     · exfalso

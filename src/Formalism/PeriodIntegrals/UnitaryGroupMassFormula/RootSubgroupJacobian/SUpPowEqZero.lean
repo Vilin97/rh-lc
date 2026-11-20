@@ -129,7 +129,7 @@ theorem hSh_dep (hS : ∀ q ∈ S, q.1 < q.2) (q : S) (v w : S → ℂ) (h : ∀
 
 theorem continuous_hSh (q : S) : Continuous (hSh S q) := by
   unfold hSh
-  refine Continuous.neg (continuous_finset_sum _ (fun m _ => ?_))
+  refine Continuous.neg (continuous_finsetSum _ (fun m _ => ?_))
   have h1 : Continuous (fun v : S → ℂ => (-vM S v) ^ (m + 1 + 1)) := ((continuous_vM S).neg).pow _
   exact h1.matrix_elem q.1.1 q.1.2
 

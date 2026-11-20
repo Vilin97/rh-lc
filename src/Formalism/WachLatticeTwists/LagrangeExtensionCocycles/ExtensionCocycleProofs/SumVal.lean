@@ -13,7 +13,7 @@ lemma sum_Ioc_add (n w : ℕ) :
   | zero => simp
   | succ w ih =>
     rw [← add_assoc, Finset.sum_Ioc_succ_top (by omega), Nat.factorial_succ,
-      padicValNat.mul (by omega) (Nat.factorial_ne_zero _), ← ih]
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by omega) (Nat.factorial_ne_zero _), ← ih]
     ring
 
 lemma sum_Ioc_eq (n w : ℕ) :
@@ -22,9 +22,9 @@ lemma sum_Ioc_eq (n w : ℕ) :
   have h1 := sum_Ioc_add ℓ n w
   have h2 := Nat.choose_mul_factorial_mul_factorial (Nat.le_add_left w n)
   rw [Nat.add_sub_cancel] at h2
-  rw [← h2, padicValNat.mul (Nat.mul_ne_zero (Nat.choose_pos (Nat.le_add_left w n)).ne'
+  rw [← h2, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.mul_ne_zero (Nat.choose_pos (Nat.le_add_left w n)).ne'
       (Nat.factorial_ne_zero _)) (Nat.factorial_ne_zero _),
-    padicValNat.mul (Nat.choose_pos (Nat.le_add_left w n)).ne' (Nat.factorial_ne_zero _)] at h1
+    (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.choose_pos (Nat.le_add_left w n)).ne' (Nat.factorial_ne_zero _)] at h1
   omega
 
 lemma one_lt_cast : (1 : ℝ) < (ℓ : ℝ) := by

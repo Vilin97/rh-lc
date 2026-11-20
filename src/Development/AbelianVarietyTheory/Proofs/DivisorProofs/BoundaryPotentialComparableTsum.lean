@@ -120,7 +120,7 @@ theorem rTot_comparable_tSum : ∀ {e : ℕ} {X : Type} [TopologicalSpace X] (A 
     have hp : 0 < ∏ i, normSec (L i) (s i) (ψ.symm z) :=
       Finset.prod_pos (fun i _ => lt_of_le_of_ne (hnn i) (hne i).symm)
     have hp1 : ∏ i, normSec (L i) (s i) (ψ.symm z) ≤ 1 :=
-      Finset.prod_le_one (fun i _ => hnn i) (fun i _ => (hB i).2.2.2 _)
+      Finset.prod_le_one₀ (fun i _ => hnn i) (fun i _ => (hB i).2.2.2 _)
     have : Real.log ((∏ i, normSec (L i) (s i) (ψ.symm z)) ^ 2) ≤ 0 :=
       Real.log_nonpos (by positivity) (pow_le_one₀ hp.le hp1)
     linarith

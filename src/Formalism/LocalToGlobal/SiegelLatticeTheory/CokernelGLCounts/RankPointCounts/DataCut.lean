@@ -262,7 +262,7 @@ theorem densInputAt_of (hL : DensLocBound D) (hα : AlpBound D) (hP : PlacesOver
       lt_of_mul_lt_mul_right hxd hαpos.le
     obtain ⟨S, hS⟩ := (hMq.hasProd.eventually (lt_mem_nhds hxq)).exists
     refine ⟨S, le_of_lt (lt_of_lt_of_le hS ?_)⟩
-    exact Finset.prod_le_prod (fun p _ => (div_pos (hb p).1 (hal0 p)).le) (fun p _ => (hb p).2)
+    exact Finset.prod_le_prod₀ (fun p _ => (div_pos (hb p).1 (hal0 p)).le) (fun p _ => (hb p).2)
   · rw [Set.not_nonempty_iff_eq_empty] at hne
     have h0 : supDens L δ ϖ u u' F0 what₂ = 0 := by simp [supDens, hne]
     rw [h0, zero_div] at hx

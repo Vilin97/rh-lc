@@ -12,10 +12,10 @@ section Lsum
 variable {σ K : Type*} [CommRing K]
 
 def Lsum (w : (σ →₀ ℕ) → K) (Q : MvPolynomial σ K) : K :=
-  ∑ α ∈ Q.support, coeff α Q * w α
+  ∑ α ∈ Q.support, AddMonoidAlgebra.coeff Q α * w α
 
 lemma Lsum_eq_of_subset (w : (σ →₀ ℕ) → K) (Q : MvPolynomial σ K) (S : Finset (σ →₀ ℕ))
-    (h : Q.support ⊆ S) : Lsum w Q = ∑ α ∈ S, coeff α Q * w α := by
+    (h : Q.support ⊆ S) : Lsum w Q = ∑ α ∈ S, AddMonoidAlgebra.coeff Q α * w α := by
   unfold Lsum
   apply Finset.sum_subset h
   intro α _ hα
@@ -29,7 +29,7 @@ lemma Lsum_add (w : (σ →₀ ℕ) → K) (p q : MvPolynomial σ K) :
     Lsum_eq_of_subset w q (p.support ∪ q.support) Finset.subset_union_right,
     ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun α _ => ?_
-  rw [coeff_add, add_mul]
+  rw [MvPolynomial.coeff_add, add_mul]
 
 lemma Lsum_zero (w : (σ →₀ ℕ) → K) : Lsum w (0 : MvPolynomial σ K) = 0 := by
   simp [Lsum]

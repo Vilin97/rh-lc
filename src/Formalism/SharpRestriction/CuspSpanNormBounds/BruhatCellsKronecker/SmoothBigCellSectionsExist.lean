@@ -808,7 +808,7 @@ theorem density_bound_of_local_density {Ce : ℝ} (hk : 4 * D.R.rS + 8 ≤ D.R.k
   unfold densT
   refine tprod_le_of_prod_le' (Real.one_le_exp hS0) fun s => ?_
   calc _ ≤ ∏ p ∈ s, Real.exp (4 * (Nat.card 𝓀[(D.s.atP p).Fp] : ℝ) ^ (-((D.R.k : ℤ) - 2 * D.R.rS - 2))) :=
-        Finset.prod_le_prod
+        Finset.prod_le_prod₀
           (fun p _ => div_nonneg (Nat.cast_nonneg _) (zpow_nonneg (Nat.cast_nonneg _) _))
           (fun p _ => (hd hk _ _ (M p) (hA p).1 (ϖ p) (hϖ p) _ ((Z δ M hA u u').H p) ((Z δ M hA u u').rank p)
             ((Z δ M hA u u').loc γ p) (hloc p)).1)

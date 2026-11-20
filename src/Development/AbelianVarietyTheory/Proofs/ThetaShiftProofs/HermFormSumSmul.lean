@@ -221,7 +221,7 @@ theorem det_im_eq_covol : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
       ((Real.sqrt (2 ^ Θ.S.card))⁻¹ * ∏ _i : (U.X k).Ψ, (2 : ℝ)⁻¹), by positivity, ?_, ?_⟩
     · refine le_trans (mul_le_of_le_one_right (Real.sqrt_nonneg _) ?_) (Real.sqrt_le_sqrt (by exact_mod_cast le0))
       refine mul_le_one₀ (inv_le_one_of_one_le₀ (Real.one_le_sqrt.2 (one_le_pow₀ one_le_two))) (by positivity) ?_
-      exact Finset.prod_le_one (fun _ _ => by norm_num) (fun _ _ => by norm_num)
+      exact Finset.prod_le_one₀ (fun _ _ => by norm_num) (fun _ _ => by norm_num)
     · rintro w x L γ hw hL hγ ⟨t, ht, htξ⟩
       obtain ⟨-, b, hb, hdet⟩ := key E H Dw l Xo c σ r U Uw O β Y a χ W Ha th Θ k ξ' hG hU hξ.2.2 h1 w x L γ hL hγ
         t ht htξ

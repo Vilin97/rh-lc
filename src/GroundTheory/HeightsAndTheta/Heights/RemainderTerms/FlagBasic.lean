@@ -220,7 +220,7 @@ theorem flagIntegral_C_mul (f N : ℕ) (x : ℚ) (Φ : RootRing f N) :
 
 theorem flagIntegral_add (f N : ℕ) (Φ Ψ : RootRing f N) :
     flagIntegral f N (Φ + Ψ) = flagIntegral f N Φ + flagIntegral f N Ψ := by
-  simp only [flagIntegral, coeff_add, add_mul, Finset.sum_add_distrib]
+  simp only [flagIntegral, MvPolynomial.coeff_add, add_mul, Finset.sum_add_distrib]
 
 theorem flagIntegral_zero (f N : ℕ) : flagIntegral f N 0 = 0 := by
   simp [flagIntegral]

@@ -101,7 +101,7 @@ theorem exists_mul_sub_mem_of_mem_twist_fibre {F : Type u} [Field F] [Algebra S 
     obtain ⟨f₁, hf₁, f₂, hf₂, rfl⟩ := Submodule.mem_sup.mp hf
     have hsplit : f₁ + f₂ = homogeneousComponent e f₁ + homogeneousComponent e f₂ := by
       rw [← map_add, homogeneousComponent_of_mem ((mem_homogeneousSubmodule _ _).mpr hfe), if_pos rfl]
-    have hg₂ : ∀ m, coeff m (homogeneousComponent e f₂) ∈ 𝔪 := by
+    have hg₂ : ∀ m, AddMonoidAlgebra.coeff (homogeneousComponent e f₂) m ∈ 𝔪 := by
       intro m
       rw [coeff_homogeneousComponent]
       split_ifs

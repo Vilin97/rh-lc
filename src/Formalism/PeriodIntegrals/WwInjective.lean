@@ -23,7 +23,7 @@ def Gxz (nu : Lt → YoungDiagram) (I : ColChoice N1 nu) : MvPolynomial (XZ Lt N
 def applyAt0 (l : ℕ) [Fact l.Prime] (Th : MvPowerSeries (Lt × Fin N0 × Fin N1) ℂ_[l])
     (P : MvPolynomial (XZ Lt N0 N1) ℤ) : MvPolynomial (Lt × ℕ × Fin N0) ℂ_[l] :=
   ∑ μ ∈ P.support, MvPolynomial.monomial (Finsupp.sumFinsuppEquivProdFinsupp μ).1
-    (((MvPolynomial.coeff μ P : ℤ) : ℂ_[l]) *
+    (((AddMonoidAlgebra.coeff P μ : ℤ) : ℂ_[l]) *
       ((Finsupp.sumFinsuppEquivProdFinsupp μ).2.prod fun _ n => (n.factorial : ℂ_[l])) *
       MvPowerSeries.coeff (Finsupp.sumFinsuppEquivProdFinsupp μ).2 Th)
 

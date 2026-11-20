@@ -89,7 +89,7 @@ theorem origin_mem {ψ : Sp (Jet ℂ (Fin n × Fin g) m) ⟶ A.left} {Λ : (Fin 
     intro F
     unfold jetOf psJet
     rw [jetAug_mk, FBIdJet.psTrunc_eq]
-    show MvPolynomial.coeff 0 _ = _
+    show AddMonoidAlgebra.coeff _ 0 = _
     rw [MvPowerSeries.coeff_truncTotal _ (by simp), coeff_tay]
     simp [dirs, fct, TM.mD_zero]
   have hk : ∀ c : ℂ, jetOf m (fun _ : Fin (n * g) → ℂ => c) = algebraMap ℂ _ c := by

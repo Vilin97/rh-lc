@@ -49,9 +49,9 @@ omit [Algebra ℂ D] [CommRing D] in
 
 theorem coeff_sum_monomial_finsuppAntidiag (N : ℕ) (F : MvPowerSeries I ℂ) (n : I →₀ ℕ)
     (hn : n.degree < N + 1) :
-    MvPolynomial.coeff n (∑ k ∈ Finset.range (N + 1),
+    AddMonoidAlgebra.coeff (∑ k ∈ Finset.range (N + 1),
       ∑ m ∈ Finset.finsuppAntidiag (Finset.univ : Finset I) k,
-        MvPolynomial.monomial m (MvPowerSeries.coeff m F)) = MvPowerSeries.coeff n F := by
+        MvPolynomial.monomial m (MvPowerSeries.coeff m F)) n = MvPowerSeries.coeff n F := by
   simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_monomial, Finset.sum_ite_eq',
     Finset.mem_finsuppAntidiag, Finset.subset_univ, and_true]
   rw [← Finsupp.degree_eq_sum, Finset.sum_ite_eq, if_pos (Finset.mem_range.2 hn)]

@@ -17,7 +17,7 @@ noncomputable def compL (k : Type) [Field k] {σ : Type} (Pr : (σ →₀ ℕ) �
   map_add' x y := by
     classical
     ext m
-    simp only [coeff_compP, coeff_add]
+    simp only [coeff_compP, MvPolynomial.coeff_add]
     split_ifs <;> simp
   map_smul' c x := by
     classical
@@ -27,7 +27,7 @@ noncomputable def compL (k : Type) [Field k] {σ : Type} (Pr : (σ →₀ ℕ) �
 
 open Classical in
 theorem coeff_compL (Pr : (σ →₀ ℕ) → Prop) (x : MvPolynomial σ k) (m : σ →₀ ℕ) :
-    coeff m (compL k Pr x) = if Pr m then coeff m x else 0 := coeff_compP Pr x m
+    AddMonoidAlgebra.coeff (compL k Pr x) m = if Pr m then AddMonoidAlgebra.coeff x m else 0 := coeff_compP Pr x m
 
 theorem compL_mem (Pr : (σ →₀ ℕ) → Prop) (x : MvPolynomial σ k) :
     compL k Pr x ∈ restrictSupport k {m | Pr m} := by
@@ -65,7 +65,7 @@ theorem compL_add_not (Pr : (σ →₀ ℕ) → Prop) (x : MvPolynomial σ k) :
     compL k Pr x + compL k (fun m => ¬ Pr m) x = x := by
   classical
   ext m
-  rw [coeff_add, coeff_compL, coeff_compL]
+  rw [MvPolynomial.coeff_add, coeff_compL, coeff_compL]
   by_cases h : Pr m <;> simp [h]
 
 theorem compL_intertwine (T : MvPolynomial σ k →ₗ[k] MvPolynomial σ k) (Pr Pr' : (σ →₀ ℕ) → Prop)
@@ -177,7 +177,7 @@ theorem exists_top (x : MvPolynomial (Fin (K + 1) × Fin r) ℚ_[p]) (hx : x ≠
   obtain ⟨m, hm, rfl⟩ := Finset.mem_image.mp hβ
   refine ⟨wp K m, ?_, ?_, m, hm, rfl⟩
   · intro h0
-    have := congrArg (coeff m) h0
+    have := congrArg (AddMonoidAlgebra.coeff · m) h0
     rw [cw, coeff_compL, if_pos rfl, coeff_zero] at this
     exact (mem_support_iff.mp hm) this
   · intro γ hγ
@@ -436,7 +436,7 @@ theorem pderiv_free {σ : Type} (v : σ) (x : MvPolynomial σ ℚ_[p]) (hx : x �
   rw [FreeOf, mem_restrictSupport_iff] at hx
   ext m
   rw [coeff_pderiv, coeff_zero]
-  have : coeff (m + Finsupp.single v 1) x = 0 := by
+  have : AddMonoidAlgebra.coeff x (m + Finsupp.single v 1) = 0 := by
     by_contra hc
     have := hx (Finset.mem_coe.mpr (mem_support_iff.mpr hc))
     simp at this

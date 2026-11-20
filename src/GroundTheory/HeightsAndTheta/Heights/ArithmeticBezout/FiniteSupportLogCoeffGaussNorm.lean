@@ -164,7 +164,7 @@ theorem isChowForm_genericIdeal {n e δ : ℕ} {P : Ideal (MRing (PBlk n))} (hP 
     IsChowForm (genericIdeal P) (e + 1) f := by
   obtain ⟨c, hc, g, hcg, hg⟩ := ObjectsChow.ComplexChowFormToChowForm.proof n e δ P _ hP hf
   obtain ⟨m, hm⟩ := ne_zero_iff.mp hg.1
-  have hcoef := congrArg (coeff m) hcg
+  have hcoef := congrArg (AddMonoidAlgebra.coeff · m) hcg
   rw [coeff_map, coeff_C_mul, coeff_map] at hcoef
   have hm' : ((g.coeff m : ℚ) : ℂ) ≠ 0 := by exact_mod_cast hm
   have hcq : c = ((f.coeff m / g.coeff m : ℚ) : ℂ) := by

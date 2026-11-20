@@ -38,7 +38,7 @@ def nablaO {K : Type} [NormedField K] [IsUltrametricDist K] {d N0 : ℕ} [NeZero
 
 def SBSat (K : Type) [NormedField K] [IsUltrametricDist K] {d N0 : ℕ} [NeZero d]
     (colN : ZMod d → ℕ) (p : ∀ s, Fin (colN s) → ℕ) (hp : ∀ s c, p s c ≤ N0) : Prop :=
-  ∀ P ∈ nablaK (K := K) colN p hp, (∀ n, ‖MvPolynomial.coeff n P‖ ≤ 1) → P ∈ nablaO colN p hp
+  ∀ P ∈ nablaK (K := K) colN p hp, (∀ n, ‖AddMonoidAlgebra.coeff P n‖ ≤ 1) → P ∈ nablaO colN p hp
 
 def CBMem : Prop :=
   ∀ (K : Type) [Field K] (d N0 N1 : ℕ) [NeZero d] (colN : ZMod d → ℕ)

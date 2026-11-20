@@ -39,7 +39,7 @@ theorem eval_scaleP (p : ι → Prop) [DecidablePred p] (a : ℂ) (u : ι → �
       ∑ d ∈ Finset.range (D + 1), eval u (weightedHomogeneousComponent (indW p) d g) * a ^ d := by
   classical
   have hc : ∀ d, eval u (weightedHomogeneousComponent (indW p) d g) =
-      ∑ m ∈ g.support, (if Finsupp.weight (indW p) m = d then coeff m g else 0) *
+      ∑ m ∈ g.support, (if Finsupp.weight (indW p) m = d then AddMonoidAlgebra.coeff g m else 0) *
         ∏ i ∈ m.support, u i ^ m i := by
     intro d
     rw [eval_eq]
@@ -174,7 +174,7 @@ theorem weight_indW_le (p : ι → Prop) [DecidablePred p] (m : ι →₀ ℕ) :
 
 theorem eq_monomial_of_homog [DecidableEq ι] (g : MvPolynomial ι ℂ) (hg : g ≠ 0)
     (h : ∀ x, ∃ d, IsWeightedHomogeneous (indW (· = x)) g d) :
-    ∃ m, g = monomial m (coeff m g) ∧ coeff m g ≠ 0 := by
+    ∃ m, g = monomial m (AddMonoidAlgebra.coeff g m) ∧ AddMonoidAlgebra.coeff g m ≠ 0 := by
   choose d hd using h
   have key : ∀ m ∈ g.support, ∀ x, m x = d x := by
     intro m hm x
@@ -214,10 +214,10 @@ theorem logPoly [Fintype ι] [DecidableEq ι] (r : ℝ) :
   ·
     obtain ⟨m, hgm, hc⟩ := eq_monomial_of_homog g hg h0
     rw [hgm]
-    have hmeas : Measurable fun u : ι → ℂ => Real.log ‖eval u (monomial m (coeff m g))‖ :=
+    have hmeas : Measurable fun u : ι → ℂ => Real.log ‖eval u (monomial m (AddMonoidAlgebra.coeff g m))‖ :=
       Real.measurable_log.comp (continuous_eval _).measurable.norm
     refine ⟨?_, ?_⟩
-    · refine Integrable.mono' (g := fun u => |Real.log ‖coeff m g‖| +
+    · refine Integrable.mono' (g := fun u => |Real.log ‖AddMonoidAlgebra.coeff g m‖| +
           ∑ i ∈ m.support, (m i : ℝ) * |Real.log ‖u i‖|) ?_ hmeas.aestronglyMeasurable
           (Filter.Eventually.of_forall fun u => ?_)
       · have : IsFiniteMeasure (volume.restrict (polydisc ι r)) :=
@@ -248,7 +248,7 @@ theorem logPoly [Fintype ι] [DecidableEq ι] (r : ℝ) :
     set g' := weightedHomogeneousComponent w d0 g with hg'
     have hg'0 : g' ≠ 0 := by
       intro h
-      have := congrArg (coeff m0) h
+      have := congrArg (AddMonoidAlgebra.coeff · m0) h
       rw [hg', coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at this
       exact mem_support_iff.mp hm0 this
     have hsub : nonHomog g' ⊆ (nonHomog g).erase x := by

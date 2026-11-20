@@ -16,7 +16,7 @@ private theorem tact_prod {X σ S : Type} [AddCommGroup X] [CommRing S] (wt : σ
 
 private theorem tact_aeval {O X σ S : Type} [CommRing O] [AddCommGroup X] [CommRing S] [Algebra O S]
     (wt : σ → X) (t : Multiplicative X →* Sˣ) (x : σ → S) (j : X) (p : MvPolynomial σ O)
-    (hp : ∀ d, Finsupp.weight wt d ≠ j → MvPolynomial.coeff d p = 0) :
+    (hp : ∀ d, Finsupp.weight wt d ≠ j → AddMonoidAlgebra.coeff p d = 0) :
     MvPolynomial.aeval (fun i => (t (Multiplicative.ofAdd (wt i)) : S) * x i) p =
       (t (Multiplicative.ofAdd j) : S) * MvPolynomial.aeval x p := by
   rw [p.as_sum, map_sum, map_sum, Finset.mul_sum]

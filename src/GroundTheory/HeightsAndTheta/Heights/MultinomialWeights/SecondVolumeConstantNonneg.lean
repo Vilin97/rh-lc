@@ -65,8 +65,8 @@ def degFl (lam : T × Fin N → ℝ) : ℝ := flagDegree T N (linForm lam ^ anti
 def cFl : ℝ := degFl T N (basePoint T N) / eval (basePoint T N) (antisymDelta T N)
 
 def polar (k : ℕ) (P F : MvPolynomial (T × Fin N) ℝ) : ℝ :=
-  ∑ m ∈ (homogeneousComponent k F).support, coeff m F *
-    ((-1 : ℝ) ^ k * ((m.prod fun _ n => (n.factorial : ℝ)) / (k.factorial : ℝ)) * coeff m P)
+  ∑ m ∈ (homogeneousComponent k F).support, AddMonoidAlgebra.coeff F m *
+    ((-1 : ℝ) ^ k * ((m.prod fun _ n => (n.factorial : ℝ)) / (k.factorial : ℝ)) * AddMonoidAlgebra.coeff P m)
 
 def derivTerm (j : ℕ) (al be : T → ℝ) (F : MvPolynomial (T × Fin N) ℝ) : ℝ :=
   ∑ τ, flagDegree T N (∑ i : Fin N, (if i.val < j then al τ else be τ) • pderiv (τ, i) F)
@@ -756,7 +756,7 @@ theorem abs_coeff_le_coeffSum {σ : Type} (Q : MvPolynomial σ ℝ) (m : σ →�
     |coeff m Q| ≤ coeffSum Q := by
   by_cases h : m ∈ Q.support
   · exact Finset.single_le_sum (f := fun m => |coeff m Q|) (fun _ _ => abs_nonneg _) h
-  · have h0 : coeff m Q = 0 := by
+  · have h0 : AddMonoidAlgebra.coeff Q m = 0 := by
       by_contra h'
       exact h (mem_support_iff.2 h')
     rw [h0, abs_zero]

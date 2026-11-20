@@ -15,7 +15,7 @@ def cth (v : σ) (n : ℕ) (F : MvPolynomial σ K) : MvPolynomial σ K :=
   monomial (Finsupp.single v n) (1 : K) * divDer (Finsupp.single v n) F
 
 theorem coeff_cth (v : σ) (n : ℕ) (F : MvPolynomial σ K) (μ : σ →₀ ℕ) :
-    coeff μ (cth v n F) = coeff μ F * (((μ v).choose n : ℕ) : K) := by
+    AddMonoidAlgebra.coeff (cth v n F) μ = AddMonoidAlgebra.coeff F μ * (((μ v).choose n : ℕ) : K) := by
   unfold cth
   rw [eig_one]
   by_cases hn : n = 0
@@ -25,7 +25,7 @@ theorem coeff_cth (v : σ) (n : ℕ) (F : MvPolynomial σ K) (μ : σ →₀ ℕ
 
 theorem cth_add (v : σ) (n : ℕ) (F G : MvPolynomial σ K) : cth v n (F + G) = cth v n F + cth v n G := by
   ext μ
-  simp only [coeff_cth, coeff_add, add_mul]
+  simp only [coeff_cth, MvPolynomial.coeff_add, add_mul]
 
 theorem cth_smul (v : σ) (n : ℕ) (c : K) (F : MvPolynomial σ K) : cth v n (c • F) = c • cth v n F := by
   ext μ

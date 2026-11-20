@@ -57,7 +57,7 @@ theorem prod_max_absGz_le (Z : GramM D) {b C β T T' : ℝ} (hb : 1 ≤ b) (hC :
     ring
   calc ∏ τ, max 1 |Cnt.Gz D T T' Z τ| ≤ ∏ τ, ((2 * β ^ 2 * (b ^ (C * (D.R.m : ℝ) ^ 2)) ^ 2) *
         Formalism.MainNotions.GramProductBounds.Pt D b C Z τ ^ 2) :=
-        Finset.prod_le_prod (fun τ _ => le_trans zero_le_one (le_max_left _ _)) (fun τ _ => step τ)
+        Finset.prod_le_prod₀ (fun τ _ => le_trans zero_le_one (le_max_left _ _)) (fun τ _ => step τ)
     _ = Gbd D b C β Z := by
         unfold Gbd
         rw [Finset.prod_mul_distrib, Finset.prod_const, hf, Finset.prod_pow, Formalism.MainNotions.GramProductBounds.sizeZ_eq]
@@ -185,12 +185,12 @@ theorem prod_max_Gz_inv_le {u u' : D.what₂.Word} (F0 : FlagG (VS D) D.R.rS ((T
   have hG := prod_max_absGz_le D Z hb hC hβ hT0 hT hT0' hT' hr
   have hP0 : 0 ≤ ∏ τ, max 1 ‖embS D τ γ‖⁻¹ := Finset.prod_nonneg fun τ _ => le_trans zero_le_one (le_max_left _ _)
   calc ∏ τ, max 1 (Cnt.Gz D (Tu D u) (Tu D u') Z τ)⁻¹ ≤ ∏ τ, (max 1 ‖embS D τ γ‖⁻¹ * s⁻¹) :=
-        Finset.prod_le_prod (fun τ _ => le_trans zero_le_one (le_max_left _ _)) (fun τ _ => h1 τ)
+        Finset.prod_le_prod₀ (fun τ _ => le_trans zero_le_one (le_max_left _ _)) (fun τ _ => h1 τ)
     _ = (∏ τ, max 1 ‖embS D τ γ‖⁻¹) * s⁻¹ ^ D.R.f := by rw [Finset.prod_mul_distrib, Finset.prod_const, hf]
     _ ≤ (∏ τ, max 1 ‖embS D τ γ‖) * s⁻¹ ^ D.R.f :=
         mul_le_mul_of_nonneg_right (prod_max_inv_le _ hn (one_le_prod_norm D γ hγ hγ0)) (by positivity)
     _ ≤ (∏ τ, (max 1 |Cnt.Gz D (Tu D u) (Tu D u') Z τ| * s⁻¹)) * s⁻¹ ^ D.R.f :=
-        mul_le_mul_of_nonneg_right (Finset.prod_le_prod (fun τ _ => le_trans zero_le_one (le_max_left _ _))
+        mul_le_mul_of_nonneg_right (Finset.prod_le_prod₀ (fun τ _ => le_trans zero_le_one (le_max_left _ _))
           (fun τ _ => h3 τ)) (by positivity)
     _ = (∏ τ, max 1 |Cnt.Gz D (Tu D u) (Tu D u') Z τ|) * s⁻¹ ^ D.R.f * s⁻¹ ^ D.R.f := by
         rw [Finset.prod_mul_distrib, Finset.prod_const, hf]

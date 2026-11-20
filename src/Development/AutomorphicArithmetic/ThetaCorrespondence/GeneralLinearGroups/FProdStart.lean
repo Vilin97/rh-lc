@@ -27,8 +27,8 @@ private theorem eq_single_of_monomial {ι σ : Type*} (Ψ : (ι →₀ ℤ) ≃+
     · rw [smul_zero]
       by_contra hx0
       exact hx (hU w x hw' hx0).symm
-  have h2 : C w * MvPolynomial.coeff m (Ψ (Finsupp.single w 1)) = 1 := by
-    have h3 := congrArg (fun p => MvPolynomial.coeff m (Ψ p)) h1
+  have h2 : C w * AddMonoidAlgebra.coeff (Ψ (Finsupp.single w 1)) m = 1 := by
+    have h3 := congrArg (fun p => AddMonoidAlgebra.coeff (Ψ p) m) h1
     simp only [map_zsmul, ep, MvPolynomial.coeff_monomial, if_true, MvPolynomial.coeff_smul, smul_eq_mul] at h3
     exact h3.symm
   have h4 : C w = 1 := by

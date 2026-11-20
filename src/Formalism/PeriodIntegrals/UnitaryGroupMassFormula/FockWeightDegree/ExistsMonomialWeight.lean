@@ -156,7 +156,7 @@ theorem fockAct2_monomial (p q r s : ℕ) (c : Ix r s) (β : Ln p q r s →₀ �
 theorem coeff_of_diag {σ : Type*} (T : Module.End ℂ (MvPolynomial σ ℂ)) (f : (σ →₀ ℕ) → ℂ)
     (hT : ∀ β, T (MvPolynomial.monomial β 1) = f β • MvPolynomial.monomial β 1)
     (P : MvPolynomial σ ℂ) (α : σ →₀ ℕ) :
-    MvPolynomial.coeff α (T P) = f α * MvPolynomial.coeff α P := by
+    AddMonoidAlgebra.coeff (T P) α = f α * AddMonoidAlgebra.coeff P α := by
   classical
   induction P using MvPolynomial.induction_on'
   next u a =>
@@ -178,7 +178,7 @@ theorem exists_monomial_weight {σ ι : Type*} [Fintype σ]
     (μ : ι → ℚ) (d : ℕ) (P : MvPolynomial σ ℂ) (hP : P ∈ homog σ d) (h0 : P ≠ 0)
     (hw : ∀ a, (T a - ((μ a : ℚ) : ℂ) • (LinearMap.id : Module.End ℂ (MvPolynomial σ ℂ))) P = 0) :
     ∃ α : σ →₀ ℕ, ∑ i, α i = d ∧ ∀ a, μ a = f a α := by
-  obtain ⟨α, hα⟩ : ∃ α, MvPolynomial.coeff α P ≠ 0 := by
+  obtain ⟨α, hα⟩ : ∃ α, AddMonoidAlgebra.coeff P α ≠ 0 := by
     by_contra hne
     push_neg at hne
     exact h0 (MvPolynomial.ext _ _ fun β => by simp [hne β])

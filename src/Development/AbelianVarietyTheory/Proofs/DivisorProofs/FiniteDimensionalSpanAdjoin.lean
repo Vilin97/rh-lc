@@ -23,7 +23,7 @@ theorem coeff_mem_span_fin {M : Type} [AddCommGroup M] [Module ℂ M] {n : ℕ} 
   have hev : ∀ u, Q.eval u = φ (p u) := by
     intro u
     rw [hp, map_sum]
-    simp only [Q, eval_finset_sum, eval_monomial]
+    simp only [Q, Polynomial.eval_finsetSum, eval_monomial]
     exact Finset.sum_congr rfl fun j _ => by rw [map_smul, smul_eq_mul, mul_comm]
   have hdeg : Q.natDegree ≤ n := by
     apply natDegree_sum_le_of_forall_le
@@ -37,7 +37,7 @@ theorem coeff_mem_span_fin {M : Type} [AddCommGroup M] [Module ℂ M] {n : ℕ} 
       exact (Submodule.mem_dualAnnihilator φ).1 hφ _ (Submodule.subset_span ⟨j, rfl⟩)
     · simpa using Nat.lt_succ_of_le hdeg
   have := congrArg (fun P : Polynomial ℂ => P.coeff i) h0
-  simpa [Q, Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, hi, Nat.lt_succ_iff.1 hi] using this
+  simpa [Q, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, hi, Nat.lt_succ_iff.1 hi] using this
 
 def stabAlg (N : Submodule ℂ V) : Subalgebra ℂ (Module.End ℂ V) where
   carrier := {T | ∀ v ∈ N, T v ∈ N}

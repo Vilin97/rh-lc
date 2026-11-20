@@ -354,7 +354,7 @@ theorem exists_bound_of_central [∀ i, NeZero (d i)] {c : (∀ i, GL (Fin (d i)
       linarith [zpow_nonneg (hρ0 i).le (-a i)]
   rw [hcx]
   calc ‖c y‖ * ∏ i, ρ i ^ (-((d i : ℤ) * j i)) ≤ B * ∏ i, (D i * ρ i ^ ordDet (x i)) :=
-        mul_le_mul (hB y hj) (Finset.prod_le_prod (fun i _ => zpow_nonneg (hρ0 i).le _)
+        mul_le_mul (hB y hj) (Finset.prod_le_prod₀ (fun i _ => zpow_nonneg (hρ0 i).le _)
           fun i _ => hfac i) (Finset.prod_nonneg fun i _ => zpow_nonneg (hρ0 i).le _)
           (hB0 x₀ hx₀)
     _ = B * (∏ i, D i) * ∏ i, ρ i ^ ordDet (x i) := by rw [Finset.prod_mul_distrib]; ring

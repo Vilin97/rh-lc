@@ -28,7 +28,7 @@ theorem sum_pi_single {ι α : Type*} [Fintype ι] [DecidableEq ι] [DecidableEq
     rw [Finset.sum_filter]; simp [hh]
   have hX : 0 ≤ ∑ a ∈ S0.filter P, w v a := Finset.sum_nonneg fun a _ => hw0 v a
   have hY : ∏ i ∈ Finset.univ.erase v, ∑ a ∈ S0, h i a ≤ 1 := by
-    refine Finset.prod_le_one (fun i _ => Finset.sum_nonneg fun a _ => ?_) fun i hi => ?_
+    refine Finset.prod_le_one₀ (fun i _ => Finset.sum_nonneg fun a _ => ?_) fun i hi => ?_
     · simp only [hh]; split_ifs <;> first | exact hw0 _ _ | exact le_rfl
     · have hne : i ≠ v := Finset.ne_of_mem_erase hi
       simp only [hh, if_neg hne]
@@ -298,7 +298,7 @@ theorem propW_of_counts (hC : Counts D) : PropW D := by
     calc _ = ∑ a ∈ Finset.Icc 1 (D.R.r / 2), ∏ v : D.nd.PlG k, ∑ f ∈ S0.filter (Eiv D k a), wtOf D k (eV k v) f :=
           Finset.sum_congr rfl fun a _ => sum_pi_all S0 (fun v f => wtOf D k (eV k v) f) (Eiv D k a)
       _ ≤ ∑ a ∈ Finset.Icc 1 (D.R.r / 2), ∏ v : D.nd.PlG k, ((1 + CL * D.R.r / D.host.g k) * (7 / 8)) :=
-          Finset.sum_le_sum fun a ha => Finset.prod_le_prod
+          Finset.sum_le_sum fun a ha => Finset.prod_le_prod₀
             (fun v _ => Finset.sum_nonneg fun f _ => hw0 v f) fun v _ => P4 v a ha
       _ = _ := by
           rw [Finset.sum_const, Nat.card_Icc, Finset.prod_const, Finset.card_univ, D.nd.card_PlG k, nsmul_eq_mul]
@@ -306,7 +306,7 @@ theorem propW_of_counts (hC : Counts D) : PropW D := by
   have b5 : ∑ t ∈ Fintype.piFinset (fun _ : D.nd.PlG k => S0), (if ∀ v, Ev D k (t v) then ∏ v, wtOf D k (eV k v) (t v) else 0) ≤ ((1 + CL * D.R.r / D.host.g k) * (1 - 1 / (5 * Real.log D.R.r))) ^ D.R.f := by
     calc _ = ∏ v : D.nd.PlG k, ∑ f ∈ S0.filter (Ev D k), wtOf D k (eV k v) f := sum_pi_all S0 (fun v f => wtOf D k (eV k v) f) (Ev D k)
       _ ≤ ∏ v : D.nd.PlG k, ((1 + CL * D.R.r / D.host.g k) * (1 - 1 / (5 * Real.log D.R.r))) :=
-          Finset.prod_le_prod (fun v _ => Finset.sum_nonneg fun f _ => hw0 v f) fun v _ => P5 v
+          Finset.prod_le_prod₀ (fun v _ => Finset.sum_nonneg fun f _ => hw0 v f) fun v _ => P5 v
       _ = _ := by rw [Finset.prod_const, Finset.card_univ, D.nd.card_PlG k]
   have hsplit : ∑ t ∈ Fintype.piFinset (fun _ : D.nd.PlG k => S0), (∑ v, (if ¬ Squarefree (t v) then ∏ v, wtOf D k (eV k v) (t v) else 0) + ∑ v, (if Eii D k (t v) then ∏ v, wtOf D k (eV k v) (t v) else 0) + ∑ v, ∑ j, ((if Eiii D k (D.nd.chiT k v j) (t v) then ∏ v, wtOf D k (eV k v) (t v) else 0) + (if Eiii D k (D.nd.chiT k v j)⁻¹ (t v) then ∏ v, wtOf D k (eV k v) (t v) else 0)) + ∑ a ∈ Finset.Icc 1 (D.R.r / 2), (if ∀ v, Eiv D k a (t v) then ∏ v, wtOf D k (eV k v) (t v) else 0) + (if ∀ v, Ev D k (t v) then ∏ v, wtOf D k (eV k v) (t v) else 0)) =
       ∑ t ∈ Fintype.piFinset (fun _ : D.nd.PlG k => S0), ∑ v, (if ¬ Squarefree (t v) then ∏ v, wtOf D k (eV k v) (t v) else 0) + ∑ t ∈ Fintype.piFinset (fun _ : D.nd.PlG k => S0), ∑ v, (if Eii D k (t v) then ∏ v, wtOf D k (eV k v) (t v) else 0) + ∑ t ∈ Fintype.piFinset (fun _ : D.nd.PlG k => S0), ∑ v, ∑ j, ((if Eiii D k (D.nd.chiT k v j) (t v) then ∏ v, wtOf D k (eV k v) (t v) else 0) + (if Eiii D k (D.nd.chiT k v j)⁻¹ (t v) then ∏ v, wtOf D k (eV k v) (t v) else 0)) + ∑ t ∈ Fintype.piFinset (fun _ : D.nd.PlG k => S0), ∑ a ∈ Finset.Icc 1 (D.R.r / 2), (if ∀ v, Eiv D k a (t v) then ∏ v, wtOf D k (eV k v) (t v) else 0) + ∑ t ∈ Fintype.piFinset (fun _ : D.nd.PlG k => S0), (if ∀ v, Ev D k (t v) then ∏ v, wtOf D k (eV k v) (t v) else 0) := by

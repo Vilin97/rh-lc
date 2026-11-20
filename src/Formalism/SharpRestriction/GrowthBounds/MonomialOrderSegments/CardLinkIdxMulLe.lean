@@ -177,7 +177,7 @@ theorem stepB_of (h1 : 1 ≤ C0) (hV2 : V2 K) (hP : PROJ K v p C0) : StepB K v p
       Pr (monomial α0 1) + dg (fun α => D.ga α * g α - 1) (Pr (monomial α0 1)) := by
     rw [gaAct_eq_dg]
     ext α
-    rw [coeff_add, coeff_dg, coeff_dg, coeff_dg]
+    rw [MvPolynomial.coeff_add, coeff_dg, coeff_dg, coeff_dg]
     ring
   have herr : ∀ α, vge v (D.c : ℝ) (D.ga α * g α - 1) := by
     intro α

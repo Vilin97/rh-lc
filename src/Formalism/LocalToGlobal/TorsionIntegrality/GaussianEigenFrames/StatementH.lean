@@ -56,7 +56,7 @@ def IntOpTwoLoc : Prop :=
   ∀ (J : Type) [Fintype J] (v : J → n → ℂ), (∀ j, InMul (cmL a₀ b₀ dK ha hdK lam hlam) Λ (v j)) →
   ∀ (ν : Type) [Fintype ν] (A : J → ν → ℂ_[2]), (∀ j x, ‖A j x‖ ≤ 1) →
     JetsIntegral (thetaLin (ι : ℂ →+* ℂ_[2]) h θ r t (frameM (ι : ℂ →+* ℂ_[2]) v A)) ∧
-    ∀ P : MvPolynomial ν ℂ_[2], (∀ k, ‖MvPolynomial.coeff k P‖ ≤ 1) →
+    ∀ P : MvPolynomial ν ℂ_[2], (∀ k, ‖AddMonoidAlgebra.coeff P k‖ ≤ 1) →
       ‖jetPair P (thetaLin (ι : ℂ →+* ℂ_[2]) h θ r t (frameM (ι : ℂ →+* ℂ_[2]) v A))‖ ≤ 1
 
 def IntOpTwoFree : Prop :=
@@ -73,7 +73,7 @@ def IntOpTwoFree : Prop :=
   ∀ (J : Type) [Fintype J] (v : J → n → ℂ), (∀ j, InMul (cmL a₀ b₀ dK ha hdK lam hlam) Λ (v j)) →
   ∀ (ν : Type) [Fintype ν] (A : J → ν → ℂ_[2]), (∀ j x, ‖A j x‖ ≤ 1) →
     JetsIntegral (thetaLin (ι : ℂ →+* ℂ_[2]) h θ r t (frameM (ι : ℂ →+* ℂ_[2]) v A)) ∧
-    ∀ P : MvPolynomial ν ℂ_[2], (∀ k, ‖MvPolynomial.coeff k P‖ ≤ 1) →
+    ∀ P : MvPolynomial ν ℂ_[2], (∀ k, ‖AddMonoidAlgebra.coeff P k‖ ≤ 1) →
       ‖jetPair P (thetaLin (ι : ℂ →+* ℂ_[2]) h θ r t (frameM (ι : ℂ →+* ℂ_[2]) v A))‖ ≤ 1
 
 end Formalism.L2.Th1.GD

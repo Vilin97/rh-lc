@@ -83,7 +83,7 @@ private theorem supp_good {F : KF ((E →+* ℂ) × Fin n) (Pl E × Fin n)}
   intro x hx
   refine hF x ((MvPolynomial.mem_vars_iff_mem_support x).2 ⟨β, ?_, hx⟩)
   by_contra hn
-  have h := congrArg (MvPolynomial.coeff β) (hG k)
+  have h := congrArg (AddMonoidAlgebra.coeff · β) (hG k)
   rw [MvPolynomial.coeff_map, pieceK, MvPolynomial.coeff_sum, Finset.sum_eq_zero fun γ hγ => by
     rw [MvPolynomial.coeff_monomial, if_neg fun e : γ = β => hn (e ▸ hγ)]] at h
   exact MvPolynomial.mem_support_iff.1 hβ (UpperTheory.ConvolutionTheory.FX.blockE_inj (E →+* ℂ) n (h.trans (map_zero _).symm))

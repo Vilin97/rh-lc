@@ -36,7 +36,7 @@ def topDegree (f N : ℕ) : ℕ := f * (N * (N - 1) / 2)
 
 def flagIntegral (f N : ℕ) (Φ : RootRing f N) : ℚ :=
   ∑ α ∈ (blockVandermonde f N).support,
-    coeff α Φ * coeff α (blockVandermonde f N) * α.prod (fun _ e => (e.factorial : ℚ))
+    AddMonoidAlgebra.coeff Φ α * AddMonoidAlgebra.coeff (blockVandermonde f N) α * α.prod (fun _ e => (e.factorial : ℚ))
 
 def restrictToBlock (f N : ℕ) (τ : Fin f) : RootRing f N →ₐ[ℚ] MvPolynomial (Fin N) ℚ :=
   aeval (fun p : Fin f × Fin N => if p.1 = τ then X p.2 else 0)
@@ -65,9 +65,9 @@ def numStandardTable {m : ℕ} (lam : Fin m → ℕ) : ℕ :=
     ∀ p q : youngCells lam, p.1.1 ≤ q.1.1 → p.1.2 ≤ q.1.2 → T p ≤ T q}
 
 def symmetricGroupCharacter {m : ℕ} (lam : Fin m → ℕ) (rho : List ℕ) : ℚ :=
-  coeff (Finsupp.equivFunOnFinite.symm fun i : Fin m => lam i + (m - 1 - (i : ℕ)))
-    (vandermondeOf (fun i : Fin m => (X i : MvPolynomial (Fin m) ℚ)) *
+  AddMonoidAlgebra.coeff (vandermondeOf (fun i : Fin m => (X i : MvPolynomial (Fin m) ℚ)) *
       (rho.map fun q => psum (Fin m) ℚ q).prod)
+    (Finsupp.equivFunOnFinite.symm fun i : Fin m => lam i + (m - 1 - (i : ℕ)))
 
 def partitionsOf (m n : ℕ) : Finset (Fin m → ℕ) :=
   (Finset.Nat.antidiagonalTuple m n).filter fun lam => ∀ i j : Fin m, i ≤ j → lam j ≤ lam i
@@ -149,7 +149,7 @@ def LemmaA.Statement : Prop :=
         (F.IsHomogeneous (topDegree f N + 1) → (restrictToBlock f N τ P).IsHomogeneous k) ∧
         ∃ S : MvPolynomial (Fin N) ℚ, powerSumHom N S = restrictToBlock f N τ P ∧
           flagIntegral f N (G * Q k τ) =
-            c * coeff (Finsupp.single (⟨k - 1, by omega⟩ : Fin N) 1) S
+            c * AddMonoidAlgebra.coeff S (Finsupp.single (⟨k - 1, by omega⟩ : Fin N) 1)
 
 def RestTermWellDefined.Statement : Prop :=
   ∀ (f N : ℕ) (F : RootRing f N) (Q Q' : ℕ → Fin f → RootRing f N),
@@ -186,7 +186,7 @@ def FrobeniusDimensionFormula.Statement : Prop :=
 def SchurPowerSumCoefficient.Statement : Prop :=
   ∀ (N r k : ℕ) (hk1 : 1 ≤ k) (hkN : k ≤ N) (nu : Fin r → ℕ), Antitone nu → ∑ i, nu i = k →
     ∃ S : MvPolynomial (Fin N) ℚ, powerSumHom N S = schur (Fin N) nu ∧
-      coeff (Finsupp.single (⟨k - 1, by omega⟩ : Fin N) 1) S =
+      AddMonoidAlgebra.coeff S (Finsupp.single (⟨k - 1, by omega⟩ : Fin N) 1) =
         if ∀ i : Fin r, (i : ℕ) ≠ 0 → nu i ≤ 1 then
           (-1 : ℚ) ^ ((Finset.univ.filter fun i : Fin r => (i : ℕ) ≠ 0 ∧ nu i = 1).card) / k
         else 0
@@ -232,7 +232,7 @@ def SameFactorFormula.Statement : Prop :=
               C₀ * k * (f * (r * a) + 1).factorial /
                   (((r * a + 1).factorial : ℚ) * ((r * a).factorial : ℚ) ^ (f - 1)) *
                 (numStandardTable (rectangle r a) : ℚ) ^ (f - 1) *
-                coeff (Finsupp.single (⟨k - 1, by omega⟩ : Fin (r + a)) 1) S
+                AddMonoidAlgebra.coeff S (Finsupp.single (⟨k - 1, by omega⟩ : Fin (r + a)) 1)
 
 def SameFactorBound.Statement : Prop :=
   ∀ (f r a : ℕ) (c : SmallBlock), 1 ≤ f → 1 ≤ r → 1 ≤ a →

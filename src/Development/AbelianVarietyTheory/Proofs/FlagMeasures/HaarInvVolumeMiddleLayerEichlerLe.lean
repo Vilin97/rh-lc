@@ -1169,7 +1169,7 @@ theorem invVol_mid_layer_le : ∀ (K V : Type) [Field K] [NumberField K] [StarRi
       N.bI Λ ^ Module.finrank K N.Wt * (N.gI g Λ * N.iI g Λ) ^ (r - N.j) := by
     calc ∏ a ∈ S, (Q a).relIndex (P a)
         ≤ ∏ a ∈ S, ((C' a).relIndex (N.aa a).toAddSubgroup ^ Module.finrank K N.Wt * m) :=
-          Finset.prod_le_prod (fun _ _ => Nat.zero_le _) (fun a ha => (hper a ha).2)
+          Finset.prod_le_prod₀ (fun _ _ => Nat.zero_le _) (fun a ha => (hper a ha).2)
       _ = (∏ a ∈ S, (C' a).relIndex (N.aa a).toAddSubgroup) ^ Module.finrank K N.Wt * m ^ S.card := by
           rw [Finset.prod_mul_distrib, Finset.prod_pow, Finset.prod_const]
       _ ≤ N.bI Λ ^ Module.finrank K N.Wt * (N.gI g Λ * N.iI g Λ) ^ (r - N.j) := by

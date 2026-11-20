@@ -49,13 +49,13 @@ def UBMplus : Prop :=
 def DetPowDiag : Prop :=
   ∀ (R : Type) [CommRing R] (n0 n : ℕ) (hn : n0 ≤ n) (Y : ℕ) (e : (Fin n × Fin n) →₀ ℕ),
     (∀ ρ c : Fin n, n0 ≤ ρ.val → e (ρ, c) = if c = ρ then Y else 0) →
-    MvPolynomial.coeff e
-        ((Matrix.of fun b c : Fin n =>
-          (MvPolynomial.X (b, c) : MvPolynomial (Fin n × Fin n) R)).det ^ Y) =
-      MvPolynomial.coeff (e.filter fun x => x.1.val < n0)
-        ((Matrix.of fun b c : Fin n0 =>
+    AddMonoidAlgebra.coeff ((Matrix.of fun b c : Fin n =>
+          (MvPolynomial.X (b, c) : MvPolynomial (Fin n × Fin n) R)).det ^ Y)
+        e =
+      AddMonoidAlgebra.coeff ((Matrix.of fun b c : Fin n0 =>
           (MvPolynomial.X (Fin.castLE hn b, Fin.castLE hn c) :
             MvPolynomial (Fin n × Fin n) R)).det ^ Y)
+        (e.filter fun x => x.1.val < n0)
 
 def embV {n0 n : ℕ} (hn : n0 ≤ n) : PVar n0 → PVar n :=
   Sum.map (Prod.map (Fin.castLE hn) (Fin.castLE hn)) (Prod.map (Fin.castLE hn) (Fin.castLE hn))
@@ -98,8 +98,8 @@ def diagExp (n : ℕ) (e : Fin (n + 1) → ℕ) : (Fin n × Fin n) →₀ ℕ :=
 
 def LeadMinorDiag : Prop :=
   ∀ (R : Type) [CommRing R] (n : ℕ) (e : Fin (n + 1) → ℕ),
-    MvPolynomial.coeff (diagExp n e)
-        (∏ k : Fin (n + 1), leadMinor R n k.val (Nat.lt_succ_iff.mp k.isLt) ^ e k) = 1
+    AddMonoidAlgebra.coeff (∏ k : Fin (n + 1), leadMinor R n k.val (Nat.lt_succ_iff.mp k.isLt) ^ e k)
+        (diagExp n e) = 1
 
 def MonContent : Prop :=
   ∀ (C : Type) [Field C] [CharZero C] (v : AddValuation C (WithTop ℝ)) (l : ℕ),

@@ -39,7 +39,7 @@ theorem finitePlace_monomial_le (v : FinitePlace K) (y : Cone n K) {m : Coord n 
   simp_rw [map_pow]
   calc ∏ p ∈ m.support, v (y p.1 p.2) ^ m p
       ≤ ∏ p ∈ m.support, (⨆ i, v (y p.1 i)) ^ m p := by
-        refine Finset.prod_le_prod (fun p _ ↦ pow_nonneg (apply_nonneg v _) _) fun p _ ↦ ?_
+        refine Finset.prod_le_prod₀ (fun p _ ↦ pow_nonneg (apply_nonneg v _) _) fun p _ ↦ ?_
         exact pow_le_pow_left₀ (apply_nonneg v _)
           (le_ciSup (f := fun i ↦ v (y p.1 i)) (Set.finite_range _).bddAbove p.2) _
     _ = ∏ p : Coord n, (⨆ i, v (y p.1 i)) ^ m p := by
@@ -61,14 +61,14 @@ theorem finitePlace_evalCone_le (v : FinitePlace K) (y : Cone n K) {f : MvPolyno
   · simpa [evalCone] using hR
   rw [evalCone, eval₂_eq]
   obtain ⟨m, hm, hle⟩ := (finitePlace_isNonarchimedean v).finset_image_add_of_nonempty
-    (fun d ↦ (Int.castRingHom K) (coeff d f) * ∏ p ∈ d.support, y p.1 p.2 ^ d p)
+    (fun d ↦ (Int.castRingHom K) (AddMonoidAlgebra.coeff f d) * ∏ p ∈ d.support, y p.1 p.2 ^ d p)
     (support_nonempty.mpr hf0)
   refine hle.trans ?_
   rw [map_mul]
-  have h1 : v ((Int.castRingHom K) (coeff m f)) ≤ 1 := by
+  have h1 : v ((Int.castRingHom K) (AddMonoidAlgebra.coeff f m)) ≤ 1 := by
     rw [eq_intCast]
     exact (finitePlace_isNonarchimedean v).apply_intCast_le_one
-  calc v ((Int.castRingHom K) (coeff m f)) * v (∏ p ∈ m.support, y p.1 p.2 ^ m p)
+  calc v ((Int.castRingHom K) (AddMonoidAlgebra.coeff f m)) * v (∏ p ∈ m.support, y p.1 p.2 ^ m p)
       ≤ 1 * ∏ k, (⨆ i, v (y k i)) ^ δ k :=
         mul_le_mul h1 (finitePlace_monomial_le v y (hf (mem_support_iff.mp hm)))
           (apply_nonneg v _) zero_le_one

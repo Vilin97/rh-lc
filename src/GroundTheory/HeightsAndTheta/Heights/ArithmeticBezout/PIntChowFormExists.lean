@@ -18,9 +18,9 @@ theorem chowFormExists : ChowFormExists.Statement :=
   ChowFormExists.of_affineChartTrdeg AffineChartTrdeg.proof
 
 theorem exists_coeff_eq_apply {σ R S : Type*} [CommSemiring R] [CommSemiring S] (F : R → S) (hF : F 0 = 0)
-    (p : MvPolynomial σ R) : ∃ q : MvPolynomial σ S, ∀ m, coeff m q = F (coeff m p) := by
+    (p : MvPolynomial σ R) : ∃ q : MvPolynomial σ S, ∀ m, AddMonoidAlgebra.coeff q m = F (AddMonoidAlgebra.coeff p m) := by
   classical
-  refine ⟨∑ m ∈ p.support, monomial m (F (coeff m p)), fun m' => ?_⟩
+  refine ⟨∑ m ∈ p.support, monomial m (F (AddMonoidAlgebra.coeff p m)), fun m' => ?_⟩
   rw [coeff_sum]
   simp only [coeff_monomial]
   rw [Finset.sum_ite_eq']
@@ -45,7 +45,7 @@ theorem exists_isPrimitive_map_eq_C_mul {σ : Type*} (g : MvPolynomial σ ℚ) (
 
   let F : ℚ → ℤ := fun q => ((d / q.den : ℕ) : ℤ) * q.num
   have hF0 : F 0 = 0 := by simp [F]
-  obtain ⟨f₀, hf₀⟩ : ∃ f₀ : MvPolynomial σ ℤ, ∀ m, coeff m f₀ = F (g.coeff m) :=
+  obtain ⟨f₀, hf₀⟩ : ∃ f₀ : MvPolynomial σ ℤ, ∀ m, AddMonoidAlgebra.coeff f₀ m = F (g.coeff m) :=
     exists_coeff_eq_apply F hF0 g
   have hmap₀ : map (Int.castRingHom ℚ) f₀ = C (d : ℚ) * g := by
     ext m
@@ -60,7 +60,7 @@ theorem exists_isPrimitive_map_eq_C_mul {σ : Type*} (g : MvPolynomial σ ℚ) (
     rw [h0, map_zero] at hmap₀
     exact mul_ne_zero (C_ne_zero.mpr hd0) hg hmap₀.symm
 
-  obtain ⟨c₀, hc₀⟩ : ∃ c₀ : ℤ, c₀ = f₀.support.gcd (fun m => coeff m f₀) := ⟨_, rfl⟩
+  obtain ⟨c₀, hc₀⟩ : ∃ c₀ : ℤ, c₀ = f₀.support.gcd (fun m => AddMonoidAlgebra.coeff f₀ m) := ⟨_, rfl⟩
   have hc0 : c₀ ≠ 0 := by
     intro h0
     rw [h0, eq_comm, Finset.gcd_eq_zero_iff] at hc₀
@@ -69,12 +69,12 @@ theorem exists_isPrimitive_map_eq_C_mul {σ : Type*} (g : MvPolynomial σ ℚ) (
     by_cases hm : m ∈ f₀.support
     · simpa using hc₀ m hm
     · simpa using notMem_support_iff.mp hm
-  have hdvd : ∀ m, c₀ ∣ coeff m f₀ := by
+  have hdvd : ∀ m, c₀ ∣ AddMonoidAlgebra.coeff f₀ m := by
     intro m
     by_cases hm : m ∈ f₀.support
     · rw [hc₀]; exact Finset.gcd_dvd hm
     · rw [notMem_support_iff.mp hm]; exact dvd_zero _
-  obtain ⟨f, hf⟩ : ∃ f : MvPolynomial σ ℤ, ∀ m, coeff m f = coeff m f₀ / c₀ :=
+  obtain ⟨f, hf⟩ : ∃ f : MvPolynomial σ ℤ, ∀ m, AddMonoidAlgebra.coeff f m = AddMonoidAlgebra.coeff f₀ m / c₀ :=
     exists_coeff_eq_apply (fun a => a / c₀) (by simp) f₀
   have hf₀eq : f₀ = C c₀ * f := by
     ext m

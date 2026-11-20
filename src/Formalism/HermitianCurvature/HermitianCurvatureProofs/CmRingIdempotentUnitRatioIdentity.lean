@@ -10,7 +10,7 @@ lemma prodBound {ι : Type} [Fintype ι] (F t : ι → ℝ) (K Ct : ℝ) (hK : 0
     (hF : ∀ w, 0 ≤ F w ∧ F w ≤ K * t w) (ht : ∏ w, t w ≤ Ct) :
     ∏ w, F w ≤ Ct * K ^ Fintype.card ι := by
   have h1 : ∏ w, F w ≤ ∏ w, (K * t w) :=
-    Finset.prod_le_prod (fun w _ => (hF w).1) (fun w _ => (hF w).2)
+    Finset.prod_le_prod₀ (fun w _ => (hF w).1) (fun w _ => (hF w).2)
   rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ] at h1
   have h2 : K ^ Fintype.card ι * ∏ w, t w ≤ K ^ Fintype.card ι * Ct :=
     mul_le_mul_of_nonneg_left ht (pow_nonneg hK _)

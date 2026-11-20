@@ -113,7 +113,7 @@ theorem latticeMean_finset_sum {ι : Type*} (s : Finset ι) {f : ι → E → G}
     latticeMean L (fun x => ∑ i ∈ s, f i x) = ∑ i ∈ s, latticeMean L (f i) := by
   borelize E
   simp only [latticeMean_eq_integral]
-  exact integral_finset_sum s fun i hi => integrable_latticeProb L (hf i hi)
+  exact MeasureTheory.integral_finsetSum s fun i hi => integrable_latticeProb L (hf i hi)
 
 theorem latticeMean_const_mul {𝕜 : Type*} [RCLike 𝕜] (c : 𝕜) (f : E → 𝕜) :
     latticeMean L (fun x => c * f x) = c * latticeMean L f := by

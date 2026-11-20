@@ -30,23 +30,23 @@ theorem lineMap_mk {k : ℕ} (c : Fin k → R) (p : MvPolynomial (Fin k) R) :
     lineMap c (Ideal.Quotient.mk _ p) = aeval (fun b => (TrivSqZeroExt.inr (c b) : DualNumber R)) p := rfl
 
 theorem topCoeff_mk {k : ℕ} (p : MvPolynomial (Fin k) R) :
-    topCoeff R k (Ideal.Quotient.mk _ p) = coeff (topMon k) p := rfl
+    topCoeff R k (Ideal.Quotient.mk _ p) = AddMonoidAlgebra.coeff p (topMon k) := rfl
 
 theorem fst_aeval {k : ℕ} (c : Fin k → R) (p : MvPolynomial (Fin k) R) :
-    (aeval (fun b => (TrivSqZeroExt.inr (c b) : DualNumber R)) p).fst = coeff 0 p := by
+    (aeval (fun b => (TrivSqZeroExt.inr (c b) : DualNumber R)) p).fst = AddMonoidAlgebra.coeff p 0 := by
   induction p using MvPolynomial.induction_on with
   | C a => simp [TrivSqZeroExt.algebraMap_eq_inl]
-  | add p q hp hq => rw [map_add, TrivSqZeroExt.fst_add, hp, hq, coeff_add]
+  | add p q hp hq => rw [map_add, TrivSqZeroExt.fst_add, hp, hq, MvPolynomial.coeff_add]
   | mul_X p n hp => simp [← constantCoeff_eq]
 
 theorem snd_aeval {k : ℕ} (a : Fin k) (p : MvPolynomial (Fin k) R) :
     (aeval (fun b => (TrivSqZeroExt.inr ((Pi.single a 1 : Fin k → R) b) : DualNumber R)) p).snd
-      = coeff (Finsupp.single a 1) p := by
+      = AddMonoidAlgebra.coeff p (Finsupp.single a 1) := by
   induction p using MvPolynomial.induction_on with
   | C r =>
     have : (0 : Fin k →₀ ℕ) ≠ Finsupp.single a 1 := (Finsupp.single_ne_zero.2 one_ne_zero).symm
     simp [TrivSqZeroExt.algebraMap_eq_inl, coeff_C, this]
-  | add p q hp hq => rw [map_add, TrivSqZeroExt.snd_add, hp, hq, coeff_add]
+  | add p q hp hq => rw [map_add, TrivSqZeroExt.snd_add, hp, hq, MvPolynomial.coeff_add]
   | mul_X p n hp =>
     rw [map_mul, TrivSqZeroExt.snd_mul, fst_aeval, aeval_X, coeff_mul_X']
     by_cases h : n = a
@@ -58,13 +58,13 @@ theorem degree_topMon (k : ℕ) : Finsupp.degree (topMon k) = k := by
   simp [topMon, map_sum]
 
 theorem coeff_top_of_mem {k n : ℕ} (h : k < n) {p : MvPolynomial (Fin k) R} (hp : p ∈ idealOfVars (Fin k) R ^ n) :
-    coeff (topMon k) p = 0 := by
+    AddMonoidAlgebra.coeff p (topMon k) = 0 := by
   by_contra h0
   have := (mem_pow_idealOfVars_iff n p).1 hp _ (mem_support_iff.2 h0)
   rw [degree_topMon] at this
   omega
 
-theorem mem_idealOfVars {k : ℕ} {p : MvPolynomial (Fin k) R} (hp : coeff 0 p = 0) : p ∈ idealOfVars (Fin k) R := by
+theorem mem_idealOfVars {k : ℕ} {p : MvPolynomial (Fin k) R} (hp : AddMonoidAlgebra.coeff p 0 = 0) : p ∈ idealOfVars (Fin k) R := by
   rw [← pow_one (idealOfVars (Fin k) R), mem_pow_idealOfVars_iff]
   intro x hx
   by_contra h
@@ -72,8 +72,8 @@ theorem mem_idealOfVars {k : ℕ} {p : MvPolynomial (Fin k) R} (hp : coeff 0 p =
   subst this
   exact mem_support_iff.1 hx hp
 
-theorem mem_idealOfVars_sq {k : ℕ} {p : MvPolynomial (Fin k) R} (hp : coeff 0 p = 0)
-    (h1 : ∀ a, coeff (Finsupp.single a 1) p = 0) : p ∈ idealOfVars (Fin k) R ^ 2 := by
+theorem mem_idealOfVars_sq {k : ℕ} {p : MvPolynomial (Fin k) R} (hp : AddMonoidAlgebra.coeff p 0 = 0)
+    (h1 : ∀ a, AddMonoidAlgebra.coeff p (Finsupp.single a 1) = 0) : p ∈ idealOfVars (Fin k) R ^ 2 := by
   rw [mem_pow_idealOfVars_iff]
   intro x hx
   by_contra h
@@ -111,8 +111,8 @@ theorem topCoeff_eq {k : ℕ} (u z : EpsAlg R k) (d : R) (hz : (lineMap 0 z).fst
   rw [← map_pow, ← map_mul, topCoeff_mk]
   set J := idealOfVars (Fin k) R
   set l : MvPolynomial (Fin k) R := C d * ∑ a, X a with hl
-  have hl0 : coeff 0 l = 0 := by simp [hl, coeff_sum]
-  have hl1 : ∀ a, coeff (Finsupp.single a 1) l = d := fun a => by
+  have hl0 : AddMonoidAlgebra.coeff l 0 = 0 := by simp [hl, coeff_sum]
+  have hl1 : ∀ a, AddMonoidAlgebra.coeff l (Finsupp.single a 1) = d := fun a => by
     simp [hl, coeff_sum, coeff_X', Finsupp.single_left_inj]
   have hp : p ∈ J := mem_idealOfVars hz
   have hlJ : l ∈ J := mem_idealOfVars hl0
@@ -127,12 +127,12 @@ theorem topCoeff_eq {k : ℕ} (u z : EpsAlg R k) (d : R) (hz : (lineMap 0 z).fst
       refine Ideal.add_mem _ ?_ ?_
       · rw [pow_succ J (n + 1)]; exact Ideal.mul_mem_mul ih hp
       · rw [show n + 1 + 1 = n + 2 from rfl, pow_add J n 2]; exact Ideal.mul_mem_mul (Ideal.pow_mem_pow hlJ n) h2
-  have hq : q - C (coeff 0 q) ∈ J := mem_idealOfVars (by simp)
-  have h4 : q * p ^ k = C (coeff 0 q) * l ^ k + (q * (p ^ k - l ^ k) + l ^ k * (q - C (coeff 0 q))) := by ring
-  have h5 : q * (p ^ k - l ^ k) + l ^ k * (q - C (coeff 0 q)) ∈ J ^ (k + 1) :=
+  have hq : q - C (AddMonoidAlgebra.coeff q 0) ∈ J := mem_idealOfVars (by simp)
+  have h4 : q * p ^ k = C (AddMonoidAlgebra.coeff q 0) * l ^ k + (q * (p ^ k - l ^ k) + l ^ k * (q - C (AddMonoidAlgebra.coeff q 0))) := by ring
+  have h5 : q * (p ^ k - l ^ k) + l ^ k * (q - C (AddMonoidAlgebra.coeff q 0)) ∈ J ^ (k + 1) :=
     Ideal.add_mem _ (Ideal.mul_mem_left _ _ (h3 k))
       (by rw [pow_succ J k]; exact Ideal.mul_mem_mul (Ideal.pow_mem_pow hlJ k) hq)
-  rw [h4, coeff_add, coeff_top_of_mem (Nat.lt_succ_self k) h5, add_zero, hl, mul_pow, ← map_pow, coeff_C_mul,
+  rw [h4, MvPolynomial.coeff_add, coeff_top_of_mem (Nat.lt_succ_self k) h5, add_zero, hl, mul_pow, ← map_pow, coeff_C_mul,
     coeff_C_mul, coeff_sum_X_pow_of_fintype, if_pos, multinomial_topMon, _root_.mul_assoc]
   simpa [Finsupp.degree_apply, Finsupp.sum] using degree_topMon k
 

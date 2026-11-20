@@ -20,7 +20,7 @@ def CurveKernelUnram : Prop :=
     al * (al - albar) * s2 = ∑ P, (xP P + W.b₂ / 12) →
     ∀ (n : Type) [Fintype n] (c : n → K), (∀ i, ‖c i‖ ≤ 1) →
     ∀ G : MvPowerSeries n K, IntMv (unitBall K) G →
-    ∀ P : MvPolynomial n K, (∀ m, ‖MvPolynomial.coeff m P‖ ≤ 1) →
+    ∀ P : MvPolynomial n K, (∀ m, ‖AddMonoidAlgebra.coeff P m‖ ≤ 1) →
       ‖jetPair P (toZ (expSer W) (mvExp (-(phSum c (Formalism.L2.Th1.B.phO s2 (wpReg W) (logSer W)))) * G))‖ ≤ 1
 
 end Formalism.L2.Th1.G

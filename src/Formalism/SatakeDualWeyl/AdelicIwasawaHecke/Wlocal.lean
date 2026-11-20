@@ -469,7 +469,7 @@ lemma wlocal_kill (P : Ideal R) [P.IsPrime] {σ : Type} (w : MvPolynomial σ R)
   have hc : ∀ m, ∃ t : P.primeCompl, (t : R) * w.coeff m = 0 := by
     intro m
     have h1 : algebraMap R (Localization.AtPrime P) (w.coeff m) = 0 := by
-      have := congrArg (coeff m) hw
+      have := congrArg (AddMonoidAlgebra.coeff · m) hw
       rwa [coeff_map, coeff_zero] at this
     exact (IsLocalization.map_eq_zero_iff P.primeCompl (Localization.AtPrime P) _).mp h1
   choose t ht using hc

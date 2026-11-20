@@ -402,7 +402,7 @@ theorem mem_cond_of_euler_eigen [NeZero r] (LL : Letters (K + 1)) (hv : LL.vec (
     rw [FreeLast, SetLike.mem_coe, MvPolynomial.mem_restrictSupport_iff]
     intro m hm c
     rw [Finset.mem_coe, MvPolynomial.mem_support_iff] at hm
-    have hc := congrArg (MvPolynomial.coeff m) he
+    have hc := congrArg (AddMonoidAlgebra.coeff · m) he
     rw [Formalism.GM.ProjS.coeff_eulL, Nat.cast_zero, zero_smul, MvPolynomial.coeff_zero] at hc
     have hs : (∑ d : Fin r, (m (Fin.last K, d) : ℚ_[p])) = 0 := (mul_eq_zero.1 hc).resolve_left hm
     have hs' : ∑ d : Fin r, m (Fin.last K, d) = 0 := by exact_mod_cast hs

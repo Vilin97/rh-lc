@@ -79,7 +79,7 @@ theorem norm_eval_le {B N : ℕ} {a : Fin B → ℕ} {A : Matrix (Fin N) (Fin N)
     rw [norm_pow, Complex.norm_real, Real.norm_of_nonneg (hr0 i)]
   have hprod : ∏ i, r i ^ a i ≤ R ^ (∑ i, a i) := by
     rw [← Finset.prod_pow_eq_pow_sum]
-    exact Finset.prod_le_prod (fun i _ => pow_nonneg (hr0 i) _) fun i _ => pow_le_pow_left₀ (hr0 i) (hu i) _
+    exact Finset.prod_le_prod₀ (fun i _ => pow_nonneg (hr0 i) _) fun i _ => pow_le_pow_left₀ (hr0 i) (hu i) _
   rw [hval]
   by_cases hz : eval p h = 0
   · rw [hz, norm_zero, mul_zero]

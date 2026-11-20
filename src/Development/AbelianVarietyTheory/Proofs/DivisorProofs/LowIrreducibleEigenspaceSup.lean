@@ -41,14 +41,14 @@ theorem monomial_mem_eig {P Q R S : ℕ} (α : Ln P Q R S →₀ ℕ)
 
 theorem support_unmixed {P Q R S : ℕ} (x : ℚ) (k k' : ℕ) (hk : x - cPair R S = k)
     (hk' : x + cPair R S = k') (f : Pol P Q R S) (hf : f ∈ GlobalTheory.KFixIrr.lowOne P Q R S x (P * k + Q * k'))
-    (α : Ln P Q R S →₀ ℕ) (hα : coeff α f ≠ 0) :
+    (α : Ln P Q R S →₀ ℕ) (hα : AddMonoidAlgebra.coeff f α ≠ 0) :
     (∀ (i : Fin P) (c : Fin S), α (Sum.inl i, Sum.inr c) = 0) ∧
       ∀ (j : Fin Q) (c : Fin R), α (Sum.inr j, Sum.inl c) = 0 := by
   rw [GlobalTheory.KFixIrr.mem_lowOne, GlobalTheory.KFixIrr.mem_chiOne] at hf
   obtain ⟨hf, hdeg⟩ := hf
   have hval : ∀ a : Ix P Q, GlobalTheory.FockLowDeg.cartanVal a α = (x : ℂ) := by
     intro a
-    have h := congrArg (coeff α) (hf _ (GlobalTheory.FockLowDeg.isKC_Eab_diag a))
+    have h := congrArg (AddMonoidAlgebra.coeff · α) (hf _ (GlobalTheory.FockLowDeg.isKC_Eab_diag a))
     rw [GlobalTheory.FockLowDeg.coeff_cartan, GlobalTheory.FockLowDeg.trace_Eab_diag, mul_one, coeff_smul,
       smul_eq_mul] at h
     exact mul_right_cancel₀ hα h
@@ -114,7 +114,7 @@ theorem lowOne_le_wt : ∀ (P Q R S : ℕ) (x : ℚ) (k k' : ℕ), x - Formalism
   rw [← MvPolynomial.support_sum_monomial_coeff f]
   refine Submodule.sum_mem _ fun α hα => ?_
   obtain ⟨h1, h2⟩ := support_unmixed x k k' hk hk' f hf α (mem_support_iff.mp hα)
-  have e : (monomial α (coeff α f) : Pol P Q R S) = coeff α f • monomial α 1 := by
+  have e : (monomial α (AddMonoidAlgebra.coeff f α) : Pol P Q R S) = AddMonoidAlgebra.coeff f α • monomial α 1 := by
     rw [smul_monomial, smul_eq_mul, mul_one]
   rw [e]
   refine Submodule.smul_mem _ _ ?_

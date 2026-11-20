@@ -512,7 +512,7 @@ theorem blockEnds_prod_le (D : D7) (F G : ℕ → ℝ) (hF0 : ∀ l, 0 ≤ F l) 
       rw [ht, Finset.prod_Ico_succ_top (by omega : acc ≤ t)]
       have h1 : (1 : ℝ) ≤ ∏ i ∈ Finset.Ico acc t, G (i + 1) := by
         calc (1 : ℝ) = ∏ _i ∈ Finset.Ico acc t, (1 : ℝ) := by simp
-          _ ≤ _ := Finset.prod_le_prod (fun _ _ => zero_le_one) (fun i _ => hG1 _)
+          _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun i _ => hG1 _)
       have h2 : 0 ≤ G (t + 1) := le_trans zero_le_one (hG1 _)
       nlinarith
     have hrest0 : 0 ≤ ((blockEnds D (acc + s) bs).map F).prod := by
@@ -641,7 +641,7 @@ theorem weights_le (T T' : ℕ) (v : D.what₂.Tau) (γ : Point D.host.E (D.R.rS
   have hPh1 := Fl_one_le D v γ (Fin.last D.R.rS)
   have hPi1 : (1 : ℝ) ≤ ∏ l, Fl D v γ l := by
     calc (1 : ℝ) = ∏ _l : Fin (D.R.rS + 1), (1 : ℝ) := by simp
-      _ ≤ ∏ l, Fl D v γ l := Finset.prod_le_prod (fun _ _ => zero_le_one) (fun l _ => Fl_one_le D v γ l)
+      _ ≤ ∏ l, Fl D v γ l := Finset.prod_le_prod₀ (fun _ _ => zero_le_one) (fun l _ => Fl_one_le D v γ l)
   have hw0 : 0 ≤ wLoc D v γ := by
     unfold wLoc
     apply List.prod_nonneg
@@ -748,7 +748,7 @@ theorem alfProd_inv_le (Rd : ℝ) (hRd1 : 1 ≤ Rd) (hRd : D.host.rdE ≤ Rd) (n
   have h1 : (∏ i : Fin n, alf D i)⁻¹ ≤ Rd ^ (D.R.rS * n) := by
     rw [← Finset.prod_inv_distrib]
     calc ∏ i : Fin n, (alf D i)⁻¹ ≤ ∏ _i : Fin n, Rd ^ D.R.rS :=
-          Finset.prod_le_prod (fun i _ => (inv_pos.2 (alf_pos D i)).le)
+          Finset.prod_le_prod₀ (fun i _ => (inv_pos.2 (alf_pos D i)).le)
             (fun i _ => alf_inv_le D Rd hRd1 hRd i (by have := i.2; omega))
       _ = Rd ^ (D.R.rS * n) := by
           rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin, ← pow_mul]

@@ -98,7 +98,7 @@ def cx : Lat ρ g →ₗ[ℤ] Lat ρ g where
 
 theorem cx_apply (x : Lat ρ g) (i : Fin r) : cx ρ g x i = ((x i).2, -(x i).1) := rfl
 
-def act (a : 𝓞 E) : Lat ρ g →ₗ[ℤ] Lat ρ g := (DistribMulAction.toAddMonoidHom (Lat ρ g) a).toIntLinearMap
+def act (a : 𝓞 E) : Lat ρ g →ₗ[ℤ] Lat ρ g := (DistribSMul.toAddMonoidHom (Lat ρ g) a).toIntLinearMap
 
 theorem act_apply (a : 𝓞 E) (x : Lat ρ g) : act ρ g a x = a • x := rfl
 

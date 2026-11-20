@@ -224,7 +224,7 @@ theorem HookCharacterSumIdentity.proof (hSh : ShiftSumRule.Statement)
       rw [map_mul, hSν1 nu hnu]
       simp [powerSumHom, SmallBlock.sign]
     have hk0 : (k : ℚ) ≠ 0 := by exact_mod_cast (show k ≠ 0 by omega)
-    have hcoeff : (k : ℚ) * coeff (Finsupp.single (⟨k - 1, by omega⟩ : Fin (r + a)) 1) S =
+    have hcoeff : (k : ℚ) * AddMonoidAlgebra.coeff S (Finsupp.single (⟨k - 1, by omega⟩ : Fin (r + a)) 1) =
         ∑ nu ∈ partitionsOf r k,
           symmetricGroupCharacter (fun i => a + nu i) ((k - 1) :: List.replicate (r * a + 1) 1) *
             (if ∀ i : Fin r, (i : ℕ) ≠ 0 → nu i ≤ 1 then

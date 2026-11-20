@@ -22,7 +22,7 @@ theorem monomial_mem_orig_pow (e : ι →₀ ℕ) (a : R) : monomial e a ∈ ori
   rw [hpow]
   exact Ideal.prod_mem_prod (fun i _ => Ideal.pow_mem_pow (show (X i : MvPolynomial ι R) ∈ orig R ι from Ideal.subset_span (Set.mem_range_self i)) _)
 
-theorem mem_orig_pow_of_coeff (n : ℕ) (p : MvPolynomial ι R) (h : ∀ e, e.degree < n → coeff e p = 0) :
+theorem mem_orig_pow_of_coeff (n : ℕ) (p : MvPolynomial ι R) (h : ∀ e, e.degree < n → AddMonoidAlgebra.coeff p e = 0) :
     p ∈ orig R ι ^ n := by
   rw [p.as_sum]
   refine Ideal.sum_mem _ (fun e he => ?_)
@@ -35,7 +35,7 @@ theorem mem_orig_pow_of_coeff (n : ℕ) (p : MvPolynomial ι R) (h : ∀ e, e.de
 variable [Fintype ι] [DecidableEq ι]
 
 theorem psJet_eq_mk (m : ℕ) (f : MvPowerSeries ι R) (p : MvPolynomial ι R)
-    (h : ∀ e, e.degree ≤ m → coeff e p = MvPowerSeries.coeff e f) :
+    (h : ∀ e, e.degree ≤ m → AddMonoidAlgebra.coeff p e = MvPowerSeries.coeff e f) :
     psJet m f = Ideal.Quotient.mk _ p := by
   unfold psJet
   rw [Ideal.Quotient.eq]
@@ -73,7 +73,7 @@ theorem aeval_scale_monomial (s : ι → R) (e : ι →₀ ℕ) (a : R) :
   ring
 
 theorem coeff_aeval_scale (s : ι → R) (p : MvPolynomial ι R) (e : ι →₀ ℕ) :
-    coeff e (aeval (fun i => C (s i) * X i) p) = (e.prod fun i k => s i ^ k) * coeff e p := by
+    AddMonoidAlgebra.coeff (aeval (fun i => C (s i) * X i) p) e = (e.prod fun i k => s i ^ k) * AddMonoidAlgebra.coeff p e := by
   induction p using MvPolynomial.induction_on' with
   | monomial e' a =>
     rw [aeval_scale_monomial, coeff_monomial, coeff_monomial]
@@ -82,7 +82,7 @@ theorem coeff_aeval_scale (s : ι → R) (p : MvPolynomial ι R) (e : ι →₀ 
       ring
     · simp
   | add p q hp hq =>
-    rw [map_add, coeff_add, coeff_add, hp, hq, mul_add]
+    rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem jetMap_mk {ι' : Type} (m : ℕ) (φ : ι → MvPolynomial ι' R) (hφ : ∀ i, φ i ∈ orig R ι')
     (p : MvPolynomial ι R) :
@@ -106,7 +106,7 @@ theorem jetAug_psJet (m : ℕ) (f : MvPowerSeries ι R) :
   show (MvPolynomial.aeval fun _ => (0 : R)) (psTrunc m f) = _
   rw [show (fun _ : ι => (0 : R)) = 0 from rfl, MvPolynomial.aeval_zero, Algebra.algebraMap_self_apply,
 ]
-  show MvPolynomial.coeff 0 (psTrunc m f) = _
+  show AddMonoidAlgebra.coeff (psTrunc m f) 0 = _
   rw [GermFun.coeff_psTrunc m f 0 (by simp)]
   rfl
 
@@ -120,14 +120,14 @@ theorem exists_ps_of_compat (ρ : ∀ m, Jet R ι m) (h : ∀ m, jetTrunc (ρ (m
     have h1 := h m
     rw [← hP (m + 1), ← hP m] at h1
     exact h1
-  have hcoef : ∀ n k (e : ι →₀ ℕ), e.degree ≤ n → coeff e (P (n + k)) = coeff e (P n) := by
+  have hcoef : ∀ n k (e : ι →₀ ℕ), e.degree ≤ n → AddMonoidAlgebra.coeff (P (n + k)) e = AddMonoidAlgebra.coeff (P n) e := by
     intro n k e he
     induction k with
     | zero => rfl
     | succ k ih =>
       rw [← ih, ← sub_eq_zero, ← coeff_sub]
       exact GermFun.coeff_eq_zero_of_mem (hstep (n + k)) (by omega)
-  refine ⟨fun e => coeff e (P e.degree), fun m => ?_⟩
+  refine ⟨fun e => AddMonoidAlgebra.coeff (P e.degree) e, fun m => ?_⟩
   rw [← hP m]
   refine psJet_eq_mk m _ _ (fun e he => ?_)
   have h2 := hcoef e.degree (m - e.degree) e le_rfl

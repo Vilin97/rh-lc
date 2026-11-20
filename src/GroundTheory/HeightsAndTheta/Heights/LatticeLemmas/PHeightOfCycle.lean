@@ -84,7 +84,7 @@ theorem HeightOfCycle.proof (h1 : HeightOfPoint.Statement) (h2 : FibreMahlerForm
     have hle : Submodule.span (𝓞 F) (Set.range w) ≤ LinearMap.ker (yv q) := by
       rw [Submodule.span_le]
       rintro _ ⟨k, rfl⟩
-      have := congrArg (coeff (Finsupp.single k 1)) h0
+      have := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single k 1)) h0
       simp only [coeff_sum, coeff_C_mul, coeff_X, coeff_zero] at this
       rw [Finset.sum_eq_single k (fun j _ hj ↦ by
         rw [if_neg (fun e ↦ hj (Finsupp.single_left_injective one_ne_zero e)), mul_zero])

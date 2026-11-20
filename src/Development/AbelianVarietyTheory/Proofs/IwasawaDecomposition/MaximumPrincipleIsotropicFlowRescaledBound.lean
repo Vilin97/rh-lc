@@ -117,7 +117,7 @@ theorem stepBound (E : Type) [Field E] [NumberField E] [IsCMField E] (r : ℕ) (
     exact (div_nonneg_iff.mp this).elim (fun h => h.1) (fun h => absurd h.2 (not_le.mpr hn'))
   have hr := (m3bNorm_holds r X _ (FjCauchy.isIsoV_embV X hξ) la x hx b hx').2
   have hr2 : X.nfac la x / X.nfac la x' ≤ ∏ τ, q τ ^ (-w) := by
-    refine le_trans hr (Finset.prod_le_prod (fun τ _ => ?_) fun τ _ => ?_)
+    refine le_trans hr (Finset.prod_le_prod₀ (fun τ _ => ?_) fun τ _ => ?_)
     all_goals
       have hqq : 1 + (b τ).im / X.ttV (X.embV ξ) x τ = q τ := by
         change 1 + (b τ).im / X.tt ξ x τ = q τ

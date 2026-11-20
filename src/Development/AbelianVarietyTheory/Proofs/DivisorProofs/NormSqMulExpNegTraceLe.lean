@@ -23,7 +23,7 @@ theorem norm_sq_mul_exp_neg_trace_le : ∀ (F : Type) [Field F] [NumberField F] 
   have hprod : |((Algebra.norm ℚ x : ℚ) : ℝ)| ≤ T ^ Fintype.card (Emb F) := by
     rw [hnorm, abs_of_nonneg (Finset.prod_nonneg fun τ _ => (hx τ).le)]
     calc ∏ τ : Emb F, τ x ≤ ∏ _τ : Emb F, T :=
-          Finset.prod_le_prod (fun τ _ => (hx τ).le) (fun τ _ =>
+          Finset.prod_le_prod₀ (fun τ _ => (hx τ).le) (fun τ _ =>
             Finset.single_le_sum (f := fun σ : Emb F => σ x) (fun σ _ => (hx σ).le) (Finset.mem_univ τ))
       _ = T ^ Fintype.card (Emb F) := by rw [Finset.prod_const, Finset.card_univ]
   have hsq : |((Algebra.norm ℚ x : ℚ) : ℝ)| ^ 2 ≤ T ^ n := by

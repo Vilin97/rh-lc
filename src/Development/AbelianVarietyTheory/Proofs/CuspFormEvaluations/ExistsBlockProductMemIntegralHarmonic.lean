@@ -214,7 +214,7 @@ theorem minors_polynomial_coefficient_norm_le_pow (a : T → ℕ → ℕ) (N : �
       (N : ℝ) ^ (∑ σ, ∑ s : Fin (r σ), (s + 1) * (a σ s - a σ (s + 1))) := by
   rw [← Finset.prod_pow_eq_pow_sum]
   refine (MvPoly.l1Norm_prod_le _ _).trans
-    (Finset.prod_le_prod (fun _ _ => MvPoly.l1Norm_nonneg _) fun σ _ => ?_)
+    (Finset.prod_le_prod₀ (fun _ _ => MvPoly.l1Norm_nonneg _) fun σ _ => ?_)
   rw [← Finset.prod_pow_eq_pow_sum]
   simp only [pow_mul]
   refine MvPoly.l1Norm_prod_pow_le _ _ _ _ fun s _ => ?_

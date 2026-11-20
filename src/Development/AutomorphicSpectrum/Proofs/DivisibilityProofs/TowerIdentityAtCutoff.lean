@@ -20,11 +20,11 @@ namespace GlobalTheory.CompanionTheory.Ar.Top
 theorem abs_apply_le_of_monomial_bound {σ : Type} (G : MvPolynomial σ ℝ →ₗ[ℝ] ℝ) (F : MvPolynomial σ ℝ) {d : ℕ}
     (hF : F.IsHomogeneous d) {e : ℝ} (he : ∀ m : σ →₀ ℕ, m.degree = d → |G (monomial m 1)| ≤ e) :
     |G F| ≤ (∑ m ∈ F.support, |coeff m F|) * e := by
-  have h1 : G F = ∑ m ∈ F.support, coeff m F * G (monomial m 1) := by
+  have h1 : G F = ∑ m ∈ F.support, AddMonoidAlgebra.coeff F m * G (monomial m 1) := by
     conv_lhs => rw [F.as_sum]
     rw [map_sum]
     refine Finset.sum_congr rfl fun m _ => ?_
-    have : monomial m (coeff m F) = coeff m F • monomial m (1 : ℝ) := by
+    have : monomial m (AddMonoidAlgebra.coeff F m) = AddMonoidAlgebra.coeff F m • monomial m (1 : ℝ) := by
       rw [smul_monomial]; simp
     rw [this, map_smul, smul_eq_mul]
   rw [h1, Finset.sum_mul]

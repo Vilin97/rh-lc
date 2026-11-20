@@ -22,7 +22,7 @@ theorem card_choice_le (r : ℕ) (hr : ∀ j, (bs j).i ≤ r) :
     Fintype.card (Choice bs) ≤ r ^ DF bs := by
   unfold DF
   rw [Fintype.card_pi, ← Finset.prod_pow_eq_pow_sum]
-  apply Finset.prod_le_prod (fun _ _ => Nat.zero_le _)
+  apply Finset.prod_le_prod₀ (fun _ _ => Nat.zero_le _)
   intro j _
   rw [Fintype.card_fun, Fintype.card_perm, Fintype.card_fin, Fintype.card_fin, pow_mul]
   exact Nat.pow_le_pow_left (le_trans (Nat.factorial_le_pow _) (Nat.pow_le_pow_left (hr j) _)) _
@@ -58,7 +58,7 @@ theorem prod_det_ge (d : ∀ j : Fin nb, ℝ) (δ : ℝ) (hδ0 : 0 ≤ δ) (hδ1
     δ ^ DF bs ≤ ∏ j, d j ^ (bs j).c := by
   unfold DF
   rw [← Finset.prod_pow_eq_pow_sum]
-  apply Finset.prod_le_prod (fun j _ => pow_nonneg hδ0 _)
+  apply Finset.prod_le_prod₀ (fun j _ => pow_nonneg hδ0 _)
   intro j _
   by_cases hi : (bs j).i = 0
   · rw [hi, zero_mul, pow_zero, hd1 j hi, one_pow]

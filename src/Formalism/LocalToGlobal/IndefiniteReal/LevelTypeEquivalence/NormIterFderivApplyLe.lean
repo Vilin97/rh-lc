@@ -40,7 +40,7 @@ theorem snoc_eq_cons_rot {n : ℕ} (w : V) (vs : Fin n → V) :
   refine Fin.lastCases ?_ (fun j => ?_) i
   · simp [finRotate_last]
   · simp only [Fin.snoc_castSucc, Function.comp_apply]
-    rw [finRotate_succ_apply, Fin.coeSucc_eq_succ, Fin.cons_succ]
+    rw [finRotate_apply, Fin.coeSucc_eq_succ, Fin.cons_succ]
 
 theorem iter_fderiv_apply {φ : V → ℂ} (hφ : ContDiff ℝ ∞ φ) (n : ℕ) (w : V) (a : V) (vs : Fin n → V) :
     iteratedFDeriv ℝ n (fun y => fderiv ℝ φ y w) a vs = iteratedFDeriv ℝ (n + 1) φ a (Fin.cons w vs) := by

@@ -154,7 +154,7 @@ private theorem coeff_eq_zero_of_monomial_sum_eq_zero {n : ℕ} (M : Finset (Fin
     rw [Finsupp.prod_fintype _ _ (fun i => pow_zero _)]
     simp
   intro α hα
-  have hc := congrArg (MvPolynomial.coeff (Finsupp.equivFunOnFinite.symm α)) hP
+  have hc := congrArg (AddMonoidAlgebra.coeff · (Finsupp.equivFunOnFinite.symm α)) hP
   simp only [P, MvPolynomial.coeff_sum, MvPolynomial.coeff_monomial, MvPolynomial.coeff_zero,
     (Finsupp.equivFunOnFinite).symm.injective.eq_iff] at hc
   rwa [Finset.sum_ite_eq' M α B, if_pos hα] at hc

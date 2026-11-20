@@ -14,7 +14,7 @@ theorem PolarisationCoeff.prod_X_pow_eq_monomial_one {σ S : Type*} [CommSemirin
 
 theorem PolarisationCoeff.coeff_polarPoly {σ R : Type*} [CommRing R] [Fintype σ]
     (Φ : MvPolynomial σ R →ₗ[R] R) (n : ℕ) (m : σ →₀ ℕ) :
-    coeff m (polarPoly Φ n) = Φ (coeff m ((-outerDot σ R) ^ n)) := by
+    AddMonoidAlgebra.coeff (polarPoly Φ n) m = Φ (AddMonoidAlgebra.coeff ((-outerDot σ R) ^ n) m) := by
   classical
   unfold polarPoly
   rw [coeff_sum]
@@ -26,7 +26,7 @@ theorem PolarisationCoeff.coeff_polarPoly {σ R : Type*} [CommRing R] [Fintype �
 
 theorem PolarisationCoeff.coeff_outerDot_pow {σ R : Type*} [CommRing R] [Fintype σ] (n : ℕ) (m : σ →₀ ℕ)
     (hm : (m.sum fun _ e => e) = n) :
-    coeff m ((outerDot σ R) ^ n) = (Nat.multinomial univ m : MvPolynomial σ R) * monomial m 1 := by
+    AddMonoidAlgebra.coeff ((outerDot σ R) ^ n) m = (Nat.multinomial univ m : MvPolynomial σ R) * monomial m 1 := by
   classical
   unfold outerDot
   rw [Finset.sum_pow_eq_sum_piAntidiag, coeff_sum]

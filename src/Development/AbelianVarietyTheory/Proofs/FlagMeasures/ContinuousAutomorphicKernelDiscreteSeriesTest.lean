@@ -173,7 +173,7 @@ theorem continuous_kern_phe : ∀ (B : RowsAut) (d : InfinitePlace B.I.F → ℝ
       simp only [majPh]
       refine mul_le_mul (le_abs_self _) ?_ (Finset.prod_nonneg fun v _ => (Real.exp_pos _).le)
         (abs_nonneg _)
-      refine Finset.prod_le_prod (fun v _ => (Real.exp_pos _).le) fun v _ => ?_
+      refine Finset.prod_le_prod₀ (fun v _ => (Real.exp_pos _).le) fun v _ => ?_
       exact decE_dOp_le_exp_floor (B.I.ε v) h hn (hb v) (w.1 v)
     have hshift : ∀ v, Real.exp (-(4 * (n : ℝ) ^ 2 * (⌊dOp (uMat (w.1 v))⌋₊ : ℝ))) ≤
         Real.exp (4 * (n : ℝ) ^ 2 * (1 + 2 * Mv v)) *
@@ -200,7 +200,7 @@ theorem continuous_kern_phe : ∀ (B : RowsAut) (d : InfinitePlace B.I.F → ℝ
         (∏ v, Real.exp (4 * (n : ℝ) ^ 2 * (1 + 2 * Mv v))) *
           ∏ v, Real.exp (-(2 * (2 * (n : ℝ) ^ 2) * (⌊D γ v⌋₊ : ℝ))) := by
       rw [← Finset.prod_mul_distrib]
-      exact Finset.prod_le_prod (fun v _ => (Real.exp_pos _).le) fun v _ => hshift v
+      exact Finset.prod_le_prod₀ (fun v _ => (Real.exp_pos _).le) fun v _ => hshift v
     calc ‖ph B d w.1‖ * ‖B.e w.2‖
         ≤ (|∏ v, d v| * ((∏ v, Real.exp (4 * (n : ℝ) ^ 2 * (1 + 2 * Mv v))) *
             ∏ v, Real.exp (-(2 * (2 * (n : ℝ) ^ 2) * (⌊D γ v⌋₊ : ℝ))))) * (B.e 1).re := by

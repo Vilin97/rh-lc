@@ -89,7 +89,7 @@ theorem coeff_mem_of_dehom_coeff_mem {Ω : Type} [Field Ω] [CharZero Ω] {D : �
     split_ifs
     · exact (mem_range_map_iff V H).mp hHW ν
     · exact V.zero_mem
-  have h1 : coeff (μ + Finsupp.single j (N2 - N)) (X j ^ (N2 - N) * F) = coeff μ F := by
+  have h1 : AddMonoidAlgebra.coeff (X j ^ (N2 - N) * F) (μ + Finsupp.single j (N2 - N)) = AddMonoidAlgebra.coeff F μ := by
     rw [X_pow_eq_monomial, mul_comm, coeff_mul_monomial, mul_one]
   rw [← h1]
   exact (mem_range_map_iff V _).mp hKW _

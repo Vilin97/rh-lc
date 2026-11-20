@@ -462,6 +462,6 @@ theorem det_poly_statement : LemmaDetPoly := by
     refine Finset.sum_congr rfl (fun g _ => ?_)
     rw [Algebra.smul_def, map_mul]
   obtain ⟨t, ht, htx⟩ := hdet s
-  exact ⟨t, ht, fun x => by rw [htx x]; exact congrArg (MvPolynomial.coeff s) (hx x)⟩
+  exact ⟨t, ht, fun x => by rw [htx x]; exact congrArg (AddMonoidAlgebra.coeff · s) (hx x)⟩
 
 end Formalism.TruncatedSeriesCounting.TruncatedSeriesCountingIdentities

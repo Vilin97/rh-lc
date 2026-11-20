@@ -71,7 +71,7 @@ private theorem sep (I : Ideal A) [IsAdicComplete I A] {σ : Type} {p q : MvPoly
     p = q := by
   ext m
   refine sub_eq_zero.1 (IsHausdorff.haus (I := I) inferInstance _ fun N => ?_)
-  have := congrArg (MvPolynomial.coeff m) (h N)
+  have := congrArg (AddMonoidAlgebra.coeff · m) (h N)
   rw [MvPolynomial.coeff_map, MvPolynomial.coeff_map, Ideal.Quotient.eq] at this
   rw [SModEq.zero, smul_eq_mul, Ideal.mul_top]
   exact this

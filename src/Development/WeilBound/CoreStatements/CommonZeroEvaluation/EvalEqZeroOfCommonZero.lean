@@ -186,7 +186,7 @@ theorem sectionPoly_isHomogeneous {δ : ℕ} {g : MvPolynomial (Fin (e + 1) × F
   have hp := IsHomogeneous.prod Finset.univ (fun ij => firstSub v ij ^ d ij) _
     (fun ij _ => (hs ij).pow (d ij))
   rw [h1] at hp
-  simpa using (isHomogeneous_C (Fin n) (coeff d g)).mul hp
+  simpa using (isHomogeneous_C (Fin n) (AddMonoidAlgebra.coeff g d)).mul hp
 
 theorem eval_eq_zero_of_common_zero {W : Ideal (MvPolynomial (Fin n) ℂ)}
     {g : MvPolynomial (Fin (e + 1) × Fin n) ℂ} (hg : IsChowForm W (e + 1) g)

@@ -159,7 +159,7 @@ theorem exists_norm_schwartz_le_prod (φ : 𝓢(mixedSpace K, ℂ)) (k : ℕ) :
   rw [norm_iteratedFDeriv_zero] at h1
   have hprod : ∏ w, (1 + ‖x w‖) ^ k ≤ (1 + ‖y‖) ^ (k * d) := by
     calc ∏ w, (1 + ‖x w‖) ^ k ≤ ∏ _w : InfinitePlace K, (1 + ‖y‖) ^ k :=
-          Finset.prod_le_prod (fun w _ ↦ by positivity) fun w _ ↦
+          Finset.prod_le_prod₀ (fun w _ ↦ by positivity) fun w _ ↦
             pow_le_pow_left₀ (by positivity) (by linarith [norm_le_norm_homeomorphMixedSpace x w]) k
       _ = (1 + ‖y‖) ^ (k * d) := by rw [Finset.prod_const, Finset.card_univ, ← pow_mul]
   have hpos : 0 < ∏ w, (1 + ‖x w‖) ^ k := Finset.prod_pos fun w _ ↦ by positivity

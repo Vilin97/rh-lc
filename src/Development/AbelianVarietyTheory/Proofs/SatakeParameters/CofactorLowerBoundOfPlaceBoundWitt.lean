@@ -127,7 +127,7 @@ theorem cofactor_lower_bound_of_place_bound_witt : ∀ (p : ℕ) [Fact p.Prime] 
     intro f
     rw [Sys.ThZA, ← MvPowerSeries.coe_substAlgHom hsub]
     rfl
-  have hval : MvPolynomial.coeff m (applyD P (X.ThZA Y.Kc j (MvPowerSeries.map φ E * U))) =
+  have hval : AddMonoidAlgebra.coeff (applyD P (X.ThZA Y.Kc j (MvPowerSeries.map φ E * U))) m =
       (p : Y.Kc) ^ ⌈g⌉ * ∑ n ∈ S, c n * φ (algebraMap (WW p) (K0 p) (a n)) := by
     rw [hU', hTh, map_add, ← hTh, hz, zero_add, map_sum, MvPolynomial.coeff_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun n _ => ?_

@@ -5939,7 +5939,7 @@ theorem levelSizes_of_ThS (K : ℕ) (hK : 4 ≤ K) (C4 : ℝ) (hC4 : 1 ≤ C4) :
       Finset.prod_nonneg fun s' hs' => (hvol s' hs').1
     have hprod : ∏ s' ∈ Ico 1 s, (Real.pi ^ D.R.f * volB D C1 C2 N T T' δ x L (i - s + 1) s') ≤
         (Real.pi ^ D.R.f * Y ^ 2) ^ (s - 1) := by
-      have := Finset.prod_le_prod (fun s' hs' => (hvol s' hs').1) (fun s' hs' => (hvol s' hs').2)
+      have := Finset.prod_le_prod₀ (fun s' hs' => (hvol s' hs').1) (fun s' hs' => (hvol s' hs').2)
       simpa using this
     have hC4p : 0 ≤ C4 ^ (D.R.f * s) := by positivity
     have hB0 : 0 ≤ bdB D C1 C2 N T T' δ x L C4 i s := mul_nonneg hC4p hprod0

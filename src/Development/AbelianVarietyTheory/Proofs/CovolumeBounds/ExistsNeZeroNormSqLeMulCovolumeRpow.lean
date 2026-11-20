@@ -184,7 +184,7 @@ theorem succMin_mul_minNorm_pow_le {k : ℕ} (h1 : 1 ≤ k) (hk : k ≤ finrank 
   rw [← Finset.mul_prod_erase _ _ (Finset.mem_univ j), show (j : ℕ) + 1 = k by simp [j]; omega]
   refine mul_le_mul_of_nonneg_left ?_ (succMin_nonneg L k)
   calc minNorm L ^ (finrank ℝ E - 1) = ∏ _i ∈ Finset.univ.erase j, minNorm L := by simp
-    _ ≤ _ := Finset.prod_le_prod (fun _ _ ↦ succMin_nonneg L 1) fun i _ ↦
+    _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ ↦ succMin_nonneg L 1) fun i _ ↦
         succMin_mono_of_isZLattice (by omega) i.2
 
 end Euclidean

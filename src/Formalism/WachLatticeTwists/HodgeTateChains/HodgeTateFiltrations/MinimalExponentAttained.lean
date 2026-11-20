@@ -128,7 +128,7 @@ lemma val_factorial_pred (ℓ : ℕ) (hℓ : ℓ.Prime) (e : ℕ) (he : 1 ≤ e)
     padicValNat ℓ e.factorial = padicValNat ℓ e + padicValNat ℓ (e - 1).factorial := by
   have := Fact.mk hℓ
   rw [← Nat.mul_factorial_pred (by omega : e ≠ 0),
-    padicValNat.mul (by omega) (Nat.factorial_ne_zero _)]
+    (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by omega) (Nat.factorial_ne_zero _)]
 
 theorem betaCount : StatBetaCount := by
   intro ℓ hℓ s e he
@@ -164,7 +164,7 @@ lemma cPrime_eq (ℓ : ℕ) (hℓ : ℓ.Prime) (s e : ℕ) :
       | zero => simp
       | succ k ih =>
         rw [Finset.sum_range_succ, ih, Nat.factorial_succ,
-          padicValNat.mul (by omega) (Nat.factorial_ne_zero _)]
+          (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by omega) (Nat.factorial_ne_zero _)]
         ring
     rw [← h2, ← hr]
     refine Finset.sum_congr rfl fun j hj => ?_

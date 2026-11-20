@@ -152,7 +152,7 @@ theorem _root_.GlobalTheory.ChartCompare.nEval_subst (b : σ → MvPowerSeries �
 omit [Fintype σ] in
 theorem coeff_eq_zero_of_mem_span {N : ℕ} (f : MvPolynomial σ R₀)
     (hf : f ∈ Ideal.span (Set.range fun j : σ => (MvPolynomial.X j : MvPolynomial σ R₀) ^ N))
-    (m : σ →₀ ℕ) (hm : ∀ i, m i < N) : MvPolynomial.coeff m f = 0 := by
+    (m : σ →₀ ℕ) (hm : ∀ i, m i < N) : AddMonoidAlgebra.coeff f m = 0 := by
   rw [Ideal.span, Finsupp.mem_span_range_iff_exists_finsupp] at hf
   obtain ⟨c, rfl⟩ := hf
   rw [Finsupp.sum, MvPolynomial.coeff_sum]
@@ -164,7 +164,7 @@ theorem coeff_eq_zero_of_mem_span {N : ℕ} (f : MvPolynomial σ R₀)
   exact absurd (hm j) (not_lt.mpr this)
 
 theorem coeff_tEval_X {N : ℕ} (f : MvPowerSeries σ R₀) (m : σ →₀ ℕ) (hm : ∀ i, m i < N) :
-    MvPolynomial.coeff m (tEval N f (MvPolynomial.X : σ → MvPolynomial σ R₀)) = coeff m f := by
+    AddMonoidAlgebra.coeff (tEval N f (MvPolynomial.X : σ → MvPolynomial σ R₀)) m = coeff m f := by
   have h : ∀ (e : σ → ℕ) (r : R₀), algebraMap R₀ (MvPolynomial σ R₀) r *
       ∏ i, MvPolynomial.X i ^ e i = MvPolynomial.monomial (Finsupp.equivFunOnFinite.symm e) r :=
     fun e r => by

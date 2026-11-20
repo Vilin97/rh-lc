@@ -45,7 +45,7 @@ open Finsupp in
 variable {C : Type} [Field C] {ι τ : Type} [Fintype ι] {σ : ι → Type} (e : ∀ i, σ i ↪ τ) in
 private lemma jetAt0_eq_sum_coeff_mul_mfact_of_support_subset {α : Type} (P : MvPolynomial α C) (G : MvPowerSeries α C)
     {s : Finset (α →₀ ℕ)} (hs : P.support ⊆ s) :
-    _root_.Formalism.IncomingBounds.jetAt0 P G = ∑ m ∈ s, MvPolynomial.coeff m P * (_root_.Formalism.IncomingBounds.mfact m : C) * MvPowerSeries.coeff m G := by
+    _root_.Formalism.IncomingBounds.jetAt0 P G = ∑ m ∈ s, AddMonoidAlgebra.coeff P m * (_root_.Formalism.IncomingBounds.mfact m : C) * MvPowerSeries.coeff m G := by
   unfold _root_.Formalism.IncomingBounds.jetAt0
   refine Finset.sum_subset hs fun m _ hm => ?_
   rw [MvPolynomial.mem_support_iff, not_not] at hm
@@ -199,9 +199,9 @@ theorem _root_.GlobalTheory.JetProd.jetAt0_prod_rename (hd : ∀ i j x y, e i x 
   have hP : ∏ j, MvPolynomial.rename (e j) (P j) =
       ∑ f ∈ Fintype.piFinset fun j => (P j).support,
         MvPolynomial.monomial (∑ k, Finsupp.embDomain (e k) (f k))
-          (∏ k, MvPolynomial.coeff (f k) (P k)) := by
+          (∏ k, AddMonoidAlgebra.coeff (P k) (f k)) := by
     conv_lhs => rw [show P = fun j => ∑ v ∈ (P j).support,
-      MvPolynomial.monomial v (MvPolynomial.coeff v (P j)) from
+      MvPolynomial.monomial v (AddMonoidAlgebra.coeff (P j) v) from
         funext fun j => MvPolynomial.as_sum (P j)]
     simp only [map_sum, MvPolynomial.rename_monomial]
     rw [Finset.prod_univ_sum]

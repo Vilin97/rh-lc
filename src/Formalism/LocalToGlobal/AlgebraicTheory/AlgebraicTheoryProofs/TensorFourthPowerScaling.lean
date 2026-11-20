@@ -248,7 +248,7 @@ private theorem jetsIntegral_sum_C_mul {p : ℕ} [Fact p.Prime] {X κ : Type} [F
     _ ≤ 1 * 1 := mul_le_mul (hr k) (hf k e) (norm_nonneg _) zero_le_one
     _ = 1 := one_mul 1
 private theorem norm_jetPair_le_one {p : ℕ} [Fact p.Prime] {X : Type} (P : MvPolynomial X ℂ_[p]) (T : MvPowerSeries X ℂ_[p])
-    (hP : ∀ k, ‖MvPolynomial.coeff k P‖ ≤ 1) (hT : JetsIntegral T) : ‖jetPair P T‖ ≤ 1 := by
+    (hP : ∀ k, ‖AddMonoidAlgebra.coeff P k‖ ≤ 1) (hT : JetsIntegral T) : ‖jetPair P T‖ ≤ 1 := by
   unfold jetPair
   apply IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one
   intro e _

@@ -102,7 +102,7 @@ theorem isLevDatum_flat : ∀ (D : D7) (S T : HSp D) (B : Base S T), B.Good → 
 
 open Classical in
 
-theorem exists_coef_sum : ∀ (D : D7) (Γ : Type) [Group Γ] [Fintype Γ] (Pl0 I0 T0 : Type) (A3 : FamIn3 D.what₂.LL Γ Pl0 I0 (List ℕ) T0 D.R.m) (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (Rl : RealDat3 D A3 T.Q.c.F) (cG : G0 Rl.Pg D.R.r ≃* G0g D.nd) (F : Face D A3.A) (v₀ : ∀ (j : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (Rl.MW j σ).Vec) (ρ : Setup D.ntw), ρ.Good → RealPin Rl cG ρ → GlobalTheory.Hk3.Core Rl.toRealDat F → IoExt Rl.toRealDat → ∀ (i : D.ntw.Tw) (j : Fin D.R.m) (b : Bool), FWT.IsChosenExtremalVector Rl.toRealDat j (sg0 D A3.A) (v₀ j _) → ∀ (u : ∀ τ, lowT (Rl.MW j (sg0 D A3.A)) τ), (∀ τ, (u τ : (Rl.MW j (sg0 D A3.A)).sm τ) = v₀ j _ τ) → ∀ (c0 : VsV D j D.what₂.LL →ₛₗ[D.what₂.embLL] (Rl.cV j).W) (c : ℂ), c ≠ 0 → IsScaleAt Rl (ρ.B i j b) u c0 c → ∀ (h : GA D (Vc D j)) (P : PolF D (Wc D j).rank (Vc D j).rank), P ∈ ρ.lat i j b (ρ.eO i b).range h → ∃ (m : ℕ) (o : Fin m → ℂ) (v : Fin m → VsV D j D.what₂.LL), (∀ t, o t ∈ (ρ.eO i b).range) ∧ (∀ t mm, D.what₂.embLL (MvPolynomial.coeff mm (v t : Pol D.what₂.LL D.what₂.Tau (Vc D j).rank)) ∈ (embLL0 D).fieldRange) ∧ c • P = ∑ t, o t • Rl.ioP j (PiTensorProduct.tprod ℂ u) (c0 (v t)) := by
+theorem exists_coef_sum : ∀ (D : D7) (Γ : Type) [Group Γ] [Fintype Γ] (Pl0 I0 T0 : Type) (A3 : FamIn3 D.what₂.LL Γ Pl0 I0 (List ℕ) T0 D.R.m) (T : CoreJ D) [Algebra T.Q.c.F D.what₂.LL] (Rl : RealDat3 D A3 T.Q.c.F) (cG : G0 Rl.Pg D.R.r ≃* G0g D.nd) (F : Face D A3.A) (v₀ : ∀ (j : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (Rl.MW j σ).Vec) (ρ : Setup D.ntw), ρ.Good → RealPin Rl cG ρ → GlobalTheory.Hk3.Core Rl.toRealDat F → IoExt Rl.toRealDat → ∀ (i : D.ntw.Tw) (j : Fin D.R.m) (b : Bool), FWT.IsChosenExtremalVector Rl.toRealDat j (sg0 D A3.A) (v₀ j _) → ∀ (u : ∀ τ, lowT (Rl.MW j (sg0 D A3.A)) τ), (∀ τ, (u τ : (Rl.MW j (sg0 D A3.A)).sm τ) = v₀ j _ τ) → ∀ (c0 : VsV D j D.what₂.LL →ₛₗ[D.what₂.embLL] (Rl.cV j).W) (c : ℂ), c ≠ 0 → IsScaleAt Rl (ρ.B i j b) u c0 c → ∀ (h : GA D (Vc D j)) (P : PolF D (Wc D j).rank (Vc D j).rank), P ∈ ρ.lat i j b (ρ.eO i b).range h → ∃ (m : ℕ) (o : Fin m → ℂ) (v : Fin m → VsV D j D.what₂.LL), (∀ t, o t ∈ (ρ.eO i b).range) ∧ (∀ t mm, D.what₂.embLL (AddMonoidAlgebra.coeff (v t : Pol D.what₂.LL D.what₂.Tau (Vc D j).rank) mm) ∈ (embLL0 D).fieldRange) ∧ c • P = ∑ t, o t • Rl.ioP j (PiTensorProduct.tprod ℂ u) (c0 (v t)) := by
   intro D Γ _ _ Pl0 I0 T0 A3 T _ Rl cG F v₀ ρ hρ hpin hcore hio i j b hv u hu c0 c hc hs h P hP
   have hB := hρ.base i j b
   have hBo := BaseRat.baseOf_of_realPin hcore.lev hρ hpin i j b
@@ -329,7 +329,7 @@ theorem exists_coef {T : CoreJ D} [Algebra T.Q.c.F D.what₂.LL] {Rl : RealDat3 
     {c0 : VsV D j D.what₂.LL →ₛₗ[D.what₂.embLL] (Rl.cV j).W} {c : ℂ} (hc : c ≠ 0) (hs : IsScaleAt Rl (ρ.B i j b) u c0 c)
     {h : GA D (Vc D j)} {P : PolF D (Wc D j).rank (Vc D j).rank} (hP : P ∈ ρ.lat i j b (ρ.eO i b).range h) :
     ∃ (m : ℕ) (o : Fin m → ℂ) (v : Fin m → VsV D j D.what₂.LL), (∀ t, o t ∈ (ρ.eO i b).range) ∧
-      (∀ t mm, D.what₂.embLL (MvPolynomial.coeff mm (v t : Pol D.what₂.LL D.what₂.Tau (Vc D j).rank)) ∈
+      (∀ t mm, D.what₂.embLL (AddMonoidAlgebra.coeff (v t : Pol D.what₂.LL D.what₂.Tau (Vc D j).rank) mm) ∈
         (embLL0 D).fieldRange) ∧
       c • P = ∑ t, o t • Rl.ioP j (PiTensorProduct.tprod ℂ u) (c0 (v t)) := exists_coef_sum D Γ Pl0 I0 T0 A3 T Rl cG F v₀ ρ hρ hpin hcore hio i j b hv u hu c0 c hc hs h P hP
 

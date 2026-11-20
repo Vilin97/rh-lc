@@ -18,7 +18,7 @@ theorem eval_lin {K : Type} [Field K] {N : ℕ} (x : Fin 1 × Fin N → K) (y : 
   simp [lin]
 
 theorem coeff_lin {K : Type} [Field K] {N : ℕ} (y : Fin N → K) (j : Fin N) :
-    coeff (Finsupp.single ((0 : Fin 1), j) 1) (lin y) = y j := by
+    AddMonoidAlgebra.coeff (lin y) (Finsupp.single ((0 : Fin 1), j) 1) = y j := by
   classical
   rw [lin, coeff_sum]
   simp only [mul_comm (X _) (C _), coeff_C_mul, coeff_X', Finsupp.single_left_inj (one_ne_zero' ℕ)]
@@ -78,7 +78,7 @@ theorem eq_C_mul_prod_lin : ∀ (K : Type) [Field K] [IsAlgClosed K] (N δ m : �
     obtain ⟨t, -, ht⟩ := isUnit_iff_eq_C_of_isReduced.1 a.isUnit
     rw [ht, mul_comm] at ha
     refine hne (hinj q q' t (funext fun j => ?_))
-    have h1 := congrArg (coeff (Finsupp.single ((0 : Fin 1), j) 1)) ha
+    have h1 := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single ((0 : Fin 1), j) 1)) ha
     rw [coeff_C_mul, coeff_lin, coeff_lin] at h1
     simpa using h1.symm
   have Pdvd : (∏ q, lin (y q)) ∣ g := Finset.prod_dvd_of_isRelPrime

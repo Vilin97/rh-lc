@@ -121,7 +121,7 @@ theorem mem_range_chernRootsOver (n : ℕ) : ∀ (ι : Type) [Fintype ι] [Decid
     obtain ⟨T, hT⟩ := esymmAlgHom_fin_surjective R' (m := m τ₀) (n := m τ₀) le_rfl ⟨_, hsym⟩
     have hT' : aeval f T = splitEquiv R τ₀ S := by
       rw [← esymmAlgHom_apply, hT]
-    have hcoef : ∀ d, coeff d T ∈ (chernRootsOver R (fun τ : {τ // τ ≠ τ₀} => m τ.1)).range := by
+    have hcoef : ∀ d, AddMonoidAlgebra.coeff T d ∈ (chernRootsOver R (fun τ : {τ // τ ≠ τ₀} => m τ.1)).range := by
       intro d
       apply ih _ hc' R
       intro w'
@@ -135,7 +135,7 @@ theorem mem_range_chernRootsOver (n : ℕ) : ∀ (ι : Type) [Fintype ι] [Decid
         congr 1
         funext i
         exact (map_esymm _ _ _ _).symm
-      have := congrArg (coeff d) hinv
+      have := congrArg (AddMonoidAlgebra.coeff · d) hinv
       rwa [coeff_map] at this
     let k : MvPolynomial (Fin (m τ₀)) R' →+* MvPolynomial (Root m) R :=
       (splitEquiv R τ₀).symm.toRingEquiv.toRingHom

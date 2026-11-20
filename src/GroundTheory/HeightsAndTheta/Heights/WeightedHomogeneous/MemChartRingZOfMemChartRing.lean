@@ -62,7 +62,7 @@ theorem isWeightedHomogeneous_aeval {σ : Type*} {F : MvPolynomial σ ℤ} {τ :
     have h := hF (mem_support_iff.mp hm)
     simpa [Finsupp.weight_apply, Finsupp.sum] using h
   rw [aeval_monomial, Finsupp.prod, algebraMap_eq]
-  have h := (isWeightedHomogeneous_C (coordDeg n) (coeff m F)).mul
+  have h := (isWeightedHomogeneous_C (coordDeg n) (AddMonoidAlgebra.coeff F m)).mul
     (IsWeightedHomogeneous.prod m.support (fun j ↦ g j ^ m j) (fun j ↦ m j • δ)
       fun j _ ↦ (hg j).pow (m j))
   rwa [zero_add, ← Finset.sum_smul, hdeg] at h

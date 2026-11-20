@@ -60,7 +60,7 @@ theorem totalDegree_aeval_le {σ τ : Type} (φ : σ → MvPolynomial τ ℂ) (h
   refine (totalDegree_finsetSum _ _).trans (Finset.sup_le fun m hm => ?_)
   rw [aeval_monomial]
   refine (totalDegree_mul _ _).trans ?_
-  have h1 : (algebraMap ℂ (MvPolynomial τ ℂ) (coeff m p)).totalDegree = 0 := by
+  have h1 : (algebraMap ℂ (MvPolynomial τ ℂ) (AddMonoidAlgebra.coeff p m)).totalDegree = 0 := by
     rw [MvPolynomial.algebraMap_eq]; exact totalDegree_C _
   rw [h1, zero_add, Finsupp.prod]
   refine (totalDegree_finsetProd _ _).trans ?_

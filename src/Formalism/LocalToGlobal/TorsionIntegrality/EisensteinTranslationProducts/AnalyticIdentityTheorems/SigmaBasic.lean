@@ -32,7 +32,7 @@ lemma differentiable_tprod (h : SigmaProdLU) (L : PeriodPair) :
   refine Eventually.of_forall fun s => ?_
   refine Differentiable.differentiableOn ?_
   intro x
-  exact DifferentiableAt.fun_finset_prod fun l _ => differentiable_wFactor _ x
+  exact DifferentiableAt.fun_finsetProd fun l _ => differentiable_wFactor _ x
 
 end SigmaBasic
 

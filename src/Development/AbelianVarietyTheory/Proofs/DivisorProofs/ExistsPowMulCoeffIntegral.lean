@@ -106,7 +106,7 @@ theorem coeff_aeval_scale {σ K : Type} [Field K] (t : K) (P : MvPolynomial σ K
     by_cases h : d = m
     · subst h; simp
     · simp [h]
-  | add p q hp hq => rw [map_add, coeff_add, coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H}
   {l : Level H} (c : Coeff l)

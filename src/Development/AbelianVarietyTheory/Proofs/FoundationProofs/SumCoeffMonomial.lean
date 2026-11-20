@@ -19,7 +19,7 @@ theorem card_strictMono_le (a d : ℕ) [Fintype {s : Fin a → Fin d // StrictMo
 
 theorem sum_coeff_monomial {σ : Type} (w : (σ →₀ ℕ) → ℂ) :
     ∃ L : MvPolynomial σ ℂ →ₗ[ℂ] ℂ, (∀ α c, L (MvPolynomial.monomial α c) = c * w α) ∧
-      ∀ P, L P = ∑ α ∈ P.support, MvPolynomial.coeff α P * w α := by
+      ∀ P, L P = ∑ α ∈ P.support, AddMonoidAlgebra.coeff P α * w α := by
   let L : MvPolynomial σ ℂ →ₗ[ℂ] ℂ := (MvPolynomial.basisMonomials σ ℂ).constr ℂ w
   have h1 : ∀ α c, L (MvPolynomial.monomial α c) = c * w α := by
     intro α c

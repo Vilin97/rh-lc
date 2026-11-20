@@ -119,7 +119,7 @@ theorem norm_iteratedFDeriv_comp_le (e : A →L[ℝ] B) (he : ‖e‖ ≤ 1) (f 
   calc ‖iteratedFDeriv ℝ i f (e x)‖ * ∏ _j : Fin i, ‖e‖
       ≤ ‖iteratedFDeriv ℝ i f (e x)‖ * 1 := by
         gcongr
-        exact Finset.prod_le_one (fun _ _ => norm_nonneg _) fun _ _ => he
+        exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun _ _ => he
     _ = _ := mul_one _
 
 theorem exists_schwartz_prod (f₁ : 𝓢(A, ℂ)) (f₂ : 𝓢(B, ℂ)) :

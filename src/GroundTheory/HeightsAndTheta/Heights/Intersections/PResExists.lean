@@ -49,7 +49,7 @@ theorem eq_bot_of_isEmpty [IsEmpty K] {P : Ideal (MRing ι ℂ)} (hP : P.IsPrime
   intro f hf
   rw [Ideal.mem_bot, eq_C_of_isEmpty f]
   by_contra h
-  have hc : coeff 0 f ≠ 0 := fun h0 => h (by rw [h0, map_zero])
+  have hc : AddMonoidAlgebra.coeff f 0 ≠ 0 := fun h0 => h (by rw [h0, map_zero])
   refine hP.ne_top (Ideal.eq_top_of_isUnit_mem _ hf ?_)
   rw [eq_C_of_isEmpty f]
   exact (isUnit_iff_ne_zero.mpr hc).map C
@@ -101,7 +101,7 @@ def emptyAlgRes [IsEmpty K] : ReciprocityTheory.AnForm.R.AlgRes ι (⊥ : Ideal 
   sncAt _ _ _ := ptSnc _
   comp_eq _ _ _ := ⟨Set.univ, isOpen_univ, Set.mem_univ _, subset_rfl, fun k => k.elim0⟩
   mult f _ _ hfP _ := by
-    have hc : coeff 0 f ≠ 0 := fun h0 => hfP (by rw [Ideal.mem_bot, eq_C_of_isEmpty f, h0, map_zero])
+    have hc : AddMonoidAlgebra.coeff f 0 ≠ 0 := fun h0 => hfP (by rw [Ideal.mem_bot, eq_C_of_isEmpty f, h0, map_zero])
     refine ⟨fun k => k.elim0, fun i x hx => ⟨algebraMap _ _ (bind₁ (fun q : Σ k, ι k =>
       (isEmptyElim q.1 : MvPolynomial (Fin 0) ℂ)) f), ?_, ?_⟩⟩
     · rw [eq_C_of_isEmpty f, bind₁_C_right]

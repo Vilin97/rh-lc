@@ -440,7 +440,7 @@ lemma pm_int (K : ℕ) (x : ℤ) (hx : Odd x) (o : ℕ) (ho : 0 < o)
     (2:ℤ) ^ (K - padicValNat 2 o) ∣ x - 1 ∨ (2:ℤ) ^ (K - padicValNat 2 o) ∣ x + 1 := by
   obtain ⟨a, m, hm, rfl⟩ := Nat.exists_eq_two_pow_mul_odd ho.ne'
   have hv : padicValNat 2 (2 ^ a * m) = a := by
-    rw [padicValNat.mul (by positivity) hm.pos.ne', padicValNat.prime_pow,
+    rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by positivity) hm.pos.ne', padicValNat.prime_pow,
       padicValNat.eq_zero_of_not_dvd (by rwa [← even_iff_two_dvd, Nat.not_even_iff_odd]), add_zero]
   rw [hv]
   apply pm_of_two_pow a K x hx
@@ -502,7 +502,7 @@ theorem pm_one_of_pow (K l o : ℕ) (hl : Odd l) (ho : 0 < o)
     omega
 
 theorem two_pow_padicVal_le (o : ℕ) (ho : 0 < o) : 2 ^ padicValNat 2 o ≤ o := by
-  exact Nat.le_of_dvd ho pow_padicValNat_dvd
+  exact Nat.le_of_dvd ho (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
 
 end Formalism.MainNotions.TwistedPlaces.Cong
 

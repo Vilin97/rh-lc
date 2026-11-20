@@ -283,7 +283,7 @@ theorem block_data (hx : Ext.All) (hc : CharStatement) (ht : ColTorusStatement)
     have hprod : ∏ j, (1 + ∑ k, ‖εc j k‖) ≤ (1 + B) ^ ρ := by
       calc ∏ j, (1 + ∑ k, ‖εc j k‖)
           ≤ ∏ j, (if (s0 j).val < ρ then 1 + B else 1) := by
-            refine Finset.prod_le_prod (fun j _ => by positivity) fun j _ => ?_
+            refine Finset.prod_le_prod₀ (fun j _ => by positivity) fun j _ => ?_
             have := hrow j
             by_cases h : (s0 j).val < ρ
             · simp only [h, if_true] at this ⊢; linarith

@@ -70,7 +70,7 @@ theorem detSpan_relIndex_le : ∀ (F V : Type) [Field F] [NumberField F] [AddCom
   rw [← hmulA, ← hn, ← hmul]
   exact Nat.mul_le_mul hstep ih'
 
-theorem finPart_sub_mean_le_deg : ∀ (F V : Type) [Field F] [NumberField F] [AddCommGroup V] [Module F V] [Module (𝓞 F) V] [IsScalarTower (𝓞 F) F V] (nm : HermFam F V) (M : Submodule (𝓞 F) V) (d : ℕ) (b : Module.Basis (Fin d) F V), IsFull M → ∀ (τ : Type) (g : MvPolynomial τ F), g ≠ 0 → (∀ m, coeff m g ∈ Submodule.span (𝓞 F) {y | ∃ v : Fin d → V, (∀ i, v i ∈ M) ∧ y = b.det v}) → finPart g - mean F (fun σ => Real.log (nm.gram σ b).det.re) / 2 ≤ deg nm M := by
+theorem finPart_sub_mean_le_deg : ∀ (F V : Type) [Field F] [NumberField F] [AddCommGroup V] [Module F V] [Module (𝓞 F) V] [IsScalarTower (𝓞 F) F V] (nm : HermFam F V) (M : Submodule (𝓞 F) V) (d : ℕ) (b : Module.Basis (Fin d) F V), IsFull M → ∀ (τ : Type) (g : MvPolynomial τ F), g ≠ 0 → (∀ m, AddMonoidAlgebra.coeff g m ∈ Submodule.span (𝓞 F) {y | ∃ v : Fin d → V, (∀ i, v i ∈ M) ∧ y = b.det v}) → finPart g - mean F (fun σ => Real.log (nm.gram σ b).det.re) / 2 ≤ deg nm M := by
   intro F V _ _ _ _ _ _ nm M d b hM τ g hg hcoef
   classical
   have hfg := hM.fg
@@ -92,7 +92,7 @@ theorem finPart_sub_mean_le_deg : ∀ (F V : Type) [Field F] [NumberField F] [Ad
   have hdet : ∀ w : Fin r → V, b.det w = δ * β.det w := fun w => by
     rw [hδ, ← hβ, Module.Basis.det_apply, Module.Basis.det_apply, Module.Basis.det_apply, ← Matrix.det_mul,
       Module.Basis.toMatrix_mul_toMatrix]
-  have hcoef' : ∀ m, coeff m g / δ ∈ B := fun m => by
+  have hcoef' : ∀ m, AddMonoidAlgebra.coeff g m / δ ∈ B := fun m => by
     let φ : F →ₗ[𝓞 F] F := (LinearMap.mulLeft F δ⁻¹).restrictScalars (𝓞 F)
     have hmap : (Submodule.span (𝓞 F) {y | ∃ v : Fin r → V, (∀ i, v i ∈ M) ∧ y = b.det v}).map φ ≤ B := by
       rw [Submodule.map_span_le]

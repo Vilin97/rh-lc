@@ -13,7 +13,7 @@ section Fock
 variable {R : Type} [CommRing R] {σ : Type}
 
 theorem fockR_add (G T₁ T₂ : MvPolynomial σ R) : fock G (T₁ + T₂) = fock G T₁ + fock G T₂ := by
-  simp only [fock, coeff_add, mul_add, add_mul, Finset.sum_add_distrib]
+  simp only [fock, MvPolynomial.coeff_add, mul_add, add_mul, Finset.sum_add_distrib]
 
 theorem fockR_zero (G : MvPolynomial σ R) : fock G 0 = 0 := by
   simp [fock]

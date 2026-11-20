@@ -12,7 +12,7 @@ section General
 variable {C : Type} [CommRing C] {κ : Type}
 
 noncomputable def pairing (F : MvPolynomial κ C) : MvPolynomial κ C →ₗ[C] C :=
-  ∑ A ∈ F.support, (coeff A F * (A.prod fun _ e => (e.factorial : C))) • lcoeff C A
+  ∑ A ∈ F.support, (AddMonoidAlgebra.coeff F A * (A.prod fun _ e => (e.factorial : C))) • lcoeff C A
 
 end General
 
@@ -22,7 +22,7 @@ open MvPolynomial in
 variable {C : Type} [CommRing C] {κ : Type} in
 private theorem pairing_eq_sum_factorial (F G : MvPolynomial κ C) :
     _root_.GlobalTheory.DetPowPairing.pairing F G =
-      ∑ A ∈ F.support, coeff A F * (A.prod fun _ e => (e.factorial : C)) * coeff A G := by
+      ∑ A ∈ F.support, AddMonoidAlgebra.coeff F A * (A.prod fun _ e => (e.factorial : C)) * AddMonoidAlgebra.coeff G A := by
   rw [_root_.GlobalTheory.DetPowPairing.pairing, LinearMap.sum_apply]
   simp only [LinearMap.smul_apply, lcoeff_apply, smul_eq_mul]
 
@@ -46,10 +46,10 @@ variable {C : Type} [CommRing C] {κ : Type} in
 private theorem pairing_eq_sum_of_support_subset (F G : MvPolynomial κ C)
     (S : Finset (κ →₀ ℕ)) (hS : F.support ⊆ S) :
     _root_.GlobalTheory.DetPowPairing.pairing F G =
-      ∑ A ∈ S, coeff A F * (A.prod fun _ e => (e.factorial : C)) * coeff A G := by
+      ∑ A ∈ S, AddMonoidAlgebra.coeff F A * (A.prod fun _ e => (e.factorial : C)) * AddMonoidAlgebra.coeff G A := by
   rw [pairing_eq_sum_factorial]
   refine Finset.sum_subset hS fun A _ hA => ?_
-  have h : coeff A F = 0 := by simpa using hA
+  have h : AddMonoidAlgebra.coeff F A = 0 := by simpa using hA
   rw [h]; ring
 
 open MvPolynomial in
@@ -67,7 +67,7 @@ open MvPolynomial in
 variable {C : Type} [CommRing C] {κ : Type} in
 private theorem pairing_monomial_eq_coeff_mul_prod_factorial_mul (F : MvPolynomial κ C) (A : κ →₀ ℕ) (b : C) :
     _root_.GlobalTheory.DetPowPairing.pairing F (monomial A b) =
-      coeff A F * (A.prod fun _ e => (e.factorial : C)) * b := by
+      AddMonoidAlgebra.coeff F A * (A.prod fun _ e => (e.factorial : C)) * b := by
   classical
   rw [pairing_eq_sum_of_support_subset F _ (insert A F.support)
       (Finset.subset_insert _ _), Finset.sum_eq_single A]
@@ -178,7 +178,7 @@ variable {C : Type} [CommRing C] {n : ℕ} in
 
 theorem _root_.GlobalTheory.DetPowPairing.pairing_pow_proportional :
   (∀ (C : Type) [Field C] [CharZero C] (n₀ M Y : ℕ) (Q : MvPolynomial (Fin n₀ × Fin n₀) C), M ≤ Y → Q.IsHomogeneous (n₀ * M) →
-    (∑ A ∈ (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ Y).support, MvPolynomial.coeff A (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ Y) * (A.prod fun _ e => (e.factorial : C)) * MvPolynomial.coeff A (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ (Y - M) * Q)) * (∑ A ∈ (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ M).support, MvPolynomial.coeff A (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ M) * (A.prod fun _ e => (e.factorial : C)) * MvPolynomial.coeff A (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ M)) = (∑ A ∈ (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ M).support, MvPolynomial.coeff A (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ M) * (A.prod fun _ e => (e.factorial : C)) * MvPolynomial.coeff A (Q)) * (∑ A ∈ (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ Y).support, MvPolynomial.coeff A (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ Y) * (A.prod fun _ e => (e.factorial : C)) * MvPolynomial.coeff A (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ Y))) := by
+    (∑ A ∈ (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ Y).support, AddMonoidAlgebra.coeff (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ Y) A * (A.prod fun _ e => (e.factorial : C)) * AddMonoidAlgebra.coeff (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ (Y - M) * Q) A) * (∑ A ∈ (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ M).support, AddMonoidAlgebra.coeff (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ M) A * (A.prod fun _ e => (e.factorial : C)) * AddMonoidAlgebra.coeff (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ M) A) = (∑ A ∈ (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ M).support, AddMonoidAlgebra.coeff (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ M) A * (A.prod fun _ e => (e.factorial : C)) * AddMonoidAlgebra.coeff (Q) A) * (∑ A ∈ (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ Y).support, AddMonoidAlgebra.coeff (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ Y) A * (A.prod fun _ e => (e.factorial : C)) * AddMonoidAlgebra.coeff (_root_.ReciprocityTheory.PGsh.cayDet n₀ C ^ Y) A)) := by
   intro C _ _ n₀ M Y Q hMY _
   simp only [← pairing_eq_sum_factorial]
   obtain ⟨c, hc⟩ := exists_cayOp_pow_cayDet_pow (C := C) n₀ (Y - M) Y

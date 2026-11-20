@@ -23,7 +23,7 @@ theorem aeval_weightedHomogeneous {K σ τ : Type} [CommRing K] {w : σ → ℕ}
   have h2 : (∑ i ∈ d.support, d i • w i) = m := by
     rw [← hdeg, Finsupp.weight_apply, Finsupp.sum]
   rw [h2] at h1
-  have h3 := (isWeightedHomogeneous_C w' (coeff d φ)).mul h1
+  have h3 := (isWeightedHomogeneous_C w' (AddMonoidAlgebra.coeff φ d)).mul h1
   rw [zero_add] at h3
   rw [MvPolynomial.algebraMap_eq]
   exact h3

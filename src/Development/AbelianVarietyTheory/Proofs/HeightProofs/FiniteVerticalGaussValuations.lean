@@ -222,7 +222,7 @@ theorem finite_vertical_gauss_valuations : ∀ (K Ω : Type) [Field K] [NumberFi
   obtain ⟨s, hs0, hs⟩ := (halg.isAlgebraic g⁻¹).exists_integral_multiple
   obtain ⟨m, hm⟩ := MvPolynomial.ne_zero_iff.1 (mul_ne_zero hr0 hs0)
   have hfin : {la : HeightOneSpectrum (𝓞 K) |
-      la.asIdeal ∣ Ideal.span {MvPolynomial.coeff m (r * s)}}.Finite :=
+      la.asIdeal ∣ Ideal.span {AddMonoidAlgebra.coeff (r * s) m}}.Finite :=
     Ideal.finite_factors (by simpa using hm)
   refine (hfin.biUnion (t := fun la => {v : AddValuation Ω (WithTop ℤ) | IsNormDiscrete v ∧
       ∀ y : R, 0 ≤ v (algebraMap R Ω y) ∧ (0 < v (algebraMap R Ω y) ↔ y ∈ extPrime (Fin D) la)})

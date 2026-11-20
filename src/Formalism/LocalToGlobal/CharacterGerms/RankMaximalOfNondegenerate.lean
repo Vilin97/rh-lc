@@ -38,7 +38,7 @@ theorem agr_iff_trunc {τ : Type} [Finite τ] (k : ℕ) (f g : MvPowerSeries τ 
     · exact h e he
     · rfl
   · intro h e he
-    have h2 := congrArg (MvPolynomial.coeff e) h
+    have h2 := congrArg (AddMonoidAlgebra.coeff · e) h
     rwa [MvPowerSeries.coeff_truncTotal _ he, MvPowerSeries.coeff_truncTotal _ he] at h2
 
 theorem agr_subst_left {σ τ : Type} [Finite σ] [Finite τ] {a b : σ → MvPowerSeries τ C}

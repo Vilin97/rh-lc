@@ -31,7 +31,7 @@ theorem exists_eval_line_ne_zero {k : ℕ} (P : MvPolynomial (Fin k) ℂ) (v : F
   set d := P.totalDegree with hd
   have hdeg : ∀ m ∈ P.support, m.degree ≤ d := fun m hm => le_totalDegree hm
   set H : ℂ → ℂ := fun s => ∑ m ∈ P.support,
-    coeff m P * (s ^ (d - m.degree) * ∏ i ∈ m.support, (s * w i + v i) ^ m i) with hH
+    AddMonoidAlgebra.coeff P m * (s ^ (d - m.degree) * ∏ i ∈ m.support, (s * w i + v i) ^ m i) with hH
   have hHc : Continuous H := by
     simp only [hH]
     fun_prop
@@ -39,7 +39,7 @@ theorem exists_eval_line_ne_zero {k : ℕ} (P : MvPolynomial (Fin k) ℂ) (v : F
     intro s hs
     have h1 := h s⁻¹
     rw [eval_eq] at h1
-    have : H s = s ^ d * ∑ m ∈ P.support, coeff m P * ∏ i ∈ m.support, ((w + s⁻¹ • v) i) ^ m i := by
+    have : H s = s ^ d * ∑ m ∈ P.support, AddMonoidAlgebra.coeff P m * ∏ i ∈ m.support, ((w + s⁻¹ • v) i) ^ m i := by
       rw [Finset.mul_sum]
       refine Finset.sum_congr rfl fun m hm => ?_
       simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
@@ -65,7 +65,7 @@ theorem homogeneousComponent_totalDegree_ne_zero {k : ℕ} {P : MvPolynomial (Fi
   have hne : P.support.Nonempty := Finset.nonempty_iff_ne_empty.mpr (mt support_eq_empty.mp hP)
   obtain ⟨m, hm, hmax⟩ := Finset.exists_mem_eq_sup P.support hne (fun s => s.sum fun _ e => e)
   intro h0
-  have h1 := congrArg (coeff m) h0
+  have h1 := congrArg (AddMonoidAlgebra.coeff · m) h0
   rw [coeff_homogeneousComponent, coeff_zero, if_pos] at h1
   · exact (mem_support_iff.mp hm) h1
   · rw [totalDegree, hmax]

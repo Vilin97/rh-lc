@@ -43,7 +43,7 @@ theorem natCast_inv_mem_Rp (vp : K') (m : ℕ) (hm : ¬ p ∣ m) : ((m : K'))⁻
   exact W_mem_Rp p K' vp w
 
 private lemma exists_not_dvd_eq_pow_padicValNat_mul (n : ℕ) (hn : n ≠ 0) : ∃ m, ¬ p ∣ m ∧ n = p ^ padicValNat p n * m := by
-  obtain ⟨m, hm⟩ := (pow_padicValNat_dvd : p ^ padicValNat p n ∣ n)
+  obtain ⟨m, hm⟩ := ((_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)) : p ^ padicValNat p n ∣ n)
   refine ⟨m, fun ⟨c, hc⟩ => pow_succ_padicValNat_not_dvd (p := p) hn ⟨c, ?_⟩, hm⟩
   conv_lhs => rw [hm]
   rw [hc]

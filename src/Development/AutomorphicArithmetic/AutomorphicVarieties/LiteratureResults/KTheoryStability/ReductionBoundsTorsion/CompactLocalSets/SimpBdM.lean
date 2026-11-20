@@ -318,7 +318,7 @@ theorem main (μ : Measure V) [μ.IsAddHaarMeasure] (q : ℕ) (A : Fin (q + 1) �
     intro y hy
     have hy' : ∀ j, y j ∈ B := fun j => hy j (Set.mem_univ j)
     calc ∏ j : Fin q, ‖A j.succ (y j.succ) - A 0 (y 0)‖ ≤ ∏ _j : Fin q, (2 * a * max r 0) :=
-          Finset.prod_le_prod (fun j _ => norm_nonneg _) fun j _ => by
+          Finset.prod_le_prod₀ (fun j _ => norm_nonneg _) fun j _ => by
             calc ‖A j.succ (y j.succ) - A 0 (y 0)‖ ≤ ‖A j.succ (y j.succ)‖ + ‖A 0 (y 0)‖ := norm_sub_le _ _
               _ ≤ a * max r 0 + a * max r 0 := add_le_add (hAx _ _ (hy' _)) (hAx _ _ (hy' _))
               _ = 2 * a * max r 0 := by ring

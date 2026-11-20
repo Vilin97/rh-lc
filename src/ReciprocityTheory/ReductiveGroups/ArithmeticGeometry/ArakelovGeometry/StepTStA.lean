@@ -120,7 +120,7 @@ theorem mem_pts_iff (v : J → Ω) (z : J → ℂ) :
       apply hg
       intro h0
       apply hd
-      have h1 := congrArg (coeff d) hfg
+      have h1 := congrArg (AddMonoidAlgebra.coeff · d) hfg
       rw [coeff_C_mul, h0, mul_zero] at h1
       simp only [qmap, coeff_map] at h1
       simpa using h1

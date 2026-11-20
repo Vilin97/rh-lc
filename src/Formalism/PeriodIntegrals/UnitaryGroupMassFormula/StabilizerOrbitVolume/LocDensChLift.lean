@@ -256,7 +256,7 @@ theorem chLift_holds : ChLift := by
     refine Finset.sum_congr rfl fun v _ => ?_
     rw [← map_add]
     rfl
-  · exact continuous_finset_sum _ fun v _ => (hℓc v).comp (continuous_apply v)
+  · exact continuous_finsetSum _ fun v _ => (hℓc v).comp (continuous_apply v)
   · show χ x = Complex.exp (∑ v, ℓ v (x v))
     conv_lhs => rw [← sum_sgl x]
     rw [ChLiftW.addChar_sum, Complex.exp_sum]

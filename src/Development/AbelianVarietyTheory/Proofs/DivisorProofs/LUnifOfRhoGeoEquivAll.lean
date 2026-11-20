@@ -70,7 +70,7 @@ theorem eq_smul_of_eval_eq (H : HMod (MMap M)) (d : ℂ) (h : ∀ x y : H.H, inn
     exact (sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)).1 this
   have hs1 : ‖s‖ ≤ 1 := by
     rw [hs, norm_prod]
-    refine Finset.prod_le_one (fun _ _ => norm_nonneg _) fun τ _ => ?_
+    refine Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun τ _ => ?_
     have := norm_inner_le_norm (𝕜 := ℂ) (v τ : M.H τ) (v' τ : M.H τ)
     rwa [hv τ, hv' τ, mul_one] at this
   refine ⟨?_, hn⟩

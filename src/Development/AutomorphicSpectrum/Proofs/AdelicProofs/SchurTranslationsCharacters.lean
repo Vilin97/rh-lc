@@ -179,7 +179,7 @@ theorem schur_translations_characters (V : Type) [AddCommGroup V] [TopologicalSp
   funext x
   set φ₁ : V → ℂ := fun u => φ₀ (u + -x) with hφ₁
   have hφ₁SB : SB φ₁ :=
-    ⟨hφ₀SB.1.comp_continuous (continuous_add_right _),
+    ⟨hφ₀SB.1.comp_continuous (continuous_add_const _),
       hφ₀SB.2.comp_homeomorph (Homeomorph.addRight (-x))⟩
   have hψ := sb_add hφ (sb_smul (-φ x) hφ₁SB)
   have hz : (φ + (-φ x) • φ₁) x = 0 := by

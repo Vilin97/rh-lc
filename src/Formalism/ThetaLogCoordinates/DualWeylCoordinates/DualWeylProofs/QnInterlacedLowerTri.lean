@@ -45,7 +45,7 @@ theorem qn_lowerTriIntegral : LowerTriIntegral := by
     exact ⟨i, by rw [algebraMap_int_eq]; rfl⟩
   suffices H : ∀ s : (colLex r n).syn, ∀ Q : MvPolynomial (Fin r × Fin n) ℚ,
       (colLex r n).toSyn ((colLex r n).degree Q) = s → Q ∈ dualWeyl ℚ r n ν →
-      (∀ e : Fin r × Fin n →₀ ℕ, LowerTri e → ∃ z : ℤ, coeff e Q = z) →
+      (∀ e : Fin r × Fin n →₀ ℕ, LowerTri e → ∃ z : ℤ, AddMonoidAlgebra.coeff Q e = z) →
       ∃ Q' : MvPolynomial (Fin r × Fin n) ℤ, Q = intQ r n Q' by
     intro Q hQ hint
     exact H _ Q rfl hQ hint
@@ -91,7 +91,7 @@ theorem qn_lowerTriIntegral : LowerTriIntegral := by
     set Q1 := Q - (colLex r n).leadingCoeff Q • B with hQ1
     have hQ1mem : Q1 ∈ dualWeyl ℚ r n ν :=
       Submodule.sub_mem _ hQ (Submodule.smul_mem _ _ (hBmem mi))
-    have hQ1int : ∀ e : Fin r × Fin n →₀ ℕ, LowerTri e → ∃ z' : ℤ, coeff e Q1 = z' := by
+    have hQ1int : ∀ e : Fin r × Fin n →₀ ℕ, LowerTri e → ∃ z' : ℤ, AddMonoidAlgebra.coeff Q1 e = z' := by
       intro e he
       obtain ⟨w, hw⟩ := hint e he
       refine ⟨w - z * (b mi).coeff e, ?_⟩

@@ -175,9 +175,9 @@ theorem hook_product_bounds : HookProductBounds := by
     rw [hD]
     calc (1:ℝ) = ∏ _i : Fin (N+1), ∏ _j ∈ univ.filter (fun j => _i < j), (1:ℝ) := by simp
       _ ≤ _ := by
-        apply Finset.prod_le_prod (fun _ _ => by positivity)
+        apply Finset.prod_le_prod₀ (fun _ _ => by positivity)
         intro i _
-        apply Finset.prod_le_prod (fun _ _ => by positivity)
+        apply Finset.prod_le_prod₀ (fun _ _ => by positivity)
         intro j hj
         exact (hook_den_bounds N nu hnu i j (mem_filter.mp hj).2).1
   have hDM : D ≤ Mr ^ ((N + 1) ^ 2) := by
@@ -206,7 +206,7 @@ theorem hook_product_bounds : HookProductBounds := by
   have hnumM : num ≤ (∏ i : Fin (N + 1), ((nu i).factorial : ℝ)) * Mr ^ ((N + 1) ^ 2) := by
     rw [hnum]
     calc _ ≤ ∏ i : Fin (N + 1), (((nu i).factorial : ℝ) * Mr ^ (N + 1)) := by
-          apply Finset.prod_le_prod (fun _ _ => by positivity)
+          apply Finset.prod_le_prod₀ (fun _ _ => by positivity)
           intro i _
           have := fact_bound (nu i) (nu 0) N i (hnu (Fin.zero_le i)) (Nat.lt_succ_iff.mp i.isLt)
           rw [hMr]

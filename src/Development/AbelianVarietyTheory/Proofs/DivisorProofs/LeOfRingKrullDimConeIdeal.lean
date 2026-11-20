@@ -26,10 +26,10 @@ section Algebra
 variable {k K σ : Type} [Field k] [Field K] [Algebra k K]
 
 def coeffMap (l : K →ₗ[k] k) (g : MvPolynomial σ K) : MvPolynomial σ k :=
-  ∑ a ∈ g.support, monomial a (l (coeff a g))
+  ∑ a ∈ g.support, monomial a (l (AddMonoidAlgebra.coeff g a))
 
 theorem coeff_coeffMap (l : K →ₗ[k] k) (g : MvPolynomial σ K) (a : σ →₀ ℕ) :
-    coeff a (coeffMap l g) = l (coeff a g) := by
+    AddMonoidAlgebra.coeff (coeffMap l g) a = l (AddMonoidAlgebra.coeff g a) := by
   classical
   simp only [coeffMap, coeff_sum, coeff_monomial, Finset.sum_ite_eq']
   split_ifs with h
@@ -45,15 +45,15 @@ theorem mem_map_of_coeffMap {I : Ideal (MvPolynomial σ k)} {g : MvPolynomial σ
     g ∈ I.map (MvPolynomial.map (algebraMap k K) : MvPolynomial σ k →+* MvPolynomial σ K) := by
   classical
   let b := Module.Basis.ofVectorSpace k K
-  let s := g.support.biUnion fun a => (b.repr (coeff a g)).support
+  let s := g.support.biUnion fun a => (b.repr (AddMonoidAlgebra.coeff g a)).support
   have e : g = ∑ i ∈ s, C (b i) * map (algebraMap k K) (coeffMap (b.coord i) g) := by
     ext a
     simp only [coeff_sum, coeff_C_mul, coeff_map, coeff_coeffMap]
-    have hs : (b.repr (coeff a g)).support ⊆ s := by
+    have hs : (b.repr (AddMonoidAlgebra.coeff g a)).support ⊆ s := by
       by_cases ha : a ∈ g.support
-      · exact Finset.subset_biUnion_of_mem (fun a => (b.repr (coeff a g)).support) ha
+      · exact Finset.subset_biUnion_of_mem (fun a => (b.repr (AddMonoidAlgebra.coeff g a)).support) ha
       · simp [notMem_support_iff.1 ha]
-    conv_lhs => rw [← b.linearCombination_repr (coeff a g),
+    conv_lhs => rw [← b.linearCombination_repr (AddMonoidAlgebra.coeff g a),
       Finsupp.linearCombination_apply, Finsupp.sum_of_support_subset _ hs _ (by simp)]
     exact Finset.sum_congr rfl fun i _ => by rw [Algebra.smul_def, mul_comm]; rfl
   rw [e]
@@ -120,7 +120,7 @@ theorem coeffMap_mem_imageIdeal (E : Type) [Field E] [Algebra k E] {g : MvPolyno
   rw [coeffMap, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [chartEval, eval₂Hom_monomial]
-  refine Eq.trans (hΛ (coeff a g) (a.prod fun j n => resG S.Y hle ((S.b j).f i) ^ n)).symm (congrArg Λ ?_)
+  refine Eq.trans (hΛ (AddMonoidAlgebra.coeff g a) (a.prod fun j n => resG S.Y hle ((S.b j).f i) ^ n)).symm (congrArg Λ ?_)
   refine congrArg₂ (· * ·) rfl ?_
   refine (map_prod ((S.bcFst E).appLE W (S.bcFst E ⁻¹ᵁ W) le_rfl).hom _ _).trans
     (Finset.prod_congr rfl fun j _ => ?_)

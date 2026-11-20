@@ -89,10 +89,10 @@ theorem der_aeval {R B : Type} [CommRing R] [CommRing B] [Algebra R B] {d : ℕ}
 
 theorem coeff_iterPD {R : Type} [CommRing R] {d : ℕ} :
     ∀ (L : List (Fin d)) (m : Fin d →₀ ℕ) (Q : MvPolynomial (Fin d) R),
-      coeff m (iterDer (fun i => pderiv i) L Q) = coeff (m + expOf L) Q * (fac L m : R)
+      AddMonoidAlgebra.coeff (iterDer (fun i => pderiv i) L Q) m = AddMonoidAlgebra.coeff Q (m + expOf L) * (fac L m : R)
   | [], m, Q => by simp [iterDer, expOf, fac]
   | i :: L, m, Q => by
-    show coeff m (iterDer (fun i => pderiv i) L (pderiv i Q)) = _
+    show AddMonoidAlgebra.coeff (iterDer (fun i => pderiv i) L (pderiv i Q)) m = _
     rw [coeff_iterPD L m, coeff_pderiv, fac, expOf_cons]
     have e : m + expOf L + Finsupp.single i 1 = m + (Finsupp.single i 1 + expOf L) := by abel
     rw [e]; push_cast; ring
@@ -110,7 +110,7 @@ theorem aeval_mem_pow {R B : Type} [CommRing R] [CommRing B] [Algebra R B] {d : 
 
 theorem eval_aeval {R B : Type} [CommRing R] [CommRing B] [Algebra R B] {d : ℕ}
     (ε : B →ₐ[R] R) (y : Fin d → B) (hy : ∀ i, ε (y i) = 0) (Q : MvPolynomial (Fin d) R) :
-    ε (aeval y Q) = coeff 0 Q := by
+    ε (aeval y Q) = AddMonoidAlgebra.coeff Q 0 := by
   induction Q using MvPolynomial.induction_on with
   | C a => simp
   | add p q hp hq => simp [hp, hq]
@@ -120,14 +120,14 @@ theorem eval_iterDer_aeval {R B : Type} [CommRing R] [CommRing B] [Algebra R B] 
     (ε : B →ₐ[R] R) (y : Fin d → B) (D : Fin d → Derivation R B B)
     (hy : ∀ i, ε (y i) = 0) (hD : ∀ i j, ε (D i (y j)) = if i = j then 1 else 0) :
     ∀ (L : List (Fin d)) (Q : MvPolynomial (Fin d) R), Q ∈ idealOfVars (Fin d) R ^ L.length →
-      ε (iterDer D L (aeval y Q)) = coeff 0 (iterDer (fun i => pderiv i) L Q)
+      ε (iterDer D L (aeval y Q)) = AddMonoidAlgebra.coeff (iterDer (fun i => pderiv i) L Q) 0
   | [], Q, _ => by simpa [iterDer] using eval_aeval ε y hy Q
   | i :: L, Q, hQ => by
-    show ε (iterDer D L (D i (aeval y Q))) = coeff 0 (iterDer (fun i => pderiv i) L (pderiv i Q))
+    show ε (iterDer D L (D i (aeval y Q))) = AddMonoidAlgebra.coeff (iterDer (fun i => pderiv i) L (pderiv i Q)) 0
     have hP : ∀ j, pderiv j Q ∈ idealOfVars (Fin d) R ^ L.length := fun j =>
       der_mem_pow (pderiv j) _ L.length Q (by simpa using hQ)
     have key : ∀ j, ε (iterDer D L (aeval y (pderiv j Q) * D i (y j))) =
-        ε (D i (y j)) * coeff 0 (iterDer (fun i => pderiv i) L (pderiv j Q)) := by
+        ε (D i (y j)) * AddMonoidAlgebra.coeff (iterDer (fun i => pderiv i) L (pderiv j Q)) 0 := by
       intro j
       set x := aeval y (pderiv j Q)
       set u := D i (y j)
@@ -149,12 +149,12 @@ theorem eval_iterDer_aeval {R B : Type} [CommRing R] [CommRing B] [Algebra R B] 
 theorem exists_mul_coeff_eq_zero (d N : ℕ) : ∃ K : ℕ, 0 < K ∧ ∀ (R B : Type) [CommRing R] [CommRing B] [Algebra R B]
     (ε : B →ₐ[R] R) (y : Fin d → B) (D : Fin d → Derivation R B B), (∀ i, ε (y i) = 0) →
     (∀ i j, ε (D i (y j)) = if i = j then 1 else 0) → ∀ P : MvPolynomial (Fin d) R,
-    (∀ α : Fin d →₀ ℕ, N ≤ α.degree → MvPolynomial.coeff α P = 0) →
-    MvPolynomial.aeval y P ∈ RingHom.ker ε ^ N → ∀ α, (K : R) * MvPolynomial.coeff α P = 0 := by
+    (∀ α : Fin d →₀ ℕ, N ≤ α.degree → AddMonoidAlgebra.coeff P α = 0) →
+    MvPolynomial.aeval y P ∈ RingHom.ker ε ^ N → ∀ α, (K : R) * AddMonoidAlgebra.coeff P α = 0 := by
   refine ⟨(N.factorial ^ N) ^ N, by positivity, ?_⟩
   intro R B _ _ _ ε y D hy hD P hhi hP
   set c : ℕ := N.factorial ^ N with hc
-  have claim : ∀ k, k ≤ N → ∀ α : Fin d →₀ ℕ, α.degree < k → ((c ^ k : ℕ) : R) * coeff α P = 0 := by
+  have claim : ∀ k, k ≤ N → ∀ α : Fin d →₀ ℕ, α.degree < k → ((c ^ k : ℕ) : R) * AddMonoidAlgebra.coeff P α = 0 := by
     intro k
     induction k with
     | zero => intro _ α h; omega
@@ -184,10 +184,10 @@ theorem exists_mul_coeff_eq_zero (d N : ℕ) : ∃ K : ℕ, 0 < K ∧ ∀ (R B :
             (pow_dvd_pow _ (by omega))
         have hg' : (c : R) = (fac L 0 : R) * (g : R) := by rw [hg, Nat.cast_mul]
         push_cast at e2
-        calc ((c ^ (k + 1) : ℕ) : R) * coeff α P = (c : R) ^ k * (c : R) * coeff α P := by
+        calc ((c ^ (k + 1) : ℕ) : R) * AddMonoidAlgebra.coeff P α = (c : R) ^ k * (c : R) * AddMonoidAlgebra.coeff P α := by
               push_cast; ring
-          _ = (c : R) ^ k * ((fac L 0 : R) * (g : R)) * coeff α P := by rw [← hg']
-          _ = ((c : R) ^ k * coeff α P * (fac L 0 : R)) * g := by ring
+          _ = (c : R) ^ k * ((fac L 0 : R) * (g : R)) * AddMonoidAlgebra.coeff P α := by rw [← hg']
+          _ = ((c : R) ^ k * AddMonoidAlgebra.coeff P α * (fac L 0 : R)) * g := by ring
           _ = 0 := by rw [e2, zero_mul]
   intro α
   rcases Nat.lt_or_ge α.degree N with h | h

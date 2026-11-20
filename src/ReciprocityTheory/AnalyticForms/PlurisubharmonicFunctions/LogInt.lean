@@ -144,7 +144,7 @@ theorem logCoordLocInt_thm : LogCoordLocIntStatement := fun D i => locallyIntegr
 
 theorem logMonoLocInt_thm : LogMonoLocIntStatement := by
   intro D m
-  exact locallyIntegrable_finset_sum (μ := volume) Finset.univ
+  exact MeasureTheory.locallyIntegrable_finsetSum (μ := volume) Finset.univ
     (f := fun i (z : Fin D → ℂ) => (m i : ℝ) * Real.log ‖z i‖)
     (fun i _ => (logCoordLocInt_thm D i).smul (m i : ℝ))
 

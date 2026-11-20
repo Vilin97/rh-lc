@@ -239,15 +239,15 @@ theorem dirC_cls {s : ℂ} (hs : s = 1 ∨ s = -1) (z : ℂ) (p q : ℕ) (R : Mv
   ring
 
 theorem norm_eval_le {σ : Type} (x : σ → ℂ) (hx : ∀ i, ‖x i‖ ≤ 1) (R : MvPolynomial σ ℂ) :
-    ‖MvPolynomial.eval x R‖ ≤ ∑ m ∈ R.support, ‖MvPolynomial.coeff m R‖ := by
+    ‖MvPolynomial.eval x R‖ ≤ ∑ m ∈ R.support, ‖AddMonoidAlgebra.coeff R m‖ := by
   rw [MvPolynomial.eval_eq]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun m _ => ?_)
   rw [norm_mul]
   have : ‖∏ i ∈ m.support, x i ^ m i‖ ≤ 1 := by
     rw [norm_prod]
-    exact Finset.prod_le_one (fun _ _ => norm_nonneg _) fun i _ => by
+    exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) fun i _ => by
       rw [norm_pow]; exact pow_le_one₀ (norm_nonneg _) (hx i)
-  calc ‖MvPolynomial.coeff m R‖ * ‖∏ i ∈ m.support, x i ^ m i‖ ≤ ‖MvPolynomial.coeff m R‖ * 1 :=
+  calc ‖AddMonoidAlgebra.coeff R m‖ * ‖∏ i ∈ m.support, x i ^ m i‖ ≤ ‖AddMonoidAlgebra.coeff R m‖ * 1 :=
         mul_le_mul_of_nonneg_left this (norm_nonneg _)
     _ = _ := mul_one _
 
@@ -258,7 +258,7 @@ theorem norm_ent_le {s : ℂ} (hs : s = 1 ∨ s = -1) (y : E n) (e : Bool × Fin
 
 theorem cls_bound {s : ℂ} (hs : s = 1 ∨ s = -1) (z : ℂ) (p q : ℕ) (R : MvPolynomial (Bool × Fin n × Fin n) ℂ)
     (y : E n) : ‖cls s z p q R y‖ ≤
-      (∑ m ∈ R.support, ‖MvPolynomial.coeff m R‖) * (dP y) ^ (-(z.re + (p + q : ℝ) / 2)) := by
+      (∑ m ∈ R.support, ‖AddMonoidAlgebra.coeff R m‖) * (dP y) ^ (-(z.re + (p + q : ℝ) / 2)) := by
   have hd := dP_pos y
   have e1 : ‖((dP y : ℝ) : ℂ) ^ (-z)‖ = (dP y) ^ (-z.re) := by
     rw [Complex.norm_cpow_eq_rpow_re_of_pos hd, Complex.neg_re]
@@ -267,11 +267,11 @@ theorem cls_bound {s : ℂ} (hs : s = 1 ∨ s = -1) (z : ℂ) (p q : ℕ) (R : M
   have e4 := norm_eval_le (fun e => ent s e y) (norm_ent_le hs y) R
   simp only [cls, norm_mul]
   rw [e1, e2, e3]
-  have hC : 0 ≤ ∑ m ∈ R.support, ‖MvPolynomial.coeff m R‖ := Finset.sum_nonneg fun _ _ => norm_nonneg _
+  have hC : 0 ≤ ∑ m ∈ R.support, ‖AddMonoidAlgebra.coeff R m‖ := Finset.sum_nonneg fun _ _ => norm_nonneg _
   have hpos : 0 ≤ (dP y) ^ (-z.re) * (dP y) ^ (-(p : ℝ) / 2) * (dP y) ^ (-(q : ℝ) / 2) := by positivity
   calc (dP y) ^ (-z.re) * (dP y) ^ (-(p : ℝ) / 2) * (dP y) ^ (-(q : ℝ) / 2) * ‖evUV s R y‖
       ≤ (dP y) ^ (-z.re) * (dP y) ^ (-(p : ℝ) / 2) * (dP y) ^ (-(q : ℝ) / 2) *
-          (∑ m ∈ R.support, ‖MvPolynomial.coeff m R‖) := mul_le_mul_of_nonneg_left (by rw [evUV_eq]; exact e4) hpos
+          (∑ m ∈ R.support, ‖AddMonoidAlgebra.coeff R m‖) := mul_le_mul_of_nonneg_left (by rw [evUV_eq]; exact e4) hpos
     _ = _ := by
       rw [← Real.rpow_add hd, ← Real.rpow_add hd]
       rw [mul_comm]; congr 2; ring

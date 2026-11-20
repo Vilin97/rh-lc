@@ -18,7 +18,7 @@ def JetsIntegral {σ : Type*} {p : ℕ} [Fact p.Prime] (F : MvPowerSeries σ ℂ
   ∀ α, ‖jetAt F α‖ ≤ 1
 
 def PolyIntegral {σ : Type*} {p : ℕ} [Fact p.Prime] (Q : MvPolynomial σ ℂ_[p]) : Prop :=
-  ∀ β, ‖MvPolynomial.coeff β Q‖ ≤ 1
+  ∀ β, ‖AddMonoidAlgebra.coeff Q β‖ ≤ 1
 
 def FamTie (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (χ : TaylorLogMetric.IdE D → ℂ) : Prop :=
   TaylorLogMetric.IsCurveIdeal D cc ∧ TaylorLogMetric.IsDiscriminantTwelfthRootOfIdealLattice D cc δ ∧ TaylorLogMetric.IsChi D χ

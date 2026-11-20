@@ -35,7 +35,7 @@ theorem depthK_of_hypotheses_alt : _root_.GlobalTheory.FunPr.ThetaLocalInputs �
   have heq := le_antisymm (Nat.le_of_dvd hk (Nat.gcd_dvd_left _ _)) hle
   have hdvd : expDepth ch.S.toGridChoice t Φ β ∣ K := heq ▸ Nat.gcd_dvd_right _ K
   haveI := Fact.mk hl
-  exact (padicValNat_dvd_iff_le hK.ne').1 ((pow_padicValNat_dvd).trans hdvd) |>.trans (hval w l hl hlw haw)
+  exact (padicValNat_dvd_iff_le hK.ne').1 (((_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))).trans hdvd) |>.trans (hval w l hl hlw haw)
 end GlobalTheory.DepthUnf
 end
 end

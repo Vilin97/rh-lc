@@ -24,7 +24,7 @@ theorem tOf (hx : Ext.All) (hs : SplitStatement) (hS : GSupStatement) (hd : DimS
     exact t_assemble P hI (perFactor_of hx hS P hI hph hsmem) r1 hr1 a ha hgen hph
   · calc ∏ j, Real.sqrt (X.ptN2 1 s fun _ => a j) / Real.sqrt (X.l2 1 s)
         ≤ ∏ _j : Fin X.r, Real.exp P.p1 :=
-          Finset.prod_le_prod (fun j _ => div_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _))
+          Finset.prod_le_prod₀ (fun j _ => div_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _))
             (fun j _ => sup_ratio_le_of_phase_zero P hS hsmem h0 (a j))
       _ = Real.exp (X.r * P.p1) := by
           rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin, ← Real.exp_nat_mul]

@@ -25,7 +25,7 @@ theorem fock_add_right' (F G G' : MvPolynomial σ ℚ_[p]) : fock p F (G + G') =
   unfold fock
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun m _ => ?_
-  rw [coeff_add]
+  rw [MvPolynomial.coeff_add]
   ring
 
 theorem fock_smul_right' (c : ℚ_[p]) (F G : MvPolynomial σ ℚ_[p]) : fock p F (c • G) = c * fock p F G := by

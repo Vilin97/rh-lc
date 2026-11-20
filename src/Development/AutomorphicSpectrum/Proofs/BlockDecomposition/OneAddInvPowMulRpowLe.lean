@@ -49,7 +49,7 @@ theorem integrable_weight {σ : ℝ} (hσ : 1 < σ) : ∃ A₀ : ℕ, ∀ (L : (
     have hq : ∏ w, (1 + ‖(a : InfiniteAdeleRing K) w‖) ^ k ≤ (1 + ‖y‖) ^ A := by
       calc ∏ w, (1 + ‖(a : InfiniteAdeleRing K) w‖) ^ k
           ≤ ∏ _w : InfinitePlace K, (1 + ‖y‖) ^ k :=
-            Finset.prod_le_prod (fun w _ ↦ by positivity) fun w _ ↦
+            Finset.prod_le_prod₀ (fun w _ ↦ by positivity) fun w _ ↦
               pow_le_pow_left₀ (by positivity)
                 (by
                   have h : ‖(a : InfiniteAdeleRing K) w‖ ≤ ‖y‖ :=
@@ -186,7 +186,7 @@ theorem majorant_tensor (φ : 𝓢(ι → mixedSpace K, ℂ)) (I : (FractionalId
     have hprod : (t ^ (N * A))⁻¹ ≤ ∏ i, adeleWeight L A (y i) := by
       calc (t ^ (N * A))⁻¹ = ∏ _i : ι, (t ^ A)⁻¹ := by
             rw [Finset.prod_const, Finset.card_univ, inv_pow, ← pow_mul, mul_comm]
-        _ ≤ _ := Finset.prod_le_prod (fun _ _ ↦ by positivity) fun i _ ↦ hw i
+        _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ ↦ by positivity) fun i _ ↦ hw i
     calc ‖φ z‖ ≤ P * ((1 + ‖z‖) ^ (N * A))⁻¹ := hφ z
       _ = P * D' ^ (N * A) * (t ^ (N * A))⁻¹ := by
           have hz : (1 + ‖z‖) ^ (N * A) ≠ 0 := by positivity
@@ -215,7 +215,7 @@ theorem exists_majorant {Ψ : (ι → 𝔸[K]) → ℂ} (hΨ : Ψ ∈ GJMatrix.s
     set L := fractionalIdealSupUnit L₁ L₂
     have hmono : ∀ {L' : (FractionalIdeal (𝓞 K)⁰ K)ˣ}, (L' : FractionalIdeal (𝓞 K)⁰ K) ≤ L →
         ∀ y : ι → 𝔸[K], ∏ i, adeleWeight L' A (y i) ≤ ∏ i, adeleWeight L A (y i) := fun h y ↦
-      Finset.prod_le_prod (fun _ _ ↦ adeleWeight_nonneg _ _ _) fun i _ ↦ adeleWeight_mono h A _
+      Finset.prod_le_prod₀ (fun _ _ ↦ adeleWeight_nonneg _ _ _) fun i _ ↦ adeleWeight_mono h A _
     refine ⟨M₁ + M₂, L, add_nonneg h₁ h₂, fun m hm y ↦ ?_⟩
     calc ‖(G + H) ((m : Matrix ι ι 𝔸[K]) *ᵥ y)‖
         ≤ ‖G ((m : Matrix ι ι 𝔸[K]) *ᵥ y)‖ + ‖H ((m : Matrix ι ι 𝔸[K]) *ᵥ y)‖ := norm_add_le _ _
@@ -248,7 +248,7 @@ theorem exists_finiteModule_le (L : (FractionalIdeal (𝓞 K)⁰ K)ˣ) :
   refine ⟨(finiteModule (diagonal K u))⁻¹, by positivity, fun τ hτ ↦ ?_⟩
   have h1 : finiteModule (diagonal K u * τ) ≤ 1 := by
     rw [finiteModule, finprod_eq_prod _ (finite_mulSupport_norm _)]
-    refine Finset.prod_le_one (fun _ _ ↦ norm_nonneg _) fun v _ ↦ ?_
+    refine Finset.prod_le_one₀ (fun _ _ ↦ norm_nonneg _) fun v _ ↦ ?_
     have h2 := hd _ hτ v
     have h3 : ((diagonal K u * τ : IdeleGroup K) : 𝔸[K]).2 v ∈ v.adicCompletionIntegers K := by
       simpa [coe_diagonal, u] using h2
@@ -285,7 +285,7 @@ theorem sep_adele {L : (FractionalIdeal (𝓞 K)⁰ K)ˣ} {c : ℝ} (hc0 : 0 < c
     rw [this]
   have hinf : infiniteModule τ ≤ Z ^ Module.finrank ℚ K := by
     rw [infiniteModule, ← InfinitePlace.sum_mult_eq, ← Finset.prod_pow_eq_pow_sum]
-    refine Finset.prod_le_prod (fun _ _ ↦ by positivity) fun w _ ↦ pow_le_pow_left₀ (norm_nonneg _) ?_ _
+    refine Finset.prod_le_prod₀ (fun _ _ ↦ by positivity) fun w _ ↦ pow_le_pow_left₀ (norm_nonneg _) ?_ _
     rw [← hZ]
     exact norm_le_norm_homeomorphMixedSpace _ w
   rw [div_le_iff₀ hc0, ← hmod, ideleModule_apply]
@@ -460,7 +460,7 @@ theorem integrable_lineFn {L : (FractionalIdeal (𝓞 K)⁰ K)ˣ} {A : ℕ} {x :
   have h1 : tw L A t 1 = adeleWeight L A (t : 𝔸[K]) := by simp [tw]
   rw [h1]
   exact mul_le_of_le_one_right (adeleWeight_nonneg _ _ _)
-    (Finset.prod_le_one (fun _ _ ↦ tw_nonneg _ _ _ _) fun _ _ ↦ tw_le_one _ _ _ _)
+    (Finset.prod_le_one₀ (fun _ _ ↦ tw_nonneg _ _ _ _) fun _ _ ↦ tw_le_one _ _ _ _)
 
 theorem summable_lineInt {L : (FractionalIdeal (𝓞 K)⁰ K)ˣ} {A : ℕ} {x c : ℝ} (hx : 1 < x) (hc : 0 ≤ c)
     (hI₁ : Integrable (fun t : IdeleGroup K ↦ adeleWeight L A (t : 𝔸[K]) * (ideleModule K t : ℝ) ^ x)

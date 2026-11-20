@@ -105,17 +105,17 @@ lemma sep_self_abs {n : ℕ} {lam : Fin (n + 1) → ℤ} {nu : Fin n → ℤ} (h
       ≤ W ^ (n * (min (len lam i) (B0 lam nu)).toNat) := by
     intro i
     rw [Finset.abs_prod, ← card_erase_Iset h i, pow_mul, ← Finset.prod_const (W ^ n)]
-    refine Finset.prod_le_prod (fun _ _ => abs_nonneg _) ?_
+    refine Finset.prod_le_prod₀ (fun _ _ => abs_nonneg _) ?_
     intro y hy
     have hyI := (Finset.mem_erase.mp hy).2
     unfold ev
     rw [Finset.abs_prod]
     calc ∏ j, |nu j - (j : ℤ) - (y - (i : ℤ))| ≤ ∏ _j : Fin n, W :=
-          Finset.prod_le_prod (fun _ _ => abs_nonneg _) (fun j _ => factor_bound h i j y hyI)
+          Finset.prod_le_prod₀ (fun _ _ => abs_nonneg _) (fun j _ => factor_bound h i j y hyI)
       _ = W ^ n := by rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
   unfold sep
   rw [Finset.abs_prod, Finset.mul_sum, ← Finset.prod_pow_eq_pow_sum]
-  exact Finset.prod_le_prod (fun _ _ => abs_nonneg _) (fun i _ => inner i)
+  exact Finset.prod_le_prod₀ (fun _ _ => abs_nonneg _) (fun i _ => inner i)
 
 lemma sep_other_zero {n : ℕ} {lam : Fin (n + 1) → ℤ} {nu nu' : Fin n → ℤ}
     (h' : Interlace lam nu') (hb : B0 lam nu' = B0 lam nu) (hne : nu' ≠ nu) :

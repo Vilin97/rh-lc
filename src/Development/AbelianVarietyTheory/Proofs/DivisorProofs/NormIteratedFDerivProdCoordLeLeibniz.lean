@@ -66,7 +66,7 @@ theorem norm_iteratedFDeriv_comp_apply_le {ι : Type} [Fintype ι] (g : ℂ → 
     (fun w => by simpa [P] using norm_le_pi_norm w j)
   calc ‖iteratedFDeriv ℝ k g (P z)‖ * ∏ _i : Fin k, ‖P‖ ≤ ‖iteratedFDeriv ℝ k g (P z)‖ * 1 := by
         gcongr
-        exact Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun _ _ => hP)
+        exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun _ _ => hP)
     _ = ‖iteratedFDeriv ℝ k g (z j)‖ := by rw [mul_one]; rfl
 
 theorem norm_iteratedFDeriv_prod_apply_le : ∀ (ι : Type) [Fintype ι] (g : ι → ℂ → ℂ) (U : ι → Set ℂ), (∀ i, IsOpen (U i)) →

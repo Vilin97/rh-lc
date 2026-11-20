@@ -150,7 +150,7 @@ theorem orbAddUp_main : ∀ (D : Formalism.BasicNotions.D7) (E : PI.OrbJet.Ent D
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (Real.rpow_nonneg hpos.le _) fun m _ => ?_
   rw [MvPolynomial.coeff_smul, smul_eq_mul]
   refine (norm_mul_le _ _).trans ?_
-  calc ‖coeff m U‖ * ‖MvPolynomial.coeff mx (applyAt0 (D.R.N i) (D.R.N (i + 1)) p (Pm D p _ _ ep R sg be m) G)‖
+  calc ‖coeff m U‖ * ‖AddMonoidAlgebra.coeff (applyAt0 (D.R.N i) (D.R.N (i + 1)) p (Pm D p _ _ ep R sg be m) G) mx‖
       ≤ 1 * (p : ℝ) ^ (-∑ r ∈ R, β r) :=
         mul_le_mul (hU m) (hPk m I mx) (norm_nonneg _) zero_le_one
     _ = (p : ℝ) ^ (-∑ r ∈ R, β r) := one_mul _

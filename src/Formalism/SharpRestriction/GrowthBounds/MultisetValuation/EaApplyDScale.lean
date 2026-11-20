@@ -13,8 +13,8 @@ theorem ea_applyD_scale {σ τ K : Type} [Field K] (q E : ℕ) (P : MvPolynomial
     (f : MvPowerSeries σ K) :
     applyD ((q : MvPolynomial σ (MvPolynomial τ ℤ)) ^ E * P) f = ((q : K) ^ E) • applyD P f := by
   classical
-  have hc : ∀ n, MvPolynomial.coeff n ((q : MvPolynomial σ (MvPolynomial τ ℤ)) ^ E * P) =
-      (q : MvPolynomial τ ℤ) ^ E * MvPolynomial.coeff n P := by
+  have hc : ∀ n, AddMonoidAlgebra.coeff ((q : MvPolynomial σ (MvPolynomial τ ℤ)) ^ E * P) n =
+      (q : MvPolynomial τ ℤ) ^ E * AddMonoidAlgebra.coeff P n := by
     intro n
     have : (q : MvPolynomial σ (MvPolynomial τ ℤ)) ^ E = MvPolynomial.C ((q : MvPolynomial τ ℤ) ^ E) := by
       rw [map_pow, map_natCast]

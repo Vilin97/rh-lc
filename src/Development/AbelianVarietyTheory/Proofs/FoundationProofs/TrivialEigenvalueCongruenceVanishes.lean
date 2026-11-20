@@ -29,10 +29,10 @@ theorem eq_zero_of_sum {k : ℕ} {v : Fin k → E} (hv : LinearIndependent ℤ_[
     (Q : Fin k → MvPolynomial (Fin 2) ℤ_[l])
     (h : ∑ a, v a • MvPolynomial.map (algebraMap ℤ_[l] E) (Q a) = 0) (a : Fin k) : Q a = 0 := by
   ext m
-  have h1 := congrArg (MvPolynomial.coeff m) h
+  have h1 := congrArg (AddMonoidAlgebra.coeff · m) h
   simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, MvPolynomial.coeff_map, MvPolynomial.coeff_zero,
     smul_eq_mul] at h1
-  have := Fintype.linearIndependent_iff.1 hv (fun a => MvPolynomial.coeff m (Q a)) (by
+  have := Fintype.linearIndependent_iff.1 hv (fun a => AddMonoidAlgebra.coeff (Q a) m) (by
     simpa [Algebra.smul_def, mul_comm] using h1)
   simpa using this a
 

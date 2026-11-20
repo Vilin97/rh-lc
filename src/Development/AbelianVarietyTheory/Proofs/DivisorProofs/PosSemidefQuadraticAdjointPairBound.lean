@@ -189,7 +189,7 @@ theorem pos_form_adjoint_bound : âˆ€ (X : Type) [AddCommGroup X] [Module.Free â„
     rw [Polynomial.aeval_eq_sum_range, Finset.sum_range_succ, hmonic.coeff_natDegree, one_smul] at hCH
     have h2 := congrArg (fun x => B x y) hCH
     simp only [LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_add,
-      map_sum, map_zsmul, AddMonoidHom.add_apply, AddMonoidHom.finset_sum_apply,
+      map_sum, map_zsmul, AddMonoidHom.add_apply, AddMonoidHom.finsetSum_apply,
       AddMonoidHom.smul_apply, smul_eq_mul, map_zero, AddMonoidHom.zero_apply] at h2
     rw [add_comm]; exact h2
   have hb := seq_bound a (fun i => p.coeff i) p.natDegree apos alc hrec

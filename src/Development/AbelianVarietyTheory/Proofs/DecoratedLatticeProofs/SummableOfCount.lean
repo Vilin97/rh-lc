@@ -127,7 +127,7 @@ theorem cover_rect (D : D7) (r n : ℕ) : ∃ (K : Set (Mx D r n)) (C : ℝ), Is
       simp only [Fintype.card_piFinset, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
     refine (Nat.cast_le.2 h1.le).trans ?_
     push_cast
-    refine (Finset.prod_le_prod (fun _ _ => by positivity) fun i _ =>
+    refine (Finset.prod_le_prod₀ (fun _ _ => by positivity) fun i _ =>
       pow_le_pow_left₀ (Nat.cast_nonneg _) (hY (m i)) n).trans (le_of_eq ?_)
     simp only [mul_pow, Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin, ← pow_mul _ (m _),
       mul_comm n]

@@ -71,7 +71,7 @@ theorem gs_pderiv_facts {σ : Type*} (p : MvPolynomial σ ℚ) (j : σ) (hj : 0 
         (degreeOf_lt_iff one_pos).2 (fun m hm => by have := hcon m hm; omega)
       omega
     intro h0
-    have hc : coeff (m' - Finsupp.single j 1) (pderiv j p) = coeff m' p * (m' j : ℚ) := by
+    have hc : AddMonoidAlgebra.coeff (pderiv j p) (m' - Finsupp.single j 1) = AddMonoidAlgebra.coeff p m' * (m' j : ℚ) := by
       conv_lhs => rw [p.as_sum]
       rw [map_sum, coeff_sum]
       simp only [pderiv_monomial, coeff_monomial]
@@ -92,7 +92,7 @@ theorem gs_pderiv_facts {σ : Type*} (p : MvPolynomial σ ℚ) (j : σ) (hj : 0 
       · intro h
         exact absurd hm' h
     rw [h0, coeff_zero] at hc
-    have hne : coeff m' p ≠ 0 := mem_support_iff.1 hm'
+    have hne : AddMonoidAlgebra.coeff p m' ≠ 0 := mem_support_iff.1 hm'
     have hne2 : (m' j : ℚ) ≠ 0 := by exact_mod_cast hm'j.ne'
     exact mul_ne_zero hne hne2 hc.symm
   · intro i hi

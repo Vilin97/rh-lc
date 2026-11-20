@@ -309,7 +309,7 @@ theorem rder_bound_basisWords : ∀ {n : ℕ} (ε : Fin n → Bool) (m : ℕ), �
       intro σ
       rw [Finset.abs_prod]
       calc ∏ i, |cf (w.get i) (σ i)| ≤ ∏ _i : Fin w.length, max 1 A :=
-            Finset.prod_le_prod (fun i _ => abs_nonneg _) fun i _ =>
+            Finset.prod_le_prod₀ (fun i _ => abs_nonneg _) fun i _ =>
               (hcf _ (hwK _ (List.get_mem w i)).1 (hwK _ (List.get_mem w i)).2 _).trans (le_max_right _ _)
         _ = (max 1 A) ^ w.length := by simp
         _ ≤ (max 1 A) ^ m := pow_le_pow_right₀ (le_max_left _ _) hw

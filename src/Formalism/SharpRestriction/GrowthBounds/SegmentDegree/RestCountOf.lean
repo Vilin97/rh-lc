@@ -118,7 +118,7 @@ theorem restCount_of (C₀ Crk : ℝ) (hL : RestLam C₀) (hS : RestSeg C₀) (h
   refine le_trans ?_ (Nat.cast_le.mpr (hL p n' r K X O S hX hLa hk))
   push_cast
   refine Finset.sum_le_sum fun la hla => Finset.sum_le_sum fun e he => ?_
-  refine Finset.prod_le_prod (fun j _ => (hG _).1 _) fun j _ => ?_
+  refine Finset.prod_le_prod₀ (fun j _ => (hG _).1 _) fun j _ => ?_
   obtain ⟨h1, h2⟩ := hP p n' r K X hX hLa hk la hla e he (j.val : ℤ)
   refine (hG _).2.2.1 _ ?_ h1 h2
   intro x hx

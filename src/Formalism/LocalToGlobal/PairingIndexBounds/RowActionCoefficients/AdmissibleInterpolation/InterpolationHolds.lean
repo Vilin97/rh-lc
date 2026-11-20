@@ -22,7 +22,7 @@ theorem interpolation_holds : Interp := by
     rw [map_zero, map_sum, ← this]
     refine Finset.sum_congr rfl fun m' _ => ?_
     rw [eval_monomial, map_smul, smul_eq_mul, mul_comm]
-  have hc : coeff m P = φ (w m) := by
+  have hc : AddMonoidAlgebra.coeff P m = φ (w m) := by
     classical
     simp only [P, coeff_sum, coeff_monomial]
     rw [Finset.sum_ite_eq' S m]

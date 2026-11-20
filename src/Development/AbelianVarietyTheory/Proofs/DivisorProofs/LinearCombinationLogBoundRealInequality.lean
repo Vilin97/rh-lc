@@ -72,7 +72,7 @@ theorem delta_log_le (l : ℕ) (hl : l.Prime) :
   have hpos : (0 : ℝ) < |(discr E : ℝ)| := abs_pos.2 (by exact_mod_cast hd)
   have hn : (0 : ℝ) < Module.finrank ℚ E := by exact_mod_cast Module.finrank_pos
   rw [Real.log_rpow hpos]
-  have hdvd : l ^ padicValNat l (discr E).natAbs ∣ (discr E).natAbs := pow_padicValNat_dvd
+  have hdvd : l ^ padicValNat l (discr E).natAbs ∣ (discr E).natAbs := (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
   have hle : l ^ padicValNat l (discr E).natAbs ≤ (discr E).natAbs := Nat.le_of_dvd (Int.natAbs_pos.2 hd) hdvd
   have hle' : ((l : ℝ)) ^ padicValNat l (discr E).natAbs ≤ |(discr E : ℝ)| := by
     have e : (((discr E).natAbs : ℕ) : ℝ) = |(discr E : ℝ)| := by rw [Nat.cast_natAbs, Int.cast_abs]

@@ -45,8 +45,8 @@ theorem finrank_le_pow_of_aeval_surjective {n d : ℕ} {K A : Type*} [Field K] [
     obtain ⟨P, rfl⟩ := hsurj y
     rw [P.as_sum, map_sum]
     refine Submodule.sum_mem _ fun m _ => ?_
-    have : MvPolynomial.monomial m (MvPolynomial.coeff m P) =
-        MvPolynomial.coeff m P • MvPolynomial.monomial m (1 : K) := by
+    have : MvPolynomial.monomial m (AddMonoidAlgebra.coeff P m) =
+        AddMonoidAlgebra.coeff P m • MvPolynomial.monomial m (1 : K) := by
       rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
     rw [this, map_smul]
     exact Submodule.smul_mem _ _ (hmono m)

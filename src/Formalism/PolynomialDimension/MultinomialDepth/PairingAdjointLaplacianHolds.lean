@@ -46,7 +46,7 @@ theorem ctrF_h_mul (f : PolXY K k) :
   rw [← Nat.cast_smul_eq_nsmul K]
 
 theorem coeff_X_mul_pderiv (v : XY k) (f : PolXY K k) (m : XY k →₀ ℕ) :
-    coeff m (X v * pderiv v f) = (m v : K) * coeff m f := by
+    AddMonoidAlgebra.coeff (X v * pderiv v f) m = (m v : K) * AddMonoidAlgebra.coeff f m := by
   classical
   induction f using MvPolynomial.induction_on' with
   | add p q hp hq => simp [mul_add, hp, hq]
@@ -57,11 +57,11 @@ theorem coeff_X_mul_pderiv (v : XY k) (f : PolXY K k) (m : XY k →₀ ℕ) :
     · simp [h]
 
 theorem coeff_eulX (f : PolXY K k) (m : XY k →₀ ℕ) :
-    coeff m (eulX_har K k f) = (xDeg m : K) * coeff m f := by
+    AddMonoidAlgebra.coeff (eulX_har K k f) m = (xDeg m : K) * AddMonoidAlgebra.coeff f m := by
   simp [eulX_har, coeff_sum, coeff_X_mul_pderiv, xDeg, Finset.sum_mul]
 
 theorem coeff_eulY (f : PolXY K k) (m : XY k →₀ ℕ) :
-    coeff m (eulY K k f) = (yDeg m : K) * coeff m f := by
+    AddMonoidAlgebra.coeff (eulY K k f) m = (yDeg m : K) * AddMonoidAlgebra.coeff f m := by
   simp [eulY, coeff_sum, coeff_X_mul_pderiv, yDeg, Finset.sum_mul]
 
 theorem eulX_of_mem {A B : ℕ} {f : PolXY K k} (hf : f ∈ PolAB K k A B) :

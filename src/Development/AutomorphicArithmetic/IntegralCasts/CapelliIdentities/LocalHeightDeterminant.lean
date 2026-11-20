@@ -30,5 +30,5 @@ theorem UpperTheory.Reformulated.B.LocalHeightDeterminant.norm_det_le_pow.{u_1} 
   rw [hs, norm_prod]
   calc ∏ i, ‖(↑g : Matrix (Fin n) (Fin n) R) (σ i) i‖
       ≤ ∏ _i : Fin n, UpperTheory.Reformulated.B.LocalHeightDeterminant.locHeight g :=
-        Finset.prod_le_prod (fun _ _ ↦ norm_nonneg _) (fun i _ ↦ hent _ _)
+        Finset.prod_le_prod₀ (fun _ _ ↦ norm_nonneg _) (fun i _ ↦ hent _ _)
     _ = UpperTheory.Reformulated.B.LocalHeightDeterminant.locHeight g ^ n := by simp

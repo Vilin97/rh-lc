@@ -397,7 +397,7 @@ theorem young_diagram_hook : RowsHook := by
       exact YoungDiagram.mem_iff_lt_rowLen.mpr h.2
   have hle : ∏ x ∈ μ.cells, (μ.rowLen x.1 - x.2) ≤ Formalism.LatticeIndexTer.hookProd μ := by
     unfold Formalism.LatticeIndexTer.hookProd
-    apply Finset.prod_le_prod (fun _ _ => Nat.zero_le _)
+    apply Finset.prod_le_prod₀ (fun _ _ => Nat.zero_le _)
     rintro ⟨i, j⟩ h
     have h1 : i < μ.colLen j := YoungDiagram.mem_iff_lt_colLen.mp h
     show μ.rowLen i - j ≤ μ.rowLen i - j + (μ.colLen j - i) - 1

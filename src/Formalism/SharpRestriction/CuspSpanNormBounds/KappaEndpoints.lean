@@ -2948,7 +2948,7 @@ theorem one_le_minor_sigma (H1 : ℝ) (j : ℕ) (δ : ℕ → D.host.E) (τ : D.
 
 theorem one_le_sigma_product (H1 : ℝ) (j : ℕ) (δ : ℕ → D.host.E) : 1 ≤ k2S D H1 j δ := by
   unfold k2S
-  have h := Finset.prod_le_prod (s := Finset.univ) (f := fun _ : D.what₂.Tau => (1 : ℝ)) (g := fun τ => k2sg D H1 j δ τ)
+  have h := Finset.prod_le_prod₀ (s := Finset.univ) (f := fun _ : D.what₂.Tau => (1 : ℝ)) (g := fun τ => k2sg D H1 j δ τ)
     (fun _ _ => zero_le_one) (fun τ _ => one_le_minor_sigma H1 j δ τ)
   simpa using h
 
@@ -4451,7 +4451,7 @@ theorem ng_factors (hOK : M.OK) (hG : P.Gv ≠ 0) {d : Datum P} {t : Term V M r}
       have h := ng_modK hOK (hu.mul (hu.map M.L.cj))
       exact ⟨h.1, h.2 (M.L.O.mul_mem (ng_term_Dm ht l) (Formalism.MainNotions.LocalModelPeriodLattices.cj_mem_O M.L _ (ng_term_Dm ht l)))⟩
     exact ⟨Finset.prod_pos (fun l h => (hl l h).1),
-      Finset.prod_le_one (fun l h => (hl l h).1.le) (fun l h => (hl l h).2)⟩
+      Finset.prod_le_one₀ (fun l h => (hl l h).1.le) (fun l h => (hl l h).2)⟩
 
 omit [TopologicalSpace E] [MeasurableSpace E] [CommRing E] in
 theorem ng_real_one {a b c : ℝ} (a0 : 0 < a) (a1 : a ≤ 1) (b0 : 0 < b) (b1 : b ≤ 1) (c0 : 0 < c) (c1 : c ≤ 1) :

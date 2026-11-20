@@ -53,7 +53,7 @@ lemma unit_of_not_dvd {d : ℕ} (h : ¬ ℓ ∣ d) : IsUnit (d : ℤ_[ℓ]) := b
 
 lemma index_smul_mem {A : Type} [AddCommGroup A] [Module ℤ_[ℓ] A] (S : Submodule ℤ_[ℓ] A) (d : ℕ)
     (hd : d ≠ 0) (x : A) (h : d • x ∈ S) : ((ℓ : ℤ_[ℓ]) ^ padicValNat ℓ d) • x ∈ S := by
-  obtain ⟨d', hd'⟩ := pow_padicValNat_dvd (p := ℓ) (n := d)
+  obtain ⟨d', hd'⟩ := (fun {p n : ℕ} => _root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat p n)) (p := ℓ) (n := d)
   have hnd : ¬ ℓ ∣ d' := by
     intro ⟨t, ht⟩
     apply pow_succ_padicValNat_not_dvd (p := ℓ) hd

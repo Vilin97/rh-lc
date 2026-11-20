@@ -13,7 +13,7 @@ namespace GlobalTheory.ChernTopDens
 variable {n : ℕ}
 
 theorem coeff_aeval_C_mul_X (c : ℂ) (Q : MvPolynomial (Fin n × Fin n) ℂ) (d : Fin n × Fin n →₀ ℕ) :
-    coeff d (aeval (fun y => C c * X y) Q) = c ^ (d.sum fun _ e => e) * coeff d Q := by
+    AddMonoidAlgebra.coeff (aeval (fun y => C c * X y) Q) d = c ^ (d.sum fun _ e => e) * AddMonoidAlgebra.coeff Q d := by
   induction Q using MvPolynomial.induction_on' with
   | monomial u a =>
     have : aeval (fun y => C c * X y) (monomial u a) = monomial u (c ^ (u.sum fun _ e => e) * a) := by
@@ -26,7 +26,7 @@ theorem coeff_aeval_C_mul_X (c : ℂ) (Q : MvPolynomial (Fin n × Fin n) ℂ) (d
     split_ifs with h
     · rw [h]
     · simp
-  | add p q hp hq => rw [map_add, coeff_add, coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 section Rev
 

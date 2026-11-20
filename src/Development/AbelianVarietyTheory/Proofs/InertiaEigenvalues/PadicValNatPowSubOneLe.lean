@@ -23,7 +23,7 @@ theorem padicValNat_pow_sub_one_le (g g' a : ℕ) (hg : g.Prime) (hg' : 2 ≤ g'
   haveI : Fact g.Prime := ⟨hg⟩
   have h1 : 1 < g' ^ a := Nat.one_lt_pow (by omega) (by omega)
   have hpos : 0 < g' ^ a - 1 := by omega
-  have hle : g ^ padicValNat g (g' ^ a - 1) ≤ g' ^ a - 1 := Nat.le_of_dvd hpos pow_padicValNat_dvd
+  have hle : g ^ padicValNat g (g' ^ a - 1) ≤ g' ^ a - 1 := Nat.le_of_dvd hpos (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
   have hlt : g ^ padicValNat g (g' ^ a - 1) < g ^ (2 * a) := by
     calc g ^ padicValNat g (g' ^ a - 1) ≤ g' ^ a - 1 := hle
       _ < g' ^ a := by omega
@@ -43,7 +43,7 @@ theorem val_card_le (g g' r f : ℕ) (hg : g.Prime) (hg' : g'.Prime) (hne : g �
   have h0 : ∀ q : ℕ, [Fact q.Prime] → Nat.card (Matrix.GeneralLinearGroup (Fin r) (ZMod q)) ≠ 0 :=
     fun q _ => Nat.card_pos.ne'
   obtain ⟨h1, h2⟩ := Formalism.IrreducibleCountingLemmas.WindowSums.padicValCardGeneralLinear g g' r hne
-  rw [padicValNat.mul (pow_ne_zero _ (h0 g)) (pow_ne_zero _ (h0 g')), padicValNat.pow,
+  rw [(show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ (h0 g)) (pow_ne_zero _ (h0 g')), padicValNat.pow,
     padicValNat.pow, h1, h2]
   have hs : ∑ a ∈ Finset.Icc 1 r, padicValNat g (g' ^ a - 1) ≤ r * (r + 1) := by
     rw [← sum_two_mul_Icc]

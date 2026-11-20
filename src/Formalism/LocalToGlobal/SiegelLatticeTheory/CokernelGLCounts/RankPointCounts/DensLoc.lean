@@ -42,7 +42,7 @@ theorem prod_lower_third {x : ℝ} (hx0 : 0 ≤ x) (hx : x ≤ 1 / 3) {η : ℝ}
     _ = ∏ i ∈ Finset.Icc a b, Real.exp (-(2 * x ^ i)) := by
         rw [← Real.exp_sum]; congr 1; rw [Finset.mul_sum, ← Finset.sum_neg_distrib]
     _ ≤ ∏ i ∈ Finset.Icc a b, (1 - η ^ i * x ^ i) := by
-        refine Finset.prod_le_prod (fun i _ => (Real.exp_pos _).le) fun i hi => ?_
+        refine Finset.prod_le_prod₀ (fun i _ => (Real.exp_pos _).le) fun i hi => ?_
         exact (LocModel.exp_neg_two_le (pow_nonneg hx0 _) (hxi i hi)).trans (hlow i hi)
 
 section Alpha

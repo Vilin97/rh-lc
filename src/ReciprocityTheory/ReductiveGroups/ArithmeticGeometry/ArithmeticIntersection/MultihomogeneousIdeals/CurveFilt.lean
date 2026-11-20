@@ -156,7 +156,7 @@ theorem homog_of_lex {x : MRingOver F ι} {l : Lex (Fin (Fintype.card K) → ℕ
     (hx : x ∈ weightedHomogeneousSubmodule F (fun p => lexDeg (mw (ι := ι) p)) l) :
     ∃ d, x ∈ weightedHomogeneousSubmodule F (mw (ι := ι)) d := by
   rw [mem_weightedHomogeneousSubmodule] at hx
-  by_cases h : ∃ m, coeff m x ≠ 0
+  by_cases h : ∃ m, AddMonoidAlgebra.coeff x m ≠ 0
   · obtain ⟨m₀, hm₀⟩ := h
     refine ⟨Finsupp.weight (mw (ι := ι)) m₀, ?_⟩
     rw [mem_weightedHomogeneousSubmodule]
@@ -274,8 +274,8 @@ theorem weighted_le_of_irrel {P : Ideal (MRingOver F ι)} {k : K}
   have hle : Finsupp.single (⟨k, i⟩ : Σ k, ι k) 1 ≤ m := by
     rw [Finsupp.single_le_iff]
     omega
-  have hmono : monomial m (coeff m x) =
-      monomial (m - Finsupp.single ⟨k, i⟩ 1) (coeff m x) * X ⟨k, i⟩ := by
+  have hmono : monomial m (AddMonoidAlgebra.coeff x m) =
+      monomial (m - Finsupp.single ⟨k, i⟩ 1) (AddMonoidAlgebra.coeff x m) * X ⟨k, i⟩ := by
     rw [X, monomial_mul, mul_one, tsub_add_cancel_of_le hle]
   rw [hmono]
   exact Ideal.mul_mem_left _ _ (hk i)

@@ -26,7 +26,7 @@ theorem norm_iteratedFDeriv_slice_le {f : V₁ × (EuclideanSpace ℝ ι) → E}
     iteratedFDeriv_comp_add_right]
   refine (ContinuousMultilinearMap.norm_compContinuousLinearMap_le _ _).trans ?_
   have h1 : ∏ _i : Fin n, ‖ContinuousLinearMap.inr ℝ V₁ (EuclideanSpace ℝ ι)‖ ≤ 1 :=
-    Finset.prod_le_one (fun _ _ ↦ by positivity) fun _ _ ↦ ContinuousLinearMap.norm_inr_le_one ℝ V₁ (EuclideanSpace ℝ ι)
+    Finset.prod_le_one₀ (fun _ _ ↦ by positivity) fun _ _ ↦ ContinuousLinearMap.norm_inr_le_one ℝ V₁ (EuclideanSpace ℝ ι)
   have h2 : (ContinuousLinearMap.inr ℝ V₁ (EuclideanSpace ℝ ι)) v + (x, 0) = (x, v) := by simp
   rw [h2]
   calc _ ≤ ‖iteratedFDeriv ℝ n f (x, v)‖ * 1 := by gcongr

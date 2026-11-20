@@ -64,7 +64,7 @@ theorem exists_cutoff : ∀ (R S : Type) [Group R] [TopologicalSpace R] [IsTopol
     rw [IsLocallyConstant.iff_eventually_eq]
     intro g
     have hc : Tendsto (fun y => y * g⁻¹) (𝓝 g) (𝓝 1) := by
-      simpa using (continuous_mul_right g⁻¹).tendsto g
+      simpa using (continuous_mul_const g⁻¹).tendsto g
     filter_upwards [hc hW] with y hy
     have := hFW _ hy g
     rwa [inv_mul_cancel_right] at this

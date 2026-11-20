@@ -23,7 +23,7 @@ def antisym (P : RootPoly Ψ N) : RootPoly Ψ N :=
 
 def rhoMono : Ψ × Fin N →₀ ℕ := Finsupp.equivFunOnFinite.symm fun p => N - 1 - (p.2 : ℕ)
 
-def flagInt (P : RootPoly Ψ N) : ℚ := coeff (rhoMono Ψ N) (antisym Ψ N P)
+def flagInt (P : RootPoly Ψ N) : ℚ := AddMonoidAlgebra.coeff (antisym Ψ N P) (rhoMono Ψ N)
 
 variable (j : ℕ)
 
@@ -36,8 +36,8 @@ def rhoBlock : Ψ × Fin N →₀ ℕ :=
   Finsupp.equivFunOnFinite.symm fun p => if (p.2 : ℕ) < j then j - 1 - (p.2 : ℕ) else N - 1 - (p.2 : ℕ)
 
 def blockInt (P : RootPoly Ψ N) : ℚ :=
-  coeff (rhoBlock Ψ N j)
-    (∑ w ∈ Finset.univ.filter (IsBlockPerm Ψ N j), weylSign Ψ N w • rename (weylAct Ψ N w) P)
+  AddMonoidAlgebra.coeff (∑ w ∈ Finset.univ.filter (IsBlockPerm Ψ N j), weylSign Ψ N w • rename (weylAct Ψ N w) P)
+    (rhoBlock Ψ N j)
 
 def la0 (p : Ψ × Fin N) : ℤ := if (p.2 : ℕ) < j then 0 else -1
 
@@ -96,7 +96,7 @@ theorem Jint_line (cf : ℚ) : Jint Unit 2 1 cf = -cf := by
   unfold Jint flagInt antisym
   rw [dimN_line, pow_one, muPoly_line, fib, vandBlocks_line, mul_one, sum_unit_perm, rhoMono_line]
   simp only [weylSign, Finset.univ_unique, Finset.prod_singleton, Equiv.Perm.sign_one,
-    Equiv.Perm.sign_swap (show (0 : Fin 2) ≠ 1 by decide), map_mul, rename_X, rename_C, coeff_add,
+    Equiv.Perm.sign_swap (show (0 : Fin 2) ≠ 1 by decide), map_mul, rename_X, rename_C, MvPolynomial.coeff_add,
     coeff_smul, smul_eq_mul, weylAct]
   rw [coeff_X_mul', coeff_X_mul']
   simp [coeff_C, Finsupp.single_apply, Equiv.swap_apply_of_ne_of_ne]

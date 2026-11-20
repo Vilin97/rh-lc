@@ -186,7 +186,7 @@ theorem exists_bound {E : Type 1} [AddCommGroup E] [Module ℝ E] {D : ℕ} (num
   rw [e, num.map_sum]
   refine (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum fun r _ => ?_)
   rw [num.map_smul_univ, smul_eq_mul, abs_mul, Finset.abs_prod]
-  refine mul_le_of_le_one_left (abs_nonneg _) (Finset.prod_le_one (fun _ _ => abs_nonneg _) fun j _ => ?_)
+  refine mul_le_of_le_one_left (abs_nonneg _) (Finset.prod_le_one₀ (fun _ _ => abs_nonneg _) fun j _ => ?_)
   cases hr : r j
   · simp [c']
   · simpa [c'] using h j _

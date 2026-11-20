@@ -86,8 +86,8 @@ theorem UpperTheory.V.Z.Sym.Wt.trSwap :
     apply Finset.prod_congr rfl
     intro v _
     rw [Fintype.prod_bool]
-    show MvPolynomial.coeff (μ (v, true))
-        ((sbs fun _ : Unit => invT ℂ d (g v)) (MvPolynomial.monomial (μ (v, false)) 1)) *
-      MvPolynomial.coeff (μ (v, false))
-        ((sbs fun _ : Unit => g v) (MvPolynomial.monomial (μ (v, true)) 1)) = _
+    show AddMonoidAlgebra.coeff ((sbs fun _ : Unit => invT ℂ d (g v)) (MvPolynomial.monomial (μ (v, false)) 1))
+        (μ (v, true)) *
+      AddMonoidAlgebra.coeff ((sbs fun _ : Unit => g v) (MvPolynomial.monomial (μ (v, true)) 1))
+        (μ (v, false)) = _
     exact mul_comm _ _

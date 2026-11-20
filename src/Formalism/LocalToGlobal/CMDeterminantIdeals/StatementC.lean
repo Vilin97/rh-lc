@@ -10,7 +10,7 @@ open scoped nonZeroDivisors ComplexOrder
 def CoeffCauchy : Prop :=
   ∀ (V : Type) [Fintype V] (G : MvPolynomial V ℂ) (ρ : V → ℝ) (S : ℝ) (μ : V →₀ ℕ), (∀ v, 0 < ρ v) →
     (∀ z : V → ℂ, (∀ v, ‖z v‖ ≤ ρ v) → ‖MvPolynomial.eval z G‖ ≤ S) →
-    ‖MvPolynomial.coeff μ G‖ * ∏ v, ρ v ^ μ v ≤ S
+    ‖AddMonoidAlgebra.coeff G μ‖ * ∏ v, ρ v ^ μ v ≤ S
 
 def LamEnd : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (NN : MLine K) (cf : K) (S : (K →+* ℂ) → ℝ) (B : ℝ),
@@ -45,7 +45,7 @@ def LamNumber : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (g : ℕ) (Lie : MLat K g) (ℓ : Fin g → MLine K) (u : Fin g → Fin g → K)
     (de : MLine K) (La logOm : ℝ) (V : Type) [Fintype V] (c : V → Fin g) (G : MvPolynomial V K) (μ : V →₀ ℕ) (n : ℕ)
     (S : (K →+* ℂ) → ℝ) (Rr : ℝ),
-    CMNumbers Lie ℓ u de La logOm → MvPolynomial.coeff μ G ≠ 0 → MvPolynomial.coeff μ G ∈ (lineNN de ℓ c μ n).I →
+    CMNumbers Lie ℓ u de La logOm → AddMonoidAlgebra.coeff G μ ≠ 0 → AddMonoidAlgebra.coeff G μ ∈ (lineNN de ℓ c μ n).I →
     (∀ σ, 0 < S σ) → 0 < Rr →
     (∀ (σ : K →+* ℂ) (z : V → ℂ), (∀ v, ‖z v‖ * (ℓ (c v)).n σ ≤ 1) →
       ‖MvPolynomial.eval z (MvPolynomial.map σ G)‖ * de.n σ ^ n ≤ S σ * Rr ^ (∑ v, μ v)) →

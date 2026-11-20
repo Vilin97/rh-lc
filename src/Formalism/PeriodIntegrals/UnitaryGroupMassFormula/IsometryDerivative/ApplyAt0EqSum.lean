@@ -20,9 +20,9 @@ variable {T : Type} [Fintype T] {N N' : ℕ} (Θ : VC T N N' → ℂ)
 def wt (α : Mono T N N') : ℂ := (α.prod fun _ n => (n.factorial : ℂ)) * taylor Θ α
 
 theorem applyAt0_eq_sum (P : MvPolynomial (Idx T N N') ℂ) (S : Finset (Mono T N N'))
-    (hS : P.support ⊆ S) : applyAt0 P Θ = ∑ α ∈ S, MvPolynomial.coeff α P * wt Θ α := by
-  have e : ∀ α, MvPolynomial.coeff α P * wt Θ α =
-      MvPolynomial.coeff α P * (α.prod fun _ n => (n.factorial : ℂ)) * taylor Θ α := fun α => by
+    (hS : P.support ⊆ S) : applyAt0 P Θ = ∑ α ∈ S, AddMonoidAlgebra.coeff P α * wt Θ α := by
+  have e : ∀ α, AddMonoidAlgebra.coeff P α * wt Θ α =
+      AddMonoidAlgebra.coeff P α * (α.prod fun _ n => (n.factorial : ℂ)) * taylor Θ α := fun α => by
     unfold wt; ring
   simp only [e]
   unfold applyAt0

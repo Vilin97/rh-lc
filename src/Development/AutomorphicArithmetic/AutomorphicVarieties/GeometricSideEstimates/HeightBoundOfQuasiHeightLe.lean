@@ -10,7 +10,7 @@ private theorem ratio_bound {m : ℕ} {f : Fin (m + 1) → ℝ} {c u : ℝ} (hf 
     (hu : ∀ i, f i ≤ u) (h1 : 1 ≤ c * ∏ i, f i) (i j : Fin (m + 1)) : f i / f j ≤ c * u ^ (m + 1) := by
   rw [Fin.prod_univ_succAbove _ j] at h1
   have h2 : ∏ k, f (j.succAbove k) ≤ u ^ m := by
-    calc ∏ k, f (j.succAbove k) ≤ ∏ _k : Fin m, u := Finset.prod_le_prod (fun k _ => (hf _).le) fun k _ => hu _
+    calc ∏ k, f (j.succAbove k) ≤ ∏ _k : Fin m, u := Finset.prod_le_prod₀ (fun k _ => (hf _).le) fun k _ => hu _
       _ = u ^ m := by rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
   have hu0 : 0 < u := (hf i).trans_le (hu i)
   have h3 : 1 ≤ c * (f j * u ^ m) :=

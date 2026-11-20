@@ -138,7 +138,7 @@ theorem count_sep : ∀ (X ι : Type) [Fintype ι] [Nonempty ι] (S : Set X) (z 
       simp only [cell, Prod.mk.injEq, Fin.mk.injEq] at hc
       exact cell_close_sq m hm1 (T i) (hT i) _ _ (hS x hx i) (hS y hy i) hc.1 hc.2
     have hprod : ∏ i, ‖z x i - z y i‖ ^ 2 ≤ ∏ i, (8 * T i / (m : ℝ) ^ 2) :=
-      Finset.prod_le_prod (fun i _ => by positivity) (fun i _ => hb i)
+      Finset.prod_le_prod₀ (fun i _ => by positivity) (fun i _ => hb i)
     have e : ∏ i, (8 * T i / (m : ℝ) ^ 2) = 8 ^ d * P / (m : ℝ) ^ (2 * d) := by
       rw [Finset.prod_div_distrib, Finset.prod_mul_distrib, Finset.prod_const, Finset.prod_const,
         Finset.card_univ, ← hd, ← hP]

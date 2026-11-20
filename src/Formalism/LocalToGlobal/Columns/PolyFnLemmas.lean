@@ -520,14 +520,14 @@ theorem linearIndependent_map {σ κ : Type} (s : K →+* ℂ) (v : κ → MvPol
     intro b
     apply hv t (fun j => B.repr (g j) b)
     ext m
-    have hm := congrArg (MvPolynomial.coeff m) hg
+    have hm := congrArg (AddMonoidAlgebra.coeff · m) hg
     simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_smul, MvPolynomial.coeff_map, smul_eq_mul,
       MvPolynomial.coeff_zero] at hm ⊢
-    have hm' : ∑ j ∈ t, (MvPolynomial.coeff m (v j)) • g j = 0 := by
+    have hm' : ∑ j ∈ t, (AddMonoidAlgebra.coeff (v j) m) • g j = 0 := by
       refine Eq.trans (Finset.sum_congr rfl fun j _ => ?_) hm
       rw [Algebra.smul_def, mul_comm]
       rfl
-    have h2 : ∑ j ∈ t, (MvPolynomial.coeff m (v j)) * B.repr (g j) b = 0 := by
+    have h2 : ∑ j ∈ t, (AddMonoidAlgebra.coeff (v j) m) * B.repr (g j) b = 0 := by
       have h3 := congrArg (fun z => B.repr z b) hm'
       simpa only [map_sum, map_smul, Finsupp.coe_finset_sum, Finset.sum_apply, Finsupp.smul_apply,
         smul_eq_mul, map_zero, Finsupp.coe_zero, Pi.zero_apply] using h3

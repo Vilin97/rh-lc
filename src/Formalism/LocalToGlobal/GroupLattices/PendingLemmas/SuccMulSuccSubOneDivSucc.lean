@@ -30,17 +30,17 @@ theorem facS_add_single (n : σ →₀ ℕ) (y : σ) :
   push_cast
   ring
 
-def ap (P F : MvPolynomial σ S) : S := ∑ n ∈ P.support, facS S n * coeff n F * coeff n P
+def ap (P F : MvPolynomial σ S) : S := ∑ n ∈ P.support, facS S n * AddMonoidAlgebra.coeff F n * AddMonoidAlgebra.coeff P n
 
 theorem ap_eq (P F : MvPolynomial σ S) (T : Finset (σ →₀ ℕ)) (h : P.support ⊆ T) :
-    ap P F = ∑ n ∈ T, facS S n * coeff n F * coeff n P :=
+    ap P F = ∑ n ∈ T, facS S n * AddMonoidAlgebra.coeff F n * AddMonoidAlgebra.coeff P n :=
   Finset.sum_subset h fun n _ hn => by rw [notMem_support_iff.1 hn, mul_zero]
 
 theorem ap_add_left (P Q F : MvPolynomial σ S) : ap (P + Q) F = ap P F + ap Q F := by
   rw [ap_eq (P + Q) F (P.support ∪ Q.support) support_add, ap_eq P F (P.support ∪ Q.support) Finset.subset_union_left,
     ap_eq Q F (P.support ∪ Q.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun n _ => ?_
-  rw [coeff_add, mul_add]
+  rw [MvPolynomial.coeff_add, mul_add]
 
 theorem ap_zero_left (F : MvPolynomial σ S) : ap 0 F = 0 := by simp [ap]
 
@@ -75,7 +75,7 @@ theorem ap_mul_X (P F : MvPolynomial σ S) (y : σ) : ap (P * X y) F = ap P (pde
   rw [addRightEmbedding_apply, coeff_mul_X, facS_add_single, coeff_pderiv]
   ring
 
-theorem ap_C (a : S) (F : MvPolynomial σ S) : ap (C a) F = coeff 0 F * a := by
+theorem ap_C (a : S) (F : MvPolynomial σ S) : ap (C a) F = AddMonoidAlgebra.coeff F 0 * a := by
   rw [ap_eq (C a) F {0} (by
     intro n hn
     rw [mem_support_iff, coeff_C] at hn
@@ -156,7 +156,7 @@ open MvPolynomial
 
 variable {σ : Type} [Fintype σ] [DecidableEq σ] {S : Type} [CommRing S] {K : Type} [Field K] [Algebra K S]
 
-theorem ap_monomial (R : MvPolynomial σ S) (m : σ →₀ ℕ) : ap R (monomial m 1) = facS S m * coeff m R := by
+theorem ap_monomial (R : MvPolynomial σ S) (m : σ →₀ ℕ) : ap R (monomial m 1) = facS S m * AddMonoidAlgebra.coeff R m := by
   unfold ap
   by_cases hm : m ∈ R.support
   · rw [Finset.sum_eq_single m]
@@ -192,7 +192,7 @@ theorem map_linP (x : σ) : map (algebraMap K S) (linP Lk x) = linP (fun x y => 
 
 theorem coeff_prod_linS (m n : σ →₀ ℕ) :
     algebraMap K S (MvPowerSeries.coeff n (m.prod fun s e => linS Lk s ^ e)) =
-      coeff n (aeval (linP fun x y => algebraMap K S (Lk x y)) (monomial m (1 : S))) := by
+      AddMonoidAlgebra.coeff (aeval (linP fun x y => algebraMap K S (Lk x y)) (monomial m (1 : S))) n := by
   have h1 : (m.prod fun s e => linS Lk s ^ e) =
       ((m.prod fun s e => linP Lk s ^ e : MvPolynomial σ K) : MvPowerSeries σ K) := by
     rw [← coeToMvPowerSeries.ringHom_apply, Finsupp.prod, Finsupp.prod, map_prod]
@@ -204,7 +204,7 @@ theorem coeff_prod_linS (m n : σ →₀ ℕ) :
   rw [map_pow, map_linP]
 
 def pr (Gd : (σ →₀ ℕ) → Prop) [DecidablePred Gd] (Q : MvPolynomial σ S) (f : MvPowerSeries σ K) : S :=
-  ∑ n ∈ Q.support, (if Gd n then facS K n * MvPowerSeries.coeff n f else 0) • coeff n Q
+  ∑ n ∈ Q.support, (if Gd n then facS K n * MvPowerSeries.coeff n f else 0) • AddMonoidAlgebra.coeff Q n
 
 theorem algebraMap_facS (n : σ →₀ ℕ) : algebraMap K S (facS K n) = facS S n := by
   unfold facS
@@ -212,7 +212,7 @@ theorem algebraMap_facS (n : σ →₀ ℕ) : algebraMap K S (facS K n) = facS S
   exact Finset.prod_congr rfl fun x _ => map_natCast _ _
 
 theorem pr_sub (Gd : (σ →₀ ℕ) → Prop) [DecidablePred Gd]
-    (hGd : ∀ m n, coeff n (aeval (linP fun x y => algebraMap K S (Lk x y)) (monomial m (1 : S))) ≠ 0 → (Gd n ↔ Gd m))
+    (hGd : ∀ m n, AddMonoidAlgebra.coeff (aeval (linP fun x y => algebraMap K S (Lk x y)) (monomial m (1 : S))) n ≠ 0 → (Gd n ↔ Gd m))
     (Q : MvPolynomial σ S) (f : MvPowerSeries σ K) :
     pr Gd Q (MvPowerSeries.subst (linS Lk) f) = pr Gd (aeval (linT fun x y => algebraMap K S (Lk x y)) Q) f := by
   set L : σ → σ → S := fun x y => algebraMap K S (Lk x y) with hL
@@ -230,30 +230,30 @@ theorem pr_sub (Gd : (σ →₀ ℕ) → Prop) [DecidablePred Gd]
     refine Finset.mem_coe.2 (Finset.mem_union_left _ (Finset.mem_biUnion.2 ⟨n, hn, ?_⟩))
     exact (Set.Finite.mem_toFinset _).2 hm
 
-  have hm : ∀ m, ∑ n ∈ Q.support, (if Gd n then facS S n * coeff n (aeval (linP L) (monomial m (1 : S))) else 0) * coeff n Q =
-      (if Gd m then facS S m else 0) * coeff m (aeval (linT L) Q) := by
+  have hm : ∀ m, ∑ n ∈ Q.support, (if Gd n then facS S n * AddMonoidAlgebra.coeff (aeval (linP L) (monomial m (1 : S))) n else 0) * AddMonoidAlgebra.coeff Q n =
+      (if Gd m then facS S m else 0) * AddMonoidAlgebra.coeff (aeval (linT L) Q) m := by
     intro m
     have h0 := ap_sub L Q (monomial m 1)
     rw [ap_monomial] at h0
     by_cases hg : Gd m
     · rw [if_pos hg, ← h0]
       refine Finset.sum_congr rfl fun n _ => ?_
-      by_cases hz : coeff n (aeval (linP L) (monomial m (1 : S))) = 0
+      by_cases hz : AddMonoidAlgebra.coeff (aeval (linP L) (monomial m (1 : S))) n = 0
       · rw [hz]; simp
       · rw [if_pos ((hGd m n hz).2 hg)]
     · rw [if_neg hg, zero_mul]
       refine Finset.sum_eq_zero fun n _ => ?_
-      by_cases hz : coeff n (aeval (linP L) (monomial m (1 : S))) = 0
+      by_cases hz : AddMonoidAlgebra.coeff (aeval (linP L) (monomial m (1 : S))) n = 0
       · rw [hz]; simp
       · rw [if_neg (fun h => hg ((hGd m n hz).1 h)), zero_mul]
   have h2 : pr Gd (aeval (linT L) Q) f =
-      ∑ m ∈ T, (if Gd m then facS K m * MvPowerSeries.coeff m f else 0) • coeff m (aeval (linT L) Q) :=
+      ∑ m ∈ T, (if Gd m then facS K m * MvPowerSeries.coeff m f else 0) • AddMonoidAlgebra.coeff (aeval (linT L) Q) m :=
     Finset.sum_subset Finset.subset_union_right fun m _ hm' => by rw [notMem_support_iff.1 hm', smul_zero]
   rw [h2]
   unfold pr
-  calc ∑ n ∈ Q.support, (if Gd n then facS K n * MvPowerSeries.coeff n (MvPowerSeries.subst (linS Lk) f) else 0) • coeff n Q
+  calc ∑ n ∈ Q.support, (if Gd n then facS K n * MvPowerSeries.coeff n (MvPowerSeries.subst (linS Lk) f) else 0) • AddMonoidAlgebra.coeff Q n
       = ∑ n ∈ Q.support, ∑ m ∈ T, algebraMap K S (MvPowerSeries.coeff m f) *
-          ((if Gd n then facS S n * coeff n (aeval (linP L) (monomial m (1 : S))) else 0) * coeff n Q) := by
+          ((if Gd n then facS S n * AddMonoidAlgebra.coeff (aeval (linP L) (monomial m (1 : S))) n else 0) * AddMonoidAlgebra.coeff Q n) := by
         refine Finset.sum_congr rfl fun n hn => ?_
         rw [hc n hn, Algebra.smul_def]
         by_cases hg : Gd n
@@ -265,7 +265,7 @@ theorem pr_sub (Gd : (σ →₀ ℕ) → Prop) [DecidablePred Gd]
         · simp only [if_neg hg]
           simp
     _ = ∑ m ∈ T, algebraMap K S (MvPowerSeries.coeff m f) *
-          ((if Gd m then facS S m else 0) * coeff m (aeval (linT L) Q)) := by
+          ((if Gd m then facS S m else 0) * AddMonoidAlgebra.coeff (aeval (linT L) Q) m) := by
         rw [Finset.sum_comm]
         refine Finset.sum_congr rfl fun m _ => ?_
         rw [← Finset.mul_sum, hm m]
@@ -423,8 +423,8 @@ theorem mono_wh (v : X.Pl) (s : Fin (X.G.P.n' v)) (m : X.ZA j →₀ ℕ) :
   exact MvPolynomial.IsWeightedHomogeneous.prod _ _ _ fun x _ => (isWeightedHomogeneous_linP X Kc j B v s x).pow _
 
 theorem hGd_B (m n : X.ZA j →₀ ℕ)
-    (h : MvPolynomial.coeff n (MvPolynomial.aeval (linP fun x y => algebraMap Kc (XspC (X.Pj (j + 1)) Kc) (LkB X Kc j B x y))
-        (MvPolynomial.monomial m (1 : XspC (X.Pj (j + 1)) Kc))) ≠ 0) : GoodDeg X j n ↔ GoodDeg X j m := by
+    (h : AddMonoidAlgebra.coeff (MvPolynomial.aeval (linP fun x y => algebraMap Kc (XspC (X.Pj (j + 1)) Kc) (LkB X Kc j B x y))
+        (MvPolynomial.monomial m (1 : XspC (X.Pj (j + 1)) Kc))) n ≠ 0) : GoodDeg X j n ↔ GoodDeg X j m := by
   have key : ∀ (v : X.Pl) (s : Fin (X.G.P.n' v)), ∑ a, ∑ b, n ⟨v, (s, a, b)⟩ = ∑ a, ∑ b, m ⟨v, (s, a, b)⟩ := by
     intro v s
     rw [← wt_eq, ← wt_eq]
@@ -636,13 +636,13 @@ theorem pairD_cD_mul (c : Kc) (Q : DA X Kc j) (f : MvPowerSeries (X.ZA j) Kc) :
     rw [MvPolynomial.mem_support_iff] at hn ⊢
     intro h0
     apply hn
-    show MvPolynomial.coeff n (MvPolynomial.C _ * Q) = 0
+    show AddMonoidAlgebra.coeff (MvPolynomial.C _ * Q) n = 0
     rw [MvPolynomial.coeff_C_mul, h0, mul_zero])]
   unfold pairD
   rw [Finset.smul_sum]
   refine Finset.sum_congr rfl fun n _ => ?_
-  have h1 : MvPolynomial.coeff n (cD X Kc j c * Q) = c • MvPolynomial.coeff n Q := by
-    show MvPolynomial.coeff n (MvPolynomial.C _ * Q) = _
+  have h1 : AddMonoidAlgebra.coeff (cD X Kc j c * Q) n = c • AddMonoidAlgebra.coeff Q n := by
+    show AddMonoidAlgebra.coeff (MvPolynomial.C _ * Q) n = _
     rw [MvPolynomial.coeff_C_mul, Algebra.smul_def]
   rw [h1, smul_comm]
 

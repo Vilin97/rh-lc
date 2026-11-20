@@ -42,7 +42,7 @@ theorem le_prod_of_forall_le {q : ℕ} {c : ℝ} (hc : 0 < c) (t : Fin q → ℝ
   rw [← Finset.mul_prod_erase Finset.univ t (Finset.mem_univ k)]
   have hk : 0 ≤ t k := hc.le.trans (ht k)
   refine mul_le_mul_of_nonneg_left ?_ hk
-  have := Finset.prod_le_prod (s := Finset.univ.erase k) (f := fun _ => min 1 c) (g := t) (fun _ _ => hm.le)
+  have := Finset.prod_le_prod₀ (s := Finset.univ.erase k) (f := fun _ => min 1 c) (g := t) (fun _ _ => hm.le)
     (fun i _ => (min_le_right _ _).trans (ht i))
   simpa [Finset.prod_const, Finset.card_erase_of_mem, Finset.card_univ, Fintype.card_fin] using this
 
@@ -136,7 +136,7 @@ theorem height_torus_le : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
     simp only [hfin, finprod_one, mul_one, NNReal.coe_prod]
   rw [hh]
   calc _ ≤ ∏ w, ((1 + K w * c0) * (1 + P)) :=
-        Finset.prod_le_prod (fun _ _ => NNReal.coe_nonneg _) (fun w _ => hinf w)
+        Finset.prod_le_prod₀ (fun _ _ => NNReal.coe_nonneg _) (fun w _ => hinf w)
     _ = _ := by rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ]
 
 end GlobalTheory.TorusHeight

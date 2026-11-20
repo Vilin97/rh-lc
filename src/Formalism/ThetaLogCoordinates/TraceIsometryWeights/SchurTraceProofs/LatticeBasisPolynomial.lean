@@ -12,7 +12,7 @@ theorem mem_intPol_iff (x : MvPolynomial σ ℚ_[p]) : x ∈ IntPol p σ ↔ ∀
   constructor
   · rintro ⟨f0, rfl⟩ m
     simp only [AlgHom.toLinearMap_apply, mapAlgHom_apply, coeff_map]
-    exact PadicInt.norm_le_one (coeff m f0)
+    exact PadicInt.norm_le_one (AddMonoidAlgebra.coeff f0 m)
   · intro h
     have : (x.coeffs : Set ℚ_[p]) ⊆ Set.range (algebraMap ℤ_[p] ℚ_[p]) := by
       intro a ha

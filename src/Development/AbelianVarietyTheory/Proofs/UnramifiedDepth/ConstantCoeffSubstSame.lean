@@ -150,7 +150,7 @@ variable {K : Type} [Field K]
 
 theorem jetAt0_eq_sum {σ : Type} (P : MvPolynomial σ K) (G : MvPowerSeries σ K) (s : Finset (σ →₀ ℕ))
     (hs : P.support ⊆ s) :
-    jetAt0 P G = ∑ m ∈ s, MvPolynomial.coeff m P * (mfact m : K) * coeff m G := by
+    jetAt0 P G = ∑ m ∈ s, AddMonoidAlgebra.coeff P m * (mfact m : K) * coeff m G := by
   unfold jetAt0
   refine Finset.sum_subset hs fun m _ hm => ?_
   rw [MvPolynomial.notMem_support_iff.1 hm, zero_mul, zero_mul]

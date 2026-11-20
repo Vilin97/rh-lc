@@ -19,7 +19,7 @@ def spl (K : Type) [Field K] (n : ℕ) : BP K n →+* MvPolynomial (Unit × Fin 
         _ →ₐ[K] _).toRingHom.comp (incl K n).toRingHom))
 
 theorem coefOne_eq (b : Fin n → ℕ) (x : BP K n) :
-    coefOne K n b (incl K n x) = coeff (GlobalTheory.BranchFormula.expOf fun _ : Unit => b) (spl K n x) := by
+    coefOne K n b (incl K n x) = AddMonoidAlgebra.coeff (spl K n x) (GlobalTheory.BranchFormula.expOf fun _ : Unit => b) := by
   unfold coefOne
   rw [GlobalTheory.BranchFormula.coefLast_eq_coeff]
   simp [spl, coeff_map]
@@ -53,7 +53,7 @@ theorem emb_inj : Function.Injective (fun v : Fin n × Fin n => ((v.1.castSucc, 
 
 theorem key (x : BP K n) (β : Unit × Fin n →₀ ℕ) (p : MvPolynomial (Fin n × Fin n) K) :
     fockB x (rename (lastV n) (monomial β (1 : K)) * emb K n p) =
-      ((∏ u, (β u).factorial : ℕ) : K) * fockB (coeff β (spl K n x)) p := by
+      ((∏ u, (β u).factorial : ℕ) : K) * fockB (AddMonoidAlgebra.coeff (spl K n x) β) p := by
   classical
   induction x using MvPolynomial.induction_on generalizing β p with
   | C a =>
@@ -62,7 +62,7 @@ theorem key (x : BP K n) (β : Unit × Fin n →₀ ℕ) (p : MvPolynomial (Fin 
     · subst h; simp [fockB_C_left]
     · rw [if_neg h, if_neg (Ne.symm h), ← fockBL_apply]; simp
   | add f g hf hg =>
-    simp only [← fockBL_apply, map_add, LinearMap.add_apply, coeff_add] at *
+    simp only [← fockBL_apply, map_add, LinearMap.add_apply, MvPolynomial.coeff_add] at *
     rw [hf, hg, mul_add]
   | mul_X f v hf =>
     obtain ⟨a, s⟩ := v

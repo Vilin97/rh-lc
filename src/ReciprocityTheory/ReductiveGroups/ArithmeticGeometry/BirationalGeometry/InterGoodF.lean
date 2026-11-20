@@ -18,7 +18,7 @@ def oneK : K →₀ ℕ := Finsupp.equivFunOnFinite.symm (fun _ => 1)
 theorem weight_blkWt_apply (m : (Σ k, ι k) →₀ ℕ) (k : K) :
     Finsupp.weight (blkWt (ι := ι)) m k = ∑ i, m ⟨k, i⟩ := by
   classical
-  rw [Finsupp.weight_apply, Finsupp.sum_fintype _ _ (by simp), Finsupp.finset_sum_apply,
+  rw [Finsupp.weight_apply, Finsupp.sum_fintype _ _ (by simp), Finsupp.finsetSum_apply,
     Fintype.sum_sigma]
   refine (Finset.sum_eq_single k ?_ ?_).trans ?_
   · intro k' _ hk'
@@ -58,7 +58,7 @@ theorem segMon_isWeightedHomogeneous (i : (k : K) → ι k) :
     (fun k _ => isWeightedHomogeneous_X ℚ _ _)
   have e : (∑ k ∈ Finset.univ, blkWt (ι := ι) ⟨k, i k⟩) = oneK := by
     ext k
-    rw [Finsupp.finset_sum_apply]
+    rw [Finsupp.finsetSum_apply]
     simp only [blkWt, oneK, Finsupp.single_apply, Finsupp.coe_equivFunOnFinite_symm]
     simp
   rw [e] at h
@@ -104,7 +104,7 @@ theorem weight_sWt_apply {r : ℕ} (n : (Fin r ⊕ {k // k ≠ k0}) →₀ ℕ) 
     Finsupp.weight (sWt k0 r) n k =
       (∑ j, n (Sum.inl j)) + (if h : k = k0 then 0 else n (Sum.inr ⟨k, h⟩)) := by
   classical
-  rw [Finsupp.weight_apply, Finsupp.sum_fintype _ _ (by simp), Finsupp.finset_sum_apply,
+  rw [Finsupp.weight_apply, Finsupp.sum_fintype _ _ (by simp), Finsupp.finsetSum_apply,
     Fintype.sum_sum_type]
   congr 1
   · refine Finset.sum_congr rfl fun j _ => ?_

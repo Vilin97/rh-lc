@@ -118,7 +118,7 @@ theorem gram_pos {Λ : Type} [AddCommGroup Λ] (b : Λ →ₗ[ℤ] Λ →ₗ[ℤ
     apply hc
     ext k
     have := congrArg (fun p : ℤ[X] => p.coeff k) h
-    simp only [finset_sum_coeff, coeff_C_mul_X_pow, coeff_zero, Fin.val_inj] at this
+    simp only [Polynomial.finsetSum_coeff, coeff_C_mul_X_pow, coeff_zero, Fin.val_inj] at this
     simpa using this
   have h3 := hb _ (hd _ h2 (degree_sum_fin_lt c))
   rw [h1] at h3

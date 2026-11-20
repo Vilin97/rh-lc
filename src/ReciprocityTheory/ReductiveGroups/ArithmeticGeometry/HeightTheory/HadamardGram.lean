@@ -57,7 +57,7 @@ theorem hadamard_gram {R : Type*} [Fintype R] [DecidableEq R] {n : ℕ} (hR : Fi
         exact Finset.prod_congr rfl fun k _ =>
           Real.sq_sqrt (Finset.sum_nonneg fun i _ => by positivity)
     _ ≤ ∏ k, ((n : ℝ) * s k ^ 2) :=
-        Finset.prod_le_prod (fun k _ => Finset.sum_nonneg fun i _ => by positivity)
+        Finset.prod_le_prod₀ (fun k _ => Finset.sum_nonneg fun i _ => by positivity)
           fun k _ => hcol k
     _ = (n : ℝ) ^ n * ∏ k, s k ^ 2 := by
         rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin]

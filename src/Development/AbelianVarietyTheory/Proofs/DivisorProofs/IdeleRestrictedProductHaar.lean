@@ -20,7 +20,7 @@ namespace GlobalTheory.ThK.ConeEuler
 theorem prod_le_exp_tsum_abs_sub_one {ι : Type} (a : ι → ℝ) (ha : ∀ x, 0 ≤ a x) (hs : Summable fun x => a x - 1)
     (S : Finset ι) : ∏ x ∈ S, a x ≤ Real.exp (∑' x, |a x - 1|) := by
   calc ∏ x ∈ S, a x ≤ ∏ x ∈ S, Real.exp |a x - 1| :=
-        Finset.prod_le_prod (fun x _ => ha x) fun x _ => by
+        Finset.prod_le_prod₀ (fun x _ => ha x) fun x _ => by
           have h1 := le_abs_self (a x - 1)
           have h2 := Real.add_one_le_exp |a x - 1|
           linarith

@@ -10,14 +10,14 @@ open Formalism.MainNotions.G Formalism.MainNotions.CovariantDegrees
 
 theorem coeff_weightComponent {R : Type*} [CommRing R] {ι : Type*} [Fintype ι] {n : ℕ} (LL : Letters ι) (S : Set ι)
     (nu : Fin n → ℤ) (F : MvPolynomial (ι × Fin n) R) (m : ι × Fin n →₀ ℕ) :
-    coeff m (weightComponent LL S nu F) = if wtS LL S m = nu then coeff m F else 0 := by
+    AddMonoidAlgebra.coeff (weightComponent LL S nu F) m = if wtS LL S m = nu then AddMonoidAlgebra.coeff F m else 0 := by
   classical
   unfold weightComponent
   rw [MvPolynomial.coeff_sum]
   simp only [MvPolynomial.coeff_monomial]
   rw [Finset.sum_ite_eq']
   simp only [Finset.mem_filter, MvPolynomial.mem_support_iff]
-  by_cases h1 : wtS LL S m = nu <;> by_cases h2 : coeff m F = 0 <;> simp [h1, h2]
+  by_cases h1 : wtS LL S m = nu <;> by_cases h2 : AddMonoidAlgebra.coeff F m = 0 <;> simp [h1, h2]
 
 theorem sum_weightComponents {R : Type*} [CommRing R] {ι : Type*} [Fintype ι] {n : ℕ} (LL : Letters ι) (S : Set ι)
     (F : MvPolynomial (ι × Fin n) R) :
@@ -165,7 +165,7 @@ theorem scalarExtension_monomial_weights (hGr : BinomialStableContainsComponents
     simp only [polWts, Set.mem_setOf_eq]
     refine ⟨weightComponent LL S (wtS LL S m) w, hGr R ι LL n S W hW2 w hw _, ?_, ?_⟩
     · intro h0
-      have e := congrArg (MvPolynomial.coeff m) h0
+      have e := congrArg (AddMonoidAlgebra.coeff · m) h0
       rw [coeff_weightComponent, if_pos rfl, MvPolynomial.coeff_zero] at e
       exact (MvPolynomial.mem_support_iff.1 hm') e
     · intro m' hm''

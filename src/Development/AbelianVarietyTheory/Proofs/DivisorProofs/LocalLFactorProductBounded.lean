@@ -64,10 +64,10 @@ theorem prod_norm_Lv_le : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [
       hne ((mem_aboveF.1 h1).symm.trans (mem_aboveF.1 h2))
   calc ∏ v ∈ S, ‖Lv (fun _ : HeightOneSpectrum (𝓞 E) => ({1} : Multiset ℂˣ)) v (s : ℂ)‖
         ≤ ∏ v ∈ S, ∏ w ∈ aboveF (L := E) F v, Real.exp (2 * invSq w) := by
-          refine Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun v _ => ?_
+          refine Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun v _ => ?_
           unfold Lv
           exact (Finset.norm_prod_le _ _).trans
-            (Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun w _ => norm_locL_le w hs)
+            (Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun w _ => norm_locL_le w hs)
     _ = ∏ w ∈ S.biUnion (fun v => aboveF (L := E) F v), Real.exp (2 * invSq w) :=
           (Finset.prod_biUnion hdisj).symm
     _ = Real.exp (2 * ∑ w ∈ S.biUnion (fun v => aboveF (L := E) F v), invSq w) := by

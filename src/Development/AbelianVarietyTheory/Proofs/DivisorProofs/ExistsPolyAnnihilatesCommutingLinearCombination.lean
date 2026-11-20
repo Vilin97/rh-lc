@@ -12,7 +12,7 @@ theorem exists_poly_annihilates_linear_combination : ∀ {M : Type} [AddCommGrou
         Polynomial.aeval (∑ i, c i • A i) p v = 0 := by
   intro M _ _ ι _ A hc c P hP
   classical
-  letI : CommRing (Algebra.adjoin ℂ (Set.range A)) := Algebra.adjoinCommRingOfComm ℂ
+  letI : CommRing (Algebra.adjoin ℂ (Set.range A)) := Algebra.isMulCommutative_adjoin ℂ
     (by rintro _ ⟨i, rfl⟩ _ ⟨j, rfl⟩; exact hc i j)
   let S := Algebra.adjoin ℂ (Set.range A)
   let I : Ideal S :=

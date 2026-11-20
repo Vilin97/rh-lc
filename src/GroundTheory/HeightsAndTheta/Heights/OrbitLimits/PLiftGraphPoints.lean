@@ -38,14 +38,14 @@ theorem eval_map_int {σ : Type} (z : σ → ℂ) (f : MvPolynomial σ ℤ) :
   rw [eval_map, aeval_def, algebraMap_int_eq]
 
 def homogAt (c : ∀ k, ι k) (M : ℕ) (F : MRing ι) : MRing ι :=
-  ∑ m ∈ F.support, monomial m (coeff m F) * ∏ k, (X ⟨k, c k⟩ : MRing ι) ^ (M - ∑ i, m ⟨k, i⟩)
+  ∑ m ∈ F.support, monomial m (AddMonoidAlgebra.coeff F m) * ∏ k, (X ⟨k, c k⟩ : MRing ι) ^ (M - ∑ i, m ⟨k, i⟩)
 
 theorem homogAt_isMultiHomog (c : ∀ k, ι k) (M : ℕ) (F : MRing ι)
     (hM : ∀ m ∈ F.support, ∀ k, ∑ i, m ⟨k, i⟩ ≤ M) : IsMultiHomog (homogAt c M F) (fun _ => M) := by
   classical
   intro m' hm' k
   obtain ⟨m, hm, hm'⟩ := Finset.mem_biUnion.mp (support_sum hm')
-  have h := Inter.ThmIUnique.isMultiHomog_mul' (ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.isMultiHomog_monomial m (coeff m F))
+  have h := Inter.ThmIUnique.isMultiHomog_mul' (ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.isMultiHomog_monomial m (AddMonoidAlgebra.coeff F m))
     (Inter.ThmIUnique.isMultiHomog_coordMonomial c (fun k => M - ∑ i, m ⟨k, i⟩)) m' hm' k
   simp only [Pi.add_apply] at h
   have := hM m hm k

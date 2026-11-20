@@ -69,7 +69,7 @@ private lemma support_eq_of_pairW_homogeneous_of_erase_eq (hlj : l ≠ j) (a0 : 
 theorem lcplead_coeff_peel (hlj : l ≠ j) (a0 : Fin r) {ω : Fin r × Fin n →₀ ℕ}
     {g : MvPolynomial (Fin r × Fin n) B}
     (hg : IsWeightedHomogeneous (pairW l j) g ω) {m : Fin r × Fin n →₀ ℕ} (hm : m ∈ g.support) :
-    coeff ((m.erase (a0, l)).erase (a0, j)) (peel l j a0 (m (a0, l)) g) = coeff m g := by
+    AddMonoidAlgebra.coeff (peel l j a0 (m (a0, l)) g) ((m.erase (a0, l)).erase (a0, j)) = AddMonoidAlgebra.coeff g m := by
   classical
   unfold peel
   rw [coeff_sum]

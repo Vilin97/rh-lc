@@ -50,7 +50,7 @@ theorem pderivIter_sq_le {ι : Type*} [DecidableEq ι] [Fintype ι] (F : (ι →
   rw [div_pow, mul_pow, Real.sq_sqrt (by positivity), ← Finset.prod_pow, ← Finset.prod_pow,
     Real.exp_sum, ← Finset.prod_pow_eq_pow_sum, mul_left_comm, mul_div_assoc,
     ← Finset.prod_mul_distrib, ← Finset.prod_div_distrib]
-  refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod (fun k _ => by positivity) fun k _ => ?_) hS
+  refine mul_le_mul_of_nonneg_left (Finset.prod_le_prod₀ (fun k _ => by positivity) fun k _ => ?_) hS
   rw [← pow_mul, mul_comm (α k) 2, pow_mul, hsq]
   exact factor_le A B hA _ (hα k)
 

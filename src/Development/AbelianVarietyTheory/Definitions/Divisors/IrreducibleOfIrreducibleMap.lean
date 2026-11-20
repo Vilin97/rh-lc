@@ -43,10 +43,10 @@ theorem irreducible_of_irreducible_map {K σ : Type} [Field K] [Algebra k K] {f 
   have key : ∀ a : MvPolynomial σ k, IsUnit (MvPolynomial.map (algebraMap k K) a) → IsUnit a := by
     intro a ha
     obtain ⟨c, hc, hca⟩ := isUnit_iff_eq_C_of_isReduced.1 ha
-    have h0 : algebraMap k K (coeff 0 a) = c := by
-      have := congrArg (coeff 0) hca
+    have h0 : algebraMap k K (AddMonoidAlgebra.coeff a 0) = c := by
+      have := congrArg (AddMonoidAlgebra.coeff · 0) hca
       rwa [coeff_map, coeff_zero_C] at this
-    have ha' : a = C (coeff 0 a) := by
+    have ha' : a = C (AddMonoidAlgebra.coeff a 0) := by
       apply map_injective (algebraMap k K) (algebraMap k K).injective
       rw [map_C, h0, hca]
     rw [ha']

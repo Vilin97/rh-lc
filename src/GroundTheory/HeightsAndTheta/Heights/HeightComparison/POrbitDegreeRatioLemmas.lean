@@ -14,7 +14,7 @@ variable {ι : Type} {n : ι → ℕ}
 
 def chartHomogQ (c : (k : ι) → Fin (n k + 1)) (f : MvPolynomial (Coord n) ℚ)
     [Fintype ι] : MvPolynomial (Coord n) ℚ :=
-  ∑ m ∈ f.support, C (coeff m f) * ∏ p : Coord n, (X p ^ m p * X ⟨p.1, c p.1⟩ ^ (f.totalDegree - m p))
+  ∑ m ∈ f.support, C (AddMonoidAlgebra.coeff f m) * ∏ p : Coord n, (X p ^ m p * X ⟨p.1, c p.1⟩ ^ (f.totalDegree - m p))
 
 theorem le_totalDegree_of_mem_support {f : MvPolynomial (Coord n) ℚ} {m : Coord n →₀ ℕ}
     (hm : m ∈ f.support) (p : Coord n) : m p ≤ f.totalDegree :=
@@ -24,7 +24,7 @@ variable [Fintype ι]
 
 theorem aeval_chartHomogQ {S : Type*} [CommRing S] [Algebra ℚ S] (c : (k : ι) → Fin (n k + 1))
     (f : MvPolynomial (Coord n) ℚ) (y : Coord n → S) :
-    aeval y (chartHomogQ c f) = ∑ m ∈ f.support, algebraMap ℚ S (coeff m f) *
+    aeval y (chartHomogQ c f) = ∑ m ∈ f.support, algebraMap ℚ S (AddMonoidAlgebra.coeff f m) *
       ∏ p : Coord n, (y p ^ m p * y ⟨p.1, c p.1⟩ ^ (f.totalDegree - m p)) := by
   simp [chartHomogQ, map_sum, map_prod]
 

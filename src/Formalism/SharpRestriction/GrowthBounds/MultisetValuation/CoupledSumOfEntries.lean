@@ -72,7 +72,7 @@ theorem hk_adj (D : Formalism.BasicNotions.D7) (h5b : MinkowskiCounting D X Y) (
   apply MvPolynomial.ext
   intro n
   let φ : X.Lv.comp j → (X.Pj j).Tup → (X.Pj j).Tup → Y.Kc := fun c L L1 =>
-    if (X.Pj j).IsLatTup L1 then MvPolynomial.coeff n (Y.ker j (c, L1) La' (F c L)) else 0
+    if (X.Pj j).IsLatTup L1 then AddMonoidAlgebra.coeff (Y.ker j (c, L1) La' (F c L)) n else 0
   have hφ : ∀ c (γ : (X.Lv.lev j c).Γ) L L1,
       φ c ((X.Lv.lev j c).smul γ L) ((X.Lv.lev j c).smul γ L1) = φ c L L1 := by
     intro c γ L L1

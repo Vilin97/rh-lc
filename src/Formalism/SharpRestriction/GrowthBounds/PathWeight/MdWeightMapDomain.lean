@@ -62,7 +62,7 @@ theorem md_sDegs_comp [Fintype ι] (LL : Letters ι) (S : Set ι) (jj : Fin n) (
     exact G.support_sum_monomial_coeff.symm
   have key : (twistSub LL S jj (multidegreeComponent d G)).coeff m' = (twistSub LL S jj G).coeff m' := by
     conv_rhs => rw [hsplit]
-    rw [map_add, coeff_add, map_sum, coeff_sum, Finset.sum_eq_zero, add_zero]
+    rw [map_add, MvPolynomial.coeff_add, map_sum, coeff_sum, Finset.sum_eq_zero, add_zero]
     intro m hm
     apply (twist_substitution_weighted_homog LL S jj m (G.coeff m)).coeff_eq_zero
     intro h

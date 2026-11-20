@@ -9,9 +9,9 @@ namespace GlobalTheory.ClassFin
 
 theorem exists_component_subst {σ : Type} (s : σ → MvPolynomial σ ℚ) (l : ℂ →ₗ[ℚ] ℚ)
     (b : MvPolynomial σ ℂ) :
-    ∃ b' : MvPolynomial σ ℚ, ∀ m, MvPolynomial.coeff m (MvPolynomial.aeval s b') =
-      l (MvPolynomial.coeff m
-        (MvPolynomial.aeval (fun i => MvPolynomial.map (algebraMap ℚ ℂ) (s i)) b)) := by
+    ∃ b' : MvPolynomial σ ℚ, ∀ m, AddMonoidAlgebra.coeff (MvPolynomial.aeval s b') m =
+      l (AddMonoidAlgebra.coeff (MvPolynomial.aeval (fun i => MvPolynomial.map (algebraMap ℚ ℂ) (s i)) b)
+        m) := by
   induction b using MvPolynomial.induction_on' with
   | monomial u a =>
     refine ⟨MvPolynomial.monomial u (l a), fun m => ?_⟩

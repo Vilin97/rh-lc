@@ -68,7 +68,7 @@ theorem Bd.prod_coe {n : ℕ} {A : ℝ} (c : Fin n → Qbar) (h : ∀ i, ‖lam 
   have := Bd.coe (lam := lam) (B := A ^ n) (x := ∏ i, c i) (by
     rw [map_prod, norm_prod]
     calc ∏ i, ‖lam (c i)‖ ≤ ∏ _i : Fin n, A :=
-          Finset.prod_le_prod (fun i _ => norm_nonneg _) (fun i _ => h i)
+          Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) (fun i _ => h i)
       _ = A ^ n := by simp)
   simpa using this
 
@@ -80,7 +80,7 @@ theorem bd_applyAt0 (D : D7) {a d n : ℕ} {B : ℝ} (hB : 0 ≤ B) (G : VC D a 
       Bd lam B (iteratedFDeriv ℂ m G 0 (fun i => coordV D (f i))) := by
     rintro m rfl; exact h
   refine Bd.sum hB _ _ fun α hα => ?_
-  have hα' : MvPolynomial.coeff α P ≠ 0 :=
+  have hα' : AddMonoidAlgebra.coeff P α ≠ 0 :=
     MvPolynomial.mem_support_iff.1 (MvPolynomial.support_map_subset _ _ hα)
   have hdeg : Multiset.card α.toMultiset = n := by
     have h1 := hP hα'
@@ -91,7 +91,7 @@ theorem bd_applyAt0 (D : D7) {a d n : ℕ} {B : ℝ} (hB : 0 ≤ B) (G : VC D a 
   have hne : (α.prod fun _ n => (n.factorial : ℂ)) ≠ 0 :=
     Finset.prod_ne_zero_iff.2 fun i _ => Nat.cast_ne_zero.2 (Nat.factorial_ne_zero _)
   rw [taylor, mul_assoc, mul_div_cancel₀ _ hne, MvPolynomial.coeff_map]
-  have := (Bd.intCast (lam := lam) (MvPolynomial.coeff α P)).mul (h' _ hdeg
+  have := (Bd.intCast (lam := lam) (AddMonoidAlgebra.coeff P α)).mul (h' _ hdeg
     (fun i => α.toMultiset.toList.get ⟨i, by simpa using i.2⟩))
   rw [one_mul] at this
   exact this
@@ -202,7 +202,7 @@ theorem term_bound : ∀ (D : D7), Inp D → ∀ (S : Finset ℕ) (dl : ℕ → 
   have hp0 : (0 : ℝ) < p := by exact_mod_cast hp.pos
   have hQn := norm_natCast_inv p hQ.1.ne'
   have hN : ‖((M * Q : ℕ) : ℂ_[p])‖⁻¹ = (p : ℝ) ^ (padicValNat p Q : ℝ) := by
-    rw [norm_natCast_inv p (Nat.mul_pos hM hQ.1).ne', padicValNat.mul hM.ne' hQ.1.ne',
+    rw [norm_natCast_inv p (Nat.mul_pos hM hQ.1).ne', (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) hM.ne' hQ.1.ne',
       padicValNat.eq_zero_of_not_dvd (hp.coprime_iff_not_dvd.1 hMp.symm), zero_add]
   have hsp : p ∣ M * Q → SplitIn D p := fun h =>
     hQ.2 p hp (hMp.symm.dvd_of_dvd_mul_left h)

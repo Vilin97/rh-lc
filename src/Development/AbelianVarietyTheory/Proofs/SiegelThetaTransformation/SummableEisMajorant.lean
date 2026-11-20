@@ -162,7 +162,7 @@ theorem exists_short_generators {Ψ : Finset (E →+* ℂ)} (hΨ : IsType Ψ) (N
       simp only [hwe, Finset.mul_sum, Matrix.smul_mul, Matrix.smul_apply, smul_eq_mul, map_mul,
         map_natCast, norm_mul, norm_natCast, mul_pow]
     rw [← Finset.prod_pow]
-    refine (Finset.prod_le_prod (fun _ _ => by positivity) fun i _ => h1 i).trans ?_
+    refine (Finset.prod_le_prod₀ (fun _ _ => by positivity) fun i _ => h1 i).trans ?_
     rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
     refine (mul_le_mul_of_nonneg_left hle (by positivity)).trans (le_of_eq ?_)
     rw [mul_pow, mul_pow, Real.sq_sqrt hC.le, Finset.prod_pow]

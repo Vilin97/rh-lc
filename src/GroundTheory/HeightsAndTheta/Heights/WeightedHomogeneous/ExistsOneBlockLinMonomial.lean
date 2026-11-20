@@ -184,7 +184,7 @@ theorem mem_secM_oneBlockPt_iff [NumberField K] (N : ℕ) (hN : 1 ≤ N) (s : Fr
       rintro rfl
       simp at hdeg
       omega
-    obtain ⟨g, hg, hgα⟩ := exists_oneBlockLin_monomial om i α hα0 (coeff α F)
+    obtain ⟨g, hg, hgα⟩ := exists_oneBlockLin_monomial om i α hα0 (AddMonoidAlgebra.coeff F α)
     rw [hdeg] at hg
     refine Submodule.subset_span ⟨g, (isMultiHomog_unit_iff g N).mpr hg, ?_⟩
     rw [← hgα]

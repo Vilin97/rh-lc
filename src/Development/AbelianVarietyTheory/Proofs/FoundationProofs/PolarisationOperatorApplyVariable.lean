@@ -387,7 +387,7 @@ theorem fock_add_left (P P' Q : MvPolynomial σ ℂ) :
     fock_eq_sum P Q (P.support ∪ P'.support) Finset.subset_union_left,
     fock_eq_sum P' Q (P.support ∪ P'.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun m _ => ?_
-  rw [coeff_add]; ring
+  rw [MvPolynomial.coeff_add]; ring
 
 theorem fock_sum_left {ι : Type} (s : Finset ι) (P : ι → MvPolynomial σ ℂ) (Q : MvPolynomial σ ℂ) :
     Formalism.E.fock (∑ i ∈ s, P i) Q = ∑ i ∈ s, Formalism.E.fock (P i) Q := by
@@ -444,7 +444,7 @@ theorem coeff_pderiv' (v : σ) (m : σ →₀ ℕ) (Q : MvPolynomial σ ℂ) :
     (pderiv v Q).coeff m = Q.coeff (m + Finsupp.single v 1) * (m v + 1) := by
   classical
   induction Q using MvPolynomial.induction_on' with
-  | add P₁ P₂ h₁ h₂ => simp only [map_add, coeff_add, h₁, h₂, add_mul]
+  | add P₁ P₂ h₁ h₂ => simp only [map_add, MvPolynomial.coeff_add, h₁, h₂, add_mul]
   | monomial b c =>
     rw [pderiv_monomial, coeff_monomial, coeff_monomial]
     by_cases h : b = m + Finsupp.single v 1

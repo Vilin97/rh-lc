@@ -108,8 +108,8 @@ theorem moll_young (E : Type*) [NormedAddCommGroup E] [NormedSpace ℝ E] [Finit
   have h := moll_young_sq E μ K u s hs hu
   have e : ∀ z : ℝ≥0∞, z ^ (ENNReal.toReal 2) = z ^ 2 := fun z => by
     rw [ENNReal.toReal_ofNat, ← ENNReal.rpow_natCast]; norm_num
-  rw [eLpNorm_eq_lintegral_rpow_enorm (by norm_num) (by norm_num),
-    eLpNorm_eq_lintegral_rpow_enorm (by norm_num) (by norm_num)]
+  rw [MeasureTheory.eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num),
+    MeasureTheory.eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num) (by norm_num)]
   simp_rw [e]
   exact ENNReal.rpow_le_rpow h (by norm_num)
 

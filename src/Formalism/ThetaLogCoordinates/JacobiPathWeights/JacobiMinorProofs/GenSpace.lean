@@ -17,10 +17,10 @@ variable {k : Type*} [Field k] {σ : Type*}
 variable {A B D : Type*} [CommRing A] [CommRing B] [CommRing D] [Algebra k A] [Algebra k B] [Algebra k D]
 
 def slcFun (θ : A →ₗ[k] B) (P : MvPolynomial σ A) : MvPolynomial σ B :=
-  ∑ e ∈ P.support, monomial e (θ (coeff e P))
+  ∑ e ∈ P.support, monomial e (θ (AddMonoidAlgebra.coeff P e))
 
 theorem coeff_slcFun (θ : A →ₗ[k] B) (P : MvPolynomial σ A) (e : σ →₀ ℕ) :
-    coeff e (slcFun θ P) = θ (coeff e P) := by
+    AddMonoidAlgebra.coeff (slcFun θ P) e = θ (AddMonoidAlgebra.coeff P e) := by
   classical
   simp only [slcFun, coeff_sum, coeff_monomial, Finset.sum_ite_eq', mem_support_iff]
   split_ifs with h
@@ -38,7 +38,7 @@ def slc (θ : A →ₗ[k] B) : MvPolynomial σ A →ₗ[k] MvPolynomial σ B whe
     simp [coeff_slcFun]
 
 @[simp] theorem coeff_slc (θ : A →ₗ[k] B) (P : MvPolynomial σ A) (e : σ →₀ ℕ) :
-    coeff e (slc θ P) = θ (coeff e P) := coeff_slcFun θ P e
+    AddMonoidAlgebra.coeff (slc θ P) e = θ (AddMonoidAlgebra.coeff P e) := coeff_slcFun θ P e
 
 theorem slc_comp (θ₁ : B →ₗ[k] D) (θ₂ : A →ₗ[k] B) (P : MvPolynomial σ A) :
     slc θ₁ (slc θ₂ P) = slc (θ₁ ∘ₗ θ₂) P := by
@@ -117,17 +117,17 @@ theorem mem_span_iff (N : Submodule k (MvPolynomial σ k)) (P : MvPolynomial σ 
       exact hx _
   · intro h
     let b := Module.Basis.ofVectorSpace k A
-    let I := P.support.biUnion fun e => (b.repr (coeff e P)).support
+    let I := P.support.biUnion fun e => (b.repr (AddMonoidAlgebra.coeff P e)).support
     have key : P = ∑ i ∈ I, (b i) • map (algebraMap k A) (slc (b.coord i) P) := by
       ext e
       rw [coeff_sum]
       simp only [coeff_smul, coeff_map, coeff_slc, smul_eq_mul, Module.Basis.coord_apply]
-      have hsub : (b.repr (coeff e P)).support ⊆ I := by
+      have hsub : (b.repr (AddMonoidAlgebra.coeff P e)).support ⊆ I := by
         by_cases he : e ∈ P.support
-        · exact Finset.subset_biUnion_of_mem (fun e => (b.repr (coeff e P)).support) he
+        · exact Finset.subset_biUnion_of_mem (fun e => (b.repr (AddMonoidAlgebra.coeff P e)).support) he
         · rw [notMem_support_iff.mp he]
           simp
-      conv_lhs => rw [← b.linearCombination_repr (coeff e P), Finsupp.linearCombination_apply,
+      conv_lhs => rw [← b.linearCombination_repr (AddMonoidAlgebra.coeff P e), Finsupp.linearCombination_apply,
         Finsupp.sum_of_support_subset _ hsub (fun i a => a • b i) (fun i _ => zero_smul _ _)]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [Algebra.smul_def, mul_comm]
@@ -521,7 +521,7 @@ theorem isWeightOf_iff (G : MvPolynomial (LVar ι ζ n) k) (ν : Fin n → ℤ) 
     exact he rfl
   · rintro ⟨e, he, rfl⟩
     rw [mem_support_iff] at he
-    obtain ⟨ℓ, hℓ⟩ : ∃ ℓ : UR k n →ₗ[k] k, ℓ (coeff e (rho isVec S G)) ≠ 0 := by
+    obtain ⟨ℓ, hℓ⟩ : ∃ ℓ : UR k n →ₗ[k] k, ℓ (AddMonoidAlgebra.coeff (rho isVec S G) e) ≠ 0 := by
       by_contra hc
       push Not at hc
       exact he ((Module.forall_dual_apply_eq_zero_iff k _).mp hc)
@@ -574,11 +574,11 @@ theorem genH_support (G : MvPolynomial (LVar ι ζ n) k) (e : LVar ι ζ n →�
     exact h rfl
   · intro h h0
     apply h
-    have h1 : (ant k n : UR k n →+* UR k n) (coeff e (rho isVec S G)) = 0 := by
+    have h1 : (ant k n : UR k n →+* UR k n) (AddMonoidAlgebra.coeff (rho isVec S G) e) = 0 := by
       apply uAlg_gen_injective
       rw [map_zero]
       exact h0
-    have h2 := congrArg (coeff e) (map_ant_ant isVec S G)
+    have h2 := congrArg (AddMonoidAlgebra.coeff · e) (map_ant_ant isVec S G)
     rw [coeff_map, coeff_map, h1, map_zero] at h2
     exact h2.symm
 

@@ -16,7 +16,7 @@ variable {V : Type} [CommRing V]
 
 theorem aeval_tan {ι : Type} [DecidableEq ι] (ℓ : ι) (P : MvPolynomial ι V) :
     aeval (fun i => if i = ℓ then (DualNumber.eps : DualNumber V) else 0) P =
-      algebraMap V (DualNumber V) (constantCoeff P) + coeff (Finsupp.single ℓ 1) P • DualNumber.eps := by
+      algebraMap V (DualNumber V) (constantCoeff P) + AddMonoidAlgebra.coeff P (Finsupp.single ℓ 1) • DualNumber.eps := by
   induction P using MvPolynomial.induction_on with
   | C a =>
     simp only [MvPolynomial.aeval_C, MvPolynomial.constantCoeff_C, MvPolynomial.coeff_C,
@@ -34,7 +34,7 @@ theorem aeval_tan {ι : Type} [DecidableEq ι] (ℓ : ι) (P : MvPolynomial ι V
       simp [h, this]
 
 theorem coeff_psTrunc {ι : Type} [Fintype ι] [DecidableEq ι] (m : ℕ) (f : MvPowerSeries ι V) (e : ι →₀ ℕ)
-    (he : e ∈ degLE m) : coeff e (psTrunc m f) = MvPowerSeries.coeff e f := by
+    (he : e ∈ degLE m) : AddMonoidAlgebra.coeff (psTrunc m f) e = MvPowerSeries.coeff e f := by
   simp [psTrunc, MvPolynomial.coeff_sum, MvPolynomial.coeff_monomial, he]
 
 theorem single_mem_degLE {ι : Type} [Fintype ι] [DecidableEq ι] (ℓ : ι) : Finsupp.single ℓ 1 ∈ degLE (ι := ι) 1 := by

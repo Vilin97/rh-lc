@@ -41,7 +41,7 @@ theorem norm_pow_div (hp : p.Prime) (hnp : ‖(p : K)‖ = (p : ℝ)⁻¹) (m : 
   rw [norm_div, norm_pow,
     Formalism.DworkPowerSeriesWeights.norm_natCast_eq_pow_padicValNat hp hlt (show m + 1 ≠ 0 by omega)]
   have hv : padicValNat p (m + 1) ≤ m := by
-    have h1 : p ^ padicValNat p (m + 1) ∣ m + 1 := pow_padicValNat_dvd
+    have h1 : p ^ padicValNat p (m + 1) ∣ m + 1 := (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _))
     have h2 := Nat.le_of_dvd (Nat.succ_pos m) h1
     have h3 : padicValNat p (m + 1) < p ^ padicValNat p (m + 1) := Nat.lt_pow_self hp.one_lt
     omega

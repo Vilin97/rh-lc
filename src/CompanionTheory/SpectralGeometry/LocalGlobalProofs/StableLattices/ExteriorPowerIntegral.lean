@@ -49,7 +49,7 @@ theorem okWedge : OKWedge := by
             rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with h | h <;> simp [h]
           rw [norm_mul, hs, one_mul, norm_prod]
           calc ∏ i, ‖g.submatrix _ _ (σ i) i‖ ≤ ∏ _i : Fin l, Formalism.FourierDecayAlt.B.gN g :=
-                Finset.prod_le_prod (fun i _ => norm_nonneg _) (fun i _ => hent _ _)
+                Finset.prod_le_prod₀ (fun i _ => norm_nonneg _) (fun i _ => hent _ _)
             _ = Formalism.FourierDecayAlt.B.gN g ^ l := by simp
       _ = (Fintype.card (Equiv.Perm (Fin l)) : ℝ) * Formalism.FourierDecayAlt.B.gN g ^ l := by
           simp [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]

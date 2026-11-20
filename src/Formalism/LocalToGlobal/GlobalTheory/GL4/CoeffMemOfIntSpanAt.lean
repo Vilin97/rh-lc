@@ -106,7 +106,7 @@ variable {D : D7}
 
 theorem coeff_mem_of_intSpanAt {n : ℕ} (w : D.what₂.places.Pl) (lam : D.what₂.Tau → DomWeight n)
     {p : MvPolynomial (D.what₂.Tau × Fin n × Fin n) D.what₂.LL} (hp : p ∈ IntSpanAt D w lam) (m : (D.what₂.Tau × Fin n × Fin n) →₀ ℕ) :
-    coeff m p ∈ intW D.what₂.places w := by
+    AddMonoidAlgebra.coeff p m ∈ intW D.what₂.places w := by
   unfold IntSpanAt at hp
   induction hp using AddSubgroup.closure_induction with
   | mem x hx =>

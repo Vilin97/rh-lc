@@ -148,7 +148,7 @@ theorem exists_lift [SecondCountableTopology G] [T2Space G] (μ : Measure G)
       exact ih.const_sub 1
     | iUnion f hd hf ih =>
       simp only [measure_iUnion hd hf]
-      exact Measurable.ennreal_tsum ih
+      exact Measurable.tsum ih
   have happ : ∀ g, ∀ A, MeasurableSet A → κ g A = η ((fun m : M => s g * (m : G)) ⁻¹' A) := fun g A hA =>
     Measure.map_apply (measurable_transl_fun M _) hA
   refine ⟨μ.bind κ, ?_, ?_, ?_, ?_⟩

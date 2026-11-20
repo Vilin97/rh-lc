@@ -359,7 +359,7 @@ theorem b_ptB_le (D : D7) (u : D.what₂.Word) (Cn : ℝ) (hB : BeOnBd D u Cn) :
       Real.log (dimV ((D.fm u).lam D.R.m τ).w))) := by
   rw [Real.exp_sum]
   unfold ptB
-  refine Finset.prod_le_prod (fun τ _ => mul_nonneg (zpow_nonneg (Nat.cast_nonneg _) _) (sq_nonneg _)) fun τ _ => ?_
+  refine Finset.prod_le_prod₀ (fun τ _ => mul_nonneg (zpow_nonneg (Nat.cast_nonneg _) _) (sq_nonneg _)) fun τ _ => ?_
   rw [add_assoc, Real.exp_add]
   refine mul_le_mul (le_of_eq ?_) (hB τ) (sq_nonneg _) (Real.exp_pos _).le
   rw [← Real.rpow_intCast, Real.rpow_def_of_pos (b_Tu_pos D u)]
@@ -525,7 +525,7 @@ theorem b_prod_places {K : Type} [Field K] [NumberField K] [IsTotallyComplex K] 
     exact_mod_cast Fintype.card_pos
   have h1 : (∏ v, a v) ^ 2 ≤ Real.exp (∑ s, F s) := by
     rw [← Finset.prod_pow, ← fib a, Real.exp_sum]
-    exact Finset.prod_le_prod (fun s _ => ha _) fun s _ => h s
+    exact Finset.prod_le_prod₀ (fun s _ => ha _) fun s _ => h s
   have h2 : Real.exp (∑ s, F s) =
       Real.exp ((Formalism.HN.nPl K : ℝ) * ((∑ s, F s) / (Fintype.card (K →+* ℂ) : ℝ))) ^ 2 := by
     rw [← Real.exp_nat_mul, hcard]
@@ -2204,7 +2204,7 @@ theorem blockB_le (D : D7) (u : D.what₂.Word) (Cd : ℝ) (i : ℕ) (s : D.what
     refine max_le ?_ (Real.exp_pos _).le
     refine le_trans (le_abs_self _) ?_
     rw [Finset.abs_prod, Real.exp_sum]
-    exact Finset.prod_le_prod (fun _ _ => abs_nonneg _) fun τ _ => abs_le_exp_log _
+    exact Finset.prod_le_prod₀ (fun _ _ => abs_nonneg _) fun τ _ => abs_le_exp_log _
   have hth : 0 < thetaLocalFactorAtIndex D u i s ^ 2 := by
     unfold thetaLocalFactorAtIndex
     have := D.gx.thOne_pos s

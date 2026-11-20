@@ -135,7 +135,7 @@ theorem up_cauchy (hd : d.AxH 𝒜) (hdel : 1 ≤ d.del) (c : ι) (F1 : MvPolyno
     rw [d.evc_eq, hwy]
     exact evW_factor y w0 R hR
   have hcoef : ∀ (m : ℕ) (R : MvPolynomial (UXVar d.D d.N) K), XHom m R → ∀ β,
-      MvPolynomial.coeff β (d.evc c R) = MvPolynomial.coeff β (evW (R := K) y R) • w0 ^ m := by
+      AddMonoidAlgebra.coeff (d.evc c R) β = AddMonoidAlgebra.coeff (evW (R := K) y R) β • w0 ^ m := by
     intro m R hR β
     rw [hfac m R hR, mul_comm, MvPolynomial.coeff_C_mul, MvPolynomial.coeff_map,
       Algebra.smul_def, mul_comm]
@@ -154,10 +154,10 @@ theorem up_cauchy (hd : d.AxH 𝒜) (hdel : 1 ≤ d.del) (c : ι) (F1 : MvPolyno
     intro s hs
     apply hQx s
     rwa [mapK, MvPolynomial.support_map_of_injective _ (IsFractionRing.injective (𝓞 K) K)]
-  set g := MvPolynomial.coeff β (evW (R := 𝓞 K) (D := d.D) d.w Q) with hgdef
-  have hgc : g c = MvPolynomial.coeff β (d.evc c (mapK Q)) := by
+  set g := AddMonoidAlgebra.coeff (evW (R := 𝓞 K) (D := d.D) d.w Q) β with hgdef
+  have hgc : g c = AddMonoidAlgebra.coeff (d.evc c (mapK Q)) β := by
     rw [← d.map_evW_global hd c Q, MvPolynomial.coeff_map]; rfl
-  set φ := MvPolynomial.coeff β (evW (R := K) y (mapK Q)) with hφdef
+  set φ := AddMonoidAlgebra.coeff (evW (R := K) y (mapK Q)) β with hφdef
   have hgφ : g c = φ • w0 ^ n := by rw [hgc, hcoef n _ hQx β]
   have hgne : g c ≠ 0 := by rw [hgc]; exact hβ
   have hφ : φ ≠ 0 := by rintro h; apply hgne; rw [hgφ, h, zero_smul]
@@ -209,8 +209,8 @@ theorem up_cauchy (hd : d.AxH 𝒜) (hdel : 1 ≤ d.del) (c : ι) (F1 : MvPolyno
         _ = _ := by simp
 
     have hval : d.nrm c (n • d.wL) (g c) P =
-        ‖MvPolynomial.coeff β (Ey (D := d.D) (fun j => (P : Ω c →+* ℂ) (y j))
-          (MvPolynomial.map sg (mapK Q)))‖ * d.nrm c d.wL w0 P ^ n := by
+        ‖AddMonoidAlgebra.coeff (Ey (D := d.D) (fun j => (P : Ω c →+* ℂ) (y j))
+          (MvPolynomial.map sg (mapK Q))) β‖ * d.nrm c d.wL w0 P ^ n := by
       rw [hgφ, hd.nrm_smul c P φ (d.lineSection_pow_mem hd c n) (d.lineSection_pow_ne hd c n) hφ,
         d.norm_lineSection_pow hd c P n hn1, ← map_evW_eq (P : Ω c →+* ℂ) sg hP, MvPolynomial.coeff_map]
 
@@ -245,7 +245,7 @@ theorem up_cauchy (hd : d.AxH 𝒜) (hdel : 1 ≤ d.del) (c : ι) (F1 : MvPolyno
       have hpow : (∑ j, ‖(P : Ω c →+* ℂ) (y j)‖) ^ n * d.nrm c d.wL w0 P ^ n ≤
           (((d.N + 1 : ℕ) : ℝ) * Real.exp (S sg)) ^ n := by
         rw [← mul_pow]; exact pow_le_pow_left₀ (by positivity) hsum n
-      calc ‖MvPolynomial.coeff β _‖ * d.nrm c d.wL w0 P ^ n
+      calc ‖AddMonoidAlgebra.coeff _ β‖ * d.nrm c d.wL w0 P ^ n
           ≤ (ReciprocityTheory.MultiplicativeHeights.polyL2 R * Real.sqrt (cardUX d.D d.N n n') *
               (∑ j, ‖(P : Ω c →+* ℂ) (y j)‖) ^ n) * d.nrm c d.wL w0 P ^ n := by
             apply mul_le_mul_of_nonneg_right _ (by positivity)

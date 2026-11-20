@@ -318,7 +318,7 @@ theorem exists_quasiFiniteAt_of_not_injective {S : Type*} [CommRing S] [IsDomain
   have hne : MvPolynomial.map ι g₁ ≠ 0 := by
     intro h0
     apply hv
-    have := congrArg (MvPolynomial.coeff v) h0
+    have := congrArg (AddMonoidAlgebra.coeff · v) h0
     rw [MvPolynomial.coeff_map] at this
     simpa [RingHom.mem_ker] using this
   obtain ⟨u, k, a, ha, hc⟩ := exists_coeff_map_eq_C ι g₁ hne

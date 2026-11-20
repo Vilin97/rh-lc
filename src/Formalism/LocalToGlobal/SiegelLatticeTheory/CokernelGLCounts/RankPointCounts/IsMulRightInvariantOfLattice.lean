@@ -51,7 +51,7 @@ theorem lcount_mul (Γ : Subgroup H) (K : Set H) (δ : Γ) (x : H) :
 
 theorem measurable_lcount (Γ : Subgroup H) [Countable Γ] {K : Set H} (hK : IsCompact K) :
     Measurable (lcount Γ K) :=
-  Measurable.ennreal_tsum fun _ =>
+  Measurable.tsum fun _ =>
     ((measurable_one : Measurable (1 : H → ℝ≥0∞)).indicator hK.measurableSet).comp (measurable_const_mul _)
 
 theorem measurable_lwt (Γ : Subgroup H) [Countable Γ] {K : Set H} (hK : IsCompact K) :

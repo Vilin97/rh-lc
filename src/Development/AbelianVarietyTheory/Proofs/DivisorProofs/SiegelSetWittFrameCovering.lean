@@ -220,7 +220,7 @@ theorem theta_torus_decay (hKP : GlobalTheory.ThK.KP) {F E : Type} [Field F] [Nu
       have hTle : T ≤ ((m : ℝ) * (1 + s0)) ^ r₀ := by
         rw [hTdef]
         calc ∏ i, t i ≤ ∏ _i : Fin r₀, ((m : ℝ) * (1 + s0)) :=
-              Finset.prod_le_prod (fun i _ => (tpos i).le) (fun i _ => hti i)
+              Finset.prod_le_prod₀ (fun i _ => (tpos i).le) (fun i _ => hti i)
           _ = _ := by rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
       calc T ^ K ≤ (((m : ℝ) * (1 + s0)) ^ r₀) ^ K := pow_le_pow_left₀ hT0.le hTle K
         _ = (m : ℝ) ^ D * (1 + s0) ^ D := by rw [← pow_mul, mul_pow, hDdef]
@@ -267,7 +267,7 @@ theorem theta_torus_decay (hKP : GlobalTheory.ThK.KP) {F E : Type} [Field F] [Nu
     have hπT : π₀ ≤ T := by
       rw [hπ₀def, hTdef]
       calc c' ^ r₀ = ∏ _i : Fin r₀, c' := by rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
-        _ ≤ ∏ i, t i := Finset.prod_le_prod (fun _ _ => hc'0.le) (fun i _ => tlow i)
+        _ ≤ ∏ i, t i := Finset.prod_le_prod₀ (fun _ _ => hc'0.le) (fun i _ => tlow i)
     have h1 : 1 ≤ π₀⁻¹ * T := by rw [le_inv_mul_iff₀ hπ₀, mul_one]; exact hπT
     rw [← mul_pow]
     exact pow_le_pow_left₀ (by positivity) (by nlinarith) L

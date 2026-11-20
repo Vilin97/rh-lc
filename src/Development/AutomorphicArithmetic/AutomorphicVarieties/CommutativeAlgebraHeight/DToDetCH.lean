@@ -39,7 +39,7 @@ private theorem chiS_eq {n : ℕ} {A G : Type} [CommRing A] [Group G] (D : GDet 
 private theorem coeff_lid {A G : Type} [CommRing A] [Group G] {m : ℕ} (β : Fin m →₀ ℕ)
     (w : MvPolynomial (Fin m) A ⊗[A] MonoidAlgebra A G) (g : G) :
     (TensorProduct.lid A (MonoidAlgebra A G) ((MvPolynomial.lcoeff A β).rTensor _ w)).coeff g =
-      MvPolynomial.coeff β ((ofT A G _ w).coeff g) := by
+      AddMonoidAlgebra.coeff ((ofT A G _ w).coeff g) β := by
   induction w with
   | zero => simp
   | add a b ha hb => simp only [map_add, MonoidAlgebra.coeff_add, Finsupp.add_apply, MvPolynomial.coeff_add, ha, hb]
@@ -47,9 +47,9 @@ private theorem coeff_lid {A G : Type} [CommRing A] [Group G] {m : ℕ} (β : Fi
 
 private theorem chElt_coeff {n : ℕ} {A G : Type} [CommRing A] [Group G] (D : GDet n A G) {m : ℕ}
     (y : Fin m → MonoidAlgebra A G) (β : Fin m →₀ ℕ) (g : G) :
-    (D.toDet.chElt y β).coeff g = MvPolynomial.coeff β
-      ((Polynomial.aeval (GDet.gen y)
-        ((D.map (MvPolynomial.C : A →+* MvPolynomial (Fin m) A)).chi (GDet.gen y))).coeff g) := by
+    (D.toDet.chElt y β).coeff g = AddMonoidAlgebra.coeff ((Polynomial.aeval (GDet.gen y)
+        ((D.map (MvPolynomial.C : A →+* MvPolynomial (Fin m) A)).chi (GDet.gen y))).coeff g)
+      β := by
   rw [Det.chElt, coeff_lid, chiS_eq, ← Polynomial.aeval_algHom_apply, ofT_gen]
 
 theorem UpperTheory.V.CA.d_toDet_CH :

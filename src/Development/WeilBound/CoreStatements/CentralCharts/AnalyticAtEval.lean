@@ -127,7 +127,7 @@ private theorem valAt_pow_lemma_8 {z : Spec (CommRingCat.of ℂ) ⟶ X} (hz : ge
 private theorem eval₂_div_lemma_9 {L : Type*} [Field L] {d : K → ℕ} {p : MRing J} (hp : IsMultiHomog p d)
     (u : (Σ k, J k) → L) (c : (k : K) → J k) :
     MvPolynomial.eval₂ (Int.castRingHom L) u p / ∏ k, u ⟨k, c k⟩ ^ d k =
-      ∑ m ∈ p.support, ((MvPolynomial.coeff m p : ℤ) : L) * ∏ k, ∏ i, (u ⟨k, i⟩ / u ⟨k, c k⟩) ^ m ⟨k, i⟩ := by
+      ∑ m ∈ p.support, ((AddMonoidAlgebra.coeff p m : ℤ) : L) * ∏ k, ∏ i, (u ⟨k, i⟩ / u ⟨k, c k⟩) ^ m ⟨k, i⟩ := by
   rw [MvPolynomial.eval₂_eq', Finset.sum_div]
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [eq_intCast, mul_div_assoc, Fintype.prod_sigma, ← Finset.prod_div_distrib]

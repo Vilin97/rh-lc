@@ -52,8 +52,8 @@ def TieOpS {Y : Pend X} (t : KerEntTied ex) (u : D.what₂.Word) (μ : D.what₂
     (e : GL3Theta.Idx D (D.R.N j) (D.R.N (j + 1)) → X.ZA j)
     (Φ₀ : MvPolynomial (GL3Theta.FrV D (D.R.N (j + 1))) ℂ →ₛₗ[ι] XspC (X.Pj (j + 1)) Y.Kc) : Prop :=
   ∀ La ∈ Y.Rep j, ∀ (x : ((ex.tw.fm u μ).lat j).V) Q, K2.SharpQ t ex.tw u μ j x Q → ∀ n : X.ZA j →₀ ℕ,
-    MvPolynomial.coeff n (polDel X Y.Kc j (Gm j La x)) =
-      sO j La • MvPolynomial.coeff n (trDY X Y.Kc j D e Φ₀ (polDY D (t.O u μ).dgen (Q (cls j La.1 La.2)) (N' := D.R.N (j + 1))))
+    AddMonoidAlgebra.coeff (polDel X Y.Kc j (Gm j La x)) n =
+      sO j La • AddMonoidAlgebra.coeff (trDY X Y.Kc j D e Φ₀ (polDY D (t.O u μ).dgen (Q (cls j La.1 La.2)) (N' := D.R.N (j + 1)))) n
 
 end Gen
 

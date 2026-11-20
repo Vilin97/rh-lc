@@ -195,7 +195,7 @@ theorem CharId_on_v {V : Type} [AddCommGroup V] [Module ℂ V] {n : ℕ}
   have hy : (Pi.single b v : Fin n → V) ∈ CharId_F E v 0 := CharId_F_gen E v 0 b (Nat.zero_le _)
   have hk := CharId_kill E hE ν v hv n 0 (by omega) (∏ s : Fin n, (X - C (lsh ν s))) (by simp) _ hy
   have hdeg : (∏ s : Fin n, (X - C (lsh ν s))).natDegree < n + 1 := by
-    rw [natDegree_finset_prod_X_sub_C_eq_card]
+    rw [Polynomial.natDegree_finsetProd_X_sub_C_eq_card]
     simp
   rw [aeval_eq_sum_range' hdeg] at hk
   have h := congrFun hk a

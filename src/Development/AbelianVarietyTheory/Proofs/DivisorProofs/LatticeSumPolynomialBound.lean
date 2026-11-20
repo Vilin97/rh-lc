@@ -82,7 +82,7 @@ theorem latG_tsum_le : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fin
   have hPP0 : P0 ≤ P := by
     rw [hP0def, hPdef]
     calc c ^ q = ∏ _i : Fin q, c := by simp
-      _ ≤ ∏ i, t i := Finset.prod_le_prod (fun i _ => hc.le) (fun i _ => ht i)
+      _ ≤ ∏ i, t i := Finset.prod_le_prod₀ (fun i _ => hc.le) (fun i _ => ht i)
   have hP : 0 < P := hP0.trans_le hPP0
   have hmpos : (0 : ℝ) < m := by exact_mod_cast hm
   have hm0 : (m : F) ≠ 0 := by exact_mod_cast (Nat.one_le_iff_ne_zero.mp hm)
@@ -127,7 +127,7 @@ theorem latG_tsum_le : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fin
     have hQge : P * ((m : ℝ) ^ q)⁻¹ ≤ Q := by
       calc P * ((m : ℝ) ^ q)⁻¹ = ∏ i, (t i * (m : ℝ)⁻¹) := by
             rw [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin, inv_pow]
-        _ ≤ Q := Finset.prod_le_prod (fun i _ => by have := ht0 i; positivity) (fun i _ => by
+        _ ≤ Q := Finset.prod_le_prod₀ (fun i _ => by have := ht0 i; positivity) (fun i _ => by
               have := mul_le_mul_of_nonneg_left (hS0 i) (ht0 i).le
               exact le_add_of_nonneg_of_le zero_le_one this)
     have hs0 : 0 ≤ s := Finset.sum_nonneg fun j _ => Finset.sum_nonneg fun w _ => apply_nonneg w _

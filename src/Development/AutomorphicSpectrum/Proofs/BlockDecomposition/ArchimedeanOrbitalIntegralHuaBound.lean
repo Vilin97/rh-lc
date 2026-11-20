@@ -245,7 +245,7 @@ theorem weight_le (κ : Type) [Fintype κ] (L : ℕ) (C r s : ℝ) (u v : κ →
           inv_pow, inv_pow, ← pow_mul, ← pow_mul, mul_comm L]
     _ ≤ (C ^ L) ^ Fintype.card κ * ∏ k, (((1 + u k) ^ L)⁻¹ * ((1 + v k) ^ L)⁻¹) := by
         apply mul_le_mul_of_nonneg_left _ (pow_nonneg (pow_nonneg hC0.le L) _)
-        exact Finset.prod_le_prod (fun k _ => mul_nonneg (inv_nonneg.mpr (pow_nonneg hr1.le L))
+        exact Finset.prod_le_prod₀ (fun k _ => mul_nonneg (inv_nonneg.mpr (pow_nonneg hr1.le L))
           (mul_nonneg (inv_nonneg.mpr (pow_nonneg hC0.le L)) (inv_nonneg.mpr (pow_nonneg hs1.le L))))
           (fun k _ => key k)
 

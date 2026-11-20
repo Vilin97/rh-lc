@@ -143,7 +143,7 @@ theorem etProd_bound (X : PT E) {DF : ℕ} (P : ReciprocityTheory.ChartRestricti
       rw [hlb]
       linear_combination hn2 + hp0
   calc ∏ g, ∑ t, |(c g t : ℝ)| * thRat X s (a g t) ≤ ∏ _g : Fin (2 * r1 ^ 4 * i), ((nt : ℝ) * Nc * bd) :=
-        Finset.prod_le_prod (fun g _ => Finset.sum_nonneg fun t _ => mul_nonneg (abs_nonneg _) (thRat_nonneg _ _ _))
+        Finset.prod_le_prod₀ (fun g _ => Finset.sum_nonneg fun t _ => mul_nonneg (abs_nonneg _) (thRat_nonneg _ _ _))
           (fun g _ => hfac g)
     _ = ((nt : ℝ) * Nc * bd) ^ (2 * r1 ^ 4 * i) := by rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
     _ = Real.exp (((2 * r1 ^ 4 * i : ℕ) : ℝ) * Real.log ((nt : ℝ) * Nc * bd)) := by

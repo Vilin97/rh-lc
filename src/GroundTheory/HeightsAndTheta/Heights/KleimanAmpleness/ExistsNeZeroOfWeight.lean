@@ -68,7 +68,7 @@ theorem vals_eq_span (y : (Σ k, ι k) → Ω) (d : K → ℕ) :
     rw [AlgHom.toLinearMap_apply, g.as_sum, map_sum]
     refine Submodule.sum_mem _ fun a ha => ?_
     have hw := hg (mem_support_iff.mp ha)
-    have hm : monomial a (coeff a g) = coeff a g • monomial a (1 : F) := by
+    have hm : monomial a (AddMonoidAlgebra.coeff g a) = AddMonoidAlgebra.coeff g a • monomial a (1 : F) := by
       rw [smul_monomial, smul_eq_mul, mul_one]
     rw [hm, map_smul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, hw, rfl⟩)

@@ -20,7 +20,7 @@ theorem exists_red_of {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ 
     intro e
     unfold pot
     calc c ^ d = ∏ _k : Fin d, c := by simp
-      _ ≤ _ := Finset.prod_le_prod (fun _ _ => hc0.le) (fun k _ => hc e k)
+      _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => hc0.le) (fun k _ => hc e k)
   have hne : S.Nonempty := ⟨_, ⟨Pi.basisFun ℤ (Fin d), rfl⟩⟩
   have hbdd : BddBelow S := ⟨c ^ d, by rintro _ ⟨e, rfl⟩; exact hpos e⟩
   have hm : c ^ d ≤ sInf S := le_csInf hne (by rintro _ ⟨e, rfl⟩; exact hpos e)
