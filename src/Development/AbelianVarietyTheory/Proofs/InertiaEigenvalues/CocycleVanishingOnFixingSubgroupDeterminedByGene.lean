@@ -426,7 +426,7 @@ theorem procyclic : ∀ (l : ℕ) [Fact l.Prime] (act : GQ l →* (PadicComplex 
       have e2 := LiftExp.norm_zpow_sub_one l m hm _ hF.1.2 (d : ℤ) (by exact_mod_cast hd0)
       rw [zpow_natCast, padicValInt.of_nat] at e2
       rw [map_pow, Units.val_pow_eq_pow_val, e2, zpow_le_zpow_iff_right₀ hl1] at e1
-      refine (padicValNat_dvd_iff_le hd0).2 ?_
+      refine ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hd0).2 ?_
       omega
     · intro ε hε
       have hc := (continuousOn_twHom hact hχ hF i w).sub (continuousOn_const (c := w))

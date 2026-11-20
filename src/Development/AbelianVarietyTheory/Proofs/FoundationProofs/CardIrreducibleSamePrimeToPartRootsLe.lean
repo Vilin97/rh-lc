@@ -26,7 +26,7 @@ theorem pow_eq_pow_padicVal {k : Type} [Field k] {n l a : ℕ} (hn : n ≠ 0) (h
   obtain ⟨b, -, hb⟩ := (Nat.dvd_prime_pow hl).1 (orderOf_dvd_of_pow_eq_one h2)
   have h3 : l ^ b ∣ n := hb ▸ orderOf_dvd_of_pow_eq_one h1
   have h4 : orderOf (x / y) ∣ l ^ padicValNat l n := by
-    rw [hb]; exact pow_dvd_pow _ ((padicValNat_dvd_iff_le hn).1 h3)
+    rw [hb]; exact pow_dvd_pow _ (((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hn).1 h3)
   have h5 := orderOf_dvd_iff_pow_eq_one.1 h4
   rwa [div_pow, div_eq_one_iff_eq (pow_ne_zero _ hy0)] at h5
 

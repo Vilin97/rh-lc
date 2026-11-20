@@ -15,7 +15,7 @@ theorem split_of_dvd {D : D7} {Q Q' p : ℕ} [hp : Fact p.Prime] (hQ : GoodLevel
   have hpp : p.Prime := hp.out
   obtain ⟨hQ0, hQs⟩ := hQ
   have h1 : 1 ≤ padicValNat p Q' := one_le_padicValNat_of_dvd h0.ne' hd
-  have hpQ : p ^ 1 ∣ Q := (padicValNat_dvd_iff_le hQ0.ne').2 (h1.trans h)
+  have hpQ : p ^ 1 ∣ Q := ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hQ0.ne').2 (h1.trans h)
   exact hQs p hpp (by simpa using hpQ)
 
 open GlobalTheory.NormSum.Term in
@@ -109,7 +109,7 @@ theorem coordInt_of_jets (hJ : type_of% @GlobalTheory.T.jets_torsion_translates_
   have hMN0 : 8 ^ (4 * fF D * N) * (8 * fF D * N).factorial ≠ 0 := by positivity
   have hvle : ∀ m : ℕ, m ∣ 8 ^ (4 * fF D * N) * (8 * fF D * N).factorial →
       padicValNat p m ≤ padicValNat p (8 ^ (4 * fF D * N) * (8 * fF D * N).factorial) := fun m hm =>
-    (padicValNat_dvd_iff_le hMN0).1 (((fun {p n : ℕ} => _root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat p n)) (p := p) (n := m)).trans hm)
+    ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hMN0).1 (((fun {p n : ℕ} => _root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat p n)) (p := p) (n := m)).trans hm)
   have hvQ : (padicValNat p Q' : ℝ) ≤ padicValNat p Q := by exact_mod_cast hQ'
   have hite : (0 : ℝ) ≤ (if p = D.host.d then 1 / 4 else 0) := by split_ifs <;> norm_num
   have hX : 0 ≤ dl p + (if p = D.host.d then 1 / 4 else 0) + (padicValNat p Q : ℝ) := by

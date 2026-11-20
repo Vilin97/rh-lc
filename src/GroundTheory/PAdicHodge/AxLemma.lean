@@ -51,7 +51,7 @@ theorem not_sq_dvd_choose_pow_pow {p : ℕ} [hp : Fact p.Prime] {k : ℕ} (hk : 
       _ = 1 := Finset.card_singleton k
   intro hdvd
   have hne : Nat.choose (p ^ k) (p ^ (k - 1)) ≠ 0 := (Nat.choose_pos hle).ne'
-  have := (padicValNat_dvd_iff_le hne).1 hdvd
+  have := ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hne).1 hdvd
   omega
 
 section Norms

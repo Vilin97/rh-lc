@@ -150,7 +150,7 @@ private theorem padicValInt_eq_card_filter_pow_dvd (l : ℕ) [hl : Fact l.Prime]
   have hn : t.natAbs ≠ 0 := Int.natAbs_ne_zero.mpr ht
   have hdiv : ∀ k : ℕ, ((l : ℤ) ^ k ∣ t ↔ k ≤ padicValNat l t.natAbs) := by
     intro k
-    rw [← Nat.cast_pow, ← padicValNat_dvd_iff_le hn]
+    rw [← Nat.cast_pow, ← (by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hn]
     first
       | exact Int.natCast_dvd
       | exact Int.ofNat_dvd_left

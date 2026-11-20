@@ -104,7 +104,7 @@ theorem minkowski_number_dvd_factorial : Formalism.HermitianLatticeCounting.S6.M
   have hpp : p.Prime := (Finset.mem_filter.1 hp).2
   have := Fact.mk hpp
   have hp2 : 2 ≤ p := hpp.two_le
-  rw [padicValNat_dvd_iff_le (Nat.factorial_ne_zero _)]
+  rw [(by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (Nat.factorial_ne_zero _)]
   have hlog : Nat.log p (2 * N) < N + 2 := by
     by_cases h0 : 2 * N = 0
     · simp [h0]

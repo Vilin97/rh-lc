@@ -56,7 +56,7 @@ theorem minkowskiBound_of (h : PGroupStep) : PI.MinkowskiBound := by
     mul_ne_zero (pow_ne_zero _ hℓ.ne_zero) (Nat.factorial_ne_zero _)
   have hle : k ≤ PI.minkowskiExp N ℓ := by
     rw [← padicValNat_pow_mul_factorial N ℓ hℓ]
-    exact (padicValNat_dvd_iff_le hne).1 hdvd
+    exact ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hne).1 hdvd
   exact (pow_dvd_pow ℓ hle).trans (pow_minkowskiExp_dvd N ℓ hℓ)
 
 end PI.Mk

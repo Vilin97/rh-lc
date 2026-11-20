@@ -158,7 +158,7 @@ theorem pow_le_factorial {R : Type} [CommRing R] (p : ℕ) [Fact p.Prime] (N : R
     (Fact.out : p.Prime).ne_one
   have hen : e ≤ n := by
     have h2 : e ≤ padicValNat p n.factorial :=
-      (padicValNat_dvd_iff_le n.factorial_ne_zero).1 ⟨m, he⟩
+      ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) n.factorial_ne_zero).1 ⟨m, he⟩
     have h3 := sub_one_mul_padicValNat_factorial (p := p) n
     have h4 : 1 ≤ p - 1 := by have := (Fact.out : p.Prime).two_le; omega
     have h5 := Nat.mul_le_mul_right (padicValNat p n.factorial) h4

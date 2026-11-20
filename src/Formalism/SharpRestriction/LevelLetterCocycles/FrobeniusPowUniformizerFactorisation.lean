@@ -1787,7 +1787,7 @@ theorem arith_eWA_mono (l : ℕ) (hl : 2 ≤ l) {H H' : ℕ} (h : H ≤ H') : eW
 
 theorem arith_val_fact_mono (l : ℕ) [Fact l.Prime] {a b : ℕ} (h : a ≤ b) :
     padicValNat l a.factorial ≤ padicValNat l b.factorial := by
-  exact (padicValNat_dvd_iff_le (Nat.factorial_ne_zero b)).1
+  exact ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (Nat.factorial_ne_zero b)).1
     (dvd_trans (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)) (Nat.factorial_dvd_factorial h))
 
 theorem arith_eWB_mono (l : ℕ) [Fact l.Prime] (s : ℕ) {H H' : ℕ} (h : H ≤ H') :

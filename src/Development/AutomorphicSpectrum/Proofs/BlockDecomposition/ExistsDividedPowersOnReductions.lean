@@ -21,7 +21,7 @@ theorem mem_span_pow_of_factorial_mul_eq {S : Type} [CommRing S] (hS : R.TF S) {
   obtain ⟨v, m, hlm, hm⟩ := Nat.exists_eq_pow_mul_and_not_dvd k.factorial_ne_zero l hl.ne_one
   have hv : v < k := by
     have h1 : v ≤ padicValNat l k.factorial :=
-      (padicValNat_dvd_iff_le k.factorial_ne_zero).1 ⟨m, hm⟩
+      ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) k.factorial_ne_zero).1 ⟨m, hm⟩
     have h2 := sub_one_mul_padicValNat_factorial_lt_of_ne_zero (p := l) hk
     have h3 : 1 ≤ l - 1 := Nat.le_sub_of_add_le hl.two_le
     nlinarith

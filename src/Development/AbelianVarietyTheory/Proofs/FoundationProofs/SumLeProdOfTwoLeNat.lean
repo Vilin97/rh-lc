@@ -43,7 +43,7 @@ theorem sum_primePowerParts_le :
   have hpow : ∀ p k : ℕ, p.Prime → p ^ k ∣ n → p ^ k ≤ f p := by
     intro p k hp hk
     haveI := Fact.mk hp
-    exact Nat.pow_le_pow_right hp.pos ((padicValNat_dvd_iff_le hn.ne').1 hk)
+    exact Nat.pow_le_pow_right hp.pos (((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hn.ne').1 hk)
   have hge : ∀ p ∈ n.primeFactors, p ≤ f p := by
     intro p hp
     have := hpow p 1 (Nat.prime_of_mem_primeFactors hp)

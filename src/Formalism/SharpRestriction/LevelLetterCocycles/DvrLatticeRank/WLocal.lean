@@ -68,7 +68,7 @@ theorem w_div {R : Type*} [CommRing R] (c L : R) (hc : IsUnit c) (l : ℕ) [Fact
     have hkN : k ≤ 2 * a - 1 := by omega
     have hd := Nat.factorial_mul_factorial_dvd_factorial hkN
     rw [← (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (Nat.factorial_ne_zero _) (Nat.factorial_ne_zero _)]
-    exact (padicValNat_dvd_iff_le (Nat.factorial_ne_zero _)).1 (dvd_trans (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)) hd)
+    exact ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (Nat.factorial_ne_zero _)).1 (dvd_trans (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)) hd)
   rw [hsplit, Finset.prod_union hdisj, hA, hB]
   refine dvd_trans ?_ (pow_dvd_pow L (show k + padicValNat l k.factorial +
     (2 * a - 1 - k + padicValNat l (2 * a - 1 - k).factorial) ≤

@@ -13,7 +13,7 @@ theorem exists_dp_pow {S : Type} [CommRing S] (l : ℕ) [hl : Fact l.Prime] (hu 
     (hm : m ≠ 0) (hk : k ≠ 0) (c : S) : ∃ y ∈ Ideal.span {(l : S) ^ m}, (k.factorial : S) * y = ((l : S) ^ m * c) ^ k := by
   obtain ⟨v, u, hlu, e⟩ := Nat.exists_eq_pow_mul_and_not_dvd k.factorial_ne_zero l hl.out.ne_one
   have hv : v < k := by
-    have h1 : v ≤ padicValNat l k.factorial := (padicValNat_dvd_iff_le k.factorial_ne_zero).1 ⟨u, e⟩
+    have h1 : v ≤ padicValNat l k.factorial := ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) k.factorial_ne_zero).1 ⟨u, e⟩
     exact h1.trans_lt (padicValNat_factorial_lt_of_ne_zero l hk)
   obtain ⟨w, hw⟩ := (hu u hlu).exists_right_inv
   obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hk

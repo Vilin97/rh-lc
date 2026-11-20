@@ -31,7 +31,7 @@ theorem vAdd_dvd_le (w : D.what₂.places.Pl) {n N : ℕ} (hN : N ≠ 0) (hd : n
   have hpk : ((p : ℕ) : D.what₂.LL) ^ k ≠ 0 := pow_ne_zero _ (OrbitPlaces.p_ne w)
   have hv : vAdd (D.plEq w) (n : D.what₂.LL) = (k : ℤ) * (D.what₂.places.ramIdx w : ℤ) := by
     rw [← hprod, Nat.cast_mul, Nat.cast_pow, OrbitPlaces.vAdd_mul w hpk (Nat.cast_ne_zero.2 hn'0), OrbitPlaces.vAdd_pow, hv', add_zero]
-  have hkN : k ≤ padicValNat p N := (padicValNat_dvd_iff_le hN).1 ((_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)).trans hd)
+  have hkN : k ≤ padicValNat p N := ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hN).1 ((_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)).trans hd)
   rw [hv]
   unfold ur
   push_cast

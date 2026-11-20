@@ -63,7 +63,7 @@ theorem exc_of_dvd {g d a l s : ℕ} (hg : 2 ≤ g) (ha : 0 < a) (had : a < d) (
   rw [hM] at h2
   obtain ⟨t, -, rfl⟩ := (Nat.dvd_prime_pow hl).1 (Nat.dvd_of_mul_dvd_mul_left (by omega) h2)
   have ht : t ≤ padicValNat l (g ^ d - 1) :=
-    (padicValNat_dvd_iff_le (by omega)).1 ⟨_, by rw [hM, mul_comm]⟩
+    ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (by omega)).1 ⟨_, by rw [hM, mul_comm]⟩
   have h3 : g ^ (d - e) ≤ l ^ t := by
     have h4 : g ^ d = g ^ e * g ^ (d - e) := by rw [← pow_add]; congr 1; omega
     have h5 : 1 ≤ l ^ t := Nat.one_le_pow _ _ hl.pos

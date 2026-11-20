@@ -131,7 +131,7 @@ theorem four_mul_padicValNat_le (p : ℕ) [hp : Fact p.Prime] (c : ℕ) {n : ℕ
 theorem sub_one_mul_padicValNat_lt (p : ℕ) [hp : Fact p.Prime] {n : ℕ} (hn : n ≠ 0) :
     (p - 1) * padicValNat p n < n := by
   have h : padicValNat p n ≤ padicValNat p n.factorial := by
-    rw [← padicValNat_dvd_iff_le (Nat.factorial_ne_zero n)]
+    rw [← (by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (Nat.factorial_ne_zero n)]
     exact (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)).trans (Nat.dvd_factorial (Nat.pos_of_ne_zero hn) le_rfl)
   exact lt_of_le_of_lt (Nat.mul_le_mul_left _ h)
     (sub_one_mul_padicValNat_factorial_lt_of_ne_zero p hn)

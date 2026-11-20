@@ -30,7 +30,7 @@ private theorem exists_factorial_mul_eq_pow_pow_in_span {n j : ℕ} (hn : n ≠ 
   obtain ⟨e, u, hu, hfac⟩ := Nat.exists_eq_pow_mul_and_not_dvd (Nat.factorial_ne_zero j) l hl.one_lt.ne'
   have he : e < j := by
     have h1 : e ≤ padicValNat l j.factorial :=
-      (padicValNat_dvd_iff_le (Nat.factorial_ne_zero j)).1 ⟨u, hfac⟩
+      ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (Nat.factorial_ne_zero j)).1 ⟨u, hfac⟩
     have h2 := sub_one_mul_padicValNat_factorial_lt_of_ne_zero l hj
     have h3 : 1 ≤ l - 1 := by
       have := hl.two_le

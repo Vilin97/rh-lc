@@ -20,7 +20,7 @@ theorem exists_factorial_mul_eq_pow (n : ℕ) : ∃ a : ℤ_[p], (n ! : ℤ_[p])
   obtain ⟨v, m, hm, h⟩ := Nat.exists_eq_pow_mul_and_not_dvd (Nat.factorial_ne_zero n) p hp.ne_one
   have hv : v ≤ n := by
     have h1 : v ≤ padicValNat p n ! :=
-      (padicValNat_dvd_iff_le (Nat.factorial_ne_zero n)).1 ⟨m, h⟩
+      ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (Nat.factorial_ne_zero n)).1 ⟨m, h⟩
     exact h1.trans (padicValNat_factorial_le p n)
   have hu : IsUnit (m : ℤ_[p]) := by
     rw [PadicInt.isUnit_iff, PadicInt.norm_natCast_eq_one_iff]

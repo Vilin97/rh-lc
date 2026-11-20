@@ -198,7 +198,7 @@ theorem length_le_classNumber : GlobalTheory.Published.GlobalArtinReciprocity �
     rw [hres v, Submodule.mem_bot] at h1
     exact congrArg Multiplicative.ofAdd (congrFun h1 ⟨τ, hτ⟩)
   · refine mul_le_mul_right (Nat.cast_le.2 ?_) _
-    exact (padicValNat_dvd_iff_le hh).1 ((_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)).trans hd)
+    exact ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hh).1 ((_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)).trans hd)
 
 end GlobalTheory.UnramHom
 

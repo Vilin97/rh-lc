@@ -41,7 +41,7 @@ theorem norm_inv_natCast_le_of_dvd (l : ℕ) [hl : Fact l.Prime] {c D : ℕ} (hD
   have h1 := norm_l_lt_one l
   have hc0 : c ≠ 0 := fun h => hD (by rw [h] at hc; exact Nat.eq_zero_of_zero_dvd hc)
   have hle : padicValNat l c ≤ padicValNat l D :=
-    (padicValNat_dvd_iff_le hD).1 (dvd_trans (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)) hc)
+    ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hD).1 (dvd_trans (_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)) hc)
   rw [norm_inv, norm_natCast_eq_pow_padicValNat hl.out h1 hc0, Real.rpow_neg h0.le, Real.rpow_natCast]
   exact inv_anti₀ (pow_pos h0 _) (pow_le_pow_of_le_one h0.le h1.le hle)
 

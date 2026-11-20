@@ -213,7 +213,7 @@ theorem minkowskiBound : Formalism.HermitianLatticeCounting.S6.MinkowskiBound :=
       have h := card_two_group_dvd ((Units.coeHom _).comp (G.subtype.comp K.subtype))
         (fun g hg => Subtype.ext (Subtype.ext (Units.ext hg))) hK
       have hf := Nat.factorial_ne_zero n
-      rw [padicValNat_dvd_iff_le (by positivity), (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by positivity) hf,
+      rw [(by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (by positivity), (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by positivity) hf,
         padicValNat.prime_pow] at h
       simpa using h
     · obtain ⟨l, hl, hpl, h⟩ := exists_prime_gen p hp h2

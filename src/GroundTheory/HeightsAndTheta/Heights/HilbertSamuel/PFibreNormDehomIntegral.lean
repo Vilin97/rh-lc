@@ -53,7 +53,7 @@ theorem FibreNormDehomIntegral.proof (hF : FibreNormBadPrimesFinite.Statement)
     rw [padicValRat.mul hMq ha, padicValRat.pow, padicValRat.of_nat]
     by_cases hpT : p ∈ T
     · have hle : C p ≤ padicValNat p M₀ :=
-        (padicValNat_dvd_iff_le hM0).mp (Finset.dvd_prod_of_mem (fun p => p ^ C p) hpT)
+        ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hM0).mp (Finset.dvd_prod_of_mem (fun p => p ^ C p) hpT)
       have hb := hC p hp τ s hs j c hc m
       have hle' : ((C p * τ : ℕ) : ℤ) ≤ (τ : ℤ) * (padicValNat p M₀ : ℤ) := by
         push_cast

@@ -1402,7 +1402,7 @@ theorem logVal_holds : Formalism.MainNotions.ColumnSystems.logVal := by
       one_add_mul_le_pow (by norm_num) _
     have h5 : ((1 : ℝ) + 4) ^ padicValNat p s ≤ (p : ℝ) ^ padicValNat p s := by
       apply pow_le_pow_left₀ (by norm_num); norm_num; exact_mod_cast hp5
-    have hd : p ^ padicValNat p s ∣ s := (padicValNat_dvd_iff_le (show s ≠ 0 by omega)).mpr le_rfl
+    have hd : p ^ padicValNat p s ∣ s := ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (show s ≠ 0 by omega)).mpr le_rfl
     have hle : p ^ padicValNat p s ≤ s := Nat.le_of_dvd (by omega) hd
     have hle' : (p : ℝ) ^ padicValNat p s ≤ s := by exact_mod_cast hle
     linarith

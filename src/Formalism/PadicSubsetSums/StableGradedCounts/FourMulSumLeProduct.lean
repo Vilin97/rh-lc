@@ -55,7 +55,7 @@ theorem prime_power_order_share : PrimePowerOrderShare := by
       _ ≤ l ^ padicValNat l n := Nat.pow_le_pow_right hl.pos hv
   have hf2 : 16 ≤ 2 ^ padicValNat 2 n := by
     haveI := Fact.mk Nat.prime_two
-    have hv : 4 ≤ padicValNat 2 n := (padicValNat_dvd_iff_le hn0).mp (by norm_num; exact h16)
+    have hv : 4 ≤ padicValNat 2 n := ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hn0).mp (by norm_num; exact h16)
     calc 16 = 2 ^ 4 := by norm_num
       _ ≤ 2 ^ padicValNat 2 n := Nat.pow_le_pow_right (by norm_num) hv
   have h2m := hmem 2 Nat.prime_two h2n

@@ -385,7 +385,7 @@ theorem sprimeRam (hT : O.T = ((Dd.Q.T : ℕ) : ℝ))
       · rw [h, h4]
         exact Dvd.dvd.mul_left (pow_dvd_pow _ (Nat.le_add_right _ _)) _
     have hle : ((Dd.Q.T : ℕ) : ℝ) * (Dd.Q.cP (DF (Dw (ι j)) (Dd.aL (ι j))) (plc v) : ℝ) ≤ (padicValNat (plc v) N : ℝ) := by
-      exact_mod_cast (padicValNat_dvd_iff_le hN).1 hdvd
+      exact_mod_cast ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hN).1 hdvd
     have hnn0 : (0 : ℝ) ≤ (vw v (nnKAt (H := H) (LL := K) Dd (ι j)) : ℝ) :=
       by exact_mod_cast vw_nonneg_of_isIntegral v _ (nnK_isIntegral Dd (ι j))
     have he := ramw_pos v

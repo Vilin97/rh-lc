@@ -51,7 +51,7 @@ private theorem exponent_bound (ℓ : ℕ) [Fact ℓ.Prime] (s a a' : ℕ) (ha :
     rw [prod_natAbs_sub_erase (2 * a) a' (by omega)]
     exact (Nat.factorial_mul_factorial_dvd_factorial_add _ _).trans
       (Nat.factorial_dvd_factorial (by omega))
-  have h1 := (padicValNat_dvd_iff_le (Nat.factorial_ne_zero _)).1 hdvd
+  have h1 := ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (Nat.factorial_ne_zero _)).1 hdvd
   have h2 : (2 * a - 1) * s ≤ 2 * a * s := Nat.mul_le_mul_right _ (by omega)
   omega
 

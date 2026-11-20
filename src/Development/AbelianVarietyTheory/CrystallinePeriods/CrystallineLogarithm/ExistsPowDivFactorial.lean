@@ -625,9 +625,9 @@ theorem exists_pow_eq_mul (x : Ainf p R) (hx : Ainf.theta p R x = 0) :
   obtain ⟨c, hc⟩ := p_dvd_pow x hx
   refine ⟨c, mem_jac_of_pow (n := p) ?_, hc⟩
   have h1 : p ^ (p + 1) ∣ (p * p)! := by
-    rw [padicValNat_dvd_iff_le (Nat.factorial_ne_zero _), padicValNat_factorial_mul]
+    rw [(by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (Nat.factorial_ne_zero _), padicValNat_factorial_mul]
     have : 1 ≤ padicValNat p p ! := by
-      rw [← padicValNat_dvd_iff_le (Nat.factorial_ne_zero _), pow_one]
+      rw [← (by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (Nat.factorial_ne_zero _), pow_one]
       exact Nat.dvd_factorial hp.pos le_rfl
     omega
   obtain ⟨d, hd⟩ := (Nat.cast_dvd_cast (α := Acris p R) h1).trans (factorial_dvd (p * p) x hx)

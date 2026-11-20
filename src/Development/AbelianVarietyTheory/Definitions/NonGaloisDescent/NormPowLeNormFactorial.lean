@@ -499,7 +499,7 @@ theorem norm_factorial_le (m : ℕ) : ‖(m.factorial : K)‖ ≤ ‖(l : K)‖ 
   rw [← norm_pow, ← Nat.cast_pow]
   refine norm_natCast_le_of_dvd (Dvd.dvd.trans ?_
     (Nat.factorial_dvd_factorial (Nat.mul_div_le m l)))
-  rw [padicValNat_dvd_iff_le (Nat.factorial_ne_zero _), padicValNat_factorial_mul]
+  rw [(by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (Nat.factorial_ne_zero _), padicValNat_factorial_mul]
   omega
 
 theorem tendsto_wS (e : ℕ) [NeZero e] : Tendsto (wS K e) atTop (𝓝 0) :=

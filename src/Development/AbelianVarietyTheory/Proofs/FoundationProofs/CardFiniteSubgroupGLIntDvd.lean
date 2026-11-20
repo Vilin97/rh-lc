@@ -110,7 +110,7 @@ theorem sum_odd (p l : ℕ) (hp : p.Prime) (h2 : p ≠ 2) (hl : l.Prime) (hpl : 
     exact (Nat.modEq_iff_dvd' (Nat.one_le_pow _ _ hl.pos)).mp this.symm
   have hone : padicValNat p (l ^ (p - 1) - 1) ≤ 1 := by
     by_contra hc
-    have h0 := h (p - 1) ((padicValNat_dvd_iff_le (hne (p - 1) (by omega))).mpr (by omega))
+    have h0 := h (p - 1) (((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (hne (p - 1) (by omega))).mpr (by omega))
     have := Nat.le_of_dvd (by omega) h0
     have h3 : 2 * (p - 1) ≤ p * (p - 1) := Nat.mul_le_mul_right _ hp2
     omega
@@ -133,7 +133,7 @@ theorem sum_odd (p l : ℕ) (hp : p.Prime) (h2 : p ≠ 2) (hl : l.Prime) (hpl : 
         have h1 := hlte (n + 1) p (by omega) (by omega) hd'
         have h3 := one_le_padicValNat_of_dvd (hne (n + 1) (by omega)) hd'
         rw [padicValNat_self] at h1
-        have h4 := h _ ((padicValNat_dvd_iff_le (hne ((n + 1) * p)
+        have h4 := h _ (((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (hne ((n + 1) * p)
           (Nat.mul_ne_zero (by omega) (by omega)))).mpr (by omega : 2 ≤ _))
         rw [mul_comm (n + 1)] at h4
         exact hd (Nat.dvd_of_mul_dvd_mul_left hp.pos h4)
@@ -166,7 +166,7 @@ private theorem prod_pow_sub_pow_succ (q n : ℕ) :
 open Matrix in
 private theorem padicValNat_le_padicValNat_of_dvd {p a b : ℕ} [Fact p.Prime] (hb : b ≠ 0) (h : a ∣ b) :
     padicValNat p a ≤ padicValNat p b :=
-  (padicValNat_dvd_iff_le hb).mp ((_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)).trans h)
+  ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hb).mp ((_root_.Dvd.intro_left _ (_root_.Nat.divMaxPow_mul_pow_padicValNat _ _)).trans h)
 
 open Matrix in
 private theorem padicValNat_two_three_pow_sub_one_le (k : ℕ) (hk : 0 < k) :
@@ -255,7 +255,7 @@ private theorem exists_prime_gt_order_padicValNat_pow_sub_one (p : ℕ) [hp : Fa
     have hne : q ^ (k * p) - 1 ≠ 0 := by
       have := Nat.one_lt_pow (Nat.mul_ne_zero hk.ne' hp'.ne_zero) hq1
       omega
-    have h2 : p ^ 2 ∣ q ^ (k * p) - 1 := (padicValNat_dvd_iff_le hne).mpr (by omega)
+    have h2 : p ^ 2 ∣ q ^ (k * p) - 1 := ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hne).mpr (by omega)
     rw [key, mul_comm k p] at h2
     exact Nat.dvd_of_mul_dvd_mul_left hp'.pos h2
   · intro j hj
@@ -269,7 +269,7 @@ private theorem exists_prime_gt_order_padicValNat_pow_sub_one (p : ℕ) [hp : Fa
     have hv1 : padicValNat p (q ^ (p - 1) - 1) = 1 := by
       have h1 : 1 ≤ padicValNat p (q ^ (p - 1) - 1) := one_le_padicValNat_of_dvd hne hferm
       by_contra hne1
-      have h2 : p ^ 2 ∣ q ^ (p - 1) - 1 := (padicValNat_dvd_iff_le hne).mpr (by omega)
+      have h2 : p ^ 2 ∣ q ^ (p - 1) - 1 := ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hne).mpr (by omega)
       rw [key] at h2
       have := Nat.le_of_dvd hp1 h2
       have : p - 1 < p * (p - 1) := by

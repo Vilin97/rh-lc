@@ -131,7 +131,7 @@ theorem exists_prime_pow_eq {M : Type} [Monoid M] (n : ℕ) (hn : 2 ≤ n) (u : 
     rw [← orderOf_dvd_iff_pow_eq_one, hk']
     apply pow_dvd_pow
     haveI := Fact.mk hl
-    exact (padicValNat_dvd_iff_le (by omega)).mp hln
+    exact ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (by omega)).mp hln
 
 variable {K L : Type} [Field K] [Fintype K] [Field L] [Algebra K L]
 
