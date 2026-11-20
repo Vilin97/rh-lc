@@ -25,7 +25,7 @@ theorem AreaFormulaInj.proof (h : AreaFormulaInjSet.Statement) : AreaFormulaInj.
     have hpre : MeasurableSet (f' ⁻¹' S) := hf'm hS
     rw [Measure.map_apply hf'm hS, withDensity_apply _ hpre, Measure.restrict_restrict hpre,
       Measure.restrict_apply hS,
-      ← h E F k hk U _ f hU hf (fun x hx => hAU hx.2) (hpre.inter hA) (hinj.mono fun x hx => hx.2)]
+      ← h E F k hk U _ f hU hf (by exact fun x hx => hAU hx.2) (hpre.inter hA) (hinj.mono fun x hx => hx.2)]
     congr 1
     ext z
     constructor
