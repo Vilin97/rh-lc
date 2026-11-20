@@ -24,7 +24,7 @@ theorem exists_away_lift {X : Scheme.{0}} {S R : Type} [CommRing S] [CommRing R]
   let p : PrimeSpectrum S := ⟨q, inferInstance⟩
   let t : Sp (Localization.AtPrime q) := (IsLocalRing.closedPoint (Localization.AtPrime q) : PrimeSpectrum _)
   have hcl : (spMap (algebraMap S (Localization.AtPrime q))) t = (p : Sp S) :=
-    PrimeSpectrum.ext (Localization.AtPrime.comap_maximalIdeal)
+    PrimeSpectrum.ext (Localization.AtPrime.under_maximalIdeal)
   have hmem : w (p : Sp S) ∈ Set.range x := by
     refine ⟨(spMap θ) t, ?_⟩
     have := congrArg (fun f : Sp (Localization.AtPrime q) ⟶ X => f t) h

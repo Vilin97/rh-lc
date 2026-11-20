@@ -61,7 +61,7 @@ theorem prime_contraction_or_dvr : ∀ (R : Type) [CommRing R] (R₁ : Subring R
   let O := Localization.AtPrime p'
   haveI : IsDomain O := IsLocalization.isDomain_localization p'.primeCompl_le_nonZeroDivisors
   have hOinj : Function.Injective (algebraMap A O) := IsLocalization.injective O p'.primeCompl_le_nonZeroDivisors
-  have hcm : (IsLocalRing.maximalIdeal O).comap (algebraMap A O) = p' := Localization.AtPrime.comap_maximalIdeal
+  have hcm : (IsLocalRing.maximalIdeal O).comap (algebraMap A O) = p' := Localization.AtPrime.under_maximalIdeal
   have hnf : ¬ IsField O := by
     intro hF
     apply hp

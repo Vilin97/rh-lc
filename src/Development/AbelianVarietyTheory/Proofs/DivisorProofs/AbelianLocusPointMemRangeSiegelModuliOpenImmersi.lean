@@ -138,6 +138,6 @@ theorem mem_range_of_mem_abLocus : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (
   change ξ (ιp (closedPoint _)) = ξ p
   congr 1
   apply PrimeSpectrum.ext
-  exact Localization.AtPrime.comap_maximalIdeal
+  exact Localization.AtPrime.under_maximalIdeal
 
 end GlobalTheory.AbChart

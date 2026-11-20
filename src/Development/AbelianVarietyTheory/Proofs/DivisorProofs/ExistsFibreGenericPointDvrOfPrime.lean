@@ -38,7 +38,7 @@ theorem exists_fibre_generic_of_prime : ∀ (R : Type) [CommRing R] [IsDomain R]
   obtain ⟨h₁, h₂⟩ := DvrModel.isDiscreteValuationRing_stalk_generic hπ hs
   have h₃ := DvrModel.notMem_basicOpen_iff_specializes hπ hs
   have hlv : l (IsLocalRing.closedPoint V) = v :=
-    PrimeSpectrum.ext (Localization.AtPrime.comap_maximalIdeal (I := v.asIdeal))
+    PrimeSpectrum.ext (Localization.AtPrime.under_maximalIdeal (I := v.asIdeal))
   have h₄ := (DvrModel.notMem_basicOpen_iff f hπ _).1 ((h₃ _).2 specializes_rfl)
   generalize (pullback.fst f (Spec.map (CommRingCat.ofHom (IsLocalRing.residue V)))) (genericPoint _) = ξ
     at h₁ h₂ h₃ h₄

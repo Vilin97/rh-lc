@@ -49,7 +49,7 @@ theorem surj_of_strictHenselisation_polynomial : ∀ (T : Type) [CommRing T] (A 
   have hyO : (maximalIdeal O).comap (algebraMap (Polynomial T) O) = y := by
     rw [IsScalarTower.algebraMap_eq (Polynomial T) (Localization.AtPrime y) O, ← Ideal.comap_comap,
       hRO]
-    exact Localization.AtPrime.comap_maximalIdeal
+    exact Localization.AtPrime.under_maximalIdeal
   have hkO : ∀ r : Polynomial T, algebraMap (Polynomial T) (ResidueField O) r = 0 ↔ r ∈ y := by
     intro r
     rw [IsScalarTower.algebraMap_apply (Polynomial T) O (ResidueField O), ResidueField.algebraMap_eq,

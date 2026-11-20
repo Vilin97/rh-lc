@@ -132,7 +132,7 @@ theorem exists_fibre_generic {R : Type} [CommRing R] [IsDedekindDomain R] {X : S
   refine ⟨ψ ξ, π, fun h => hπ.ne_zero (by rw [h, map_zero]), fun x hx => ?_,
     IsDiscreteValuationRing.RingEquivClass.isDiscreteValuationRing E.symm, ?_⟩
   · obtain ⟨y, rfl, hy⟩ := Scheme.exists_preimage_of_isPullback H x (IsLocalRing.closedPoint V)
-      (hx.trans (PrimeSpectrum.ext (Localization.AtPrime.comap_maximalIdeal (I := v.asIdeal)).symm))
+      (hx.trans (PrimeSpectrum.ext (Localization.AtPrime.under_maximalIdeal (I := v.asIdeal)).symm))
     exact ((h₃ y).1 ((DvrModel.notMem_basicOpen_iff f hπ y).2 hy)).map ψ.continuous
   · rw [← MulEquiv.irreducible_iff E.toMulEquiv]
     convert h₂ using 1

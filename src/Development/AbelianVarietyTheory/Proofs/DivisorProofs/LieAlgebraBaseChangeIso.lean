@@ -64,7 +64,7 @@ theorem lieBaseChange_equiv : ∀ {F : Type} [Field F] [NumberField F] {𝔠 : F
     let w : Fin n → X.Lie := fun i => Serre.Lie.mk X.rm (w₀ i) (hw₀ i)
     have hmax : (IsLocalRing.maximalIdeal T).comap (gT.comp f) = p := by
       rw [← Ideal.comap_comap]
-      exact congrArg (Ideal.comap f) (Localization.AtPrime.comap_maximalIdeal (I := q))
+      exact congrArg (Ideal.comap f) (Localization.AtPrime.under_maximalIdeal (I := q))
     have hB := GlobalTheory.T.tangent_frame_localization_spans hsm p w₀ hw T (gT.comp f) hmax _ _ hc
       (fun i => (ρq (ρ (w i))).hom) fun i => by
         have e1 := hρq (ρ (w i))

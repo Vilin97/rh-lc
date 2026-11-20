@@ -49,6 +49,6 @@ theorem trait_unramified_of_prime_below : ∀ {A R W : Type} [CommRing A] [CommR
       · exact Ideal.comap_ne_top G (maximalIdeal.isMaximal W).ne_top
       · rw [← Ideal.map_le_iff_le_comap, hmapV]
     rw [← hGc, ← Ideal.comap_comap, hcm]
-    exact Localization.AtPrime.comap_maximalIdeal (I := Q)
+    exact Localization.AtPrime.under_maximalIdeal (I := Q)
 
 end GlobalTheory

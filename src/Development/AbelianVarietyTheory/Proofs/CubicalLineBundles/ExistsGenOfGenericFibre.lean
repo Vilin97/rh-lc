@@ -228,7 +228,7 @@ theorem exists_gen_of_fibre {R k : Type} [CommRing R] [IsDedekindDomain R] [Fiel
       have H' := IsPullback.of_hasPullback f (spMap (algebraMap R V))
       have : Flat (spMap (algebraMap R V)) := Flat.SpecMap_iff.2 (RingHom.flat_algebraMap_iff.2 inferInstance)
       obtain ⟨y, hy, -⟩ := Scheme.exists_preimage_of_isPullback H' x (IsLocalRing.closedPoint V)
-        (PrimeSpectrum.ext (Localization.AtPrime.comap_maximalIdeal (I := (f x).asIdeal)).symm)
+        (PrimeSpectrum.ext (Localization.AtPrime.under_maximalIdeal (I := (f x).asIdeal)).symm)
       have hy' : pullback.fst f (spMap (algebraMap R V)) y ∈ N.U i := hy.symm ▸ hx
       obtain ⟨u, hu, h⟩ := exists_unit_dvr (algebraMap R V) hg f _ _ H'.w e
         (H'.lift (spMap (algebraMap R V) ≫ e) (𝟙 _) (by rw [Category.assoc, he]; simp)) (H'.lift_snd _ _ _)

@@ -95,7 +95,7 @@ theorem exists_mem_nonzeroLocus_fibre : SecBaseChangeAnySt → ∀ (R : Type) [C
     have : spMap (IsLocalRing.residue Rp) (IsLocalRing.closedPoint k : PrimeSpectrum k) =
         (IsLocalRing.closedPoint Rp : PrimeSpectrum Rp) := IsLocalRing.comap_closedPoint (IsLocalRing.residue Rp)
     rw [this]
-    exact PrimeSpectrum.ext (Localization.AtPrime.comap_maximalIdeal (I := s.asIdeal))
+    exact PrimeSpectrum.ext (Localization.AtPrime.under_maximalIdeal (I := s.asIdeal))
   have u₁ : IsUnit (sv P.A bp r z J) := by
     rw [← sv_pullS P.A 1 hk bp (𝟙 _) z hJ']
     exact (AmpleSpan.mem_nonzeroLocus_iff_gs _ (𝟙 _) z (hJ'.mem (fun _ : Fin 1 => (snd Tk P.A).left) _)).1 hz

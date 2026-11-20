@@ -25,7 +25,7 @@ theorem origin_primes : ∀ (A' : Type) [CommRing A'] [HenselianLocalRing A'] [I
   have hmax : (maximalIdeal (Localization.AtPrime Q)).comap
       (algebraMap (Polynomial A') (Localization.AtPrime Q)) = GlobalTheory.KeyOriginCut.originIdeal A' := by
     have h0 : (maximalIdeal (Localization.AtPrime Q)).comap (algebraMap E (Localization.AtPrime Q)) = Q :=
-      Localization.AtPrime.comap_maximalIdeal (I := Q)
+      Localization.AtPrime.under_maximalIdeal (I := Q)
     rw [IsScalarTower.algebraMap_eq (Polynomial A') E (Localization.AtPrime Q), ← Ideal.comap_comap,
       h0, hQ]
   haveI hloc : IsLocalRing (TensorProduct (Polynomial A') (Polynomial S) (Localization.AtPrime Q)) :=

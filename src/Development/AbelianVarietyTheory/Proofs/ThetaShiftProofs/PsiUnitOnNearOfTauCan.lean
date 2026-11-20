@@ -85,7 +85,7 @@ theorem psiUnitOn_near_of_tauCan [IsIntegrallyClosed R] (D : DegPre R) {n : ℕ}
     have := hadd y (-y)
     rw [add_neg_cancel, p0, heven] at this
     exact (pow_two _).trans this.symm)
-  have hcp : spMap φ (closedPoint W) = P := PrimeSpectrum.ext (Localization.AtPrime.comap_maximalIdeal (I := P.asIdeal))
+  have hcp : spMap φ (closedPoint W) = P := PrimeSpectrum.ext (Localization.AtPrime.under_maximalIdeal (I := P.asIdeal))
   have hj : J (𝟙 (TK R).left ≫ D.xK y) = J₀ ((D.c y).left P) := by
     have h : 𝟙 (TK R).left ≫ D.xK y = spMap i ≫ spMap φ ≫ (show Sp R ⟶ D.P.A.left from (D.c y).left) := by
       rw [← Category.assoc, sq]; exact Category.id_comp _

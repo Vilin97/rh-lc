@@ -53,6 +53,6 @@ theorem norm_not_mem_iff (A B : Type) [CommRing A] [CommRing B] [Algebra A B]
     show (M.comap (algebraMap B Sₘ)).comap (algebraMap A B) = P.asIdeal
     rw [Ideal.comap_comap, ← IsScalarTower.algebraMap_eq, IsScalarTower.algebraMap_eq A Rₘ Sₘ,
       ← Ideal.comap_comap, hMc]
-    exact Localization.AtPrime.comap_maximalIdeal
+    exact Localization.AtPrime.under_maximalIdeal
 
 end GlobalTheory.Mum

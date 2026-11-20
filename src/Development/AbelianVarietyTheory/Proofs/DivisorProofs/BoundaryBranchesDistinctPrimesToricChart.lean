@@ -158,7 +158,7 @@ theorem side {A : Type} [CommRing A] [CharZero k] (θ : A →+* ChartRing k m e)
   have hc : (maximalIdeal V).comap f = (Ideal.span {t}).comap θ := by
     rw [← Ideal.comap_comap]
     congr 1
-    exact Localization.AtPrime.comap_maximalIdeal
+    exact Localization.AtPrime.under_maximalIdeal
   refine ⟨?_, hc, ?_, ?_, hm, hj, hunit⟩
   · exact RingHom.Flat.comp hθ (by rw [RingHom.flat_algebraMap_iff]; exact IsLocalization.flat _ (Ideal.span {t}).primeCompl)
   · rw [hc]

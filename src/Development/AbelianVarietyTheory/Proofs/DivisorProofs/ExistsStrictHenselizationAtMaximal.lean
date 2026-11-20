@@ -59,7 +59,7 @@ theorem GlobalTheory.HensMax.exists_strictHens_of_maximal : ∀ (B : Type) [Comm
     refine ⟨?_, fun o => ?_⟩
     · rw [IsScalarTower.algebraMap_eq B (Localization.AtPrime P) S, ← Ideal.comap_comap,
         GlobalTheory.HensMax.comap_maximalIdeal_of_localHom]
-      exact Localization.AtPrime.comap_maximalIdeal (I := P)
+      exact Localization.AtPrime.under_maximalIdeal (I := P)
     · obtain ⟨y, hy⟩ := hbij.2 (residue S o)
       obtain ⟨r, rfl⟩ := IsLocalRing.residue_surjective y
       obtain ⟨b, hb⟩ := (IsLocalization.AtPrime.equivQuotMaximalIdeal P (Localization.AtPrime P)).surjective

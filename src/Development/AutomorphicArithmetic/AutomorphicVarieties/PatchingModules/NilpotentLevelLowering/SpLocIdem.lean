@@ -216,7 +216,7 @@ private theorem spLoc_alg (R : Type) [CommRing R] [IsLocalRing R] [IsNoetherianR
     have hmemL : ∀ y ∈ N, algebraMap (MSplitAlg P n) (Localization.AtPrime N) y ∈
         maximalIdeal (Localization.AtPrime N) := by
       intro y hy
-      have h := Localization.AtPrime.comap_maximalIdeal (I := N)
+      have h := Localization.AtPrime.under_maximalIdeal (I := N)
       rw [← h] at hy
       exact hy
     haveI : IsNoetherian (Localization.AtPrime N) (Localization.AtPrime N) :=

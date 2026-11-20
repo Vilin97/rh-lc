@@ -132,7 +132,7 @@ theorem etale_atPrime_of_isIntegrallyClosedIn : ∀ (R C : Type) [CommRing R] [I
     have hle : q.comap (algebraMap R (Localization.AtPrime P)) ≤ P := by
       have := Ideal.comap_mono (f := algebraMap R (Localization.AtPrime P))
         (IsLocalRing.le_maximalIdeal (Ideal.IsPrime.ne_top ‹q.IsPrime›))
-      exact this.trans (Localization.AtPrime.comap_maximalIdeal (I := P)).le
+      exact this.trans (Localization.AtPrime.under_maximalIdeal (I := P)).le
     have hh : (q.comap (algebraMap R (Localization.AtPrime P))).height ≤ 1 :=
       (le_of_eq (IsLocalization.height_comap P.primeCompl q)).trans hq1
     haveI h1 := GlobalTheory.OffDivisor.etale_localization_of_comap R (Localization.AtPrime P) C _ q rfl

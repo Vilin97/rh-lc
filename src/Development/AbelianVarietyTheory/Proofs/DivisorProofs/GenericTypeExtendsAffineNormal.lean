@@ -85,7 +85,7 @@ theorem mem_of_extends (K : Type) [Field K] [Algebra R K] [IsFractionRing R K] [
     change PrimeSpectrum.comap (h.comp (algebraMap R _)) _ = q
     rw [PrimeSpectrum.comap_comp_apply, IsLocalRing.comap_closedPoint h]
     ext1
-    exact Localization.AtPrime.comap_maximalIdeal
+    exact Localization.AtPrime.under_maximalIdeal
   obtain ⟨χ, hχ, hVo⟩ := hext ((Algebra.ofId R K).comp g) W (hcl ▸ hy)
   have hχg : χ = (Algebra.ofId R W).comp g := by
     ext a

@@ -151,7 +151,7 @@ theorem reg_value (z : Sp (𝓞 L) ⟶ X) (hξ : IsCptGen ξ) (𝔭 : PrimeSpect
     have e : (spMap (algebraMap (𝓞 L) A)) (IsLocalRing.closedPoint A) = 𝔭 := by
       apply PrimeSpectrum.ext
       show (IsLocalRing.maximalIdeal A).comap (algebraMap (𝓞 L) A) = 𝔭.asIdeal
-      exact Localization.AtPrime.comap_maximalIdeal
+      exact Localization.AtPrime.under_maximalIdeal
     show z 𝔭 = z ((spMap (algebraMap (𝓞 L) A)) (IsLocalRing.closedPoint A))
     rw [e]
   have key : ∀ (q : X) (hq : q = centre zA) (h' : genPt ξ ⤳ q), a ∈ regAt ξ ⟨q, h'⟩ →

@@ -114,7 +114,7 @@ theorem exists_stage_torsor : ∀ (T O : Type) [CommRing T] [IsDomain T] [IsLoca
     have h1 : ψ.toRingHom.comp (algebraMap (Polynomial T) E) = φ.comp (algebraMap (Polynomial T) _) := by
       rw [hφ]; exact ψ.comp_algebraMap
     rw [h1, ← Ideal.comap_comap, hloc]
-    exact Localization.AtPrime.comap_maximalIdeal (R := Polynomial T) (I := P)
+    exact Localization.AtPrime.under_maximalIdeal (R := Polynomial T) (I := P)
 
   have hunit : ∀ y : Q.primeCompl, IsUnit (ψ.toRingHom (y : E)) := by
     intro y

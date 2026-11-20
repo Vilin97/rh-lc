@@ -104,7 +104,7 @@ theorem main : ∀ (S K L : Type) [CommRing S] [IsDomain S] [IsDiscreteValuation
       (IsLocalization.orderEmbedding Q.primeCompl (Localization.AtPrime Q)).strictMono hlt
     have hc : (maximalIdeal (Localization.AtPrime Q)).comap
         (algebraMap (integralClosure D (TensorProduct S D L)) (Localization.AtPrime Q)) = Q :=
-      Localization.AtPrime.comap_maximalIdeal
+      Localization.AtPrime.under_maximalIdeal
     rw [hc] at h2
     haveI : ((⊥ : Ideal (Localization.AtPrime Q)).comap
         (algebraMap (integralClosure D (TensorProduct S D L)) (Localization.AtPrime Q))).IsPrime := Ideal.comap_isPrime _ _

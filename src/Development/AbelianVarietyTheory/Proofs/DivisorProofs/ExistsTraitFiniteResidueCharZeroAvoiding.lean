@@ -71,7 +71,7 @@ theorem exists_trait_finite_residueField_charZero_avoiding : ∀ (B : Type) [Com
   have hcompR : Ideal.comap (Ideal.Quotient.mk q) (IsLocalRing.maximalIdeal D) = IsLocalRing.maximalIdeal R :=
     IsLocalRing.eq_maximalIdeal (Ideal.comap_isMaximal_of_surjective _ Ideal.Quotient.mk_surjective)
   have hcomp : Ideal.comap φ (IsLocalRing.maximalIdeal D) = m := by
-    rw [← Ideal.comap_comap, hcompR]; exact Localization.AtPrime.comap_maximalIdeal
+    rw [← Ideal.comap_comap, hcompR]; exact Localization.AtPrime.under_maximalIdeal
   have hφh : φ h ≠ 0 := by
     intro e; apply hnq
     rw [map_mul]; exact q.mul_mem_right _ ((Ideal.Quotient.eq_zero_iff_mem).mp e)
@@ -99,8 +99,8 @@ theorem exists_trait_finite_residueField_charZero_avoiding : ∀ (B : Type) [Com
     obtain ⟨r, rfl⟩ := Ideal.Quotient.mk_surjective d
     have hsR := IsLocalization.surjective_quotientMap_of_maximal_of_localization m.primeCompl R
       (I := IsLocalRing.maximalIdeal R) (J := m)
-      (H := le_of_eq Localization.AtPrime.comap_maximalIdeal.symm)
-      (by rw [Localization.AtPrime.comap_maximalIdeal]; exact hm)
+      (H := le_of_eq Localization.AtPrime.under_maximalIdeal.symm)
+      (by rw [Localization.AtPrime.under_maximalIdeal]; exact hm)
     obtain ⟨bb, hb⟩ := hsR (Ideal.Quotient.mk _ r)
     obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective bb
     refine ⟨b, ?_⟩

@@ -42,7 +42,7 @@ theorem exists_complete_flat (R : Type) [CommRing R] [IsNoetherianRing R] (P : P
   · exact RingHom.Flat.comp (RingHom.flat_algebraMap_iff.2 inferInstance)
       (RingHom.flat_algebraMap_iff.2 (AdicCompletion.flat_of_isNoetherian _))
   · rw [← Ideal.comap_comap, IsLocalRing.maximalIdeal_comap ψ]
-    exact Localization.AtPrime.comap_maximalIdeal
+    exact Localization.AtPrime.under_maximalIdeal
 
 theorem isPreconnected_fibre : ∀ (X Y : Scheme.{0}) (a : X ⟶ Y), IsLocallyNoetherian Y → IsProper a →
     (∀ V : Y.Opens, Function.Bijective (a.app V).hom) → ∀ y : Y, _root_.IsPreconnected {x : X | a x = y} := by

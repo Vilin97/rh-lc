@@ -174,7 +174,7 @@ theorem regular_mod_fibre (p₀ p : Ideal C) [p₀.IsPrime] [p.IsPrime]
   refine hmin (Ideal.comap (algebraMap C (Localization.AtPrime p)) Q) inferInstance (le_antisymm ?_ ?_) hd
   · refine Ideal.comap_mono ?_
     refine (Ideal.comap_mono (IsLocalRing.le_maximalIdeal hQp.ne_top)).trans ?_
-    exact (Localization.AtPrime.comap_maximalIdeal).le
+    exact (Localization.AtPrime.under_maximalIdeal).le
   · rw [Ideal.comap_comap, ← IsScalarTower.algebraMap_eq, ← Ideal.map_le_iff_le_comap]
     exact hQ
 
@@ -206,7 +206,7 @@ theorem isIntegral_tensor_of_fibre [IsNoetherianRing A] {K : Type} [CommRing K] 
     refine regular_tensor (algebraMap C B c) (p.comap (algebraMap A C)) ?_
       (regular_mod_fibre p₀ p h0 hmin c hc) (K ⧸ I) _ ?_
     · rw [IsScalarTower.algebraMap_eq A C B, ← Ideal.comap_comap]
-      exact congrArg _ (Localization.AtPrime.comap_maximalIdeal).symm
+      exact congrArg _ (Localization.AtPrime.under_maximalIdeal).symm
     · rw [algebraMap_smul, ← map_smul, h1, map_zero]
   obtain ⟨⟨s, hs⟩, h3⟩ := (IsLocalizedModule.eq_zero_iff p.primeCompl φ).1 h2
   exact ⟨s, hs, (key _).2 (by rw [map_smul]; exact h3)⟩
