@@ -152,7 +152,7 @@ theorem exists_vT_over {X : Formalism.L2.Col.Fields} {Pr : Formalism.L2.Col.Prim
     simpa using this
   haveI : Algebra.IsIntegral (𝓞 X.F) (𝓞 X.E) := inferInstance
   obtain ⟨Q, -, hQp, hQ⟩ := Ideal.exists_ideal_over_prime_of_isIntegral (S := 𝓞 X.E) v'.asIdeal ⊥ (by
-    rw [Ideal.comap_bot_of_injective _ hinj]; exact bot_le)
+    rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ hinj)]; exact bot_le)
   have hQ0 : Q ≠ ⊥ := by
     rintro rfl
     rw [Ideal.comap_bot_of_injective _ hinj] at hQ

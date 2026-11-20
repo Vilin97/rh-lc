@@ -15,7 +15,7 @@ private theorem ext_integral (R S : Type) [CommRing R] [IsDomain R] [CommRing S]
   classical
   haveI hP : (RingHom.ker y).IsPrime := RingHom.ker_isPrime y
   obtain ⟨Q, -, hQ, hQc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral (RingHom.ker y)
-    (⊥ : Ideal S) (by rw [Ideal.comap_bot_of_injective _ hinj]; exact bot_le)
+    (⊥ : Ideal S) (by rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ hinj)]; exact bot_le)
   let y' : (R ⧸ Ideal.comap (algebraMap R S) Q) →+* K :=
     Ideal.Quotient.lift _ y (fun a ha => by rw [hQc] at ha; exact ha)
   have hy' : Function.Injective y' := by

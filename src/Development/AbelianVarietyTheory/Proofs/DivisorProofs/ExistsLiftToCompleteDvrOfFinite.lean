@@ -16,7 +16,7 @@ theorem exists_lift_to_complete_dvr_of_finite : ∀ (A R : Type) [CommRing A] [C
   haveI : p.IsPrime := RingHom.ker_isPrime h
   haveI : Algebra.IsIntegral A R := Algebra.IsIntegral.of_finite A R
   obtain ⟨Q, -, hQ, hQp⟩ := Ideal.exists_ideal_over_prime_of_isIntegral p (⊥ : Ideal R) (by
-    rw [Ideal.comap_bot_of_injective _ hinj]; exact bot_le)
+    rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ hinj)]; exact bot_le)
   let K := FractionRing V
   let Ω := AlgebraicClosure K
   letI : Algebra (A ⧸ p) (R ⧸ Q) := Ideal.Quotient.algebraQuotientOfLEComap (le_of_eq hQp.symm)

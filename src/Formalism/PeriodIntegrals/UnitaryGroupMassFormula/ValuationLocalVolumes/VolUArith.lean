@@ -120,7 +120,7 @@ theorem locDeg_one_below (l : ℕ) [hl : Fact l.Prime]
     p.asIdeal.ramificationIdx ℤ = 1 ∧ p.asIdeal.inertiaDeg ℤ = 1 := by
   haveI := p.isPrime
   obtain ⟨Q, -, hQ, hc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral (S := 𝓞 E) p.asIdeal ⊥
-    (by rw [Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective _ _)]; exact bot_le)
+    (by rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective _ _))]; exact bot_le)
   haveI := hQ
   haveI : Q.LiesOver p.asIdeal := ⟨hc.symm⟩
   have hQ0 : Q ≠ ⊥ := by

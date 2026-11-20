@@ -16,7 +16,7 @@ theorem ef_one_of_split (E L : Type) [Field E] [NumberField E] [Field L] [Number
   have hinjEL : Function.Injective (algebraMap (𝓞 E) (𝓞 L)) :=
     FaithfulSMul.algebraMap_injective (𝓞 E) (𝓞 L)
   obtain ⟨W, -, hWp, hWQ⟩ := Ideal.exists_ideal_over_prime_of_isIntegral (S := 𝓞 L) Q ⊥
-    (by rw [Ideal.comap_bot_of_injective _ hinjEL]; exact bot_le)
+    (by rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ hinjEL)]; exact bot_le)
   have hWb : W ≠ ⊥ := by
     intro h0; apply hQb; rw [← hWQ, h0, Ideal.comap_bot_of_injective _ hinjEL]
   have hpW : ((p : ℕ) : 𝓞 L) ∈ W := by

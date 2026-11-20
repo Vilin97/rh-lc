@@ -24,7 +24,7 @@ theorem places_dvd_iff (D : Formalism.BasicNotions.D7) (π π' : 𝓞 D.host.E) 
     have hQb : Q ≠ ⊥ := by
       rintro rfl
       apply x.ne_bot
-      rw [← hQ, Ideal.comap_bot_of_injective _ hinj]
+      rw [← hQ, (show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ hinj)]
     let w : HeightOneSpectrum (𝓞 D.host.E) := ⟨Q, hQp, hQb⟩
     have hw : w.under (𝓞 D.host.F) = x := HeightOneSpectrum.ext hQ
     have hTw : π * π' ∈ w.asIdeal := by

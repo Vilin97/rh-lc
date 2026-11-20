@@ -18,7 +18,7 @@ theorem exists_ringHom_extend_of_isIntegral_of_injective {R B Ω : Type*} [CommR
   haveI := RingHom.ker_isPrime φ
   obtain ⟨Q, -, hQ, hQP⟩ := Ideal.exists_ideal_over_prime_of_isIntegral (S := B)
     (RingHom.ker φ) ⊥ (by
-      rw [Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective R B)]
+      rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective R B))]
       exact bot_le)
   haveI : Q.LiesOver (RingHom.ker φ) := ⟨hQP.symm⟩
   letI : Algebra (R ⧸ RingHom.ker φ) Ω := (RingHom.kerLift φ).toAlgebra

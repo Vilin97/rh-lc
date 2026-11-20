@@ -9,7 +9,7 @@ theorem exists_extension {V R K : Type} [CommRing V] [CommRing R] [IsDomain R] [
 
   have : (RingHom.ker ev).IsPrime := RingHom.ker_isPrime ev
   obtain ⟨Q, -, hQ, hQp⟩ := Ideal.exists_ideal_over_prime_of_isIntegral (S := R) (RingHom.ker ev) ⊥ (by
-    rw [Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective V R)]
+    rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ (FaithfulSMul.algebraMap_injective V R))]
     exact bot_le)
   have := hQ
   have : Q.LiesOver (RingHom.ker ev) := ⟨hQp.symm⟩

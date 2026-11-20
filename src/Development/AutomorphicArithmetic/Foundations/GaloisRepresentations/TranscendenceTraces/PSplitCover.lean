@@ -53,7 +53,7 @@ theorem UpperTheory.Gal.TranscendenceTraces.splitCover_of :
   · refine ⟨fun p => ?_⟩
     have hp : p.asIdeal.IsPrime := p.isPrime
     obtain ⟨Q, -, hQ, hQc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral (S := C) p.asIdeal ⊥ (by
-      rw [Ideal.comap_bot_of_injective _ hinj]
+      rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ hinj)]
       exact bot_le)
     exact ⟨⟨Q, hQ⟩, PrimeSpectrum.ext hQc⟩
   · intro j

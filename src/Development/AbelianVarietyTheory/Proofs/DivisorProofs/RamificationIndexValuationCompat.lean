@@ -58,7 +58,7 @@ theorem exists_dvr (V K L : Type) [CommRing V] [IsDomain V] [IsDiscreteValuation
   have hinj : Function.Injective (algebraMap V (integralClosure V L)) := fun a b h =>
     IsFractionRing.injective V K ((algebraMap K L).injective (congrArg Subtype.val h))
   obtain ⟨M, -, hM, hc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral (S := integralClosure V L)
-    (IsLocalRing.maximalIdeal V) ⊥ (by rw [Ideal.comap_bot_of_injective _ hinj]; exact bot_le)
+    (IsLocalRing.maximalIdeal V) ⊥ (by rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ hinj)]; exact bot_le)
   have h0 : M ≠ ⊥ := by
     rintro rfl
     rw [Ideal.comap_bot_of_injective _ hinj] at hc

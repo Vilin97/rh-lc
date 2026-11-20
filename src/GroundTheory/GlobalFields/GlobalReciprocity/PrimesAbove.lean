@@ -82,11 +82,11 @@ theorem exists_placeBelow_eq (K : FiniteSubfield) (v : HeightOneSpectrum (𝓞 K
   have hinj : Function.Injective (algebraMap (𝓞 K.1) (𝓞 ℚ̄)) := fun a b hab ↦
     RingOfIntegers.ext (Subtype.ext (congrArg (fun z : 𝓞 ℚ̄ ↦ (z : ℚ̄)) hab))
   obtain ⟨Q, -, hQ, hQv⟩ := Ideal.exists_ideal_over_prime_of_isIntegral (S := 𝓞 ℚ̄) v.asIdeal ⊥
-    (by rw [Ideal.comap_bot_of_injective _ hinj]; exact bot_le)
+    (by rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ hinj)]; exact bot_le)
   have hQ0 : Q ≠ ⊥ := by
     rintro rfl
     apply v.ne_bot
-    rw [← hQv, Ideal.comap_bot_of_injective _ hinj]
+    rw [← hQv, (show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ hinj)]
   exact ⟨Q, hQ, hQ0, HeightOneSpectrum.ext hQv⟩
 
 include hP in

@@ -221,7 +221,7 @@ theorem sub_h (hqd : HypOdd q d) (h : IsLayer (e + 2) q d ζ a b) (p : ℕ) (hp 
     apply Subtype.ext
     exact h1
   obtain ⟨Q, -, hQp, hQc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral P (⊥ : Ideal (𝓞 L))
-    (by rw [Ideal.comap_bot_of_injective _ hinj]; exact bot_le)
+    (by rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ hinj)]; exact bot_le)
   haveI := hQp
   haveI : Q.LiesOver P := ⟨hQc.symm⟩
   haveI : Q.LiesOver (span {(p : ℤ)}) := Ideal.LiesOver.trans Q P _
@@ -270,7 +270,7 @@ theorem sup (hqd : HypOdd q d) (h : IsLayer (e + 2) q d ζ a b) (p : ℕ)
     apply Subtype.ext
     exact h1
   obtain ⟨Q, -, hQp, hQc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral P (⊥ : Ideal (𝓞 L))
-    (by rw [Ideal.comap_bot_of_injective _ hinj]; exact bot_le)
+    (by rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ hinj)]; exact bot_le)
   haveI := hQp
   haveI : Q.LiesOver P := ⟨hQc.symm⟩
   haveI : Q.LiesOver (span {(p : ℤ)}) := Ideal.LiesOver.trans Q P _

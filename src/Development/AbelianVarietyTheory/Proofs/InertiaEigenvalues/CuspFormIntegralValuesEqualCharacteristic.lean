@@ -33,7 +33,7 @@ theorem exists_place (K : Type) [Field K] [NumberField K] (p : ℕ) (hp : p.Prim
   have hP : (Ideal.span {(p : ℤ)}).IsPrime :=
     (Ideal.span_singleton_prime (by exact_mod_cast hp.ne_zero)).2 (Nat.prime_iff_prime_int.mp hp)
   obtain ⟨Q, -, hQ, hQl⟩ := Ideal.exists_ideal_over_prime_of_isIntegral (S := 𝓞 K) (Ideal.span {(p : ℤ)}) ⊥
-    (by rw [Ideal.comap_bot_of_injective _ (algebraMap ℤ (𝓞 K)).injective_int]; exact bot_le)
+    (by rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ (algebraMap ℤ (𝓞 K)).injective_int)]; exact bot_le)
   have hpQ : (p : 𝓞 K) ∈ Q := by
     have : ((p : ℤ)) ∈ Q.comap (algebraMap ℤ (𝓞 K)) := hQl ▸ Ideal.mem_span_singleton_self _
     simpa using this

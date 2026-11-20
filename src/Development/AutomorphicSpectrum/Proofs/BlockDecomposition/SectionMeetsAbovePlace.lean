@@ -14,7 +14,7 @@ theorem exists_above_mem_section : ∀ (E : Type) [Field E] [NumberField E] [IsC
   have hinj : Function.Injective (algebraMap (𝓞 (maximalRealSubfield E)) (𝓞 E)) :=
     FaithfulSMul.algebraMap_injective _ _
   obtain ⟨Q, -, hQ, hQv⟩ := Ideal.exists_ideal_over_prime_of_isIntegral v.asIdeal (⊥ : Ideal (𝓞 E))
-    (by rw [Ideal.comap_bot_of_injective _ hinj]; exact bot_le)
+    (by rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ hinj)]; exact bot_le)
   have hQ0 : Q ≠ ⊥ := by
     rintro rfl
     rw [Ideal.comap_bot_of_injective _ hinj] at hQv

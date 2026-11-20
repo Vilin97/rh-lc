@@ -113,7 +113,7 @@ theorem tower_ef {p : ℕ} (hp : p.Prime)
   have hq0 := span_p_ne_bot hp
   have hinj : Function.Injective (algebraMap (𝓞 K) (𝓞 L)) := FaithfulSMul.algebraMap_injective (𝓞 K) (𝓞 L)
   obtain ⟨Q, -, hQp, hQv⟩ := Ideal.exists_ideal_over_prime_of_isIntegral (S := 𝓞 L) v.asIdeal ⊥
-    (by rw [Ideal.comap_bot_of_injective _ hinj]; exact bot_le)
+    (by rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ hinj)]; exact bot_le)
   have hvq : v.asIdeal ∈ (Ideal.span {(p : ℤ)}).primesOver (𝓞 K) := by
     rw [primesOver_eq K hp]; exact ⟨v, hv, rfl⟩
   have hvlo : v.asIdeal.LiesOver (Ideal.span {(p : ℤ)}) := hvq.2

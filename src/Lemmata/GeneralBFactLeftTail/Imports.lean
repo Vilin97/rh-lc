@@ -11,7 +11,7 @@ theorem goal1 (g : ℕ) (hg : g.Prime) : ∃ v : HeightOneSpectrum (𝓞 F), (g 
     (Ideal.span_singleton_prime (by exact_mod_cast hg.ne_zero)).2 (Nat.prime_iff_prime_int.mp hg)
   obtain ⟨Q, -, hQ, hQc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral (S := 𝓞 F)
     (Ideal.span {(g : ℤ)}) ⊥ (by
-      rw [Ideal.comap_bot_of_injective _ (algebraMap ℤ (𝓞 F)).injective_int]
+      rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ (algebraMap ℤ (𝓞 F)).injective_int)]
       exact bot_le)
   have hgQ : (g : 𝓞 F) ∈ Q := by
     have h1 : (g : ℤ) ∈ Q.comap (algebraMap ℤ (𝓞 F)) := by

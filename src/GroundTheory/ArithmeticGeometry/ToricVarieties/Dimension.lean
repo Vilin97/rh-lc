@@ -22,7 +22,7 @@ theorem exists_ltSeries_lift (hinj : Function.Injective (algebraMap R A))
   induction l using RelSeries.inductionOn' with
   | singleton x =>
     obtain ⟨Q, -, hQ, hQx⟩ := Ideal.exists_ideal_over_prime_of_isIntegral x.asIdeal (⊥ : Ideal A)
-      (by rw [Ideal.comap_bot_of_injective _ hinj]; exact bot_le)
+      (by rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ hinj)]; exact bot_le)
     exact ⟨RelSeries.singleton _ ⟨Q, hQ⟩, rfl, PrimeSpectrum.ext hQx⟩
   | snoc p x hx ih =>
     obtain ⟨l', hlen, hlast⟩ := ih

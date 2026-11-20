@@ -54,7 +54,7 @@ theorem exists_dominating_dvr : ∀ (F : Type) [Field F] [CharZero F] (T' : Subr
   have hPbot : P ≠ ⊥ := by
     rintro rfl
     apply IsDiscreteValuationRing.not_a_field T'
-    rw [← hPm, Ideal.comap_bot_of_injective _ hinjC]
+    rw [← hPm, (show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ hinjC)]
   let Loc := Localization.AtPrime P
   haveI : IsDiscreteValuationRing Loc :=
     IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain C hPbot Loc

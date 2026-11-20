@@ -25,7 +25,7 @@ theorem exists_over (X : Fields) (v : HeightOneSpectrum (𝓞 X.F)) :
   have hinj : Function.Injective (algebraMap (𝓞 X.F) (𝓞 X.E)) := FaithfulSMul.algebraMap_injective (𝓞 X.F) (𝓞 X.E)
   have hv := v.isPrime
   obtain ⟨Q, _, hQ, hc⟩ := Ideal.exists_ideal_over_prime_of_isIntegral v.asIdeal (⊥ : Ideal (𝓞 X.E))
-    (by rw [Ideal.comap_bot_of_injective _ hinj]; exact bot_le)
+    (by rw [(show Ideal.under _ ⊥ = ⊥ from Ideal.comap_bot_of_injective _ hinj)]; exact bot_le)
   refine ⟨⟨Q, hQ, ?_⟩, hc⟩
   rintro rfl
   exact v.ne_bot (hc ▸ Ideal.comap_bot_of_injective _ hinj)
