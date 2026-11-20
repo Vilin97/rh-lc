@@ -161,84 +161,84 @@ theorem restrictedIndicator_of_not {ξ x : ∀ v, V v} (h : ¬ IsRestricted ξ x
 def restrictedLift (ξ : ∀ v, V v) (T : Finset ι) (l : ∀ v, Dual ℂ (V v))
     (hl : ∀ᶠ v in cofinite, l v (ξ v) = 1) (f : MultilinearMap ℂ (fun v : T => V v) N) :
     MultilinearMap ℂ V N where
-  toFun x := sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  toFun x := restrictedIndicator ξ x • (∏ᶠ v, weight T l x v) • f (fun v => x v)
+  map_update_add' := by
+    intro inst x i a b
+    by_cases hx : IsRestricted ξ x
+    · have h1 : ∀ c : V i, IsRestricted ξ (@Function.update _ _ inst x i c) := fun c => by
+        have := @IsRestricted.update _ _ _ _ inst ξ x hx i c
+        exact this
+      simp only [restrictedIndicator_of (h1 _), one_smul]
+      by_cases hi : i ∈ T
+      · simp only [weight_update_of_mem l x hi, restrict_update_of_mem x hi]
+        rw [f.map_update_add, smul_add]
+      · simp only [weight_update_of_notMem l x hi, restrict_update_of_notMem x hi]
+        have hw := finite_mulSupport_weight hx T hl
+        rw [finprod_update_eq_mul _ hw, finprod_update_eq_mul _ hw (c := l i a),
+          finprod_update_eq_mul _ hw (c := l i b), map_add, add_mul, add_smul]
+    · have h1 : ∀ c : V i, ¬ IsRestricted ξ (@Function.update _ _ inst x i c) := fun c h => by
+        apply hx
+        have := @IsRestricted.update _ _ _ _ inst ξ _ h i (x i)
+        rwa [Function.update_idem, Function.update_eq_self] at this
+      simp [restrictedIndicator_of_not (h1 _)]
+  map_update_smul' := by
+    intro inst x i c a
+    by_cases hx : IsRestricted ξ x
+    · have h1 : ∀ c : V i, IsRestricted ξ (@Function.update _ _ inst x i c) := fun c => by
+        have := @IsRestricted.update _ _ _ _ inst ξ x hx i c
+        exact this
+      simp only [restrictedIndicator_of (h1 _), one_smul]
+      by_cases hi : i ∈ T
+      · simp only [weight_update_of_mem l x hi, restrict_update_of_mem x hi]
+        rw [f.map_update_smul, smul_comm]
+      · simp only [weight_update_of_notMem l x hi, restrict_update_of_notMem x hi]
+        have hw := finite_mulSupport_weight hx T hl
+        rw [finprod_update_eq_mul _ hw (c := l i (c • a)), finprod_update_eq_mul _ hw (c := l i a),
+          map_smul, smul_eq_mul, mul_assoc, mul_smul]
+    · have h1 : ∀ c : V i, ¬ IsRestricted ξ (@Function.update _ _ inst x i c) := fun c h => by
+        apply hx
+        have := @IsRestricted.update _ _ _ _ inst ξ _ h i (x i)
+        rwa [Function.update_idem, Function.update_eq_self] at this
+      simp [restrictedIndicator_of_not (h1 _)]
 
 theorem restrictedLift_apply_of {ξ : ∀ v, V v} {T : Finset ι} {l : ∀ v, Dual ℂ (V v)}
     {hl : ∀ᶠ v in cofinite, l v (ξ v) = 1} (f : MultilinearMap ℂ (fun v : T => V v) N)
     {x : ∀ v, V v} (hx : IsRestricted ξ x) :
-    restrictedLift ξ T l hl f x = (∏ᶠ v, weight T l x v) • f (fun v => x v) := by sorry
-
-
+    restrictedLift ξ T l hl f x = (∏ᶠ v, weight T l x v) • f (fun v => x v) := by
+  show restrictedIndicator ξ x • ((∏ᶠ v, weight T l x v) • f (fun v => x v)) = _
+  rw [restrictedIndicator_of hx, one_smul]
 
 def evalForm (ξ : ∀ v, V v) (l : ∀ v, Dual ℂ (V v)) (hl : ∀ᶠ v in cofinite, l v (ξ v) = 1) :
-    (⨂[ℂ] v, V v) →ₗ[ℂ] ℂ := sorry
-
+    (⨂[ℂ] v, V v) →ₗ[ℂ] ℂ :=
+  lift (restrictedLift ξ ∅ l hl (MultilinearMap.constOfIsEmpty ℂ _ 1))
 
 theorem evalForm_tprod {ξ : ∀ v, V v} {l : ∀ v, Dual ℂ (V v)}
     {hl : ∀ᶠ v in cofinite, l v (ξ v) = 1} {x : ∀ v, V v} (hx : IsRestricted ξ x) :
-    evalForm ξ l hl (tprod ℂ x) = ∏ᶠ v, l v (x v) := by sorry
-
-
-
+    evalForm ξ l hl (tprod ℂ x) = ∏ᶠ v, l v (x v) := by
+  rw [evalForm, lift.tprod, restrictedLift_apply_of _ hx]
+  simp only [MultilinearMap.constOfIsEmpty_apply, Function.const_apply, smul_eq_mul, mul_one]
+  exact finprod_congr fun v => weight_of_notMem l x (Finset.notMem_empty v)
 
 def projSingleton (v : ι) : MultilinearMap ℂ (fun w : ({v} : Finset ι) => V w) (V v) where
-  toFun y := sorry
-
-
-
-
-
-
-
-
+  toFun y := y ⟨v, Finset.mem_singleton_self v⟩
+  map_update_add' := by
+    intro inst y j a b
+    obtain rfl : j = ⟨v, Finset.mem_singleton_self v⟩ := Subsingleton.elim _ _
+    simp
+  map_update_smul' := by
+    intro inst y j c a
+    obtain rfl : j = ⟨v, Finset.mem_singleton_self v⟩ := Subsingleton.elim _ _
+    simp
 
 def contract (ξ : ∀ v, V v) (l : ∀ v, Dual ℂ (V v)) (hl : ∀ᶠ v in cofinite, l v (ξ v) = 1)
-    (v : ι) : (⨂[ℂ] w, V w) →ₗ[ℂ] V v := sorry
-
+    (v : ι) : (⨂[ℂ] w, V w) →ₗ[ℂ] V v :=
+  lift (restrictedLift ξ {v} l hl (projSingleton v))
 
 theorem contract_tprod {ξ : ∀ v, V v} {l : ∀ v, Dual ℂ (V v)}
     {hl : ∀ᶠ v in cofinite, l v (ξ v) = 1} (v : ι) {x : ∀ v, V v} (hx : IsRestricted ξ x) :
-    contract ξ l hl v (tprod ℂ x) = (∏ᶠ w, weight {v} l x w) • x v := by sorry
-
-
+    contract ξ l hl v (tprod ℂ x) = (∏ᶠ w, weight {v} l x w) • x v := by
+  rw [contract, lift.tprod, restrictedLift_apply_of _ hx]
+  rfl
 
 theorem finprod_eq_mul_weight {ξ x : ∀ v, V v} (hx : IsRestricted ξ x) {l : ∀ v, Dual ℂ (V v)}
     (hl : ∀ᶠ v in cofinite, l v (ξ v) = 1) (v : ι) :
@@ -317,39 +317,39 @@ theorem extend_restrict {ξ x : ∀ v, V v} {T : Finset ι} (h : ∀ v ∉ T, x 
   · exact (h v hv).symm
 
 theorem finiteEmbed_injective {ξ : ∀ v, V v} {T : Finset ι} (hξ : ∀ v ∉ T, ξ v ≠ 0) :
-    Injective (finiteEmbed ξ T) := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    Injective (finiteEmbed ξ T) := by
+  have hex : ∀ v, ∃ f : Dual ℂ (V v), v ∉ T → f (ξ v) = 1 := by
+    intro v
+    by_cases hv : v ∈ T
+    · exact ⟨0, fun h => absurd hv h⟩
+    · obtain ⟨f, hf⟩ : ∃ f : Dual ℂ (V v), f (ξ v) ≠ 0 := by
+        by_contra hcon
+        push Not at hcon
+        exact hξ v hv ((Module.forall_dual_apply_eq_zero_iff ℂ (ξ v)).1 hcon)
+      exact ⟨(f (ξ v))⁻¹ • f, fun _ => by simp [hf]⟩
+  choose l hl using hex
+  have hl' : ∀ᶠ v in cofinite, l v (ξ v) = 1 :=
+    Filter.eventually_cofinite.2 (T.finite_toSet.subset fun v hv => by
+      by_contra hvT
+      exact hv (hl v hvT))
+  let P := lift (restrictedLift ξ T l hl' (PiTensorProduct.tprod ℂ))
+  have hP : P ∘ₗ finiteEmbed ξ T = LinearMap.id := by
+    refine PiTensorProduct.ext (MultilinearMap.ext fun y => ?_)
+    simp only [LinearMap.compMultilinearMap_apply, LinearMap.comp_apply, finiteEmbed_tprod,
+      LinearMap.id_apply, P, lift.tprod]
+    rw [restrictedLift_apply_of _ (isRestricted_extend ξ T y)]
+    have hw : weight T l (extend ξ T y) = fun _ => 1 := by
+      funext v
+      by_cases hv : v ∈ T
+      · exact weight_of_mem l _ hv
+      · rw [weight_of_notMem l _ hv]
+        simp [extend, hv, hl v hv]
+    rw [hw, finprod_one, one_smul]
+    congr 1
+    funext ⟨v, hv⟩
+    simp [extend, hv]
+  exact Function.LeftInverse.injective (g := P) fun t => by
+    simpa using congrArg (fun F => F t) hP
 
 theorem exists_mem_range_finiteEmbed {ξ : ∀ v, V v} {t : ⨂[ℂ] v, V v}
     (ht : t ∈ restrictedTensor ξ) : ∃ T₀ : Finset ι, ∀ T, T₀ ⊆ T →
