@@ -49,11 +49,10 @@ theorem not_iso_mu_const [Fact p.Prime] (hp : ¬ IsUnit (p : O)) :
 theorem padicAction_const_injective [Fact p.Prime] [Nontrivial O] :
     Function.Injective (padicAction (const p O)) := fun a b h => by
   apply toSpanSingleton_constGen_injective p O
-  have key : ∀ c : ℤ_[p], tateMap _ _ O (padicAction (const p O) c) (constGen p O) =
+  have key : ∀ c : ℤ_[p], tateMap _ _ O (padicAction (const p O) c).asHom (constGen p O) =
       c • constGen p O := fun c => by
-    change tateMap _ _ O (algebraMap ℤ_[p] (End (const p O)) c) _ = _
-    rw [Algebra.algebraMap_eq_smul_one]
-    change tateMap _ _ O (c • 𝟙 (const p O)) _ = _
+    change tateMap _ _ O (algebraMap ℤ_[p] (End (const p O)) c).asHom _ = _
+    rw [Algebra.algebraMap_eq_smul_one, End.smul_asHom, End.one_asHom]
     rw [map_smul, LinearMap.smul_apply, tateMap_id]
   simp only [LinearMap.toSpanSingleton_apply]
   rw [← key, ← key, h]
@@ -188,7 +187,7 @@ def swap (G : PDivGroup p O) : End (prod G G) :=
     BialgHom.coe_toAlgHom_injective (Algebra.TensorProduct.ext' fun _ _ => rfl)⟩
 
 theorem swap_mul_swap (G : PDivGroup p O) : swap G * swap G = 1 :=
-  hom_ext fun _ => BialgHom.coe_toAlgHom_injective (Algebra.TensorProduct.ext' fun _ _ => rfl)
+  End.ext (hom_ext fun _ => BialgHom.coe_toAlgHom_injective (Algebra.TensorProduct.ext' fun _ _ => rfl))
 
 def fst (G H : PDivGroup p O) : prod G H ⟶ G :=
   ⟨fun _ => inl _ _, fun n => BialgHom.ext fun a => by
@@ -209,9 +208,9 @@ theorem incl_fst (G H : PDivGroup p O) : incl G H ≫ fst G H = 𝟙 G :=
     change counit (R := O) (1 : H.A n) • a = a
     simp
 
-theorem incl_swap_fst (G : PDivGroup p O) : incl G G ≫ swap G ≫ fst G G = 0 :=
+theorem incl_swap_fst (G : PDivGroup p O) : incl G G ≫ (swap G).asHom ≫ fst G G = 0 :=
   hom_ext fun n => BialgHom.ext fun a => by
-    change (incl G G).app n ((swap G).app n (inl _ _ a)) = algebraMap O _ (counit a)
+    change (incl G G).app n ((swap G).asHom.app n (inl _ _ a)) = algebraMap O _ (counit a)
     rw [inl_apply]
     change counit (R := O) a • (1 : G.A n) = _
     rw [Algebra.algebraMap_eq_smul_one]
@@ -221,22 +220,24 @@ def swapAction [Fact p.Prime] (G : PDivGroup p O) : Action (Polynomial ℤ_[p]) 
 
 theorem swap_ne_scalar [Fact p.Prime] [Nontrivial O] (a : ℤ_[p]) :
     swapAction (const p O) Polynomial.X ≠ padicAction _ a := fun h => by
-  have h0 : swap (const p O) = a • 𝟙 _ := by
+  have h0 : swap (const p O) = a • 1 := by
     have : swapAction (const p O) Polynomial.X = swap (const p O) := Polynomial.aeval_X _
     rw [this] at h
     exact h.trans (Algebra.algebraMap_eq_smul_one a)
   have h1 := incl_swap_fst (const p O)
-  rw [h0, Linear.smul_comp, Category.id_comp, Linear.comp_smul, incl_fst] at h1
+  rw [h0, End.smul_asHom, End.one_asHom, Linear.smul_comp, Category.id_comp, Linear.comp_smul, incl_fst] at h1
   have ha : a = 0 := padicAction_const_injective (O := O)
-    ((Algebra.algebraMap_eq_smul_one a).trans (h1.trans (map_zero _).symm))
+    ((Algebra.algebraMap_eq_smul_one a).trans ((End.ext h1).trans (map_zero _).symm))
   have h2 := swap_mul_swap (const p O)
   rw [h0, ha, zero_smul] at h2
-  have h3 : 𝟙 (prod (const p O) (const p O)) = 0 := h2.symm.trans (mul_zero (M₀ := End _) _)
+  have h3End : (1 : End (prod (const p O) (const p O))) = 0 :=
+    h2.symm.trans (mul_zero _)
+  have h3 : 𝟙 (prod (const p O) (const p O)) = 0 := congrArg End.asHom h3End
   have h4 : 𝟙 (const p O) = 0 := by
     rw [← incl_fst (const p O) (const p O), ← Category.id_comp (fst _ _), h3, Limits.zero_comp,
       Limits.comp_zero]
   exact one_ne_zero (padicAction_const_injective (p := p) (O := O)
-    ((map_one _).trans (h4.trans (map_zero _).symm)))
+    ((map_one _).trans ((End.ext h4).trans (map_zero _).symm)))
 
 example [Fact p.Prime] : (prod (mu p O) (const p O)).height = 2 := rfl
 
