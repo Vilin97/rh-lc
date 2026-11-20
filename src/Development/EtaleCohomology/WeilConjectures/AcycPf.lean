@@ -12,12 +12,12 @@ def ResInj : Prop := ∀ (R : Type) [CommRing R] (F : Shv R) (s : ℤ), Injectiv
 
 def RestrInj : Prop := ∀ (R : Type) [CommRing R] (S : Scheme.{0})
   (G : Sheaf (Scheme.etaleTopology.over S) (ModuleCat.{1} (ULift.{1} R))) [Injective G],
-  ∃ h : Presheaf.IsSheaf S.smallEtaleTopology ((incl S).op ⋙ G.val),
+  ∃ h : Presheaf.IsSheaf S.smallEtaleTopology ((incl S).op ⋙ G.obj),
     Injective (⟨_, h⟩ : Sheaf S.smallEtaleTopology (ModuleCat.{1} (ULift.{1} R)))
 
 def ModAcyc : Prop := Base → ∀ (q : ℕ) (A : CommRingCat.{0})
   (G : Sheaf (Spec A).smallEtaleTopology (ModuleCat.{1} (ULift.{1} (ZMod q)))) [Injective G]
-  (h : Presheaf.IsSheaf (Spec A).smallEtaleTopology (G.val ⋙ forget₂ (ModuleCat.{1} (ULift.{1} (ZMod q))) AddCommGrpCat.{1}))
+  (h : Presheaf.IsSheaf (Spec A).smallEtaleTopology (G.obj ⋙ forget₂ (ModuleCat.{1} (ULift.{1} (ZMod q))) AddCommGrpCat.{1}))
   (n : ℕ), 0 < n → Subsingleton (Sheaf.H.{1} (⟨_, h⟩ : Sm A) n)
 
 end LateralTheory.EWeil.AcycPf

@@ -38,10 +38,10 @@ def skyPresheaf : (X.Opens)ᵒᵖ ⥤ Ab.{u} where
   map f := AddCommGrpCat.ofHom
     { toFun := fun m h ↦ m ⟨leOfHom f.unop h.down⟩, map_zero' := rfl, map_add' := fun _ _ ↦ rfl }
 
-instance (U : (X.Opens)ᵒᵖ) : Module (X.ringCatSheaf.val.obj U) ((skyPresheaf x M).obj U) :=
+instance (U : (X.Opens)ᵒᵖ) : Module (X.ringCatSheaf.obj.obj U) ((skyPresheaf x M).obj U) :=
   inferInstanceAs (Module Γ(X, U.unop) (Obj x U.unop M))
 
-def skyPresheafOfModules : PresheafOfModules.{u} X.ringCatSheaf.val :=
+def skyPresheafOfModules : PresheafOfModules.{u} X.ringCatSheaf.obj :=
   PresheafOfModules.ofPresheaf (skyPresheaf x M) fun U V f r m ↦ funext fun h ↦ by
     have e := X.presheaf.germ_res_apply f.unop x h.down (r : Γ(X, U.unop))
     exact congrArg (· • m ⟨leOfHom f.unop h.down⟩) e.symm

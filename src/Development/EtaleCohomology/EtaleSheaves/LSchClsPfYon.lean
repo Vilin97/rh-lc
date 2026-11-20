@@ -7,8 +7,8 @@ namespace LateralTheory.E.L_sch_clsPfYon
 
 variable (R : Type) [CommRing R]
 
-def yon0 (G : Shv R) (X : Scheme.{0}) (z : Sec G X) : (freeP R).obj (yoneda.obj X) ⟶ G.val where
-  app U := ModuleCat.freeDesc (R := ULift.{1} R) (X := ULift.{1} (U.unop ⟶ X)) (TypeCat.ofHom (fun g : ULift.{1} (U.unop ⟶ X) => (G.val.map g.down.op).hom z))
+def yon0 (G : Shv R) (X : Scheme.{0}) (z : Sec G X) : (freeP R).obj (yoneda.obj X) ⟶ G.obj where
+  app U := ModuleCat.freeDesc (R := ULift.{1} R) (X := ULift.{1} (U.unop ⟶ X)) (TypeCat.ofHom (fun g : ULift.{1} (U.unop ⟶ X) => (G.obj.map g.down.op).hom z))
   naturality U V f := by
     apply ModuleCat.free_hom_ext (R := ULift.{1} R)
     rintro ⟨g⟩
@@ -16,7 +16,7 @@ def yon0 (G : Shv R) (X : Scheme.{0}) (z : Sec G X) : (freeP R).obj (yoneda.obj 
         ModuleCat.freeMk (ULift.up (f.unop ≫ g)) := ModuleCat.free_map_apply (R := ULift.{1} R) _ _
     erw [ConcreteCategory.comp_apply, e1, ConcreteCategory.comp_apply, ModuleCat.freeDesc_apply]
     erw [ModuleCat.freeDesc_apply]
-    show (G.val.map (f.unop ≫ g).op).hom z = (G.val.map f).hom ((G.val.map g.op).hom z)
+    show (G.obj.map (f.unop ≫ g).op).hom z = (G.obj.map f).hom ((G.obj.map g.op).hom z)
     rw [op_comp, Functor.map_comp]
     rfl
 
