@@ -550,7 +550,7 @@ theorem step_estimate {x : T.RobbaExt ρ0} (hx : x ≠ 0) (hε0 : T.ptEval hξ h
   set g : Polynomial L := ∑ j ∈ Finset.range (J + 1), Polynomial.C (b j) * Polynomial.X ^ j
     with hgdef
   have hcoeff : ∀ k, g.coeff k = if k < J + 1 then b k else 0 := fun k => by
-    rw [hgdef, Polynomial.finset_sum_coeff]
+    rw [hgdef, Polynomial.finsetSum_coeff]
     simp only [Polynomial.coeff_C_mul_X_pow]
     rw [Finset.sum_ite_eq (Finset.range (J + 1)) k (fun j => b j)]
     simp [Finset.mem_range]

@@ -49,7 +49,7 @@ theorem extract (W' : Submodule ℂ (Module.Dual ℂ V)) (φ : Module.Dual ℂ V
   have c3 : ∀ j ∈ range (m - 1), ((X + C a) ^ j).coeff (m - 1) = 0 := fun j hj => by
     rw [coeff_X_add_C_pow, Nat.choose_eq_zero_of_lt (mem_range.1 hj)]; simp
   rw [hR] at hc
-  simp only [coeff_sub, coeff_add, coeff_mul_C, finset_sum_coeff, c1, c2] at hc
+  simp only [coeff_sub, coeff_add, coeff_mul_C, finsetSum_coeff, c1, c2] at hc
   rw [Finset.sum_eq_zero (fun j hj => by rw [c3 j hj, zero_mul])] at hc
   apply hf
   have et : φ ∘ₗ (∑ k, E k k) = φ ∘ₗ t + (((m : ℂ) * ((m : ℂ) - 1)) / 2) • φ := by

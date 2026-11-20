@@ -32,7 +32,7 @@ theorem UpperTheory.symmetricSubalgebra_le_adjoin_range_prod_C_add_X_complex :
       rw [← h2]
       exact Finset.sum_congr rfl fun i _ => mul_comm _ _
     have h3 := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p (n - j)) hp
-    simp only [Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_zero] at h3
+    simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_zero] at h3
     rw [Finset.sum_eq_single j] at h3
     · exact hφ (by simpa using h3)
     · intro b hb hbj

@@ -31,7 +31,7 @@ theorem linFunctional_translate_pow_firstOrder_eq_zero (σ : Type) (Φ : MvPolyn
       sub_self]
   have hc := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p 1) hzero
   simp only [Polynomial.coeff_sub, Polynomial.coeff_C, Polynomial.coeff_zero, hq,
-    Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow] at hc
+    Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow] at hc
   rw [Finset.sum_ite_eq (Finset.range (m + 2)) 1] at hc
   simp only [Finset.mem_range, show 1 < m + 2 by omega, if_true, one_ne_zero, if_false, sub_zero, ha,
     Nat.choose_one_right, pow_one, Nat.add_sub_cancel] at hc

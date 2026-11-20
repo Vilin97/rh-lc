@@ -18,7 +18,7 @@ theorem trunc_mem (w : ℕ) (R : ℂ[X]) :
 
 theorem trunc_coeff (w : ℕ) (R : ℂ[X]) {j : ℕ} (hj : j ≤ w) :
     (∑ i ∈ Finset.range (w + 1), C (R.coeff i) * X ^ i).coeff j = R.coeff j := by
-  rw [finset_sum_coeff]
+  rw [finsetSum_coeff]
   simp only [coeff_C_mul_X_pow]
   rw [Finset.sum_ite_eq]
   simp [Finset.mem_range, Nat.lt_succ_of_le hj]

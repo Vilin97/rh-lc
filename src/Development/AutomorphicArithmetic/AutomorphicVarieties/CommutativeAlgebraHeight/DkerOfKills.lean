@@ -42,7 +42,7 @@ private theorem dker_top (S : Type) [CommRing S] [Algebra A S] (w : S ⊗[A] E) 
       Algebra.TensorProduct.map (IsScalarTower.toAlgHom A S S[X]) (AlgHom.id A E) w)).coeff n = D.D S w := by
   obtain ⟨h1, h2, -⟩ := d_bc D S
   obtain ⟨-, -, h3, h4, -⟩ := d_chi (D.baseChange S) w
-  rw [← dker_cancel, ← h1, h3, ← h2, ← h4, finset_sum_coeff]
+  rw [← dker_cancel, ← h1, h3, ← h2, ← h4, finsetSum_coeff]
   simp only [coeff_C_mul_X_pow]
   simp
 
@@ -106,5 +106,5 @@ theorem UpperTheory.V.CA.d_ker :
     have h4 : D.D A[X] (1 + X ⊗ₜ (h * x)) = 1 := by
       simpa using D.mem_ker.1 hx A[X] 1 (X ⊗ₜ h) 1
     have h5 := congrArg (fun p => p.coeff i) (h3.symm.trans h4)
-    simp only [finset_sum_coeff, coeff_C_mul_X_pow, coeff_one] at h5
+    simp only [finsetSum_coeff, coeff_C_mul_X_pow, coeff_one] at h5
     simpa [Nat.lt_succ_of_le hi, show i ≠ 0 by omega] using h5

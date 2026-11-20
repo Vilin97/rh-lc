@@ -93,7 +93,7 @@ theorem L_core : ∀ (W : Type) [AddCommGroup W] [Module ℂ W] (t : W) (M : ℕ
   have hdeg : ∀ i, (∑ j ∈ range (d i), C (a i j) * X ^ j : ℂ[X]).degree < (d i : WithBot ℕ) := fun i => by
     rw [degree_lt_iff_coeff_zero]
     intro m hm
-    simp only [finset_sum_coeff, coeff_C_mul, coeff_X_pow]
+    simp only [finsetSum_coeff, coeff_C_mul, coeff_X_pow]
     refine Finset.sum_eq_zero fun j hj => ?_
     have : m ≠ j := by have := Finset.mem_range.1 hj; omega
     simp [this]
@@ -142,7 +142,7 @@ theorem L_core : ∀ (W : Type) [AddCommGroup W] [Module ℂ W] (t : W) (M : ℕ
     · have h1 : 1 ≤ d i := Nat.one_le_iff_ne_zero.2 hd
       rw [nextCoeff_of_natDegree_pos (by rw [hnd i]; omega), hnd i]
       have hco : (P i).coeff (d i - 1) = a i (d i - 1) := by
-        simp only [P, coeff_add, coeff_X_pow, finset_sum_coeff, coeff_C_mul]
+        simp only [P, coeff_add, coeff_X_pow, finsetSum_coeff, coeff_C_mul]
         rw [if_neg (by omega), zero_add, Finset.sum_eq_single (d i - 1)]
         · simp
         · intro b _ hb; simp [Ne.symm hb]

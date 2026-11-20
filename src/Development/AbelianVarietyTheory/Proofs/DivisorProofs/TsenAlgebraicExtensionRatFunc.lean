@@ -55,7 +55,7 @@ variable {σ k : Type} [CommRing k] in
 private theorem coeffHom_sum {ι : Type} (s : Finset ι) {e : ℕ} (p : ι → (MvPolynomial σ k)[X])
     (hp : ∀ i ∈ s, _root_.GlobalTheory.TsenCount.CoeffHom e (p i)) :
     _root_.GlobalTheory.TsenCount.CoeffHom e (∑ i ∈ s, p i) := fun j => by
-  rw [Polynomial.finset_sum_coeff]
+  rw [Polynomial.finsetSum_coeff]
   exact MvPolynomial.IsHomogeneous.sum _ _ _ fun i hi => hp i hi j
 
 open Polynomial in
@@ -247,7 +247,7 @@ private theorem exists_ne_zero_polynomial_zero_of_homogeneous {k : Type} [Field 
     rw [congrFun hx i]
     simp
   have hc : (x i).coeff j = a (e (i, j)) := by
-    simp only [x, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow]
+    simp only [x, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow]
     rw [Finset.sum_eq_single j]
     · simp
     · intro b _ hb

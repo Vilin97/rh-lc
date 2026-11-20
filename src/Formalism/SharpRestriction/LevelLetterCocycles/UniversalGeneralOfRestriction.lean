@@ -1402,12 +1402,12 @@ theorem frame_inv_poly2 {O LL : Type} [CommRing O] [Field LL] [Algebra O LL] (p 
     ∑ r ∈ Finset.range M, Polynomial.C (yy k' r m) * Polynomial.X ^ r
   have hGPc : ∀ m i, (GP m).coeff i = if i < M then zz i k m else 0 := by
     intro m i
-    simp only [GP, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow]
+    simp only [GP, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow]
     rw [Finset.sum_ite_eq]
     simp [Finset.mem_range]
   have hHPc : ∀ m i, (HP m).coeff i = if i < M then yy k' i m else 0 := by
     intro m i
-    simp only [HP, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow]
+    simp only [HP, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow]
     rw [Finset.sum_ite_eq]
     simp [Finset.mem_range]
   set cst : O := ((p : ℕ) : O) ^ (κ₁ + κ₂) * if k = k' then 1 else 0 with hcst
@@ -1416,7 +1416,7 @@ theorem frame_inv_poly2 {O LL : Type} [CommRing O] [Field LL] [Algebra O LL] (p 
     intro t ht
     apply hinj
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_zero, hQdef, Polynomial.coeff_sub, Polynomial.finset_sum_coeff, Polynomial.coeff_C, map_sub,
+      rw [map_zero, hQdef, Polynomial.coeff_sub, Polynomial.finsetSum_coeff, Polynomial.coeff_C, map_sub,
       map_sum]
     have hk : ∀ m, algebraMap O LL ((GP m * HP m).coeff t) = (p : LL) ^ (κ₁ + κ₂) *
         ∑ x ∈ Finset.HasAntidiagonal.antidiagonal t, PowerSeries.coeff x.1 (Hps⁻¹ k m) * sol k' x.2 m := by

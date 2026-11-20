@@ -92,7 +92,7 @@ def HeckeLiftsNamed : Prop := R.Char F → HeckeOpsNamed R
 theorem HasResC.zero {j : Fin D.R.m} {Sg : Pl0 → D.what₂.LL[X]} {x : SphIx A j A.μ0 → ℂ} (h : HasResC A j Sg x) (P : A.ok A.μ0) :
     x (Sum.inl (P, 0)) = D.what₂.embLL ((Sg P * (A.fam.L j A.μ0).blockProd P).coeff 0) := by
   have h0 := congrArg (fun f : ℂ[X] => f.coeff 0) (h P)
-  simp only [Formalism.L2.Col.heckePolyOf, finset_sum_coeff, coeff_C_mul_X_pow, coeff_map] at h0
+  simp only [Formalism.L2.Col.heckePolyOf, finsetSum_coeff, coeff_C_mul_X_pow, coeff_map] at h0
   rw [← h0, Finset.sum_eq_single 0]
   · simp
   · intro b _ hb

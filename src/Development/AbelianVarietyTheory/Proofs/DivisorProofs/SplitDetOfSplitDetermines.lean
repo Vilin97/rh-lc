@@ -45,7 +45,7 @@ theorem coeff_heckePolyOf (n q : ℕ) (a : ℕ → K) (i : ℕ) :
     (Formalism.L2.Col.heckePolyOf n q a).coeff i =
       if i ≤ n then (-1) ^ i * (q : K) ^ (i * (i - 1) / 2) * a i else 0 := by
   unfold Formalism.L2.Col.heckePolyOf
-  simp only [finset_sum_coeff, coeff_C_mul, coeff_X_pow, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_range,
+  simp only [finsetSum_coeff, coeff_C_mul, coeff_X_pow, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_range,
     Nat.lt_succ_iff]
 
 theorem tri_add (i j : ℕ) : (i + j) * (i + j - 1) / 2 + i * (i - 1) / 2 = j * (j - 1) / 2 + (i + j - 1) * i := by

@@ -27,7 +27,7 @@ def polyOf {R : Type} [CommRing R] (n : ℕ) (c : ℕ → R) : R[X] := ∑ k ∈
 
 theorem polyOf_coeff {R : Type} [CommRing R] (n : ℕ) (c : ℕ → R) {j : ℕ} (hj : j ≤ n) : (polyOf n c).coeff j = c j := by
   classical
-  simp only [polyOf, finset_sum_coeff, coeff_C_mul_X_pow]
+  simp only [polyOf, finsetSum_coeff, coeff_C_mul_X_pow]
   rw [Finset.sum_ite_eq]
   simp [Nat.lt_succ_iff, hj]
 

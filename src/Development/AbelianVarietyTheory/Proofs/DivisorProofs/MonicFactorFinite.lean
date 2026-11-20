@@ -66,7 +66,7 @@ theorem monicFactorFinite : MonicFactorFinite := by
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [Algebra.smul_def, Algebra.commutes, map_pow]
   have hPc : ∀ i, i < d + 1 → P.coeff i = c' i := fun i hi => by
-    simp [P, Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, hi]
+    simp [P, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, hi]
   have hPm : P.Monic := by
     refine Polynomial.monic_of_degree_le d ?_ ?_
     · refine (Polynomial.degree_sum_le _ _).trans (Finset.sup_le fun i hi => ?_)
@@ -77,7 +77,7 @@ theorem monicFactorFinite : MonicFactorFinite := by
     refine Polynomial.monic_of_degree_le e ?_ ?_
     · refine (Polynomial.degree_sum_le _ _).trans (Finset.sup_le fun i hi => ?_)
       exact (Polynomial.degree_monomial_le _ _).trans (by exact_mod_cast Nat.lt_succ_iff.1 (Finset.mem_range.1 hi))
-    · simp only [Q, Polynomial.finset_sum_coeff, Polynomial.coeff_monomial]
+    · simp only [Q, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial]
       rw [Finset.sum_ite_eq' (Finset.range (e + 1)) e b', if_pos (Finset.mem_range.2 (Nat.lt_succ_self e))]
       exact Subtype.ext (by simp [b', b, hbe])
 

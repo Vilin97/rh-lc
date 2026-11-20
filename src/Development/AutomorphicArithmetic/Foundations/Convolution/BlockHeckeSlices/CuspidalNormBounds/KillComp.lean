@@ -43,7 +43,7 @@ private theorem exists_esymm (n : ℕ) (c : Fin n → ℂ) :
     have h3 : (Polynomial.X ^ n : Polynomial ℂ).coeff ((Fin.rev i : Fin n) : ℕ) = 0 := by
       rw [Polynomial.coeff_X_pow, if_neg (by omega)]
     have h4 : q.coeff ((Fin.rev i : Fin n) : ℕ) = a (Fin.rev i) := by
-      simp only [q, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow]
+      simp only [q, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow]
       rw [Finset.sum_eq_single (Fin.rev i)]
       · simp
       · intro b _ hb

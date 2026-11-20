@@ -27,7 +27,7 @@ open Polynomial
 theorem coeff_heckePolyOf_le (n q : ℕ) (a : ℕ → ℂ) {i : ℕ} (hi : i ≤ n) :
     (Formalism.L2.Col.heckePolyOf n q a).coeff i = (-1) ^ i * (q : ℂ) ^ (i * (i - 1) / 2) * a i := by
   unfold Formalism.L2.Col.heckePolyOf
-  rw [finset_sum_coeff, Finset.sum_eq_single i]
+  rw [finsetSum_coeff, Finset.sum_eq_single i]
   · rw [coeff_C_mul_X_pow, if_pos rfl]
   · intro b _ hb
     rw [coeff_C_mul_X_pow, if_neg (Ne.symm hb)]

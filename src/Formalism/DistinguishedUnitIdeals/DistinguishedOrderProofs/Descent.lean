@@ -55,13 +55,13 @@ theorem coe_sum_fin {d : ℕ} (a : Fin d → O) :
 
 theorem coeff_sum_fin {d : ℕ} (a : Fin d → O) (j : Fin d) :
     (∑ i : Fin d, Polynomial.C (a i) * Polynomial.X ^ (i : ℕ) : Polynomial O).coeff j = a j := by
-  simp [Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow, Fin.val_inj]
+  simp [Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow, Fin.val_inj]
 
 theorem coe_eq_sum_fin {d : ℕ} {r : Polynomial O} (hr : r.degree < d) :
     (r : PowerSeries O) = ∑ i : Fin d, C (r.coeff i) * X ^ (i : ℕ) := by
   have h : r = ∑ i : Fin d, Polynomial.C (r.coeff i) * Polynomial.X ^ (i : ℕ) := by
     ext j
-    rw [Polynomial.finset_sum_coeff]
+    rw [Polynomial.finsetSum_coeff]
     simp only [Polynomial.coeff_C_mul_X_pow]
     by_cases hj : j < d
     · rw [Finset.sum_eq_single ⟨j, hj⟩]

@@ -31,7 +31,7 @@ theorem xd_li : LinearIndependent ℤ xd := by
   rw [linearIndependent_iff']
   intro s g hg i hi
   have := congrArg (fun p : ℚ[X] ↦ p.coeff i) hg
-  simp only [finset_sum_coeff, xd, coeff_zero, coeff_smul, coeff_monomial] at this
+  simp only [finsetSum_coeff, xd, coeff_zero, coeff_smul, coeff_monomial] at this
   rw [Finset.sum_eq_single i (by intro j _ hj; simp [hj]) (by intro h; exact absurd hi h)] at this
   have hm : (i.factorial : ℚ) ≠ 0 := by exact_mod_cast i.factorial_ne_zero
   simpa [hm] using this

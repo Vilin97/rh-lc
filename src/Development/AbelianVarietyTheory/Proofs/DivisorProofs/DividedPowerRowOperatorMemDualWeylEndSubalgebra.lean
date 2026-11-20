@@ -233,7 +233,7 @@ theorem rowDiv_mem_dwAlg : ∀ (O : Type) [CommRing O] (N : ℕ) (ν : Fin N →
         rowDiv O a b k (∑ w ∈ s, F w) = ∑ w ∈ s, rowDiv O a b k (F w) := by
       intro s F
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [rowDiv, map_sum, Polynomial.finset_sum_coeff]
+        simp only [rowDiv, map_sum, Polynomial.finsetSum_coeff]
     rw [hlin]
     refine Finset.sum_congr rfl fun w _ => ?_
     simp only [Module.End.mul_apply]

@@ -55,7 +55,7 @@ theorem exists_char {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
   have hq : q.degree < n := by
     rw [degree_lt_iff_coeff_zero]
     intro m hm
-    simp only [q, finset_sum_coeff, coeff_C_mul, coeff_X_pow]
+    simp only [q, finsetSum_coeff, coeff_C_mul, coeff_X_pow]
     refine Finset.sum_eq_zero fun j hj => ?_
     have : m ≠ j := by have := Finset.mem_range.1 hj; omega
     simp [this]

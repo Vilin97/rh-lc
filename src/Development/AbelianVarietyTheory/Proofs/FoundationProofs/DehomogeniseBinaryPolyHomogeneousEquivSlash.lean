@@ -35,7 +35,7 @@ theorem dehH_expand (w : ℕ) (p : MvPolynomial (Fin 2) ℂ) (hp : p.IsHomogeneo
 
 theorem dehH_coeff (w : ℕ) (c : ℕ → ℂ) (j : ℕ) (hj : j < w + 1) :
     (∑ i ∈ Finset.range (w + 1), Polynomial.C (c i) * Polynomial.X ^ i).coeff j = c j := by
-  simp [Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow, hj]
+  simp [Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow, hj]
 
 end GlobalTheory.KZ.H3
 
@@ -57,7 +57,7 @@ theorem dehH_sum_eq (w : ℕ) (q : Polynomial ℂ) (hq : q ∈ Polynomial.degree
   ext j
   by_cases hj : j < w + 1
   · exact dehH_coeff w _ j hj
-  · rw [Polynomial.finset_sum_coeff]
+  · rw [Polynomial.finsetSum_coeff]
     rw [Polynomial.mem_degreeLT] at hq
     have h0 : q.coeff j = 0 := Polynomial.coeff_eq_zero_of_degree_lt
       (lt_of_lt_of_le hq (by exact_mod_cast not_lt.mp hj))

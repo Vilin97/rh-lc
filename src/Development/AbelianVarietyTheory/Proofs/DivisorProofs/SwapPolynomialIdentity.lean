@@ -131,7 +131,7 @@ theorem key [DecidableEq κ] {x y : κ} (hxy : x ≠ y) (D : ℕ) (Φ Ψ : MvPol
     rintro _ ⟨j, rfl⟩
     rw [Set.mem_setOf_eq, Polynomial.IsRoot, hev, hj j, sub_self]
   have hc := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q (2 * k)) hp0
-  simp only [hp, Polynomial.coeff_sub, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow,
+  simp only [hp, Polynomial.coeff_sub, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow,
     Polynomial.coeff_zero, mul_eq_mul_left_iff, OfNat.ofNat_ne_zero, or_false, Finset.sum_ite_eq,
     Finset.mem_range] at hc
   rw [if_pos (by omega), if_pos (by omega), ha, hb, (even_two_mul k).neg_one_pow] at hc

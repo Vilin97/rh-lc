@@ -96,7 +96,7 @@ theorem heckePol_map {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (n q
 
 theorem heckePol_coeff {A : Type} [CommRing A] (n q : ℕ) (a : ℕ → A) (j : ℕ) (hj : j ≤ n) :
     (-1) ^ j * (heckePol n q a).coeff (n - j) = (q : A) ^ (j * (j - 1) / 2) * a j := by
-  rw [heckePol, finset_sum_coeff, Finset.sum_eq_single j]
+  rw [heckePol, finsetSum_coeff, Finset.sum_eq_single j]
   · rw [coeff_C_mul, coeff_X_pow_self, mul_one, mul_assoc, ← mul_assoc, ← mul_pow]
     simp
   · intro i hi hij

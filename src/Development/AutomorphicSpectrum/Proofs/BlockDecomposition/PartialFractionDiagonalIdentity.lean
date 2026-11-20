@@ -52,7 +52,7 @@ theorem prod_eq_partial_fraction {m : ℕ} (d : Fin (m + 1) → ℝ) (d' : Fin m
       < (m : WithBot ℕ) := by
     rw [degree_lt_iff_coeff_zero]
     intro n hn
-    rw [finset_sum_coeff]
+    rw [finsetSum_coeff]
     refine Finset.sum_eq_zero fun j _ => ?_
     rw [coeff_C_mul]
     have hL : (∏ k ∈ univ.erase j, (X - C (d' k)) : ℝ[X]).natDegree < n := by

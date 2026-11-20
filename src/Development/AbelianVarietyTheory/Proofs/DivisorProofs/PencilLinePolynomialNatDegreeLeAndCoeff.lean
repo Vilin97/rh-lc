@@ -67,7 +67,7 @@ theorem line_natDegree_le_and_coeff (F R : Type) [CommRing F] [CommRing R] [Alge
   rw [hline, aeval_def, eval₂_eq']
   refine ⟨Polynomial.natDegree_sum_le_of_forall_le _ _ fun m hm =>
     (Polynomial.natDegree_C_mul_le _ _).trans (hkey m hm).1, ?_⟩
-  rw [Polynomial.finset_sum_coeff]
+  rw [Polynomial.finsetSum_coeff]
   refine Finset.sum_congr rfl fun m hm => ?_
   rw [Polynomial.coeff_C_mul, (hkey m hm).2]
 

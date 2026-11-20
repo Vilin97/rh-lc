@@ -86,7 +86,7 @@ variable {L : Type} [Field L]
 theorem coeff_heckePolyOf (n q : ℕ) (a : ℕ → L) (k : ℕ) :
     (heckePolyOf n q a).coeff k = if k ≤ n then (-1) ^ k * (q : L) ^ (k * (k - 1) / 2) * a k else 0 := by
   unfold heckePolyOf
-  simp only [finset_sum_coeff, coeff_C_mul_X_pow]
+  simp only [finsetSum_coeff, coeff_C_mul_X_pow]
   rw [Finset.sum_ite_eq]
   simp [Nat.lt_succ_iff]
 

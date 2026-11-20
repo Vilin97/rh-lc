@@ -63,7 +63,7 @@ theorem reverse_prod_eq_hecke {n q : ℕ} (M : Multiset K) (hM : M.card = n) (a 
     (M.map fun m => X - C m).prod.reverse = heckePolyOf n q a := by
   ext i
   have hd : (M.map fun m => X - C m).prod.natDegree = n := by rw [natDegree_multiset_prod_X_sub_C_eq_card, hM]
-  rw [coeff_reverse, hd, heckePolyOf, finset_sum_coeff]
+  rw [coeff_reverse, hd, heckePolyOf, finsetSum_coeff]
   simp only [coeff_C_mul_X_pow]
   rw [Finset.sum_ite_eq]
   by_cases hi : i ≤ n

@@ -11454,7 +11454,7 @@ theorem group_unique (K : ℕ) (a b : ℕ → SmQ P.r P.TT)
     · intro m n hmn; simpa using hmn
     · intro n; exact hev n
   have hc := congrArg (fun p : Polynomial ℂ => p.coeff k) hpab
-  simp only [pa, pb, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow] at hc
+  simp only [pa, pb, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow] at hc
   rw [Finset.sum_ite_eq _ k, Finset.sum_ite_eq _ k, if_pos hk, if_pos hk] at hc
   exact hc
 

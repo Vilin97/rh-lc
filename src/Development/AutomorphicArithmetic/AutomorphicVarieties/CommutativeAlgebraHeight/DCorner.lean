@@ -133,7 +133,7 @@ private lemma cornerF_tr (he : IsIdempotentElem e) (h1 : D.D A[X] (1 + X ⊗ₜ 
     simp [mul_add, add_mul, he.eq, hu, ← add_assoc]
   rw [cornerF_add he h1, cornerF_e he h1, cornerF_tmul he h1, (d_chi D u).2.2.1] at h
   have h2 := congrArg (fun p => p.coeff 1) h
-  simp only [finset_sum_coeff, coeff_C_mul_X_pow] at h2
+  simp only [finsetSum_coeff, coeff_C_mul_X_pow] at h2
   rw [Finset.sum_ite_eq, if_pos (Finset.mem_range.2 (by omega))] at h2
   simpa [Det.tr, coeff_one] using h2
 

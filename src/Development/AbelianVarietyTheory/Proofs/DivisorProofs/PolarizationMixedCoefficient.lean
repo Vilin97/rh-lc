@@ -77,7 +77,7 @@ theorem coeff_compare :
       rw [← Complex.ofReal_pow, Complex.re_ofReal_mul]
       simp only [d]; ring
   have hc := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p e) hP
-  simp only [Polynomial.finset_sum_coeff, Polynomial.coeff_monomial] at hc
+  simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_monomial] at hc
   rw [sum_card_eq, Finset.sum_ite_eq' , if_pos (by simp)] at hc
   simp only [c, Nat.add_sub_cancel] at hc
   rw [hc, trace_adjugate_mul, Complex.re_sum, Finset.mul_sum]

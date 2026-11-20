@@ -25,7 +25,7 @@ private theorem finite_setOf_nat_polynomial_collision {F : Type*} [Field F] [Cha
     simp [P, Polynomial.eval_finsetSum]
   have hco : ∀ u (j : Fin r), (P u).coeff j = u j := by
     intro u j
-    simp only [P, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow]
+    simp only [P, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow]
     rw [Finset.sum_eq_single j]
     · simp
     · intro i _ hij

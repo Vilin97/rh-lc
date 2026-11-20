@@ -21,7 +21,7 @@ theorem coeff_charpolyRev_neg_of_tri {R : Type} [CommRing R] {s : ℕ} (F : Matr
       rw [Matrix.sub_apply, Matrix.one_apply_eq, Matrix.smul_apply, Matrix.map_apply, Matrix.neg_apply, map_neg, smul_eq_mul,
         mul_neg, sub_neg_eq_add, mul_comm]
     simp only [e]
-    rw [Finset.prod_one_add, Polynomial.finset_sum_coeff]
+    rw [Finset.prod_one_add, Polynomial.finsetSum_coeff]
     simp only [Finset.prod_mul_distrib, Finset.prod_const, ← map_prod, Polynomial.coeff_C_mul_X_pow]
     rw [← Finset.sum_filter]
     refine Finset.sum_congr ?_ fun _ _ => rfl

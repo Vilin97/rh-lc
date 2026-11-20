@@ -70,7 +70,7 @@ theorem exists_poly_approx_PPSet : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZ
   let b : Bp l a := ∑ x ∈ s, Polynomial.monomial x.1 (Polynomial.monomial x.2 ((nn / N x) • w x))
   have coeff_b : ∀ i n, (b.coeff i).coeff n = if (i, n) ∈ s then (nn / N (i, n)) • w (i, n) else 0 := by
     intro i n
-    simp only [b, Polynomial.finset_sum_coeff, Polynomial.coeff_monomial]
+    simp only [b, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial]
     rw [Finset.sum_congr rfl (g := fun x => if x = (i, n) then (nn / N x) • w x else 0)]
     · exact Finset.sum_ite_eq' _ _ _
     · intro x _

@@ -106,7 +106,7 @@ theorem coef_mem {M : Type*} [AddCommGroup M] [Module ℂ M] (P : Submodule ℂ 
     rw [← e]
     exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
   have e3 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q j) hp
-  simpa [p, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow, hj, ℓ'] using e3
+  simpa [p, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow, hj, ℓ'] using e3
 
 theorem qdet_mem {A : Type} [Ring A] [Algebra ℂ A] (B : Subalgebra ℂ A) {m : ℕ} (E : Fin m → Fin m → A)
     (hE : ∀ a b, E a b ∈ B) (u : ℂ) : qdet E u ∈ B := by
@@ -597,7 +597,7 @@ theorem coeff_sumPoly_comp (θ : ℕ → ℂ) (e : ℕ) (h : θ (e + 1) = 1) (c 
   have e1 : (sumPoly θ (e + 1)).comp (X + C c) = ∑ k ∈ Finset.range (e + 1 + 1), C (θ k) * (X + C c) ^ k := by
     have := map_sum (Polynomial.compRingHom (X + C c)) (fun k => C (θ k) * X ^ k) (Finset.range (e + 1 + 1))
     simpa [sumPoly, Polynomial.coe_compRingHom_apply] using this
-  rw [e1, finset_sum_coeff, Finset.sum_range_succ, Finset.sum_range_succ]
+  rw [e1, finsetSum_coeff, Finset.sum_range_succ, Finset.sum_range_succ]
   have e2 : ∑ x ∈ Finset.range e, (C (θ x) * (X + C c) ^ x).coeff e = 0 := by
     refine Finset.sum_eq_zero fun k hk => ?_
     rw [coeff_C_mul, coeff_X_add_C_pow, Nat.choose_eq_zero_of_lt (Finset.mem_range.1 hk)]

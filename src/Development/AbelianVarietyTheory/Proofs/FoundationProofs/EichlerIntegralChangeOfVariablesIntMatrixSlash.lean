@@ -67,7 +67,7 @@ theorem polySlash_eichler_toGL_smul : ∀ (k : ℕ), 2 ≤ k → ∀ (f : ℍ �
   set q : ℕ → ℂ := fun i => ((C a * X + C b) ^ i * (C c * X + C d) ^ (w - i)).coeff n with hq
   have hslP : ∀ p : ℂ[X], (slP w β p).coeff n = ∑ i ∈ Finset.range (w + 1), p.coeff i * q i := by
     intro p
-    rw [polySlash_apply, finset_sum_coeff]
+    rw [polySlash_apply, finsetSum_coeff]
     simp only [coeff_smul, smul_eq_mul]
     rfl
   set Φ : ℂ → ℂ := fun v => ∑ i ∈ Finset.range (w + 1),

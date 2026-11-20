@@ -169,7 +169,7 @@ theorem PositivityTheory.Xgp.t_thma_alg : ∀ (σ : Type) [Fintype σ] (D : ℕ)
       else 0 := by
     intro n
     rw [PositivityTheory.Xgp.thma_alg.linePoly_formPoly D b hb c ε]
-    simp only [volPoly, Polynomial.finset_sum_coeff, hx, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow]
+    simp only [volPoly, Polynomial.finsetSum_coeff, hx, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow]
     simp [Finset.mem_range]
   rw [tsgPoly, Polynomial.eval_finsetSum]
   set Pl := linePoly c ε (formPoly D b) with hPl

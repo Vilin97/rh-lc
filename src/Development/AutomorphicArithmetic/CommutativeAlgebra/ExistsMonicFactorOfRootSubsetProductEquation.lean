@@ -167,7 +167,7 @@ private lemma coeff_sum {S ι : Type} [CommRing S] [Nontrivial S] {N : ℕ} (Λ 
     (ε : ι → S) (s : ι → Finset (Fin N)) (x : Fin N → S) (d : ℕ)
     (hd : ∀ J ∈ Λ, (s J).card = d) :
     (∑ J ∈ Λ, C (ε J) * ∏ i ∈ s J, (X - C (x i))).coeff d = ∑ J ∈ Λ, ε J := by
-  rw [finset_sum_coeff]
+  rw [finsetSum_coeff]
   refine Finset.sum_congr rfl fun J hJ => ?_
   rw [coeff_C_mul]
   have hm : (∏ i ∈ s J, (X - C (x i))).Monic :=

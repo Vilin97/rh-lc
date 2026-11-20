@@ -37,7 +37,7 @@ private theorem coef_zero (n : ℕ) (a : ℕ → ℂ) (h : ∀ u : ℂ, ∑ k �
       rw [Polynomial.eval_finsetSum, Polynomial.eval_zero, ← h u]
       exact Finset.sum_congr rfl fun k _ => by rw [Polynomial.eval_monomial, mul_comm]
   have := congrArg (fun p => _root_.AddMonoidAlgebra.coeff (M := ℕ) p (n - k)) hp
-  simp only [Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_zero] at this
+  simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_zero] at this
   rw [Finset.sum_eq_single k] at this
   · simpa using this
   · intro b hb hne

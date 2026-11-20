@@ -39,7 +39,7 @@ theorem coeff_mem_of_values {A : Type} [AddCommGroup A] [Module ℂ A] (W : Subm
     rw [map_smul, map_smul, smul_eq_mul, mul_comm]
     rfl
   have hc := congrArg (fun q : ℂ[X] => q.coeff k) hp
-  simp only [p, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero] at hc
+  simp only [p, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero] at hc
   rw [Finset.sum_ite_eq] at hc
   simpa [Finset.mem_range, hk] using hc
 

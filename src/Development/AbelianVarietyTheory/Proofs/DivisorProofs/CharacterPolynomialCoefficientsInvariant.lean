@@ -30,7 +30,7 @@ theorem charPow_expansion : ∀ (T : Type) [CommGroup T] (L : T → ℝ), (∀ x
     intro i x; simp [P, eval_finsetSum]
   have hcoeff : ∀ i (k : Fin (K + 1)), (P i).coeff k = c i k := by
     intro i k
-    simp only [P, finset_sum_coeff, coeff_C_mul, coeff_X_pow]
+    simp only [P, finsetSum_coeff, coeff_C_mul, coeff_X_pow]
     rw [Finset.sum_eq_single k]
     · simp
     · intro b _ hb; simp [Fin.val_eq_val, Ne.symm hb]

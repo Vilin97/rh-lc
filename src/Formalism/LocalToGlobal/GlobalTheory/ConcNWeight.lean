@@ -39,7 +39,7 @@ theorem sum_eSer (k : Fin 2) :
     intro c i
     unfold Formalism.CyclotomicNorms.monicOf
     rw [Polynomial.coeff_add, Polynomial.coeff_X_pow, if_neg i.isLt.ne, zero_add,
-      Polynomial.finset_sum_coeff]
+      Polynomial.finsetSum_coeff]
     simp only [Polynomial.coeff_C_mul_X_pow]
     rw [Finset.sum_eq_single i]
     · simp

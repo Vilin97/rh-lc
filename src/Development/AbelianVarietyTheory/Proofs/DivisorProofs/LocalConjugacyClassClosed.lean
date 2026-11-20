@@ -52,7 +52,7 @@ theorem eq_zero_of_isNilpotent (n : ℕ) (x₀ : B) (hsep : (minpoly F x₀).Sep
     have hz : hp = 0 := Polynomial.eq_zero_of_dvd_of_degree_lt hd2 hdeglt
     intro j
     have := congrArg (fun q : K[X] => q.coeff (j : ℕ)) hz
-    simp only [hp, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero] at this
+    simp only [hp, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow, Polynomial.coeff_zero] at this
     rw [Finset.sum_eq_single j] at this
     · simpa using this
     · intro b _ hb

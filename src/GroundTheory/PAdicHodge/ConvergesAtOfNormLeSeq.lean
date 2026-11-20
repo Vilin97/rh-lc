@@ -73,7 +73,7 @@ theorem exists_start_point {x : T.RobbaExt ρ0} (hx : x ≠ 0) {r : ℝ} (h : 0 
   set P : Polynomial L := ∑ i ∈ Finset.range (m + 1), Polynomial.C (a (lo + i)) * Polynomial.X ^ i
     with hPdef
   have hcoeff : ∀ k, P.coeff k = if k < m + 1 then a (lo + k) else 0 := fun k => by
-    rw [hPdef, Polynomial.finset_sum_coeff]
+    rw [hPdef, Polynomial.finsetSum_coeff]
     simp only [Polynomial.coeff_C_mul_X_pow]
     rw [Finset.sum_ite_eq (Finset.range (m + 1)) k (fun i => a (lo + i))]
     simp [Finset.mem_range]

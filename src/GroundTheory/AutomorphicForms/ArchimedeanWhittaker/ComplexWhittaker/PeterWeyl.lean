@@ -170,7 +170,7 @@ theorem coeff_eq_zero_of_forall {N : ℕ} {a : ℕ → ℂ}
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [eval_mul, eval_C, eval_pow, eval_X, mul_comm]
   have h1 := congrArg (fun p : ℂ[X] => p.coeff i) hp0
-  simp only [hp, finset_sum_coeff, coeff_C_mul_X_pow, coeff_zero] at h1
+  simp only [hp, finsetSum_coeff, coeff_C_mul_X_pow, coeff_zero] at h1
   rw [Finset.sum_eq_single i (fun j _ hj => if_neg (Ne.symm hj))
     (fun hi' => absurd (Finset.mem_range.2 (Nat.lt_succ_of_le hi)) hi'), if_pos rfl] at h1
   exact h1
@@ -182,7 +182,7 @@ theorem coeff_linear_pow (a b : ℂ) (m i : ℕ) :
       C (a ^ j * b ^ (m - j) * (m.choose j : ℂ)) * X ^ j := by
     intro j _
     simp only [mul_pow, ← C_pow, map_mul, map_natCast]; ring
-  rw [Finset.sum_congr rfl e, finset_sum_coeff]
+  rw [Finset.sum_congr rfl e, finsetSum_coeff]
   simp only [coeff_C_mul_X_pow]
   by_cases him : i ≤ m
   · rw [Finset.sum_eq_single i (fun j _ hj => if_neg (Ne.symm hj))

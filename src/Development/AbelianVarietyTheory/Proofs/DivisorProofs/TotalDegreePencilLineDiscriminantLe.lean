@@ -52,7 +52,7 @@ theorem CoeffDeg.mul {e e' : ℕ} {P Q : Polynomial (MvPolynomial σ F)} (hP : C
 theorem coeffDeg_sum {ι : Type} (s : Finset ι) {e : ℕ} (P : ι → Polynomial (MvPolynomial σ F))
     (h : ∀ i ∈ s, CoeffDeg e (P i)) : CoeffDeg e (∑ i ∈ s, P i) := by
   intro k
-  rw [Polynomial.finset_sum_coeff]
+  rw [Polynomial.finsetSum_coeff]
   exact totalDegree_finsetSum_le fun i hi => h i hi k
 
 theorem coeffDeg_prod {ι : Type} [DecidableEq ι] (s : Finset ι) (e : ι → ℕ)

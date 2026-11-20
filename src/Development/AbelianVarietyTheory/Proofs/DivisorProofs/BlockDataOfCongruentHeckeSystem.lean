@@ -36,7 +36,7 @@ theorem continuous_character_of_rankOneRep_continuous {Γ K : Type} [Group Γ] [
 theorem coeff_heckePolyOf {L : Type} [Field L] (n q : ℕ) (a : ℕ → L) (j : ℕ) :
     (Formalism.L2.Col.heckePolyOf n q a).coeff j =
       if j ≤ n then (-1) ^ j * (q : L) ^ (j * (j - 1) / 2) * a j else 0 := by
-  simp only [Formalism.L2.Col.heckePolyOf, finset_sum_coeff, coeff_C_mul_X_pow]
+  simp only [Formalism.L2.Col.heckePolyOf, finsetSum_coeff, coeff_C_mul_X_pow]
   rw [Finset.sum_ite_eq]
   simp [Finset.mem_range, Nat.lt_succ_iff]
 

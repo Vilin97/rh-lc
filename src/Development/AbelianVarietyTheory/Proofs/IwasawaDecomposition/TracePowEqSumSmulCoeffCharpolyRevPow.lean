@@ -15,7 +15,7 @@ namespace LogTrace
 theorem coeff_sub_one_pow {S : Type} [CommRing S] [Algebra ℝ S] (f : S[X]) (s n : ℕ) (hs : s ≤ n) :
     ((f - 1) ^ s).coeff n =
       ∑ k ∈ Finset.range (n + 1), ((-1 : ℝ) ^ (s - k) * (s.choose k : ℝ)) • (f ^ k).coeff n := by
-  rw [sub_eq_add_neg, add_pow, finset_sum_coeff]
+  rw [sub_eq_add_neg, add_pow, finsetSum_coeff]
   rw [← Finset.sum_subset (Finset.range_subset_range.2 (by omega : s + 1 ≤ n + 1))]
   · refine Finset.sum_congr rfl fun k _ => ?_
     rw [show f ^ k * (-1) ^ (s - k) * ((s.choose k : ℕ) : S[X]) =
@@ -36,7 +36,7 @@ def newtonPoly {R : Type} [CommRing R] {N : ℕ} (M : Matrix (Fin N) (Fin N) R) 
 
 theorem coeff_newtonPoly {R : Type} [CommRing R] {N : ℕ} (M : Matrix (Fin N) (Fin N) R) (m k : ℕ)
     (hk : k ≤ m) : (newtonPoly M m).coeff k = -(M ^ (k + 1)).trace := by
-  simp only [newtonPoly, finset_sum_coeff, coeff_C_mul_X_pow]
+  simp only [newtonPoly, finsetSum_coeff, coeff_C_mul_X_pow]
   rw [Finset.sum_ite_eq]
   simp [Finset.mem_range, Nat.lt_succ_of_le hk]
 
@@ -129,7 +129,7 @@ theorem trace_pow_eq_sum_smul_coeff_charpolyRev_pow :
         refine Finset.sum_congr rfl fun s hs => ?_
         rw [coeff_sub_one_pow f (s + 1) (m + 1) (by simp only [Finset.mem_range] at hs; omega)]
     _ = ((-1 : ℝ) ^ m * ((m : ℝ) + 1)) • (logTrunc m f).coeff (m + 1) := by
-        simp only [logTrunc, finset_sum_coeff, coeff_C_mul, Finset.smul_sum, ← Algebra.smul_def,
+        simp only [logTrunc, finsetSum_coeff, coeff_C_mul, Finset.smul_sum, ← Algebra.smul_def,
           smul_smul]
     _ = (L ^ (m + 1)).trace := by
         rw [Algebra.smul_def]

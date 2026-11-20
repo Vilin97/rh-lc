@@ -100,7 +100,7 @@ theorem coeff_eq {N n : ℕ} (hN : N ≠ 0) {c c' : ℕ → ℂ}
       C ((-1 : ℂ) ^ j * ((N : ℂ)) ^ (j * (j - 1) / 2) * d j) * X ^ (n - j) : ℂ[X]).coeff (n - k) =
         (-1 : ℂ) ^ k * ((N : ℂ)) ^ (k * (k - 1) / 2) * d k := by
     intro d
-    rw [coeff_add, coeff_X_pow, if_neg (by omega), zero_add, finset_sum_coeff, Finset.sum_eq_single k]
+    rw [coeff_add, coeff_X_pow, if_neg (by omega), zero_add, finsetSum_coeff, Finset.sum_eq_single k]
     · rw [coeff_C_mul_X_pow, if_pos rfl]
     · intro j hj hjk
       rw [Finset.mem_Icc] at hj

@@ -120,7 +120,7 @@ private theorem coef (n i : ℕ) (hi : i ≤ n) (m : Multiset ℂ) (hm : m.card 
   have hinj : Set.InjOn (fun j : Fin (n + 1) => ((j : ℕ) : ℂ)) (Finset.univ : Finset (Fin (n + 1))) := fun a _ b _ h =>
     Fin.ext (Nat.cast_injective h)
   have h1 := congrArg (fun q : Polynomial ℂ => q.coeff (n - i)) (Lagrange.eq_interpolate hinj hd)
-  simp only [Lagrange.interpolate_apply, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul] at h1
+  simp only [Lagrange.interpolate_apply, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul] at h1
   have h2 : p.coeff (n - i) = m.esymm i := by
     rw [hp, Multiset.prod_X_add_C_coeff m (by omega), hm, Nat.sub_sub_self hi]
   rw [← h2, h1]

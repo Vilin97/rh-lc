@@ -23,7 +23,7 @@ theorem lag_weights (k : ℕ) : ∃ lam : Fin (k + 1) → ℂ, ∀ p : ℂ[X], p
     rw [Finset.card_univ, Fintype.card_fin]
     exact lt_of_le_of_lt (Polynomial.degree_le_of_natDegree_le hp) (by exact_mod_cast Nat.lt_succ_self k)
   conv_rhs => rw [Lagrange.eq_interpolate hinj hdeg]
-  rw [Lagrange.interpolate_apply, Polynomial.finset_sum_coeff]
+  rw [Lagrange.interpolate_apply, Polynomial.finsetSum_coeff]
   refine Finset.sum_congr rfl ?_
   intro j _
   rw [Polynomial.coeff_C_mul, mul_comm]

@@ -21,7 +21,7 @@ theorem exists_esymm_eq (n : ℕ) (a : ℕ → ℂ) (h0 : a 0 = 1) (hn : a n ≠
       Polynomial.natDegree_X_pow]
   have hqc : ∀ k (hk : k < n), q.coeff k = c ⟨k, hk⟩ := by
     intro k hk
-    rw [hq, Polynomial.finset_sum_coeff, Finset.sum_eq_single (⟨k, hk⟩ : Fin n)]
+    rw [hq, Polynomial.finsetSum_coeff, Finset.sum_eq_single (⟨k, hk⟩ : Fin n)]
     · rw [Polynomial.coeff_C_mul_X_pow, if_pos rfl]
     · intro i _ hi
       rw [Polynomial.coeff_C_mul_X_pow, if_neg]

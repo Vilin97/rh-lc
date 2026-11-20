@@ -18,7 +18,7 @@ theorem UpperTheory.exists_polynomial_eq_map_eval_roots_of_perm_invariant :
     exact (natDegree_monomial_le _).trans (Nat.lt_succ_iff.1 (Finset.mem_range.1 hn))
   · intro S _ _ x hx
     ext n
-    rw [Polynomial.coeff_map, Polynomial.coeff_map, Polynomial.finset_sum_coeff]
+    rw [Polynomial.coeff_map, Polynomial.coeff_map, Polynomial.finsetSum_coeff]
     simp only [Polynomial.coeff_monomial_apply, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_range]
     split_ifs with hn
     · rw [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, ha n S x hx]

@@ -60,7 +60,7 @@ theorem top_coeff_eq (hp : 1 ≤ p) (b : Fin (p + 1) → B) (v : B)
       exact hi (Fin.ext (by simpa using h'.symm))
     · simp
   rw [e₁] at hc
-  simp only [Polynomial.coeff_sub, Polynomial.coeff_add, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow,
+  simp only [Polynomial.coeff_sub, Polynomial.coeff_add, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow,
     Polynomial.coeff_one, if_neg hp0, e₂, if_true, zero_add] at hc
   exact sub_eq_zero.1 hc
 

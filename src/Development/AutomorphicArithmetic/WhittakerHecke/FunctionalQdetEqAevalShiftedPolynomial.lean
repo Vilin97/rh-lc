@@ -49,7 +49,7 @@ theorem UpperTheory.functional_qdet_eq_aeval_shifted_polynomial :
         mul_comm]
       rfl
     have e2 := congrArg (fun r => _root_.AddMonoidAlgebra.coeff (M := ℕ) r k) e
-    simp only [Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_mul_C, Finset.sum_ite_eq'] at e2
+    simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Polynomial.coeff_mul_C, Finset.sum_ite_eq'] at e2
     rw [← e2]
     split_ifs with hk
     · rfl

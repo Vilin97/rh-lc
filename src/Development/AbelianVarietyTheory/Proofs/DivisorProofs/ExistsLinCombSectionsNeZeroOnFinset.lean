@@ -15,7 +15,7 @@ theorem exists_pow_ne_zero {Y : Type} (N : ℕ) (T : Finset Y) (v : Y → Fin N 
   let q : Y → ℂ[X] := fun P => ∑ k : Fin N, C (v P k) * X ^ (k : ℕ)
   have hcoeff : ∀ P (k : Fin N), (q P).coeff k = v P k := by
     intro P k
-    simp only [q, finset_sum_coeff, coeff_C_mul_X_pow, Fin.val_inj]
+    simp only [q, finsetSum_coeff, coeff_C_mul_X_pow, Fin.val_inj]
     simp
   have hq : ∀ P ∈ T, q P ≠ 0 := by
     intro P hP h0

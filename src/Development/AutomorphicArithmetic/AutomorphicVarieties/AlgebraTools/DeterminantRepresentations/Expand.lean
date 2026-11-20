@@ -70,7 +70,7 @@ theorem UpperTheory.V.AlgebraTools.Det.expand :
       rw [map_mul, map_pow, map_neg, map_one]
       ring
     unfold GDet.lam
-    rw [hchi, Polynomial.finset_sum_coeff]
+    rw [hchi, Polynomial.finsetSum_coeff]
     simp only [Polynomial.coeff_C_mul_X_pow]
     rw [Finset.sum_eq_single i]
     · rw [if_pos rfl, mul_left_comm, ← mul_pow, neg_one_mul, neg_neg, one_pow, mul_one]

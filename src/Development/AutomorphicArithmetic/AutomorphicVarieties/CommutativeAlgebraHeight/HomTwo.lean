@@ -43,7 +43,7 @@ private theorem lam_two {n : ℕ} {A E : Type} [CommRing A] [Ring E] [Algebra A 
       simp only [Polynomial.algebraMap_apply, Algebra.algebraMap_self, RingHom.id_apply, map_mul, map_pow, map_neg,
         map_one]
       ring
-    rw [Det.lam, hchi, finset_sum_coeff, Finset.sum_eq_single j]
+    rw [Det.lam, hchi, finsetSum_coeff, Finset.sum_eq_single j]
     · rw [coeff_C_mul_X_pow, if_pos rfl, ← mul_assoc, ← mul_pow]; simp
     · intro i hi hij
       have : i ≤ n := by simpa [Nat.lt_succ_iff] using hi
@@ -93,6 +93,6 @@ theorem UpperTheory.V.CA.d_chi :
         smul_eq_C_mul]
       ring
     have h2 := congrArg (fun p => p.coeff j) h'
-    simp only [finset_sum_coeff, coeff_C_mul_X_pow, Finset.sum_ite_eq, Finset.mem_range, Nat.lt_succ_iff, hj,
+    simp only [finsetSum_coeff, coeff_C_mul_X_pow, Finset.sum_ite_eq, Finset.mem_range, Nat.lt_succ_iff, hj,
       if_true] at h2
     exact h2.symm

@@ -110,7 +110,7 @@ theorem polyVanish {X : Type} [AddCommGroup X] [Module ℂ X] (d : ℕ) (c : ℕ
     intro u hu
     exact hroot u hu
   have hc : p.coeff s = 0 := by rw [hp0, Polynomial.coeff_zero]
-  rw [hp, Polynomial.finset_sum_coeff] at hc
+  rw [hp, Polynomial.finsetSum_coeff] at hc
   simpa [Polynomial.coeff_C_mul_X_pow, Finset.mem_range.mp hs] using hc
 
 theorem pow_mem {W : Type} [AddCommGroup W] [Module ℂ W] (G : Submodule ℂ W) (K : Module.End ℂ W)

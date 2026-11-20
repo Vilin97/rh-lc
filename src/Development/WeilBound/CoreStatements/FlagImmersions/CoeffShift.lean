@@ -133,7 +133,7 @@ theorem alt_pow (a : Ψ → Fin N → ℕ) (u : Wt Ψ N) (x0 : Ψ × Fin N) (s n
   rw [RootFieldNumerics.M5.linRoot_eq]
   unfold RootFieldNumerics.M5.alt
   simp only [hdet]
-  rw [Fintype.prod_sum, Polynomial.finset_sum_coeff, Finset.mul_sum]
+  rw [Fintype.prod_sum, Polynomial.finsetSum_coeff, Finset.mul_sum]
   refine Finset.sum_congr rfl fun σ _ => ?_
   rw [RootFieldNumerics.M5.coeff_shift (fun x : Ψ × Fin N => u x.1 x.2) x0 s n
       (RootFieldNumerics.M5.expo a σ) (hsum σ), hq σ, Finset.prod_mul_distrib,

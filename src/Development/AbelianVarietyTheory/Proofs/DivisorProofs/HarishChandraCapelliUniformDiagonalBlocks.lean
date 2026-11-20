@@ -96,7 +96,7 @@ theorem exists_poly {V : Type} [AddCommGroup V] [Module ℂ V] (K : Submodule �
   obtain ⟨s, c, hs, i, hi, hci⟩ := not_linearIndependent_iff.1 hnli
   refine ⟨∑ k ∈ s, Polynomial.monomial k (c k), fun h0 => hci ?_, ?_⟩
   · have := congrArg (fun p : Polynomial ℂ => p.coeff i) h0
-    simpa [Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, hi] using this
+    simpa [Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, hi] using this
   · have ev : (Polynomial.aeval T (∑ k ∈ s, Polynomial.monomial k (c k))) w = ∑ k ∈ s, c k • (T ^ k) w := by
       set_option synthInstance.maxHeartbeats 100000 in
         simp [map_sum, Polynomial.aeval_monomial, Module.algebraMap_end_apply]

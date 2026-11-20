@@ -64,7 +64,7 @@ theorem form_bound {k σ : Type} [Field k] [Infinite k] [Fintype σ] (n : ℕ)
     have := hcle m hm
     omega
   · intro d p hp hpl
-    rw [MvPolynomial.eval_eq, Polynomial.finset_sum_coeff]
+    rw [MvPolynomial.eval_eq, Polynomial.finsetSum_coeff]
     have hterm : ∀ m ∈ F.support, (F.coeff m * ∏ i ∈ m.support, p i ^ m i).coeff (n * d + c) =
         (F.coeff m).coeff c * ∏ i ∈ m.support, lam i ^ m i := by
       intro m hm

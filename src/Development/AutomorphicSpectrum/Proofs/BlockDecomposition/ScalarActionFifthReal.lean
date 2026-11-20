@@ -404,7 +404,7 @@ theorem coeffs_zero {V : Type*} [AddCommGroup V] [Module ℂ V] (N : ℕ) (d : �
     rw [← this]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
   have h2 := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q i) hp
-  simpa [finset_sum_coeff, coeff_C_mul, coeff_X_pow, hi] using h2
+  simpa [finsetSum_coeff, coeff_C_mul, coeff_X_pow, hi] using h2
 
 theorem poly_eq_zero_of_eval {B : Type} [CommRing B] [Algebra ℂ B] (p : B[X])
     (h : ∀ u : ℂ, p.eval (algebraMap ℂ B u) = 0) : p = 0 := by
@@ -481,7 +481,7 @@ theorem capPoly {R : Type} [CommRing R] [Nontrivial R] [Algebra ℂ R] {A : Type
   set r : R[X] := ∑ k ∈ range t, C (d k) * X ^ k with hr
   have hcoef : ∀ k, r.coeff k = if k < t then d k else 0 := by
     intro k
-    simp only [hr, finset_sum_coeff, coeff_C_mul, coeff_X_pow]
+    simp only [hr, finsetSum_coeff, coeff_C_mul, coeff_X_pow]
     simp [Finset.sum_ite_eq, Finset.mem_range]
   have hdeg : r.degree < t := by
     rw [degree_lt_iff_coeff_zero]

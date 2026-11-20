@@ -24,7 +24,7 @@ theorem coeff_mem_of_poly_values_mem : ∀ (V : Type) [AddCommGroup V] [Module �
     rw [← h0]
     exact Finset.sum_congr rfl (fun j _ => mul_comm _ _)
   have hc := congrArg (fun q : Polynomial ℂ => q.coeff k) hp
-  simp only [hpdef, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow,
+  simp only [hpdef, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow,
     Polynomial.coeff_zero, mul_ite, mul_one, mul_zero] at hc
   rw [Finset.sum_ite_eq] at hc
   simpa [Finset.mem_range.mpr hk] using hc

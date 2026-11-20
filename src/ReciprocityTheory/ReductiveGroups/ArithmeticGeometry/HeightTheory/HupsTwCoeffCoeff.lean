@@ -33,7 +33,7 @@ theorem hupsTw_coeff_coeff {σ R : Type*} [CommRing R] (w : σ → ℕ) (p : MvP
     (j : ℕ) (s : σ →₀ ℕ) :
     ((hupsTw w p).coeff j).coeff s = if hupsWt w s = j then p.coeff s else 0 := by
   classical
-  rw [hupsTw_eq, Polynomial.finset_sum_coeff]
+  rw [hupsTw_eq, Polynomial.finsetSum_coeff]
   simp only [Polynomial.coeff_C_mul_X_pow]
   rw [MvPolynomial.coeff_sum]
   simp only [apply_ite (AddMonoidAlgebra.coeff · s), MvPolynomial.coeff_monomial, MvPolynomial.coeff_zero]

@@ -166,7 +166,7 @@ theorem lam_bound (u : Wt Ψ N) (τ τ' : Ψ) (i : Fin N) (g U : ℝ) (hg : 0 < 
   have hl : lam τ k (X (τ', i) ^ (k - 1) * linRoot u ^ (dimFl Ψ N + 1)) =
       (-1) ^ (dimFl Ψ N + 1) * ((dimFl Ψ N + 1).factorial : ℝ) * ((k - 1).factorial : ℝ) *
         (r * ∏ τ'', gdet (rho τ'') (vv u (τ', i) τ'')).coeff (k - 1) := by
-    rw [← hsum, Polynomial.finset_sum_coeff, Finset.mul_sum, lam]
+    rw [← hsum, Polynomial.finsetSum_coeff, Finset.mul_sum, lam]
     refine Finset.sum_congr rfl fun c _ => ?_
     exact alt_pow _ _ _ _ _ (by rw [sum_bump]; omega)
   have hM := (hr.mul (maj_rho u τ' i g hg hsep) (by positivity) (by positivity)) (k - 1)

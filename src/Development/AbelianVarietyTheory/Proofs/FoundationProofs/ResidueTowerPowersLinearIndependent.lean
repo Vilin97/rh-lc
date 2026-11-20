@@ -48,7 +48,7 @@ theorem field_indep {k : Type} [Field k] (p : ℕ) [hp : Fact p.Prime] [CharP k 
     exact absurd (Nat.pow_le_pow_right hp.out.pos hNn) (not_le.2 h4)
   intro j hj
   have h1 : P.coeff j = c' j := by
-    simp only [P, finset_sum_coeff, coeff_monomial]
+    simp only [P, finsetSum_coeff, coeff_monomial]
     rw [Finset.sum_ite_eq' , if_pos (Finset.mem_range.2 hj)]
   rw [hP0, coeff_zero] at h1
   have h2 := congrArg Subtype.val h1

@@ -84,14 +84,14 @@ theorem coeff_prod_card {E R : Type} [CommRing R] [Nontrivial R] (A : Finset E) 
 
 theorem coeff_coProd_card {E R : Type} [DecidableEq E] [CommRing R] [Nontrivial R] (A : Finset E) (f : E → R) :
     (coProd A fun q => Polynomial.X - Polynomial.C (f q)).coeff A.card = 0 := by
-  rw [coProd, Polynomial.finset_sum_coeff]
+  rw [coProd, Polynomial.finsetSum_coeff]
   refine Finset.sum_eq_zero fun p hp => Polynomial.coeff_eq_zero_of_natDegree_lt ?_
   rw [Polynomial.natDegree_finset_prod_X_sub_C_eq_card]
   exact Finset.card_erase_lt_of_mem hp
 
 theorem coeff_coProd_pred {E R : Type} [DecidableEq E] [CommRing R] [Nontrivial R] (A : Finset E) (f : E → R) :
     (coProd A fun q => Polynomial.X - Polynomial.C (f q)).coeff (A.card - 1) = (A.card : R) := by
-  rw [coProd, Polynomial.finset_sum_coeff, Finset.sum_congr rfl (g := fun _ => (1 : R))]
+  rw [coProd, Polynomial.finsetSum_coeff, Finset.sum_congr rfl (g := fun _ => (1 : R))]
   · simp
   · intro p hp
     rw [← Finset.card_erase_of_mem hp, coeff_prod_card]

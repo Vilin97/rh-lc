@@ -653,7 +653,7 @@ theorem closed_of_stable (M : Submodule ℚ (MvPolynomial (Fin n × Fin n) ℚ))
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← C_pow, mul_comm (Q.coeff i), ← smul_eq_C_mul, map_smul, smul_eq_mul, mul_comm]
   have := congrArg (fun P => P.coeff k) hR
-  simp only [R, Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, Finset.sum_ite_eq', Polynomial.coeff_zero] at this
+  simp only [R, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Finset.sum_ite_eq', Polynomial.coeff_zero] at this
   split_ifs at this with hk
   · exact this
   · have : Q.coeff k = 0 := Polynomial.coeff_eq_zero_of_natDegree_lt (by simpa using hk)

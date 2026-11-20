@@ -33,7 +33,7 @@ theorem coeff_mem_of_eval_mem {K A : Type} [Field K] [CharZero K] [CommRing A] [
     rw [this, map_smul, smul_eq_mul, mul_comm]
   by_cases hk : k ≤ p.natDegree
   · have := congrArg (fun r => r.coeff k) hq0
-    simp only [hq, Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, Finset.sum_ite_eq', Finset.mem_range,
+    simp only [hq, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Finset.sum_ite_eq', Finset.mem_range,
       Polynomial.coeff_zero] at this
     rwa [if_pos (by omega)] at this
   · rw [Polynomial.coeff_eq_zero_of_natDegree_lt (by omega), map_zero]

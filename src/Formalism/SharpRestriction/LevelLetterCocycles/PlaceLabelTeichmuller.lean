@@ -400,7 +400,7 @@ private theorem monicOf_coeff_lemma {K : Type} [Field K] {N : ℕ} (a : Fin N �
     (Formalism.CyclotomicNorms.monicOf a).coeff i = a i := by
   unfold Formalism.CyclotomicNorms.monicOf
   rw [Polynomial.coeff_add, Polynomial.coeff_X_pow, if_neg (Nat.ne_of_lt i.isLt), zero_add,
-    Polynomial.finset_sum_coeff]
+    Polynomial.finsetSum_coeff]
   simp only [Polynomial.coeff_C_mul_X_pow]
   rw [Finset.sum_eq_single i]
   · simp

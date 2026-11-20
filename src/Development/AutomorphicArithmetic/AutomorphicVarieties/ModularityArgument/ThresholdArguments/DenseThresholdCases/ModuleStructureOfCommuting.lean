@@ -21,7 +21,7 @@ private theorem hecke_poly_coeff_formula {A : Type} [CommRing A] (n q : ℕ) (a 
   simp
 private theorem hecke_poly_coeff_zero {A : Type} [CommRing A] (n q : ℕ) (a : ℕ → A) (i : ℕ) (hi : n < i) :
     (heckePol n q a).coeff i = 0 := by
-  rw [Hi.heckePol, finset_sum_coeff]
+  rw [Hi.heckePol, finsetSum_coeff]
   refine Finset.sum_eq_zero fun j _ => ?_
   rw [coeff_C_mul_X_pow, if_neg]
   omega

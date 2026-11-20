@@ -26,7 +26,7 @@ theorem splitPts : StatSplitPts := by
   let PT : Polynomial T := ∑ k ∈ range (t + 1), Polynomial.monomial k ⟨fun x => (P x).coeff k, hPc k⟩
   have hcoef : ∀ k, PT.coeff k = if k ≤ t then ⟨fun x => (P x).coeff k, hPc k⟩ else 0 := by
     intro k
-    simp only [PT, Polynomial.finset_sum_coeff, Polynomial.coeff_monomial, Finset.sum_ite_eq',
+    simp only [PT, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Finset.sum_ite_eq',
       Finset.mem_range, Nat.lt_succ_iff]
   have hmap : ∀ x, PT.map (evT x) = P x := by
     intro x

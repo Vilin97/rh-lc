@@ -24,7 +24,7 @@ theorem nf_coef_unique {E : Type*} [AddCommGroup E] [Module ℂ E] (M : ℕ) (a 
     rw [← hfs]
     exact Finset.sum_congr rfl fun j _ => mul_comm _ _
   have hc := congrArg (fun q => _root_.AddMonoidAlgebra.coeff (M := ℕ) q i) hp
-  simpa [Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow, Finset.mem_range.mpr hi] using hc
+  simpa [Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul_X_pow, Finset.mem_range.mpr hi] using hc
 
 section scoef
 

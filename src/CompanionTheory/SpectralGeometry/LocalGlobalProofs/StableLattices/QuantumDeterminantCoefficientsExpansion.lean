@@ -32,7 +32,7 @@ theorem poly_eq_zero_of_evU (Q : A[X]) (h : ∀ u : ℂ, evU u Q = 0) : Q = 0 :=
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [← Algebra.commutes, ← Algebra.smul_def, map_smul, smul_eq_mul, mul_comm]
   have h2 := congrArg (fun p => p.coeff j) hR
-  simp only [R, finset_sum_coeff, coeff_monomial, coeff_zero, Finset.sum_ite_eq', mem_range] at h2
+  simp only [R, finsetSum_coeff, coeff_monomial, coeff_zero, Finset.sum_ite_eq', mem_range] at h2
   split_ifs at h2 with hj
   · exact h2
   · rw [coeff_eq_zero_of_natDegree_lt (by omega), map_zero]

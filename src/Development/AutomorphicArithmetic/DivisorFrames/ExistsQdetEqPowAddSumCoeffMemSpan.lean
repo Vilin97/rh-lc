@@ -117,7 +117,7 @@ theorem UpperTheory.exists_qdet_eq_pow_add_sum_coeff_mem_span :
     simpa using (hQ σ).1
   have hQ2 : ∀ σ, (Q σ).coeff n = if σ = 1 then 1 else 0 := fun σ => (hQ σ).2
   have hPn : P.coeff n = 1 := by
-    simp only [P, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul, hQ2]
+    simp only [P, Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul, hQ2]
     simp
   have heval : ∀ u : ℂ, Formalism.REAL.qdet X u = P.eval₂ (RingHom.id A) (algebraMap ℂ A u) := by
     intro u

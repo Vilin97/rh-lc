@@ -7,7 +7,7 @@ open TensorProduct IsLocalRing Polynomial UpperTheory.V.W UpperTheory.V.Alg Uppe
 
 private theorem UpperTheory.V.CA.d_tr_coeff {n : ℕ} {A E : Type} [CommRing A] [Ring E] [Algebra A E] (D : Det n A E)
     (x : E) (i : ℕ) (hi : i ≤ n) : (D.D A[X] (1 + X ⊗ₜ x)).coeff i = D.lam i x := by
-  rw [(d_chi D x).2.2.1, finset_sum_coeff]
+  rw [(d_chi D x).2.2.1, finsetSum_coeff]
   simp only [coeff_C_mul_X_pow]
   rw [Finset.sum_ite_eq]
   simp [Nat.lt_succ_iff, hi]

@@ -51,7 +51,7 @@ theorem polyOf_natDegree {V : Type} [AddCommGroup V] [Module ℂ V] (d : ℕ) (c
 theorem polyOf_coeff {V : Type} [AddCommGroup V] [Module ℂ V] (d : ℕ) (c : ℕ → Module.End ℂ V)
     (φ : Module.Dual ℂ V) (v : V) : (polyOf d c φ v).coeff d = φ (c d v) := by
   unfold polyOf
-  rw [finset_sum_coeff, sum_eq_single d]
+  rw [finsetSum_coeff, sum_eq_single d]
   · simp
   · intro b _ hb; simp [coeff_C_mul_X_pow, hb.symm]
   · intro h; exact absurd (self_mem_range_succ d) h

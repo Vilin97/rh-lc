@@ -28,7 +28,7 @@ theorem UpperTheory.V.Th.AnnihilatorQuotientFinite.frobS :
     rw [hf]
     refine R.mul_mem (R.pow_mem (R.neg_mem R.one_mem) _) ?_
     unfold UpperTheory.V.Hi.heckePol
-    rw [Polynomial.finset_sum_coeff]
+    rw [Polynomial.finsetSum_coeff]
     refine R.sum_mem fun j _ => ?_
     rw [Polynomial.coeff_C_mul_X_pow]
     split_ifs
