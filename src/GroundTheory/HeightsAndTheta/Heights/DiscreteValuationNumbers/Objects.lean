@@ -181,7 +181,7 @@ theorem isModelOver_projectiveSpace {O : Type*} [CommRing O] [IsDomain O]
     simp only [Ideal.mem_comap, Ideal.mem_bot, C_eq_zero]
   dim := by
     rw [ringKrullDim_eq_of_ringEquiv (RingEquiv.quotientBot _),
-      MvPolynomial.ringKrullDim_of_isNoetherianRing, IsDiscreteValuationRing.ringKrullDim_eq_one]
+      MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite, IsDiscreteValuationRing.ringKrullDim_eq_one]
     have hc : Nat.card ((_ : Unit) × Fin (n + 1)) = n + 1 := by
       rw [Nat.card_eq_fintype_card, Fintype.card_sigma]
       simp
