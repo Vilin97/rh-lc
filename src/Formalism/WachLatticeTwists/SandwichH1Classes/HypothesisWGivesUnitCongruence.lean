@@ -305,7 +305,7 @@ def StatLLW : Prop :=
     ∀ (a : ℤ) (n d : ℕ) (X : LLRest ℓ n (fun k => ModuleCat.of ℤ_[ℓ] (H1 (repT R L (a + k)))))
       (infm : ∀ k : ℕ, (Fin r → R.Tt.Om) →ₗ[ℤ_[ℓ]] H1 (repD R L W (a + k)))
       (infX : ∀ k : ℕ, (Fin r → R.Tt.Xm) →ₗ[ℤ_[ℓ]] H1 (repD R L W (a + k))), d ≠ 0 →
-      (∀ k : ℕ, InfPin R L W (a + k) (infm k) (infX k) ∧
+      (∀ k : ℕ, ((∀ v, ∃ c : Z1 (repD R L W (a + k)), H1.mk (repD R L W (a + k)) c = infm k v ∧ (∀ h ∈ R.H, c.1 h = 0) ∧ c.1 R.gg = fun j => R.emb (algebraMap R.Tt.Om R.Tt.Oi (v j))) ∧ ∀ v, ∃ c : Z1 (repD R L W (a + k)), H1.mk (repD R L W (a + k)) c = infX k v ∧ (∀ h ∈ R.H, c.1 h = 0) ∧ c.1 R.gg = fun j => R.emb (v j : R.Tt.Oi)) ∧
         (pieceW R L W (A.map R.ϑ) Y' (a + k) (infm k) (infX k)).InfRes ∧
         (pieceW R L W (A.map R.ϑ) Y' (a + k) (infm k) (infX k)).T4) →
       (X.toLL fun k => pieceW R L W (A.map R.ϑ) Y' (a + k) (infm k) (infX k)).LES →

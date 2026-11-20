@@ -24,7 +24,7 @@ def TBWIn {ℓ : ℕ} [Fact ℓ.Prime] (D : TBData ℓ) (u w : ℤ_[ℓ]ˣ) (s m
         (infX : ∀ k : ℕ, (Fin r → R.Tt.Xm) →ₗ[ℤ_[ℓ]] H1 (repD R L W (0 + k)))
         (K : XiAdicFiltrationData ℓ) (T : Twist ℓ D.HGe) (_ : D.HYL ≃ₗ[ℤ_[ℓ]] X.HK) (_ : D.HWe ≃ₗ[ℤ_[ℓ]] K.H e), d ≠ 0 →
 
-        (∀ k : ℕ, InfPin R L W (0 + k) (infm k) (infX k) ∧
+        (∀ k : ℕ, ((∀ v, ∃ c : Z1 (repD R L W (0 + k)), H1.mk (repD R L W (0 + k)) c = infm k v ∧ (∀ h ∈ R.H, c.1 h = 0) ∧ c.1 R.gg = fun j => R.emb (algebraMap R.Tt.Om R.Tt.Oi (v j))) ∧ ∀ v, ∃ c : Z1 (repD R L W (0 + k)), H1.mk (repD R L W (0 + k)) c = infX k v ∧ (∀ h ∈ R.H, c.1 h = 0) ∧ c.1 R.gg = fun j => R.emb (v j : R.Tt.Oi)) ∧
           (pieceW R L W (A.map R.ϑ) Y' (0 + k) (infm k) (infX k)).InfRes ∧
           (pieceW R L W (A.map R.ϑ) Y' (0 + k) (infm k) (infX k)).T4) →
         (X.toLL fun k => pieceW R L W (A.map R.ϑ) Y' (0 + k) (infm k) (infX k)).LES →
