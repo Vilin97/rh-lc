@@ -34,7 +34,7 @@ theorem exists_small_cover [SecondCountableTopology G] (H : Subgroup G) [Discret
       ∀ i, ∀ a ∈ u i, ∀ b ∈ u i, a * b⁻¹ ∈ H → a = b := by
   obtain ⟨W, hWo, hW1, hW⟩ := exists_open_small H
   let s : G → Set G := fun g => (fun x => x * g⁻¹) ⁻¹' W
-  have hso : ∀ g, IsOpen (s g) := fun g => hWo.preimage (continuous_mul_right _)
+  have hso : ∀ g, IsOpen (s g) := fun g => hWo.preimage (continuous_mul_const _)
   obtain ⟨T, hTc, hT⟩ := TopologicalSpace.isOpen_iUnion_countable s hso
   have hcov : ∀ g, ∃ t ∈ T, g ∈ s t := by
     intro g

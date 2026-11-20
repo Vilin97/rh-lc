@@ -96,7 +96,7 @@ theorem UpperTheory.V.Pa.chebOne :
   have hS : S.Finite := (hfin d hd).union (hA.biUnion fun v _ => hfib v)
   have hden := GlobalTheory.Published.ChebotarevDegreeOne.dense (Ω := Ω) GlobalTheory.Published.chebotarevDegreeOne' hS
   have hO : IsOpen ((fun τ : G L Ω => τ * g⁻¹) ⁻¹' (U : Set (G L Ω))) :=
-    hU.preimage (continuous_mul_right _)
+    hU.preimage (continuous_mul_const _)
   obtain ⟨σ, hσU, w, hwS, hin, B, hB, hF⟩ :=
     hden.inter_open_nonempty _ hO ⟨g, by simp [U.one_mem]⟩
   have hp : (Ideal.absNorm w.asIdeal).Prime :=

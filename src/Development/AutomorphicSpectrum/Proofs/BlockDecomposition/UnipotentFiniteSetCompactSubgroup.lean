@@ -127,7 +127,7 @@ theorem exhaust : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
   intro k _ _ _ _ N n s hs
   have hmul : ∀ c : k, ∀ᶠ z in 𝓝 (0 : k), z * c ∈ 𝒪[k] := by
     intro c
-    have h := (continuous_mul_right c).tendsto (0 : k)
+    have h := (continuous_mul_const c).tendsto (0 : k)
     rw [zero_mul] at h
     exact h (isOpen_O.mem_nhds (Subring.zero_mem _))
   have hU : ∀ᶠ z in 𝓝 (0 : k), z ∈ 𝒪[k] ∧ ∀ g ∈ s, ∀ i j : Fin N,

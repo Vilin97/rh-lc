@@ -13,7 +13,7 @@ private theorem mn_sep {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalG
   obtain ⟨g, rfl⟩ := QuotientGroup.mk_surjective h
   have hg : g ∉ (commutator G).topologicalClosure := fun hm => hh ((QuotientGroup.eq_one_iff g).2 hm)
   have hS : IsOpen {x : G | x * g ∉ ((commutator G).topologicalClosure : Set G)} :=
-    (Subgroup.isClosed_topologicalClosure _).isOpen_compl.preimage (continuous_mul_right g)
+    (Subgroup.isClosed_topologicalClosure _).isOpen_compl.preimage (continuous_mul_const g)
   have h1 : (1 : G) ∈ {x : G | x * g ∉ ((commutator G).topologicalClosure : Set G)} := by
     show 1 * g ∉ ((commutator G).topologicalClosure : Set G)
     rw [one_mul]

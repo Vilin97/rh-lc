@@ -44,7 +44,7 @@ theorem isQuotIntFJ_linear {n : Type} [Fintype n] [DecidableEq n] {c ρ : ℕ} (
   have hint : ∀ φ ∈ SB (GL (n ⊕ Fin c) k), ∀ h, Integrable (fun z => φ (ι z * h)) M := by
     intro φ hφ h
     obtain ⟨D, hD, hD'⟩ := GlobalTheory.RootEx.ProperTriple.proper_triple k n c ρ hp hpc _
-      (hφ.2.isCompact.image (continuous_mul_right h⁻¹))
+      (hφ.2.isCompact.image (continuous_mul_const h⁻¹))
     refine (hφ.1.continuous.comp (hm.mul continuous_const)).integrable_of_hasCompactSupport ?_
     refine HasCompactSupport.intro hD fun z hz => ?_
     by_contra h0

@@ -243,7 +243,7 @@ theorem levi_hom : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberF
       · change Continuous fun t : (AE F E)ˣ => M t⁻¹
         simp only [M, inv_inv]
         exact hM _ _ Units.continuous_coe_inv (hcA.comp Units.continuous_val)
-    exact (continuous_mul_right g).comp hc
+    exact (continuous_mul_const g).comp hc
   · intro t
     refine ⟨levi_matrix_mulVec_first_vector hax' hbx' _ _, levM_mulVec_y hay' hby' _ _, ?_⟩
     change M t * incM F H'.ι = incM F H'.ι * 1

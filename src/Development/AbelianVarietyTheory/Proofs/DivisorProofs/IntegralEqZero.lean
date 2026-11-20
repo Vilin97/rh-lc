@@ -44,7 +44,7 @@ theorem Sq.add {F F' : H → ℂ} (h : Sq μ Γ 𝓕 F) (h' : Sq μ Γ 𝓕 F') 
 
 theorem Sq.transl (h𝓕 : IsFundamentalDomain Γ 𝓕 μ) {F : H → ℂ} (h : Sq μ Γ 𝓕 F) (y : H) :
     Sq μ Γ 𝓕 (fun g => F (g * y)) :=
-  ⟨h.1.comp (continuous_mul_right y), fun γ hγ g => by simp only [mul_assoc, h.2.1 γ hγ],
+  ⟨h.1.comp (continuous_mul_const y), fun γ hγ g => by simp only [mul_assoc, h.2.1 γ hγ],
     integrableOn_mul_right μ Γ 𝓕 h𝓕 (fun h => star (F h) * F h) (fun γ hγ g => by simp only [h.2.1 γ hγ]) y h.2.2⟩
 
 theorem Sq.sum (h𝓕 : IsFundamentalDomain Γ 𝓕 μ) {F : H → ℂ} (h : Sq μ Γ 𝓕 F) (A : Finset H) :

@@ -37,7 +37,7 @@ theorem isOpen_stab (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
   let V : Set (AE F E) := {y | ∀ j k, B.equivFun (y * B j) k ∈ O}
   have hcont : ∀ j k, Continuous fun y : AE F E => B.equivFun (y * B j) k := fun j k =>
     (continuous_apply k).comp ((IsModuleTopology.continuous_of_linearMap B.equivFun.toLinearMap).comp
-      (continuous_mul_right _))
+      (continuous_mul_const _))
   have hV : IsOpen V := by
     have : V = ⋂ j, ⋂ k, (fun y : AE F E => B.equivFun (y * B j) k) ⁻¹' O := by
       ext y; simp [V]

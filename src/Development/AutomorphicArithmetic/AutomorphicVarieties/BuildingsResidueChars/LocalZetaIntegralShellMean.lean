@@ -207,7 +207,7 @@ private theorem eq_zero_of_ordDet_eq_of_compact_support_of_mul_ne_zero {F : Type
     ∀ g, ordDet g = k → φ g = 0 := by
   intro g0 hg0
   by_contra hne
-  refine not_ordDet_eq_zero_subset_compact_of_two_le hm ((fun y => y * g0⁻¹) '' T) (hT.image (continuous_mul_right g0⁻¹)) ?_
+  refine not_ordDet_eq_zero_subset_compact_of_two_le hm ((fun y => y * g0⁻¹) '' T) (hT.image (continuous_mul_const g0⁻¹)) ?_
   intro h hh
   exact ⟨h * g0, hTφ _ (by rw [ordDet_mul, hh, hg0, zero_add]) (hinv h g0 hh hne), by simp⟩
 

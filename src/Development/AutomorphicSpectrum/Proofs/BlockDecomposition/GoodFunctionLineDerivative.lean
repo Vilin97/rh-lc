@@ -59,7 +59,7 @@ theorem continuous_lineDer_of_growth (h : IsCMExt F E σ) {φ : GAd σ J → ℂ
     exact this.exists
   refine ⟨_, (isOpen_lt (hb.mul (continuous_const (y := t))) (continuous_const (y := ε))).mem_nhds t2,
     fun g => t⁻¹ • (φ (g * γ t) - φ g),
-    (((hc.comp (continuous_mul_right _)).sub hc).const_smul t⁻¹).continuousAt, fun y hy => hu ?_⟩
+    (((hc.comp (continuous_mul_const _)).sub hc).const_smul t⁻¹).continuousAt, fun y hy => hu ?_⟩
   rw [dist_eq_norm]
   exact (key t t0 t1 y).trans_lt hy
 

@@ -440,7 +440,7 @@ theorem exists_isRam {p : SplitPt D k} {S : HSp D} (hS : S.rank = 1) (β : Frame
   have cont : ∀ Q, IsContAut S (φ₀ Q) := fun Q =>
     ⟨fun a ha g => by
       show f (a * g * _) = f (g * _)
-      rw [mul_assoc, hf.1 a ha], hf.2.comp (continuous_mul_right _)⟩
+      rw [mul_assoc, hf.1 a ha], hf.2.comp (continuous_mul_const _)⟩
   obtain ⟨c, hc⟩ := exists_dia_eq hu P₀
   refine ⟨fun Q => φ₀ (c • Q) - φ₀ Q, P₀, ⟨fun g Q => ?_, ?_, fun Q => ⟨fun a ha g => ?_, (cont _).2.sub (cont _).2⟩⟩, ?_⟩
   · simp only [map_sub, ← eqv, smul_comm g c]

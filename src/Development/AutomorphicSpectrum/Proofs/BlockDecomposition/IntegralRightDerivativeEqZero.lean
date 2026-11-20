@@ -72,9 +72,9 @@ theorem integral_Rd_skew : ∀ (n : ℕ) [MeasurableSpace (Matrix.unitaryGroup (
   · simpa using key
   · intro t _
     simp only [hval]
-    exact cU.comp (continuous_mul_right (kt t))
+    exact cU.comp (continuous_mul_const (kt t))
   · simp only [hval]
-    exact cR.comp (continuous_mul_right (kt 0))
+    exact cR.comp (continuous_mul_const (kt 0))
   · intro y t _
     have hg : y.1 * (NormedSpace.exp (t • X) : Mat n) ∈ GLs n := by
       rw [hval]

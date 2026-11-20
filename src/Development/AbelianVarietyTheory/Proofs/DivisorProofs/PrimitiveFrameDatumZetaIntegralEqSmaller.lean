@@ -98,7 +98,7 @@ theorem bigF_phiA {a : ℕ} {A' C : Type} [Fintype A'] [DecidableEq A'] [Fintype
   have hSm : @MeasurableSet (GL (Fin a) k) Units.instMeasurableSpace S := by
     letI : MeasurableSpace (GL (Fin a) k) := Units.instMeasurableSpace
     haveI : BorelSpace (GL (Fin a) k) := borel_GL
-    exact (isOpen_KO.preimage (continuous_mul_right _)).measurableSet
+    exact (isOpen_KO.preimage (continuous_mul_const _)).measurableSet
   have hS1 : (haarVol (KO k (Fin a))).real S = 1 := by
     simp [hSdef, Measure.real, measure_preimage_mul_right, haarVol_self isOpen_KO le_rfl]
   have hint : ∀ g : GL (Fin a) k, phiA μ σ ν ϖ n (diagLat c) Ψ (g.val * X) * (ν (gdet g) : ℂ) *

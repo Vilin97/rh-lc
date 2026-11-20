@@ -55,7 +55,7 @@ theorem isAutFun_rTrans {V : HSp D} (x : GA D V) {φ : GA D V → ℂ} (h : IsAu
     have e : g * k * x = g * x * (x⁻¹ * k * x) := by group
     simp only [rTrans]
     rw [e, hUφ _ hk' hf]
-  · exact h.cont.comp (continuous_mul_right x)
+  · exact h.cont.comp (continuous_mul_const x)
 
 theorem trc_mapDomain {V : HSp D} (ε : GA D V →₀ ℂ) (b : GA D V) (f : GA D V → ℂ) :
     trc (ε.mapDomain (· * b)) f = trc ε (rTrans b f) := by

@@ -98,7 +98,7 @@ theorem measurableSet_and_vol {a : ℕ} (g₁ : GL (Fin a) k) :
   refine ⟨?_, ?_⟩
   · letI : MeasurableSpace (GL (Fin a) k) := Units.instMeasurableSpace
     haveI : BorelSpace (GL (Fin a) k) := borel_GL
-    exact (isOpen_KO.preimage (continuous_mul_right _)).measurableSet
+    exact (isOpen_KO.preimage (continuous_mul_const _)).measurableSet
   · simp [Measure.real, measure_preimage_mul_right, haarVol_self isOpen_KO le_rfl]
 
 theorem shellSum_indicator {ϖ : kˣ} (hϖ : IsUnif ϖ) {a : ℕ} (ν : kˣ →* ℂˣ) (z C : ℂ)

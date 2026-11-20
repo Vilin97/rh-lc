@@ -69,7 +69,7 @@ private theorem UpperTheory.Reformulated.B.Gr38.aut_translate {E : Type} [Field 
   obtain ⟨hc, hr, ho, hf⟩ := (h : GlobalTheory.UnitaryBC.IsAutFormU φ)
   refine (GlobalTheory.UnitaryBC.IsAutFormU.mk ?_ ?_ ?_ ?_ :
     GlobalTheory.UnitaryBC.IsAutFormU (GlobalTheory.UnitaryBC.RU E n (k : ↥(GlobalTheory.UnitaryBC.UA E n)) φ))
-  · exact hc.comp (continuous_mul_right (k : ↥(GlobalTheory.UnitaryBC.UA E n)))
+  · exact hc.comp (continuous_mul_const (k : ↥(GlobalTheory.UnitaryBC.UA E n)))
   · intro γ hγ g
     have := hr γ hγ (g * k)
     rw [← mul_assoc] at this

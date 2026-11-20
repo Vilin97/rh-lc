@@ -85,7 +85,7 @@ theorem lintegral_rhoB {m : ℕ} {Φ : GA E k → ℝ≥0∞} (hΦ : Measurable 
 
 theorem integral_rhoB {m : ℕ} {Φ : GA E k → ℂ} (hΦ : Continuous Φ) (g : GA E k) :
     ∫ r, Φ (r * g) ∂rhoB m = ∫ x in vecDomain E (UnipotentBlockColumnIndex k m m), Φ (blkU x * g) ∂vecMeasure E (UnipotentBlockColumnIndex k m m) :=
-  integral_map (meas_blkU m).aemeasurable (hΦ.comp (continuous_mul_right g)).aestronglyMeasurable
+  integral_map (meas_blkU m).aemeasurable (hΦ.comp (continuous_mul_const g)).aestronglyMeasurable
 
 theorem lintegral_rhoA {m : ℕ} {Φ : GA E k → ℝ≥0∞} (hΦ : Measurable Φ) (g : GA E k) :
     ∫⁻ r, Φ (r * g) ∂rhoA m = ∑' ξ : RowT E k m, Φ (ratGL E k (gam ξ) * g) := by
@@ -95,7 +95,7 @@ theorem lintegral_rhoA {m : ℕ} {Φ : GA E k → ℝ≥0∞} (hΦ : Measurable 
 theorem integral_rhoA {m : ℕ} {Φ : GA E k → ℂ} (hΦ : Continuous Φ) (g : GA E k)
     (hs : Summable fun ξ : RowT E k m => Φ (ratGL E k (gam ξ) * g)) :
     ∫ r, Φ (r * g) ∂rhoA m = ∑' ξ : RowT E k m, Φ (ratGL E k (gam ξ) * g) := by
-  have hc : Continuous fun r => Φ (r * g) := hΦ.comp (continuous_mul_right g)
+  have hc : Continuous fun r => Φ (r * g) := hΦ.comp (continuous_mul_const g)
   have hn := summable_norm_iff.2 hs
   have hint : Integrable (fun r => Φ (r * g)) (rhoA m) := by
     refine ⟨hc.aestronglyMeasurable, ?_⟩

@@ -40,7 +40,7 @@ theorem GlobalTheory.Unf.unfFB_of_descent : ∀ D : D7, Descent D → UnfFB D :=
   obtain ⟨hI, hL⟩ := GlobalTheory.T.fourierJacobiPeriod_lift_eq_integral_unfolded D hD ψ σ J B s vL Y G Φ hY hG hΦ 𝓑 h𝓑
   have habs := GlobalTheory.Unf.BesInt.absConv_of_invariant D σ B _ hFc hFi
   have hm : ∀ h : GA D B.V, Measurable fun g : GA D B.V => unfF s vL Y G Φ (g * h) :=
-    fun h => (hFc.comp (continuous_mul_right h)).measurable
+    fun h => (hFc.comp (continuous_mul_const h)).measurable
   have key := GlobalTheory.quot_fubini_mean (GA D B.V) s.vW.μ (besGrp B.d B.o) (GQ B.V ⊓ besGrp B.d B.o) inf_le_right
     (GlobalTheory.BesClosed.besGrp_isClosed D B.V B.V₀ B.A B.L σ B.d B.o) hcnt hdisc B.μR hHR 𝓡 𝓑 h𝓡 h𝓑 (unfF s vL Y G Φ)
     hFc.measurable hFi hI (fun h => ((hint _ (hm h)).1).2 (habs h))

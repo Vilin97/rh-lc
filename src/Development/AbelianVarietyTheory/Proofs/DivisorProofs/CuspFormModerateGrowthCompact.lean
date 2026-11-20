@@ -129,13 +129,13 @@ theorem mem_regSpan {π : CuspSub E a} {F : GA E a → ℂ} :
 
 theorem rt_mem_regSpan {π : CuspSub E a} {F : GA E a → ℂ} (hF : F ∈ regSpan π) (h : GA E a) :
     (fun g => F (g * h)) ∈ regSpan π := by
-  refine ⟨rt_mem_rspan hF.1 h, hF.2.1.comp (continuous_mul_right h), fun g₀ => ?_⟩
+  refine ⟨rt_mem_rspan hF.1 h, hF.2.1.comp (continuous_mul_const h), fun g₀ => ?_⟩
   obtain ⟨y₀, k, rfl⟩ : ∃ y₀ k, h = infGL E a y₀ * finGL E a k := ⟨_, _, (infGL_mul_finGL h).symm⟩
   obtain ⟨C, N, h0, e⟩ := hF.2.2 (g₀ * finGL E a k)
   have hy₀ := one_le_height y₀
   refine ⟨C * ((1 + 2 * a) * height y₀) ^ N, N, mul_nonneg h0 (pow_nonneg (mul_nonneg (by positivity)
     (by linarith)) N), ?_⟩
-  have ht : Tendsto (fun g => g * finGL E a k) (𝓝 g₀) (𝓝 (g₀ * finGL E a k)) := (continuous_mul_right _).tendsto g₀
+  have ht : Tendsto (fun g => g * finGL E a k) (𝓝 g₀) (𝓝 (g₀ * finGL E a k)) := (continuous_mul_const _).tendsto g₀
   filter_upwards [ht.eventually e] with g hg z
   have ex : g * infGL E a z * (infGL E a y₀ * finGL E a k) = g * finGL E a k * infGL E a (z * y₀) := by
     rw [mul_assoc g (finGL E a k), ← infGL_comm, map_mul]; simp only [mul_assoc]
@@ -156,7 +156,7 @@ theorem kerInf_mem_regSpan {π : CuspSub E a} {F : GA E a → ℂ} (hF : F ∈ r
     refine continuousAt_of_dominated (bound := fun x => C * (‖k x‖ * height (γ x) ^ N))
       (Eventually.of_forall fun g => (RapidModel.integrable_of_modGr hM hk g).aestronglyMeasurable) ?_
       ((hk.2.2 N).const_mul C)
-      (Eventually.of_forall fun x => (continuous_const.mul (hF.2.1.comp (continuous_mul_right _))).continuousAt)
+      (Eventually.of_forall fun x => (continuous_const.mul (hF.2.1.comp (continuous_mul_const _))).continuousAt)
     filter_upwards [e] with g hg
     refine Eventually.of_forall fun x => ?_
     rw [norm_mul]

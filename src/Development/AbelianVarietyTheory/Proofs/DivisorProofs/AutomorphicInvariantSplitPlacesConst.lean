@@ -51,7 +51,7 @@ theorem constant_of_invariant : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field 
       rw [hy1, one_mul]
     · obtain ⟨v, hvT, hvs, hτ⟩ := GlobalTheory.SplitAway.exists_splitsFully_notMem F E T
       have hcl := GlobalTheory.T.strong_approximation_det_one hKP.base.strongApproxSU F E σ B n V r s hB hV hn v hτ y hy
-      have hf : Continuous fun x : UA σ V.J => φ (x * g) := hφ.comp (continuous_mul_right g)
+      have hf : Continuous fun x : UA σ V.J => φ (x * g) := hφ.comp (continuous_mul_const g)
       have hmem : y ∈ {x | φ (x * g) = φ g} := by
         refine (isClosed_eq hf continuous_const).closure_subset_iff.2 ?_ hcl
         rintro x ⟨γ, hγ, k, hk, rfl⟩

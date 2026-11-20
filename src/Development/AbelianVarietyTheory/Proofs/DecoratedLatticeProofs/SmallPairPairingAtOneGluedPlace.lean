@@ -111,7 +111,7 @@ theorem SmallPl.integral_sum_translates {D : D7} {ψ : AddChar (AF D.host.F) ℂ
   have hint : ∀ i ∈ s, IntegrableOn (fun h => c * K (h * b i)) vS.𝓕 vS.μ := by
     intro i _
     refine (GlobalTheory.CocompactParam.continuous_integral_param D S hS vS Unit (fun h _ => c * K (h * b i)) ?_ ?_).1 ()
-    · exact (continuous_const.mul (hKc.comp (continuous_mul_right _))).comp continuous_fst
+    · exact (continuous_const.mul (hKc.comp (continuous_mul_const _))).comp continuous_fst
     · intro γ hγ h _
       rw [mul_assoc γ h, hKa γ hγ]
   calc (∫ h in vS.𝓕, om (h, h') Φ₂ 0 * (c * ∑ i ∈ s, G (h * b i)) ∂vS.μ)

@@ -195,7 +195,7 @@ theorem UpperTheory.V.Base.h2Zl :
   refine (denseGen l).induction_on (p := fun g => σ g (C h) - C (g * h) + C g = f.1 (g, h)) g ?_ ?_
   · exact (clopenEq
       (((hσ'.comp (continuous_id.prodMk continuous_const)).sub
-        (hC.comp (continuous_mul_right h))).add hC)
+        (hC.comp (continuous_mul_const h))).add hC)
       (hf.comp (continuous_id.prodMk continuous_const))).isClosed
   · intro n
     induction n with

@@ -111,7 +111,7 @@ theorem unfold_stab : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
   exact GlobalTheory.T.unfolding_integral_countable G.M.μ G₁.M.μ μ μK (unip σ G.V H) (ratU σ G.V.J ⊓ Subgroup.closure {g : UA σ G.V.J | mat g *ᵥ incV F H.x = incV F H.x}) (ratU σ G₁.V.J) μN (fun k : K => k.1) m (fun γ => m 1 γ)
     (fun l => ENNReal.ofReal ((absE F E l : ℝ) ^ (1 - ((b + 2 : ℕ) : ℝ)))) c G₁.M.dom 𝓕
     hQc inferInstance inferInstance inferInstance (fun g => (continuous_const_mul g).measurable)
-    (fun g => (continuous_const_mul g).measurable) (fun g => (continuous_mul_right g).measurable) hjoint hw hw0 (fun _ => ENNReal.ofReal_ne_top) inferInstance hI hc0 hctop
+    (fun g => (continuous_const_mul g).measurable) (fun g => (continuous_mul_const g).measurable) hjoint hw hw0 (fun _ => ENNReal.ofReal_ne_top) inferInstance hI hc0 hctop
     hmul hιQ (GlobalTheory.T.rational_levi_closure_mem F E σ B b a' G G₁ H H' hC hB hG hG₁ m hm)
     (GlobalTheory.T.levi_unipotent_measure_formula F E σ B b a' G G₁ H H' hC hB hG hG₁ m hm μN hμN) inferInstance (hsub ▸ h𝓕) h𝓕0 h𝓕top hG₁.hM.dom inferInstance
     𝓓 h𝓓 φ (hφ.measurable) hφQ hφN

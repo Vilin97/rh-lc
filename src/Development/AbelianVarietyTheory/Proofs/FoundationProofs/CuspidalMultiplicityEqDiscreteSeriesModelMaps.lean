@@ -178,7 +178,7 @@ theorem toHom_surjective (hP : GlobalTheory.Published.CuspRapidDecay) (hθ : IsI
       map_smul' := fun c w => eq_of_represents_cont (hc _) (fun v => (hc w v).const_smul c) (hr (c • w))
         (by rw [map_smul]; exact (hr w).smul c) }
   have hf : f ∈ homInto σ (finRep M) (allMaps θ M) :=
-    ⟨hT, fun g w => eq_of_represents_cont (hc _) (fun v => (hc w v).comp (continuous_mul_right _)) (hr (σ g w))
+    ⟨hT, fun g w => eq_of_represents_cont (hc _) (fun v => (hc w v).comp (continuous_mul_const _)) (hr (σ g w))
       ((hr w).translate' g (h2 g w))⟩
   exact ⟨⟨f, hf⟩, Subtype.ext (LinearMap.ext fun w => phiOf_eq hP hθ (hT w) (hr w))⟩
 

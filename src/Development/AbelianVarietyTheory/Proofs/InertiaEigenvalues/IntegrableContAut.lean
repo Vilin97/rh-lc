@@ -544,7 +544,7 @@ theorem unrCorr_inert : GlobalTheory.Hk3.HoweUnram → ∀ (D : D7) (G : Type) [
   have hρ0 : ∀ a (z : GA D (Vc D i) → ℂ) g, ρ0 a z g = z (g * embV (Vc D i) (w.under (𝓞 D.host.F)) a) :=
     fun _ _ _ => rfl
   have hXs : ∀ a, ∀ z ∈ X, ρ0 a z ∈ X := fun a z hz =>
-    ⟨hz.1.comp (continuous_mul_right _), fun γ hγ g => by rw [hρ0, hρ0, mul_assoc, hz.2 γ hγ]⟩
+    ⟨hz.1.comp (continuous_mul_const _), fun γ hγ g => by rw [hρ0, hρ0, mul_assoc, hz.2 γ hγ]⟩
   let ρX : Representation ℂ (Gv (Vc D i) (w.under (𝓞 D.host.F))) X := GlobalTheory.PRep.sub ρ0 X hXs
   let U := GlobalTheory.FinWeilO.thetaSub R.ψ (Vc D i) (Wc D i)
   have hint : ∀ (u : U) (z : X) x, IntegrableOn (fun h => thetaKO (R.ωP i t) h x (u : WO (Vc D i) (Wc D i) → ℂ) *

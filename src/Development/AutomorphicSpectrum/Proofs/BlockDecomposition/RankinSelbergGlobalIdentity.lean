@@ -35,14 +35,14 @@ theorem globalIdentity : Ad3.R.B0 → Ad3.R.A1 → Ad3.R.G0 → Ad3.R.G2a → Ad
   have hDec1 : Dec φ := by
     have := hDec 1 (fun w => by simp)
     simpa using this
-  have hcontR : Continuous fun g : G2 => φ (g * h) := hL.cont.comp (continuous_mul_right h)
+  have hcontR : Continuous fun g : G2 => φ (g * h) := hL.cont.comp (continuous_mul_const h)
   have hleftR : LInv fun g : G2 => φ (g * h) := fun γ' g => by
     simp only [mul_assoc]; exact hL.left γ' (g * h)
   have hWh : ∀ g, Wh (fun g : G2 => φ (g * h)) g = Wh φ (g * h) := fun g => by
     simp only [Wh, mul_assoc]
   have hWhF : Wh (fun g : G2 => φ (g * h)) = fun g => Wh φ (g * h) := funext hWh
   have hWcR : Continuous (Wh fun g : G2 => φ (g * h)) := by
-    rw [hWhF]; exact hWc.comp (continuous_mul_right h)
+    rw [hWhF]; exact hWc.comp (continuous_mul_const h)
   have hPar : Par (fun g => φ g * conj (φ (g * h))) (fun g => Wh φ g * conj (Wh φ (g * h))) := by
     have := hF6 φ (fun g => φ (g * h)) hL.cont hcontR hL.left hleftR hDec1
       ⟨Cb, fun g => hCb _⟩ hcusp hWc hWcR

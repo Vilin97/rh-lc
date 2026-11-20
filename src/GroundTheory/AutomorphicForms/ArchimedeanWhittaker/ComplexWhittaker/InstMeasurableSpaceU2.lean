@@ -21,7 +21,7 @@ instance : μK.IsMulRightInvariant := by
   refine ⟨fun g => ?_⟩
   haveI : (Measure.map (· * g) μK).IsHaarMeasure := Measure.isHaarMeasure_map_mul_right μK g
   haveI : IsProbabilityMeasure (Measure.map (· * g) μK) :=
-    Measure.isProbabilityMeasure_map (continuous_mul_right g).measurable.aemeasurable
+    Measure.isProbabilityMeasure_map (continuous_mul_const g).measurable.aemeasurable
   exact Measure.isHaarMeasure_eq_of_isProbabilityMeasure _ _
 
 instance : μK.IsInvInvariant := by

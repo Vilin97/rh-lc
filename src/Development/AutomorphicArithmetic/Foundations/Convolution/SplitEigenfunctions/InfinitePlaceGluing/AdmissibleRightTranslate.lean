@@ -205,11 +205,11 @@ private theorem admissible_two_sided_translate (hD : DecE) (D : Dat ℚ E) (P : 
   have hL : ∀ f ∈ P.V, Pp.Lf f.1 := fun f hf => (hD E P f hf).1
   have hB : ∀ f ∈ P.V, ∃ B : ℝ, ∀ g, ‖f.1 g‖ ≤ B := UpperTheory.exists_bound_cuspForm_of_unitary_centralCharacter E P ω hc hu
   obtain ⟨hl, h0, hd⟩ := hD E P f hf
-  have hcp : ∀ {C : Set (GL (Fin 2) (A E))}, IsCompact C → IsCompact ((· * h) '' C) := fun hC => hC.image (continuous_mul_right h)
+  have hcp : ∀ {C : Set (GL (Fin 2) (A E))}, IsCompact C → IsCompact ((· * h) '' C) := fun hC => hC.image (continuous_mul_const h)
   have hz : ∀ g, ∫ b in fundamentalSet E, f.1 (gl (nU b) * g * h) ∂(adeleMeasure E) = 0 := fun g => by
     simp only [mul_assoc]
     exact h0 _
-  have hc' : Continuous fun g => f.1 (g * h) := hl.1.comp (continuous_mul_right h)
+  have hc' : Continuous fun g => f.1 (g * h) := hl.1.comp (continuous_mul_const h)
   have hl' : ∀ γ g, f.1 (ratGL E 2 γ * g * h) = f.1 (g * h) := fun γ g => by rw [mul_assoc, hl.2]
   refine ⟨⟨hc', hl', fun z g => ?_, UpperTheory.integral_unipotentCoordinates_eq_zero_of_cuspidal E D _ ⟨hc', hl'⟩ hz, ?_, ?_, ?_⟩, hz⟩
   · rw [mul_assoc, hc f hf]

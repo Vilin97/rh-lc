@@ -77,7 +77,7 @@ theorem unfBF_of_parts
     hνh h𝓝 hμR
   have hK : Measurable (kerBF s φ G Φ) := hcont.measurable
   have hmeas : ∀ h, Measurable fun g => kerBF s φ G Φ (g * h) := fun h =>
-    (hcont.comp (continuous_mul_right h)).measurable
+    (hcont.comp (continuous_mul_const h)).measurable
   have key := GlobalTheory.T.integral_quotient_eq_mean_intermediate_subgroup (GA D J.W) s.vW.μ (jacGrp J.d) (GQ J.W ⊓ jacGrp J.d) inf_le_right hRcl hΓc hΓd J.μR hμR 𝓡 𝓑
     h𝓡 h𝓑 (kerBF s φ G Φ) hK hinv hint
     (fun h => ((hsem (fun g => kerBF s φ G Φ (g * h)) (hmeas h)).1).2 (hcpt D ρ J _ hcont hinv h))

@@ -259,7 +259,7 @@ theorem liftS_trans {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {χS χT : (A
     (fun γ hγ h => by rw [ker_inv_right hom hf hγ, hG γ hγ]) b
 
 theorem contAut_rTrans {V : HSp D} {F : GA D V → ℂ} (hF : IsContAut V F) (b : GA D V) : IsContAut V (rTrans b F) :=
-  ⟨fun γ hγ g => by simp only [rTrans]; rw [mul_assoc, hF.1 γ hγ], hF.2.comp (continuous_mul_right b)⟩
+  ⟨fun γ hγ g => by simp only [rTrans]; rw [mul_assoc, hF.1 γ hγ], hF.2.comp (continuous_mul_const b)⟩
 
 theorem cocpt_zero {S S₀ : HSp D} (d : HypDec S S₀ 0) (h : CoCpt S₀) : CoCpt S := by
   obtain ⟨K, hK, hKs⟩ := h

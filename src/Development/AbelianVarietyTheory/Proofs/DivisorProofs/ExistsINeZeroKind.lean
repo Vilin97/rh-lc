@@ -238,7 +238,7 @@ theorem exists_I_ne_zero_at (hM : IsMatched B G X om om' R Rf) (hc : OneConst B 
   obtain ⟨s, g, hg, hs, rfl⟩ := hH x
   have hcont : Continuous fun y : UA σ G.W.J => G.M.I om (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ) (y * g) := by
     simp only [I_eq_l hM.triple hl hΦ]
-    exact (hM.triple.weil.isUSplitting.cont l hla _ hΦ).comp (continuous_const.prodMk (continuous_mul_right g))
+    exact (hM.triple.weil.isUSplitting.cont l hla _ hΦ).comp (continuous_const.prodMk (continuous_mul_const g))
   refine closure_minimal (t := {y | G.M.I om (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ) (y * g) = 0}) ?_
     (isClosed_eq hcont continuous_const) (hsa s hs)
   rintro _ ⟨γ, hγ, k, hk, rfl⟩

@@ -25,7 +25,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchim
 theorem rep_mem_CA {A : HSp D} (α : Frame p A n) (g : GL n k) {φ : GA D A → ℂ} (h : φ ∈ CA A) : α.rep g φ ∈ CA A :=
   ⟨fun γ hγ x => by
     change φ (γ * x * α.gl g) = φ (x * α.gl g)
-    rw [mul_assoc, h.1 γ hγ], h.2.comp (continuous_mul_right _)⟩
+    rw [mul_assoc, h.1 γ hγ], h.2.comp (continuous_mul_const _)⟩
 
 def caRep {A : HSp D} (α : Frame p A n) : Representation ℂ (GL n k) (CA A) where
   toFun g := (α.rep g).restrict fun _ h => rep_mem_CA α g h

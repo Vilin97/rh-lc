@@ -21,7 +21,7 @@ private theorem haar {n : ℕ} {U : Type} [Group U] [TopologicalSpace U] [Second
   · refine hE.of_semiconj (measurePreserving_pi _ _ fun i => hl (e k i)) (fun x => ?_) (continuous_const_mul k).measurable
     change e.symm (e k * x) = _
     rw [map_mul, e.symm_apply_apply]
-  · refine hE.of_semiconj (measurePreserving_pi _ _ fun i => hr (e k i)) (fun x => ?_) (continuous_mul_right k).measurable
+  · refine hE.of_semiconj (measurePreserving_pi _ _ fun i => hr (e k i)) (fun x => ?_) (continuous_mul_const k).measurable
     change e.symm (x * e k) = _
     rw [map_mul, e.symm_apply_apply]
 

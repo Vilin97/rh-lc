@@ -134,7 +134,7 @@ theorem adm : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F]
           funext fun x => GlobalTheory.ThetaFacCompl.I_transl _ _ _ _ _
         show Continuous (G.M.I om (om (1, k.1) Φ))
         rw [e]
-        exact (cont Φ hΦ).1.comp (continuous_mul_right _)
+        exact (cont Φ hΦ).1.comp (continuous_mul_const _)
       | zero => exact continuous_const
       | add x y _ _ hx hy => exact hx.add hy
       | smul c x _ hx => exact hx.const_smul c

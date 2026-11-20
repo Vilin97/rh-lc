@@ -254,7 +254,7 @@ theorem foldr_rTr (hθ : IsInfFam θ) (hh : IsRealPt θ h) (φ : GA D V → ℂ)
 theorem isAutFunSm_rTr (hθ : IsInfFam θ) (hh : IsRealPt θ h) {φ : GA D V → ℂ} (hφ : IsAutFunSm θ V φ) :
     IsAutFunSm θ V (rTr V h φ) := by
   haveI : IsTopologicalGroup (GA D V) := Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.Unfold.topGroupHA _ _
-  refine { left := fun γ hγ g => ?_, level := ?_, cont := hφ.cont.comp (continuous_mul_right h),
+  refine { left := fun γ hγ g => ?_, level := ?_, cont := hφ.cont.comp (continuous_mul_const h),
            smooth := rTr_mem hθ hh hφ.smooth, zfin := ?_, growth := ?_ }
   · unfold rTr
     rw [mul_assoc, hφ.left γ hγ]

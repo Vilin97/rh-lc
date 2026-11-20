@@ -15,7 +15,7 @@ private theorem map_right_eq_of_CO {G : Type} [Group G] [TopologicalSpace G] [Is
     [LocallyCompactSpace G] [SecondCountableTopology G] [MeasurableSpace G] [BorelSpace G]
     (m : Measure G) [m.IsHaarMeasure] {J : Subgroup G} (hJ : CO J) {k : G} (hk : k ∈ J) :
     Measure.map (· * k) m = m := by
-  have hcont : Measurable (· * k : G → G) := (continuous_mul_right k).measurable
+  have hcont : Measurable (· * k : G → G) := (continuous_mul_const k).measurable
   haveI : (Measure.map (· * k) m).IsHaarMeasure := Measure.isHaarMeasure_map_mul_right m k
   have h := Measure.isMulLeftInvariant_eq_smul (Measure.map (· * k) m) m
   have hmeas : MeasurableSet (J : Set G) := hJ.2.measurableSet
@@ -45,7 +45,7 @@ theorem UpperTheory.localOperator_comp_rhoL_eq_of_right_invariant :
     simp only [rhoL, rhoF, map_mul]
     exact UnitaryRep.map_mul_apply _ _ _ v
   have hmp : MeasurePreserving (· * k : Gw n w → Gw n w) mw mw :=
-    ⟨(continuous_mul_right k).measurable, map_right_eq_of_CO mw hJ hk⟩
+    ⟨(continuous_mul_const k).measurable, map_right_eq_of_CO mw hJ hk⟩
   refine ContinuousLinearMap.ext fun v => ext_inner_left ℂ fun u => ?_
   rw [ContinuousLinearMap.comp_apply, hT u, hT u v,
     ← hmp.integral_comp (Homeomorph.mulRight k).measurableEmbedding

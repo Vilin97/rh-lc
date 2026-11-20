@@ -17,7 +17,7 @@ abbrev XB (E : Type) [Field E] [NumberField E] (a : ℕ) : Type := GA E a →ᵇ
 
 variable {E : Type} [Field E] [NumberField E] {a : ℕ}
 
-def rtFun (h : GA E a) (φ : XB E a) : XB E a := φ.compContinuous ⟨fun g => g * h, continuous_mul_right h⟩
+def rtFun (h : GA E a) (φ : XB E a) : XB E a := φ.compContinuous ⟨fun g => g * h, continuous_mul_const h⟩
 
 variable (E a) in
 

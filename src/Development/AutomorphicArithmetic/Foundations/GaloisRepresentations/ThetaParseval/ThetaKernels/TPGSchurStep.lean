@@ -77,7 +77,7 @@ private theorem assemble_pk {H A V : Type} [Group H] [TopologicalSpace H] [IsTop
   obtain ⟨u₀, hu₀⟩ := UpperTheory.riesz_representation_sesquilinear B hh hp L
   have hL : ∀ b, pet μ 𝓕 u (f b) = B u₀ b := hu₀
   have key : ∀ x, pet μ 𝓕 (fun y => u (y * ι x)) (f x₀) = B (π x u₀) x₀ := fun x => by
-    have e1 := (P (fun y => u (y * ι x)) (f x₀) (huc.comp (continuous_mul_right _)) (hfc x₀)
+    have e1 := (P (fun y => u (y * ι x)) (f x₀) (huc.comp (continuous_mul_const _)) (hfc x₀)
       (fun γ hγ h => by simp only [mul_assoc, hul γ hγ]) (hfl x₀)).2.1 (ι x⁻¹)
     have e2 : ∀ h, f x₀ (h * ι x⁻¹) = f (π x⁻¹ x₀) h := fun h => (hfr _ _ _).symm
     have e3 : ∀ h, u (h * ι x⁻¹ * ι x) = u h := fun h => by
@@ -209,7 +209,7 @@ theorem UpperTheory.TP.schurStep_k : _root_.UpperTheory.TP.Tools_k → _root_.Up
     exact Complex.ofReal_ne_zero.2 (div_pos h1 h3).ne'
   have hmain := UpperTheory.TP.assemble_pk M.μ (ratU (UpperTheory.TP.cj E) X.J) M.dom P.good.dom (C.fin _ _ hHaar P.good.dom) Ω hΩ hcov μA π hI
     (UpperTheory.TP.gInf (UpperTheory.TP.cj E) X).subtype measurable_subtype_coe f hf0 hfc hleft hfr B₁ hB₁ x₀
-    (fun y => φ (e.symm (y * cc))) (hform.cont.comp (e.symm.continuous.comp (continuous_mul_right cc)))
+    (fun y => φ (e.symm (y * cc))) (hform.cont.comp (e.symm.continuous.comp (continuous_mul_const cc)))
     (fun γ hγ h => by
       show φ (e.symm (γ * h * cc)) = φ (e.symm (h * cc))
       rw [mul_assoc, map_mul]

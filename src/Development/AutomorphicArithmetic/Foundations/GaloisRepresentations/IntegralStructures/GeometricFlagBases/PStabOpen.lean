@@ -28,7 +28,7 @@ theorem UpperTheory.Gal.Int.Geo.stabOpen_of :
     have hσ' : ((galHl l Ω p n i σ) x).1 m = x.1 m := hσ
     rw [hσ']
     exact fix _ hg'
-  · exact (IntermediateField.fixingSubgroup_isOpen L).preimage (continuous_mul_right σ⁻¹)
+  · exact (IntermediateField.fixingSubgroup_isOpen L).preimage (continuous_mul_const σ⁻¹)
   · show σ * σ⁻¹ ∈ L.fixingSubgroup
     rw [mul_inv_cancel]
     exact one_mem _

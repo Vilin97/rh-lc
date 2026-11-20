@@ -80,7 +80,7 @@ theorem GlobalTheory.StdPairZetaB.smallF_stdB : ∀ {k : Type} [Field k] [Valuat
     have hSm : @MeasurableSet (GL (Fin a') k) Units.instMeasurableSpace S := by
       letI : MeasurableSpace (GL (Fin a') k) := Units.instMeasurableSpace
       haveI : BorelSpace (GL (Fin a') k) := borel_GL
-      exact (isOpen_KO.preimage (continuous_mul_right _)).measurableSet
+      exact (isOpen_KO.preimage (continuous_mul_const _)).measurableSet
     have hS1 : (haarVol (KO k (Fin a'))).real S = 1 := by
       simp [hSdef, Measure.real, measure_preimage_mul_right, haarVol_self isOpen_KO le_rfl]
     have hint : ∀ g : GL (Fin a') k, stdB ν ϖ c a a' (g.val * Y) * (ν (gdet g) : ℂ) * apow (gdet g) d =

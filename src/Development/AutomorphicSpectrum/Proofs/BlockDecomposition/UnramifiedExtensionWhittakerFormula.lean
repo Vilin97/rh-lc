@@ -33,7 +33,7 @@ theorem exists_scale {S : Set K} (hS : IsCompact S) : ∃ s : Kˣ, ∀ x ∈ S, 
     | succ n ih => rw [pow_succ, modulus_mul, ih, pow_succ]
   let U : ℕ → Set K := fun n => {x | x * π ^ n ∈ 𝒪[K]}
   have ho : IsOpen (𝒪[K] : Set K) := Valuation.isOpen_integer
-  have hUo : ∀ n, IsOpen (U n) := fun n => ho.preimage (continuous_mul_right _)
+  have hUo : ∀ n, IsOpen (U n) := fun n => ho.preimage (continuous_mul_const _)
   have hcov : S ⊆ ⋃ n, U n := by
     intro x _
     refine Set.mem_iUnion.2 ?_

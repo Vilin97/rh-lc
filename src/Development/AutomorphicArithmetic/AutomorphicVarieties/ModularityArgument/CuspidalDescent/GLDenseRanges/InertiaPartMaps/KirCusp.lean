@@ -247,7 +247,7 @@ theorem UpperTheory.V.Z.Desc.V0.kirCusp :
       have hU : IsOpen {u | σ.ρ u v = v} := σ.5 v
       obtain ⟨γ, hγ⟩ := (denseRange_mapGL (algebraMap E (w.adicCompletion E))
         (HeightOneSpectrum.denseRange_algebraMap E w) a).exists_mem_open
-        (hU.preimage (continuous_mul_right (pw w g))) ⟨(pw w g)⁻¹, by
+        (hU.preimage (continuous_mul_const (pw w g))) ⟨(pw w g)⁻¹, by
           change σ.ρ ((pw w g)⁻¹ * pw w g) v = v
           rw [inv_mul_cancel, map_one]
           rfl⟩

@@ -257,7 +257,7 @@ theorem isClosed_stSub : IsClosed (stSub ε e z z' γ : Set (Formalism.REAL.UJ �
   have h1 : (stSub ε e z z' γ : Set (Formalism.REAL.UJ ε)) =
       NLoc ε e z ∩ (fun y => γ⁻¹ * y * γ) ⁻¹' NLoc ε e z' := rfl
   have h2 : Continuous (fun y : Formalism.REAL.UJ ε => γ⁻¹ * y * γ) :=
-    (continuous_mul_right γ).comp (continuous_const_mul γ⁻¹)
+    (continuous_mul_const γ).comp (continuous_const_mul γ⁻¹)
   rw [h1]
   exact (isClosed_nLoc ε e z).inter ((isClosed_nLoc ε e z').preimage h2)
 

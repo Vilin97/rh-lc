@@ -90,7 +90,7 @@ private theorem ldet_shift {g : GA E n} (hg : logAbs g.val.det = 0) (x : H E n 0
 
 private theorem slab_rt (D : Dom E n 0) {a : GA E n → ℂ} (ha : Slab D a) {g : GA E n} (hg : logAbs g.val.det = 0) :
     Slab D fun x => a (x * g) := by
-  have hc : Continuous fun x => a (x * g) := ha.1.comp (continuous_mul_right g)
+  have hc : Continuous fun x => a (x * g) := ha.1.comp (continuous_mul_const g)
   refine ⟨hc, fun γ x => ?_, fun t x => ?_, fun u hu hs => ?_⟩
   · show a (_ * x * g) = a (x * g)
     rw [mul_assoc]

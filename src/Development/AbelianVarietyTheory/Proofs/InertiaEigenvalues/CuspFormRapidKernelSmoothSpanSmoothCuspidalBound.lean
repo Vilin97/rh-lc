@@ -85,7 +85,7 @@ theorem lie_mem_dSub {π : CuspSub E a} {φ : Sm E a} (h : φ ∈ dSub π) (X : 
   mem_dSub.2 fun l => by rw [← word_append]; exact mem_dSub.1 h _
 
 theorem isBCC_rt {F : GA E a → ℂ} (hF : IsBCC F) (h : GA E a) : IsBCC (fun g => F (g * h)) where
-  cont := hF.cont.comp (continuous_mul_right h)
+  cont := hF.cont.comp (continuous_mul_const h)
   bdd := let ⟨C, hC⟩ := hF.bdd; ⟨C, fun g => hC _⟩
   cusp := by
     intro r h0 h1 _ _ μ 𝓕 hμ hF' g

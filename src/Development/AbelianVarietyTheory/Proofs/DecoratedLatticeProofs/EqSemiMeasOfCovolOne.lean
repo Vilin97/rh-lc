@@ -258,7 +258,7 @@ theorem semiMeas_rightInv (μ : Measure H) (ν : Measure N) [μ.IsHaarMeasure] [
     (g := fun h n => n * cj N s hnorm h n₀) hcont.measurable
     (Filter.Eventually.of_forall fun h => map_mul_right_eq_self ν _)
   change ((μ.prod ν).map (mk N s)).map _ = (μ.prod ν).map (mk N s)
-  rw [Measure.map_map (continuous_mul_right _).measurable hφ]
+  rw [Measure.map_map (continuous_mul_const _).measurable hφ]
   conv_rhs => rw [← hT.map_eq, Measure.map_map hφ hT.measurable]
   congr 1
   funext q

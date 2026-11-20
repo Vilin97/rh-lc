@@ -41,7 +41,7 @@ theorem lie_kills : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFi
   have hcont : ∀ (Ψ : (Fin a' × Fin (a + a') → AF F) → ℂ), Continuous (fun x : UA σ G.V'.J × UA σ G.W.J => theta om' Ψ x.1 x.2) →
       ∀ c : UA σ G.V'.J, Continuous fun g : UA σ G.V'.J => theta om' Ψ (g * c) h := by
     intro Ψ hΨ c
-    exact hΨ.comp ((continuous_mul_right c).prodMk continuous_const)
+    exact hΨ.comp ((continuous_mul_const c).prodMk continuous_const)
   have hder : ∀ (g : UA σ G.V'.J) (s : ℝ), HasDerivAt (fun t : ℝ => theta om' Φ (g * γ (Multiplicative.ofAdd t)) h)
       (theta om' Φ₁ (g * γ (Multiplicative.ofAdd s)) h) s := by
     intro g s

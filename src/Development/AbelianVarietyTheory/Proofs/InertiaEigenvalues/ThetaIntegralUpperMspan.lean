@@ -50,7 +50,7 @@ theorem measurable_of_mem_mspanR (π : CuspSub E a) {F : GA E a → ℂ} (hF : F
   refine Submodule.mem_sInf.1 hF' (measSub E a) ⟨fun φ hφ => ?_, fun F hF h => ?_,
     fun F hF X _ ν _ k γ hk => ?_⟩
   · exact (continuous_of_mem_or (π := π) (Or.inl hφ)).measurable
-  · exact (hF : Measurable F).comp (continuous_mul_right h).measurable
+  · exact (hF : Measurable F).comp (continuous_mul_const h).measurable
   · have hγ : Measurable fun p : GA E a × X => p.1 * infGL E a (γ p.2) :=
       measurable_fst.mul ((GlobalTheory.ConstTermSmooth.continuous_infGL.measurable.comp
         (measurable_gl_of_matrix hk.2.1)).comp measurable_snd)

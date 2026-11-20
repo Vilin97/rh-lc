@@ -146,7 +146,7 @@ theorem conjMap_isAutFunSm : GlobalTheory.Published.DiscreteSeriesClassification
   have hcont : ∀ u, Continuous (GlobalTheory.ConjRowMult.conjMap X M c Φ h t u) := fun u => by
     have : GlobalTheory.ConjRowMult.conjMap X M c Φ h t u = fun y => star (f u (iotaX X h (y * t⁻¹))) := funext (hval u)
     rw [this]
-    exact ((hf u).1.comp ((iotaX X h).continuous.comp (continuous_mul_right _))).star
+    exact ((hf u).1.comp ((iotaX X h).continuous.comp (continuous_mul_const _))).star
   have haut : ∀ u, IsAutFun (D.sp.Y 0) (GlobalTheory.ConjRowMult.conjMap X M c Φ h t u) := by
     intro u
     refine ⟨fun γ hγ y => ?_, ?_, hcont u⟩
@@ -157,7 +157,7 @@ theorem conjMap_isAutFunSm : GlobalTheory.Published.DiscreteSeriesClassification
       · rw [← hK] at hKo
         exact hKo.preimage (f := fun k => (iotaX X h (t * k * t⁻¹)).2)
           (continuous_snd.comp ((iotaX X h).continuous.comp
-            ((continuous_mul_right _).comp (continuous_const_mul _))))
+            ((continuous_mul_const _).comp (continuous_const_mul _))))
       · have hk' : (iotaX X h (t * k * t⁻¹)).2 ∈ X.B.I.Kg X.B.g := by rw [← hK]; exact hk
         have h1 : (iotaX X h (t * k * t⁻¹)).1 = 1 :=
           hfst _ ((GfC _).mul_mem ((GfC _).mul_mem ht hkf) ((GfC _).inv_mem ht))

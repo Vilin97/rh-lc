@@ -58,11 +58,11 @@ instance muG_haar (D : Dom E n 0) : (muG D).IsHaarMeasure := by
 instance muG_right (D : Dom E n 0) : (muG D).IsMulRightInvariant := by
   haveI := D.haar.2.1
   refine ⟨fun g => ?_⟩
-  rw [muG, Measure.map_map (continuous_mul_right g).measurable measurable_eH_symm]
+  rw [muG, Measure.map_map (continuous_mul_const g).measurable measurable_eH_symm]
   have e : (fun x => x * g) ∘ (eH (E := E) (n := n)).symm =
       (eH (E := E) (n := n)).symm ∘ fun x => x * eH g := funext fun x => by
     simp only [Function.comp_apply, map_mul, ContinuousMulEquiv.symm_apply_apply]
-  rw [e, ← Measure.map_map measurable_eH_symm (continuous_mul_right _).measurable, map_mul_right_eq_self]
+  rw [e, ← Measure.map_map measurable_eH_symm (continuous_mul_const _).measurable, map_mul_right_eq_self]
 
 def eR (δ : ratH E n 0) : (ratGL E n).range :=
   ⟨(δ : H E n 0).1, by

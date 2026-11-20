@@ -25,7 +25,7 @@ private theorem coef_le (hfin : μ D < ⊤) (hD : IsFundamentalDomain Γ D μ) {
     Measure.integrableOn_of_bounded (M := C ^ 2) hfin.ne (h1.norm.pow 2).aestronglyMeasurable
       (Eventually.of_forall fun y => by
         rw [norm_pow, norm_norm]; exact pow_le_pow_left₀ (norm_nonneg _) (h2 y) 2)
-  have hcg : Continuous fun y => φ (y * g) := hc.comp (continuous_mul_right g)
+  have hcg : Continuous fun y => φ (y * g) := hc.comp (continuous_mul_const g)
   have i1 := hb hcg fun y => hC _
   have i2 := hb hc hC
   have e := sq_shift (μ := μ) hD (f := fun y => ‖φ y‖ ^ 2) (fun γ hγ y => by simp only [hi γ hγ y]) g

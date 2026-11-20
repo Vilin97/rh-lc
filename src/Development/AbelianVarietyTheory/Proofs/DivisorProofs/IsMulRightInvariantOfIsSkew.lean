@@ -64,7 +64,7 @@ theorem isMulRightInvariant_of_isSkew : ∀ (F E : Type) [Field F] [NumberField 
   have hem : Measurable e := he.measurable
   have hem' : Measurable e.symm := he'.measurable
   refine ⟨fun g => ?_⟩
-  have hmg : Measurable fun y : HA (AF F) σ (δ • W.J.map σ) => y * e g := (continuous_mul_right (e g)).measurable
+  have hmg : Measurable fun y : HA (AF F) σ (δ • W.J.map σ) => y * e g := (continuous_mul_const (e g)).measurable
   have h1 : (μ.map e).map e.symm = μ := by
     rw [Measure.map_map hem' hem]
     have : (e.symm ∘ e : UA σ W.J → UA σ W.J) = id := funext fun x => e.symm_apply_apply x

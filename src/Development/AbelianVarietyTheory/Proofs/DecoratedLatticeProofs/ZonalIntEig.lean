@@ -17,7 +17,7 @@ theorem zonalInt_eig : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpa
     have := hψ g _ hx
     rwa [mul_inv_cancel_left] at this
   have hint : ∀ y, IntegrableOn (fun κ => ψ (κ * y)) (KO k (Fin N) : Set (GL (Fin N) k)) μK := fun y =>
-    (hcont.comp (continuous_mul_right y)).continuousOn.integrableOn_compact GlobalTheory.SplitFlip.isCompact_KO
+    (hcont.comp (continuous_mul_const y)).continuousOn.integrableOn_compact GlobalTheory.SplitFlip.isCompact_KO
   simp only [zonalInt]
   rw [← integral_finsetSum _ (fun g _ => hint (m * g)), ← integral_const_mul]
   congr 1

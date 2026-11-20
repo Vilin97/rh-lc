@@ -177,7 +177,7 @@ private theorem haar_right {G : Type} [Group G] [TopologicalSpace G] [IsTopologi
     rw [this, ← Measure.map_map (measurable_mul_const u) (measurable_const_mul g), map_mul_left_eq_self]⟩
   haveI : IsFiniteMeasureOnCompacts (Measure.map (· * u) m) := ⟨fun C hC => by
     rw [Measure.map_apply (measurable_mul_const u) hC.measurableSet, hpre]
-    exact (hC.image (continuous_mul_right _)).measure_lt_top⟩
+    exact (hC.image (continuous_mul_const _)).measure_lt_top⟩
   have e := Measure.isMulLeftInvariant_eq_smul (Measure.map (· * u) m) m
   generalize Measure.haarScalarFactor (Measure.map (· * u) m) m = a at e
   have hJm : MeasurableSet (J : Set G) := hJ.2.measurableSet

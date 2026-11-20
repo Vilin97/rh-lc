@@ -141,7 +141,7 @@ theorem avgInt_holds : AvgInt := by
     obtain ⟨h1, h2⟩ := (integrable_prod_iff' cF3.aestronglyMeasurable).1 hF3
     refine ⟨h1.mono fun s hs => ?_, ?_⟩
     · have hm : AEStronglyMeasurable (fun x => (fun y => w (ldet y - s * c) * L y) (x * aS E n s)) D.ν :=
-        (((hwc.comp (hldc.sub continuous_const)).mul hLc).comp (continuous_mul_right (aS E n s))).aestronglyMeasurable
+        (((hwc.comp (hldc.sub continuous_const)).mul hLc).comp (continuous_mul_const (aS E n s))).aestronglyMeasurable
       refine (integrable_shift D (fun y => w (ldet y - s * c) * L y) (hinv s) (aS E n s) hs hm).congr
         (Eventually.of_forall fun x => ?_)
       simp only [ldet_mul_aS, ← hc_eq, add_sub_cancel_right]

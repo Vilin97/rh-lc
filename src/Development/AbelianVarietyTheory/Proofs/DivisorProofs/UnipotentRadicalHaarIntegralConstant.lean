@@ -23,7 +23,7 @@ theorem lintegral_midSet_lt_top : GlobalTheory.Published.EisensteinIsotropicLine
     obtain ⟨p, l, hp, k, hk, rfl⟩ := hS.2.2.2.2.2.2.1 g
     rw [hS.2.2.2.2.2.2.2 p l hp k hk]; exact NNReal.coe_nonneg _
   obtain ⟨C, hC, hcov⟩ := GlobalTheory.T.unipotent_radical_rational_translate F E σ n J r X Y L a h hS
-  obtain ⟨K, hK0, hK⟩ := GlobalTheory.T.height_function_compact_right_translate F E σ n J r X Y L a h hS ((fun c => c * g) '' C) (hC.image (continuous_mul_right g))
+  obtain ⟨K, hK0, hK⟩ := GlobalTheory.T.height_function_compact_right_translate F E σ n J r X Y L a h hS ((fun c => c * g) '' C) (hC.image (continuous_mul_const g))
   have hsum := GlobalTheory.T.eisenstein_series_converges_right_half hP F E σ n J r X Y L a h hS T hT s hs
   have hb : ∀ u : unipRad σ J (col0 X), ∑' t : GlobalTheory.EisCT.midSet σ J (col0 X) T, ENNReal.ofReal (h (t.1.1 * (u.1 * g)) ^ s) ≤
       ENNReal.ofReal (K ^ s) * ∑' t : GlobalTheory.EisCT.midSet σ J (col0 X) T, ENNReal.ofReal (h t.1.1 ^ s) := by

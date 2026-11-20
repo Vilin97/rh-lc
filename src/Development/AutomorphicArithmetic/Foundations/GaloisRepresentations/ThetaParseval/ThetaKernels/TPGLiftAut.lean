@@ -198,7 +198,7 @@ theorem _root_.UpperTheory.TP.liftAut_k :
   have hm := _root_.UpperTheory.TP.polStab_k T hP (e g) (e' h) Φ.1 Φ.2
   refine ⟨⟨_, hm⟩, rfl, ?_⟩
   have hRC : GlobalTheory.UnitaryBC.RU E n g φ ∈ C :=
-    ⟨hφ.cont.comp (continuous_mul_right g), fun γ hγ x => by
+    ⟨hφ.cont.comp (continuous_mul_const g), fun γ hγ x => by
       show φ (γ * x * g) = φ (x * g)
       rw [mul_assoc]
       exact hφ.left γ hγ _⟩

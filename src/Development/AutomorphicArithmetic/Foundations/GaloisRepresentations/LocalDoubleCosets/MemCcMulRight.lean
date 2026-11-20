@@ -6,7 +6,7 @@ open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.LocGL ValuativeRel Matrix 
 private theorem mem_Cc_mul_right {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
     {f : G → ℂ} (hf : f ∈ Cc G) (u : G) : (fun x => f (x * u)) ∈ Cc G := by
   rw [GroundTheory.Automorphic.mem_locallyConstantCompactSupport] at hf ⊢
-  refine ⟨hf.1.comp_continuous (continuous_mul_right u), ?_⟩
+  refine ⟨hf.1.comp_continuous (continuous_mul_const u), ?_⟩
   exact hf.2.comp_homeomorph (Homeomorph.mulRight u)
 
 @[reducible] private def act {G : Type} [Group G] (B N : Subgroup G) : MulAction (B × N) G where

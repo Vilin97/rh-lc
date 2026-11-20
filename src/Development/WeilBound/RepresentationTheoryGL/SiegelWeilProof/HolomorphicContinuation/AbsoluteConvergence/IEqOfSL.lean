@@ -198,7 +198,7 @@ theorem absThm_gen (hV : VacOut) (hP : ProjOp) (hT : TSGen) (hB : Basis) (hFar :
     hT m n ε c t p q e sL ρ hL G Pp Γ ι s₀ Ht sec I Λ hD W hWfd hWst ν κ hν hκ hproj hlift x (yy i)
       (QQ i) (hQW i) (hyy i)
   have hmap : ∀ i, Continuous fun k : ↥(KR n) => g * ι (↑k * yy i) := fun i =>
-    continuous_const.mul (hD.ιcont.comp ((continuous_mul_right (yy i)).comp continuous_subtype_val))
+    continuous_const.mul (hD.ιcont.comp ((continuous_mul_const (yy i)).comp continuous_subtype_val))
   have hAh : ∀ i, DifferentiableOn ℂ (fun z => ∫ k, κ k * F z (g * ι (↑k * yy i)) ∂ν) (Metric.ball s₀ r) := by
     intro i
     refine (hH (↥(KR n)) ν univ isCompact_univ (by simp) (Metric.ball s₀ r)

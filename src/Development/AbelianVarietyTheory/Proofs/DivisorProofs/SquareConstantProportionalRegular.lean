@@ -54,7 +54,7 @@ theorem I_eq_zero (hT : IsTriple B G X om om')
   obtain ⟨s, g, hg, hs, rfl⟩ := hH x
   have hcont : Continuous fun y : UA σ G.W.J => G.M.I om (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ) (y * g) := by
     simp only [I_eq_l hT hl hΦ]
-    exact (hT.weil.isUSplitting.cont l hla _ hΦ).comp (continuous_const.prodMk (continuous_mul_right g))
+    exact (hT.weil.isUSplitting.cont l hla _ hΦ).comp (continuous_const.prodMk (continuous_mul_const g))
   refine closure_minimal (t := {y | G.M.I om (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ) (y * g) = 0}) ?_
     (isClosed_eq hcont continuous_const) (hsa s hs)
   rintro _ ⟨γ, hγ, k, hk, rfl⟩

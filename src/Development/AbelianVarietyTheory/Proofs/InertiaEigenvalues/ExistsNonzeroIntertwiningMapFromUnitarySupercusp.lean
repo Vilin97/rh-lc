@@ -210,7 +210,7 @@ theorem exists_back : ∀ (G W V : Type) [Group G] [TopologicalSpace G] [IsTopol
     intro v
     obtain ⟨C, hC, hCs⟩ := hρc v l hl
     obtain ⟨t, ht⟩ := hC.elim_finite_subcover (fun c : G => (fun x => x * c⁻¹) ⁻¹' (K : Set G))
-      (fun c => hKopen.preimage (continuous_mul_right c⁻¹))
+      (fun c => hKopen.preimage (continuous_mul_const c⁻¹))
       (fun c _ => Set.mem_iUnion.2 ⟨c, by simp⟩)
     refine ⟨t.image (fun c => c⁻¹), fun g hg => ?_⟩
     have hne : l (ρ g⁻¹ v) ≠ 0 := by

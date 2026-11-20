@@ -91,7 +91,7 @@ theorem muPolar_mul_right (ε : Fin n → Bool) (g : UJ ε) :
   swap
   · simp only [Measure.comap, dif_neg h, Measure.map_zero]
   haveI : BorelSpace (UJ ε) := ⟨rfl⟩
-  have hRm : Measurable (fun x : UJ ε => x * g) := (continuous_mul_right g).measurable
+  have hRm : Measurable (fun x : UJ ε => x * g) := (continuous_mul_const g).measurable
   have hG : inUJ ε (toM g) := g.2
   have h4 := muPolarMat_mul_right ε hG
   have hRM : Measurable (rmulPR (toM g)) := (continuous_rmulPR (toM g)).measurable

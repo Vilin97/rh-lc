@@ -109,7 +109,7 @@ theorem int_tr {F : Face D A} (hL : Laws R F) {T T' : MMap (R.MW i (sg0 D A))} (
   haveI : IsTopologicalGroup (GA D (Wc D i)) := Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.Unfold.topGroupHA _ _
   haveI : BorelSpace (GA D (Wc D i)) := ⟨rfl⟩
   exact GlobalTheory.DoubleCosetAdjoint.integrableOn_star_mul (R.νW i) (R.fdW i) (T v) (fun g => T' v' (g * δ))
-    (cont hT v) ((cont hT' v').comp (continuous_mul_right δ)) (sq_int hL hT v) (sq_int_tr hL hT' v' δ)
+    (cont hT v) ((cont hT' v').comp (continuous_mul_const δ)) (sq_int hL hT v) (sq_int_tr hL hT' v' δ)
 
 theorem exists_ip {F : Face D A} (hL : Laws R F) (hLP : LevProd R i) {γ : GA D (Wc D i)} (hγ : γ ∈ GfC (Wc D i))
     {T T' : MMap (R.MW i (sg0 D A))} (hT : T ∈ R.Wall i (sg0 D A)) (hT' : T' ∈ R.Wall i (sg0 D A)) :
@@ -239,7 +239,7 @@ theorem transLaws_of {F : Face D A} (hL : Laws R F) (hLP : LevProd R i) : TransL
       ‖∫ g in R.fdW i, star (e x v0 g) * e x v0 g ∂(R.νW i)‖ * ‖∫ g in R.fdW i, star (e y v0 g) * e y v0 g ∂(R.νW i)‖ := by
     intro x y
     have hcs' := norm_integral_star_mul_sq_le ((R.νW i).restrict (R.fdW i)) (e x v0) (fun g => e y v0 (g * γ))
-      (cont (hW x) v0).aestronglyMeasurable ((cont (hW y) v0).comp (continuous_mul_right γ)).aestronglyMeasurable
+      (cont (hW x) v0).aestronglyMeasurable ((cont (hW y) v0).comp (continuous_mul_const γ)).aestronglyMeasurable
       (sq_int hL (hW x) v0) (sq_int_tr hL (hW y) v0 γ)
     have hsh := shift hL (fun g => star (e y v0 g) * e y v0 g)
       (fun δ hδ g => by simp only [linv (hW y) v0 hδ]) γ

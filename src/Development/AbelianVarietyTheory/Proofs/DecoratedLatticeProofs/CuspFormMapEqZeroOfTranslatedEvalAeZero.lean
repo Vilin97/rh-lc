@@ -36,7 +36,7 @@ theorem GlobalTheory.Core.Mi.multT_eq_zero_of_evS_ae : ∀ (D : D7) (X : Formali
   have hφc : Continuous φ := by
     have e : φ = fun x => T' v₀ (ι.symm (x * ι t)) := funext hφ
     rw [e]
-    exact hf.comp (ι.symm.continuous.comp (continuous_mul_right _))
+    exact hf.comp (ι.symm.continuous.comp (continuous_mul_const _))
   have hφi : ∀ γ ∈ X.B.I.GFset, ∀ y, φ (γ * y) = φ y := by
     intro γ hγ y
     show T' v₀ (ι.symm (γ * y) * t) = T' v₀ (ι.symm y * t)

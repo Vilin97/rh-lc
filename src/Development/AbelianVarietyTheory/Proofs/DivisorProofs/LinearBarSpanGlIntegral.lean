@@ -89,7 +89,7 @@ theorem isHaar_map_trGL (n : ℕ) (μ : Measure (GL (Fin n) k)) [μ.IsHaarMeasur
     have e : (fun x => a * x) ∘ (trGL n) = (trGL n) ∘ (fun x => x * trGL n a) := by
       funext g; apply Units.ext
       simp only [Function.comp_apply, Units.val_mul, trGL_val, Matrix.transpose_mul, Matrix.transpose_transpose]
-    rw [e, ← Measure.map_map hm (continuous_mul_right _).measurable, MeasureTheory.map_mul_right_eq_self]⟩
+    rw [e, ← Measure.map_map hm (continuous_mul_const _).measurable, MeasureTheory.map_mul_right_eq_self]⟩
   haveI : IsFiniteMeasureOnCompacts (μ.map (trGL n)) := ⟨fun C hC => by
     rw [(trGL n).measurableEmbedding.map_apply]
     exact ((trGL n).isCompact_preimage.2 hC).measure_lt_top⟩

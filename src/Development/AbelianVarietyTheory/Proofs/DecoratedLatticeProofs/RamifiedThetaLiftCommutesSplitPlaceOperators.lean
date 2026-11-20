@@ -23,7 +23,7 @@ def contAutSub (S : HSp D) : Submodule ℂ (GA D S → ℂ) where
 
 theorem isContAut_mul_right {S : HSp D} {φ : GA D S → ℂ} (hφ : IsContAut S φ) (a : GA D S) :
     IsContAut S (fun x => φ (x * a)) :=
-  ⟨fun γ hγ g => by simp only [mul_assoc]; exact hφ.1 γ hγ (g * a), hφ.2.comp (continuous_mul_right a)⟩
+  ⟨fun γ hγ g => by simp only [mul_assoc]; exact hφ.1 γ hγ (g * a), hφ.2.comp (continuous_mul_const a)⟩
 
 section Rep
 

@@ -47,7 +47,7 @@ theorem isAutFunSm_rTr_fin : ∀ (D : D7) (θ : InfF D), IsInfFam θ → ∀ (V 
     IsAutFunSm θ V φ → ∀ k ∈ GfC V, IsAutFunSm θ V (rTr V k φ) := by
   intro D θ _ V φ h k hk
   haveI : IsTopologicalGroup (GA D V) := Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.Unfold.topGroupHA _ _
-  refine { left := fun γ hγ g => ?_, level := ?_, cont := h.cont.comp (continuous_mul_right k),
+  refine { left := fun γ hγ g => ?_, level := ?_, cont := h.cont.comp (continuous_mul_const k),
            smooth := fun n τs Xs hX g => ?_, zfin := ?_, growth := ?_ }
   · unfold rTr
     rw [mul_assoc, h.left γ hγ]

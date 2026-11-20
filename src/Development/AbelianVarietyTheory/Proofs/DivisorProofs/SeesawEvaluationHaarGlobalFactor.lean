@@ -297,7 +297,7 @@ private theorem lintegral_fd_eq_iwasawa (B : Base F E) {n n₁ : ℕ} (X : Spc F
   exact GlobalTheory.UnfoldSemidirect.lintegral_fundamentalDomain_eq μX μ₁ μ μK (unip σ X H) Q (ratU σ X₁.J) μN (fun k : K => k.1) m
     (fun γ => m 1 γ) (fun l => ENNReal.ofReal ((absE F E l : ℝ) ^ (1 - (n : ℝ)))) c D₁ 𝓕
     hQc inferInstance inferInstance inferInstance (fun g => (continuous_const_mul g).measurable)
-    (fun g => (continuous_const_mul g).measurable) (fun g => (continuous_mul_right g).measurable) hjoint hw hw0
+    (fun g => (continuous_const_mul g).measurable) (fun g => (continuous_mul_const g).measurable) hjoint hw hw0
     (fun _ => ENNReal.ofReal_ne_top) inferInstance hform hc0 hcT hmulm hιQ huniq
     (fun γ _ f hf => GlobalTheory.T.unipotent_haar_levi_decomposition F E σ B n n₁ X X X₁ H r s i₀ i₁ hB hX hXY hH' m hm μN hμN γ f hf)
     inferInstance h𝓕' h𝓕0 h𝓕top hD₁ inferInstance 𝓓 h𝓓 f hf hfQ hfN

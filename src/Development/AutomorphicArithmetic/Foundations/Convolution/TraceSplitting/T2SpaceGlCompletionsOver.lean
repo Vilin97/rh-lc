@@ -58,11 +58,11 @@ private theorem exists_left_inv [IsTopologicalGroup G] [LocallyCompactSpace G] [
       · exact hC b hb'.2 y hy
     · intro x _
       have hW : IsOpen {z : G | φ (z * x) = φ x} :=
-        (h1.isOpen_fiber (φ x)).preimage (continuous_mul_right x)
+        (h1.isOpen_fiber (φ x)).preimage (continuous_mul_const x)
       have h1W : {z : G | φ (z * x) = φ x} ∈ nhds (1 : G) := hW.mem_nhds (by simp)
       obtain ⟨B, -, hB⟩ := exists_openSubgroup_isCompact_subset h1W
       refine ⟨{y | y * x⁻¹ ∈ B}, mem_nhdsWithin_of_mem_nhds ?_, B, ?_⟩
-      · exact (B.isOpen.preimage (continuous_mul_right x⁻¹)).mem_nhds (by simp [one_mem])
+      · exact (B.isOpen.preimage (continuous_mul_const x⁻¹)).mem_nhds (by simp [one_mem])
       · intro b hb y hy
         have hy' : y * x⁻¹ ∈ B := hy
         have e1 : φ (b * (y * x⁻¹) * x) = φ x := hB (mul_mem hb hy')

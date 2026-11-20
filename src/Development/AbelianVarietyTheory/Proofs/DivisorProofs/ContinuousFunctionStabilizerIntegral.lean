@@ -70,7 +70,7 @@ theorem lintegral_K_mul_right {G T : Type} [Group G] [TopologicalSpace G] [IsTop
     rw [← hB (k.1 * x), ← lintegral_mul_const' _ _ ENNReal.coe_ne_top]
     refine lintegral_congr fun t => ?_
     rw [mul_assoc, he, mul_assoc]
-  have hψg : Continuous fun h => ψ (h * g) := hψ.comp (continuous_mul_right g)
+  have hψg : Continuous fun h => ψ (h * g) := hψ.comp (continuous_mul_const g)
   have k1 := key ψ hψ heq g⁻¹
   have k2 := key (fun h => ψ (h * g)) hψg (fun t h => by rw [mul_assoc, heq]) 1
   have k3 : ∫⁻ h, β (h * g⁻¹) * ψ h ∂μ = ∫⁻ h, β (h * 1) * ψ (h * g) ∂μ := by

@@ -96,7 +96,7 @@ theorem temperedBoundGL2_compact_whittaker : ∀ (F : Type) [Field F] [Valuative
   haveI : Fact (Module.finrank F E = 2) := ⟨h2⟩
   set μ := selfDualMeasure (GL2LocalData.chE E χ) with hμ
   have hmeas := measurable_Wc χ hχ hal σ hσ μ lam c hc Φ hΦ
-  refine ⟨hmeas.comp (continuous_mul_right h₀).measurable, fun ε h0 h1 => ?_⟩
+  refine ⟨hmeas.comp (continuous_mul_const h₀).measurable, fun ε h0 h1 => ?_⟩
   obtain ⟨C0, B0, hC0, hB0, H0⟩ := GlobalTheory.T.weil_whittaker_diag_norm_le_sqrt_modulus_and_support F E χ σ μ lam c Φ hc hΦ.1 hΦ.2.1 h₀
   obtain ⟨C1, B1, hC1, hB1, H1⟩ := GlobalTheory.T.weil_whittaker_nontrivial_character_extension F E χ hχ hχ1 σ hσ μ lam c hc Φ hΦ.1 hΦ.2.1 h₀
   have hB : 0 < max B0 B1 := lt_max_of_lt_left hB0

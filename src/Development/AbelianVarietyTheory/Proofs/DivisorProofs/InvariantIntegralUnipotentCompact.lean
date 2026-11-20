@@ -172,8 +172,8 @@ theorem right_translate_mem {N B : Subgroup G} {T : Set (G → ℂ)}
     {F : G → ℂ} (hF : F ∈ T) {x : G} (hx : x ∈ B) : (fun g => F (g * x)) ∈ T := by
   rw [hT] at hF ⊢
   obtain ⟨hN, hL, C, hC, hCB, hs⟩ := hF
-  refine ⟨fun u hu g => by rw [mul_assoc]; exact hN u hu _, hL.comp_continuous (continuous_mul_right x),
-    (fun c => c * x⁻¹) '' C, hC.image (continuous_mul_right _), ?_, fun g hg => ?_⟩
+  refine ⟨fun u hu g => by rw [mul_assoc]; exact hN u hu _, hL.comp_continuous (continuous_mul_const x),
+    (fun c => c * x⁻¹) '' C, hC.image (continuous_mul_const _), ?_, fun g hg => ?_⟩
   · rintro _ ⟨c, hc, rfl⟩; exact B.mul_mem (hCB hc) (B.inv_mem hx)
   · obtain ⟨u, hu, c, hc, e⟩ := hs _ hg
     refine ⟨u, hu, c * x⁻¹, ⟨c, hc, rfl⟩, ?_⟩

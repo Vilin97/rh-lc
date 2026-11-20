@@ -268,7 +268,7 @@ theorem vanFB : ∀ D : D7, VanFB D := by
   obtain ⟨habs, hcont⟩ := GlobalTheory.T.besselPeriod_handedFunction_converges_continuous D ψ σ J B s vL χ χz omz hz φ G Φ₀ Φ hφ hG h₀ hΦ
   have hmeas := unf_measurable s vL hx hb.1 hz hφ.continuous h₀ hG.continuous hΦ
   have hm : ∀ h : GA D B.V, Measurable fun g : GA D B.V => unf s vL omz φ Φ₀ G Φ (g * h) :=
-    fun h => hmeas.comp (continuous_mul_right h).measurable
+    fun h => hmeas.comp (continuous_mul_const h).measurable
   have habs' : ∀ h : GA D B.V, AbsConv B.vA.μ B.vA.𝓕 B.vN.ν B.vN.𝓝
       fun h₁ n => unf s vL omz φ Φ₀ G Φ (n.1 * embA B.d B.o h₁ * h) := fun h => by
     simp only [unf_bes s vL omz φ Φ₀ G hΦ]

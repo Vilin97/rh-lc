@@ -92,7 +92,7 @@ private theorem shaInj_norm {O Γ W : Type} [CommRing O] [Group Γ] [Topological
     have hz := continuous_and_cocycle_eq_of_z1U_whole_group α z
     refine ⟨?_, ?_, ?_, ((u⁻¹ : Oˣ) : O) • z.1 ⟨δ, trivial⟩, fun g => hL z g⟩
     · rw [IsLocallyConstant.iff_continuous]
-      exact hz.1.sub ((((hz.1.comp (continuous_mul_right δ)).sub hz.1).sub continuous_const).const_smul _)
+      exact hz.1.sub ((((hz.1.comp (continuous_mul_const δ)).sub hz.1).sub continuous_const).const_smul _)
     · intro g h
       rw [hL, hL, hL, hz.2 g h, map_mul, Units.val_mul, mul_smul, smul_sub, smul_sub]
       abel

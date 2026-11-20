@@ -23,7 +23,7 @@ private theorem norm_coc (α : G ℚ Ω →* Oˣ) (δ : G ℚ Ω) (hδ : IsUnit 
   have hu : (u : O) = (α δ : O) - 1 := hδ.unit_spec
   refine ⟨((u⁻¹ : Oˣ) : O) • c δ, ⟨?_, fun g h => ?_⟩, ?_⟩
   · have hloc : IsLocallyConstant fun g : G ℚ Ω => c (g * δ) :=
-      hc.1.comp_continuous (continuous_mul_right δ)
+      hc.1.comp_continuous (continuous_mul_const δ)
     have heq : (fun g => c g - ((α g : O) • ((u⁻¹ : Oˣ) : O) • c δ - ((u⁻¹ : Oˣ) : O) • c δ)) =
         fun g => c g - (((u⁻¹ : Oˣ) : O) • (c (g * δ) - c g) - ((u⁻¹ : Oˣ) : O) • c δ) := by
       funext g

@@ -72,7 +72,7 @@ theorem UpperTheory.Gal.InertialTypesAlt.L.oneCoset :
     by_cases hg : g ∈ D
     · obtain ⟨t₀, ht₀, y, hy, rfl⟩ := hg
       set A : Set T := (fun h : T => h * (⟨t₀, ht₀⟩ : T)) ⁻¹' Hs with hA
-      have hAm : MeasurableSet A := (hHo.preimage (continuous_mul_right _)).measurableSet
+      have hAm : MeasurableSet A := (hHo.preimage (continuous_mul_const _)).measurableSet
       have hpt : ∀ h : T, ρ' ((h : G) * (t₀ * q * y)) = A.indicator (fun _ => v⁻¹) h := by
         intro h
         have hmem : (h : G) * (t₀ * q * y) ∈ D :=

@@ -37,7 +37,7 @@ theorem memLp_translate (h𝓕 : IsFundamentalDomain Γ 𝓕 μ) {F : H → ℂ}
   have h1 := GlobalTheory.integrableOn_fundamentalDomain_mul_right h𝓕 y (fun h => star (F h) * F h)
     (fun γ hγ h => by simp only [hl γ hγ]) hi
   have hm : AEStronglyMeasurable (fun h => F (h * y)) (μ.restrict 𝓕) :=
-    (hc.comp (continuous_mul_right y)).aestronglyMeasurable
+    (hc.comp (continuous_mul_const y)).aestronglyMeasurable
   rw [memLp_two_iff_integrable_sq_norm hm]
   refine h1.norm.congr (Filter.Eventually.of_forall fun h => ?_)
   simp [sq]
@@ -116,7 +116,7 @@ theorem gelf_rTr {k : GA D V} (hk : k ∈ GfC V) (τ : D.what₂.Tau) (n : ℕ) 
 theorem isAutFunSm_rTr {k : GA D V} (hk : k ∈ GfC V) {φ : GA D V → ℂ} (h : IsAutFunSm θ V φ) :
     IsAutFunSm θ V (rTr V k φ) := by
   haveI : IsTopologicalGroup (GA D V) := Formalism.L2.GlobalTheoryTheory.GenusMassVolumes.Unfold.topGroupHA _ _
-  refine { left := fun γ hγ g => ?_, level := ?_, cont := h.cont.comp (continuous_mul_right k),
+  refine { left := fun γ hγ g => ?_, level := ?_, cont := h.cont.comp (continuous_mul_const k),
            smooth := fun n τs Xs hX g => ?_, zfin := ?_, growth := ?_ }
   · unfold rTr
     rw [mul_assoc, h.left γ hγ]

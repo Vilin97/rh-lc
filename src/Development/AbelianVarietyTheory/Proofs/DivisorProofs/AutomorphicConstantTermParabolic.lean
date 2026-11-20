@@ -117,7 +117,7 @@ theorem isAutOn_constTerm : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
   have hkfin : GlobalTheory.Doubling.IsKFinite K c := by
     obtain ⟨W, hW, hWk⟩ := GlobalTheory.Doubling.isKFinite_iff.1 hφ.kfin
     refine GlobalTheory.Doubling.isKFinite_iff.2 ⟨_, hfin W hW, fun k hk => ⟨⟨fun g => φ (g * k),
-      fun γ hγ g => by simp only [mul_assoc]; exact hφΓ γ hγ _, hφ.cont.comp (continuous_mul_right k)⟩,
+      fun γ hγ g => by simp only [mul_assoc]; exact hφΓ γ hγ _, hφ.cont.comp (continuous_mul_const k)⟩,
       hWk k hk, funext fun g => ?_⟩⟩
     show constTermOn _ _ (fun g => φ (g * k)) g = c (g * k)
     rw [GlobalTheory.Cusp.constTermOn_mul_right, e]

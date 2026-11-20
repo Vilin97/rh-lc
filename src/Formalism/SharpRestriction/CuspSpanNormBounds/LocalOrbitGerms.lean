@@ -670,7 +670,7 @@ theorem grp (hS : TriangularShearMeasurePreserving) : UnipotentProductMeasureInv
       | exact inferInstanceAs (SFinite ((Measure.pi fun _ => μ).map (Grp.homeo hcU).toMeasurableEquiv))
   refine ⟨Grp.meas hcL μ, Grp.meas hcU μ, ⟨fun g => ?_⟩, ⟨fun g => ?_⟩, inferInstance, inferInstance,
     Grp.meas_int hcL μ R hR, Grp.meas_int hcU μ R hR, fun G => ?_⟩
-  · exact Grp.meas_map_of hcL hS μ (· * g) (continuous_mul_right g)
+  · exact Grp.meas_map_of hcL hS μ (· * g) (continuous_mul_const g)
       (fun i x x' h => Grp.dep_right (P := PW sb) (fun p hp => hp.1) _ g.2.1 i x x' h)
   · exact Grp.meas_map_of hcU hS μ (g * ·) (continuous_const_mul g)
       (fun i x x' h => Grp.dep_left (P := PU s.sum) (fun p hp => hp) _ g.2 i x x' h)

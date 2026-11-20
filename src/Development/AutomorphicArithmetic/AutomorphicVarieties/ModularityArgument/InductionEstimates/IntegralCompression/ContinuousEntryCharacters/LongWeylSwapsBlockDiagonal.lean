@@ -168,7 +168,7 @@ private theorem hm_haar : Haar4 hm ∧ hm.IsOpenPosMeasure := by
     refine ⟨fun g => ?_⟩
     haveI : (Measure.map (· * g) hm).IsHaarMeasure := Measure.isHaarMeasure_map_mul_right hm g
     haveI : IsProbabilityMeasure (Measure.map (· * g) hm) :=
-      Measure.isProbabilityMeasure_map (continuous_mul_right g).measurable.aemeasurable
+      Measure.isProbabilityMeasure_map (continuous_mul_const g).measurable.aemeasurable
     exact Measure.isHaarMeasure_eq_of_isProbabilityMeasure _ _
   haveI : hm.IsInvInvariant := by
     refine ⟨?_⟩

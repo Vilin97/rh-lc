@@ -32,7 +32,7 @@ theorem card_latticeGL_conj_le : ∀ (E : Type) [Field E] [NumberField E] [IsTot
   set e : GA E a := GlobalTheory.UnitaryBC.splitCentre E a 1 with he
   set W' : Set (GA E a) := ⋃ n ∈ Finset.Icc (-(n₀ : ℤ)) n₀, (fun g => g * (e ^ n)⁻¹) '' W with hW'
   have hW'c : IsCompact W' := (Finset.Icc (-(n₀ : ℤ)) n₀).isCompact_biUnion fun n _ =>
-    hW.image (continuous_mul_right _)
+    hW.image (continuous_mul_const _)
   set Kf : Set (GL (Fin a) (Af E)) := (fun g : GA E a => Matrix.GeneralLinearGroup.map (pFin E) g) '' W' with hKf
   have hKfc : IsCompact Kf := hW'c.image hFin
   have hv : Continuous fun g : GA E a =>

@@ -35,8 +35,8 @@ theorem pairing_integrable (h : IsFundamentalDomain Γ 𝓕 μ) (hc : Continuous
       (fun g => star (φ g) * φ g) z h
       (fun γ hγ g => by simp only [hΓ γ hγ])).1.1 hi
   refine Integrable.mono' ((h1 x).norm.add (h1 y).norm) ?_ (Filter.Eventually.of_forall fun g => ?_)
-  · exact (Continuous.mul (continuous_star.comp (hc.comp (continuous_mul_right x)))
-      (hc.comp (continuous_mul_right y))).aestronglyMeasurable
+  · exact (Continuous.mul (continuous_star.comp (hc.comp (continuous_mul_const x)))
+      (hc.comp (continuous_mul_const y))).aestronglyMeasurable
   · simp only [norm_mul, norm_star, Pi.add_apply]
     nlinarith [sq_nonneg (‖φ (g * x)‖ - ‖φ (g * y)‖), norm_nonneg (φ (g * x)),
       norm_nonneg (φ (g * y)), mul_nonneg (norm_nonneg (φ (g * x))) (norm_nonneg (φ (g * y)))]
