@@ -112,7 +112,7 @@ theorem exists_lift (d : ℕ) (t : MvPolynomial (Fin (N + 1)) R)
     intro s
     rw [mem_reesAlgebra_iff]
     intro i
-    rw [Polynomial.coeff_monomial]
+    rw [Polynomial.coeff_monomial_apply]
     split_ifs with h
     · subst h
       exact MvPolynomial.mem_map_C_iff.1 ht s

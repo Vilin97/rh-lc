@@ -187,7 +187,7 @@ theorem exists_polynomial_modularJ_of_hasQExpansion (A : AddSubgroup ℂ) {m : �
     · exact Polynomial.natDegree_add_le_of_degree_le (by omega)
         (Polynomial.natDegree_monomial_le _)
     · simp [Polynomial.coeff_eq_zero_of_natDegree_lt (Nat.lt_succ_of_le hP1)]
-    · rw [Polynomial.coeff_add, Polynomial.coeff_monomial]
+    · rw [Polynomial.coeff_add, Polynomial.coeff_monomial_apply]
       refine A.add_mem (hP3 i) ?_
       split_ifs
       exacts [hA 0, A.zero_mem]

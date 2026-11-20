@@ -492,7 +492,7 @@ theorem mat_unip (K : Frame X.Ψ r) (τ : X.Ψ) :
     mat (unip X K) τ = 1 + headProj X * mat K τ * (1 - headProj X) := by
   ext a c
   simp only [headProj, Matrix.mul_sub, Matrix.mul_one, Matrix.add_apply, Matrix.sub_apply, mul_diagonal,
-    diagonal_mul, mat, of_apply, unip, one_apply, Fin.ext_iff]
+    diagonal_mul, mat, of_apply, unip, Matrix.one_apply, Fin.ext_iff]
   split_ifs <;> first | omega | simp
 
 @[simp] theorem mix_self (x : Frame X.Ψ r) : mix X x x = x := by

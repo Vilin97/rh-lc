@@ -119,12 +119,12 @@ theorem lift_poly {y : (Σ k, ι k) → Ω} {b : K → ℕ} {H : MRing ι} (P : 
   choose! g hg using hP
   refine ⟨∑ j ∈ P.support, Polynomial.monomial j (g j), fun j => ?_, ?_⟩
   · rw [Polynomial.finsetSum_coeff]
-    simp only [Polynomial.coeff_monomial, Finset.sum_ite_eq']
+    simp only [Polynomial.coeff_monomial_apply, Finset.sum_ite_eq']
     split_ifs with hj
     · exact (hg j hj).1
     · exact form_zero b
   · ext n
-    simp only [Polynomial.coeff_map, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial,
+    simp only [Polynomial.coeff_map, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial_apply,
       Finset.sum_ite_eq', Polynomial.coeff_C_mul]
     split_ifs with hn
     · exact ((hg n hn).2).trans (mul_comm _ _)

@@ -82,7 +82,7 @@ def tmSlice (i : ι) (x : ι → ℂ) (f : MvPolynomial ι ℂ) : Polynomial ℂ
 lemma tmSlice_coeff (i : ι) (x : ι → ℂ) (f : MvPolynomial ι ℂ) (k : ℕ) :
     (tmSlice i x f).coeff k = MvPolynomial.eval x (coeffIn i k f) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [tmSlice, coeffIn, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, map_sum,
+    simp only [tmSlice, coeffIn, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial_apply, map_sum,
     Finset.sum_filter]
   refine Finset.sum_congr rfl fun s _ => ?_
   split_ifs <;> simp

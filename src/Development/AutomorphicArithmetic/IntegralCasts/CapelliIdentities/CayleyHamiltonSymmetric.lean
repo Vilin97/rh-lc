@@ -854,7 +854,7 @@ private lemma matrix_units [IsLocalHom (algebraMap A k)] (π : S →ₐ[A] Matri
   let M : Matrix (Fin n) (Fin n) A := Matrix.of fun i j => τ (c i * b j)
   have hM : M.map (algebraMap A k) = 1 := by
     ext i j
-    simp only [M, map_apply, Matrix.of_apply, hτ', map_mul, hb, hc', one_apply]
+    simp only [M, map_apply, Matrix.of_apply, hτ', map_mul, hb, hc', Matrix.one_apply]
     split_ifs with h
     · subst h; simp
     · simp [h]

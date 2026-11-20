@@ -93,7 +93,7 @@ theorem embX_KO {g : GL n k} (h : g ∈ KO k n) : embX c g ∈ KO k (n ⊕ Fin c
     · exact H r s
     · exact zero_mem _
     · exact zero_mem _
-    · rw [fromBlocks_apply₂₂, one_apply]; split_ifs
+    · rw [fromBlocks_apply₂₂, Matrix.one_apply]; split_ifs
       · exact one_mem _
       · exact zero_mem _
   obtain ⟨h1, h2⟩ := (mem_KO_iff _).1 h

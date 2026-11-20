@@ -144,7 +144,7 @@ theorem pRam_low (hϖ : IsUnif ϖ) (y : Matrix (Fin a') (Fin a) k) : pRam a a' �
     simpa using this
   · obtain ⟨j | j, rfl⟩ := finSumFinEquiv.surjective j
     · erw [e, show finSumFinEquiv (Sum.inl j) = eA a a' j from rfl, rad_e]
-      simp only [fromBlocks_apply₁₁, one_apply]; split_ifs <;> simp
+      simp only [fromBlocks_apply₁₁, Matrix.one_apply]; split_ifs <;> simp
     · erw [e, rad_AB]; simpa using h j i
 
 open Classical in
@@ -163,7 +163,7 @@ theorem pRam'_low (y : Matrix (Fin a') (Fin a) k) : pRam' a a' ν α (std ν ϖ 
   · obtain ⟨j | j, rfl⟩ := finSumFinEquiv.surjective j
     · erw [e, rad_BA]; simpa using h i j
     · erw [e, show finSumFinEquiv (Sum.inr j) = eB a a' j from rfl, rad_e]
-      simp only [fromBlocks_apply₂₂, one_apply]; split_ifs <;> simp
+      simp only [fromBlocks_apply₂₂, Matrix.one_apply]; split_ifs <;> simp
 
 theorem pRam_ne (hϖ : IsUnif ϖ) : pRam a a' ϖ ν β (std ν ϖ c (eA a a')) ≠ 0 := fun h => by
   have := congrFun h (low 0)

@@ -16,7 +16,7 @@ private theorem coeff_scale {A : Type} [CommRing A] {m : ℕ} (P : MvPolynomial 
       simp only [mul_pow, Finset.prod_mul_distrib, ← C_pow, ← map_prod, Finset.prod_pow_eq_pow_sum,
         Polynomial.algebraMap_apply, MvPolynomial.algebraMap_eq, map_mul]
       ring
-    rw [h, Polynomial.C_mul_X_pow_eq_monomial, Polynomial.coeff_monomial, MvPolynomial.coeff_monomial]
+    rw [h, Polynomial.C_mul_X_pow_eq_monomial, Polynomial.coeff_monomial_apply, MvPolynomial.coeff_monomial]
     split_ifs with h1 h2 h2
     · rw [MvPolynomial.coeff_monomial, if_pos h2]
     · rw [MvPolynomial.coeff_monomial, if_neg h2]

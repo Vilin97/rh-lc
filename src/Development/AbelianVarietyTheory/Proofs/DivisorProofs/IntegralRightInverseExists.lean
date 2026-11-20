@@ -51,7 +51,7 @@ theorem exists_inv_of_bdd_sub_one {n : Type} [Fintype n] [DecidableEq n] {ϖ : k
   have hmem : ∀ i j, M' i j - (1 : Matrix n n 𝒪[k]) i j ∈ IsLocalRing.maximalIdeal 𝒪[k] := fun i j => by
     rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff, Valuation.Integer.not_isUnit_iff_valuation_lt_one]
     have e : ((M' i j - (1 : Matrix n n 𝒪[k]) i j : 𝒪[k]) : k) = (M - 1) i j := by
-      simp only [M', Matrix.sub_apply, one_apply, of_apply]; split_ifs <;> simp
+      simp only [M', Matrix.sub_apply, Matrix.one_apply, of_apply]; split_ifs <;> simp
     exact lt_of_le_of_lt (e ▸ hM i j) hlt
   have hres : (IsLocalRing.residue 𝒪[k]).mapMatrix M' = 1 := by
     ext i j

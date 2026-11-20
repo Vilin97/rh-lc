@@ -35,7 +35,7 @@ theorem mem_of_homog_mem_iSup (T : ℕ → Submodule ℂ (X → ℂ)) (d : ℕ) 
     | mem k F hF =>
       obtain ⟨v, hv, rfl⟩ := hF
       refine ⟨Polynomial.monomial k v, fun j => ?_, fun t x => ?_⟩
-      · rw [Polynomial.coeff_monomial]
+      · rw [Polynomial.coeff_monomial_apply]
         split_ifs with hj
         · exact hj ▸ hv
         · exact zero_mem _

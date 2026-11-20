@@ -24,7 +24,7 @@ open scoped Classical in
 
 noncomputable def liftFun (I : Ideal R) (e : ℕ) (r : R) : reesAlgebra I :=
   if h : r ∈ I ^ e then ⟨Polynomial.monomial e r, (mem_reesAlgebra_iff I _).2 (fun i => by
-    rw [Polynomial.coeff_monomial]; split_ifs with hi
+    rw [Polynomial.coeff_monomial_apply]; split_ifs with hi
     · subst hi; exact h
     · exact zero_mem _)⟩ else 0
 

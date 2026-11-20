@@ -176,7 +176,7 @@ theorem isConnected_unramified_cover_of_irreducible :
     refine ⟨∑ k ∈ Finset.range (p.natDegree + 1), Polynomial.monomial k (a k), fun x hx => ?_⟩
     ext k
     rw [Polynomial.coeff_map, Polynomial.finsetSum_coeff]
-    simp only [Polynomial.coeff_monomial, Finset.sum_ite_eq', Finset.mem_range]
+    simp only [Polynomial.coeff_monomial_apply, Finset.sum_ite_eq', Finset.mem_range]
     split_ifs with hk'
     · exact (ha k x hx).symm
     · have := natDegree_partialProd_le hp s x

@@ -208,7 +208,7 @@ private theorem selGen {l : ℕ} [Fact l.Prime] {L : Loc} {G G0 : Glob l L} (h :
     rw [this, map_zero]
   have hsc : ∀ c : x.Fr, ((DD.C c : DD x.Fr e) • (1 : Matrix (Fin n) (Fin n) (DD x.Fr e))).map d = 0 := fun c => by
     ext i j
-    rw [map_apply, Matrix.smul_apply, one_apply]
+    rw [map_apply, Matrix.smul_apply, Matrix.one_apply]
     split_ifs
     · rw [smul_eq_mul, mul_one]; exact hC c
     · rw [smul_zero]; exact map_zero d

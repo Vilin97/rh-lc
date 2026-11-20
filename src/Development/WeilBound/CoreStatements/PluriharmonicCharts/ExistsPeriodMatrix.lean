@@ -93,7 +93,7 @@ private theorem gramOf_sigForm_submatrix_blockEquiv {p q : ℕ} (P : Matrix (Fin
     conjTranspose_submatrix, submatrix_submatrix, submatrix_submatrix, submatrix_diagonal_equiv]
   simp only [Equiv.symm_comp_self, submatrix_id_id]
   congr 2
-  ext (i | i) (j | j) <;> simp [diagonal_apply, sigForm, blockEquiv, one_apply] <;> split_ifs <;> simp
+  ext (i | i) (j | j) <;> simp [diagonal_apply, sigForm, blockEquiv, Matrix.one_apply] <;> split_ifs <;> simp
 
 theorem exists_periodMatrix {X : Type} [NormedAddCommGroup X] [NormedSpace ℂ X] {p q : ℕ} {B : Set X} (hB : IsOpen B)
     {u₀ : X} (hu₀ : u₀ ∈ B) {A : X → Matrix (Fin p) (Fin q ⊕ Fin p) ℂ} {Bm : X → Matrix (Fin q) (Fin q ⊕ Fin p) ℂ}

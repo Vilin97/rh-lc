@@ -74,7 +74,7 @@ theorem signStep_of (hP : PosCount) (hN : NonposCount) : SignStep := by
     rcases i with a | a <;> simp
   · rw [hD]
     ext i j
-    rcases i with a | a <;> rcases j with b | b <;> simp [diagonal_apply, one_apply] <;> split_ifs <;> simp
+    rcases i with a | a <;> rcases j with b | b <;> simp [diagonal_apply, Matrix.one_apply] <;> split_ifs <;> simp
 
 theorem signStep : SignStep :=
   signStep_of PI.FrameInd.CountsW.positive_count (PI.FrameInd.CountsW.nonposCount_of negative_bound)

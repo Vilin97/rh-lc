@@ -84,7 +84,7 @@ theorem UpperTheory.Gal.G1.pBlockMat :
         Matrix (Fin 1 ⊕ (Fin 2 × Fin m)) (Fin 1 ⊕ (Fin 2 × Fin m)) R) p q ∈ S := by
     intro S N hN p q
     rcases p with p | ⟨i, k⟩ <;> rcases q with q | ⟨j, l⟩
-    · simp only [fromBlocks_apply₁₁, one_apply]
+    · simp only [fromBlocks_apply₁₁, Matrix.one_apply]
       split_ifs
       · exact S.one_mem
       · exact S.zero_mem

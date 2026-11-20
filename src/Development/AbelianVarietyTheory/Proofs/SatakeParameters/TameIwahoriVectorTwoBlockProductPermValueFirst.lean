@@ -56,7 +56,7 @@ theorem emb₂_one_mem_KO {r t : ℕ} {m : GL (Fin r) k} (hm : m ∈ KO k (Fin r
     · exact hg1 a b
     · simp
     · simp
-    · rw [fromBlocks_apply₂₂, one_apply]
+    · rw [fromBlocks_apply₂₂, Matrix.one_apply]
       split_ifs <;> simp
   refine mem_KO_of_val_le (key m hm) ?_
   have : (emb₂ k (stdSum (rfl : r + t = r + t)) (m, 1))⁻¹ = emb₂ k (stdSum (rfl : r + t = r + t)) (m⁻¹, 1) := by

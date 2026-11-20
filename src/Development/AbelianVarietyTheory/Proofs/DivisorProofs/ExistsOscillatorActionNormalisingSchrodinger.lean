@@ -37,7 +37,7 @@ theorem diagonal_lineSgn : (diagonal fun n : Lines P Q R S => if lineSgn n then 
     rcases o with ⟨w, a⟩
     rw [blockDiagonal'_apply']
     rcases a with a | a <;> rcases b with b | b <;> rcases b' with b' | b' <;>
-      simp [diagonal_apply, Jm, Formalism.UG.Jpq, lineSgn, linePos, one_apply] <;> split_ifs <;> simp_all
+      simp [diagonal_apply, Jm, Formalism.UG.Jpq, lineSgn, linePos, Matrix.one_apply] <;> split_ifs <;> simp_all
   · rw [blockDiagonal'_apply_ne _ _ _ h, diagonal_apply_ne]
     intro e
     exact h (congrArg Sigma.fst e)

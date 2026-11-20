@@ -24,7 +24,7 @@ theorem IsSiegel.neg_mul_inv_of_symplectic (l : Type) [Fintype l] [DecidableEq l
   have hsc : s.map (Complex.ofRealHom : ℝ →+* ℂ) = fromBlocks A B C D := by
     ext (a|a) (b|b) <;> rfl
   have hJ : (J l ℝ).map (Complex.ofRealHom : ℝ →+* ℂ) = J l ℂ := by
-    ext (a|a) (b|b) <;> simp [J, one_apply] <;> split_ifs <;> simp
+    ext (a|a) (b|b) <;> simp [J, Matrix.one_apply] <;> split_ifs <;> simp
   have hc : (fromBlocks A B C D)ᵀ * J l ℂ * fromBlocks A B C D = J l ℂ := by
     have h1 := congrArg (fun M => M.map (Complex.ofRealHom : ℝ →+* ℂ)) (SymplecticGroup.mem_iff'.mp hs)
     simp only [Matrix.map_mul, transpose_map, hJ, hsc] at h1

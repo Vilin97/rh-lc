@@ -168,7 +168,7 @@ theorem qr_mul_pr : qr e T A * pr e T A = 0 := by
   ext i j; rw [qr_mul_apply]; simp only [pr, diagonal_apply]; split_ifs <;> simp_all
 
 theorem pr_add_qr : pr e T A + qr e T A = 1 := by
-  ext i j; simp only [pr, qr, Matrix.add_apply, diagonal_apply, one_apply]; split_ifs <;> simp_all
+  ext i j; simp only [pr, qr, Matrix.add_apply, diagonal_apply, Matrix.one_apply]; split_ifs <;> simp_all
 
 theorem ne_of_side {i j : Fin n} (h : ¬ (blk e i ∈ T ↔ blk e j ∈ T)) : i ≠ j := by
   rintro rfl; exact h Iff.rfl

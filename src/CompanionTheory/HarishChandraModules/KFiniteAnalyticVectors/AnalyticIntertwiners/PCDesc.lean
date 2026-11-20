@@ -48,7 +48,7 @@ theorem rx_JC : rx (Formalism.UG.Jpq p q) = Formalism.REAL.Jm (epq p q) := by
   simp only [rx, reindex_apply, submatrix_apply, Equiv.symm_apply_apply, Formalism.REAL.Jm, diagonal_apply,
     EmbeddingLike.apply_eq_iff_eq, epq]
   rcases a with a | a <;> rcases b with b | b <;>
-    simp [Formalism.UG.Jpq, fromBlocks, one_apply] <;> split_ifs <;> simp_all
+    simp [Formalism.UG.Jpq, fromBlocks, Matrix.one_apply] <;> split_ifs <;> simp_all
 
 theorem ixC_J : ixC (Formalism.REAL.Jm (epq p q)) = Formalism.UG.Jpq p q := by
   rw [← rx_JC, ixC_rx]
@@ -63,7 +63,7 @@ theorem rx_expC (X : Formalism.BasicNotions.TH.Mat p q) : rx (NormedSpace.exp X)
   (Formalism.FourierDecayAlt.P.WirtingerOperators.LeviExponential.exp_reindex finSumFinEquiv X).symm
 
 theorem Jm_sqC : Formalism.REAL.Jm (epq p q) * Formalism.REAL.Jm (epq p q) = 1 := by
-  ext i j; simp only [Formalism.REAL.Jm, diagonal_mul_diagonal, diagonal_apply, one_apply]
+  ext i j; simp only [Formalism.REAL.Jm, diagonal_mul_diagonal, diagonal_apply, Matrix.one_apply]
   split_ifs <;> simp_all
 
 theorem Jm_ctC : (Formalism.REAL.Jm (epq p q))ᴴ = Formalism.REAL.Jm (epq p q) := by

@@ -51,7 +51,7 @@ variable {o x}
 lemma coe_eq_monomial {n : ℕ} {f : rees o x} (hf : f ∈ grading o x n) :
     (f : (Polynomial Ω)) = Polynomial.monomial n ((f : (Polynomial Ω)).coeff n) := by
   ext i
-  rw [Polynomial.coeff_monomial]
+  rw [Polynomial.coeff_monomial_apply]
   split_ifs with h
   · rw [h]
   · exact hf i (Ne.symm h)
@@ -59,7 +59,7 @@ lemma coe_eq_monomial {n : ℕ} {f : rees o x} (hf : f ∈ grading o x n) :
 def comp (i : ℕ) (f : rees o x) : grading o x i :=
   ⟨⟨Polynomial.monomial i ((f : (Polynomial Ω)).coeff i), by
       intro k
-      rw [Polynomial.coeff_monomial]
+      rw [Polynomial.coeff_monomial_apply]
       split_ifs with h
       · rw [← h]
         exact f.2 _
@@ -149,7 +149,7 @@ lemma eq_zero_of_ev {n : ℕ} {f : rees o x} (hf : f ∈ grading o x n) (h : ev 
 def coord (c : κ) : rees o x :=
   ⟨Polynomial.monomial 1 (x c), by
     intro k
-    rw [Polynomial.coeff_monomial]
+    rw [Polynomial.coeff_monomial_apply]
     split_ifs with h
     · subst h
       rw [pow_one]

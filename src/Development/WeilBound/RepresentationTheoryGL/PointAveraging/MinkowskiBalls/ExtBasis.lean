@@ -267,7 +267,7 @@ theorem mem_KO {a : ℕ} {γ : ValueGroupWithZero k} (hc : γ < 1) (A : Matrix (
       exact lt_of_le_of_lt (hA i l) hc
     have h0 := (IsLocalRing.residue_eq_zero_iff _).2 hm
     rw [map_sub, sub_eq_zero] at h0
-    rw [RingHom.mapMatrix_apply, Matrix.map_apply, h0, one_apply, one_apply]
+    rw [RingHom.mapMatrix_apply, Matrix.map_apply, h0, Matrix.one_apply, Matrix.one_apply]
     split_ifs <;> simp
   have hdet : IsUnit B.det := by
     by_contra hnu

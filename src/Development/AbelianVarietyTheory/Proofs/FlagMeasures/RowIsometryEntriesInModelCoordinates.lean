@@ -72,5 +72,5 @@ theorem _root_.GlobalTheory.SnMass.VolN.rowE_entries : ∀ (F E : Type) [Field F
   unfold _root_.Formalism.QuantumDeterminants.herm _root_.Formalism.QuantumDeterminants.bvec
   rw [dotProduct_mulVec, dotProduct_single_one]
   simp only [Matrix.add_apply, Matrix.sub_apply, vecMulVec_apply, Pi.add_apply, Pi.smul_apply, smul_eq_mul,
-    Pi.single_apply, one_apply]
+    Pi.single_apply, Matrix.one_apply]
   split_ifs <;> ring

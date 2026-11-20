@@ -139,7 +139,7 @@ theorem gaussNorm_sum_monomial {J : Type} [Fintype J] (e : J → ℕ) (he : Func
       if h : ∃ j, e j = i then c h.choose else 0 := by
     intro i
     rw [Polynomial.finsetSum_coeff]
-    simp only [Polynomial.coeff_monomial]
+    simp only [Polynomial.coeff_monomial_apply]
     split_ifs with h
     · rw [Finset.sum_eq_single h.choose]
       · simp [h.choose_spec]
