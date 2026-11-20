@@ -152,7 +152,7 @@ theorem aug_le_sq {K H : Type} [Field K] [CharZero K] [CommRing H] [Algebra K H]
     exact (IsUnit.mk0 _ (Nat.cast_ne_zero.2 (by omega))).map _
   have hu2 : IsUnit (π (D x)) := by
     have hm : D x - 1 ∈ RingHom.ker ε := by
-      rw [RingHom.mem_ker, map_sub, hεD, hlx, map_one, sub_self]
+      rw [RingHom.mem_ker, RingHom.map_sub, hεD, hlx, map_one, sub_self]
     have hnil : IsNilpotent (π (D x - 1)) :=
       ⟨k + 2, by rw [← map_pow, Ideal.Quotient.eq_zero_iff_mem]; exact Ideal.pow_mem_pow hm _⟩
     have := hnil.isUnit_one_add

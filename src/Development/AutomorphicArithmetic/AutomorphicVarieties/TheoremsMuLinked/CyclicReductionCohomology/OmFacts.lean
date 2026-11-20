@@ -27,7 +27,7 @@ theorem UpperTheory.V.Th.omFacts :
     exact this
   · rw [nsmul_eq_mul, Nat.cast_pow, hpow, zero_mul]
   · have h : a - 1 ∈ RingHom.ker (PadicInt.toZModPow (p := l) m) := by
-      rw [RingHom.mem_ker, map_sub, ha, map_one, sub_self]
+      rw [RingHom.mem_ker, RingHom.map_sub, ha, map_one, sub_self]
     rw [PadicInt.ker_toZModPow, Ideal.mem_span_singleton'] at h
     obtain ⟨b, hb⟩ := h
     have e : a = 1 + b * (l : ℤ_[l]) ^ m := by rw [hb]; ring

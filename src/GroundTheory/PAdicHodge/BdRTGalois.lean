@@ -179,7 +179,7 @@ theorem gal_smul_fontaineT {L : IntermediateField ℚ_[p] (PadicAlgCl p)} (σ : 
   set ξ := IsPerfectoidField.kerThetaGenerator ℂ_[p] p
   obtain ⟨c, hc⟩ : ξ ∣ teichmuller p ν - 1 := by
     have h : teichmuller p ν - 1 ∈ RingHom.ker (fontaineTheta 𝒪 p) := by
-      rw [RingHom.mem_ker, map_sub, map_one, fontaineTheta_teichmuller, hν, sub_self]
+      rw [RingHom.mem_ker, RingHom.map_sub, map_one, fontaineTheta_teichmuller, hν, sub_self]
     rwa [hξ, mem_span_singleton] at h
   have hT : (teichmuller p ε' : 𝕎𝒪♭) = teichmuller p ε ^ aN * (1 + ξ * c) ^ p ^ (M + k) := by
     rw [hη, ← hνη, map_mul, map_pow, map_pow, ← hc]

@@ -53,7 +53,7 @@ theorem unramIn_of_ine {v : HeightOneSpectrum (𝓞 K)}
     have h2 : A.valuation (algebraMap L Ω (τ (t : L) - t)) < 1 := (hA _).2 (hτ t)
     have h3 : A.valuation (algebraMap L Ω (τ (s : L) - s)) < 1 := (hA _).2 (hτ s)
     have h4 : A.valuation (algebraMap L Ω (τ (s : L) * (τ x - x))) < 1 := by
-      rw [key, map_sub (algebraMap L Ω) _ (x * _), map_mul]
+      rw [key, RingHom.map_sub (algebraMap L Ω) _ (x * _), map_mul]
       refine Valuation.map_sub_lt _ h2 ?_
       rw [map_mul]
       exact (mul_le_of_le_one_left' hx).trans_lt h3
@@ -344,7 +344,7 @@ theorem div_mem_rayIdl_iff {𝔪 : Ideal (𝓞 K)} (hm : 𝔪 ≠ ⊥) (J : idea
   have e2 : ∀ v : HeightOneSpectrum (𝓞 K), v.asIdeal ∣ 𝔪 →
       Valued.v (ev v ((diagUnits K k * (unifIdl 𝔪 J)⁻¹ : Ideles K) : AdeleRing (𝓞 K) K) - 1) =
         v.valuation K ((k : K) - 1) := fun v hv => by
-    rw [e0, ev_unifIdl, J.2 v hv, zpow_zero, inv_one, mul_one, ← valued_algebraMap, map_sub (algebraMap K _), map_one]
+    rw [e0, ev_unifIdl, J.2 v hv, zpow_zero, inv_one, mul_one, ← valued_algebraMap, RingHom.map_sub (algebraMap K _), map_one]
   have e3 : infPart (diagUnits K k * (unifIdl 𝔪 J)⁻¹) =
       Units.map (algebraMap K (InfiniteAdeleRing K)).toMonoidHom k := by
     rw [map_mul, map_inv, infPart_unifIdl, inv_one, mul_one]

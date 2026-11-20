@@ -143,7 +143,7 @@ private theorem epsD_one (l : ℕ) [Fact l.Prime] (F : GFrame l) (n : ℕ) (x : 
     have := (finAm l F n x m k.g).2.2.2.2.1 1
     rwa [nsmul_eq_mul, mul_one] at this
   have : ((F.ε g : ℤ_[l]ˣ) : ℤ_[l]) - 1 ∈ RingHom.ker (PadicInt.toZMod (p := l)) := by
-    rw [RingHom.mem_ker, map_sub, hg, map_one, sub_self]
+    rw [RingHom.mem_ker, RingHom.map_sub, hg, map_one, sub_self]
   rw [PadicInt.ker_toZMod, PadicInt.maximalIdeal_eq_span_p, Ideal.mem_span_singleton] at this
   obtain ⟨c, hc⟩ := this
   rw [epsD, eq_add_of_sub_eq hc]

@@ -132,7 +132,7 @@ theorem isUnit_of_pi_ne_zero (J : JetRing ℂ I n) (x : J.B) (hx : J.π x ≠ 0)
   obtain ⟨N, hN⟩ := ker_nil I n J
   set a := J.π x
   have hr : algebraMap ℂ J.B a⁻¹ * x - 1 ∈ RingHom.ker J.π := by
-    rw [RingHom.mem_ker, map_sub, map_mul, map_one]
+    rw [RingHom.mem_ker, RingHom.map_sub, map_mul, map_one]
     have : J.π (algebraMap ℂ J.B a⁻¹) = a⁻¹ := by
       rw [J.π_eq, Algebra.algebraMap_eq_smul_one, ← J.one, map_smul, J.b.repr_self]
       simp

@@ -118,6 +118,6 @@ theorem UpperTheory.Kd.C7.pFixAbs :
   rw [SModEq.sub_mem, Ideal.span_singleton_pow, Ideal.smul_eq_mul, Ideal.mul_top, Ideal.mem_span_singleton]
   obtain ⟨c, hc⟩ := (hZ _ _ n).mp (hL n)
   have h2 := congrArg (algebraMap ℤ_[p] R) hc
-  rw [map_sub, map_natCast, map_mul, map_pow, map_natCast] at h2
+  rw [RingHom.map_sub, map_natCast, map_mul, map_pow, map_natCast] at h2
   refine ⟨-(algebraMap ℤ_[p] R c + (seq n).1), ?_⟩
   linear_combination (-1 : R) * h2 - hrep n

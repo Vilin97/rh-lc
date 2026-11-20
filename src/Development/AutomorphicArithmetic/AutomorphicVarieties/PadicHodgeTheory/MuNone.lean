@@ -121,7 +121,7 @@ private theorem mn_cyc {l : ℕ} [Fact l.Prime] (σ : GQ l) {ζ : Om l} (h1 : ζ
   have hk' : PadicInt.toZModPow 1 x = 1 := by
     rw [← ZMod.natCast_zmod_val (PadicInt.toZModPow 1 x), hk, Nat.cast_one]
   have hmem : x - 1 ∈ RingHom.ker (PadicInt.toZModPow (p := l) 1) := by
-    rw [RingHom.mem_ker, map_sub, hk', map_one, sub_self]
+    rw [RingHom.mem_ker, RingHom.map_sub, hk', map_one, sub_self]
   rw [PadicInt.ker_toZModPow, pow_one, ← PadicInt.maximalIdeal_eq_span_p, ← PadicInt.ker_toZMod,
     RingHom.mem_ker, map_sub, map_one, sub_eq_zero] at hmem
   exact hmem

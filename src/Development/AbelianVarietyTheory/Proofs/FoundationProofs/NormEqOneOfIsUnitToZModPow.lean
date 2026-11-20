@@ -59,7 +59,7 @@ theorem norm_inv_pow_sub_le {r : ℕ} (hr : r ≠ 0) (e : ℕ) {a b : ℤ_[l]} (
   rw [PadicInt.ker_toZModPow, Ideal.mem_span_singleton] at hk
   obtain ⟨k, hk⟩ := hk
   have hk' := congrArg (algebraMap ℤ_[l] (Qbar l)) hk
-  rw [map_sub, map_pow, map_pow, map_mul, map_pow, map_natCast] at hk'
+  rw [RingHom.map_sub, map_pow, map_pow, map_mul, map_pow, map_natCast] at hk'
   rw [inv_sub_inv (norm_ne_zero_iff.1 (by rw [na]; exact one_ne_zero)) (norm_ne_zero_iff.1 (by rw [nb]; exact one_ne_zero)),
     norm_div, norm_mul, na, nb, mul_one, div_one, hk', norm_mul, norm_algebraMap_padicInt]
   exact mul_le_of_le_one_right (norm_nonneg _) k.norm_le_one

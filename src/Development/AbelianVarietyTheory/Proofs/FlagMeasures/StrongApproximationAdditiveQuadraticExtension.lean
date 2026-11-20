@@ -367,7 +367,7 @@ theorem approxTr (A : Places F E sig) (c : ∀ p, ((A.loc p).Fp)ˣ)
   obtain ⟨o2, ho2⟩ := hβ p
   refine ⟨algebraMap _ _ (o2 : (A.loc p).Fp) * (A.loc p).ιE d, mul_mem (O_of_int A p o2) (hdO p), ?_⟩
   have e2 := congrArg (algebraMap (A.loc p).Fp (A.loc p).Ep) ho2
-  rw [map_sub, map_mul] at e2
+  rw [RingHom.map_sub, map_mul] at e2
   rw [map_add, map_mul, map_mul, (A.loc p).compat β]
   linear_combination (A.loc p).ιE d * e2 - hab p - hA p - (A.loc p).ιE (algebraMap F E 2⁻¹) * hyt p
 

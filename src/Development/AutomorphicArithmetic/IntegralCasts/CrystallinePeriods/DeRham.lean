@@ -149,7 +149,7 @@ theorem isUnit_iff_theta_ne_zero (x : BdRPlus p R) : IsUnit x ↔ theta p R x �
   obtain ⟨z, hz⟩ := (isField_away p R).mul_inv_cancel h
   obtain ⟨y, rfl⟩ := theta_surjective (p := p) z
   have h1 : x * y - 1 ∈ RingHom.ker (theta p R) := by
-    rw [RingHom.mem_ker, map_sub, map_mul, hz, map_one, sub_self]
+    rw [RingHom.mem_ker, RingHom.map_sub, map_mul, hz, map_one, sub_self]
   have h2 := Ideal.mem_jacobson_bot.1 (IsAdicComplete.le_jacobson_bot _ h1) 1
   rw [mul_one, sub_add_cancel] at h2
   exact isUnit_of_mul_isUnit_left h2

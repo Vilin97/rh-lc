@@ -333,7 +333,7 @@ theorem kummer_sub_lamv {m : ℕ} {ζ' : Ω} (hζ : IsPrimitiveRoot ζ' (l ^ (m 
     push_cast at hb
     linear_combination hb
   have h5 := congrArg (algebraMap ℤ_[l] (Qbar l)) h4
-  rw [map_sub, map_natCast, map_mul, map_pow, map_natCast] at h5
+  rw [RingHom.map_sub, map_natCast, map_mul, map_pow, map_natCast] at h5
   rw [ha', h5]
   exact mul_mem_ball (by rw [norm_algebraMap_padicInt]; exact PadicInt.norm_le_one b) (mem_ball.2 le_rfl)
 

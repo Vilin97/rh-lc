@@ -101,7 +101,7 @@ theorem UpperTheory.cohomology_punctured_affine_line : LateralTheory.E.StandardE
     exact hy
   have hmem : w' ^ q - 1 ∈ mm (⊤ : Subalgebra A Γ(pullback ι₁ ι₂, ⊤)) := by
     have hk : w' ^ q - 1 ∈ RingHom.ker r.appTop.hom := by
-      rw [RingHom.mem_ker, map_sub, map_pow, hwq, map_one, sub_self]
+      rw [RingHom.mem_ker, RingHom.map_sub, map_pow, hwq, map_one, sub_self]
     rw [hrker] at hk
     unfold mm
     rw [Algebra.top_toSubmodule, Ideal.smul_top_eq_map]

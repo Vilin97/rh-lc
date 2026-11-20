@@ -84,7 +84,7 @@ theorem exists_eq_pow_mul_of_iota_eq_zero {y : ACris K p} (hy : iota K p y = 0) 
       apply hle
       rw [← Ideal.map_map]
       exact Ideal.mem_map_of_mem _ ha
-    rw [map_sub, iotaM_eq_zero hy, zero_sub, Ideal.span_singleton_pow, Ideal.mem_span_singleton] at h1
+    rw [RingHom.map_sub, iotaM_eq_zero hy, zero_sub, Ideal.span_singleton_pow, Ideal.mem_span_singleton] at h1
     obtain ⟨t, ht⟩ := h1
     obtain ⟨s, hs, hst⟩ := t.2
     have h3 := congrArg (fun x : acrisQ K p m => (x : 𝔸 ⧸ kerAway K p ^ m)) ht
@@ -118,7 +118,7 @@ theorem iota_injective : Function.Injective (iota K p) := by
       (Ideal.span {(p : ACrisZero K p)} ^ k).map
         (algebraMap (ACrisZero K p) (ACris K p)) := by
     rw [← ker_adicCompletion_evalₐ (Submodule.fg_span_singleton _), RingHom.mem_ker]
-    simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_sub]
+    simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, RingHom.map_sub]
     rw [← hyk]
     exact sub_eq_zero.2 (_root_.AdicCompletion.evalₐ_of _ k yk).symm
   obtain ⟨z, hz, hzk⟩ := exists_eq_pow_mul_of_iota_eq_zero hy hker

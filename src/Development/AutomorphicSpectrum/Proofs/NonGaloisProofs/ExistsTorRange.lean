@@ -170,7 +170,7 @@ theorem finite_tor (hT : T = LinearMap.range (Algebra.linearMap O LL)) {ϖ : O} 
     rw [ha]
     field_simp
   have h3 := congrArg (algebraMap O LL) hb
-  rw [map_sub, map_mul, map_pow] at h3
+  rw [RingHom.map_sub, map_mul, map_pow] at h3
   rw [h2, ← sub_mul, h3]
   simp only [x₀]
   field_simp

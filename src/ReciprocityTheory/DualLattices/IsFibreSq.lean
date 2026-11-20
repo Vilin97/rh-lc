@@ -41,7 +41,7 @@ lemma π_η : Dp.π.1 Dp.η = 0 := RingHom.mem_ker.mp Dp.η_ker
 lemma isUnit_of_π {d : (Dp.D : Type u)} (h : IsUnit (Dp.π.1 d)) : IsUnit d := by
   obtain ⟨w, hw⟩ := h
   have hk : d * Dp.σ.1 (↑w⁻¹ : (R : Type u)) - 1 ∈ RingHom.ker Dp.π.1 := by
-    rw [RingHom.mem_ker, map_sub, map_mul, Dp.sect, ← hw, Units.mul_inv, map_one, sub_self]
+    rw [RingHom.mem_ker, RingHom.map_sub, map_mul, Dp.sect, ← hw, Units.mul_inv, map_one, sub_self]
   have hkk := Dp.sq_ker hk hk
   exact isUnit_iff_exists_inv.mpr
     ⟨Dp.σ.1 (↑w⁻¹ : (R : Type u)) * (2 - d * Dp.σ.1 (↑w⁻¹ : (R : Type u))),
@@ -96,9 +96,9 @@ lemma fp_isUnit (q : Dp.fpS) (h : IsUnit (Dp.π.1 q.1.1)) : IsUnit q := by
   obtain ⟨w, hw⟩ := h
   let e : Dp.fpS := ⟨(Dp.σ.1 (↑w⁻¹ : (R : Type u)), Dp.σ.1 (↑w⁻¹ : (R : Type u))), rfl⟩
   have m1 : q.1.1 * Dp.σ.1 (↑w⁻¹ : (R : Type u)) - 1 ∈ RingHom.ker Dp.π.1 := by
-    rw [RingHom.mem_ker, map_sub, map_mul, Dp.sect, ← hw, Units.mul_inv, map_one, sub_self]
+    rw [RingHom.mem_ker, RingHom.map_sub, map_mul, Dp.sect, ← hw, Units.mul_inv, map_one, sub_self]
   have m2 : q.1.2 * Dp.σ.1 (↑w⁻¹ : (R : Type u)) - 1 ∈ RingHom.ker Dp.π.1 := by
-    rw [RingHom.mem_ker, map_sub, map_mul, Dp.sect, ← Dp.fp_eq, ← hw, Units.mul_inv, map_one,
+    rw [RingHom.mem_ker, RingHom.map_sub, map_mul, Dp.sect, ← Dp.fp_eq, ← hw, Units.mul_inv, map_one,
       sub_self]
   have hkk : (q * e - 1) * (q * e - 1) = 0 :=
     Subtype.ext (Prod.ext (Dp.sq_ker m1 m1) (Dp.sq_ker m2 m2))

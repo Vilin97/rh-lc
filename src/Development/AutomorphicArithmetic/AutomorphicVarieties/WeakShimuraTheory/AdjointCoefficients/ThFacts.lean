@@ -19,7 +19,7 @@ private theorem no_tors1 {l : ℕ} [hl : Fact l.Prime] (h2 : l ≠ 2) {u : ℤ_[
     exact hp.not_dvd_one h1
   have hxy : (l : ℤ_[l]) ∣ u - 1 := by
     have hk : u - 1 ∈ RingHom.ker (PadicInt.toZMod : ℤ_[l] →+* ZMod l) := by
-      rw [RingHom.mem_ker, map_sub, map_one]
+      rw [RingHom.mem_ker, RingHom.map_sub, map_one]
       have h3 := congrArg (PadicInt.toZMod : ℤ_[l] →+* ZMod l) h
       rw [map_pow, map_one, ZMod.pow_card] at h3
       rw [h3, sub_self]

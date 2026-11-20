@@ -141,7 +141,7 @@ theorem pc_lim (R : Type) [CommRing R] (s : ℕ → R)
   obtain ⟨z, hz⟩ := h1
   obtain ⟨w, hw⟩ := hs r n hn
   have h2 := congrArg (algebraMap R (GlobalTheory.AdicMaps.PHat l R)) hw
-  rw [map_sub, map_mul, map_pow, map_natCast] at h2
+  rw [RingHom.map_sub, map_mul, map_pow, map_natCast] at h2
   exact ⟨-z - algebraMap R _ w, by linear_combination -hz - h2⟩
 
 private theorem acris_sep (x : Per.Acris l)

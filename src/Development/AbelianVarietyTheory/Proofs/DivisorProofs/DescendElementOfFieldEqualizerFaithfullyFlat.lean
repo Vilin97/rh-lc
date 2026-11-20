@@ -62,7 +62,7 @@ theorem exists_sub_mem_of_under_eq_bot [IsIntegrallyClosed R] [CharZero R]
   apply IsFractionRing.injective A K₀
   rw [map_zero]
   have h : π (s - algebraMap R R₁ y) = 0 := by
-    rw [map_sub, hπ, hy, he', sub_self]
+    rw [RingHom.map_sub, hπ, hy, he', sub_self]
   exact h
 
 theorem eq_of_sub_mem [Algebra.IsIntegral R R₁] (s : R₁)

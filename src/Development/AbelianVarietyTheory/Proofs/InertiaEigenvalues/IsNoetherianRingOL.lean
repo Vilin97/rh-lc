@@ -315,7 +315,7 @@ theorem exists_c {O LL : Type} [CommRing O] [Field LL] [Algebra O LL] (p : ℕ) 
   choose c hc using dvd_one_sub_zpow (p : O) u hu
   refine ⟨c, fun a => ?_⟩
   have h2 := congrArg (algebraMap O LL) (hc a)
-  rw [map_mul, map_natCast, map_sub, map_one] at h2
+  rw [map_mul, map_natCast, RingHom.map_sub, map_one] at h2
   rw [← h2]
   congr 1
   have h3 := congrArg Units.val (map_zpow (chiLL LL (MonoidHom.id Oˣ)) u a)

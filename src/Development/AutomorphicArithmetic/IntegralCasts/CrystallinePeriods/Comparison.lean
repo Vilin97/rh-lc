@@ -256,7 +256,7 @@ theorem toBdRPlus_log (u : Ainf p R) (hu : Ainf.theta p R u = 1)
       AinfInv p R ⧸ AinfInv.kerTheta p R ^ n) =
       truncLog n (BdRPlus.eval p R n (algebraMap _ _ u - 1)) := fun N hN => by
     rw [← eval_toBdRPlus, toBdRPlus_algebraMap_zero, coe_logPartial, map_truncLog, map_truncLog,
-      ← truncLog_eq_of_pow_eq_zero hz hN, ← IsScalarTower.algebraMap_apply, map_sub (algebraMap _ _),
+      ← truncLog_eq_of_pow_eq_zero hz hN, ← IsScalarTower.algebraMap_apply, RingHom.map_sub (algebraMap _ _),
       map_one]
   rw [eval_toBdRPlus, BdRPlus.eval_log, ← h1 n le_rfl]
   congr 1
@@ -266,7 +266,7 @@ theorem toBdRPlus_log (u : Ainf p R) (hu : Ainf.theta p R u = 1)
       toRange p R n (algebraMap _ _ (logPartial (max n (p ^ k)) u hu)) :=
     Subtype.ext (by rw [h1 _ le_rfl, h1 _ (le_max_left _ _)])
   have h3 := (eval_eq_zero_iff k (log u hu - algebraMap _ _ (logPartial (max n (p ^ k)) u hu))).1
-    (by rw [map_sub, eval_log u hu (le_max_right _ _), eval_algebraMap, sub_self])
+    (by rw [RingHom.map_sub, eval_log u hu (le_max_right _ _), eval_algebraMap, sub_self])
   rw [h2, smul_eq_mul, Ideal.mul_top, SModEq.sub_mem, Ideal.span_singleton_pow,
     Ideal.mem_span_singleton, ← map_sub]
   simpa using map_dvd (toRange p R n) h3
@@ -282,7 +282,7 @@ theorem BdRPlus.ker_theta_eq_span_logTeich {ε : tateModule p R} (hε : IsPrimit
   set x := algebraMap (Ainf p R) (BdRPlus p R) (Ainf.teich p ε.1 - 1) with hx
   have h2 : BdRPlus.logTeich ε - x ∈ BdRPlus.fil p R 2 := by
     rw [← BdRPlus.ker_eval, RingHom.mem_ker, map_sub, BdRPlus.logTeich, BdRPlus.eval_two_log, hx,
-      map_sub (algebraMap _ _), map_one, sub_self]
+      RingHom.map_sub (algebraMap _ _), map_one, sub_self]
   rw [BdRPlus.fil, h, Ideal.span_singleton_pow, Ideal.mem_span_singleton] at h2
   obtain ⟨c, hc⟩ := h2
   have hx0 : BdRPlus.theta p R x = 0 := by

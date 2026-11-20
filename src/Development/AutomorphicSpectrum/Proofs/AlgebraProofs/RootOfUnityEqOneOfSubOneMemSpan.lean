@@ -21,7 +21,7 @@ theorem rootOfUnity_eq_one_of_sub_one_mem_span : ∀ (E : Type) [Field E] [Numbe
     exact h
   have hwE : (w : E) * (M : E) = (z : E) - 1 := by
     have h := congrArg (algebraMap (𝓞 E) E) hw
-    rw [map_mul, map_sub, map_natCast, map_one] at h
+    rw [map_mul, RingHom.map_sub, map_natCast, map_one] at h
     rw [NumberField.RingOfIntegers.coe_eq_algebraMap w, NumberField.RingOfIntegers.coe_eq_algebraMap z]
     exact h
   have hbound : ∀ σ : E →ₐ[ℚ] ℂ, ‖σ (w : E)‖ ≤ 2 / M := by

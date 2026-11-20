@@ -113,7 +113,7 @@ lemma R'n_local (n : ℕ) : IsLocalRing (R'n p O ε n) := by
     obtain ⟨u, hu⟩ := ha.exists_right_inv
     obtain ⟨u', rfl⟩ := piRing_surj p O hv ε hε n u
     have hk : a * u' - 1 ∈ RingHom.ker (piRing p O hv ε hε n) := by
-      rw [RingHom.mem_ker, map_sub, map_mul, hu, map_one, sub_self]
+      rw [RingHom.mem_ker, RingHom.map_sub, map_mul, hu, map_one, sub_self]
     rw [ker_pi, Ideal.mem_span_singleton'] at hk
     obtain ⟨k, hk⟩ := hk
     have h1 : a * u' = 1 + k * xiR p O ε n := by rw [hk]; ring
@@ -158,7 +158,7 @@ lemma ann' (n : ℕ) (a : R'n p O ε n) (ha : a * xiR p O ε n = 0) :
   rw [sub_eq_zero] at h5
   rw [h5, Ideal.mem_span_singleton']
   refine ⟨-(Ideal.Quotient.mk _ (Ideal.Quotient.mk _ c)), ?_⟩
-  simp only [xiR, map_sub, map_mul, map_pow, map_natCast, hpR', mul_zero, zero_sub, neg_mul]
+  simp only [xiR, RingHom.map_sub, map_mul, map_pow, map_natCast, hpR', mul_zero, zero_sub, neg_mul]
 
 def zv (n : ℕ) : R'n p O ε n :=
   Ideal.Quotient.mk _ (Ideal.Quotient.mk _ (teichmuller p (root p O ε (n + 1))))

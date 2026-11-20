@@ -409,7 +409,7 @@ theorem exists_assoc_log (u : Ainf p R) (hu : Ainf.theta p R u = 1) :
     · have := congrArg (algebraMap (AcrisZero p R) (Acris p R)) h1
       rwa [map_mul, map_pow, map_natCast, map_sub, map_pow, map_one,
         ← IsScalarTower.algebraMap_apply] at this
-    · rw [← Acris.eval_eq_zero_iff, map_sub, h2, Acris.eval_algebraMap, sub_self]
+    · rw [← Acris.eval_eq_zero_iff, RingHom.map_sub, h2, Acris.eval_algebraMap, sub_self]
   choose l hl ht using h
   generalize Acris.log u hu = t at *
   generalize algebraMap (Ainf p R) (Acris p R) u = U at *
@@ -679,7 +679,7 @@ theorem exists_log_eq (u : Ainf p R) (hu : Ainf.theta p R u = 1) :
     · have := congrArg (algebraMap (AcrisZero p R) (Acris p R)) hl
       rwa [map_mul, map_pow, map_natCast, map_sub, map_one, map_pow,
         ← IsScalarTower.algebraMap_apply] at this
-    · rw [← Acris.eval_eq_zero_iff, map_sub, hl', Acris.eval_algebraMap, sub_self]
+    · rw [← Acris.eval_eq_zero_iff, RingHom.map_sub, hl', Acris.eval_algebraMap, sub_self]
   choose l hl hl' using h0
   have h1 : ∀ n, ∃ c, l (n + 3) = l (n + 2) * (1 + (p : Acris p R) ^ (n + 1) * c) := by
     intro n
@@ -882,7 +882,7 @@ theorem dvd_tail (u : Ainf p R) (hu : Ainf.theta p R u = 1) :
     Nat.add_le_add (Nat.pow_le_pow_right hp.pos n.le_succ) (Nat.mul_le_mul_left p (by omega))
   let s : ℕ → Acris p R := fun n => ∑ k ∈ Finset.range (M n), (-1) ^ k * term u hu k
   have h1 : ∀ n, (p : Acris p R) ^ n ∣ Acris.log u hu - s n := fun n => by
-    rw [← Acris.eval_eq_zero_iff, map_sub, Acris.eval_log u hu (Nat.le_add_right _ _ : p ^ n ≤ M n)]
+    rw [← Acris.eval_eq_zero_iff, RingHom.map_sub, Acris.eval_log u hu (Nat.le_add_right _ _ : p ^ n ≤ M n)]
     simp only [s]
     rw [← partial_eq, Acris.eval_algebraMap, sub_self]
   have h2 : ∀ n, algebraMap (Ainf p R) (Acris p R) (u - 1) * (p : Acris p R) ^ n ∣
@@ -1130,7 +1130,7 @@ theorem log_eq (u : Ainf p R) (hu : Ainf.theta p R u = 1) (a : Acris p R)
     refine Acris.eq_zero_of_forall_dvd fun n => ?_
     obtain ⟨l, hl, hl'⟩ := Acris.exists_quot u hu n
     have h1 := congrArg (algebraMap (AcrisZero p R) (Acris p R)) hl
-    rw [map_mul, map_pow, map_natCast, map_sub, map_pow, map_one, ← IsScalarTower.algebraMap_apply,
+    rw [map_mul, map_pow, map_natCast, RingHom.map_sub, map_pow, map_one, ← IsScalarTower.algebraMap_apply,
       ← hU, hW] at h1
     have h2 := Acris.p_pow_mul_cancel n h1
     have h3 : (p : Acris p R) ^ n ∣ Acris.log u hu - algebraMap (AcrisZero p R) _ l :=

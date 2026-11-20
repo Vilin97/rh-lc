@@ -1627,7 +1627,7 @@ theorem lifta_lifts (W : LocWach PD LL O v n) (hp : PD.p = ℓ) (hA : CaseA W) (
       1 - (((W.χΓ W.gam) ^ (-x) : Oˣ) : O) := by
     intro x
     have h := congrArg (algebraMap ℤ_[PD.p] O) (hc x)
-    rw [map_mul, map_natCast, map_sub, map_one] at h
+    rw [map_mul, map_natCast, RingHom.map_sub, map_one] at h
     rw [h, ← hU, ← map_zpow]
     rfl
   have hstabN : ∀ x ∈ W.NΔ T₀, lifta_δ W T₀ cE x ∈ W.NΔ T₀ := by
@@ -4580,7 +4580,7 @@ theorem lqa_lifts (W : LocWach PD LL O v n) (hp : PD.p = ℓ) (hA : CaseA W) (u 
       1 - (((W.χΓ W.gam) ^ (-x) : Oˣ) : O) := by
     intro x
     have h := congrArg (algebraMap ℤ_[PD.p] O) (hc x)
-    rw [map_mul, map_natCast, map_sub, map_one] at h
+    rw [map_mul, map_natCast, RingHom.map_sub, map_one] at h
     rw [h, ← hU, ← map_zpow]
     rfl
   have hstabN : ∀ x ∈ W.NΔ T₀, lifta_δ W T₀ cE x ∈ W.NΔ T₀ := by

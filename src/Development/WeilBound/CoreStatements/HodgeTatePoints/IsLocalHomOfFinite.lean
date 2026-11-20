@@ -333,7 +333,7 @@ theorem htd_tie : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed
         obtain ⟨u, hu'⟩ := hu.exists_right_inv
         obtain ⟨y, rfl⟩ := hsurj i u
         have h1 : x * y - 1 ∈ RingHom.ker (χ i) := by
-          rw [RingHom.mem_ker, map_sub, map_mul, hu', map_one, sub_self]
+          rw [RingHom.mem_ker, RingHom.map_sub, map_mul, hu', map_one, sub_self]
         have h2 : (1 : T.A) ∈ M := by
           have h3 := M.sub_mem (M.mul_mem_right y hx) (hK h1)
           simpa using h3

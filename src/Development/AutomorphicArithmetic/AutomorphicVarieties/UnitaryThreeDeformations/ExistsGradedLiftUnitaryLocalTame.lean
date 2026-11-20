@@ -33,7 +33,7 @@ private theorem isUnit_of_isUnit_surjective_localRingHom {R R' : Type} [CommRing
   obtain ⟨u, hu⟩ := h
   obtain ⟨b, hb⟩ := hp (↑u⁻¹ : R')
   have hk : a * b - 1 ∈ RingHom.ker p := by
-    rw [RingHom.mem_ker, map_sub, map_mul, hb, ← hu, map_one]
+    rw [RingHom.mem_ker, RingHom.map_sub, map_mul, hb, ← hu, map_one]
     simp
   have hker : RingHom.ker p ≤ maximalIdeal R := IsLocalRing.le_maximalIdeal (RingHom.ker_ne_top p)
   have h1 : a * b ∈ maximalIdeal R := Ideal.mul_mem_right b _ ((IsLocalRing.mem_maximalIdeal a).2 ha)

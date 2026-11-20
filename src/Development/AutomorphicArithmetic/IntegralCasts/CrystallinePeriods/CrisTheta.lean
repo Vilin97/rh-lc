@@ -195,7 +195,7 @@ theorem theta_eq_zero_iff (y : AcrisZero p R) : theta p R y = 0 ↔ y ∈ pdIdea
   refine ⟨fun h => ?_, key y⟩
   obtain ⟨a, ha⟩ := exists_sub_mem_pdIdeal y
   have h1 := key _ ha
-  rw [map_sub, h, theta_algebraMap, zero_sub, neg_eq_zero] at h1
+  rw [RingHom.map_sub, h, theta_algebraMap, zero_sub, neg_eq_zero] at h1
   simpa using add_mem ha (algebraMap_mem_pdIdeal a h1)
 
 theorem ker_theta : RingHom.ker (theta p R) = pdIdeal p R :=
@@ -238,7 +238,7 @@ theorem theta_surjective (hθ : Function.Surjective (Ainf.theta p R)) :
 @[simp] theorem theta_log (u : Ainf p R) (hu : Ainf.theta p R u = 1) : theta p R (log u hu) = 0 := by
   refine IsHausdorff.haus (I := span {(p : R)}) inferInstance _ fun n => ?_
   obtain ⟨y, hy⟩ := (eval_eq_zero_iff n (log u hu - algebraMap _ _ (logPartial (p ^ n) u hu))).1
-    (by rw [map_sub, eval_log u hu le_rfl, eval_algebraMap, sub_self])
+    (by rw [RingHom.map_sub, eval_log u hu le_rfl, eval_algebraMap, sub_self])
   have h0 : AcrisZero.theta p R (logPartial (p ^ n) u hu) = 0 := by
     rw [logPartial, map_sum]
     exact Finset.sum_eq_zero fun k _ => by

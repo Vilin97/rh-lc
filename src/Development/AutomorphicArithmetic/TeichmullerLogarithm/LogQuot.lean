@@ -112,9 +112,9 @@ theorem exists_logTeich_eq_mu_mul (η : tateModule p R) :
   obtain ⟨V, hV, hV'⟩ := hv' n
   obtain ⟨l, hl, hl'⟩ := Acris.exists_quot u hu (n + 1)
   have h1 : (p : Acris p R) ^ (n + 1) ∣ Acris.log u hu - algebraMap _ _ l := by
-    rw [← Acris.eval_eq_zero_iff, map_sub, hl', Acris.eval_algebraMap, sub_self]
+    rw [← Acris.eval_eq_zero_iff, RingHom.map_sub, hl', Acris.eval_algebraMap, sub_self]
   have h2 := congrArg (algebraMap (AcrisZero p R) (Acris p R)) hl
-  rw [map_mul, map_pow, map_natCast, map_sub, map_pow, map_one, ← IsScalarTower.algebraMap_apply,
+  rw [map_mul, map_pow, map_natCast, RingHom.map_sub, map_pow, map_one, ← IsScalarTower.algebraMap_apply,
     ← hV] at h2
   rw [Acris.p_pow_mul_cancel _ h2] at h1
   have h3 := dvd_add ((pow_dvd_pow _ (Nat.le_succ n)).trans h1)

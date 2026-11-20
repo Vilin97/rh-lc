@@ -306,7 +306,7 @@ theorem exists_lin_mul {X : Scheme.{0}} (p : X ⟶ Sp ℂ) {N : ℕ} (ι : X ⟶
       Eq.trans (congrArg (ι.app _).hom (frac_mul_eq rfl).symm) (map_mul _ _ _)
     have e2 : rat p ι _ g₀ hl hg₀ = (e t)⁻¹ • rat p ι l₁ g₀ hl₁ hg₀ := fRatio_smul_n p ι hp _ hl₁ hl hg₀
     have h3 : 1 - algebraMap ℂ _ (e t)⁻¹ * t ∈ RingHom.ker e := by
-      rw [RingHom.mem_ker, map_sub, map_mul, he, map_one, inv_mul_cancel₀ ht, sub_self]
+      rw [RingHom.mem_ker, RingHom.map_sub, map_mul, he, map_one, inv_mul_cancel₀ ht, sub_self]
     have h4 : u' - v ∈ RingHom.ker e ^ 2 := by
       have h5 := Ideal.mul_mem_mul (RingHom.mem_ker.2 hs0) h3
       rw [← pow_two] at h5

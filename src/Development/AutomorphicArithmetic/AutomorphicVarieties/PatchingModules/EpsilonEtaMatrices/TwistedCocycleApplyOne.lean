@@ -185,7 +185,7 @@ private theorem epsD_one (l : ℕ) [Fact l.Prime] (F : GFrame l) (n : ℕ) (x : 
     (k : Kap x) (m : ℕ) (g : F.Γ) (hg : PadicInt.toZMod ((F.ε g : ℤ_[l]ˣ) : ℤ_[l]) = 1) : epsD k (x.Am m) g = 1 := by
   set y : ℤ_[l] := ((F.ε g : ℤ_[l]ˣ) : ℤ_[l]) with hyd
   have hy : y - 1 ∈ RingHom.ker (PadicInt.toZMod (p := l)) := by
-    rw [RingHom.mem_ker, map_sub, hg, map_one, sub_self]
+    rw [RingHom.mem_ker, RingHom.map_sub, hg, map_one, sub_self]
   rw [PadicInt.ker_toZMod, PadicInt.maximalIdeal_eq_span_p, Ideal.mem_span_singleton'] at hy
   obtain ⟨u, hu⟩ := hy
   have hl : ∀ w : DD (x.Am m) k.g, l • w = 0 := (finAm l F n x m k.g).2.2.2.2.1

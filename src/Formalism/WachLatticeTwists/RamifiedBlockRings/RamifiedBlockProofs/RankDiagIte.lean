@@ -132,7 +132,7 @@ theorem idem : StatIdem := by
   obtain ⟨u1, hu1⟩ := (hB' _).mp (hcor 1)
   obtain ⟨u2, hu2⟩ := (hB' _).mp (hcor (Matrix.single i0 i0 1))
   have hv1 : f₀ (1 - u1) = (0, 1) := by
-    rw [map_sub, map_one, hu1]
+    rw [RingHom.map_sub, map_one, hu1]
     refine Prod.ext ?_ ?_ <;> simp
   have hfin : Module.Finite O R :=
     (inferInstance : Module.Finite O (Subalgebra.toSubmodule R))

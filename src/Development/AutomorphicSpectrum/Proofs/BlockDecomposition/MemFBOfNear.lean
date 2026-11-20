@@ -38,7 +38,7 @@ theorem keyL : ∀ {l : ℕ} [Fact l.Prime] (b : Formalism.Per6.BdRp l) (k : ℕ
         AdicCompletion.evalₐ_of]
     have h1 : b' - c' ∈ RingHom.ker (AdicCompletion.evalₐ I k).toRingHom := by
       rw [RingHom.mem_ker]
-      simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_sub]
+      simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, RingHom.map_sub]
       rw [e, ha0, sub_self]
     rw [GroundTheory.PAdicHodge.ker_adicCompletion_evalₐ hfg k] at h1
     rw [hm, h']

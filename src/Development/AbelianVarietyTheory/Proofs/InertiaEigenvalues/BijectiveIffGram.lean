@@ -270,7 +270,7 @@ theorem dualFor [IsFractionRing O LL]
           algebraMap (LetA O n) W.EE letπ * algebraMap _ W.EE a' := by
         rw [← ha, ← ha', ← hA₁, ← h1, map_sub, LinearMap.sub_apply]
       have h4 := congrArg (algebraMap _ W.EE) hd
-      rw [map_sub, map_mul] at h4
+      rw [RingHom.map_sub, map_mul] at h4
       rw [← hA₂, ← hy', map_sub, h2, map_add]
       linear_combination h4 + h3
     · apply le_antisymm

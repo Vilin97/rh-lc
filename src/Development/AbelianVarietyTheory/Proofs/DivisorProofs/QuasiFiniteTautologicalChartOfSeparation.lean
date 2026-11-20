@@ -63,7 +63,7 @@ theorem eq_zero_of_inv_mem [IsLocalRing V] (ev : V →+* K) {r : V} (hr : r ∈ 
   by_contra h0
   obtain ⟨r', hr'⟩ := h
   have h₁ : 1 - r * r' ∈ RingHom.ker ev := by
-    rw [RingHom.mem_ker, map_sub, map_mul, map_one, hr', mul_inv_cancel₀ h0, sub_self]
+    rw [RingHom.mem_ker, RingHom.map_sub, map_mul, map_one, hr', mul_inv_cancel₀ h0, sub_self]
   have h₂ := le_maximalIdeal (RingHom.ker_ne_top ev) h₁
   have h₃ := add_mem h₂ (Ideal.mul_mem_right r' _ hr)
   rw [sub_add_cancel] at h₃

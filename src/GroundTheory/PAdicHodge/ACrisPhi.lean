@@ -211,7 +211,8 @@ theorem log_one_add_pow (hx : x ∈ RingHom.ker θ) :
   have h2 : ∑ n ∈ Finset.range M, algebraMap (ACrisZero K p) (ACris K p) (p : ACrisZero K p) *
       logTerm hx n - ∑ n ∈ Finset.range M, logTerm (one_add_pow_sub_one_mem hx) n ∈ 𝔭 ^ k := by
     have h := algebraMap_mem_pow (sum_p_mul_logTermZero_sub_mem hx (le_of_max_le_right hM))
-    rw [map_sub, map_sum, map_sum] at h
+    simp only [RingHom.map_sub, @map_sum _ _ _ _ _ _ _
+      (RingHomClass.toAddMonoidHomClass (self := RingHom.instRingHomClass))] at h
     simpa only [map_mul, logTerm] using h
   have := add_mem h1 h2
   simp only at this

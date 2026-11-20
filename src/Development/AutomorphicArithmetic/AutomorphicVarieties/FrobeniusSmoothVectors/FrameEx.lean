@@ -26,7 +26,7 @@ private theorem cycMod_emb (F Ω : Type) [Field F] [NumberField F] [Field Ω] [C
 private theorem one_of_cast (l : ℕ) [Fact l.Prime] (k : Type) [Field k] [CharP k l] (x : ℤ_[l])
     (h : ZMod.castHom (dvd_refl l) k (PadicInt.toZMod x) = 1) : PadicInt.toZModPow 1 x = 1 := by
   have h1 : x - 1 ∈ RingHom.ker (PadicInt.toZMod : ℤ_[l] →+* ZMod l) := by
-    rw [RingHom.mem_ker, map_sub, map_one, sub_eq_zero]
+    rw [RingHom.mem_ker, RingHom.map_sub, map_one, sub_eq_zero]
     exact (ZMod.castHom (dvd_refl l) k).injective (h.trans (map_one _).symm)
   rw [PadicInt.ker_toZMod, PadicInt.maximalIdeal_eq_span_p, ← pow_one (l : ℤ_[l]), ← PadicInt.ker_toZModPow,
     RingHom.mem_ker, map_sub, map_one, sub_eq_zero] at h1

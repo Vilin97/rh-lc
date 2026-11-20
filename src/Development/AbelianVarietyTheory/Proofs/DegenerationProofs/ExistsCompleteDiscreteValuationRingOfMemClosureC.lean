@@ -48,7 +48,7 @@ theorem exists_complete_discreteValuationRing_of_mem_closure_cone :
     rw [Ideal.ne_top_iff_one, Ideal.mem_map_iff_of_surjective _ Φ.rangeRestrict_surjective]
     rintro ⟨G, h1, h2⟩
     have h3 : G - 1 ∈ RingHom.ker Φ := by
-      rw [RingHom.mem_ker, map_sub, map_one, sub_eq_zero]
+      rw [RingHom.mem_ker, RingHom.map_sub, map_one, sub_eq_zero]
       exact congrArg Subtype.val h2
     have h4 := hker h3
     rw [RingHom.mem_ker] at h1 h4

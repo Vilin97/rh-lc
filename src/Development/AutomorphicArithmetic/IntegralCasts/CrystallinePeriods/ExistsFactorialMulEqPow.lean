@@ -198,7 +198,7 @@ theorem extend_log (g : AcrisZero p R →+* AcrisZero p S) (u : Ainf p R) (v : A
   refine ext_eval fun n => ?_
   obtain ⟨l, hl, hl'⟩ := exists_quot u hu n
   rw [eval_extend, hl', Ideal.quotientMap_mk, eval_log_of_mul_eq v hv n (g l)]
-  rw [← h, ← map_natCast g, ← map_pow, ← map_mul, hl, map_sub, map_pow, map_one]
+  rw [← h, ← map_natCast g, ← map_pow, ← map_mul, hl, RingHom.map_sub, map_pow, map_one]
 
 variable (p) in
 

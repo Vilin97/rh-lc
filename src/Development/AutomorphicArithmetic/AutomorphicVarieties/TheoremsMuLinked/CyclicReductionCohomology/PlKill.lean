@@ -106,7 +106,7 @@ private theorem lc_padic {l : ℕ} [Fact l.Prime] {R : Type} [CommRing R] (f : �
 private theorem pow_one_padic {l : ℕ} [Fact l.Prime] {R : Type} [CommRing R] (f : ℤ_[l] →+* R) (m : ℕ)
     (hl : (l : R) ^ m = 0) (a : ℤ_[l]) (ha : PadicInt.toZMod a = 1) : f (a ^ l ^ m) = 1 := by
   have : a - 1 ∈ RingHom.ker (PadicInt.toZMod (p := l)) := by
-    rw [RingHom.mem_ker, map_sub, ha, map_one, sub_self]
+    rw [RingHom.mem_ker, RingHom.map_sub, ha, map_one, sub_self]
   rw [PadicInt.ker_toZMod, PadicInt.maximalIdeal_eq_span_p, Ideal.mem_span_singleton] at this
   obtain ⟨c, hc⟩ := dvd_sub_pow_of_dvd_sub this m
   rw [one_pow] at hc

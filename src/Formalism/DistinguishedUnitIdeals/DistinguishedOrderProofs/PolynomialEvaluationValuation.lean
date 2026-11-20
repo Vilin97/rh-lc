@@ -290,7 +290,7 @@ theorem factorial_bound_holds : FactVOf := by
       rfl
     rw [← this, h1, Units.val_one]
   have h3 := congrArg (algebraMap O LL) hε
-  rw [map_sub, map_one, h2, sub_self, map_mul, map_pow, map_natCast] at h3
+  rw [RingHom.map_sub, map_one, h2, sub_self, map_mul, map_pow, map_natCast] at h3
   exact mul_ne_zero ((ε.isUnit.map (algebraMap O LL)).ne_zero) (pow_ne_zero _ hl) h3.symm
 
 theorem polynomial_evaluation_valuation : PPevalVal := by

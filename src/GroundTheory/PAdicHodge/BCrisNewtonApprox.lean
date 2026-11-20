@@ -27,7 +27,7 @@ theorem exists_approx (a : ACris K p) (N : ℕ) :
   have h : a - _root_.AdicCompletion.of _ _ c ∈
       (Ideal.span {(p : ACrisZero K p)} ^ N).map (algebraMap (ACrisZero K p) (ACris K p)) := by
     rw [← ker_adicCompletion_evalₐ (Submodule.fg_span_singleton _), RingHom.mem_ker]
-    simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_sub]
+    simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, RingHom.map_sub]
     rw [← hc]
     exact sub_eq_zero.2 (_root_.AdicCompletion.evalₐ_of _ N c).symm
   rwa [span_p_pow_map, Ideal.span_singleton_pow] at h

@@ -97,7 +97,7 @@ theorem stRed_of_parts {D : D7} (X : HidaSetting D) (p : TypX X) (hR : StResZ X 
       obtain ⟨v, hv⟩ := IsUnit.exists_right_inv (show IsUnit (π A.det) by rw [hmap]; exact hdetM)
       obtain ⟨b, rfl⟩ := hπ v
       have h1 : A.det * b - 1 ∈ RingHom.ker π := by
-        rw [RingHom.mem_ker, map_sub, map_mul, hv, map_one, sub_self]
+        rw [RingHom.mem_ker, RingHom.map_sub, map_mul, hv, map_one, sub_self]
       have h2 : A.det * b ∈ IsLocalRing.maximalIdeal (Op X p) := by
         first
           | exact Ideal.mul_mem_right _ _ hm

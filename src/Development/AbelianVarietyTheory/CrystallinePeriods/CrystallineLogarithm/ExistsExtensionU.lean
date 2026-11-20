@@ -145,7 +145,7 @@ theorem log_eq [IsDomain R] [CharZero R] (η : tateModule p R) :
   have hθ : Ainf.theta p R (Ainf.teich p η.1) = 1 := by rw [Ainf.theta_teich, he]
   obtain ⟨r, hr⟩ := p_dvd_geom η.1 he
   have hr1 : r - 1 ∈ AcrisZero.pdIdeal p R := by
-    rw [← AcrisZero.theta_eq_zero_iff, map_sub, map_one, sub_eq_zero]
+    rw [← AcrisZero.theta_eq_zero_iff, RingHom.map_sub, map_one, sub_eq_zero]
     have h := congrArg (AcrisZero.theta p R) hr
     rw [AcrisZero.theta_algebraMap, map_mul, map_natCast, map_sum] at h
     simp only [map_pow, hθ, one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul] at h
@@ -167,9 +167,9 @@ theorem log_eq [IsDomain R] [CharZero R] (η : tateModule p R) :
   · intro n w hw
     obtain ⟨l, hl, hl'⟩ := Acris.exists_quot (Ainf.teich p η.1) hθ n
     have h := congrArg (algebraMap (AcrisZero p R) (Acris p R)) hl
-    rw [map_mul, map_pow, map_natCast, map_sub, map_pow, map_one,
+    rw [map_mul, map_pow, map_natCast, RingHom.map_sub, map_pow, map_one,
       ← IsScalarTower.algebraMap_apply, hw] at h
-    rw [← Acris.p_pow_mul_cancel n h, ← Acris.eval_eq_zero_iff, map_sub, Acris.eval_algebraMap,
+    rw [← Acris.p_pow_mul_cancel n h, ← Acris.eval_eq_zero_iff, RingHom.map_sub, Acris.eval_algebraMap,
       sub_eq_zero]
     exact hl'
 

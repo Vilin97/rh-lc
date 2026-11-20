@@ -314,7 +314,7 @@ theorem exists_isC (hp : ((PD.p : ℕ) : k) = 0) (u : Oˣ) (hu : (u : O) = 1 + (
   choose c hc1 hc2 using exists_c (algebraMap O k) ((PD.p : ℕ) : O) (by rw [map_natCast, hp]) _ hu
   refine ⟨c, fun a => ?_, hc2⟩
   have h1 := congrArg (algebraMap O LL) (hc1 a)
-  rw [map_mul, map_natCast, map_sub, map_one, map_units_zpow, hu, map_add, map_one, map_natCast] at h1
+  rw [map_mul, map_natCast, RingHom.map_sub, map_one, map_units_zpow, hu, map_add, map_one, map_natCast] at h1
   exact h1
 
 theorem map_prod_c (c : ℤ → O) (hc : ∀ a : ℤ, algebraMap O k (c a) = -(a : k)) (U : Multiset ℤ) (x : k) :

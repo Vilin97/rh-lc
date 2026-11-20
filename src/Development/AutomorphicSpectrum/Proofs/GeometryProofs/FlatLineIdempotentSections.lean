@@ -40,7 +40,7 @@ theorem glue_rel (R : Type) [CommRing R] [IsReduced R]
       haveI : I.IsPrime := hI
       let ψ : R →+* I.ResidueField := algebraMap R I.ResidueField
       have key : ψ (a * g' - a' * g) = 0 := by
-        rw [map_sub, map_mul, map_mul]
+        rw [RingHom.map_sub, map_mul, map_mul]
         by_cases h1 : ψ g = 0
         · rw [(h _ ψ).1 h1, h1]; simp
         by_cases h2 : ψ g' = 0

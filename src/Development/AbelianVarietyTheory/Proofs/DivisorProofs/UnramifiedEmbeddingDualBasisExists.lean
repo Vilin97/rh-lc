@@ -84,7 +84,7 @@ theorem sgF_emb {E : Type} [Field E] [NumberField E] (p : ℕ) [hp : Fact p.Prim
   obtain ⟨w, hw⟩ := h
   refine ⟨w, ?_⟩
   have h3 := congrArg (algebraMap _ (KW p)) hw
-  rw [map_sub, map_pow, map_mul, map_natCast, ← SqrtUnif.fractionRing_frobenius_algebraMap, hg] at h3
+  rw [RingHom.map_sub, map_pow, map_mul, map_natCast, ← SqrtUnif.fractionRing_frobenius_algebraMap, hg] at h3
   rw [← h3]
   simp only [sgF]
   ring

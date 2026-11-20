@@ -157,7 +157,7 @@ lemma norm_unit_pow_sub_one {u : ℚ_[l]} (hu : ‖u‖ = 1) :
   have h1 := ZMod.pow_totient v
   rw [Nat.totient_prime_pow hl.out (by norm_num)] at h1
   have h2 : z ^ (l * (l - 1)) - 1 ∈ RingHom.ker (PadicInt.toZModPow (p := l) 2) := by
-    rw [RingHom.mem_ker, map_sub, map_pow, map_one, ← hv, ← Units.val_pow_eq_pow_val]
+    rw [RingHom.mem_ker, RingHom.map_sub, map_pow, map_one, ← hv, ← Units.val_pow_eq_pow_val]
     simp only [Nat.add_one_sub_one, pow_one] at h1
     rw [h1]
     simp

@@ -301,7 +301,7 @@ theorem GlobalTheory.Mum.ratio_gen_mod_of_closedFibre : ∀ (R : Type) [CommRing
     obtain ⟨v', rfl⟩ := hNsurj v
     have hk : MvPolynomial.eval₂ (GlobalTheory.AbLaw.cst (pe ≫ G.hom) ((thickObj R (maximalIdeal R) e G).left.basicOpen F)) r Q
         * v' - 1 ∈ RingHom.ker (jm.app _).hom := by
-      rw [RingHom.mem_ker, map_sub, map_mul, map_one, hv, sub_self]
+      rw [RingHom.mem_ker, RingHom.map_sub, map_mul, map_one, hv, sub_self]
     have hu := (hnil _ (hNker hk)).isUnit_one_add
     rw [add_sub_cancel] at hu
     exact isUnit_of_mul_isUnit_left hu

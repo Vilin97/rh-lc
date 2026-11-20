@@ -87,7 +87,7 @@ private theorem norm_cong (p : ℕ) [Fact p.Prime] (n : ℕ) (g u : ℤ_[p]) (j 
     ‖algebraMap ℤ_[p] ℂ_[p] u * (y * (j : ℂ_[p])) + y * -algebraMap ℤ_[p] ℂ_[p] g‖ ≤ (p : ℝ)⁻¹ ^ n := by
   obtain ⟨c, hc⟩ := h
   have hc' := congrArg (algebraMap ℤ_[p] ℂ_[p]) hc
-  rw [map_sub, map_mul, map_mul, map_intCast, map_pow, map_natCast] at hc'
+  rw [RingHom.map_sub, map_mul, map_mul, map_intCast, map_pow, map_natCast] at hc'
   have e3 : algebraMap ℤ_[p] ℂ_[p] u * (y * (j : ℂ_[p])) + y * -algebraMap ℤ_[p] ℂ_[p] g =
       -(y * algebraMap ℤ_[p] ℂ_[p] c * (p : ℂ_[p]) ^ n) := by
     linear_combination (-y) * hc'

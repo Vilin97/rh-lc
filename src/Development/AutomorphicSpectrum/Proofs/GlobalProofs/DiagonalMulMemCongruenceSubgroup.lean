@@ -300,7 +300,7 @@ theorem mk_mem_of_fixed (hd : NumberField.discr K < -4) (L : PeriodPair)
   rw [hε] at hξ
   have hmem : y - algebraMap (𝓞 K) K ε * (n : K)⁻¹ ∈ ((1 : 𝓘) : FractionalIdeal (𝓞 K)⁰ K) := by
     apply mem_of_map_mem_idealLattice (algebraMap K ℂ)
-    rw [← hf.map_eq_zero_iff, map_sub (algebraMap K ℂ), map_mul (algebraMap K ℂ), map_sub (toPointHom L), hξ, sub_self]
+    rw [← hf.map_eq_zero_iff, RingHom.map_sub (algebraMap K ℂ), map_mul (algebraMap K ℂ), map_sub (toPointHom L), hξ, sub_self]
   refine ⟨_, diagonal_mul_mem_congruenceSubgroup hn hu ε hy.symm hmem, ?_⟩
   refine QuotientGroup.eq.2 ⟨(Units.map (algebraMap (𝓞 K) K).toMonoidHom ε)⁻¹, ?_⟩
   rw [mul_inv, mul_assoc, inv_mul_cancel, mul_one, map_inv]

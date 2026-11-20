@@ -48,7 +48,7 @@ theorem exists_lamv_eq {m : ℕ} {s : G ℚ Ω} (hs : cycMod ℚ Ω l m s = 1) :
   have h1 : PadicInt.toZModPow m ((cycZ ℚ Ω l s : ℤ_[l]ˣ) : ℤ_[l]) = 1 := by
     simpa [cycMod] using congrArg Units.val hs
   have h2 : ((cycZ ℚ Ω l s : ℤ_[l]ˣ) : ℤ_[l]) - 1 ∈ RingHom.ker (PadicInt.toZModPow m : ℤ_[l] →+* ZMod (l ^ m)) := by
-    rw [RingHom.mem_ker, map_sub, h1, map_one, sub_self]
+    rw [RingHom.mem_ker, RingHom.map_sub, h1, map_one, sub_self]
   rw [PadicInt.ker_toZModPow, Ideal.mem_span_singleton] at h2
   obtain ⟨a, ha⟩ := h2
   have h3 : ((cycZ ℚ Ω l s : ℤ_[l]ˣ) : ℤ_[l]) = 1 + (l : ℤ_[l]) ^ m * a := by rw [← ha]; ring

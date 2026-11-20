@@ -132,7 +132,7 @@ theorem inv (w : WCb l) (hw : w ∈ bk.OE) (hu : IsUnit w) : ∃ w' ∈ bk.OE, w
     rw [map_mul, h0, zero_mul, map_one] at h1
     exact zero_ne_one h1
   have h1 : (u : WCb l) * v - 1 ∈ RingHom.ker (WittVector.constantCoeff (p := l) (R := Cb l)) := by
-    rw [RingHom.mem_ker, map_sub, map_mul, hvy, map_one, mul_inv_cancel₀ hne, sub_self]
+    rw [RingHom.mem_ker, RingHom.map_sub, map_mul, hvy, map_one, mul_inv_cancel₀ hne, sub_self]
   rw [WittVector.ker_constantCoeff, Ideal.mem_span_singleton] at h1
   obtain ⟨z, hz⟩ := h1
   have hz' : z ∈ bk.OE := sat bk z (by

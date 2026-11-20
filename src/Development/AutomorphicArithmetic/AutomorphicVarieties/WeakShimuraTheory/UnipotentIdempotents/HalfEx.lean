@@ -132,7 +132,7 @@ private theorem padicAlgCl_eq_one_of_pow_eq_one_of_norm_sub_one_lt_one {l : ℕ}
 private theorem norm_padicInt_unit_pow_pred_sub_one_lt_one {l : ℕ} [Fact l.Prime] (u : ℤ_[l]ˣ) :
     ‖(u : ℤ_[l]) ^ (l - 1) - 1‖ < 1 := by
   have hmem : (u : ℤ_[l]) ^ (l - 1) - 1 ∈ RingHom.ker (PadicInt.toZMod (p := l)) := by
-    rw [RingHom.mem_ker, map_sub, map_pow, map_one]
+    rw [RingHom.mem_ker, RingHom.map_sub, map_pow, map_one]
     have hne : PadicInt.toZMod (u : ℤ_[l]) ≠ 0 := ((u.isUnit).map PadicInt.toZMod).ne_zero
     rw [ZMod.pow_card_sub_one_eq_one hne, sub_self]
   rw [PadicInt.ker_toZMod] at hmem

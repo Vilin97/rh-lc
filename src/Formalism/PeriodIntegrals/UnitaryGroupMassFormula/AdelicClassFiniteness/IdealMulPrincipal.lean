@@ -43,7 +43,7 @@ theorem star_fixed_reps (E : Type) [Field E] [NumberField E] [StarRing E] (N : �
   have hmem : β - h.choose ∈ I := Ideal.Quotient.eq.mp hq.symm
   obtain ⟨s, hs⟩ := Ideal.mem_span_singleton'.mp hmem
   have e1 := congrArg (algebraMap (𝓞 E) E) hs
-  rw [map_mul, map_sub, map_natCast] at e1
+  rw [map_mul, RingHom.map_sub, map_natCast] at e1
   refine ⟨pick (Ideal.Quotient.mk I β), ⟨_, rfl⟩, s, ?_, ?_⟩
   · rw [hpick]
     linear_combination (-1 : E) * e1

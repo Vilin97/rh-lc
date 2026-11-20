@@ -65,7 +65,7 @@ private theorem cg_coord {l : ℕ} [Fact l.Prime] {c : Coef l} (β : Bas c) (m :
     simp
   obtain ⟨e, he⟩ := Ideal.mem_span_singleton'.1 h2
   have h3 := congrArg (algebraMap ℤ_[l] (PadicAlgCl l)) he
-  rw [map_sub, map_natCast, map_mul, map_pow, map_natCast] at h3
+  rw [RingHom.map_sub, map_natCast, map_mul, map_pow, map_natCast] at h3
   rw [← mul_sub, ← h3, norm_mul, norm_mul]
   have h4 : ‖algebraMap ℤ_[l] (PadicAlgCl l) e‖ ≤ 1 := by
     rw [IsScalarTower.algebraMap_apply ℤ_[l] ℚ_[l] (PadicAlgCl l), norm_algebraMap']

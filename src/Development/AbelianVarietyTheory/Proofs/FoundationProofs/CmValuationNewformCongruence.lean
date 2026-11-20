@@ -188,7 +188,7 @@ theorem exists_isThB_sum [IsAlgClosed Ω] {ε : Ω →+* ℂ} (X : Tower Ω ε) 
       ‖((a.appr n : ℕ) : Qbar l) * z - algebraMap ℤ_[l] (Qbar l) a * z‖ ≤ ‖(l : Qbar l) ^ n‖ := fun a z hz => by
     obtain ⟨q, hq⟩ := Ideal.mem_span_singleton.1 (PadicInt.appr_spec n a)
     have h := congrArg (algebraMap ℤ_[l] (Qbar l)) hq
-    rw [map_sub, map_natCast, map_mul, map_pow, map_natCast] at h
+    rw [RingHom.map_sub, map_natCast, map_mul, map_pow, map_natCast] at h
     rw [← sub_mul, norm_mul, norm_sub_rev, h]
     refine (mul_le_of_le_one_right (norm_nonneg _) hz).trans ?_
     rw [norm_mul]

@@ -65,7 +65,7 @@ theorem finite_quotient_span_of_birational
     rw [eq_comm, Ideal.Quotient.eq, Ideal.mem_span_singleton] at hwv
     obtain ⟨t, ht⟩ := hwv
     have ht' := congrArg (algebraMap A B) ht
-    rw [map_sub, map_mul, ← hα] at ht'
+    rw [RingHom.map_sub, map_mul, ← hα] at ht'
     refine ⟨u + z, t, mul_left_cancel₀ hα0 ?_⟩
     linear_combination e + ht' + hz
   have hP : ∀ x, P n x := by

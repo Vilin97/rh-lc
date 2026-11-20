@@ -16,7 +16,7 @@ theorem isUnit_of_map (π : A →+* A') (hπ : Function.Surjective π)
   obtain ⟨w, hw⟩ := hu
   obtain ⟨z, hz⟩ := hπ (↑w⁻¹ : A')
   have hker : u * z - 1 ∈ RingHom.ker π := by
-    rw [RingHom.mem_ker, map_sub, map_mul, map_one, hz, ← hw, Units.mul_inv, sub_self]
+    rw [RingHom.mem_ker, RingHom.map_sub, map_mul, map_one, hz, ← hw, Units.mul_inv, sub_self]
   have hsq := h2 _ hker _ hker
   have h1 : u * (z * (1 - (u * z - 1))) = 1 := by linear_combination -hsq
   exact ⟨⟨u, _, h1, by rw [mul_comm]; exact h1⟩, rfl⟩

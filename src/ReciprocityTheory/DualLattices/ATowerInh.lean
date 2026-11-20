@@ -34,7 +34,7 @@ lemma isLocalHom_of_surj {R S : Type} [CommRing R] [IsLocalRing R] [CommRing S] 
   have hker : RingHom.ker f ≤ IsLocalRing.maximalIdeal R :=
     IsLocalRing.le_maximalIdeal (RingHom.ker_ne_top f)
   have h1 : 1 - a * c ∈ RingHom.ker f := by
-    rw [RingHom.mem_ker, map_sub, map_one, map_mul, hc, IsUnit.mul_val_inv, sub_self]
+    rw [RingHom.mem_ker, RingHom.map_sub, map_one, map_mul, hc, IsUnit.mul_val_inv, sub_self]
   have h2 : a * c ∈ IsLocalRing.maximalIdeal R :=
     Ideal.mul_mem_right c _ ((IsLocalRing.mem_maximalIdeal a).2 hna)
   have h3 := Ideal.add_mem _ (hker h1) h2

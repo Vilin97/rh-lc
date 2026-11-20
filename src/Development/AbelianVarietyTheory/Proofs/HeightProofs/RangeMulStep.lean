@@ -155,7 +155,7 @@ theorem exists_point [Finite ι]
     have hmem : frac X la w 1 (CurveLoc.secOf X la N g) ∈ Frac0 X la w :=
       Algebra.subset_adjoin (frac_mem_Hfr X la w (by rw [add_zero_weight_one_eq]; exact CurveLoc.secOf_mem X la N g))
     have h1 : (⟨_, hmem⟩ : ↥(Frac0 X la w)) - 1 ∈ RingHom.ker (phiZ X la N (Ω Z) (gF Z) w) := by
-      rw [RingHom.mem_ker, map_sub, map_one, CurveLoc.phiZ_of_eq X la N w (gF Z) _ 1 _ rfl,
+      rw [RingHom.mem_ker, RingHom.map_sub, map_one, CurveLoc.phiZ_of_eq X la N w (gF Z) _ 1 _ rfl,
         CurveLoc.rzMap_secOf X la N (gF Z) g w (fun k => (hg k).1), CurveLoc.secOf_self, pow_one,
         CurveLoc.weight_zero_section_mul_inv, sub_self]
     have h2 := hZ h1

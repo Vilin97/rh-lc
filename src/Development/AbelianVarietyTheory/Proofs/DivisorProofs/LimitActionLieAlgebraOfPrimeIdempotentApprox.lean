@@ -166,7 +166,7 @@ theorem limActSt_of_epsSt (hε : EpsSt) : LimActSt := by
       dActX Ch X (ε N * x N) e e' + (p : X.C) ^ N * algebraMap X.O X.C (W e e' N) := by
     intro N e e'
     have h := congrArg (algebraMap X.O X.C) (hW e e' N)
-    rw [map_sub, map_mul, map_pow, map_natCast, alg_entO] at h
+    rw [RingHom.map_sub, map_mul, map_pow, map_natCast, alg_entO] at h
     linear_combination h
   refine ⟨Matrix.of fun e e' => algebraMap X.O X.C (L e e'), fun N e e' => ?_, fun i => ?_⟩
   · rw [Matrix.of_apply, hA N, add_sub_cancel_left]
