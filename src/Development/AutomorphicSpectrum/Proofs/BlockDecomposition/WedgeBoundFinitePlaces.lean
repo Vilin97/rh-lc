@@ -36,7 +36,7 @@ theorem sz_le_one {g : Matrix ι κ K} (h : ∀ i j, ‖g i j‖ ≤ 1) : sz g �
 theorem int_mul [IsUltrametricDist K] [Fintype κ] {a : Matrix ι κ K} {b : Matrix κ ι' K}
     (ha : ∀ i j, ‖a i j‖ ≤ 1) (hb : ∀ i j, ‖b i j‖ ≤ 1) : ∀ i j, ‖(a * b) i j‖ ≤ 1 := by
   intro i j
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg zero_le_one fun k _ => ?_
   rw [norm_mul]
   exact mul_le_one₀ (ha i k) (norm_nonneg _) (hb k j)
@@ -67,7 +67,7 @@ theorem nF_mul_le (hM : MulF) [IsUltrametricDist K] [Fintype ι] [Fintype ι'] [
 theorem sel_mul [DecidableEq ι] [Fintype ι] (s : κ → ι) (M : Matrix ι ι' K) :
     (1 : Matrix ι ι K).submatrix s id * M = M.submatrix s id := by
   ext a b
-  simp [mul_apply, one_apply]
+  simp [Matrix.mul_apply, one_apply]
 
 theorem norm_det_perm [Fintype κ] [DecidableEq κ] (M : Matrix κ κ K) (e : Equiv.Perm κ) :
     ‖(M.submatrix e id).det‖ = ‖M.det‖ := by

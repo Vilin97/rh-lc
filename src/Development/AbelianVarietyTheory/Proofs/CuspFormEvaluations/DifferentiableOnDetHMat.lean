@@ -298,12 +298,12 @@ theorem gram_mul_im (G A τ : Matrix (Fin g) (Fin g) ℂ)
   generalize Aᵀ * G * A.map conj = M at hM hN
   ext j k
   have h := hN j k
-  simp only [mul_apply, im_sum, map_apply, mul_im, hM, conj_im, zero_mul, add_zero, mul_neg,
+  simp only [Matrix.mul_apply, im_sum, map_apply, mul_im, hM, conj_im, zero_mul, add_zero, mul_neg,
     Finset.sum_neg_distrib, neg_inj] at h
   apply Complex.ext
-  · simp only [mul_apply, re_sum, map_apply, re_mul_ofReal, h]
+  · simp only [Matrix.mul_apply, re_sum, map_apply, re_mul_ofReal, h]
     by_cases hjk : j = k <;> simp [one_apply, hjk]
-  · simp only [mul_apply, im_sum, map_apply, im_mul_ofReal, hM]
+  · simp only [Matrix.mul_apply, im_sum, map_apply, im_mul_ofReal, hM]
     by_cases hjk : j = k <;> simp [one_apply, hjk]
 
 variable {bas}

@@ -44,7 +44,7 @@ theorem isONFr_frMove {D : D7} {θ : InfFam D} (hθ : IsInfFam θ) (W : HSp D) (
     intro y
     have e0 : FD.gram τ.1 X.Gm y = yᵀ * (X.Gm.map τ.1 * yᴴᵀ) := by
       ext a b
-      simp only [FD.gram, hermC, FD.col, of_apply, mul_apply, transpose_apply, map_apply, Finset.mul_sum, mul_assoc,
+      simp only [FD.gram, hermC, FD.col, of_apply, Matrix.mul_apply, transpose_apply, map_apply, Finset.mul_sum, mul_assoc,
         conjTranspose_apply, RCLike.star_def]
     rw [e0, hG, transpose_mul, transpose_mul, Matrix.neg_mul, Matrix.mul_neg]
   rw [mat_frMove θ W X k x ρ τ hρ, ← hx τ, e, e, conjTranspose_mul]

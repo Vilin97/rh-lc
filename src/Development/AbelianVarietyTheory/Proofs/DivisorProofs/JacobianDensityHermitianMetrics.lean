@@ -136,7 +136,7 @@ theorem chg_submatrix_emb {T M : Matrix (Fin m) (Fin m) ℂ}
     · exact (Fin.le_def.2 (by simp [emb]))
     · exact le_rfl
   ext x y
-  simp only [chg, mul_apply, transpose_apply, submatrix_apply, conjTranspose_apply]
+  simp only [chg, Matrix.mul_apply, transpose_apply, submatrix_apply, conjTranspose_apply]
   rw [sum_emb i _ fun c hc => by simp [hT c (emb i y) (lt_of_le_of_lt (hle y) hc)]]
   refine Finset.sum_congr rfl fun u _ => ?_
   congr 1
@@ -207,7 +207,7 @@ theorem frame {k : ℕ} {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [N
       ∀ ξ η, curv (fun v => chg (X v * T) (Gm (bL v))) p ξ η =
         (X p * T)⁻¹ * curv Gm z (bL ξ) (bL η) * (X p * T) := by
   have hA' : ∀ b c, ContDiff ℂ 2 (fun v => (X v * T) b c) := fun b c => by
-    simp only [mul_apply]; exact ContDiff.sum fun d _ => (hX b d).mul contDiff_const
+    simp only [Matrix.mul_apply]; exact ContDiff.sum fun d _ => (hX b d).mul contDiff_const
   have hA : MContDiffAt 2 (fun v => X v * T) p := fun b c =>
     (hA' b c).contDiffAt.restrict_scalars ℝ
   have hX1 : MContDiffAt 1 X p := fun b c => ((hX b c).contDiffAt.restrict_scalars ℝ).of_le (by norm_num)
@@ -283,7 +283,7 @@ theorem normal_coords : ∀ (ι : Type) [Fintype ι] (r : ι → ℕ) (d : ℕ) 
         ∑ a, ∑ s : Low (r a), δ (some ⟨a, s⟩) * conn (H' a) p (EuclideanSpace.single j 1) s.1.1 s.1.2 *
           star (conn (H' a) p (EuclideanSpace.single l 1) s.1.1 s.1.2) := by
     intro δ j l
-    rw [chg, mul_apply]
+    rw [chg, Matrix.mul_apply]
     simp only [mul_diagonal, transpose_apply, conjTranspose_apply, of_apply]
     rw [← e.symm.sum_comp, Fintype.sum_option, Fintype.sum_sigma]
     simp only [Equiv.apply_symm_apply, Lc, Option.elim]
@@ -354,7 +354,7 @@ theorem normal_coords : ∀ (ι : Type) [Fintype ι] (r : ι → ℕ) (d : ℕ) 
         rw [EuclideanSpace.single_apply, if_neg]
         simp
       rw [hconn, hbLv, h0, zero_smul, conn_zero_vec, Matrix.zero_mul, zero_add, hD, Matrix.mul_inv_rev]
-      simp [mul_apply, ite_and, Finset.sum_ite_eq', Finset.sum_ite_eq]
+      simp [Matrix.mul_apply, ite_and, Finset.sum_ite_eq', Finset.sum_ite_eq]
     have hdiff : ∀ a (a' : ι) (t : Low (r a')), a' ≠ a →
         conn (H' a) p (EuclideanSpace.single (e.symm (some ⟨a', t⟩)) 1) = 0 := by
       intro a a' t hne
@@ -413,7 +413,7 @@ theorem normal_coords : ∀ (ι : Type) [Fintype ι] (r : ι → ℕ) (d : ℕ) 
     have hs1 : subGram (1 : Matrix (Fin i ⊕ Fin 1) (Fin i ⊕ Fin 1) ℂ) = 1 := by
       ext; simp [subGram, toBlocks₁₁, one_apply]
     have hq1' : quotGram (1 : Matrix (Fin i ⊕ Fin 1) (Fin i ⊕ Fin 1) ℂ) = 1 := by
-      ext; simp [quotGram, toBlocks₂₁, toBlocks₂₂, toBlocks₁₂, toBlocks₁₁, mul_apply, one_apply]
+      ext; simp [quotGram, toBlocks₂₁, toBlocks₂₂, toBlocks₁₂, toBlocks₁₁, Matrix.mul_apply, one_apply]
     have hsub1 : IsUnit (subGram (S p)).det := by
       rw [hS1, hs1, det_one]; exact isUnit_one
     have hq1 : (quotGram (S p)).det.re ≠ 0 := by

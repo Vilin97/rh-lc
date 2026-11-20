@@ -139,12 +139,12 @@ private theorem ker_mat (O : Type) [CommRing O] [IsLocalRing O] {R : Type} [Comm
     ext a b
     exact hc a b
   · ext a b
-    simp only [mul_apply, hΨ, h4, ← map_sum]
+    simp only [Matrix.mul_apply, hΨ, h4, ← map_sum]
     congr 1
     funext u
     simp
   · ext a b
-    simp only [mul_apply, hΨ, mul_comm (ψ _), h4, ← map_sum]
+    simp only [Matrix.mul_apply, hΨ, mul_comm (ψ _), h4, ← map_sum]
     congr 1
     funext u
     simp [mul_comm]
@@ -171,7 +171,7 @@ omit [DecidableEq ι] in
 private theorem mask_left (j : X) {A : Matrix ι ι k} (hA : ∀ a b, w a ≠ w b → A a b = 0) (Y : Matrix ι ι k) :
     mask w j (A * Y) = A * mask w j Y := by
   ext a b
-  simp only [mask_apply, mul_apply]
+  simp only [mask_apply, Matrix.mul_apply]
   rw [← Finset.sum_const_zero (s := (Finset.univ : Finset ι)), ← Finset.sum_ite_irrel]
   refine Finset.sum_congr rfl fun c _ => ?_
   by_cases h : w a = w c
@@ -182,7 +182,7 @@ omit [DecidableEq ι] in
 private theorem mask_right (j : X) {A : Matrix ι ι k} (hA : ∀ a b, w a ≠ w b → A a b = 0) (Y : Matrix ι ι k) :
     mask w j (Y * A) = mask w j Y * A := by
   ext a b
-  simp only [mask_apply, mul_apply]
+  simp only [mask_apply, Matrix.mul_apply]
   rw [← Finset.sum_const_zero (s := (Finset.univ : Finset ι)), ← Finset.sum_ite_irrel]
   refine Finset.sum_congr rfl fun c _ => ?_
   by_cases h : w c = w b
@@ -196,7 +196,7 @@ private theorem mask_mem (Φ : FormData O w) (j : X) {Y : Matrix ι ι k} (hY : 
   have hJ : ∀ c d, w c + w d ≠ Φ.c → Φ.JR k c d = 0 := fun c d h => by
     have : Φ.J c d = 0 := by_contra fun n => h (Φ.hw c d n)
     simp [FormData.JR, this]
-  simp only [Matrix.add_apply, mul_apply, transpose_apply, mask_apply, Matrix.zero_apply] at h0 ⊢
+  simp only [Matrix.add_apply, Matrix.mul_apply, transpose_apply, mask_apply, Matrix.zero_apply] at h0 ⊢
   have e1 : ∀ c, w c + w b = Φ.c → w c - w a = Φ.c - w a - w b := fun c h => by rw [← h]; abel
   have e2 : ∀ c, w a + w c = Φ.c → w c - w b = Φ.c - w a - w b := fun c h => by rw [← h]; abel
   by_cases hj : Φ.c - w a - w b = j

@@ -30,7 +30,7 @@ theorem exists_minor_ne_zero [Nontrivial A] {X : Matrix (Fin n) (Fin r) A} {P : 
     change detRowAlternating (P * X) = detRowAlternating _
     congr 1
     ext i j
-    simp [mul_apply]
+    simp [Matrix.mul_apply]
   rw [h, det_one, MultilinearMap.map_sum] at e
   refine one_ne_zero (e.trans (Finset.sum_eq_zero fun f _ => ?_))
   rw [MultilinearMap.map_smul_univ]
@@ -58,7 +58,7 @@ theorem exists_frame (O : Subring A) {K : Type} [Field K] (V : ValuationSubring 
       by_cases ha : a = j
       · subst ha
         have := congrFun (congrFun hX i) b
-        simpa [mul_apply] using this
+        simpa [Matrix.mul_apply] using this
       · simp [ha]
     have := hf (Function.update f j i)
     rw [e, det_updateRow_sum, smul_eq_mul, map_mul, map_mul] at this
@@ -69,7 +69,7 @@ theorem exists_frame (O : Subring A) {K : Type} [Field K] (V : ValuationSubring 
     rw [← hu.mul_val_inv, hY]; rfl
   ext i j
   have := congrFun (congrFun e i) j
-  simpa [mul_apply, one_apply, apply_ite ((↑) : O → A)] using this
+  simpa [Matrix.mul_apply, one_apply, apply_ite ((↑) : O → A)] using this
 
 theorem isLocalRing_of_equiv (O : Subring A) {K : Type} [Field K] (V : ValuationSubring K) (φ : A ≃+* K)
     (hφ : ∀ y, y ∈ O ↔ φ y ∈ V) : IsLocalRing O :=

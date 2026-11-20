@@ -26,12 +26,12 @@ theorem frameCo_inv_rows : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
       rw [← e1]
       ext i k
       have := congrFun (congrFun hCC (Sum.inl i)) (Sum.inr k)
-      simpa [mul_apply] using this
+      simpa [Matrix.mul_apply] using this
     have := congrArg (· * C.toBlocks₂₂⁻¹) e2
     simpa [Matrix.mul_assoc, mul_nonsing_inv _ hD] using this
   · ext i i'
     have := congrFun (congrFun hCC (Sum.inl i)) (Sum.inl i')
-    simpa [mul_apply, one_apply] using this
+    simpa [Matrix.mul_apply, one_apply] using this
   · intro v i hi
     have hk : (idx hj).symm (Sum.inl i) = ⟨X.p0 + i, hi⟩ := Fin.ext (by rw [idx_symm_inl]; exact congrArg (· + (i : ℕ)) hp.symm)
     have hM : (mat x ψ)⁻¹ = ((mat (x0F X) ψ)⁻¹ * mat x ψ)⁻¹ * (mat (x0F X) ψ)⁻¹ := by

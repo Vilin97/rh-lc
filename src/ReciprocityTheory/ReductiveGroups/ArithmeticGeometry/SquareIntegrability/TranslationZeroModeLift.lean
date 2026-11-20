@@ -195,12 +195,12 @@ theorem Tc_shift (c : Qc X I) (γ0 : X.L) (v : Vsp X.dim) :
 theorem sP_shift (γ0 : X.L) (v : Vsp X.dim) :
     sP X I q β (v + (γ0 : Vsp X.dim)) = (X.eps (γ0 : Vsp X.dim) : ℂ) ^ q *
       cexp (q * Real.pi * Hf v (γ0 : Vsp X.dim) + q * Real.pi * Hf (γ0 : Vsp X.dim) γ0 / 2) *
-        sP X I q β v := by sorry
-
-
-
-
-
+        sP X I q β v := by
+  unfold sP
+  simp only [Tc_shift hI hP q hβ]
+  rw [tsum_mul_left]
+  congr 1
+  exact (Equiv.subRight (Submodule.Quotient.mk γ0 : Qc X I)).tsum_eq (fun c => Tc X I q β c v)
 
 end Tsec
 

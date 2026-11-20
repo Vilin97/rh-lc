@@ -36,14 +36,14 @@ theorem Bm_act (g : GL (Fin r) k) (Y : Gl r k) :
   simp only [Bm, act, of_apply]
   rw [conj_pow_GL, mulVec_mulVec, mul_assoc _ _ (g : Matrix (Fin r) (Fin r) k), Units.inv_mul, mul_one,
     ← mulVec_mulVec]
-  simp [mul_apply, mulVec, dotProduct]
+  simp [Matrix.mul_apply, mulVec, dotProduct]
 
 theorem Cm_act (g : GL (Fin r) k) (Y : Gl r k) :
     Cm (act g Y) = Cm Y * ((g⁻¹ : GL (Fin r) k) : Matrix (Fin r) (Fin r) k) := by
   ext i j
   simp only [Cm, act, of_apply]
   rw [conj_pow_GL, vecMul_vecMul, ← mul_assoc, ← mul_assoc, Units.inv_mul, one_mul, ← vecMul_vecMul]
-  simp [mul_apply, vecMul, dotProduct]
+  simp [Matrix.mul_apply, vecMul, dotProduct]
 
 theorem Cm_sec (a : Inv r k) : Cm (sec a) = hankel a := by
   ext i j

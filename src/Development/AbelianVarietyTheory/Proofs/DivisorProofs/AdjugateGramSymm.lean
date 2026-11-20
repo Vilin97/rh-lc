@@ -45,7 +45,7 @@ theorem det_smul_eq_sum (x : Module.Basis (Fin r) ℤ O) (b : LinearMap.BilinFor
   have key : ∀ j, ∑ i, G.adjugate i j * b (x i) v = G.det * x.repr v j := by
     intro j
     have e : ∑ i, G.adjugate i j * b (x i) v = ∑ k, (G.adjugate * G) j k * x.repr v k := by
-      simp_rw [hb', Finset.mul_sum, mul_apply, Finset.sum_mul]
+      simp_rw [hb', Finset.mul_sum, Matrix.mul_apply, Finset.sum_mul]
       rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun i _ => ?_
       rw [hA]; ring

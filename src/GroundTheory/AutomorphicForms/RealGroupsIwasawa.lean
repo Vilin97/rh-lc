@@ -12,7 +12,7 @@ variable {𝕜 : Type*} [RCLike 𝕜] {n : Type*} [Fintype n] [LinearOrder n]
 
 theorem mul_apply_self_of_isUpperTriangular {A B : Matrix n n 𝕜} (hA : A.IsUpperTriangular)
     (hB : B.IsUpperTriangular) (i : n) : (A * B) i i = A i i * B i i := by
-  rw [mul_apply, Finset.sum_eq_single i]
+  rw [Matrix.mul_apply, Finset.sum_eq_single i]
   · intro k _ hk
     rcases lt_or_gt_of_ne hk with h | h
     · rw [hA h, zero_mul]
@@ -44,7 +44,7 @@ theorem eq_one_of_mem_unitaryGroup_of_isUpperTriangular {t : Matrix n n 𝕜}
   have hii : ∀ i, t i i = 1 := by
     intro i
     have e := congrFun (congrFun h1 i) i
-    rw [mul_apply, Finset.sum_eq_single i (fun k _ hk => by rw [hdiag k i hk, mul_zero])
+    rw [Matrix.mul_apply, Finset.sum_eq_single i (fun k _ hk => by rw [hdiag k i hk, mul_zero])
       (fun h => absurd (Finset.mem_univ i) h), one_apply_eq, conjTranspose_apply] at e
     obtain ⟨hre, him⟩ := RCLike.pos_iff.1 (hpos i)
     have hr : t i i = (RCLike.re (t i i) : 𝕜) := by

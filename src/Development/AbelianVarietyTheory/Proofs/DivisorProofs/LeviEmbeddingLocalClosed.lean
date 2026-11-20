@@ -20,7 +20,7 @@ theorem vmv_mulVec (a b u : Fin n → R) : vecMulVec a b *ᵥ u = (b ⬝ᵥ u) �
   ext i; simp [mulVec, dotProduct, vecMulVec_apply, Finset.mul_sum, mul_comm, mul_left_comm]
 
 theorem vmv_mul_vmv (a b u w : Fin n → R) : vecMulVec a b * vecMulVec u w = (b ⬝ᵥ u) • vecMulVec a w := by
-  ext i j; simp only [mul_apply, vecMulVec_apply, dotProduct, Matrix.smul_apply, smul_eq_mul, Finset.sum_mul]
+  ext i j; simp only [Matrix.mul_apply, vecMulVec_apply, dotProduct, Matrix.smul_apply, smul_eq_mul, Finset.sum_mul]
   exact Finset.sum_congr rfl fun k _ => by ring
 
 theorem vmv_mul (a b : Fin n → R) (M : Matrix (Fin n) (Fin n) R) : vecMulVec a b * M = vecMulVec a (b ᵥ* M) :=

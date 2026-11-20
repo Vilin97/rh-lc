@@ -327,7 +327,7 @@ theorem ratCircleChar_pairQuadraticForm_mk (hd : d.det ≠ 0) (hs : (dᵀ * b).I
       Matrix.map_one _ (map_zero _) (map_one _)]
   rw [pairQuadraticForm_mk, ratCircleChar_coe, hinv]
   congr 1
-  simp only [dotProduct, mulVec, mul_apply, map_apply, Rat.coe_castHom]
+  simp only [dotProduct, mulVec, Matrix.mul_apply, map_apply, Rat.coe_castHom]
   push_cast
   ring
 
@@ -402,7 +402,7 @@ omit [DecidableEq n] in
 theorem even_dotProduct_mulVec_of_two_dvd (hb : ∀ i j, 2 ∣ b i j) (d : Matrix n n ℤ) (μ : n → ℤ) :
     Even (μ ⬝ᵥ (dᵀ * b) *ᵥ μ) := by
   rw [even_iff_two_dvd]
-  simp only [dotProduct, mulVec, mul_apply]
+  simp only [dotProduct, mulVec, Matrix.mul_apply]
   exact dvd_sum fun i _ => Dvd.dvd.mul_left (dvd_sum fun j _ => Dvd.dvd.mul_right
     (dvd_sum fun k _ => (hb k j).mul_left _) _) _
 

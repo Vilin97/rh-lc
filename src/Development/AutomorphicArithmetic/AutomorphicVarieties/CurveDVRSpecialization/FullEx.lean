@@ -86,14 +86,14 @@ private theorem expProd {κ : Type} [Field κ] {n : ℕ} (α : Fin n → κˣ) (
   · intro i k j h1 h2
     have := hm ⟨(true, i, j), k, by simpa [c0] using ⟨h1, h2⟩⟩
     convert this using 1
-    rw [diagonal_pow, mul_apply]
+    rw [diagonal_pow, Matrix.mul_apply]
     refine Finset.sum_congr rfl fun t _ => ?_
     simp only [mul_diagonal, c0, a0, if_true, Pi.pow_apply]
     ring
   · intro i k j h1 h2
     have := hm ⟨(false, i, j), k, by simpa [c0] using ⟨h1, h2⟩⟩
     convert this using 1
-    rw [diagonal_pow, mul_apply]
+    rw [diagonal_pow, Matrix.mul_apply]
     refine Finset.sum_congr rfl fun t _ => ?_
     simp only [mul_diagonal, c0, a0, Bool.false_eq_true, if_false, Pi.pow_apply]
     ring

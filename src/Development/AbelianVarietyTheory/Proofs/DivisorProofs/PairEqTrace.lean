@@ -33,12 +33,12 @@ variable {K : Type} [Field K] {n d : ℕ}
 
 theorem pair_eq_trace (X Y : Matrix (Fin n) (Fin d) K) :
     GlobalTheory.FlipMatch.pairM X Y = trace (Xᵀ * Y) := by
-  simp only [GlobalTheory.FlipMatch.pairM, trace, diag, mul_apply, transpose_apply]
+  simp only [GlobalTheory.FlipMatch.pairM, trace, diag, Matrix.mul_apply, transpose_apply]
   exact Finset.sum_comm
 
 theorem pair_expand (P M : Matrix (Fin n) (Fin d) K) :
     trace (Pᵀ * M) = ∑ i : Fin n, ∑ j : Fin d, P i j * M i j := by
-  simp only [trace, diag, mul_apply, transpose_apply]
+  simp only [trace, diag, Matrix.mul_apply, transpose_apply]
   exact Finset.sum_comm
 
 theorem main (A : Matrix (Fin n) (Fin n) K) (B : Matrix (Fin d) (Fin d) K)
@@ -58,7 +58,7 @@ theorem main (A : Matrix (Fin n) (Fin n) K) (B : Matrix (Fin d) (Fin d) K)
   rw [pair_eq_trace, ht, trace_neg, trace_mul_comm, ← Matrix.mul_assoc, hc, Matrix.one_mul, pair_expand]
   congr 1
   refine Finset.sum_congr rfl fun i _ ↦ Finset.sum_congr rfl fun j _ ↦ ?_
-  simp only [mul_apply, transpose_apply, Finset.sum_mul, Finset.mul_sum]
+  simp only [Matrix.mul_apply, transpose_apply, Finset.sum_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun k _ ↦ Finset.sum_congr rfl fun l _ ↦ by ring
 

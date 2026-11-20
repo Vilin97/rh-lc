@@ -116,9 +116,9 @@ theorem invariantUnder_of_row_one (hS : ChartEnergySwapInvariant.Statement)
   set A := C * (S * T)⁻¹ with hAdef
   have hCA : C = A * (S * T) := by rw [hAdef, Matrix.mul_assoc, nonsing_inv_mul _ hU, Matrix.mul_one]
   have hA0 : ∀ j : Fin (e + 1), A 0 j.succ = 0 := fun j => by
-    rw [hAdef, mul_apply]
+    rw [hAdef, Matrix.mul_apply]
     simp_rw [hST0]
-    rw [← mul_apply, mul_nonsing_inv _ hU, one_apply_ne (Fin.succ_ne_zero j).symm]
+    rw [← Matrix.mul_apply, mul_nonsing_inv _ hU, one_apply_ne (Fin.succ_ne_zero j).symm]
   have hAdet : A.det ≠ 0 := fun h => hC (by rw [hCA, det_mul, h, zero_mul])
   have h := invariantUnder_mul (invariantUnder_of_row_zero A hA0 hAdet)
     (invariantUnder_mul hSinv (invariantUnder_of_row_zero T hT0 hTdet') hSdet) hAdet

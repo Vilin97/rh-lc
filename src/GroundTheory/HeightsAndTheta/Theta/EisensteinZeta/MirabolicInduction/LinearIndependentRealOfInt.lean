@@ -55,7 +55,7 @@ omit [FiniteDimensional ℝ W] in
 theorem gram_comb {k l : Type*} [Fintype k] [Fintype l] (A : Matrix k l ℝ) (b : l → W) :
     gram ℝ (fun i => ∑ j, A i j • b j) = A * gram ℝ b * Aᵀ := by
   ext i i'
-  simp only [gram, of_apply, mul_apply, transpose_apply, sum_inner, inner_sum,
+  simp only [gram, of_apply, Matrix.mul_apply, transpose_apply, sum_inner, inner_sum,
     real_inner_smul_left, real_inner_smul_right, Finset.sum_mul]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun j' _ => by ring
 

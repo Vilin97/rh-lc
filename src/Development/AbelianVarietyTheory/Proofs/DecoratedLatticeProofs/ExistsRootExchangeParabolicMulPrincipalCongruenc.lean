@@ -39,7 +39,7 @@ theorem mem_R_of_pattern (r : GL (n ⊕ Fin c) k)
     rw [Units.val_mul, mul_toBlocks₁₁, Units.val_one, ← fromBlocks_one, toBlocks_fromBlocks₁₁] at this
     rw [← this, left_eq_add]
     ext x x'
-    simp only [mul_apply, toBlocks₁₂, toBlocks₂₁, of_apply, Matrix.zero_apply]
+    simp only [Matrix.mul_apply, toBlocks₁₂, toBlocks₂₁, of_apply, Matrix.zero_apply]
     refine Finset.sum_eq_zero fun j _ => ?_
     rcases le_total (j.val + 1) p with hj | hj
     · rw [hz x j hj, zero_mul]
@@ -52,11 +52,11 @@ theorem mem_R_of_pattern (r : GL (n ⊕ Fin c) k)
     rcases a with x | i
     · rcases b with x' | j
       · have := congrFun (congrFun e2 x) x'
-        simpa [mul_apply, Fintype.sum_sum_type, toBlocks₁₁, one_apply] using this
+        simpa [Matrix.mul_apply, Fintype.sum_sum_type, toBlocks₁₁, one_apply] using this
       · have hj : j.val + 1 ≤ p := by simpa [lev] using hab
-        simp [mul_apply, Fintype.sum_sum_type, hz _ _ hj]
+        simp [Matrix.mul_apply, Fintype.sum_sum_type, hz _ _ hj]
     · have := hr (.inr i) b hab (by simp)
-      simpa [mul_apply, Fintype.sum_sum_type, one_apply] using this
+      simpa [Matrix.mul_apply, Fintype.sum_sum_type, one_apply] using this
   have : r = embX c γ * ((embX c γ)⁻¹ * r) := by group
   rw [this]
   exact mul_mem (Subgroup.mem_sup_left ⟨γ, rfl⟩) (Subgroup.mem_sup_right (Subgroup.subset_closure hm))

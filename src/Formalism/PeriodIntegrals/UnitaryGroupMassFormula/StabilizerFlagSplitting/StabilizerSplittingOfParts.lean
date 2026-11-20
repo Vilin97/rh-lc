@@ -70,7 +70,7 @@ theorem stabilizer_splitting_of_parts (hFS : FixSub) (hSF : SubFlag) (hUN : Unip
     intro g hg
     refine Proj.exists_C Y (g * Y) (fun j => ?_)
     have e : (fun i => (g * Y) i j) = g *ᵥ gramVec k r z z' γ j := by
-      ext i; simp [hY, Ym, mul_apply, mulVec, dotProduct]
+      ext i; simp [hY, Ym, Matrix.mul_apply, mulVec, dotProduct]
     rw [e]; exact Hcol g hg j
   have HM : ∀ g ∈ Hst k r z z' γ, (1 - P) * g * P = 0 := fun g hg => by
     obtain ⟨C, hC⟩ := HC g hg; exact Proj.presM _ Y hG g C hC
@@ -83,7 +83,7 @@ theorem stabilizer_splitting_of_parts (hFS : FixSub) (hSF : SubFlag) (hUN : Unip
   have Q_U : ∀ j, (fun i => (1 - P) i j) ∈ Uperp k r z z' γ := by
     intro j; rw [mem_U_iff]; ext l
     have := congrFun (congrFun hLQ l) j
-    simpa [mulVec, dotProduct, mul_apply] using this
+    simpa [mulVec, dotProduct, Matrix.mul_apply] using this
   have fixU : ∀ g : B.Mat k r, (∀ v ∈ Uperp k r z z' γ, g *ᵥ v = v) → g * (1 - P) = 1 - P :=
     fun g hg => mul_eq_of_cols k r g (1 - P) (fun j => hg _ (Q_U j))
   have fixM : ∀ g : B.Mat k r, g * Y = Y → g * P = P := by
@@ -122,9 +122,9 @@ theorem stabilizer_splitting_of_parts (hFS : FixSub) (hSF : SubFlag) (hUN : Unip
       ext i j
       rcases j with a | b
       · have := congrFun (n1 a) i
-        simpa [hY, Ym, mul_apply, mulVec, dotProduct, gramVec] using this
+        simpa [hY, Ym, Matrix.mul_apply, mulVec, dotProduct, gramVec] using this
       · have := congrFun (n2 b) i
-        simpa [hY, Ym, mul_apply, mulVec, dotProduct, gramVec] using this
+        simpa [hY, Ym, Matrix.mul_apply, mulVec, dotProduct, gramVec] using this
     have hP0 : (g - 1) ^ (r + 1) * P = 0 := by
       simp only [hP, Pm, Proj.prj, ← Matrix.mul_assoc]
       rw [← hY, hY0]; simp

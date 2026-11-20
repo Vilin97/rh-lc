@@ -102,7 +102,7 @@ private lemma minor_le_gram {r n : ℕ} (A : Matrix (Fin r) (Fin n) ℂ) (e : Fi
     split_ifs <;> simp
   have hsplit : A * A.conjTranspose = B * B.conjTranspose + Q := by
     ext i k
-    rw [hQ, hB, Matrix.add_apply, mul_apply, mul_apply, mul_apply]
+    rw [hQ, hB, Matrix.add_apply, Matrix.mul_apply, Matrix.mul_apply, Matrix.mul_apply]
     simp only [mul_diagonal, conjTranspose_apply, submatrix_apply, id]
     have h1 : ∑ l, A i (e l) * star (A k (e l))
         = ∑ j, if j ∈ Set.range e then A i j * star (A k j) else 0 := by
@@ -155,7 +155,7 @@ theorem orthogonal_minor_bound : OrthogonalMinorBound := by
   have hsub : (A * S).submatrix id e
       = A.submatrix id e * diagonal (fun i => ((Real.sqrt (d (e i)) : ℝ) : ℂ)) := by
     ext i k
-    simp [hS, mul_apply, diagonal_apply]
+    simp [hS, Matrix.mul_apply, diagonal_apply]
   have h := minor_le_gram (A * S) e he
   rw [hgram]
   refine le_trans (le_of_eq ?_) h

@@ -437,7 +437,7 @@ theorem aLin_rmul (x₁ x₂ : Frame X.Ψ r) :
   refine Eq.trans ?_ (congrFun (lowMat_mulVec hb τ (fun a => ∑ d, τ.1 (X.Gm c d) * conj (x₂ τ d a))
     fun a => (mat x₁ τ)⁻¹ a c) a).symm
   have hm : mat (rmul x₁ b) τ = mat x₁ τ * mat b τ := rfl
-  simp only [aLin, of_apply, hm, Matrix.mul_inv_rev, mul_apply]
+  simp only [aLin, of_apply, hm, Matrix.mul_inv_rev, Matrix.mul_apply]
 
 theorem det_moves : (lowMat X b τ).det * (upMat X b τ).det =
     ∏ a, rowFac X (fun τ a => b τ a a) (τ, a) := by

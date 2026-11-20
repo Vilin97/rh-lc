@@ -132,7 +132,7 @@ open scoped ComplexConjugate Real in
 theorem _root_.GlobalTheory.SW.Parab.qv_row_mul {κ ι : Type} [Fintype ι] (x : Matrix κ ι ℚ) (A : Matrix ι ι ℚ) (k : κ) :
     _root_.GlobalTheory.SW.qv ((x * A) k) = _root_.GlobalTheory.SW.qv (x k) ᵥ* _root_.GlobalTheory.SW.qm A := by
   funext j
-  simp [_root_.GlobalTheory.SW.qv, _root_.GlobalTheory.SW.qm, vecMul, dotProduct, mul_apply]
+  simp [_root_.GlobalTheory.SW.qv, _root_.GlobalTheory.SW.qm, vecMul, dotProduct, Matrix.mul_apply]
 
 open Matrix Complex in
 open scoped ComplexConjugate Real in
@@ -145,7 +145,7 @@ open scoped ComplexConjugate Real in
 theorem _root_.GlobalTheory.SW.Parab.qm_mul' {α β γ : Type} [Fintype β] (A : Matrix α β ℚ) (B : Matrix β γ ℚ) :
     _root_.GlobalTheory.SW.qm (A * B) = _root_.GlobalTheory.SW.qm A * _root_.GlobalTheory.SW.qm B := by
   ext i j
-  simp [_root_.GlobalTheory.SW.qm, mul_apply]
+  simp [_root_.GlobalTheory.SW.qm, Matrix.mul_apply]
 
 open Matrix Complex in
 open scoped ComplexConjugate Real in

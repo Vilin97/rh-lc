@@ -435,7 +435,7 @@ theorem submatrix_mul_of_isUpperTriangular {u M : Matrix (Fin n) (Fin n) F}
     (u * M).submatrix r c = u.submatrix r r * M.submatrix r c := by
   classical
   ext a b
-  simp only [submatrix_apply, mul_apply]
+  simp only [submatrix_apply, Matrix.mul_apply]
   rw [← Finset.sum_image (s := Finset.univ) (g := r) (fun x _ y _ h => hr h)
     (f := fun s => u (r a) s * M s (c b))]
   symm

@@ -62,7 +62,7 @@ theorem norm_gram_sign_sub_le {r : ℕ} (j : Fin r → ℂ) (hj : ∀ a, ‖j a�
   have h2 : ‖(diagonal j * z.map star) a b‖ ≤ δ := by
     rw [diagonal_mul, norm_mul, hj, one_mul, map_apply, norm_star]; exact hz _ _
   have h3 : ‖(zᵀ * diagonal j * z.map star) a b‖ ≤ r * (δ * δ) := by
-    rw [mul_apply]
+    rw [Matrix.mul_apply]
     refine (norm_sum_le _ _).trans ?_
     have := Finset.sum_le_card_nsmul Finset.univ
       (fun k => ‖(zᵀ * diagonal j) a k * z.map star k b‖) (δ * δ) fun k _ => by

@@ -15,7 +15,7 @@ theorem bd_mul {ι : Type} [Fintype ι] [DecidableEq ι] {d : ι → Type} [∀ 
     [∀ a, DecidableEq (d a)] {p : Type} (g : ∀ a, Matrix (d a) (d a) R) (X : Matrix (Σ a, d a) p R)
     (a : ι) (i : d a) (q : p) :
     (blockDiagonal' g * X) ⟨a, i⟩ q = ∑ k, g a i k * X ⟨a, k⟩ q := by
-  rw [mul_apply, Fintype.sum_sigma, Finset.sum_eq_single a]
+  rw [Matrix.mul_apply, Fintype.sum_sigma, Finset.sum_eq_single a]
   · simp [blockDiagonal'_apply_eq]
   · intro b _ hb
     exact Finset.sum_eq_zero fun k _ => by simp [blockDiagonal'_apply', Ne.symm hb]
@@ -25,7 +25,7 @@ theorem mul_bd {ι : Type} [Fintype ι] [DecidableEq ι] {d : ι → Type} [∀ 
     [∀ a, DecidableEq (d a)] {p : Type} (X : Matrix p (Σ a, d a) R) (g : ∀ a, Matrix (d a) (d a) R)
     (q : p) (b : ι) (j : d b) :
     (X * blockDiagonal' g) q ⟨b, j⟩ = ∑ k, X q ⟨b, k⟩ * g b k j := by
-  rw [mul_apply, Fintype.sum_sigma, Finset.sum_eq_single b]
+  rw [Matrix.mul_apply, Fintype.sum_sigma, Finset.sum_eq_single b]
   · simp [blockDiagonal'_apply_eq]
   · intro a _ ha
     exact Finset.sum_eq_zero fun k _ => by simp [blockDiagonal'_apply', ha]
@@ -34,7 +34,7 @@ theorem mul_bd {ι : Type} [Fintype ι] [DecidableEq ι] {d : ι → Type} [∀ 
 theorem one_by_one {ι : Type} [Fintype ι] [DecidableEq ι] [Subsingleton ι] (g : GL ι R) (x y z w : ι) :
     (g : Matrix ι ι R) x y * ((g⁻¹ : GL ι R) : Matrix ι ι R) z w = 1 := by
   have h := congrFun (congrFun (Units.mul_inv g) x) x
-  rw [mul_apply, Fintype.sum_subsingleton _ x, one_apply_eq] at h
+  rw [Matrix.mul_apply, Fintype.sum_subsingleton _ x, one_apply_eq] at h
   rwa [Subsingleton.elim y x, Subsingleton.elim z x, Subsingleton.elim w x]
 
 end GlobalTheory.LeviGramDual
@@ -111,15 +111,15 @@ theorem mid {m : ℕ} (A K : GL (Fin m) R) (i j : Fin m) :
     rw [mul_assoc, ← mul_assoc K, ← mul_assoc K, mul_inv_cancel, one_mul, ← mul_assoc, hA, one_mul]
   have hM := congrArg (fun g : GL (Fin m) R => (g : Matrix (Fin m) (Fin m) R) i j) hG
   simp only [Units.val_mul, gT_val] at hM
-  rw [← hM, mul_apply]
+  rw [← hM, Matrix.mul_apply]
   refine Finset.sum_congr rfl fun x _ => ?_
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   simp only [Units.val_mul, gT_val]
 
 theorem invK {m : ℕ} (K : GL (Fin m) R) (i j : Fin m) :
     ∑ y, ((K⁻¹ : GL (Fin m) R) : Matrix (Fin m) (Fin m) R) i y * (K : Matrix (Fin m) (Fin m) R) y j =
       if i = j then 1 else 0 := by
-  rw [← mul_apply, Units.inv_mul, one_apply]
+  rw [← Matrix.mul_apply, Units.inv_mul, one_apply]
 
 theorem one_apply_middle_block {m : ℕ} (i j : Fin (blk3 m 1)) :
     (1 : Matrix (Ix m) (Ix m) R) ⟨1, i⟩ ⟨1, j⟩ = if i = j then 1 else 0 := by
@@ -131,7 +131,7 @@ theorem one_apply_middle_block {m : ℕ} (i j : Fin (blk3 m 1)) :
 theorem gamInv_mul {m : ℕ} (K : GL (Fin m) R) :
     gamInv ((K⁻¹ : GL (Fin m) R) : Matrix (Fin m) (Fin m) R) * gamS (K : Matrix (Fin m) (Fin m) R) = 1 := by
   ext ⟨a, i⟩ ⟨b, j⟩
-  rw [mul_apply, sum3]
+  rw [Matrix.mul_apply, sum3]
   rcases (show a = 0 ∨ a = 1 ∨ a = 2 by fin_cases a <;> simp) with rfl | rfl | rfl <;>
   rcases (show b = 0 ∨ b = 1 ∨ b = 2 by fin_cases b <;> simp) with rfl | rfl | rfl
   all_goals simp only [gamS_02, gamS_20, gamS_11, gamInv_02, gamInv_20, gamInv_11, gamS_00, gamInv_00, gamS_01, gamInv_01, gamS_10, gamInv_10, gamS_12, gamInv_12, gamS_21, gamInv_21, gamS_22, gamInv_22, mul_zero, zero_mul, Finset.sum_const_zero, add_zero, zero_add]

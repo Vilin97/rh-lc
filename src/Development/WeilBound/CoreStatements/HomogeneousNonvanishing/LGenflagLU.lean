@@ -49,7 +49,7 @@ theorem uni_one : Uni (1 : Matrix (Fin r) (Fin r) R) :=
 theorem trunc_mul (k : Fin r) (A C : Matrix (Fin r) (Fin r) R) (hC : Up C) :
     trunc k (A * C) = trunc k A * trunc k C := by
   ext i j
-  simp only [trunc, of_apply, mul_apply]
+  simp only [trunc, of_apply, Matrix.mul_apply]
   by_cases hi : i ≤ k
   · by_cases hj : j ≤ k
     · simp only [hi, hj, and_self, if_true, true_and, and_true]
@@ -101,7 +101,7 @@ theorem exists_lu (A : Matrix (Fin r) (Fin r) F) (h : ∀ k, (trunc k A).det ≠
   have key : ∀ l k, l ≤ k → (A * Matrix.of fun l k => x k l) l k = (Pi.single k 1 : Fin r → F) l := by
     intro l k hlk
     rw [← congrFun (hx k) l]
-    simp only [mul_apply, mulVec, dotProduct, trunc, of_apply, hlk, true_and]
+    simp only [Matrix.mul_apply, mulVec, dotProduct, trunc, of_apply, hlk, true_and]
     refine Finset.sum_congr rfl fun b _ => ?_
     by_cases hb : b ≤ k
     · simp [hb]
@@ -132,7 +132,7 @@ theorem uni_mul_up {L W : Matrix (Fin r) (Fin r) F} (hL : Uni L) (hW : Up W) (h 
   by_cases hij : i = j
   · subst hij
     have := h.1 i
-    rw [mul_apply, Finset.sum_eq_single i] at this
+    rw [Matrix.mul_apply, Finset.sum_eq_single i] at this
     · simpa [hL.1] using this
     · intro b _ hb; simp [hoff b i hb]
     · simp
@@ -196,7 +196,7 @@ theorem fl_mul_le (M C : Matrix (Fin r) (Fin r) F) (hC : Up C) (i : ℕ) : fl (M
   rintro _ ⟨k, hk, rfl⟩
   have : (fun l => (M * C) l k) = ∑ b, C b k • fun l => M l b := by
     funext l
-    simp [mul_apply, Finset.sum_apply, mul_comm]
+    simp [Matrix.mul_apply, Finset.sum_apply, mul_comm]
   simp only [this]
   refine Submodule.sum_mem _ fun b _ => ?_
   by_cases hb : k < b

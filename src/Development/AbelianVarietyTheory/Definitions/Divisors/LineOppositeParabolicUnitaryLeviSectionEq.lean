@@ -401,7 +401,7 @@ omit [DecidableEq n] in
 theorem blockPart_mul {b : n → α} {A B : Matrix n n k} (hA : A.BlockTriangular b) (hB : B.BlockTriangular b) :
     blockPart b (A * B) = blockPart b A * blockPart b B := by
   ext i j
-  simp only [blockPart, mul_apply]
+  simp only [blockPart, Matrix.mul_apply]
   split_ifs with h
   · refine Finset.sum_congr rfl fun l _ => ?_
     rcases lt_trichotomy (b l) (b i) with h' | h' | h'
@@ -729,11 +729,11 @@ theorem antiJ_apply (n : ℕ) (i j : Fin n) : antiJ L n i j = if j = i.rev then 
 
 omit [Valued L (WithZero (Multiplicative ℤ))] in
 theorem antiJ_mul_apply (n : ℕ) (A : Matrix (Fin n) (Fin n) L) (i j : Fin n) : (antiJ L n * A) i j = A i.rev j := by
-  simp [mul_apply, antiJ_apply]
+  simp [Matrix.mul_apply, antiJ_apply]
 
 omit [Valued L (WithZero (Multiplicative ℤ))] in
 theorem mul_antiJ_apply (n : ℕ) (A : Matrix (Fin n) (Fin n) L) (i j : Fin n) : (A * antiJ L n) i j = A i j.rev := by
-  simp only [mul_apply, antiJ_apply, eq_comm (a := j), Fin.rev_eq_iff]
+  simp only [Matrix.mul_apply, antiJ_apply, eq_comm (a := j), Fin.rev_eq_iff]
   simp
 
 omit [Valued L (WithZero (Multiplicative ℤ))] in
@@ -1319,7 +1319,7 @@ variable (a d : L) (h : Matrix (Fin n) (Fin n) L)
 theorem lineMat_mul (a' d' : L) (h' : Matrix (Fin n) (Fin n) L) :
     lineMat a h d * lineMat a' h' d' = lineMat (a * a') (h * h') (d * d') := by
   ext i j
-  induction i using lineCases <;> induction j using lineCases <;> simp [mul_apply, sum_line]
+  induction i using lineCases <;> induction j using lineCases <;> simp [Matrix.mul_apply, sum_line]
 
 theorem lineMat_one : lineMat (1 : L) (1 : Matrix (Fin n) (Fin n) L) 1 = 1 := by
   ext i j

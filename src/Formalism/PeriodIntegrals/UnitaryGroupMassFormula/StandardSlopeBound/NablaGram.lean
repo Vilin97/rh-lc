@@ -11,7 +11,7 @@ open MvPolynomial Formalism.GradedWeylDivisibility Formalism.L2.DIV Matrix
 theorem det_mul_rect' {R : Type*} [CommRing R] {k : ℕ} {n : Type*} [Fintype n]
     (A : Matrix (Fin k) n R) (B : Matrix n (Fin k) R) :
     (A * B).det = ∑ f : Fin k → n, (∏ i, B (f i) i) * (A.submatrix id f).det := by
-  simp only [det_apply, mul_apply, Fintype.prod_sum, Finset.smul_sum, submatrix_apply, id]
+  simp only [det_apply, Matrix.mul_apply, Fintype.prod_sum, Finset.smul_sum, submatrix_apply, id]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun f _ => ?_
   rw [Finset.mul_sum]

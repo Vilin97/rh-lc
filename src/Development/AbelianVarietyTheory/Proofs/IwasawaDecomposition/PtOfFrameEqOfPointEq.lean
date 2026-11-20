@@ -18,18 +18,18 @@ theorem exists_block {r : ℕ} (q : ℕ) (K : Matrix (Fin r) (Fin r) ℂ) (hK : 
   let K₂ : Matrix (Fin r) (Fin r) ℂ := of fun a c => if (a : ℕ) < q then (1 : Matrix _ _ ℂ) a c else K a c
   have hm : K₁ * K₂ = K := by
     ext a c
-    rw [mul_apply]
+    rw [Matrix.mul_apply]
     by_cases ha : (a : ℕ) < q
     · have : ∀ b, K₁ a b * K₂ b c = K a b * (1 : Matrix _ _ ℂ) b c := fun b => by
         by_cases hb : (b : ℕ) < q
         · simp only [K₁, K₂, of_apply, if_pos ha, if_pos hb]
         · simp only [K₁, K₂, of_apply, if_pos ha, h0 a b (by simp [ha, hb]), zero_mul]
       simp only [this]
-      rw [← mul_apply, Matrix.mul_one]
+      rw [← Matrix.mul_apply, Matrix.mul_one]
     · have : ∀ b, K₁ a b * K₂ b c = (1 : Matrix _ _ ℂ) a b * K₂ b c := fun b => by
         simp only [K₁, of_apply, if_neg ha]
       simp only [this]
-      rw [← mul_apply, Matrix.one_mul]
+      rw [← Matrix.mul_apply, Matrix.one_mul]
       simp only [K₂, of_apply, if_neg ha]
   rw [← hm, det_mul] at hK
   have u1 : IsUnit K₁ᵀ.det := by rw [det_transpose]; exact (left_ne_zero_of_mul hK).isUnit
@@ -62,7 +62,7 @@ theorem exists_block {r : ℕ} (q : ℕ) (K : Matrix (Fin r) (Fin r) ℂ) (hK : 
     have e2 : K a ᵥ* K₁ᵀ⁻¹ = K a := by
       conv_lhs => rw [← e1]
       rw [vecMul_vecMul, mul_nonsing_inv _ u1, vecMul_one]
-    rw [Matrix.mul_inv_rev, nonsing_inv_nonsing_inv _ u2, ← congrFun e2 c, mul_apply, vecMul, dotProduct]
+    rw [Matrix.mul_inv_rev, nonsing_inv_nonsing_inv _ u2, ← congrFun e2 c, Matrix.mul_apply, vecMul, dotProduct]
     simp only [K₂, of_apply, if_neg ha]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
@@ -83,15 +83,15 @@ theorem rmul_mem_dom (X : Data E r) {x : Frame X.Ψ r} (hx : x ∈ X.dom) (b : F
     intro c
     ext i
     show (mat x τ * mat b τ) i (f c) = _
-    rw [mul_apply, Finset.sum_apply]
+    rw [Matrix.mul_apply, Finset.sum_apply]
     simp only [mul_comm (mat x τ i _)]
     exact hs c _
   have e : X.gramPos (rmul x b) τ = B * X.gramPos x τ * Bᴴ := by
     ext c d
     show hermC τ.1 X.Gm (FD.col (mat (rmul x b) τ) (f c)) (FD.col (mat (rmul x b) τ) (f d)) = _
-    rw [hc, hc, hermC_sum_right, mul_apply]
+    rw [hc, hc, hermC_sum_right, Matrix.mul_apply]
     refine Finset.sum_congr rfl fun a _ => ?_
-    rw [hermC_smul_right, hermC_sum_left, mul_apply, mul_comm]
+    rw [hermC_smul_right, hermC_sum_left, Matrix.mul_apply, mul_comm]
     simp only [hermC_smul_left]
     rfl
   rw [e]

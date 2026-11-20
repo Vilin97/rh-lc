@@ -19,7 +19,7 @@ def rowPermGL (A : Type) [CommRing A] {N : ℕ} (σ : Equiv.Perm (Fin N)) : GL (
 theorem rowPermGL_mul_apply {A : Type} [CommRing A] {N : ℕ} (σ : Equiv.Perm (Fin N)) (g : GL (Fin N) A) (i j : Fin N) :
     (rowPermGL A σ * g).1 i j = g.1 (σ i) j := by
   change ∑ k, (1 : Matrix (Fin N) (Fin N) A) (σ i) k * g.1 k j = _
-  rw [← mul_apply, one_mul]
+  rw [← Matrix.mul_apply, one_mul]
 
 theorem leading_minor_univGL_ne_zero {ι : Type} [Fintype ι] {N : ℕ} (σ : Equiv.Perm (Fin N)) (τ : ι) (k : ℕ)
     (hk : k ≤ N) :

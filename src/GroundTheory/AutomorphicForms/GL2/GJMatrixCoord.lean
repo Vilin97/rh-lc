@@ -73,7 +73,7 @@ theorem measurePreserving_matrixCoordT [MeasurableSpace X] (μ : Measure X) [Sig
 theorem trace_mul_eq_sum {R : Type*} [CommRing R] (x y : Matrix n n R) :
     trace (x * y) = ∑ p, matrixCoord x p * matrixCoordT y p := by
   rw [trace, Fintype.sum_prod_type]
-  simp only [diag_apply, mul_apply, matrixCoord, matrixCoordT]
+  simp only [diag_apply, Matrix.mul_apply, matrixCoord, matrixCoordT]
 
 end
 

@@ -76,7 +76,7 @@ theorem dP_eq_prod (y : E n) :
       simp [pow_two]
     have hre : (herm y * herm y).trace.re = ∑ i, ∑ j, Complex.normSq (herm y i j) := by
       rw [trace]
-      simp only [diag_apply, mul_apply, Complex.re_sum]
+      simp only [diag_apply, Matrix.mul_apply, Complex.re_sum]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
       have hji : herm y j i = star (herm y i j) := by
         have := congrFun (congrFun hA.eq j) i

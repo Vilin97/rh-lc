@@ -27,10 +27,10 @@ theorem mul_colMat_of_mem {n : ℕ} (h : GL (Fin (n + 1)) k) (hh : h ∈ Mir k n
         intro l
         rw [hl]
         simp [eLast, Pi.single_apply, Fin.castSucc_ne_last]
-      simp [colMat, mul_apply, Fin.sum_univ_castSucc, e]
+      simp [colMat, Matrix.mul_apply, Fin.sum_univ_castSucc, e]
     | cast i =>
-      simp [colMat, mul_apply, Fin.sum_univ_castSucc, mulVec, dotProduct, blockMat]
-  · simp [colMat, mul_apply, hj]
+      simp [colMat, Matrix.mul_apply, Fin.sum_univ_castSucc, mulVec, dotProduct, blockMat]
+  · simp [colMat, Matrix.mul_apply, hj]
 
 theorem colMat_mul_of_mem {n : ℕ} (h : GL (Fin (n + 1)) k) (hh : h ∈ Mir k n) (w : Fin n → k) :
     colMat k n w * (h : Matrix (Fin (n + 1)) (Fin (n + 1)) k) = colMat k n w := by
@@ -38,7 +38,7 @@ theorem colMat_mul_of_mem {n : ℕ} (h : GL (Fin (n + 1)) k) (hh : h ∈ Mir k n
   ext i j
   have e : (colMat k n w * (h : Matrix (Fin (n + 1)) (Fin (n + 1)) k)) i j =
       colMat k n w i (Fin.last n) * (h : Matrix (Fin (n + 1)) (Fin (n + 1)) k) (Fin.last n) j := by
-    rw [mul_apply, Finset.sum_eq_single (Fin.last n)]
+    rw [Matrix.mul_apply, Finset.sum_eq_single (Fin.last n)]
     · intro l _ hlne
       simp [colMat, hlne]
     · simp

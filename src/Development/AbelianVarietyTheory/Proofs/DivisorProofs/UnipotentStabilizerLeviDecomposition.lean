@@ -12,7 +12,7 @@ open Matrix
 variable {A : Type} [CommRing A] {m n k : Type} [Fintype m] [Fintype n] [Fintype k]
 
 theorem mul_vmv (M : Matrix m n A) (u : n → A) (w : k → A) : M * vecMulVec u w = vecMulVec (M *ᵥ u) w := by
-  ext i j; simp [vecMulVec_apply, mul_apply, mulVec, dotProduct, Finset.sum_mul, mul_assoc]
+  ext i j; simp [vecMulVec_apply, Matrix.mul_apply, mulVec, dotProduct, Finset.sum_mul, mul_assoc]
 
 theorem vmv_transpose (u : m → A) (w : n → A) : (vecMulVec u w)ᵀ = vecMulVec w u := by
   ext i j; simp [vecMulVec_apply, mul_comm]

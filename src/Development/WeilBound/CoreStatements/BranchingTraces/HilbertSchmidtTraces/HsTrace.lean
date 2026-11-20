@@ -9,7 +9,7 @@ open scoped InnerProductSpace
 namespace PositivityTheory.UnitaryDecomposition.X4
 
 theorem hs_trace {m : ℕ} (X : Matrix (Fin m) (Fin m) ℂ) : (hs X : ℂ) = trace (Xᴴ * X) := by
-  simp only [hs, trace, diag_apply, mul_apply, conjTranspose_apply]
+  simp only [hs, trace, diag_apply, Matrix.mul_apply, conjTranspose_apply]
   rw [Finset.sum_comm]
   push_cast
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

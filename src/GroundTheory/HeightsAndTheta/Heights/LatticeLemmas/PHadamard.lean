@@ -26,7 +26,7 @@ theorem det_gram_re_le_prod_norm_sq {E : Type*} [NormedAddCommGroup E] [InnerPro
   set A := b.toBasis.toMatrix w
   have hA : gram ℂ w = Aᴴ * A := by
     ext j k
-    rw [gram_apply, mul_apply, ← b.sum_inner_mul_inner]
+    rw [gram_apply, Matrix.mul_apply, ← b.sum_inner_mul_inner]
     refine Finset.sum_congr rfl fun i _ ↦ ?_
     simp only [A, conjTranspose_apply, Module.Basis.toMatrix_apply,
       OrthonormalBasis.coe_toBasis_repr_apply, OrthonormalBasis.repr_apply_apply, RCLike.star_def,

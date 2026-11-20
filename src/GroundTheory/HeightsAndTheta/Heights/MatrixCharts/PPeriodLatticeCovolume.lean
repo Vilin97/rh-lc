@@ -78,7 +78,7 @@ theorem PeriodLatticeCovolume.proof : PeriodLatticeCovolume.Statement := by
         = ∑ i, (((N i j : ℝ)) : ℂ) • periodBasis τ i := fun j => by
       simp
     rw [h1 j, h1 l, hermPair_comb]
-    simp only [intGram, mul_apply, transpose_apply, map_apply, periodGram, Matrix.of_apply,
+    simp only [intGram, Matrix.mul_apply, transpose_apply, map_apply, periodGram, Matrix.of_apply,
       Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun a _ => ?_

@@ -87,7 +87,7 @@ theorem qW_ge : ∀ (s : ℕ) (W : Matrix (Fin s) (Fin s) ℤ), PosW W → ∃ c
   have hM := gram_posSemidef β hsym hβ y
   have ht := GlobalTheory.trace_mul_nonneg_of_posSemidef hP hM
   rw [Matrix.sub_mul, trace_sub, Matrix.smul_mul, Matrix.one_mul, trace_smul, sub_nonneg] at ht
-  simp only [trace, diag, mul_apply, Matrix.map_apply, Matrix.add_apply, transpose_apply, Matrix.of_apply,
+  simp only [trace, diag, Matrix.mul_apply, Matrix.map_apply, Matrix.add_apply, transpose_apply, Matrix.of_apply,
     smul_eq_mul] at ht
   have e : ∑ u, ∑ v, ((W u v + W v u : ℤ) : ℝ) * (β (y v) (y u) : ℝ) = 2 * (qW W β y : ℝ) := by
     simp only [qW, Int.cast_sum, Int.cast_mul, Int.cast_add, add_mul, Finset.sum_add_distrib]

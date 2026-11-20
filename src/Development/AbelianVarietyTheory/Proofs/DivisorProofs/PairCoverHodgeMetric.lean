@@ -48,7 +48,7 @@ theorem mul_block {m : Type} (A : Matrix m (Fin n) R) (T : Matrix (Fin n) (Fin n
     (h : ∀ a b : Fin n, (b : ℕ) < k → k ≤ a → T a b = 0) :
     (A * T).submatrix id (Fin.castLE hk) = A.submatrix id (Fin.castLE hk) * T.submatrix (Fin.castLE hk) (Fin.castLE hk) := by
   ext a b
-  simp only [submatrix_apply, mul_apply, id]
+  simp only [submatrix_apply, Matrix.mul_apply, id]
   refine (Fintype.sum_of_injective (Fin.castLE hk) (Fin.castLE_injective hk) _ _ (fun c hc => ?_) fun _ => rfl).symm
   rw [h c _ b.2 (not_lt.1 fun hc' => hc ⟨⟨c, hc'⟩, rfl⟩), mul_zero]
 
@@ -62,7 +62,7 @@ theorem lminor_block (M T : Matrix (Fin n) (Fin n) ℂ) (k : Fin (n + 1))
       (T.submatrix (Fin.castLE hk) (Fin.castLE hk))ᴴ * M.submatrix (Fin.castLE hk) (Fin.castLE hk) := by
     ext a b
     have := congrArg star (congrFun (congrFun e2 (Fin.castLE hk b)) a)
-    simpa [mul_apply, mul_comm] using this
+    simpa [Matrix.mul_apply, mul_comm] using this
   have e4 : (Tᴴ * M * T).submatrix (Fin.castLE hk) (Fin.castLE hk) =
       (Tᴴ * M).submatrix (Fin.castLE hk) (Fin.castLE hk) * T.submatrix (Fin.castLE hk) (Fin.castLE hk) := by
     ext a b

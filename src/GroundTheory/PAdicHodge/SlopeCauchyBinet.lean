@@ -21,7 +21,7 @@ variable {k n : ℕ}
 
 private theorem det_mul_eq_sum_fun (A : Matrix (Fin k) (Fin n) R) (B : Matrix (Fin n) (Fin k) R) :
     (A * B).det = ∑ p : Fin k → Fin n, (A.submatrix id p).det * ∏ i, B (p i) i := by
-  simp only [det_apply', mul_apply, prod_univ_sum, mul_sum, Fintype.piFinset_univ,
+  simp only [det_apply', Matrix.mul_apply, prod_univ_sum, mul_sum, Fintype.piFinset_univ,
     submatrix_apply, id, sum_mul, prod_mul_distrib, mul_assoc]
   rw [Finset.sum_comm]
 
@@ -136,7 +136,7 @@ theorem maxMinor_mul_left (P : Matrix (Fin m) (Fin n) R) (B : Matrix (Fin n) (Fi
     maxMinor (P * B) s = ∑ t : KSubset n k, compound k P s t * maxMinor B t := by
   unfold maxMinor
   have : (P * B).submatrix s.emb id = P.submatrix s.emb id * B := by
-    ext i j; simp [mul_apply]
+    ext i j; simp [Matrix.mul_apply]
   rw [this, det_mul_eq_sum_minors]
   rfl
 
@@ -149,9 +149,9 @@ theorem maxMinor_mul_left_eq_mulVec (P : Matrix (Fin m) (Fin n) R) (B : Matrix (
 theorem compound_mul {l : ℕ} (P : Matrix (Fin m) (Fin n) R) (Q : Matrix (Fin n) (Fin l) R) :
     compound k (P * Q) = compound k P * compound k Q := by
   ext s u
-  rw [compound_apply, mul_apply]
+  rw [compound_apply, Matrix.mul_apply]
   have : (P * Q).submatrix s.emb u.emb = P.submatrix s.emb id * Q.submatrix id u.emb := by
-    ext i j; simp [mul_apply]
+    ext i j; simp [Matrix.mul_apply]
   rw [this, det_mul_eq_sum_minors]
   rfl
 

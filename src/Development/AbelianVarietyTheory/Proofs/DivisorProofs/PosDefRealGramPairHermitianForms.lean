@@ -70,7 +70,7 @@ theorem gram_posDef_pair (g n : ℕ) (e : Module.Basis (Fin n) ℝ (Fin g → �
       LinearMap.toMatrix e e (γ.restrictScalars ℝ) =
       Matrix.of fun k l => (e k ⬝ᵥ H₂.mulVec (star (e l))).re := by
     ext k l
-    rw [of_apply, hγ, mul_apply]
+    rw [of_apply, hγ, Matrix.mul_apply]
     have hs : γ (e l) = ∑ m, e.repr (γ (e l)) m • e m := (e.sum_repr _).symm
     have : (e k ⬝ᵥ H₁.mulVec (star (γ (e l)))).re = reForm H₁ (e k) (γ (e l)) := rfl
     rw [this, hs]

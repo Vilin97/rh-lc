@@ -9,11 +9,11 @@ variable {n : ℕ} {k : Type} [Field k]
 
 private lemma mul_pm_apply (M : Matrix (Fin n) (Fin n) k) (σ : Equiv.Perm (Fin n)) (r c : Fin n) :
     (M * (pm k n σ : Matrix (Fin n) (Fin n) k)) r c = M r (σ c) := by
-  simp [mul_apply, pm_apply]
+  simp [Matrix.mul_apply, pm_apply]
 
 private lemma pm_mul_apply (M : Matrix (Fin n) (Fin n) k) (σ : Equiv.Perm (Fin n)) (r c : Fin n) :
     ((pm k n σ : Matrix (Fin n) (Fin n) k) * M) r c = M (σ⁻¹ r) c := by
-  rw [mul_apply, Fintype.sum_eq_single (σ⁻¹ r)]
+  rw [Matrix.mul_apply, Fintype.sum_eq_single (σ⁻¹ r)]
   · simp [pm_apply]
   · intro a ha
     rw [pm_apply, if_neg, zero_mul]

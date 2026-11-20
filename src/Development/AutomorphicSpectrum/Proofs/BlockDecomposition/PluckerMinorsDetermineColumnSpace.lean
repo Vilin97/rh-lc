@@ -20,7 +20,7 @@ theorem mul_adjugate_submatrix (M : Matrix ι (Fin n) K) (f₀ : Fin n → ι) (
     (M * adjugate (M.submatrix f₀ id)) i j = mnr M (Function.update f₀ j i) := by
   have h1 : (M * adjugate (M.submatrix f₀ id)) i j = cramer (M.submatrix f₀ id)ᵀ (M i) j := by
     rw [cramer_eq_adjugate_mulVec, ← adjugate_transpose]
-    simp [mulVec, dotProduct, mul_apply, transpose_apply, mul_comm]
+    simp [mulVec, dotProduct, Matrix.mul_apply, transpose_apply, mul_comm]
   rw [h1, cramer_transpose_apply]
   unfold mnr
   congr 1

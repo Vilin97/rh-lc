@@ -99,7 +99,7 @@ theorem mul_conjTranspose_eq {g : GL (Fin p ⊕ Fin q) ℂ} (hg : g ∈ Upq p q)
   ext a b
   have e : ∀ a c, fromRows G.toBlocks₁₂ G.toBlocks₂₂ a c = G a (Sum.inr c) := by
     rintro (a | a) c <;> rfl
-  simp only [Jpq, Matrix.add_apply, Matrix.smul_apply, mul_apply, conjTranspose_apply, Fintype.sum_sum_type, e,
+  simp only [Jpq, Matrix.add_apply, Matrix.smul_apply, Matrix.mul_apply, conjTranspose_apply, Fintype.sum_sum_type, e,
     fromBlocks_apply₁₁, fromBlocks_apply₁₂, fromBlocks_apply₂₁, fromBlocks_apply₂₂, one_apply, Matrix.neg_apply,
     Matrix.zero_apply]
   simp
@@ -134,7 +134,7 @@ theorem exists_bound {w : Matrix (Fin p) (Fin q) ℂ} (hw : w ∈ hcDom p q) :
   rw [← e, ← mul_conjTranspose_eq hg] at hw'
   refine Real.le_sqrt_of_sq_le (le_trans ?_ hw'.le)
   have e2 : (g.1 * g.1ᴴ).trace = ((∑ a, ∑ b, ‖g.1 a b‖ ^ 2 : ℝ) : ℂ) := by
-    simp [trace, mul_apply, Complex.mul_conj']
+    simp [trace, Matrix.mul_apply, Complex.mul_conj']
   rw [e2, Complex.norm_real]
   refine le_trans ?_ (le_abs_self _)
   exact (Finset.single_le_sum (f := fun b => ‖g.1 a b‖ ^ 2) (fun _ _ => by positivity) (Finset.mem_univ b)).trans
@@ -142,7 +142,7 @@ theorem exists_bound {w : Matrix (Fin p) (Fin q) ℂ} (hw : w ∈ hcDom p q) :
 
 theorem norm_mul_mul_le {n : Type} [Fintype n] (A M B : Matrix n n ℂ) {C : ℝ} (h : ∀ a b, ‖M a b‖ ≤ C) (a b : n) :
     ‖(A * M * B) a b‖ ≤ ∑ d, (∑ c, ‖A a c‖ * C) * ‖B d b‖ := by
-  simp only [mul_apply]
+  simp only [Matrix.mul_apply]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun d _ => ?_)
   rw [norm_mul]
   refine mul_le_mul_of_nonneg_right ((norm_sum_le _ _).trans (Finset.sum_le_sum fun c _ => ?_)) (norm_nonneg _)

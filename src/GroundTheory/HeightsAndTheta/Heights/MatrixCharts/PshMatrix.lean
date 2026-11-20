@@ -113,7 +113,7 @@ theorem re_trace_eq (W : Matrix ι κ ℂ) (Y : Matrix ι ι ℝ) :
       ∑ j, ∑ k, (∑ a, (star (W j a) * W k a).re) * Y j k := by
   calc RCLike.re (Wᴴ * cx Y * W).trace
       = ∑ a, ∑ k, ∑ j, (star (W j a) * W k a).re * Y j k := by
-        simp only [trace, diag, mul_apply, conjTranspose_apply, map_apply, RCLike.re_to_complex,
+        simp only [trace, diag, Matrix.mul_apply, conjTranspose_apply, map_apply, RCLike.re_to_complex,
           Complex.re_sum, Finset.sum_mul]
         refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun k _ =>
           Finset.sum_congr rfl fun j _ => ?_

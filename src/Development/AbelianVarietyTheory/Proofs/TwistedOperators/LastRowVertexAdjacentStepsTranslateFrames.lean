@@ -16,14 +16,14 @@ theorem mul_reindex_gen {k : Type} [Field k] {a c b : ℕ} {ι' ι : Type} (h : 
     (D : Matrix (Fin a ⊕ Fin c) ι' k) :
     g.val * D.reindex (frame h) f = ((frameGL h g).val * D).reindex (frame h) f := by
   ext i j
-  simp only [reindex_apply, submatrix_apply, mul_apply, frameGL_val]
+  simp only [reindex_apply, submatrix_apply, Matrix.mul_apply, frameGL_val]
   exact (Fintype.sum_equiv (frame h) _ _ (fun x => by simp)).symm
 
 theorem reindex_mul_gen {k : Type} [Field k] {a c b : ℕ} {ι' ι : Type} (h : a + c = b) (f : ι' ≃ ι) (g : GL (Fin b) k)
     (D : Matrix ι' (Fin a ⊕ Fin c) k) :
     D.reindex f (frame h) * g.val = (D * (frameGL h g).val).reindex f (frame h) := by
   ext i j
-  simp only [reindex_apply, submatrix_apply, mul_apply, frameGL_val]
+  simp only [reindex_apply, submatrix_apply, Matrix.mul_apply, frameGL_val]
   exact (Fintype.sum_equiv (frame h) _ _ (fun x => by simp)).symm
 
 end GlobalTheory.FlatStepVertex

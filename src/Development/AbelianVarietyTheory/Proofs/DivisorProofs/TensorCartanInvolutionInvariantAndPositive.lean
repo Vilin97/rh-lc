@@ -13,7 +13,7 @@ open scoped Kronecker ComplexOrder
 variable {n d : ℕ}
 
 theorem map_star_mul {a b c : Type} [Fintype b] (A : Matrix a b ℂ) (B : Matrix b c ℂ) : (A * B).map star = A.map star * B.map star := by
-  ext i j; simp [mul_apply, star_sum]
+  ext i j; simp [Matrix.mul_apply, star_sum]
 
 theorem cartan_comm {M θ : Matrix (Fin n) (Fin n) ℂ} (h : IsCartan M θ) : M * θ.map star = θᵀ * M := by
   obtain ⟨h1, h2, -⟩ := h
@@ -44,7 +44,7 @@ variable {n d : ℕ}
 theorem quadruple_sum_eq_trace_transpose_mul (A : Matrix (Fin n) (Fin n) ℂ) (B : Matrix (Fin d) (Fin d) ℂ) (x y : Matrix (Fin n) (Fin d) ℂ) :
     (∑ i, ∑ j, ∑ k, ∑ l, x i j * A i k * B j l * star (y k l)) = trace (xᵀ * (A * y.map star * Bᵀ)) := by
   rw [← trace_transpose_mul, transpose_transpose]
-  simp only [trace, diag_apply, mul_apply, transpose_apply, map_apply, Finset.sum_mul, Finset.mul_sum]
+  simp only [trace, diag_apply, Matrix.mul_apply, transpose_apply, map_apply, Finset.sum_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_

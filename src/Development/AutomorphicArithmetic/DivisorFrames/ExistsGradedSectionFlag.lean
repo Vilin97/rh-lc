@@ -66,7 +66,7 @@ private theorem diag_ne_zero {K : Type} [Field K] {r : ℕ} (dual : Bool) (B : M
 private theorem mul_diag {K : Type} [CommRing K] {r : ℕ} (dual : Bool) (B T : Matrix (Fin r) (Fin r) K)
     (hB : IsTri (B.submatrix (pos dual) id)) (hT : IsTri T) (i : Fin r) :
     (B * T) (pos dual i) i = B (pos dual i) i * T i i := by
-  rw [mul_apply, Finset.sum_eq_single i]
+  rw [Matrix.mul_apply, Finset.sum_eq_single i]
   · intro b _ hb
     rcases lt_or_gt_of_ne hb with h | h
     · rw [show B (pos dual i) b = 0 from hB i b h, zero_mul]

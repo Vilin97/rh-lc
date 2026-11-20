@@ -39,7 +39,7 @@ theorem herm_endo_matrix_rat : ∀ (g n : ℕ) (e : Module.Basis (Fin n) ℝ (Fi
 
   have key : A₁ * T = A₂ := by
     ext k l
-    rw [mul_apply]
+    rw [Matrix.mul_apply]
     show _ = (e k ⬝ᵥ H₂ *ᵥ star (e l)).im
     rw [hγ, hγe l]
     have := map_sum (imFormRight H₁ (e k)) (fun m : Fin n => T m l • e m) (Finset.univ : Finset (Fin n))

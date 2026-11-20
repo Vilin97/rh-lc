@@ -97,7 +97,7 @@ def tailUnip (F : Type) [Field F] (r k : ℕ) : Subgroup (GL (Fin r) F) where
   mul_mem' := by
     rintro x y ⟨hx, hx1⟩ ⟨hy, hy1⟩
     refine ⟨Subgroup.mul_mem _ hx hy, fun i hi => ?_⟩
-    rw [Units.val_mul, mul_apply, Finset.sum_eq_single i, hx1 i hi, hy1 i hi, one_mul]
+    rw [Units.val_mul, Matrix.mul_apply, Finset.sum_eq_single i, hx1 i hi, hy1 i hi, one_mul]
     · intro l _ hl
       rcases lt_or_gt_of_ne hl with h | h
       · have h' : l.val < i.val := h
@@ -110,7 +110,7 @@ def tailUnip (F : Type) [Field F] (r k : ℕ) : Subgroup (GL (Fin r) F) where
     have hi := Subgroup.inv_mem _ hx
     refine ⟨hi, fun i hk => ?_⟩
     have h1 : ((x * x⁻¹ : GL (Fin r) F) : Matrix (Fin r) (Fin r) F) i i = 1 := by simp
-    rw [Units.val_mul, mul_apply, Finset.sum_eq_single i, hx1 i hk, one_mul] at h1
+    rw [Units.val_mul, Matrix.mul_apply, Finset.sum_eq_single i, hx1 i hk, one_mul] at h1
     · exact h1
     · intro l _ hl
       rcases lt_or_gt_of_ne hl with h | h

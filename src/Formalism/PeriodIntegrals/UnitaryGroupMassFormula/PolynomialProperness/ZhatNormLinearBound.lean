@@ -72,7 +72,7 @@ theorem hs_hpk_mul {k r : ℕ} (M : B.Mat k r) : hs (Hpk k r * M) = hs M := by
   unfold hs
   have e : ∀ i j, (Hpk k r * M) i j = GBasic.sgn k r i * M (GBasic.sig k r i) j := by
     intro i j
-    rw [mul_apply]
+    rw [Matrix.mul_apply]
     simp only [GBasic.Hpk_eq k r i, ite_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, if_true]
   have hs1 : ∀ i, Complex.normSq (GBasic.sgn k r i) = 1 := by
     intro i; unfold GBasic.sgn; split_ifs <;> simp
@@ -201,7 +201,7 @@ theorem mx_mul_le {m : ℕ} (A B' : Matrix (Fin m) (Fin m) ℂ) :
   have h0 : 0 ≤ (m : ℝ) * C2.mx A * C2.mx B' := by
     have := mx_nonneg A; have := mx_nonneg B'; positivity
   refine (mx_le_iff _ h0).2 fun i j => ?_
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   calc ‖∑ l, A i l * B' l j‖ ≤ ∑ l, ‖A i l * B' l j‖ := norm_sum_le _ _
     _ ≤ ∑ _l : Fin m, C2.mx A * C2.mx B' := by
         refine Finset.sum_le_sum fun l _ => ?_

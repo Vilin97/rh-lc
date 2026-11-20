@@ -22,12 +22,12 @@ theorem inSupp_mul_left {y : Matrix (A ⊕ D') (A ⊕ D) k} (hy : InSupp y) {u :
   have hl := (mem_parahoric.1 hu).2
   obtain ⟨hyi, hyd, hyl⟩ := hy
   have hprod : ∀ i l, (u.val * y) i l ∈ 𝒪[k] := fun i l => by
-    rw [mul_apply]; exact sum_mem fun m _ => mul_mem (hJ i m) (hyi m l)
+    rw [Matrix.mul_apply]; exact sum_mem fun m _ => mul_mem (hJ i m) (hyi m l)
   have hcong : valuation k ((u.val * y).toBlocks₁₁.det - u.val.toBlocks₁₁.det * y.toBlocks₁₁.det) < 1 := by
     rw [← det_mul]
     refine GlobalTheory.DatumEigen.val_det_sub_lt (fun i l => hprod _ _) (fun i l => ?_) (fun i l => ?_)
-    · rw [mul_apply]; exact sum_mem fun m _ => mul_mem (hJ _ _) (hyi _ _)
-    · simp only [toBlocks₁₁, of_apply, mul_apply, Fintype.sum_sum_type, add_sub_cancel_left]
+    · rw [Matrix.mul_apply]; exact sum_mem fun m _ => mul_mem (hJ _ _) (hyi _ _)
+    · simp only [toBlocks₁₁, of_apply, Matrix.mul_apply, Fintype.sum_sum_type, add_sub_cancel_left]
       exact Valuation.map_sum_lt _ one_ne_zero fun m _ => GlobalTheory.DatumEigen.val_mul_lt (hJ _ _) (hyl _ _)
   have hd1 : valuation k (u.val.toBlocks₁₁.det * y.toBlocks₁₁.det) = 1 := by
     rw [map_mul, hyd, mul_one, (GlobalTheory.DatumEigen.val_det_blocks hu).1]
@@ -36,7 +36,7 @@ theorem inSupp_mul_left {y : Matrix (A ⊕ D') (A ⊕ D) k} (hy : InSupp y) {u :
     refine Valuation.map_eq_of_sub_lt _ ?_
     rw [hd1]; exact hcong
   · intro e a
-    rw [mul_apply, Fintype.sum_sum_type]
+    rw [Matrix.mul_apply, Fintype.sum_sum_type]
     refine Valuation.map_add_lt _ (Valuation.map_sum_lt _ one_ne_zero fun m _ => ?_)
       (Valuation.map_sum_lt _ one_ne_zero fun m _ => ?_)
     · rw [mul_comm]; exact GlobalTheory.DatumEigen.val_mul_lt (hyi _ _) (hl _ _)

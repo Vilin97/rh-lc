@@ -34,7 +34,7 @@ theorem exists_subsetCols_eq {p : ℕ} (S : {s : Finset κ // s.card = p}) {k : 
 
 theorem det_mul_expand [Fintype κ] {p : ℕ} (A : Matrix (Fin p) κ R) (B : Matrix κ (Fin p) R) :
     (A * B).det = ∑ φ : Fin p → κ, (A.submatrix id φ).det * ∏ i, B (φ i) i := by
-  simp only [det_apply', mul_apply, Finset.prod_univ_sum, Finset.mul_sum, Fintype.piFinset_univ]
+  simp only [det_apply', Matrix.mul_apply, Finset.prod_univ_sum, Finset.mul_sum, Fintype.piFinset_univ]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun φ _ => ?_
   rw [Finset.sum_mul]
@@ -144,7 +144,7 @@ theorem PlueckerHadamard.intersectionNumber_baseChange : PlueckerHadamard.Statem
     rw [hH.det_eq_prod_eigenvalues]; push_cast; rfl
   have htrH : H.trace = ((p * (1 + q) : ℝ) : ℂ) := by
     have hZZ : (Z * Z.conjTranspose).trace = ((p * q : ℕ) : ℂ) := by
-      simp only [trace, Matrix.diag, mul_apply, conjTranspose_apply]
+      simp only [trace, Matrix.diag, Matrix.mul_apply, conjTranspose_apply]
       have : ∀ i j, Z i j * (starRingEnd ℂ) (Z i j) = 1 := by
         intro i j
         rw [Complex.mul_conj, Complex.normSq_eq_norm_sq, hZ i j]

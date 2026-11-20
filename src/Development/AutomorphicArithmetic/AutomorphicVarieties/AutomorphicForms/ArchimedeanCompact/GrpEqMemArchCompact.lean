@@ -92,12 +92,12 @@ private theorem complex_unitary_iff {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) :
   have e : ∀ k, f (WithLp.toLp 2 (Pi.single k 1)) = WithLp.toLp 2 (M k) := fun k =>
     congrArg (WithLp.toLp 2) (single_one_vecMul k M)
   rw [e, e, PiLp.inner_apply, PiLp.inner_apply] at this
-  rw [mul_apply, one_apply]
+  rw [Matrix.mul_apply, one_apply]
   simpa [Pi.single_apply, eq_comm] using this
 
 private theorem pi_unitary_iff {ι : Type} {n : ℕ} (M : Matrix (Fin n) (Fin n) (ι → ℂ)) :
     M ∈ unitaryGroup (Fin n) (ι → ℂ) ↔ ∀ w, M.map (fun x => x w) ∈ unitaryGroup (Fin n) ℂ := by
-  simp only [mem_unitaryGroup_iff, ← Matrix.ext_iff, funext_iff, mul_apply, one_apply, star_apply, map_apply,
+  simp only [mem_unitaryGroup_iff, ← Matrix.ext_iff, funext_iff, Matrix.mul_apply, one_apply, star_apply, map_apply,
     Finset.sum_apply, Pi.mul_apply, Pi.star_apply, ite_apply, Pi.one_apply, Pi.zero_apply]
   exact ⟨fun h w i j => h i j w, fun h i j w => h w i j⟩
 

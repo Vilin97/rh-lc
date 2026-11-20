@@ -86,7 +86,7 @@ theorem differentiable_frameAt [Fintype Tau] (τ : X.Ψ) (a b : Fin r) :
     rcases (idx hj) c with c' | c' <;> rcases (idx hj) b with b' | b' <;>
       simp only [fromBlocks_apply₁₁, fromBlocks_apply₁₂, fromBlocks_apply₂₁, fromBlocks_apply₂₂, unflat, of_apply] <;>
       first | exact differentiable_const _ | exact differentiable_apply _
-  simp only [mat_frameAt, mul_apply]
+  simp only [mat_frameAt, Matrix.mul_apply]
   exact Differentiable.fun_sum (u := Finset.univ) (A := fun c (v : Tau × Fin j × Fin (r - j) → ℂ) =>
     mat (x0F X) τ a c * ((reindex (idx hj) (idx hj)).symm (fromBlocks 1 (unflat v (κ.symm τ)) 0 1)) c b)
     fun c _ => (hM c).const_mul _

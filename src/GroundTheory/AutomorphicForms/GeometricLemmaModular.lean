@@ -51,7 +51,7 @@ theorem mem_leviPar_iff {g : GL (Fin n) F} :
 theorem mul_mem_lieLeviPar {A B : Matrix (Fin n) (Fin n) F} (hA : A ∈ lieLeviPar F n γ δ)
     (hB : B ∈ lieLeviPar F n γ δ) : A * B ∈ lieLeviPar F n γ δ := by
   intro i j h
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   refine Finset.sum_eq_zero fun k _ => ?_
   by_cases hik : γ i = γ k ∧ ¬ δ k < δ i
   · by_cases hkj : γ k = γ j ∧ ¬ δ j < δ k
@@ -250,7 +250,7 @@ theorem mul_inv_apply_of_diagonal {g : GL (Fin n) F}
   have h1 : ((g : Matrix (Fin n) (Fin n) F) * ((g⁻¹ : GL (Fin n) F) : Matrix (Fin n) (Fin n) F)) i j =
       (1 : Matrix (Fin n) (Fin n) F) i j := by
     rw [← Units.val_mul, mul_inv_cancel, Units.val_one]
-  rw [mul_apply, Finset.sum_eq_single i (fun k _ hk => by rw [hg i k (Ne.symm hk), zero_mul])
+  rw [Matrix.mul_apply, Finset.sum_eq_single i (fun k _ hk => by rw [hg i k (Ne.symm hk), zero_mul])
     (by simp)] at h1
   exact h1
 

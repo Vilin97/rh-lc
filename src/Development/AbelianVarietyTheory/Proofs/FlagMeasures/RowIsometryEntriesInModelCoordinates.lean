@@ -14,7 +14,7 @@ open scoped TensorProduct ENNReal nonZeroDivisors in
 private lemma mul_vecMulVec_mul_flag_measures {n : Type} [Fintype n] (M N : Matrix n n ℂ) (u v : n → ℂ) :
     M * vecMulVec u v * N = vecMulVec (M *ᵥ u) (v ᵥ* N) := by
   ext i j
-  simp only [mul_apply, vecMulVec_apply, mulVec, vecMul, dotProduct, Finset.sum_mul, Finset.mul_sum]
+  simp only [Matrix.mul_apply, vecMulVec_apply, mulVec, vecMul, dotProduct, Finset.sum_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun p _ => Finset.sum_congr rfl fun q _ => ?_
   ring
 

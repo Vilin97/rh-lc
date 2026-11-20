@@ -26,7 +26,7 @@ theorem plk_eq {C : Type} [Field C] {M n : ℕ} (c : Fin n → Fin (M + 1) → C
     ext l' l
     have h2 := congrFun (congrFun hc (plE M k q l')) (Fin.castLE hk l)
     simp only [transpose_apply, of_apply] at h2 ⊢
-    rw [h2, mul_apply, mul_apply]
+    rw [h2, Matrix.mul_apply, Matrix.mul_apply]
     symm
     refine Fintype.sum_of_injective (Fin.castLE hk) (Fin.castLE_injective hk) _ _ ?_ (fun _ => rfl)
     intro j hj

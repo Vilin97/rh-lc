@@ -17,7 +17,7 @@ def inclusionAlt : Matrix (Fin (n + 1)) (Fin n) R := of fun a b => if a = Fin.ca
 
 theorem extendOne_mul_inclusion (g : Matrix (Fin n) (Fin n) R) : blk1 g * inclusionAlt = inclusionAlt * g := by
   ext i j
-  simp only [mul_apply, inclusionAlt, of_apply, mul_ite, mul_one, mul_zero, ite_mul, one_mul, zero_mul,
+  simp only [Matrix.mul_apply, inclusionAlt, of_apply, mul_ite, mul_one, mul_zero, ite_mul, one_mul, zero_mul,
     Finset.sum_ite_eq', Finset.mem_univ, if_true]
   induction i using Fin.lastCases with
   | last =>

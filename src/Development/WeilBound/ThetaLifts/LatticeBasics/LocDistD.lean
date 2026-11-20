@@ -123,7 +123,7 @@ theorem step_closed {n d : ℕ} (ih : Claim c n d) {l : (Matrix (Fin (n + 1)) (F
     rw [this, hX, hg₀.2.2, one_mul]
   · obtain ⟨t, pt, ht⟩ := hl h hh
     refine ⟨t, pt, fun ψ hψ => (eq _ (sb _ (sb_right hψ hh)) _ (sb_right (sb ψ hψ) hh) fun X hX => ?_).trans (ht _ (sb ψ hψ))⟩
-    have : (X * h) 0 = 0 := by ext j; simp [mul_apply, hX]
+    have : (X * h) 0 = 0 := by ext j; simp [Matrix.mul_apply, hX]
     rw [hX, this]; rfl
   · obtain ⟨v, hv, h⟩ := hX
     rw [hψ0 (tl X) ⟨v, hv, funext fun i => congrFun h i.succ⟩, mul_zero]

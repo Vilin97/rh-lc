@@ -72,7 +72,7 @@ theorem mixedTraceL_star_mul_self_pos {x : mixedSpace K} (hx : x ≠ 0) :
 theorem mixedTraceL_trace_conjTranspose_mul_self_pos {A : Matrix (Fin n) (Fin n) (mixedSpace K)}
     (hA : A ≠ 0) : 0 < mixedTraceL K (trace (Aᴴ * A)) := by
   have e : mixedTraceL K (trace (Aᴴ * A)) = ∑ i, ∑ j, mixedTraceL K (star (A j i) * A j i) := by
-    simp only [trace, diag_apply, mul_apply, conjTranspose_apply, map_sum]
+    simp only [trace, diag_apply, Matrix.mul_apply, conjTranspose_apply, map_sum]
   rw [e]
   obtain ⟨j, i, hji⟩ : ∃ j i, A j i ≠ 0 := by
     by_contra hc

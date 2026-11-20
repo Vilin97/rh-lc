@@ -111,16 +111,16 @@ omit [IsTotallyComplex E] in
 
 theorem mul_apply_of_row {R : Type} [CommRing R] {A B : Matrix (Fin n) (Fin n) R} {j : Fin n}
     (hA : ∀ t, A j t = (1 : Matrix (Fin n) (Fin n) R) j t) (l : Fin n) : (A * B) j l = B j l := by
-  rw [mul_apply, ← one_mul B, mul_apply]
+  rw [Matrix.mul_apply, ← one_mul B, Matrix.mul_apply]
   simp only [hA, one_mul]
 
 omit [IsTotallyComplex E] in
 
 theorem mul_apply_of_col {R : Type} [CommRing R] {A B : Matrix (Fin n) (Fin n) R} {l : Fin n}
     (hB : ∀ t, B t l = (1 : Matrix (Fin n) (Fin n) R) t l) (i : Fin n) : (A * B) i l = A i l := by
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   simp only [hB]
-  rw [← mul_apply, mul_one]
+  rw [← Matrix.mul_apply, mul_one]
 
 omit [IsTotallyComplex E] in
 

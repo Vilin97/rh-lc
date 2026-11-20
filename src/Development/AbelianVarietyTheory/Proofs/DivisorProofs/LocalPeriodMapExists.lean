@@ -67,10 +67,10 @@ theorem normalise {G : Matrix (Fin g) (Fin g) ℂ} (hG : G.PosDef) {p : Fin g �
       rw [hN'] at hN
       ext j k
       have := hN j k
-      simp only [mul_apply, Complex.im_sum, map_apply, Complex.mul_im, hM, Complex.conj_im, zero_mul, add_zero,
+      simp only [Matrix.mul_apply, Complex.im_sum, map_apply, Complex.mul_im, hM, Complex.conj_im, zero_mul, add_zero,
         mul_neg, Finset.sum_neg_distrib, neg_inj] at this
       rw [← this]
-      simp [mul_apply]
+      simp [Matrix.mul_apply]
     have e : ((τ.map Complex.im)⁻¹).map (fun t : ℝ => (t : ℂ)) = M := by
       rw [inv_eq_left_inv hRY]
       ext j k
@@ -320,7 +320,7 @@ theorem exists_family {S : Scheme.{0}} (P : PPAS S) {m : ℕ} {B : Set (Fin m �
     RelExp.isHolTo_of_holAt (hCo.prod isOpen_univ) fun q hq => ?_, fun b hb => ⟨fun z => Over.w _, ?_, ?_, ?_, ?_⟩⟩
   · have hh := RiemannRel.differentiableOn_left_inverse (B := C) (fun b => colR (p b)) (fun b => (colR (p b))⁻¹)
       (fun i j => hpd _ _) fun b hb => nonsing_inv_mul _ (hn b hb).1
-    simp only [mul_apply]
+    simp only [Matrix.mul_apply]
     exact DifferentiableOn.fun_sum fun l _ => (hh i l).mul (hpd _ _)
   · refine RelExp.HolAt.comp (a := ε) (φ := fun q : (Fin m → ℂ) × (Fin P.g → ℂ) => (q.1, colR (p q.1) *ᵥ q.2))
       (v₀ := q) ((he q.1 (hCB hq.1)).1 _) (analyticAt_fst.prod (AnalyticAt.pi fun i => ?_))

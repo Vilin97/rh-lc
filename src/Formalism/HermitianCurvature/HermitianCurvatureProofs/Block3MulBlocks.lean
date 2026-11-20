@@ -16,7 +16,7 @@ lemma EB.mono {m n : Type*} {A : Matrix m n ℂ} {a b : ℝ} (h : EB A a) (hab :
 lemma EB_mul {l m n : Type*} [Fintype m] {A : Matrix l m ℂ} {B : Matrix m n ℂ} {a b : ℝ}
     (hA : EB A a) (hB : EB B b) : EB (A * B) (Fintype.card m * (a * b)) := by
   intro i k
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   calc ‖∑ j, A i j * B j k‖ ≤ ∑ j, ‖A i j * B j k‖ := norm_sum_le _ _
     _ ≤ ∑ _j : m, a * b := by
         apply Finset.sum_le_sum
@@ -122,7 +122,7 @@ lemma submatrix_mul_lower {p k : ℕ} (h : k ≤ p) (L X : Matrix (Fin p) (Fin p
     (L * X).submatrix (Fin.castLE h) f =
       L.submatrix (Fin.castLE h) (Fin.castLE h) * X.submatrix (Fin.castLE h) f := by
   ext a b
-  simp only [submatrix_apply, mul_apply]
+  simp only [submatrix_apply, Matrix.mul_apply]
   symm
   have e1 : ∑ t : Fin k, L (Fin.castLE h a) (Fin.castLE h t) * X (Fin.castLE h t) (f b) =
       ∑ t ∈ Finset.univ.map (Fin.castLEEmb h), L (Fin.castLE h a) t * X t (f b) := by
@@ -244,7 +244,7 @@ lemma det_permutationMatrix_ne_zero {p : ℕ} (σ : Equiv.Perm (Fin p)) : (wP σ
 
 lemma permutationMatrix_mul_apply {p : ℕ} (σ : Equiv.Perm (Fin p)) (M : Matrix (Fin p) (Fin p) ℂ) (a b : Fin p) :
     (wP σ * M) a b = M (σ a) b := by
-  simp [wP, mul_apply]
+  simp [wP, Matrix.mul_apply]
 
 lemma lowW_lower {p : ℕ} (σ : Equiv.Perm (Fin p)) (v : LW σ → ℂ) (a b : Fin p) (h : a < b) : lowW σ v a b = 0 := by
   have : ¬ (b < a ∧ σ.symm b < σ.symm a) := fun h' => absurd h'.1 (not_lt.mpr (le_of_lt h))

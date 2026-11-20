@@ -121,7 +121,7 @@ theorem span_rows_mul {m : Type} (a : Matrix (Fin N) (Fin N) E) (ha : a.det ≠ 
     intro b X
     rw [Submodule.span_le]
     rintro _ ⟨i, rfl⟩
-    have : (b * X) i = ∑ k, b i k • X k := by ext j; simp [mul_apply]
+    have : (b * X) i = ∑ k, b i k • X k := by ext j; simp [Matrix.mul_apply]
     simp only [this]
     exact Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
   refine le_antisymm (key a W) ?_

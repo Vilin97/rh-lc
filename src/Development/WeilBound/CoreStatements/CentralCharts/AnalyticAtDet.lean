@@ -77,7 +77,7 @@ theorem psh_core {τ : (Fin n → ℂ) → Matrix (Fin k) (Fin k) ℂ} {V : (Fin
     apply h1
     rw [← hVC, ← mulVec_mulVec, ← mulVec_mulVec, hxy]
   have hF : AnalyticAt ℂ (fun u => (V u * C).det) 0 := analyticAt_det fun p q => by
-    simp only [mul_apply]
+    simp only [Matrix.mul_apply]
     exact Finset.analyticAt_fun_sum _ fun i _ => (hV _ _).mul analyticAt_const
   have hF0 : (V 0 * C).det ≠ 0 := by rw [hVC]; exact huG.ne_zero
   obtain ⟨Km, hK⟩ : ∃ Km, Km = C * G⁻¹ * Cᴴ := ⟨_, rfl⟩
@@ -90,7 +90,7 @@ theorem psh_core {τ : (Fin n → ℂ) → Matrix (Fin k) (Fin k) ℂ} {V : (Fin
       rw [hK, ← Matrix.mul_assoc, trace_mul_comm]
       simp only [Matrix.mul_assoc]
     rw [e, hY]
-    simp [trace, mul_apply, Complex.re_sum]
+    simp [trace, Matrix.mul_apply, Complex.re_sum]
   have hg := padd (plog_norm 2 (d - Real.log G.det.re + r) hF hF0) (pre hT)
   refine ptouch hf hg ?_ ?_
   · rw [he.self_of_nhds (hG ▸ hGp), htr, hM0, hVC, ← hG, nonsing_inv_mul _ huG, trace_one]

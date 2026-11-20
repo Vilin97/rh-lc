@@ -51,14 +51,14 @@ theorem vertical_fixesFlag : ∀ (E : Type) [NormedAddCommGroup E] [NormedSpace 
       | mem v hv =>
         obtain ⟨j, hj, rfl⟩ := hv
         have h3 : ((A x)⁻¹ *ᵥ fun a => A x a j) l = ((A x)⁻¹ * A x) l j := by
-          simp [mulVec, dotProduct, mul_apply]
+          simp [mulVec, dotProduct, Matrix.mul_apply]
         rw [h3, nonsing_inv_mul _ (hA.isUnit x hx), one_apply_ne]
         exact (lt_of_le_of_lt hj hil).ne'
       | zero => simp
       | add v w _ _ hv hw => simp [mulVec_add, hv, hw]
       | smul c v _ hv => simp [mulVec_smul, hv]
     have h4 := key _ (he.mem x hx i)
-    simpa [T, mulVec, dotProduct, mul_apply] using h4
+    simpa [T, mulVec, dotProduct, Matrix.mul_apply] using h4
   clear_value T
   have hdT : ∀ i l, i < l → mdel T y ξ l i = 0 := by
     intro i l hil

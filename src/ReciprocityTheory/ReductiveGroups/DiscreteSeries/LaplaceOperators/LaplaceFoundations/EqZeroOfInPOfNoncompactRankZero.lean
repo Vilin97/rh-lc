@@ -11,7 +11,7 @@ variable {n : ℕ}
 
 theorem hs_eq_re_trace (A : Matrix (Fin n) (Fin n) ℂ) :
     S7.hs A = (trace (Aᴴ * A)).re := by
-  simp only [S7.hs, trace, diag, mul_apply, conjTranspose_apply, Complex.re_sum]
+  simp only [S7.hs, trace, diag, Matrix.mul_apply, conjTranspose_apply, Complex.re_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   rw [Complex.star_def, Complex.conj_mul']

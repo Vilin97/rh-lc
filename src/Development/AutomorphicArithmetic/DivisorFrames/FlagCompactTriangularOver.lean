@@ -18,8 +18,8 @@ private theorem UpperTheory.exists_triangular_of_lie_submatrix {K : Type} [Field
   · have h₁ : lieMat true P = lieMat true Q * T.submatrix Fin.revPerm Fin.revPerm := by
       ext a i
       have := congrFun (congrFun h a) i.rev
-      simp only [submatrix_apply, pos, cond_true, id, Fin.rev_rev, mul_apply] at this
-      rw [this, mul_apply, ← Equiv.sum_comp Fin.revPerm]
+      simp only [submatrix_apply, pos, cond_true, id, Fin.rev_rev, Matrix.mul_apply] at this
+      rw [this, Matrix.mul_apply, ← Equiv.sum_comp Fin.revPerm]
       simp
     have hu : IsUnit T.det := by
       have := isUnit_det_lieMat true hP

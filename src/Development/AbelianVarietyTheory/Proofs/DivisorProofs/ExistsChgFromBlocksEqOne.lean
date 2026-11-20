@@ -90,7 +90,7 @@ theorem chg_submatrix_first (A₁ : Matrix m m ℂ) (B : Matrix m (l ⊕ n) ℂ)
   have h2 : (fromBlocks A₁ B 0 (fromBlocks A₂ C 0 A₃)).submatrix id (Sum.map id Sum.inl)
       = J * fromBlocks A₁ (B.submatrix id Sum.inl) 0 A₂ := by
     ext (a | a | a) (b | b) <;>
-      simp [hJ, mul_apply, Fintype.sum_sum_type, one_apply]
+      simp [hJ, Matrix.mul_apply, Fintype.sum_sum_type, one_apply]
   rw [h1, chg_chg, ← h2, h0]
 
 end Exists
@@ -116,7 +116,7 @@ theorem extTrace_eq_sum_of_eq_one {K : E → Matrix (m ⊕ l) (m ⊕ l) ℂ} {z 
   have hb : ∀ ξ, secondForm K z ξ = (mdel K z ξ).toBlocks₁₂ᵀ := fun ξ => by
     rw [secondForm_eq, conn, h1, transpose_one, inv_one, Matrix.one_mul]; rfl
   rw [extTrace_eq h hp, secondFormAdj, h1, hs, hq, hb, hb, adj]
-  simp only [transpose_one, inv_one, Matrix.one_mul, Matrix.mul_one, trace, diag_apply, mul_apply,
+  simp only [transpose_one, inv_one, Matrix.one_mul, Matrix.mul_one, trace, diag_apply, Matrix.mul_apply,
     transpose_apply, conjTranspose_apply, toBlocks₁₂, of_apply]
   rw [Finset.sum_comm]
 

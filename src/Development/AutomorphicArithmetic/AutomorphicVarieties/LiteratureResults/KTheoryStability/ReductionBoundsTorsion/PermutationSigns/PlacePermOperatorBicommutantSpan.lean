@@ -17,7 +17,7 @@ def embE : Matrix Ω Ω ℂ ≃ₗ[ℂ] EuclideanSpace ℂ (Ω × Ω) :=
 theorem inner_embE (x y : Matrix Ω Ω ℂ) :
     inner ℂ (embE x) (embE y) = trace (xᴴ * y) := by
   rw [EuclideanSpace.inner_eq_star_dotProduct]
-  simp only [embE, LinearEquiv.trans_apply, dotProduct, trace, diag, mul_apply, conjTranspose_apply]
+  simp only [embE, LinearEquiv.trans_apply, dotProduct, trace, diag, Matrix.mul_apply, conjTranspose_apply]
   rw [Fintype.sum_prod_type, Finset.sum_comm]
   exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => mul_comm _ _
 
@@ -28,17 +28,17 @@ theorem comm_left (A : Submodule ℂ (Matrix Ω Ω ℂ)) (T : Matrix Ω Ω ℂ)
   have key : ∀ (a : Matrix Ω Ω ℂ) (c j : Ω), a * single c j 1 = ∑ b, a b c • single b j 1 := by
     intro a c j
     ext x z
-    simp only [mul_apply, Matrix.sum_apply, Matrix.smul_apply, single, of_apply, smul_eq_mul]
+    simp only [Matrix.mul_apply, Matrix.sum_apply, Matrix.smul_apply, single, of_apply, smul_eq_mul]
     by_cases h : j = z <;> simp [h, mul_ite, Finset.sum_ite_eq, Finset.sum_ite_eq']
   let Z : Ω → Ω → Matrix Ω Ω ℂ := fun j k => Matrix.of fun x c => S (single c j 1) x k
   have hZr : ∀ (a : Matrix Ω Ω ℂ) (j k x c : Ω), (Z j k * a) x c = S (a * single c j 1) x k := by
     intro a j k x c
     rw [key, map_sum, Matrix.sum_apply]
-    simp only [Z, mul_apply, of_apply, map_smul, Matrix.smul_apply, smul_eq_mul]
+    simp only [Z, Matrix.mul_apply, of_apply, map_smul, Matrix.smul_apply, smul_eq_mul]
     exact Finset.sum_congr rfl fun b _ => mul_comm _ _
   have hZl : ∀ (a : Matrix Ω Ω ℂ) (j k x c : Ω), (a * Z j k) x c = (a * S (single c j 1)) x k := by
     intro a j k x c
-    simp only [Z, mul_apply, of_apply]
+    simp only [Z, Matrix.mul_apply, of_apply]
   have hZ : ∀ j k, T * Z j k = Z j k * T := fun j k => hT _ fun a ha => by
     ext x c; rw [hZr, hZl, hS a ha]
   have hsingle : ∀ c j, S (T * single c j 1) = T * S (single c j 1) := by
@@ -101,7 +101,7 @@ variable {W : Type} [Fintype W] [DecidableEq W] {m q : ℕ}
 theorem perm'_mul (σ τ : Equiv.Perm (Fin q)) (w v : Fin q → W) :
     (perm' (m := m) σ w) * perm' τ v = if v = w ∘ σ then perm' (σ * τ) w else 0 := by
   ext I K
-  rw [mul_apply, Finset.sum_eq_single (I ∘ σ)]
+  rw [Matrix.mul_apply, Finset.sum_eq_single (I ∘ σ)]
   · simp only [perm', of_apply, Equiv.Perm.coe_mul]
     by_cases hv : v = w ∘ σ
     · subst hv

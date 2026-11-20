@@ -30,7 +30,7 @@ private theorem sub_transpose_eq_fromRows_conj_fromBlocks {p q : ℕ} (A : Matri
     ext i (j | j) <;> simp [conjTranspose_apply]
   have h2 : fromBlocks (-Goᵀ) 0 0 Gw * fromRows (Bm.map (starRingEnd ℂ)) A =
       fromRows (-Goᵀ * Bm.map (starRingEnd ℂ)) (Gw * A) := by
-    ext (i | i) j <;> simp [mul_apply, Fintype.sum_sum_type]
+    ext (i | i) j <;> simp [Matrix.mul_apply, Fintype.sum_sum_type]
   have h3 : Bmᴴᵀ = Bm.map (starRingEnd ℂ) := by
     ext i j
     simp [conjTranspose_apply]
@@ -55,7 +55,7 @@ private theorem fromRows_mul_neg_inv_mul_transpose {p q : ℕ} (A : Matrix (Fin 
   have hDF : fromBlocks (-Goᵀ) 0 0 Gw * fromRows Goᵀ⁻¹ (0 : Matrix (Fin p) (Fin q) ℂ) =
       fromRows (-1) (0 : Matrix (Fin p) (Fin q) ℂ) := by
     have : Goᵀ * Goᵀ⁻¹ = 1 := mul_nonsing_inv _ hGu
-    ext (i | i) j <;> simp [mul_apply, Fintype.sum_sum_type, ← this]
+    ext (i | i) j <;> simp [Matrix.mul_apply, Fintype.sum_sum_type, ← this]
   have hW : Ψ * (Nm⁻¹ * fromRows Goᵀ⁻¹ (0 : Matrix (Fin p) (Fin q) ℂ)) = -Bmᵀ := by
     rw [hΨ, Matrix.mul_assoc, Matrix.mul_assoc, ← Matrix.mul_assoc Nm Nm⁻¹,
       mul_nonsing_inv _ hNu, Matrix.one_mul, hDF, hNh, fromCols_mul_fromRows]
@@ -255,7 +255,7 @@ theorem exists_periodMatrix {X : Type} [NormedAddCommGroup X] [NormedSpace ℂ X
     have hsel : ∀ (W : Matrix (Fin q ⊕ Fin p) (Fin q) ℂ) (i : Fin p) (j : Fin q),
         (fromCols (0 : Matrix (Fin p) (Fin q) ℂ) (1 : Matrix (Fin p) (Fin p) ℂ) * W) i j = W (Sum.inr i) j := by
       intro W i j
-      simp [mul_apply, Fintype.sum_sum_type, one_apply]
+      simp [Matrix.mul_apply, Fintype.sum_sum_type, one_apply]
     have hAdQ1 : A u₀ * dM Q1f u₀ v = 0 := by
       ext i j
       rw [hA0, Matrix.mul_assoc, hsel]

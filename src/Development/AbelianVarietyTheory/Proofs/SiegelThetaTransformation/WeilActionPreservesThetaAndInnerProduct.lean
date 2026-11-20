@@ -178,7 +178,7 @@ theorem wG_laws : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : �
       rw [← per_lact x hγ]
       congr 1
       funext i
-      simp only [mul_apply, transpose_apply, mulVec, dotProduct, mul_comm]
+      simp only [Matrix.mul_apply, transpose_apply, mulVec, dotProduct, mul_comm]
     rw [(hH _ _ k1).2.2.2.2 _ (hγ.lact_mem hx), (hH _ _ hφ).2.2.2.2 _ hx, k2 x hx]
     simp only [hy, herm_lact idx hs hγ hx]
 

@@ -149,11 +149,11 @@ example (ξ η : ℂ) : extTrace tautPairGram 0 ξ η = kappa * (ξ * conj η) :
     rw [del_eq_fderiv differentiableAt_fun_id]; simp
   have hs : subGram (tautPairGram 0) = 1 := by rw [h]; ext; simp [subGram, toBlocks₁₁]
   have hq : quotGram (tautPairGram 0) = 1 := by
-    rw [h]; ext; simp [quotGram, toBlocks₂₂, toBlocks₂₁, mul_apply]
+    rw [h]; ext; simp [quotGram, toBlocks₂₂, toBlocks₂₁, Matrix.mul_apply]
   have hu : IsUnit (subGram (tautPairGram 0)).det := by simp [hs]
   rw [extTrace, extFormAdj_eq_neg_secondForm (hf.one trivial) (hf.eventually_herm trivial)
       (hf.isUnit 0 trivial) hu, extForm_eq_neg_secondFormAdj (hf.one trivial)
       (hf.eventually_herm trivial) (hf.isUnit 0 trivial) hu, secondFormAdj, adj, hs, hq]
-  simp [trace, mul_apply, hb]
+  simp [trace, Matrix.mul_apply, hb]
 
 end GlobalTheory.IndefiniteRowSideFullHecke.HermitianCurvatureForms

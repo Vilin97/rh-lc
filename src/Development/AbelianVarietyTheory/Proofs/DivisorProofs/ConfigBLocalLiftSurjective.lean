@@ -21,7 +21,7 @@ variable {R : Type} [CommRing R]
 theorem vecMulVec_mulVec {m n k l : Type} [Fintype n] [Fintype l] (A : Matrix m n R) (C : Matrix k l R)
     (p : n → R) (q : l → R) : vecMulVec (A *ᵥ p) (C *ᵥ q) = A * vecMulVec p q * Cᵀ := by
   ext i j
-  simp only [vecMulVec_apply, mulVec, dotProduct, mul_apply, transpose_apply, Finset.sum_mul, Finset.mul_sum]
+  simp only [vecMulVec_apply, mulVec, dotProduct, Matrix.mul_apply, transpose_apply, Finset.sum_mul, Finset.mul_sum]
   refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 
 theorem map_vecMulVec {S : Type} [CommRing S] {m n : Type} (f : R →+* S) (p : m → R) (q : n → R) :

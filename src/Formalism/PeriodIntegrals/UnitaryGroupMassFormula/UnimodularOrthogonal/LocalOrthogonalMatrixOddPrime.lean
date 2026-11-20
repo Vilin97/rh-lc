@@ -38,7 +38,7 @@ theorem q_fixed {n : ℕ} {H : Matrix (Fin n) (Fin n) S} (hH : Hᴴ = H) (v : Fi
 
 theorem cong_apply_self {n : ℕ} (P H : Matrix (Fin n) (Fin n) S) (a : Fin n) :
     (P * H * Pᴴ) a a = q H (P a) := by
-  simp only [mul_apply, q, conjTranspose_apply]
+  simp only [Matrix.mul_apply, q, conjTranspose_apply]
 
 theorem herm_cong {n : ℕ} (P : Matrix (Fin n) (Fin n) S) {H : Matrix (Fin n) (Fin n) S} (hH : Hᴴ = H) :
     (P * H * Pᴴ)ᴴ = P * H * Pᴴ := by
@@ -81,18 +81,18 @@ theorem det_elim {n : ℕ} (A : Matrix (Fin (n + 1)) (Fin (n + 1)) S) : (elim A)
 
 theorem elimination_mul_first_row {n : ℕ} (A : Matrix (Fin (n + 1)) (Fin (n + 1)) S) (b : Fin (n + 1)) :
     (elim A * A) 0 b = A 0 b := by
-  simp [elim, mul_apply, Pi.single_apply]
+  simp [elim, Matrix.mul_apply, Pi.single_apply]
 
 theorem elim_mul_col {n : ℕ} {A : Matrix (Fin (n + 1)) (Fin (n + 1)) S} (h : A 0 0 = 1) (a : Fin (n + 1)) :
     (elim A * A) a 0 = if a = 0 then 1 else 0 := by
   rcases Fin.eq_zero_or_eq_succ a with rfl | ⟨i, rfl⟩
   · simp [elimination_mul_first_row, h]
-  · simp [elim, mul_apply, Fin.sum_univ_succ, h, Pi.single_apply, Fin.succ_ne_zero]
+  · simp [elim, Matrix.mul_apply, Fin.sum_univ_succ, h, Pi.single_apply, Fin.succ_ne_zero]
 
 theorem row0 {n : ℕ} {A : Matrix (Fin (n + 1)) (Fin (n + 1)) S} (hA : Aᴴ = A) (h : A 0 0 = 1) (b : Fin (n + 1)) :
     (elim A * A * (elim A)ᴴ) 0 b = if b = 0 then 1 else 0 := by
   have e1 : (elim A * A * (elim A)ᴴ) 0 b = (A * (elim A)ᴴ) 0 b := by
-    rw [mul_apply (M := elim A * A), mul_apply (M := A)]
+    rw [Matrix.mul_apply (M := elim A * A), Matrix.mul_apply (M := A)]
     exact Finset.sum_congr rfl fun l _ => by rw [elimination_mul_first_row]
   rw [e1, show A * (elim A)ᴴ = (elim A * A)ᴴ by rw [conjTranspose_mul, hA], conjTranspose_apply,
     elim_mul_col h]
@@ -120,12 +120,12 @@ theorem blk_cong {n : ℕ} {M : Matrix (Fin (n + 1)) (Fin (n + 1)) S} {P : Matri
   ext a b
   rcases Fin.eq_zero_or_eq_succ a with rfl | ⟨i, rfl⟩ <;>
     rcases Fin.eq_zero_or_eq_succ b with rfl | ⟨j, rfl⟩
-  · simp [blk, mul_apply, Fin.sum_univ_succ, hr0, hrs, hcs, one_apply]
-  · simp [blk, mul_apply, Fin.sum_univ_succ, hr0, hrs, hcs, one_apply, (Fin.succ_ne_zero j).symm]
-  · simp [blk, mul_apply, Fin.sum_univ_succ, hr0, hrs, hcs, one_apply]
+  · simp [blk, Matrix.mul_apply, Fin.sum_univ_succ, hr0, hrs, hcs, one_apply]
+  · simp [blk, Matrix.mul_apply, Fin.sum_univ_succ, hr0, hrs, hcs, one_apply, (Fin.succ_ne_zero j).symm]
+  · simp [blk, Matrix.mul_apply, Fin.sum_univ_succ, hr0, hrs, hcs, one_apply]
   · have := congrFun (congrFun hP i) j
-    simp only [mul_apply, submatrix_apply, conjTranspose_apply] at this
-    simp [blk, mul_apply, Fin.sum_univ_succ, hr0, hrs, hcs, one_apply] at this ⊢
+    simp only [Matrix.mul_apply, submatrix_apply, conjTranspose_apply] at this
+    simp [blk, Matrix.mul_apply, Fin.sum_univ_succ, hr0, hrs, hcs, one_apply] at this ⊢
     exact this
 
 theorem step (hL : LocHyp S) {n : ℕ}

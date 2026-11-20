@@ -146,7 +146,7 @@ omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
 
 theorem MContDiffAt.mul [Fintype n] {B : E → Matrix n l ℂ} (h : MContDiffAt k A z)
     (h' : MContDiffAt k B z) : MContDiffAt k (fun x => A x * B x) z := fun a b => by
-  simp only [mul_apply]
+  simp only [Matrix.mul_apply]
   exact ContDiffAt.sum fun c _ => (h a c).mul (h' c b)
 
 omit [NormedSpace ℂ E] [IsScalarTower ℝ ℂ E] in
@@ -214,7 +214,7 @@ theorem mdel_mul [Fintype n] {B : E → Matrix n l ℂ} (h : MContDiffAt 1 A z)
     (h' : MContDiffAt 1 B z) (ξ : E) :
     mdel (fun x => A x * B x) z ξ = A z * mdel B z ξ + mdel A z ξ * B z := by
   ext a b
-  simp only [mdel_apply, mul_apply, Matrix.add_apply]
+  simp only [mdel_apply, Matrix.mul_apply, Matrix.add_apply]
   rw [del_sum fun c _ => (h.diff a c).fun_mul (h'.diff c b), ← Finset.sum_add_distrib,
     ContinuousLinearMap.sum_apply]
   exact Finset.sum_congr rfl fun c _ => del_mul (h.diff a c) (h'.diff c b) ξ
@@ -223,7 +223,7 @@ theorem mdbar_mul [Fintype n] {B : E → Matrix n l ℂ} (h : MContDiffAt 1 A z)
     (h' : MContDiffAt 1 B z) (ξ : E) :
     mdbar (fun x => A x * B x) z ξ = A z * mdbar B z ξ + mdbar A z ξ * B z := by
   ext a b
-  simp only [mdbar_apply, mul_apply, Matrix.add_apply]
+  simp only [mdbar_apply, Matrix.mul_apply, Matrix.add_apply]
   rw [dbar_sum fun c _ => (h.diff a c).fun_mul (h'.diff c b), ← Finset.sum_add_distrib,
     ContinuousLinearMap.sum_apply]
   exact Finset.sum_congr rfl fun c _ => dbar_mul (h.diff a c) (h'.diff c b) ξ
@@ -373,7 +373,7 @@ theorem del_form (hH : MContDiffAt 1 H z) (hu : IsUnit (H z).det) {s t : E → n
   have e : ∀ (K : Matrix n n ℂ) (P Q : Matrix n Unit ℂ),
       (Pᵀ * K * Qᴴᵀ) () () = form K (fun a => P a ()) fun a => Q a () := fun K P Q => by
     rw [form_eq_sum, Finset.sum_comm]
-    simp [mul_apply, Finset.sum_mul]
+    simp [Matrix.mul_apply, Finset.sum_mul]
   have h := congrFun (congrFun (mdel_mul (hS.transpose.mul hH) hT.conjTranspose.transpose ξ) ()) ()
   rw [mdel_mul hS.transpose hH, mdel_transpose (fun x => (T x)ᴴ), mdel_conjTranspose,
     mdel_transpose, Matrix.add_mul, ← conn_transpose_mul hu, ← Matrix.mul_assoc, ← transpose_mul,

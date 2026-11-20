@@ -12,7 +12,7 @@ theorem gram_eq_one {n : ℕ} {H e : Matrix (Fin n) (Fin n) ℂ}
     eᵀ * H * eᴴᵀ = 1 := by
   ext k l
   rw [one_apply, ← h k l, form_eq_sum]
-  simp only [mul_apply, Finset.sum_mul, transpose_apply, conjTranspose_apply, star_def]
+  simp only [Matrix.mul_apply, Finset.sum_mul, transpose_apply, conjTranspose_apply, star_def]
   rw [Finset.sum_comm]
 
 theorem sum_form_eq_trace {n : ℕ} {H e : Matrix (Fin n) (Fin n) ℂ}
@@ -26,7 +26,7 @@ theorem sum_form_eq_trace {n : ℕ} {H e : Matrix (Fin n) (Fin n) ℂ}
   have h2 : ∀ i, form H (M *ᵥ fun a => e a i) (fun a => e a i) = ((M * e)ᵀ * H * eᴴᵀ) i i := by
     intro i
     rw [form_eq_sum]
-    simp only [mul_apply, Finset.sum_mul, transpose_apply, conjTranspose_apply, star_def, mulVec,
+    simp only [Matrix.mul_apply, Finset.sum_mul, transpose_apply, conjTranspose_apply, star_def, mulVec,
       dotProduct]
     rw [Finset.sum_comm]
   simp only [h2]

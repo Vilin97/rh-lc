@@ -20,7 +20,7 @@ theorem gram_eq {D : D7} (V : HSp D) (X : Data D.host.E V.rank) (hW : ModelW V r
     simp [gramAt]
   have hg : gram (tauE D ρ) X.Gm z = zᵀ * X.Gm.map (tauE D ρ) * zᴴᵀ := by
     ext a b
-    simp only [ReciprocityTheory.ChartRestriction.G.FD.gram, hermC, ReciprocityTheory.ChartRestriction.G.FD.col, of_apply, mul_apply, transpose_apply, conjTranspose_apply, map_apply,
+    simp only [ReciprocityTheory.ChartRestriction.G.FD.gram, hermC, ReciprocityTheory.ChartRestriction.G.FD.col, of_apply, Matrix.mul_apply, transpose_apply, conjTranspose_apply, map_apply,
       Finset.sum_mul]
     rw [Finset.sum_comm]
     rfl

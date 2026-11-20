@@ -110,7 +110,7 @@ theorem _root_.GlobalTheory.SiegelNormalForm.siegel_of_relations (Y : Matrix (Fi
     split_ifs at this ⊢ <;> linarith
   have hYB : Y * B = 1 := by
     ext a i
-    simp only [mul_apply, one_apply, hBdef, map_apply]
+    simp only [Matrix.mul_apply, one_apply, hBdef, map_apply]
     exact hrow a i
   have hBY : B * Y = 1 := mul_eq_one_comm.mp hYB
   have hYt : Yᵀ = Y := by
@@ -299,7 +299,7 @@ theorem _root_.GlobalTheory.SiegelNormalForm.exists_normal_form : (∀ (g : ℕ)
         Pi.single j 1 := by
       ext k
       have h := congrFun (congrFun hYB k) j
-      simp only [mul_apply, map_apply, one_apply] at h
+      simp only [Matrix.mul_apply, map_apply, one_apply] at h
       simp only [mulVec, dotProduct, map_apply, Pi.single_apply]
       have h' : ((∑ i, Y k i * (τ i j).im : ℝ) : ℂ) = ((if k = j then 1 else 0 : ℝ) : ℂ) := by
         rw [h]

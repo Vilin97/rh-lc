@@ -226,7 +226,7 @@ theorem rank_le (d : HSMBlockDatum D K ι Ω) (n : ℕ) {r : ℕ} (f : Fin r →
     have h1 := congrArg Matrix.trace (nonsing_inv_mul G hu)
     rw [trace_one, Fintype.card_fin] at h1
     rw [← h1]
-    simp [trace, mul_apply]
+    simp [trace, Matrix.mul_apply]
   have hQ : ∀ a, 0 ≤ a ⬝ᵥ (G *ᵥ a) := fun a => by
     simpa using hG.posSemidef.dotProduct_mulVec_nonneg a
   have hpt : ∀ w ∈ mcPts (mCoordIdeal d.y),
@@ -319,7 +319,7 @@ theorem exists_gram {r : ℕ} {G : Matrix (Fin r) (Fin r) ℝ} (hG : G.PosDef) :
   refine ⟨fun k => WithLp.toLp 2 (fun i => M i k), ?_⟩
   ext k l
   rw [Matrix.gram_apply, EuclideanSpace.inner_toLp_toLp, ← hMM]
-  simp [dotProduct, mul_apply, Matrix.star_eq_conjTranspose, mul_comm]
+  simp [dotProduct, Matrix.mul_apply, Matrix.star_eq_conjTranspose, mul_comm]
 
 theorem count_of_gram {r : ℕ} {G : Matrix (Fin r) (Fin r) ℝ} (hG : G.PosDef) {ρ : ℝ} (hρ : 0 < ρ)
     (P : (Fin r → ℤ) → Prop)

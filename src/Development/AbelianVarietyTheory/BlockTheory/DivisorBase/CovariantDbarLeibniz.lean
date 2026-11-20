@@ -164,7 +164,7 @@ theorem isPosFrame_tautPairGram : IsPosFrame Set.univ tautPairGram := by
   have hP : IsUnit P := by
     rw [isUnit_iff_isUnit_det, det_fromBlocks_zero₂₁]; simp
   have e : tautPairGram z = P * 1 * Pᴴ := by
-    ext (a | a) (b | b) <;> simp [tautPairGram, P, mul_apply]
+    ext (a | a) (b | b) <;> simp [tautPairGram, P, Matrix.mul_apply]
   rw [e]
   exact PosDef.one.mul_mul_conjTranspose_same (vecMul_injective_iff_isUnit.2 hP)
 
@@ -209,7 +209,7 @@ theorem lorentzPairGram_spec : IsHermFrame (Metric.ball 0 1) lorentzPairGram ∧
   · let P : Matrix (Unit ⊕ Unit) (Unit ⊕ Unit) ℂ := fromBlocks 1 (of fun _ _ => z) 0 1
     let Q : Matrix (Unit ⊕ Unit) (Unit ⊕ Unit) ℂ := fromBlocks 1 0 (of fun _ _ => -conj z) (-1)
     have e : lorentzPairGram z = P * Q := by
-      ext (a | a) (b | b) <;> simp [lorentzPairGram, P, Q, mul_apply, sub_eq_add_neg]
+      ext (a | a) (b | b) <;> simp [lorentzPairGram, P, Q, Matrix.mul_apply, sub_eq_add_neg]
     rw [e, det_mul, det_fromBlocks_zero₂₁, det_fromBlocks_zero₁₂]
     simp
   · rw [det_unique]; exact (hs z hz).isUnit

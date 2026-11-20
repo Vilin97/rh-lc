@@ -31,7 +31,7 @@ theorem gramX_eq (ε : Fin m → Bool) (u : Fin m → Fin n → ℂ) :
 private theorem gramB_eq_conjTranspose_diagonal_mul (ε : Fin m → Bool) (b : Bool) (u : Fin m → Fin n → ℂ) :
     gramB ε b u = (Matrix.of u)ᴴ * diagonal (fun a => if ε a = b then (1 : ℂ) else 0) * Matrix.of u := by
   ext i j
-  simp [gramB_apply, mul_apply, diagonal_apply, Finset.sum_filter, conjTranspose_apply]
+  simp [gramB_apply, Matrix.mul_apply, diagonal_apply, Finset.sum_filter, conjTranspose_apply]
 
 theorem gramB_mul (ε : Fin m → Bool) (b : Bool) (u : Fin m → Fin n → ℂ) (a : Matrix (Fin n) (Fin n) ℂ) :
     gramB ε b (Matrix.of u * a) = aᴴ * gramB ε b u * a := by

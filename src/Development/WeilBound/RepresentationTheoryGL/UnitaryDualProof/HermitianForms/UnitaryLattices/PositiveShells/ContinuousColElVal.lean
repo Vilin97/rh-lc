@@ -252,16 +252,16 @@ theorem B_scalAt {m N : ℕ} (h : m + 2 ≤ N) {V : Type} [AddCommGroup V] [Modu
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem row_one_mul {N : ℕ} (A M : Matrix (Fin N) (Fin N) k) (i j : Fin N)
     (hA : ∀ l, A i l = (1 : Matrix (Fin N) (Fin N) k) i l) : (A * M) i j = M i j := by
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   simp_rw [hA]
-  rw [← mul_apply, Matrix.one_mul]
+  rw [← Matrix.mul_apply, Matrix.one_mul]
 
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem col_mul_one {N : ℕ} (A M : Matrix (Fin N) (Fin N) k) (i j : Fin N)
     (hA : ∀ l, A l j = (1 : Matrix (Fin N) (Fin N) k) l j) : (M * A) i j = M i j := by
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   simp_rw [hA]
-  rw [← mul_apply, Matrix.mul_one]
+  rw [← Matrix.mul_apply, Matrix.mul_one]
 
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem colFix_mulVec {N n : ℕ} {g : GL (Fin N) k} (hg : g ∈ colFix k N n) (y : Fin N → k)
@@ -283,9 +283,9 @@ theorem mulVec_single_apply {N : ℕ} (M : Matrix (Fin N) (Fin N) k) (i r : Fin 
 theorem colEl_mul_apply {m N : ℕ} (h : m + 2 ≤ N) (x : Fin (m + 1) → k) (M : Matrix (Fin N) (Fin N) k) (i j : Fin N) :
     ((colEl k m N h x : Matrix (Fin N) (Fin N) k) * M) i j =
       M i j + if hi : (i : ℕ) ≤ m then x ⟨i, by omega⟩ * M ⟨m + 1, by omega⟩ j else 0 := by
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   simp_rw [colEl_val, add_mul, Finset.sum_add_distrib]
-  have e1 : ∑ l, (1 : Matrix (Fin N) (Fin N) k) i l * M l j = M i j := by rw [← mul_apply, Matrix.one_mul]
+  have e1 : ∑ l, (1 : Matrix (Fin N) (Fin N) k) i l * M l j = M i j := by rw [← Matrix.mul_apply, Matrix.one_mul]
   rw [e1]
   congr 1
   by_cases hi : (i : ℕ) ≤ m

@@ -98,12 +98,12 @@ theorem inSupp_mul {x : Matrix (A ⊕ E) (A ⊕ D) k} (hx : InSupp x) {j : GL (A
   have hl := (mem_parahoric.1 hj).2
   obtain ⟨hxi, hxd, hxl⟩ := hx
   have hprod : ∀ i l, (x * j.val) i l ∈ 𝒪[k] := fun i l => by
-    rw [mul_apply]; exact sum_mem fun m _ => mul_mem (hxi i m) (hJ m l)
+    rw [Matrix.mul_apply]; exact sum_mem fun m _ => mul_mem (hxi i m) (hJ m l)
   have hcong : valuation k ((x * j.val).toBlocks₁₁.det - x.toBlocks₁₁.det * j.val.toBlocks₁₁.det) < 1 := by
     rw [← det_mul]
     refine val_det_sub_lt (fun i l => hprod _ _) (fun i l => ?_) (fun i l => ?_)
-    · rw [mul_apply]; exact sum_mem fun m _ => mul_mem (hxi _ _) (hJ _ _)
-    · simp only [toBlocks₁₁, of_apply, mul_apply, Fintype.sum_sum_type, add_sub_cancel_left]
+    · rw [Matrix.mul_apply]; exact sum_mem fun m _ => mul_mem (hxi _ _) (hJ _ _)
+    · simp only [toBlocks₁₁, of_apply, Matrix.mul_apply, Fintype.sum_sum_type, add_sub_cancel_left]
       exact Valuation.map_sum_lt _ one_ne_zero fun m _ => val_mul_lt (hxi _ _) (hl _ _)
   have hd1 : valuation k (x.toBlocks₁₁.det * j.val.toBlocks₁₁.det) = 1 := by
     rw [map_mul, hxd, one_mul, (val_det_blocks hj).1]
@@ -112,7 +112,7 @@ theorem inSupp_mul {x : Matrix (A ⊕ E) (A ⊕ D) k} (hx : InSupp x) {j : GL (A
     refine Valuation.map_eq_of_sub_lt _ ?_
     rw [hd1]; exact hcong
   · intro e a
-    rw [mul_apply, Fintype.sum_sum_type]
+    rw [Matrix.mul_apply, Fintype.sum_sum_type]
     refine Valuation.map_add_lt _ (Valuation.map_sum_lt _ one_ne_zero fun m _ => ?_)
       (Valuation.map_sum_lt _ one_ne_zero fun m _ => ?_)
     · rw [mul_comm]; exact val_mul_lt (hJ _ _) (hxl _ _)

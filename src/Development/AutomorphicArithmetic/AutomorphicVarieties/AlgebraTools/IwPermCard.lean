@@ -10,7 +10,7 @@ private theorem conj_apply {R : Type} [CommRing R] {n : ℕ} (w : Equiv.Perm (Fi
     (((pm R n w)⁻¹ * g * pm R n w : GL (Fin n) R) : Matrix (Fin n) (Fin n) R) a b =
       (g : Matrix (Fin n) (Fin n) R) (w a) (w b) := by
   rw [← map_inv, Units.val_mul, Units.val_mul]
-  simp only [mul_apply, pm_apply]
+  simp only [Matrix.mul_apply, pm_apply]
   rw [Fintype.sum_eq_single (w b), Fintype.sum_eq_single (w a)]
   · simp
   · intro x hx
@@ -118,7 +118,7 @@ private theorem step (C : Subgroup 𝓀[k]ˣ) (w : Equiv.Perm (Fin n)) (i j : Fi
     rw [Units.val_mul] at h6
     have h7 : (((g'⁻¹ : GL (Fin n) k) : Matrix (Fin n) (Fin n) k) * single j i d * (g : Matrix (Fin n) (Fin n) k)) j i =
         ((g'⁻¹ : GL (Fin n) k) : Matrix (Fin n) (Fin n) k) j j * d * (g : Matrix (Fin n) (Fin n) k) i i := by
-      rw [mul_apply, Fintype.sum_eq_single i, mul_single_apply_same]
+      rw [Matrix.mul_apply, Fintype.sum_eq_single i, mul_single_apply_same]
       intro a ha
       rw [mul_single_apply_of_ne _ _ _ _ _ ha, zero_mul]
     have h8 := Valuation.map_sub_lt _ h5 h6

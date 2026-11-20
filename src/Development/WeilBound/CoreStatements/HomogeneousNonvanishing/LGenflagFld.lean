@@ -71,7 +71,7 @@ theorem adjoin_le {F : Type} [Field F] [Algebra Ω F] (u u' : ∀ σ, Matrix (Fi
   rintro _ ⟨q, rfl⟩
   have := lu_mem (IntermediateField.adjoin Ω (Set.range (ent u))).toSubfield (hC q.1) (e q.1 ▸ hu' q.1)
     (fun i j => by
-      rw [mul_apply]
+      rw [Matrix.mul_apply]
       exact sum_mem fun l _ => mul_mem (IntermediateField.algebraMap_mem _ _) (mem_adjoin_ent u hu _ _ _))
   rw [← e q.1] at this
   exact this _ _
@@ -165,7 +165,7 @@ theorem fl_coord {Ω' : Type} [Field Ω'] [Algebra Ω Ω'] {E E' : Type} [AddCom
   rw [← hf]
   congr 1
   funext k
-  simp only [hb, hh, map_sum, hj, Finset.smul_sum, smul_smul, mul_apply, map_apply, Finset.sum_smul]
+  simp only [hb, hh, map_sum, hj, Finset.smul_sum, smul_smul, Matrix.mul_apply, map_apply, Finset.sum_smul]
   rw [Finset.sum_comm]
   simp only [mul_comm]
 

@@ -56,7 +56,7 @@ omit [DecidableEq ι] [Fintype κ] [DecidableEq κ] in
 theorem gram_sum_smul (v : ι → V) (Y : Matrix ι κ 𝕜) :
     gram 𝕜 (fun j => ∑ i, Y i j • v i) = Yᴴ * gram 𝕜 v * Y := by
   ext a b
-  simp only [gram_apply, sum_inner, inner_sum, inner_smul_left, inner_smul_right, mul_apply,
+  simp only [gram_apply, sum_inner, inner_sum, inner_smul_left, inner_smul_right, Matrix.mul_apply,
     conjTranspose_apply, Finset.sum_mul, RCLike.star_def]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.mul_sum]
@@ -86,7 +86,7 @@ theorem norm_det_inner [FiniteDimensional 𝕜 V] (hι : Fintype.card ι = finra
     (stdOrthonormalBasis 𝕜 V).reindex (Fintype.equivFinOfCardEq hι).symm
   have : (Matrix.of fun i j => ⟪w i, v j⟫_𝕜) = (b.toBasis.toMatrix w)ᴴ * b.toBasis.toMatrix v := by
     ext i j
-    simp [mul_apply, Basis.toMatrix_apply, b.repr_apply_apply, b.sum_inner_mul_inner]
+    simp [Matrix.mul_apply, Basis.toMatrix_apply, b.repr_apply_apply, b.sum_inner_mul_inner]
   rw [this, det_mul, det_conjTranspose, norm_mul, norm_star, gramVol_eq_norm_det b,
     gramVol_eq_norm_det b]
 

@@ -102,7 +102,7 @@ theorem lintegral_det_inv_pow (m q p : ℕ) :
       rw [add_assoc]
       congr 1
       ext i j
-      simp [mul_apply, Fin.sum_univ_castSucc, (hΦ' v u).1, (hΦ' v u).2, vecMulVec_apply]
+      simp [Matrix.mul_apply, Fin.sum_univ_castSucc, (hΦ' v u).1, (hΦ' v u).2, vecMulVec_apply]
     have hpos : ∀ v : Fin p × Fin q → ℂ,
         (1 + (Matrix.of fun a b => v (a, b))ᴴ * (Matrix.of fun a b => v (a, b))).PosDef := fun v =>
       PosDef.one.add_posSemidef (posSemidef_conjTranspose_mul_self _)

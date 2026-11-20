@@ -191,7 +191,7 @@ theorem mul_perm' (Z : Matrix (Fin q → Ix W m) (Fin q → Ix W m) ℂ) (σ : E
     (Z * perm' σ w : Matrix (Fin q → Ix W m) (Fin q → Ix W m) ℂ) A B =
       if (∀ i, ((B ∘ σ.symm) i).1 = w i) then Z A (B ∘ σ.symm) else 0 := by
   have hB : (B ∘ σ.symm) ∘ σ = B := by funext i; simp
-  rw [mul_apply, Finset.sum_eq_single (B ∘ σ.symm)]
+  rw [Matrix.mul_apply, Finset.sum_eq_single (B ∘ σ.symm)]
   · rw [perm'_apply]
     split_ifs with h1 h2 h2
     · rw [mul_one]
@@ -208,7 +208,7 @@ theorem perm'_mul (Z : Matrix (Fin q → Ix W m) (Fin q → Ix W m) ℂ) (σ : E
     (w : Fin q → W) (A B : Fin q → Ix W m) :
     (perm' σ w * Z : Matrix (Fin q → Ix W m) (Fin q → Ix W m) ℂ) A B =
       if (∀ i, (A i).1 = w i) then Z (A ∘ σ) B else 0 := by
-  rw [mul_apply, Finset.sum_eq_single (A ∘ σ)]
+  rw [Matrix.mul_apply, Finset.sum_eq_single (A ∘ σ)]
   · rw [perm'_apply]
     split_ifs with h1 h2 h2
     · rw [one_mul]

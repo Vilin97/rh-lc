@@ -108,7 +108,7 @@ theorem lminor_nb (N B : Matrix (Fin n) (Fin n) ℂ) (hup : ∀ i k : Fin n, i <
   have hmono : ∀ a b : Fin k, a < b → e a < e b := fun a b h => h
   have hsub : (N * B).submatrix e e = N.submatrix e e * B.submatrix e e := by
     ext a b
-    simp only [submatrix_apply, mul_apply]
+    simp only [submatrix_apply, Matrix.mul_apply]
     symm
     refine Fintype.sum_of_injective e (Fin.castLE_injective _) _ _ (fun c hc => ?_) (fun _ => rfl)
     have hc' : (k : ℕ) ≤ c := by

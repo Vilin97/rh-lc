@@ -60,7 +60,7 @@ theorem exists_Q {r k : ℕ} (ε : Fin (2 * r + k + 1) → Bool)
   refine ⟨Matrix.of fun i j => Formalism.QuantumDeterminants.GBasic.Pk k r (σ.symm i) j, ?_⟩
   rw [← Formalism.QuantumDeterminants.GBasic.PJP k r]
   ext a b
-  rw [mul_apply, mul_apply]
+  rw [Matrix.mul_apply, Matrix.mul_apply]
   simp only [Formalism.REAL.Jm, mul_diagonal, conjTranspose_apply, of_apply]
   refine (Fintype.sum_equiv σ _ _ (fun m => ?_)).symm
   simp only [Equiv.symm_apply_apply, hσ m]

@@ -33,7 +33,7 @@ theorem pow_bracket (e : Matrix (Fin n) (Fin n) A)
     by_cases h1 : c = d <;> by_cases h2 : b = c <;> by_cases h3 : a = d <;> simp_all
   | succ m ih =>
     intro a b c d
-    have hp : ∀ i j, (e ^ (m + 1)) i j = ∑ x, e i x * (e ^ m) x j := fun i j => by rw [pow_succ', mul_apply]
+    have hp : ∀ i j, (e ^ (m + 1)) i j = ∑ x, e i x * (e ^ m) x j := fun i j => by rw [pow_succ', Matrix.mul_apply]
     have key : ∀ x, e a b * (e c x * (e ^ m) x d) - (e c x * (e ^ m) x d) * e a b =
         (if b = c then e a x * (e ^ m) x d else 0) - (if a = x then e c b * (e ^ m) x d else 0) +
           (if b = x then e c x * (e ^ m) a d else 0) - (if a = d then e c x * (e ^ m) x b else 0) := by
@@ -57,7 +57,7 @@ theorem pow_central (e : Matrix (Fin n) (Fin n) A)
 
 theorem trace_cent (N : Matrix (Fin n) (Fin n) ℂ) (Y : Matrix (Fin n) (Fin n) A) :
     (N.map (algebraMap ℂ A) * Y).trace = (Y * N.map (algebraMap ℂ A)).trace := by
-  simp only [Matrix.trace, Matrix.diag, mul_apply, map_apply]
+  simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply, map_apply]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun c _ => Algebra.commutes _ _
 
@@ -137,7 +137,7 @@ theorem pow_intertw (e : Matrix (Fin n) (Fin n) (Module.End ℂ M)) (e' : Matrix
     split_ifs <;> simp
   | succ m ih =>
     intro a b x
-    simp only [pow_succ', mul_apply, LinearMap.sum_apply, map_sum, Module.End.mul_apply]
+    simp only [pow_succ', Matrix.mul_apply, LinearMap.sum_apply, map_sum, Module.End.mul_apply]
     exact Finset.sum_congr rfl fun c _ => by rw [h, ih]
 
 theorem trace_intertw (e : Matrix (Fin n) (Fin n) (Module.End ℂ M)) (e' : Matrix (Fin n) (Fin n) (Module.End ℂ M'))

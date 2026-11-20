@@ -53,7 +53,7 @@ theorem submatrix_mul_of_zero {ι : Type} [Fintype ι] (e : ι → Fin n) (he : 
     (M N : Matrix (Fin n) (Fin n) κ) (h : ∀ i j l, l ∉ Set.range e → M (e i) l * N l (e j) = 0) :
     (M * N).submatrix e e = M.submatrix e e * N.submatrix e e := by
   ext i j
-  simp only [submatrix_apply, mul_apply]
+  simp only [submatrix_apply, Matrix.mul_apply]
   exact (Fintype.sum_of_injective e he _ _ (fun l hl => h i j l hl) (fun _ => rfl)).symm
 
 def blkMat (b : Fin n → ℕ) (c : ℕ) :
@@ -142,7 +142,7 @@ def unip (κ : Type) [CommRing κ] (r : ℕ) : Subgroup (GL (Fin r) κ) where
   mul_mem' := by
     rintro x y ⟨hx, hx1⟩ ⟨hy, hy1⟩
     refine ⟨Subgroup.mul_mem _ hx hy, fun i => ?_⟩
-    rw [Units.val_mul, mul_apply, Finset.sum_eq_single i, hx1, hy1, one_mul]
+    rw [Units.val_mul, Matrix.mul_apply, Finset.sum_eq_single i, hx1, hy1, one_mul]
     · intro l _ hl
       rcases lt_or_gt_of_ne hl with h | h
       · rw [hx (show l.val < i.val from h), zero_mul]
@@ -153,7 +153,7 @@ def unip (κ : Type) [CommRing κ] (r : ℕ) : Subgroup (GL (Fin r) κ) where
     have hi := Subgroup.inv_mem _ hx
     refine ⟨hi, fun i => ?_⟩
     have h1 : ((x * x⁻¹ : GL (Fin r) κ) : Matrix (Fin r) (Fin r) κ) i i = 1 := by simp
-    rw [Units.val_mul, mul_apply, Finset.sum_eq_single i, hx1, one_mul] at h1
+    rw [Units.val_mul, Matrix.mul_apply, Finset.sum_eq_single i, hx1, one_mul] at h1
     · exact h1
     · intro l _ hl
       rcases lt_or_gt_of_ne hl with h | h
@@ -172,7 +172,7 @@ theorem unip_mul_entry {x y : GL (Fin r) κ} (hx : x ∈ unip κ r) (hy : y ∈ 
       (x : Matrix (Fin r) (Fin r) κ) i l * (y : Matrix (Fin r) (Fin r) κ) l j = 0) :
     ((x * y : GL (Fin r) κ) : Matrix (Fin r) (Fin r) κ) i j =
       (x : Matrix (Fin r) (Fin r) κ) i j + (y : Matrix (Fin r) (Fin r) κ) i j := by
-  rw [Units.val_mul, mul_apply, Finset.sum_eq_add i j (ne_of_lt hij), unip_diag hx, unip_diag hy, one_mul, mul_one,
+  rw [Units.val_mul, Matrix.mul_apply, Finset.sum_eq_add i j (ne_of_lt hij), unip_diag hx, unip_diag hy, one_mul, mul_one,
     add_comm]
   · rintro l _ ⟨hli, hlj⟩
     rcases lt_or_gt_of_ne hli with h | h

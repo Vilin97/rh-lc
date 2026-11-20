@@ -85,7 +85,7 @@ theorem exists_Kmat (hk : 1 ≤ k) (c u : Fin (r + 1) → EE k r) (hc : Orthonor
         inner ℂ (WithLp.toLp 2 (Pi.single i 1) : EE k r) (WithLp.toLp 2 (Pi.single j 1)) := by
       rw [hκ, hκ, LinearIsometryEquiv.inner_map_map]
     simp only [EuclideanSpace.inner_eq_star_dotProduct, WithLp.ofLp_toLp, dotProduct] at h2
-    simp only [mul_apply, conjTranspose_apply, one_apply]
+    simp only [Matrix.mul_apply, conjTranspose_apply, one_apply]
     convert h2 using 1
     · refine Finset.sum_congr rfl fun m _ => ?_
       simp [mulVec_single, mul_comm]

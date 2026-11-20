@@ -21,7 +21,7 @@ theorem jacobiDualColumn_scalar_identity {K : Type} [Field K] (X : K) (hX : X �
 
 theorem mul_col_eq {ι' ι κ μ K : Type} [Fintype ι] [Field K] (P : Matrix ι' ι K) (Y : Matrix ι κ K) (Z : Matrix ι μ K)
     (c : κ) (c' : μ) (h : ∀ l, Y l c = Z l c') (r : ι') : (P * Y) r c = (P * Z) r c' := by
-  simp only [mul_apply, h]
+  simp only [Matrix.mul_apply, h]
 
 theorem hz_besAt {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L sc) {t : T} {M : Vol G} (hM : M.Is t)
     (j σ : ℕ) (hj : j + 2 * σ + 2 = D.R.m) (vN : GlobalTheory.Unf.VolN (besDecAt G j σ hj)) {k : Type} [Field k] [ValuativeRel k]
@@ -109,8 +109,8 @@ theorem big_jacP : Big fun ch => JacP ch := by
       (loc w (ch.S.βp (j + 1))).val.submatrix id (Fin.cast (topRank_eq ch.G t w h₁.le))) _ x (fun l => ?_) r).trans
       (congrFun (congrFun (T0' _) r) x)
     have e1 := congrFun (congrFun h1 l) (Sum.inl (Fin.cast (topRank_eq ch.G t w h₁.le) x))
-    simp only [submatrix_apply, id, fromCols_apply_inl, mul_apply, Matrix.map_apply] at e1
-    simp only [submatrix_apply, id, mul_apply, Matrix.map_apply, hpr]
+    simp only [submatrix_apply, id, fromCols_apply_inl, Matrix.mul_apply, Matrix.map_apply] at e1
+    simp only [submatrix_apply, id, Matrix.mul_apply, Matrix.map_apply, hpr]
     refine (congrArg _ (Fin.ext ?_)).trans e1
     simp [frame]
   · intro i jj hij r

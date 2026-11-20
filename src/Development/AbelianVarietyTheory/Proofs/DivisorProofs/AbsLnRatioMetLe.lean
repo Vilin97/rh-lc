@@ -90,7 +90,7 @@ theorem lminor_eq (M : Matrix (Fin n) (Fin n) ℂ) (k : Fin (n + 1)) :
   unfold lminor
   congr 1
   ext i j
-  simp [mul_apply, conjTranspose_apply, Finset.sum_ite_eq', Finset.sum_ite_eq]
+  simp [Matrix.mul_apply, conjTranspose_apply, Finset.sum_ite_eq', Finset.sum_ite_eq]
 
 theorem Cmp.lminor_le {m : ℝ} {A B : Matrix (Fin n) (Fin n) ℂ} (h : Cmp m A B) (hA : A.PosDef) (hm : 0 ≤ m)
     (k : Fin (n + 1)) : (lminor A k).re ≤ m ^ (k : ℕ) * (lminor B k).re := by

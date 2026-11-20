@@ -29,13 +29,13 @@ theorem transferStep : TransferStep := by
     ext i j
     have h1 := orthonormal_iff_ite.mp hbo i j
     rw [EuclideanSpace.inner_eq_star_dotProduct] at h1
-    simp only [star_eq_conjTranspose, mul_apply, conjTranspose_apply, of_apply, one_apply]
+    simp only [star_eq_conjTranspose, Matrix.mul_apply, conjTranspose_apply, of_apply, one_apply]
     rw [← h1]
     simp [dotProduct, mul_comm]
   · ext i j
     have h1 := congrArg (fun v : EuclideanSpace ℂ (Fin (n + 1)) => v i) (hd j)
     simp only [Matrix.toLpLin_apply, PiLp.smul_apply, smul_eq_mul] at h1
-    rw [mul_diagonal, mul_apply]
+    rw [mul_diagonal, Matrix.mul_apply]
     simp only [of_apply]
     simpa [mulVec, dotProduct, mul_comm] using h1
   · intro i

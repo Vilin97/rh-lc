@@ -158,7 +158,7 @@ theorem IsSiegel.neg_inv_add_inv_mul {τ : Matrix ι ι ℂ} (hτ : IsSiegel τ)
   convert hτ.neg_inv.add_map_ofReal h2.neg using 1
   rw [e c, e d, inv_map_ofReal hu.ne_zero, neg_add]
   ext i j
-  simp [mul_apply]
+  simp [Matrix.mul_apply]
 
 theorem symplectic_action_eq {R : Type*} [CommRing R] {a b c d τ : Matrix ι ι R}
     (h : fromBlocks a b c d ∈ symplecticGroup ι R) (hd : IsUnit d.det) (hτ : IsUnit τ.det)
@@ -214,7 +214,7 @@ theorem IsSiegel.riemannTheta_symplectic {τ : Matrix ι ι ℂ} (hτ : IsSiegel
       (b.map ((↑) : ℤ → ℝ) * (d.map ((↑) : ℤ → ℝ))⁻¹).map ofReal := by
     rw [eD]
     ext i j
-    simp [mul_apply]
+    simp [Matrix.mul_apply]
   have hcast := intCast_mulVec_complex d
   have hC := fromBlocks_map_intCast_mem_symplecticGroup ℂ h
   set A := a.map ((↑) : ℤ → ℂ)

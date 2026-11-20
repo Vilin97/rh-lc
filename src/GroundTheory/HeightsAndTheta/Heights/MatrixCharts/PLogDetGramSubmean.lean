@@ -78,7 +78,7 @@ theorem LogDetGramSubmean.proof (hcont : LogDetGramContinuous.Statement) :
   have hh : AnalyticOnNhd ℂ (fun ζ => (W0ᴴ * F ζ).det) (closedBall 0 1) := by
     refine analyticOnNhd_det fun i j => ?_
     intro z hz
-    simp only [mul_apply]
+    simp only [Matrix.mul_apply]
     exact Finset.univ.analyticAt_fun_sum fun k _ => analyticAt_const.mul (hF k j z hz)
   have hh0ne : (W0ᴴ * F 0).det ≠ 0 := by rw [hW0F0]; exact hBu.ne_zero
 

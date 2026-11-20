@@ -49,7 +49,7 @@ theorem mul_low_mul_apply {m : ℕ} (A C : Matrix (Fin m) (Fin m) ℂ) (ξ : Low
     simp only [g, ← lowProj_apply]
     simp [lowProj, t.2]
   rw [← Finset.sum_congr rfl (fun t _ => hlow t), hsub, Fintype.sum_prod_type]
-  simp only [g, mul_apply, Finset.sum_mul]
+  simp only [g, Matrix.mul_apply, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   ring
@@ -66,7 +66,7 @@ theorem deriv_flag_eq {m : ℕ} (g : Matrix (Fin m) (Fin m) ℂ) (φ : (Low m �
     have := HasFDerivAt.sum (u := Finset.univ)
       (fun b _ => (hasFDerivAt_uni_apply (hasFDerivAt_id x) b c).const_mul (g a b))
     refine this.congr_of_eventuallyEq (Eventually.of_forall fun y => ?_)
-    simp [mul_apply]
+    simp [Matrix.mul_apply]
   have h2 : HasFDerivAt (fun y => (g * uni y) a c)
       (∑ b ∈ Finset.univ, (uni (φ x) a b • fderiv ℂ (fun y => B y b c) x
         + B x b c • (lowProj a b).comp (fderiv ℂ φ x))) x := by
@@ -74,18 +74,18 @@ theorem deriv_flag_eq {m : ℕ} (g : Matrix (Fin m) (Fin m) ℂ) (φ : (Low m �
       (fun b _ => (hasFDerivAt_uni_apply hφ.hasFDerivAt a b).mul (hBd b c).hasFDerivAt)
     refine this.congr_of_eventuallyEq (hB.mono fun y hy => ?_)
     simp only [hy]
-    simp [mul_apply]
+    simp [Matrix.mul_apply]
   have := congrArg (fun D => D ξ) (h1.unique h2)
   simp only [ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply, ContinuousLinearMap.add_apply,
     ContinuousLinearMap.comp_apply, ContinuousLinearMap.id_apply, lowProj_apply, smul_eq_mul] at this
-  simp only [Matrix.add_apply, mul_apply, of_apply, this, Finset.sum_add_distrib]
+  simp only [Matrix.add_apply, Matrix.mul_apply, of_apply, this, Finset.sum_add_distrib]
   rw [add_comm]
   congr 1 <;> refine Finset.sum_congr rfl fun b _ => by ring
 
 theorem upper_mul_upper {m : ℕ} (N P : Matrix (Fin m) (Fin m) ℂ) (hN : ∀ a c : Fin m, c < a → N a c = 0)
     (hP : ∀ a c : Fin m, c < a → P a c = 0) : ∀ a c : Fin m, c < a → (N * P) a c = 0 := by
   intro a c h
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   refine Finset.sum_eq_zero fun b _ => ?_
   rcases lt_or_ge b a with hb | hb
   · rw [hN a b hb, zero_mul]

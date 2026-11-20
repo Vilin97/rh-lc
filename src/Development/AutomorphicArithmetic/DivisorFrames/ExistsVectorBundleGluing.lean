@@ -164,7 +164,7 @@ theorem UpperTheory.exists_vector_bundle_gluing :
     have hW := le_inf_pre h h'
     simp only [A, dif_pos h, dif_pos h']
     ext i j
-    rw [mul_apply, of_apply, ← cres _ _ h' hW inf_le_right,
+    rw [Matrix.mul_apply, of_apply, ← cres _ _ h' hW inf_le_right,
       ← (ch.isFrame.basis inf_le_left).sum_repr (resM _ inf_le_right (ch'.e j)), csum, mulVec, dotProduct]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [of_apply, of_apply, IsFrame.basis_apply, cres _ _ h, trAt_apply ch ch' inf_le_left inf_le_right hW]

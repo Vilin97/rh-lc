@@ -22,7 +22,7 @@ private theorem isUnit_diag_dvd_lower_mul {O : Type*} [CommRing O] [IsLocalRing 
     (∀ i, IsUnit ((A * B) i i)) ∧ ∀ i j, j < i → ϖ ∣ (A * B) i j := by
   constructor
   · intro i
-    rw [mul_apply, ← Finset.add_sum_erase _ _ (Finset.mem_univ i)]
+    rw [Matrix.mul_apply, ← Finset.add_sum_erase _ _ (Finset.mem_univ i)]
     have hs : ϖ ∣ ∑ l ∈ univ.erase i, A i l * B l i := by
       refine Finset.dvd_sum fun l hl => ?_
       rcases lt_or_gt_of_ne (Finset.ne_of_mem_erase hl) with h | h
@@ -32,7 +32,7 @@ private theorem isUnit_diag_dvd_lower_mul {O : Type*} [CommRing O] [IsLocalRing 
     rw [hc]
     exact isUnit_add_mul_of_mem_maximalIdeal hϖ ((hA i).mul (hB i)) c
   · intro i j hij
-    rw [mul_apply]
+    rw [Matrix.mul_apply]
     refine Finset.dvd_sum fun l _ => ?_
     rcases lt_or_ge l i with h | h
     · exact Dvd.dvd.mul_right (hA' i l h) _

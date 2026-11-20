@@ -34,14 +34,14 @@ theorem frame_up {g : Matrix (Fin n) (Fin n) R} {h : Matrix (Fin n₁) (Fin n₁
   · ext i j
     refine Fin.cases ?_ (fun j => ?_) j
     · have := congrFun hv i
-      rw [mul_apply, mul_apply, Fin.sum_univ_succ]
+      rw [Matrix.mul_apply, Matrix.mul_apply, Fin.sum_univ_succ]
       simp only [of_apply, Fin.cons_zero, Fin.cons_succ, mul_zero, Finset.sum_const_zero, add_zero]
       simpa [mulVec, dotProduct, mul_comm] using this
     · have e : g * (ι * C) = (ι * C) * B := by
         rw [← Matrix.mul_assoc, hι, Matrix.mul_assoc, hB, Matrix.mul_assoc]
       have := congrFun (congrFun e i) j
-      rw [mul_apply, mul_apply] at this
-      rw [mul_apply, mul_apply, Fin.sum_univ_succ]
+      rw [Matrix.mul_apply, Matrix.mul_apply] at this
+      rw [Matrix.mul_apply, Matrix.mul_apply, Fin.sum_univ_succ]
       simp only [of_apply, Fin.cons_zero, Fin.cons_succ, Pi.zero_apply, mul_zero, zero_add, hC]
       exact this
 
@@ -74,7 +74,7 @@ theorem frame_down {g : Matrix (Fin n) (Fin n) R} {h : Matrix (Fin n₁) (Fin n�
       rw [this, e1, ← Matrix.mul_assoc g, hι, Matrix.mul_assoc, ← Matrix.mul_assoc L, hL, Matrix.one_mul]
     rw [e3, hB, ← Matrix.mul_assoc, e2]
     ext i j
-    simp [mul_apply, Fin.sum_univ_succ]
+    simp [Matrix.mul_apply, Fin.sum_univ_succ]
 
 end Ring
 

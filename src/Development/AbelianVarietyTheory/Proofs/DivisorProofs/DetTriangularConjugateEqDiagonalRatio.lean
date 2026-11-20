@@ -42,7 +42,7 @@ theorem det_eq_prod_diag_of_strict {α R : Type*} [Fintype α] [DecidableEq α] 
 theorem diag_mul_of_upper {m : ℕ} (N P : Matrix (Fin m) (Fin m) ℂ)
     (hN : ∀ a c : Fin m, c < a → N a c = 0) (hP : ∀ a c : Fin m, c < a → P a c = 0) (a : Fin m) :
     (N * P) a a = N a a * P a a := by
-  rw [mul_apply, Finset.sum_eq_single a]
+  rw [Matrix.mul_apply, Finset.sum_eq_single a]
   · intro c _ hc
     rcases lt_or_gt_of_ne hc with h | h
     · rw [hN a c h, zero_mul]
@@ -108,9 +108,9 @@ theorem det_lowConj : ∀ {m : ℕ} (n : Low m → ℂ) (T : Matrix (Fin m) (Fin
         simp [g, uni_inv_lower n _ _ this]
       · simp [g, h2]
     have hM : (M3 * M1) s t = ∑ u : Low m, g u.1 := by
-      simp only [M3, M1, g, mul_apply, of_apply]
+      simp only [M3, M1, g, Matrix.mul_apply, of_apply]
     rw [hM, hsub, Fintype.sum_prod_type]
-    simp only [g, of_apply, mul_apply, Finset.sum_mul, mul_ite, mul_one, mul_zero,
+    simp only [g, of_apply, Matrix.mul_apply, Finset.sum_mul, mul_ite, mul_one, mul_zero,
       Finset.sum_ite_eq', Finset.mem_univ, if_true]
     refine Finset.sum_congr rfl fun c _ => ?_
     ring

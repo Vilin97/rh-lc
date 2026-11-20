@@ -50,10 +50,10 @@ lemma submatrix_mem_unitaryGroup {n : ℕ} (k : Matrix (Fin (n + 1)) (Fin (n + 1
   rw [mem_unitaryGroup_iff] at hk ⊢
   ext a b
   have hab := congrFun (congrFun hk (Fin.castSucc a)) (Fin.castSucc b)
-  rw [mul_apply, Fin.sum_univ_castSucc] at hab
+  rw [Matrix.mul_apply, Fin.sum_univ_castSucc] at hab
   simp only [star_eq_conjTranspose, conjTranspose_apply, hcol, zero_mul, add_zero,
     one_apply, Fin.castSucc_inj] at hab
-  simpa [mul_apply, conjTranspose_apply, one_apply] using hab
+  simpa [Matrix.mul_apply, conjTranspose_apply, one_apply] using hab
 
 theorem blockStep : BlockStep := by
   intro hS n g hg
@@ -82,11 +82,11 @@ theorem blockStep : BlockStep := by
       Matrix.one_mul]
 
   have hkent : ∀ i j, k i j = ∑ l, star (u i l) * star (u j l) := by
-    intro i j; simp [hkdef, mul_apply, conjTranspose_apply]
+    intro i j; simp [hkdef, Matrix.mul_apply, conjTranspose_apply]
   have hu1e : ∀ i j, ∑ l, u i l * star (u j l) = if i = j then 1 else 0 := by
     intro i j
     have := congrFun (congrFun hu1 i) j
-    simpa [mul_apply, conjTranspose_apply, one_apply] using this
+    simpa [Matrix.mul_apply, conjTranspose_apply, one_apply] using this
   have hcol : ∀ i, k i (Fin.last n) = if i = Fin.last n then 1 else 0 := by
     intro i
     rw [hkent]

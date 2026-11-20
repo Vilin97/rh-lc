@@ -141,7 +141,7 @@ theorem exists_gl_mul_eq_base (e : c ⊕ d ≃ a) (x : Matrix c a k) (hx : x.ran
   rw [Units.val_mul, ← Matrix.mul_assoc, hG, mul_apply_of_cols e hg]
   rcases s with j | j
   · have := congrFun (congrFun (mul_nonsing_inv u hud) i) j
-    rw [mul_apply] at this
+    rw [Matrix.mul_apply] at this
     simpa [hudef] using this
   · simp
 

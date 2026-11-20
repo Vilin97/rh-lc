@@ -34,7 +34,7 @@ theorem frame_base {n k : ℕ} {E : Type} [NormedAddCommGroup E] [NormedSpace �
       ∀ ξ η, curv (fun v => chg (X v * T) (Gm (bL v))) p ξ η =
         (X p * T)⁻¹ * curv Gm z (bL ξ) (bL η) * (X p * T) := by
   have hA' : ∀ b c, ContDiff ℂ 2 (fun v => (X v * T) b c) := fun b c => by
-    simp only [mul_apply]; exact ContDiff.sum fun d _ => (hX b d).mul contDiff_const
+    simp only [Matrix.mul_apply]; exact ContDiff.sum fun d _ => (hX b d).mul contDiff_const
   have hA : MContDiffAt 2 (fun v => X v * T) p := fun b c =>
     (hA' b c).contDiffAt.restrict_scalars ℝ
   have hX1 : MContDiffAt 1 X p := fun b c => ((hX b c).contDiffAt.restrict_scalars ℝ).of_le (by norm_num)
@@ -82,7 +82,7 @@ theorem sesq_sum_right {W M : Type*} [AddCommGroup W] [Module ℂ W] [AddCommGro
 theorem chg_submatrix_equiv_apply {ι : Type} [Fintype ι] {D : ℕ} (J : Matrix (Fin D) (Fin D) ℂ) (ε : Fin D ≃ ι)
     (N : Matrix ι ι ℂ) (j l : Fin D) :
     chg J (N.submatrix ε ε) j l = ∑ y, ∑ y', J (ε.symm y) j * N y y' * star (J (ε.symm y') l) := by
-  simp only [chg, mul_apply, transpose_apply, conjTranspose_apply, submatrix_apply, Finset.sum_mul]
+  simp only [chg, Matrix.mul_apply, transpose_apply, conjTranspose_apply, submatrix_apply, Finset.sum_mul]
   rw [Finset.sum_comm, ← ε.symm.sum_comp]
   refine Finset.sum_congr rfl fun y _ => ?_
   rw [← ε.symm.sum_comp]

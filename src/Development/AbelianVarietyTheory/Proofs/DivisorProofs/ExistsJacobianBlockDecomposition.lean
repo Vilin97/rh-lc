@@ -30,7 +30,7 @@ theorem frame_base {n k : ℕ} {E : Type} [NormedAddCommGroup E] [NormedSpace �
       ∀ ξ η, curv (fun v => chg (X v * T) (Gm (bL v))) p ξ η =
         (X p * T)⁻¹ * curv Gm z (bL ξ) (bL η) * (X p * T) := by
   have hA' : ∀ b c, ContDiff ℂ 2 (fun v => (X v * T) b c) := fun b c => by
-    simp only [mul_apply]; exact ContDiff.sum fun d _ => (hX b d).mul contDiff_const
+    simp only [Matrix.mul_apply]; exact ContDiff.sum fun d _ => (hX b d).mul contDiff_const
   have hA : MContDiffAt 2 (fun v => X v * T) p := fun b c =>
     (hA' b c).contDiffAt.restrict_scalars ℝ
   have hX1 : MContDiffAt 1 X p := fun b c => ((hX b c).contDiffAt.restrict_scalars ℝ).of_le (by norm_num)
@@ -100,7 +100,7 @@ theorem chg_blk (ε : Fin D ≃ Fin n ⊕ (Σ a, Low (r a))) (L : (Fin n ⊕ (Σ
     chg (Matrix.of fun k j => L (ε k) j) (BigCell.blk ε N δ) j l =
       (∑ b, ∑ b', L (.inl b) j * N b b' * star (L (.inl b') l)) +
         ∑ s, (δ s : ℂ) * L (.inr s) j * star (L (.inr s) l) := by
-  simp only [chg, mul_apply, transpose_apply, conjTranspose_apply, of_apply, BigCell.blk, submatrix_apply]
+  simp only [chg, Matrix.mul_apply, transpose_apply, conjTranspose_apply, of_apply, BigCell.blk, submatrix_apply]
   rw [← ε.symm.sum_comp]
   simp only [Equiv.apply_symm_apply]
   have h : ∀ x, ∑ y, L (ε y) j * fromBlocks N 0 0 (diagonal fun s ↦ (δ s : ℂ)) (ε y) x =
@@ -229,7 +229,7 @@ theorem normal_coords_base : ∀ (ι : Type) [Fintype ι] (r : ι → ℕ) (n D 
           rintro ⟨rfl, rfl⟩
           exact h t.2
       rw [hconn, hbL0, conn_zero_vec, Matrix.zero_mul, zero_add, hD, Matrix.mul_inv_rev]
-      simp [mul_apply, ite_and, Finset.sum_ite_eq', Finset.sum_ite_eq]
+      simp [Matrix.mul_apply, ite_and, Finset.sum_ite_eq', Finset.sum_ite_eq]
     have hdiff : ∀ a (a' : ι) (t : Low (r a')), a' ≠ a →
         conn (H' a) p (EuclideanSpace.single (ε.symm (.inr ⟨a', t⟩)) 1) = 0 := by
       intro a a' t hne
@@ -271,7 +271,7 @@ theorem normal_coords_base : ∀ (ι : Type) [Fintype ι] (r : ι → ℕ) (n D 
         -((∑ j, ∑ l, W l j • curv (G a) z (e j) (e l))ᵀ * G a z) := by
       simp only [smul_neg, Finset.sum_neg_distrib, transpose_sum, transpose_smul, Finset.sum_mul, Matrix.smul_mul]
     have htr : ∀ M : Matrix (Fin n) (Fin n) ℂ, (W * M).trace = ∑ j, ∑ l, W j l * M l j := fun M => by
-      simp [Matrix.trace, mul_apply]
+      simp [Matrix.trace, Matrix.mul_apply]
     show _ = theta (G a z) (∑ j, ∑ l, W l j • (-((curv (G a) z (e j) (e l))ᵀ * G a z))) (u a) i
     rw [hF, theta_eq _ _ (u a) (T a) (hT a) (hT1 a)]
     congr 1
@@ -287,7 +287,7 @@ theorem normal_coords_base : ∀ (ι : Type) [Fintype ι] (r : ι → ℕ) (n D 
     have hs1 : subGram (1 : Matrix (Fin i ⊕ Fin 1) (Fin i ⊕ Fin 1) ℂ) = 1 := by
       ext; simp [subGram, toBlocks₁₁, one_apply]
     have hq1' : quotGram (1 : Matrix (Fin i ⊕ Fin 1) (Fin i ⊕ Fin 1) ℂ) = 1 := by
-      ext; simp [quotGram, toBlocks₂₁, toBlocks₂₂, toBlocks₁₂, toBlocks₁₁, mul_apply, one_apply]
+      ext; simp [quotGram, toBlocks₂₁, toBlocks₂₂, toBlocks₁₂, toBlocks₁₁, Matrix.mul_apply, one_apply]
     have hsub1 : IsUnit (subGram (S p)).det := by
       rw [hS1, hs1, det_one]; exact isUnit_one
     have hq1 : (quotGram (S p)).det.re ≠ 0 := by

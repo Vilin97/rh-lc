@@ -39,7 +39,7 @@ theorem minorsMatrix_mem_unitaryGroup : ∀ {N a : ℕ} (M : Matrix (Fin N) (Fin
     rw [mem_unitaryGroup_iff'] at hM
     have h1 : Mᵀ * (Mᵀ)ᴴ = (star M * M)ᵀ := by
       ext i j
-      simp [mul_apply, mul_comm]
+      simp [Matrix.mul_apply, mul_comm]
     rw [h1, hM, transpose_one]
   rw [hC, mem_unitaryGroup_iff, star_eq_conjTranspose, conjTranspose_submatrix,
     submatrix_mul_equiv, ← compoundMatrix_conjTranspose, ← compoundMatrix_mul, hT,

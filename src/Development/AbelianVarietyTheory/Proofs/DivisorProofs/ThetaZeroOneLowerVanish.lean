@@ -28,12 +28,12 @@ theorem inv_mul_upper (A e : Matrix (Fin n) (Fin n) ℂ) (hA : IsUnit A.det)
     rintro v ⟨j, hj, rfl⟩ b hb
     have h1 : (A⁻¹ * A) b j = (1 : Matrix (Fin n) (Fin n) ℂ) b j := by
       rw [nonsing_inv_mul _ hA]
-    rw [mul_apply] at h1
+    rw [Matrix.mul_apply] at h1
     simp only [Matrix.mulVecLin_apply, mulVec, dotProduct]
     rw [h1, one_apply_ne]
     exact fun e' => absurd (e' ▸ hb) (not_lt.2 hj)
   have := hle (hmem i) a h
-  simpa [Matrix.mulVecLin_apply, mulVec, dotProduct, mul_apply] using this
+  simpa [Matrix.mulVecLin_apply, mulVec, dotProduct, Matrix.mul_apply] using this
 
 theorem inv_upper {T : Matrix (Fin n) (Fin n) ℂ} (hT : T.BlockTriangular id) :
     T⁻¹.BlockTriangular id := by

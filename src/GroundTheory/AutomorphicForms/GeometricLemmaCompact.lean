@@ -25,7 +25,7 @@ abbrev EntryBound (e : ℕ) (A : Matrix (Fin n) (Fin n) F) : Prop :=
 theorem EntryBound.mul {a b : ℕ} {A B : Matrix (Fin n) (Fin n) F} (hA : EntryBound F a A)
     (hB : EntryBound F b B) : EntryBound F (a + b) (A * B) := by
   intro i j
-  rw [mul_apply, Finset.mul_sum]
+  rw [Matrix.mul_apply, Finset.mul_sum]
   refine sum_mem fun k _ => ?_
   have := mul_mem (hA i k) (hB k j)
   convert this using 1

@@ -17,7 +17,7 @@ def distOne {n : ℕ} (x : Matrix (Fin n) (Fin n) ℂ) : ℝ := (trace ((x - 1)�
 
 theorem distOne_eq {n : ℕ} (x : Matrix (Fin n) (Fin n) ℂ) :
     distOne x = ∑ j, ∑ i, ‖(x - 1) i j‖ ^ 2 := by
-  simp only [distOne, trace, diag, mul_apply, conjTranspose_apply, Complex.re_sum]
+  simp only [distOne, trace, diag, Matrix.mul_apply, conjTranspose_apply, Complex.re_sum]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_
   rw [Complex.star_def, Complex.conj_mul', ← Complex.ofReal_pow, Complex.ofReal_re]
 

@@ -162,13 +162,13 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r g q0 n : ℕ} (X 
 theorem aLin_eq (x₁ x₂ : Frame X.Ψ r) (τ : X.Ψ) :
     aLin X x₁ x₂ τ = mix X.p0 ((cj (mat x₂ τ))ᵀ * (X.Gm.map τ.1)ᵀ) (mat x₁ τ)⁻¹ := by
   ext a c
-  simp only [aLin, mix, of_apply, mul_apply, transpose_apply, map_apply, cj, mat, mul_comm]
+  simp only [aLin, mix, of_apply, Matrix.mul_apply, transpose_apply, map_apply, cj, mat, mul_comm]
 
 theorem aAnti_eq (x₁ x₂ : Frame X.Ψ r) (τ : X.Ψ) :
     aAnti X x₁ x₂ τ = mix X.p0 ((mat x₁ τ)ᵀ * X.Gm.map τ.1) (cj (mat x₂ τ))⁻¹ := by
   rw [← cj_inv]
   ext a c
-  simp only [aAnti, mix, of_apply, mul_apply, transpose_apply, map_apply, cj, mat]
+  simp only [aAnti, mix, of_apply, Matrix.mul_apply, transpose_apply, map_apply, cj, mat]
 
 theorem map_Gm_conjTranspose (τ : X.Ψ) : (X.Gm.map τ.1)ᴴ = X.Gm.map τ.1 := by
   ext a b
@@ -181,7 +181,7 @@ theorem det_map_Gm (τ : X.Ψ) : (X.Gm.map τ.1).det ≠ 0 := by
 theorem gram_eq_mul (τ : X.Ψ) (M : Matrix (Fin r) (Fin r) ℂ) :
     gram τ.1 X.Gm M = Mᵀ * X.Gm.map τ.1 * cj M := by
   ext a b
-  simp only [FD.gram, hermC, FD.col, of_apply, mul_apply, transpose_apply, map_apply, cj,
+  simp only [FD.gram, hermC, FD.col, of_apply, Matrix.mul_apply, transpose_apply, map_apply, cj,
     Finset.sum_mul]
   rw [Finset.sum_comm]
 

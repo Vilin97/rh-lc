@@ -281,7 +281,7 @@ def grp {f : n → n → ℤ} (hf : Conc f) : Subgroup (GL n k) where
   mul_mem' := by
     have : ∀ A B : Matrix n n k, (∀ i j, Deep (f i j) (A i j)) → (∀ i j, Deep (f i j) (B i j)) →
         ∀ i j, Deep (f i j) ((A * B) i j) := fun A B hA hB i j => by
-      rw [mul_apply]
+      rw [Matrix.mul_apply]
       exact Deep.sum fun l _ => ((hA i l).mul (hB l j)).mono (hf.2 i j l)
     intro a b ha hb
     refine ⟨this _ _ ha.1 hb.1, ?_⟩
@@ -355,7 +355,7 @@ theorem mem_of_entry (hg : Conc g) (hf : Chamber f) (hij : i ≠ j)
   rw [c.1, c.2]
   obtain ⟨hu0, hu⟩ := deep_inv (diag_unit hf (h1 i) fun l => h2 l i (by grind))
   have h3 : (p.val * (p⁻¹).val) i j = 0 := by simp [one_apply_ne hij]
-  rw [mul_apply, ← Finset.add_sum_erase _ _ (Finset.mem_univ i), add_eq_zero_iff_eq_neg] at h3
+  rw [Matrix.mul_apply, ← Finset.add_sum_erase _ _ (Finset.mem_univ i), add_eq_zero_iff_eq_neg] at h3
   have h4 : Deep (f i j) (p.val i i * (p⁻¹).val i j) := by
     rw [h3]
     exact (Deep.sum fun l hl => ((h1 i l).mul (h2 l j (by grind))).mono (hf.1.2 i j l)).neg

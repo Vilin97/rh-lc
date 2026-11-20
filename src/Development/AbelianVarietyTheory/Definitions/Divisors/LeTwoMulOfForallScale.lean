@@ -497,7 +497,7 @@ example : form (1 : Matrix Unit Unit ℂ) (fun _ => I) (fun _ => 1) = I := by si
 
 example : quotGram (fromBlocks (1 : Matrix Unit Unit ℂ) (of fun _ _ => I) (of fun _ _ => -I)
     (of fun _ _ => 3) : Matrix (Unit ⊕ Unit) (Unit ⊕ Unit) ℂ) () () = 2 := by
-  simp [quotGram, mul_apply]; norm_num
+  simp [quotGram, Matrix.mul_apply]; norm_num
 
 example : opNorm (1 : Matrix Unit Unit ℂ) 1 ((2 : ℂ) • (1 : Matrix Unit Unit ℂ)) ≤ 2 ∧
     ¬ opNorm (1 : Matrix Unit Unit ℂ) 1 ((2 : ℂ) • (1 : Matrix Unit Unit ℂ)) ≤ 1 := by

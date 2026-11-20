@@ -37,13 +37,13 @@ private def evE (F : Type) [CommRing F] {n : ℕ} (p : Fin n → Prop) (b : Prop
   mul_mem' := by
     intro Y Z hY hZ i j
     refine ⟨fun hij => ?_, fun hij => ?_⟩
-    · rw [mul_apply, TrivSqZeroExt.fst_sum]
+    · rw [Matrix.mul_apply, TrivSqZeroExt.fst_sum]
       refine Finset.sum_eq_zero fun k _ => ?_
       rw [TrivSqZeroExt.fst_mul]
       by_cases hk : p i ↔ p k
       · rw [(hZ k j).1 (by tauto), mul_zero]
       · rw [(hY i k).1 hk, zero_mul]
-    · rw [mul_apply, TrivSqZeroExt.snd_sum]
+    · rw [Matrix.mul_apply, TrivSqZeroExt.snd_sum]
       refine Finset.sum_eq_zero fun k _ => ?_
       rw [DualNumber.snd_mul]
       have e1 : (Y i k).fst * (Z k j).snd = 0 := by
@@ -81,12 +81,12 @@ private theorem scal_mem (p : Fin n → Prop) (b : Prop) (y : DualNumber F) (hy 
 private theorem snd_l (A : Matrix (Fin n) (Fin n) F) (Z : Matrix (Fin n) (Fin n) (DualNumber F)) :
     (A.map (TrivSqZeroExt.inlHom F F) * Z).map TrivSqZeroExt.snd = A * Z.map TrivSqZeroExt.snd := by
   ext i j
-  simp [mul_apply, TrivSqZeroExt.snd_sum]
+  simp [Matrix.mul_apply, TrivSqZeroExt.snd_sum]
 
 private theorem snd_r (A : Matrix (Fin n) (Fin n) F) (Z : Matrix (Fin n) (Fin n) (DualNumber F)) :
     (Z * A.map (TrivSqZeroExt.inlHom F F)).map TrivSqZeroExt.snd = Z.map TrivSqZeroExt.snd * A := by
   ext i j
-  simp [mul_apply, TrivSqZeroExt.snd_sum, mul_comm]
+  simp [Matrix.mul_apply, TrivSqZeroExt.snd_sum, mul_comm]
 
 private theorem map_snd_sub (Y Z : Matrix (Fin n) (Fin n) (DualNumber F)) :
     (Y - Z).map TrivSqZeroExt.snd = Y.map TrivSqZeroExt.snd - Z.map TrivSqZeroExt.snd := by

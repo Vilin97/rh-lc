@@ -93,7 +93,7 @@ theorem exists_diag_of_involution {r m n : ℕ} (hr : r = m + n) (G K : Matrix (
         (Uᴴ * T * U).submatrix σ σ := by
       have e : Uᴴ * T * U = (P⁻¹ * U)ᴴ * G * (P⁻¹ * U) := by
         rw [hT, conjTranspose_mul]; simp only [mul_assoc]
-      rw [e]; ext a b; simp [mul_apply]
+      rw [e]; ext a b; simp [Matrix.mul_apply]
     rw [this, hD, submatrix_diagonal_equiv]
     congr 1; funext a; exact hσ a
 

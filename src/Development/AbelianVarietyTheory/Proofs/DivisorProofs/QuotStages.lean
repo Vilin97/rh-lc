@@ -33,7 +33,7 @@ theorem quotStages : ∀ (m l n : Type) [Fintype m] [Fintype l] [Fintype n] [Dec
       ext; rfl
     rw [quotGram, quotGram, h11, subGram]
     ext i j
-    simp only [toBlocks₁₁, toBlocks₁₂, toBlocks₂₁, toBlocks₂₂, of_apply, Matrix.sub_apply, mul_apply,
+    simp only [toBlocks₁₁, toBlocks₁₂, toBlocks₂₁, toBlocks₂₂, of_apply, Matrix.sub_apply, Matrix.mul_apply,
       submatrix_apply, Sum.map_inl, Sum.map_inr, id]
   · have hKu : IsUnit K.det := (isUnit_iff_isUnit_det _).1 hK.isUnit
     have hKs : IsUnit (subGram K).det := (isUnit_iff_isUnit_det _).1 (posDef_subGram hK).isUnit

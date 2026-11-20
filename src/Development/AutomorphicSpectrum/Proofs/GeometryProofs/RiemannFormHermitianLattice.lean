@@ -210,7 +210,7 @@ theorem form_bounds : ∀ (g : ℕ) (Bs : Matrix (Fin g) (Fin g) ℤ) (τ G : Ma
     ext i j
     have h := congrArg Complex.re (congrFun (hker _ (horth j)) i)
     rw [hGre] at h
-    simpa [mulVec, dotProduct, mul_apply, hBrdef] using h
+    simpa [mulVec, dotProduct, Matrix.mul_apply, hBrdef] using h
   have hmul' : Br * S = 0 := by
     have h := congrArg transpose hmul
     rwa [transpose_mul, hS, hBr, transpose_zero] at h

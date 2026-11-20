@@ -259,11 +259,11 @@ theorem exists_conj {n : ℕ} {σ : E ≃+* E} (hσ : Isom σ) (t : Fin n → E�
   refine ⟨k, fun i j => by rw [hk]; exact hx i j, fun i j => ?_, fun i => (Units.mk0 _ (hμ0 i))⁻¹,
     fun i => by simpa using hμ i, ?_⟩
   · refine hbd (fun l => k⁻¹.val i l) 1 (fun l hl => absurd l.2 (not_lt.2 hl)) (fun j _ => ?_) j
-    rw [← hk, ← mul_apply, k.inv_mul, one_apply]
+    rw [← hk, ← Matrix.mul_apply, k.inv_mul, one_apply]
     split_ifs <;> simp
   · rw [mul_assoc, eq_inv_mul_iff_mul_eq, ← mul_assoc, ← eq_mul_inv_iff_mul_eq, mul_assoc]
     ext i j
-    rw [Units.val_mul, Units.val_mul, Units.val_mul, val_diagT, val_diagT, mul_diagonal, diagonal_mul, mul_apply]
+    rw [Units.val_mul, Units.val_mul, Units.val_mul, val_diagT, val_diagT, mul_diagonal, diagonal_mul, Matrix.mul_apply]
     have h2 : ∀ l, (sg σ k).val i l = σ (x i l) := fun l => by
       show σ (k.val i l) = _
       rw [hk]; rfl

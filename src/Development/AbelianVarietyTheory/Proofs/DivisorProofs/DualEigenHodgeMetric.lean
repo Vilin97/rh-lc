@@ -44,7 +44,7 @@ theorem conjTranspose_mul_inv_mul {g : ℕ} {κ : Type} [Fintype κ] [DecidableE
       rw [mulVec_zero]
       funext b
       have := congrFun (congrFun h1 b) s'
-      simpa [mulVec, dotProduct, mul_apply] using this
+      simpa [mulVec, dotProduct, Matrix.mul_apply] using this
     exact congrFun (hP key) s
   have h3 : Q * (Pᴴ * Gm⁻¹ * P) = 1 := sub_eq_zero.1 h2
   calc Pᴴ * Gm⁻¹ * P = (R * Q) * (Pᴴ * Gm⁻¹ * P) := by rw [hRQ, Matrix.one_mul]
@@ -54,7 +54,7 @@ theorem form_dualGram_cols {g : ℕ} {κ : Type} [Fintype κ] (P : Matrix (Fin g
     (s s' : κ) :
     HermFrame.form (HermFrame.dualGram Gm) (fun b => P b s) (fun b => P b s') = (Pᴴ * Gm⁻¹ * P) s' s := by
   rw [HermFrame.form_eq_sum, HermFrame.dualGram]
-  simp only [transpose_apply, mul_apply, conjTranspose_apply, Finset.sum_mul]
+  simp only [transpose_apply, Matrix.mul_apply, conjTranspose_apply, Finset.sum_mul]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   simp only [Complex.star_def]
   ring

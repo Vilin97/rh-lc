@@ -56,7 +56,7 @@ theorem e_isUnit (hE : IsUnitaryFlagFrame Y H π A e) {x : E} (hx : x ∈ Y) :
     have := hE.unitary x hx k l
     rw [form_eq_sum] at this
     rw [one_apply, ← this]
-    simp only [mul_apply, transpose_apply, conjTranspose_apply, star_def, Finset.mul_sum,
+    simp only [Matrix.mul_apply, transpose_apply, conjTranspose_apply, star_def, Finset.mul_sum,
       Finset.sum_mul, mul_assoc]
   have h2 := congrArg det h1
   rw [det_mul, det_one, det_transpose] at h2
@@ -81,7 +81,7 @@ theorem T_up (hF : IsFlagFamily Y U π A) (hE : IsUnitaryFlagFrame Y H π A e) {
     | add v w _ _ hv hw => simp [mulVec_add, hv, hw]
     | smul c v _ hv => simp [mulVec_smul, hv]
   have := key _ hmem
-  simpa [mul_apply, mulVec, dotProduct] using this
+  simpa [Matrix.mul_apply, mulVec, dotProduct] using this
 
 theorem smooth_at (hF : IsFlagFamily Y U π A) (hE : IsUnitaryFlagFrame Y H π A e) {y : E}
     (hy : y ∈ Y) : MContDiffAt 1 A y ∧ MContDiffAt 1 e y := by

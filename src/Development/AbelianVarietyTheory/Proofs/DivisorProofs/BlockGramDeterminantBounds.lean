@@ -92,7 +92,7 @@ theorem adaptedOmega {q : ℕ} (c : ℝ) (hc : 0 < c) (G : Matrix (Fin q) (Fin q
     rw [hK]
     ext a b
     simp only [transpose_mul, transpose_transpose, transpose_smul, transpose_nonsing_inv, submatrix_apply,
-      mul_apply, Matrix.smul_apply, conjTranspose_apply, hR, id, Fin.rev_rev, smul_eq_mul, transpose_apply,
+      Matrix.mul_apply, Matrix.smul_apply, conjTranspose_apply, hR, id, Fin.rev_rev, smul_eq_mul, transpose_apply,
       Finset.mul_sum, Finset.sum_mul]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ => ?_

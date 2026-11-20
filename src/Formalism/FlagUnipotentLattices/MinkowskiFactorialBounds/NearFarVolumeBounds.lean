@@ -11,7 +11,7 @@ open Formalism.NuclearRankWeightBounds.D (lead hs q0)
 
 lemma hs_sq_trace_b {N : ℕ} (Y : Matrix (Fin N) (Fin N) ℂ) :
     ((∑ a, ∑ b, ‖Y a b‖ ^ 2 : ℝ) : ℂ) = (Yᴴ * Y).trace := by
-  simp only [trace, Matrix.diag, mul_apply, conjTranspose_apply]
+  simp only [trace, Matrix.diag, Matrix.mul_apply, conjTranspose_apply]
   rw [Finset.sum_comm]
   push_cast
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_

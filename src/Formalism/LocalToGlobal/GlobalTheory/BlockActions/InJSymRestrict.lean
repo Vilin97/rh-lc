@@ -35,12 +35,12 @@ theorem jsym_of_blk {κ : Type} [Field κ] {n N : ℕ} (hN : n + 1 = N) {k rS t 
   have hmul : ∀ (A B : Matrix (Fin (n + 1)) (Fin (n + 1)) κ), InJSym k rS t true A → ∀ x y : Fin n,
       (A * B) x.castSucc y.castSucc = ∑ j : Fin n, A x.castSucc j.castSucc * B j.castSucc y.castSucc := by
     intro A B hA x y
-    rw [mul_apply, Fin.sum_univ_castSucc, hl A hA x, zero_mul, add_zero]
+    rw [Matrix.mul_apply, Fin.sum_univ_castSucc, hl A hA x, zero_mul, add_zero]
   have e1 : R * R' = 1 := by
     ext x y
     have := congrFun (congrFun (Mm.mul_inv) x.castSucc) y.castSucc
     rw [hmul _ _ h1] at this
-    rw [mul_apply]
+    rw [Matrix.mul_apply]
     simp only [hRc, hR']
     rw [this]
     simp [one_apply, Fin.castSucc_inj]
@@ -48,7 +48,7 @@ theorem jsym_of_blk {κ : Type} [Field κ] {n N : ℕ} (hN : n + 1 = N) {k rS t 
     ext x y
     have := congrFun (congrFun (Mm.inv_mul) x.castSucc) y.castSucc
     rw [hmul _ _ h2] at this
-    rw [mul_apply]
+    rw [Matrix.mul_apply]
     simp only [hRc, hR']
     rw [this]
     simp [one_apply, Fin.castSucc_inj]
@@ -70,16 +70,16 @@ theorem blk_conj {K : Type} [CommRing K] {n N : ℕ} (hN : n + 1 = N) (gm Fm Fm'
     ext x y
     refine Fin.lastCases ?_ (fun y' => ?_) y
     · have e1 : (gm * Fm) x (Fin.last n) = w x := by
-        rw [← congrFun hgw x, mul_apply]
+        rw [← congrFun hgw x, Matrix.mul_apply]
         simp only [mulVec, dotProduct]
         exact Finset.sum_congr rfl (fun j _ => by rw [hF2 j (Fin.last n) (by simp)])
-      rw [e1, mul_apply, Fin.sum_univ_castSucc]
+      rw [e1, Matrix.mul_apply, Fin.sum_univ_castSucc]
       simp [hB, hne, hF2 x (Fin.last n) (by simp)]
     · have eL : (gm * Fm) x y'.castSucc = (A * (Fp * M')) x y' := by
-        rw [hM', ← Matrix.mul_assoc, ← hgA, Matrix.mul_assoc, mul_apply, mul_apply]
+        rw [hM', ← Matrix.mul_assoc, ← hgA, Matrix.mul_assoc, Matrix.mul_apply, Matrix.mul_apply]
         exact Finset.sum_congr rfl (fun j _ => by rw [hF1 j y' y'.castSucc (by simp)])
       have eR : (Fm * B) x y'.castSucc = ((A * Fp) * M') x y' := by
-        rw [mul_apply, Fin.sum_univ_castSucc, mul_apply]
+        rw [Matrix.mul_apply, Fin.sum_univ_castSucc, Matrix.mul_apply]
         have hlast : B (Fin.last n) y'.castSucc = 0 := by
           simp [hB, (hne y').symm]
         rw [hlast, mul_zero, add_zero]

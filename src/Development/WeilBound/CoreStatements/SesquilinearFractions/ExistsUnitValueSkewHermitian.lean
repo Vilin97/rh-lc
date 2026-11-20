@@ -295,7 +295,7 @@ theorem unitCoord [Finite (MaximalSpectrum R)] {n : ℕ} (x : Fin (n + 1) → R)
 theorem mul_conj_apply {I : Type} [Fintype I] [DecidableEq I] (T G : Matrix I I R) (i j : I) :
     (T * G * Tᴴ) i j = hf G (T i) (T j) := by
   rw [hf_expand]
-  simp only [mul_apply, conjTranspose_apply, Finset.sum_mul]
+  simp only [Matrix.mul_apply, conjTranspose_apply, Finset.sum_mul]
   rw [Finset.sum_comm]
 
 theorem step {n : ℕ} (G : Matrix (Fin (n + 1)) (Fin (n + 1)) R) (hG : Gᴴ = -G) (x : Fin (n + 1) → R)

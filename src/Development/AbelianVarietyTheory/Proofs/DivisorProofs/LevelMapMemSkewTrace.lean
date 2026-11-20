@@ -8,7 +8,7 @@ variable {A : Type} [CommRing A] {n : Type} [Fintype n] [DecidableEq n]
 
 theorem intM_mul (S : Subring A) {M N : Matrix n n A} (hM : ∀ i j, M i j ∈ S)
     (hN : ∀ i j, N i j ∈ S) : ∀ i j, (M * N) i j ∈ S := fun i j => by
-  rw [mul_apply]; exact Subring.sum_mem _ fun l _ => mul_mem (hM i l) (hN l j)
+  rw [Matrix.mul_apply]; exact Subring.sum_mem _ fun l _ => mul_mem (hM i l) (hN l j)
 
 theorem intM_cT (S : Subring A) (σ : A →+* A) (hσ : ∀ s ∈ S, σ s ∈ S) {M : Matrix n n A}
     (hM : ∀ i j, M i j ∈ S) : ∀ i j, Formalism.UG.cT σ M i j ∈ S := fun i j => by

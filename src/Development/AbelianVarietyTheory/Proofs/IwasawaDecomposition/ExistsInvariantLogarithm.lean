@@ -78,7 +78,7 @@ def Par (p : ℕ) (g : Matrix (Fin N) (Fin N) ℂ) : Prop :=
 
 theorem Par.mul {p : ℕ} {g h : Matrix (Fin N) (Fin N) ℂ} (hg : Par p g) (hh : Par p h) : Par p (g * h) := by
   refine ⟨by rw [det_mul]; exact mul_ne_zero hg.1 hh.1, fun a c hc ha => ?_⟩
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   refine Finset.sum_eq_zero fun k _ => ?_
   by_cases hk : (k : ℕ) < p
   · rw [hg.2 a k hk ha, zero_mul]

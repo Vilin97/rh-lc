@@ -73,7 +73,7 @@ theorem IsStrictUpper.isUpperTriangular {X : Matrix n n 𝕜} (hX : IsStrictUppe
 theorem IsStrictUpper.mul_left {X Y : Matrix n n 𝕜} (hX : X.IsUpperTriangular)
     (hY : IsStrictUpper Y) : IsStrictUpper (X * Y) := by
   intro i j hji
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   refine Finset.sum_eq_zero fun k _ => ?_
   rcases lt_or_ge k i with hki | hik
   · rw [hX hki, zero_mul]
@@ -82,7 +82,7 @@ theorem IsStrictUpper.mul_left {X Y : Matrix n n 𝕜} (hX : X.IsUpperTriangular
 theorem IsStrictUpper.mul_right {X Y : Matrix n n 𝕜} (hX : IsStrictUpper X)
     (hY : Y.IsUpperTriangular) : IsStrictUpper (X * Y) := by
   intro i j hji
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   refine Finset.sum_eq_zero fun k _ => ?_
   rcases le_or_gt k i with hki | hik
   · rw [hX i k hki, zero_mul]

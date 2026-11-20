@@ -76,7 +76,7 @@ theorem firstGram_chol {N k : ℕ} (hk : k ≤ N) (S : Matrix (Fin N) (Fin N) �
     (hS : S.BlockTriangular id) :
     firstGram hk (Sᵀ * Sᴴᵀ) = (firstGram hk S)ᵀ * (firstGram hk S)ᴴᵀ := by
   ext a b
-  simp only [firstGram, submatrix_apply, mul_apply, transpose_apply, conjTranspose_apply]
+  simp only [firstGram, submatrix_apply, Matrix.mul_apply, transpose_apply, conjTranspose_apply]
   symm
   refine Eq.trans (Finset.sum_map Finset.univ (Fin.castLEEmb hk)
     (fun m => S m (Fin.castLE hk a) * (star (S m (Fin.castLE hk b))))).symm ?_
@@ -131,7 +131,7 @@ theorem gram_frame (he : IsUnitaryFlagFrame Y H π A e) {x : E} (hx : x ∈ Y) :
   have := he.unitary x hx k l
   rw [form_eq_sum] at this
   rw [one_apply, ← this]
-  simp only [mul_apply, transpose_apply, conjTranspose_apply, Finset.sum_mul]
+  simp only [Matrix.mul_apply, transpose_apply, conjTranspose_apply, Finset.sum_mul]
   rw [Finset.sum_comm]
   rfl
 
@@ -162,7 +162,7 @@ theorem gram_eq_inv (he : IsUnitaryFlagFrame Y H π A e) {x : E} (hx : x ∈ Y) 
 theorem factor_apply (he : IsUnitaryFlagFrame Y H π A e) {x : E} (hx : x ∈ Y) (k i : Fin n) :
     ((e x)⁻¹ * A x) k i = form (H (π x)) (fun a => A x a i) (fun a => e x a k) := by
   rw [inv_frame he hx, form_eq_sum]
-  simp only [mul_apply, transpose_apply, conjTranspose_apply, Finset.sum_mul]
+  simp only [Matrix.mul_apply, transpose_apply, conjTranspose_apply, Finset.sum_mul]
   refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun a _ => ?_
   rw [Complex.star_def]; ring
 
@@ -201,7 +201,7 @@ open GlobalTheory.CholFrame
 
 theorem mul_diag_of_tri {n : ℕ} {M N : Matrix (Fin n) (Fin n) ℂ} (hM : M.BlockTriangular id)
     (hN : N.BlockTriangular id) (i : Fin n) : (M * N) i i = M i i * N i i := by
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   refine Finset.sum_eq_single i (fun k _ hk => ?_) (by simp)
   rcases lt_or_gt_of_ne hk with h | h
   · rw [hM h, zero_mul]
@@ -238,9 +238,9 @@ theorem cholB_unit {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [Normed
   have hu : IsUnit (of fun _ _ => f x : Matrix Unit Unit ℂ).det := by
     rw [det_unique]; exact Ne.isUnit hx
   have h := congrFun (congrFun (nonsing_inv_mul _ hu) ()) ()
-  simp only [mul_apply, Finset.univ_unique, Finset.sum_singleton, of_apply, one_apply_eq] at h
+  simp only [Matrix.mul_apply, Finset.univ_unique, Finset.sum_singleton, of_apply, one_apply_eq] at h
   have hi := eq_inv_of_mul_eq_one_left h
-  simp only [cholB, mul_apply, Finset.univ_unique, Finset.sum_singleton, mdbar_apply, of_apply]
+  simp only [cholB, Matrix.mul_apply, Finset.univ_unique, Finset.sum_singleton, mdbar_apply, of_apply]
   exact congrArg (dbar f x v * ·) hi
 
 end GlobalTheory.GradedLine
@@ -366,11 +366,11 @@ open GlobalTheory.CholFrame
 
 theorem unit_conj {M : Matrix Unit Unit ℂ} (hu : IsUnit M.det) (X : Matrix Unit Unit ℂ) :
     M⁻¹ * X * M = X := by
-  have h : M⁻¹ * X = X * M⁻¹ := by ext ⟨⟩ ⟨⟩; simp [mul_apply, mul_comm]
+  have h : M⁻¹ * X = X * M⁻¹ := by ext ⟨⟩ ⟨⟩; simp [Matrix.mul_apply, mul_comm]
   rw [h, Matrix.mul_assoc, nonsing_inv_mul _ hu, Matrix.mul_one]
 
 theorem unit_comm (X Z : Matrix Unit Unit ℂ) : X * Z = Z * X := by
-  ext ⟨⟩ ⟨⟩; simp [mul_apply, mul_comm]
+  ext ⟨⟩ ⟨⟩; simp [Matrix.mul_apply, mul_comm]
 
 variable {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [NormedSpace ℝ E]
   [IsScalarTower ℝ ℂ E] {ι : Type} [Fintype ι] {n : ℕ} {U : Set (ι → ℂ)}
@@ -396,7 +396,7 @@ theorem curv_line_eq (hH : IsPosFrame U H) (hF : IsFlagFamily Y U π A)
       ext ⟨⟩ ⟨⟩
       rw [lineGram, adaptedGram_eq he hx, gradedGram_chol _ (factor_triangular hH hF he hx)
         (factor_diag_ne hH hF he hx)]
-      simp [mul_apply]
+      simp [Matrix.mul_apply]
   have hB : (fun x => cholB (fun x => (of fun _ _ => ((e x)⁻¹ * A x) i i : Matrix Unit Unit ℂ))
       x η () ()) =ᶠ[𝓝 y] fun x => cholB (fun x => (e x)⁻¹) x η i i :=
     Filter.eventually_of_mem (hF.isOpen.mem_nhds hy) fun x hx => by
@@ -427,7 +427,7 @@ theorem curv_lineGram : ∀ (E : Type) [NormedAddCommGroup E] [NormedSpace ℂ E
   have hθ : ∀ v, thetaOneZero H π e y v = cholC (fun x => (e x)⁻¹) y v :=
     thetaOneZero_eq hH hF he hy
   rw [curv_line_eq hH hF he hy i ξ η, curvDiag_eq hH hF he hy i ξ η, cholX, Matrix.sub_apply, Matrix.sub_apply,
-    Matrix.sub_apply, mul_apply, mul_apply]
+    Matrix.sub_apply, Matrix.mul_apply, Matrix.mul_apply]
   simp only [thetaSq, hθ]
   simp only [cholC, conjTranspose_apply, Complex.star_def, conj_conj]
   generalize cholB (fun x => (e x)⁻¹) y η = b at htri ⊢

@@ -39,12 +39,12 @@ def mono {n : ℕ} (s : Fin n → Fin n) (a : Fin n → ℂ) : Matrix (Fin n) (F
 
 theorem mul_mono {n : ℕ} (s : Fin n → Fin n) (a : Fin n → ℂ) (M : Matrix (Fin n) (Fin n) ℂ) (i j : Fin n) :
     (M * mono s a) i j = M i (s j) * a j := by
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   simp only [mono, of_apply, mul_ite, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
 
 theorem conjT_mono_mul {n : ℕ} (s : Fin n → Fin n) (a : Fin n → ℂ) (M : Matrix (Fin n) (Fin n) ℂ) (i j : Fin n) :
     ((mono s a)ᴴ * M) i j = star (a i) * M (s i) j := by
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   simp only [mono, of_apply, conjTranspose_apply, apply_ite, star_zero, ite_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, if_true]
 
 def bt (k r : ℕ) (c : Fin r → ℂ) (j : Fin (2 * r + k + 1)) : ℂ :=
@@ -245,12 +245,12 @@ theorem embWb_mulVec (X : Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ) (v : Fin (k + 
 theorem embWb_mul (X Y : Matrix (Fin (k + 1)) (Fin (k + 1)) ℂ) :
     embWb k r (X * Y) = embWb k r X * embWb k r Y := by
   ext i j
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   by_cases hi : r ≤ i.val ∧ i.val ≤ r + k
   · by_cases hj : r ≤ j.val ∧ j.val ≤ r + k
     · rw [sum_wb (f := fun l => embWb k r X i l * embWb k r Y l j)
         (by intro l hl; show embWb k r X i l * embWb k r Y l j = 0; rw [embWb_out_right X hl, if_neg (fun h : i = l => hl (h ▸ hi)), zero_mul])]
-      simp only [embWb_in _ hi hj, embWb_in _ hi (wI_in _), embWb_in _ (wI_in _) hj, wI_sub, mul_apply]
+      simp only [embWb_in _ hi hj, embWb_in _ hi (wI_in _), embWb_in _ (wI_in _) hj, wI_sub, Matrix.mul_apply]
     · simp only [embWb_out_right _ hj, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
   · simp only [embWb_out_left _ hi, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true]
 

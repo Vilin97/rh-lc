@@ -119,7 +119,7 @@ theorem ext_basis {k : Type*} [Field k] {a j : ℕ} (hj : j ≤ a) (v : Fin j �
 private theorem E_mul_apply_eq_dite_lt {R : Type*} [Semiring R] {a b c j : ℕ} (hb : j ≤ b)
     (M : Matrix (Fin b) (Fin c) R) (i : Fin a) (m : Fin c) :
     (E R a b j * M) i m = if h : (i : ℕ) < j then M ⟨i, by omega⟩ m else 0 := by
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   simp only [E_apply]
   split_ifs with h
   · rw [Finset.sum_eq_single (⟨i, by omega⟩ : Fin b)]
@@ -216,7 +216,7 @@ def Bd {a b : ℕ} (γ : ValueGroupWithZero k) (M : Matrix (Fin a) (Fin b) k) : 
 
 theorem bd_mul {a b d : ℕ} {γ δ : ValueGroupWithZero k} {P : Matrix (Fin a) (Fin b) k}
     {Q : Matrix (Fin b) (Fin d) k} (hP : Bd γ P) (hQ : Bd δ Q) : Bd (γ * δ) (P * Q) := fun i m => by
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   exact Valuation.map_sum_le _ fun l _ => by rw [map_mul]; exact mul_le_mul' (hP i l) (hQ l m)
 
 theorem bd_sub {a b : ℕ} {γ : ValueGroupWithZero k} {P Q : Matrix (Fin a) (Fin b) k}

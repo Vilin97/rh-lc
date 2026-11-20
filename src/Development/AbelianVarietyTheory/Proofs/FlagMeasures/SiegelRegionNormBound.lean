@@ -60,13 +60,13 @@ theorem upUni_mul {n : ℕ} {A B : Matrix (Fin n) (Fin n) ℂ} (hA : IsUpUni A) 
   intro i j
   constructor
   · intro h
-    rw [mul_apply]
+    rw [Matrix.mul_apply]
     refine Finset.sum_eq_zero fun c _ => ?_
     by_cases hc : c < i
     · rw [(hA i c).1 hc, zero_mul]
     · rw [(hB c j).1 (lt_of_lt_of_le h (not_lt.1 hc)), mul_zero]
   · rintro rfl
-    rw [mul_apply, Finset.sum_eq_single i]
+    rw [Matrix.mul_apply, Finset.sum_eq_single i]
     · rw [(hA i i).2 rfl, (hB i i).2 rfl, one_mul]
     · intro c _ hc
       rcases lt_or_gt_of_ne hc with h | h
@@ -196,7 +196,7 @@ theorem eucl_frame_le (z : Fin (2 * r + k + 1) → ℂ) (s : Mat k r) (P : Matri
   refine (eucl_le_sum _).trans ?_
   rw [Finset.sum_mul]
   refine Finset.sum_le_sum fun i _ => ?_
-  rw [← mul_flagMat, e, mul_apply, Finset.sum_mul]
+  rw [← mul_flagMat, e, Matrix.mul_apply, Finset.sum_mul]
   refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun c _ => ?_)
   rw [norm_mul]
   exact mul_le_mul_of_nonneg_left (hP c b) (norm_nonneg _)

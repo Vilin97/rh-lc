@@ -223,7 +223,7 @@ theorem valuation_le_of_mem_doubleCoset {w w' : ExtendedAffineWeyl n}
     congr 1
     group
   have hent := congrFun (congrFun hmat (w'.right c)) c
-  rw [mul_apply, Fintype.sum_eq_single (w.right c), mul_apply,
+  rw [Matrix.mul_apply, Fintype.sum_eq_single (w.right c), Matrix.mul_apply,
     Fintype.sum_eq_single c] at hent
   rotate_left
   · intro l hl

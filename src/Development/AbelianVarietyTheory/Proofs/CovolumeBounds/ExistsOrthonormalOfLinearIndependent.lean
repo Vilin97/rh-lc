@@ -62,7 +62,7 @@ omit [DecidableEq ι] [Fintype κ] [DecidableEq κ] in
 theorem gram_sum_smul [Fintype κ] (e : ι → E) (m : Matrix ι κ 𝕜) :
     gram 𝕜 (fun j => ∑ i, m i j • e i) = mᴴ * gram 𝕜 e * m := by
   ext j k
-  simp only [gram_apply, sum_inner, inner_sum, inner_smul_left, inner_smul_right, mul_apply,
+  simp only [gram_apply, sum_inner, inner_sum, inner_smul_left, inner_smul_right, Matrix.mul_apply,
     conjTranspose_apply, Finset.sum_mul, Finset.mul_sum, RCLike.star_def]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring
 
@@ -133,7 +133,7 @@ theorem norm_det_apply_sq_le (φ : ι → E →L[𝕜] 𝕜) (x : ι → E) :
   · obtain ⟨e, m, he, hm⟩ := exists_orthonormal_of_linearIndependent hx
     have h : (of fun j k => φ j (x k)) = (of fun j i => φ j (e i)) * m := by
       ext j k
-      simp [hm, mul_apply, mul_comm]
+      simp [hm, Matrix.mul_apply, mul_comm]
     rw [h]
     obtain rfl : x = fun j => ∑ i, m i j • e i := funext hm
     rw [re_det_gram_sum_smul, gram_eq_one_iff_orthonormal.mpr he, det_mul, norm_mul, mul_pow,

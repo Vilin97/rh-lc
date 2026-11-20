@@ -59,7 +59,7 @@ theorem mulVec_adjugate_col (M : Matrix n n R) (l : n) :
     M *ᵥ (fun r => M.adjugate r l) = M.det • Pi.single l 1 := by
   ext a
   have := congrFun (congrFun (mul_adjugate M) a) l
-  rw [mul_apply, Matrix.smul_apply, one_apply, smul_eq_mul] at this
+  rw [Matrix.mul_apply, Matrix.smul_apply, one_apply, smul_eq_mul] at this
   simp only [mulVec, dotProduct, this, Pi.smul_apply, Pi.single_apply, smul_eq_mul, eq_comm]
 
 theorem key (M : Matrix n n R) {k i : n} (hki : k ≠ i) (l j : n) :

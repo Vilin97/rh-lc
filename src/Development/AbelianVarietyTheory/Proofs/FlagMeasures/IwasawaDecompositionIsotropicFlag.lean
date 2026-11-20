@@ -240,7 +240,7 @@ theorem exists_K (c u : Fin r → EuclideanSpace ℂ (Fin (2 * r + k + 1))) (hc 
         inner ℂ (WithLp.toLp 2 (Pi.single i 1) : EuclideanSpace ℂ _) (WithLp.toLp 2 (Pi.single j 1)) := by
       rw [hκ, hκ, hκi]
     simp only [EuclideanSpace.inner_eq_star_dotProduct, WithLp.ofLp_toLp, dotProduct] at h2
-    simp only [mul_apply, conjTranspose_apply, one_apply]
+    simp only [Matrix.mul_apply, conjTranspose_apply, one_apply]
     convert h2 using 1
     · refine Finset.sum_congr rfl fun m _ => ?_
       simp [mulVec_single, mul_comm]

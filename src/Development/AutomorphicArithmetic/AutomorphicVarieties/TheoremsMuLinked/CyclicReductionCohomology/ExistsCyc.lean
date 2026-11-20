@@ -19,7 +19,7 @@ private theorem cols_zero {O : Type} [CommRing O] [IsDomain O] {n : ℕ} (A W : 
   have hv : W * vandermonde al = 0 := by
     ext i k
     have := congrFun (hk k) i
-    simpa [mul_apply, vandermonde_apply, mulVec, dotProduct] using this
+    simpa [Matrix.mul_apply, vandermonde_apply, mulVec, dotProduct] using this
   have hd : (vandermonde al).det ≠ 0 := det_vandermonde_ne_zero_iff.mpr ha
   have h2 : W * vandermonde al * adjugate (vandermonde al) = 0 := by rw [hv, Matrix.zero_mul]
   rw [Matrix.mul_assoc, mul_adjugate, Matrix.mul_smul, Matrix.mul_one] at h2

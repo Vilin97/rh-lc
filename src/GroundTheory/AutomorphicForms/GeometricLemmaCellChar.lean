@@ -184,7 +184,7 @@ theorem patMat_patLeft {k : GL (Fin n) F} (hk : k ∈ U) (X : PatIdx T → F) :
   by_cases h : T i j
   · rw [patMat_apply_of_mem T h]
     rfl
-  · rw [patMat_apply_of_not T h, mul_apply]
+  · rw [patMat_apply_of_not T h, Matrix.mul_apply]
     refine (Finset.sum_eq_zero fun l _ => ?_).symm
     by_cases hlj : T l j
     · have hil : ¬ T i l := fun hil => h (hTt i l j hil hlj)
@@ -239,7 +239,7 @@ theorem distribHaarChar_patLeftEquiv {k : GL (Fin n) F} (hk : k ∈ U ⊓ integr
     rw [Measures.mem_box] at hX ⊢
     intro p
     show ((k' : Matrix (Fin n) (Fin n) F) * patMat F T X) p.1.1 p.1.2 ∈ 𝒪[F]
-    rw [mul_apply]
+    rw [Matrix.mul_apply]
     refine sum_mem fun l _ => mul_mem (((mem_integralGL_iff F n).1 hk').1 _ _) ?_
     by_cases hl : T l p.1.2
     · rw [patMat_apply_of_mem T hl]

@@ -87,7 +87,7 @@ theorem secondChernDensity_chg_eq_norm_det_sq_mul {e : ℕ} (Θ : V (e + 2) → 
           rw [Finset.mul_sum]
           refine Finset.sum_congr rfl fun s _ => ?_
           rw [hT (s 0), hT (s 1), hl, chg, Matrix.mul_assoc]
-          simp only [mul_apply (M := Jᵀ), transpose_apply, of_apply]
+          simp only [Matrix.mul_apply (M := Jᵀ), transpose_apply, of_apply]
           push_cast
           ring
       _ = J.det * ∑ s : Equiv.Perm (Fin (e + 2)), ((Equiv.Perm.sign s : ℤ) : ℂ) * (Jᴴᵀ.det *
@@ -100,7 +100,7 @@ theorem secondChernDensity_chg_eq_norm_det_sq_mul {e : ℕ} (Θ : V (e + 2) → 
           rw [Finset.sum_comm]
           refine Finset.sum_congr rfl fun s _ => Finset.sum_congr rfl fun t _ => ?_
           rw [hT (t 0), hT (t 1), hr]
-          simp only [mul_apply, transpose_apply, conjTranspose_apply, mul_comm (A _ _)]
+          simp only [Matrix.mul_apply, transpose_apply, conjTranspose_apply, mul_comm (A _ _)]
           ring
       _ = _ := by
           simp only [hd, Finset.mul_sum]
@@ -117,7 +117,7 @@ variable {n r : ℕ} {H K : V n → Matrix (Fin r) (Fin r) ℂ} {z : V n}
 theorem chTwo_trace (H : V n → Matrix (Fin r) (Fin r) ℂ) (z a b c d : V n) : chTwo H z a b c d = kappa ^ 2 / 2 *
     ((curv H z a b * curv H z c d).trace + (curv H z c d * curv H z a b).trace -
       (curv H z a d * curv H z c b).trace - (curv H z c b * curv H z a d).trace) := by
-  simp only [chTwo, HermFrame.wedge, trace, diag_apply, mul_apply, Finset.sum_add_distrib, Finset.sum_sub_distrib]
+  simp only [chTwo, HermFrame.wedge, trace, diag_apply, Matrix.mul_apply, Finset.sum_add_distrib, Finset.sum_sub_distrib]
 
 theorem curv_sum_left (h : MContDiffAt 2 H z) (hu : IsUnit (H z).det) (x : Fin n → ℂ) (u : Fin n → V n) (η : V n) :
     curv H z (∑ a, x a • u a) η = ∑ a, x a • curv H z (u a) η := by

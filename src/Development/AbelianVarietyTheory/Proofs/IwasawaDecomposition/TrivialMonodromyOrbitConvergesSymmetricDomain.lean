@@ -216,7 +216,7 @@ theorem submatrix_mul_upper {N p : ℕ} (hp : p ≤ N) (y b : Matrix (Fin N) (Fi
     (y * b).submatrix id (Fin.castLE hp) =
       y.submatrix id (Fin.castLE hp) * b.submatrix (Fin.castLE hp) (Fin.castLE hp) := by
   ext a j
-  simp only [submatrix_apply, mul_apply, id]
+  simp only [submatrix_apply, Matrix.mul_apply, id]
   rw [sum_castLE hp fun k => y a k * b k (Fin.castLE hp j)]
   refine Finset.sum_congr rfl fun k _ => ?_
   split_ifs with hk

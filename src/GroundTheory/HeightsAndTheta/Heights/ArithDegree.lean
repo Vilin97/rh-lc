@@ -109,7 +109,7 @@ theorem gram_comb {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V] {
     [Fintype ι] (v : ι → V) (B : Matrix ι ι ℂ) :
     gram ℂ (fun j ↦ ∑ i, B i j • v i) = Bᴴ * gram ℂ v * B := by
   ext j k
-  simp only [gram_apply, sum_inner, inner_sum, inner_smul_left, inner_smul_right, mul_apply,
+  simp only [gram_apply, sum_inner, inner_sum, inner_smul_left, inner_smul_right, Matrix.mul_apply,
     conjTranspose_apply, Finset.sum_mul, Finset.mul_sum, RCLike.star_def]
   refine Finset.sum_congr rfl fun i _ ↦ Finset.sum_congr rfl fun l _ ↦ ?_
   ring

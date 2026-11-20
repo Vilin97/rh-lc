@@ -25,7 +25,7 @@ lemma Ym_mulVec (k r : ℕ) (z z' : Fin (2 * r + k + 1) → ℂ) (γ : B.Mat k r
 
 lemma L_mulVec (k r : ℕ) (z z' : Fin (2 * r + k + 1) → ℂ) (γ : B.Mat k r) (v) (j) :
     (((Ym k r z z' γ)ᴴ * Hpk k r) *ᵥ v) j = herm (Hpk k r) v (gramVec k r z z' γ j) := by
-  simp only [herm, mulVec, dotProduct, mul_apply, conjTranspose_apply, Ym, of_apply, Finset.sum_mul,
+  simp only [herm, mulVec, dotProduct, Matrix.mul_apply, conjTranspose_apply, Ym, of_apply, Finset.sum_mul,
     Finset.mul_sum, mul_assoc]
   exact Finset.sum_comm
 
@@ -33,7 +33,7 @@ lemma gram_eq (k r : ℕ) (z z' : Fin (2 * r + k + 1) → ℂ) (γ : B.Mat k r) 
     gramM k r z z' γ = (Ym k r z z' γ)ᴴ * Hpk k r * Ym k r z z' γ := by
   ext i j
   rw [gramM, ← L_mulVec]
-  simp only [mulVec, dotProduct, mul_apply, Ym, of_apply]
+  simp only [mulVec, dotProduct, Matrix.mul_apply, Ym, of_apply]
 
 lemma mem_U_iff (k r : ℕ) (z z' : Fin (2 * r + k + 1) → ℂ) (γ : B.Mat k r) (v) :
     v ∈ Uperp k r z z' γ ↔ ((Ym k r z z' γ)ᴴ * Hpk k r) *ᵥ v = 0 := by
@@ -82,14 +82,14 @@ lemma mul_eq_of_cols {m : Type*} [Fintype m] (k r : ℕ) (A : B.Mat k r)
     A * C = C := by
   ext i j
   have := congrFun (h j) i
-  simpa [mulVec, dotProduct, mul_apply] using this
+  simpa [mulVec, dotProduct, Matrix.mul_apply] using this
 
 lemma mulVec_col_of_mul {m : Type*} [Fintype m] (k r : ℕ) (A : B.Mat k r)
     (C : Matrix (Fin (2 * r + k + 1)) m ℂ) (h : A * C = C) (j : m) :
     A *ᵥ (fun i => C i j) = fun i => C i j := by
   ext i
   have := congrFun (congrFun h i) j
-  simpa [mulVec, dotProduct, mul_apply] using this
+  simpa [mulVec, dotProduct, Matrix.mul_apply] using this
 
 lemma flag_nilp {m N : ℕ} (g : Matrix (Fin N) (Fin N) ℂ) (v : Fin m → Fin N → ℂ)
     (hv : ∀ a, g *ᵥ v a - v a ∈ Submodule.span ℂ (Set.range fun b : {b : Fin m // b < a} => v b.1)) :

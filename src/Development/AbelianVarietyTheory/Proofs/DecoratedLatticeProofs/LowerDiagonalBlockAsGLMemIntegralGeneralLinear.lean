@@ -15,7 +15,7 @@ def IsIntM {m n : Type} (M : Matrix m n k) : Prop := ∀ i j, M i j ∈ 𝒪[k]
 
 theorem isIntM_mul {l m n : Type} [Fintype m] {M : Matrix l m k} {N : Matrix m n k} (hM : IsIntM M) (hN : IsIntM N) :
     IsIntM (M * N) := fun i j => by
-  rw [mul_apply]; exact sum_mem fun a _ => mul_mem (hM i a) (hN a j)
+  rw [Matrix.mul_apply]; exact sum_mem fun a _ => mul_mem (hM i a) (hN a j)
 
 theorem isIntM_sub {m n : Type} {M N : Matrix m n k} (hM : IsIntM M) (hN : IsIntM N) : IsIntM (M - N) :=
   fun i j => sub_mem (hM i j) (hN i j)
@@ -156,7 +156,7 @@ theorem isIntM_of_mem_parahoric {j : GL (A ⊕ D) k} (hj : j ∈ parahoric k A D
 
 theorem val_lt_mul {l m n : Type} [Fintype m] {P : Matrix l m k} {c : Matrix m n k} (hP : IsIntM P)
     (hc : ∀ i j, valuation k (c i j) < 1) (i j) : valuation k ((P * c) i j) < 1 := by
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   exact Valuation.map_sum_lt _ one_ne_zero fun m _ => GlobalTheory.DatumEigen.val_mul_lt (hP _ _) (hc _ _)
 
 theorem inv_torusElt_int {ϖ : kˣ} (hϖ : valuation k (ϖ : k) = uniformizer k) (s : Finset D) :

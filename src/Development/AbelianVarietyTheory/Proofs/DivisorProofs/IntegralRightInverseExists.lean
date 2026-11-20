@@ -143,7 +143,7 @@ theorem normalize (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [Is
   obtain ⟨N, hNb, hMN⟩ := exists_inv_of_bdd_sub_one hϖ _ hM
   obtain ⟨S', hS'⟩ : ∃ S', S' = S * N := ⟨_, rfl⟩
   have hS'b : Bdd 1 S' := by have := bdd_mul (c := 1) hSi hNb; rw [mul_one] at this; rwa [hS']
-  have hS'0 : ∀ i, S' j₀ i = 0 := fun i => by rw [hS', mul_apply]; simp [hS0]
+  have hS'0 : ∀ i, S' j₀ i = 0 := fun i => by rw [hS', Matrix.mul_apply]; simp [hS0]
   have hS'r : S'.row j₀ = 0 := funext hS'0
   have hAS : A * S' = 1 := by rw [hS', ← Matrix.mul_assoc, hMN]
 

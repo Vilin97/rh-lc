@@ -46,7 +46,7 @@ noncomputable def clr (X : Matrix (Fin n) (Fin m) k) : Matrix (Fin m) (Fin m) k 
 open Classical in
 theorem mul_clr (X : Matrix (Fin n) (Fin m) k) (r : Fin n) (j : Fin m) :
     (X * clr X) r j = if cols X j ∈ Submodule.span k (cols X '' Set.Ioi j) then 0 else X r j := by
-  rw [clr, Matrix.mul_sub, Matrix.mul_one, Matrix.sub_apply, mul_apply]
+  rw [clr, Matrix.mul_sub, Matrix.mul_one, Matrix.sub_apply, Matrix.mul_apply]
   split_ifs with hj
   · rw [sum_coef X hj, sub_self]
   · simp [coef_of_not_mem X hj]
@@ -111,7 +111,7 @@ theorem exists_decomp (X : Matrix (Fin n) (Fin m) k) :
   · simp only [s, of_apply]
     split_ifs <;> simp
   · ext r j
-    rw [mul_clr, GeneralLinearGroup.val_mkOfDetNeZero, mul_apply]
+    rw [mul_clr, GeneralLinearGroup.val_mkOfDetNeZero, Matrix.mul_apply]
     simp only [s, of_apply]
     split_ifs with hj
     · simp

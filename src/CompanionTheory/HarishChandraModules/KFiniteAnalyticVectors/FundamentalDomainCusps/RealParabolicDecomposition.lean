@@ -117,7 +117,7 @@ theorem IsPr.entry {p : Matrix (Fin n) (Fin n) ℂ} (hp : IsPr W p) (i j : Fin n
     conv_rhs => rw [← hp.sq, ← hp.1]
     rw [hp.1]
     conv_rhs => rw [show p * p = pᴴ * p by rw [hp.1]]
-    simp only [mul_apply, conjTranspose_apply, Complex.ofReal_sum, Complex.ofReal_pow, Complex.star_def,
+    simp only [Matrix.mul_apply, conjTranspose_apply, Complex.ofReal_sum, Complex.ofReal_pow, Complex.star_def,
       Complex.conj_mul']
   have h1 : ∀ k, ‖p k j‖ ^ 2 ≤ ‖p j j‖ := fun k => by
     rw [← h j, Complex.norm_real, Real.norm_of_nonneg (Finset.sum_nonneg fun _ _ => sq_nonneg _)]

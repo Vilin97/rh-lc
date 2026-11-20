@@ -265,7 +265,7 @@ theorem derUnipM_decomp {m n : ℕ} (hnm : n ≤ m) (u : derUnipM k (m + 1) n) :
   show X = (1 + colMat k (m + 1) c.toAdd) * glEmbMat k (m + 1) (blockMat k (m + 1) X)
   rw [add_mul, one_mul]
   ext i j
-  rw [Matrix.add_apply, mul_apply, Fin.sum_univ_castSucc]
+  rw [Matrix.add_apply, Matrix.mul_apply, Fin.sum_univ_castSucc]
   simp only [colMat, Fin.castSucc_ne_last, if_false, zero_mul, Finset.sum_const_zero, zero_add, if_true]
   induction j using Fin.lastCases with
   | last =>

@@ -86,7 +86,7 @@ variable {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] {x₀ : V}
 theorem an_mul {m n p : Type} [Fintype n] {A : V → Matrix m n ℂ} {B : V → Matrix n p ℂ}
     (hA : ∀ i j, AnalyticAt ℂ (fun x => A x i j) x₀) (hB : ∀ i j, AnalyticAt ℂ (fun x => B x i j) x₀)
     (i : m) (j : p) : AnalyticAt ℂ (fun x => (A x * B x) i j) x₀ := by
-  simp only [mul_apply]
+  simp only [Matrix.mul_apply]
   exact Finset.analyticAt_fun_sum _ fun k _ => (hA i k).mul (hB k j)
 
 end Analytic
@@ -150,12 +150,12 @@ theorem gram_conj {m : ℕ} {Ω Ω₁ Q : Matrix (Fin m) (Fin m) ℂ} (hΩ₁ : 
 
 theorem hP_transpose {p q : ℕ} (z : Matrix (Fin p) (Fin q) ℂ) : (hP z)ᵀ = 1 - z.map (starRingEnd ℂ) * zᵀ := by
   ext a b
-  simp [hP, mul_apply, mul_comm, one_apply, eq_comm]
+  simp [hP, Matrix.mul_apply, mul_comm, one_apply, eq_comm]
 
 theorem cast_cols_map {p q q' : ℕ} (z : Matrix (Fin p) (Fin q) ℂ) (e : Fin q' ≃ Fin q) :
     (z.submatrix id e).map (starRingEnd ℂ) * (z.submatrix id e)ᵀ = z.map (starRingEnd ℂ) * zᵀ := by
   ext a b
-  simp only [mul_apply, map_apply, transpose_apply, submatrix_apply, id]
+  simp only [Matrix.mul_apply, map_apply, transpose_apply, submatrix_apply, id]
   exact Fintype.sum_equiv e _ _ fun _ => rfl
 
 theorem cast_cols_herm {p q q' : ℕ} (z : Matrix (Fin p) (Fin q) ℂ) (e : Fin q' ≃ Fin q) :

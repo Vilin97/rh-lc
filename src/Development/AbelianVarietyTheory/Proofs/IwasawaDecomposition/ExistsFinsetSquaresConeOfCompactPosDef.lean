@@ -168,7 +168,7 @@ theorem local_step (P₀ : Matrix ι ι ℝ) (h : P₀.PosDef) :
     rw [star_trivial] at this
     exact this.symm
   have hGsum : ∀ a b, G a b = ∑ k, R k a * R k b := fun a b => by
-    rw [← hRR, mul_apply]
+    rw [← hRR, Matrix.mul_apply]
     exact Finset.sum_congr rfl fun k _ => by rw [hRs a k]
   have hconv : ∀ a b, Tendsto (fun N : ℕ => ∑ k, ((⌊(N : ℝ) * R k a⌋ : ℤ) : ℝ) / N *
       (((⌊(N : ℝ) * R k b⌋ : ℤ) : ℝ) / N)) atTop (𝓝 (G a b)) := fun a b => by

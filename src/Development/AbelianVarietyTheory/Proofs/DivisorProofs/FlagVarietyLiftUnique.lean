@@ -251,7 +251,7 @@ theorem lifts_unique : ∀ (ι : Type) [Fintype ι] (N : ℕ) (T : Scheme.{0}) (
   erw [germ_sum (isFrame_stdT g N) (V := g₁ ⁻¹ᵁ U) t hU fun k => g₁.app U ((c a).1 k j)] at k
   rw [sum_mem_low] at k
   refine Eq.trans ?_ (k i le_rfl)
-  rw [Units.val_mul, mul_apply, mulVec, dotProduct]
+  rw [Units.val_mul, Matrix.mul_apply, mulVec, dotProduct]
   exact Finset.sum_congr rfl fun m _ => congrArg _ (Scheme.Hom.germ_stalkMap_apply g₁ U t hU _)
 
 end GlobalTheory.FlagZ.Univ.Uniq

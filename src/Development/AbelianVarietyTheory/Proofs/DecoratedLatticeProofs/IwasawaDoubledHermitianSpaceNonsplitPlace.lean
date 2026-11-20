@@ -108,7 +108,7 @@ theorem fCol_mulVec (x : n → A) : fCol A e *ᵥ x = pairVec e x 0 := by
 omit [DecidableEq ι] in
 theorem transpose_fCol_mul (M : Matrix (n ⊕ n) n A) : (fCol A e)ᵀ * M.submatrix e.symm id = M.toRows₁ := by
   ext i j
-  simp [fCol, mul_apply, ← e.sum_comp, one_apply, toRows₁]
+  simp [fCol, Matrix.mul_apply, ← e.sum_comp, one_apply, toRows₁]
 
 omit [Fintype n] [Fintype ι] [DecidableEq ι] in
 theorem dCol_map {B : Type} [CommRing B] (f : A →+* B) : (dCol A e).map f = dCol B e := by

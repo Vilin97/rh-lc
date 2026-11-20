@@ -120,7 +120,7 @@ theorem zhatMove : ZhatMove := by
   unfold fmul
   rw [herm_sum_right]
   simp only [herm_sum_left]
-  simp only [mul_apply, conjTranspose_apply, Finset.sum_mul, Finset.mul_sum]
+  simp only [Matrix.mul_apply, conjTranspose_apply, Finset.sum_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun d _ => Finset.sum_congr rfl fun c _ => ?_
   simp only [Zhat]

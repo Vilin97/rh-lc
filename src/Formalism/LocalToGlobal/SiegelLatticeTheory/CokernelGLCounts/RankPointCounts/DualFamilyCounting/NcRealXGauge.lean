@@ -66,7 +66,7 @@ theorem unrealify_adE (A B : Matrix (Fin m) (Fin m) ℂ) (x : EuclideanSpace ℝ
 
 theorem norm_sq_realifyE (Y : Matrix (Fin m) (Fin m) ℂ) : ‖realifyE Y‖ ^ 2 = (trace (Yᴴ * Y)).re := by
   rw [EuclideanSpace.norm_eq, Real.sq_sqrt (Finset.sum_nonneg fun _ _ => sq_nonneg _)]
-  simp only [Fintype.sum_prod_type, Fintype.sum_bool, trace, diag, mul_apply, conjTranspose_apply, Complex.re_sum]
+  simp only [Fintype.sum_prod_type, Fintype.sum_bool, trace, diag, Matrix.mul_apply, conjTranspose_apply, Complex.re_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   simp only [realifyE_apply, realifyFun, if_true, Bool.false_eq_true, if_false, Real.norm_eq_abs, sq_abs,

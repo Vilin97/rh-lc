@@ -25,7 +25,7 @@ theorem stepIdx_injective (i : Fin n) : Function.Injective (stepIdx i) := by
 theorem stepIncl_gram (i : Fin n) (K : Matrix (Fin n) (Fin n) ℂ) :
     (stepIncl i)ᵀ * K * (stepIncl i)ᴴᵀ = stepGram K i := by
   ext b c
-  simp [stepIncl, mul_apply, ite_mul, mul_ite, Finset.sum_ite_eq, Finset.sum_ite_eq']
+  simp [stepIncl, Matrix.mul_apply, ite_mul, mul_ite, Finset.sum_ite_eq, Finset.sum_ite_eq']
   rcases b with b | b <;> rcases c with c | c <;> rfl
 
 theorem form_stepIncl (i : Fin n) (K : Matrix (Fin n) (Fin n) ℂ) (u w : Fin i ⊕ Unit → ℂ) :

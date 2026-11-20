@@ -95,7 +95,7 @@ theorem submatrix_mul_of_mem_blockUpper {p : GL (Fin n) F} (hp : p ∈ blockUppe
           (fun i : {i : Fin n // a ≤ β i} => (i : Fin n)) *
         M.submatrix (fun i : {i : Fin n // a ≤ β i} => (i : Fin n)) c := by
   ext i j
-  simp only [submatrix_apply, mul_apply]
+  simp only [submatrix_apply, Matrix.mul_apply]
   rw [← Fintype.sum_subtype_add_sum_subtype (fun k => a ≤ β k)]
   have h0 : ∑ k : {k : Fin n // ¬ a ≤ β k}, (p : Matrix (Fin n) (Fin n) F) i k * M k (c j) = 0 :=
     Finset.sum_eq_zero fun k _ => by
@@ -110,7 +110,7 @@ theorem mul_submatrix_of_mem_blockUpper {q : GL (Fin n) F} (hq : q ∈ blockUppe
         (q : Matrix (Fin n) (Fin n) F).submatrix (fun j : {j : Fin n // γ j ≤ b} => (j : Fin n))
           (fun j : {j : Fin n // γ j ≤ b} => (j : Fin n)) := by
   ext i j
-  simp only [submatrix_apply, mul_apply]
+  simp only [submatrix_apply, Matrix.mul_apply]
   rw [← Fintype.sum_subtype_add_sum_subtype (fun k => γ k ≤ b)]
   have h0 : ∑ k : {k : Fin n // ¬ γ k ≤ b}, M (r i) k * (q : Matrix (Fin n) (Fin n) F) k j = 0 :=
     Finset.sum_eq_zero fun k _ => by

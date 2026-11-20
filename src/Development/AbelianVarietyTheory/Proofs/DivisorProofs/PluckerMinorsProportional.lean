@@ -69,15 +69,15 @@ theorem jacobi_complementary_minors {K : Type} [Field K] {p q : ℕ}
     ext k m
     have := congrFun (congrFun hT (π (Sum.inr m))) k
     rw [transpose_apply] at this
-    simp only [submatrix_apply, id, Function.comp_apply, mul_apply, transpose_apply]
-    rw [this, mul_apply, Fintype.sum_sum_type]
+    simp only [submatrix_apply, id, Function.comp_apply, Matrix.mul_apply, transpose_apply]
+    rw [this, Matrix.mul_apply, Fintype.sum_sum_type]
     have h0 : ∀ l, (M * β.transpose) (Sum.inl l) k = 0 := by
       intro l
       have := congrFun (congrFun hαβ l) k
-      simpa [M, mul_apply] using this
+      simpa [M, Matrix.mul_apply] using this
     have h1 : ∀ k', (M * β.transpose) (Sum.inr k') k = g k k' := by
       intro k'
-      simp [M, g, mul_apply, one_apply]
+      simp [M, g, Matrix.mul_apply, one_apply]
     simp only [h0, h1, mul_zero, Finset.sum_const_zero, zero_add]
     refine Finset.sum_congr rfl fun k' _ => ?_
     rw [mul_comm]

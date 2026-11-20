@@ -55,7 +55,7 @@ omit [Fintype ι] in
 
 theorem norm_mul_apply_le {m κ : Type*} [Fintype κ] (A : Matrix m κ ℂ) (B : Matrix κ ι ℂ)
     (i : m) (j : ι) : ‖(A * B) i j‖ ≤ ∑ k, ‖A i k‖ * ‖B k j‖ := by
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   refine (norm_sum_le _ _).trans (le_of_eq ?_)
   simp
 
@@ -80,7 +80,7 @@ theorem exists_rightInv (v : Basis ι E W) {n : ℕ} {e : Fin n → W}
     rw [← hc i, map_sum, Finsupp.finsetSum_apply]
     refine Finset.sum_congr rfl fun a _ => ?_
     rw [map_smul, Finsupp.smul_apply, smul_eq_mul, mul_comm]
-  simp only [mul_apply, of_apply, vecAt, ← map_mul, ← map_sum, h1, Basis.repr_self, one_apply]
+  simp only [Matrix.mul_apply, of_apply, vecAt, ← map_mul, ← map_sum, h1, Basis.repr_self, one_apply]
   by_cases hki : k = i
   · subst hki
     simp

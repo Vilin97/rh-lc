@@ -30,10 +30,10 @@ theorem block_conj {n : ℕ} {ε : Fin n → Bool} {κ κ' Y : Matrix (Fin n) (F
     (h : κ * Formalism.REAL.Jm ε = Formalism.REAL.Jm ε * κ) (h' : κ' * Formalism.REAL.Jm ε = Formalism.REAL.Jm ε * κ')
     (hY : ∀ a b, ¬ (ε a = false ∧ ε b = true) → Y a b = 0) (a b : Fin n) (hab : ¬ (ε a = false ∧ ε b = true)) :
     (κ' * Y * κ) a b = 0 := by
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   refine Finset.sum_eq_zero fun d _ => ?_
   by_cases hd : ε d = ε b
-  · rw [mul_apply, Finset.sum_eq_zero fun c _ => ?_, zero_mul]
+  · rw [Matrix.mul_apply, Finset.sum_eq_zero fun c _ => ?_, zero_mul]
     by_cases hc : ε a = ε c
     · rw [hY c d (by rw [← hc, hd]; exact hab), mul_zero]
     · rw [entry_eq_zero h' hc, zero_mul]

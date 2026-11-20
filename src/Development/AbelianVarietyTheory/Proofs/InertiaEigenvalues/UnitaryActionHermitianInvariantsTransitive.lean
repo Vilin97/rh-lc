@@ -69,7 +69,7 @@ theorem mulBm_eq (Y : Gl r K) (k : ℕ) : Y.2.2.1 ᵥ* (Y.1 ^ k * Bm Y) = fun j 
   funext j
   have : (Y.1 ^ k * Bm Y) = Matrix.of fun i (j : Fin r) => ((Y.1 ^ (k + (j : ℕ))) *ᵥ Y.2.1) i := by
     ext i j
-    simp only [mul_apply, Bm, of_apply, pow_add, ← mulVec_mulVec]
+    simp only [Matrix.mul_apply, Bm, of_apply, pow_add, ← mulVec_mulVec]
     rfl
   rw [this]
   simp only [vecMul, mom, dotProduct, of_apply]
@@ -233,12 +233,12 @@ theorem mul_Bm (Y : Gl r K) (q : Fin r → K) (hq : Y.1 ^ r *ᵥ Y.2.1 = -(Bm Y 
   ext i j
   have hL : (Y.1 * Bm Y) i j = (Y.1 ^ ((j : ℕ) + 1) *ᵥ Y.2.1) i := by
     rw [pow_succ', ← mulVec_mulVec]
-    simp [mul_apply, Bm, mulVec, dotProduct]
+    simp [Matrix.mul_apply, Bm, mulVec, dotProduct]
   rw [hL]
   by_cases hj : (j : ℕ) + 1 = r
   · rw [hj, hq]
-    simp [mul_apply, companion, hj, mulVec, dotProduct]
-  · rw [mul_apply, Finset.sum_eq_single ⟨(j : ℕ) + 1, by omega⟩]
+    simp [Matrix.mul_apply, companion, hj, mulVec, dotProduct]
+  · rw [Matrix.mul_apply, Finset.sum_eq_single ⟨(j : ℕ) + 1, by omega⟩]
     · simp [companion, hj, Bm]
     · intro l _ hl
       have : ¬ ((l : ℕ) = (j : ℕ) + 1) := fun h => hl (Fin.ext h)
@@ -280,7 +280,7 @@ theorem mom_map (X : Hn r F E) (a : Inv r F) (h : HasInv X a) (n : ℕ) :
 theorem gram (X : Hn r F E) : (Bm X.toGl)ᴴ * Bm X.toGl = Matrix.of fun i j : Fin r => mom X.toGl ((i : ℕ) + j) := by
   ext i j
   have : ((Bm X.toGl)ᴴ * Bm X.toGl) i j = star (X.1.1 ^ (i : ℕ) *ᵥ X.2.1) ⬝ᵥ (X.1.1 ^ (j : ℕ) *ᵥ X.2.1) := by
-    simp only [mul_apply, conjTranspose_apply, Bm, of_apply, dotProduct, Pi.star_apply]
+    simp only [Matrix.mul_apply, conjTranspose_apply, Bm, of_apply, dotProduct, Pi.star_apply]
     rfl
   rw [this, form_pow X.1.1 X.1.2, mulVec_mulVec, ← pow_add]
   rfl
@@ -322,7 +322,7 @@ theorem g_Bm (g : Matrix.unitaryGroup (Fin r) E) (X₁ X₂ : Hn r F E) (hact : 
   have hp : ∀ k : ℕ, g.1 * X₁.1.1 ^ k = X₂.1.1 ^ k * g.1 := fun k => SemiconjBy.pow_right hs k
   ext i j
   have : (g.1 * Bm X₁.toGl) i j = (g.1 *ᵥ (X₁.1.1 ^ (j : ℕ) *ᵥ X₁.2.1)) i := by
-    simp only [mul_apply, Bm, of_apply, mulVec, dotProduct]
+    simp only [Matrix.mul_apply, Bm, of_apply, mulVec, dotProduct]
     rfl
   rw [this, mulVec_mulVec, hp, ← mulVec_mulVec, e2]
   rfl

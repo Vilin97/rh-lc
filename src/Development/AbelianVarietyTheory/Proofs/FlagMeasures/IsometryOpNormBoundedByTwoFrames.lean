@@ -69,7 +69,7 @@ omit [Fintype ι] in
 theorem mul_fam (s : Matrix (Fin n) (Fin n) ℂ) (b : ι → Fin n → ℂ) :
     s * fam b = fam (fun i => s *ᵥ b i) := by
   ext p i
-  simp [fam, mul_apply, mulVec, dotProduct]
+  simp [fam, Matrix.mul_apply, mulVec, dotProduct]
 
 omit [Fintype ι] in
 theorem famH_mul_mul_fam (H : Matrix (Fin n) (Fin n) ℂ) (b : ι → Fin n → ℂ) (m i : ι) :

@@ -46,7 +46,7 @@ def tInner (X Y : Matrix ι ι ℂ) : ℝ := (trace (X * Yᴴ)).re
 theorem tInner_self (X : Matrix ι ι ℂ) : tInner X X = hs X ^ 2 := by
   rw [hs_sq, tInner, trace, Complex.re_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [diag, mul_apply, Complex.re_sum]
+  rw [diag, Matrix.mul_apply, Complex.re_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [conjTranspose_apply, Complex.star_def, Complex.mul_conj, Complex.ofReal_re,
     Complex.normSq_eq_norm_sq]
@@ -81,7 +81,7 @@ theorem hs_mul_left_le (A X : Matrix ι ι ℂ) : hs (A * X) ≤ ‖A‖ * hs X 
   rw [mul_pow, EuclideanSpace.norm_sq_eq, EuclideanSpace.norm_sq_eq] at key2
   convert key2 using 2
   rw [ofLp_toEuclideanCLM]
-  simp [mulVec, dotProduct, mul_apply]
+  simp [mulVec, dotProduct, Matrix.mul_apply]
 
 theorem hs_mul_right_le (X B : Matrix ι ι ℂ) : hs (X * B) ≤ hs X * ‖B‖ := by
   rw [← hs_conjTranspose, conjTranspose_mul, ← hs_conjTranspose X, ← l2_opNorm_conjTranspose B,

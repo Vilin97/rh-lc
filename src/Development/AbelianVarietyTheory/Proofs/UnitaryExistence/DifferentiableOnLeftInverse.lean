@@ -215,12 +215,12 @@ theorem cols_iff (h τ : Matrix (Fin g) (Fin g) ℂ) (a b : Fin g → Fin g → 
     · ext i j
       have := congrFun (H j).1 i
       simp only [mulVec, dotProduct] at this
-      simp [mul_apply, this, one_apply, Pi.single_apply]
+      simp [Matrix.mul_apply, this, one_apply, Pi.single_apply]
     · ext i j
       have := congrFun (H j).2 i
       rw [mulVec_single_one] at this
       simp only [mulVec, dotProduct] at this
-      simp [mul_apply, this]
+      simp [Matrix.mul_apply, this]
   · rintro ⟨h1, rfl⟩ k
     constructor
     · rw [← of_cols_mulVec a k, mulVec_mulVec, h1, one_mulVec]

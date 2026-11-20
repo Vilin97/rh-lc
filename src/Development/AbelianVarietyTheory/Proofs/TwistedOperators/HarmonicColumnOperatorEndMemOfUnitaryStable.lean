@@ -70,7 +70,7 @@ theorem colActHom_colDerM (g : T → GL κ R) (t : T) (X : Matrix κ κ R) (P : 
           rw [colSubst_xForm]
           congr 1
           have key : ∀ (M N : Matrix κ κ R) (j : κ), M j ᵥ* N = (M * N) j := fun M N j => by
-            ext i; simp [vecMul, dotProduct, mul_apply]
+            ext i; simp [vecMul, dotProduct, Matrix.mul_apply]
           rw [key, key, ← Matrix.mul_assoc, ← Matrix.mul_assoc, Units.inv_mul, Matrix.one_mul]
         · simp
       · rw [colDerM_X_yVar]
@@ -80,7 +80,7 @@ theorem colActHom_colDerM (g : T → GL κ R) (t : T) (X : Matrix κ κ R) (P : 
           rw [map_neg, colSubst_yForm]
           congr 2
           have key : ∀ (M N : Matrix κ κ R) (j : κ), (M *ᵥ fun r => N r j) = fun r => (M * N) r j :=
-            fun M N j => by ext i; simp [mulVec, dotProduct, mul_apply]
+            fun M N j => by ext i; simp [mulVec, dotProduct, Matrix.mul_apply]
           rw [key, key, Matrix.mul_assoc, Units.inv_mul, Matrix.mul_one]
         · simp
     rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add, map_mul, map_mul, map_mul,

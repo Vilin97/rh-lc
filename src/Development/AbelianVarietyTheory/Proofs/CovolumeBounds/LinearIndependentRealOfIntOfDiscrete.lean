@@ -55,7 +55,7 @@ theorem posSemidef_det_le_prod_diag {A : Matrix ι ι 𝕜} (hA : A.PosSemidef) 
     push_cast; rfl
   · push_cast
     refine Finset.prod_congr rfl fun j _ ↦ ?_
-    simp [mul_apply, RCLike.conj_mul]
+    simp [Matrix.mul_apply, RCLike.conj_mul]
 
 theorem posSemidef_re_det_le_prod_diag {A : Matrix ι ι 𝕜} (hA : A.PosSemidef) :
     RCLike.re A.det ≤ ∏ i, RCLike.re (A i i) := by

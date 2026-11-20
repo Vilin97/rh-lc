@@ -35,7 +35,7 @@ theorem ut_entry_eq_det {m : ℕ} {L U : Matrix (Fin m) (Fin m) ℂ} (hL : L ∈
   have hfac : (L * U).submatrix (rws i) (cls i j) =
       L.submatrix (rws i) (rws i) * U.submatrix (rws i) (cls i j) := by
     ext a b
-    simp only [submatrix_apply, mul_apply]
+    simp only [submatrix_apply, Matrix.mul_apply]
     refine sum_castLE (Nat.succ_le_of_lt i.isLt) _ fun l hl => ?_
     have h0 : L (rws i a) l = 0 := hL.1 _ _ (by rw [Fin.lt_def, rws_val]; omega)
     rw [h0, zero_mul]

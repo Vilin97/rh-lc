@@ -43,7 +43,7 @@ theorem LogDetDerivative.sum_cramer_eq {m : ℕ} (A B : Matrix (Fin m) (Fin m) �
     (hA : IsUnit A.det) :
     ∑ i, A.cramer (fun k ↦ B k i) i = A.det * (A⁻¹ * B).trace := by
   simp only [← det_smul_inv_mulVec_eq_cramer A _ hA, Pi.smul_apply, smul_eq_mul, trace,
-    diag_apply, mul_apply, mulVec, dotProduct, Finset.mul_sum]
+    diag_apply, Matrix.mul_apply, mulVec, dotProduct, Finset.mul_sum]
 
 theorem LogDetDerivative.intersectionNumber_baseChange : LogDetDerivative.Statement := by
   intro m G G' hpos hG t

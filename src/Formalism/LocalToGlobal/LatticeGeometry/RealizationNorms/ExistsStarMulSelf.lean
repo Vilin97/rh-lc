@@ -39,7 +39,7 @@ theorem quad_le_trace_HH (H : Matrix n n ℂ) (w : n → ℂ) :
     rw [← mulVec_mulVec, dotProduct_mulVec, star_mulVec]
   rw [e1, re_star_dot_self]
   have e2 : (Hᴴ * H).trace.re = ∑ j, ∑ k, ‖H k j‖ ^ 2 := by
-    simp only [trace, diag, mul_apply, conjTranspose_apply, Complex.re_sum]
+    simp only [trace, diag, Matrix.mul_apply, conjTranspose_apply, Complex.re_sum]
     refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => ?_
     rw [Complex.star_def, Complex.conj_mul']; norm_cast
   rw [e2, Finset.sum_comm, Finset.sum_mul]
@@ -62,7 +62,7 @@ theorem trace_nonneg {b : Matrix n n ℂ} (hb : b.PosSemidef) (Y : Matrix n n �
   have e2 : (b * (Y * Yᴴ)).trace = (Yᴴ * b * Y).trace := by
     rw [← Matrix.mul_assoc, trace_mul_comm, Matrix.mul_assoc]
   rw [e2, hH]
-  simp only [trace, diag, mul_apply, conjTranspose_apply, Complex.re_sum]
+  simp only [trace, diag, Matrix.mul_apply, conjTranspose_apply, Complex.re_sum]
   refine Finset.sum_nonneg fun j _ => Finset.sum_nonneg fun k _ => ?_
   rw [Complex.star_def, Complex.conj_mul']; norm_cast; positivity
 
@@ -72,7 +72,7 @@ theorem trace_pos {b : Matrix n n ℂ} (hb : b.PosSemidef) (hb0 : b ≠ 0) (Y : 
   have e2 : (b * (Y * Yᴴ)).trace = (Yᴴ * b * Y).trace := by
     rw [← Matrix.mul_assoc, trace_mul_comm, Matrix.mul_assoc]
   have e3 : (Hᴴ * H).trace.re = ∑ j, ∑ k, ‖H k j‖ ^ 2 := by
-    simp only [trace, diag, mul_apply, conjTranspose_apply, Complex.re_sum]
+    simp only [trace, diag, Matrix.mul_apply, conjTranspose_apply, Complex.re_sum]
     refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => ?_
     rw [Complex.star_def, Complex.conj_mul']; norm_cast
   rw [e2, hH, e3]

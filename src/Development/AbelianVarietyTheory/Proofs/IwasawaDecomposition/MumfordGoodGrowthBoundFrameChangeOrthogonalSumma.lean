@@ -64,7 +64,7 @@ theorem frame_summands_goodBound : ∀ (n g : ℕ) (S : Finset (Fin n)) (W : Set
     intro u hu
     ext ⟨τ, i⟩ ⟨τ', j⟩
     have key : (P u * G₁ u * (P u)ᴴ) ⟨τ, i⟩ ⟨τ', j⟩ = (Q τ u * G₀ u * (Q τ' u)ᴴ) i j := by
-      simp only [P, G₁, mul_apply, conjTranspose_apply, of_apply, submatrix_apply]
+      simp only [P, G₁, Matrix.mul_apply, conjTranspose_apply, of_apply, submatrix_apply]
       exact Fintype.sum_equiv e _ _ fun l => by
         congr 1
         exact Fintype.sum_equiv e _ _ fun k => rfl

@@ -162,11 +162,11 @@ theorem exists_bound {G : Matrix (Fin m) (Fin m) ℂ} (hG : G.PosDef) (F : Matri
   refine ⟨∑ b, ∑ a, ‖(R⁻¹ * F * R) a b‖, fun x i => ?_⟩
   obtain ⟨u, hu, h⟩ := exists_unitary hG hR x
   have hb (a c) : ‖u a c‖ ≤ 1 := entry_norm_bound_of_unitary (mem_unitaryGroup_iff'.2 hu) a c
-  rw [h, mul_apply]
+  rw [h, Matrix.mul_apply]
   refine norm_sum_le_of_le _ fun b _ => ?_
   rw [norm_mul]
   refine (mul_le_of_le_one_right (norm_nonneg _) (hb _ _)).trans ?_
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   refine norm_sum_le_of_le _ fun a _ => ?_
   rw [norm_mul, conjTranspose_apply, norm_star]
   exact mul_le_of_le_one_left (norm_nonneg _) (hb _ _)
@@ -243,7 +243,7 @@ theorem integral_sq {G : Matrix (Fin m) (Fin m) ℂ} (hG : G.PosDef) (F F' : Mat
       rwa [e, inv_eq_left_inv hU] at this)
     (fun a b c d => by
       have e (x) (a b i : Fin m) : ((u x)ᴴ * Matrix.single a b (1 : ℂ) * u x : Matrix (Fin m) (Fin m) ℂ) i i = star (u x a i) * u x b i := by
-        simp [mul_apply, Matrix.single_apply, ite_and]
+        simp [Matrix.mul_apply, Matrix.single_apply, ite_and]
       refine integral_congr_ae (.of_forall fun x => ?_)
       simp only [sq, h, e]
       congr 1
@@ -279,7 +279,7 @@ theorem dens22_chTwo {r e : ℕ} (G : V (e + 2) → Matrix (Fin r) (Fin r) ℂ) 
   have hw (a b c d : Fin (e + 2)) : chTwo G u (bas _ a) (bas _ b) (bas _ c) (bas _ d) =
       kappa ^ 2 * ((F a b * F c d).trace - (F a d * F c b).trace) := by
     have t1 (X Y : Matrix (Fin r) (Fin r) ℂ) : ∑ i, ∑ j, X i j * Y j i = (X * Y).trace := by
-      simp only [trace, diag_apply, mul_apply]
+      simp only [trace, diag_apply, Matrix.mul_apply]
     simp only [chTwo, wedge, Finset.sum_add_distrib, Finset.sum_sub_distrib, t1]
     rw [trace_mul_comm (curv G u (bas _ c) (bas _ d)), trace_mul_comm (curv G u (bas _ c) (bas _ b))]
     ring

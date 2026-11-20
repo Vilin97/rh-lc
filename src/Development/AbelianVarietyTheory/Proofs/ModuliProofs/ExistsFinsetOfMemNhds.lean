@@ -97,7 +97,7 @@ theorem riemann_symm {M M₀ C : Matrix (Fin g) (Fin g) ℂ} (hM : M.IsHermitian
     rw [(key _ _).2, (key _ _).2, (key z w).1, herm_conj hM (c w) (c (c z)), (key (c w) (c z)).1,
       ← herm_conj hM]
   have := key2 (Pi.single i 1) (Pi.single j 1)
-  simpa [hc, hermForm, ← Pi.single_star, mul_apply, dotProduct] using this
+  simpa [hc, hermForm, ← Pi.single_star, Matrix.mul_apply, dotProduct] using this
 
 theorem eq_zero_of_imForm {M : Matrix (Fin g) (Fin g) ℂ}
     (hpos : ∀ z : Fin g → ℂ, z ≠ 0 → 0 < (hermForm M z z).re) {u : Fin g → ℂ} (h : imForm M u = 0) : u = 0 := by

@@ -51,7 +51,7 @@ theorem InvEntryDeriv.proof (h₁ : InvEntryBound.Statement) : InvEntryDeriv.Sta
     have hconst : (fun q => ∑ s, Y q j s * (Y q)⁻¹ s m) =ᶠ[𝓝 p]
         fun _ => (1 : Matrix (Fin g) (Fin g) ℝ) j m := by
       filter_upwards [hnear] with q hq
-      rw [← mul_apply, mul_nonsing_inv _ (isUnit_iff_ne_zero.mpr hq)]
+      rw [← Matrix.mul_apply, mul_nonsing_inv _ (isUnit_iff_ne_zero.mpr hq)]
     have h1 : fderiv ℝ (fun q => ∑ s, Y q j s * (Y q)⁻¹ s m) p =
         ∑ s, (Y p j s • fderiv ℝ (fun q => (Y q)⁻¹ s m) p +
           (Y p)⁻¹ s m • fderiv ℝ (fun q => Y q j s) p) := by
@@ -68,7 +68,7 @@ theorem InvEntryDeriv.proof (h₁ : InvEntryBound.Statement) : InvEntryDeriv.Sta
         = ∑ s, ((Y p)⁻¹ * Y p) j s • fderiv ℝ (fun q => (Y q)⁻¹ s l) p := by
           rw [hZY]; simp [one_apply]
       _ = ∑ m, (Y p)⁻¹ j m • ∑ s, Y p m s • fderiv ℝ (fun q => (Y q)⁻¹ s l) p := by
-          simp only [mul_apply, Finset.sum_smul, Finset.smul_sum, smul_smul]
+          simp only [Matrix.mul_apply, Finset.sum_smul, Finset.smul_sum, smul_smul]
           exact Finset.sum_comm
       _ = _ := by
           simp only [key, smul_neg, Finset.smul_sum, smul_smul, Finset.sum_neg_distrib]

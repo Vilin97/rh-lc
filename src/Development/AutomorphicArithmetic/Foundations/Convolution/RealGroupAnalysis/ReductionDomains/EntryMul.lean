@@ -25,7 +25,7 @@ private theorem real_iff {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) :
     ext i j
     have h3 := hb (Pi.single i 1) (Pi.single j 1)
     rw [single_one_vecMul, single_one_vecMul, single_one_dotProduct] at h3
-    rw [mul_apply, one_apply]
+    rw [Matrix.mul_apply, one_apply]
     simp only [transpose_apply]
     refine Eq.trans h3 ?_
     simp [Pi.single_apply]
@@ -61,7 +61,7 @@ private theorem place_iff {F : Type} [Field F] [NumberField F] [IsTotallyReal F]
     rfl
   have key : ∀ i j, (M * Mᵀ) i j = ψ (((k.1 * k.1ᵀ) i j).1 w) := by
     intro i j
-    rw [entry_mul, map_sum, mul_apply]
+    rw [entry_mul, map_sum, Matrix.mul_apply]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [map_mul]
     rfl

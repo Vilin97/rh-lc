@@ -216,7 +216,7 @@ private lemma mulVec_adjugate_single_last_apply_eq_zero_of_lt (z' : Fin (2 * r +
     have hJa : ∀ i l, _root_.Formalism.QuantumDeterminants.Hpk k r i l =
         if l = _root_.PI.QuotSetU.UnitaryGroupMassFormula.SW.piI k r i then _root_.PI.QuotSetU.UnitaryGroupMassFormula.SW.epsI k r i else 0 :=
       fun i l => _root_.PI.QuotSetU.UnitaryGroupMassFormula.SW.Hpk_apply i l
-    rw [mul_apply]
+    rw [Matrix.mul_apply]
     simp only [hJa, ite_mul, zero_mul, Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ,
       if_true]
   have hj2 := j.isLt
@@ -235,7 +235,7 @@ private lemma mulVec_adjugate_single_last_apply_eq_zero_of_lt (z' : Fin (2 * r +
   rw [adjugate_mul] at h1
   simp only [conjTranspose_apply, Matrix.smul_apply, one_apply,
     if_neg (Fin.castSucc_lt_last b).ne', smul_zero, star_zero] at h1
-  rw [conjTranspose_mul, hpk_conjTranspose_eq_self', Matrix.mul_assoc, mul_apply,
+  rw [conjTranspose_mul, hpk_conjTranspose_eq_self', Matrix.mul_assoc, Matrix.mul_apply,
     Finset.sum_eq_single (_root_.Formalism.QuantumDeterminants.eI k r b)] at h1
   · rw [hJP, hpi] at h1
     have heps := _root_.PI.QuotSetU.UnitaryGroupMassFormula.SW.epsI_mul_self (k := k) (r := r) (_root_.Formalism.QuantumDeterminants.eI k r b)

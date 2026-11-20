@@ -23,7 +23,7 @@ theorem alt_sum_change (N R Q : Matrix (Fin n) (Fin n) ℂ) (p : Equiv.Perm (Fin
   rw [alt_sum_eq_det, alt_sum_eq_det, ← det_transpose Q, ← det_mul]
   congr 1
   ext i k
-  simp [h, mul_apply]
+  simp [h, Matrix.mul_apply]
 
 theorem eq_sum_single (v : Fin n → ℂ) : v = ∑ a, v a • (Pi.single a 1 : Fin n → ℂ) := by
   ext b; simp [Pi.single_apply]

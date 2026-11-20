@@ -75,7 +75,7 @@ theorem core (C : Matrix (Fin n) (Fin r) A) (N : Matrix (Fin r) (Fin n) A) (T : 
     rw [add_mulVec, one_mulVec, mulVec_mulVec]
   have hcol : ∀ j, N *ᵥ Cᵀ j = fun i => (N * C) i j := fun j => by
     funext i
-    simp [mulVec, dotProduct, mul_apply]
+    simp [mulVec, dotProduct, Matrix.mul_apply]
   refine ⟨fun y => ?_, fun j => ?_, fun j y => ?_⟩
   · rw [hD, add_sub_cancel_left]
     refine (mem_span_cols_iff C T _).2 ⟨N *ᵥ y, fun l hl => ?_, rfl⟩

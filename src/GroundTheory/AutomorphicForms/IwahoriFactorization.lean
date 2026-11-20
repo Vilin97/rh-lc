@@ -53,7 +53,7 @@ theorem elimCol_apply (h : Matrix (Fin n) (Fin n) F) (a i k : Fin n) :
 theorem elimCol_mul_elimCol (h : Matrix (Fin n) (Fin n) F) (a : Fin n) :
     elimCol β h a * elimCol β h a = 0 := by
   ext i l
-  rw [mul_apply, Matrix.zero_apply]
+  rw [Matrix.mul_apply, Matrix.zero_apply]
   refine Finset.sum_eq_zero fun k _ => ?_
   by_cases hk : k = a
   · subst hk
@@ -62,7 +62,7 @@ theorem elimCol_mul_elimCol (h : Matrix (Fin n) (Fin n) F) (a : Fin n) :
 
 theorem elimCol_mul_apply (h : Matrix (Fin n) (Fin n) F) (a i l : Fin n) :
     (elimCol β h a * h) i l = if elimKey β a < elimKey β i then h i a / h a a * h a l else 0 := by
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   simp only [elimCol_apply]
   split_ifs with hi
   · rw [Finset.sum_eq_single a]

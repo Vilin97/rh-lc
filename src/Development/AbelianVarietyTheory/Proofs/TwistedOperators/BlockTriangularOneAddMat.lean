@@ -71,7 +71,7 @@ theorem ent_mul_mat (A : Matrix n n R) (x : Idx e → R) :
     ent e (A * mat e x) = (lmat e A).mulVec x := by
   funext p
   refine Eq.trans ?_ (sum_idx e (fun i j => if p.1.2 = j then A p.1.1 i else 0) x).symm
-  simp [ent, mul_apply]
+  simp [ent, Matrix.mul_apply]
 
 omit [Fintype α] [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] in
 theorem ent_mat_mul (B : Matrix n n R) (x : Idx e → R) :
@@ -79,7 +79,7 @@ theorem ent_mat_mul (B : Matrix n n R) (x : Idx e → R) :
   funext p
   refine Eq.trans ?_ (sum_idx e (fun i j => if p.1.1 = i then B j p.1.2 else 0) x).symm
   rw [Finset.sum_comm]
-  simp [ent, mul_apply, mul_comm]
+  simp [ent, Matrix.mul_apply, mul_comm]
 
 omit [Fintype α] [∀ a, Fintype (m a)] [∀ a, DecidableEq (m a)] in
 theorem mul_mat {A : Matrix n n R} (hA : A.BlockTriangular (blk e)) (x : Idx e → R) :
@@ -88,7 +88,7 @@ theorem mul_mat {A : Matrix n n R} (hA : A.BlockTriangular (blk e)) (x : Idx e �
   ext i j
   by_cases h : blk e i < blk e j
   · simp [mat, h, ent]
-  · simp only [mat, of_apply, h, dif_neg, not_false_eq_true, mul_apply]
+  · simp only [mat, of_apply, h, dif_neg, not_false_eq_true, Matrix.mul_apply]
     refine Finset.sum_eq_zero fun l _ => ?_
     by_cases h' : blk e l < blk e j
     · rw [hA (h'.trans_le (not_lt.1 h)), zero_mul]

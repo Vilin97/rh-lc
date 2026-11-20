@@ -178,7 +178,7 @@ theorem cong_factor (e : a ⊕ b ≃ n) (γ : (ValueGroupWithZero k)ˣ) (hγ : �
       ((mem_parabLower_two k).2 fun i j => ?_)⟩, by simp [mul_assoc]⟩
   · rw [map_mul, map_inv, leviProj_leviEmb, mul_inv_cancel]
   · have : (p⁻¹ * g).val (e (.inl i)) (e (.inr j)) = (p⁻¹ * p).val (e (.inl i)) (e (.inr j)) := by
-      simp only [Units.val_mul, mul_apply]
+      simp only [Units.val_mul, Matrix.mul_apply]
       refine Finset.sum_congr rfl fun l _ => ?_
       congr 1
       simp [hp, M]

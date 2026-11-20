@@ -100,7 +100,7 @@ theorem gramHead_of_triangular {N : ℕ} (hd : Fin N → ℝ) (k : ℕ) (b : Mat
       b.submatrix Subtype.val Subtype.val := by
   ext i j
   simp only [gramHead, gramOf, submatrix_apply]
-  rw [mul_apply, mul_apply]
+  rw [Matrix.mul_apply, Matrix.mul_apply]
   simp only [mul_diagonal, conjTranspose_apply, submatrix_apply]
   rw [← Finset.sum_subtype (Finset.univ.filter fun a : Fin N => (a : ℕ) < k) (by simp)
     (fun l => star (b l i.1) * ((hd l : ℝ) : ℂ) * b l j.1)]

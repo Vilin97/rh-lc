@@ -300,7 +300,7 @@ theorem cast_eps (ρ : Fin k → Fin k) :
 theorem det_eq_sum_eps (x : Fin k → Fin k → R) :
     (Matrix.of x).det = ∑ ρ : Fin k → Fin k, (eps ρ : R) * ∏ t, x (ρ t) t := by
   conv_lhs => rw [← Matrix.one_mul (Matrix.of x)]
-  simp only [det_apply', mul_apply, Finset.prod_univ_sum, Finset.mul_sum, Fintype.piFinset_univ]
+  simp only [det_apply', Matrix.mul_apply, Finset.prod_univ_sum, Finset.mul_sum, Fintype.piFinset_univ]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun ρ _ => ?_
   rw [cast_eps, ← det_transpose, det_apply', Finset.sum_mul]

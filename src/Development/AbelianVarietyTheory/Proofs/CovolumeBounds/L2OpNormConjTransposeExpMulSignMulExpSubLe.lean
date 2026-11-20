@@ -93,10 +93,10 @@ theorem l2_opNorm_submatrix_le (A : Matrix n n ℂ) {e : m → n} (he : Function
   set P : Matrix n m ℂ := (1 : Matrix n n ℂ).submatrix id e with hP
   have hPP : Pᴴ * P = 1 := by
     ext a b
-    simp [hP, mul_apply, one_apply, he.eq_iff]
+    simp [hP, Matrix.mul_apply, one_apply, he.eq_iff]
   have hA : A.submatrix e e = Pᴴ * A * P := by
     ext a b
-    simp [hP, mul_apply, one_apply]
+    simp [hP, Matrix.mul_apply, one_apply]
   have hn : ‖P‖ ≤ 1 := by
     have := l2_opNorm_conjTranspose_mul_self P
     rw [hPP] at this
@@ -420,7 +420,7 @@ variable {m n : Type*} [Fintype m] [Fintype n] [DecidableEq m] [DecidableEq n]
 
 theorem transpose_mul_diagonal_mul_map_star_apply (j : n → ℂ) (g : Matrix n m ℂ) (k l : m) :
     (gᵀ * diagonal j * g.map star) k l = ∑ a, j a * (g a k * star (g a l)) := by
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [mul_diagonal, transpose_apply, map_apply]
   ring

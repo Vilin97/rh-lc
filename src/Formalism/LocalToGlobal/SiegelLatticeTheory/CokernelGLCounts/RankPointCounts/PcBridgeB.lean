@@ -420,7 +420,7 @@ theorem schur_eq {n s : E} {P X L U : Matrix (Fin (m + 1)) (Fin (m + 1)) E} (hL 
   have hhd : hd P = hd L * hd X * hd U := by
     rw [hP]
     ext a b
-    simp [hd, mul_apply, Fin.sum_univ_castSucc, hL.2 _ _ (Fin.castSucc_lt_last a),
+    simp [hd, Matrix.mul_apply, Fin.sum_univ_castSucc, hL.2 _ _ (Fin.castSucc_lt_last a),
       hU.2 _ _ (Fin.castSucc_lt_last b)]
   have hdetP : P.det = X.det := by
     rw [hP, det_mul, det_mul, hdetL, hdetU, one_mul, mul_one]

@@ -147,9 +147,9 @@ theorem _root_.GlobalTheory.FitSquare.relations_mem {M : Type} [AddCommGroup M] 
         rw [h₁, h₂, det_one, one_mul]
       · ext s t
         simp [N, toBlocks₁₂, updateRow_apply]
-    rw [hadj, hN, adjugate_mul_distrib, adjugate_mul_distrib, mul_apply]
+    rw [hadj, hN, adjugate_mul_distrib, adjugate_mul_distrib, Matrix.mul_apply]
     refine Ideal.sum_mem _ fun x _ => Ideal.mul_mem_left _ _ ?_
-    rw [mul_apply]
+    rw [Matrix.mul_apply]
     exact Ideal.sum_mem _ fun y _ => Ideal.mul_mem_right _ _ (hD x y)
 
 end blocks

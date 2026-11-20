@@ -91,7 +91,7 @@ def kronFam (A : K → Matrix I I ℂ) : Matrix (K → I) (K → I) ℂ := of fu
 
 lemma kronFam_mul (A B : K → Matrix I I ℂ) : kronFam A * kronFam B = kronFam (A * B) := by
   ext g h
-  simp only [kronFam, mul_apply, of_apply, Pi.mul_apply, Finset.prod_univ_sum, Fintype.piFinset_univ,
+  simp only [kronFam, Matrix.mul_apply, of_apply, Pi.mul_apply, Finset.prod_univ_sum, Fintype.piFinset_univ,
     Finset.prod_mul_distrib]
 
 def intersection_update_fsHerm_neg_one (i : K) : Matrix I I ℂ →ₗ[ℂ] Matrix (K → I) (K → I) ℂ where
@@ -164,7 +164,7 @@ lemma position_wedge (ι : K → I) (hι : Function.Injective ι) (Z : Matrix I 
   ext l j
   by_cases hj : j = i
   · subst hj
-    simp only [of_apply, Pi.mulSingle_eq_same, updateCol_self, mul_apply, one_apply]
+    simp only [of_apply, Pi.mulSingle_eq_same, updateCol_self, Matrix.mul_apply, one_apply]
     by_cases hx : g j ∈ Set.range ι
     · obtain ⟨m, hm⟩ := hx
       simp [← hm, hι.eq_iff]

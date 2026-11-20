@@ -145,7 +145,7 @@ theorem torus_inv_mul_int_iff {ϖ : kˣ} (hϖ : valuation k (ϖ : k) = uniformiz
 omit [DecidableEq n] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem int_mul {a b : Type} {A : Matrix a n k} {B : Matrix n b k} (hA : ∀ i j, A i j ∈ 𝒪[k]) (hB : ∀ i j, B i j ∈ 𝒪[k]) :
     ∀ i j, (A * B) i j ∈ 𝒪[k] := fun i j => by
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   exact sum_mem fun l _ => mul_mem (hA i l) (hB l j)
 
 theorem int_of_KO {g : GL n k} (hg : g ∈ KO k n) : ∀ i j, g.1 i j ∈ 𝒪[k] := by

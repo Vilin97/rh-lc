@@ -38,7 +38,7 @@ private lemma re_star_mul_self_eq_norm_sq (z : ℂ) : (star z * z).re = ‖z‖ 
   ring
 
 theorem hs_eq_re_trace (g : Matrix (Fin n) (Fin n) ℂ) : hs g = (trace (gᴴ * g)).re := by
-  simp only [hs, trace, Matrix.diag, mul_apply, conjTranspose_apply, Complex.re_sum,
+  simp only [hs, trace, Matrix.diag, Matrix.mul_apply, conjTranspose_apply, Complex.re_sum,
     re_star_mul_self_eq_norm_sq]
   exact Finset.sum_comm
 

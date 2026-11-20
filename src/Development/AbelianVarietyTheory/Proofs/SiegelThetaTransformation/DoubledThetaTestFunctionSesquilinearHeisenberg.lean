@@ -177,7 +177,7 @@ theorem cz_per (hs : IsSympl X bas) {x₁ x₂ : Frame X.Ψ r} (h₁ : x₁ ∈ 
   rw [DblPer.cols, toCols₁_fromCols, toCols₂_fromCols] at e e'
   refine ⟨(congrFun (e τ) 0).trans ?_, congrFun (e' τ) 0⟩
   funext a
-  simp only [Matrix.add_apply, Pi.add_apply, mul_apply, mulVec, dotProduct, mul_comm (dblZ _ _ _ _ _ _)]
+  simp only [Matrix.add_apply, Pi.add_apply, Matrix.mul_apply, mulVec, dotProduct, mul_comm (dblZ _ _ _ _ _ _)]
   rfl
 
 theorem trace_pair (b d : Fin r → E) : ((Algebra.trace ℚ E (∑ a, b a * cc (d a)) : ℚ) : ℂ) =
@@ -333,7 +333,7 @@ theorem isDbl_heis (hs : IsSympl X bas) (hn : Even n) {φ₁ φ₂ : TF n g} (h�
     funext τ k
     rw [dblz_row, ← Prod.mk_add_mk, map_add, (cz_per idx hs h₁ h₂ _ _ _).1, ← add_assoc]
     funext a
-    simp only [Matrix.add_apply, Pi.add_apply, mul_apply, mulVec, dotProduct,
+    simp only [Matrix.add_apply, Pi.add_apply, Matrix.mul_apply, mulVec, dotProduct,
       mul_comm (dblZ _ _ _ _ _ _)]
     rfl
   have a2 : dblz' X idx x₁ x₂ (fun k => z k + per X x₁ (y₁ k) ∘ idx)

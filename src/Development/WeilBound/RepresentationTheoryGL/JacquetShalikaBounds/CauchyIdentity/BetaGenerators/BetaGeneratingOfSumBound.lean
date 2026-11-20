@@ -83,7 +83,7 @@ theorem detC (α : Fin m → ℂ) (X : ℂ) (l : Fin k → ℕ) :
 theorem ML_eq (α : Fin m → ℂ) (b : Fin k → ℂ) (X : ℂ) (L : ℕ) :
     ML α b X L = (Matrix.of fun i (n : Fin L) => b i ^ (n : ℕ)) * (Matrix.of fun (n : Fin L) c => cE α X k n c) := by
   ext i c
-  simp only [ML, of_apply, mul_apply]
+  simp only [ML, of_apply, Matrix.mul_apply]
   exact (Fin.sum_univ_eq_sum_range (fun n => b i ^ n * cE α X k n c) L).symm
 
 theorem gap {f : Fin k → ℕ} (hf : StrictMono f) : ∀ (d : ℕ) (s t : Fin k), (t : ℕ) = s + d → f s + d ≤ f t := by

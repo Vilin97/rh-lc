@@ -55,7 +55,7 @@ theorem om'_mem_perpX (f f' : Fin (r + 1) → V) : H.om' f f' ∈ H.perp (H.X f)
   unfold HermSp.om'
   rw [h_sum_smul_left]
   have e := congrFun (congrFun (mul_adjugate (H.Zhat f f')) j.castSucc) (Fin.last r)
-  rw [Matrix.smul_apply, one_apply_ne (Fin.castSucc_lt_last j).ne, smul_zero, mul_apply] at e
+  rw [Matrix.smul_apply, one_apply_ne (Fin.castSucc_lt_last j).ne, smul_zero, Matrix.mul_apply] at e
   rw [← e]
   refine Finset.sum_congr rfl fun b _ => ?_
   simp only [HermSp.Zhat, Matrix.of_apply]

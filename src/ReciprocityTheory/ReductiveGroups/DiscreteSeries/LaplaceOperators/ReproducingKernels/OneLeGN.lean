@@ -103,7 +103,7 @@ theorem inv_mem {k r : ℕ} {g : Mat k r} (hg : g ∈ UH (Hpk k r)) : g⁻¹ ∈
 theorem gN_nonneg {k r : ℕ} (g : Mat k r) : 0 ≤ Formalism.FourierDecayAlt.B.gN g := Real.sqrt_nonneg _
 
 theorem gN_sq {k r : ℕ} (g : Mat k r) : (∑ i, ∑ j, Complex.normSq (g i j)) = (trace (gᴴ * g)).re := by
-  simp only [trace, diag, mul_apply, conjTranspose_apply, Complex.re_sum]
+  simp only [trace, diag, Matrix.mul_apply, conjTranspose_apply, Complex.re_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_
   rw [Complex.normSq_apply, Complex.star_def, Complex.mul_re, Complex.conj_re, Complex.conj_im]; ring

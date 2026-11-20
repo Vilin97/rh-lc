@@ -40,7 +40,7 @@ lemma obj_PJP_apply (k r : ℕ) (i j : Fin (2 * r + k + 1)) :
     ((obj_PU k r)ᴴ * Formalism.REAL.Jm (epsK k r) * obj_PU k r) i j = Hpk k r i j := by
   have hJ : Formalism.REAL.Jm (epsK k r) = diagonal (dK k r) := rfl
   have hs := obj_s_sq
-  rw [hJ, mul_apply]
+  rw [hJ, Matrix.mul_apply]
   simp only [mul_diagonal, conjTranspose_apply, obj_PU_star]
   unfold obj_PU
   simp only [add_mul, mul_add, Finset.sum_add_distrib, ite_mul, mul_ite,
@@ -69,7 +69,7 @@ lemma obj_PJP_apply (k r : ℕ) (i j : Fin (2 * r + k + 1)) :
 lemma obj_PP_apply (k r : ℕ) (i j : Fin (2 * r + k + 1)) :
     ((obj_PU k r)ᴴ * obj_PU k r) i j = (1 : Matrix _ _ ℂ) i j := by
   have hs := obj_s_sq
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   simp only [conjTranspose_apply, obj_PU_star]
   unfold obj_PU
   simp only [add_mul, mul_add, Finset.sum_add_distrib, ite_mul, mul_ite,
@@ -127,7 +127,7 @@ theorem obj_cayleyU_of_card (k r : ℕ) (ε : Fin (2 * r + k + 1) → Bool)
   have hsum : ∀ (d : Fin (2 * r + k + 1) → ℂ) a b, (Pᴴ * diagonal d * P) a b =
       ((obj_PU k r)ᴴ * diagonal (fun l => d (π l)) * obj_PU k r) a b := by
     intro d a b
-    rw [mul_apply, mul_apply]
+    rw [Matrix.mul_apply, Matrix.mul_apply]
     simp only [mul_diagonal, conjTranspose_apply]
     rw [← Equiv.sum_comp π]
     simp [P]

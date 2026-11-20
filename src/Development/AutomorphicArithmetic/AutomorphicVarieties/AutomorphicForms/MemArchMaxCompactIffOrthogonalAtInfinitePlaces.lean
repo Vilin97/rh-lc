@@ -21,14 +21,14 @@ private theorem real_unitary_iff {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) :
   ext i j
   have := hb (Pi.single i 1) (Pi.single j 1)
   rw [single_one_vecMul, single_one_vecMul, single_one_dotProduct] at this
-  rw [mul_apply, one_apply]
+  rw [Matrix.mul_apply, one_apply]
   simp only [star_apply, star_trivial]
   refine Eq.trans this ?_
   simp [Pi.single_apply]
 
 private theorem pi_unitary_iff {ι : Type} {n : ℕ} (M : Matrix (Fin n) (Fin n) (ι → ℝ)) :
     M ∈ unitaryGroup (Fin n) (ι → ℝ) ↔ ∀ w, M.map (fun x => x w) ∈ unitaryGroup (Fin n) ℝ := by
-  simp only [mem_unitaryGroup_iff, ← Matrix.ext_iff, funext_iff, mul_apply, one_apply, star_apply, map_apply,
+  simp only [mem_unitaryGroup_iff, ← Matrix.ext_iff, funext_iff, Matrix.mul_apply, one_apply, star_apply, map_apply,
     Finset.sum_apply, Pi.mul_apply, Pi.star_apply, ite_apply, Pi.one_apply, Pi.zero_apply]
   exact ⟨fun h w i j => h i j w, fun h i j w => h w i j⟩
 

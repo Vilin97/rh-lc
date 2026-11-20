@@ -123,7 +123,7 @@ variable {𝕜 : Type*} [RCLike 𝕜] {n : ℕ}
 def frobSq (M : Matrix (Fin n) (Fin n) 𝕜) : ℝ := ∑ i, ∑ j, ‖M i j‖ ^ 2
 
 theorem frobSq_eq_trace (M : Matrix (Fin n) (Fin n) 𝕜) : (frobSq M : 𝕜) = Matrix.trace (Mᴴ * M) := by
-  simp only [frobSq, Matrix.trace, diag, mul_apply, conjTranspose_apply, RCLike.star_def]
+  simp only [frobSq, Matrix.trace, diag, Matrix.mul_apply, conjTranspose_apply, RCLike.star_def]
   rw [Finset.sum_comm]
   push_cast
   refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_

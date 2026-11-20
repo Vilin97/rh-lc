@@ -159,7 +159,7 @@ theorem hermMat_pull (L : V n →L[ℂ] V m) {β : CxForm.Alt m} (h : IsType 1 1
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     rw [pull_pair, repr_pair_sum]
   rw [hermMat, of_apply, hr]
-  simp only [mul_apply, of_apply, conjTranspose_apply, hermMat, Complex.star_def, Finset.mul_sum, Finset.sum_mul]
+  simp only [Matrix.mul_apply, of_apply, conjTranspose_apply, hermMat, Complex.star_def, Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   ring

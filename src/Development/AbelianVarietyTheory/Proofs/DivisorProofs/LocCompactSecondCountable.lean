@@ -131,7 +131,7 @@ theorem nMat_mul (x' y' : Fin n → L) (z' : L) :
     nMat x y z * nMat x' y' z' = nMat (x + x') (y + y') (z + x ⬝ᵥ y' + z') := by
   ext i j
   induction i using lineCases <;> induction j using lineCases <;>
-    simp [mul_apply, sum_line, Matrix.one_apply, dotProduct] <;> ring
+    simp [Matrix.mul_apply, sum_line, Matrix.one_apply, dotProduct] <;> ring
 
 theorem nMat_zero : nMat (0 : Fin n → L) 0 0 = 1 := by
   ext i j

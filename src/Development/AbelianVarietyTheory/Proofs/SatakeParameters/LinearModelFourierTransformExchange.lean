@@ -34,7 +34,7 @@ def flatT (n r : ℕ) : Matrix (Fin r) (Fin n) k ≃ₜ (Fin n × Fin r → k) w
 
 theorem trace_mul_eq_dotProduct {n r : ℕ} (x : Matrix (Fin r) (Fin n) k) (y : Matrix (Fin n) (Fin r) k) :
     trace (x * y) = flat n r y ⬝ᵥ flatT n r x := by
-  simp only [trace, diag, mul_apply, dotProduct, Fintype.sum_prod_type]
+  simp only [trace, diag, Matrix.mul_apply, dotProduct, Fintype.sum_prod_type]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
   show x j i * y i j = y i j * x j i

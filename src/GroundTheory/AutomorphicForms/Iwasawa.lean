@@ -46,7 +46,7 @@ theorem borel_le_blockUpper {α : Type*} [LinearOrder α] {β : Fin n → α} (h
 
 theorem upper_mul_apply_self {A C : Matrix (Fin n) (Fin n) F} (hA : A.IsUpperTriangular)
     (hC : C.IsUpperTriangular) (i : Fin n) : (A * C) i i = A i i * C i i := by
-  rw [mul_apply, Finset.sum_eq_single i]
+  rw [Matrix.mul_apply, Finset.sum_eq_single i]
   · intro k _ hk
     rcases lt_or_gt_of_ne hk with h | h
     · rw [hA h, zero_mul]

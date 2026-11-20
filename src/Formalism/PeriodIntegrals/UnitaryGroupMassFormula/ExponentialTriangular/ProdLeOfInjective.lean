@@ -10,7 +10,7 @@ namespace PI.ET
 theorem det_mul_rect {R : Type*} [CommRing R] {k n : ℕ}
     (A : Matrix (Fin k) (Fin n) R) (B : Matrix (Fin n) (Fin k) R) :
     (A * B).det = ∑ f : Fin k → Fin n, (∏ i, B (f i) i) * (A.submatrix id f).det := by
-  simp only [det_apply, mul_apply, Fintype.prod_sum, Finset.smul_sum]
+  simp only [det_apply, Matrix.mul_apply, Fintype.prod_sum, Finset.smul_sum]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun f _ => ?_
   rw [Finset.mul_sum]

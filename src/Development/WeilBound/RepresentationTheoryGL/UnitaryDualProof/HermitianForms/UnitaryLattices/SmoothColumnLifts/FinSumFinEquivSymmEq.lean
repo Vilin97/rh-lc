@@ -192,7 +192,7 @@ theorem conj_mat (N a : ℕ) (B C U : Matrix (Fin N) (Fin N) k) (hBC : B * C = 1
       rw [Matrix.sub_apply, h2, one_apply_eq, sub_self]
   have hXC : (U - 1) * C = U - 1 := by
     ext r c
-    rw [mul_apply, Finset.sum_eq_single c]
+    rw [Matrix.mul_apply, Finset.sum_eq_single c]
     · by_cases hc : (c : ℕ) < a + 1
       · rw [hXcol r c hc, zero_mul]
       · rw [hC c c (Or.inl (by omega)), if_pos rfl, mul_one]
@@ -207,11 +207,11 @@ theorem conj_mat (N a : ℕ) (B C U : Matrix (Fin N) (Fin N) k) (hBC : B * C = 1
       _ = 1 + B * (U - 1) := by rw [mul_add, mul_one, add_mul, hBC, mul_assoc, hXC]
   have hBXcol : ∀ r c : Fin N, (c : ℕ) < a + 1 → (B * (U - 1)) r c = 0 := by
     intro r c hc
-    rw [mul_apply]
+    rw [Matrix.mul_apply]
     exact Finset.sum_eq_zero fun l _ => by rw [hXcol l c hc, mul_zero]
   have hBXrow : ∀ r c : Fin N, a ≤ (r : ℕ) → (B * (U - 1)) r c = (U - 1) r c := by
     intro r c hr
-    rw [mul_apply, Finset.sum_eq_single r]
+    rw [Matrix.mul_apply, Finset.sum_eq_single r]
     · rw [hB r r (Or.inl hr), if_pos rfl, one_mul]
     · intro l _ hl
       rw [hB r l (Or.inl hr), if_neg (Ne.symm hl), zero_mul]

@@ -13599,7 +13599,7 @@ variable {A : Type} [Ring A]
 theorem transpose_mul_comm (M N : Matrix (Fin 2) (Fin 2) A) (h : ∀ i j k l, M i j * N k l = N k l * M i j) :
     (M * N)ᵀ = Nᵀ * Mᵀ := by
   ext i j
-  simp only [transpose_apply, mul_apply]
+  simp only [transpose_apply, Matrix.mul_apply]
   exact Finset.sum_congr rfl fun k _ => h _ _ _ _
 
 theorem transpose_list_prod : ∀ (l : List (Matrix (Fin 2) (Fin 2) A)),
@@ -13620,7 +13620,7 @@ theorem transpose_list_prod : ∀ (l : List (Matrix (Fin 2) (Fin 2) A)),
       | nil => intro k m; simp only [List.prod_nil, one_apply]; split_ifs <;> simp
       | cons N L' ih =>
         intro k m
-        rw [List.prod_cons, mul_apply, Finset.mul_sum, Finset.sum_mul]
+        rw [List.prod_cons, Matrix.mul_apply, Finset.mul_sum, Finset.sum_mul]
         refine Finset.sum_congr rfl fun t _ => ?_
         rw [← mul_assoc, hL' N (by simp) k t, mul_assoc, ih (fun N' hN' => hL' N' (by simp [hN'])) t m, mul_assoc]
     exact hc l (fun N hN k m => key N hN i j k m) k m

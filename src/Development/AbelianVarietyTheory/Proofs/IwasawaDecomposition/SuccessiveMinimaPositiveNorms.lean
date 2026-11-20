@@ -43,7 +43,7 @@ theorem det_eq {C : Type} [Field C] {J : Type} {n : ℕ}
   have h1 : (u * b).submatrix σ (Fin.castLE hk) =
       u.submatrix σ (Fin.castLE hk) * b.submatrix (Fin.castLE hk) (Fin.castLE hk) := by
     ext l' l
-    rw [submatrix_apply, mul_apply, mul_apply]
+    rw [submatrix_apply, Matrix.mul_apply, Matrix.mul_apply]
     symm
     refine Fintype.sum_of_injective (Fin.castLE hk) (Fin.castLE_injective hk) _ _ ?_ (fun _ => rfl)
     intro j hj

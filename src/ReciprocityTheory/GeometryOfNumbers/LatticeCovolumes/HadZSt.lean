@@ -47,9 +47,9 @@ theorem neg_log_det_le {r' r : ℕ} (hr : r' ≤ r) {G' : Matrix (Fin r') (Fin r
   have hUl : ∀ l i, UC l (Fin.castAdd m i) = MC l i := by intro l i; simp [UC, U, MC]
   have hUr : ∀ l j, UC l (Fin.natAdd r' j) = NC l (f j) := by intro l j; simp [UC, U, NC]
   have hsub : H.submatrix (Fin.castAdd m) (Fin.castAdd m) = MCᴴ * G * MC := by
-    ext i j; simp only [H, submatrix_apply, mul_apply, conjTranspose_apply, hUl]
+    ext i j; simp only [H, submatrix_apply, Matrix.mul_apply, conjTranspose_apply, hUl]
   have hdiag : ∀ j, H (Fin.natAdd r' j) (Fin.natAdd r' j) = (NCᴴ * G * NC) (f j) (f j) := by
-    intro j; simp only [H, mul_apply, conjTranspose_apply, hUr]
+    intro j; simp only [H, Matrix.mul_apply, conjTranspose_apply, hUr]
   have hMMpd : (MCᴴ * G * MC).PosDef := by
     rw [← hsub]; exact hHpd.submatrix (Fin.castAdd_injective r' m)
 

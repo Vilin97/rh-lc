@@ -94,7 +94,7 @@ variable [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β] [Fintype κ
 
 omit [DecidableEq α] [DecidableEq β] in
 theorem flat_dot (σ : κ ≃ α × β) (X Y : Matrix α β R) : flat σ X ⬝ᵥ flat σ Y = trace (X * Yᵀ) := by
-  simp only [dotProduct, flat_apply, trace, diag_apply, mul_apply, transpose_apply]
+  simp only [dotProduct, flat_apply, trace, diag_apply, Matrix.mul_apply, transpose_apply]
   rw [← Fintype.sum_prod_type']
   exact Equiv.sum_comp σ (fun p => X p.1 p.2 * Y p.1 p.2)
 

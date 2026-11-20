@@ -23,7 +23,7 @@ def gramMat (w : ReciprocityTheory.L2DbarEstimates.V 1) : Matrix (Fin 1 ⊕ Fin 
 
 theorem gramMat_eq (w : ReciprocityTheory.L2DbarEstimates.V 1) : gramMat w = (frameMat w)ᵀ * 1 * (frameMat w)ᴴᵀ := by
   ext (a | a) (b | b) <;>
-    simp [gramMat, frameMat, mul_apply, Subsingleton.elim a 0, Subsingleton.elim b 0]
+    simp [gramMat, frameMat, Matrix.mul_apply, Subsingleton.elim a 0, Subsingleton.elim b 0]
 
 theorem det_frameMat (w : ReciprocityTheory.L2DbarEstimates.V 1) : (frameMat w).det = 1 := by
   rw [frameMat, det_fromBlocks_zero₁₂]; simp
@@ -74,7 +74,7 @@ theorem secondForm_gramMat (z ξ : ReciprocityTheory.L2DbarEstimates.V 1) :
   have hi : (frameMat z)⁻¹ = fromBlocks 1 0 (of fun _ _ => -z 0) 1 := by
     refine inv_eq_left_inv ?_
     ext (a | a) (b | b) <;> obtain rfl := Subsingleton.elim a 0 <;>
-      obtain rfl := Subsingleton.elim b 0 <;> simp [frameMat, mul_apply]
+      obtain rfl := Subsingleton.elim b 0 <;> simp [frameMat, Matrix.mul_apply]
   rw [secondForm_eq, funext gramMat_eq, conn_changeFrame (H := fun _ => 1) (mContDiffAt_const 1)
     (by simp) (mContDiffAt_frameMat z) hu (mdbar_frameMat z), conn_const, Matrix.zero_mul, zero_add,
     mdel_frameMat, hi, fromBlocks_multiply, toBlocks_fromBlocks₂₁]
@@ -100,7 +100,7 @@ theorem quotGram_gramMat (z : ReciprocityTheory.L2DbarEstimates.V 1) :
   rw [quotGram, gramMat, toBlocks_fromBlocks₁₁, toBlocks_fromBlocks₁₂, toBlocks_fromBlocks₂₁,
     toBlocks_fromBlocks₂₂, ← ofReal_u, inv_of_const]
   ext a b
-  simp only [Subsingleton.elim a 0, Subsingleton.elim b 0, Matrix.sub_apply, one_apply_eq, mul_apply,
+  simp only [Subsingleton.elim a 0, Subsingleton.elim b 0, Matrix.sub_apply, one_apply_eq, Matrix.mul_apply,
     Fin.sum_univ_one, of_apply]
   field_simp
   rw [ofReal_u]; ring
@@ -115,7 +115,7 @@ theorem density_eq : ∀ v : ReciprocityTheory.L2DbarEstimates.V 1, 2 * diagVal 
       (((ArithHeightModel.u v ^ 2)⁻¹ : ℝ) : ℂ) := by
     rw [secondFormAdj, secondForm_gramMat, subGram_gramMat, quotGram_gramMat, adj,
       ← transpose_nonsing_inv, inv_of_const]
-    simp [trace, mul_apply, sq]
+    simp [trace, Matrix.mul_apply, sq]
   rw [diagVal, extTrace_eq (mContDiffAt_gramMat v) (.of_forall posDef_gramMat), ← mul_assoc, e,
     Complex.re_ofReal_mul, ht, Complex.ofReal_re]
   ring

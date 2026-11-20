@@ -16,7 +16,7 @@ theorem rowAdd_mul_apply (r l : Fin c) (a : k) (t : Matrix (n ⊕ Fin c) (n' ⊕
     (p : n ⊕ Fin c) (q : n' ⊕ Fin (c + 1)) :
     ((fromBlocks 1 0 0 (transvection r l a) : Matrix (n ⊕ Fin c) (n ⊕ Fin c) k) * t) p q =
       t p q + if p = Sum.inr r then a * t (Sum.inr l) q else 0 := by
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   rcases p with p | p
   · simp [Fintype.sum_sum_type, one_apply]
   · simp [Fintype.sum_sum_type, transvection, add_mul, Finset.sum_add_distrib, one_apply, single_apply,

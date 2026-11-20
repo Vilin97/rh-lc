@@ -58,7 +58,7 @@ theorem minor_mul (g b : Matrix (Fin N) (Fin N) A) (l : Fin (N + 1))
   rw [minor, minor, ← det_mul]
   congr 1
   ext i j
-  simp only [submatrix_apply, mul_apply]
+  simp only [submatrix_apply, Matrix.mul_apply]
   refine (Fintype.sum_of_injective (Fin.castLE l.is_le) (Fin.castLE_injective _) _ _ (fun k hk => ?_)
     fun _ => rfl).symm
   rw [hb k _ j.2 (not_lt.1 fun h => hk ⟨⟨k, h⟩, rfl⟩), mul_zero]

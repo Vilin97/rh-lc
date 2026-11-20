@@ -105,7 +105,7 @@ theorem UpperTheory.curvature_connection_bound :
       have hB : ∀ i, (B i c a : ℝ) = B i a c := fun i => by simpa using (hP.psd i).isHermitian.apply a c
       simp [hodgeGram, imPeriod, Matrix.sum_apply, hB, (hP.symm _ (hH' z hz).1.1).apply]
     rw [dualGram, transpose_nonsing_inv, hs.eq]
-    simp only [mul_apply, transpose_apply, conjTranspose_apply, A, of_apply]
+    simp only [Matrix.mul_apply, transpose_apply, conjTranspose_apply, A, of_apply]
     rw [ε.symm_apply_apply, ε.symm_apply_apply]
   set C₁ : ℝ := b * (max C 0 * max D 1 ^ 2 * b + b) with hC₁
   set C₂ : ℝ := max C₁ (max C 0 * max D 1 ^ 2) with hC₂

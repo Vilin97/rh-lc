@@ -12,7 +12,7 @@ variable {R : Type*} [CommRing R] {j N : ℕ}
 
 theorem det_mul_eq_sum (A : Matrix (Fin j) (Fin N) R) (B : Matrix (Fin N) (Fin j) R) :
     (A * B).det = ∑ p : Fin j → Fin N, (∏ i, B (p i) i) * (A.submatrix id p).det := by
-  simp only [det_apply', mul_apply, prod_univ_sum, mul_sum, Fintype.piFinset_univ,
+  simp only [det_apply', Matrix.mul_apply, prod_univ_sum, mul_sum, Fintype.piFinset_univ,
     submatrix_apply, id]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun p _ => Finset.sum_congr rfl fun σ _ => ?_

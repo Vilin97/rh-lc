@@ -26,7 +26,7 @@ theorem blockMat_mul {n : ℕ} (g h : Mir k n) :
   ext i j
   have e : ((h : GL (Fin (n + 1)) k) : Matrix (Fin (n + 1)) (Fin (n + 1)) k) (Fin.last n) (Fin.castSucc j) = 0 := by
     rw [hh]; simp [eLast, Pi.single_apply, Fin.castSucc_ne_last]
-  simp [blockMat, Units.val_mul, mul_apply, Fin.sum_univ_castSucc, e]
+  simp [blockMat, Units.val_mul, Matrix.mul_apply, Fin.sum_univ_castSucc, e]
 
 def mirabolicProjection (n : ℕ) : Mir k n →* GL (Fin n) k :=
   MonoidHom.toHomUnits
@@ -54,13 +54,13 @@ theorem glEmbMat_mul_colMat (n : ℕ) (A : Matrix (Fin n) (Fin n) k) (v : Fin n 
   ext i j
   by_cases hj : j = Fin.last n
   · subst hj
-    induction i using Fin.lastCases <;> simp [glEmbMat, colMat, mul_apply, Fin.sum_univ_castSucc, mulVec, dotProduct]
-  · simp [glEmbMat, colMat, mul_apply, hj]
+    induction i using Fin.lastCases <;> simp [glEmbMat, colMat, Matrix.mul_apply, Fin.sum_univ_castSucc, mulVec, dotProduct]
+  · simp [glEmbMat, colMat, Matrix.mul_apply, hj]
 
 theorem colMat_mul_glEmbMat (n : ℕ) (A : Matrix (Fin n) (Fin n) k) (w : Fin n → k) :
     colMat k n w * glEmbMat k n A = colMat k n w := by
   ext i j
-  induction j using Fin.lastCases <;> simp [colMat, glEmbMat, mul_apply, Fin.sum_univ_castSucc, Fin.castSucc_ne_last]
+  induction j using Fin.lastCases <;> simp [colMat, glEmbMat, Matrix.mul_apply, Fin.sum_univ_castSucc, Fin.castSucc_ne_last]
 
 theorem glEmb_mul_unip' (n : ℕ) (g : GL (Fin n) k) (v : Multiplicative (Fin n → k)) :
     glEmb k n g * unip k n v =
@@ -107,7 +107,7 @@ theorem qEntry_mul (n : ℕ) (a b : Mir k (n + 1)) (ha : mirabolicProjection k (
   have hb : ((b : GL (Fin (n + 2)) k) : Matrix (Fin (n + 2)) (Fin (n + 2)) k) (Fin.last (n + 1)) (Fin.last (n + 1)) = 1 := by
     have := congrFun ((mem_Mir_iff k _).1 b.2) (Fin.last (n + 1))
     simpa [eLast] using this
-  simp only [qEntry, Units.val_mul, mul_apply, Fin.sum_univ_castSucc (n := n + 1), ha', hb, mul_one]
+  simp only [qEntry, Units.val_mul, Matrix.mul_apply, Fin.sum_univ_castSucc (n := n + 1), ha', hb, mul_one]
   simp [eLast, Pi.single_apply, add_comm]
 
 def qChar (ψ : AddChar k Circle) (n : ℕ) : Q k n →* ℂˣ where

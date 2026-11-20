@@ -371,11 +371,11 @@ theorem extM_mul_self (hQ : Q * ι = 1) (g : Matrix k k A) : extM ι Q g * ι = 
 
 theorem mul_vecMulVec' {a b : Type} [Fintype b] (M : Matrix a b A) (u : b → A) (v : k → A) :
     M * vecMulVec u v = vecMulVec (M *ᵥ u) v := by
-  ext i j; simp [vecMulVec, mul_apply, mulVec, dotProduct, Finset.sum_mul, mul_assoc]
+  ext i j; simp [vecMulVec, Matrix.mul_apply, mulVec, dotProduct, Finset.sum_mul, mul_assoc]
 
 theorem vecMulVec_mul' {a b : Type} [Fintype b] (u : a → A) (v : b → A) (M : Matrix b k A) :
     vecMulVec u v * M = vecMulVec u (v ᵥ* M) := by
-  ext i j; simp [vecMulVec, mul_apply, vecMul, dotProduct, Finset.mul_sum, mul_assoc]
+  ext i j; simp [vecMulVec, Matrix.mul_apply, vecMul, dotProduct, Finset.mul_sum, mul_assoc]
 
 theorem det_extM (hQ : Q * ι = 1) (t : Matrix k k A) : (extM ι Q t).det = t.det := by
   have e : extM ι Q t = 1 + ι * ((t - 1) * Q) := by
@@ -525,7 +525,7 @@ theorem z_part {d : Type} [Fintype d] (z : Matrix d m A) (x a b : m → A) :
     mul_fromCols, Matrix.mul_one, fromBlocks_transpose, transpose_zero, fromCols_mul_fromBlocks]
   simp only [Matrix.mul_zero, add_zero, zero_add, fromCols_add', transpose_add, transpose_mul, Matrix.mul_add,
     Matrix.mul_assoc]
-  congr 1 <;> congr 1 <;> ext i j <;> simp [vecMulVec, mul_apply, mulVec, dotProduct, Finset.sum_mul, mul_comm, mul_left_comm] <;>
+  congr 1 <;> congr 1 <;> ext i j <;> simp [vecMulVec, Matrix.mul_apply, mulVec, dotProduct, Finset.sum_mul, mul_comm, mul_left_comm] <;>
     (rw [Finset.mul_sum]; exact Finset.sum_congr rfl fun _ _ => by ring)
 
 end ExtDiag

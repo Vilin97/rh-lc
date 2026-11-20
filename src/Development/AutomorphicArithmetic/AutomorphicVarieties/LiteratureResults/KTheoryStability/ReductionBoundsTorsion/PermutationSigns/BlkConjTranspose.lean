@@ -22,7 +22,7 @@ theorem prod_sum_sum (g : Fin q → ι → ι → ℂ) :
 
 theorem tp_mul (A B : Matrix ι ι ℂ) : tp q (A * B) = tp q A * tp q B := by
   ext I J
-  simp only [tp, of_apply, mul_apply]
+  simp only [tp, of_apply, Matrix.mul_apply]
   rw [Fintype.prod_sum]
   simp [Finset.prod_mul_distrib]
 
@@ -56,13 +56,13 @@ theorem fT'_conj (A : Matrix (Fin q → ι) (Fin q → ι) ℂ) (P : Matrix ι �
     fT' A (fun i => P * B i * Pᴴ) = fT' (tp q Pᵀ * A * tp q (P.map star)) B := by
   have h1 : ∀ (b : Matrix ι ι ℂ) (x y : ι), (P * b * Pᴴ) x y = ∑ u, ∑ v, P x u * b u v * star (P y v) := by
     intro b x y
-    simp only [mul_apply, conjTranspose_apply, Finset.sum_mul]
+    simp only [Matrix.mul_apply, conjTranspose_apply, Finset.sum_mul]
     rw [Finset.sum_comm]
   unfold fT'
   simp only [h1, prod_sum_sum, Finset.mul_sum]
   rw [sum4]
   refine Finset.sum_congr rfl fun U _ => Finset.sum_congr rfl fun V _ => ?_
-  simp only [mul_apply, tp, of_apply, transpose_apply, map_apply, Finset.sum_mul]
+  simp only [Matrix.mul_apply, tp, of_apply, transpose_apply, map_apply, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun J _ => Finset.sum_congr rfl fun I _ => ?_
   simp only [Finset.prod_mul_distrib]
@@ -76,7 +76,7 @@ variable {W : Type} [Fintype W] {m : ℕ}
 
 theorem blk_mul (d e : W → Matrix (Fin m) (Fin m) ℂ) : blk d * blk e = blk fun w => d w * e w := by
   ext x y
-  simp only [blk, mul_apply, of_apply]
+  simp only [blk, Matrix.mul_apply, of_apply]
   rw [Fintype.sum_prod_type]
   simp only
   by_cases h : x.1 = y.1
@@ -304,10 +304,10 @@ theorem conj_supp (d1 d2 : InfinitePlace L → Matrix (Fin N) (Fin N) ℂ)
     (A : Matrix (Fin q → Ix (InfinitePlace L) N) (Fin q → Ix (InfinitePlace L) N) ℂ)
     (hA : ∀ I J, A I J ≠ 0 → ∀ i, (I i).1 = (J i).1) (X Y : Fin q → Ix (InfinitePlace L) N)
     (h : (tp q (blk d1) * A * tp q (blk d2)) X Y ≠ 0) (i : Fin q) : (X i).1 = (Y i).1 := by
-  rw [mul_apply] at h
+  rw [Matrix.mul_apply] at h
   obtain ⟨J, -, hJ⟩ := Finset.exists_ne_zero_of_sum_ne_zero h
   obtain ⟨h1, h2⟩ := mul_ne_zero_iff.1 hJ
-  rw [mul_apply] at h1
+  rw [Matrix.mul_apply] at h1
   obtain ⟨I, -, hI⟩ := Finset.exists_ne_zero_of_sum_ne_zero h1
   obtain ⟨h3, h4⟩ := mul_ne_zero_iff.1 hI
   rw [tp_blk_supp d1 X I h3 i, hA I J h4 i, tp_blk_supp d2 J Y h2 i]

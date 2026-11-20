@@ -17,7 +17,7 @@ def twoPhase (x : Matrix (n ⊕ Fin 2) (n' ⊕ Fin 3) k) (x' : Matrix (n'' ⊕ F
 
 theorem twoPhase_upU (x₀ : Matrix n n' k) (e : StepVar n 2 n' → k) (x' : Matrix (n'' ⊕ Fin 1) (n ⊕ Fin 2) k)
     (β : n → k) : twoPhase ((colE 2 2 β).val * stepPt x₀ e) (x' * (colE 2 2 (-β)).val) = twoPhase (stepPt x₀ e) x' := by
-  simp [twoPhase, ch, colE, upU, mul_apply, Fintype.sum_sum_type, Fin.sum_univ_succ, stepPt, basePt, Free, Kept,
+  simp [twoPhase, ch, colE, upU, Matrix.mul_apply, Fintype.sum_sum_type, Fin.sum_univ_succ, stepPt, basePt, Free, Kept,
     one_apply, mul_add, Finset.sum_add_distrib]
   rw [Finset.filter_singleton, if_neg (Fin.succ_ne_zero _).symm]
   simp only [Finset.card_empty, Nat.cast_zero]
@@ -25,7 +25,7 @@ theorem twoPhase_upU (x₀ : Matrix n n' k) (e : StepVar n 2 n' → k) (x' : Mat
 
 theorem twoPhase_lowU (x : Matrix (n ⊕ Fin 2) (n' ⊕ Fin 3) k) (x₀ : Matrix n'' n k) (e : StepVar n'' 1 n → k)
     (u : n → k) : twoPhase ((rowE 2 1 u).val * x) (stepPt x₀ e * (rowE 2 1 (-u)).val) = twoPhase x (stepPt x₀ e) := by
-  simp [twoPhase, ch, rowE, lowU, mul_apply, Fintype.sum_sum_type, Fin.sum_univ_succ, stepPt, basePt, Free, Kept,
+  simp [twoPhase, ch, rowE, lowU, Matrix.mul_apply, Fintype.sum_sum_type, Fin.sum_univ_succ, stepPt, basePt, Free, Kept,
     one_apply, add_mul, Finset.sum_add_distrib]
   ring
 

@@ -26,7 +26,7 @@ theorem thetaZeroOne_eq_neg_conj_thetaOneZero :
   have hone : ∀ x ∈ Y, (e x)ᵀ * H (π x) * (e x)ᴴᵀ = 1 := fun x hx => by
     ext a b
     rw [Matrix.one_apply, ← he.unitary x hx a b, form_eq_sum, Finset.sum_comm]
-    simp [mul_apply, Finset.sum_mul]
+    simp [Matrix.mul_apply, Finset.sum_mul]
   have heu : IsUnit (e y).det := by
     have h := congrArg det (hone y hy)
     rw [det_mul, det_mul, det_transpose, det_one, mul_assoc] at h

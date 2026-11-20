@@ -58,7 +58,7 @@ theorem exp_phiP (ε : Fin m → Bool) (c t : ℝ) (b : Matrix (Fin n) (Fin n) �
       rw [mul_comm, Complex.mul_conj, Complex.normSq_eq_norm_sq]
     rw [Complex.star_def, hz]; push_cast; ring
   have h2 : (b * gramX ε x).trace = ∑ a, ∑ k, ∑ j, sgn ε a * b j k * star (x a k) * x a j := by
-    simp only [trace, diag, mul_apply, gramX_apply, Finset.mul_sum]
+    simp only [trace, diag, Matrix.mul_apply, gramX_apply, Finset.mul_sum]
     conv_lhs => arg 2; ext j; rw [Finset.sum_comm]
     rw [Finset.sum_comm]
     refine Finset.sum_congr rfl fun a _ => ?_

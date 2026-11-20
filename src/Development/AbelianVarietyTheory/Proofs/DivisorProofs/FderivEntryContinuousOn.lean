@@ -65,7 +65,7 @@ theorem exists_conn_bound (hF : IsPosFrame V F) {K : Set (Fin D → ℂ)} (hK : 
     exact (norm_del_apply_le _ z ξ).trans
       (mul_le_mul_of_nonneg_right (e1 z hz b c) (norm_nonneg _))
   calc ‖conn F z ξ a b‖ = ‖∑ c, ((F z)ᵀ)⁻¹ a c * mdel F z ξ b c‖ := by
-        rw [conn, mul_apply]; rfl
+        rw [conn, Matrix.mul_apply]; rfl
     _ ≤ ∑ c, ‖((F z)ᵀ)⁻¹ a c * mdel F z ξ b c‖ := norm_sum_le _ _
     _ ≤ ∑ _c : Fin n, M₂ * (M₁ * ‖ξ‖) := Finset.sum_le_sum fun c _ => hterm c
     _ = n * (M₂ * M₁) * ‖ξ‖ := by

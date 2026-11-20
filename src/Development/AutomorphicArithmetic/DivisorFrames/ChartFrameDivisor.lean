@@ -9,12 +9,12 @@ open scoped ComplexOrder
 private theorem tri_mul {K : Type} [CommRing K] {r : ℕ} {S T : Matrix (Fin r) (Fin r) K} (hS : IsTri S) (hT : IsTri T) :
     IsTri (S * T) ∧ ∀ i, (S * T) i i = S i i * T i i := by
   refine ⟨fun a i h => ?_, fun i => ?_⟩
-  · rw [mul_apply]
+  · rw [Matrix.mul_apply]
     refine Finset.sum_eq_zero fun k _ => ?_
     rcases lt_or_ge k a with h' | h'
     · rw [hS a k h', zero_mul]
     · rw [hT k i (h.trans_le h'), mul_zero]
-  · rw [mul_apply]
+  · rw [Matrix.mul_apply]
     refine Finset.sum_eq_single i (fun k _ hk => ?_) (by simp)
     rcases lt_or_gt_of_ne hk with h' | h'
     · rw [hS i k h', zero_mul]

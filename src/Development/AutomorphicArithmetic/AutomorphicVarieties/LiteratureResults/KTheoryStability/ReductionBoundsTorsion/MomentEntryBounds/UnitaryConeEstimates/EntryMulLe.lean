@@ -11,7 +11,7 @@ variable {ι : Type} {N : ℕ}
 
 theorem entry_mul_le {A B : Matrix (Fin N) (Fin N) ℂ} {a b : ℝ} (hA : ∀ i j, ‖A i j‖ ≤ a)
     (hB : ∀ i j, ‖B i j‖ ≤ b) (i j : Fin N) : ‖(A * B) i j‖ ≤ N * (a * b) := by
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   calc ‖∑ k, A i k * B k j‖ ≤ ∑ k, ‖A i k * B k j‖ := norm_sum_le _ _
     _ ≤ ∑ _k : Fin N, a * b := by
         gcongr with k

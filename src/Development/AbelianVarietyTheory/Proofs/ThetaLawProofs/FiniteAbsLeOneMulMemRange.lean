@@ -95,19 +95,19 @@ theorem spInvariant_partialInv (hH : IsSpInvariant g H) (e : Fin g)
   have : σ * jAut (spPJ e) τ = nAut (spPJ e) τ := by
     have e1 : jAut (spPJ e) τ = 1 - single e e (1 : ℂ) * (τ + 1) := by
       ext i k
-      by_cases hi : e = i <;> simp [jAut_eq, cMat, spPJ, toBlocks₂₁, toBlocks₂₂, mul_apply,
+      by_cases hi : e = i <;> simp [jAut_eq, cMat, spPJ, toBlocks₂₁, toBlocks₂₂, Matrix.mul_apply,
         one_apply, single_apply, ite_and, hi]
     have e2 : nAut (spPJ e) τ = τ + single e e (1 : ℂ) * (1 - τ) := by
       ext i k
-      by_cases hi : e = i <;> simp [nAut_eq, cMat, spPJ, toBlocks₁₁, toBlocks₁₂, mul_apply,
+      by_cases hi : e = i <;> simp [nAut_eq, cMat, spPJ, toBlocks₁₁, toBlocks₁₂, Matrix.mul_apply,
         one_apply, single_apply, ite_and, hi]
     ext i k
     rw [e1, e2, Matrix.mul_sub, Matrix.mul_one, ← Matrix.mul_assoc]
     have := h i k
     by_cases hi : i = e
     · subst hi
-      simpa [mul_apply, single_apply, ite_and, one_apply] using this
-    · simpa [mul_apply, single_apply, ite_and, one_apply, hi, Ne.symm hi] using this
+      simpa [Matrix.mul_apply, single_apply, ite_and, one_apply] using this
+    · simpa [Matrix.mul_apply, single_apply, ite_and, one_apply, hi, Ne.symm hi] using this
   have e2 : σ = spAct (spPJ e) τ := by
     rw [spAct_eq, ← this, Matrix.mul_nonsing_inv_cancel_right _ _ hj]
   rw [e2]
@@ -216,7 +216,7 @@ theorem eq_on_rankOneCurve_of_integral (hol : IsHoloSiegel g H) (hH : IsSpInvari
         push_cast
         rfl
       have hZe' : ∀ i, Z e i = 0 := fun i => (hZs.apply i e).trans (hZe i)
-      simp only [rkU_val, mul_apply, map_apply, Matrix.add_apply, transpose_apply, rankOneCurve,
+      simp only [rkU_val, Matrix.mul_apply, map_apply, Matrix.add_apply, transpose_apply, rankOneCurve,
         of_apply, h3]
       simp [one_apply, vecMulVec_apply, Pi.single_apply, add_mul, mul_add, Finset.sum_add_distrib,
         hZe, hZe', hu, hRe, R₁, hR.apply j e]
@@ -471,7 +471,7 @@ theorem fderiv_vecMulVec_eq_zero (hol : IsHoloSiegel g H) (hH : IsSpInvariant g 
       (U.val.map (Int.cast : ℤ → ℂ))ᵀ) i e).im : ℂ)) = U.val.map (Int.cast : ℤ → ℂ) *ᵥ w := by
     ext i
     rw [Matrix.mul_assoc]
-    simp [hw, mul_apply, mulVec, dotProduct, imC]
+    simp [hw, Matrix.mul_apply, mulVec, dotProduct, imC]
   have hd : HasDerivAt (fun s : ℂ => (of.symm τ + s • of.symm (vecMulVec w w) : Fin g → Fin g → ℂ))
       (of.symm (vecMulVec w w)) 0 := by
     simpa using ((hasDerivAt_id (0 : ℂ)).smul_const

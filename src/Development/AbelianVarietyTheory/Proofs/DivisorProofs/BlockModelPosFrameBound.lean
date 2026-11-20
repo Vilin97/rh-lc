@@ -64,15 +64,15 @@ theorem opNorm_submatrix_le {M : Matrix n n ℂ} (hM : M.PosDef) {j : m → n} (
     ext s b
     by_cases hs : s ∈ Set.range j
     · obtain ⟨a, rfl⟩ := hs
-      simp [hJ, mul_apply, one_apply, hj.eq_iff]
+      simp [hJ, Matrix.mul_apply, one_apply, hj.eq_iff]
     · have : ∀ a, s ≠ j a := fun a h => hs ⟨a, h.symm⟩
-      simp [hJ, mul_apply, one_apply, this, h0 s b hs]
+      simp [hJ, Matrix.mul_apply, one_apply, this, h0 s b hs]
   have hstar : ∀ u, star (J *ᵥ u) = J *ᵥ star u := fun u => by
     ext s; simp [hJ, mulVec, dotProduct, one_apply, apply_ite]
   have hJJ : Jᵀ * J = 1 := by
-    ext a b; simp [hJ, mul_apply, one_apply, hj.eq_iff]
+    ext a b; simp [hJ, Matrix.mul_apply, one_apply, hj.eq_iff]
   have hT : T.submatrix j j = Jᵀ * T * J := by
-    ext a b; simp [hJ, mul_apply, one_apply]
+    ext a b; simp [hJ, Matrix.mul_apply, one_apply]
   have h1 : ∀ w u, form M w (J *ᵥ u) = form (M.submatrix j j) (Jᵀ *ᵥ w) u := fun w u => by
     rw [form, form, hstar, mulVec_mulVec, hMJ, ← mulVec_mulVec, dotProduct_mulVec, mulVec_transpose]
   have h2 : ∀ u, gnorm M (J *ᵥ u) = gnorm (M.submatrix j j) u := fun u => by
@@ -109,7 +109,7 @@ theorem conn_submatrix {M : E → Matrix n n ℂ} {z : E} (hM : (M z).PosDef) {j
   ext a b
   have h := congrFun (congrFun (conn_transpose_mul ((isUnit_iff_isUnit_det _).1 hM.isUnit) ξ) (j a)) (j b)
   refine Eq.trans ?_ h
-  simp only [mul_apply, transpose_apply, submatrix_apply]
+  simp only [Matrix.mul_apply, transpose_apply, submatrix_apply]
   refine Finset.sum_of_injOn j hj.injOn (fun _ _ => Finset.mem_univ _) (fun s _ hs => ?_) fun _ _ => rfl
   rw [h0 s b (by simpa using hs), mul_zero]
 
@@ -315,7 +315,7 @@ theorem blockModel_bounds : ∀ (e m : ℕ) (σ : Fin m → Option (Fin e)) (ι 
       have hB : ∀ i, (B i c a : ℝ) = B i a c := fun i => by simpa using (hP.psd i).isHermitian.apply a c
       simp [hodgeGram, imPeriod, Matrix.sum_apply, hB, (hP.symm _ (hH' z hz).1.1).apply]
     rw [dualGram, transpose_nonsing_inv, hs.eq]
-    simp only [mul_apply, transpose_apply, conjTranspose_apply, A, of_apply]
+    simp only [Matrix.mul_apply, transpose_apply, conjTranspose_apply, A, of_apply]
     rw [ε.symm_apply_apply, ε.symm_apply_apply]
   refine ⟨ρ', _, lt_min (lt_min hρ₂ hρ₃) one_pos, l0, fun τ => bounds_block (j := fun a => ε ⟨τ, a⟩) (hκ τ)
     (ε.injective.comp sigma_mk_injective) q0 (q1.mono (le_max_left _ _)) (q2.mono (le_max_right _ _))

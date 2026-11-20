@@ -142,7 +142,7 @@ theorem pm_exists_gram_of_posSemidef {A : Matrix (Fin D) (Fin D) ℂ} (hA : A.Po
     ∃ v : Fin D → Fin D → ℂ, ∀ a b, A a b = ∑ r, v r a * star (v r b) := by
   obtain ⟨B, hB⟩ := CStarAlgebra.nonneg_iff_eq_star_mul_self.mp hA.nonneg
   refine ⟨fun r a => star (B r a), fun a b => ?_⟩
-  rw [hB, star_eq_conjTranspose, mul_apply]
+  rw [hB, star_eq_conjTranspose, Matrix.mul_apply]
   simp [conjTranspose_apply]
 
 open scoped MatrixOrder in

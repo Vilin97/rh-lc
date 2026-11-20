@@ -92,7 +92,7 @@ theorem curvPoly_model_zero : ∀ (ι : Type) [Fintype ι] (p q n : ℕ) (h : Fi
         (if Fintype.equivFinOfCardEq h (τ, j, b) = c then 1 else 0) := by
     intro a c i j
     change curv (fun u => ((Formalism.DegreeFormula.hP (flatCoordinateMatrixBlock h τ u))⁻¹)ᵀ) 0 _ _ i j = _
-    rw [curv_model h τ, Matrix.neg_apply, mul_apply]
+    rw [curv_model h τ, Matrix.neg_apply, Matrix.mul_apply]
     simp [block_reshape_apply, EuclideanSpace.single_apply]
   refine Matrix.ext fun i j => ?_
   simp only [GlobalTheory.GoodMetric.curvPoly, of_apply, e2, Matrix.neg_apply, blockSym_apply]

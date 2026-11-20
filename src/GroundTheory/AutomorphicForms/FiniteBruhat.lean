@@ -40,11 +40,11 @@ lemma permGL_apply (σ : Equiv.Perm (Fin n)) (i j : Fin n) :
 
 lemma mul_permGL_apply (M : Matrix (Fin n) (Fin n) k) (σ : Equiv.Perm (Fin n)) (r c : Fin n) :
     (M * (permGL k σ : Matrix (Fin n) (Fin n) k)) r c = M r (σ c) := by
-  simp [mul_apply, permGL_apply]
+  simp [Matrix.mul_apply, permGL_apply]
 
 lemma permGL_mul_apply (M : Matrix (Fin n) (Fin n) k) (σ : Equiv.Perm (Fin n)) (r c : Fin n) :
     ((permGL k σ : Matrix (Fin n) (Fin n) k) * M) r c = M (σ⁻¹ r) c := by
-  rw [mul_apply, Fintype.sum_eq_single (σ⁻¹ r)]
+  rw [Matrix.mul_apply, Fintype.sum_eq_single (σ⁻¹ r)]
   · simp [permGL_apply]
   · intro a ha
     rw [permGL_apply, if_neg, zero_mul]

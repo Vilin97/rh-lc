@@ -15,7 +15,7 @@ variable {k : Type} [Field k] [ValuativeRel k]
 
 theorem val_lt_mul_right {l m n : Type} [Fintype m] {c : Matrix l m k} {P : Matrix m n k}
     (hc : ∀ i j, valuation k (c i j) < 1) (hP : IsIntM P) (i j) : valuation k ((c * P) i j) < 1 := by
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   exact Valuation.map_sum_lt _ one_ne_zero fun m _ => by
     rw [mul_comm]; exact GlobalTheory.DatumEigen.val_mul_lt (hP _ _) (hc _ _)
 

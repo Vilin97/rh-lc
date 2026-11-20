@@ -35,7 +35,7 @@ theorem downMap_last_mul_of_toFrame_eq : ∀ {k : Type} [Field k] [ValuativeRel 
   unfold downMap
   rw [dif_neg (by omega), dif_pos (by omega), dif_neg (by omega), dif_pos (by omega), hx]
   ext r q
-  simp only [submatrix_apply, mul_apply, hval]
+  simp only [submatrix_apply, Matrix.mul_apply, hval]
   exact (Fintype.sum_equiv (finCongr hr) _ _ (fun p => rfl)).symm
 
 end GlobalTheory.TopLevelInv

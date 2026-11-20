@@ -157,8 +157,8 @@ theorem mul_Bm (Y : Gl r k) : Y.1 * Bm Y = Bm Y * companion (inv Y).1 := by
   ext i j
   have hl : (Y.1 * Bm Y) i j = (Y.1 ^ ((j : ℕ) + 1) *ᵥ Y.2.1) i := by
     rw [pow_succ', ← mulVec_mulVec]
-    simp [mul_apply, Bm, mulVec, dotProduct]
-  rw [hl, mul_apply]
+    simp [Matrix.mul_apply, Bm, mulVec, dotProduct]
+  rw [hl, Matrix.mul_apply]
   by_cases hj : (j : ℕ) + 1 = r
   · simp only [companion, of_apply, hj, if_true, Bm, inv]
     rw [pow_card_eq Y.1, neg_mulVec, sum_mulVec']

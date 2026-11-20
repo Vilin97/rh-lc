@@ -215,7 +215,7 @@ theorem uniform_consts : ∀ (n a g rk : ℕ) (τ₀ : (Fin n → ℂ) → Matri
     refine (le_abs_self _).trans ((quad_abs_le _ (Fintype.card {j : Fin g // j.val < rk} * E ^ 2)
       ?_ y).trans ?_)
     · intro j k
-      rw [mul_apply]
+      rw [Matrix.mul_apply]
       refine (Finset.abs_sum_le_sum_abs _ _).trans ?_
       calc ∑ i, |bMᵀ j i * bM i k| ≤ ∑ _i : Fin (Fintype.card {j : Fin g // j.val < rk}), E ^ 2 :=
             Finset.sum_le_sum fun i _ => by

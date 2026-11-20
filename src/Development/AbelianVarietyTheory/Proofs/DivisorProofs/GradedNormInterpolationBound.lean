@@ -98,7 +98,7 @@ theorem gram_interp_formula : ∀ (ι : Type) [Fintype ι] (m : ι → ℕ) (g :
     ext a b
     rw [hG']
     refine (HermFrame.form_blockDiagonal' (N t) (fun p => v a p.1 p.2) (fun p => v b p.1 p.2)).symm.trans ?_
-    simp only [HermFrame.form, dotProduct, mulVec, mul_apply, conjTranspose_apply, hB, Finset.mul_sum, Finset.sum_mul,
+    simp only [HermFrame.form, dotProduct, mulVec, Matrix.mul_apply, conjTranspose_apply, hB, Finset.mul_sum, Finset.sum_mul,
       Pi.star_apply, mul_assoc]
     exact Finset.sum_comm
 

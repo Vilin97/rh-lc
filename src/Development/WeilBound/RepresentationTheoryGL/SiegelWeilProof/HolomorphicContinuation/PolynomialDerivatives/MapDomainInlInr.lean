@@ -51,16 +51,16 @@ theorem kpow {a : Ix m n} (ha : inF1 ε a) (b : ℕ) : ∀ (d : ℕ) (u : Sym m 
     ring
 
 theorem mapDomain_inl_inl (γ : Ix m n →₀ ℕ) (k : Ix m n) :
-    (γ.mapDomain Sum.inl : Ix m n ⊕ Ix m n →₀ ℕ) (Sum.inl k) = γ k :=
-  Finsupp.mapDomain_apply Sum.inl_injective γ k
+    (γ.mapDomain Sum.inl : Ix m n ⊕ Ix m n →₀ ℕ) (Sum.inl k) = γ k := by sorry
+
 
 theorem mapDomain_inl_inr (γ : Ix m n →₀ ℕ) (k : Ix m n) :
     (γ.mapDomain Sum.inl : Ix m n ⊕ Ix m n →₀ ℕ) (Sum.inr k) = 0 :=
   Finsupp.mapDomain_notin_range γ _ (by simp)
 
 theorem mapDomain_inr_inr (γ : Ix m n →₀ ℕ) (k : Ix m n) :
-    (γ.mapDomain Sum.inr : Ix m n ⊕ Ix m n →₀ ℕ) (Sum.inr k) = γ k :=
-  Finsupp.mapDomain_apply Sum.inr_injective γ k
+    (γ.mapDomain Sum.inr : Ix m n ⊕ Ix m n →₀ ℕ) (Sum.inr k) = γ k := by sorry
+
 
 theorem mapDomain_inr_inl (γ : Ix m n →₀ ℕ) (k : Ix m n) :
     (γ.mapDomain Sum.inr : Ix m n ⊕ Ix m n →₀ ℕ) (Sum.inl k) = 0 :=

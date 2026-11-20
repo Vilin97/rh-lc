@@ -30,7 +30,7 @@ theorem chg_submatrix {m' : Type} [Fintype m'] (A : Matrix n n' ℂ) (H : Matrix
     {l' : Type} (f : l' → n') :
     chg (A.submatrix e f) (H.submatrix e e) = (chg A H).submatrix f f := by
   ext a b
-  simp only [chg, mul_apply, submatrix_apply, transpose_apply, conjTranspose_apply]
+  simp only [chg, Matrix.mul_apply, submatrix_apply, transpose_apply, conjTranspose_apply]
   rw [← e.sum_comp]
   exact Finset.sum_congr rfl fun j _ => by rw [← e.sum_comp]
 

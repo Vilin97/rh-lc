@@ -128,7 +128,7 @@ theorem _root_.GlobalTheory.PeriodChange.period_change : ∀ (E : Type) [Field E
     funext i
     have hc : ∀ u, (h * Matrix.of fun i u => P (bas (Pi.single u 1)) i) i u
         = (h *ᵥ P (bas (Pi.single u 1))) i := by
-      intro u; simp [mul_apply, mulVec, dotProduct]
+      intro u; simp [Matrix.mul_apply, mulVec, dotProduct]
     rw [mulVec, dotProduct, Fintype.sum_sum_type]
     simp only [hc, (hnorm _).1, (hnorm _).2]
     simp [mulVec_single_one, Pi.single_apply]
@@ -140,22 +140,22 @@ theorem _root_.GlobalTheory.PeriodChange.period_change : ∀ (E : Type) [Field E
     ext i k
     have := congrFun (hcol (Sum.inl k)) i
     simp only [mulVec, dotProduct] at this
-    simp [A₀, mul_apply, this, toBlocks₁₁, toBlocks₂₁]
+    simp [A₀, Matrix.mul_apply, this, toBlocks₁₁, toBlocks₂₁]
   have hBR : h * (Matrix.of fun i k => P' (bas (Pi.single (Sum.inr k) 1)) i) = B₀ := by
     ext i k
     have := congrFun (hcol (Sum.inr k)) i
     simp only [mulVec, dotProduct] at this
-    simp [B₀, mul_apply, this, toBlocks₁₂, toBlocks₂₂]
+    simp [B₀, Matrix.mul_apply, this, toBlocks₁₂, toBlocks₂₂]
   have hL1 : h' * (Matrix.of fun i k => P' (bas (Pi.single (Sum.inl k) 1)) i) = 1 := by
     ext i k
     have := congrFun (hnorm' k).1 i
     simp only [mulVec, dotProduct] at this
-    simp [mul_apply, this, one_apply, Pi.single_apply]
+    simp [Matrix.mul_apply, this, one_apply, Pi.single_apply]
   have hRτ : h' * (Matrix.of fun i k => P' (bas (Pi.single (Sum.inr k) 1)) i) = τ' := by
     ext i k
     have := congrFun (hnorm' k).2 i
     simp only [mulVec, dotProduct] at this
-    simp [mul_apply, this, Pi.single_apply]
+    simp [Matrix.mul_apply, this, Pi.single_apply]
   obtain ⟨e₁, e₂, e₃⟩ :=
     _root_.GlobalTheory.PeriodChange.change_of_normalisation h h' τ' A₀ B₀ _ _ hAL hBR hL1 hRτ hτs' hu
   have hj : _root_.ReciprocityTheory.ChartRestriction.G.Key.Chi.jAut (Matrix.fromBlocks N.toBlocks₂₂ᵀ N.toBlocks₁₂ᵀ N.toBlocks₂₁ᵀ N.toBlocks₁₁ᵀ) τ =

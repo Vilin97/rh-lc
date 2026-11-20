@@ -359,8 +359,8 @@ theorem colL_transitive (e : c ⊕ d ≃ a) {κ : ℕ} (hκ : κ = Fintype.card 
   obtain ⟨l | l, rfl⟩ := e.surjective l
   · have h1 := congrFun (hφ' (Pi.single l 1)) i
     rw [← LinearEquiv.coe_coe, ← LinearMap.toMatrix'_mulVec] at h1
-    simpa [mul_apply, mulVec, dotProduct, g, Pi.single_apply] using h1
-  · rw [y'.2, mul_apply]; simp [y.2]
+    simpa [Matrix.mul_apply, mulVec, dotProduct, g, Pi.single_apply] using h1
+  · rw [y'.2, Matrix.mul_apply]; simp [y.2]
 
 def leftRep (e : c ⊕ d ≃ a) (s : Set ℕ) (ψ : GL b k →* ℂˣ) :
     Representation ℂ (GL b k) (SB (ColZero k b e s)) :=

@@ -241,14 +241,14 @@ omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Decid
   [DecidableEq b] [DecidableEq c] in
 theorem mul_topM (e : a ⊕ c ≃ b) (g : Matrix b b k) (y : Matrix a a k) (i : b) (l : a) :
     (g * topM e y) i l = ∑ m, g i (e (.inl m)) * y m l := by
-  rw [mul_apply, ← e.sum_comp, Fintype.sum_sum_type]
+  rw [Matrix.mul_apply, ← e.sum_comp, Fintype.sum_sum_type]
   simp
 
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [DecidableEq a]
   [DecidableEq b] [DecidableEq c] [Fintype c] [Fintype b] in
 theorem topM_mul (e : a ⊕ c ≃ b) (y g : Matrix a a k) : topM e (y * g) = topM e y * g := by
   ext i l
-  obtain ⟨i | i, rfl⟩ := e.surjective i <;> simp [mul_apply]
+  obtain ⟨i | i, rfl⟩ := e.surjective i <;> simp [Matrix.mul_apply]
 
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [DecidableEq b] [DecidableEq c] in
 theorem rank_topM (e : a ⊕ c ≃ b) (y : GL a k) : (topM e y.val).rank = Fintype.card a := by

@@ -37,7 +37,7 @@ theorem exists_unitary_block {r p : ℕ} (B : Matrix (Fin r) (Fin r) ℂ) (hB : 
   have hti : (t⁻¹).BlockTriangular id := blockTriangular_inv_of_blockTriangular ht
   have hu' : u = B * t⁻¹ := by rw [e, Matrix.mul_nonsing_inv_cancel_right _ _ htd.isUnit]
   refine ⟨u, t, hu, fun a c hc ha => ?_, htd, fun a c h => ht h, e⟩
-  rw [hu', mul_apply]
+  rw [hu', Matrix.mul_apply]
   refine Finset.sum_eq_zero fun k _ => ?_
   by_cases hk : k ≤ c
   · rw [h0 a k (lt_of_le_of_lt (Fin.le_def.1 hk) hc) ha, zero_mul]

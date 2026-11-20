@@ -27,21 +27,21 @@ omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] [Finty
 
 theorem mul_topR (e : c ⊕ d ≃ b) (g : Matrix b b k) (y : Matrix c a k) (i : b) (l : a) :
     (g * topR e y) i l = ∑ m, g i (e (.inl m)) * y m l := by
-  rw [mul_apply, ← e.sum_comp, Fintype.sum_sum_type]
+  rw [Matrix.mul_apply, ← e.sum_comp, Fintype.sum_sum_type]
   simp
 
 theorem topR_mul (e : c ⊕ d ≃ b) (y : Matrix c a k) (g : Matrix a a k) :
     topR e (y * g) = topR e y * g := by
   ext i l
-  obtain ⟨i | i, rfl⟩ := e.surjective i <;> simp [mul_apply]
+  obtain ⟨i | i, rfl⟩ := e.surjective i <;> simp [Matrix.mul_apply]
 
 theorem rank_topR (e : c ⊕ d ≃ b) (y : Matrix c a k) : (topR e y).rank = y.rank := by
   refine le_antisymm ?_ ?_
   · have h : topR e y = ((1 : Matrix b b k).submatrix id fun i => e (.inl i)) * y := by
       ext i l
       obtain ⟨i | i, rfl⟩ := e.surjective i
-      · simp [mul_apply, one_apply]
-      · simp [mul_apply, one_apply]
+      · simp [Matrix.mul_apply, one_apply]
+      · simp [Matrix.mul_apply, one_apply]
     rw [h]
     exact rank_mul_le_right _ _
   · have h : (topR e y).submatrix (fun i => e (.inl i)) (Equiv.refl a) = y := by

@@ -49,7 +49,7 @@ theorem vandermonde_diag_herm {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (l : Fi
         _ = trace (V⁻¹ * ((D' ^ (i : ℕ) * diagonal l ^ (j : ℕ)) * V)) := by rw [hM]
         _ = trace (D' ^ (i : ℕ) * diagonal l ^ (j : ℕ)) := by
             rw [trace_mul_comm, mul_assoc, hVinv', mul_one]
-    rw [of_apply, htr, diagonal_pow, diagonal_pow, diagonal_mul_diagonal, trace_diagonal, mul_apply]
+    rw [of_apply, htr, diagonal_pow, diagonal_pow, diagonal_mul_diagonal, trace_diagonal, Matrix.mul_apply]
     refine Finset.sum_congr rfl fun k _ => ?_
     simp [V, D', vandermonde_apply, conjTranspose_apply, hconj, inv_pow]
   · rw [det_mul, det_conjTranspose]

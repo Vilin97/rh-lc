@@ -17,11 +17,11 @@ theorem det_blk (a : k) (b : Fin d → k) (h : Matrix (Fin d) (Fin d) k) : (blk 
   simp [this]
 
 theorem mul_blk_zero {m : Type} (X : Matrix m (Fin (d + 1)) k) (a : k) (b : Fin d → k) (h : Matrix (Fin d) (Fin d) k) (i : m) :
-    (X * blk a b h) i 0 = X i 0 * a := by simp [mul_apply, Fin.sum_univ_succ, blk]
+    (X * blk a b h) i 0 = X i 0 * a := by simp [Matrix.mul_apply, Fin.sum_univ_succ, blk]
 
 theorem mul_blk_succ {m : Type} (X : Matrix m (Fin (d + 1)) k) (a : k) (b : Fin d → k) (h : Matrix (Fin d) (Fin d) k) (i : m)
     (j : Fin d) : (X * blk a b h) i j.succ = X i 0 * b j + ∑ s, X i s.succ * h s j := by
-  simp [mul_apply, Fin.sum_univ_succ, blk]
+  simp [Matrix.mul_apply, Fin.sum_univ_succ, blk]
 
 theorem blk_comm (a : k) (b b' : Fin d → k) (hb : b = (a - 1) • b') :
     blk a 0 1 * blk 1 b' 1 = blk 1 b 1 * (blk 1 b' 1 * blk a 0 1) := by
@@ -68,7 +68,7 @@ theorem chE_levi (X : Matrix (Fin (n + 1)) (Fin (d + 1)) k) (h : Matrix (Fin d) 
     exact Finset.sum_congr rfl fun s _ => by ring
   · ext i j
     simp only [chE, mul_blk_zero, mul_blk_succ, of_apply, Pi.zero_apply, mul_zero, zero_add, mul_one, Finset.sum_div]
-    rw [mul_apply, Finset.mul_sum, ← Finset.sum_sub_distrib]
+    rw [Matrix.mul_apply, Finset.mul_sum, ← Finset.sum_sub_distrib]
     exact Finset.sum_congr rfl fun s _ => by simp only [of_apply]; ring
 
 def Deg {m : Type} (X : Matrix m (Fin d) k) : Prop := ∃ v ≠ 0, X *ᵥ v = 0

@@ -90,7 +90,7 @@ theorem norm_om_le {q : ℕ} (ω : Form (HS L N) q) (x : Gp L N) :
 
 theorem entry_mul_le {n : ℕ} {A B : Matrix (Fin n) (Fin n) ℂ} {a b : ℝ} (hA : ∀ i j, ‖A i j‖ ≤ a)
     (hB : ∀ i j, ‖B i j‖ ≤ b) (i j : Fin n) : ‖(A * B) i j‖ ≤ n * (a * b) := by
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   calc ‖∑ k, A i k * B k j‖ ≤ ∑ k : Fin n, ‖A i k * B k j‖ := norm_sum_le _ _
     _ ≤ ∑ _k : Fin n, a * b := Finset.sum_le_sum fun k _ => by
         rw [norm_mul]; exact mul_le_mul (hA i k) (hB k j) (norm_nonneg _) ((norm_nonneg _).trans (hA i k))

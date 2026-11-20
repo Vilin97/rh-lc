@@ -55,16 +55,16 @@ theorem blk_conj_full [CommRing K] {N : ℕ} (hN : n + 1 = N) (gm Fm Fm' : Matri
     ext x y
     refine Fin.lastCases ?_ (fun y' => ?_) y
     · have e1 : (gm * Fm) x (Fin.last n) = w x := by
-        rw [← congrFun hgw x, mul_apply]
+        rw [← congrFun hgw x, Matrix.mul_apply]
         simp only [mulVec, dotProduct]
         exact Finset.sum_congr rfl (fun j _ => by rw [hF2 j (Fin.last n) (by simp)])
-      rw [e1, mul_apply, Fin.sum_univ_castSucc]
+      rw [e1, Matrix.mul_apply, Fin.sum_univ_castSucc]
       simp [hB, hF2 x (Fin.last n) (by simp)]
     · have eL : (gm * Fm) x y'.castSucc = (A * (Fp * M')) x y' := by
-        rw [hM', ← Matrix.mul_assoc, ← hgA, Matrix.mul_assoc, mul_apply, mul_apply]
+        rw [hM', ← Matrix.mul_assoc, ← hgA, Matrix.mul_assoc, Matrix.mul_apply, Matrix.mul_apply]
         exact Finset.sum_congr rfl (fun j _ => by rw [hF1 j y' y'.castSucc (by simp)])
       have eR : (Fm * B) x y'.castSucc = ((A * Fp) * M') x y' := by
-        rw [mul_apply, Fin.sum_univ_castSucc, mul_apply]
+        rw [Matrix.mul_apply, Fin.sum_univ_castSucc, Matrix.mul_apply]
         rw [hB, blkDg_lc, mul_zero, add_zero]
         refine Finset.sum_congr rfl (fun j _ => ?_)
         rw [hF1 x j j.castSucc (by simp), blkDg_cc]

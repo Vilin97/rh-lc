@@ -126,12 +126,12 @@ theorem Y0_mul_iff (e : Fin a ⊕ Fin a' ≃ Fin N) (b : Matrix (Fin N) (Fin N) 
   constructor
   · intro h
     refine ⟨fun i j => ?_, fun i j => ?_⟩
-    · rw [← frameMatrixSecondColumnBlock_mul_apply e b, h]; simp [Y0, mul_apply]
-    · rw [← frameMatrixSecondColumnBlock_mul_apply e b, h]; simp [Y0, mul_apply]
+    · rw [← frameMatrixSecondColumnBlock_mul_apply e b, h]; simp [Y0, Matrix.mul_apply]
+    · rw [← frameMatrixSecondColumnBlock_mul_apply e b, h]; simp [Y0, Matrix.mul_apply]
   · rintro ⟨h1, h2⟩
     ext i j
     rw [frameMatrixSecondColumnBlock_mul_apply]
-    obtain ⟨j | j, rfl⟩ := e.surjective j <;> simp [Y0, mul_apply, h1, h2]
+    obtain ⟨j | j, rfl⟩ := e.surjective j <;> simp [Y0, Matrix.mul_apply, h1, h2]
 
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem gdet_blocks (e : Fin a ⊕ Fin a' ≃ Fin N) (b : GL (Fin N) k) (A : GL (Fin a) k) (D : GL (Fin a') k)

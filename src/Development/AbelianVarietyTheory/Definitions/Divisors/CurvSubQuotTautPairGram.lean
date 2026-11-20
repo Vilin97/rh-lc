@@ -127,7 +127,7 @@ def pairFrame (z : ℂ) : Matrix (Unit ⊕ Unit) (Unit ⊕ Unit) ℂ :=
 
 theorem tautPairGram_eq (z : ℂ) :
     tautPairGram z = (pairFrame z)ᵀ * (fun _ : ℂ => 1) z * (pairFrame z)ᴴᵀ := by
-  ext (a | a) (b | b) <;> simp [tautPairGram, pairFrame, mul_apply]
+  ext (a | a) (b | b) <;> simp [tautPairGram, pairFrame, Matrix.mul_apply]
 
 theorem mContDiffAt_pairFrame (k : WithTop ℕ∞) (z : ℂ) : MContDiffAt k pairFrame z := by
   rintro (a | a) (b | b) <;> simp only [pairFrame, fromBlocks_apply₁₁, fromBlocks_apply₁₂,

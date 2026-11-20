@@ -54,7 +54,7 @@ theorem blk_mem_siegel {τ : Matrix (Fin g) (Fin g) ℂ} (h : τ ∈ Siegel (Fin
 private theorem sum_herm_eq_trace_mul_ccT {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
     (G : Matrix (Fin r) (Fin r) E) (y y' : Matrix (Fin n) (Fin r) E) :
     ∑ k, herm G (y k) (y' k) = (y * G * ccT y').trace := by
-  simp only [herm, trace, diag, mul_apply, ccT, transpose_apply, map_apply, Finset.sum_mul]
+  simp only [herm, trace, diag, Matrix.mul_apply, ccT, transpose_apply, map_apply, Finset.sum_mul]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Finset.sum_comm]
 
@@ -149,7 +149,7 @@ theorem per_mul (x : Frame X.Ψ r) (h : Matrix (Fin n) (Fin n) E) (y : Matrix (F
     (k : Fin n) : per X x ((h * y) k) ∘ idx = Dict.hAct X idx h (fun k => per X x (y k) ∘ idx) k := by
   have e : (h * y) k = ∑ k', h k k' • y k' := by
     ext a
-    simp [mul_apply, Finset.sum_apply]
+    simp [Matrix.mul_apply, Finset.sum_apply]
   funext i
   rw [e, per_sum]
   simp only [Function.comp_apply, Finset.sum_apply, per_smul, Dict.hAct]

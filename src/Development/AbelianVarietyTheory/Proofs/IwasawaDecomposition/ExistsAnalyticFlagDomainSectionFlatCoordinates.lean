@@ -34,7 +34,7 @@ theorem analyticAt_frameAt [Fintype Tau] (τ : X.Ψ) (a b : Fin r) (v₀ : Tau �
     rcases (idx hj) c with c' | c' <;> rcases (idx hj) b with b' | b' <;>
       simp only [fromBlocks_apply₁₁, fromBlocks_apply₁₂, fromBlocks_apply₂₁, fromBlocks_apply₂₂, unflat, of_apply] <;>
       first | exact analyticAt_const | exact (ContinuousLinearMap.proj (R := ℂ) (φ := fun _ : Tau × Fin j × Fin (r - j) => ℂ) _).analyticAt _
-  simp only [mat_frameAt, mul_apply]
+  simp only [mat_frameAt, Matrix.mul_apply]
   exact Finset.analyticAt_fun_sum _ fun c _ => analyticAt_const.fun_mul (hM c)
 
 end GlobalTheory.FrameLift

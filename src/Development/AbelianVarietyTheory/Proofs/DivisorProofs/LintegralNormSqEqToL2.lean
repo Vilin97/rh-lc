@@ -52,7 +52,7 @@ theorem cpt_blk (b : O → Matrix (Fin m) (Fin m) ℂ) (a : O → Matrix (Fin n)
   ext i j
   simp only [cpt, blk, of_apply, blockDiagonal_mulVec]
   simp only [mulVec, dotProduct, Fintype.sum_prod_type, kroneckerMap_apply,
-    transpose_apply, mul_apply, of_apply, Finset.sum_mul]
+    transpose_apply, Matrix.mul_apply, of_apply, Finset.sum_mul]
   rw [Finset.sum_comm]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 
@@ -74,7 +74,7 @@ theorem blk_conjTranspose (b : O → Matrix (Fin m) (Fin m) ℂ) (a : O → Matr
 omit [DecidableEq O] in
 theorem star_dotProduct_eq (x y : (Fin m × Fin n) × O → ℂ) :
     star y ⬝ᵥ x = ∑ τ, ((cpt y τ)ᴴ * cpt x τ).trace := by
-  simp only [dotProduct, Fintype.sum_prod_type, trace, diag_apply, mul_apply, conjTranspose_apply, cpt, of_apply,
+  simp only [dotProduct, Fintype.sum_prod_type, trace, diag_apply, Matrix.mul_apply, conjTranspose_apply, cpt, of_apply,
     Pi.star_apply]
   rw [Finset.sum_comm]
   simp only [Finset.sum_comm (s := (Finset.univ : Finset (Fin m))) (t := (Finset.univ : Finset O))]

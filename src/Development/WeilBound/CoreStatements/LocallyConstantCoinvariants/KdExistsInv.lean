@@ -26,7 +26,7 @@ omit [Field k] [Fintype α] [Fintype β] in
 @[simp] theorem ofM_toM (y : α × β → k) : ofM (toM y) = y := rfl
 
 theorem dot_ofM (Y Z : Matrix α β k) : ofM Y ⬝ᵥ ofM Z = trace (Yᵀ * Z) := by
-  simp only [dotProduct, ofM, Fintype.sum_prod_type, trace, diag, mul_apply, transpose_apply]
+  simp only [dotProduct, ofM, Fintype.sum_prod_type, trace, diag, Matrix.mul_apply, transpose_apply]
   exact Finset.sum_comm
 
 theorem schr_schr {R : Type} [CommRing R] [Invertible (2 : R)] (ψ : AddChar R ℂ) {κ : Type} [Fintype κ] (a b : (κ → R) × (κ → R))
@@ -54,8 +54,8 @@ def rm (g : GL β k) : (α × β → k) ≃ₜ (α × β → k) where
   invFun y := ofM (toM y * (g⁻¹).1)
   left_inv y := by simp only [toM_ofM, Matrix.mul_assoc, Units.mul_inv, Matrix.mul_one, ofM_toM]
   right_inv y := by simp only [toM_ofM, Matrix.mul_assoc, Units.inv_mul, Matrix.mul_one, ofM_toM]
-  continuous_toFun := continuous_pi fun p => by simp only [ofM, toM, mul_apply, of_apply]; fun_prop
-  continuous_invFun := continuous_pi fun p => by simp only [ofM, toM, mul_apply, of_apply]; fun_prop
+  continuous_toFun := continuous_pi fun p => by simp only [ofM, toM, Matrix.mul_apply, of_apply]; fun_prop
+  continuous_invFun := continuous_pi fun p => by simp only [ofM, toM, Matrix.mul_apply, of_apply]; fun_prop
 
 def rmL (g : GL β k) : Module.End ℂ ((α × β → k) → ℂ) := LinearMap.funLeft ℂ ℂ (rm g)
 

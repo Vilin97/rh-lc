@@ -170,7 +170,7 @@ theorem mem_of_int_kernel {g : ℕ} (S : Matrix (Fin g) (Fin g) ℤ) (U : Submod
     have h5 : S *ᵥ m = 0 := by
       ext i
       have := congrFun (congrFun h2 i) j
-      simp only [mul_apply, hA, map_apply, Matrix.zero_apply] at this
+      simp only [Matrix.mul_apply, hA, map_apply, Matrix.zero_apply] at this
       have h6 : (((S *ᵥ m) i : ℤ) : ℚ) = ((b : ℤ) : ℚ) * ∑ k, (S i k : ℚ) * P k j := by
         simp only [mulVec, dotProduct, Finset.mul_sum]
         push_cast

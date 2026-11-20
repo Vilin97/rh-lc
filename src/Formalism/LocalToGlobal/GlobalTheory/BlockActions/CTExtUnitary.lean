@@ -25,12 +25,12 @@ theorem exists_proj {E : Type} [Field E] {N n : ℕ} (hN : n + 1 = N) (A : Matri
   refine ⟨Matrix.of fun a j => B⁻¹ (Fin.castSucc a) j, ?_, ?_⟩
   · ext a b
     have e := congrFun (congrFun h (Fin.castSucc a)) (Fin.castSucc b)
-    simp only [mul_apply, hBdef, of_apply, Fin.val_castSucc, Fin.is_lt, dif_pos, Fin.eta, one_apply,
+    simp only [Matrix.mul_apply, hBdef, of_apply, Fin.val_castSucc, Fin.is_lt, dif_pos, Fin.eta, one_apply,
       Fin.castSucc_inj] at e
-    simpa [mul_apply, one_apply] using e
+    simpa [Matrix.mul_apply, one_apply] using e
   · funext a
     have e := congrFun (congrFun h (Fin.castSucc a)) (Fin.last n)
-    simp only [mul_apply, hBdef, of_apply, Fin.val_last, lt_irrefl, dif_neg, not_false_eq_true, one_apply] at e
+    simp only [Matrix.mul_apply, hBdef, of_apply, Fin.val_last, lt_irrefl, dif_neg, not_false_eq_true, one_apply] at e
     simpa [mulVec, dotProduct, (Fin.castSucc_lt_last a).ne] using e
 
 theorem cT_ext_unitary {A : Type} [CommRing A] (τ : A →+* A) {N n : ℕ} (I : Matrix (Fin N) (Fin n) A)

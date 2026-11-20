@@ -331,7 +331,7 @@ theorem IsAdapted.tauMat_flow (hξ : X.IsIso ξ) (s : X.Ψ → ℂ) {x : Frame X
   have h := mulVec_per_smul X idx (hMat X bas idx x) x s
     (-X.κ0 * herm X.Gm (bas (Pi.single (Sum.inr k) 1)) ξ) ξ j
   rw [tauMat, hA.hMat_flow hs idx hξ, Matrix.add_apply, tauMat, Matrix.sum_apply]
-  simp only [mul_apply, perMat_apply, per_flow hξ.2.1, mul_add, Finset.sum_add_distrib]
+  simp only [Matrix.mul_apply, perMat_apply, per_flow hξ.2.1, mul_add, Finset.sum_add_distrib]
   congr 1
   refine h.trans (Finset.sum_congr rfl fun τ _ => ?_)
   rw [(hA.hMat_mulVec_part hs idx hξ.1 hx τ j).1, (hA.hMat_mulVec_part hs idx hξ.1 hx τ j).2,
