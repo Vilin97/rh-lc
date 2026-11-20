@@ -148,7 +148,7 @@ theorem tm_mp (k r' : ℕ) : MeasurePreserving (tm k r') volume volume :=
 
 theorem lsq_cont {p m : ℕ} (l : Fin (p + 1)) : Continuous fun x : Xp p m => Lsq x l := by
   unfold Lsq
-  exact continuous_const.add (continuous_finsetSum _ fun j _ => Continuous.if_const _
+  exact continuous_const.fun_add (continuous_finsetSum _ fun j _ => Continuous.if_const _
     (((continuous_apply j).comp continuous_fst).norm.pow 2) continuous_const)
 
 theorem de_cont {p m : ℕ} (l : Fin (p + 1)) : Continuous fun x : Xp p m => de x l := by

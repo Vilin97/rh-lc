@@ -198,7 +198,7 @@ lemma split_le {p m : ℕ} (G : Xp (p + 1) m → ℝ≥0∞) :
 
 lemma cont_Lsq {p m : ℕ} (l : Fin (p + 1)) : Continuous (fun x : Xp p m => Lsq x l) := by
   unfold ReciprocityTheory.ChartRestriction.DS.Xi.Lsq
-  exact continuous_const.add (continuous_finsetSum _ (fun j _ => by
+  exact continuous_const.fun_add (continuous_finsetSum _ (fun j _ => by
     by_cases h : j.val < l.val <;> simp only [h, ↓reduceIte] <;> fun_prop))
 
 lemma cont_rhoSq {p m : ℕ} (l : Fin (p + 1)) : Continuous (fun x : Xp p m => rhoSq x l) := by

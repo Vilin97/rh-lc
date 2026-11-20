@@ -93,7 +93,7 @@ theorem isClosed_psd :
 
 theorem continuous_torusCharacter : Continuous fun v : V (nD f p q + N') => Real.log (1 + ‖tPart v‖ ^ 2) := by
   simp only [normSq_tPart]
-  refine Continuous.log (continuous_const.add (continuous_finsetSum _ fun j _ =>
+  refine Continuous.log (continuous_const.fun_add (continuous_finsetSum _ fun j _ =>
     ((cont_coord _).norm).pow 2)) fun v => ?_
   positivity
 
