@@ -41,8 +41,8 @@ theorem eigenSub_iff : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (v : A
     Function.Injective (evalVec (liftA hv a) N) →
     (∀ y, y ∈ freeLattice a N ↔ ∃ x, evalVec (liftA hv a) N x = y) →
     ∀ y : Fin N → C, y ∈ eigenSub (W := fun _ => Fin N → C) (freeLattice a N) τ ↔
-      ∃ z ∈ eigSub (liftA hv a) τ (Fin N → RS (liftA hv a)),
-        (fun i => ((comp (liftA hv a) N τ z i : Int0 v) : C)) = y :=
+      ∃ z ∈ GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.eigSub (liftA hv a) τ (Fin N → RS (liftA hv a)),
+        (fun i => ((GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.comp (liftA hv a) N τ z i : Int0 v) : C)) = y :=
   GlobalTheory.T.eigenSublattice_freeLattice_iff_eval
 
 theorem mem_of_components : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (S : Type) [Fintype S]
@@ -62,8 +62,8 @@ theorem lie_iff : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (v : AddVal
     ∀ z : (Fin N → C) ⧸ filSpace F τ, z ∈ eigenSub (lie (freeLattice a N) F) τ ↔
       ∃ x : Fin N → RS (liftA hv a),
         proj (liftA hv a) ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ F})) x ∈
-          eigSub (liftA hv a) τ ((Fin N → RS (liftA hv a)) ⧸ (Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ F})) ∧
-        quotMap (w := w) (filSpace F τ) (fun i => ((comp (liftA hv a) N τ x i : Int0 v) : C)) = z :=
+          GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.eigSub (liftA hv a) τ ((Fin N → RS (liftA hv a)) ⧸ (Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ F})) ∧
+        quotMap (w := w) (filSpace F τ) (fun i => ((GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.comp (liftA hv a) N τ x i : Int0 v) : C)) = z :=
   GlobalTheory.T.lieEigenSublattice_iff_eval_flat
 
 end GlobalTheory.HerbrandBridge
@@ -168,7 +168,7 @@ theorem eigenQuot_iff {w : Valuation C ℝ≥0} {v : AddValuation C (WithTop ℝ
   constructor
   · rintro ⟨x, hx, rfl⟩
     obtain ⟨z, hz⟩ := (hrange x).1 (hle hx)
-    refine ⟨comp (liftA hv a) N s z, ⟨z, (hmem z).2 (hz ▸ hx), rfl⟩, ?_⟩
+    refine ⟨GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.comp (liftA hv a) N s z, ⟨z, (hmem z).2 (hz ▸ hx), rfl⟩, ?_⟩
     rw [comp_coe, hz]; rfl
   · rintro ⟨_, ⟨z, hz, rfl⟩, rfl⟩
     exact ⟨_, (hmem z).1 hz, rfl⟩
@@ -270,14 +270,14 @@ theorem exForm : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (ℓ : C), 0
     finSumFinEquiv.symm.trans (Equiv.sumCongr (Equiv.refl _) (finCongr hq'.symm))
   obtain ⟨c, hc, hne, hdet⟩ := hDet h l x hx f e
   let X : Fin (p + q) → Fin (p + q) → C := fun k i =>
-    ((comp (liftA hv a) (p + q) τ (h k : Fin (p + q) → RS (liftA hv a)) i : Int0 (toAddVal w ℓ h0 h1)) : C)
-  let U : Fin p → Fin (p + q) → C := fun k i => ((comp (liftA hv a) (p + q) τ (x k) i : Int0 (toAddVal w ℓ h0 h1)) : C)
+    ((GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.comp (liftA hv a) (p + q) τ (h k : Fin (p + q) → RS (liftA hv a)) i : Int0 (toAddVal w ℓ h0 h1)) : C)
+  let U : Fin p → Fin (p + q) → C := fun k i => ((GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.comp (liftA hv a) (p + q) τ (x k) i : Int0 (toAddVal w ℓ h0 h1)) : C)
   let fb := f.reindex (finCongr hq')
   let M : Fin q → Fin (p + q) → C := fun k i => ((fb k : Fin (p + q) → Int0 (toAddVal w ℓ h0 h1)) i : C)
-  have hXmat : Matrix.of X = (Matrix.of fun k => comp (liftA hv a) (p + q) τ
+  have hXmat : Matrix.of X = (Matrix.of fun k => GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.comp (liftA hv a) (p + q) τ
       (h k : Fin (p + q) → RS (liftA hv a))).map (Int0 (toAddVal w ℓ h0 h1)).subtype := rfl
   have hAmat : Matrix.of (Fin.append U M) = (Matrix.of fun k => Sum.elim
-      (fun i => comp (liftA hv a) (p + q) τ (x i)) (fun i => (f i : Fin (p + q) → Int0 (toAddVal w ℓ h0 h1))) (e k)).map
+      (fun i => GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.comp (liftA hv a) (p + q) τ (x i)) (fun i => (f i : Fin (p + q) → Int0 (toAddVal w ℓ h0 h1))) (e k)).map
       (Int0 (toAddVal w ℓ h0 h1)).subtype := by
     ext k j
     refine Fin.addCases (fun i => ?_) (fun i => ?_) k
@@ -313,8 +313,8 @@ theorem exForm : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (ℓ : C), 0
     ⟨linearIndependent_mkQ (filSpace Fil τ) hq U M hMF hAne, ?_⟩, ⟨hMli, ?_⟩, hMF,
     ⟨hc0, ?_⟩, hdet'⟩
   ·
-    refine span_eq_of_basis hv (eigSub (liftA hv a) τ (Fin (p + q) → RS (liftA hv a))) h
-      LinearMap.id (fun z i => ((comp (liftA hv a) (p + q) τ z i : Int0 (toAddVal w ℓ h0 h1)) : C))
+    refine span_eq_of_basis hv (GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.eigSub (liftA hv a) τ (Fin (p + q) → RS (liftA hv a))) h
+      LinearMap.id (fun z i => ((GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.comp (liftA hv a) (p + q) τ z i : Int0 (toAddVal w ℓ h0 h1)) : C))
       (fun z z' => by funext i; simp only [map_add (f := _), Pi.add_apply]; rfl)
       (fun c z => by funext i; simp only [map_smul, Pi.smul_apply, smul_eq_mul]; rfl)
       (fun z z' hz => by rw [show z = z' from hz])
@@ -322,10 +322,10 @@ theorem exForm : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (ℓ : C), 0
     rw [eigenSub_iff C w _ hv S a (p + q) τ ha hinj hrange y]
     simp only [LinearMap.id_apply]
   ·
-    refine span_eq_of_basis hv (eigSub (liftA hv a) τ ((Fin (p + q) → RS (liftA hv a)) ⧸
+    refine span_eq_of_basis hv (GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.eigSub (liftA hv a) τ ((Fin (p + q) → RS (liftA hv a)) ⧸
         (Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil}))) l (proj (liftA hv a) ((Submodule.span (RS (liftA hv a)) {x : Fin _ → RS (liftA hv a) | (fun s i => ↑(ev (liftA hv a) s (x i))) ∈ Fil})))
       (fun z => quotMap (w := w) (filSpace Fil τ)
-        (fun i => ((comp (liftA hv a) (p + q) τ z i : Int0 (toAddVal w ℓ h0 h1)) : C)))
+        (fun i => ((GlobalTheory.IndefiniteRowSideFullHecke.MultiplicationKernelIdentity.comp (liftA hv a) (p + q) τ z i : Int0 (toAddVal w ℓ h0 h1)) : C)))
       (fun z z' => by
         rw [← map_add (f := _)]; congr 1; funext i; simp only [map_add (f := _), Pi.add_apply]; rfl)
       (fun c z => by
