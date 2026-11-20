@@ -11,6 +11,37 @@ open scoped CategoryTheory.Obj
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
 open GlobalTheory.SS
 
+-- c189: restore Model.prod for incomplete imports.
+open CategoryTheory Limits MonoidalCategory AlgebraicGeometry in
+open ReciprocityTheory.ChartRestriction.G.Geo.Tor in
+run_cmd
+  unless (← Lean.getEnv).contains `GlobalTheory.SS.Model.prod do
+    let prodName := Lean.mkIdent `_root_.GlobalTheory.SS.Model.prod
+    Lean.Elab.Command.elabCommand (← `(
+      private noncomputable def $prodName:ident
+          {R : Type} [CommRing R] {K : Type} [Field K] [Algebra R K]
+          {A A' : Over (Sp K)} (M : GlobalTheory.SS.Model R A)
+          (N : GlobalTheory.SS.Model R A') : GlobalTheory.SS.Model R (A ⊗ A') where
+        Y := M.Y ⊗ N.Y
+        e := (Functor.Monoidal.μIso (Over.pullback (spMap (algebraMap R K))) M.Y N.Y).symm ≪≫
+          tensorIso M.e N.e
+        smooth := by
+          have := M.smooth
+          have := N.smooth
+          show Smooth (pullback.fst _ _ ≫ M.Y.hom)
+          infer_instance
+        sep := by
+          have := M.sep
+          have := N.sep
+          show IsSeparated (pullback.fst _ _ ≫ M.Y.hom)
+          infer_instance
+        qc := by
+          have := M.qc
+          have := N.qc
+          show QuasiCompact (pullback.fst _ _ ≫ M.Y.hom)
+          infer_instance))
+
+
 noncomputable section
 namespace GlobalTheory.SS.GI
 set_option backward.isDefEq.respectTransparency false
