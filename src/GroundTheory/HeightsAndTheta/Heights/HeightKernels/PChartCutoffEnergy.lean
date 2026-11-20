@@ -24,7 +24,7 @@ theorem sqn_smul {D : ℕ} (c : ℝ) (y : Fin D → ℂ) : sqn (c • y) = c ^ 2
 
 theorem contDiff_sqn {D : ℕ} : ContDiff ℝ 1 (sqn (D := D)) := by
   unfold sqn
-  exact ContDiff.sum fun i _ => (contDiff_norm_sq ℂ).comp (contDiff_apply ℝ ℂ i)
+  exact ContDiff.sum fun i _ => (contDiff_norm_sq ℂ).comp (contDiff_apply ℝ (fun _ => ℂ) i)
 
 theorem chartCutoff_eq {D : ℕ} (k : ℕ) (y : Fin D → ℂ) :
     chartCutoff k y = Real.smoothTransition (2 - sqn y / ((k : ℝ) + 1) ^ 2) := rfl

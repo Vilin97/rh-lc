@@ -19,7 +19,7 @@ theorem contDiff_eval (σ : Type) [Fintype σ] (p : MvPolynomial σ ℂ) :
     exact hp.add hq
   | mul_X p i hp =>
     simp only [map_mul, MvPolynomial.eval_X]
-    exact hp.mul (contDiff_apply ℝ ℂ i)
+    exact hp.mul (contDiff_apply ℝ (fun _ => ℂ) i)
 
 end PositivityTheory.Xgn.SmoothPolynomialNormSquare
 

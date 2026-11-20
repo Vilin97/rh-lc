@@ -46,6 +46,6 @@ theorem reframe_contDiffOn : ∀ {E : Type} [NormedAddCommGroup E] [NormedSpace 
   refine contDiffOn_fst.prodMk (contDiffOn_pi.2 fun j => ?_)
   simp only [reframe, Matrix.vecMul, dotProduct]
   refine ContDiffOn.sum fun i _ => ContDiffOn.mul ?_ (hent i j)
-  exact ((contDiff_apply ℝ ℂ i).comp contDiff_snd).contDiffOn
+  exact ((contDiff_apply ℝ (fun _ => ℂ) i).comp contDiff_snd).contDiffOn
 
 end GlobalTheory.ReframeSmooth

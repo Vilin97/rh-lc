@@ -37,7 +37,7 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.exists_smooth_conj_invariant_m
   · show ContDiffOn ℝ _ (fun z => ∏ k, S k z ^ ((a k : ℝ) / 2)) _
     apply contDiffOn_prod
     intro k _ z hz
-    exact ((ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ _)).contDiffAt.rpow_const_of_ne
+    exact ((ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) _)).contDiffAt.rpow_const_of_ne
       (hSpos k z (hz k)).ne').contDiffWithinAt
   · intro z
     simp [S]

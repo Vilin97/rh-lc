@@ -51,9 +51,9 @@ theorem CxInf.sum {κ : Type} (s : Finset κ) {f : κ → GlobalTheory.CxPts p �
 theorem cxInf_ratVal {F : Type} [Field F] {X : Var F} {σ : F →+* ℂ} {y : GlobalTheory.CxPts X.str σ} {f : X.Fn}
     (hf : RegAt (under y) f) : CxInf (fun z => ratVal f z) y :=
   ⟨GlobalTheory.GoodMetric.cInfAt_ratVal (κ := Unit) (f := fun _ => f) (fun _ => hf)
-               (G := fun v => (v ()).re) (Complex.reCLM.contDiff.comp (contDiff_apply ℝ ℂ ())),
+               (G := fun v => (v ()).re) (Complex.reCLM.contDiff.comp (contDiff_apply ℝ (fun _ => ℂ) ())),
     GlobalTheory.GoodMetric.cInfAt_ratVal (κ := Unit) (f := fun _ => f) (fun _ => hf)
-      (G := fun v => (v ()).im) (Complex.imCLM.contDiff.comp (contDiff_apply ℝ ℂ ()))⟩
+      (G := fun v => (v ()).im) (Complex.imCLM.contDiff.comp (contDiff_apply ℝ (fun _ => ℂ) ()))⟩
 
 end GlobalTheory.LieBase.GramSmooth
 

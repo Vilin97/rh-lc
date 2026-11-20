@@ -59,7 +59,7 @@ theorem exists_chart {E : Type} [NormedRing E] [NormedAlgebra ℝ E] [FiniteDime
       simp)
   have hC : ContDiff ℝ ∞ Θ := by
     refine contDiff_list_prod_ofFn (fun i (t : Fin _ → ℝ) => NormedSpace.exp (t i • e i)) fun i => ?_
-    exact GlobalTheory.SmoothForms.SecondKind.contDiff_exp.comp ((contDiff_apply ℝ ℝ i).smul contDiff_const)
+    exact GlobalTheory.SmoothForms.SecondKind.contDiff_exp.comp ((contDiff_apply ℝ (fun _ => ℝ) i).smul contDiff_const)
   let T : (Fin _ → ℝ) →L[ℝ] E :=
     ∑ i, (ContinuousLinearMap.toSpanSingleton ℝ (e i)).comp (ContinuousLinearMap.proj i)
   have hT : ∀ t, T t = ∑ i, t i • e i := fun t => by simp [T]

@@ -55,7 +55,7 @@ theorem contDiff_lineLift_comp (L : (Fin (1 + 1) → ℂ) ≃ₗ[ℂ] (((k : Uni
   have hL : ContDiff ℂ 2 fun w => L (c w) :=
     (LinearMap.toContinuousLinearMap L.toLinearMap).contDiff.comp hc
   have h : ContDiff ℂ 2 fun w => lineLift (L (c w)) :=
-    contDiff_pi.2 fun p => (contDiff_apply ℂ ℂ (fun _ => p.2)).comp hL
+    contDiff_pi.2 fun p => (contDiff_apply ℂ (fun _ => ℂ) (fun _ => p.2)).comp hL
   exact h.restrict_scalars ℝ
 
 theorem lineLift_ne {L : (Fin (1 + 1) → ℂ) ≃ₗ[ℂ] (((k : Unit) → PBlk 2 k) → ℂ)} {v : Fin (1 + 1) → ℂ}

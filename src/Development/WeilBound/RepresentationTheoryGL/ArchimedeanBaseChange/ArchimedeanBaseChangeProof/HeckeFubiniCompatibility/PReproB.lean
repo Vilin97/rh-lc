@@ -311,7 +311,7 @@ theorem contDiff_atW (v : InfinitePlace E) : ContDiff ℝ ∞ (Bridge.atW (E := 
   unfold Bridge.atW
   refine contDiff_pi.2 fun i => contDiff_pi.2 fun j => contDiff_pi.2 fun w => ?_
   split_ifs
-  · exact (contDiff_apply ℝ ℂ j).comp (contDiff_apply ℝ (Fin N → ℂ) i)
+  · exact (contDiff_apply ℝ (fun _ => ℂ) j).comp (contDiff_apply ℝ (fun _ => (Fin N → ℂ)) i)
   · exact contDiff_const
 
 theorem contDiffOn_along (v : InfinitePlace E) {φ : GA E N → ℂ} (hs : φ ∈ Sm E N) (g : GA E N) :

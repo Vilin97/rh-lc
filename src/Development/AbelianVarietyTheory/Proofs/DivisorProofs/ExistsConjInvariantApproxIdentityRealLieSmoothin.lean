@@ -98,7 +98,7 @@ theorem contDiff_frobSq : ContDiff ℝ ∞ (frobSq E a) := by
   unfold frobSq
   refine ContDiff.sum fun w _ => ContDiff.sum fun i _ => ContDiff.sum fun j _ => ?_
   exact (contDiff_norm_sq ℝ).comp
-    (((contDiff_apply ℝ ℂ w).comp ((contDiff_apply ℝ _ j).comp (contDiff_apply ℝ _ i))).sub contDiff_const)
+    (((contDiff_apply ℝ (fun _ => ℂ) w).comp ((contDiff_apply ℝ _ j).comp (contDiff_apply ℝ _ i))).sub contDiff_const)
 
 omit [IsTotallyComplex E] in
 theorem frobSq_one : frobSq E a (oneL E a) = 0 := by

@@ -355,7 +355,7 @@ theorem GlobalTheory.ThK.CuspTransfer.isSm_of_isInd : ∀ (F E : Type) [Field F]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
   refine contDiff_iff_contDiffAt.2 fun t₀ => ?_
   have hfam : IsSmoothRealFam fun t : Fin e → ℝ => (List.ofFn fun j => γ j (t j)).prod :=
-    GlobalTheory.Orb.isSmoothRealFam_prod fun j => (line_fam hCM (hγ j)).1.comp (contDiff_apply ℝ ℝ j)
+    GlobalTheory.Orb.isSmoothRealFam_prod fun j => (line_fam hCM (hγ j)).1.comp (contDiff_apply ℝ (fun _ => ℝ) j)
   obtain ⟨u, hu, t₁, m, y, k, hk, hm, hg⟩ := hI.1 (g * (List.ofFn fun j => γ j (t₀ j)).prod)
   obtain ⟨d', π, κ, s, s', hπ, hκ, hπx, hκK, hs, hs', hev⟩ := local_iwasawa hCM hN hx hxx' hK' k
     (fam_translate hfam (a := (List.ofFn fun j => γ j (t₀ j)).prod⁻¹) (b := 1)
@@ -370,7 +370,7 @@ theorem GlobalTheory.ThK.CuspTransfer.isSm_of_isInd : ∀ (F E : Type) [Field F]
     simp only [map_mul, map_list_prod, List.map_ofFn, Function.comp_def]
     refine contDiff_const.mul (contDiff_list_prod _ _ fun j => ?_)
     refine (contDiff_of_oneParam (f := fun t => φ ⟨π j t, hπP j t⟩) (hφ.comp ((line_fam hCM (hπ j)).2.subtype_mk _))
-      ?_ fun s t => ?_).comp (contDiff_apply ℝ ℝ j)
+      ?_ fun s t => ?_).comp (contDiff_apply ℝ (fun _ => ℝ) j)
     · rw [← map_one φ]; exact congrArg φ (Subtype.ext (line_zero hCM (hπ j)))
     · rw [← map_mul]; exact congrArg φ (Subtype.ext (GlobalTheory.SiegelSet.isRealLine_add F E σ hCM _ _ _ (hπ j) s t))
   have h2 : ∀ i, ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) fun v : Fin d' → ℝ =>

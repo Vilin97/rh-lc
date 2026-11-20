@@ -107,7 +107,7 @@ theorem smoothOnG_inner_rep (w : H) {v : H} (hv : IsSmoothVecU ε σ v) :
 
 theorem smoothOnG_tensor_phi (dual : Bool) (c d : Fin n) : Formalism.REAL.SmoothOnG ε (fun g => oa1Phi dual g c d) := by
   have hentry : ContDiff ℝ ∞ fun g : Matrix (Fin n) (Fin n) ℂ => g c d :=
-    (contDiff_apply ℝ ℂ d).comp (contDiff_apply ℝ (Fin n → ℂ) c)
+    (contDiff_apply ℝ (fun _ => ℂ) d).comp (contDiff_apply ℝ (fun _ => (Fin n → ℂ)) c)
   have hstar : ContDiff ℝ ∞ fun g : Matrix (Fin n) (Fin n) ℂ => star (g c d) :=
     Complex.conjCLE.contDiff.comp hentry
   intro g₀ _

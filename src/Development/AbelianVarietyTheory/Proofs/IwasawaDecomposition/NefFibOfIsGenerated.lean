@@ -35,7 +35,7 @@ theorem isCInf_combWeight (hB : B.IsLB) (s : α → B.Sec) {σ : k →+* ℂ} (A
     (h : Weight.NoCommonZero fun a => ∑ j, A j a • secVal p σ (s j)) : (combWeight hB s A h).IsCInf := fun i y hy => by
   have hs : ContDiff ℝ ∞ fun v : α → ℂ => ∑ a, ‖∑ j, A j a * v j‖ ^ 2 :=
     ContDiff.sum fun a _ => (ContDiff.sum fun j _ =>
-      contDiff_const.mul (contDiff_apply ℝ ℂ j)).norm_sq ℂ
+      contDiff_const.mul (contDiff_apply ℝ (fun _ => ℂ) j)).norm_sq ℂ
   refine ⟨B.U i, α, inferInstance, fun j => (s j).f i,
     fun v => Real.log (∑ a, ‖∑ j, A j a * v j‖ ^ 2), {v | ∑ a, ‖∑ j, A j a * v j‖ ^ 2 ≠ 0}, hy,
     isOpen_ne_fun hs.continuous continuous_const, ?_, hs.contDiffOn.log fun _ h => h,

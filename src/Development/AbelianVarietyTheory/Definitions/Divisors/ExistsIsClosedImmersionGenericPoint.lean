@@ -155,7 +155,7 @@ theorem isCInf_fsBasis {α : Type} [Fintype α] [DecidableEq α] (hB : B.IsLB) (
     (fsBasis p σ hB b hb M hM).IsCInf := fun i y hy => by
   have hs : ContDiff ℝ ∞ fun v : α → ℂ => ∑ a, ‖∑ j, M j a * v j‖ ^ 2 :=
     ContDiff.sum fun a _ => (ContDiff.sum fun j _ =>
-      contDiff_const.mul (contDiff_apply ℝ ℂ j)).norm_sq ℂ
+      contDiff_const.mul (contDiff_apply ℝ (fun _ => ℂ) j)).norm_sq ℂ
   refine ⟨B.U i, α, inferInstance, fun j => (b j).f i,
     fun v => Real.log (∑ a, ‖∑ j, M j a * v j‖ ^ 2), {v | ∑ a, ‖∑ j, M j a * v j‖ ^ 2 ≠ 0}, hy,
     isOpen_ne_fun hs.continuous continuous_const, ?_, hs.contDiffOn.log fun _ h => h,

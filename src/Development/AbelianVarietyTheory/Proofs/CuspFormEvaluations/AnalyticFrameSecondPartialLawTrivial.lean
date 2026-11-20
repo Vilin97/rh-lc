@@ -24,7 +24,7 @@ open scoped ContDiff
 theorem tay_coord {N : ℕ} (k : Fin N) :
     tay (fun v : Fin N → ℂ => v k) 0 = MvPowerSeries.X ((0 : Fin 1), k) := by
   classical
-  have hθ : ContDiffAt ℂ ω (fun v : Fin N → ℂ => v k) 0 := (contDiff_apply ℂ ℂ k).contDiffAt
+  have hθ : ContDiffAt ℂ ω (fun v : Fin N → ℂ => v k) 0 := (contDiff_apply ℂ (fun _ => ℂ) k).contDiffAt
   refine TCPf.eq_of_cc _ _ fun l => ?_
   induction l using List.reverseRecOn with
   | nil =>
@@ -67,8 +67,8 @@ theorem jetN_coord_add {n g : ℕ} (m : ℕ) (i i' : Fin n) (j : Fin g) :
     jetN m (fun w : Fin n → Fin g → ℂ => w i j + w i' j) =
       Ideal.Quotient.mk _ (MvPolynomial.X (i, j) + MvPolynomial.X (i', j)) := by
   rw [map_add, ← jetN_coord, ← jetN_coord, jetN, jetN, jetN, ← map_add]
-  exact congrArg _ (jetOf_add m (contDiff_apply ℂ ℂ (finProdFinEquiv (i, j))).contDiffAt
-      (contDiff_apply ℂ ℂ (finProdFinEquiv (i', j))).contDiffAt)
+  exact congrArg _ (jetOf_add m (contDiff_apply ℂ (fun _ => ℂ) (finProdFinEquiv (i, j))).contDiffAt
+      (contDiff_apply ℂ (fun _ => ℂ) (finProdFinEquiv (i', j))).contDiffAt)
 
 theorem subst_X {κ κ' : Type} [Fintype κ] [DecidableEq κ] (m : ℕ) (sb : κ → MvPolynomial κ' ℂ) (p : κ) :
     (jetSubstP m sb : Jet ℂ κ m →ₐ[ℂ] Jet ℂ κ' m) (psJet m (MvPowerSeries.X p)) =

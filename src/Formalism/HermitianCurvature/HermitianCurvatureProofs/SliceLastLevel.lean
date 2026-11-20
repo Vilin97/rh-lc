@@ -1002,7 +1002,7 @@ lemma tr_cd_bigCell (c : Fin r → ℂ) :
   split_ifs
   · exact contDiffOn_const
   · exact contDiffOn_const
-  · exact ((contDiff_apply ℝ ℂ _).comp (contDiff_apply ℝ (Fin (2 * 0 + k + 1) → ℂ) _)).contDiffOn
+  · exact ((contDiff_apply ℝ (fun _ => ℂ) _).comp (contDiff_apply ℝ (fun _ => (Fin (2 * 0 + k + 1) → ℂ)) _)).contDiffOn
   · exact contDiffOn_const
   · exact contDiffOn_const
   · exact contDiffOn_const

@@ -34,7 +34,7 @@ theorem contDiff_ιLev' : ContDiff ℝ ∞ (ιLev k i r') := by
   refine contDiff_pi.2 fun p => contDiff_pi.2 fun q => ?_
   unfold ιLev
   split_ifs
-  · exact (contDiff_apply ℝ ℂ _).comp (contDiff_apply ℝ (Fin (2 * r' + k + 1) → ℂ) _)
+  · exact (contDiff_apply ℝ (fun _ => ℂ) _).comp (contDiff_apply ℝ (fun _ => (Fin (2 * r' + k + 1) → ℂ)) _)
   all_goals exact contDiff_const
 
 theorem zeta_lift (z z' : Fin (2 * r' + k + 1) → ℂ) (g : Mx k r') :

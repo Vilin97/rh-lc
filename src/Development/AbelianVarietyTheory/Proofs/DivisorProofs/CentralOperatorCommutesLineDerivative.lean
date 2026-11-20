@@ -48,7 +48,7 @@ theorem contDiff_snoc {k : ℕ} :
   refine Fin.lastCases ?_ (fun j => ?_) i
   · simpa using contDiff_snd
   · simp only [Fin.snoc_castSucc]
-    exact (contDiff_apply ℝ ℝ j).comp contDiff_fst
+    exact (contDiff_apply ℝ (fun _ => ℝ) j).comp contDiff_fst
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
   {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fin n) E}

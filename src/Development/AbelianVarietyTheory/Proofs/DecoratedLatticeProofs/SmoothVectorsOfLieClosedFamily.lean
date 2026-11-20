@@ -19,7 +19,7 @@ theorem contDiff_expM : ContDiff ℝ ∞ (NormedSpace.exp : Matrix (Fin n) (Fin 
   contDiff_iff_contDiffAt.2 fun x => (NormedSpace.exp_analytic (𝕂 := ℝ) x).contDiffAt
 
 theorem contDiff_init {k : ℕ} : ContDiff ℝ ∞ fun t : Fin (k + 1) → ℝ => Fin.init t :=
-  contDiff_pi.2 fun j => contDiff_apply ℝ ℝ (Fin.castSucc j)
+  contDiff_pi.2 fun j => contDiff_apply ℝ (fun _ => ℝ) (Fin.castSucc j)
 
 theorem contDiff_pr : ∀ {k : ℕ} (Xs : Fin k → Matrix (Fin n) (Fin n) ℂ), ContDiff ℝ ∞ (pr Xs)
   | 0, Xs => by
@@ -31,7 +31,7 @@ theorem contDiff_pr : ∀ {k : ℕ} (Xs : Fin k → Matrix (Fin n) (Fin n) ℂ),
       funext (pr_succ Xs)
     rw [e]
     exact ((contDiff_pr (Fin.init Xs)).comp contDiff_init).mul
-      (contDiff_expM.comp ((contDiff_apply ℝ ℝ (Fin.last k)).smul contDiff_const))
+      (contDiff_expM.comp ((contDiff_apply ℝ (fun _ => ℝ) (Fin.last k)).smul contDiff_const))
 
 theorem coord {Hm : Matrix (Fin n) (Fin n) ℂ} (hu : IsUnit Hm.det) : ∀ {k : ℕ} (Xs : Fin k → Matrix (Fin n) (Fin n) ℂ),
     (∀ j, Xs j ∈ lieH Hm) → ∀ m : Fin k, ∃ Y : (Fin k → ℝ) → Matrix (Fin n) (Fin n) ℂ, ContDiff ℝ ∞ Y ∧
@@ -51,7 +51,7 @@ theorem coord {Hm : Matrix (Fin n) (Fin n) ℂ} (hu : IsUnit Hm.det) : ∀ {k : 
       refine ⟨fun t => NormedSpace.exp (-(t (Fin.last k) • Xs (Fin.last k))) * Y' (Fin.init t) *
         NormedSpace.exp (t (Fin.last k) • Xs (Fin.last k)), ?_, ?_, ?_⟩
       · have hl : ContDiff ℝ ∞ fun t : Fin (k+1) → ℝ => t (Fin.last k) • Xs (Fin.last k) :=
-          (contDiff_apply ℝ ℝ (Fin.last k)).smul contDiff_const
+          (contDiff_apply ℝ (fun _ => ℝ) (Fin.last k)).smul contDiff_const
         exact ((contDiff_expM.comp hl.neg).mul (hY'.comp contDiff_init)).mul (contDiff_expM.comp hl)
       · intro t
         have hg := exp_mem hu (hX (Fin.last k)) (t (Fin.last k))

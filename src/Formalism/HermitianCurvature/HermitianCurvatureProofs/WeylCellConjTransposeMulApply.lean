@@ -425,7 +425,7 @@ theorem fam_differentiableAt {Φ : Fn k r E} (h : SmoothFam k r i U₀ Φ) {x : 
   obtain ⟨U, F, hU, hxU, hF, hΦ⟩ := h x hx hxG
   exact (fam_hasFDerivAt hU hF hΦ hxU hxG).differentiableAt
 
-theorem cd_coord (a : Fin r) : ContDiff ℝ ∞ (fun c : Fin r → ℂ => c a) := contDiff_apply ℝ ℂ a
+theorem cd_coord (a : Fin r) : ContDiff ℝ ∞ (fun c : Fin r → ℂ => c a) := contDiff_apply ℝ (fun _ => ℂ) a
 
 theorem cd_coordBar (a : Fin r) : ContDiff ℝ ∞ (fun c : Fin r → ℂ => star (c a)) :=
   Complex.conjCLE.contDiff.comp (cd_coord a)

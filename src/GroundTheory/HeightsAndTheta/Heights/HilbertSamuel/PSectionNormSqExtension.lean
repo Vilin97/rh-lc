@@ -113,7 +113,7 @@ theorem sumSq_pos {M : Type} [Fintype M] {a : M → ℂ} (ha : a ≠ 0) : 0 < �
 
 theorem contDiff_sumSq {M : Type} [Fintype M] {n : WithTop ℕ∞} :
     ContDiff ℝ n (fun u : M → ℂ => ∑ j, ‖u j‖ ^ 2) :=
-  ContDiff.sum fun j _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ j)
+  ContDiff.sum fun j _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) j)
 
 theorem contDiffAt_fs {M : Type} [Fintype M] {a : M → ℂ} (ha : a ≠ 0) :
     ContDiffAt ℝ 2 (fun u : M → ℂ => Real.log (∑ j, ‖u j‖ ^ 2) / 2) a :=

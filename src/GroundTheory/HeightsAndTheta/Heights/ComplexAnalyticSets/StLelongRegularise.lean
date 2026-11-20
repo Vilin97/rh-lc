@@ -16,7 +16,7 @@ def logReg (u : Fin n → ℂ) (ε : ℝ) (x : Fin n → ℂ) : ℝ :=
 
 theorem contDiff_linEval (u : Fin n → ℂ) : ContDiff ℝ ∞ (fun x : Fin n → ℂ => linEval u x) := by
   unfold linEval
-  exact ContDiff.sum fun j _ => contDiff_const.mul ((contDiff_apply ℝ ℂ j).restrict_scalars ℝ)
+  exact ContDiff.sum fun j _ => contDiff_const.mul ((contDiff_apply ℝ (fun _ => ℂ) j).restrict_scalars ℝ)
 
 theorem contDiff_logReg (u : Fin n → ℂ) {ε : ℝ} (hε : 0 < ε) : ContDiff ℝ ∞ (logReg u ε) := by
   unfold logReg

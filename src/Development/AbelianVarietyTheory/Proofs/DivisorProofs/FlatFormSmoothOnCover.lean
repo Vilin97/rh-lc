@@ -92,9 +92,9 @@ theorem contDiffOn_flat (hτ : IsPeriodMap B τ) : ContDiffOn ℝ ∞ (flat τ) 
     contDiffOn_inv_real (fun a b => him a b)
       (fun P hP => (hτ.2.2 P.1 hP.1).2.det_pos.ne') i j
   have hzr : ∀ i, ContDiffOn ℝ ∞ (fun P : Pt E g => (P.2 i).re) (cov B g) := fun i =>
-    (Complex.reCLM.contDiff.comp ((contDiff_apply ℝ ℂ i).comp contDiff_snd)).contDiffOn
+    (Complex.reCLM.contDiff.comp ((contDiff_apply ℝ (fun _ => ℂ) i).comp contDiff_snd)).contDiffOn
   have hzi : ∀ i, ContDiffOn ℝ ∞ (fun P : Pt E g => (P.2 i).im) (cov B g) := fun i =>
-    (Complex.imCLM.contDiff.comp ((contDiff_apply ℝ ℂ i).comp contDiff_snd)).contDiffOn
+    (Complex.imCLM.contDiff.comp ((contDiff_apply ℝ (fun _ => ℂ) i).comp contDiff_snd)).contDiffOn
   refine contDiffOn_pi.2 fun k => ?_
   cases k with
   | inl i =>

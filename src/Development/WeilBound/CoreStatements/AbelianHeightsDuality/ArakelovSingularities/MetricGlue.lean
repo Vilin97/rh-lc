@@ -27,7 +27,7 @@ theorem cInfAt_logSq_ev {W : Y.Opens} (u : Γ(Y, W)ˣ) (hy : y ∈ ptsIn p σ W)
   refine ⟨W, Unit, inferInstance, fun _ => u.val, fun v => Real.log (‖v ()‖ ^ 2), {v | v () ≠ 0}, hy,
     isOpen_ne_fun (continuous_apply ()) continuous_const, ev_ne_zero hy u.isUnit, ?_,
     Filter.EventuallyEq.rfl⟩
-  refine ContDiffOn.log ((contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ ())).contDiffOn ?_
+  refine ContDiffOn.log ((contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) ())).contDiffOn ?_
   intro v hv
   exact pow_ne_zero 2 (norm_ne_zero_iff.mpr hv)
 
@@ -287,7 +287,7 @@ theorem cInfAt_conj {σ : k →+* ℂ} {f : CxPts q ((starRingEnd ℂ).comp σ) 
     funext z
     simp
   let c : (ι → ℂ) → (ι → ℂ) := fun v a => starRingEnd ℂ (v a)
-  have hc : ContDiff ℝ ∞ c := contDiff_pi.mpr fun a => hc1.comp (contDiff_apply ℝ ℂ a)
+  have hc : ContDiff ℝ ∞ c := contDiff_pi.mpr fun a => hc1.comp (contDiff_apply ℝ (fun _ => ℂ) a)
   refine ⟨W, ι, hι, g, fun v => F (c v), c ⁻¹' O, hy', hO.preimage hc.continuous, ?_,
     hF.comp hc.contDiffOn (mapsTo_preimage c O), ?_⟩
   · show (fun a => starRingEnd ℂ (ev q σ W (g a) y)) ∈ O

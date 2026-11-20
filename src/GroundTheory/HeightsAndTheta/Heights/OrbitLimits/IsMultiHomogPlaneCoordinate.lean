@@ -54,7 +54,7 @@ theorem contDiff_evalC (s : MRing ι) :
   | C a => simpa only [map_C, eval_C] using contDiff_const
   | add p q hp hq => simpa only [map_add, eval_add] using hp.add hq
   | mul_X p i hp =>
-    simpa only [map_mul, map_X, eval_mul, eval_X] using hp.mul (contDiff_apply ℝ ℂ i)
+    simpa only [map_mul, map_X, eval_mul, eval_X] using hp.mul (contDiff_apply ℝ (fun _ => ℂ) i)
 
 theorem contDiffOn_regLog {A : HermLine ι} (hA : IsSmoothHerm A) (s : MRing ι) {ε : ℝ} (hε : 0 < ε) :
     ContDiffOn ℝ ∞ (regLog A s ε) {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := by

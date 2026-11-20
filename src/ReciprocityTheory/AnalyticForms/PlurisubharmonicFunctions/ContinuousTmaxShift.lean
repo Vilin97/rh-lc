@@ -111,7 +111,7 @@ lemma kK_neg (h : ι → ℝ) : kK (-h) = kK h := by
   simp only [kK, Pi.neg_apply, kθ_neg]
 lemma kK_contDiff : ContDiff ℝ ∞ (kK : (ι → ℝ) → ℝ) := by
   show ContDiff ℝ ∞ (fun h : ι → ℝ => ∏ j, kθ (h j))
-  exact contDiff_prod fun j _ => kθ_contDiff.comp (contDiff_apply ℝ ℝ j)
+  exact contDiff_prod fun j _ => kθ_contDiff.comp (contDiff_apply ℝ (fun _ => ℝ) j)
 lemma norm_le_of_kK_ne {h : ι → ℝ} (hh : kK h ≠ 0) : ‖h‖ ≤ 1 / 2 := by
   have hh' : ∏ j, kθ (h j) ≠ 0 := hh
   have hj : ∀ j, kθ (h j) ≠ 0 := fun j => (Finset.prod_ne_zero_iff.1 hh') j (Finset.mem_univ j)

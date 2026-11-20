@@ -145,7 +145,7 @@ theorem chart_smooth (hO : Osg) (hB : B1b) (F : Type) [Field F] [NumberField F] 
     have hE : ∀ v i j, ContDiffAt ℝ ∞ (fun m : TR.Lie F 2 => M v m i j) (TR.toL y.val) := by
       intro v i j
       have hc : ∀ l, ContDiff ℝ ∞ (fun m : TR.Lie F 2 => m l j v) := fun l =>
-        (contDiff_apply ℝ ℝ v).comp ((contDiff_apply ℝ _ j).comp (contDiff_apply ℝ _ l))
+        (contDiff_apply ℝ (fun _ => ℝ) v).comp ((contDiff_apply ℝ _ j).comp (contDiff_apply ℝ _ l))
       exact (ContDiff.sum fun l _ => contDiff_const.mul (hc l)).contDiffAt
     have hdt : ∀ v, dt (M v (TR.toL y.val)) ≠ 0 := by
       intro v

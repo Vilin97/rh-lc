@@ -159,7 +159,7 @@ lemma eh_clm (p q : Fin (mdim k r i)) (L : E →L[ℂ] E') (f : Mx k r → E) (h
 lemma mulX_cd (X : Mx k r) : ContDiff ℝ ∞ (fun g : Mx k r => g * X) := by
   refine contDiff_pi.2 fun a => contDiff_pi.2 fun b => ?_
   simp only [Matrix.mul_apply]
-  exact ContDiff.sum fun j _ => ((contDiff_apply ℝ ℂ j).comp (contDiff_apply ℝ (Fin (2 * r + k + 1) → ℂ) a)).mul
+  exact ContDiff.sum fun j _ => ((contDiff_apply ℝ (fun _ => ℂ) j).comp (contDiff_apply ℝ (fun _ => (Fin (2 * r + k + 1) → ℂ)) a)).mul
     contDiff_const
 
 lemma eh_smooth (p q : Fin (mdim k r i)) (f : Mx k r → E) (hf : SmoothLev k r i D f) :

@@ -59,7 +59,7 @@ theorem integral_fderiv_comp_mul_det_eq_zero (φ : (Fin (m + 1) → ℝ) → Fin
     refine contDiff_pi.2 fun k => ?_
     by_cases hk : k = 0
     · subst hk; rw [hH0]; exact hg.comp hφ
-    · rw [hHk k hk]; exact (contDiff_apply ℝ ℝ k).comp hφ
+    · rw [hHk k hk]; exact (contDiff_apply ℝ (fun _ => ℝ) k).comp hφ
   have hHc : HasCompactSupport fun x => H x 0 := by
     rw [hH0]
     simpa using hasCompactSupport_comp_sub φ C hC g hgc 0

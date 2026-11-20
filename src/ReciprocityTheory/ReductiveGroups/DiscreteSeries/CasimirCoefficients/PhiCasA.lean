@@ -15,7 +15,7 @@ variable {n : ℕ}
 
 theorem contDiff_entry (a b : Fin n) {m : ℕ∞ω} :
     ContDiff ℂ m (fun z : Matrix (Fin n) (Fin n) ℂ => z a b) := by
-  exact (contDiff_apply ℂ ℂ b).comp (contDiff_apply ℂ (Fin n → ℂ) a)
+  exact (contDiff_apply ℂ (fun _ => ℂ) b).comp (contDiff_apply ℂ (fun _ => (Fin n → ℂ)) a)
 
 theorem contDiff_lead (i : ℕ) {m : ℕ∞ω} : ContDiff ℂ m (lead (n := n) i) := by
   unfold lead

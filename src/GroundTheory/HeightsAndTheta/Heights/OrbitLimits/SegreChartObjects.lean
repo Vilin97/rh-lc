@@ -59,7 +59,7 @@ def chartLift {m : ℕ} (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι 
 
 theorem contDiff_chartLift {m : ℕ} (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k) {n : WithTop ℕ∞} :
     ContDiff ℝ n (chartLift σ i) :=
-  contDiff_pi.2 fun p => contDiff_apply ℝ ℂ (σ.symm (Function.update i p.1 p.2))
+  contDiff_pi.2 fun p => contDiff_apply ℝ (fun _ => ℂ) (σ.symm (Function.update i p.1 p.2))
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
 

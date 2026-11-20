@@ -120,7 +120,7 @@ theorem dl_eq (g : GA F 2) (y : GL (Fin 2) (UpperTheory.V.TR.Rinf F))
 
 theorem contDiff_dl (g : GA F 2) : ContDiff ℝ ∞ (dl (F := F) g) :=
   contDiff_const.mul (contDiff_prod fun v _ =>
-    (contDiff_apply ℝ ℝ v).comp (UpperTheory.V.TR.contDiff_det (E := F) (a := 2)))
+    (contDiff_apply ℝ (fun _ => ℝ) v).comp (UpperTheory.V.TR.contDiff_det (E := F) (a := 2)))
 
 theorem dl_one (g : GA F 2) : dl g (UpperTheory.V.TR.oneL F 2) = absD g := by
   simp [dl, UpperTheory.V.TR.oneL, UpperTheory.V.TR.toL]

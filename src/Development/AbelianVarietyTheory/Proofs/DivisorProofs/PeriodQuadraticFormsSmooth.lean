@@ -64,10 +64,10 @@ theorem inv_smooth {B : Set E} {τ : E → Matrix (Fin g) (Fin g) ℂ} (hτ : Is
   contDiffOn_inv_entry' (im_smooth hτ) (fun P hP => (hτ.2.2 _ hP.1).2.det_pos.ne') i j
 
 theorem zim_smooth (i : Fin g) : ContDiff ℝ ∞ (fun P : Pt E g => (P.2 i).im) :=
-  Complex.imCLM.contDiff.comp ((contDiff_apply ℝ ℂ i).comp contDiff_snd)
+  Complex.imCLM.contDiff.comp ((contDiff_apply ℝ (fun _ => ℂ) i).comp contDiff_snd)
 
 theorem zre_smooth (i : Fin g) : ContDiff ℝ ∞ (fun P : Pt E g => (P.2 i).re) :=
-  Complex.reCLM.contDiff.comp ((contDiff_apply ℝ ℂ i).comp contDiff_snd)
+  Complex.reCLM.contDiff.comp ((contDiff_apply ℝ (fun _ => ℂ) i).comp contDiff_snd)
 
 theorem p_smooth {B : Set E} {τ : E → Matrix (Fin g) (Fin g) ℂ} (hτ : IsPeriodMap B τ) (i : Fin g) :
     ContDiffOn ℝ ∞ (fun P : Pt E g => ((fun k => (P.2 k).im) ᵥ* ((τ P.1).map Complex.im)⁻¹) i) (cov B g) := by

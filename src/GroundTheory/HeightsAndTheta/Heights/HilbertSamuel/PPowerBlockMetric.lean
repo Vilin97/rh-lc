@@ -482,10 +482,10 @@ theorem newSq_pos {N : ℕ} {z : (Σ k, addIdx ι N k) → ℂ} (hz : ∀ k, ∃
 
 theorem contDiff_newSq {N : ℕ} {n : WithTop ℕ∞} : ContDiff ℝ n (addedBlockNormSq (ι := ι) (N := N)) := by
   unfold addedBlockNormSq
-  exact ContDiff.sum fun j _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ (⟨none, j⟩ : Σ k, addIdx ι N k))
+  exact ContDiff.sum fun j _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) (⟨none, j⟩ : Σ k, addIdx ι N k))
 
 theorem contDiff_oldPart {N : ℕ} {n : WithTop ℕ∞} : ContDiff ℝ n (basePart₂ (ι := ι) (N := N)) :=
-  contDiff_pi.mpr fun p => contDiff_apply ℝ ℂ (⟨some p.1, p.2⟩ : Σ k, addIdx ι N k)
+  contDiff_pi.mpr fun p => contDiff_apply ℝ (fun _ => ℂ) (⟨some p.1, p.2⟩ : Σ k, addIdx ι N k)
 
 variable [DecidableEq K]
 

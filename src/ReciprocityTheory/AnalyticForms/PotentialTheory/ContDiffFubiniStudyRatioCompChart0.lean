@@ -442,7 +442,7 @@ theorem projLine_smooth_of_charts {f : OnePoint ℂ → ℝ}
   · exact h1.contDiffOn
 
 private theorem contDiff_fsQ' : ContDiff ℝ (⊤ : ℕ∞) fsQ :=
-  (contDiff_norm_sq ℂ).comp (contDiff_apply ℝ ℂ (0 : Fin 1))
+  (contDiff_norm_sq ℂ).comp (contDiff_apply ℝ (fun _ => ℂ) (0 : Fin 1))
 
 theorem contDiff_fubiniStudyRatio_comp_chart0 : ContDiff ℝ (⊤ : ℕ∞) (fsH ∘ projectiveLineChartAtZero.symm) := by
   rw [fsH_chart0]

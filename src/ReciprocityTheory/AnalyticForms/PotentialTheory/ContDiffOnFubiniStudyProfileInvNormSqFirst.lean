@@ -124,7 +124,7 @@ def fubiniStudyProfile (t : ℝ) : ℝ := (1 / 2) * Real.log (1 + t)
 def fubiniStudyProfileInv (t : ℝ) : ℝ := (1 / 2) * Real.log (1 + t⁻¹)
 def fsQ (w : Fin 1 → ℂ) : ℝ := ‖w 0‖ ^ 2
 
-theorem contDiff_fsQ : ContDiff ℝ (⊤ : ℕ∞) fsQ := (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ 0)
+theorem contDiff_fsQ : ContDiff ℝ (⊤ : ℕ∞) fsQ := (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) 0)
 
 theorem contDiff_fubiniStudyProfile_normSqFirst : ContDiff ℝ (⊤ : ℕ∞) (fun w => fubiniStudyProfile (fsQ w)) := by
   unfold fubiniStudyProfile

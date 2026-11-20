@@ -103,7 +103,7 @@ theorem zop_qminG (k r j : ℕ) {t : ℕ} (a b : Fin t → Fin (2 * r + k + 1)) 
 end zop
 
 theorem contDiff_entry {j : ℕ} (a b : Fin j) : ContDiff ℝ ∞ fun Z : MJ j => Z a b :=
-  (contDiff_apply ℝ ℂ b).comp (contDiff_apply ℝ (Fin j → ℂ) a)
+  (contDiff_apply ℝ (fun _ => ℂ) b).comp (contDiff_apply ℝ (fun _ => (Fin j → ℂ)) a)
 
 theorem contDiff_det_of {j m : ℕ} (M : MJ j → Matrix (Fin m) (Fin m) ℂ) (hM : ∀ a b, ContDiff ℝ ∞ fun Z => M Z a b) :
     ContDiff ℝ ∞ fun Z => (M Z).det := by

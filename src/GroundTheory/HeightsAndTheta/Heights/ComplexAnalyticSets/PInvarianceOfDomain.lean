@@ -54,7 +54,7 @@ theorem smoothSubalgebra_separatesPoints : (smoothSubalgebra n).SeparatesPoints 
   obtain ⟨i, hi⟩ := Function.ne_iff.mp hxy
   refine ⟨fun z => z i, ⟨⟨fun z => z i, continuous_apply i⟩, ?_, rfl⟩, hi⟩
   show ContDiff ℝ 1 fun z : Fin n → ℝ => z i
-  exact contDiff_apply ℝ ℝ i
+  exact contDiff_apply ℝ (fun _ => ℝ) i
 
 theorem exists_differentiable_near {S : Set (Fin n → ℝ)} (hS : IsCompact S)
     (G : (Fin n → ℝ) → Fin n → ℝ) (hG : Continuous G) {η : ℝ} (hη : 0 < η) :

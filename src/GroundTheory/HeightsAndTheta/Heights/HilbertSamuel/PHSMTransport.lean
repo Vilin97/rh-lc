@@ -171,7 +171,7 @@ theorem matActC_conjPt (A : Matrix J J ℚ) (z : J → ℂ) : matActC A (conjPt 
 
 theorem contDiff_matActC {k : WithTop ℕ∞} (A : Matrix J J ℚ) : ContDiff ℝ k (matActC A) := by
   refine contDiff_pi.2 fun i => ?_
-  exact ContDiff.sum fun j _ => contDiff_const.mul (contDiff_apply ℝ ℂ j)
+  exact ContDiff.sum fun j _ => contDiff_const.mul (contDiff_apply ℝ (fun _ => ℂ) j)
 
 theorem eval_matSubst [DecidableEq J] (B : Matrix J J ℚ) (z : J → ℂ) (g : MvPolynomial J ℚ) :
     eval z (map (algebraMap ℚ ℂ) (matSubst B g)) = eval (matActC B z) (map (algebraMap ℚ ℂ) g) := by

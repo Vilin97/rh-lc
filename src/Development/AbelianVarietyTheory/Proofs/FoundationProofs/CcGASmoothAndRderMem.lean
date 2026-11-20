@@ -173,7 +173,7 @@ theorem ccGA_smooth_and_Rder_mem (D : D7) (V : HSp D)
         ContDiff ℝ ∞ fun t : Fin k → ℝ => f (g * (List.ofFn fun i => oneP θ V (τs i) (Xs i) (t i)).prod)) ∧
     ∀ τ, ∀ X ∈ lieAt V τ, Rder θ V τ X f ∈ CcGA V :=
   ⟨fun _ _ _ hX g => (isSmoothRealFam_prod fun i => (isSmoothRealFam_oneP hθ (hX i)).1.comp
-      (contDiff_apply ℝ ℝ i)).contDiff hf g,
+      (contDiff_apply ℝ (fun _ => ℝ) i)).contDiff hf g,
     fun _ _ hX => have h := isSmoothRealFam_oneP hθ hX; h.1.deriv_mem_ccAd h.2.1 h.2.2 hf⟩
 
 end Record

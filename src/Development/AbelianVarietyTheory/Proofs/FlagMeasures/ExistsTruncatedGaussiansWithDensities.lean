@@ -227,7 +227,7 @@ theorem hasCompactSupport_prodFun (k n : ℕ) : HasCompactSupport (prodFun (cutE
 
 theorem contDiff_prodFun (k n : ℕ) :
     ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (prodFun (cutExp k) : (Fin n → ℂ) → ℝ) :=
-  contDiff_prod fun i _ => (contDiff_cutExp k).comp ((contDiff_apply ℝ ℂ i).norm_sq ℂ)
+  contDiff_prod fun i _ => (contDiff_cutExp k).comp ((contDiff_apply ℝ (fun _ => ℂ) i).norm_sq ℂ)
 
 theorem tendsto_dens {n : ℕ} (ε : Fin (n + 1) → Bool) (t : ℝ) :
     Filter.Tendsto (fun k => dens (cutExp k) ε t) Filter.atTop (nhds (dens (fun r => Real.exp (-r)) ε t)) := by

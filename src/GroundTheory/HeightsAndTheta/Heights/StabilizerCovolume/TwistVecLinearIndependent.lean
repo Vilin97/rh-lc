@@ -144,7 +144,7 @@ theorem contDiff_chartMap {n : WithTop ℕ∞} (a p : Fin 2) :
   rw [this]
   split_ifs
   · exact contDiff_const
-  · exact contDiff_const.mul (contDiff_apply ℝ ℂ (0 : Fin 1))
+  · exact contDiff_const.mul (contDiff_apply ℝ (fun _ => ℂ) (0 : Fin 1))
 
 theorem contDiffAt_tautSq {n : WithTop ℕ∞} (l a : Fin 2) (t : Fin 1 → ℂ) (hz : chartMap a t ⟨(), l⟩ ≠ 0) :
     ContDiffAt ℝ n (fun t' => tautSq l (chartMap a t')) t := by

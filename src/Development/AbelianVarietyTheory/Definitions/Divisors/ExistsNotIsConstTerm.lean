@@ -142,7 +142,7 @@ theorem isSm_entry (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w)
       refine ContDiff.mul ?_ ih
       have : ContDiff ℝ ∞ (NormedSpace.exp : Matrix (Fin n) (Fin n) ℂ → _) :=
         contDiff_iff_contDiffAt.2 fun x => (NormedSpace.exp_analytic (𝕂 := ℝ) x).contDiffAt
-      exact this.comp ((contDiff_apply ℝ ℝ a).smul contDiff_const)
+      exact this.comp ((contDiff_apply ℝ (fun _ => ℝ) a).smul contDiff_const)
   simp only [List.ofFn_eq_map, map_mul]
   exact (LinearMap.toContinuousLinearMap (Matrix.entryLinearMap ℝ ℂ i j)).contDiff.comp
     (contDiff_const.mul (key _))

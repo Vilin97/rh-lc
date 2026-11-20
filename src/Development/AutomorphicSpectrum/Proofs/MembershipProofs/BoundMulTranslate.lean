@@ -14,26 +14,26 @@ theorem contDiff_iter {F : X → V} (hF : ContDiff ℝ ∞ F) (n : ℕ) : ContDi
   hF.iteratedFDeriv_right (by norm_cast)
 
 theorem fderiv_iter_comm {F : X → V} (hF : ContDiff ℝ ∞ F) (h : X) (n : ℕ) (a : X) :
-    fderiv ℝ (iteratedFDeriv ℝ n F) a h = iteratedFDeriv ℝ n (fun b => fderiv ℝ F b h) a := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    fderiv ℝ (iteratedFDeriv ℝ n F) a h = iteratedFDeriv ℝ n (fun b => fderiv ℝ F b h) a := by
+  induction n generalizing a with
+  | zero =>
+    ext m
+    rw [← fderiv_continuousMultilinear_apply_const_apply
+      ((contDiff_iter hF 0).differentiable (by simp) a)]
+    simp [iteratedFDeriv_zero_apply]
+  | succ n ih =>
+    ext m
+    have hK := contDiff_iter hF n
+    have hK' : ContDiff ℝ ∞ (fderiv ℝ (iteratedFDeriv ℝ n F)) := hK.fderiv_right (by norm_cast)
+    have hd := hK'.differentiable (by simp) a
+    rw [← fderiv_continuousMultilinear_apply_const_apply
+      ((contDiff_iter hF (n + 1)).differentiable (by simp) a), iteratedFDeriv_succ_apply_left,
+      ← funext ih]
+    simp only [iteratedFDeriv_succ_apply_left]
+    rw [fderiv_continuousMultilinear_apply_const_apply (hd.clm_apply (differentiableAt_const _)),
+      fderiv_clm_apply hd (differentiableAt_const _), fderiv_clm_apply hd (differentiableAt_const _)]
+    have hs := (hK.contDiffAt (x := a)).isSymmSndFDerivAt (by simp; norm_cast)
+    simp [hs.eq h (m 0)]
 
 theorem taylor_iter {F : X → V} (hF : ContDiff ℝ ∞ F) (n : ℕ) (a h : X) {M : ℝ} (hM0 : 0 ≤ M)
     (hM : ∀ b ∈ segment ℝ a (a + h), ‖iteratedFDeriv ℝ (n + 2) F b‖ ≤ M) :

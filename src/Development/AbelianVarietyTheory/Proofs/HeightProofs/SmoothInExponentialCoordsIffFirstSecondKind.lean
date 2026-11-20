@@ -172,7 +172,7 @@ private theorem contDiff_list_prod_ofFn_exp_smul {k : ℕ} (Y : Fin k → L) :
     funext t
     rw [map_smul]
   rw [h]
-  exact _root_.GlobalTheory.SmoothForms.SecondKind.contDiff_exp.comp ((contDiff_apply ℝ ℝ i).smul contDiff_const)
+  exact _root_.GlobalTheory.SmoothForms.SecondKind.contDiff_exp.comp ((contDiff_apply ℝ (fun _ => ℝ) i).smul contDiff_const)
 
 open NumberField Matrix in
 open scoped ContDiff Topology in

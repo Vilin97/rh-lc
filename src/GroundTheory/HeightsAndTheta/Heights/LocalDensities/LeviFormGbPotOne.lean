@@ -81,7 +81,7 @@ theorem MACompact.hyp_inhabited :
 theorem gbPot_contDiff : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.gbPot (D := 1)) := by
   have hG : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.gbG (D := 1)) := by
     unfold ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.gbG
-    exact contDiff_const.add (ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ i))
+    exact contDiff_const.add (ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) i))
   have h := (hG.log fun y => (ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.gbG_pos y).ne').div_const 2
   have e : ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.gbPot (D := 1) =
       fun y => Real.log (ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.gbG y) / 2 :=

@@ -43,7 +43,7 @@ theorem genWt_eq (L : HermLB p) (t : LB.Gen L.B) (ht : t.IsGen) (σ : k →+* �
 
 theorem cInfAt_logSq {σ : k →+* ℂ} {U : X.Opens} (u : Γ(X, U)ˣ) {y : CxPts p σ}
     (hy : y ∈ ptsIn p σ U) : CInfAt (fun z => logSq z U u) y := by
-  have hs : ContDiff ℝ ∞ fun v : Unit → ℂ => ‖v ()‖ ^ 2 := (contDiff_apply ℝ ℂ ()).norm_sq ℂ
+  have hs : ContDiff ℝ ∞ fun v : Unit → ℂ => ‖v ()‖ ^ 2 := (contDiff_apply ℝ (fun _ => ℂ) ()).norm_sq ℂ
   refine ⟨U, Unit, inferInstance, fun _ => u.val, fun v => Real.log (‖v ()‖ ^ 2),
     {v | ‖v ()‖ ^ 2 ≠ 0}, hy, isOpen_ne_fun hs.continuous continuous_const, ?_,
     hs.contDiffOn.log fun _ h => h, Filter.Eventually.of_forall fun _ => rfl⟩

@@ -120,7 +120,7 @@ theorem toGeo_h_of_blockNonzero (A : HermLine n) {w : Coord n → ℂ}
 
 theorem isSmoothHerm_toGeo (A : HermLine n) : Geo.IsSmoothHerm A.toGeo := by
   have hu : ContDiff ℝ ∞ (fun w : Coord n → ℂ ↦ unflatCone w) :=
-    contDiff_pi.2 fun k ↦ contDiff_pi.2 fun i ↦ contDiff_apply ℝ ℂ (⟨k, i⟩ : Coord n)
+    contDiff_pi.2 fun k ↦ contDiff_pi.2 fun i ↦ contDiff_apply ℝ (fun _ => ℂ) (⟨k, i⟩ : Coord n)
   have hm : ContDiffOn ℝ ∞ (fun w : Coord n → ℂ ↦ A.metric (unflatCone w))
       {w | ∀ k, ∃ i, w ⟨k, i⟩ ≠ 0} :=
     A.metric_smooth.comp hu.contDiffOn fun w hw ↦ (blockNonzero_unflatCone_iff w).mpr hw

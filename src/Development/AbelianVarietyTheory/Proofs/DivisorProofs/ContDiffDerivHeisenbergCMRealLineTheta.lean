@@ -133,7 +133,7 @@ theorem contDiff_deriv_heisOF_line : ∀ (F E : Type) [Field F] [NumberField F] 
     refine contDiff_pi.2 fun i => ?_
     induction i using Fin.lastCases with
     | last => simp only [Fin.snoc_last]; exact contDiff_snd
-    | cast j => simp only [Fin.snoc_castSucc]; exact (contDiff_apply ℝ ℝ j).comp contDiff_fst
+    | cast j => simp only [Fin.snoc_castSucc]; exact (contDiff_apply ℝ (fun _ => ℝ) j).comp contDiff_fst
   let h : (Fin k → ℝ) × ℝ → ℂ := fun p => f (w + M (Fin.snoc (α := fun _ => ℝ) p.1 p.2))
   have hh : ContDiff ℝ ∞ h := hg.comp hsnoc
   have hfe : ∀ x t, f (w + L' x + L t) = h (x, t) := by

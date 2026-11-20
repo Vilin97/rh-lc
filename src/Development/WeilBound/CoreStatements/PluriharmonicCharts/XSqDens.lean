@@ -123,7 +123,7 @@ theorem lin_analyticAt {D D' : ℕ} (τ : Fin D' → Fin D) (z : Fin D → ℂ) 
   exact ContinuousLinearMap.analyticAt _ _
 
 theorem lin_contDiff {D D' : ℕ} (τ : Fin D' → Fin D) : ContDiff ℝ 2 (lin τ) :=
-  contDiff_pi.2 fun j => contDiff_apply ℝ ℂ (τ j)
+  contDiff_pi.2 fun j => contDiff_apply ℝ (fun _ => ℂ) (τ j)
 
 theorem herm2_line_expand (G : Matrix (Fin 2) (Fin 2) ℂ) (b : ℂ) :
     herm2 G ![1, b] ![1, b] = G 0 0 + G 0 1 * b + (starRingEnd ℂ) b * G 1 0 + (starRingEnd ℂ) b * G 1 1 * b := by
@@ -170,7 +170,7 @@ theorem α_cd (n : ℕ) (a : σ) {y : Fin d → ℂ} (hy : y ∈ Q.U n) : ContDi
 theorem xi_cd {D : ℕ} (n : ℕ) (τ : Fin d → Fin D) (j : Fin D) {z : Fin D → ℂ} (hz : lin τ z ∈ Q.U n) :
     ContDiffAt ℝ 2 (fun z' => xiPot (Q.G n (lin τ z')) (z' j)) z :=
   contDiffAt_xiPot (fun p q => (G_cd Q n p q hz).comp z (lin_contDiff τ).contDiffAt)
-    (contDiff_apply ℝ ℂ j).contDiffAt (Q.G_pos n _ hz)
+    (contDiff_apply ℝ (fun _ => ℂ) j).contDiffAt (Q.G_pos n _ hz)
 
 theorem sumα_cd {D : ℕ} (n : ℕ) (c : σ → ℝ) (τ : Fin d → Fin D) {z : Fin D → ℂ} (hz : lin τ z ∈ Q.U n) :
     ContDiffAt ℝ 2 (fun z' => ∑ a, c a * Q.α n a (lin τ z')) z :=

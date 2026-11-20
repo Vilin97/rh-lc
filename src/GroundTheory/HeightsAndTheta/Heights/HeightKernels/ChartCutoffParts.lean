@@ -21,7 +21,7 @@ variable {e : ℕ}
 
 theorem contDiff_gbPot_of_le {D : ℕ} (m : ℕ) : ContDiff ℝ m (gbPot (D := D)) := by
   have hs : ContDiff ℝ m fun y : Fin D → ℂ => 1 + ∑ i, ‖y i‖ ^ 2 :=
-    contDiff_const.add (ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ i))
+    contDiff_const.add (ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) i))
   have hpos : ∀ y : Fin D → ℂ, 0 < 1 + ∑ i, ‖y i‖ ^ 2 := fun y => by positivity
   exact (hs.sqrt fun y => (hpos y).ne').log fun y => (Real.sqrt_pos.mpr (hpos y)).ne'
 
@@ -59,7 +59,7 @@ theorem chartCutoff_apply (k : ℕ) (y : Fin D → ℂ) :
 
 theorem contDiff_chartCutoff (k : ℕ) (m : ℕ) : ContDiff ℝ m (chartCutoff (D := D) k) := by
   have hs : ContDiff ℝ m fun y : Fin D → ℂ => ∑ i, ‖y i‖ ^ 2 :=
-    ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ i)
+    ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) i)
   exact Real.smoothTransition.contDiff.comp (contDiff_const.sub (hs.div_const _))
 
 theorem chartCutoff_nonneg (k : ℕ) (y : Fin D → ℂ) : 0 ≤ chartCutoff k y := Real.smoothTransition.nonneg _

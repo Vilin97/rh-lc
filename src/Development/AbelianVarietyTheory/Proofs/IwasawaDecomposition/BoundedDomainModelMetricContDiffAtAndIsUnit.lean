@@ -52,7 +52,7 @@ theorem contDiff_hP_entry (ι : Type) [Fintype ι] (p q n : ℕ)
     intro c
     have hL : ContDiff ℝ 2 (fun w : ReciprocityTheory.L2DbarEstimates.V n => GlobalTheory.UnifDens.flatL h w) :=
       ((GlobalTheory.UnifDens.flatL h).contDiff).restrict_scalars ℝ
-    exact (contDiff_apply ℝ ℂ c).comp hL
+    exact (contDiff_apply ℝ (fun _ => ℂ) c).comp hL
   simp only [hP, Matrix.sub_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, unflat,
     Matrix.of_apply]
   refine contDiff_const.sub (ContDiff.sum (fun k _ => ?_))

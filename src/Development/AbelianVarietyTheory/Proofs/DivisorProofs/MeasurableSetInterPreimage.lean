@@ -66,7 +66,7 @@ theorem padZero_contDiff (n d : ℕ) : ContDiff ℝ ⊤ (padZero n d) := by
   by_cases h : (k : ℕ) < n
   · have : (fun z : Fin n → ℂ => padZero n d z k) = fun z => z ⟨k, h⟩ := by
       funext z; simp [padZero, h]
-    rw [this]; exact contDiff_apply ℝ ℂ _
+    rw [this]; exact contDiff_apply ℝ (fun _ => ℂ) _
   · have : (fun z : Fin n → ℂ => padZero n d z k) = fun _ => 0 := by
       funext z; simp [padZero, h]
     rw [this]; exact contDiff_const

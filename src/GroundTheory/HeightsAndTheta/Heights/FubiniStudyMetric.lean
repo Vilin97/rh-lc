@@ -123,7 +123,7 @@ theorem fsNorm_sq_frame (i : Fin (N + 1)) (z : Fin N → ℂ) :
   simp [coordForm]
 
 lemma contDiff_normSqSum : ContDiff ℝ ∞ (fun z : Fin N → ℂ => ∑ j, ‖z j‖ ^ 2) :=
-  ContDiff.sum fun j _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ j)
+  ContDiff.sum fun j _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) j)
 
 end CP
 

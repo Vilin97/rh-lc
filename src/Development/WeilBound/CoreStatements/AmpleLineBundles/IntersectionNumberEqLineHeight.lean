@@ -30,7 +30,7 @@ def stdLine (m : K → ℕ) : HermLine ι where
 theorem stdLine_smooth (m : K → ℕ) : IsSmoothHerm (stdLine (ι := ι) m) := by
   refine ContDiff.contDiffOn ?_
   refine contDiff_prod fun k _ => ContDiff.pow (ContDiff.sum fun i _ => ?_) _
-  exact (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ (⟨k, i⟩ : Σ k, ι k))
+  exact (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) (⟨k, i⟩ : Σ k, ι k))
 
 theorem tensor_smooth {A B : HermLine ι} (hA : IsSmoothHerm A) (hB : IsSmoothHerm B) :
     IsSmoothHerm (A.tensor B) := ContDiffOn.mul hA hB

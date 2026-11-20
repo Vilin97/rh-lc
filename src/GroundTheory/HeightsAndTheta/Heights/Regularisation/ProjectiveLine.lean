@@ -334,7 +334,7 @@ theorem cp_mem_Yo (j : Fin 2) (x : CP 1) (hx : x ∈ (sChart j).source) :
 
 theorem contDiff_logNormSq : ContDiff ℝ ∞ (fun y : Fin 1 → ℂ => Real.log (1 + ‖(2 : ℂ) * y 0‖ ^ 2)) := by
   have h2 : ContDiff ℝ ∞ (fun y : Fin 1 → ℂ => (2 : ℂ) * y 0) :=
-    contDiff_const.mul (contDiff_apply ℝ ℂ 0)
+    contDiff_const.mul (contDiff_apply ℝ (fun _ => ℂ) 0)
   exact (contDiff_const.add ((contDiff_norm_sq ℝ).comp h2)).log fun y =>
     (by positivity : (0 : ℝ) < 1 + ‖(2 : ℂ) * y 0‖ ^ 2).ne'
 

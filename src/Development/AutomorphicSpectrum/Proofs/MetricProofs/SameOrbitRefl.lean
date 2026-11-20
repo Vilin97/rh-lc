@@ -95,7 +95,7 @@ theorem conjAvg_smooth {A : HermLine ι} (hA : IsSmoothHerm A) : IsSmoothHerm (c
   set S : Set ((Σ k, ι k) → ℂ) := {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} with hS
   have hconj : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (cj : ((Σ k, ι k) → ℂ) → (Σ k, ι k) → ℂ) := by
     refine contDiff_pi.2 fun q => ?_
-    exact Complex.conjCLE.contDiff.comp (contDiff_apply ℝ ℂ q)
+    exact Complex.conjCLE.contDiff.comp (contDiff_apply ℝ (fun _ => ℂ) q)
   have hmap : Set.MapsTo (cj : ((Σ k, ι k) → ℂ) → (Σ k, ι k) → ℂ) S S := fun z hz => cj_nonzero hz
   have h2 : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun z => A.h (cj z)) S :=
     hA.comp hconj.contDiffOn hmap

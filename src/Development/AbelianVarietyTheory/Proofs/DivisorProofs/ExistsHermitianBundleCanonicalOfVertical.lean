@@ -27,7 +27,7 @@ theorem cInfAt_log_ratVal {f : X.functionField} {y : CxPts q σ} (hf : UnitAt (u
   obtain ⟨U, hU, a, rfl⟩ := hf.regAt.exists_fnOf
   have hy : y ∈ ptsIn q σ U := mem_ptsIn.2 hU
   rw [ratVal_fnOf hy] at h0
-  have hs : ContDiff ℝ ∞ fun v : Unit → ℂ => ‖v ()‖ ^ 2 := (contDiff_apply ℝ ℂ ()).norm_sq ℂ
+  have hs : ContDiff ℝ ∞ fun v : Unit → ℂ => ‖v ()‖ ^ 2 := (contDiff_apply ℝ (fun _ => ℂ) ()).norm_sq ℂ
   refine ⟨U, Unit, inferInstance, fun _ => a, fun v => Real.log (‖v ()‖ ^ 2),
     {v | ‖v ()‖ ^ 2 ≠ 0}, hy, isOpen_ne_fun hs.continuous continuous_const,
     pow_ne_zero _ (norm_ne_zero_iff.2 h0), hs.contDiffOn.log fun _ h => h, ?_⟩

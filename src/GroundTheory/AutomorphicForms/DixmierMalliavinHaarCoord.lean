@@ -32,8 +32,8 @@ theorem contDiff_prodExpVal {d : ℕ} (X : Fin d → 𝔸) : ContDiff ℝ ∞ (p
     have e : prodExpVal X = fun t => exp (t 0 • X 0) *
         prodExpVal (fun i => X i.succ) (fun i => t i.succ) := funext (prodExpVal_succ X)
     rw [e]
-    exact ((contDiff_exp ℝ 𝔸).comp ((contDiff_apply ℝ ℝ 0).smul contDiff_const)).mul
-      ((ih _).comp (contDiff_pi.2 fun i => contDiff_apply ℝ ℝ i.succ))
+    exact ((contDiff_exp ℝ 𝔸).comp ((contDiff_apply ℝ (fun _ => ℝ) 0).smul contDiff_const)).mul
+      ((ih _).comp (contDiff_pi.2 fun i => contDiff_apply ℝ (fun _ => ℝ) i.succ))
 
 theorem hasFDerivAt_prodExpVal_zero {d : ℕ} (X : Fin d → 𝔸) :
     HasFDerivAt (prodExpVal X)

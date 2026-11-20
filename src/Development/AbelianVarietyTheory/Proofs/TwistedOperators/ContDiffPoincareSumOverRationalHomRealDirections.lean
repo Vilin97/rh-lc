@@ -67,7 +67,7 @@ theorem contDiff_psi_symplOH {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D
       funext t
       exact LinearMap.pi_apply_eq_sum_univ ((φ t).toRealLinearMap (hφ t) : (Fin k → ℝ) →ₗ[ℝ] ℂ) t
     rw [e]
-    refine ContDiff.sum fun i _ => (contDiff_apply ℝ ℝ i).smul ?_
+    refine ContDiff.sum fun i _ => (contDiff_apply ℝ (fun _ => ℝ) i).smul ?_
     exact contDiff_of_additive _ (by rw [map_zero, hz2, map_zero]) (fun x y => by rw [map_add, hadd2, map_add])
       (hl.comp (GlobalTheory.WeilVacMove.continuous_symplOH S T continuous_const hB))
   have e : ∀ t, ψ (symplOH S T (c + A t) (c' + B t)) = ψ (symplOH S T c c') *

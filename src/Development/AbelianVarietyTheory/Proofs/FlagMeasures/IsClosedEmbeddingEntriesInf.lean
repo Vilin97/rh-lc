@@ -60,7 +60,7 @@ theorem tens_average (B : RowsAut) (hU : ∀ v, IsURepOn (UJset (B.I.ε v)) (B.�
   obtain ⟨hin, hact, hden⟩ := B.tens_spec
   set G : (InfinitePlace B.I.F → Fin B.I.n → Fin B.I.n → ℂ) → ℂ := fun x => ∏ v, F v (x v) with hGdef
   have hGs : ContDiff ℝ ∞ G :=
-    contDiff_prod (fun v _ => (hF v).comp (contDiff_apply ℝ (Fin B.I.n → Fin B.I.n → ℂ) v))
+    contDiff_prod (fun v _ => (hF v).comp (contDiff_apply ℝ (fun _ => (Fin B.I.n → Fin B.I.n → ℂ)) v))
   have hGc : HasCompactSupport G := by
     refine HasCompactSupport.intro' (isCompact_univ_pi fun v => hc v)
       (isClosed_set_pi fun v _ => isClosed_tsupport (F v)) ?_

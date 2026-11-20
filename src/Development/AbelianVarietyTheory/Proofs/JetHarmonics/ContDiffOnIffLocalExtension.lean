@@ -39,7 +39,7 @@ variable {n : ℕ} in
 attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace in
 private lemma contDiff_entry' (i j : Fin n) :
     ContDiff ℝ ∞ (fun A : Matrix (Fin n) (Fin n) ℂ => A i j) :=
-  (contDiff_apply ℝ ℂ j).comp (contDiff_apply ℝ (Fin n → ℂ) i)
+  (contDiff_apply ℝ (fun _ => ℂ) j).comp (contDiff_apply ℝ (fun _ => (Fin n → ℂ)) i)
 
 open Matrix in
 open scoped ContDiff in

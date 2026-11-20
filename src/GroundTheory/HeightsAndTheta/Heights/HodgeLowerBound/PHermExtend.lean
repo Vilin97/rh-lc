@@ -104,15 +104,15 @@ theorem isOpen_blocksNe : IsOpen (blocksNe ι) := by
 
 theorem contDiff_blkSq (k : K) : ContDiff ℝ 𝕟 (fun z : (Σ k, ι k) → ℂ => blkSq z k) := by
   unfold blkSq
-  exact ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ (⟨k, i⟩ : Σ k, ι k))
+  exact ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) (⟨k, i⟩ : Σ k, ι k))
 
 theorem contDiffOn_proj : ContDiffOn ℝ 𝕟 (proj (ι := ι)) (blocksNe ι) := by
   refine contDiffOn_pi.2 fun q => ?_
   unfold proj
   have hc : ContDiff ℝ 𝕟 (fun z : (Σ k, ι k) → ℂ => starRingEnd ℂ (z ⟨q.1, q.2.2⟩)) := by
-    have := Complex.conjCLE.contDiff.comp (contDiff_apply ℝ ℂ (⟨q.1, q.2.2⟩ : Σ k, ι k)) (n := 𝕟)
+    have := Complex.conjCLE.contDiff.comp (contDiff_apply ℝ (fun _ => ℂ) (⟨q.1, q.2.2⟩ : Σ k, ι k)) (n := 𝕟)
     simpa [Function.comp_def, Complex.conjCLE_apply] using this
-  refine ((contDiff_apply ℝ ℂ (⟨q.1, q.2.1⟩ : Σ k, ι k)).mul hc).contDiffOn.mul ?_
+  refine ((contDiff_apply ℝ (fun _ => ℂ) (⟨q.1, q.2.1⟩ : Σ k, ι k)).mul hc).contDiffOn.mul ?_
   refine ContDiffOn.inv ?_ fun z hz => ?_
   · exact (Complex.ofRealCLM.contDiff.comp (contDiff_blkSq q.1)).contDiffOn
   · exact_mod_cast (blkSq_pos hz q.1).ne'
@@ -120,7 +120,7 @@ theorem contDiffOn_proj : ContDiffOn ℝ 𝕟 (proj (ι := ι)) (blocksNe ι) :=
 theorem contDiff_secAt (z₀ : (Σ k, ι k) → ℂ) : ContDiff ℝ 𝕟 (secAt (ι := ι) z₀) := by
   refine contDiff_pi.2 fun p => ?_
   unfold secAt
-  exact ContDiff.sum fun j _ => (contDiff_apply ℝ ℂ _).mul contDiff_const
+  exact ContDiff.sum fun j _ => (contDiff_apply ℝ (fun _ => ℂ) _).mul contDiff_const
 
 theorem contDiffOn_refNorm (a : K → ℤ) : ContDiffOn ℝ 𝕟 (refNorm (ι := ι) a) (blocksNe ι) := by
   unfold refNorm

@@ -229,7 +229,7 @@ theorem dRep_eq_fderiv (hG : IsUnit G) {k : ℕ} {B : Fin k → Matrix (Fin n) (
   have h1 : ContDiff ℝ ∞ (NormedSpace.exp : Matrix (Fin n) (Fin n) ℂ → _) :=
     contDiff_iff_contDiffAt.2 fun x => (NormedSpace.exp_analytic (𝕂 := ℝ) x).contDiffAt
   have h2 : ContDiff ℝ ∞ fun t : Fin k → ℝ => ∑ i, t i • B i :=
-    ContDiff.sum fun i _ => (contDiff_apply ℝ ℝ i).smul contDiff_const
+    ContDiff.sum fun i _ => (contDiff_apply ℝ (fun _ => ℝ) i).smul contDiff_const
   have h3 := hy k _ (h1.comp h2) fun t => by
     have := exp_mem hG ((lie G).sum_mem (t := Finset.univ) fun i _ => (lie G).smul_mem (t i) (hB i)) 1
     rwa [one_smul] at this

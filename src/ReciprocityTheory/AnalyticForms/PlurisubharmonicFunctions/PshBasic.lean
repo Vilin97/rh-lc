@@ -232,7 +232,7 @@ theorem isPshInhabit_thm : IsPshInhabitStatement := by
         (ci_of_cont (by fun_prop)) fun ζ _ => ?_)
       simpa using norm_le_pi_norm (z + ζ • w) j
   have hC : ContDiffOn ℝ 2 (fun z : Fin D → ℂ => ∑ j, ‖z j‖ ^ 2) Set.univ :=
-    (ContDiff.sum fun j _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ j)).contDiffOn
+    (ContDiff.sum fun j _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) j)).contDiffOn
   refine ⟨hsq, hnorm, (PshLap.plurisubharmonicIffLeviNonneg_holds D _ _ isOpen_univ hC).1 hsq, ?_⟩
   rintro ⟨-, h2⟩
   have h := (h2 0 (Pi.single 0 1) (fun _ _ => Set.mem_univ _)).2

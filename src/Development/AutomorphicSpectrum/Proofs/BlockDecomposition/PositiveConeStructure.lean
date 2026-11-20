@@ -165,7 +165,7 @@ theorem contDiff_hOf : ContDiff ℝ ∞ (hOf (n := n)) := by
   unfold hOf
   refine ContDiff.sum fun p _ => ?_
   have h : ContDiff ℝ ∞ (fun v : Fin n × Fin n → ℝ => ((v p : ℝ) : ℂ)) :=
-    Complex.ofRealCLM.contDiff.comp (contDiff_apply ℝ ℝ p)
+    Complex.ofRealCLM.contDiff.comp (contDiff_apply ℝ (fun _ => ℝ) p)
   exact h.smul contDiff_const
 
 theorem det_ne_of_gram {a P : Mat n} (h : a * aᴴ = P) (hP : P.PosDef) : a.det ≠ 0 := by

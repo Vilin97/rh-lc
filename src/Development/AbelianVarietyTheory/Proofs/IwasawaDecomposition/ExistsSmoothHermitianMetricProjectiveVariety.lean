@@ -125,7 +125,7 @@ theorem exists_isMetricOn_top : ∀ (F : Type) [Field F] (σ : F →+* ℂ) (X :
       · have hr (x : Fin (m τ) × Fin (m τ)) : RegAt (under y) ((B * (A (pt j))⁻¹) τ x.1 x.2) :=
           mem_O_ratOf.1 ((hpar j y hy B hB τ).1 _ _)
         have hG : ContDiff ℝ (⊤ : ℕ∞) fun w : Fin (m τ) × Fin (m τ) → ℂ => ∑ l, w (i, l) * star (w (k, l)) :=
-          ContDiff.sum fun l _ => (contDiff_apply ℝ ℂ _).mul (Complex.conjCLE.contDiff.comp (contDiff_apply ℝ ℂ _))
+          ContDiff.sum fun l _ => (contDiff_apply ℝ (fun _ => ℂ) _).mul (Complex.conjCLE.contDiff.comp (contDiff_apply ℝ (fun _ => ℂ) _))
         refine ((hd j y).comp₂ (cInfAt_ratVal hr (g.contDiff.comp hG))
           (contDiff_fst.mul contDiff_snd)).congr (Eventually.of_forall fun z => ?_)
         simp [T, Matrix.mul_apply, Mat.map]

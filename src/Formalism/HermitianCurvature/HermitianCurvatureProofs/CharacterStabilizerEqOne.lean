@@ -109,7 +109,7 @@ theorem sgs_pL (x : Mt k r × Mt k r) (g : B.Mat k r) :
 theorem contDiff_lmul (σ : B.Mat k r) : ContDiff ℝ (⊤ : ℕ∞) (fun g : B.Mat k r => σ * g) := by
   refine contDiff_pi.2 fun i => contDiff_pi.2 fun j => ?_
   simp only [Matrix.mul_apply]
-  exact ContDiff.sum fun l _ => contDiff_const.mul ((contDiff_apply ℝ ℂ j).comp (contDiff_apply ℝ _ l))
+  exact ContDiff.sum fun l _ => contDiff_const.mul ((contDiff_apply ℝ (fun _ => ℂ) j).comp (contDiff_apply ℝ _ l))
 
 theorem cpt_left (Bs : B.RealPlaceData k r Wp Wq) {G : B.Mat k r → (Wq →L[ℂ] Wp)} (hG : KB.CptCoef Bs G)
     {x : Mt k r × Mt k r}

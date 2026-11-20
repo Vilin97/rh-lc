@@ -171,9 +171,9 @@ theorem cs_aeval {κ : Type} (P : MvPolynomial κ ℤ) {w : κ → CxPts X.str �
 
 theorem cs_ratVal {f : X.Fn} (hf : RegAt (under y) f) : CS (fun z => ratVal f z) y :=
   ⟨cInfAt_ratVal (κ := Unit) (f := fun _ => f) (fun _ => hf) (G := fun w => (w ()).re)
-      (Complex.reCLM.contDiff.comp (contDiff_apply ℝ ℂ ())),
+      (Complex.reCLM.contDiff.comp (contDiff_apply ℝ (fun _ => ℂ) ())),
     cInfAt_ratVal (κ := Unit) (f := fun _ => f) (fun _ => hf) (G := fun w => (w ()).im)
-      (Complex.imCLM.contDiff.comp (contDiff_apply ℝ ℂ ()))⟩
+      (Complex.imCLM.contDiff.comp (contDiff_apply ℝ (fun _ => ℂ) ()))⟩
 
 theorem cs_conj_entry {n : ℕ} {T R : CxPts X.str σ → Matrix (Fin n) (Fin n) ℂ} (hT : ∀ i j, CS (fun z => T z i j) y)
     (hR : ∀ i j, CS (fun z => R z i j) y) (i j : Fin n) : CS (fun z => (T z * R z * (T z)ᴴ) i j) y := by

@@ -42,7 +42,7 @@ theorem HermNorm.contDiff_dualNorm_sq (h : HermNorm n) :
   simp_rw [HermNorm.dualNorm_sq]
   refine ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp ?_
   simp only [Matrix.mulVec, dotProduct]
-  exact ContDiff.sum fun j _ => contDiff_const.mul (contDiff_apply ℝ ℂ j)
+  exact ContDiff.sum fun j _ => contDiff_const.mul (contDiff_apply ℝ (fun _ => ℂ) j)
 
 theorem HermNorm.contDiffOn_log_dualNorm (h : HermNorm n) :
     ContDiffOn ℝ ∞ (fun y : Fin n → ℂ => Real.log (h.dualNorm y)) {y | y ≠ 0} := by
@@ -69,7 +69,7 @@ theorem fsLogReg_smul (h : HermNorm n) (u : Fin n → ℂ) (ε : ℝ) (t : ℂ) 
 theorem contDiffOn_fsLogReg (h : HermNorm n) (u : Fin n → ℂ) {ε : ℝ} (hε : 0 < ε) :
     ContDiffOn ℝ ∞ (fsLogReg h u ε) {y | y ≠ 0} := by
   have hnum : ContDiff ℝ ∞ fun y : Fin n → ℂ => ‖∑ j, u j * y j‖ ^ 2 + ε * h.dualNorm y ^ 2 :=
-    ((contDiff_norm_sq ℝ).comp (ContDiff.sum fun j _ => contDiff_const.mul (contDiff_apply ℝ ℂ j))).add
+    ((contDiff_norm_sq ℝ).comp (ContDiff.sum fun j _ => contDiff_const.mul (contDiff_apply ℝ (fun _ => ℂ) j))).add
       (contDiff_const.mul h.contDiff_dualNorm_sq)
   have hpos : ∀ y : Fin n → ℂ, y ≠ 0 → 0 < h.dualNorm y ^ 2 := fun y hy =>
     pow_pos (h.dualNorm_pos hy) 2

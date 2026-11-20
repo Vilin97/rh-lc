@@ -98,7 +98,7 @@ theorem coneGL : ConeGL := by
 theorem hOf_contDiff : ContDiff ℝ ∞ (fun v : Fin n × Fin n → ℝ => hOf v) := by
   unfold hOf
   refine ContDiff.sum fun p _ => ?_
-  exact (Complex.ofRealCLM.contDiff.comp (contDiff_apply ℝ ℝ p)).smul contDiff_const
+  exact (Complex.ofRealCLM.contDiff.comp (contDiff_apply ℝ (fun _ => ℝ) p)).smul contDiff_const
 
 theorem kcSmooth : KcSmooth := by
   intro n V _ _ σ c Fr k Γ T d hd hσs hσ hFr hk

@@ -25,7 +25,7 @@ theorem cInfAt_log_normSq_ratVal {F : Type} [Field F] {σ : F →+* ℂ} {Y : Va
     have := ratVal_ne_zero h
     rwa [← e, ratVal_fnOf hW] at this
   · refine ContDiffOn.log ?_ fun v hv => pow_ne_zero 2 (norm_ne_zero_iff.2 hv)
-    exact ((contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ ())).contDiffOn
+    exact ((contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) ())).contDiffOn
   · filter_upwards [(isOpen_ptsIn U).mem_nhds hW] with z hz
     rw [← e, ratVal_fnOf hz]
 

@@ -265,8 +265,8 @@ theorem contDiff_ballDet (τ : Ψ) :
     intro i k
     simp only [Matrix.sub_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, ballMat, Matrix.of_apply]
     refine contDiff_const.sub (ContDiff.sum fun l _ => ContDiff.mul ?_ ?_)
-    · exact Complex.conjCLE.contDiff.comp (contDiff_apply ℝ ℂ _)
-    · exact contDiff_apply ℝ ℂ _
+    · exact Complex.conjCLE.contDiff.comp (contDiff_apply ℝ (fun _ => ℂ) _)
+    · exact contDiff_apply ℝ (fun _ => ℂ) _
   have hd : ContDiff ℝ 2 fun t : Fin n → ℂ => (1 - (ballMat q t τ)ᴴ * ballMat q t τ).det := by
     simp only [Matrix.det_apply]
     refine ContDiff.sum fun σ _ => ContDiff.const_smul _ (contDiff_prod fun i _ => he _ _)

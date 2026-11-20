@@ -246,7 +246,7 @@ theorem jet_projA_le : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r
     refine I2.contDiff_of_diff (Differentiable.comp ?_ A.symm.differentiable)
     refine Differentiable.fun_sum fun a _ => Differentiable.const_mul ?_ _
     refine (contDiff_prod fun b _ => (I2.contDiff_of_diff ((fock_laws E r X g bas idx n hs hn x hx 1 _).2.2.2.1
-      (hdiff hθ.1 _) _)).comp (contDiff_apply ℂ (Fin g → ℂ) b)).differentiable (by simp)
+      (hdiff hθ.1 _) _)).comp (contDiff_apply ℂ (fun _ => (Fin g → ℂ)) b)).differentiable (by simp)
   have hsb (a) : IsSB (heisG X bas a v) := ((heisG_laws E r X g bas idx n hs hn).2.2.2 a v hv.1).1
   have hth : thA X bas idx (heisG X bas y (projA X bas (w : E) (tens Λ L) v)) x =
       (κ⁻¹ * (R.card : ℂ)⁻¹) • fun z => G ((A : (Fin n → Fin g → ℂ) →L[ℂ] (Fin n → I2.Vsp T.dim)) z) := by

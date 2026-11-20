@@ -19,7 +19,7 @@ theorem smoothNear_comp_init {n : ℕ} {J : Ideal (MvPolynomial (Fin n) ℂ)} (p
     SmoothNear (zeroSet (graphIdeal J p)) (fun x => g (Fin.init x)) := by
   obtain ⟨U, hU, hJU, hgU⟩ := hg
   have hinit : ContDiff ℝ ∞ (fun x : Fin (n + 1) → ℂ => Fin.init x) :=
-    contDiff_pi.2 fun i => contDiff_apply ℝ ℂ (Fin.castSucc i)
+    contDiff_pi.2 fun i => contDiff_apply ℝ (fun _ => ℂ) (Fin.castSucc i)
   exact ⟨(fun x => Fin.init x) ⁻¹' U, hU.preimage hinit.continuous,
     fun x hx => hJU (init_mem_zeroSet p hx), hgU.comp hinit.contDiffOn fun _ hx => hx⟩
 
@@ -48,7 +48,7 @@ theorem LelongPolyLimit.proof (hGraph : VarIntGraph.Statement) (hMult : LocalMul
     simp only [Φ, graphPt_init]
   have hF : SmoothNear (zeroSet (graphIdeal J p)) F := by
     obtain ⟨U, hU, hJU, hfU⟩ := smoothNear_comp_init p hf
-    exact ⟨U, hU, hJU, hfU.mul ((χ.contDiff.comp (contDiff_apply ℝ ℂ (Fin.last n))).contDiffOn)⟩
+    exact ⟨U, hU, hJU, hfU.mul ((χ.contDiff.comp (contDiff_apply ℝ (fun _ => ℂ) (Fin.last n))).contDiffOn)⟩
   have hFc : HasCompactSupport F := by
     refine HasCompactSupport.intro ((hfc.isCompact.prod χ.hasCompactSupport.isCompact).image
       (Continuous.finSnoc (A := fun _ => ℂ) continuous_fst continuous_snd :
@@ -85,7 +85,7 @@ theorem LelongPolyLimit.proof (hGraph : VarIntGraph.Statement) (hMult : LocalMul
     refine ⟨U ∩ k' ⁻¹' Set.Ioi 0, hkU.continuousOn.isOpen_inter_preimage hU isOpen_Ioi,
       fun x hx => ⟨hJU hx, hk0 _ (init_mem_zeroSet p hx)⟩, ?_⟩
     refine ContDiffOn.div_const (ContDiffOn.log ?_ fun x hx => ?_) _
-    · exact ((contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ (Fin.last n))).contDiffOn.add
+    · exact ((contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) (Fin.last n))).contDiffOn.add
         (contDiffOn_const.mul ((hkU.mono Set.inter_subset_left).pow 2))
     · exact (add_pos_of_nonneg_of_pos (sq_nonneg _) (mul_pos hε (pow_pos hx.2 2))).ne'
   rw [hGraph n (d + 1) J p F _ hJ hF (fun j => Fin.cases hG hΦ j), hFγ]

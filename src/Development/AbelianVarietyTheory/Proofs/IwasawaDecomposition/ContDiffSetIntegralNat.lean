@@ -47,7 +47,7 @@ theorem contDiff_expProd {n k : ℕ} (Xs : Fin k → Matrix (Fin n) (Fin n) ℂ)
     obtain ⟨i, rfl⟩ := (List.mem_ofFn' _ _).1 hf
     have h1 : ContDiff ℝ ∞ (NormedSpace.exp : Matrix (Fin n) (Fin n) ℂ → _) :=
       contDiff_iff_contDiffAt.2 fun x => (NormedSpace.exp_analytic (𝕂 := ℝ) x).contDiffAt
-    exact h1.comp ((contDiff_apply ℝ ℝ i).smul contDiff_const))
+    exact h1.comp ((contDiff_apply ℝ (fun _ => ℝ) i).smul contDiff_const))
   simpa [List.map_ofFn, Function.comp_def] using this
 
 theorem contDiff_conjTranspose {n : ℕ} : ContDiff ℝ ∞ fun x : Matrix (Fin n) (Fin n) ℂ => xᴴ := by

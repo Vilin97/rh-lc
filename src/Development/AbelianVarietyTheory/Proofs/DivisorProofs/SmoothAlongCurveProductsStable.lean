@@ -93,7 +93,7 @@ private theorem contDiff_prod_ofFn_apply_of_jointlySmooth {k : ℕ} {E : Type} [
     intro a ha
     rw [List.mem_ofFn] at ha
     obtain ⟨i, rfl⟩ := ha
-    exact ⟨hps i, contDiff_apply ℝ ℝ i⟩)
+    exact ⟨hps i, contDiff_apply ℝ (fun _ => ℝ) i⟩)
   simpa [List.map_ofFn, Function.comp_def] using h1
 
 open MeasureTheory in
@@ -224,7 +224,7 @@ theorem _root_.GlobalTheory.smooth_along_curve_products_stable : ∀ (G : Type) 
         intro a ha
         rw [List.mem_ofFn] at ha
         obtain ⟨i, rfl⟩ := ha
-        exact ⟨hps i, contDiff_apply ℝ ℝ i⟩)
+        exact ⟨hps i, contDiff_apply ℝ (fun _ => ℝ) i⟩)
     have h2 := jointlySmooth_foldr_deriv_action h1 l hl (Fin k → ℝ) id contDiff_id [] (by simp)
     simpa [List.map_ofFn, Function.comp_def] using h2
 

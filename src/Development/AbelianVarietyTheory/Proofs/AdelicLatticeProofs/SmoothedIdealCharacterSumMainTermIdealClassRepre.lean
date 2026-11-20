@@ -131,7 +131,7 @@ private theorem contDiffAt_mixedEmbedding_norm_of_ne_zero {K : Type} [Field K] [
     have hx' : x.1 ⟨w, hr⟩ ≠ 0 := by
       intro h0; apply hw; rw [normAtPlace_apply_of_isReal hr, h0, norm_zero]
     exact (contDiffAt_norm ℝ hx').comp x
-      ((contDiff_apply ℝ ℝ (⟨w, hr⟩ : {w : InfinitePlace K // w.IsReal})).comp contDiff_fst).contDiffAt
+      ((contDiff_apply ℝ (fun _ => ℝ) (⟨w, hr⟩ : {w : InfinitePlace K // w.IsReal})).comp contDiff_fst).contDiffAt
   · have hc : w.IsComplex := InfinitePlace.not_isReal_iff_isComplex.1 hr
     have e : (⇑(normAtPlace w) : mixedSpace K → ℝ) = fun y => ‖y.2 ⟨w, hc⟩‖ := by
       funext y; exact normAtPlace_apply_of_isComplex hc y
@@ -139,7 +139,7 @@ private theorem contDiffAt_mixedEmbedding_norm_of_ne_zero {K : Type} [Field K] [
     have hx' : x.2 ⟨w, hc⟩ ≠ 0 := by
       intro h0; apply hw; rw [normAtPlace_apply_of_isComplex hc, h0, norm_zero]
     exact (contDiffAt_norm ℝ hx').comp x
-      ((contDiff_apply ℝ ℂ (⟨w, hc⟩ : {w : InfinitePlace K // w.IsComplex})).comp contDiff_snd).contDiffAt
+      ((contDiff_apply ℝ (fun _ => ℂ) (⟨w, hc⟩ : {w : InfinitePlace K // w.IsComplex})).comp contDiff_snd).contDiffAt
 
 open NumberField IsDedekindDomain NumberField.mixedEmbedding MeasureTheory Complex Classical in
 open scoped ContDiff nonZeroDivisors in

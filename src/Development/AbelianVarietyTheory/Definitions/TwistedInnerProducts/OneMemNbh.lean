@@ -184,7 +184,7 @@ theorem smV_chi (L : Set (Mat 1)) (m : ℤ) (w : ℂ) : SmV L (chi m) w := by
     simp
   rw [this]
   refine ContDiff.mul (ContDiff.cexp (ContDiff.mul contDiff_const (ContDiff.sum fun i _ => ContDiff.mul ?_ contDiff_const))) contDiff_const
-  exact Complex.ofRealCLM.contDiff.comp (contDiff_apply ℝ ℝ i)
+  exact Complex.ofRealCLM.contDiff.comp (contDiff_apply ℝ (fun _ => ℝ) i)
 
 theorem dR_chi (m : ℤ) (X : Mat 1) (w : ℂ) : dR (chi m) X w = m * X 0 0 * w := by
   have : (fun t : ℝ => chi m (NormedSpace.exp (t • X)) w) = fun t : ℝ => Complex.exp ((t : ℂ) * (m * X 0 0)) * w := by

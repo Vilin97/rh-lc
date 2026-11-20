@@ -183,7 +183,7 @@ theorem prodEx_mem {Hm : Mat n} : ∀ {d : ℕ} (X : Fin d → Mat n), (∀ j, L
 
 theorem contDiff_tail {d : ℕ} :
     ContDiff ℝ ∞ (fun (t : Fin (d + 1) → ℝ) (j : Fin d) => t j.succ) :=
-  contDiff_pi.2 fun j => contDiff_apply ℝ ℝ j.succ
+  contDiff_pi.2 fun j => contDiff_apply ℝ (fun _ => ℝ) j.succ
 
 theorem contDiff_prodEx : ∀ {d : ℕ} (X : Fin d → Mat n), ContDiff ℝ ∞ (prodEx X)
   | 0, X => by
@@ -191,7 +191,7 @@ theorem contDiff_prodEx : ∀ {d : ℕ} (X : Fin d → Mat n), ContDiff ℝ ∞ 
     rw [this]; exact contDiff_const
   | d + 1, X => by
     rw [show prodEx X = _ from funext (prodEx_succ X)]
-    exact contDiff_mul' ((contDiff_ex (X 0)).comp (contDiff_apply ℝ ℝ 0))
+    exact contDiff_mul' ((contDiff_ex (X 0)).comp (contDiff_apply ℝ (fun _ => ℝ) 0))
       ((contDiff_prodEx _).comp contDiff_tail)
 
 theorem exists_fields {Hm : Mat n} (h : Hm * Hm = 1) : ∀ {d : ℕ} (X : Fin d → Mat n),

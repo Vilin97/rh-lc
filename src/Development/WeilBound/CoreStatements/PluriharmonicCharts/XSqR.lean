@@ -21,7 +21,7 @@ theorem smooth_pull {K K' : Type} [Fintype K] [Fintype K'] {ι : K → Type} {ι
   rw [hfun]
   have hlin : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞)
       (fun z : (Σ k, ι' k) → ℂ => fun p => z (v p)) :=
-    contDiff_pi.2 fun p => contDiff_apply ℝ ℂ (v p)
+    contDiff_pi.2 fun p => contDiff_apply ℝ (fun _ => ℂ) (v p)
   refine hA.comp hlin.contDiffOn ?_
   intro z hz k
   obtain ⟨i, hi⟩ := hz (κ k)

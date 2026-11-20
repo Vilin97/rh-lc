@@ -84,9 +84,9 @@ theorem rho_cInfAt : ∀ (k : Type) [CommRing k] (Y : Scheme.{0}) (p : Y ⟶ Sp 
           ((p.2 ᵥ* matIn a c (toV d p.1)) ⬝ᵥ star p.2).re) (c.finChart.target ×ˢ univ) := by
         simp only [Matrix.vecMul, dotProduct, Pi.star_apply]
         refine Complex.reCLM.contDiff.comp_contDiffOn (ContDiffOn.sum fun i _ => (ContDiffOn.sum fun j _ => ?_).mul ?_)
-        · exact ((contDiff_apply ℝ ℂ j).comp contDiff_snd).contDiffOn.mul
+        · exact ((contDiff_apply ℝ (fun _ => ℂ) j).comp contDiff_snd).contDiffOn.mul
             ((hM j i).comp ((toV d).contDiff.comp contDiff_fst).contDiffOn fun p hp => hp.1)
-        · exact (Complex.conjCLE.contDiff.comp ((contDiff_apply ℝ ℂ i).comp contDiff_snd)).contDiffOn
+        · exact (Complex.conjCLE.contDiff.comp ((contDiff_apply ℝ (fun _ => ℂ) i).comp contDiff_snd)).contDiffOn
       refine hexpr.congr fun p hp => ?_
       have := hform (toV d p.1) hp.1 (toV d p.2)
       rw [← Complex.ofReal_re (q p.1 p.2)]

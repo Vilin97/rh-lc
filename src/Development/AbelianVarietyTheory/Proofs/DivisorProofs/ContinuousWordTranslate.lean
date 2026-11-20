@@ -116,7 +116,7 @@ theorem dRep_mem (hσ : IsURepOn (UJset ε) σ) {w : H} (hw : w ∈ smSub ε σ)
   have hs : ContDiff ℝ ∞ fun z : (Fin k → ℝ) × ℝ => (Fin.snoc z.1 z.2 : Fin (k + 1) → ℝ) := by
     refine contDiff_pi.2 fun i => Fin.lastCases ?_ (fun j => ?_) i
     · simpa using contDiff_snd
-    · simpa [Function.comp_def] using (contDiff_apply ℝ ℝ j).comp (contDiff_fst (F := ℝ))
+    · simpa [Function.comp_def] using (contDiff_apply ℝ (fun _ => ℝ) j).comp (contDiff_fst (F := ℝ))
   have h2 : ContDiff ℝ ∞ fun z : (Fin k → ℝ) × ℝ =>
       σ ((List.ofFn fun i => NormedSpace.exp (z.1 i • Xs i)).prod) (σ (NormedSpace.exp (z.2 • X)) w) := by
     convert h.comp hs using 2 with z
@@ -234,7 +234,7 @@ theorem dRep_lin_fam {h : H} (hh : h ∈ famSub ε σ) {X Y : Matrix (Fin n) (Fi
   have h1 : ContDiff ℝ ∞ (NormedSpace.exp : Matrix (Fin n) (Fin n) ℂ → _) :=
     contDiff_iff_contDiffAt.2 fun x => (NormedSpace.exp_analytic (𝕂 := ℝ) x).contDiffAt
   have hF := hh 2 (fun t => NormedSpace.exp (t 0 • X + t 1 • Y))
-    (h1.comp (((contDiff_apply ℝ ℝ 0).smul contDiff_const).add ((contDiff_apply ℝ ℝ 1).smul contDiff_const)))
+    (h1.comp (((contDiff_apply ℝ (fun _ => ℝ) 0).smul contDiff_const).add ((contDiff_apply ℝ (fun _ => ℝ) 1).smul contDiff_const)))
     (fun t => by
       simpa using exp_memJ ((lieJ ε).add_mem ((lieJ ε).smul_mem (t 0) hX) ((lieJ ε).smul_mem (t 1) hY)) 1)
   have hd := (hF.differentiable (by simp) 0).hasFDerivAt

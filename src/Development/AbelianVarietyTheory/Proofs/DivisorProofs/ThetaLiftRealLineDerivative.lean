@@ -73,7 +73,7 @@ theorem contDiff_lines : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
       refine contDiff_list_prod_mat _ _ fun i _ => ?_
       by_cases h : j < i
       · simp only [h, if_true]
-        exact hexp.comp ((contDiff_apply ℝ ℝ i).smul contDiff_const)
+        exact hexp.comp ((contDiff_apply ℝ (fun _ => ℝ) i).smul contDiff_const)
       · simp only [h, if_false]
         exact contDiff_const
     have hinv : ∀ t, A (suf t)⁻¹ = Ring.inverse (A (suf t)) := fun t => by

@@ -279,7 +279,7 @@ theorem isSmoothHerm_pull (j : Fin 2) {X : HermLine (T.yyIdx ι ν κ)} {X' : He
   rw [hfun]
   have hlin : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞)
       (fun z : (Σ k, T.wwIdx ι ν κ k) → ℂ => fun p => z (T.yyEmb j p)) :=
-    contDiff_pi.2 fun p => contDiff_apply ℝ ℂ (T.yyEmb j p)
+    contDiff_pi.2 fun p => contDiff_apply ℝ (fun _ => ℂ) (T.yyEmb j p)
   refine hX.comp hlin.contDiffOn ?_
   intro z hz k
   fin_cases j <;> cases k

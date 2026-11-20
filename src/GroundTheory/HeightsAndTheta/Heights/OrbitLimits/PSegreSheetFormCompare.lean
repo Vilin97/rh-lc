@@ -122,7 +122,7 @@ theorem contDiff_ins : ContDiff ℝ ∞ (ins jj) := by
     simp only [ins_anchor]
     exact contDiff_const
   · simp only [ins_ne jj _ h]
-    exact contDiff_apply ℝ ℂ _
+    exact contDiff_apply ℝ (fun _ => ℂ) _
 
 omit [DecidableEq K] in
 theorem pt_eS {k : K} {j : ι k} (h : j ≠ jj k) : pt jj (eS ι ⟨k, eK jj k ⟨j, h⟩⟩) = ⟨k, j⟩ := by

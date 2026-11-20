@@ -47,7 +47,7 @@ theorem contDiff_facs (Xs : Fin k → Mx n) :
   obtain ⟨i, rfl⟩ := List.mem_ofFn.1 hf
   have he : ContDiff ℝ ∞ (NormedSpace.exp : Mx n → Mx n) :=
     contDiff_iff_contDiffAt.2 fun x => (NormedSpace.exp_analytic (𝕂 := ℝ) x).contDiffAt
-  exact he.comp ((contDiff_apply ℝ ℝ i).smul contDiff_const)
+  exact he.comp ((contDiff_apply ℝ (fun _ => ℝ) i).smul contDiff_const)
 
 def ctL : Mx n →ₗ[ℝ] Mx n where
   toFun M := Mᴴ

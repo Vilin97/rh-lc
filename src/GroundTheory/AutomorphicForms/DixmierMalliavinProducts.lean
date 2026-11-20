@@ -27,8 +27,8 @@ theorem integral_fin_succ_cons {E : Type*} [NormedAddCommGroup E] [NormedSpace �
 
 theorem contDiff_cons_kernel {d : ℕ} {a : ℝ → ℂ} {K : (Fin d → ℝ) → ℂ} (ha : ContDiff ℝ ∞ a)
     (hK : ContDiff ℝ ∞ K) : ContDiff ℝ ∞ (fun t : Fin (d + 1) → ℝ => a (t 0) * K (Fin.tail t)) :=
-  (ha.comp (contDiff_apply ℝ ℝ 0)).mul
-    (hK.comp (contDiff_pi.2 fun j => contDiff_apply ℝ ℝ j.succ))
+  (ha.comp (contDiff_apply ℝ (fun _ => ℝ) 0)).mul
+    (hK.comp (contDiff_pi.2 fun j => contDiff_apply ℝ (fun _ => ℝ) j.succ))
 
 theorem tsupport_cons_kernel {d : ℕ} {ε : ℝ} (hε : 0 ≤ ε) {a : ℝ → ℂ} {K : (Fin d → ℝ) → ℂ}
     (has : tsupport a ⊆ Icc (-ε) ε)

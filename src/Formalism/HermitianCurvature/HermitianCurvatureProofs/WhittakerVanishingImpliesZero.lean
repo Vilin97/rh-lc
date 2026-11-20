@@ -119,7 +119,7 @@ theorem critCut_eq_zero {n : ℕ} {δ : ℝ} {z : ℂ} {x : Fin n → ℂ} (hδ 
 theorem critCut_contDiff {d : ℕ} (δ : ℝ) (z : ℂ) {n : ℕ∞} : ContDiff ℝ n (critCut (n := d) δ z) := by
   show ContDiff ℝ n (fun x : Fin d → ℂ => ∏ k, chi0 (‖x k - z‖ ^ 2 / δ ^ 2))
   refine contDiff_prod fun k _ => contDiff_smooth_cutoff.comp ?_
-  exact (((contDiff_apply ℝ ℂ k).sub contDiff_const).norm_sq ℝ).div_const _
+  exact (((contDiff_apply ℝ (fun _ => ℂ) k).sub contDiff_const).norm_sq ℝ).div_const _
 
 theorem critCut_shift {d : ℕ} (δ : ℝ) (z : ℂ) :
     critCut (n := d) δ z = fun x => critCut δ 0 (x - fun _ => z) := by

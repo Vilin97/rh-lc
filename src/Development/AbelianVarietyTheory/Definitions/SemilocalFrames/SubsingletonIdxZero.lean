@@ -230,7 +230,7 @@ theorem detRep_apply (μ : Fin (2 * r + k + 1) → ℝ) (g : Mat k r) (v : ℂ) 
     (detRep k r μ).σ g v = g.det ^ ⌊μ 0⌋₊ * v := rfl
 
 theorem contDiff_entry (i j : Fin (2 * r + k + 1)) : ContDiff ℝ ∞ (fun g : Mat k r => g i j) :=
-  (contDiff_apply ℝ ℂ j).comp (contDiff_apply ℝ (Fin (2 * r + k + 1) → ℂ) i)
+  (contDiff_apply ℝ (fun _ => ℂ) j).comp (contDiff_apply ℝ (fun _ => (Fin (2 * r + k + 1) → ℂ)) i)
 
 theorem contDiff_det : ContDiff ℝ ∞ (fun g : Mat k r => g.det) := by
   simp only [Matrix.det_apply']

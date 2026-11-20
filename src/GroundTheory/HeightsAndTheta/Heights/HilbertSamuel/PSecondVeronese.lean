@@ -74,7 +74,7 @@ theorem x_linearIndependent (D : ℕ) : LinearIndependent ℤ (x D) := by
 
 theorem isSmoothMetric_metric (D : ℕ) : IsSmoothMetric (metric D) := by
   have hs : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (scale D) :=
-    contDiff_pi.2 fun q => contDiff_const.mul (contDiff_apply ℝ ℂ q)
+    contDiff_pi.2 fun q => contDiff_const.mul (contDiff_apply ℝ (fun _ => ℂ) q)
   exact (ProjLine.isSmoothMetric_fs (J := Ix (Idx D))).comp hs.contDiffOn fun z hz => scale_ne_zero hz
 
 theorem isConjInvariant_metric (D : ℕ) : IsConjInvariant (metric D) := by

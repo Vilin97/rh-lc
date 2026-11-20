@@ -217,7 +217,7 @@ theorem smooth_of_holFn {Hm : ι → Mt n} {q : ι → ℕ} {x₀ : ι → Mt n}
     by_cases hσ : σ = τs i
     · subst hσ
       simp only [Pi.mulSingle_eq_same]
-      exact (contDiff_exp_entry (Xs i) a b).comp (contDiff_apply ℝ ℝ i)
+      exact (contDiff_exp_entry (Xs i) a b).comp (contDiff_apply ℝ (fun _ => ℝ) i)
     · simp only [Pi.mulSingle_eq_of_ne hσ]
       exact contDiff_const
   have h2 : SmE (fun t : Fin k → ℝ => u * (List.ofFn fun i => (Pi.mulSingle (τs i) (NormedSpace.exp (t i • Xs i)) : ι → Mt n)).prod) :=

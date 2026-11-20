@@ -154,7 +154,7 @@ theorem contDiff_cofactorFn (H : (Fin n → ℝ) → Fin n → ℝ) (hH : ContDi
 theorem integral_det_fderiv_eq_zero (H : (Fin n → ℝ) → Fin n → ℝ) (hH : ContDiff ℝ ∞ H)
     (i : Fin n) (hi : HasCompactSupport fun x => H x i) : ∫ x, (fderiv ℝ H x).det = 0 := by
   set h : (Fin n → ℝ) → ℝ := fun x => H x i with hh
-  have hhs : ContDiff ℝ ∞ h := (contDiff_apply ℝ ℝ i).comp hH
+  have hhs : ContDiff ℝ ∞ h := (contDiff_apply ℝ (fun _ => ℝ) i).comp hH
   have hJ : ∀ x j, jacobian H x i j = fderiv ℝ h x (Pi.single j 1) := fun x j =>
     jacobian_eq_fderiv_apply H x ((hH.differentiable (by simp)) x) i j
   have hexp : ∀ x, (fderiv ℝ H x).det =

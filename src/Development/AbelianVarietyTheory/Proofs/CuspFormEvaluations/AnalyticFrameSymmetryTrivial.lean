@@ -18,7 +18,7 @@ attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem tay_coord {g : ℕ} (k : Fin g) :
     tay (fun v : Fin g → ℂ => v k) 0 = MvPowerSeries.X ((0 : Fin 1), k) := by
-  have hc : ContDiffAt ℂ ω (fun v : Fin g → ℂ => v k) 0 := (contDiff_apply ℂ ℂ k).contDiffAt
+  have hc : ContDiffAt ℂ ω (fun v : Fin g → ℂ => v k) 0 := (contDiff_apply ℂ (fun _ => ℂ) k).contDiffAt
   refine TCPf.eq_of_cc _ _ fun l => ?_
   rcases List.eq_nil_or_concat l with rfl | ⟨l', q, rfl⟩
   · simp only [List.foldr_nil, constantCoeff_tay, MvPowerSeries.constantCoeff_X]

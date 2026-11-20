@@ -134,7 +134,7 @@ theorem cInfAt_log_ev {k : Type} [CommRing k] {X : Scheme.{0}} {p : X ⟶ Sp k} 
     (a : Γ(X, W)ˣ) {z : CxPts p σ} (hz : z ∈ ptsIn p σ W) :
     CInfAt (fun w => Real.log (‖ev p σ W a.val w‖ ^ 2)) z := by
   have hc : ContDiff ℝ ∞ fun v : Unit → ℂ => ‖v ()‖ ^ 2 :=
-    (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ ())
+    (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) ())
   refine ⟨W, Unit, inferInstance, fun _ => a.val, fun v => Real.log (‖v ()‖ ^ 2), {v | v () ≠ 0}, hz,
     isOpen_ne_fun (continuous_apply ()) continuous_const, ev_ne_zero hz a.isUnit,
     hc.contDiffOn.log fun v hv => pow_ne_zero 2 (norm_ne_zero_iff.2 hv), Filter.EventuallyEq.rfl⟩

@@ -23,7 +23,7 @@ theorem contDiff_evalMap (t : MRing ι) :
   induction t using MvPolynomial.induction_on with
   | C a => simpa using contDiff_const
   | add p q hp hq => simpa using hp.add hq
-  | mul_X p v hp => simpa using hp.mul (contDiff_apply ℝ ℂ v)
+  | mul_X p v hp => simpa using hp.mul (contDiff_apply ℝ (fun _ => ℂ) v)
 
 def mdeg (d : (Σ k, ι k) →₀ ℕ) : K →₀ ℕ := Finsupp.mapDomain Sigma.fst d
 

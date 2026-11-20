@@ -51,7 +51,7 @@ theorem exists_smooth (b : K → ℤ) : ∃ B : HermLine ι, IsSmoothHerm B ∧ 
       {z : (k : K) × ι k → ℂ | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0}
     apply ContDiffOn.sqrt
     · exact (ContDiff.sum (fun i _ => (contDiff_norm_sq ℂ).comp
-        (contDiff_apply (𝕜 := ℝ) (E := ℂ) (⟨k, i⟩ : (k : K) × ι k)))).contDiffOn
+        (contDiff_apply (𝕜 := ℝ) (F' := fun _ => ℂ) (⟨k, i⟩ : (k : K) × ι k)))).contDiffOn
     · intro z hz
       obtain ⟨i, hi⟩ := hz k
       exact (Finset.sum_pos' (fun _ _ => by positivity)

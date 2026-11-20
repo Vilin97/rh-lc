@@ -497,8 +497,8 @@ lemma cd_Mv : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (Mv : (J k r → �
   rw [← contDiffOn_univ, cdm_iff]
   intro p q
   simp only [Mv, Matrix.of_apply]
-  exact ((Complex.ofRealCLM.contDiff.comp (contDiff_apply ℝ ℝ (p, q, false))).add
-    ((Complex.ofRealCLM.contDiff.comp (contDiff_apply ℝ ℝ (p, q, true))).mul contDiff_const)).contDiffOn
+  exact ((Complex.ofRealCLM.contDiff.comp (contDiff_apply ℝ (fun _ => ℝ) (p, q, false))).add
+    ((Complex.ofRealCLM.contDiff.comp (contDiff_apply ℝ (fun _ => ℝ) (p, q, true))).mul contDiff_const)).contDiffOn
 
 def Lt (i : J k r) : Mat k r := (nrm (true, prj (Eb i))).2
 

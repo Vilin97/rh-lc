@@ -591,7 +591,7 @@ theorem isSmoothHerm_ofMetrics_fs (a : K → ℤ) : IsSmoothHerm (HermLine.ofMet
   have hf : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun z : (Σ k, ι k) → ℂ => Real.sqrt (∑ i, ‖z ⟨k, i⟩‖ ^ 2))
       {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} :=
     ContDiffOn.sqrt (ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp
-      (contDiff_apply ℝ ℂ (⟨k, i⟩ : Σ k, ι k))).contDiffOn fun z hz => (hpos z hz).ne'
+      (contDiff_apply ℝ (fun _ => ℂ) (⟨k, i⟩ : Σ k, ι k))).contDiffOn fun z hz => (hpos z hz).ne'
   have hf0 : ∀ z ∈ {z : (Σ k, ι k) → ℂ | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0}, Real.sqrt (∑ i, ‖z ⟨k, i⟩‖ ^ 2) ≠ 0 :=
     fun z hz => (Real.sqrt_pos.2 (hpos z hz)).ne'
   obtain ⟨m, hm | hm⟩ := Int.eq_nat_or_neg (a k)

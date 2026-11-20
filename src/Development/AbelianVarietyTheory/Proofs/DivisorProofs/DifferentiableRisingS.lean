@@ -71,7 +71,7 @@ theorem homFac_ne_zero {z : I → ℂ} (hz : z ∈ polydisc I) : homFac z ≠ 0 
 
 theorem contDiff_homFac : ContDiff ℂ ∞ (homFac : (I → ℂ) → ℂ) := by
   unfold homFac
-  exact contDiff_prod fun i _ => (contDiff_const.add (contDiff_apply ℂ ℂ i)).div_const _
+  exact contDiff_prod fun i _ => (contDiff_const.add (contDiff_apply ℂ (fun _ => ℂ) i)).div_const _
 
 theorem contDiffOn_logFac : ContDiffOn ℝ ∞ (logFac : (I → ℂ) → ℂ) (polydisc I) := by
   have h1 : ContDiff ℝ ∞ (homFac : (I → ℂ) → ℂ) := contDiff_homFac.restrict_scalars ℝ
@@ -88,8 +88,8 @@ theorem contDiffOn_modPt {Φ : Type} [Fintype Φ] (φ : I → E →+* ℂ) (e : 
   refine contDiffOn_pi.2 fun τ => ?_
   unfold modPt defCoord
   refine ContDiffOn.div ?_ ?_ fun z hz => one_add_ne_zero hz _
-  · exact (contDiff_const.add ((contDiff_apply ℂ ℂ _).mul contDiff_const)).contDiffOn
-  · exact (contDiff_const.add (contDiff_apply ℂ ℂ _)).contDiffOn
+  · exact (contDiff_const.add ((contDiff_apply ℂ (fun _ => ℂ) _).mul contDiff_const)).contDiffOn
+  · exact (contDiff_const.add (contDiff_apply ℂ (fun _ => ℂ) _)).contDiffOn
 
 omit [Fintype I] in
 

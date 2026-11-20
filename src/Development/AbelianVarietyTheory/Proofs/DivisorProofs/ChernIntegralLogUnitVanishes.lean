@@ -28,7 +28,7 @@ theorem chInt_logSq_unit_eq_zero : GlobalTheory.Published.ArCalc → ∀ (k : Ty
   have hu : ∀ σ y, CxPts.CInfAt (u σ) y := by
     intro σ y
     have hy : y ∈ ptsIn p σ (⊤ : X.Opens) := mem_ptsIn_top
-    have hs : ContDiff ℝ ∞ fun v : Unit → ℂ => ‖v ()‖ ^ 2 := (contDiff_apply ℝ ℂ ()).norm_sq ℂ
+    have hs : ContDiff ℝ ∞ fun v : Unit → ℂ => ‖v ()‖ ^ 2 := (contDiff_apply ℝ (fun _ => ℂ) ()).norm_sq ℂ
     refine ⟨⊤, Unit, inferInstance, fun _ => a.val, fun v => Real.log (‖v ()‖ ^ 2),
       {v | ‖v ()‖ ^ 2 ≠ 0}, hy, isOpen_ne_fun hs.continuous continuous_const, ?_,
       hs.contDiffOn.log fun _ h => h, Filter.Eventually.of_forall fun _ => rfl⟩

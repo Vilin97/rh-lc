@@ -57,7 +57,7 @@ theorem contDiff_char {k : ℕ} (χ : (Fin k → ℝ) → ℂ) (hc : Continuous 
   have hi : ContDiff ℝ ∞ fun s : ℝ => χ (Pi.single i s) :=
     contDiff_real_char _ (hc.comp hsc) (fun s t => by rw [Pi.single_add, hm])
       (by rw [Pi.single_zero, h0])
-  exact hi.comp (contDiff_apply ℝ ℝ i)
+  exact hi.comp (contDiff_apply ℝ (fun _ => ℝ) i)
 
 theorem ker_fin_mem_nhds {F : Type} [Field F] [NumberField F] {ψ : AddChar (AF F) ℂ} (hc : Continuous ψ) :
     {a : Af F | ψ (pairA F 0 a) = 1} ∈ 𝓝 (0 : Af F) := by

@@ -18,7 +18,7 @@ theorem contDiff_cons (k : ℕ) {Y : Type} [NormedAddCommGroup Y] [NormedSpace �
   refine contDiff_pi.2 fun i => ?_
   refine Fin.cases ?_ (fun j => ?_) i
   · simp only [Fin.cons_zero]; fun_prop
-  · simp only [Fin.cons_succ]; exact (contDiff_apply ℝ ℝ j).comp contDiff_fst
+  · simp only [Fin.cons_succ]; exact (contDiff_apply ℝ (fun _ => ℝ) j).comp contDiff_fst
 
 theorem hasDerivAt_fst {Y : Type} [NormedAddCommGroup Y] [NormedSpace ℝ Y] (G : ℝ × Y → ℂ)
     (hG : ContDiff ℝ ∞ G) (s : ℝ) (y : Y) :
@@ -98,7 +98,7 @@ theorem hasDerivAt_nd : ∀ (k : ℕ) (H : (Fin k → ℝ) → ℝ → ℂ),
           refine contDiff_pi.2 fun i => ?_
           refine Fin.cases ?_ (fun j => ?_) i
           · simp only [Fin.cons_zero]; exact contDiff_const
-          · simp only [Fin.cons_succ]; exact (contDiff_apply ℝ ℝ j).comp contDiff_fst
+          · simp only [Fin.cons_succ]; exact (contDiff_apply ℝ (fun _ => ℝ) j).comp contDiff_fst
         exact hH.comp hc
       simp only [e] at hs
       exact hs
@@ -132,7 +132,7 @@ theorem contDiff_snoc (k : ℕ) :
   refine contDiff_pi.2 fun i => ?_
   refine Fin.lastCases ?_ (fun j => ?_) i
   · simp only [Fin.snoc_last]; exact contDiff_snd
-  · simp only [Fin.snoc_castSucc]; exact (contDiff_apply ℝ ℝ j).comp contDiff_fst
+  · simp only [Fin.snoc_castSucc]; exact (contDiff_apply ℝ (fun _ => ℝ) j).comp contDiff_fst
 
 theorem hasDerivAt_foldr_lineDer_translate : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (n : ℕ)
     (J : Matrix (Fin n) (Fin n) E) (f : GAd σ J → ℂ), IsSm σ J f →

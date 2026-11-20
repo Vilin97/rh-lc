@@ -684,14 +684,14 @@ theorem projLine_cutoffFamily : ∃ C : ℝ, projLineCharts.IsCutoffFamily C pro
     by_cases hjk : j = k
     · subst hjk
       rw [cut_comp_self]
-      exact (cutG_contDiff.comp ((contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ 0))).contDiffOn
+      exact (cutG_contDiff.comp ((contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) 0))).contDiffOn
     · rw [cut_comp_other j k hjk]
       intro y hy
       have hy0 : y 0 ≠ 0 := symm_other_ne j k hjk y hy.2.1
       have hne : ‖y 0‖ ^ 2 ≠ 0 := (pow_pos (norm_pos_iff.2 hy0) 2).ne'
       have : ContDiffAt ℝ ∞ (fun y : Fin 1 → ℂ => cutG ((‖y 0‖ ^ 2)⁻¹)) y :=
         cutG_contDiff.contDiffAt.comp y
-          ((((contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ 0)).contDiffAt).inv hne)
+          ((((contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) 0)).contDiffAt).inv hne)
       exact this.contDiffWithinAt
   · intro x _
     have h1 := Real.smoothTransition.nonneg ((‖crdj j x‖ ^ 2 - 25 / 16) * (64 / 21))

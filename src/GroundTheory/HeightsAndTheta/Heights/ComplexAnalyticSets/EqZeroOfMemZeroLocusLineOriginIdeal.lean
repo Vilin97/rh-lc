@@ -204,7 +204,7 @@ theorem isFiniteProj_one (n : ℕ) :
   exact AlgHom.Finite.of_surjective _ (Ideal.Quotient.mkₐ_surjective ℂ ⊥)
 
 theorem contDiff_normSq_coord : ContDiff ℝ ∞ fun x : Fin 1 → ℂ => ‖x 0‖ ^ 2 :=
-  (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ (0 : Fin 1))
+  (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) (0 : Fin 1))
 
 theorem smoothNear_of_contDiff {n : ℕ} (Z : Set (Fin n → ℂ)) {f : (Fin n → ℂ) → ℝ}
     (hf : ContDiff ℝ ∞ f) : SmoothNear Z f :=
@@ -213,7 +213,7 @@ theorem smoothNear_of_contDiff {n : ℕ} (Z : Set (Fin n → ℂ)) {f : (Fin n �
 def lineBump : (Fin 1 → ℂ) → ℝ := fun x => (⟨1, 2, one_pos, one_lt_two⟩ : ContDiffBump (0 : ℂ)) (x 0)
 
 theorem contDiff_lineBump : ContDiff ℝ ∞ lineBump :=
-  (ContDiffBump.contDiff _).comp (contDiff_apply ℝ ℂ (0 : Fin 1))
+  (ContDiffBump.contDiff _).comp (contDiff_apply ℝ (fun _ => ℂ) (0 : Fin 1))
 
 theorem hasCompactSupport_lineBump : HasCompactSupport lineBump :=
   (ContDiffBump.hasCompactSupport _).comp_homeomorph (Homeomorph.funUnique (Fin 1) ℂ)

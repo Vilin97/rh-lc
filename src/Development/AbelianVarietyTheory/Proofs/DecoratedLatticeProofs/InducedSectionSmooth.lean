@@ -72,7 +72,7 @@ theorem MatSmooth.contDiff (h : MatSmooth j ι φ) {k : ℕ} {x : Fin k → ℝ 
     | nil => exact contDiff_const (c := ι 1)
     | cons i l ih =>
       simp only [List.map_cons, List.prod_cons, map_mul]
-      exact CompanionTheory.D.gk.admitted.Gard.contDiff_mul.comp (((hx i).comp (contDiff_apply ℝ ℝ i)).prodMk ih)
+      exact CompanionTheory.D.gk.admitted.Gard.contDiff_mul.comp (((hx i).comp (contDiff_apply ℝ (fun _ => ℝ) i)).prodMk ih)
   have h2 := (ContinuousMap.evalCLM (M := ℂ) ℝ (⟨g, rfl⟩ : ({g} : Set G))).contDiff.comp (hΦ.comp (key (List.ofFn id)))
   convert h2 using 1
   funext t

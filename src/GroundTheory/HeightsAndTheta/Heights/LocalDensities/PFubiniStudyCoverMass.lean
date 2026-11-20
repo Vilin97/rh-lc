@@ -23,7 +23,7 @@ abbrev coverFSPot (e : ℕ) (z : Fin e → ℂ) : ℝ := (1 / 2) * Real.log (1 +
 theorem coverFSPot_contDiff (e : ℕ) {n : WithTop ℕ∞} : ContDiff ℝ n (coverFSPot e) := by
   unfold coverFSPot
   refine contDiff_const.mul (ContDiff.log (contDiff_const.add
-    (ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ i))) fun z => ?_)
+    (ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) i))) fun z => ?_)
   positivity
 
 theorem coverFS_local {e : ℕ} {X : Type} [TopologicalSpace X] {A : FinHolAtlas e X}

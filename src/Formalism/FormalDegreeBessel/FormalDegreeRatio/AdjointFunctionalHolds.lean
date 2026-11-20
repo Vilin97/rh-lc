@@ -80,7 +80,7 @@ theorem uW_hasLineDerivAt (l : Fin m) (x : Fin m → ℂ) (hx : x l ≠ 0) (a : 
   exact h2.congr_deriv (by rw [h0]; ring)
 
 theorem uW_contDiffOn (l : Fin m) : ContDiffOn ℝ ∞ (uW l) (OmX m) := by
-  have h1 : ContDiff ℝ ∞ (fun x : Fin m → ℂ => x l) := contDiff_apply ℝ ℂ l
+  have h1 : ContDiff ℝ ∞ (fun x : Fin m → ℂ => x l) := contDiff_apply ℝ (fun _ => ℂ) l
   have h2 : ContDiff ℝ ∞ (fun x : Fin m → ℂ => ∏ k, Complex.normSq (x k)) := by
     apply contDiff_prod
     intro k _
@@ -88,7 +88,7 @@ theorem uW_contDiffOn (l : Fin m) : ContDiffOn ℝ ∞ (uW l) (OmX m) := by
       funext x
       rw [Complex.normSq_eq_norm_sq]
     rw [e]
-    exact (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ k)
+    exact (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) k)
   have h3 : ContDiffOn ℝ ∞ (fun x : Fin m → ℂ => (∏ k, Complex.normSq (x k))⁻¹) (OmX m) := by
     apply h2.contDiffOn.inv
     intro x hx

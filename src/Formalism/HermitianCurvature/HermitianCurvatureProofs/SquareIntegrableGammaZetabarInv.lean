@@ -1178,7 +1178,7 @@ theorem normSq_smooth {f : E P.r → ℂ} (hf : ContDiff ℝ sm f) : ContDiff �
 theorem Gr_smooth : ContDiff ℝ sm (Gr P) := by
   unfold Gr
   refine ContDiff.mul ?_ ((normSq_smooth P contDiff_snd).sub contDiff_const)
-  exact contDiff_prod fun l _ => normSq_smooth P ((contDiff_apply ℝ ℂ l).comp contDiff_fst)
+  exact contDiff_prod fun l _ => normSq_smooth P ((contDiff_apply ℝ (fun _ => ℂ) l).comp contDiff_fst)
 
 theorem psi_smooth {φ : ℝ → ℝ} (hφ : LE.SmoothLog φ) (n : ℕ) :
     ContDiff ℝ sm (iteratedDeriv n (fun u => φ (Real.exp u))) := by

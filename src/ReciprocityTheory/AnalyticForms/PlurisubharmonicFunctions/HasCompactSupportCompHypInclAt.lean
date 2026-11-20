@@ -21,7 +21,7 @@ theorem integral_gReg_eq (i : Fin (n + 1)) {U : Set (Fin (n + 1) → ℂ)}
   obtain ⟨hh, hhc⟩ := hDens_props i hp
   obtain ⟨hU, hv, hvc, hvU, hφ⟩ := hp
   have hg : ContDiff ℝ 3 (fun y : Fin (n + 1) → ℂ => gReg ε (y i)) :=
-    (gReg_contDiff hε).comp (contDiff_apply ℝ ℂ i)
+    (gReg_contDiff hε).comp (contDiff_apply ℝ (fun _ => ℂ) i)
   have h1 := (parts_thm n φ v (fun y => gReg ε (y i)) U
     ⟨hU, hv.contDiffOn, hvc, hvU, hg.contDiffOn,
       fun k => by exact_mod_cast contDiffOn_infty.1 (hφ k) 3⟩).2.2.2.2

@@ -66,7 +66,7 @@ theorem contDiff_eval_map (t : MRing ι) :
   induction t using MvPolynomial.induction_on with
   | C a => simpa using contDiff_const
   | add p q hp hq => simpa using hp.add hq
-  | mul_X p v hp => simpa using hp.mul (contDiff_apply ℝ ℂ v)
+  | mul_X p v hp => simpa using hp.mul (contDiff_apply ℝ (fun _ => ℂ) v)
 
 theorem isSmoothHerm_regLine (hE : IsSmoothHerm E) (hε : 0 < ε) : IsSmoothHerm (regLine E t ht ε) := by
   unfold IsSmoothHerm

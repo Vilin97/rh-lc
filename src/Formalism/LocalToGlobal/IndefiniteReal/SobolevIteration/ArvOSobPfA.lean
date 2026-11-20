@@ -89,7 +89,7 @@ theorem contDiff_append_left {N d : ℕ} (t : Fin d → ℝ) : ContDiff ℝ ∞ 
   refine contDiff_pi.2 fun j => ?_
   refine Fin.addCases (fun j => ?_) (fun j => ?_) j
   · simp only [Fin.append_left]
-    exact contDiff_apply ℝ ℝ j
+    exact contDiff_apply ℝ (fun _ => ℝ) j
   · simp only [Fin.append_right]
     exact contDiff_const
 

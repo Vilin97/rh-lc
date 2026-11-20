@@ -48,7 +48,7 @@ theorem matActC_smul_one [DecidableEq J] (q : ℚ) (z : J → ℂ) :
 
 theorem contDiff_matActC {k : WithTop ℕ∞} (A : Matrix J J ℚ) : ContDiff ℝ k (matActC A) := by
   refine contDiff_pi.2 fun i => ?_
-  exact ContDiff.sum fun j _ => contDiff_const.mul (contDiff_apply ℝ ℂ j)
+  exact ContDiff.sum fun j _ => contDiff_const.mul (contDiff_apply ℝ (fun _ => ℂ) j)
 
 theorem matAct_mem_span {A : Matrix J J ℚ} (hA : ∀ i j, ∃ k : ℤ, A i j = k) (x : J → Ω) (i : J) :
     matAct A x i ∈ Submodule.span ℤ (Set.range x) := by

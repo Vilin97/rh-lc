@@ -42,7 +42,7 @@ theorem contDiffOn_per {B : Set (V D)} {τ : V D → Matrix (Fin g) (Fin g) ℂ}
     ContDiffOn ℝ ∞ (fun Q : V D × Fl g => ((Q.1, per (τ Q.1) Q.2) : Pt (V D) g)) (B ×ˢ univ) := by
   refine contDiffOn_fst.prodMk (contDiffOn_pi.2 fun a => ?_)
   have c (i) : ContDiffOn ℝ ∞ (fun Q : V D × Fl g => (Q.2 i : ℂ)) (B ×ˢ univ) :=
-    (Complex.ofRealCLM.contDiff.comp ((contDiff_apply ℝ ℝ i).comp contDiff_snd)).contDiffOn
+    (Complex.ofRealCLM.contDiff.comp ((contDiff_apply ℝ (fun _ => ℝ) i).comp contDiff_snd)).contDiffOn
   simp only [per, vecMul, dotProduct, Pi.add_apply]
   exact (ContDiffOn.sum fun i _ => (c _).mul ((ChartGlue.contDiffOn_real h.1 (h.2.1 i a)).comp
     contDiffOn_fst fun _ hQ => hQ.1)).add (c _)

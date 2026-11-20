@@ -888,7 +888,7 @@ def tautGram (e : ℕ) (z : Fin e → ℂ) : Matrix (Fin 1) (Fin 1) ℂ :=
 
 theorem contDiff_one_add_normSq (e : ℕ) :
     ContDiff ℝ ∞ fun z : Fin e → ℂ => 1 + ∑ k, ‖z k‖ ^ 2 :=
-  contDiff_const.add (ContDiff.sum fun k _ => (contDiff_apply ℝ ℂ k).norm_sq ℂ)
+  contDiff_const.add (ContDiff.sum fun k _ => (contDiff_apply ℝ (fun _ => ℂ) k).norm_sq ℂ)
 
 theorem isPosFrame_tautGram (e : ℕ) : IsPosFrame Set.univ (tautGram e) := by
   refine ⟨isOpen_univ, fun _ _ =>

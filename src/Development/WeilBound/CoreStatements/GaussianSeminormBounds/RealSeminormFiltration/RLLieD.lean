@@ -250,7 +250,7 @@ theorem zero_of_ball (n : ℕ) (T : SchwartzMap (Fin n → ℝ) ℂ →L[ℂ] �
     have hsm : ∀ i, ContDiff ℝ ∞ (fun x : Fin n → ℝ => cexp (2 * π * I * x i) * g i x) := by
       intro i
       refine ContDiff.mul ?_ ((g i).smooth ⊤)
-      exact (contDiff_const.mul (Complex.ofRealCLM.contDiff.comp (contDiff_apply ℝ ℝ i))).cexp
+      exact (contDiff_const.mul (Complex.ofRealCLM.contDiff.comp (contDiff_apply ℝ (fun _ => ℝ) i))).cexp
     have hcs : ∀ i, HasCompactSupport (fun x : Fin n → ℝ => cexp (2 * π * I * x i) * g i x) :=
       fun i => (hg i).mul_left
     have e : f = ∑ i, ((hcs i).toSchwartzMap (hsm i) - g i) := by

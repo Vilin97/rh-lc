@@ -13,7 +13,7 @@ lemma contDiff_mvEval {d : ℕ} (q : MvPolynomial (Fin d) ℂ) :
   | C a => simpa using contDiff_const
   | add p q hp hq => simpa using hp.add hq
   | mul_X p i hp =>
-    have hX : ContDiff ℂ 1 (fun v : (Fin d → ℂ) × ℂ => v.1 i) := (contDiff_apply ℂ ℂ i).comp contDiff_fst
+    have hX : ContDiff ℂ 1 (fun v : (Fin d → ℂ) × ℂ => v.1 i) := (contDiff_apply ℂ (fun _ => ℂ) i).comp contDiff_fst
     simpa using hp.mul hX
 
 lemma contDiff_evalFun {d : ℕ} (p : Polynomial (MvPolynomial (Fin d) ℂ)) :

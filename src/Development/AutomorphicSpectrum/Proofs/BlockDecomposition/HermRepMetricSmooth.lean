@@ -230,7 +230,7 @@ theorem isSmoothHerm_of_isHermRep (m : ℕ) (n : Fin (m + 1) → ℕ) (M : HermL
   have hP : ContDiffAt ℝ ∞ (fun z : (Σ k, Bk n k) → ℂ => ∏ k, ‖z ⟨k, c k⟩‖ ^ A.a k) z₀ := by
     refine contDiffAt_prod fun k _ => ?_
     have hn : ContDiffAt ℝ ∞ (fun z : (Σ k, Bk n k) → ℂ => ‖z ⟨k, c k⟩‖) z₀ :=
-      (contDiff_apply ℝ ℂ (⟨k, c k⟩ : Σ k, Bk n k)).contDiffAt.norm ℝ (hc k)
+      (contDiff_apply ℝ (fun _ => ℂ) (⟨k, c k⟩ : Σ k, Bk n k)).contDiffAt.norm ℝ (hc k)
     exact contDiffAt_zpow_of_ne' hn (norm_ne_zero_iff.2 (hc k)) (A.a k)
   have hE : ContDiffAt ℝ ∞ (fun z => Real.exp ((M.φ σ₀).φ i (s z) / 2)) z₀ :=
     (hφ.div_const 2).exp

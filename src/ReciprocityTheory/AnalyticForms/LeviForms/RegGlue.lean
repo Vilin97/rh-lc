@@ -142,7 +142,7 @@ lemma polydiscCutoff_eq_zero_of_not_mem_ball {e : ℕ} {z : Fin e → ℂ} (hz :
 
 lemma cutP_contDiff {e : ℕ} : ContDiff ℝ ∞ (cutP (e := e)) := by
   have hq : ∀ i : Fin e, ContDiff ℝ ∞ (fun z : Fin e → ℂ => 64 * (‖z i‖ ^ 2 - 1) / 17) := fun i =>
-    (contDiff_const.mul (((contDiff_apply ℝ ℂ i).norm_sq ℝ).sub contDiff_const)).div_const 17
+    (contDiff_const.mul (((contDiff_apply ℝ (fun _ => ℂ) i).norm_sq ℝ).sub contDiff_const)).div_const 17
   unfold cutP cutψ
   exact contDiff_prod fun i _ => contDiff_const.sub (Real.smoothTransition.contDiff.comp (hq i))
 

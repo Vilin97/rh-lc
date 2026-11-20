@@ -80,7 +80,7 @@ theorem norm_iteratedFDeriv_prod_apply_le : ∀ (ι : Type) [Fintype ι] (g : ι
   have hzV : z ∈ V := Set.mem_iInter.2 hz
   have hf : ∀ i ∈ (Finset.univ : Finset ι), ContDiffOn ℝ ∞ (fun w : ι → ℂ => g i (w i)) V := by
     intro i _
-    exact (hg i).comp (contDiff_apply ℝ ℂ i).contDiffOn (fun w hw => Set.mem_iInter.1 hw i)
+    exact (hg i).comp (contDiff_apply ℝ (fun _ => ℂ) i).contDiffOn (fun w hw => Set.mem_iInter.1 hw i)
   have key := norm_iteratedFDerivWithin_prod_le (u := Finset.univ) hf hV.uniqueDiffOn hzV (n := n)
     (by exact_mod_cast le_top)
   rw [iteratedFDerivWithin_of_isOpen n hV hzV] at key

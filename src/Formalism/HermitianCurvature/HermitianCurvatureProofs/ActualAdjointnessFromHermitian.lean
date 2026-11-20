@@ -242,7 +242,7 @@ theorem crd_pb (l : Fin r) (Φ : Fn k r (Wq →L[ℂ] Wp)) :
   split_ifs <;> simp
 
 theorem coord_contDiff (l : Fin r) : ContDiff ℝ ∞ (fun x : (Fin r → ℂ) × Mx k r => x.1 l) :=
-  (contDiff_apply ℝ ℂ l).comp contDiff_fst
+  (contDiff_apply ℝ (fun _ => ℂ) l).comp contDiff_fst
 
 theorem star_contDiff {X : Type*} [NormedAddCommGroup X] [NormedSpace ℝ X] {f : X → ℂ} {s : Set X}
     (hf : ContDiffOn ℝ ∞ f s) : ContDiffOn ℝ ∞ (fun x => star (f x)) s :=

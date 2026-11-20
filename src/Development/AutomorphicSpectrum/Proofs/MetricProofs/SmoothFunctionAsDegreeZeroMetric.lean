@@ -48,8 +48,8 @@ theorem contDiffAt_deproj (p : (k : K) → ι k) {M : (Σ k, ι k × ι k) → �
     (hM : ∀ k, M ⟨k, (p k, p k)⟩ ≠ 0) : ContDiffAt ℝ 𝕟 (deproj p) M := by
   refine contDiffAt_pi.2 fun q => ?_
   simp only [deproj, div_eq_mul_inv]
-  exact (contDiff_apply ℝ ℂ _).contDiffAt.mul
-    (ContDiffAt.inv (contDiff_apply ℝ ℂ _).contDiffAt (hM q.1))
+  exact (contDiff_apply ℝ (fun _ => ℂ) _).contDiffAt.mul
+    (ContDiffAt.inv (contDiff_apply ℝ (fun _ => ℂ) _).contDiffAt (hM q.1))
 
 theorem proj_eq_of_sameOrbit {z z' : (Σ k, ι k) → ℂ} (h : SameOrbit z z') :
     HermExtend.proj z = HermExtend.proj z' := by

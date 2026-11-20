@@ -59,7 +59,7 @@ theorem mem_GLs_conjInv {x : Mat n} (hx : x ∈ GLs n) : (x⁻¹)ᴴ ∈ GLs n :
 
 theorem contDiff_conjT : ContDiff ℝ ∞ (fun y : Mat n => yᴴ) := by
   refine contDiff_pi.2 fun i => contDiff_pi.2 fun j => ?_
-  exact Complex.conjCLE.contDiff.comp ((contDiff_apply ℝ ℂ i).comp (contDiff_apply ℝ (Fin n → ℂ) j))
+  exact Complex.conjCLE.contDiff.comp ((contDiff_apply ℝ (fun _ => ℂ) i).comp (contDiff_apply ℝ (fun _ => (Fin n → ℂ)) j))
 
 theorem contDiffOn_theta : ContDiffOn ℝ ∞ (fun y : Mat n => (y⁻¹)ᴴ) (GLs n) :=
   contDiff_conjT.comp_contDiffOn GlobalTheory.CompanionTheory.MatInv.contDiffOn_inv
@@ -67,7 +67,7 @@ theorem contDiffOn_theta : ContDiffOn ℝ ∞ (fun y : Mat n => (y⁻¹)ᴴ) (GL
 theorem contDiffOn_entry {J : Type} [Fintype J] [DecidableEq J] {f : Mat n → Matrix J J ℂ} (hf : ContDiffOn ℝ ∞ f (GLs n))
     (a b : J) : ContDiffOn ℝ ∞ (fun x => (f x * (1 : Matrix J J ℂ) : Matrix J J ℂ) a b) (GLs n) := by
   simp only [Matrix.mul_one]
-  exact ((contDiff_apply ℝ ℂ b).comp (contDiff_apply ℝ (J → ℂ) a)).comp_contDiffOn hf
+  exact ((contDiff_apply ℝ (fun _ => ℂ) b).comp (contDiff_apply ℝ (fun _ => (J → ℂ)) a)).comp_contDiffOn hf
 
 end PositivityTheory.RgBcC.Cxh
 

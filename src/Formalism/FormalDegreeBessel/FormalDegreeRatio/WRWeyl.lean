@@ -239,15 +239,15 @@ theorem wirtBar_coef {k : Fin m} {x : Fin m → ℂ} (hx : x ∈ OmX m) (l : Fin
 theorem contDiffAt_star_apply (k : Fin m) (x : Fin m → ℂ) :
     ContDiffAt ℝ ∞ (fun y : Fin m → ℂ => star (y k)) x := by
   rw [star_fun_eq]
-  exact ((Complex.conjCLE : ℂ →L[ℝ] ℂ).contDiff.comp (contDiff_apply ℝ ℂ k)).contDiffAt
+  exact ((Complex.conjCLE : ℂ →L[ℝ] ℂ).contDiff.comp (contDiff_apply ℝ (fun _ => ℂ) k)).contDiffAt
 
 theorem coef_contDiffAt {k : Fin m} {x : Fin m → ℂ} (hx : x ∈ OmX m) (j : Fin 6) :
     ContDiffAt ℝ ∞ (coef k j) x := by
   have hxk : x k ≠ 0 := hx k
   match j with
-  | 0 => exact (contDiff_apply ℝ ℂ k).contDiffAt
-  | 1 => exact (contDiff_apply ℝ ℂ k).contDiffAt
-  | 2 => exact (contDiffAt_inv ℝ hxk).comp x (contDiff_apply ℝ ℂ k).contDiffAt
+  | 0 => exact (contDiff_apply ℝ (fun _ => ℂ) k).contDiffAt
+  | 1 => exact (contDiff_apply ℝ (fun _ => ℂ) k).contDiffAt
+  | 2 => exact (contDiffAt_inv ℝ hxk).comp x (contDiff_apply ℝ (fun _ => ℂ) k).contDiffAt
   | 3 => exact contDiffAt_star_apply k x
   | 4 => exact contDiffAt_star_apply k x
   | 5 => exact (contDiffAt_inv ℝ (star_ne_zero.mpr hxk)).comp x (contDiffAt_star_apply k x)

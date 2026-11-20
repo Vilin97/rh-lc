@@ -28,7 +28,7 @@ theorem smoothOn_inv {n : ℕ} {M : Pt ι p q → Matrix (Fin n) (Fin n) ℂ} (h
   exact ContDiffOn.mul (ContDiffOn.inv (smoothOn_det h) fun v hv => hd _ hv) hadj
 
 theorem smoothOn_coord (τ : ι) (a : Fin p) (b : Fin q) : SmoothOn fun z : Pt ι p q => z τ a b :=
-  (contDiff_apply ℝ ℂ (τ, a, b)).contDiffOn
+  (contDiff_apply ℝ (fun _ => ℂ) (τ, a, b)).contDiffOn
 
 theorem smoothOn_star {f : Pt ι p q → ℂ} (h : SmoothOn f) : SmoothOn fun z => star (f z) :=
   Complex.conjCLE.contDiff.comp_contDiffOn h

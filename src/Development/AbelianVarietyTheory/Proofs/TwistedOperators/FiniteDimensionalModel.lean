@@ -316,7 +316,7 @@ theorem smooth_coefFun (hθ : IsInfFam θ) (hc : c.Is) (hF : ∀ g, ∀ k ∈ Gi
     ContDiff ℝ ∞ fun t : Fin k → ℝ => coefFun c F ℓ (g * (List.ofFn fun i => oneP θ V (τs i) (Xs i) (t i)).prod) := by
   have h1 := contDiff_prod (c := c) (List.ofFn fun i (t : Fin k → ℝ) => oneP θ V (τs i) (Xs i) (t i)) (fun f hf => by
     obtain ⟨i, rfl⟩ := List.mem_ofFn.1 hf
-    exact (contDiff_oneP hθ hc (hX i)).comp (contDiff_apply ℝ ℝ i))
+    exact (contDiff_oneP hθ hc (hX i)).comp (contDiff_apply ℝ (fun _ => ℝ) i))
   simp only [List.map_ofFn, Function.comp_def] at h1
   have h2 := ((ℓ.comp (ContinuousLinearMap.apply ℂ c.W (invOp c g (F g)))).restrictScalars ℝ).contDiff.comp h1
   have e : (fun t : Fin k → ℝ => coefFun c F ℓ (g * (List.ofFn fun i => oneP θ V (τs i) (Xs i) (t i)).prod)) =

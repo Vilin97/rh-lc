@@ -34,7 +34,7 @@ theorem contDiff_mul_right (X : Matrix (Fin n) (Fin n) ℂ) :
     simp [Matrix.mul_apply]
   rw [e]
   refine ContDiff.sum fun c _ => ContDiff.mul ?_ contDiff_const
-  exact (contDiff_apply ℝ ℂ c).comp (contDiff_apply ℝ (Fin n → ℂ) a)
+  exact (contDiff_apply ℝ (fun _ => ℂ) c).comp (contDiff_apply ℝ (fun _ => (Fin n → ℂ)) a)
 
 end GlobalTheory.CompanionTheory.Hypotheses₂.HCA.SmoothDeriv
 

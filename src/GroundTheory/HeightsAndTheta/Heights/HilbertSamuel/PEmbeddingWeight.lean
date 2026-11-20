@@ -60,18 +60,18 @@ theorem conjVec_mem_blockNonzero {z : (Σ k, ι k) → ℂ} (hz : ∀ k, ∃ i, 
   ⟨i, (map_ne_zero _).2 hi⟩
 
 theorem contDiff_conjVec : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (conjVec (ι := ι)) :=
-  contDiff_pi.2 fun p => Complex.conjCLE.contDiff.comp (contDiff_apply ℝ ℂ p)
+  contDiff_pi.2 fun p => Complex.conjCLE.contDiff.comp (contDiff_apply ℝ (fun _ => ℂ) p)
 
 theorem contDiffOn_projPt :
     ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (projPt (ι := ι)) {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := by
   refine contDiffOn_pi.2 fun q => ?_
   have hN : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) fun z : (Σ k, ι k) → ℂ => blockNormSq z q.1 :=
-    ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ _)
+    ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) _)
   have hinv := hN.contDiffOn.inv (s := {z : (Σ k, ι k) → ℂ | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0})
     fun z hz => (blockNormSq_pos hz q.1).ne'
   have hconj : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) fun z : (Σ k, ι k) → ℂ => conj (z ⟨q.1, q.2.2⟩) :=
-    Complex.conjCLE.contDiff.comp (contDiff_apply ℝ ℂ _)
-  have := (((contDiff_apply ℝ ℂ ⟨q.1, q.2.1⟩).mul hconj).contDiffOn).mul
+    Complex.conjCLE.contDiff.comp (contDiff_apply ℝ (fun _ => ℂ) _)
+  have := (((contDiff_apply ℝ (fun _ => ℂ) ⟨q.1, q.2.1⟩).mul hconj).contDiffOn).mul
     (Complex.ofRealCLM.contDiff.comp_contDiffOn hinv)
   refine this.congr fun z _ => ?_
   simp [projPt, div_eq_mul_inv]

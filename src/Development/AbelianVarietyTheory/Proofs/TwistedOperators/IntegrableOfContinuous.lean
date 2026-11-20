@@ -41,9 +41,9 @@ theorem pr_add (hG : IsUnit G) : ∀ {k : ℕ} (Xs : Fin k → Matrix (Fin n) (F
       · simpa using contDiff_const
       · simp only [Fin.snoc_castSucc, ← Matrix.exp_neg]
         have a1 : ContDiff ℝ ∞ fun t : Fin (k + 1) → ℝ => t (Fin.last k) • X :=
-          (contDiff_apply ℝ ℝ (Fin.last k)).smul contDiff_const
+          (contDiff_apply ℝ (fun _ => ℝ) (Fin.last k)).smul contDiff_const
         have a2 : ContDiff ℝ ∞ fun t : Fin (k + 1) → ℝ => (Fin.init t : Fin k → ℝ) :=
-          contDiff_pi.2 fun j => contDiff_apply ℝ ℝ _
+          contDiff_pi.2 fun j => contDiff_apply ℝ (fun _ => ℝ) _
         exact ((hexp.comp a1.neg).mul ((h1 j).comp a2)).mul (hexp.comp a1)
     · refine Fin.lastCases ?_ (fun j => ?_) i
       · simpa using hX _

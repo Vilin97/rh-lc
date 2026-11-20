@@ -247,7 +247,7 @@ theorem smoothNear_of_contDiff {n : ℕ} {S : Set (Fin n → ℂ)} {φ : (Fin n 
 
 theorem contDiff_euclPot (n : ℕ) : ContDiff ℝ ∞ (euclPot : (Fin n → ℂ) → ℝ) := by
   unfold euclPot
-  exact ContDiff.sum fun j _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ j)
+  exact ContDiff.sum fun j _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) j)
 
 theorem linForm_single_not_mem_bot {n : ℕ} (i : Fin n) :
     linForm (Pi.single i (1 : ℂ)) ∉ (⊥ : Ideal (MvPolynomial (Fin n) ℂ)) := by

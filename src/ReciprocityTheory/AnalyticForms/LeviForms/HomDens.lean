@@ -71,7 +71,7 @@ theorem contDiff_detGram (N : ℕ) (hd : Fin N → ℝ) (m : ℕ) (hm : m ≤ N)
   have hZ : ∀ a b, ContDiff ℝ 2 (fun z : Pairs N → ℂ => zMat N z a b) := by
     intro a b
     by_cases h : b < a
-    · simp only [zMat_apply, dif_pos h]; exact contDiff_apply ℝ ℂ _
+    · simp only [zMat_apply, dif_pos h]; exact contDiff_apply ℝ (fun _ => ℂ) _
     · simp only [zMat_apply, dif_neg h]; exact contDiff_const
   have hP : ∀ k a b, ContDiff ℝ 2 (fun z : Pairs N → ℂ => (zMat N z ^ k) a b) := by
     intro k

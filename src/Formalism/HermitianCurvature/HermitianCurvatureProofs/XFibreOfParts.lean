@@ -109,8 +109,8 @@ theorem xf_capV_cd (π' : Mx k r → (Wq →L[ℂ] Wq)) (B0 : Fin k → Fin (2 *
     funext (xf_capV_sum π' B0 w)]
   refine ContDiff.sum fun i _ => ContDiff.sum fun j _ => ?_
   have hs : ContDiff ℝ ∞ (fun ν : Fin k → ℂ => star (ν i)) :=
-    Complex.conjCLE.contDiff.comp (contDiff_apply ℝ ℂ i)
-  exact ((contDiff_const.mul hs).mul (contDiff_apply ℝ ℂ j)).smul contDiff_const
+    Complex.conjCLE.contDiff.comp (contDiff_apply ℝ (fun _ => ℂ) i)
+  exact ((contDiff_const.mul hs).mul (contDiff_apply ℝ (fun _ => ℂ) j)).smul contDiff_const
 
 def xfPi (π' : Mx k r → (Wq →L[ℂ] Wq)) (B0 : Fin k → Fin (2 * r + k + 1) → ℂ) (w : ℂ) (ν : Fin k → ℂ) :
     C6.EndH Wp Wq :=

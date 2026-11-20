@@ -66,7 +66,7 @@ theorem cInfAt_pn_of_isPot {m : (cxSt F).Met Y (I.ε a) Δ} {Q : LocPot (M.X a)}
   have hyW : y ∈ (I.pt a).symm ⁻¹' Q.U x ∩ ptsIn Y.str (I.ε a) V := ⟨Q.mem_U x, mem_ptsIn.2 hV⟩
   have h1 : CInfAt (fun z => ‖ratVal (f * g⁻¹) z‖ ^ 2) y :=
     cInfAt_ratVal (κ := Unit) (f := fun _ => f * g⁻¹) (fun _ => (hVu _ hV).regAt)
-      (G := fun w => ‖w ()‖ ^ 2) ((contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ ()))
+      (G := fun w => ‖w ()‖ ^ 2) ((contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) ()))
   have h2 := cInfAt_locPot I a hQ' x (y := y) (Q.mem_U x)
   refine (h1.comp₂ h2 (G := fun p => p.1 * Real.exp (-2 * p.2))
     (contDiff_fst.mul (Real.contDiff_exp.comp (contDiff_const.mul contDiff_snd)))).congr ?_

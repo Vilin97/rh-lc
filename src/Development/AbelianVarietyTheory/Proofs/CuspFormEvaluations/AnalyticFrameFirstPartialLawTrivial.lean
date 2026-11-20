@@ -22,7 +22,7 @@ open scoped ContDiff
 attribute [local instance] Over.cartesianMonoidalCategory
 
 theorem tay_coord {N : ℕ} (k : Fin N) : tay (fun v : Fin N → ℂ => v k) 0 = MvPowerSeries.X ((0 : Fin 1), k) := by
-  have hc : ContDiffAt ℂ ω (fun v : Fin N → ℂ => v k) 0 := (contDiff_apply ℂ ℂ k).contDiffAt
+  have hc : ContDiffAt ℂ ω (fun v : Fin N → ℂ => v k) 0 := (contDiff_apply ℂ (fun _ => ℂ) k).contDiffAt
   refine MvPowerSeries.pderiv.ext (fun q => ?_) ?_
   · obtain ⟨a, j⟩ := q
     obtain rfl : a = 0 := Subsingleton.elim _ _
@@ -53,8 +53,8 @@ theorem jetOf_sum_coord {N : ℕ} (m : ℕ) {T : Type} (I : Finset T) (k : T →
     simp only [Finset.sum_insert ha, map_add]
     rw [← ih, ← jetOf_coord, ← jetOf_add]
     · rfl
-    · exact (contDiff_apply ℂ ℂ _).contDiffAt
-    · exact (ContDiff.sum fun i _ => contDiff_apply ℂ ℂ _).contDiffAt
+    · exact (contDiff_apply ℂ (fun _ => ℂ) _).contDiffAt
+    · exact (ContDiff.sum fun i _ => contDiff_apply ℂ (fun _ => ℂ) _).contDiffAt
 
 theorem psumL_apply (n g : ℕ) (I : Finset (Fin n)) (w : Fin n → Fin g → ℂ) :
     psumL n g ⟨I⟩ w = ∑ i ∈ I, w i := by

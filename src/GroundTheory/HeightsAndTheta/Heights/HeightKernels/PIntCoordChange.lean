@@ -218,7 +218,7 @@ omit [DecidableEq T] [DecidableEq T₂] in
 
 theorem contDiff_intCoordPt (A : Matrix T T₂ ℤ) : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (intCoordPt A) := by
   refine contDiff_pi.2 fun p => ?_
-  exact ContDiff.sum fun t _ => (contDiff_apply ℝ ℂ _).mul contDiff_const
+  exact ContDiff.sum fun t _ => (contDiff_apply ℝ (fun _ => ℂ) _).mul contDiff_const
 
 omit [DecidableEq T₂] in
 

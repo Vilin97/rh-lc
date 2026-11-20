@@ -63,7 +63,7 @@ theorem hasFDerivAt_phi {z : J → ℂ} (hz : sqSum z ≠ 0) :
 theorem contDiffAt_phi {z : J → ℂ} (hz : sqSum z ≠ 0) {n : WithTop ℕ∞} :
     ContDiffAt ℝ n phi z := by
   have hs : ContDiff ℝ n (sqSum : (J → ℂ) → ℝ) :=
-    ContDiff.sum fun p _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ p)
+    ContDiff.sum fun p _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) p)
   exact (hs.contDiffAt.log hz).mul contDiffAt_const
 
 theorem fderiv_fderiv_phi {z : J → ℂ} (hz : sqSum z ≠ 0) (u : J → ℂ) :

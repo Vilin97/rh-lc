@@ -53,7 +53,7 @@ theorem baseChange_cInfAt : ∀ (F : Type) [Field F] [NumberField F] (X G : Sche
     rw [mem_ptsIn, hm]
     exact hx
   have hd : ContDiff ℝ ∞ fun v : ι → ℂ => fun a => v a / (n : ℂ) :=
-    contDiff_pi.2 fun a => (contDiff_apply ℝ ℂ a).div_const _
+    contDiff_pi.2 fun a => (contDiff_apply ℝ (fun _ => ℂ) a).div_const _
   refine ⟨W', ι, inferInstance, g', fun v => Φ fun a => v a / n, (fun v : ι → ℂ => fun a => v a / (n : ℂ)) ⁻¹' O,
     hmW, h₂.preimage hd.continuous, ?_, h₄.comp hd.contDiffOn fun v hv => hv, ?_⟩
   · show (fun a => ev p σ W' (g' a) (m z) / n) ∈ O

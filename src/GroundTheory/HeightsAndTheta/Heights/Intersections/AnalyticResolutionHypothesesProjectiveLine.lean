@@ -482,7 +482,7 @@ def qn (z : MCone ι1) : ℝ := ‖z ⟨(), 0⟩‖ ^ 2 + ‖z ⟨(), 1⟩‖ ^ 
 
 theorem contDiff_normSq_coord (i : Fin 2) :
     ContDiff ℝ ∞ (fun z : MCone ι1 => ‖z ⟨(), i⟩‖ ^ 2) :=
-  (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ (⟨(), i⟩ : Σ _ : Unit, Fin 2))
+  (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) (⟨(), i⟩ : Σ _ : Unit, Fin 2))
 
 theorem contDiff_qn : ContDiff ℝ ∞ qn :=
   (contDiff_normSq_coord 0).add (contDiff_normSq_coord 1)

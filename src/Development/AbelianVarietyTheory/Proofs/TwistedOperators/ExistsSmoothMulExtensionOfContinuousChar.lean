@@ -66,10 +66,10 @@ theorem contDiffAt_mixedLog_one (K : Type) [Field K] [NumberField K] :
     ContDiffAt ℝ ∞ (mixedLog K) 1 := by
   refine ContDiffAt.prodMk (contDiffAt_pi.mpr fun w => ?_) (contDiffAt_pi.mpr fun w => ?_)
   · have h1 : ContDiff ℝ ∞ (fun x : mixedSpace K => x.1 w) :=
-      (contDiff_apply ℝ ℝ w).comp contDiff_fst
+      (contDiff_apply ℝ (fun _ => ℝ) w).comp contDiff_fst
     exact h1.contDiffAt.log (by simp)
   · have h1 : ContDiff ℝ ∞ (fun x : mixedSpace K => x.2 w) :=
-      (contDiff_apply ℝ ℂ w).comp contDiff_snd
+      (contDiff_apply ℝ (fun _ => ℂ) w).comp contDiff_snd
     have h2 : ContDiffAt ℝ ∞ Complex.log ((1 : mixedSpace K).2 w) :=
       (Complex.contDiffAt_log (by simp)).restrict_scalars ℝ
     exact h2.comp 1 h1.contDiffAt

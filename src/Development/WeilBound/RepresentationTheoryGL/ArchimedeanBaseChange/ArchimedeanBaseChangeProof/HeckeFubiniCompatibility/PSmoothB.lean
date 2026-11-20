@@ -50,7 +50,7 @@ def xv (v : InfinitePlace E) (x : Lie E n) : Mat n := fun i j => x i j v
 omit [IsTotallyComplex E] in
 theorem contDiff_xv (v : InfinitePlace E) : ContDiff ℝ ∞ (xv (n := n) v) :=
   contDiff_pi.2 fun i => contDiff_pi.2 fun j =>
-    (contDiff_apply ℝ ℂ v).comp ((contDiff_apply ℝ _ j).comp (contDiff_apply ℝ _ i))
+    (contDiff_apply ℝ (fun _ => ℂ) v).comp ((contDiff_apply ℝ _ j).comp (contDiff_apply ℝ _ i))
 
 omit [NumberField E] [IsTotallyComplex E] in
 theorem contDiffAt_matMul {X : Type} [NormedAddCommGroup X] [NormedSpace ℝ X] {f g : X → Mat n} {x : X}

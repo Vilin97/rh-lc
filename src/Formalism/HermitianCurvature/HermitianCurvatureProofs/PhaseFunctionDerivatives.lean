@@ -24,7 +24,7 @@ theorem a_isOpen (n : ℕ) : IsOpen {x : Fin n → ℂ | ∀ k, x k ≠ 0} := by
 
 theorem a_contDiffAt_inv {n : ℕ} (N : WithTop ℕ∞) (k : Fin n) (x : Fin n → ℂ) (hx : x k ≠ 0) :
     ContDiffAt ℂ N (fun y : Fin n → ℂ => (y k)⁻¹) x :=
-  ((contDiff_apply ℂ ℂ k).contDiffAt).inv hx
+  ((contDiff_apply ℂ (fun _ => ℂ) k).contDiffAt).inv hx
 
 theorem a_norm_proj_le {n : ℕ} (k : Fin n) :
     ‖(ContinuousLinearMap.proj k : (Fin n → ℂ) →L[ℂ] ℂ)‖ ≤ 1 :=
@@ -73,7 +73,7 @@ theorem a_contDiffAt_prod {n : ℕ} (N : WithTop ℕ∞) (x : Fin n → ℂ) (hx
   contDiffAt_prod fun k _ => a_contDiffAt_inv N k x (hx k)
 
 theorem a_contDiff_lin {n : ℕ} (N : WithTop ℕ∞) : ContDiff ℂ N (fun x : Fin n → ℂ => ∑ k, x k) :=
-  ContDiff.sum fun k _ => contDiff_apply ℂ ℂ k
+  ContDiff.sum fun k _ => contDiff_apply ℂ (fun _ => ℂ) k
 
 theorem contDiffAt_phase_function {n : ℕ} (N : WithTop ℕ∞) (D' : ℂ) (x : Fin n → ℂ) (hx : ∀ k, x k ≠ 0) :
     ContDiffAt ℂ N (g0 D') x := by

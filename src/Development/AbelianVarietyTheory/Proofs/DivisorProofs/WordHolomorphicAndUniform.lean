@@ -58,7 +58,7 @@ theorem smoothLines_lineDer {f : GAd σ J → ℂ} (hf : SmoothLines σ J f) {γ
     refine Fin.lastCases ?_ (fun j => ?_) i
     · simpa using contDiff_snd
     · simp only [Fin.snoc_castSucc]
-      exact (contDiff_apply ℝ ℝ j).comp contDiff_fst
+      exact (contDiff_apply ℝ (fun _ => ℝ) j).comp contDiff_fst
   let Ψ : (Fin k → ℝ) × ℝ → ℂ := fun p => f (g * (List.ofFn fun i => γ i (p.1 i)).prod * γ₀ p.2)
   have hΨe : Ψ = (fun t' : Fin (k + 1) → ℝ => f (g * (List.ofFn fun i => γ' i (t' i)).prod)) ∘
       (fun p : (Fin k → ℝ) × ℝ => (Fin.snoc (α := fun _ => ℝ) p.1 p.2 : Fin (k + 1) → ℝ)) := by

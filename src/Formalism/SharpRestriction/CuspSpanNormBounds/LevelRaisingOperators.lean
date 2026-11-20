@@ -1636,8 +1636,8 @@ theorem contDiffAt_bc (k r : ℕ) (z z' : Fin (2 * r + k + 1) → ℂ) (μsec : 
     (hsec : IsSection k r z z' μsec) (x : Fin (r + 1) → ℂ) (hx : x ∈ BDom k r z z') :
     ContDiffAt ℝ ∞ (fun y : Fin (r + 1) → ℂ => bigCell k r (cOf y) (μsec (zOf y))) x := by
   have hc : ∀ a : Fin r, ContDiffAt ℝ ∞ (fun y : Fin (r + 1) → ℂ => cOf y a) x := fun a =>
-    (contDiff_apply ℝ ℂ a.castSucc).contDiffAt
-  have hz : ContDiffAt ℝ ∞ (fun y : Fin (r + 1) → ℂ => zOf y) x := (contDiff_apply ℝ ℂ (Fin.last r)).contDiffAt
+    (contDiff_apply ℝ (fun _ => ℂ) a.castSucc).contDiffAt
+  have hz : ContDiffAt ℝ ∞ (fun y : Fin (r + 1) → ℂ => zOf y) x := (contDiff_apply ℝ (fun _ => ℂ) (Fin.last r)).contDiffAt
   have hS : {ζ : ℂ | Tz k r z * Tz k r z' < Complex.normSq ζ} ∈ 𝓝 (zOf x) :=
     (isOpen_lt continuous_const Complex.continuous_normSq).mem_nhds hx.2
   refine contDiffAt_pi' fun i => contDiffAt_pi' fun j => ?_
@@ -1680,11 +1680,11 @@ theorem Btr_smooth {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] (k r :
   apply ContDiffAt.smul
   · refine Complex.ofRealCLM.contDiff.contDiffAt.comp x (ContDiffAt.mul ?_ ?_)
     · refine contDiffAt_prod fun a _ => ContDiffAt.pow ?_ _
-      exact ContDiffAt.norm ℝ (contDiff_apply ℝ ℂ a.castSucc).contDiffAt (hB.1 a.castSucc)
+      exact ContDiffAt.norm ℝ (contDiff_apply ℝ (fun _ => ℂ) a.castSucc).contDiffAt (hB.1 a.castSucc)
     · refine ContDiffAt.rpow_const_of_ne ?_ (ne_of_gt (sub_pos.2 hB.2))
       refine ContDiffAt.sub ?_ contDiffAt_const
       simp only [Complex.normSq_eq_norm_sq]
-      exact ContDiffAt.norm_sq ℝ (contDiff_apply ℝ ℂ (Fin.last r)).contDiffAt
+      exact ContDiffAt.norm_sq ℝ (contDiff_apply ℝ (fun _ => ℂ) (Fin.last r)).contDiffAt
   · exact (hF.contDiffAt (hU.mem_nhds hxU)).comp x hβ
 
 theorem Img_smooth (L : Lev) (h : L.Std) : ∀ φ ∈ L.Img, ContDiffOn ℝ ∞ φ L.BD := by

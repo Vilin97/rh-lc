@@ -19,8 +19,8 @@ theorem prod_ofFn_append {G : Type} [Monoid G] {d k : ℕ} (δ : Fin d → ℝ �
 theorem contDiff_append {d k : ℕ} : ContDiff ℝ ∞ fun q : (Fin d → ℝ) × (Fin k → ℝ) => Fin.append q.1 q.2 := by
   refine contDiff_pi.2 fun i => ?_
   refine Fin.addCases (fun a => ?_) (fun j => ?_) i
-  · simp only [Fin.append_left]; exact (contDiff_apply ℝ ℝ a).comp contDiff_fst
-  · simp only [Fin.append_right]; exact (contDiff_apply ℝ ℝ j).comp contDiff_snd
+  · simp only [Fin.append_left]; exact (contDiff_apply ℝ (fun _ => ℝ) a).comp contDiff_fst
+  · simp only [Fin.append_right]; exact (contDiff_apply ℝ (fun _ => ℝ) j).comp contDiff_snd
 
 theorem iteratedFDeriv_slice {A B : Type} [NormedAddCommGroup A] [NormedSpace ℝ A] [NormedAddCommGroup B]
     [NormedSpace ℝ B] {H : A × B → ℂ} (hH : ContDiff ℝ ∞ H) (m : ℕ) (a : A) (t : B) :

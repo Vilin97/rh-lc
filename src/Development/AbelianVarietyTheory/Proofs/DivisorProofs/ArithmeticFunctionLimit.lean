@@ -55,7 +55,7 @@ theorem lFam_comb {t : ℝ → ℝ} {ι : Type} [Fintype ι] {L : ℝ → ι →
     rw [map_zsmul, ← smul_add, ← icls_raise, icls_eq_iff.2 (hi i R)]
   · have H := (famAt_pi (w := fun R z i => u i R σ z) (w₀ := fun _ _ => 0) fun i => hf i σ y).comp_contDiff
       (Ψ := fun v : ι → ℝ => ∑ i, (n i : ℝ) * v i)
-      (ContDiff.sum fun i _ => contDiff_const.mul (contDiff_apply ℝ ℝ i))
+      (ContDiff.sum fun i _ => contDiff_const.mul (contDiff_apply ℝ (fun _ => ℝ) i))
     refine H.congr (.of_forall fun x => ?_) (.of_forall fun z => by simp)
     simp [G, g, AddSubgroup.val_finset_sum, Finset.sum_apply]
 

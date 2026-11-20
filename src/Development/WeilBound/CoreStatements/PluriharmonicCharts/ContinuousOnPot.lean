@@ -15,7 +15,7 @@ theorem contDiff_nd (a : K → ℕ) : ContDiff ℝ ∞ (nd (J := J) a) := by
   unfold nd
   refine contDiff_prod fun k _ => ?_
   refine (ContDiff.sum fun i _ => ?_).pow _
-  exact (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ _)
+  exact (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) _)
 
 variable {e : ℕ} {X : Type} [TopologicalSpace X] (A : FinHolAtlas e X)
 

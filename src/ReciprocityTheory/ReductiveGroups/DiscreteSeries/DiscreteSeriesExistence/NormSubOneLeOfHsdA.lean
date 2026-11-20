@@ -197,7 +197,7 @@ def hsdA (g : Matrix (Fin n) (Fin n) ℂ) : ℝ := ∑ i, ∑ j, ‖(g - 1) i j�
 
 theorem contDiff_entryA (i j : Fin n) : ContDiff ℝ ∞ (fun g : Matrix (Fin n) (Fin n) ℂ => g i j) := by
   first
-  | exact (contDiff_apply ℝ ℂ j).comp (contDiff_apply ℝ (Fin n → ℂ) i)
+  | exact (contDiff_apply ℝ (fun _ => ℂ) j).comp (contDiff_apply ℝ (fun _ => (Fin n → ℂ)) i)
   | fun_prop
   | exact ((ContinuousLinearMap.proj j).comp (ContinuousLinearMap.proj i :
       (Fin n → Fin n → ℂ) →L[ℝ] (Fin n → ℂ))).contDiff

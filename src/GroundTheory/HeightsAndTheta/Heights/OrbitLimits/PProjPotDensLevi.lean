@@ -76,7 +76,7 @@ theorem levi_fsMultiPot (p : (k : K) → ι k) {z : (Σ k, ι k) → ℂ}
   have hC : ∀ k ∈ (Finset.univ : Finset K),
       ContDiffAt ℝ 2 (fun y : (Σ k, ι k) → ℂ => Real.log (∑ i, ‖y ⟨k, i⟩‖ ^ 2)) z := fun k _ =>
     ((ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp
-      (contDiff_apply ℝ ℂ (⟨k, i⟩ : Σ k, ι k))).contDiffAt).log (hpos k).ne'
+      (contDiff_apply ℝ (fun _ => ℂ) (⟨k, i⟩ : Σ k, ι k))).contDiffAt).log (hpos k).ne'
   have hsum : levi fsMultiPot z v = ∑ k, 2 * leviForm (fun w => Real.log ((fsMetric (ι k)).ρ w))
       (blockCLM k z) (blockCLM k v) := by
     rw [show (fsMultiPot : ((Σ k, ι k) → ℂ) → ℝ) =

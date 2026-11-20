@@ -17,7 +17,7 @@ lemma contDiff_update_circleMap {e : ℕ} (i : Fin e) (r : ℝ) :
     simp only [Function.update_self]
     exact (contDiff_circleMap 0 r).comp contDiff_snd
   · simp only [Function.update_of_ne hj]
-    exact (contDiff_apply ℝ ℂ j).comp contDiff_fst
+    exact (contDiff_apply ℝ (fun _ => ℂ) j).comp contDiff_fst
 
 theorem poissonInt_update_contDiffOn (e : ℕ) (S : Finset (Fin e)) (i : Fin e) (c : Fin e → ℂ)
     (R r : ℝ) (f : (Fin e → ℂ) → ℝ) (hr : 0 < r) (hrR : r < R) (hci : c i = 0)
@@ -68,7 +68,7 @@ theorem poissonInt_update_contDiffOn (e : ℕ) (S : Finset (Fin e)) (i : Fin e) 
       have hζ : ContDiff ℝ ∞ (fun q : (Fin e → ℂ) × ℝ => circleMap 0 r q.2) :=
         (contDiff_circleMap 0 r).comp contDiff_snd
       have hw : ContDiff ℝ ∞ (fun q : (Fin e → ℂ) × ℝ => q.1 i) :=
-        (contDiff_apply ℝ ℂ i).comp contDiff_fst
+        (contDiff_apply ℝ (fun _ => ℂ) i).comp contDiff_fst
       refine ContDiffOn.div ?_ ?_ ?_
       · exact ((contDiff_norm_sq ℝ).comp hζ |>.sub ((contDiff_norm_sq ℝ).comp hw)).contDiffOn
       · exact ((contDiff_norm_sq ℝ).comp (hζ.sub hw)).contDiffOn

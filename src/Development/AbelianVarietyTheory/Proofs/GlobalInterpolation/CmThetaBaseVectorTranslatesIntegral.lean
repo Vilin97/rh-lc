@@ -108,7 +108,7 @@ theorem translates_latInt : ∀ (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ)
     exact ((AddSubgroup.mem_pi Set.univ).1 hy) w (Set.mem_univ _)
   have hcd : ∀ (x : Fin 4 × D.what₂.Tau → ℂ) (w : Fin 4 × D.what₂.Tau),
       ContDiff ℂ ⊤ (fun y : Fin 4 × D.what₂.Tau → ℂ => Formalism.L2.Th1.F.opU B.L (v w + x w) B.th0 (y w)) :=
-    fun x w => (contDiff_opU_one B.L _ hthd).comp (contDiff_apply ℂ ℂ w)
+    fun x w => (contDiff_opU_one B.L _ hthd).comp (contDiff_apply ℂ (fun _ => ℂ) w)
   have hprod : ∀ x : Fin 4 × D.what₂.Tau → ℂ, ContDiff ℂ ⊤ (fun y : Fin 4 × D.what₂.Tau → ℂ =>
       ∏ w, Formalism.L2.Th1.F.opU B.L (v w + x w) B.th0 (y w)) :=
     fun x => contDiff_prod fun w _ => hcd x w

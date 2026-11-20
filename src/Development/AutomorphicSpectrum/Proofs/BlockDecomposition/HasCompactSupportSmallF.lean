@@ -12,7 +12,7 @@ variable {ι : Type} [Fintype ι]
 def nsq (y : ι → ℂ) : ℝ := ∑ j, ‖y j‖ ^ 2
 
 lemma contDiff_coordSq (i : ι) {n : WithTop ℕ∞} : ContDiff ℝ n fun y : ι → ℂ => ‖y i‖ ^ 2 :=
-  (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ i)
+  (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) i)
 
 lemma contDiff_nsq {n : WithTop ℕ∞} : ContDiff ℝ n (nsq : (ι → ℂ) → ℝ) :=
   ContDiff.sum fun j _ => contDiff_coordSq j

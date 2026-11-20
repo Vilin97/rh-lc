@@ -20,7 +20,7 @@ theorem isSmoothHerm_of_pull {K K' : Type} [Fintype K] [Fintype K'] {ι : K → 
   unfold IsSmoothHerm
   rw [hh]
   refine ContDiffOn.comp hA ?_ ?_
-  · exact (contDiff_pi.2 fun p => contDiff_apply ℝ ℂ (v p)).contDiffOn
+  · exact (contDiff_pi.2 fun p => contDiff_apply ℝ (fun _ => ℂ) (v p)).contDiffOn
   · intro z hz k
     obtain ⟨i', hi'⟩ := hz (κ k)
     obtain ⟨⟨k₁, i⟩, hp'⟩ := hb.2.2.2 ⟨κ k, i'⟩ ⟨k, rfl⟩

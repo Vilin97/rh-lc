@@ -194,7 +194,7 @@ theorem proof (hF : LiftGraphFactor.Statement) : LiftGraphMetric.Statement := by
   have hoR : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun z : (Σ k, addIdx ι r k) → ℂ => basePart₂ z) :=
     ((oldCLM (ι := ι) r).restrictScalars ℝ).contDiff
   have hS : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) S :=
-    ContDiff.sum fun i _ => (contDiff_norm_sq ℂ).comp (contDiff_apply ℝ ℂ _)
+    ContDiff.sum fun i _ => (contDiff_norm_sq ℂ).comp (contDiff_apply ℝ (fun _ => ℂ) _)
   have hNs : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) N.h U0 := hN.1
   have hNo : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun z => N.h (basePart₂ z)) U :=
     hNs.comp hoR.contDiffOn fun z hz => hold z hz

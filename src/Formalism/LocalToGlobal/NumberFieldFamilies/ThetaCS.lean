@@ -35,7 +35,7 @@ theorem Smo.two {φ : GA D V → ℂ} (h : Smo θ V φ) (k : ℕ) (τs : Fin k �
     refine contDiff_pi.2 fun i => ?_
     refine Fin.lastCases ?_ (fun j => ?_) i
     · simpa using contDiff_snd
-    · simpa [Function.comp_def] using (contDiff_apply ℝ ℝ j).comp contDiff_fst
+    · simpa [Function.comp_def] using (contDiff_apply ℝ (fun _ => ℝ) j).comp contDiff_fst
   convert h1.comp h2 using 2 with p
   rw [Function.comp_apply, List.ofFn_succ', List.prod_concat, mul_assoc]
   simp

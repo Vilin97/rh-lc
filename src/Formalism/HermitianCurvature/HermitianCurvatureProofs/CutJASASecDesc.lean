@@ -143,7 +143,7 @@ theorem famStep {z z' : Fin (2 * r + k + 1) → ℂ} {π : Mx k r → (Wp →L[�
       by_cases ha : a = l
       · subst ha
         exact (sm_cF (l := a) h1).congr fun x _ => by simp
-      · exact ((contDiff_apply ℝ ℂ a).comp contDiff_fst).contDiffOn.congr fun x _ => by
+      · exact ((contDiff_apply ℝ (fun _ => ℂ) a).comp contDiff_fst).contDiffOn.congr fun x _ => by
           simp [ha]
     have hrho : ContDiffOn ℝ ∞ (fun x : (Fin r → ℂ) × Mx k r => rho k r l x.2)
         {x : (Fin r → ℂ) × Mx k r | x.2 ∈ C0 k r l} :=

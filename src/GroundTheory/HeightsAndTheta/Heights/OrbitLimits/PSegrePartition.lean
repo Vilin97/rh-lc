@@ -34,7 +34,7 @@ omit [DecidableEq K] in
 theorem contDiff_segreSq (i : (k : K) → ι k) :
     ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun z : (Σ k, ι k) → ℂ => segreSq z i) := by
   have h : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun z : (Σ k, ι k) → ℂ => segre z i) :=
-    contDiff_prod fun k _ => contDiff_apply ℝ ℂ (⟨k, i k⟩ : Σ k, ι k)
+    contDiff_prod fun k _ => contDiff_apply ℝ (fun _ => ℂ) (⟨k, i k⟩ : Σ k, ι k)
   exact (contDiff_norm_sq ℝ).comp h
 
 theorem contDiff_segreSqSum :

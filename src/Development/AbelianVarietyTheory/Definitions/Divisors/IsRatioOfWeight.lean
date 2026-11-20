@@ -266,7 +266,7 @@ def SmFn.ofSec (L : HermLB p) (s : L.B.Sec) : SmFn p where
     have hi := mem_pick L.isLB y
     have h₁ : CInfAt (fun z => ‖ev p σ _ (s.f (pick L.isLB y)) z‖ ^ 2) y :=
       ⟨_, Unit, inferInstance, fun _ => s.f _, fun v => ‖v ()‖ ^ 2, Set.univ, hi, isOpen_univ, trivial,
-        ((contDiff_apply ℝ ℂ ()).norm_sq ℂ).contDiffOn, EventuallyEq.rfl⟩
+        ((contDiff_apply ℝ (fun _ => ℂ) ()).norm_sq ℂ).contDiffOn, EventuallyEq.rfl⟩
     exact (h₁.comp₂ (L.cInf σ _ y hi) (G := fun x => x.1 * Real.exp (-x.2))
       (contDiff_fst.mul contDiff_snd.neg.exp)).congr
       (eventually_of_mem ((isOpen_ptsIn _).mem_nhds hi) fun z hz => (L.φ σ).nsq_eq (secVal_mem s) hz)

@@ -42,7 +42,7 @@ theorem ProjPotDensVanish.proof : ProjPotDensVanish.Statement := by
       (Finset.single_le_sum (f := fun l => ‖w l‖ ^ 2) (fun l _ => sq_nonneg _) (Finset.mem_univ i))
   have hτ1 : ∀ y, G y i ≠ 0 → τ y i = 1 := fun y hy => div_self hy
   have hφ' : ContDiffAt ℝ 2 φ' (τ u) :=
-    ((ContDiff.sum fun l _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ l)).contDiffAt.log
+    ((ContDiff.sum fun l _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) l)).contDiffAt.log
       (hsum_pos _ (hτ1 u hGi)).ne')
 
   let g : (Fin n → ℂ) → ℂ := fun y => G y i ^ 2

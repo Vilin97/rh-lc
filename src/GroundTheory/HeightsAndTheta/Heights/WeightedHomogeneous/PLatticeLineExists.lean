@@ -84,14 +84,14 @@ theorem quad_smul (c : ℂ) (z : Fin (N + 1) → ℂ) :
 
 theorem contDiff_quad : ContDiff ℝ ∞ (quad F φ R) := by
   have hrec : ∀ σ j, ContDiff ℝ ∞ (fun z : Fin (N + 1) → ℂ ↦ recover R σ z j) := fun σ j ↦
-    ContDiff.sum fun b _ ↦ contDiff_const.mul (contDiff_apply ℝ ℂ b)
+    ContDiff.sum fun b _ ↦ contDiff_const.mul (contDiff_apply ℝ (fun _ => ℂ) b)
   have hconj : ContDiff ℝ ∞ (fun x : ℂ ↦ star x) := Complex.conjCLE.contDiff
   refine ContDiff.add (ContDiff.sum fun σ _ ↦ Complex.reCLM.contDiff.comp ?_)
     (ContDiff.sum fun b _ ↦ (contDiff_norm_sq ℝ).comp ?_)
   · simp only [dotProduct, mulVec, Pi.star_apply]
     exact ContDiff.sum fun i _ ↦ (hconj.comp (hrec σ i)).mul
       (ContDiff.sum fun j _ ↦ contDiff_const.mul (hrec σ j))
-  · exact (contDiff_apply ℝ ℂ b).sub
+  · exact (contDiff_apply ℝ (fun _ => ℂ) b).sub
       (ContDiff.sum fun σ _ ↦ ContDiff.sum fun j _ ↦ contDiff_const.mul (hrec σ j))
 
 omit [NumberField K] in
@@ -168,7 +168,7 @@ def line : HermLine (fun _ : Unit ↦ N) where
   metric_smooth := by
     have h0 : ContDiff ℝ ∞ (fun z : Cone (fun _ : Unit ↦ N) ℂ ↦ z ()) := contDiff_apply ℝ _ ()
     have h1 : ContDiff ℝ ∞ (fun z : Cone (fun _ : Unit ↦ N) ℂ ↦ fun b ↦ starRingEnd ℂ (z () b)) :=
-      contDiff_pi.2 fun b ↦ Complex.conjCLE.contDiff.comp ((contDiff_apply ℝ ℂ b).comp h0)
+      contDiff_pi.2 fun b ↦ Complex.conjCLE.contDiff.comp ((contDiff_apply ℝ (fun _ => ℂ) b).comp h0)
     have hq := (((contDiff_quad F φ R).comp h0).add ((contDiff_quad F φ R).comp h1)).div_const 2
     refine hq.contDiffOn.sqrt fun z hz ↦ ne_of_gt ?_
     have h3 := quad_pos F φ R (hz ())

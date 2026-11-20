@@ -41,7 +41,7 @@ theorem cInfAt_normSq_ratVal [IsIntegral X] {g : X.functionField} (hg : RegAt (u
   have hyU : y ∈ ptsIn p σ U := mem_ptsIn.2 hU
   have h₁ : CInfAt (fun z => ‖ev p σ U a z‖ ^ 2) y :=
     ⟨U, Unit, inferInstance, fun _ => a, fun v => ‖v ()‖ ^ 2, Set.univ, hyU, isOpen_univ, trivial,
-      ((contDiff_apply ℝ ℂ ()).norm_sq ℂ).contDiffOn, EventuallyEq.rfl⟩
+      ((contDiff_apply ℝ (fun _ => ℂ) ()).norm_sq ℂ).contDiffOn, EventuallyEq.rfl⟩
   refine h₁.congr ?_
   filter_upwards [(isOpen_ptsIn U).mem_nhds hyU] with z hz
   rw [ratVal_fnOf hz]

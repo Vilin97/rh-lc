@@ -133,7 +133,7 @@ theorem isData_halfPlane :
   have hl : ∀ z : Unit → ℂ, leviForm (fun x : Unit → ℂ => 1 + (x ()).re) z = 0 := by
     intro z
     have h : ContDiffAt ℂ 2 (fun x : Unit → ℂ => 1 + x ()) z :=
-      contDiffAt_const.add (contDiff_apply ℂ ℂ ()).contDiffAt
+      contDiffAt_const.add (contDiff_apply ℂ (fun _ => ℂ) ()).contDiffAt
     simpa using leviForm_re_eq_zero h
   have hg : ∀ ξ : Unit → ℂ, gnorm (1 : Matrix Unit Unit ℂ) ξ = ‖ξ ()‖ := by
     intro ξ

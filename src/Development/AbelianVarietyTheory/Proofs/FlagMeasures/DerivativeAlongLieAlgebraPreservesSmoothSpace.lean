@@ -61,7 +61,7 @@ theorem SmFam.mul {k : ℕ} {A B : (Fin k → ℝ) → GA D V} (hA : SmFam θ A)
 
 theorem SmFam.tail {k : ℕ} {A : (Fin k → ℝ) → GA D V} (hA : SmFam θ A) :
     SmFam θ fun t : Fin (k + 1) → ℝ => A (Fin.tail t) := fun τ => by
-  have h : ContDiff ℝ ∞ fun t : Fin (k + 1) → ℝ => Fin.tail t := contDiff_pi.2 fun i => contDiff_apply ℝ ℝ i.succ
+  have h : ContDiff ℝ ∞ fun t : Fin (k + 1) → ℝ => Fin.tail t := contDiff_pi.2 fun i => contDiff_apply ℝ (fun _ => ℝ) i.succ
   exact ⟨(hA τ).1.comp h, (hA τ).2.comp h⟩
 
 theorem contDiff_oneP (hθ : IsInfFam θ) {τ : D.what₂.Tau} {X : Matrix (Fin V.rank) (Fin V.rank) ℂ}
@@ -80,8 +80,8 @@ theorem smFam_oneP (hθ : IsInfFam θ) {τ : D.what₂.Tau} {X : Matrix (Fin V.r
   have hi : ∀ t, (oneP θ V τ X t)⁻¹ = oneP θ V τ X (-t) := fun t => inv_eq_of_mul_eq_one_right (by
     rw [← oneP_add hθ hX, add_neg_cancel, oneP_zero hθ])
   simp only [hi]
-  exact ⟨(contDiff_oneP hθ hX τ').comp (contDiff_apply ℝ ℝ i),
-    (contDiff_oneP hθ hX τ').comp (contDiff_apply ℝ ℝ i).neg⟩
+  exact ⟨(contDiff_oneP hθ hX τ').comp (contDiff_apply ℝ (fun _ => ℝ) i),
+    (contDiff_oneP hθ hX τ').comp (contDiff_apply ℝ (fun _ => ℝ) i).neg⟩
 
 variable (θ) in
 

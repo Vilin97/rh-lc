@@ -30,7 +30,7 @@ theorem contDiff_dpW_coord (l : Fin r) :
     ContDiff ℝ ∞ (fun x : (Fin r → ℂ) × Mx k r => ((dpW (x.1 l) : ℝ) : ℂ)) := by
   unfold dpW
   have h : ContDiff ℝ ∞ (fun x : (Fin r → ℂ) × Mx k r => (1 + ‖x.1 l‖ ^ 2) ^ 2) :=
-    ((contDiff_const.add ((contDiff_norm_sq ℝ).comp ((contDiff_apply ℝ ℂ l).comp contDiff_fst))).pow 2)
+    ((contDiff_const.add ((contDiff_norm_sq ℝ).comp ((contDiff_apply ℝ (fun _ => ℂ) l).comp contDiff_fst))).pow 2)
   exact Complex.ofRealCLM.contDiff.comp h
 
 def dpMul (l : Fin r) : Module.End ℂ (RadSp k r z z' π π') :=

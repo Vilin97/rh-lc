@@ -429,7 +429,7 @@ theorem Gen.exists_section (hx0 : x (e 0) ≠ 0) {W : Set (Fin (D + 1) → ℂ)}
     intro i
     first
     | fun_prop
-    | exact ((contDiff_apply ℂ ℂ i).comp contDiff_fst).contDiffAt
+    | exact ((contDiff_apply ℂ (fun _ => ℂ) i).comp contDiff_fst).contDiffAt
     | exact ((ContinuousLinearMap.proj (R := ℂ) (φ := fun _ : Fin (D + 1) => ℂ) i).comp
         (ContinuousLinearMap.fst ℂ (Fin (D + 1) → ℂ) ℂ)).contDiff.contDiffAt
   have hcd : ContDiffAt ℂ 1 (fun p : (Fin (D + 1) → ℂ) × ℂ => G.P.eval₂ (deh p.1 0) p.2) (w, ρ) :=
@@ -454,7 +454,7 @@ theorem Gen.exists_section (hx0 : x (e 0) ≠ 0) {W : Set (Fin (D + 1) → ℂ)}
     intro v j
     first
     | fun_prop
-    | exact (contDiff_apply ℂ ℂ j).contDiffAt
+    | exact (contDiff_apply ℂ (fun _ => ℂ) j).contDiffAt
     | exact (ContinuousLinearMap.proj (R := ℂ) (φ := fun _ : Fin (D + 1) => ℂ) j).contDiff.contDiffAt
   refine ⟨U' ∩ W, fun w' => G.zOf w' (τ w'), hU'o.inter hWo, ⟨hwU', hw⟩, ?_, ?_, ?_⟩
   · intro w' hw'

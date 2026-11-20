@@ -313,15 +313,15 @@ theorem exists_lines_partial (h : IsCMExt F E σ) (hJ : IsHermND σ J) {k : ℕ}
   let P : (Fin k → ℝ) → GAd σ J := fun t => (List.ofFn fun j => γ j (t j)).prod
   let φ : GAd σ J →* Matrix (Fin n) (Fin n) ℂ := (archMat σ J τ).comp (projArch σ J w)
   obtain ⟨hm, hm'⟩ := contDiff_ofFn_prod φ k (fun j (t : Fin k → ℝ) => γ j (t j)) fun j =>
-    ⟨(contDiff_archMat_line h (hγ j) τ).comp (contDiff_apply ℝ ℝ j), by
+    ⟨(contDiff_archMat_line h (hγ j) τ).comp (contDiff_apply ℝ (fun _ => ℝ) j), by
       have e : ∀ u, (γ j u)⁻¹ = γ j (-u) := fun u => inv_eq_of_mul_eq_one_right (by
         rw [← (GlobalTheory.CircleDop.realLine_hom h (hγ j)).1, add_neg_cancel, realLine_zero h (hγ j)])
       simp only [e]
-      exact (contDiff_archMat_line h (hγ j) τ).comp (contDiff_apply ℝ ℝ j).neg⟩
+      exact (contDiff_archMat_line h (hγ j) τ).comp (contDiff_apply ℝ (fun _ => ℝ) j).neg⟩
   let e : Fin k → ℝ := Pi.single i 1
   let M : (Fin k → ℝ) → Matrix (Fin n) (Fin n) ℂ := fun t => φ (P t)⁻¹ * fderiv ℝ (fun t => φ (P t)) t e
   have hM : ContDiff ℝ ∞ M := hm'.mul ((hm.fderiv_right (m := ∞) (by simp)).clm_apply contDiff_const)
-  refine ⟨d, η, fun a t => c (M t) a, hη, fun a => (contDiff_apply ℝ ℝ a).comp (c.contDiff.comp hM), fun f hf g t => ?_⟩
+  refine ⟨d, η, fun a t => c (M t) a, hη, fun a => (contDiff_apply ℝ (fun _ => ℝ) a).comp (c.contDiff.comp hM), fun f hf g t => ?_⟩
   have key := hc f hf (g * P t) (fun u => projArch σ J w ((P t)⁻¹ * P (t + u • e))) (M t) (by simp) (by
     have := (hasDerivAt_dir ((hm.differentiable (by simp)) t).hasFDerivAt e).const_mul (φ (P t)⁻¹)
     simp only [← map_mul] at this

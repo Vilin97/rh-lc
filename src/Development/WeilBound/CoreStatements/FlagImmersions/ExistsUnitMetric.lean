@@ -29,7 +29,7 @@ theorem contDiff_evC (f : MRing J) : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ�
   induction f using MvPolynomial.induction_on with
   | C a => simpa using contDiff_const
   | add p q hp hq => simpa using hp.add hq
-  | mul_X p i hp => simpa using hp.mul (contDiff_apply ℝ ℂ i)
+  | mul_X p i hp => simpa using hp.mul (contDiff_apply ℝ (fun _ => ℂ) i)
 
 def blk (k : K) (w : (Σ k, J k) → ℂ) : ℝ := ∑ i, ‖w ⟨k, i⟩‖ ^ 2
 
@@ -46,7 +46,7 @@ theorem blk_conj (w : (Σ k, J k) → ℂ) (k : K) : blk k (fun p => (starRingEn
 
 theorem contDiff_blk (k : K) : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (blk (J := J) k) := by
   unfold blk
-  exact ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ (⟨k, i⟩ : Σ k, J k))
+  exact ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) (⟨k, i⟩ : Σ k, J k))
 
 def nu (f : MRing J) (d : K → ℕ) (w : (Σ k, J k) → ℂ) : ℝ := ‖evC w f‖ ^ 2 / ∏ k, blk k w ^ d k
 

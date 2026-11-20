@@ -71,7 +71,7 @@ theorem isOpen_punct (n a : ℕ) (ρ : ℝ) : IsOpen (Flat.punct n a ρ) := by
 theorem contDiff_uncentre {n : ℕ} (t₀ : Fin n → ℂ) (ρ : ℝ) (π : Equiv.Perm (Fin n)) :
     ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (uncentre t₀ ρ π) := by
   unfold uncentre
-  exact contDiff_pi.2 fun i => contDiff_const.mul ((contDiff_apply ℝ ℂ (π.symm i)).sub contDiff_const)
+  exact contDiff_pi.2 fun i => contDiff_const.mul ((contDiff_apply ℝ (fun _ => ℂ) (π.symm i)).sub contDiff_const)
 
 theorem uncentre_mem_ball {n : ℕ} {t₀ t : Fin n → ℂ} {ρ : ℝ} (hρ : 0 < ρ) (π : Equiv.Perm (Fin n))
     (h : ‖t - t₀‖ < ρ) : uncentre t₀ ρ π t ∈ Metric.ball (0 : Fin n → ℂ) 1 := by

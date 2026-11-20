@@ -43,9 +43,9 @@ theorem contDiffAt_flat {B : Set E} {τ : E → Matrix (Fin g) (Fin g) ℂ} (hτ
   have hdet : ((τ P.1).map Complex.im).det ≠ 0 := (hτ.2.2 _ hb).2.det_pos.ne'
   have hinv := contDiffAt_inv him hdet
   have hzi : ∀ k, ContDiffAt ℝ ∞ (fun Q : Pt E g => (Q.2 k).im) P := fun k =>
-    (Complex.imCLM.contDiff.comp ((contDiff_apply ℝ ℂ k).comp contDiff_snd)).contDiffAt
+    (Complex.imCLM.contDiff.comp ((contDiff_apply ℝ (fun _ => ℂ) k).comp contDiff_snd)).contDiffAt
   have hzr : ∀ k, ContDiffAt ℝ ∞ (fun Q : Pt E g => (Q.2 k).re) P := fun k =>
-    (Complex.reCLM.contDiff.comp ((contDiff_apply ℝ ℂ k).comp contDiff_snd)).contDiffAt
+    (Complex.reCLM.contDiff.comp ((contDiff_apply ℝ (fun _ => ℂ) k).comp contDiff_snd)).contDiffAt
   have hp : ∀ i, ContDiffAt ℝ ∞ (fun Q : Pt E g =>
       ∑ k, (Q.2 k).im * ((τ Q.1).map Complex.im)⁻¹ k i) P := fun i =>
     ContDiffAt.sum fun k _ => (hzi k).mul (hinv k i)

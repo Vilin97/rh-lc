@@ -20,7 +20,7 @@ lemma contDiff_entry (i j : Fin n) : ContDiff ℂ ∞ (fun z : Matrix (Fin n) (F
   first
     | exact contDiff_apply_apply (𝕜 := ℂ) (n := ∞) i j
     | fun_prop
-    | exact ((contDiff_apply ℂ (Fin n → ℂ) i).clm_apply contDiff_const).comp contDiff_id
+    | exact ((contDiff_apply ℂ (fun _ => (Fin n → ℂ)) i).clm_apply contDiff_const).comp contDiff_id
 
 lemma contDiff_mat {X : Type*} [NormedAddCommGroup X] [NormedSpace ℂ X] {f : X → Matrix (Fin n) (Fin n) ℂ}
     (h : ∀ i j, ContDiff ℂ ∞ (fun x => f x i j)) : ContDiff ℂ ∞ f := by

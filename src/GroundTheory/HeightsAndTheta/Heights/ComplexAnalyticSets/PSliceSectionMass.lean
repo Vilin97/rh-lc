@@ -25,7 +25,7 @@ theorem contDiffOn_log_dualNorm {n : ℕ} (h : HermNorm n) :
   have hQ : ContDiff ℝ ∞ fun y : Fin n → ℂ => ∑ i, ‖((h.matᵀ)⁻¹ *ᵥ y) i‖ ^ 2 := by
     refine ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp ?_
     simp only [Matrix.mulVec, dotProduct]
-    exact ContDiff.sum fun j _ => contDiff_const.mul (contDiff_apply ℝ ℂ j)
+    exact ContDiff.sum fun j _ => contDiff_const.mul (contDiff_apply ℝ (fun _ => ℂ) j)
   exact ((hQ.contDiffAt.sqrt hpos.ne').log (Real.sqrt_pos.mpr hpos).ne').contDiffWithinAt
 
 theorem smoothNear_log_dualNorm_slice {n : ℕ} (h : HermNorm n) (J : Ideal (MvPolynomial (Fin n) ℂ))

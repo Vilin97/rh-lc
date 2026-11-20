@@ -275,7 +275,7 @@ theorem lineHt_tensor (A B : HermLine ι) (L : Type) [Field L] [NumberField L] (
 theorem isSmoothHerm_pushLine (e : ∀ k, ι k ≃ Fin (n k + 1)) {A : HermLine ι} (hA : IsSmoothHerm A) :
     IsSmoothHerm (pushLine e A) := by
   have hu : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun z : Coord n → ℂ => z ∘ sig e) :=
-    contDiff_pi.2 fun p => contDiff_apply ℝ ℂ (sig e p)
+    contDiff_pi.2 fun p => contDiff_apply ℝ (fun _ => ℂ) (sig e p)
   have h : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (A.h ∘ fun z : Coord n → ℂ => z ∘ sig e)
       {z : Coord n → ℂ | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := by
     refine ContDiffOn.comp hA hu.contDiffOn fun z hz k => ?_

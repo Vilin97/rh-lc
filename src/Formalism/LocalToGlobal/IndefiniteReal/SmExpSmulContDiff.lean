@@ -28,10 +28,10 @@ lemma sm_prod_exp_contDiff : ∀ (k : ℕ) (Xs : Fin k → Matrix (Fin n) (Fin n
   | k + 1, Xs => by
     have ih := sm_prod_exp_contDiff k (fun i => Xs i.succ)
     have h1 : ContDiff ℝ ∞ (fun t : Fin (k + 1) → ℝ => NormedSpace.exp (t 0 • Xs 0)) :=
-      (sm_exp_smul_contDiff (Xs 0)).comp (contDiff_apply ℝ ℝ (0 : Fin (k + 1)))
+      (sm_exp_smul_contDiff (Xs 0)).comp (contDiff_apply ℝ (fun _ => ℝ) (0 : Fin (k + 1)))
     have h2 : ContDiff ℝ ∞ (fun t : Fin (k + 1) → ℝ =>
         (List.ofFn fun i : Fin k => NormedSpace.exp (t i.succ • Xs i.succ)).prod) :=
-      ih.comp (contDiff_pi.2 fun i => contDiff_apply ℝ ℝ i.succ)
+      ih.comp (contDiff_pi.2 fun i => contDiff_apply ℝ (fun _ => ℝ) i.succ)
     simp only [List.ofFn_succ, List.prod_cons]
     exact PI.KFinSmoothW.Gard.contDiff_mat_mul h1 h2
 

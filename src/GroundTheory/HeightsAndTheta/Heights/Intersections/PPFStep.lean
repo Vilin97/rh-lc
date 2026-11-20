@@ -24,7 +24,7 @@ theorem isSmoothHerm_of_isPullHerm' {κ : K → K'} {v : (Σ k, ι k) → (Σ k'
   have e : A'.h = A.h ∘ fun z' p => z' (v p) := funext h.2
   unfold IsSmoothHerm
   rw [e]
-  refine hA.comp (contDiff_pi.2 fun p => contDiff_apply ℝ ℂ (v p)).contDiffOn ?_
+  refine hA.comp (contDiff_pi.2 fun p => contDiff_apply ℝ (fun _ => ℂ) (v p)).contDiffOn ?_
   intro z' hz'
   simp only [Set.mem_ofPred_eq] at hz' ⊢
   intro k

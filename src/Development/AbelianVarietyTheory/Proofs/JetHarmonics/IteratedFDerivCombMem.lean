@@ -42,7 +42,7 @@ theorem iteratedFDeriv_comb_mem :
         (fun l => δ⁻¹ • ys l) ∈ algebraicClosure ℚ ℂ := by
   intro g m k δ a c f ys hf hj hc hy
   have hF : ∀ j, ContDiff ℂ k (fun z : Fin g → ℂ => ∏ i, f j i (z i) ^ a i) := fun j =>
-    contDiff_prod fun i _ => (((hf j i).contDiff).comp (contDiff_apply ℂ ℂ i)).pow _
+    contDiff_prod fun i _ => (((hf j i).contDiff).comp (contDiff_apply ℂ (fun _ => ℂ) i)).pow _
   rw [iteratedFDeriv_fun_sum_apply (f := fun j (z : Fin g → ℂ) => c j * ∏ i, f j i (z i) ^ a i)
     (fun j _ => (contDiff_const.mul (hF j)).contDiffAt), ContinuousMultilinearMap.sum_apply]
   refine sum_mem fun j _ => ?_

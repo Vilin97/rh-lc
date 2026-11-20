@@ -107,7 +107,7 @@ theorem contDiff_evC (f : MRing ι) :
   induction f using MvPolynomial.induction_on with
   | C a => simpa using contDiff_const
   | add p q hp hq => simpa using hp.add hq
-  | mul_X p v hp => simpa using hp.mul (contDiff_apply ℝ ℂ v)
+  | mul_X p v hp => simpa using hp.mul (contDiff_apply ℝ (fun _ => ℂ) v)
 
 theorem evC_congr {f : MRing ι} {a : K → ℕ} (hf : IsMultiHomog f a) {w w' : (Σ k, ι k) → ℂ}
     (h : ∀ p : Σ k, ι k, a p.1 ≠ 0 → w p = w' p) : evC f w = evC f w' := by
@@ -354,7 +354,7 @@ abbrev goodY (ι ν κ : Type) : Set (YPt ι ν κ) := {w | ∀ k, ∃ i, w ⟨k
 
 theorem contDiff_normSq_coord (p : Σ k, T.yyIdx ι ν κ k) :
     ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun w : YPt ι ν κ => ‖w p‖ ^ 2) :=
-  (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ p)
+  (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) p)
 
 theorem contDiff_ynorm : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (ynorm : YPt ι ν κ → ℝ) :=
   ContDiff.sum fun i _ => contDiff_normSq_coord ⟨.base, i⟩
@@ -369,8 +369,8 @@ variable {G : YPt ι ν κ → Matrix κ κ ℂ} (hG : IsEEMetric G)
 include hG
 
 theorem contDiffOn_hv : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (hv G) (goodY ι ν κ) :=
-  contDiffOn_formRe (fun m n => hG.2.2.2 m n) (fun _ => (contDiff_apply ℝ ℂ _).contDiffOn)
-    (fun _ => (contDiff_apply ℝ ℂ _).contDiffOn)
+  contDiffOn_formRe (fun m n => hG.2.2.2 m n) (fun _ => (contDiff_apply ℝ (fun _ => ℂ) _).contDiffOn)
+    (fun _ => (contDiff_apply ℝ (fun _ => ℂ) _).contDiffOn)
 
 theorem contDiffOn_numF (F : ι → ν → κ → κ → MRing (T.yyIdx ι ν κ)) :
     ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (numF G F) (goodY ι ν κ) := by

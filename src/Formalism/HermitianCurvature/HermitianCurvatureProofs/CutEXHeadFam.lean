@@ -21,7 +21,7 @@ theorem cd_lhOf_entry {p : ℕ} (σ : Equiv.Perm (Fin p)) (a b : Fin p) :
   refine contDiff_const.mul ?_
   refine contDiff_const.add ?_
   split_ifs
-  · exact contDiff_apply ℝ ℂ _
+  · exact contDiff_apply ℝ (fun _ => ℂ) _
   · exact contDiff_const
 
 theorem cd_subS_lhOf {p : ℕ} (σ : Equiv.Perm (Fin p)) :

@@ -45,7 +45,7 @@ theorem iteratedFDeriv_prod_coord_at {g : ℕ} (f : Fin g → ℂ → ℂ)
         = ∑ σ : Fin k → Fin g, (∏ j, ys j (σ j)) *
           ∏ i, iteratedDeriv (Finset.univ.filter (fun j => σ j = i)).card (f i) (z i) := by
   have hF : ContDiff ℂ ⊤ (fun z : Fin g → ℂ => ∏ i, f i (z i)) :=
-    contDiff_prod fun i _ => ((hf i).contDiff).comp (contDiff_apply ℂ ℂ i)
+    contDiff_prod fun i _ => ((hf i).contDiff).comp (contDiff_apply ℂ (fun _ => ℂ) i)
   induction k with
   | zero => intro ys z; simp
   | succ k ih =>

@@ -42,7 +42,7 @@ theorem Nd_pos (d : K → ℕ) {x : (Σ k, ι k) → ℂ} (hx : x ∈ blockNZ ι
 
 theorem contDiff_nrm (k : K) {n : WithTop ℕ∞} : ContDiff ℝ n (nrm (ι := ι) k) := by
   unfold nrm
-  exact ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ _)
+  exact ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) _)
 
 theorem contDiff_Nd (d : K → ℕ) {n : WithTop ℕ∞} : ContDiff ℝ n (Nd (ι := ι) d) := by
   unfold Nd

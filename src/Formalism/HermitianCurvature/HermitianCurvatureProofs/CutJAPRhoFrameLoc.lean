@@ -70,7 +70,7 @@ theorem herm_cdAt {m : ℕ} (Hm : Matrix (Fin m) (Fin m) ℂ) {E : Type} [Normed
   rw [e]
   refine ContDiffAt.sum fun i _ => ?_
   exact (hconj.contDiffAt.comp x (contDiffAt_pi.1 hg i)).mul
-    (((contDiff_apply ℝ ℂ i).comp (kap_mulVec_contDiff Hm)).contDiffAt.comp x hf)
+    (((contDiff_apply ℝ (fun _ => ℂ) i).comp (kap_mulVec_contDiff Hm)).contDiffAt.comp x hf)
 
 theorem prWv_contDiff (z : Fin (2 * r + k + 1) → ℂ) :
     ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun a => SSn.prWv k r z a) := by

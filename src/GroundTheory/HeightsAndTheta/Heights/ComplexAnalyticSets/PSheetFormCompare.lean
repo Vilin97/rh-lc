@@ -97,7 +97,7 @@ theorem contDiff_mulVec_insertNth {N : ℕ} (T : Matrix (Fin (N + 1)) (Fin (N + 
     · simp only [Fin.insertNth_apply_same]
       exact contDiff_const
     · simp only [Fin.insertNth_apply_succAbove]
-      exact contDiff_apply ℝ ℂ j
+      exact contDiff_apply ℝ (fun _ => ℂ) j
   refine contDiff_pi.2 fun a => ?_
   simp only [Matrix.mulVec, dotProduct]
   exact ContDiff.sum fun b _ => contDiff_const.mul (contDiff_pi.1 hv b)

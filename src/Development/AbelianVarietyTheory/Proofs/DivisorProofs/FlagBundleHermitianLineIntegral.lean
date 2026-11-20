@@ -22,7 +22,7 @@ def ratio (M : Fin 2 → Fin 2 → ℂ) : ℝ := ‖M 0 1‖ ^ 2 / ((M 1 1).re *
 theorem contDiffAt_ratio {M : Fin 2 → Fin 2 → ℂ} (hM : (M 1 1).re * (M 0 0).re ≠ 0) :
     ContDiffAt ℝ ∞ ratio M := by
   have a : ∀ i j : Fin 2, ContDiff ℝ ∞ (fun N : Fin 2 → Fin 2 → ℂ => N i j) := fun i j =>
-    (contDiff_apply ℝ ℂ j).comp (contDiff_apply ℝ (Fin 2 → ℂ) i)
+    (contDiff_apply ℝ (fun _ => ℂ) j).comp (contDiff_apply ℝ (fun _ => (Fin 2 → ℂ)) i)
   have re : ∀ i j : Fin 2, ContDiff ℝ ∞ (fun N : Fin 2 → Fin 2 → ℂ => (N i j).re) := fun i j =>
     Complex.reCLM.contDiff.comp (a i j)
   exact ((contDiff_norm_sq ℝ).comp (a 0 1)).contDiffAt.div

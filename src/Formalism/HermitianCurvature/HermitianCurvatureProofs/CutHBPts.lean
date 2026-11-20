@@ -42,7 +42,7 @@ theorem cd_lowW_entry {p : ℕ} (σ : Equiv.Perm (Fin p)) (a b : Fin p) :
   simp only [Matrix.add_apply, Matrix.of_apply]
   refine contDiff_const.add ?_
   split_ifs
-  · exact contDiff_apply ℝ ℂ _
+  · exact contDiff_apply ℝ (fun _ => ℂ) _
   · exact contDiff_const
 
 theorem cd_zxH_entry (h : C.LPt) (j : ℕ) (hs : D.ptSize h = j) (a b : Fin j) :

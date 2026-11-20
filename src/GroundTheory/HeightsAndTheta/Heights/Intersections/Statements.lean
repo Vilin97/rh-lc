@@ -40,7 +40,7 @@ theorem isSmoothHerm_fsLine (n : ℕ) : IsSmoothHerm (fsLine n) := by
   rw [hfun]
   refine contDiffOn_prod fun k _ => ContDiffOn.sqrt ?_ fun z hz => ?_
   · exact (ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp
-      (contDiff_apply ℝ ℂ (⟨k, i⟩ : Σ k, PBlk n k))).contDiffOn
+      (contDiff_apply ℝ (fun _ => ℂ) (⟨k, i⟩ : Σ k, PBlk n k))).contDiffOn
   · obtain ⟨i, hi⟩ := hz k
     exact (Finset.sum_pos' (fun j _ => sq_nonneg ‖z ⟨k, j⟩‖)
       ⟨i, Finset.mem_univ _, pow_pos (norm_pos_iff.mpr hi) 2⟩).ne'

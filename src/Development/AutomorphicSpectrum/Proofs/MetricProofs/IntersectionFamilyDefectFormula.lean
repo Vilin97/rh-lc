@@ -64,7 +64,7 @@ theorem isSmoothHerm_fsOfDeg (γ : K → ℕ) : IsSmoothHerm (fsOfDeg γ : HermL
     refine ContDiffOn.sqrt ?_ fun z hz => (sum_sq_pos (hz k)).ne'
     refine ContDiff.contDiffOn ?_
     refine ContDiff.sum fun i _ => ?_
-    exact (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ _)
+    exact (contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) _)
   exact h1.congr fun z hz =>
     show (blockSet ι).indicator (fun z : (Σ k, ι k) → ℂ => ∏ k, blockNorm k z ^ γ k) z = _ from
       indicator_of_mem (show z ∈ blockSet ι from hz) _

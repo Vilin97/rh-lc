@@ -55,16 +55,16 @@ theorem FamAt.prodMk {v : ℝ → CxPts p σ → G} {v₀ : CxPts p σ → G} (h
   obtain ⟨ι, _, f, Φ, O, h₁, h₂, h₃, h₄, h₅, h₆⟩ := h
   obtain ⟨ι', _, f', Φ', O', h₁', h₂', h₃', h₄', h₅', h₆'⟩ := h'
   have cl : ContDiff ℝ ∞ fun (x : ℝ × (ι ⊕ ι' → ℂ)) => (x.1, fun a => x.2 (.inl a)) :=
-    contDiff_fst.prodMk (contDiff_pi.2 fun a => (contDiff_apply ℝ ℂ _).comp contDiff_snd)
+    contDiff_fst.prodMk (contDiff_pi.2 fun a => (contDiff_apply ℝ (fun _ => ℂ) _).comp contDiff_snd)
   have cr : ContDiff ℝ ∞ fun (x : ℝ × (ι ⊕ ι' → ℂ)) => (x.1, fun a => x.2 (.inr a)) :=
-    contDiff_fst.prodMk (contDiff_pi.2 fun a => (contDiff_apply ℝ ℂ _).comp contDiff_snd)
+    contDiff_fst.prodMk (contDiff_pi.2 fun a => (contDiff_apply ℝ (fun _ => ℂ) _).comp contDiff_snd)
   refine ⟨ι ⊕ ι', inferInstance, fun z => Sum.elim (f z) (f' z),
     fun x => (Φ (x.1, fun a => x.2 (.inl a)), Φ' (x.1, fun a => x.2 (.inr a))),
     (fun x => (x.1, fun a => x.2 (.inl a))) ⁻¹' O ∩ (fun x => (x.1, fun a => x.2 (.inr a))) ⁻¹' O',
     vInfAt_pi fun a => ?_, (h₂.preimage cl.continuous).inter (h₂'.preimage cr.continuous), ⟨h₃, h₃'⟩,
     (h₄.comp cl.contDiffOn fun _ hv => hv.1).prodMk (h₄'.comp cr.contDiffOn fun _ hv => hv.2), ?_, ?_⟩
   · rcases a with a | a
-    exacts [h₁.comp_contDiff (contDiff_apply ℝ ℂ a), h₁'.comp_contDiff (contDiff_apply ℝ ℂ a)]
+    exacts [h₁.comp_contDiff (contDiff_apply ℝ (fun _ => ℂ) a), h₁'.comp_contDiff (contDiff_apply ℝ (fun _ => ℂ) a)]
   · filter_upwards [h₅, h₅'] with z e e' using Prod.ext e e'
   · filter_upwards [h₆, h₆'] with z e e' using Prod.ext e e'
 

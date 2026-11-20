@@ -32,7 +32,7 @@ theorem flatAcyclic : FlatAcyclic := by
   have hI' : (0 : ℝ) < I.card := by
     exact_mod_cast Finset.card_pos.2 (Finset.nonempty_iff_ne_empty.2 hI)
   refine GlobalTheory.T.periodic_metric_section_bound (τ b) (hτ.2.2 b hb) M hM (fun z' => h (b, z')) hHs hHpos
-    (fun z' => f z' I) ((contDiff_apply ℝ ℂ I).comp hf.1) (fun l z' => j l (b, z')) ?_ ?_ ?_
+    (fun z' => f z' I) ((contDiff_apply ℝ (fun _ => ℂ) I).comp hf.1) (fun l z' => j l (b, z')) ?_ ?_ ?_
     (2 * π * I.card) (by positivity) ?_ z
   · intro l hl z'
     have := congrFun (hf.2 l hl z') I

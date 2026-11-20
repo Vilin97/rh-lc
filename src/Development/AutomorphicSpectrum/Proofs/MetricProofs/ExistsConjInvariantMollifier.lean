@@ -17,7 +17,7 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.exists_conj_invariant_mollifie
   have hme : MeasurableEmbedding (fun v : Fin n → ℂ => star v) :=
     (starLinearEquiv ℝ (A := Fin n → ℂ)).toContinuousLinearEquiv.toHomeomorph.measurableEmbedding
   have hsm : ContDiff ℝ (↑(⊤ : ℕ∞)) (fun v : Fin n → ℂ => star v) :=
-    contDiff_pi.2 fun i => Complex.conjCLE.contDiff.comp (contDiff_apply ℝ ℂ i)
+    contDiff_pi.2 fun i => Complex.conjCLE.contDiff.comp (contDiff_apply ℝ (fun _ => ℂ) i)
   have hI : MeasureTheory.Integrable ρ.toFun :=
     MeasureTheory.Integrable.of_integral_ne_zero (by rw [ρ.integral_eq_one]; norm_num)
   have hcomp : ∫ w : Fin n → ℂ, ρ.toFun (star w) = 1 := by

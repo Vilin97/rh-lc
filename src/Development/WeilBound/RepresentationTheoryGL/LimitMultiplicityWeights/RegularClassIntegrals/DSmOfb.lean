@@ -14,7 +14,7 @@ namespace MainStatements.WeightKernel.Dec
 theorem smOf : SmOf := by
   intro F E _ _ _ _ _ σ h n J _ f hf k γ hγ g
   exact (GlobalTheory.Orb.isSmoothRealFam_prod (fun i =>
-    (GlobalTheory.ThK.CuspTransfer.Smooth.line_fam h (hγ i)).1.comp (contDiff_apply ℝ ℝ i))).contDiff hf g
+    (GlobalTheory.ThK.CuspTransfer.Smooth.line_fam h (hγ i)).1.comp (contDiff_apply ℝ (fun _ => ℝ) i))).contDiff hf g
 
 end MainStatements.WeightKernel.Dec
 

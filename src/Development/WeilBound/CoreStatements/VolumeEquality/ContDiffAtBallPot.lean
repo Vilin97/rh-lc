@@ -136,8 +136,8 @@ theorem contDiff_ballDet (q : Ψ × Fin j × Fin j' ≃ Fin n) (τ : Ψ) :
     apply ContDiff.sum
     intro c _
     apply ContDiff.mul
-    · exact (Complex.conjCLE.contDiff).comp (contDiff_apply ℝ ℂ _)
-    · exact contDiff_apply ℝ ℂ _
+    · exact (Complex.conjCLE.contDiff).comp (contDiff_apply ℝ (fun _ => ℂ) _)
+    · exact contDiff_apply ℝ (fun _ => ℂ) _
   simp only [Matrix.det_apply]
   apply ContDiff.sum
   intro σ _

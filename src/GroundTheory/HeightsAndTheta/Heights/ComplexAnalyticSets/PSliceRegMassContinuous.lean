@@ -37,7 +37,7 @@ theorem fsSq_smul (h : HermNorm n) (u : Fin n → ℂ) (t : ℂ) (x : Fin n → 
   rw [hs, h.dualNorm_smul, norm_mul, mul_pow, mul_pow, mul_div_mul_left _ _ ht2]
 
 theorem contDiffOn_fsSq (h : HermNorm n) (u : Fin n → ℂ) : ContDiffOn ℝ ∞ (fsSq h u) {x | x ≠ 0} :=
-  ((contDiff_norm_sq ℝ).comp (ContDiff.sum fun j _ => contDiff_const.mul (contDiff_apply ℝ ℂ j))).contDiffOn.div
+  ((contDiff_norm_sq ℝ).comp (ContDiff.sum fun j _ => contDiff_const.mul (contDiff_apply ℝ (fun _ => ℂ) j))).contDiffOn.div
     h.contDiff_dualNorm_sq.contDiffOn fun _ hx => (pow_pos (h.dualNorm_pos hx) 2).ne'
 
 theorem fsLogReg_eq (h : HermNorm n) (u : Fin n → ℂ) (ε : ℝ) {x : Fin n → ℂ} (hx : x ≠ 0) :

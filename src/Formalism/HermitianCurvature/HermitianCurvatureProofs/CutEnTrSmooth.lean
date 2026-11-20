@@ -30,7 +30,7 @@ theorem wq_contDiff (k r : ℕ) (TT : ℝ) : ContDiff ℝ ∞ (fun x : MA.E r =>
   apply ContDiff.mul
   · apply contDiff_prod
     intro l _
-    exact (hn.comp ((contDiff_apply ℝ ℂ l).comp contDiff_fst)).pow _
+    exact (hn.comp ((contDiff_apply ℝ (fun _ => ℂ) l).comp contDiff_fst)).pow _
   · exact ((hn.comp contDiff_snd).sub contDiff_const).pow _
 
 theorem wq_pos {k r : ℕ} {TT : ℝ} {x : MA.E r} (hx : x ∈ MA.Qset r TT) : 0 < MA.wq k x TT := by

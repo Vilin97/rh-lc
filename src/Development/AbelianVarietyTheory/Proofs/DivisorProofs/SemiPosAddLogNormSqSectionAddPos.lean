@@ -35,7 +35,7 @@ theorem cInfAt_comp {f : CxPts p σ → ℝ} {y : CxPts p σ} (h : CInfAt f y) {
 theorem cInfAt_normSq_ev {W : X.Opens} (g : Γ(X, W)) {y : CxPts p σ} (hy : y ∈ ptsIn p σ W) :
     CInfAt (fun z => ‖ev p σ W g z‖ ^ 2) y :=
   ⟨W, Unit, inferInstance, fun _ => g, fun v => ‖v ()‖ ^ 2, univ, hy, isOpen_univ, trivial,
-    ((contDiff_norm_sq ℝ).comp (contDiff_apply ℝ ℂ ())).contDiffOn, EventuallyEq.rfl⟩
+    ((contDiff_norm_sq ℝ).comp (contDiff_apply ℝ (fun _ => ℂ) ())).contDiffOn, EventuallyEq.rfl⟩
 
 theorem cInfAt_nsq {B : LB X} (φ : Weight p σ B) (hφ : φ.IsCInf) (s : B.Sec) (y : CxPts p σ) :
     CInfAt (φ.nsq (secVal p σ s)) y := by

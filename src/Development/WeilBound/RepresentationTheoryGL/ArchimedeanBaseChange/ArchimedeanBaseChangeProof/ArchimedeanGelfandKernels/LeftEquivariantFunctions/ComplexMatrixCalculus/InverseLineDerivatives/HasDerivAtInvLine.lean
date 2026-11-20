@@ -21,7 +21,7 @@ theorem updateRow_smooth (j : Fin n) (v : Fin n → ℂ) : ContDiff ℝ ∞ (fun
     rw [e]; exact contDiff_const
   · have e : (fun x : Mat n => x.updateRow j v k) = fun x : Mat n => (x : Fin n → Fin n → ℂ) k := by
       funext x; simp [Matrix.updateRow_apply, hk]
-    rw [e]; exact contDiff_apply ℝ (Fin n → ℂ) k
+    rw [e]; exact contDiff_apply ℝ (fun _ => (Fin n → ℂ)) k
 
 theorem adjugate_smooth : ContDiff ℝ ∞ (fun x : Mat n => x.adjugate) := by
   refine contDiff_pi.2 fun i => contDiff_pi.2 fun j => ?_

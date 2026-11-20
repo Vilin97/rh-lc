@@ -23,7 +23,7 @@ theorem isSmoothHerm_pullHerm {K K' : Type} [Fintype K] [Fintype K'] {ι : K →
     [∀ k, Fintype (ι k)] [∀ k, Fintype (ι' k)] {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')}
     (hv : IsBlockMap κ v) {B : HermLine ι} (hB : IsSmoothHerm B) : IsSmoothHerm (pullHerm hv B) := by
   have hlin : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun z : (Σ k', ι' k') → ℂ => fun q => z (v q)) :=
-    contDiff_pi.2 fun q => contDiff_apply ℝ ℂ (v q)
+    contDiff_pi.2 fun q => contDiff_apply ℝ (fun _ => ℂ) (v q)
   show ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (B.h ∘ fun z : (Σ k', ι' k') → ℂ => fun q => z (v q))
     {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0}
   refine ContDiffOn.comp hB hlin.contDiffOn ?_

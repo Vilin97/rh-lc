@@ -141,10 +141,10 @@ theorem exists_section {n a : ℕ} (h : a ≤ n) {u₀ : Fin n → ℂ} (hu : u�
       have hs : u₀ k / u₀ k ∈ Complex.slitPlane := by
         rw [div_self (hne k hk)]; exact Complex.one_mem_slitPlane
       have hq : ContDiffAt ℝ ∞ (fun u : Fin n → ℂ => u k / u₀ k) u₀ :=
-        ((contDiff_apply ℝ ℂ k).div_const _).contDiffAt
+        ((contDiff_apply ℝ (fun _ => ℂ) k).div_const _).contDiffAt
       exact (((Complex.contDiffAt_log hs).restrict_scalars ℝ).comp u₀ hq).add contDiffAt_const
     · simp only [if_neg hk]
-      exact (contDiff_apply ℝ ℂ k).contDiffAt
+      exact (contDiff_apply ℝ (fun _ => ℂ) k).contDiffAt
   · have hP : ∀ᶠ u in 𝓝 u₀, u ∈ Flat.punct n a 1 := (isOpen_punct n a 1).mem_nhds hu
     have hS : ∀ᶠ u in 𝓝 u₀, ∀ k : Fin n, k.val < a → u k / u₀ k ∈ Complex.slitPlane := by
       refine eventually_all.2 fun k => ?_

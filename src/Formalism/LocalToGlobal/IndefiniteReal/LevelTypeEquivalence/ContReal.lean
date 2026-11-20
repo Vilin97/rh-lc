@@ -75,8 +75,8 @@ theorem cont_real {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) (x0 : WO S T)
     have h2 : ContDiff ℝ ∞ fun p : (Fin k → ℝ) × (Fin k → ℝ) => ∑ i, ∑ j, (p.1 i : ℂ) * (p.2 j : ℂ) * b i j := by
       refine ContDiff.sum fun i _ => ContDiff.sum fun j _ => ?_
       refine ContDiff.mul (ContDiff.mul ?_ ?_) contDiff_const
-      · exact Complex.ofRealCLM.contDiff.comp ((contDiff_apply ℝ ℝ i).comp contDiff_fst)
-      · exact Complex.ofRealCLM.contDiff.comp ((contDiff_apply ℝ ℝ j).comp contDiff_snd)
+      · exact Complex.ofRealCLM.contDiff.comp ((contDiff_apply ℝ (fun _ => ℝ) i).comp contDiff_fst)
+      · exact Complex.ofRealCLM.contDiff.comp ((contDiff_apply ℝ (fun _ => ℝ) j).comp contDiff_snd)
     exact ((Complex.contDiff_exp (𝕜 := ℝ)).comp (h1.add h2)).mul (hg0.comp (contDiff_fst.add contDiff_snd))
   have hGf : ∀ s, Gf ψ L f (x0 + L s) = fun t => Φ (s, t) := by
     intro s; funext t

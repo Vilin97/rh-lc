@@ -38,10 +38,10 @@ theorem contDiff_sqDual (h : HermNorm n) : ContDiff ℝ ∞ (sqDual h) := by
   unfold sqDual
   refine ContDiff.sum fun i _ => (contDiff_norm_sq ℝ).comp ?_
   simp only [Matrix.mulVec, dotProduct]
-  exact ContDiff.sum fun j _ => contDiff_const.mul (contDiff_apply ℝ ℂ j)
+  exact ContDiff.sum fun j _ => contDiff_const.mul (contDiff_apply ℝ (fun _ => ℂ) j)
 
 theorem contDiff_lin (u : Fin n → ℂ) : ContDiff ℝ ∞ fun y : Fin n → ℂ => ‖∑ j, u j * y j‖ ^ 2 :=
-  (contDiff_norm_sq ℝ).comp (ContDiff.sum fun j _ => contDiff_const.mul (contDiff_apply ℝ ℂ j))
+  (contDiff_norm_sq ℝ).comp (ContDiff.sum fun j _ => contDiff_const.mul (contDiff_apply ℝ (fun _ => ℂ) j))
 
 theorem contDiffOn_fsLogReg (h : HermNorm n) (u : Fin n → ℂ) {ε : ℝ} (hε : 0 < ε) :
     ContDiffOn ℝ ∞ (fsLogReg h u ε) {x | x ≠ 0} := by

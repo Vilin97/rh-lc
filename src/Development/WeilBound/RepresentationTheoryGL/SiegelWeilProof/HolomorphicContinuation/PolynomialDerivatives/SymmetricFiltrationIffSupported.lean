@@ -140,11 +140,11 @@ theorem etaLe_add_lt {u v : Sym m n} {d : ℕ} (hu : EtaLe u d) (hv : EtaLt v d)
   rcases Finset.mem_union.1 (support_add ht) with h | h
   exacts [hu t h, (hv t h).le]
 
-theorem etaLt_zero_eq {r : Sym m n} (h : EtaLt r 0) : r = 0 := by sorry
-
-
-
-
+theorem etaLt_zero_eq {r : Sym m n} (h : EtaLt r 0) : r = 0 := by
+  ext t
+  rw [coeff_zero]
+  by_contra hc
+  exact Nat.not_lt_zero _ (h t (mem_support_iff.2 hc))
 
 theorem etaLe_pred {r : Sym m n} {N : ℕ} (h : EtaLt r N) : EtaLe r (N - 1) := fun t ht => by
   have := h t ht; omega
@@ -158,14 +158,14 @@ theorem etaGt_add {u v : Sym m n} {N : ℕ} (hu : EtaGt u N) (hv : EtaGt v N) : 
 theorem etaGt_sum {ι : Type*} (T : Finset ι) (u : ι → Sym m n) {N : ℕ} (hu : ∀ i ∈ T, EtaGt (u i) N) :
     EtaGt (∑ i ∈ T, u i) N := Finset.sum_induction _ (fun r => EtaGt r N) (fun _ _ => etaGt_add) (fun t ht => by simp at ht) hu
 
-theorem eq_zero_of_le_gt {r : Sym m n} {N : ℕ} (h₁ : EtaLe r N) (h₂ : EtaGt r N) : r = 0 := by sorry
-
-
-
-
-
-
-
+theorem eq_zero_of_le_gt {r : Sym m n} {N : ℕ} (h₁ : EtaLe r N) (h₂ : EtaGt r N) : r = 0 := by
+  ext t
+  rw [coeff_zero]
+  by_contra hc
+  have ht := mem_support_iff.2 hc
+  have a : ed t ≤ N := h₁ t ht
+  have b : N < ed t := h₂ t ht
+  omega
 
 def pdeg (ε : Fin m → Bool) (a b : Fin m) : ℕ := (if ε a then 0 else 1) + (if ε b then 1 else 0)
 
@@ -323,52 +323,52 @@ theorem opMono_monomial (t : (Fin m × Fin n × Bool) ⊕ (Fin m × Fin n × Boo
     rw [list_prod_pderiv_pow_monomial _ _ (Finset.nodup_toList _), Finset.toList_toFinset, one_mul]
   rw [hD, monomial_mul, one_mul]
 
-theorem op_inj {s : Sym m n} (h : ∀ f, op s f = 0) : s = 0 := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+theorem op_inj {s : Sym m n} (h : ∀ f, op s f = 0) : s = 0 := by
+  classical
+  by_contra hs
+  have hne : s.support.Nonempty := by
+    rw [Finset.nonempty_iff_ne_empty, Ne, support_eq_empty]
+    exact hs
+  obtain ⟨t0, ht0, hmin⟩ := Finset.exists_min_image s.support ed hne
+  have h1 := h (monomial (t0.comapDomain Sum.inr Sum.inr_injective.injOn) 1)
+  unfold op at h1
+  simp only [opMono_monomial] at h1
+  have h2 := congrArg (AddMonoidAlgebra.coeff · (t0.comapDomain Sum.inl Sum.inl_injective.injOn)) h1
+  rw [coeff_sum, coeff_zero] at h2
+  simp only [coeff_smul, coeff_monomial, smul_eq_mul] at h2
+  rw [Finset.sum_eq_single t0] at h2
+  · rw [if_pos] at h2
+    · refine absurd h2 (mul_ne_zero (mem_support_iff.1 ht0) ?_)
+      refine Finset.prod_ne_zero_iff.2 fun k _ => ?_
+      rw [Finsupp.comapDomain_apply, Nat.descFactorial_self]
+      exact_mod_cast Nat.factorial_ne_zero _
+    · ext k
+      simp [Finsupp.tsub_apply, Finsupp.finsetSum_apply, Finsupp.single_apply]
+  · intro b hb hbt
+    split_ifs with hc
+    · apply mul_eq_zero_of_right
+      rw [Finset.prod_eq_zero_iff]
+      by_contra hnz
+      push_neg at hnz
+      have hle : ∀ k, b (Sum.inr k) ≤ t0 (Sum.inr k) := by
+        intro k
+        have hk := hnz k (Finset.mem_univ _)
+        rw [Finsupp.comapDomain_apply] at hk
+        by_contra hlt
+        exact hk (by exact_mod_cast Nat.descFactorial_eq_zero_iff_lt.2 (by omega))
+      have hsum : ed b = ed t0 := le_antisymm (Finset.sum_le_sum fun k _ => hle k) (hmin b hb)
+      have heq := (Finset.sum_eq_sum_iff_of_le fun k _ => hle k).1 hsum
+      apply hbt
+      ext v
+      cases v with
+      | inr k => exact heq k (Finset.mem_univ _)
+      | inl k =>
+        have hck := DFunLike.congr_fun hc k
+        simp [Finsupp.tsub_apply, Finsupp.finsetSum_apply, Finsupp.single_apply, heq k (Finset.mem_univ _)] at hck
+        exact hck
+    · rw [mul_zero]
+  · intro hn
+    exact absurd ht0 hn
 
 theorem closure_prop (hC : CompSt) (ε : Fin m → Bool) {x : Sym m n}
     (hx : x ∈ Submonoid.closure (Set.range fun ab : Fin m × Fin m => pairSym (n := n) ε ab.1 ab.2)) :

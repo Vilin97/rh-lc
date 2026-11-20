@@ -33,7 +33,7 @@ theorem IsPullHerm.isSmoothHerm {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι
     IsSmoothHerm A' := by
   have e : A'.h = A.h ∘ fun (z : (Σ k', ι' k') → ℂ) (p : Σ k, ι k) => z (v p) := funext h.2
   have hR : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun (z : (Σ k', ι' k') → ℂ) (p : Σ k, ι k) => z (v p)) :=
-    contDiff_pi.2 fun p => contDiff_apply ℝ ℂ (v p)
+    contDiff_pi.2 fun p => contDiff_apply ℝ (fun _ => ℂ) (v p)
   unfold IsSmoothHerm
   rw [e]
   exact hA.comp hR.contDiffOn fun z hz => blocks_ne_zero_restrict hv hz

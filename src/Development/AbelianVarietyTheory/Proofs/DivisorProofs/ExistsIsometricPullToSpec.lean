@@ -24,7 +24,7 @@ variable {k : Type} [CommRing k] {X Y : Scheme.{0}} {p : X ⟶ Sp k} {q : Y ⟶ 
 
 theorem cInfAt_log_normSq (a : Γ(Y, ⊤)) {z : CxPts q σ} (h : CxPts.ev q σ ⊤ a z ≠ 0) :
     CInfAt (fun w => Real.log (‖CxPts.ev q σ ⊤ a w‖ ^ 2)) z := by
-  have hs : ContDiff ℝ (⊤ : ℕ∞) fun v : Unit → ℂ => ‖v ()‖ ^ 2 := (contDiff_apply ℝ ℂ ()).norm_sq ℂ
+  have hs : ContDiff ℝ (⊤ : ℕ∞) fun v : Unit → ℂ => ‖v ()‖ ^ 2 := (contDiff_apply ℝ (fun _ => ℂ) ()).norm_sq ℂ
   exact ⟨⊤, Unit, inferInstance, fun _ => a, fun v => Real.log (‖v ()‖ ^ 2), {v | ‖v ()‖ ^ 2 ≠ 0},
     mem_ptsIn_top, isOpen_ne_fun hs.continuous continuous_const, pow_ne_zero _ (norm_ne_zero_iff.2 h),
     hs.contDiffOn.log fun _ h => h, Filter.EventuallyEq.rfl⟩

@@ -256,7 +256,7 @@ theorem contDiffOn_modelGram (σ : Fin m → Option (Fin e)) {ρ : ℝ} (hρ : �
       intro z hz
       have h0 : z k ≠ 0 := hz.2 i k hi
       have h1 : ‖z k‖ < 1 := ((norm_le_pi_norm z k).trans_lt (mem_ball_zero_iff.1 hz.1)).trans_le hρ
-      have hn : ContDiffAt ℝ ∞ (fun x : Fin e → ℂ => ‖x k‖) z := (contDiff_apply ℝ ℂ k).contDiffAt.norm ℂ h0
+      have hn : ContDiffAt ℝ ∞ (fun x : Fin e → ℂ => ‖x k‖) z := (contDiff_apply ℝ (fun _ => ℂ) k).contDiffAt.norm ℂ h0
       have ht : 0 < GlobalTheory.IndefiniteRowSideFullHecke.ModelDdcForms.tOf (z k) := GlobalTheory.IndefiniteRowSideFullHecke.HodgePeriodGram.tlog_pos h0 h1
       have hn0 := norm_pos_iff.2 h0
       exact (contDiffAt_const.div ((hn.pow 2).mul (((hn.log hn0.ne').neg.div_const _).pow 2))

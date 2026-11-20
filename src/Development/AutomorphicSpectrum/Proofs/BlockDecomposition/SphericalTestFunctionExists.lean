@@ -28,14 +28,14 @@ theorem contDiff_normAtPlace_sq (w : InfinitePlace k) :
       rw [normAtPlace_apply_of_isReal hw]
     rw [h]
     exact (contDiff_norm_sq ℝ).comp
-      ((contDiff_apply ℝ ℝ (⟨w, hw⟩ : {w : InfinitePlace k // w.IsReal})).comp contDiff_fst)
+      ((contDiff_apply ℝ (fun _ => ℝ) (⟨w, hw⟩ : {w : InfinitePlace k // w.IsReal})).comp contDiff_fst)
   · have hc : w.IsComplex := InfinitePlace.not_isReal_iff_isComplex.mp hw
     have h : (fun u : mixedSpace k => normAtPlace w u ^ 2) = fun u => ‖u.2 ⟨w, hc⟩‖ ^ 2 := by
       funext u
       rw [normAtPlace_apply_of_isComplex hc]
     rw [h]
     exact (contDiff_norm_sq ℝ).comp
-      ((contDiff_apply ℝ ℂ (⟨w, hc⟩ : {w : InfinitePlace k // w.IsComplex})).comp contDiff_snd)
+      ((contDiff_apply ℝ (fun _ => ℂ) (⟨w, hc⟩ : {w : InfinitePlace k // w.IsComplex})).comp contDiff_snd)
 
 theorem contDiff_q₀ : ContDiff ℝ (∞) (q₀ (k := k)) := by
   unfold q₀

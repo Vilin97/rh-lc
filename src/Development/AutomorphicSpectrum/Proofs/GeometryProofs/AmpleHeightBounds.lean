@@ -127,7 +127,7 @@ lemma continuous_bnorm (k : K) : Continuous fun z : (Σ k, ι k) → ℂ => bnor
 lemma contDiffOn_bnorm (k : K) :
     ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun z : (Σ k, ι k) → ℂ => bnorm z k) {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0} := by
   have h1 : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) fun z : (Σ k, ι k) → ℂ => ∑ i, ‖z ⟨k, i⟩‖ ^ 2 :=
-    ContDiff.sum fun i _ => (contDiff_apply ℝ ℂ (⟨k, i⟩ : Σ k, ι k)).norm_sq ℝ
+    ContDiff.sum fun i _ => (contDiff_apply ℝ (fun _ => ℂ) (⟨k, i⟩ : Σ k, ι k)).norm_sq ℝ
   refine h1.contDiffOn.sqrt fun z hz => ?_
   have := bnorm_pos (hz k)
   unfold bnorm at this

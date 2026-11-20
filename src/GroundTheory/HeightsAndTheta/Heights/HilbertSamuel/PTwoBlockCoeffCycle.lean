@@ -21,7 +21,7 @@ variable {κ : Type} [Fintype κ]
 theorem isSmoothHerm_blockLine {m : ConeMetric ℂ (Ix κ)} (hm : IsSmoothMetric m) (b : Fin 2) :
     IsSmoothHerm (blockLine m b) := by
   have hL : ContDiff ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (fun z : (Σ k, FinTwoTypeFamily κ k) → ℂ => fun p : Ix κ => z ⟨b, p.2⟩) :=
-    contDiff_pi.2 fun p => contDiff_apply ℝ ℂ (⟨b, p.2⟩ : Σ k, FinTwoTypeFamily κ k)
+    contDiff_pi.2 fun p => contDiff_apply ℝ (fun _ => ℂ) (⟨b, p.2⟩ : Σ k, FinTwoTypeFamily κ k)
   exact hm.comp hL.contDiffOn fun z hz h0 => by
     obtain ⟨i, hi⟩ := hz b
     exact hi (congrFun h0 ⟨(), i⟩)

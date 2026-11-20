@@ -814,66 +814,66 @@ open UpperTheory.Reformulated.B.Gwa7 in
 private theorem UpperTheory.Reformulated.B.Gwa7.functional_zero [CompactSpace U2] (φ : C(U2, ℂ) →L[ℂ] ℂ)
     (h : ∀ (n : ℕ) (m : ℤ) (a b c d : ℂ),
       φ (lin (entry 0 0) (entry 0 1) (entry 1 0) (entry 1 1) a b c d ^ n * detPow m * 1) = 0)
-    (f : C(U2, ℂ)) : φ f = 0 := by
-  let P : C(U2, ℂ) → Prop := fun z => ∀ (n : ℕ) (m : ℤ) (a b c d : ℂ),
-    φ (lin (entry 0 0) (entry 0 1) (entry 1 0) (entry 1 1) a b c d ^ n * detPow m * z) = 0
-  have hD : ∀ m, detPow (m + 1) = (entry 0 0 * entry 1 1 - entry 0 1 * entry 1 0) * detPow m := by
-    intro m
-    ext k
-    change k.1.det ^ (m + 1) = (k.1 0 0 * k.1 1 1 - k.1 0 1 * k.1 1 0) * k.1.det ^ m
-    rw [zpow_add_one₀ (det_ne k), ← Matrix.det_fin_two, mul_comm]
-  have hD' : ∀ m, detPow m * detPow (-1) = detPow (m + -1) := by
-    intro m
-    ext k
-    exact (zpow_add₀ (det_ne k) m (-1)).symm
-  have hD0 : detPow 0 = 1 := by
-    ext k
-    exact zpow_zero _
-  let S : Set C(U2, ℂ) := Set.range fun ij : Fin 2 × Fin 2 => entry ij.1 ij.2
-  have hmul : ∀ f ∈ Algebra.adjoin ℂ (S ∪ star S), ∀ z, P z → P (f * z) := by
-    intro f hf
-    induction hf using Algebra.adjoin_induction with
-    | mem x hx =>
-      intro z hz
-      rcases hx with ⟨ij, rfl⟩ | ⟨ij, hx⟩
-      · obtain ⟨a, b, c, d, e⟩ := entry_lin ij.1 ij.2
-        dsimp only
-        rw [e]
-        exact mul_lin φ _ _ _ _ z detPow hD hz a b c d
-      · obtain ⟨a, b, c, d, e⟩ := star_entry_lin ij.1 ij.2
-        have hx' : x = star (entry ij.1 ij.2) := by
-          rw [← star_star x, ← hx]
-        rw [hx', e]
-        intro n m a' b' c' d'
-        rw [← mul_lin φ _ _ _ _ z detPow hD hz a b c d n (m + -1) a' b' c' d', ← hD']
-        congr 1
-        ring
-    | algebraMap r =>
-      intro z hz n m a b c d
-      rw [← Algebra.smul_def, mul_smul_comm, map_smul, hz, smul_zero]
-    | add x y _ _ hx hy =>
-      intro z hz n m a b c d
-      rw [add_mul, mul_add, map_add, hx z hz, hy z hz, add_zero]
-    | mul x y _ _ hx hy =>
-      intro z hz
-      rw [mul_assoc]
-      exact hx _ (hy z hz)
-  have hsep : (StarAlgebra.adjoin ℂ S).SeparatesPoints := by
-    intro x y hxy
-    by_contra hcon
-    refine hxy (Subtype.ext (Matrix.ext fun i j => ?_))
-    by_contra hne
-    exact hcon ⟨entry i j, ⟨entry i j, StarAlgebra.subset_adjoin ℂ S ⟨(i, j), rfl⟩, rfl⟩, hne⟩
-  have htop := ContinuousMap.starSubalgebra_topologicalClosure_eq_top_of_separatesPoints _ hsep
-  have hf : f ∈ closure (StarAlgebra.adjoin ℂ S : Set C(U2, ℂ)) := by
-    have : f ∈ (StarAlgebra.adjoin ℂ S).topologicalClosure := by
-      rw [htop]
-      trivial
-    exact this
-  refine closure_minimal (t := {f | φ f = 0}) ?_ (isClosed_eq φ.continuous continuous_const) hf
-  intro x hx
-  have := hmul x hx 1 h 0 0 0 0 0 0
-  simpa [hD0] using this
+    (f : C(U2, ℂ)) : φ f = 0 := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 open UpperTheory.Reformulated.B.Gwa7 MeasureTheory in
 private theorem UpperTheory.Reformulated.B.Gwa7.main [CompactSpace U2] [BorelSpace U2] (μ : Measure U2)

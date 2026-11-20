@@ -15,7 +15,7 @@ attribute [local instance] Matrix.normedAddCommGroup Matrix.normedSpace
 variable {k r : ℕ} {i : Fin (r + 1)} {D : Set (Mx k r)}
 
 lemma entry_cd (a b : Fin (2 * r + k + 1)) : ContDiff ℝ ∞ (fun g : Mx k r => g a b) := by
-  exact (contDiff_apply ℝ ℂ b).comp (contDiff_apply ℝ (Fin (2 * r + k + 1) → ℂ) a)
+  exact (contDiff_apply ℝ (fun _ => ℂ) b).comp (contDiff_apply ℝ (fun _ => (Fin (2 * r + k + 1) → ℂ)) a)
 
 lemma inv_glev {g : Mx k r} (hg : g ∈ Glev k r i) : g⁻¹ = Hpk k r * gᴴ * Hpk k r := by
   simp only [Glev, UH, Set.mem_setOf_eq] at hg
