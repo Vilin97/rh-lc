@@ -116,7 +116,7 @@ theorem univTorsion_hermFun : GlobalTheory.Published.BismutKoehlerTorsion → Na
         exact (continuous_apply (∅ : Finset (Fin (n + n)))).comp_continuousOn hTc
       by_cases h1 : I = Finset.univ
       · simp only [hF, h0, h1, if_false, if_true]
-        refine continuousOn_finset_sum _ fun i _ => continuousOn_finset_sum _ fun k _ => ?_
+        refine continuousOn_finsetSum _ fun i _ => continuousOn_finsetSum _ fun k _ => ?_
         exact (((hr i).mul (hr k).star).continuousOn).mul
           ((continuous_apply _).comp_continuousOn hTc)
       · simp only [hF, h0, h1, if_false]

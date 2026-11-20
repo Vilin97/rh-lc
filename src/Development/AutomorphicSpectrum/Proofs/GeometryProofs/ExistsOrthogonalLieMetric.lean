@@ -294,7 +294,7 @@ theorem exists_orth (E : Type) [Field E] [NumberField E] [IsCommMonObj G] {K : T
   · intro a b
     choose F hF1 hF2 using fun i j => h₀.cont (ρ (α i) a) (ρ (α j) b)
     refine ⟨fun w => ∑ i, ∑ j, c i j * F i j w, ?_, ?_⟩
-    · refine continuousOn_finset_sum _ fun i _ => continuousOn_finset_sum _ fun j _ =>
+    · refine continuousOn_finsetSum _ fun i _ => continuousOn_finsetSum _ fun j _ =>
         continuousOn_const.mul ((hF1 i j).mono ?_)
       rintro w ⟨z, va, vb, hw, ha, hb⟩
       exact ⟨z, va ≫ act.act (α i), vb ≫ act.act (α j), hw, valAt_act M act ρ hρ z _ ha,

@@ -105,7 +105,7 @@ theorem exists_mem_span (hP : Hypotheses2) {D : D7} {T : Core D} {j : ℕ} {Y : 
   have hint := interior_closure_zero ((Y.U σ).X k)
     (GlobalTheory.FlatCore.differentiableOn_of_mem_holSub ((mem_cuspW.1 hh.1).2 σ hσ) k) hne
   have hcont : ContinuousOn (fun y => ∑ i, ε i * rdU (Y.U σ) (s i) k y - P₀ k y) ((Y.U σ).X k).dom :=
-    (continuousOn_finset_sum _ fun i _ => continuousOn_const.mul
+    (continuousOn_finsetSum _ fun i _ => continuousOn_const.mul
       (GlobalTheory.FlatAnyLevel.contOn_rdU _ _ _ _ _ _ _ Y.U hL _ hex0 _ (hs i) σ hσ k)).sub (hcP k)
   have hO := FourierCoefficientDomain.isOpen_dom ((Y.U σ).X k)
   have key : ∀ y ∈ ((Y.U σ).X k).dom, ∑ i, ε i * rdU (Y.U σ) (s i) k y = P₀ k y := by

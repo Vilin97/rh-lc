@@ -80,7 +80,7 @@ theorem evalP : EvalPStatement := by
       ContinuousOn (tMap ε σ x1 x₀ ((w : D) : H) (fun c' => ((f c' : D) : H))) (UJset ε) := by
     intro x1 f hf
     unfold tMap
-    apply continuousOn_finset_sum
+    apply continuousOn_finsetSum
     intro c' _
     apply ContinuousOn.mul
     · rw [← tmD_cJL_coe]

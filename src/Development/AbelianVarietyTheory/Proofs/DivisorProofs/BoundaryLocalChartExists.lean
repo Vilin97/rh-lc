@@ -232,7 +232,7 @@ theorem exists_adapted : ∀ (D : ℕ) (Y : Type) [TopologicalSpace Y] [T2Space 
     refine ((continuousOn_const.mul ((huc.mono hKψ).norm.log fun y hy =>
       norm_ne_zero_iff.2 (hu0 y (hKψ hy)))).add
       (continuousOn_const.mul (hφc.mono fun y hy => hψU (hKψ hy)))).sub
-      (continuousOn_const.mul (continuousOn_finset_sum _ fun k hk =>
+      (continuousOn_const.mul (continuousOn_finsetSum _ fun k hk =>
         ((hfacc k).mono hKψ).norm.log fun y hy => ?_))
     rw [ne_eq, norm_eq_zero, ← ne_eq, hfac_ne]
     intro i hi

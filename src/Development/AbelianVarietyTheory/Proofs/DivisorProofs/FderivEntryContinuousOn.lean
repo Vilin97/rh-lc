@@ -39,11 +39,11 @@ theorem exists_conn_bound (hF : IsPosFrame V F) {K : Set (Fin D → ℂ)} (hK : 
       ‖conn F z ξ a b‖ ≤ β * ‖ξ‖ := by
   obtain ⟨M₁, hM₁⟩ := hKc.exists_bound_of_continuousOn
     (f := fun z => ∑ b, ∑ c, ‖fderiv ℝ (fun x => F x b c) z‖)
-    (continuousOn_finset_sum _ fun b _ => continuousOn_finset_sum _ fun c _ =>
+    (continuousOn_finsetSum _ fun b _ => continuousOn_finsetSum _ fun c _ =>
       ((fderiv_entry_continuousOn hF b c).mono hK).norm)
   obtain ⟨M₂, hM₂⟩ := hKc.exists_bound_of_continuousOn
     (f := fun z => ∑ a, ∑ c, ‖((F z)ᵀ)⁻¹ a c‖)
-    (continuousOn_finset_sum _ fun a _ => continuousOn_finset_sum _ fun c _ =>
+    (continuousOn_finsetSum _ fun a _ => continuousOn_finsetSum _ fun c _ =>
       ((inv_entry_continuousOn hF a c).mono hK).norm)
   have e1 : ∀ z ∈ K, ∀ b c, ‖fderiv ℝ (fun x => F x b c) z‖ ≤ M₁ := fun z hz b c => by
     refine le_trans ?_ ((le_abs_self _).trans (hM₁ z hz))

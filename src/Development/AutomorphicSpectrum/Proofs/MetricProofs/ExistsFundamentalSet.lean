@@ -315,7 +315,7 @@ theorem exists_isFundSet : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
   let b := Module.Free.chooseBasis ℤ Λ
   let u : (Fin n → ℂ) → ℝ := fun t => ∑ i, (F.R t).normSq (b i)
   have huc : ContinuousOn u (ballDom F.q) :=
-    continuousOn_finset_sum _ fun i _ => continuousOn_normSq F.hol (b i)
+    continuousOn_finsetSum _ fun i _ => continuousOn_normSq F.hol (b i)
   haveI : Countable Λ := b.repr.toEquiv.injective.countable
   have hext : ∀ γ γ' : Λ ≃ₗ[𝓞 E] Λ, (∀ i, γ (b i) = γ' (b i)) → γ = γ' := by
     intro γ γ' h

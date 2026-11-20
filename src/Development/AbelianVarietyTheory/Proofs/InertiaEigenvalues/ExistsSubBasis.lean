@@ -146,8 +146,8 @@ theorem frame_of_idem (act : GQ l →* (PadicComplex l ≃+* PadicComplex l)) (�
   refine ⟨⟨hgen, ?_, ?_, ?_, ?_, ?_⟩, ?_, heq, ?_, ?_, ?_⟩
   · intro a b
     simp only [Matrix.mul_apply]
-    refine continuousOn_finset_sum _ fun k _ => ContinuousOn.mul ?_ continuousOn_const
-    exact continuousOn_finset_sum _ fun j _ => ContinuousOn.mul continuousOn_const (hcont _ _)
+    refine continuousOn_finsetSum _ fun k _ => ContinuousOn.mul ?_ continuousOn_const
+    exact continuousOn_finsetSum _ fun j _ => ContinuousOn.mul continuousOn_const (hcont _ _)
   · intro σ hσ a b
     refine ⟨mem_subC.1 (mem_mul _ _ _ (mem_mul _ _ _ (fun i j => (hR i j).1)
       (fun i j => mem_subC.2 (hint σ hσ i j).1)) (fun i j => (hS i j).1) a b), ?_⟩

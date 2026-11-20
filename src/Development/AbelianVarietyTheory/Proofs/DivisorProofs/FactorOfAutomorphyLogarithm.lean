@@ -185,7 +185,7 @@ theorem factor_degree_zero_normal_form : ∀ {g : ℕ} {E : Type} [NormedAddComm
     fun P _ => hφ0 P, ?_⟩
   · intro l _
     rw [hs]
-    exact continuousOn_finset_sum _ fun k _ => continuousOn_const.mul (hs'c k)
+    exact continuousOn_finsetSum _ fun k _ => continuousOn_const.mul (hs'c k)
   · intro l _ l' _ b _
     exact hsadd l l' b
 

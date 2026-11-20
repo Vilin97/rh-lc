@@ -67,7 +67,7 @@ theorem defect : ∀ {g : ℕ} {E : Type} [NormedAddCommGroup E] [NormedSpace �
     intro x
     refine continuousOn_pi.2 fun i => ?_
     simp only [per, Matrix.vecMul, dotProduct, Pi.add_apply]
-    exact (continuousOn_finset_sum _ fun k _ => continuousOn_const.mul (hτc k i)).add
+    exact (continuousOn_finsetSum _ fun k _ => continuousOn_const.mul (hτc k i)).add
       continuousOn_const
   have htc : ∀ x : Fl g, ContinuousOn (transl τ x) (cov U g) := fun x =>
     continuousOn_fst.prodMk (continuousOn_snd.add (hper x))

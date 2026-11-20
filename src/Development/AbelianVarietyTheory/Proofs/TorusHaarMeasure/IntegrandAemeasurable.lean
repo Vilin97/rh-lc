@@ -24,7 +24,7 @@ theorem holo_val {f : V n → ℂ} (hf : DifferentiableOn ℂ f U) :
 
 theorem normSq_continuousOn {s : Fin n → V n → ℂ} (hs : ∀ k, DifferentiableOn ℂ (s k) U) :
     ContinuousOn (fun z => ∑ k, ‖s k z‖ ^ 2) U := by
-  exact continuousOn_finset_sum _ (fun k _ => ((hs k).continuousOn.norm).pow 2)
+  exact continuousOn_finsetSum _ (fun k _ => ((hs k).continuousOn.norm).pow 2)
 
 theorem normSq_pos {s : Fin n → V n → ℂ} {z : V n} {k : Fin n} (h : s k z ≠ 0) :
     0 < ∑ k, ‖s k z‖ ^ 2 := by
@@ -215,7 +215,7 @@ theorem step (hn : 2 ≤ n) (hU : IsOpen U) {s : Fin n → V n → ℂ} (k0 : Fi
   choose H hHd hHeq hHint using fun i => extend hU k0 hs hgn hph.continuousOn ht0 (hGd i) (hGi i)
   refine ⟨H, fun i => ⟨hHd i, hHint i⟩, ?_⟩
   have hDc : ContinuousOn (fun z => F z - ∑ i, s i z * H i z) U :=
-    hF.continuousOn.sub (continuousOn_finset_sum _ (fun i _ => (hs i).continuousOn.mul (hHd i).continuousOn))
+    hF.continuousOn.sub (continuousOn_finsetSum _ (fun i _ => (hs i).continuousOn.mul (hHd i).continuousOn))
   intro z hz
   by_contra hne
   have hW := hDc.isOpen_inter_preimage hU (isOpen_compl_singleton (x := (0:ℂ)))

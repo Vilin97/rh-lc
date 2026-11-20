@@ -58,7 +58,7 @@ theorem mn_contOn (S : Subgroup G) {X E : Type} [TopologicalSpace X] [NormedAddC
   · haveI := fin_of_ne h
     letI := Fintype.ofFinite (Quotient (QuotientGroup.rightRel S))
     simp only [mn_fin]
-    exact (continuousOn_finset_sum _ fun c _ => he c).const_smul _
+    exact (continuousOn_finsetSum _ fun c _ => he c).const_smul _
 
 theorem dC_mn (S : Subgroup G) {Y : Type} {m : ℕ} (F : Quotient (QuotientGroup.rightRel S) → (Fin (m + 1) → Y) → ℝ) :
     dC (fun y => mn S fun c => F c y) = fun y => mn S fun c => dC (F c) y := by

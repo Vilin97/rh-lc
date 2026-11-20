@@ -223,7 +223,7 @@ private theorem continuousOn_Hk_of_continuousOn {k : ℕ} (q : GK L N) {ω : For
   by_cases hfin : Finite (Quotient (QuotientGroup.rightRel (Sg q)))
   · haveI := Fintype.ofFinite (Quotient (QuotientGroup.rightRel (Sg q)))
     simp only [finsum_eq_sum_of_fintype]
-    exact ContinuousOn.const_smul (continuousOn_finset_sum _ fun c _ => hpb _) ((((Sg q).index : ℕ) : ℝ)⁻¹)
+    exact ContinuousOn.const_smul (continuousOn_finsetSum _ fun c _ => hpb _) ((((Sg q).index : ℕ) : ℝ)⁻¹)
   · have hinf : Infinite (Gm L N ⧸ Sg q) := by
       rw [← not_finite_iff_infinite]
       intro hf

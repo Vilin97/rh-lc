@@ -556,7 +556,7 @@ theorem contDens0_of (hL2 : LevelOneSquareIntegrableGeneral) (hC : ContLev1Gen) 
         ((hgood _ (hv' a)).2 t' ht')
   have hon : ContinuousOn (fun t' => ((‖t'‖ ^ (-2 : ℤ) : ℝ) : ℂ) *
       ∑ a, fs μ l (act (RRi L st 0 w) x a) (v a) c t') {0}ᶜ := by
-    refine ContinuousOn.mul ?_ (continuousOn_finset_sum _ fun a _ => hcont _ (hu a) _ (hv' a))
+    refine ContinuousOn.mul ?_ (continuousOn_finsetSum _ fun a _ => hcont _ (hu a) _ (hv' a))
     refine Complex.continuous_ofReal.comp_continuousOn ?_
     exact (continuous_norm.continuousOn).zpow₀ (-2) fun t' ht' => Or.inl (norm_ne_zero_iff.mpr ht')
   have hat := (hon.continuousAt (isOpen_compl_singleton.mem_nhds ht))

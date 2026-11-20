@@ -170,7 +170,7 @@ theorem GlobalTheory.CovTop.r_eq_sub_log_chart : GlobalTheory.CovTop.Hypotheses2
     refine (continuousOn_const.sub ((hu'.continuousOn.norm.pow 2).log hn0)).add
       (continuousOn_const.mul ?_)
     simp only [GlobalTheory.DivSec.divPot]
-    refine continuousOn_finset_sum _ fun i _ => ?_
+    refine continuousOn_finsetSum _ fun i _ => ?_
     refine (((GlobalTheory.DivSec.eq_spec hn i y₀).2.2.1 ch).continuousOn.mono fun v hv =>
       ⟨hv.1, GlobalTheory.DivSec.mem_eqV hn (hsub hv.2) i⟩).div_const _
   refine ⟨ch, U, Φ, H, I, hj', hU, ha, Set.inter_subset_left, ((hΦan.contDiffOn (n := 1) hU.uniqueDiffOn).restrict_scalars ℝ), hbij, hHc,

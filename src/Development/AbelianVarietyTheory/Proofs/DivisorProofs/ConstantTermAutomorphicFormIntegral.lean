@@ -124,7 +124,7 @@ theorem Good.continuousOn_chart {φ : Sm E a} (h : Good φ) :
 theorem Good.continuousOn_fderiv {φ : Sm E a} (h : Good φ) :
     ContinuousOn (fun p : GA E a × Lie E a => fderiv ℝ (chart φ.1 p.1) p.2) (Set.univ ×ˢ invSet E a) := by
   refine ContinuousOn.congr ?_ fun p hp => fderiv_chart φ p.1 hp.2
-  exact continuousOn_finset_sum _ fun i _ => (h.lie _).continuousOn_chart.smul
+  exact continuousOn_finsetSum _ fun i _ => (h.lie _).continuousOn_chart.smul
     ((contDiffOn_coef i).continuousOn.comp continuous_snd.continuousOn fun p hp => hp.2)
 
 section Integral

@@ -380,7 +380,7 @@ theorem HasModel.exists_rep {Λ : Fin N → ℝ} (h : HasModel Λ) :
       exact (sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)).1 h'
     · refine (PiLp.continuous_toLp 2 fun _ : ι => ℂ).comp_continuousOn
         (f := fun g => ρ g *ᵥ x.ofLp) (continuousOn_pi.2 fun i => ?_)
-      exact continuousOn_finset_sum _ fun j _ => (h4 i j).mul continuousOn_const
+      exact continuousOn_finsetSum _ fun j _ => (h4 i j).mul continuousOn_const
   let v₀ : EuclideanSpace ℂ ι := WithLp.toLp 2 v
   let W : Submodule ℂ (EuclideanSpace ℂ ι) := Submodule.span ℂ (Set.range fun g => T g v₀)
   have hW : IsKStableOn (allPos N) T W := by

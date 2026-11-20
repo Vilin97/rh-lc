@@ -248,8 +248,8 @@ theorem phi_isPsh_continuous : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
       intro τ a c
       unfold RiemLat.ip
       simp only [dotProduct, Matrix.mulVec, Pi.star_apply]
-      refine continuousOn_finset_sum _ fun i _ => ((continuousOn_pi.1 (hwc τ c) i)).mul ?_
-      refine continuousOn_finset_sum _ fun j _ => (hHm i j).mul ?_
+      refine continuousOn_finsetSum _ fun i _ => ((continuousOn_pi.1 (hwc τ c) i)).mul ?_
+      refine continuousOn_finsetSum _ fun j _ => (hHm i j).mul ?_
       exact (continuous_star.comp_continuousOn (continuousOn_pi.1 (hwc τ a) j))
     have hdet : ∀ τ, ContinuousOn (fun t => ((R t).gram fun a => w τ a t).det.re) U := by
       intro τ

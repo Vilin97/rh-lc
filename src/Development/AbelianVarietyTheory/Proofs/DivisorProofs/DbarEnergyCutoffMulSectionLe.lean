@@ -25,7 +25,7 @@ theorem wdb_bound (A : WeightedAtlas n Y ι La) (C : Cover A) (χ : Y → ℝ) (
     hg.fderiv_of_isOpen e.open_target (by simp)
   have hc : ContinuousOn (fun v => ∑ j, ‖wdb n j (fun w => ((χ (e.symm w) : ℝ) : ℂ)) v‖ ^ 2)
       e.target := by
-    refine continuousOn_finset_sum _ fun j _ => ?_
+    refine continuousOn_finsetSum _ fun j _ => ?_
     have : ContDiffOn ℝ ∞ (wdb n j (fun w => ((χ (e.symm w) : ℝ) : ℂ))) e.target :=
       ((hd.clm_apply contDiffOn_const).add
         (contDiffOn_const.mul (hd.clm_apply contDiffOn_const))).div_const 2

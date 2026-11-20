@@ -358,7 +358,7 @@ theorem Std.continuousOn_coef (h : Std ε σ) {ℓ : H →ₗ[ℂ] ℂ} (hℓ : 
     ContinuousOn (fun g => ℓ (σ g w)) (UJset ε) := by
   obtain ⟨m, S, Λ, hS, hΛ⟩ := exists_factor (isUnit_Jm ε) h.1 hℓ
   refine ContinuousOn.congr (f := fun g => ∑ i, Λ i (Dw σ (S i) (σ g w))) ?_ fun g hg => hΛ _ (hw.translate h.1 hg)
-  exact continuousOn_finset_sum _ fun i _ => (Λ i).continuous.comp_continuousOn (h.continuousOn_Dw (hS i) hw)
+  exact continuousOn_finsetSum _ fun i _ => (Λ i).continuous.comp_continuousOn (h.continuousOn_Dw (hS i) hw)
 
 theorem Std.eq_zero_of_orbit (h : Std ε σ) {ℓ : H →ₗ[ℂ] ℂ} (hℓ : Sobolev₂ (lieSet ε) σ ℓ) {u : H} (hu : Sm ε σ u)
     (hu0 : u ≠ 0) (h0 : ∀ g ∈ UJset ε, ℓ (σ g u) = 0) {w : H} (hw : Sm ε σ w) : ℓ w = 0 := by

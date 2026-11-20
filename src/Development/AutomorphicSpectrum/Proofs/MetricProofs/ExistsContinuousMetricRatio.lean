@@ -90,7 +90,7 @@ theorem logDiff_descends : ∀ (K : Type) [Fintype K] (J : K → Type) [∀ k, F
   obtain ⟨κ, hκ, hκe⟩ := exists_continuous_descent M
     (fun z => Real.log (Nb.h z) - Real.log (S.ref.h z) - ∑ p ∈ D.SB B, Real.log ((A p).h z))
     (((log_h_continuousOn hNb).sub (log_h_continuousOn S.ref_smooth)).sub
-      (continuousOn_finset_sum _ fun p hp => log_h_continuousOn (hA p hp).2.1))
+      (continuousOn_finsetSum _ fun p hp => log_h_continuousOn (hA p hp).2.1))
     (by
       intro c hc z hz
       have hb := hz.1

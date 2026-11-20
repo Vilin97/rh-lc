@@ -30,7 +30,7 @@ theorem exists_volDens : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsIntegra
             cont := fun c => ?_
             pos := fun c y hy => ?_
             trans := fun c c' y hy hy' => ?_ }⟩
-  · refine continuousOn_finset_sum _ fun i _ => fun y hy => ContinuousAt.continuousWithinAt ?_
+  · refine continuousOn_finsetSum _ fun i _ => fun y hy => ContinuousAt.continuousWithinAt ?_
     by_cases h : y ∈ tsupport (f i)
     · exact (f i).continuous.continuousAt.mul
         ((CurveDens.continuousAt_transDet_chart c _ hy (hf i h)).norm.pow 2)

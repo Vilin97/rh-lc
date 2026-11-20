@@ -128,7 +128,7 @@ theorem bounded_differentiable_foldr_lineDer : ∀ (F E : Type) [Field F] [Numbe
   obtain ⟨⟨c, hc⟩, hs⟩ := good l hl
   refine ⟨?_, fun ζ hζ hζK k hk => differentiableAt_of_smooth hs hζ hζK k hk⟩
   have hcont : ContinuousOn (fun k => ∑ j, c j * b j k) S :=
-    continuousOn_finset_sum _ fun j _ => continuousOn_const.mul (hbc j)
+    continuousOn_finsetSum _ fun j _ => continuousOn_const.mul (hbc j)
   obtain ⟨C, hC⟩ := hS.exists_bound_of_continuousOn hcont
   exact ⟨C, fun k hk => by rw [hc k hk]; exact hC k hk⟩
 

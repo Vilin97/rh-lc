@@ -22,7 +22,7 @@ theorem tens_cont {X : GMod n} {c : X.V →ₗ[ℂ] (Matrix (Fin n) (Fin n) ℂ 
     ContOK ε (tens X) (tensCoef X c j) := by
   intro u
   show ContinuousOn (fun g : Matrix (Fin n) (Fin n) ℂ => ∑ i, g j i * c (u i) g) _
-  refine continuousOn_finset_sum _ fun i _ => ContinuousOn.mul ?_ (h (u i))
+  refine continuousOn_finsetSum _ fun i _ => ContinuousOn.mul ?_ (h (u i))
   exact (continuous_id.matrix_elem j i).continuousOn
 
 theorem step_cont {X : GMod n} {c : X.V →ₗ[ℂ] (Matrix (Fin n) (Fin n) ℂ → ℂ)} (h : ContOK ε X c) (z : ℂ) (j : Fin n) :

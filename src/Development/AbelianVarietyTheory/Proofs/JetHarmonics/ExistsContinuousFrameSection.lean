@@ -283,7 +283,7 @@ theorem secMat_cont {z z' : Fin (2 * r + k + 1) → ℂ} (ν' : Fin (2 * r + k +
   simp only [smat, Matrix.of_apply]
   refine continuousOn_pi.1 ?_ a
   unfold smap
-  refine continuousOn_const.add (continuousOn_finset_sum _ fun i _ => ?_)
+  refine continuousOn_const.add (continuousOn_finsetSum _ fun i _ => ?_)
   have h := secY_cont ν' hT hT' π (Real.sqrt (Tz k r z')) i
   fun_prop
 

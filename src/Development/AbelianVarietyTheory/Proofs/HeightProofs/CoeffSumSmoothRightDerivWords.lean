@@ -39,7 +39,7 @@ theorem GlobalTheory.TypeSum.CoefClos.coefSum_cSm_wordF : ∀ (n : ℕ) (ε : Fi
   refine ⟨⟨fun l y => ∑ a, L a (σ y (Dw σ l (x a))), fun _ _ => rfl, fun l hl X hX g hg => ?_, fun l hl => ?_⟩,
     fun u => ?_⟩
   · exact hd _ (fun a => Sm.word h.1 (hx a) hl) X hX g hg
-  · exact continuousOn_finset_sum _ fun a _ => h.continuousOn_coef (hL a) (Sm.word h.1 (hx a) hl)
+  · exact continuousOn_finsetSum _ fun a _ => h.continuousOn_coef (hL a) (Sm.word h.1 (hx a) hl)
   · induction u with
     | nil => exact fun _ _ => rfl
     | cons z u ih =>

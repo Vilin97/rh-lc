@@ -77,7 +77,7 @@ lemma continuousOn_dInt {ε : Fin n → Bool} {l : Fin n → Fin n → Mt → �
     (continuous_toMK_inv_mul_mul_toMK' ε X).comp continuous_snd
   have hmaps : Set.MapsTo (fun x : Mt × KG ε => (toMK x.2)⁻¹ * x.1 * toMK x.2) (U1 ε ×ˢ Set.univ) (Omega n) :=
     fun x hx => hx.1 _ (toMK_mem_Kset x.2)
-  refine continuousOn_finset_sum _ fun c _ => continuousOn_finset_sum _ fun d _ => ?_
+  refine continuousOn_finsetSum _ fun c _ => continuousOn_finsetSum _ fun d _ => ?_
   exact (hX.matrix_elem c d).continuousOn.mul ((hl c d).comp hc.continuousOn hmaps)
 
 lemma integrable_dInt {ε : Fin n → Bool} {l : Fin n → Fin n → Mt → ℂ}

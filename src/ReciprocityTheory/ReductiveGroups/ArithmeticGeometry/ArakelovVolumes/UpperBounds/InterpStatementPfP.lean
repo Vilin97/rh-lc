@@ -220,7 +220,7 @@ theorem phla_contOn (la : Wt X.Ψ r) : ContinuousOn (phla X la) X.dom := by
 theorem pnormS_contOn (L : Wt X.Ψ r) (s : Fin (nd X) → Frame X.Ψ r → ℂ)
     (hs : ∀ k, ContinuousOn (s k) X.dom) :
     ContinuousOn (fun x => ∑ k, X.pnorm L (s k) x ^ 2) X.dom := by
-  refine continuousOn_finset_sum _ (fun k _ => ?_)
+  refine continuousOn_finsetSum _ (fun k _ => ?_)
   exact ((hs k).norm.mul (continuousOn_nfac X L)).pow 2
 
 def gφ (P : Frame X.Ψ r → ℂ) (Fp L : Wt X.Ψ r) (s : Fin (nd X) → Frame X.Ψ r → ℂ) (x : Frame X.Ψ r) :

@@ -265,7 +265,7 @@ theorem periodChart_ker : ∀ (n a g r₀ r : ℕ) (ha : a ≤ n) (K : (Fin n �
     refine hcl v hv0 hvs (fun z => (τ₀ z).mulVec (fun j => (v j : ℂ))) ?_ ?_
     · refine continuousOn_pi.2 fun j => ?_
       simp only [Matrix.mulVec, dotProduct]
-      exact continuousOn_finset_sum _ fun l _ => (hcont j l).mul continuousOn_const
+      exact continuousOn_finsetSum _ fun l _ => (hcont j l).mul continuousOn_const
     · intro s hs hz
       rw [hτ₀e s hs hz, Matrix.add_mulVec]
       have h0 : (∑ k, (s (Fin.castLE ha k) / (2 * Real.pi * Complex.I)) • (B k).map (Int.cast : ℤ → ℂ)).mulVec

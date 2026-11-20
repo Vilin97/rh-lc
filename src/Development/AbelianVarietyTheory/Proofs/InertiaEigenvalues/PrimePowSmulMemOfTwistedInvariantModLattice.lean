@@ -105,7 +105,7 @@ private theorem continuousOn_twistedAction_lemma (hact : _root_.GlobalTheory.Cyc
   refine continuousOn_pi.2 fun a => ?_
   simp only [Pi.smul_apply, Matrix.mulVec, dotProduct, smul_eq_mul]
   refine (continuous_cyclotomicCharPow_lemma_6 hχ i).continuousOn.mul ?_
-  refine continuousOn_finset_sum _ fun b _ => ?_
+  refine continuousOn_finsetSum _ fun b _ => ?_
   exact (hF.2.1 a b).mul
     (_root_.GlobalTheory.Cyc.IsActC.continuous_orbit l act hact (y b)).continuousOn
 

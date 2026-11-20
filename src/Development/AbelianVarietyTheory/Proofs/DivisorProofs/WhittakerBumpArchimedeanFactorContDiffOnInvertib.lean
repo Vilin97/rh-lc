@@ -51,7 +51,7 @@ theorem bumpInf_contDiffOn_invSet : ∀ (E : Type) [Field E] [NumberField E] [Is
       ConstTermSmooth.contDiffOn_invM.continuousOn.comp continuous_snd.continuousOn fun q hq => hB hq.2
     refine continuousOn_pi.2 fun p => ?_
     show ContinuousOn (fun q : Lie E n × Lie E n => ∑ k, q.1 p.1.1 k * ConstTermSmooth.invM q.2 k p.1.2) _
-    refine continuousOn_finset_sum _ fun k _ => ?_
+    refine continuousOn_finsetSum _ fun k _ => ?_
     have h1 : Continuous fun q : Lie E n × Lie E n => q.1 p.1.1 k :=
       (continuous_apply k).comp ((continuous_apply p.1.1).comp continuous_fst)
     have h2 : ContinuousOn (fun q : Lie E n × Lie E n => ConstTermSmooth.invM q.2 k p.1.2) (tsupport f ×ˢ closedBall x₀ r) :=

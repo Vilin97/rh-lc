@@ -266,7 +266,7 @@ theorem continuous_gram {A : AnRead p σ d}
         fun y _ => (Complex.re_add_im _).symm
   have hc : ContinuousOn (fun y => ∑ i, ∑ j, star (ev (π ≫ p) σ O (c a i) y) * (G j i (down π y) *
       ev (π ≫ p) σ O (c b j) y)) (ptsIn (π ≫ p) σ O) :=
-    continuousOn_finset_sum _ fun i _ => continuousOn_finset_sum _ fun j _ =>
+    continuousOn_finsetSum _ fun i _ => continuousOn_finsetSum _ fun j _ =>
       (continuousOn_ev _).star.mul ((hGc j i).mul (continuousOn_ev _))
   refine (hc.congr fun y hy => ?_).continuousAt ((isOpen_ptsIn O).mem_nhds (mem_ptsIn.2 hyO))
   simp only [gramOf, of_apply]

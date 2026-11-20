@@ -258,7 +258,7 @@ theorem exists_continuous_latBasis_of_arc : ∀ (E : Type) [Field E] [NumberFiel
       hcol.comp_continuousOn (han.continuousOn.comp hsmc.continuousOn fun s hs => hsc _ (hexpball s hs))
     refine continuousOn_pi.2 fun j => continuousOn_pi.2 fun i => ?_
     simp only [lamE, Matrix.mulVec, dotProduct]
-    refine continuousOn_finset_sum _ fun k _ => ContinuousOn.mul ?_ ?_
+    refine continuousOn_finsetSum _ fun k _ => ContinuousOn.mul ?_ ?_
     · exact continuousOn_pi.1 (continuousOn_pi.1 hMc i) k
     · exact continuousOn_pi.1 (continuousOn_pi.1 hlamc j) k
   · have hzb := hexpball s hsr

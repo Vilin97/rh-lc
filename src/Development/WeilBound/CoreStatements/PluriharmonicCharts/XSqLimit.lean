@@ -138,11 +138,11 @@ theorem regular (hC : ConvergenceSignedStatement) {e : ℕ} {τ : Type} (S : AnS
     intro t
     by_cases ht : 0 < t ∧ t ≤ S.t₀
     · simp only [ht, and_self, if_true]
-      refine continuousOn_const.add (continuousOn_finset_sum _ fun i _ => continuousOn_const.mul ?_)
+      refine continuousOn_const.add (continuousOn_finsetSum _ fun i _ => continuousOn_const.mul ?_)
       exact (continuousOn_of_smoothOn S.A isOpen_univ ((S.reg (mm i)).2.2 t ht.1 ht.2).1).mono
         (Set.subset_univ _)
     · simp only [ht, if_false]
-      exact continuousOn_const.add (continuousOn_finset_sum _ fun i _ => continuousOn_const.mul
+      exact continuousOn_const.add (continuousOn_finsetSum _ fun i _ => continuousOn_const.mul
         (continuousOn_of_smoothOn S.A hU (S.sing (mm i)).2.1))
   have hgb : ∀ t y, y ∉ bdry S.s → |(fun x => if 0 < t ∧ t ≤ S.t₀ then cst + ∑ i, c i * S.phT (mm i) t x
       else cst + ∑ i, c i * S.ph (mm i) x) y| ≤

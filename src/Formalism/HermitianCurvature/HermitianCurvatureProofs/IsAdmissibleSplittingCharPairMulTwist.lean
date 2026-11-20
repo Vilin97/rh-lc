@@ -11283,7 +11283,7 @@ theorem cont_gR (hL : IsModelLevel P (DQ P) L) (w : List ℝ) (X : Qp P.r P.TT �
     congr 1
     exact Finset.sum_congr rfl fun i' _ => by rw [hpt]
   rw [e]
-  refine ContinuousOn.add ?_ (continuousOn_finset_sum _ fun i' _ => (hEc i i').mul (cont_gA w X K q i'))
+  refine ContinuousOn.add ?_ (continuousOn_finsetSum _ fun i' _ => (hEc i i').mul (cont_gA w X K q i'))
   exact (continuous_finset_sum _ fun k _ => (Complex.continuous_ofReal.pow _).mul continuous_const).continuousOn
 
 theorem cont_integrand (hL : IsModelLevel P (DQ P) L) (w : List ℝ) (X : Qp P.r P.TT → Iota P w.length → ℂ)

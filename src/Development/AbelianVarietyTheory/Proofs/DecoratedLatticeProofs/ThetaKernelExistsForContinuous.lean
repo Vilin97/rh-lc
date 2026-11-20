@@ -125,7 +125,7 @@ theorem dblInt_collect : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : Inf
     refine continuous_of_compact_sq _ fun K' hK' => ?_
     obtain ⟨n', b', c', hb', hc', hrep'⟩ := hloc K' hK'
     have hs : ContinuousOn (fun x => ∑ j, c' j x * Λ (b' j)) (K' ×ˢ K') :=
-      continuousOn_finset_sum _ fun j _ => (hc' j).mul continuousOn_const
+      continuousOn_finsetSum _ fun j _ => (hc' j).mul continuousOn_const
     refine hs.congr fun x hx => ?_
     rw [hrep' x hx]; exact lin_sum Λ φ hφ hadd hsmul _ _ _ hb'
   have hEq : GlobalTheory.Eis.dblIntegrand A χ⁻¹ (fun g => Λ (omh (g, 1) φ)) (fun g => conj (u g)) (fun g => conj (u g)) =

@@ -44,8 +44,8 @@ theorem exists_isExphOn : ∀ (k : Type) [CommRing k] (Y : Scheme.{0}) (p : Y �
         ((hsm i j).continuousOn.mono hCU).comp continuousOn_fst fun x hx => hx.1
       refine Complex.continuous_re.comp_continuousOn ?_
       simp only [dotProduct, vecMul]
-      refine continuousOn_finset_sum _ fun i _ => ContinuousOn.mul ?_ ?_
-      · refine continuousOn_finset_sum _ fun j _ => ContinuousOn.mul ?_ (hm j i)
+      refine continuousOn_finsetSum _ fun i _ => ContinuousOn.mul ?_ ?_
+      · refine continuousOn_finsetSum _ fun j _ => ContinuousOn.mul ?_ (hm j i)
         exact ((PiLp.continuous_apply 2 _ j).comp continuous_snd).continuousOn
       · exact (continuous_star.comp ((PiLp.continuous_apply 2 _ i).comp continuous_snd)).continuousOn
     refine h1.congr fun x hx => ?_

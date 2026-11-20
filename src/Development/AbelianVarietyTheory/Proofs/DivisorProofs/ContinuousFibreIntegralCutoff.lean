@@ -63,7 +63,7 @@ theorem continuous_integral_fib : ∀ (M : Type) [TopologicalSpace M] [T2Space M
   have hcon : ContinuousOn (Function.uncurry h) ((sphere.e k).source ×ˢ (A.e j).target) := by
     refine ContinuousOn.congr ?_ hform
     refine Complex.continuous_re.comp_continuousOn (ContinuousOn.mul ?_
-      (continuousOn_finset_sum _ fun S _ => ContinuousOn.mul ?_ continuousOn_const))
+      (continuousOn_finsetSum _ fun S _ => ContinuousOn.mul ?_ continuousOn_const))
     · exact (hχ j).continuousOn.comp continuousOn_snd fun p hp => ⟨hp.2, trivial⟩
     · refine (hα.smooth (j, k) S).continuousOn.comp
         (f := fun p : OnePoint ℂ × V 1 => appendV 1 1 (p.2, sphere.e k p.1)) ?_ fun p hp => ?_

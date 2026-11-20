@@ -59,7 +59,7 @@ theorem isUnit_det_combMat_on_ball : ∀ (n a g r₀ r : ℕ) (ha : a ≤ n) (ζ
   have hPc : ContinuousOn (fun z => combMat (ζ z) α) (Metric.ball (0 : Fin n → ℂ) 1) := by
     refine continuousOn_pi.2 fun k => continuousOn_pi.2 fun i => ?_
     simp only [combMat, Matrix.of_apply]
-    refine continuousOn_finset_sum _ fun m _ => continuousOn_const.mul ?_
+    refine continuousOn_finsetSum _ fun m _ => continuousOn_const.mul ?_
     exact continuousOn_pi.1 (continuousOn_pi.1 hζ.continuousOn m) k
   have hτc : ContinuousOn τ₀ (Metric.ball (0 : Fin n → ℂ) 1) :=
     continuousOn_pi.2 fun k => continuousOn_pi.2 fun i => (hτ k i).continuousOn

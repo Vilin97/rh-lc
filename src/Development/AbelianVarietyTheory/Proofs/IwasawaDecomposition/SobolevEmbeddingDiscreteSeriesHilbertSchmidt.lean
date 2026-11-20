@@ -66,7 +66,7 @@ theorem sobolev_hilbertSchmidt : ∀ (n : ℕ) (ε : Fin n → Bool) (H : Type) 
     simp only [inner_smul_left]
   have hI := fun l => integral_sq_sum hd hh fun p => ∑ j, (starRingEnd ℂ) (φ j p) • Dw σ l (x j)
   simp only [← eF] at hI
-  have key := H1 F (fun l _ => continuousOn_finset_sum _ fun j _ =>
+  have key := H1 F (fun l _ => continuousOn_finsetSum _ fun j _ =>
       (innerSL ℂ (f j)).continuous.comp_continuousOn (hσ.1.2.2 _)) ?_ fun l _ => (hI l).1
   · have e1 : F [] 1 = ∑ j, ⟪f j, x j⟫_ℂ := by simp only [F, sigma_one hσ.1]; rfl
     rw [e1] at key

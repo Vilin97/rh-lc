@@ -25,7 +25,7 @@ theorem n1_lt_infty_of_isSSec : ∀ (n : ℕ) (Y : Type) [TopologicalSpace Y] [T
       Real.exp (-A.ph la i ((A.chart i).symm v))) (closedBall (C.c a) (C.r a)) := by
     refine ContinuousOn.mono ?_ hsub
     refine ContinuousOn.mul ?_ ?_
-    · refine continuousOn_finset_sum _ (fun j _ => ?_)
+    · refine continuousOn_finsetSum _ (fun j _ => ?_)
       refine ContinuousOn.pow (ContinuousOn.norm ?_) 2
       unfold wdb
       refine ContinuousOn.div_const (ContinuousOn.add ?_ (ContinuousOn.mul continuousOn_const ?_)) _

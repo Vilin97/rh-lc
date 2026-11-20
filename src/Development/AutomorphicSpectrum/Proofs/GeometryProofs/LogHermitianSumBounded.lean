@@ -60,7 +60,7 @@ theorem log_metrics_bounded (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fin
   have hfc : ContinuousOn f S := by
     refine ContinuousOn.mono ?_ hSU
     exact (continuousOn_log_h A hA).add
-      (continuousOn_finset_sum _ fun j _ => continuousOn_log_h (B j) (hB j))
+      (continuousOn_finsetSum _ fun j _ => continuousOn_log_h (B j) (hB j))
   obtain ⟨C, hC⟩ := hScpt.exists_bound_of_continuousOn hfc
   refine ⟨C, fun z hz => ?_⟩
   let c : K → ℂ := fun k => (((n k z)⁻¹ : ℝ) : ℂ)

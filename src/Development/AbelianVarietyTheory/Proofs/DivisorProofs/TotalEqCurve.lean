@@ -91,7 +91,7 @@ theorem IsDens.mul (h : IsDens ρ) {f : CxPts p σ → ℝ} (hf : Continuous f) 
 
 theorem IsDens.sum {J : Type} (s : Finset J) {τ : J → AlgChart p σ D → CxPts p σ → ℝ} (h : ∀ j, IsDens (τ j)) :
     IsDens fun c y => ∑ j ∈ s, τ j c y := by
-  refine ⟨fun c c' y hy hy' => ?_, fun c => continuousOn_finset_sum s fun j _ => (h j).2 c⟩
+  refine ⟨fun c c' y hy hy' => ?_, fun c => continuousOn_finsetSum s fun j _ => (h j).2 c⟩
   beta_reduce
   rw [Finset.mul_sum]
   exact Finset.sum_congr rfl fun j _ => (h j).1 c c' y hy hy'
@@ -182,7 +182,7 @@ theorem mix_diagonal (a m : Fin (d + 1) → ℝ) :
 
 theorem IsForm.sum {I : Type} (s : Finset I) {N : I → AlgChart p σ D → CxPts p σ → Matrix (Fin D) (Fin D) ℂ}
     (h : ∀ i, IsForm (N i)) : IsForm fun c y => ∑ i ∈ s, N i c y := by
-  refine ⟨fun c c' y hy hy' => ?_, fun c => continuousOn_finset_sum s fun i _ => (h i).2.1 c,
+  refine ⟨fun c c' y hy hy' => ?_, fun c => continuousOn_finsetSum s fun i _ => (h i).2.1 c,
     fun c y hy => ?_⟩
   · simp only [chg, Finset.mul_sum, Finset.sum_mul]
     refine Finset.sum_congr rfl fun i _ => ?_

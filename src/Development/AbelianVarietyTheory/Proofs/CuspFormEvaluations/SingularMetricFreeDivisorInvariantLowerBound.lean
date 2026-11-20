@@ -88,9 +88,9 @@ theorem measurable_Wfree : Measurable (Wfree Xa Fl G n) := by
   have ha : ContinuousOn (fun x => Real.exp (-phla X G x)) X.dom :=
     Real.continuous_exp.comp_continuousOn (IW.phla_contOn X G).neg
   have hA : ContinuousOn (fun x => ∑ k, ‖Xa.w k x‖ ^ 2) X.dom :=
-    continuousOn_finset_sum _ fun k _ => ((hw k).norm).pow 2
+    continuousOn_finsetSum _ fun k _ => ((hw k).norm).pow 2
   have hB : ContinuousOn (fun x => ∑ k, ‖Fl.s k x‖ ^ 2) X.dom :=
-    continuousOn_finset_sum _ fun k _ => ((hs k).norm).pow 2
+    continuousOn_finsetSum _ fun k _ => ((hs k).norm).pow 2
   have e : Wfree Xa Fl G n = fun x =>
       X.dom.indicator (fun x => ENNReal.ofReal (Real.exp (-phla X G x))) x *
         X.dom.indicator (fun x => ENNReal.ofReal (∑ k, ‖Xa.w k x‖ ^ 2)) x ^ (-(1 / 2 : ℝ)) *

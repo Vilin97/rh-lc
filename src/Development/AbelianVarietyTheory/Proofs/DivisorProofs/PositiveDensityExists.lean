@@ -75,7 +75,7 @@ theorem exists_isDens_pos : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) (p : X 
     · simp [h]
     · rw [transDet_trans_chart c c' _ hy hy' (hsrc i y h), norm_mul, mul_pow]
       ring
-  · refine continuousOn_finset_sum _ fun i _ => ?_
+  · refine continuousOn_finsetSum _ fun i _ => ?_
     have hg : ContinuousOn (fun y => f i y * ‖ChartGlue.transDet c.e (R.chart i.1).e y‖ ^ 2)
         c.e.source := fun y hy => by
       refine ContinuousAt.continuousWithinAt ?_

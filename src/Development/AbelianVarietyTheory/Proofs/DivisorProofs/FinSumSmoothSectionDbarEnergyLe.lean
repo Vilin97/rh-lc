@@ -46,7 +46,7 @@ theorem isSSec_finset_sum_and_n1_le_card_mul_sum (n : ℕ) (Y : Type) [Topologic
           (A.smooth_ph la i).continuousOn
         refine ENNReal.continuous_ofReal.comp_continuousOn ?_
         refine ContinuousOn.mul ?_ ((hph.mono hball).neg.rexp)
-        refine continuousOn_finset_sum _ (fun j _ => ?_)
+        refine continuousOn_finsetSum _ (fun j _ => ?_)
         refine ContinuousOn.pow (ContinuousOn.norm ?_) 2
         unfold wdb
         refine ContinuousOn.div_const (ContinuousOn.add ?_ (continuousOn_const.mul ?_)) _

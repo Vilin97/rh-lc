@@ -73,7 +73,7 @@ theorem UpperTheory.ConvolutionTheory.R2.G.contW :
     have hcont1 : Continuous fun p : IdeleGroup F × G1 F => Wf f.1 (gl (mD p.1 * p.2)) :=
       hWc.comp (continuous_gl.comp ((continuous_mD.comp continuous_fst).mul continuous_snd))
     refine hcont1.continuousOn.mul (ContinuousOn.congr ?_ e)
-    refine ContinuousOn.mul (Continuous.continuousOn ?_) (continuousOn_finset_sum _ fun i _ => ?_)
+    refine ContinuousOn.mul (Continuous.continuousOn ?_) (continuousOn_finsetSum _ fun i _ => ?_)
     · refine Continuous.mul ?_ ?_
       · exact Units.continuous_val.comp (W.η.2.1.comp continuous_fst)
       · exact Complex.continuous_ofReal.comp (continuous_ab.comp continuous_fst)
