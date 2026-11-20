@@ -63,7 +63,7 @@ theorem integral_formula_passes_to_limits : Formalism.FourierDecayAlt.KB.LimitIn
         rw [Finset.sum_coe_sort B (θ (φ n) A)]
         exact (hprob (φ n) A).2.2
       rw [e1]
-      refine tendsto_nhds_unique (tendsto_finset_sum _ fun x _ => hco A x) ?_
+      refine tendsto_nhds_unique (tendsto_finsetSum _ fun x _ => hco A x) ?_
       simp_rw [e2]
       exact tendsto_const_nhds
   · intro Y hY κ hκ l hl hl0 A
@@ -75,7 +75,7 @@ theorem integral_formula_passes_to_limits : Formalism.FourierDecayAlt.KB.LimitIn
     have hR : Filter.Tendsto (fun n => (∏ v ∈ A, X i v ^ C.Kst) *
         ∑ w' ∈ B, θ (φ n) A w' * (KB.withRR S (RR (φ n))).base.N0 ε (i - 1) w' Y κ) Filter.atTop
         (nhds ((∏ v ∈ A, X i v ^ C.Kst) * ∑ w' ∈ B, θ' A w' * S.base.N0 ε (i - 1) w' Y κ)) := by
-      refine Filter.Tendsto.const_mul _ (tendsto_finset_sum _ fun w' hw' => ?_)
+      refine Filter.Tendsto.const_mul _ (tendsto_finsetSum _ fun w' hw' => ?_)
       refine Filter.Tendsto.mul ?_ ((PBB.tendsto_base_norm_of_regularization S RR hconv ε hε (i - 1) (by omega) w' Y κ).comp
         hφ.tendsto_atTop)
       rw [hθ' A w' hw']

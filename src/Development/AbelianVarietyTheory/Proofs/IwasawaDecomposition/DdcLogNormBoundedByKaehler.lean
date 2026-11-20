@@ -60,7 +60,7 @@ theorem continuousAt_leviV {d : ℕ} {g : V d → ℂ} {x : V d} (hg : ContDiffA
     exact ((h4.clm_apply continuousAt_const).sub
       (continuousAt_const.mul (h4.clm_apply continuousAt_const))).div_const 2
   unfold leviV
-  refine tendsto_finset_sum _ fun j _ => tendsto_finset_sum _ fun k _ => ?_
+  refine tendsto_finsetSum _ fun j _ => tendsto_finsetSum _ fun k _ => ?_
   refine ContinuousAt.mul (ContinuousAt.mul (ContinuousAt.comp (g := wd d j (wdb d k g)) (f := Prod.fst)
     (x := (x, ξ)) (h3 j k) continuousAt_fst) (by fun_prop)) ?_
   exact Complex.continuous_conj.continuousAt.comp (by fun_prop)

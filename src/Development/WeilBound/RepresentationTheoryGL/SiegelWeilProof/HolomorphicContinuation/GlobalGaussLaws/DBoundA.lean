@@ -113,7 +113,7 @@ theorem posDef_unif {P : Type} [TopologicalSpace P] {p₀ : P} (H : P → Matrix
   have hf : Tendsto (fun p => ∑ i, ∑ j, ‖H p i j - H p₀ i j‖) (𝓝 p₀) (𝓝 0) := by
     have h00 : (0 : ℝ) = ∑ i : Fin n, ∑ j : Fin n, ‖H p₀ i j - H p₀ i j‖ := by simp
     rw [h00]
-    exact tendsto_finset_sum _ fun i _ => tendsto_finset_sum _ fun j _ =>
+    exact tendsto_finsetSum _ fun i _ => tendsto_finsetSum _ fun j _ =>
       ((hH i j).tendsto.sub tendsto_const_nhds).norm
   have hev := (tendsto_order.1 hf).2 (c / 2) (by positivity)
   refine ⟨c / 2, by positivity, hev.mono fun p hp w => ?_⟩

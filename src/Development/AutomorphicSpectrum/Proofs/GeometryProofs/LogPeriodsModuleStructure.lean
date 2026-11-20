@@ -127,7 +127,7 @@ theorem continuousAt_apply (A : (Fin n → ℂ) → Module.End ℂ (Fin g → �
     funext w
     exact LinearMap.pi_apply_eq_sum_univ _ _
   rw [h1]
-  exact tendsto_finset_sum _ fun i _ =>
+  exact tendsto_finsetSum _ fun i _ =>
     (((continuous_apply i).continuousAt.comp hP).smul (hAe _))
 
 theorem eventually_eq (A : (Fin n → ℂ) → Module.End ℂ (Fin g → ℂ))

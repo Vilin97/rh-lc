@@ -227,7 +227,7 @@ theorem tendsto_arLimFun (hLoc : ReciprocityTheory.ChartRestriction.G.AI.I2.Metr
       (𝓝[>] 0) (𝓝 (limTop Hd B Nb)) := by
     rw [limTop]
     simp only [hwl]
-    exact tendsto_const_nhds.sub (tendsto_finset_sum _ fun i _ => (hconv i).2.2)
+    exact tendsto_const_nhds.sub (tendsto_finsetSum _ fun i _ => (hconv i).2.2)
   exact hlim.congr' hev
 
 theorem arLim_exists_eq : Top.Given → PtsIntegrableStatement → ∀ (K : Type) [Fintype K] (J : K → Type) [∀ k, Fintype (J k)] (II : IntersectionSystem) (Ψ : Type) [Fintype Ψ] (Ω : Type) [Field Ω] [Algebra ℚ Ω] (W : Ψ → Type) [∀ τ, AddCommGroup (W τ)] [∀ τ, Module Ω (W τ)] (D : ComponentData II Ψ K J Ω W) (Hd : HodgeData D) (M M' : XModel D) (S : LogLogRegularisationSetting M D.Xo (muLine Hd)) (S₁ : LogLogRegularisationSetting M' D.Xo (muLine Hd)) (B : ℕ), IsFullIntersectionSystem II → S.IsTied → S₁.IsTied → ArLimExists Hd S B ∧ arLim Hd S B = arLim Hd S₁ B := by

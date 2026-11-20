@@ -94,7 +94,7 @@ theorem fix_col (hL : Inv e ν L) {l : kˣ} (hl : valuation k (l : k) = 1) (hν 
     exact (continuous_id.matrix_elem i _).continuousAt.mul (continuousAt_pi.1 cc j)
   · refine continuousAt_pi.2 fun i => continuousAt_pi.2 fun j => continuousAt_const.mul ?_
     change ContinuousAt (fun y : Matrix (Fin n) (Fin d) k => ∑ r, c y r * y r j) X₀
-    exact tendsto_finset_sum Finset.univ fun r _ => (continuousAt_pi.1 cc r).mul (continuous_id.matrix_elem r j).continuousAt
+    exact tendsto_finsetSum Finset.univ fun r _ => (continuousAt_pi.1 cc r).mul (continuous_id.matrix_elem r j).continuousAt
   · rw [vecMulVec_mul, mul_vecMulVec, mulVec_single_one]
     rfl
 

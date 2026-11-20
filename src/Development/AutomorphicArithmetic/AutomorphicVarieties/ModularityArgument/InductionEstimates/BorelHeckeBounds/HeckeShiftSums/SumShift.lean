@@ -167,5 +167,5 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.kT :
       simp only [A]
       rw [finsum_eq_sum_of_support_subset (s := (hfin x).toFinset) _ (by rw [Set.Finite.coe_toFinset]; exact hsupp w hw x)]
     simp only [e _ (hrz _), e ind hind]
-    refine tendsto_const_nhds.sub (tendsto_finset_sum _ fun q _ => ?_)
+    refine tendsto_const_nhds.sub (tendsto_finsetSum _ fun q _ => ?_)
     exact (ramp_lim T _).smul_const _

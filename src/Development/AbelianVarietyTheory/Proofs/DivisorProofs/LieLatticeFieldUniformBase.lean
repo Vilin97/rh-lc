@@ -110,9 +110,9 @@ theorem limit_mem {n a g rk : ℕ} (ha : a ≤ n) {τ₀ : (Fin n → ℂ) → M
       (f := fun z => τ₀ z *ᵥ fun i => (m' i : ℂ)) ?_ ?_)) Dn
     · refine continuousAt_pi.2 fun k => ?_
       simp only [Matrix.mulVec, dotProduct]
-      exact tendsto_finset_sum _ fun l _ => ContinuousAt.mul
+      exact tendsto_finsetSum _ fun l _ => ContinuousAt.mul
         ((hP.holo k l).continuousOn.continuousAt (hball ▸ Metric.isOpen_ball.mem_nhds hz₀)) continuousAt_const
-    · refine tendsto_finset_sum _ fun i _ => ?_
+    · refine tendsto_finsetSum _ fun i _ => ?_
       by_cases hi : z₀ (Fin.castLE ha i) = 0
       · simp only [hb i hi, smul_zero]
         exact tendsto_const_nhds

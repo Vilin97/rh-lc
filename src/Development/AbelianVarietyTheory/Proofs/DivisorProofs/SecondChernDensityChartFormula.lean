@@ -178,7 +178,7 @@ theorem continuousAt_chTwo (h : MContDiffAt ∞ H z) (hu : IsUnit (H z).det) (a 
   have hc (ξ η : V n) (i j : Fin r) : ContinuousAt (fun w => curv H w ξ η i j) z :=
     (h.curv (j := 0) hu (by norm_cast) ξ η i j).continuousAt
   simp only [chTwo, HermFrame.wedge]
-  refine continuousAt_const.mul (tendsto_finset_sum _ fun i _ => tendsto_finset_sum _ fun j _ => ?_)
+  refine continuousAt_const.mul (tendsto_finsetSum _ fun i _ => tendsto_finsetSum _ fun j _ => ?_)
   exact ((((hc ..).mul (hc ..)).add ((hc ..).mul (hc ..))).sub ((hc ..).mul (hc ..))).sub ((hc ..).mul (hc ..))
 
 end Curv
@@ -266,7 +266,7 @@ theorem continuousOn_ch2Dens (H : h.IsCInf) (hφ : φ.IsCInf) (c : AlgChart p σ
       (chernMat φ c (c.e.symm w))) v := by
     unfold secondChernDensity
     refine (Complex.continuous_re.continuousAt.comp ?_).neg.div_const _
-    refine tendsto_finset_sum _ fun s _ => tendsto_finset_sum _ fun t _ => ?_
+    refine tendsto_finsetSum _ fun s _ => tendsto_finsetSum _ fun t _ => ?_
     exact continuousAt_const.mul ((continuousAt_chTwo hK (h.posDef _ _ ha).det_pos.ne'.isUnit _ _ _ _).mul
       (tendsto_finset_prod _ fun i _ => continuousAt_pi.1 (continuousAt_pi.1 hA _) _))
   refine (hc.congr ?_).continuousWithinAt

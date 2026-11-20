@@ -196,7 +196,7 @@ theorem core (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [Algebra ℚ Ω] (W
       ht0.comp hφ.tendsto_atTop
     have h1 : Filter.Tendsto (fun k => (∑ x, Yr (φ k) s x) i) Filter.atTop (nhds ((∑ x, Y s x) i)) := by
       simp only [Finset.sum_apply]
-      refine tendsto_finset_sum _ fun x _ => ?_
+      refine tendsto_finsetSum _ fun x _ => ?_
       rw [tendsto_iff_norm_sub_tendsto_zero]
       refine squeeze_zero (fun _ => norm_nonneg _) (fun k => ?_) hφ0
       rw [norm_sub_rev]; exact hYap s x i (φ k)

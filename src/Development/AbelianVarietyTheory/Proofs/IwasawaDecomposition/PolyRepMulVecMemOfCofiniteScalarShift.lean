@@ -33,7 +33,7 @@ theorem mulVec_mem_of_cofinite_shift : ∀ {n : ℕ} {ι : Type} [Fintype ι] [D
   have hgc : ContinuousAt g 0 := by
     rw [continuousAt_pi]
     intro i
-    apply tendsto_finset_sum
+    apply tendsto_finsetSum
     intro j _
     exact (((MvPolynomial.continuous_eval (Q i j)).continuousAt).comp hxc).mul continuousAt_const
 

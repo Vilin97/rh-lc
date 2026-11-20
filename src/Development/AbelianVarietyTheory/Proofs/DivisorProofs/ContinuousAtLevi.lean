@@ -32,7 +32,7 @@ theorem continuousAt_levi {g : V D → ℂ} {x : V D} (hg : ContDiffAt ℝ 2 g x
     exact ((h4.clm_apply continuousAt_const).sub
       (continuousAt_const.mul (h4.clm_apply continuousAt_const))).div_const 2
   unfold leviV
-  exact tendsto_finset_sum _ fun j _ => tendsto_finset_sum _ fun l _ =>
+  exact tendsto_finsetSum _ fun j _ => tendsto_finsetSum _ fun l _ =>
     ((h3 j l).mul continuousAt_const).mul continuousAt_const
 
 theorem ae_mem [IsDomain k] [IsIntegral X] (hσ : Function.Injective σ) (c : AlgChart p σ D)

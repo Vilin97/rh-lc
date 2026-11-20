@@ -62,7 +62,7 @@ theorem exists_open_injOn :
     (hy U f).2.continuousOn.continuousAt (hCo.mem_nhds hb₀C)
   let F : (Fin m → ℂ) × (Fin m → ℂ) → ℂ := fun q => ∑ p ∈ s, valAt' (y q.1) U p.1 * valAt' (y q.2) U p.2
   have hF : ContinuousAt F (b₀, b₀) := by
-    refine tendsto_finset_sum _ fun p _ => ?_
+    refine tendsto_finsetSum _ fun p _ => ?_
     exact ((hc p.1).comp_of_eq continuousAt_fst rfl).mul ((hc p.2).comp_of_eq continuousAt_snd rfl)
   have hF0 : F (b₀, b₀) ≠ 0 := by
     simp only [F, ← valAt'_mul, ← valAt'_sum, hs1, valAt'_one _ h₀]

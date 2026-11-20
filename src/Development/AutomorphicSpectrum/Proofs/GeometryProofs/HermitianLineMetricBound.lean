@@ -146,7 +146,7 @@ theorem local_bound : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Sp Ω �
     exact (hz.1 k).imp fun c hc => hc.ne_zero
   have hsum : ContinuousWithinAt (fun w : (Σ k, J k) → ℂ => ∑ k, (A.a k : ℝ) * Real.log ‖w ⟨k, c₁ k⟩‖) S₀ w₀ := by
     refine ContinuousAt.continuousWithinAt ?_
-    refine tendsto_finset_sum _ fun k _ => ?_
+    refine tendsto_finsetSum _ fun k _ => ?_
     refine ContinuousAt.mul continuousAt_const ?_
     exact ((continuous_apply _).continuousAt.norm).log (norm_ne_zero_iff.2 (hc₁' k))
   have hD : ContinuousWithinAt D S₀ w₀ :=

@@ -128,7 +128,7 @@ theorem PositivityTheory.Xgp.t_per_int : ∀ (e : ℕ) (X : Type) [TopologicalSp
     have hcd : ContinuousAt (locDens A (fun _ => sumPot (fun _ => 1) pot) k) (A.chart k x) := by
       have h1 : ContinuousAt (fun y => ∑ w : Fin e → Ψ × Fin N, (∏ _i : Fin e, (1 : ℝ)) *
           locDens A (fun i => pot (w i)) k y) (A.chart k x) :=
-        tendsto_finset_sum _ fun w _ => continuousAt_const.mul
+        tendsto_finsetSum _ fun w _ => continuousAt_const.mul
           (dens_cont A U hU _ _ (fun i => hth (w i)) (fun i => hph (w i)) k _ hyt (by rwa [hsx]))
       refine h1.congr ?_
       filter_upwards [((A.chart k).isOpen_inter_preimage_symm hU).mem_nhds ⟨hyt, show _ ∈ U by rwa [hsx]⟩] with y hy

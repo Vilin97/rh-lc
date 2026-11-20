@@ -137,14 +137,14 @@ theorem exists_rho_pos {w : W} (h : ∃ l, 0 < f l w) : ∃ l, 0 < rho f l w := 
 
 theorem rho_cont [TopologicalSpace W] {w : W} (hc : ∀ l, ContinuousAt (f l) w) (l : Λ) :
     ContinuousAt (rho f l) w :=
-  continuousAt_const.max ((continuousAt_const.mul (hc l)).sub (tendsto_finset_sum _ fun m _ => hc m))
+  continuousAt_const.max ((continuousAt_const.mul (hc l)).sub (tendsto_finsetSum _ fun m _ => hc m))
 
 theorem rho_eventually [TopologicalSpace W] {w : W} (hc : ∀ l, ContinuousAt (f l) w) (hf : ∀ l, 0 ≤ f l w)
     (h : ∃ l, 0 < f l w) {l : Λ} (hl : f l w = 0) : ∀ᶠ v in 𝓝 w, rho f l v = 0 := by
   obtain ⟨l₀, h₀⟩ := h
   have hs : 0 < ∑ m, f m w := Finset.sum_pos' (fun m _ => hf m) ⟨l₀, Finset.mem_univ _, h₀⟩
   have h1 : ContinuousAt (fun v => ((Fintype.card Λ : ℝ) + 1) * f l v - ∑ m, f m v) w :=
-    (continuousAt_const.mul (hc l)).sub (tendsto_finset_sum _ fun m _ => hc m)
+    (continuousAt_const.mul (hc l)).sub (tendsto_finsetSum _ fun m _ => hc m)
   have h2 := h1.eventually_lt (continuousAt_const (y := (0 : ℝ))) (by simp only [hl]; linarith)
   exact h2.mono fun v hv => max_eq_left hv.le
 

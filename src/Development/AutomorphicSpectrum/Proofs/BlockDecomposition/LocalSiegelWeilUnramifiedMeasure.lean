@@ -205,7 +205,7 @@ theorem GlobalTheory.CompanionTheory.AvgFree.bad_density : ∀ (F E : Type) [Fie
     fun j => ∑ p ∈ S, (n : ℝ≥0) * (θ p ^ (M - 2 * n)) ^ j, ?_, ?_, ?_⟩
   · have h1 : Filter.Tendsto (fun j : ℕ => ∑ p ∈ S, (n : ℝ≥0) * (θ p ^ (M - 2 * n)) ^ j) Filter.atTop
         (nhds (∑ p ∈ S, (n : ℝ≥0) * 0)) :=
-      tendsto_finset_sum _ fun p hpS => tendsto_const_nhds.mul
+      tendsto_finsetSum _ fun p hpS => tendsto_const_nhds.mul
         (NNReal.tendsto_pow_atTop_nhds_zero_of_lt_one (pow_lt_one₀ zero_le' (hθ p hpS).1 (by omega)))
     simpa using h1
   · intro j

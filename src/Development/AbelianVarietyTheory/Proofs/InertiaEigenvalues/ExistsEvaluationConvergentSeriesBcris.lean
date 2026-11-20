@@ -196,7 +196,7 @@ theorem exists_eval : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAin
     have hlim : Tendsto (fun M : ℕ => Polynomial.eval₂ c (μ s) (trunc M (a i)) - ∑ k ∈ Finset.range m,
         c (coeff k (Polynomial.aeval (C ζ * exp ↥LL.1 - 1) (trunc M (a i)))) * τ ^ k) atTop
         (nhds (ev c (μ s) (a i) - ∑ k ∈ Finset.range m, c (coeff k e) * τ ^ k)) := by
-      refine (tendsto_ev hc' (hμ s) ((conv_iff_sc _).1 (ha i))).sub (tendsto_finset_sum _ fun k _ => ?_)
+      refine (tendsto_ev hc' (hμ s) ((conv_iff_sc _).1 (ha i))).sub (tendsto_finsetSum _ fun k _ => ?_)
       exact ((hc'.continuous.tendsto _).comp (tendsto_subtype_rng.2 (he k))).mul_const _
     have hmem := (hcl ι m).mem_of_tendsto hlim (Eventually.of_forall fun M => by
       have h := GlobalTheory.T.polynomial_teichmullerRoot_taylor_modFil l P AI T LL s ζ ι hζ (trunc M (a i)) m

@@ -50,8 +50,8 @@ theorem sobO_sub_tendsto_zero : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), I
     intro l
     simp only [wordAct_heisDer_sub hψ hθ (hu _) hf l, GlobalTheory.Size.l2O]
     exact eLpNorm_sub_tendsto_of_unif _ (by rw [Measure.restrict_apply_univ]; exact hμ.2.2) _ _ (hl l)
-  have := tendsto_finset_sum (Finset.range (d + 1)) fun k _ =>
-    tendsto_finset_sum (Finset.univ : Finset (Fin k → D.what₂.Tau × Fin T.rank × Fin S.rank × Bool))
+  have := tendsto_finsetSum (Finset.range (d + 1)) fun k _ =>
+    tendsto_finsetSum (Finset.univ : Finset (Fin k → D.what₂.Tau × Fin T.rank × Fin S.rank × Bool))
       fun a _ => key (List.ofFn a)
   simp only [Finset.sum_const_zero] at this
   exact this

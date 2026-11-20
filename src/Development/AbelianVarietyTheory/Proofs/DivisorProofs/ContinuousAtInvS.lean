@@ -135,9 +135,9 @@ theorem continuousAt_invS {y : AF F} (h1 : ∀ w ∈ S₁, ci w y ≠ 0) (h2 : �
     ContinuousAt (invS S₁ S₂) y := by
   unfold invS
   refine ContinuousAt.add ?_ ?_
-  · exact tendsto_finset_sum S₁ fun w hw =>
+  · exact tendsto_finsetSum S₁ fun w hw =>
       ((continuous_sglI w).continuousAt.comp ((continuousAt_inv₀ (h1 w hw)).comp (continuous_ci w).continuousAt))
-  · exact tendsto_finset_sum S₂ fun v hv =>
+  · exact tendsto_finsetSum S₂ fun v hv =>
       ((continuous_sglF v).continuousAt.comp ((continuousAt_inv₀ (h2 v hv)).comp (continuous_cf v).continuousAt))
 
 end GlobalTheory.InvIdem

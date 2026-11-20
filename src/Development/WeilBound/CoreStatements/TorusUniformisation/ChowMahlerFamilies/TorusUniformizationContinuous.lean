@@ -302,7 +302,7 @@ theorem PositivityTheory.Xgn.torus_uniformization_continuous : ∀ (X : Scheme.{
       (fun z hz => (key z hz).1 i j)).continuousAt hN
   refine continuousAt_pi.2 fun a => continuousAt_pi.2 fun b => ?_
   have hcont : ContinuousAt (fun z => ∑ i, ∑ j, starRingEnd ℂ (ev V (c a i) z) * ev V (c b j) z * F i j (w z)) z₀ := by
-    refine tendsto_finset_sum _ fun i _ => tendsto_finset_sum _ fun j _ => ?_
+    refine tendsto_finsetSum _ fun i _ => tendsto_finsetSum _ fun j _ => ?_
     exact ((Complex.continuous_conj.continuousAt.comp (ev_contAt V _ z₀ hzV)).mul (ev_contAt V _ z₀ hzV)).mul (hFc i j)
   refine hcont.congr ?_
   filter_upwards [hN] with z hz

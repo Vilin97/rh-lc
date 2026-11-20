@@ -92,7 +92,7 @@ theorem UpperTheory.V.Z.Tf.GaloisFromTraceFormula.asmTh_of :
         (fun w hw => (((ht _ _ (hab i) T hT hTZ e₁ e₂).2 k).2 w hw).2)
         (fun w hw => (((ht _ _ (Nat.add_zero n) T hT hTZ e₁ e₂).2 k).2 w hw).2)]
       simp [Φ]
-  have hsum := tendsto_finset_sum Finset.univ fun i _ => hterm i
+  have hsum := tendsto_finsetSum Finset.univ fun i _ => hterm i
   have hzero : ∀ k, 1 ≤ k → ∑ i, ((sg i : ℤ) : ℂ) * geomSt2 S (l₁ i) (l₂ i) (Φ _ _ (hab i) k) = 0 := fun k hk => by
     have h1 := hid S hS' K' (famU Z T f e₁ e₂ k) (fun a' => if h : a' + (n - a') = n then Φ a' (n - a') h k else 0) hK
       (hUv T hT hTZ e₁ e₂ k).1 fun a' ha' => by

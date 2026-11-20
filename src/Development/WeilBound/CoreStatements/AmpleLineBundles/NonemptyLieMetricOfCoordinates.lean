@@ -95,7 +95,7 @@ theorem nonempty_lie_metric_of_coordinates : ∀ (X : Scheme.{0}) (Ω : Type) [F
       have hc : ∀ l, ContinuousAt (f l) w₀ := fun l => wt_cont _ _ (hne h₀)
       refine ContinuousWithinAt.mono (t := {w | ∃ z : Sp ℂ ⟶ X, CoordsAt ξ y z w}) ?_
         fun w ⟨z, _, _, h, _⟩ => ⟨z, h⟩
-      refine tendsto_finset_sum _ fun l _ => ?_
+      refine tendsto_finsetSum _ fun l _ => ?_
       by_cases hl : f l w₀ = 0
       · have h1 := rho_eventually f hc (hf _) (pos h₀) hl
         refine (ContinuousAt.continuousWithinAt ((continuousAt_const (y := (0 : ℂ))).congr (h1.mono fun v hv => ?_)))
@@ -103,7 +103,7 @@ theorem nonempty_lie_metric_of_coordinates : ∀ (X : Scheme.{0}) (Ω : Type) [F
       · have hfr := frame h₀ l hl
         refine ContinuousWithinAt.mul
           (Complex.continuous_ofReal.continuousAt.comp (rho_cont f hc l)).continuousWithinAt
-          (tendsto_finset_sum _ fun i _ => ContinuousWithinAt.mul ?_ ?_)
+          (tendsto_finsetSum _ fun i _ => ContinuousWithinAt.mul ?_ ?_)
         · exact Complex.continuous_conj.continuousAt.comp_continuousWithinAt
             (vl_cont hall tie h₀ (co_val hξ M _ z₀ _ hfr ha i))
         · exact vl_cont hall tie h₀ (co_val hξ M _ z₀ _ hfr hb i)

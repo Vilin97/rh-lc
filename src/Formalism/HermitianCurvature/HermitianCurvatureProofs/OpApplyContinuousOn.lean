@@ -849,9 +849,9 @@ theorem formLimit_top (Cb : ℝ) : ∃ Cc : ℝ, ∀ (Wp Wq : Type) [NormedAddCo
       exact hc₂ P0.k P0.r Wp Wq p.T.base p.ν' p.m₀ q _ cut nf fib o κ Dop (ε * δ)
         (A - 2 * ((P0.r : ℝ) + 1) * o) bF hfib hIn (mul_pos hε hδ) hFv hFck hbF hcut'
         (hmono c₂ (le_max_right _ _) _ (by linarith [hthr]))
-    apply tendsto_finset_sum
+    apply tendsto_finsetSum
     intro e _
-    apply tendsto_finset_sum
+    apply tendsto_finsetSum
     intro ρ _
     apply Tendsto.const_mul
     have hcomp : ∀ q, Tendsto (fun n => (p.TP.E ρ).comp

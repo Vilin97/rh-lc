@@ -67,7 +67,7 @@ theorem UpperTheory.V.Z.IntegralApplyAeEq.traceSm :
     have := (corLim M _ hN _ (e i) _ (2 * T) cc sc k1).2
     rw [n3, map_one, one_mul, k2] at this
     exact this.comp (tendsto_id.const_mul_atTop two_pos)
-  have tot := f2.add ((tendsto_finset_sum Finset.univ fun i _ => lim i).const_mul (1 / 2 : ℂ))
+  have tot := f2.add ((tendsto_finsetSum Finset.univ fun i _ => lim i).const_mul (1 / 2 : ℂ))
   rw [zero_add] at tot
   rw [LinearMap.trace_eq_sum_inner _ e]
   refine le_of_tendsto ((tendsto_const_nhds.sub tot).norm) ?_

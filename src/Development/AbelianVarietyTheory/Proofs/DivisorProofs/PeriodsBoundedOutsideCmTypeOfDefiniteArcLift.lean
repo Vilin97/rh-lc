@@ -27,7 +27,7 @@ theorem tendsto_of_inv_mulVec_span {α : Type} {l : Filter α} {N n : ℕ} (M : 
       rw [this, Pi.single_apply, Matrix.one_apply]
     simp only [e]
     rw [lim]
-    exact tendsto_finset_sum _ fun j _ => ((ht j).apply_nhds a').const_mul _
+    exact tendsto_finsetSum _ fun j _ => ((ht j).apply_nhds a').const_mul _
   have hRi : Tendsto (fun w => ((M w)⁻¹ * W)⁻¹) l (𝓝 1) := by
     have h0 : ContinuousAt Ring.inverse (1 : Matrix (Fin N) (Fin N) ℂ).det := by
       rw [Matrix.det_one, Ring.inverse_eq_inv']

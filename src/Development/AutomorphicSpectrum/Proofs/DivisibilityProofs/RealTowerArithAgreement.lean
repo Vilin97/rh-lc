@@ -305,7 +305,7 @@ theorem exists_lim_arMono (hL : ReciprocityTheory.ChartRestriction.G.AI.I2.Metri
           (fun r a => (rootC (w r) a : ℝ)) / ((M.δ : ℝ) * (M.kA : ℝ) ^ m none))) := by
       refine Tendsto.div_const ?_ _
       simp only [PB.polar]
-      exact tendsto_finset_sum _ fun v _ => ((hconv v).const_mul _).const_mul _
+      exact tendsto_finsetSum _ fun v _ => ((hconv v).const_mul _).const_mul _
     refine ⟨_, h1.congr' ?_⟩
     filter_upwards [Ioc_mem_nhdsGT h0] with t ht
     have e : (fun v => (R.Re.deg : ℝ) * R.Re.num II t v) =
@@ -343,7 +343,7 @@ theorem arith_degrees : PB.Inputs → ∀ II : IntersectionSystem, IsFullInterse
   have h2 : Tendsto (fun t => eval (PB.gapS (fun x => lam x.1 x.2) (s / M.kA)) (R.Re.FT II t)) (𝓝[>] 0)
       (𝓝 (eval (PB.gapS (fun x => lam x.1 x.2) (s / M.kA)) (R.Re.PB II))) := by
     simp only [PB.Realis.FT, PB.Realis.PB, eval_formPoly]
-    exact tendsto_finset_sum _ fun v _ => (hconv v).mul_const _
+    exact tendsto_finsetSum _ fun v _ => (hconv v).mul_const _
   refine tendsto_nhds_unique (h1.congr' ?_) h2
   filter_upwards [Ioc_mem_nhdsGT h0] with t ht
   exact num_eq hL hII R lam s t ht.1 ht.2

@@ -36,7 +36,7 @@ theorem IsKaehlerForm.bound_ball {k : Type} [CommRing k] {Y : Scheme.{0}} {p : Y
   have hg2 : ContDiffAt ℝ 2 g (c.e y) := (hgc.contDiffAt (hOo.mem_nhds hv)).of_le ENat.LEInfty.out
   set N : ReciprocityTheory.L2DbarEstimates.V d → ℝ := fun w => ∑ j, ∑ k, ‖ReciprocityTheory.L2DbarEstimates.wd d j (ReciprocityTheory.L2DbarEstimates.wdb d k g) w‖ with hN
   have hNc : ContinuousAt N (c.e y) :=
-    tendsto_finset_sum _ fun j _ => tendsto_finset_sum _ fun k _ =>
+    tendsto_finsetSum _ fun j _ => tendsto_finsetSum _ fun k _ =>
       (continuousAt_wd_wdb hg2 j k).norm
   obtain ⟨δ₁, hδ₁, hb₁⟩ := Metric.continuousAt_iff.1 hNc 1 one_pos
   obtain ⟨δ₂, hδ₂, hb₂⟩ := Metric.isOpen_iff.1 hOo _ hv

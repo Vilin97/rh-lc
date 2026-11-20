@@ -32,7 +32,7 @@ theorem continuous_section_polynomial_growth_of_isProper : ∀ (Y : Scheme.{0}) 
   have hn := (isOpen_ptsIn W).mem_nhds hW₀
   let F : CxPts p (RingHom.id ℂ) → ℝ := fun y => (∑ k, ‖ev p (RingHom.id ℂ) W (w k) y‖) * ‖s j y‖
   have hF : ContinuousAt F y₀ :=
-    (tendsto_finset_sum _ fun k _ => ((continuousOn_ev (w k)).continuousAt hn).norm).mul
+    (tendsto_finsetSum _ fun k _ => ((continuousOn_ev (w k)).continuousAt hn).norm).mul
       ((hc j).continuousAt ((isOpen_ptsIn _).mem_nhds hj)).norm
   refine ⟨|F y₀| + 1, m, by positivity, ?_⟩
   filter_upwards [hn, hF.eventually (eventually_le_nhds (lt_of_le_of_lt (le_abs_self _) (lt_add_one |F y₀|)))]

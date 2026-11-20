@@ -125,7 +125,7 @@ theorem GlobalTheory.HeckeEx.mem_SS_of_dom : ∀ (E : Type) [Field E] [NumberFie
   have hBt : Filter.Tendsto Bt Filter.atTop (nhds 0) := by
     have : (0 : ℝ) = ∑ j : I₀, ∑ s ∈ (S j).attach, (0 : ℝ) := by simp
     rw [this]
-    refine tendsto_finset_sum _ fun j _ => tendsto_finset_sum _ fun s _ => ?_
+    refine tendsto_finsetSum _ fun j _ => tendsto_finsetSum _ fun s _ => ?_
     have h := hS j s.1 s.2
     let v : Fin r → E := (N : E) • ((s.1 : Matrix (Fin r) (Fin r) E) *ᵥ ξ)
     have hv : (X' j).IsIso v := by

@@ -102,7 +102,7 @@ theorem continuousAt_avgChar (m : ℤ) (Θ' : SUJ ε → ℂ)
     (hΘ : ∀ g : SUJ ε, IsRegSS (suMat ε g) → ContinuousAt Θ' g) (g : SUJ ε) (hg : IsRegSS (suMat ε g)) :
     ContinuousAt (avgChar ε m Θ') g := by
   unfold avgChar
-  refine continuousAt_const.mul (tendsto_finset_sum _ fun j _ => ?_)
+  refine continuousAt_const.mul (tendsto_finsetSum _ fun j _ => ?_)
   have h : ContinuousAt (fun x : SUJ ε => Θ' (cen ε j * x)) g :=
     ContinuousAt.comp (f := fun x : SUJ ε => cen ε j * x)
       (hΘ _ (isRegSS_unitScalar_mul ε (ZMod.toCircle j)⁻¹ (g : UJ ε) hg))

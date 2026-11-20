@@ -39,7 +39,7 @@ theorem exists_frame_change : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
         simp only [← map_smul, ← map_sum]
       exact congrArg _ (pi_eq_sum_univ' z)
     simp only [this]
-    refine tendsto_finset_sum _ fun j _ => ContinuousAt.const_smul ?_ (z j)
+    refine tendsto_finsetSum _ fun j _ => ContinuousAt.const_smul ?_ (z j)
     exact continuousAt_dir hol hu (hexp u hu).2.2.2.2 (fun b hb => (hh b hb).2 j) (continuousAt_snd (fun a =>
       ((harc.1.2 a).differentiableAt (Metric.isOpen_ball.mem_nhds (Metric.ball_subset_ball hρr hu))).continuousAt) _)
   · obtain ⟨hu1, -, hu2, -, hu3⟩ := hexp u hu

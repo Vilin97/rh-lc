@@ -207,7 +207,7 @@ theorem tendsto_l2A_diffQuot : ∀ (F : Type) [Field F] [NumberField F] [Inverti
   simp only [e]
   have hlim : Filter.Tendsto (fun n => (m : ENNReal) * ∑ i, (∫⁻ x, ‖u n i x‖ₑ ^ 2) * ∫⁻ y, ‖g i y‖ₑ ^ 2 ∂μ)
       Filter.atTop (nhds 0) := by
-    have h1 := tendsto_finset_sum (Finset.univ : Finset (Fin m)) fun i _ =>
+    have h1 := tendsto_finsetSum (Finset.univ : Finset (Fin m)) fun i _ =>
       ENNReal.Tendsto.mul_const (hu i) (Or.inr (hG i))
     have h2 := ENNReal.Tendsto.const_mul (a := (m : ENNReal)) h1 (Or.inr (ENNReal.natCast_ne_top m))
     simpa using h2

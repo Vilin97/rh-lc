@@ -34,7 +34,7 @@ theorem contAt_act {E : Type} [Field E] [NumberField E] [IsCMField E] {n a g : �
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_smul]
   rw [e]
-  refine tendsto_finset_sum _ fun i _ => ?_
+  refine tendsto_finsetSum _ fun i _ => ?_
   have h1 : ContinuousAt (fun z => L.B z c' (Pi.single i 1)) 0 :=
     (L.B_hol c' _).continuousOn.continuousAt (Metric.isOpen_ball.mem_nhds h0ball)
   exact ((continuous_apply i).continuousAt.comp ht).smul h1
@@ -79,10 +79,10 @@ theorem limit_of_data : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
       funext z
       exact ((hcf τ) (Fin g → ℂ) (L.B z)).1 _
     rw [e]
-    refine tendsto_finset_sum _ fun e _ => ?_
+    refine tendsto_finsetSum _ fun e _ => ?_
     exact (contAt_act L e _ (hs (y a')).1).tendsto.const_smul _
   have hqc : ∀ τ c, ContinuousAt (fun z => qt τ z c) 0 := fun τ c =>
-    tendsto_finset_sum _ fun j _ => (hbc τ j).tendsto.const_smul _
+    tendsto_finsetSum _ fun j _ => (hbc τ j).tendsto.const_smul _
   have hFc : ∀ τ i, ContinuousAt (fun z => F τ z i) 0 := by
     intro τ i
     refine Fin.addCases (fun a' => ?_) (fun c => ?_) i
@@ -159,7 +159,7 @@ theorem limit_of_data : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
     Complex.continuous_re.continuousAt.comp (hQdc τ)
   let Φ : (Fin n → ℂ) → ℝ := fun z => ∑ τ, (Real.log (Qd τ z).re - Real.log (‖(Tt τ z).det‖ ^ 2))
   have hΦc : ContinuousAt Φ 0 := by
-    refine tendsto_finset_sum _ fun τ _ => ?_
+    refine tendsto_finsetSum _ fun τ _ => ?_
     exact ((hQre τ).log (hQpos τ).ne').sub ((hdetc τ).log (hTne τ).ne')
   set idx : ℕ := (Submodule.span (𝓞 E) (Set.range fun a' => (y a' : Λ))).toAddSubgroup.relIndex I.toAddSubgroup with hidxdef
   have hidx0 : idx ≠ 0 := by

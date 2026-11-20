@@ -173,7 +173,7 @@ theorem local_step (P₀ : Matrix ι ι ℝ) (h : P₀.PosDef) :
   have hconv : ∀ a b, Tendsto (fun N : ℕ => ∑ k, ((⌊(N : ℝ) * R k a⌋ : ℤ) : ℝ) / N *
       (((⌊(N : ℝ) * R k b⌋ : ℤ) : ℝ) / N)) atTop (𝓝 (G a b)) := fun a b => by
     rw [hGsum]
-    exact tendsto_finset_sum _ fun k _ => (tendsto_floor_div _).mul (tendsto_floor_div _)
+    exact tendsto_finsetSum _ fun k _ => (tendsto_floor_div _).mul (tendsto_floor_div _)
   have hev : ∀ᶠ N : ℕ in atTop, 0 < N ∧ ∀ a b, |∑ k, ((⌊(N : ℝ) * R k a⌋ : ℤ) : ℝ) / N *
       (((⌊(N : ℝ) * R k b⌋ : ℤ) : ℝ) / N) - G a b| < t :=
     (eventually_gt_atTop 0).and (eventually_all.2 fun a => eventually_all.2 fun b =>

@@ -33,5 +33,5 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Cusp.satComb :
     exact ((hc.pow i).mul_const _).const_mul a
   · obtain ⟨a, -, e⟩ := sc_const q (r + s) j
     simp only [e, Multiset.map_add (f := _), GlobalTheory.ResW.SatWordAt.esymm_add, sc_scale]
-    exact (tendsto_finset_sum _ fun p _ =>
+    exact (tendsto_finsetSum _ fun p _ =>
       ((sc_lim hq h₁ p.1).const_mul _).mul ((sc_lim hq h₂ p.2).const_mul _)).const_mul a

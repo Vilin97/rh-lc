@@ -41,7 +41,7 @@ theorem twMinor_continuousWithinAt (M : FlagModel y Ψ N j) (F : FrameData ι Ψ
     (hP : ContinuousWithinAt P S z₀) (i : Fin N) (k : K) (g : Matrix (Fin N) (Fin N) ℂ) (J : Finset (Fin N)) :
     ContinuousWithinAt (fun z => twMinor M F (β z) i k g (P z) J) S z₀ := by
   simp only [twMinor, pluck]
-  refine tendsto_finset_sum _ fun I _ => Tendsto.const_mul _ (tendsto_finset_sum _ fun m _ => Tendsto.mul ?_ ?_)
+  refine tendsto_finsetSum _ fun I _ => Tendsto.const_mul _ (tendsto_finsetSum _ fun m _ => Tendsto.mul ?_ ?_)
   · exact ContinuousWithinAt.comp (g := valAt M.x (F.u' I ⟨k, m⟩))
       (continuousWithinAt_valAt_of_regAt hz (hG.2.1 _ _).2) hβ hS
   · exact ((continuous_apply (⟨k, m⟩ : Σ k, ι k)).continuousAt.comp_continuousWithinAt hP)

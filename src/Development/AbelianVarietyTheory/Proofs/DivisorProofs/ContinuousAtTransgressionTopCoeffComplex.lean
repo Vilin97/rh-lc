@@ -61,6 +61,6 @@ theorem _root_.GlobalTheory.GoodTop.continuousAt_corrC :
     funext x
     rfl
   rw [heq]
-  exact tendsto_finset_sum _ fun j _ => hposition j
+  exact tendsto_finsetSum _ fun j _ => hposition j
 
 end GlobalTheory.GoodTop

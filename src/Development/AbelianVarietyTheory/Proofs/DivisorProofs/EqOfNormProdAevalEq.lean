@@ -178,7 +178,7 @@ theorem norm_eq_all (s t : Multiset (PadicAlgCl l))
     simp only [e]
     rw [aeval_eq_sum_range]
     simp only [Algebra.smul_def]
-    exact tendsto_finset_sum _ fun i _ =>
+    exact tendsto_finsetSum _ fun i _ =>
       (((continuous_algebraMap ℚ_[l] (PadicAlgCl l)).tendsto _).comp (hcoef i)).mul_const _
   have hs := (tendsto_multiset_prod s fun a _ => hval a).norm
   have ht := (tendsto_multiset_prod t fun a _ => hval a).norm

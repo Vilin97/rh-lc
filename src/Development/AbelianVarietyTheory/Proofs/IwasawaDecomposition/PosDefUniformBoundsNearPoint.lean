@@ -83,10 +83,10 @@ theorem posDef_uniform_bounds_nhds : ∀ (Y : Type) [TopologicalSpace Y] (n : Ty
   set D : Y → ℝ := fun y => ∑ i, ∑ j, ‖(K y - K y₀) i j‖ with hD
   have hSc : ContinuousAt S y₀ := by
     simp only [hS]
-    exact tendsto_finset_sum _ fun i _ => tendsto_finset_sum _ fun j _ => (hent i j).norm
+    exact tendsto_finsetSum _ fun i _ => tendsto_finsetSum _ fun j _ => (hent i j).norm
   have hDc : ContinuousAt D y₀ := by
     simp only [hD, Matrix.sub_apply]
-    exact tendsto_finset_sum _ fun i _ => tendsto_finset_sum _ fun j _ =>
+    exact tendsto_finsetSum _ fun i _ => tendsto_finsetSum _ fun j _ =>
       ((hent i j).sub continuousAt_const).norm
   have hD0 : D y₀ = 0 := by simp [hD]
   have hev1 : ∀ᶠ y in 𝓝 y₀, D y < m / 2 := by

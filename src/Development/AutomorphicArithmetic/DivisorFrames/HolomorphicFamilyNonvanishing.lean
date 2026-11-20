@@ -17,7 +17,7 @@ theorem UpperTheory.holomorphic_family_nonvanishing :
   have hc : ∀ u, ContinuousAt (fun z => φ i z u) z₀ := fun u =>
     (hd i u).continuousOn.continuousAt ((hB i).mem_nhds hz₀)
   have hcs : ContinuousAt (fun z => ∑ j, ε j * φ i z (c j)) z₀ :=
-    tendsto_finset_sum _ fun j _ => (continuousAt_const.mul (hc (c j)))
+    tendsto_finsetSum _ fun j _ => (continuousAt_const.mul (hc (c j)))
   have hr0 : φ i z₀ t = 0 := by
     rw [hψ]
     exact hψP t ht

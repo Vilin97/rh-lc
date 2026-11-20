@@ -188,8 +188,8 @@ theorem l2_word_tendsto (hom : IsWeilDatumO ψ S T χS χT om) (hθ : IsInfFam �
 theorem sobO_om_tendsto (hom : IsWeilDatumO ψ S T χS χT om) (hθ : IsInfFam θ) {μ : Measure (WO S T)} {𝓕 : Set (WO S T)}
     (hμ : IsCovolOne (ratL T S) μ 𝓕) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) (d : ℕ) :
     Tendsto (fun x : GA D S => sobO ψ θ μ 𝓕 d (om (x, 1) f - f)) (𝓝 1) (𝓝 0) := by
-  have := tendsto_finset_sum (Finset.range (d + 1)) fun k _ =>
-    tendsto_finset_sum (Finset.univ : Finset (Fin k → D.what₂.Tau × Fin T.rank × Fin S.rank × Bool))
+  have := tendsto_finsetSum (Finset.range (d + 1)) fun k _ =>
+    tendsto_finsetSum (Finset.univ : Finset (Fin k → D.what₂.Tau × Fin T.rank × Fin S.rank × Bool))
       fun a _ => l2_word_tendsto hom hθ hμ (List.ofFn a) f hf
   simp only [Finset.sum_const_zero] at this
   exact this

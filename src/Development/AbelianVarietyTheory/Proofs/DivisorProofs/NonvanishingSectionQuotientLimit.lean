@@ -74,7 +74,7 @@ theorem frame_extend_near_fibre : ∀ (B : Type) [TopologicalSpace B] (b₀ : B)
     refine ContinuousOn.congr ?_ heq.symm
     intro q hq
     refine ContinuousAt.continuousWithinAt ?_
-    refine tendsto_finset_sum _ fun j _ => ?_
+    refine tendsto_finsetSum _ fun j _ => ?_
     refine (frame_term_continuousAt (f j) (f j).continuous (fun v => s j (b₀, v))
       (fun q => s i q / s j q) Prod.snd continuous_snd q fun ht => ?_).tendsto
     have hjF : j ∈ F := hfin.mem_toFinset.2 ⟨q.2, ht, hq.2.2⟩

@@ -324,7 +324,7 @@ theorem limVec : PositivityTheory.Rg.BcB.SpectralAccumulation.LimVec := by
   · funext i x
     have hA : Tendsto (fun k => heckeAct h (fun j y => c k * f (φ k) j y) i x) atTop (𝓝 (heckeAct h F i x)) := by
       simp only [heckeAct, Finsupp.sum]
-      exact tendsto_finset_sum _ fun j _ => tendsto_finset_sum _ fun g _ => (hft j _).const_mul _
+      exact tendsto_finsetSum _ fun j _ => tendsto_finsetSum _ fun g _ => (hft j _).const_mul _
     have hB : ∀ k, heckeAct h (fun j y => c k * f (φ k) j y) i x = lam (φ k) h * (c k * f (φ k) i x) := by
       intro k
       have h1 : heckeAct h (f (φ k)) i x = lam (φ k) h * f (φ k) i x :=

@@ -431,7 +431,7 @@ theorem testRest_bound : ∀ (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ)
   have hlim : Tendsto (fun B : ℕ => ∑ τ, ∑ m ∈ Finset.Icc 1 (j + k),
       ∑ p ∈ (Finset.Ioc B₀ B).filter (fun p => p.Prime ∧ p ∉ bad), restTerm j p (frob p τ) m (Q τ m))
       atTop (𝓝 (∑ τ, ∑ m ∈ Finset.Icc 1 (j + k), restSum j bad frob B₀ τ m (Q τ m))) :=
-    tendsto_finset_sum _ fun τ _ => tendsto_finset_sum _ fun m _ =>
+    tendsto_finsetSum _ fun τ _ => tendsto_finsetSum _ fun m _ =>
       (GlobalTheory.T.remainder_term_summable Ψ (j + k) j bad frob τ m (Q τ m)).2 B₀
   refine le_of_tendsto hlim.abs (Eventually.of_forall fun B => ?_)
   have h := TestRest.finite_bound hj hk frob B₀ Q hB hQ

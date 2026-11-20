@@ -93,7 +93,7 @@ theorem UpperTheory.ConvolutionTheory.Ci.abs :
       (fun q q' h => Subtype.ext h)
       (fun j q => ∑ i ∈ s with a i = q.1.1, u i (d j) * C i q.1.2)
       (fun q => ∑ i ∈ s with a i = q.1.1, u' i * C i q.1.2)
-      (fun q => tendsto_finset_sum _ fun i hi =>
+      (fun q => tendsto_finsetSum _ fun i hi =>
         ((hu i (Finset.mem_filter.1 hi).1).comp hdt).mul_const _)
       (fun s₀ => by
         obtain ⟨K, hK⟩ := hb N s₀

@@ -45,7 +45,7 @@ theorem regFam_linRel : ∀ {Y : Type} (Ei : ℂ → Y → ℂ) (σ₀ : ℝ), (
     rw [regFam_eq_of_tendsto hv y₀]
     simp only [regFam_eq_of_tendsto hv]
     have hlim : Tendsto d (𝓝[≠] s) (𝓝 (v y₀ - ∑ j, c j * v (T j))) :=
-      (hv y₀).sub (tendsto_finset_sum _ fun j _ => (hv (T j)).const_mul (c j))
+      (hv y₀).sub (tendsto_finsetSum _ fun j _ => (hv (T j)).const_mul (c j))
     have h0 : Tendsto d (𝓝[≠] s) (𝓝 0) := tendsto_const_nhds.congr' (hev.mono fun t ht => ht.symm)
     exact sub_eq_zero.mp (tendsto_nhds_unique hlim h0)
   · simp [regFam_of_not hall]

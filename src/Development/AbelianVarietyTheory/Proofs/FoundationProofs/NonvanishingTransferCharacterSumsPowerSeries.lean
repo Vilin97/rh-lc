@@ -35,7 +35,7 @@ theorem exists_series_limit : ∀ (l : ℕ) [Fact l.Prime] (c : Coef l) (b : ℕ
   simp only [PowerSeries.coeff_mk]
   have ht : Filter.Tendsto (fun N => ‖g * ∑ n ∈ Finset.range M, a n N * (z - 1) ^ n - X‖) (Filter.hyperfilter ℕ)
       (nhds ‖g * ∑ n ∈ Finset.range M, y n * (z - 1) ^ n - X‖) :=
-    (((tendsto_finset_sum _ fun n _ => (hay n).mul_const _).const_mul _).sub_const _).norm
+    (((tendsto_finsetSum _ fun n _ => (hay n).mul_const _).const_mul _).sub_const _).norm
   refine le_of_tendsto ht ?_
   have hev : ∀ᶠ N in (Filter.hyperfilter ℕ : Filter ℕ), N₀ ≤ N :=
     Nat.hyperfilter_le_atTop (Filter.eventually_ge_atTop N₀)

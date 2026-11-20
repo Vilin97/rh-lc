@@ -71,7 +71,7 @@ theorem lim_HH {K : UQ} (B : InvAlg K) {ι : Type} [Fintype ι] [DecidableEq ι]
     refine Finset.sum_congr rfl fun J _ => ?_
     rw [mul_assoc, mul_div_assoc]
   simp_rw [heq]
-  exact tendsto_finset_sum _ fun J hJ => (hℓ _ (hπ J hJ)).const_mul _
+  exact tendsto_finsetSum _ fun J hJ => (hℓ _ (hπ J hJ)).const_mul _
 
 theorem sum_formula {K : UQ} (B : InvAlg K) {ι : Type} [Fintype ι] [DecidableEq ι] (e π : ι → B.A) (S : Finset ι) (a : K.O)
     (hB : B.LieReg) (ha : K.Small a) (hF : IsFrame B e π S) (ℓ : B.A → ℝ)

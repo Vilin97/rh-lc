@@ -342,7 +342,7 @@ theorem exists_gamma_of_bounded {z : T.RobbaExt ρ1} {C : ℝ} (hC : 0 ≤ C)
   have hB : 0 < B := by positivity
   set η : ℕ → ℝ := fun j => ∑ i ∈ Finset.range (N0 + 1), ‖T.coeff (X j) i - a i‖ with hηdef
   have hη : Tendsto η atTop (𝓝 0) := by
-    have := tendsto_finset_sum (Finset.range (N0 + 1)) fun i _ =>
+    have := tendsto_finsetSum (Finset.range (N0 + 1)) fun i _ =>
       ((continuous_norm.tendsto _).comp ((hlim i).sub_const (a i)))
     simpa [hηdef] using this
   have hlow : Tendsto (fun j => B ^ (1 - t) * (min (η j) B) ^ t) atTop (𝓝 0) := by

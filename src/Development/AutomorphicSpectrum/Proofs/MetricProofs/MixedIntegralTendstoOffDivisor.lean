@@ -297,7 +297,7 @@ theorem mixed_integral_tendsto_of_C2_off_divisor : ∀ (e : ℕ) (X : Type) [Top
   · have hne : Nonempty (ChartPartition A) := existsPartition A
     simp_rw [mInt_eq_integralWith A _ hne]
     unfold integralWith
-    refine tendsto_finset_sum _ fun j _ => ?_
+    refine tendsto_finsetSum _ fun j _ => ?_
     letI : MeasurableSpace X := borel X
     haveI : BorelSpace X := ⟨rfl⟩
     have hSc : IsCompact ((A.chart j) '' tsupport (hne.some.χ j)) :=
@@ -334,6 +334,6 @@ theorem mixed_integral_tendsto_of_C2_off_divisor : ∀ (e : ℕ) (X : Type) [Top
         (fun y => hne.some.χ j ((A.chart j).symm y) * GT t ((A.chart j).symm y)) hI).2
     rw [hlim]
     refine Tendsto.congr' (hfin.mono fun t h => h.symm) ?_
-    exact tendsto_finset_sum _ fun T _ => ((hterm T).2.2).const_mul _
+    exact tendsto_finsetSum _ fun T _ => ((hterm T).2.2).const_mul _
 
 end GlobalTheory.CompanionTheory.Ar.Giv

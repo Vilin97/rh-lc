@@ -247,7 +247,7 @@ theorem IsU.ep (hM : 0 < M) (hv : ‖v‖ = 1) {j : ℤ} {e : ℕ} (he : 0 < e) 
       (𝓝 (dc (SiegQ.ep M w e) (fun z => -j * lam M w e z) n)) := by
     refine (t1 n).prodMk_nhds ?_
     simp only [tc_mul d1 (d2.const_mul _), fun N => tc_mul (hg N).dU (hg N).dL, conv, cm d2, fun N => cm (hGd N)]
-    exact tendsto_finset_sum _ fun p _ => (t1 _).mul ((t2 _).const_mul _)
+    exact tendsto_finsetSum _ fun p _ => (t1 _).mul ((t2 _).const_mul _)
   have hs : ∀ N, n ≤ N → dc (F N) (fun z => -j * G N z) n = dc (F n) (fun z => -j * G n z) n := by
     intro N hN
     induction N, hN using Nat.le_induction with

@@ -36,7 +36,7 @@ theorem absSolve : AbsSolve := by
       exact h1.symm
     have hT : Tendsto (fun k => Finsupp.linearCombination ℂ (cn k) a) atTop (𝓝 (φ a)) := by
       simp only [φ, Finsupp.linearCombination_apply, Finsupp.sum]
-      apply tendsto_finset_sum
+      apply tendsto_finsetSum
       intro j _
       exact (hlim j).const_smul (a j)
     simp only [h0] at hT

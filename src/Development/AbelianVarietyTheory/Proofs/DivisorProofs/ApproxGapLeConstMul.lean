@@ -127,7 +127,7 @@ private theorem bound_gen {X : Type} [TopologicalSpace X] [CompactSpace X] {h : 
     have hc : ContinuousAt (fun x => k₀ * ψ (h x) + lv (h x) ((∏ i, f i ^ k i) / (e : Y.Fn) ^ k₀) +
         ∑ i, k i * (Q i).φ x₀ x) x₀ :=
       ((continuousAt_const.mul (hψ.comp hh.continuousAt)).add ((continuousAt_lv hw₀).comp hh.continuousAt)).add
-        (tendsto_finset_sum _ fun i _ => continuousAt_const.mul (hQc i x₀))
+        (tendsto_finsetSum _ fun i _ => continuousAt_const.mul (hQc i x₀))
     refine ⟨k₀ * ψ (h x₀) + lv (h x₀) ((∏ i, f i ^ k i) / (e : Y.Fn) ^ k₀) + ∑ i, k i * (Q i).φ x₀ x₀ + 1, ?_⟩
     filter_upwards [hc.eventually (gt_mem_nhds (lt_add_one _)), hh.continuousAt.eventually he,
       Filter.eventually_all.2 fun i => ((Q i).isOpen_U x₀).mem_nhds ((Q i).mem_U x₀)] with x h₁ h₂ h₃ hx

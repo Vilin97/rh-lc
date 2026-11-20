@@ -69,7 +69,7 @@ theorem tendsto_vdmVal : GlobalTheory.Published.ScholzeWeinsteinB → GlobalTheo
           have := left_ne_zero_of_mul hw
           exact (Set.Finite.mem_toFinset fin).2 (Int.cast_ne_zero.1 this))
       simp only [v₁]
-      have t := ((tendsto_finset_sum fin.toFinset fun w hw =>
+      have t := ((tendsto_finsetSum fin.toFinset fun w hw =>
         (ih w (hs.2 w (by simpa using hw))).const_mul (cutMult (M.isLB_pow m) s z w : ℝ)).sub
           (GlobalTheory.T.archimedean_term_tendsto_zero hX h2 hH hA D O hc hf A T H h c M I z e m s hz hs)).div_const (m : ℝ)
       convert t using 2
@@ -84,7 +84,7 @@ theorem tendsto_vdmVal : GlobalTheory.Published.ScholzeWeinsteinB → GlobalTheo
   have e₀ (R : ℝ) : vdmVal O.Y R = ∑ c, termL O c R := by
     change (arIn O.s O.Φ O.met.hm).arMix ∅ R 1 _ = _
     exact LinearMap.sum_apply _ _ _
-  refine (tendsto_finset_sum _ fun c _ => ?_ :
+  refine (tendsto_finsetSum _ fun c _ => ?_ :
     Tendsto (fun R => ∑ c, termW O c R) _ _).congr' ((eventually_ge_atTop 2).mono fun R hR =>
       ((e₀ R).trans (GlobalTheory.T.term_sum_local_eq_global hS hX h2 hH hA D O hc hf A T H h R hR)).symm)
   obtain ⟨I, hg⟩ := hI c (M c)

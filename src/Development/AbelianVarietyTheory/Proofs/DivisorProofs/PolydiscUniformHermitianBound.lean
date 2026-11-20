@@ -441,7 +441,7 @@ theorem limit_form_bounded : ∀ (n a g rk : ℕ) (ha : a ≤ n) (τ₀ : (Fin n
   · rintro _ ⟨x, rfl⟩ w
     refine null_of_tendsto F _ _ d hG _ ?_ w
     simp only [mulVecLin_apply, hSR, sum_mulVec, mulVec_sum]
-    simpa using tendsto_finset_sum (Finset.univ.filter fun i => z₀ (Fin.castLE ha i) = 0)
+    simpa using tendsto_finsetSum (Finset.univ.filter fun i => z₀ (Fin.castLE ha i) = 0)
       fun i hi => hnull i (Finset.mem_filter.1 hi).2 x
 
 end GlobalTheory.PeriodLimit

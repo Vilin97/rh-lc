@@ -134,7 +134,7 @@ theorem lipschitz_one : ∀ (L : ℕ) (φ : ZMod L → ℂ) (z : ℂ), 0 < L →
     push_cast
     simp only [ZMod.natCast_self, mul_zero, add_zero]
     ring_nf
-  have hmain := tendsto_finset_sum (Finset.range L)
+  have hmain := tendsto_finsetSum (Finset.range L)
     fun r (_ : r ∈ Finset.range L) => (T.tendsto_sum_Icc_inv_add_mul_eq_pi_div_mul_cot L z r hL hz).const_mul (φ r)
   rw [T.sum_periodic_cot_eq_qExpansion_fourier L φ z hL hz h0] at hmain
   have hT : ∑' d, g d = -2 * ↑π * Complex.I / ↑L * ∑' (m : ℕ), hat φ ↑(m + 1) *

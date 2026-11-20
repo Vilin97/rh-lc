@@ -349,7 +349,7 @@ theorem degrees (D : D7) (Y : ShimX D.what₂.Tau) (T : Real0 Y) (A : SlopeTestR
     have hc : Tendsto (fun s : ℚ => (s : ℝ)) (𝓝[>] 0) (𝓝 0) := by
       have := (Rat.continuous_coe_real.tendsto 0).mono_left (nhdsWithin_le_nhds (s := Set.Ioi 0))
       simpa using this
-    have h := ((tendsto_finset_sum Finset.univ fun σ _ => (key c σ u).2).const_mul (T.M c).κ).comp hc
+    have h := ((tendsto_finsetSum Finset.univ fun σ _ => (key c σ u).2).const_mul (T.M c).κ).comp hc
     refine h.congr' (eventually_nhdsWithin_of_forall fun s hs => ?_)
     exact ((hM B hB u s hr hs).1 c).symm
 

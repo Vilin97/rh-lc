@@ -80,7 +80,7 @@ theorem GlobalTheory.Mix.tendsto_logReg : GlobalTheory.Published.Principalisatio
         fun n : ℕ => ∑ z ∈ hS.toFinset, (Δ.mult z : ℝ) * cycInt L (fun y => Real.log (w y + 1 / ((n : ℝ) + 1))) z :=
       funext fun n => finsum_eq_sum_of_support_subset _ (hsub _)
     rw [hrw, finsum_eq_sum_of_support_subset _ (hsub _), Finset.mul_sum]
-    refine tendsto_finset_sum _ fun z hz => ?_
+    refine tendsto_finsetSum _ fun z hz => ?_
     have hz0 : Δ.mult z ≠ 0 := by simpa using hz
     have hcoh := CartierDiv.coheight_eq_one_of_mult_ne_zero hz0
     have hdz := (GlobalTheory.T.coheight_eq_one_iff_closure_dim_projective F X p e hp hdim z).1 hcoh

@@ -75,7 +75,7 @@ theorem absTheta_le_liminf (B : HSp D) {a : ℕ} {ι : Type*} {u : Filter ι} [u
   rw [ENNReal.tsum_eq_iSup_sum]
   refine iSup_le fun s => ?_
   have ht : Filter.Tendsto (fun i => ∑ ξ ∈ s, ‖φs i (invPt B h ξ)‖ₑ) u (nhds (∑ ξ ∈ s, ‖φ (invPt B h ξ)‖ₑ)) :=
-    tendsto_finset_sum s fun ξ _ => (hlim _).enorm
+    tendsto_finsetSum s fun ξ _ => (hlim _).enorm
   rw [← ht.liminf_eq]
   exact Filter.liminf_le_liminf (Filter.Eventually.of_forall fun i => ENNReal.sum_le_tsum s)
 

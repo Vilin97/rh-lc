@@ -63,7 +63,7 @@ theorem tendsto_eval_div_pow (P : Polynomial ℚ) {e : ℕ} (hP : P.natDegree �
   have h2 : Tendsto (fun n : ℕ => ∑ i ∈ Finset.range (e + 1),
       (P.coeff i : ℝ) * ((n : ℝ) ^ i / (n : ℝ) ^ e)) atTop
       (𝓝 (∑ i ∈ Finset.range (e + 1), (P.coeff i : ℝ) * (if i = e then 1 else 0))) :=
-    tendsto_finset_sum _ fun i hi =>
+    tendsto_finsetSum _ fun i hi =>
       (tendsto_pow_div_pow (Nat.lt_succ_iff.1 (Finset.mem_range.1 hi))).const_mul _
   simpa [Finset.sum_ite_eq', Finset.mem_range] using h2
 
@@ -242,7 +242,7 @@ theorem tendsto_multilinear {M : Type} [AddCommGroup M] {n : ℕ}
       (g (s.piecewise (fun _ => β) (fun _ => e)) : ℝ) * ((q : ℝ) ^ s.card / (q : ℝ) ^ n)) atTop
       (𝓝 (∑ s : Finset (Fin n), (g (s.piecewise (fun _ => β) (fun _ => e)) : ℝ) *
         (if s.card = n then 1 else 0))) :=
-    tendsto_finset_sum _ fun s _ => (tendsto_pow_div_pow (by
+    tendsto_finsetSum _ fun s _ => (tendsto_pow_div_pow (by
       simpa using s.card_le_univ)).const_mul _
   convert h4 using 2
   rw [Finset.sum_eq_single Finset.univ]

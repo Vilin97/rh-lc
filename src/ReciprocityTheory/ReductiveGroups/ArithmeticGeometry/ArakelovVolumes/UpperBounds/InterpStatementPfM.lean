@@ -318,7 +318,7 @@ theorem rhoF_cont (x0 : Frame X.Ψ r) (ho : IsOrth X x0) (Fp : Wt X.Ψ r) (ψ : 
     hψs.continuousOn.continuousAt (hO.mem_nhds hz)
   have hrh : ContinuousAt (rhF X x0) z := by
     unfold rhF
-    exact (tendsto_finset_sum _ fun τ _ => (hdm τ _).norm.log (norm_ne_zero_iff.mpr (hne τ _))).neg
+    exact (tendsto_finsetSum _ fun τ _ => (hdm τ _).norm.log (norm_ne_zero_iff.mpr (hne τ _))).neg
   have hdF : ContinuousAt (densF X x0) z := by
     unfold densF
     refine tendsto_finset_prod _ fun τ _ => tendsto_finset_prod _ fun i _ => ?_

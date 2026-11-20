@@ -281,8 +281,8 @@ theorem det_frame_ne_zero (L : LogPeriods n a g Λ) (bas : Module.Basis (Fin g �
     refine ⟨fun k => (cu k : ℂ) + ∑ j, (cv j : ℂ) * T0 0 j k, ?_⟩
     funext m
     have hF : ContinuousAt (fun z => ∑ k, ((cu k : ℂ) + ∑ j, (cv j : ℂ) * T0 z j k) * A z k m) 0 :=
-      tendsto_finset_sum _ fun k _ => ContinuousAt.mul
-        (continuousAt_const.add (tendsto_finset_sum _ fun j _ => continuousAt_const.mul (hTc j k)))
+      tendsto_finsetSum _ fun k _ => ContinuousAt.mul
+        (continuousAt_const.add (tendsto_finsetSum _ fun j _ => continuousAt_const.mul (hTc j k)))
         (hAc k m)
     have hs : ContinuousAt (fun z => L.s x z m) 0 :=
       (differentiableOn_pi.1 (L.s_hol x) m).continuousOn.continuousAt (ball_mem_nhds 0 one_pos)

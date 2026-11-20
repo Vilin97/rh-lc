@@ -68,7 +68,7 @@ theorem re_pos_of_trace_pos {β : E} (hβ : IsCMField.complexConj E β = β) (h�
     · exact le_rfl)
   have h3 : Filter.Tendsto (fun n => ∑ σ, g σ n) Filter.atTop
       (nhds (∑ σ : E →+* ℂ, if InfinitePlace.mk σ = InfinitePlace.mk τ then (τ β).re else 0)) := by
-    refine tendsto_finset_sum _ fun σ _ => ?_
+    refine tendsto_finsetSum _ fun σ _ => ?_
     simp only [g]
     split_ifs with hσ
     · exact tendsto_const_nhds

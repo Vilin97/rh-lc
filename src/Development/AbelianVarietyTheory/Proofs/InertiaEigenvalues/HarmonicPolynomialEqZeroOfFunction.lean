@@ -366,7 +366,7 @@ theorem continuousAt_lsub {σ : Type} [Fintype σ] (M : ℂ → Matrix σ σ ℂ
       rw [mul_left_comm, ← MvPolynomial.smul_eq_C_mul, map_smul, smul_eq_mul]
       rfl
     simp only [e]
-    exact tendsto_finset_sum _ fun w _ => (hM w v).mul (hp _)
+    exact tendsto_finsetSum _ fun w _ => (hM w v).mul (hp _)
 
 theorem ev_det {ι : Type} [Fintype ι] [DecidableEq ι] (X Y : Matrix ι ι ℂ) (hY : Y.det ≠ 0) :
     ∀ᶠ t in nhdsWithin (0 : ℂ) {0}ᶜ, ((1 - t) • X + t • Y).det ≠ 0 := by

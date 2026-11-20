@@ -100,8 +100,8 @@ theorem IsModelOf.bound {Nm : (K →+* ℂ) → V → ℝ} {W : Submodule (𝓞 
     (continuousOn_ev γ).continuousAt ((isOpen_ptsIn _).mem_nhds (mem_ptsIn.2 hV₃))
   have c2 : ∀ i, ContinuousAt (ev p _ (L.B.U k) ((s (gw i)).f k)) y := fun i =>
     (continuousOn_ev _).continuousAt ((isOpen_ptsIn _).mem_nhds hy)
-  have c3 : ContinuousAt S y := tendsto_finset_sum _ fun a _ =>
-    ((tendsto_finset_sum _ fun i _ => (c2 i).tendsto.const_mul _).norm.pow 2)
+  have c3 : ContinuousAt S y := tendsto_finsetSum _ fun a _ =>
+    ((tendsto_finsetSum _ fun i _ => (c2 i).tendsto.const_mul _).norm.pow 2)
   have hle : ‖ev p _ V₃ γ y‖ ^ 2 ≤ C * S y ^ τ :=
     ContinuousWithinAt.closure_le hcl (c1.norm.pow 2).continuousWithinAt
       (continuousAt_const.mul (c3.pow τ)).continuousWithinAt key

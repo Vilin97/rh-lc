@@ -97,7 +97,7 @@ theorem lseries_ne_zero_edge : ∀ (M : ℕ) (b ω : ℕ → ℂ) (C : ℝ) (Λ 
       have ht : Tendsto (fun s : ℝ => ∑ p ∈ T X, (1 : ℝ) / (p : ℝ) ^ (1 + s)) (𝓝[>] (0 : ℝ))
           (𝓝 (∑ p ∈ T X, (1 : ℝ) / (p : ℝ) ^ (1 + (0:ℝ)))) := by
         apply Tendsto.mono_left _ nhdsWithin_le_nhds
-        apply tendsto_finset_sum
+        apply tendsto_finsetSum
         intro p hp
         simp only [T, Finset.mem_filter] at hp
         have hp0 : (0 : ℝ) < p := by exact_mod_cast hp.2.1.pos

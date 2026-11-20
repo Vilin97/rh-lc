@@ -115,7 +115,7 @@ theorem tendsto_integral_kernel_mul : ∀ (k : Type) [CommRing k] (B Y : Scheme.
       rfl
     choose W hWo hyW hW using loc
     obtain ⟨T, hT⟩ := isCompact_univ.elim_finite_subcover W hWo fun y _ => Set.mem_iUnion.2 ⟨y, hyW y⟩
-    have hs := tendsto_finset_sum T fun y _ => hW y
+    have hs := tendsto_finsetSum T fun y _ => hW y
     rw [Finset.sum_const_zero] at hs
     exact tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds hs (fun t => zero_le)
       fun t => (measure_mono hT).trans (measure_biUnion_finset_le T _)

@@ -183,7 +183,7 @@ theorem cmp_one : Inputs → AvoidStatement → ∀ (II : IntersectionSystem), I
     show mInt S.A _ _ = Re.num II t c - Re.num II t c'
     simp only [Realis.num]
     rw [s₁, s₂, ← sub_div, hs, mul_div_cancel_left₀ _ hdeg]
-  have hsum := tendsto_finset_sum Finset.univ fun i (_ : i ∈ Finset.univ) => hstep i
+  have hsum := tendsto_finsetSum Finset.univ fun i (_ : i ∈ Finset.univ) => hstep i
   simp only [Finset.sum_const_zero] at hsum
   refine hsum.congr fun t => ?_
   exact (GlobalTheory.T.telescoping_coordinate_difference (σ ⊕ σ) (D + 1) (Re.num II t) _ _).symm

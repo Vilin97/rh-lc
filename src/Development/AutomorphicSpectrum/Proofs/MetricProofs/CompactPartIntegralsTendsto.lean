@@ -315,7 +315,7 @@ theorem compact_part_integrals_tendsto :
   · have h := (integrable_indicator_iff hKm).1 c1.1
     exact ((integrableOn_const_iff (by simp)).1 h).resolve_left (by simp)
   · rw [c3.2]
-    refine Tendsto.congr' ?_ (tendsto_finset_sum _ fun j _ =>
+    refine Tendsto.congr' ?_ (tendsto_finsetSum _ fun j _ =>
       cpt_chart_tendsto A hne.some Φ ΦT hU hK hKc hKU j (hc j) hpot
         (hunif j _ (cptSet_subset A hne.some hKU j) (cptSet_compact A hne.some hKc j))
         hgT hgc hgU hE hEK)

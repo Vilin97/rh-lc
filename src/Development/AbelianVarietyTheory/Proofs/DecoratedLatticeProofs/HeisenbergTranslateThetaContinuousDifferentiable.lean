@@ -292,8 +292,8 @@ theorem tendsto_word_rem (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {L : �
 theorem tendsto_supSob {ι : Type} {l : Filter ι} {h : ι → WO S T → ℂ} (k : ℕ)
     (H : ∀ m, Filter.Tendsto (fun i => supN (wordAct (heisDer ψ θ) m (h i))) l (𝓝 0)) :
     Filter.Tendsto (fun i => supSob ψ θ k (h i)) l (𝓝 0) := by
-  have := tendsto_finset_sum (Finset.range (k + 1)) fun j _ =>
-    tendsto_finset_sum (Finset.univ : Finset (Fin j → D.what₂.Tau × Fin T.rank × Fin S.rank × Bool))
+  have := tendsto_finsetSum (Finset.range (k + 1)) fun j _ =>
+    tendsto_finsetSum (Finset.univ : Finset (Fin j → D.what₂.Tau × Fin T.rank × Fin S.rank × Bool))
       fun a _ => H (List.ofFn a)
   simp only [Finset.sum_const_zero] at this
   exact this

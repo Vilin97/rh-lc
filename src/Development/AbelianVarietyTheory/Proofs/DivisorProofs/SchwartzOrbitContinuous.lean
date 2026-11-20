@@ -193,6 +193,6 @@ theorem soCont (hP : KP) : SoCont := by
     exact thetaSum_finset_sum _ _ fun j _ => hpres _ _ (hmem _ (htT j).1 (w j))
   rw [hI f hSoLim]
   refine Tendsto.congr (fun k => (hI (u k) (hSo k)).symm) ?_
-  exact tendsto_finset_sum _ fun j _ => hcont (t j) (htT j) (fun k => u k j) (f j) (hconv j).2
+  exact tendsto_finsetSum _ fun j _ => hcont (t j) (htT j) (fun k => u k j) (f j) (hconv j).2
 
 end GlobalTheory.ThKSoCont

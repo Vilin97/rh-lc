@@ -270,7 +270,7 @@ theorem curveJoint : CurveJoint := by
     have hE0 : Tendsto E (𝓝 t) (𝓝 0) := by
       have e0 : (C * ∑ w' ∈ S, (0 : ℝ)) = 0 := by simp
       rw [← e0]
-      refine Tendsto.const_mul C (tendsto_finset_sum _ fun w' _ => ?_)
+      refine Tendsto.const_mul C (tendsto_finsetSum _ fun w' _ => ?_)
       have h1 := (hD j (w' ++ w) t).continuousAt.tendsto
       have h2 := tendsto_iff_norm_sub_tendsto_zero.1 h1
       simpa only [zero_smul, sub_zero, Rw_append] using h2

@@ -91,7 +91,7 @@ theorem tendsto_zero_of_intLoc (x : Pl F → AE F E)
   have ht : Tendsto (fun v => ∑ i, GlobalTheory.LatVac.liftV v (a v i) •
       ((1 : AF F) ⊗ₜ[F] ((RingOfIntegers.basis E i : 𝓞 E) : E) : AE F E)) cofinite
       (𝓝 (∑ i, (0 : AF F) • ((1 : AF F) ⊗ₜ[F] ((RingOfIntegers.basis E i : 𝓞 E) : E) : AE F E))) :=
-    tendsto_finset_sum _ fun i _ => (tendsto_liftV (fun v => a v i) fun v => ha v i).smul_const _
+    tendsto_finsetSum _ fun i _ => (tendsto_liftV (fun v => a v i) fun v => ha v i).smul_const _
   simp only [zero_smul, Finset.sum_const_zero] at ht
   refine ht.congr' ?_
   filter_upwards [h] with v hv using (e v hv).symm

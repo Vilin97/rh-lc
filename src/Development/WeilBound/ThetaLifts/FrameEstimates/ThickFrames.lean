@@ -252,7 +252,7 @@ theorem soCont_of (hB : ThetaBasic) (hD : DomSoU) (hF : SoFin) : SoCont := by
   have e : (fun k => M.I om (∑ j, pureA F (u k j) (φ j)) h) = fun k => ∑ j, M.I om (pureA F (u k j) (ψ j)) h :=
     funext fun k => by rw [key _ (hu k), (dom_sum hB hp hdom (u k) ψ hψ fun i => (hψ i).1).2.2 h]
   rw [e]
-  exact tendsto_finset_sum _ fun j _ => (((dom_facts hB hp hdom (hψ j) (hψ j).1).2 h).tendsto _).comp (hφ j).2
+  exact tendsto_finsetSum _ fun j _ => (((dom_facts hB hp hdom (hψ j) (hψ j).1).2 h).tendsto _).comp (hφ j).2
 
 end PositivityTheory.ThKEst
 

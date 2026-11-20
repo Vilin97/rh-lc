@@ -39,8 +39,8 @@ theorem limit_indep : Hypotheses2 → HypothesesH → OnObj fun D O _ _ _ _ => �
   · intro u hu
     have hR2 : ∀ R : ℝ, Real.exp 2 ≤ R → 2 ≤ R := fun R hR =>
       le_trans (by have := Real.add_one_le_exp 2; linarith) hR
-    have hl := tendsto_finset_sum (Finset.univ : Finset O.Y.Comp) fun c _ =>
-      tendsto_finset_sum (Finset.range (dimY O.Y + 1)) fun i hi =>
+    have hl := tendsto_finsetSum (Finset.univ : Finset O.Y.Comp) fun c _ =>
+      tendsto_finsetSum (Finset.range (dimY O.Y + 1)) fun i hi =>
         GlobalTheory.T.tendsto_mixed_integral_difference_zero h2 hH D O hC hf A T H h x' B hB u hu c i (Nat.lt_succ_iff.1 (Finset.mem_range.1 hi))
     simp only [Finset.sum_const_zero] at hl
     refine (tendsto_congr' ?_).2 hl

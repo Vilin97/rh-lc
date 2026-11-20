@@ -67,7 +67,7 @@ lemma re_nonneg_of_trace (s : E)
     · exact le_rfl
   have hlim : Filter.Tendsto (fun n => ∑ φ, g φ n) Filter.atTop
       (nhds (∑ φ : E →+* ℂ, if φ = τ then (τ s).re else 0)) := by
-    refine tendsto_finset_sum _ fun φ _ => ?_
+    refine tendsto_finsetSum _ fun φ _ => ?_
     simp only [g]
     by_cases h1 : InfinitePlace.mk φ = InfinitePlace.mk τ
     · simp only [if_pos h1, mul_zero]; exact tendsto_const_nhds

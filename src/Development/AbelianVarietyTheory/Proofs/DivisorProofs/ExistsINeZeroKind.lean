@@ -217,7 +217,7 @@ theorem exists_I_ne_zero (hM : IsMatched B G X om om' R Rf) (hc : OneConst B G X
     rw [← I_eq_l hM.triple hl (h5.fam.mem hM.triple.geo.hM _), I_zero_of_finPart hM hc hco hl (h4 i).1 (h0 _ (h4 i).1) T _ h5]
     rfl
   have h4 : Tendsto (fun k => ∑ i, Tl i (s k i)) atTop (𝓝 (∑ i, Tl i (f i))) :=
-    tendsto_finset_sum _ fun i _ => ((Tl i).continuous.tendsto _).comp (h1 i).2
+    tendsto_finsetSum _ fun i _ => ((Tl i).continuous.tendsto _).comp (h1 i).2
   simp only [h3] at h4
   rw [key, zero_mul]
   exact (tendsto_nhds_unique tendsto_const_nhds h4).symm
