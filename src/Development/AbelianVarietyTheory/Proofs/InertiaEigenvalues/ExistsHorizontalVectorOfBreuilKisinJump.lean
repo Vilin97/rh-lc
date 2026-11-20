@@ -9,7 +9,7 @@ namespace GlobalTheory.BKGal.JumpDR.Horiz
 
 theorem const_mem_of_stable {R κ : Type} [CommRing R] (hR : ∀ n : ℕ, IsUnit ((n + 1 : ℕ) : R))
     (Λ : Submodule R⟦X⟧ (κ → R⟦X⟧)) (α : ℕ) (hα : ∀ h : κ → R⟦X⟧, (X : R⟦X⟧) ^ α • h ∈ Λ)
-    (hθ : ∀ v ∈ Λ, (fun k => X * PowerSeries.derivative R (v k)) ∈ Λ) {v : κ → R⟦X⟧} (hv : v ∈ Λ) :
+    (hθ : ∀ v ∈ Λ, (fun k => X * PowerSeries.derivative (R := R) (v k)) ∈ Λ) {v : κ → R⟦X⟧} (hv : v ∈ Λ) :
     (fun k => C (constantCoeff (v k))) ∈ Λ := by
   set c : κ → R⟦X⟧ := fun k => C (constantCoeff (v k))
   have key (m : ℕ) : ∃ h : κ → R⟦X⟧, c + (X : R⟦X⟧) ^ (m + 1) • h ∈ Λ := by
@@ -22,7 +22,7 @@ theorem const_mem_of_stable {R κ : Type} [CommRing R] (hR : ∀ n : ℕ, IsUnit
     | succ m ih =>
       obtain ⟨h, hh⟩ := ih
       obtain ⟨u, hu⟩ := (hR m).exists_left_inv
-      refine ⟨fun k => -(C u * PowerSeries.derivative R (h k)), ?_⟩
+      refine ⟨fun k => -(C u * PowerSeries.derivative (R := R) (h k)), ?_⟩
       convert Λ.sub_mem hh (Λ.smul_mem (C u) (hθ _ hh)) using 1
       funext k
       have hu' : (C u : R⟦X⟧) * ((m : R⟦X⟧) + 1) = 1 := by

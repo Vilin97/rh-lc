@@ -93,7 +93,7 @@ section Ser
 variable {k : Type} [CommRing k] {d : ℕ}
 
 def dSer (g : Germ.PS k 2 d) (u : Fin d → k) : MvPowerSeries (Fin 1 × Fin d) k :=
-  ∑ i, MvPowerSeries.C (u i) * Germ.ev (n := 1) ![0, Germ.pt k d 0] (MvPowerSeries.pderiv k ((0 : Fin 2), i) g)
+  ∑ i, MvPowerSeries.C (u i) * Germ.ev (n := 1) ![0, Germ.pt k d 0] (MvPowerSeries.pderiv (R := k) ((0 : Fin 2), i) g)
 
 end Ser
 

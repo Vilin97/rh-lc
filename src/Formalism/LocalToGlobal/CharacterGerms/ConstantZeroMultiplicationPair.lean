@@ -110,7 +110,7 @@ theorem zero_axis_embedding_second (μ : Fin 1 × Fin dd →₀ ℕ) (j : Fin dd
 
 theorem Sv_eq_sum (Y : FBChart C V O dd) (v : Fin dd → C) :
     Sv Y v = ∑ j, MvPowerSeries.C (v j) *
-      ev (n := 1) (![pt C dd 0, 0] : Fin 2 → Pt C 1 dd) (MvPowerSeries.pderiv C ((1 : Fin 2), j) Y.u1) := by
+      ev (n := 1) (![pt C dd 0, 0] : Fin 2 → Pt C 1 dd) (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) Y.u1) := by
   ext μ
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum]
@@ -125,11 +125,11 @@ theorem constant_zero_multiplication_pair (Y : FBChart C V O dd) : Z0 (![M2 Y, p
   · exact FirstUnitSeriesIntegrality.double_multiplication_constantCoeff Y.B.G V.l j
   · exact z0_pt 1 j
 
-theorem pderiv_second_multiplication_pair (Y : FBChart C V O dd) (k j : Fin dd) : MvPowerSeries.pderiv C ((1 : Fin 2), j) (M2 Y k) = 0 := by
-  show MvPowerSeries.pderiv C ((1 : Fin 2), j) (ev (n := 2) ![pt C dd 0] (mulL Y.B.G.F V.l k)) = 0
+theorem pderiv_second_multiplication_pair (Y : FBChart C V O dd) (k j : Fin dd) : MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) (M2 Y k) = 0 := by
+  show MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) (ev (n := 2) ![pt C dd 0] (mulL Y.B.G.F V.l k)) = 0
   rw [ZeroPointGroupLaw.pderiv_eval_single (pt C dd 0) (z0_pt 0)]
   refine Finset.sum_eq_zero fun r _ => ?_
-  rw [show MvPowerSeries.pderiv C ((1 : Fin 2), j) (pt C (n := 2) dd 0 r) = 0 from
+  rw [show MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) (pt C (n := 2) dd 0 r) = 0 from
     MvPowerSeries.pderiv_X_of_ne (fun h' => by simp at h'), mul_zero]
 
 theorem eval_multiplication_pair_zero (Y : FBChart C V O dd) (g : PS C 2 dd) :
@@ -160,9 +160,9 @@ theorem eval_point_zero_factor (M : Pt C 1 dd) (hM : ∀ j, MvPowerSeries.consta
   · exact (ev_zero (z0_1 M hM)).symm
 
 theorem eval_pderiv_first_unit_series (Y : FBChart C V O dd) (j : Fin dd) :
-    ev (n := 1) (![pt C dd 0, 0] : Fin 2 → Pt C 1 dd) (MvPowerSeries.pderiv C ((1 : Fin 2), j) Y.u1) =
-      ev (n := 1) ![mulL Y.B.G.F V.l, 0] (MvPowerSeries.pderiv C ((1 : Fin 2), j) Y.h) -
-        (V.l : C) • ev (n := 1) (![pt C dd 0, 0] : Fin 2 → Pt C 1 dd) (MvPowerSeries.pderiv C ((1 : Fin 2), j) Y.h) := by
+    ev (n := 1) (![pt C dd 0, 0] : Fin 2 → Pt C 1 dd) (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) Y.u1) =
+      ev (n := 1) ![mulL Y.B.G.F V.l, 0] (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) Y.h) -
+        (V.l : C) • ev (n := 1) (![pt C dd 0, 0] : Fin 2 → Pt C 1 dd) (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) Y.h) := by
   have hZ2 := constant_zero_multiplication_pair Y
   have hH0 : MvPowerSeries.constantCoeff (ev (n := 2) ![M2 Y, pt C dd 1] Y.h - (V.l : C) • Y.h) = 0 := by
     rw [map_sub, const_ev hZ2 (h_const Y), MvPowerSeries.smul_eq_C_mul, map_mul, h_const Y, mul_zero, sub_zero]
@@ -171,14 +171,14 @@ theorem eval_pderiv_first_unit_series (Y : FBChart C V O dd) (j : Fin dd) :
   have hEH : ev (n := 1) (![pt C dd 0, 0] : Fin 2 → Pt C 1 dd) (ev (n := 2) ![M2 Y, pt C dd 1] Y.h - (V.l : C) • Y.h) = 0 := by
     rw [ev_sub ZeroPointGroupLaw.constant_zero_first_then_zero, eval_multiplication_pair_zero, eval_point_zero_factor _ (FirstUnitSeriesIntegrality.multiplication_constantCoeff_zero Y.B.G V.l), hEh, ev_zero (z0_1 _ (FirstUnitSeriesIntegrality.multiplication_constantCoeff_zero Y.B.G V.l)),
       MvPowerSeries.smul_eq_C_mul, ev_mul ZeroPointGroupLaw.constant_zero_first_then_zero, ev_C, hEh, mul_zero, sub_zero]
-  have hD : MvPowerSeries.pderiv C ((1 : Fin 2), j) (ev (n := 2) ![M2 Y, pt C dd 1] Y.h) =
-      ev (n := 2) ![M2 Y, pt C dd 1] (MvPowerSeries.pderiv C ((1 : Fin 2), j) Y.h) := by
+  have hD : MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) (ev (n := 2) ![M2 Y, pt C dd 1] Y.h) =
+      ev (n := 2) ![M2 Y, pt C dd 1] (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) Y.h) := by
     rw [pderiv_eval_pair hZ2]
-    have e0 : ∀ k, MvPowerSeries.pderiv C ((1 : Fin 2), j) ((![M2 Y, pt C dd 1] : Fin 2 → Pt C 2 dd) 0 k) = 0 :=
+    have e0 : ∀ k, MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) ((![M2 Y, pt C dd 1] : Fin 2 → Pt C 2 dd) 0 k) = 0 :=
       fun k => pderiv_second_multiplication_pair Y k j
-    have e1 : ∀ k, MvPowerSeries.pderiv C ((1 : Fin 2), j) ((![M2 Y, pt C dd 1] : Fin 2 → Pt C 2 dd) 1 k) =
+    have e1 : ∀ k, MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) ((![M2 Y, pt C dd 1] : Fin 2 → Pt C 2 dd) 1 k) =
         if k = j then 1 else 0 := fun k => by
-      show MvPowerSeries.pderiv C ((1 : Fin 2), j) (MvPowerSeries.X ((1 : Fin 2), k)) = _
+      show MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) (MvPowerSeries.X ((1 : Fin 2), k)) = _
       split_ifs with hk
       · subst hk
         exact MvPowerSeries.pderiv_X_self

@@ -95,8 +95,8 @@ theorem toHat_derivative (f : Rpi O K l e) :
   obtain ⟨g, hg⟩ := Ideal.Quotient.mk_surjective (AdicCompletion.evalₐ _ (n + 1) (toHat O K l e f))
   rw [dHat, evalₐ_complDer _ _ hg.symm, evalₐ_toHat_eq_iff]
   obtain ⟨h, hh, H⟩ := (evalₐ_toHat_eq_iff l e (n + 1) f g).1 hg.symm
-  refine ⟨E K l e * PowerSeries.derivative K h +
-    h * (((n + 1 : ℕ) : K⟦X⟧) * PowerSeries.derivative K (E K l e)), add_mem
+  refine ⟨E K l e * PowerSeries.derivative (R := K) h +
+    h * (((n + 1 : ℕ) : K⟦X⟧) * PowerSeries.derivative (R := K) (E K l e)), add_mem
       (mul_mem (E_mem l e _) (derivative_mem_R l hh)) (mul_mem hh (mul_mem (natCast_mem _ _)
         (derivative_mem_R l (E_mem l e _)))), ?_⟩
   rw [coe_derAl, ← map_sub, H, Derivation.leibniz, derivative_pow]

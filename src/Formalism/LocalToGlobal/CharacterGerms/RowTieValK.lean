@@ -19,7 +19,7 @@ private theorem coeff_single_one_mul' (t : Fin 1 × Fin dd) (x y : PS C 1 dd) :
         MvPowerSeries.constantCoeff x * MvPowerSeries.coeff (Finsupp.single t 1) y := by
   first
   | (have key : ∀ g : PS C 1 dd, MvPowerSeries.coeff (Finsupp.single t 1) g =
-        MvPowerSeries.constantCoeff (MvPowerSeries.pderiv C t g) := by
+        MvPowerSeries.constantCoeff (MvPowerSeries.pderiv (R := C) t g) := by
       intro g
       rw [← MvPowerSeries.coeff_zero_eq_constantCoeff_apply, MvPowerSeries.coeff_pderiv]
       simp

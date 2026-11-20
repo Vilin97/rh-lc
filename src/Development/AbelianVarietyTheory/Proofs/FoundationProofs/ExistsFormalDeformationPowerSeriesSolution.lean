@@ -175,7 +175,7 @@ theorem formal_deformation : ∀ (k A : Type) [Field k] [IsAlgClosed k] [CharZer
     fun i => PowerSeries.HasSubst.of_constantCoeff_zero' (ha0 i)
   let Δ : I → ℕ → A →ₗ[k] PowerSeries k := fun i l =>
     (PowerSeries.substAlgHom (R := k) (hsub i)).toLinearMap ∘ₗ
-      ((PowerSeries.derivative k).toLinearMap ^ l) ∘ₗ (σ i).toLinearMap
+      ((PowerSeries.derivative (R := k)).toLinearMap ^ l) ∘ₗ (σ i).toLinearMap
   have hΔ : ∀ i l u, Δ i l u =
       (((PowerSeries.derivativeFun)^[l] (σ i u)).subst (a i) : PowerSeries k) := by
     intro i l u

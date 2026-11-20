@@ -61,11 +61,11 @@ private theorem taylorDir_comp_eq_subst_taylor_of_analyticAt (u : τ → W) {φ 
         fderiv ℂ f (φ z) (Pi.single i 1) * fderiv ℂ (fun y => φ y i) z (u j))
       (fun i _ => ((hg i).comp_of_eq hφ h0).mul (analyticAt_fderiv_apply (hφi i) _))
     beta_reduce at hsum
-    have key : pderiv ℂ j (taylorDir u (f ∘ φ) -
+    have key : pderiv (R := ℂ) j (taylorDir u (f ∘ φ) -
         subst (fun i => taylorDir u fun z => φ z i) (taylor f)) =
         ∑ i, (taylorDir u ((fun y => fderiv ℂ f y (Pi.single i 1)) ∘ φ) -
           subst (fun i => taylorDir u fun z => φ z i) (taylor fun y => fderiv ℂ f y (Pi.single i 1))) *
-            pderiv ℂ j (taylorDir u fun z => φ z i) := by
+            pderiv (R := ℂ) j (taylorDir u fun z => φ z i) := by
       rw [map_sub, FormalCalc.pderiv_subst hs, ← taylorDir_fderiv u hfφ j, taylorDir_congr u hev,
         hsum, ← Finset.sum_sub_distrib]
       refine Finset.sum_congr rfl fun i _ => ?_

@@ -59,7 +59,7 @@ theorem norm_d_eq {dK : ℕ} (hsq : Squarefree dK) (hd : p ∣ dK) : ‖(dK : �
 
 theorem frame (L : PeriodPair) (ι : ℂ ≃+* ℂ_[p]) (hW : IntCurve (curveL p L ι)) :
     Formalism.L2.Th1.C.IsLogPair (logSer (curveL p L ι)) (expSer (curveL p L ι)) ∧
-    Formalism.L2.Th1.C.IsOneUnit (unitBall ℂ_[p]) (PowerSeries.derivative ℂ_[p] (logSer (curveL p L ι))) ∧
+    Formalism.L2.Th1.C.IsOneUnit (unitBall ℂ_[p]) (PowerSeries.derivative (R := ℂ_[p]) (logSer (curveL p L ι))) ∧
     PowerSeries.constantCoeff (phC p L ι) = 0 := by
   obtain ⟨hlp, -, -, -, hu⟩ := Formalism.L2.Th1.C.curveFrame ℂ_[p] (unitBall ℂ_[p]) _ (coeffIn hW)
   exact ⟨hlp, hu, (Formalism.L2.Th1.C.phOIsPh ℂ_[p] _ _ _ hlp.1 hlp.2.1).2.1⟩

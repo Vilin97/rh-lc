@@ -73,7 +73,7 @@ theorem jac_mul_invMat (G : FGLaw R d) (N : ℕ) :
 
 theorem det_jac_mulF : ∀ (R : Type) [CommRing R] (d : ℕ) (F : FGLaw R d) (N : ℕ),
     ∃ U : (PS R 1 d)ˣ, Matrix.det (Matrix.of fun i j : Fin d =>
-      MvPowerSeries.pderiv R ((0 : Fin 1), j) (mulF F.F N i)) = (N : PS R 1 d) ^ d * U := by
+      MvPowerSeries.pderiv (R := R) ((0 : Fin 1), j) (mulF F.F N i)) = (N : PS R 1 d) ^ d * U := by
   intro R _ d G N
   have hφ : GP (mulN G N) := GlobalTheory.FormalMulN.const_mulN G N
   obtain ⟨a, ha⟩ := isUnit_det_of_const (invMat G) (const_invMat G)

@@ -62,10 +62,10 @@ variable (F : FormalGroup R)
 
 def omegaF : PowerSeries R :=
   MvPowerSeries.subst ![(PowerSeries.X : PowerSeries R), 0]
-    (MvPowerSeries.pderiv R 1 F.toPowerSeries)
+    (MvPowerSeries.pderiv (R := R) 1 F.toPowerSeries)
 
 theorem constantCoeff_omega : PowerSeries.constantCoeff (omegaF F) = 1 := by
-  have := constantCoeff_subst_of_zero (MvPowerSeries.pderiv R 1 F.toPowerSeries)
+  have := constantCoeff_subst_of_zero (MvPowerSeries.pderiv (R := R) 1 F.toPowerSeries)
     (b := ![(PowerSeries.X : PowerSeries R), 0]) (fun i => by fin_cases i <;> simp [PowerSeries.X])
   rw [omegaF, PowerSeries.constantCoeff, this, ← coeff_zero_eq_constantCoeff_apply, coeff_pderiv]
   simpa using F.lin_coeff_Y
@@ -93,33 +93,33 @@ theorem evalYZero_atY (φ : PowerSeries R) :
   rfl
 
 theorem pderiv_log {g : PowerSeries R} (hg : IsLog F g) :
-    (PowerSeries.derivative R g).subst F.toPowerSeries * MvPowerSeries.pderiv R 1 F.toPowerSeries =
-      atY (PowerSeries.derivative R g) := by
-  have := congrArg (MvPowerSeries.pderiv R 1) hg.2.2
+    (PowerSeries.derivative (R := R) g).subst F.toPowerSeries * MvPowerSeries.pderiv (R := R) 1 F.toPowerSeries =
+      atY (PowerSeries.derivative (R := R) g) := by
+  have := congrArg (MvPowerSeries.pderiv (R := R) 1) hg.2.2
   rw [pderiv_psubst F.zero_constantCoeff, map_add, atX, atY, pderiv_psubst hX0,
     pderiv_psubst hX1] at this
   simpa [pderiv_X_of_ne (show (0 : Fin 2) ≠ 1 by decide)] using this
 
 theorem derivative_log_mul_omega {g : PowerSeries R} (hg : IsLog F g) :
-    PowerSeries.derivative R g * omegaF F = 1 := by
+    PowerSeries.derivative (R := R) g * omegaF F = 1 := by
   have := congrArg (MvPowerSeries.subst ![(PowerSeries.X : PowerSeries R), 0]) (pderiv_log F hg)
   rw [subst_mul hb0, eval_zero_subst_law, evalYZero_atY] at this
   rw [omegaF, this]
-  have h1 : PowerSeries.constantCoeff (PowerSeries.derivative R g) = 1 := by
+  have h1 : PowerSeries.constantCoeff (PowerSeries.derivative (R := R) g) = 1 := by
     rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, PowerSeries.coeff_derivative, hg.2.1]
     simp
   rw [h1, map_one]
 
 theorem log_unique [Algebra ℚ R] {f g : PowerSeries R} (hf : IsLog F f) (hg : IsLog F g) :
     f = g := by
-  have hd : PowerSeries.derivative R f = PowerSeries.derivative R g := by
+  have hd : PowerSeries.derivative (R := R) f = PowerSeries.derivative (R := R) g := by
     have hu := PowerSeries.mul_invOfUnit (omegaF F) 1 (by simp [constantCoeff_omega])
-    calc PowerSeries.derivative R f
-        = PowerSeries.derivative R f * omegaF F * PowerSeries.invOfUnit (omegaF F) 1 := by
+    calc PowerSeries.derivative (R := R) f
+        = PowerSeries.derivative (R := R) f * omegaF F * PowerSeries.invOfUnit (omegaF F) 1 := by
           rw [mul_assoc, hu, mul_one]
-      _ = PowerSeries.derivative R g * omegaF F * PowerSeries.invOfUnit (omegaF F) 1 := by
+      _ = PowerSeries.derivative (R := R) g * omegaF F * PowerSeries.invOfUnit (omegaF F) 1 := by
           rw [derivative_log_mul_omega F hf, derivative_log_mul_omega F hg]
-      _ = PowerSeries.derivative R g := by rw [mul_assoc, hu, mul_one]
+      _ = PowerSeries.derivative (R := R) g := by rw [mul_assoc, hu, mul_one]
   ext n
   cases n with
   | zero => simpa using hf.1.trans hg.1.symm
@@ -150,7 +150,7 @@ theorem subst_XX (Φ : MvPowerSeries (Fin 2) R) :
 
 theorem omega_subst {σ : Type*} {u : MvPowerSeries σ R} (hu : constantCoeff u = 0)
     (F : FormalGroup R) :
-    (omegaF F).subst u = (MvPowerSeries.pderiv R 1 F.toPowerSeries).subst ![u, 0] := by
+    (omegaF F).subst u = (MvPowerSeries.pderiv (R := R) 1 F.toPowerSeries).subst ![u, 0] := by
   have hu' : MvPowerSeries.HasSubst (fun _ : Unit => u) :=
     MvPowerSeries.hasSubst_of_constantCoeff_zero (fun _ => hu)
   unfold omegaF
@@ -166,7 +166,7 @@ variable (F : FormalGroup R)
 
 theorem omega_key :
     (omegaF F).subst F.toPowerSeries =
-      MvPowerSeries.pderiv R 1 F.toPowerSeries * atY (omegaF F) := by
+      MvPowerSeries.pderiv (R := R) 1 F.toPowerSeries * atY (omegaF F) := by
   have hFc : constantCoeff F.toPowerSeries = 0 := F.zero_constantCoeff
   have hY : ∀ i, constantCoeff (MvPowerSeries.X i : MvPowerSeries (Fin 3) R) = 0 := fun i => by
     simp
@@ -176,17 +176,17 @@ theorem omega_key :
   have hH : constantCoeff (F.toPowerSeries.subst ![(MvPowerSeries.X 1 : MvPowerSeries (Fin 3) R),
       MvPowerSeries.X 2]) = 0 := by
     rw [constantCoeff_subst_of_zero _ (fun i => by fin_cases i <;> simp), hFc]
-  have dG : MvPowerSeries.pderiv R 2 (F.toPowerSeries.subst ![(MvPowerSeries.X 0 : MvPowerSeries (Fin 3) R),
+  have dG : MvPowerSeries.pderiv (R := R) 2 (F.toPowerSeries.subst ![(MvPowerSeries.X 0 : MvPowerSeries (Fin 3) R),
       MvPowerSeries.X 1]) = 0 := by
     rw [pderiv_subst (fun i => by fin_cases i <;> simp)]
     simp [Fin.sum_univ_two, pderiv_X_of_ne (show (0 : Fin 3) ≠ 2 by decide),
       pderiv_X_of_ne (show (1 : Fin 3) ≠ 2 by decide)]
-  have dH : MvPowerSeries.pderiv R 2 (F.toPowerSeries.subst ![(MvPowerSeries.X 1 : MvPowerSeries (Fin 3) R),
-      MvPowerSeries.X 2]) = (MvPowerSeries.pderiv R 1 F.toPowerSeries).subst
+  have dH : MvPowerSeries.pderiv (R := R) 2 (F.toPowerSeries.subst ![(MvPowerSeries.X 1 : MvPowerSeries (Fin 3) R),
+      MvPowerSeries.X 2]) = (MvPowerSeries.pderiv (R := R) 1 F.toPowerSeries).subst
         ![(MvPowerSeries.X 1 : MvPowerSeries (Fin 3) R), MvPowerSeries.X 2] := by
     rw [pderiv_subst (fun i => by fin_cases i <;> simp)]
     simp [Fin.sum_univ_two, pderiv_X_of_ne (show (1 : Fin 3) ≠ 2 by decide)]
-  have E := congrArg (MvPowerSeries.pderiv R 2) F.assoc
+  have E := congrArg (MvPowerSeries.pderiv (R := R) 2) F.assoc
   rw [pderiv_subst (fun i => by fin_cases i <;> simp [hG]),
     pderiv_subst (fun i => by fin_cases i <;> simp [hH])] at E
   simp only [Fin.sum_univ_two, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_one,
@@ -226,7 +226,7 @@ theorem subst_X0_zero_eq_rescale (Φ : MvPowerSeries (Fin 2) R) :
   fin_cases s <;> simp
 
 theorem eq_zero_of_pderiv_one [Algebra ℚ R] {h : MvPowerSeries (Fin 2) R}
-    (hD : MvPowerSeries.pderiv R 1 h = 0)
+    (hD : MvPowerSeries.pderiv (R := R) 1 h = 0)
     (h0 : h.subst ![(MvPowerSeries.X 0 : MvPowerSeries (Fin 2) R), 0] = 0) : h = 0 := by
   rw [subst_X0_zero_eq_rescale] at h0
   ext n
@@ -264,7 +264,7 @@ def logF : PowerSeries R :=
   PowerSeries.mk fun n => if n = 0 then 0 else
     algebraMap ℚ R (1 / (n : ℚ)) * PowerSeries.coeff (n - 1) (lam F)
 
-theorem derivative_logF : PowerSeries.derivative R (logF F) = lam F := by
+theorem derivative_logF : PowerSeries.derivative (R := R) (logF F) = lam F := by
   ext n
   rw [PowerSeries.coeff_derivative]
   unfold logF
@@ -291,12 +291,12 @@ theorem logF_isLog : IsLog F (logF F) := by
     have hY1 : atY (lam F) * atY (omegaF F) = 1 := by
       rw [atY, atY, ← PowerSeries.subst_mul hX1s, mul_comm, hω, psubst_one hX1s]
     have hk := omega_key F
-    have hD : MvPowerSeries.pderiv R 1
+    have hD : MvPowerSeries.pderiv (R := R) 1
         ((logF F).subst F.toPowerSeries - atX (logF F) - atY (logF F)) = 0 := by
       rw [map_sub, map_sub, pderiv_psubst hFc, atX, atY, pderiv_psubst hX0, pderiv_psubst hX1,
         derivative_logF, pderiv_X_self, pderiv_X_of_ne (show (0 : Fin 2) ≠ 1 by decide)]
       linear_combination (-((lam F).subst F.toPowerSeries *
-        MvPowerSeries.pderiv R 1 F.toPowerSeries)) * hY1 + atY (lam F) * hF1 -
+        MvPowerSeries.pderiv (R := R) 1 F.toPowerSeries)) * hY1 + atY (lam F) * hF1 -
         (lam F).subst F.toPowerSeries * atY (lam F) * hk
     have hc2 : MvPowerSeries.HasSubst
         ![(MvPowerSeries.X 0 : MvPowerSeries (Fin 2) R), 0] := hs2 (by simp) (by simp)

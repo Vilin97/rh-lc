@@ -76,8 +76,8 @@ theorem valT_cst {R T : Type} [CommRing R] [CommRing T] {X : Scheme.{0}} (π : X
 
 theorem eval_det_pderiv_mul {O : Type} [CommRing O] {g : ℕ} (e : MvPowerSeries (Fin g) O →ₐ[O] O)
     (ω : MvPowerSeries (Fin g) O) (F : Fin g → MvPowerSeries (Fin g) O) (hF : ∀ i, e (F i) = 0) :
-    e (Matrix.of fun i j => MvPowerSeries.pderiv O j (ω * F i)).det =
-      e ω ^ g * e (Matrix.of fun i j => MvPowerSeries.pderiv O j (F i)).det := by
+    e (Matrix.of fun i j => MvPowerSeries.pderiv (R := O) j (ω * F i)).det =
+      e ω ^ g * e (Matrix.of fun i j => MvPowerSeries.pderiv (R := O) j (F i)).det := by
   rw [AlgHom.map_det, AlgHom.map_det]
   refine Eq.trans ?_ ((Matrix.det_smul _ (e ω)).trans (by rw [Fintype.card_fin]))
   congr 1

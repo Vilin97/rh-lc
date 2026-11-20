@@ -234,14 +234,14 @@ theorem coeff_one_subst {κ : Type} [Fintype κ] {γ : κ → PowerSeries C}
     (hγ : ∀ i, PowerSeries.constantCoeff (γ i) = 0) (f : MvPowerSeries κ C) :
     PowerSeries.coeff 1 (subst γ f : PowerSeries C) =
       ∑ i, PowerSeries.coeff 1 (γ i) * coeff (Finsupp.single i 1) f := by
-  have e : ∀ g : PowerSeries C, PowerSeries.coeff 1 g = constantCoeff (pderiv C () g) := by
+  have e : ∀ g : PowerSeries C, PowerSeries.coeff 1 g = constantCoeff (pderiv (R := C) () g) := by
     intro g
     rw [← coeff_zero_eq_constantCoeff_apply, coeff_pderiv]
     simp [PowerSeries.coeff]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [e, ReciprocityTheory.ChartRestriction.G.TB.LogPf.pderiv_subst (a := γ) hγ, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [map_mul, cc_subst (a := γ) hγ, e, mul_comm, ← coeff_zero_eq_constantCoeff_apply (pderiv C i f), coeff_pderiv]
+  rw [map_mul, cc_subst (a := γ) hγ, e, mul_comm, ← coeff_zero_eq_constantCoeff_apply (pderiv (R := C) i f), coeff_pderiv]
   simp
 
 theorem v_nat (V : VF C) {u : ℕ} (hu : ¬ V.l ∣ u) : V.v (u : C) = 0 := by

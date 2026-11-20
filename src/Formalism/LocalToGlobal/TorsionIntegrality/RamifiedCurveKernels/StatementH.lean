@@ -40,7 +40,7 @@ def IntJets : Prop :=
 
 def JetsDeriv : Prop :=
   ∀ (K : Type) [Field K] (R : Subring K) (ι : Type) (f : MvPowerSeries ι K),
-    JetsIn R f ↔ MvPowerSeries.constantCoeff f ∈ R ∧ ∀ i, JetsIn R (MvPowerSeries.pderiv K i f)
+    JetsIn R f ↔ MvPowerSeries.constantCoeff f ∈ R ∧ ∀ i, JetsIn R (MvPowerSeries.pderiv (R := K) i f)
 
 def JetsDivPow : Prop :=
   ∀ (K : Type) [Field K] [CharZero K] (R : Subring K) (ι : Type) (a : MvPowerSeries ι K),
@@ -73,12 +73,12 @@ def JetsOfDJets : Prop :=
 
 def IntDJets : Prop :=
   ∀ (K : Type) [Field K] (R : Subring K) (l f : PowerSeries K),
-    Formalism.L2.Th1.C.IsOneUnit R (PowerSeries.derivative K l) → Formalism.L2.Th1.C.IntPS R f →
+    Formalism.L2.Th1.C.IsOneUnit R (PowerSeries.derivative (R := K) l) → Formalism.L2.Th1.C.IntPS R f →
     ∀ i : ℕ, Formalism.L2.Th1.C.jet l f i ∈ R
 
 def IntMvZ : Prop :=
   ∀ (K : Type) [Field K] [CharZero K] (R : Subring K) (l linv : PowerSeries K),
-    Formalism.L2.Th1.C.IsLogPair l linv → Formalism.L2.Th1.C.IsOneUnit R (PowerSeries.derivative K l) →
+    Formalism.L2.Th1.C.IsLogPair l linv → Formalism.L2.Th1.C.IsOneUnit R (PowerSeries.derivative (R := K) l) →
     ∀ (n : Type) [Fintype n] (G : MvPowerSeries n K), Formalism.L2.Th1.C.IntMv R G →
     JetsIn R (MvPowerSeries.subst
       (fun i : n => (PowerSeries.subst (MvPowerSeries.X i : MvPowerSeries n K) linv :

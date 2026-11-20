@@ -399,10 +399,10 @@ omit [NeZero d] in
 theorem deriv_genVec {n : ℕ} (b : Fin n) (u : Fin dd → C) (co : WVO I → C)
     (hu : u = ∑ w : WVO I, co w • (p w.1).u w.2.1 w.2.2) (b' : Fin n) (j : Fin dd) :
     ∑ x : Fin n × WVO I, (if x.1 = b then co x.2 else 0) •
-        pderiv C x (genVec Y p (fun w : WVO I => (b', w)) j) =
+        pderiv (R := C) x (genVec Y p (fun w : WVO I => (b', w)) j) =
       if b' = b then MvPowerSeries.C (u j) else 0 := by
   classical
-  have h1 : ∀ x : Fin n × WVO I, pderiv C x (genVec Y p (fun w : WVO I => (b', w)) j) =
+  have h1 : ∀ x : Fin n × WVO I, pderiv (R := C) x (genVec Y p (fun w : WVO I => (b', w)) j) =
       if x.1 = b' then MvPowerSeries.C ((p x.2.1).u x.2.2.1 x.2.2.2 j) else 0 := by
     rintro ⟨ρ, w⟩
     unfold genVec

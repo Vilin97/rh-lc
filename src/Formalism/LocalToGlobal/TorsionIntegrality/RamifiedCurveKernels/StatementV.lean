@@ -14,7 +14,7 @@ open Formalism.DworkPowerSeriesWeights (JetsIntegral jetPair)
 
 def IntUnram : Prop :=
   ∀ (K : Type) [NormedField K] [IsUltrametricDist K] [CharZero K] (l linv ph : PowerSeries K),
-    Frame (unitBall K) l linv ph → IsOneUnit (unitBall K) (PowerSeries.derivative K l) →
+    Frame (unitBall K) l linv ph → IsOneUnit (unitBall K) (PowerSeries.derivative (R := K) l) →
     F1 (unitBall K) l linv ph → (∀ i : ℕ, 1 ≤ i → ‖jet l ph i‖ ≤ 1) →
     ∀ (O : Type) [CommRing O] [StarRing O] (τ : O →+* K),
     (∀ α, EndInt (unitBall K) l linv (τ α)) →

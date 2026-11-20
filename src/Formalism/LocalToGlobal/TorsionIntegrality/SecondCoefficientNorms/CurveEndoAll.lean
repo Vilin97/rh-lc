@@ -32,7 +32,7 @@ def CurveFrame : Prop :=
   ∀ (K : Type) [Field K] [CharZero K] (R : Subring K) (W : WeierstrassCurve K), CoeffIn R W →
     IsLogPair (logSer W) (expSer W) ∧ XIsWp (wpReg W) (logSer W) (xS W) (W.b₂ / 12) ∧
     IsOneUnit R (xS W) ∧ FGInt R (logSer W) (expSer W) ∧
-    IsOneUnit R (PowerSeries.derivative K (logSer W))
+    IsOneUnit R (PowerSeries.derivative (R := K) (logSer W))
 
 def CurveSecondLogDerivative : Prop :=
   ∀ (K : Type) [Field K] [CharZero K] (W : WeierstrassCurve K) (xP yP : K),

@@ -16,8 +16,8 @@ open ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ MvPowerSeries PartialDeri
 
 def PoincSt : Prop :=
   ∀ {σ : Type} [Fintype σ] {K : Type} [Field K] [CharZero K] (ω : σ → MvPowerSeries σ K),
-    (∀ j l, MvPowerSeries.pderiv K j (ω l) = MvPowerSeries.pderiv K l (ω j)) →
-    ∃ g : MvPowerSeries σ K, MvPowerSeries.constantCoeff g = 0 ∧ ∀ j, MvPowerSeries.pderiv K j g = ω j
+    (∀ j l, MvPowerSeries.pderiv (R := K) j (ω l) = MvPowerSeries.pderiv (R := K) l (ω j)) →
+    ∃ g : MvPowerSeries σ K, MvPowerSeries.constantCoeff g = 0 ∧ ∀ j, MvPowerSeries.pderiv (R := K) j g = ω j
 
 theorem pderiv_comm' {σ K : Type} [CommRing K] (i j : σ) (f : MvPowerSeries σ K) :
     pderiv K i (pderiv K j f) = pderiv K j (pderiv K i f) := by

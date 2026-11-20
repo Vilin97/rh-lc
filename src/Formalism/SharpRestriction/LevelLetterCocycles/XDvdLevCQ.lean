@@ -28,7 +28,7 @@ theorem lev_eq_levC (i : ZMod n) (ζ : LL) (a : LetA O n) : W.lev i ζ a = levC 
   exact h
 
 theorem levC_X (i : ZMod n) (ζ : LL) (hζ : IsPrimitiveRoot ζ PD.p) :
-    ∃ E : PowerSeries LL, PowerSeries.constantCoeff E = 1 ∧ PowerSeries.derivative LL E = E ∧
+    ∃ E : PowerSeries LL, PowerSeries.constantCoeff E = 1 ∧ PowerSeries.derivative (R := LL) E = E ∧
       levC W i ζ PowerSeries.X = PowerSeries.C ζ * E - 1 := by
   obtain ⟨E, h0, h1, h2⟩ := W.lev_π i ζ ⟨1, by rwa [pow_one]⟩
   refine ⟨E, h0, h1, ?_⟩
@@ -40,9 +40,9 @@ theorem levC_X (i : ZMod n) (ζ : LL) (hζ : IsPrimitiveRoot ζ PD.p) :
   linear_combination h2
 
 private theorem coeff_zero_derivative_eq_coeff_one {R : Type} [CommRing R] (f : PowerSeries R) :
-    PowerSeries.coeff 0 (PowerSeries.derivative R f) = PowerSeries.coeff 1 f := by
+    PowerSeries.coeff 0 (PowerSeries.derivative (R := R) f) = PowerSeries.coeff 1 f := by
   first
-  | (rw [show PowerSeries.derivative R f = f.derivativeFun from rfl, PowerSeries.coeff_derivativeFun]; simp)
+  | (rw [show PowerSeries.derivative (R := R) f = f.derivativeFun from rfl, PowerSeries.coeff_derivativeFun]; simp)
   | simp [PowerSeries.coeff_derivativeFun]
   | simp [PowerSeries.derivative, PowerSeries.coeff_derivativeFun]
 

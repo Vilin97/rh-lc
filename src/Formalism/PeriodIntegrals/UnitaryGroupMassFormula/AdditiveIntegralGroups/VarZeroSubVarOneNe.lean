@@ -28,10 +28,10 @@ theorem root_rel {W : WeierstrassCurve ℂ_[p]} {wq : PowerSeries ℂ_[p]} (h : 
     {r : MvPowerSeries (Fin 2) ℂ_[p]} (hr : MvPowerSeries.constantCoeff r = 0)
     (hw : PowerSeries.subst r (wser wq) = lam wq * r + nu wq)
     (hG : G W r (lam wq * r + nu wq) = 0) :
-    PowerSeries.subst r (omegaW W wq) * MvPowerSeries.pderiv ℂ_[p] j r *
+    PowerSeries.subst r (omegaW W wq) * MvPowerSeries.pderiv (R := ℂ_[p]) j r *
       (3 * Acf W wq * r ^ 2 + 2 * Bcf W wq * r + Ccf W wq) =
-      r * MvPowerSeries.pderiv ℂ_[p] j (lam wq) + MvPowerSeries.pderiv ℂ_[p] j (nu wq) := by
-  set D := MvPowerSeries.pderiv ℂ_[p] j with hDdef
+      r * MvPowerSeries.pderiv (R := ℂ_[p]) j (lam wq) + MvPowerSeries.pderiv (R := ℂ_[p]) j (nu wq) := by
+  set D := MvPowerSeries.pderiv (R := ℂ_[p]) j with hDdef
   have hω := omega_at h hr
   rw [hw] at hω
   have hD := congrArg D hG
@@ -81,8 +81,8 @@ theorem abel {W : WeierstrassCurve ℂ_[p]} {wq : PowerSeries ℂ_[p]} (h : IsWq
     exact G_wv h 1
   have hG2 := zwEquation_thirdRoot h
   have hsub : ∀ r : MvPowerSeries (Fin 2) ℂ_[p], MvPowerSeries.constantCoeff r = 0 → ∀ j,
-      MvPowerSeries.pderiv ℂ_[p] j (PowerSeries.subst r (flog W wq)) =
-        PowerSeries.subst r (omegaW W wq) * MvPowerSeries.pderiv ℂ_[p] j r := by
+      MvPowerSeries.pderiv (R := ℂ_[p]) j (PowerSeries.subst r (flog W wq)) =
+        PowerSeries.subst r (omegaW W wq) * MvPowerSeries.pderiv (R := ℂ_[p]) j r := by
     intro r hr j
     rw [pderiv_subst (PowerSeries.HasSubst.of_constantCoeff_zero hr), derivative_flog]
   have hA : Acf W wq ≠ 0 := fun h0 => by
@@ -105,10 +105,10 @@ theorem abel {W : WeierstrassCurve ℂ_[p]} {wq : PowerSeries ℂ_[p]} (h : IsWq
     have hBA := rt_coeff_BA W wq 1
     simp [Z3, Xv, MvPowerSeries.coeff_X, hne.symm, hBA] at h3 <;> norm_num at h3
   have key : ∀ j, PowerSeries.subst (Xv 0 : MvPowerSeries (Fin 2) ℂ_[p]) (omegaW W wq) *
-        MvPowerSeries.pderiv ℂ_[p] j (Xv 0 : MvPowerSeries (Fin 2) ℂ_[p]) +
+        MvPowerSeries.pderiv (R := ℂ_[p]) j (Xv 0 : MvPowerSeries (Fin 2) ℂ_[p]) +
       PowerSeries.subst (Xv 1 : MvPowerSeries (Fin 2) ℂ_[p]) (omegaW W wq) *
-        MvPowerSeries.pderiv ℂ_[p] j (Xv 1 : MvPowerSeries (Fin 2) ℂ_[p]) +
-      PowerSeries.subst (Z3 W wq) (omegaW W wq) * MvPowerSeries.pderiv ℂ_[p] j (Z3 W wq) = 0 := by
+        MvPowerSeries.pderiv (R := ℂ_[p]) j (Xv 1 : MvPowerSeries (Fin 2) ℂ_[p]) +
+      PowerSeries.subst (Z3 W wq) (omegaW W wq) * MvPowerSeries.pderiv (R := ℂ_[p]) j (Z3 W wq) = 0 := by
     intro j
     have e0 := root_rel h j hc0 hw0 hG0
     have e1 := root_rel h j hc1 hw1 hG1
@@ -116,10 +116,10 @@ theorem abel {W : WeierstrassCurve ℂ_[p]} {wq : PowerSeries ℂ_[p]} (h : IsWq
     have v1 := vieta1 W wq
     have v2 := vieta2 h
     set T0 := PowerSeries.subst (Xv 0 : MvPowerSeries (Fin 2) ℂ_[p]) (omegaW W wq) *
-        MvPowerSeries.pderiv ℂ_[p] j (Xv 0 : MvPowerSeries (Fin 2) ℂ_[p]) with hT0
+        MvPowerSeries.pderiv (R := ℂ_[p]) j (Xv 0 : MvPowerSeries (Fin 2) ℂ_[p]) with hT0
     set T1 := PowerSeries.subst (Xv 1 : MvPowerSeries (Fin 2) ℂ_[p]) (omegaW W wq) *
-        MvPowerSeries.pderiv ℂ_[p] j (Xv 1 : MvPowerSeries (Fin 2) ℂ_[p]) with hT1
-    set T2 := PowerSeries.subst (Z3 W wq) (omegaW W wq) * MvPowerSeries.pderiv ℂ_[p] j (Z3 W wq) with hT2
+        MvPowerSeries.pderiv (R := ℂ_[p]) j (Xv 1 : MvPowerSeries (Fin 2) ℂ_[p]) with hT1
+    set T2 := PowerSeries.subst (Z3 W wq) (omegaW W wq) * MvPowerSeries.pderiv (R := ℂ_[p]) j (Z3 W wq) with hT2
     have hprod : (T0 + T1 + T2) * (Acf W wq * ((Xv 0 - Xv 1) * (Xv 0 - Z3 W wq) * (Xv 1 - Z3 W wq))) = 0 := by
       linear_combination (Xv 1 - Z3 W wq) * e0 - (Xv 0 - Z3 W wq) * e1 + (Xv 0 - Xv 1) * e2 -
         ((Xv 1 - Z3 W wq) * T0 * 2 * Xv 0 - (Xv 0 - Z3 W wq) * T1 * 2 * Xv 1 +
@@ -131,7 +131,7 @@ theorem abel {W : WeierstrassCurve ℂ_[p]} {wq : PowerSeries ℂ_[p]} (h : IsWq
   set F := PowerSeries.subst (Xv 0 : MvPowerSeries (Fin 2) ℂ_[p]) (flog W wq) +
       PowerSeries.subst (Xv 1 : MvPowerSeries (Fin 2) ℂ_[p]) (flog W wq) +
       PowerSeries.subst (Z3 W wq) (flog W wq) with hFdef
-  have hF : ∀ j, MvPowerSeries.pderiv ℂ_[p] j F = 0 := fun j => by
+  have hF : ∀ j, MvPowerSeries.pderiv (R := ℂ_[p]) j F = 0 := fun j => by
     rw [hFdef, map_add, map_add, hsub _ hc0, hsub _ hc1, hsub _ hc2]
     exact key j
   obtain ⟨g, hg⟩ := PowerSeries.X_dvd_iff.2 (abel_cc_flog W wq)

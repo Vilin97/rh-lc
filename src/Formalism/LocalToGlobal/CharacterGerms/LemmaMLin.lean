@@ -88,7 +88,7 @@ theorem subst_kill [Finite σ] {a : σ → MvPowerSeries τ C} (ha : ∀ s, OrdG
     rw [h0, map_zero, smul_zero, smul_zero]
 
 theorem dVar_eq_pderiv {C : Type} [Field C] {σ : Type} (w : σ) (F : MvPowerSeries σ C) :
-    dVar w F = pderiv C w F := by
+    dVar w F = pderiv (R := C) w F := by
   ext μ
   rw [coeff_pderiv]
   show ((μ w + 1 : ℕ) : C) * coeff (μ + Finsupp.single w 1) F = _
@@ -96,14 +96,14 @@ theorem dVar_eq_pderiv {C : Type} [Field C] {σ : Type} (w : σ) (F : MvPowerSer
   ring
 
 theorem ordGE_pderiv {F : MvPowerSeries σ C} {n : ℕ} (hF : OrdGE (n + 1) F) (w : σ) :
-    OrdGE n (pderiv C w F) := by
+    OrdGE n (pderiv (R := C) w F) := by
   intro e he
   rw [coeff_pderiv, hF _ (by rw [map_add, Finsupp.degree_single]; omega), zero_mul]
 
 theorem pderiv_subst_coe [Fintype σ] {a : σ → MvPowerSeries τ C} (ha : HasSubst a) (b : τ)
     (p : MvPolynomial σ C) :
-    pderiv C b (subst a (p : MvPowerSeries σ C)) =
-      ∑ w, pderiv C b (a w) * subst a (pderiv C w (p : MvPowerSeries σ C)) := by
+    pderiv (R := C) b (subst a (p : MvPowerSeries σ C)) =
+      ∑ w, pderiv (R := C) b (a w) * subst a (pderiv (R := C) w (p : MvPowerSeries σ C)) := by
   induction p using MvPolynomial.induction_on with
   | C r =>
     rw [MvPolynomial.coe_C]
@@ -122,9 +122,9 @@ theorem pderiv_subst_coe [Fintype σ] {a : σ → MvPowerSeries τ C} (ha : HasS
     rw [map_add, subst_add ha, mul_add]
   | mul_X p w0 hp =>
     rw [MvPolynomial.coe_mul, MvPolynomial.coe_X, subst_mul ha, subst_X ha, Derivation.leibniz, hp]
-    have h1 : ∀ w, pderiv C b (a w) * subst a (pderiv C w ((p : MvPowerSeries σ C) * X w0)) =
-        a w0 * (pderiv C b (a w) * subst a (pderiv C w (p : MvPowerSeries σ C))) +
-          (if w = w0 then pderiv C b (a w0) * subst a (p : MvPowerSeries σ C) else 0) := by
+    have h1 : ∀ w, pderiv (R := C) b (a w) * subst a (pderiv (R := C) w ((p : MvPowerSeries σ C) * X w0)) =
+        a w0 * (pderiv (R := C) b (a w) * subst a (pderiv (R := C) w (p : MvPowerSeries σ C))) +
+          (if w = w0 then pderiv (R := C) b (a w0) * subst a (p : MvPowerSeries σ C) else 0) := by
       intro w
       rw [Derivation.leibniz, subst_add ha, smul_eq_mul, smul_eq_mul, subst_mul ha, subst_mul ha,
         subst_X ha]
@@ -147,7 +147,7 @@ theorem pderiv_subst_coe [Fintype σ] {a : σ → MvPowerSeries τ C} (ha : HasS
 
 theorem pderiv_subst [Fintype σ] {a : σ → MvPowerSeries τ C} (ha : ∀ s, OrdGE 1 (a s)) (b : τ)
     (H : MvPowerSeries σ C) :
-    pderiv C b (subst a H) = ∑ w, pderiv C b (a w) * subst a (pderiv C w H) := by
+    pderiv (R := C) b (subst a H) = ∑ w, pderiv (R := C) b (a w) * subst a (pderiv (R := C) w H) := by
   have hs := hasSubst_of_ordGE ha
   ext e
   obtain ⟨p, hp⟩ : ∃ p : MvPolynomial σ C, p = truncTotal (e.degree + 2) H := ⟨_, rfl⟩
@@ -156,18 +156,18 @@ theorem pderiv_subst [Fintype σ] {a : σ → MvPowerSeries τ C} (ha : ∀ s, O
     intro d hd
     rw [hR, map_sub, MvPolynomial.coeff_coe, hp, coeff_truncTotal _ hd, sub_self]
   have hH : H = (p : MvPowerSeries σ C) + R := by rw [hR]; ring
-  have hL : coeff e (pderiv C b (subst a R)) = 0 :=
+  have hL : coeff e (pderiv (R := C) b (subst a R)) = 0 :=
     ordGE_pderiv (n := e.degree + 1) (ordGE_subst ha hRo) b e (by omega)
-  have hRr : coeff e (∑ w, pderiv C b (a w) * subst a (pderiv C w R)) = 0 := by
+  have hRr : coeff e (∑ w, pderiv (R := C) b (a w) * subst a (pderiv (R := C) w R)) = 0 := by
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum]
     refine Finset.sum_eq_zero fun w _ => ?_
-    have h1 : OrdGE (0 + (e.degree + 1)) (pderiv C b (a w) * subst a (pderiv C w R)) :=
+    have h1 : OrdGE (0 + (e.degree + 1)) (pderiv (R := C) b (a w) * subst a (pderiv (R := C) w R)) :=
       Formalism.BaseCaseIdentities.OrdGE.mul (ordGE_zero _) (ordGE_subst ha (ordGE_pderiv (n := e.degree + 1) hRo w))
     exact h1 e (by omega)
-  have hsum : ∑ w, pderiv C b (a w) * subst a (pderiv C w H) =
-      (∑ w, pderiv C b (a w) * subst a (pderiv C w (p : MvPowerSeries σ C))) +
-        ∑ w, pderiv C b (a w) * subst a (pderiv C w R) := by
+  have hsum : ∑ w, pderiv (R := C) b (a w) * subst a (pderiv (R := C) w H) =
+      (∑ w, pderiv (R := C) b (a w) * subst a (pderiv (R := C) w (p : MvPowerSeries σ C))) +
+        ∑ w, pderiv (R := C) b (a w) * subst a (pderiv (R := C) w R) := by
     rw [← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun w _ => ?_
     rw [hH, map_add, subst_add hs, mul_add]
@@ -238,7 +238,7 @@ theorem coeff_subst_linS_congr [Finite σ] (M : τ → σ → C) {F G : MvPowerS
   coeff_subst_congr (ordGE_linS M) h e he
 
 theorem pderiv_linS (M : τ → σ → C) (b : τ) (w : σ) :
-    pderiv C b (linS M w) = MvPowerSeries.C (M b w) := by
+    pderiv (R := C) b (linS M w) = MvPowerSeries.C (M b w) := by
   unfold linS
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum, Finset.sum_eq_single b]
@@ -248,7 +248,7 @@ theorem pderiv_linS (M : τ → σ → C) (b : τ) (w : σ) :
   · intro h; exact absurd (Finset.mem_univ b) h
 
 theorem pderiv_subst_linS [Fintype σ] (M : τ → σ → C) (b : τ) (H : MvPowerSeries σ C) :
-    pderiv C b (subst (linS M) H) = ∑ w, M b w • subst (linS M) (pderiv C w H) := by
+    pderiv (R := C) b (subst (linS M) H) = ∑ w, M b w • subst (linS M) (pderiv (R := C) w H) := by
   rw [pderiv_subst (ordGE_linS M)]
   refine Finset.sum_congr rfl fun w _ => ?_
   rw [pderiv_linS, smul_eq_C_mul]

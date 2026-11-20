@@ -207,9 +207,9 @@ private theorem intPS_mul_paired_square_jets {K : Type} [Field K] {R : Subring K
   exact R.sum_mem fun p _ => R.mul_mem (hf p.1) (hg p.2)
 
 private theorem intPS_derivative' {K : Type} [Field K] {R : Subring K} {f : PowerSeries K}
-    (hf : Formalism.L2.Th1.C.IntPS R f) : Formalism.L2.Th1.C.IntPS R (PowerSeries.derivative K f) := by
+    (hf : Formalism.L2.Th1.C.IntPS R f) : Formalism.L2.Th1.C.IntPS R (PowerSeries.derivative (R := K) f) := by
   intro n
-  have h : PowerSeries.coeff n (PowerSeries.derivative K f) = PowerSeries.coeff (n + 1) f * (n + 1) := by
+  have h : PowerSeries.coeff n (PowerSeries.derivative (R := K) f) = PowerSeries.coeff (n + 1) f * (n + 1) := by
     first
       | exact PowerSeries.coeff_derivativeFun f n
       | (rw [PowerSeries.derivative_coe, PowerSeries.coeff_derivativeFun])

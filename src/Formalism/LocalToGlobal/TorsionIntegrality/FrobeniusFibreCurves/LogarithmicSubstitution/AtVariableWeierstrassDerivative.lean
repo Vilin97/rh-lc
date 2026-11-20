@@ -149,7 +149,7 @@ theorem hsL {l : PowerSeries K} (hl : PowerSeries.constantCoeff l = 0) :
 
 theorem X_ne {ι : Type} (j : ι) : (MvPowerSeries.X j : MvPowerSeries ι K) ≠ 0 := by
   intro h
-  have h2 := congrArg (MvPowerSeries.pderiv K j) h
+  have h2 := congrArg (MvPowerSeries.pderiv (R := K) j) h
   rw [MvPowerSeries.pderiv_X_self, map_zero] at h2
   exact one_ne_zero h2
 

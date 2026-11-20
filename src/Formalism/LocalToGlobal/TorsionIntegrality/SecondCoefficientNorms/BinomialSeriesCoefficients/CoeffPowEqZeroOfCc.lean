@@ -105,16 +105,16 @@ private theorem coeff_mul_congr_of_degree_lt {A A' B B' : MvPowerSeries σ K} {N
   rw [hA _ (by omega), hB _ (by omega)]
 
 theorem pderiv_mvExp {f : MvPowerSeries σ K} (hf : MvPowerSeries.constantCoeff f = 0) (i : σ) :
-    MvPowerSeries.pderiv K i (mvExp f) = MvPowerSeries.pderiv K i f * mvExp f := by
+    MvPowerSeries.pderiv (R := K) i (mvExp f) = MvPowerSeries.pderiv (R := K) i f * mvExp f := by
   classical
   ext n
-  have hE : MvPowerSeries.pderiv K i
+  have hE : MvPowerSeries.pderiv (R := K) i
       (∑ k ∈ Finset.range (n.degree + 1 + 1), ((k.factorial : K))⁻¹ • f ^ k) =
-      MvPowerSeries.pderiv K i f *
+      MvPowerSeries.pderiv (R := K) i f *
         ∑ k ∈ Finset.range (n.degree + 1), ((k.factorial : K))⁻¹ • f ^ k := by
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum, Finset.mul_sum, Finset.sum_range_succ' _ (n.degree + 1)]
-    have h0 : MvPowerSeries.pderiv K i (((Nat.factorial 0 : K))⁻¹ • f ^ 0) = 0 := by simp
+    have h0 : MvPowerSeries.pderiv (R := K) i (((Nat.factorial 0 : K))⁻¹ • f ^ 0) = 0 := by simp
     rw [h0, add_zero]
     refine Finset.sum_congr rfl fun k _ => ?_
     have hc : (((k + 1).factorial : K))⁻¹ * ((k + 1 : ℕ) : K) = ((k.factorial : K))⁻¹ := by
@@ -123,7 +123,7 @@ theorem pderiv_mvExp {f : MvPowerSeries σ K} (hf : MvPowerSeries.constantCoeff 
       have : (k.factorial : K) ≠ 0 := by exact_mod_cast (Nat.factorial_pos k).ne'
       field_simp
     rw [Derivation.map_smul, Derivation.leibniz_pow, Nat.add_sub_cancel, smul_eq_mul, ← Nat.cast_smul_eq_nsmul K,
-      smul_smul, hc, mul_smul_comm, mul_comm (MvPowerSeries.pderiv K i f)]
+      smul_smul, hc, mul_smul_comm, mul_comm (MvPowerSeries.pderiv (R := K) i f)]
   rw [MvPowerSeries.coeff_pderiv, coeff_mvExp_eq_coeff_trunc_sum hf (n.degree + 1 + 1) _ ?_,
     ← MvPowerSeries.coeff_pderiv, hE]
   · exact coeff_mul_congr_of_degree_lt (fun _ _ => rfl) (fun m hm => (coeff_mvExp_eq_coeff_trunc_sum hf _ m hm).symm) n
@@ -272,8 +272,8 @@ theorem mvExp_inj {f g : MvPowerSeries σ K} (hf : MvPowerSeries.constantCoeff f
   exact sub_eq_zero.1 (eq_zero_of_mvExp_eq_one (by simp [hf, hg]) h2)
 
 theorem derivative_mvExp {f : PowerSeries K} (hf : PowerSeries.constantCoeff f = 0) :
-    PowerSeries.derivative K (mvExp f : PowerSeries K) =
-      PowerSeries.derivative K f * (mvExp f : PowerSeries K) := by
+    PowerSeries.derivative (R := K) (mvExp f : PowerSeries K) =
+      PowerSeries.derivative (R := K) f * (mvExp f : PowerSeries K) := by
   unfold mvExp
   rw [PowerSeries.derivative_subst (hasSubst_of_cc hf), PowerSeries.derivative_exp, mul_comm]
 

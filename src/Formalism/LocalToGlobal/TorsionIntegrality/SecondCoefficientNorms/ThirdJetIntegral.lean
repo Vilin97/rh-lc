@@ -7,7 +7,7 @@ namespace Formalism.L2.Th1.C
 
 def LogDerivInt : Prop :=
   ∀ (K : Type) [Field K] [CharZero K] (R : Subring K) (l linv : PowerSeries K),
-    IsLogPair l linv → FGInt R l linv → IsOneUnit R (PowerSeries.derivative K l)
+    IsLogPair l linv → FGInt R l linv → IsOneUnit R (PowerSeries.derivative (R := K) l)
 
 def ThirdJetIntegral : Prop :=
   ∀ (K : Type) [Field K] [CharZero K] (R : Subring K) (l linv ph : PowerSeries K),

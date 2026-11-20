@@ -21,7 +21,7 @@ def linF (lam : τ → K) : MvPowerSeries τ K := ∑ w, lam w • (X w : MvPowe
 theorem constantCoeff_linF (lam : τ → K) : constantCoeff (linF lam) = 0 := by
   simp [linF, MvPowerSeries.smul_eq_C_mul]
 
-theorem pderiv_linF (lam : τ → K) (w : τ) : pderiv K w (linF lam) = C (lam w) := by
+theorem pderiv_linF (lam : τ → K) (w : τ) : pderiv (R := K) w (linF lam) = C (lam w) := by
   classical
   set_option synthInstance.maxHeartbeats 100000 in
     rw [linF, map_sum]
@@ -35,7 +35,7 @@ theorem pderiv_linF (lam : τ → K) (w : τ) : pderiv K w (linF lam) = C (lam w
 theorem coeff_linF_pow_step (lam : τ → K) (w : τ) (m : τ →₀ ℕ) (k : ℕ) :
     coeff (m + Finsupp.single w 1) (linF lam ^ (k + 1)) * ((m w : K) + 1)
       = ((k : K) + 1) * lam w * coeff m (linF lam ^ k) := by
-  have h := congrArg (coeff m) (Derivation.leibniz_pow (pderiv K w) (linF lam) (k + 1))
+  have h := congrArg (coeff m) (Derivation.leibniz_pow (pderiv (R := K) w) (linF lam) (k + 1))
   rw [coeff_pderiv, pderiv_linF] at h
   rw [h]
   rw [Nat.add_sub_cancel, smul_eq_mul, map_nsmul, MvPowerSeries.coeff_mul_C, nsmul_eq_mul]

@@ -116,7 +116,7 @@ theorem C_mem_serS {S : Subring ℂ_[p]} {a : ℂ_[p]} (ha : a ∈ S) :
   · exact ha
   · exact S.zero_mem
 
-theorem dX_eq_derivative (f : PowerSeries ℂ_[p]) : dX f = PowerSeries.derivative ℂ_[p] f := by
+theorem dX_eq_derivative (f : PowerSeries ℂ_[p]) : dX f = PowerSeries.derivative (R := ℂ_[p]) f := by
   ext n
   simp only [dX, PowerSeries.coeff_mk, PowerSeries.coeff_derivative]
   ring
@@ -140,16 +140,16 @@ theorem vInv_mul_omega {W : WeierstrassCurve ℂ_[p]} {wq : PowerSeries ℂ_[p]}
     vInv W wq * omegaW W wq = 1 := by
   have hc := wq_const h
   simp only [IsWq] at h
-  have hd : PowerSeries.derivative ℂ_[p] wq =
-      algebraMap ℂ_[p] (PowerSeries ℂ_[p]) W.a₁ * (wq + PowerSeries.X * PowerSeries.derivative ℂ_[p] wq) +
+  have hd : PowerSeries.derivative (R := ℂ_[p]) wq =
+      algebraMap ℂ_[p] (PowerSeries ℂ_[p]) W.a₁ * (wq + PowerSeries.X * PowerSeries.derivative (R := ℂ_[p]) wq) +
       algebraMap ℂ_[p] (PowerSeries ℂ_[p]) W.a₂ *
-        (2 * PowerSeries.X * wq + PowerSeries.X ^ 2 * PowerSeries.derivative ℂ_[p] wq) +
+        (2 * PowerSeries.X * wq + PowerSeries.X ^ 2 * PowerSeries.derivative (R := ℂ_[p]) wq) +
       algebraMap ℂ_[p] (PowerSeries ℂ_[p]) W.a₃ *
-        (3 * PowerSeries.X ^ 2 * wq ^ 2 + 2 * PowerSeries.X ^ 3 * wq * PowerSeries.derivative ℂ_[p] wq) +
+        (3 * PowerSeries.X ^ 2 * wq ^ 2 + 2 * PowerSeries.X ^ 3 * wq * PowerSeries.derivative (R := ℂ_[p]) wq) +
       algebraMap ℂ_[p] (PowerSeries ℂ_[p]) W.a₄ *
-        (4 * PowerSeries.X ^ 3 * wq ^ 2 + 2 * PowerSeries.X ^ 4 * wq * PowerSeries.derivative ℂ_[p] wq) +
+        (4 * PowerSeries.X ^ 3 * wq ^ 2 + 2 * PowerSeries.X ^ 4 * wq * PowerSeries.derivative (R := ℂ_[p]) wq) +
       algebraMap ℂ_[p] (PowerSeries ℂ_[p]) W.a₆ *
-        (6 * PowerSeries.X ^ 5 * wq ^ 3 + 3 * PowerSeries.X ^ 6 * wq ^ 2 * PowerSeries.derivative ℂ_[p] wq) := by
+        (6 * PowerSeries.X ^ 5 * wq ^ 3 + 3 * PowerSeries.X ^ 6 * wq ^ 2 * PowerSeries.derivative (R := ℂ_[p]) wq) := by
     conv_lhs => rw [h]
     simp only [map_add, Derivation.leibniz, Derivation.leibniz_pow, Derivation.map_algebraMap,
       PowerSeries.derivative_X, Derivation.map_one_eq_zero, smul_eq_mul, nsmul_eq_mul]

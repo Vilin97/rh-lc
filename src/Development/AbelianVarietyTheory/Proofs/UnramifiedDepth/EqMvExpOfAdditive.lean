@@ -40,7 +40,7 @@ theorem eq_mvExp_of_additive : ∀ (C : Type) [Field C] [CharZero C] (κ : Type)
     intro x; simp only [p]; split_ifs <;> simp)
   have hE : GlobalTheory.CharBlock.IsExp (fun i => coeff (Finsupp.single i 1) U) U := by
     refine ⟨h0, fun w => ?_⟩
-    have h1 := congrArg (pderiv C ((1 : Fin 2), w)) h
+    have h1 := congrArg (pderiv (R := C) ((1 : Fin 2), w)) h
     rw [Derivation.leibniz, Formalism.G.LogCR.pderiv_subst (by simp), Formalism.G.LogCR.pderiv_subst (by simp),
       Formalism.G.LogCR.pderiv_subst (by simp), Finset.sum_eq_single w, Finset.sum_eq_single w,
       Finset.sum_eq_zero] at h1

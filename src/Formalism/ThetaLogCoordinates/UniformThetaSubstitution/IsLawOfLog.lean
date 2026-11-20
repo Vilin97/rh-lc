@@ -67,7 +67,7 @@ def DerivA : Prop :=
   ∀ (K : Type) [NormedField K] [IsUltrametricDist K] [CharZero K] (p : ℕ), p.Prime →
     ‖(p : K)‖ = (p : ℝ)⁻¹ →
     Integral (MvPowerSeries.pderiv (R := K) 0 (Aser K p) -
-      at1 0 (PowerSeries.derivative K (lgF K p)) * at1 1 (g0F K p)) ∧
+      at1 0 (PowerSeries.derivative (R := K) (lgF K p)) * at1 1 (g0F K p)) ∧
     Integral (MvPowerSeries.pderiv (R := K) 0 (Aser' K p))
 
 def LemmaOne : Prop :=

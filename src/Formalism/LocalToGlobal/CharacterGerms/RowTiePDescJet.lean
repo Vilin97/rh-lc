@@ -37,7 +37,7 @@ theorem HiOrd.sum {K : ℕ} {α : Type} (s : Finset α) (g : α → PS k n d) (h
   exact Finset.sum_eq_zero fun i hi => h i hi μ hμ
 
 theorem HiOrd.deriv {K : ℕ} {g : PS k n d} (h : HiOrd (K + 1) g) (i : Fin n × Fin d) :
-    HiOrd K (MvPowerSeries.pderiv k i g) := by
+    HiOrd K (MvPowerSeries.pderiv (R := k) i g) := by
   intro μ hμ
   rw [MvPowerSeries.coeff_pderiv, h _ (by rw [map_add, Finsupp.degree_single]; omega), zero_mul]
 

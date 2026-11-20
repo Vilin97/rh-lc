@@ -202,7 +202,7 @@ theorem jetsIn_phSum [CharZero K] {R : Subring K} {n : Type} [Fintype n]
     (jetsIn_subst_one hf (MvPowerSeries.constantCoeff_X i) (jetsIn_X i))
 
 theorem jetsIn_toZ [CharZero K] {R : Subring K} {l linv : PowerSeries K}
-    (h : IsLogPair l linv) (hl : IsOneUnit R (PowerSeries.derivative K l)) {n : Type} [Fintype n]
+    (h : IsLogPair l linv) (hl : IsOneUnit R (PowerSeries.derivative (R := K) l)) {n : Type} [Fintype n]
     {G : MvPowerSeries n K} (hG : IntMv R G) : JetsIn R (toZ linv G) :=
   IntMvZ_of (JetsSubst_of jets_ring_holds jets_div_pow_holds) integral_jets_holds jets_subst_one_holds
     jets_ring_holds K R l linv h hl n G hG
@@ -229,11 +229,11 @@ theorem wpShift_eq {K : Type} [Field K] [CharZero K] (W : WeierstrassCurve K) (x
   have cL : PowerSeries.constantCoeff L = 0 := by
     rw [hL, map_add, map_nsmul, map_nsmul, map_neg, constantCoeff_lam, constantCoeff_lam]
     simp
-  have cL' : PowerSeries.constantCoeff (PowerSeries.derivative K L) = 0 := by
+  have cL' : PowerSeries.constantCoeff (PowerSeries.derivative (R := K) L) = 0 := by
     rw [hL, map_add, map_nsmul, map_nsmul, map_neg, map_add, map_nsmul, map_nsmul, map_neg,
       constantCoeff_derivative_lam, constantCoeff_derivative_lam]
     simp
-  have dL : PowerSeries.derivative K (PowerSeries.derivative K L) =
+  have dL : PowerSeries.derivative (R := K) (PowerSeries.derivative (R := K) L) =
       2 * wpReg W - wTr W x0 y0 - wTr W x0 y0 := by
     rw [hL]
     simp only [map_add, map_nsmul, map_neg, derivative2_lam]

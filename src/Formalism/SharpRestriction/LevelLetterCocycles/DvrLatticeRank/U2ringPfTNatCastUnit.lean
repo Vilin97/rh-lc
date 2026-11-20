@@ -53,7 +53,7 @@ theorem u2ringPfT_deriv [IsDomain O] [IsDiscreteValuationRing O] [CharZero O]
   have hwq : IsUnit wq := w₁.isUnit.map (Pi.evalMonoidHom (fun _ : ZMod n => PowerSeries O) c)
   set Ec := E c with hEcdef
   have hQ : W.q₀ = wq * Polynomial.aeval π Ec := congrFun hq c
-  set D := PowerSeries.derivative O with hD
+  set D := PowerSeries.derivative (R := O) with hD
   obtain ⟨uv, huv⟩ := DualFramesAlt.eigenRingInvariants.ev_exists hxm u
   obtain ⟨duv, hduv⟩ := DualFramesAlt.eigenRingInvariants.ev_exists hxm (D u)
   obtain ⟨wv, hwv⟩ := DualFramesAlt.eigenRingInvariants.ev_exists hxm wq

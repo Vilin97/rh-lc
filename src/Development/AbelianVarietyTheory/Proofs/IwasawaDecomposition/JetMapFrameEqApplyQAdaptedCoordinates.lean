@@ -100,7 +100,7 @@ theorem prod_factorial_add_single [Fintype σ] [DecidableEq σ] (α : σ →₀ 
   simp
 
 theorem fpair_mul_X [Fintype σ] [DecidableEq σ] (Q : MvPolynomial σ K) (j : σ) (F : MvPowerSeries σ K) :
-    fpair (Q * MvPolynomial.X j) F = fpair Q (MvPowerSeries.pderiv K j F) := by
+    fpair (Q * MvPolynomial.X j) F = fpair Q (MvPowerSeries.pderiv (R := K) j F) := by
   induction Q using MvPolynomial.induction_on' with
   | monomial α c =>
     rw [MvPolynomial.X, MvPolynomial.monomial_mul, mul_one, fpair_monomial, fpair_monomial,
@@ -125,7 +125,7 @@ theorem hasSubst_linS (c : σ → κ → K) : MvPowerSeries.HasSubst (linS c) :=
   MvPowerSeries.hasSubst_of_constantCoeff_zero (constantCoeff_linS c)
 
 theorem pderiv_linS (c : σ → κ → K) (k : σ) (j : κ) :
-    MvPowerSeries.pderiv K j (linS c k) = MvPowerSeries.C (c k j) := by
+    MvPowerSeries.pderiv (R := K) j (linS c k) = MvPowerSeries.C (c k j) := by
   unfold linS
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum, Finset.sum_eq_single j]

@@ -12,7 +12,7 @@ noncomputable def E (Y : Mat C N) : Fin N × Fin N → PowerSeries C :=
 noncomputable def F (Y : Mat C N) (f : MP C N) : PowerSeries C := MvPolynomial.aeval (E Y) f
 
 theorem deriv_E (Y : Mat C N) (p : Fin N × Fin N) :
-    PowerSeries.derivative C (E Y p) = MvPolynomial.aeval (E Y) (DX Y (MvPolynomial.X p)) := by
+    PowerSeries.derivative (R := C) (E Y p) = MvPolynomial.aeval (E Y) (DX Y (MvPolynomial.X p)) := by
   rw [DX, MvPolynomial.mkDerivation_X]
   ext n
   set_option synthInstance.maxHeartbeats 100000 in
@@ -37,7 +37,7 @@ theorem cc_F (Y : Mat C N) (f : MP C N) : PowerSeries.constantCoeff (F Y f) = ev
     simp [E]
 
 theorem deriv_F (Y : Mat C N) (f : MP C N) :
-    PowerSeries.derivative C (F Y f) = F Y (DX Y f) := by
+    PowerSeries.derivative (R := C) (F Y f) = F Y (DX Y f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [F]
   | add p q hp hq => simp only [F, map_add] at * <;> rw [hp, hq]

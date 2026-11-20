@@ -76,7 +76,7 @@ def ExpIntegral : Prop :=
 
 def QuasiLogShift : Prop :=
   ∀ (K : Type u) [NormedField K] [IsUltrametricDist K] (p : ℕ), p.Prime → ‖(p : K)‖ < 1 →
-    ∀ z : PowerSeries K, constantCoeff z = 0 → IntegralPS (PowerSeries.derivative K z) →
+    ∀ z : PowerSeries K, constantCoeff z = 0 → IntegralPS (PowerSeries.derivative (R := K) z) →
       DivByMv (p : K)
         (z.subst (MvPowerSeries.X (0 : Fin 2) + (p : K) • MvPowerSeries.X (1 : Fin 2)) - atX z)
 

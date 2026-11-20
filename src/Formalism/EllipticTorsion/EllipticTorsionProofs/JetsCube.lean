@@ -24,7 +24,7 @@ theorem integral_mul {σ : Type} {f g : MvPowerSeries σ K} (hf : IntegralMv f) 
   exact mul_le_one₀ (hf _) (norm_nonneg _) (hg _)
 
 theorem integral_pderiv {σ : Type} (i : σ) {f : MvPowerSeries σ K} (hf : IntegralMv f) :
-    IntegralMv (MvPowerSeries.pderiv K i f) := by
+    IntegralMv (MvPowerSeries.pderiv (R := K) i f) := by
   classical
   intro d
   rw [coeff_pderiv, norm_mul]
@@ -40,8 +40,8 @@ theorem integral_map {σ : Type} (g : MvPowerSeries σ (unitBall K)) :
 
 theorem pderiv_map {R S : Type*} [CommRing R] [CommRing S] (f : R →+* S) {σ : Type} (i : σ)
     (g : MvPowerSeries σ R) :
-    MvPowerSeries.pderiv S i (MvPowerSeries.map f g) =
-      MvPowerSeries.map f (MvPowerSeries.pderiv R i g) := by
+    MvPowerSeries.pderiv (R := S) i (MvPowerSeries.map f g) =
+      MvPowerSeries.map f (MvPowerSeries.pderiv (R := R) i g) := by
   ext d
   rw [coeff_pderiv, MvPowerSeries.coeff_map, MvPowerSeries.coeff_map, coeff_pderiv, map_mul,
     map_add, map_natCast, map_one]
@@ -78,7 +78,7 @@ theorem integral_omegaX (j : Fin 3) :
   exact integral_map _
 
 def Dj (j : Fin 3) (g : MvPowerSeries (Fin 3) K) : MvPowerSeries (Fin 3) K :=
-  (omegaF F).subst (MvPowerSeries.X j : MvPowerSeries (Fin 3) K) * MvPowerSeries.pderiv K j g
+  (omegaF F).subst (MvPowerSeries.X j : MvPowerSeries (Fin 3) K) * MvPowerSeries.pderiv (R := K) j g
 
 theorem integral_Dj (j : Fin 3) {g : MvPowerSeries (Fin 3) K} (hg : IntegralMv g) :
     IntegralMv (Dj F j g) :=
@@ -94,7 +94,7 @@ theorem Dj_C (j : Fin 3) (c : K) : Dj F j (MvPowerSeries.C c) = 0 := by
   rw [Dj, MvPowerSeries.pderiv_C, mul_zero]
 
 theorem Dj_const (j : Fin 3) (ψ : PowerSeries K) {A : MvPowerSeries (Fin 3) K}
-    (hA : MvPowerSeries.constantCoeff A = 0) (hdA : MvPowerSeries.pderiv K j A = 0) :
+    (hA : MvPowerSeries.constantCoeff A = 0) (hdA : MvPowerSeries.pderiv (R := K) j A = 0) :
     Dj F j (ψ.subst A) = 0 := by
   rw [Dj, pderiv_psubst hA, hdA, mul_zero, mul_zero]
 
@@ -106,7 +106,7 @@ theorem Dj_X (j : Fin 3) (ψ : PowerSeries K) :
     PowerSeries.subst_mul (PowerSeries.HasSubst.of_constantCoeff_zero hX)]
 
 theorem rti (ψ : PowerSeries K) {A : MvPowerSeries (Fin 3) K}
-    (hA : MvPowerSeries.constantCoeff A = 0) (j : Fin 3) (hdA : MvPowerSeries.pderiv K j A = 0) :
+    (hA : MvPowerSeries.constantCoeff A = 0) (j : Fin 3) (hdA : MvPowerSeries.pderiv (R := K) j A = 0) :
     Dj F j (ψ.subst ((FK F).toPowerSeries.subst ![A, MvPowerSeries.X j])) =
       (invD F ψ).subst ((FK F).toPowerSeries.subst ![A, MvPowerSeries.X j]) := by
   have hXj : MvPowerSeries.constantCoeff (MvPowerSeries.X j : MvPowerSeries (Fin 3) K) = 0 := by
@@ -115,12 +115,12 @@ theorem rti (ψ : PowerSeries K) {A : MvPowerSeries (Fin 3) K}
     rw [constantCoeff_subst_of_zero _ (fun i => by fin_cases i <;> simp [hA]),
       (FK F).zero_constantCoeff]
   have hs := hs2 hA hXj
-  have dB : MvPowerSeries.pderiv K j ((FK F).toPowerSeries.subst ![A, MvPowerSeries.X j]) =
-      (MvPowerSeries.pderiv K 1 (FK F).toPowerSeries).subst ![A, MvPowerSeries.X j] := by
+  have dB : MvPowerSeries.pderiv (R := K) j ((FK F).toPowerSeries.subst ![A, MvPowerSeries.X j]) =
+      (MvPowerSeries.pderiv (R := K) 1 (FK F).toPowerSeries).subst ![A, MvPowerSeries.X j] := by
     rw [pderiv_subst (fun i => by fin_cases i <;> simp [hA])]
     simp [Fin.sum_univ_two, hdA]
   have hω : (omegaF F).subst ((FK F).toPowerSeries.subst ![A, MvPowerSeries.X j]) =
-      (MvPowerSeries.pderiv K 1 (FK F).toPowerSeries).subst ![A, MvPowerSeries.X j] *
+      (MvPowerSeries.pderiv (R := K) 1 (FK F).toPowerSeries).subst ![A, MvPowerSeries.X j] *
         (omegaF F).subst (MvPowerSeries.X j : MvPowerSeries (Fin 3) K) := by
     have := congrArg (MvPowerSeries.subst ![A, MvPowerSeries.X j]) (omega_key (FK F))
     rw [MvPowerSeries.subst_mul hs, psubst_subst _ (FK F).zero_constantCoeff hs, atY,
@@ -145,7 +145,7 @@ theorem constantCoeff_three_variable_law : MvPowerSeries.constantCoeff (F3 F) = 
     (FK F).zero_constantCoeff]
 
 theorem pderiv_two_variable_law_other (a b k : Fin 3) (ha : a ≠ k) (hb : b ≠ k) :
-    MvPowerSeries.pderiv K k (F2 F a b) = 0 := by
+    MvPowerSeries.pderiv (R := K) k (F2 F a b) = 0 := by
   rw [F2, pderiv_subst (fun i => by fin_cases i <;> simp [Y3])]
   simp [Fin.sum_univ_two, Y3, pderiv_X_of_ne ha, pderiv_X_of_ne hb]
 

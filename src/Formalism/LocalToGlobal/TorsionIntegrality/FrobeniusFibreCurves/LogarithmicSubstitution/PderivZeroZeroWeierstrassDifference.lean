@@ -82,7 +82,7 @@ theorem partialDeriv_inVar_self (x : Fin 2) (f : PowerSeries K) : pd x (at1 x f 
 theorem partialDeriv_inVar_of_ne {i x : Fin 2} (h : x ≠ i) (f : PowerSeries K) : pd i (at1 x f : A2) = 0 := by
   rw [pderiv_series_at_variable, show pd i (MvPowerSeries.X x : A2) = 0 from MvPowerSeries.pderiv_X_of_ne h, mul_zero]
 
-theorem pd_two (i : Fin 2) : MvPowerSeries.pderiv K i (2 : A2) = 0 := by
+theorem pd_two (i : Fin 2) : MvPowerSeries.pderiv (R := K) i (2 : A2) = 0 := by
   rw [show (2 : A2) = ((2 : ℕ) : A2) by norm_num, Derivation.map_natCast]
 
 def Lop (f : A2) : A2 :=
@@ -108,16 +108,16 @@ theorem pderiv_zero_weierstrass_difference (P : PowerSeries K) : pd 0 (wpDiff P)
     2 * MvPowerSeries.X 0 + 2 * MvPowerSeries.X 0 * MvPowerSeries.X 1 ^ 2 * (at1 1 P - at1 0 P) -
       MvPowerSeries.X 0 ^ 2 * MvPowerSeries.X 1 ^ 2 * at1 0 (dz P) := by
   unfold wpDiff
-  have s0 : ∀ f : PowerSeries K, MvPowerSeries.pderiv K 0 (at1 0 f : A2) = at1 0 (dz f) :=
+  have s0 : ∀ f : PowerSeries K, MvPowerSeries.pderiv (R := K) 0 (at1 0 f : A2) = at1 0 (dz f) :=
     fun f => partialDeriv_inVar_self 0 f
-  have s1 : ∀ f : PowerSeries K, MvPowerSeries.pderiv K 1 (at1 1 f : A2) = at1 1 (dz f) :=
+  have s1 : ∀ f : PowerSeries K, MvPowerSeries.pderiv (R := K) 1 (at1 1 f : A2) = at1 1 (dz f) :=
     fun f => partialDeriv_inVar_self 1 f
-  have n01 : ∀ f : PowerSeries K, MvPowerSeries.pderiv K 0 (at1 1 f : A2) = 0 :=
+  have n01 : ∀ f : PowerSeries K, MvPowerSeries.pderiv (R := K) 0 (at1 1 f : A2) = 0 :=
     fun f => partialDeriv_inVar_of_ne (by decide) f
-  have n10 : ∀ f : PowerSeries K, MvPowerSeries.pderiv K 1 (at1 0 f : A2) = 0 :=
+  have n10 : ∀ f : PowerSeries K, MvPowerSeries.pderiv (R := K) 1 (at1 0 f : A2) = 0 :=
     fun f => partialDeriv_inVar_of_ne (by decide) f
-  have t0 : MvPowerSeries.pderiv K 0 (2 : A2) = 0 := pd_two 0
-  have t1 : MvPowerSeries.pderiv K 1 (2 : A2) = 0 := pd_two 1
+  have t0 : MvPowerSeries.pderiv (R := K) 0 (2 : A2) = 0 := pd_two 0
+  have t1 : MvPowerSeries.pderiv (R := K) 1 (2 : A2) = 0 := pd_two 1
   simp only [pd, map_add, map_sub, map_neg, Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul, nsmul_eq_mul,
     MvPowerSeries.pderiv_X_self, MvPowerSeries.pderiv_X_of_ne (i := (0 : Fin 2)) (j := 1) (by decide),
     MvPowerSeries.pderiv_X_of_ne (i := (1 : Fin 2)) (j := 0) (by decide), s0, s1, n01, n10, t0, t1,
@@ -129,16 +129,16 @@ theorem pderiv_one_weierstrass_difference (P : PowerSeries K) : pd 1 (wpDiff P) 
     -2 * MvPowerSeries.X 1 + 2 * MvPowerSeries.X 0 ^ 2 * MvPowerSeries.X 1 * (at1 1 P - at1 0 P) +
       MvPowerSeries.X 0 ^ 2 * MvPowerSeries.X 1 ^ 2 * at1 1 (dz P) := by
   unfold wpDiff
-  have s0 : ∀ f : PowerSeries K, MvPowerSeries.pderiv K 0 (at1 0 f : A2) = at1 0 (dz f) :=
+  have s0 : ∀ f : PowerSeries K, MvPowerSeries.pderiv (R := K) 0 (at1 0 f : A2) = at1 0 (dz f) :=
     fun f => partialDeriv_inVar_self 0 f
-  have s1 : ∀ f : PowerSeries K, MvPowerSeries.pderiv K 1 (at1 1 f : A2) = at1 1 (dz f) :=
+  have s1 : ∀ f : PowerSeries K, MvPowerSeries.pderiv (R := K) 1 (at1 1 f : A2) = at1 1 (dz f) :=
     fun f => partialDeriv_inVar_self 1 f
-  have n01 : ∀ f : PowerSeries K, MvPowerSeries.pderiv K 0 (at1 1 f : A2) = 0 :=
+  have n01 : ∀ f : PowerSeries K, MvPowerSeries.pderiv (R := K) 0 (at1 1 f : A2) = 0 :=
     fun f => partialDeriv_inVar_of_ne (by decide) f
-  have n10 : ∀ f : PowerSeries K, MvPowerSeries.pderiv K 1 (at1 0 f : A2) = 0 :=
+  have n10 : ∀ f : PowerSeries K, MvPowerSeries.pderiv (R := K) 1 (at1 0 f : A2) = 0 :=
     fun f => partialDeriv_inVar_of_ne (by decide) f
-  have t0 : MvPowerSeries.pderiv K 0 (2 : A2) = 0 := pd_two 0
-  have t1 : MvPowerSeries.pderiv K 1 (2 : A2) = 0 := pd_two 1
+  have t0 : MvPowerSeries.pderiv (R := K) 0 (2 : A2) = 0 := pd_two 0
+  have t1 : MvPowerSeries.pderiv (R := K) 1 (2 : A2) = 0 := pd_two 1
   simp only [pd, map_add, map_sub, map_neg, Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul, nsmul_eq_mul,
     MvPowerSeries.pderiv_X_self, MvPowerSeries.pderiv_X_of_ne (i := (0 : Fin 2)) (j := 1) (by decide),
     MvPowerSeries.pderiv_X_of_ne (i := (1 : Fin 2)) (j := 0) (by decide), s0, s1, n01, n10, t0, t1,
@@ -151,16 +151,16 @@ theorem pderiv_zero_zero_weierstrass_difference (P : PowerSeries K) : pd 0 (pd 0
       4 * MvPowerSeries.X 0 * MvPowerSeries.X 1 ^ 2 * at1 0 (dz P) -
       MvPowerSeries.X 0 ^ 2 * MvPowerSeries.X 1 ^ 2 * at1 0 (dz (dz P)) := by
   rw [pderiv_zero_weierstrass_difference]
-  have s0 : ∀ f : PowerSeries K, MvPowerSeries.pderiv K 0 (at1 0 f : A2) = at1 0 (dz f) :=
+  have s0 : ∀ f : PowerSeries K, MvPowerSeries.pderiv (R := K) 0 (at1 0 f : A2) = at1 0 (dz f) :=
     fun f => partialDeriv_inVar_self 0 f
-  have s1 : ∀ f : PowerSeries K, MvPowerSeries.pderiv K 1 (at1 1 f : A2) = at1 1 (dz f) :=
+  have s1 : ∀ f : PowerSeries K, MvPowerSeries.pderiv (R := K) 1 (at1 1 f : A2) = at1 1 (dz f) :=
     fun f => partialDeriv_inVar_self 1 f
-  have n01 : ∀ f : PowerSeries K, MvPowerSeries.pderiv K 0 (at1 1 f : A2) = 0 :=
+  have n01 : ∀ f : PowerSeries K, MvPowerSeries.pderiv (R := K) 0 (at1 1 f : A2) = 0 :=
     fun f => partialDeriv_inVar_of_ne (by decide) f
-  have n10 : ∀ f : PowerSeries K, MvPowerSeries.pderiv K 1 (at1 0 f : A2) = 0 :=
+  have n10 : ∀ f : PowerSeries K, MvPowerSeries.pderiv (R := K) 1 (at1 0 f : A2) = 0 :=
     fun f => partialDeriv_inVar_of_ne (by decide) f
-  have t0 : MvPowerSeries.pderiv K 0 (2 : A2) = 0 := pd_two 0
-  have t1 : MvPowerSeries.pderiv K 1 (2 : A2) = 0 := pd_two 1
+  have t0 : MvPowerSeries.pderiv (R := K) 0 (2 : A2) = 0 := pd_two 0
+  have t1 : MvPowerSeries.pderiv (R := K) 1 (2 : A2) = 0 := pd_two 1
   simp only [pd, map_add, map_sub, map_neg, Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul, nsmul_eq_mul,
     MvPowerSeries.pderiv_X_self, MvPowerSeries.pderiv_X_of_ne (i := (0 : Fin 2)) (j := 1) (by decide),
     MvPowerSeries.pderiv_X_of_ne (i := (1 : Fin 2)) (j := 0) (by decide), s0, s1, n01, n10, t0, t1,
@@ -173,16 +173,16 @@ theorem pderiv_one_one_weierstrass_difference (P : PowerSeries K) : pd 1 (pd 1 (
       4 * MvPowerSeries.X 0 ^ 2 * MvPowerSeries.X 1 * at1 1 (dz P) +
       MvPowerSeries.X 0 ^ 2 * MvPowerSeries.X 1 ^ 2 * at1 1 (dz (dz P)) := by
   rw [pderiv_one_weierstrass_difference]
-  have s0 : ∀ f : PowerSeries K, MvPowerSeries.pderiv K 0 (at1 0 f : A2) = at1 0 (dz f) :=
+  have s0 : ∀ f : PowerSeries K, MvPowerSeries.pderiv (R := K) 0 (at1 0 f : A2) = at1 0 (dz f) :=
     fun f => partialDeriv_inVar_self 0 f
-  have s1 : ∀ f : PowerSeries K, MvPowerSeries.pderiv K 1 (at1 1 f : A2) = at1 1 (dz f) :=
+  have s1 : ∀ f : PowerSeries K, MvPowerSeries.pderiv (R := K) 1 (at1 1 f : A2) = at1 1 (dz f) :=
     fun f => partialDeriv_inVar_self 1 f
-  have n01 : ∀ f : PowerSeries K, MvPowerSeries.pderiv K 0 (at1 1 f : A2) = 0 :=
+  have n01 : ∀ f : PowerSeries K, MvPowerSeries.pderiv (R := K) 0 (at1 1 f : A2) = 0 :=
     fun f => partialDeriv_inVar_of_ne (by decide) f
-  have n10 : ∀ f : PowerSeries K, MvPowerSeries.pderiv K 1 (at1 0 f : A2) = 0 :=
+  have n10 : ∀ f : PowerSeries K, MvPowerSeries.pderiv (R := K) 1 (at1 0 f : A2) = 0 :=
     fun f => partialDeriv_inVar_of_ne (by decide) f
-  have t0 : MvPowerSeries.pderiv K 0 (2 : A2) = 0 := pd_two 0
-  have t1 : MvPowerSeries.pderiv K 1 (2 : A2) = 0 := pd_two 1
+  have t0 : MvPowerSeries.pderiv (R := K) 0 (2 : A2) = 0 := pd_two 0
+  have t1 : MvPowerSeries.pderiv (R := K) 1 (2 : A2) = 0 := pd_two 1
   simp only [pd, map_add, map_sub, map_neg, Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul, nsmul_eq_mul,
     MvPowerSeries.pderiv_X_self, MvPowerSeries.pderiv_X_of_ne (i := (0 : Fin 2)) (j := 1) (by decide),
     MvPowerSeries.pderiv_X_of_ne (i := (1 : Fin 2)) (j := 0) (by decide), s0, s1, n01, n10, t0, t1,
@@ -274,7 +274,7 @@ theorem Lop_log (h2 : ExpLogDeriv) {N : A2} (hN : MvPowerSeries.constantCoeff N 
   simp only [pd, Derivation.leibniz, smul_eq_mul] at d0 d1 e0 e1 ⊢
   unfold Lop
   simp only [pd]
-  linear_combination N * d0 - MvPowerSeries.pderiv K 0 N * e0 - N * d1 + MvPowerSeries.pderiv K 1 N * e1
+  linear_combination N * d0 - MvPowerSeries.pderiv (R := K) 0 N * e0 - N * d1 + MvPowerSeries.pderiv (R := K) 1 N * e1
 
 theorem evalYZero_eq (h : A2) : ev0 h = MvPowerSeries.substAlgHom Formalism.G.LogP.hb0 h := by
   rw [MvPowerSeries.coe_substAlgHom]
@@ -313,9 +313,9 @@ theorem AddSigmaLog_of (h2 : ExpLogDeriv) (h3 : ExpLogSubst) (h4 : PrimRules)
   obtain ⟨hpr1', -⟩ := h4 K P
   have hddf : dz (dz f) = -P := by
     rw [hf, sigS]
-    show PowerSeries.derivative K (PowerSeries.derivative K (-prim (prim P))) = -P
-    rw [map_neg, map_neg, show PowerSeries.derivative K (prim (prim P)) = prim P from hpr1,
-      show PowerSeries.derivative K (prim P) = P from hpr1']
+    show PowerSeries.derivative (R := K) (PowerSeries.derivative (R := K) (-prim (prim P))) = -P
+    rw [map_neg, map_neg, show PowerSeries.derivative (R := K) (prim (prim P)) = prim P from hpr1,
+      show PowerSeries.derivative (R := K) (prim P) = P from hpr1']
   have hLopN : Lop N = (2 * at1 0 P - 2 * at1 1 P) * N ^ 2 := by
     have e1 := Lop_wpDiff h8 hP
     rw [wpDiff_eq h9 hPodd, ← hNdef, Lop_mulD] at e1

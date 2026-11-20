@@ -446,7 +446,7 @@ def EulerCoordNeg : Prop :=
     (PowerSeries.X * (ω : PowerSeries K)) * (PowerSeries.C l - PowerSeries.X) =
       PowerSeries.C l * PowerSeries.X →
     ∀ j : ℕ, (PowerSeries.X - PowerSeries.C l) *
-        (PowerSeries.X * PowerSeries.derivative K (((ω⁻¹ : (PowerSeries K)ˣ) : PowerSeries K) ^ j) -
+        (PowerSeries.X * PowerSeries.derivative (R := K) (((ω⁻¹ : (PowerSeries K)ˣ) : PowerSeries K) ^ j) -
           (j : PowerSeries K) * ((ω⁻¹ : (PowerSeries K)ˣ) : PowerSeries K) ^ j) =
       (PowerSeries.C l * (j : PowerSeries K)) * ((ω⁻¹ : (PowerSeries K)ˣ) : PowerSeries K) ^ j
 
@@ -482,10 +482,10 @@ def AverageLift : Prop :=
 
 def FrobDeriv : Prop :=
   ∀ (O : Type) [CommRing O] (l : ℕ), 1 ≤ l → ∀ f : PowerSeries O,
-    (PowerSeries.X * PowerSeries.derivative O (frob l f) =
-      PowerSeries.C (l : O) * frob l (PowerSeries.X * PowerSeries.derivative O f)) ∧
-    ∀ ζ : O, PowerSeries.X * PowerSeries.derivative O (PowerSeries.rescale ζ f) =
-      PowerSeries.rescale ζ (PowerSeries.X * PowerSeries.derivative O f)
+    (PowerSeries.X * PowerSeries.derivative (R := O) (frob l f) =
+      PowerSeries.C (l : O) * frob l (PowerSeries.X * PowerSeries.derivative (R := O) f)) ∧
+    ∀ ζ : O, PowerSeries.X * PowerSeries.derivative (R := O) (PowerSeries.rescale ζ f) =
+      PowerSeries.rescale ζ (PowerSeries.X * PowerSeries.derivative (R := O) f)
 
 def IsotypicSeries : Prop :=
   ∀ (O : Type) [CommRing O] [IsDomain O] (e : ℕ) (ζ : O), IsPrimitiveRoot ζ e →

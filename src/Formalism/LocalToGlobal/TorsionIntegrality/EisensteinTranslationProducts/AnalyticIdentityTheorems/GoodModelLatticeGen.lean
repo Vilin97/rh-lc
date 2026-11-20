@@ -75,7 +75,7 @@ theorem T_den (hr : TaylorRing) (hd : TaylorDeriv) (L : PeriodPair) :
   have h5 : taylor0 (fun z : ℂ => z * z) = taylor0 (fun z : ℂ => z) * taylor0 (fun z : ℂ => z) :=
     (hadd (fun z : ℂ => z) (fun z : ℂ => z) hz hz).2
   rw [h1, h2, h3, h4, h5, hC, hC, hX, hd.1 _ hP, map_one, map_neg]
-  show _ = 1 - PowerSeries.C (1 / 2 : ℂ) * PowerSeries.X ^ 3 * PowerSeries.derivative ℂ (taylor0 (L.weierstrassPExcept 0))
+  show _ = 1 - PowerSeries.C (1 / 2 : ℂ) * PowerSeries.X ^ 3 * PowerSeries.derivative (R := ℂ) (taylor0 (L.weierstrassPExcept 0))
   ring
 
 theorem den_zero (L : PeriodPair) : den L 0 = 1 := by

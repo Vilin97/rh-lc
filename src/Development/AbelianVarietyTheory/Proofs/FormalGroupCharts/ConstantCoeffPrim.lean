@@ -28,7 +28,7 @@ theorem degree_eq_sum (n : τ →₀ ℕ) : n.degree = ∑ w, n w := by
   exact Finset.sum_subset (Finset.subset_univ _) (fun w _ hw => by simpa using hw)
 
 theorem pderiv_prim (ω : τ → MvPowerSeries τ k)
-    (hω : ∀ a c, pderiv k c (ω a) = pderiv k a (ω c)) (v : τ) : pderiv k v (prim ω) = ω v := by
+    (hω : ∀ a c, pderiv (R := k) c (ω a) = pderiv (R := k) a (ω c)) (v : τ) : pderiv (R := k) v (prim ω) = ω v := by
   ext n
   rw [coeff_pderiv, coeff_prim]
   have hterm : ∀ w, ((n v : k) + 1) *

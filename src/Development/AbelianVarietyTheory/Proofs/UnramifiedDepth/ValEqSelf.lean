@@ -322,7 +322,7 @@ theorem valEqSelf : ∀ (C : Type) [Field C] [CharZero C] (V : VF C) (O : Type) 
     refine GlobalTheory.T.invariantDerivations_constant_in_logCoordinates C V O dd Y n _ (linCol pl u) (cc_linCol pl u) _ _ _ ?_
     intro b j
     obtain ⟨ρ, col, hpl, h0, h1⟩ := hco ℓ hℓ
-    have h2 : ∀ x, MvPowerSeries.pderiv C x (linCol pl u (b, j)) =
+    have h2 : ∀ x, MvPowerSeries.pderiv (R := C) x (linCol pl u (b, j)) =
         MvPowerSeries.C (∑ col : Fin 2, if pl (x.1, col) = b then u x.2 (col, j) else 0) := by
       intro x
       unfold linCol

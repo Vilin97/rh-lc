@@ -359,7 +359,7 @@ def LieLeafVanishingLocal : Prop :=
         MvPowerSeries (Λ.CoG g ⊕ Λ.CoG (1 - g)) 𝓞_ℂ_[l],
       ∀ b, (∑ k : Fin (Λ.rk (1 - g) (a + (i : ZMod d))),
           ((Λ.tan χ (1 - g) (a + (i : ZMod d)) b k : 𝓞_ℂ_[l]) : ℂ_[l]) •
-            MvPowerSeries.pderiv ℂ_[l] (Sum.inr k) (Λ.hL g a (a + (i : ZMod d)))) =
+            MvPowerSeries.pderiv (R := ℂ_[l]) (Sum.inr k) (Λ.hL g a (a + (i : ZMod d)))) =
         MvPowerSeries.subst
             (Sum.elim (fun x => embL (Λ.tL χ g a x))
               (fun x => embR (Λ.tL χ (1 - g) (a + (i : ZMod d)) x)))

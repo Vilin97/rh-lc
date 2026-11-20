@@ -64,7 +64,7 @@ def ThetaZeroJetsCurve : Prop :=
 
 def KernelTwo : Prop :=
   ∀ (K : Type) [NormedField K] [IsUltrametricDist K] [CharZero K] (l linv ph : PowerSeries K),
-    IsLogPair l linv → IsOneUnit (unitBall K) (PowerSeries.derivative K l) →
+    IsLogPair l linv → IsOneUnit (unitBall K) (PowerSeries.derivative (R := K) l) →
     PowerSeries.constantCoeff ph = 0 → (∀ i : ℕ, 1 ≤ i → ‖jet l ph i‖ ≤ 1) →
     ∀ (n : Type) [Fintype n] (c : n → K), (∀ i, ‖c i‖ ≤ 1) →
     ∀ G : MvPowerSeries n K, IntMv (unitBall K) G →

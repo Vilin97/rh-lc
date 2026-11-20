@@ -12,10 +12,10 @@ open Formalism.G.LogCR
 variable {K : Type*} [CommRing K]
 
 def ccd (i : Fin 2) (H : MvPowerSeries (Fin 2) K) : K :=
-  MvPowerSeries.constantCoeff (MvPowerSeries.pderiv K i H)
+  MvPowerSeries.constantCoeff (MvPowerSeries.pderiv (R := K) i H)
 
 def Q (H : MvPowerSeries (Fin 2) K) : K :=
-  MvPowerSeries.constantCoeff (MvPowerSeries.pderiv K 1 (MvPowerSeries.pderiv K 0 H))
+  MvPowerSeries.constantCoeff (MvPowerSeries.pderiv (R := K) 1 (MvPowerSeries.pderiv (R := K) 0 H))
 
 theorem Q_sub (f g : MvPowerSeries (Fin 2) K) : Q (f - g) = Q f - Q g := by
   simp [Q, map_sub]
@@ -26,18 +26,18 @@ theorem cc_psubst {τ : Type*} [Finite τ] {a : MvPowerSeries τ K}
   exact Formalism.G.LogP.constantCoeff_subst_of_zero (f : MvPowerSeries Unit K) (b := fun _ => a) (fun _ => ha)
 
 theorem cc_derivative (f : PowerSeries K) :
-    PowerSeries.constantCoeff (PowerSeries.derivative K f) = PowerSeries.coeff 1 f := by
+    PowerSeries.constantCoeff (PowerSeries.derivative (R := K) f) = PowerSeries.coeff 1 f := by
   rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, PowerSeries.coeff_derivative]
   simp
 
 theorem pderiv_one_subst_X0 (g : PowerSeries K) :
-    MvPowerSeries.pderiv K 1 (g.subst (MvPowerSeries.X (0 : Fin 2) : MvPowerSeries (Fin 2) K))
+    MvPowerSeries.pderiv (R := K) 1 (g.subst (MvPowerSeries.X (0 : Fin 2) : MvPowerSeries (Fin 2) K))
       = 0 := by
   rw [pderiv_psubst (MvPowerSeries.constantCoeff_X _)]
   simp [MvPowerSeries.pderiv_X]
 
 theorem pderiv_zero_subst_X1 (g : PowerSeries K) :
-    MvPowerSeries.pderiv K 0 (g.subst (MvPowerSeries.X (1 : Fin 2) : MvPowerSeries (Fin 2) K))
+    MvPowerSeries.pderiv (R := K) 0 (g.subst (MvPowerSeries.X (1 : Fin 2) : MvPowerSeries (Fin 2) K))
       = 0 := by
   rw [pderiv_psubst (MvPowerSeries.constantCoeff_X _)]
   simp [MvPowerSeries.pderiv_X]
@@ -83,9 +83,9 @@ theorem linearCoeff_zero_subst_X1 (g : PowerSeries K) :
 theorem Q_phi (φ : PowerSeries K) {S : MvPowerSeries (Fin 2) K}
     (hS : MvPowerSeries.constantCoeff S = 0) :
     Q (φ.subst S) =
-      PowerSeries.constantCoeff (PowerSeries.derivative K (PowerSeries.derivative K φ)) *
+      PowerSeries.constantCoeff (PowerSeries.derivative (R := K) (PowerSeries.derivative (R := K) φ)) *
           ccd 1 S * ccd 0 S +
-        PowerSeries.constantCoeff (PowerSeries.derivative K φ) * Q S := by
+        PowerSeries.constantCoeff (PowerSeries.derivative (R := K) φ) * Q S := by
   unfold Q ccd
   rw [pderiv_psubst hS, Derivation.leibniz, pderiv_psubst hS]
   simp only [smul_eq_mul, map_add, map_mul, cc_psubst hS]
@@ -110,10 +110,10 @@ theorem ccd_F (F : MvPowerSeries (Fin 2) K) {x y : MvPowerSeries (Fin 2) K}
 theorem Q_F (F : MvPowerSeries (Fin 2) K) {x y : MvPowerSeries (Fin 2) K}
     (hx : MvPowerSeries.constantCoeff x = 0) (hy : MvPowerSeries.constantCoeff y = 0) :
     Q (F.subst ![x, y]) =
-      ccd 0 F * Q x + ccd 0 x * (ccd 0 (MvPowerSeries.pderiv K 0 F) * ccd 1 x +
-          ccd 1 (MvPowerSeries.pderiv K 0 F) * ccd 1 y) +
-        ccd 1 F * Q y + ccd 0 y * (ccd 0 (MvPowerSeries.pderiv K 1 F) * ccd 1 x +
-          ccd 1 (MvPowerSeries.pderiv K 1 F) * ccd 1 y) := by
+      ccd 0 F * Q x + ccd 0 x * (ccd 0 (MvPowerSeries.pderiv (R := K) 0 F) * ccd 1 x +
+          ccd 1 (MvPowerSeries.pderiv (R := K) 0 F) * ccd 1 y) +
+        ccd 1 F * Q y + ccd 0 y * (ccd 0 (MvPowerSeries.pderiv (R := K) 1 F) * ccd 1 x +
+          ccd 1 (MvPowerSeries.pderiv (R := K) 1 F) * ccd 1 y) := by
   unfold Q
   set_option synthInstance.maxHeartbeats 100000 in
     rw [pderiv_subst (hv hx hy), map_sum, Fin.sum_univ_two]
@@ -130,7 +130,7 @@ theorem ccd_single (F : MvPowerSeries (Fin 2) K) (i : Fin 2) :
   simp
 
 theorem ccd_mixed (F : MvPowerSeries (Fin 2) K) :
-    ccd 1 (MvPowerSeries.pderiv K 0 F) = ccd 0 (MvPowerSeries.pderiv K 1 F) := by
+    ccd 1 (MvPowerSeries.pderiv (R := K) 0 F) = ccd 0 (MvPowerSeries.pderiv (R := K) 1 F) := by
   rw [ccd_single, ccd_single, MvPowerSeries.coeff_pderiv, MvPowerSeries.coeff_pderiv,
     add_comm (Finsupp.single (1 : Fin 2) 1)]
   simp
@@ -155,23 +155,23 @@ theorem cc_omega (F : FormalGroup (Formalism.G.unitBall K)) :
   unfold Formalism.ELL.omegaF
   exact Formalism.G.LogP.constantCoeff_subst_of_zero _ hb
 
-theorem pd_unit_X : MvPowerSeries.pderiv K () (PowerSeries.X : PowerSeries K) = 1 := by
-  show MvPowerSeries.pderiv K () (MvPowerSeries.X ()) = 1
+theorem pd_unit_X : MvPowerSeries.pderiv (R := K) () (PowerSeries.X : PowerSeries K) = 1 := by
+  show MvPowerSeries.pderiv (R := K) () (MvPowerSeries.X ()) = 1
   simp [MvPowerSeries.pderiv_X]
 
 theorem cc_domega (F : FormalGroup (Formalism.G.unitBall K)) :
-    PowerSeries.constantCoeff (PowerSeries.derivative K (omegaF F)) =
-      ccd 0 (MvPowerSeries.pderiv K 1 (FK F).toPowerSeries) := by
-  have hd : ∀ g : PowerSeries K, PowerSeries.derivative K g = MvPowerSeries.pderiv K () g := by
+    PowerSeries.constantCoeff (PowerSeries.derivative (R := K) (omegaF F)) =
+      ccd 0 (MvPowerSeries.pderiv (R := K) 1 (FK F).toPowerSeries) := by
+  have hd : ∀ g : PowerSeries K, PowerSeries.derivative (R := K) g = MvPowerSeries.pderiv (R := K) () g := by
     intro g
     ext n
     rw [PowerSeries.coeff_derivative]
-    show _ = MvPowerSeries.coeff (Finsupp.single () n) (MvPowerSeries.pderiv K () g)
+    show _ = MvPowerSeries.coeff (Finsupp.single () n) (MvPowerSeries.pderiv (R := K) () g)
     rw [MvPowerSeries.coeff_pderiv, ← Finsupp.single_add]
     simp only [Finsupp.single_eq_same]
     rfl
   rw [hd]
-  change MvPowerSeries.constantCoeff (MvPowerSeries.pderiv K () (Formalism.ELL.omegaF F)) = _
+  change MvPowerSeries.constantCoeff (MvPowerSeries.pderiv (R := K) () (Formalism.ELL.omegaF F)) = _
   unfold Formalism.ELL.omegaF
   rw [pderiv_subst hb, Fin.sum_univ_two]
   simp only [map_add, map_mul, Formalism.G.LogP.constantCoeff_subst_of_zero _ hb, Matrix.cons_val_zero,
@@ -181,13 +181,13 @@ theorem cc_domega (F : FormalGroup (Formalism.G.unitBall K)) :
 theorem constantCoeff_second_derivative_law (F : FormalGroup (Formalism.G.unitBall K)) (φ : PowerSeries K) :
     PowerSeries.constantCoeff ((invD F)^[2] φ) =
       ccd 1 (FK F).toPowerSeries *
-        (ccd 0 (MvPowerSeries.pderiv K 1 (FK F).toPowerSeries) *
-            PowerSeries.constantCoeff (PowerSeries.derivative K φ) +
+        (ccd 0 (MvPowerSeries.pderiv (R := K) 1 (FK F).toPowerSeries) *
+            PowerSeries.constantCoeff (PowerSeries.derivative (R := K) φ) +
           ccd 1 (FK F).toPowerSeries *
-            PowerSeries.constantCoeff (PowerSeries.derivative K (PowerSeries.derivative K φ))) := by
+            PowerSeries.constantCoeff (PowerSeries.derivative (R := K) (PowerSeries.derivative (R := K) φ))) := by
   unfold Formalism.ELL.invD
-  show PowerSeries.constantCoeff (Formalism.ELL.omegaF F * PowerSeries.derivative K
-      (Formalism.ELL.omegaF F * PowerSeries.derivative K φ)) = _
+  show PowerSeries.constantCoeff (Formalism.ELL.omegaF F * PowerSeries.derivative (R := K)
+      (Formalism.ELL.omegaF F * PowerSeries.derivative (R := K) φ)) = _
   rw [map_mul, Derivation.leibniz]
   simp only [map_add, map_mul, smul_eq_mul, cc_omega, cc_domega]
   ring
@@ -246,18 +246,18 @@ theorem jetsTwo_of (hN : Formalism.ELL.NPderiv.{u}) : Formalism.ELL.JetsTwo.{u} 
     exact (FK F).zero_constantCoeff
   have h1 : Q (betaF F φ (a.subst (MvPowerSeries.X (0 : Fin 2) : MvPowerSeries (Fin 2) K))
       (MvPowerSeries.X 1)) = PowerSeries.coeff 1 a *
-        (PowerSeries.constantCoeff (PowerSeries.derivative K (PowerSeries.derivative K φ)) +
-          PowerSeries.constantCoeff (PowerSeries.derivative K φ) *
-            ccd 0 (MvPowerSeries.pderiv K 1 (FK F).toPowerSeries)) := by
+        (PowerSeries.constantCoeff (PowerSeries.derivative (R := K) (PowerSeries.derivative (R := K) φ)) +
+          PowerSeries.constantCoeff (PowerSeries.derivative (R := K) φ) *
+            ccd 0 (MvPowerSeries.pderiv (R := K) 1 (FK F).toPowerSeries)) := by
     rw [hβ, Q_sub, Q_sub, Q_phi φ (cS _ _ cu constantCoeff_threeGroupsFirstVariables_eq_zero), Q_phi φ cu, Q_phi φ constantCoeff_threeGroupsFirstVariables_eq_zero,
       ccd_F _ cu constantCoeff_threeGroupsFirstVariables_eq_zero, ccd_F _ cu constantCoeff_threeGroupsFirstVariables_eq_zero, Q_F _ cu constantCoeff_threeGroupsFirstVariables_eq_zero]
     simp only [linearCoeff_zero_formal_group_law, linearCoeff_one_formal_group_law, linearCoeff_zero_subst_X0, linearCoeff_one_subst_X0, quadraticJet_subst_X0, hX01, hX11, hQX, ccd_mixed]
     ring
   have h2 : Q (betaF F φ (MvPowerSeries.X 0)
       (a'.subst (MvPowerSeries.X (1 : Fin 2) : MvPowerSeries (Fin 2) K))) = PowerSeries.coeff 1 a' *
-        (PowerSeries.constantCoeff (PowerSeries.derivative K (PowerSeries.derivative K φ)) +
-          PowerSeries.constantCoeff (PowerSeries.derivative K φ) *
-            ccd 0 (MvPowerSeries.pderiv K 1 (FK F).toPowerSeries)) := by
+        (PowerSeries.constantCoeff (PowerSeries.derivative (R := K) (PowerSeries.derivative (R := K) φ)) +
+          PowerSeries.constantCoeff (PowerSeries.derivative (R := K) φ) *
+            ccd 0 (MvPowerSeries.pderiv (R := K) 1 (FK F).toPowerSeries)) := by
     rw [hβ, Q_sub, Q_sub, Q_phi φ (cS _ _ cX0 cv), Q_phi φ cX0, Q_phi φ cv,
       ccd_F _ cX0 cv, ccd_F _ cX0 cv, Q_F _ cX0 cv]
     simp only [linearCoeff_zero_formal_group_law, linearCoeff_one_formal_group_law, linearCoeff_one_subst_X1, linearCoeff_zero_subst_X1, quadraticJet_subst_X1, hX00, hX10, hQX, ccd_mixed]
@@ -271,7 +271,7 @@ theorem jetsTwo_of (hN : Formalism.ELL.NPderiv.{u}) : Formalism.ELL.JetsTwo.{u} 
     ring
   rw [← key]
   unfold Q
-  rw [show ∀ Z : MvPowerSeries (Fin 2) K, MvPowerSeries.constantCoeff (MvPowerSeries.pderiv K 1 Z) =
+  rw [show ∀ Z : MvPowerSeries (Fin 2) K, MvPowerSeries.constantCoeff (MvPowerSeries.pderiv (R := K) 1 Z) =
       MvPowerSeries.coeff (Finsupp.single 1 1) Z from fun Z => ccd_single Z 1]
   exact hQG _
 

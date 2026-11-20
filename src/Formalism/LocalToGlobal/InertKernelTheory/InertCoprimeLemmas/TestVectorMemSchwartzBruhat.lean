@@ -173,7 +173,7 @@ theorem integral_psubstX {r : ℕ} (i : Fin r) {w : PowerSeries ℂ_[p]} (hw : �
     rw [e]; exact this
 
 theorem integral_pderiv {σ : Type*} (j : σ) {G : MvPowerSeries σ ℂ_[p]} (hG : IntegralMv G) :
-    IntegralMv (MvPowerSeries.pderiv ℂ_[p] j G) := fun n => by
+    IntegralMv (MvPowerSeries.pderiv (R := ℂ_[p]) j G) := fun n => by
   rw [MvPowerSeries.coeff_pderiv]
   refine Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.RestC.isPadicIntegral_mul (hG _) ?_
   have := isPadicIntegral_natCast (p := p) (n j + 1)
@@ -201,7 +201,7 @@ theorem cc_psubstX {r : ℕ} (i : Fin r) (f : PowerSeries ℂ_[p]) :
   rw [PowerSeries.subst_def, cc_subst (fun _ => MvPowerSeries.constantCoeff_X i)]
   rfl
 
-theorem dX_eq (f : PowerSeries ℂ_[p]) : dX f = PowerSeries.derivative ℂ_[p] f := by
+theorem dX_eq (f : PowerSeries ℂ_[p]) : dX f = PowerSeries.derivative (R := ℂ_[p]) f := by
   ext n
   rw [PowerSeries.coeff_derivative, dX, PowerSeries.coeff_mk]
   ring
@@ -217,13 +217,13 @@ variable {p : ℕ} [Fact p.Prime] {r : ℕ}
 def dl (c : ℂ_[p]) (w : PowerSeries ℂ_[p]) (j : Fin r) :
     MvPowerSeries (Fin r) ℂ_[p] →+ MvPowerSeries (Fin r) ℂ_[p] where
   toFun G := algebraMap ℂ_[p] (MvPowerSeries (Fin r) ℂ_[p]) c *
-    PowerSeries.subst (MvPowerSeries.X j : MvPowerSeries (Fin r) ℂ_[p]) w * MvPowerSeries.pderiv ℂ_[p] j G
+    PowerSeries.subst (MvPowerSeries.X j : MvPowerSeries (Fin r) ℂ_[p]) w * MvPowerSeries.pderiv (R := ℂ_[p]) j G
   map_zero' := by simp
   map_add' F G := by simp only [map_add]; ring
 
 theorem dl_apply (c : ℂ_[p]) (w : PowerSeries ℂ_[p]) (j : Fin r) (G : MvPowerSeries (Fin r) ℂ_[p]) :
     dl c w j G = algebraMap ℂ_[p] (MvPowerSeries (Fin r) ℂ_[p]) c *
-      PowerSeries.subst (MvPowerSeries.X j : MvPowerSeries (Fin r) ℂ_[p]) w * MvPowerSeries.pderiv ℂ_[p] j G := rfl
+      PowerSeries.subst (MvPowerSeries.X j : MvPowerSeries (Fin r) ℂ_[p]) w * MvPowerSeries.pderiv (R := ℂ_[p]) j G := rfl
 
 theorem dl_mul (c : ℂ_[p]) (w : PowerSeries ℂ_[p]) (j : Fin r) (F G : MvPowerSeries (Fin r) ℂ_[p]) :
     dl c w j (F * G) = dl c w j F * G + F * dl c w j G := by
@@ -260,9 +260,9 @@ theorem psubstX_zero (i : Fin r) :
   rw [← PowerSeries.coe_substAlgHom (hsX i), map_zero]
 
 theorem pderiv_psubstX (i j : Fin r) (h : PowerSeries ℂ_[p]) :
-    MvPowerSeries.pderiv ℂ_[p] j (PowerSeries.subst (MvPowerSeries.X i : MvPowerSeries (Fin r) ℂ_[p]) h) =
+    MvPowerSeries.pderiv (R := ℂ_[p]) j (PowerSeries.subst (MvPowerSeries.X i : MvPowerSeries (Fin r) ℂ_[p]) h) =
       if i = j then PowerSeries.subst (MvPowerSeries.X i : MvPowerSeries (Fin r) ℂ_[p])
-        (PowerSeries.derivative ℂ_[p] h) else 0 := by
+        (PowerSeries.derivative (R := ℂ_[p]) h) else 0 := by
   rw [Formalism.G.LogCR.pderiv_psubst (MvPowerSeries.constantCoeff_X i)]
   split_ifs with hij
   · subst hij; rw [MvPowerSeries.pderiv_X_self, mul_one]
@@ -296,11 +296,11 @@ theorem atLogA_cc (k : D.what₂.Tau × Fin N' × Fin N) :
   rw [RestC.cc_psubst' (MvPowerSeries.constantCoeff_X i) (RestC.cc_flog _ wq), mul_zero]
 
 theorem pderiv_atLogA (j : Fin r) (k : D.what₂.Tau × Fin N' × Fin N) :
-    MvPowerSeries.pderiv ℂ_[p] j (RestC.atLogA lam Λ C wq b k) =
+    MvPowerSeries.pderiv (R := ℂ_[p]) j (RestC.atLogA lam Λ C wq b k) =
       algebraMap ℂ_[p] (MvPowerSeries (Fin r) ℂ_[p])
         (((C.u⁻¹ : ℂ_[p]ˣ) : ℂ_[p]) * lamC lam (embT D k.1 (b j k.2.1 k.2.2))) *
       PowerSeries.subst (MvPowerSeries.X j : MvPowerSeries (Fin r) ℂ_[p])
-        (PowerSeries.derivative ℂ_[p] (flog (C • wModel lam Λ) wq)) := by
+        (PowerSeries.derivative (R := ℂ_[p]) (flog (C • wModel lam Λ) wq)) := by
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [RestC.atLogA, map_sum, RestC.pderiv_C_mul, pderiv_psubstX, mul_ite, mul_zero]
   rw [Finset.sum_ite_eq' Finset.univ j, if_pos (Finset.mem_univ j)]
@@ -320,11 +320,11 @@ theorem atLog_der (w : PowerSeries ℂ_[p]) (hw : w * dX (flog (C • wModel lam
   simp only [map_mul, AlgHom.commutes]
   rw [Finset.mul_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
-  set S := (MvPowerSeries.substAlgHom hs) (MvPowerSeries.pderiv ℂ_[p] k F)
+  set S := (MvPowerSeries.substAlgHom hs) (MvPowerSeries.pderiv (R := ℂ_[p]) k F)
   set cj := lamC lam (embT D k.1 (b j k.2.1 k.2.2))
   have hprod : PowerSeries.subst (MvPowerSeries.X j : MvPowerSeries (Fin r) ℂ_[p]) w *
       PowerSeries.subst (MvPowerSeries.X j : MvPowerSeries (Fin r) ℂ_[p])
-        (PowerSeries.derivative ℂ_[p] (flog (C • wModel lam Λ) wq)) = 1 := by
+        (PowerSeries.derivative (R := ℂ_[p]) (flog (C • wModel lam Λ) wq)) = 1 := by
     rw [← psubstX_mul, ← dX_eq, hw, psubstX_one]
   have hc : algebraMap ℂ_[p] (MvPowerSeries (Fin r) ℂ_[p]) ((C.u : ℂ_[p]ˣ) : ℂ_[p]) *
       algebraMap ℂ_[p] (MvPowerSeries (Fin r) ℂ_[p]) ((C.u⁻¹ : ℂ_[p]ˣ) : ℂ_[p]) = 1 := by

@@ -21,7 +21,7 @@ open MvPowerSeries in
 set_option autoImplicit false in
 private theorem pderiv_map_algebraMap {B Q σ : Type} [CommRing B] [CommRing Q] [Algebra B Q]
     (k : σ) (g : MvPowerSeries σ B) :
-    pderiv Q k (map (algebraMap B Q) g) = map (algebraMap B Q) (pderiv B k g) := by
+    pderiv (R := Q) k (map (algebraMap B Q) g) = map (algebraMap B Q) (pderiv (R := B) k g) := by
   ext n
   simp [coeff_pderiv, coeff_map]
 
@@ -97,11 +97,11 @@ private theorem dIn_univ_of_QL_of_isLaw {B Q : Type} [CommRing B] [CommRing Q] [
     · simp [hij]
     · simp [hij, Finsupp.single_left_inj]
   let M : Matrix (Fin d) (Fin d) (MvPowerSeries (Fin d) B) :=
-    fun j i => subst eB (pderiv B (Sum.inr i) (μ j))
+    fun j i => subst eB (pderiv (R := B) (Sum.inr i) (μ j))
   have hM : ∀ i j, constantCoeff (M i j) = if i = j then 1 else 0 := by
     intro i j
     rw [← coeff_zero_eq_constantCoeff_apply]
-    have := (_root_.GlobalTheory.coeff_subst_restrict_sum (pderiv B (Sum.inr j) (μ i))).1 0
+    have := (_root_.GlobalTheory.coeff_subst_restrict_sum (pderiv (R := B) (Sum.inr j) (μ i))).1 0
     simp only [M, eB]
     rw [this, Finsupp.mapDomain_zero, coeff_pderiv, zero_add, hlinμ j i]
     by_cases hij : i = j
@@ -111,8 +111,8 @@ private theorem dIn_univ_of_QL_of_isLaw {B Q : Type} [CommRing B] [CommRing Q] [
       subst e (map (algebraMap B Q) g) = map (algebraMap B Q) (subst eB g) := by
     intro g
     rw [map_subst heB, hmape]
-  have hchain : ∀ i, ∑ j, pderiv Q j f * map (algebraMap B Q) (M j i) =
-      subst e (pderiv Q (Sum.inr i) (subst μQ f)) := by
+  have hchain : ∀ i, ∑ j, pderiv (R := Q) j f * map (algebraMap B Q) (M j i) =
+      subst e (pderiv (R := Q) (Sum.inr i) (subst μQ f)) := by
     intro i
     set_option synthInstance.maxHeartbeats 100000 in
       rw [_root_.GlobalTheory.PSChain.pderiv_subst_chain μQ hμQ0 f (Sum.inr i), ← coe_substAlgHom he, map_sum]
@@ -121,7 +121,7 @@ private theorem dIn_univ_of_QL_of_isLaw {B Q : Type} [CommRing B] [CommRing Q] [
     simp only [M, μQ]
     rw [pderiv_map_algebraMap, hmapsub]
   have hg : ∀ i, _root_.GlobalTheory.QLog.In (B := B) ⊤
-      (subst e (pderiv Q (Sum.inr i) (subst μQ f))) := by
+      (subst e (pderiv (R := Q) (Sum.inr i) (subst μQ f))) := by
     intro i
     obtain ⟨s₀, hs₀⟩ := _root_.GlobalTheory.QLog.In.top_iff.1 hcob
     have hdec : subst μQ f = map (algebraMap B Q) s₀ + _root_.GlobalTheory.Katz.inL f +
@@ -130,19 +130,19 @@ private theorem dIn_univ_of_QL_of_isLaw {B Q : Type} [CommRing B] [CommRing Q] [
       unfold _root_.GlobalTheory.Katz.cob1
       rw [hμQ]
       ring
-    have hleft : pderiv Q (Sum.inr i) (_root_.GlobalTheory.Katz.inL f) = 0 := by
+    have hleft : pderiv (R := Q) (Sum.inr i) (_root_.GlobalTheory.Katz.inL f) = 0 := by
       unfold _root_.GlobalTheory.Katz.inL
       rw [_root_.GlobalTheory.PSChain.pderiv_subst_chain _ (fun k => by simp) f (Sum.inr i)]
       simp [pderiv_X]
-    have hright : pderiv Q (Sum.inr i) (_root_.GlobalTheory.Katz.inR f) =
-        subst (fun k => (X (Sum.inr k) : MvPowerSeries (Fin d ⊕ Fin d) Q)) (pderiv Q i f) := by
+    have hright : pderiv (R := Q) (Sum.inr i) (_root_.GlobalTheory.Katz.inR f) =
+        subst (fun k => (X (Sum.inr k) : MvPowerSeries (Fin d ⊕ Fin d) Q)) (pderiv (R := Q) i f) := by
       unfold _root_.GlobalTheory.Katz.inR
       rw [_root_.GlobalTheory.PSChain.pderiv_subst_chain _ (fun k => by simp) f (Sum.inr i)]
       simp [pderiv_X, Pi.single_apply]
     obtain ⟨b, -, hb⟩ := hlin i
     have hX : HasSubst (fun k => (X (Sum.inr k) : MvPowerSeries (Fin d ⊕ Fin d) Q)) :=
       hasSubst_of_constantCoeff_zero (fun k => by simp)
-    have hrr : subst e (subst (fun k => (X (Sum.inr k) : MvPowerSeries (Fin d ⊕ Fin d) Q)) (pderiv Q i f)) =
+    have hrr : subst e (subst (fun k => (X (Sum.inr k) : MvPowerSeries (Fin d ⊕ Fin d) Q)) (pderiv (R := Q) i f)) =
         map (algebraMap B Q) (C b) := by
       rw [subst_comp_subst_apply hX he]
       have hz : (fun k : Fin d => subst e (X (Sum.inr k) : MvPowerSeries (Fin d ⊕ Fin d) Q)) =
@@ -154,13 +154,13 @@ private theorem dIn_univ_of_QL_of_isLaw {B Q : Type} [CommRing B] [CommRing Q] [
       unfold _root_.GlobalTheory.Katz.lin at hb
       simp [hb]
     rw [_root_.GlobalTheory.QLog.In.top_iff]
-    refine ⟨subst eB (pderiv B (Sum.inr i) s₀) + C b, ?_⟩
+    refine ⟨subst eB (pderiv (R := B) (Sum.inr i) s₀) + C b, ?_⟩
     rw [hdec]
     simp only [map_add]
     rw [hleft, hright, add_zero, ← coe_substAlgHom he, map_add, coe_substAlgHom, hrr,
       pderiv_map_algebraMap, hmapsub]
-  have hsol := _root_.GlobalTheory.InvSolve.solve ⊤ M hM (fun j => pderiv Q j f)
-    (fun i => subst e (pderiv Q (Sum.inr i) (subst μQ f))) hchain hg
+  have hsol := _root_.GlobalTheory.InvSolve.solve ⊤ M hM (fun j => pderiv (R := Q) j f)
+    (fun i => subst e (pderiv (R := Q) (Sum.inr i) (subst μQ f))) hchain hg
   intro α i
   by_cases hα : α i = 0
   · exact ⟨0, Submodule.mem_top, by simp [hα]⟩

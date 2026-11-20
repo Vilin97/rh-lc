@@ -16,17 +16,17 @@ section Defs
 variable [CharZero C] {V : VF C} {O : Type} [CommRing O] [StarRing O] {dd : ℕ}
 
 def FBChart.dF (Y : FBChart C V O dd) (v : Fin dd → C) (j : Fin dd) : PS C 1 dd :=
-  ∑ i, MvPowerSeries.C (v i) * ev (n := 1) ![pt C dd 0, 0] (MvPowerSeries.pderiv C ((1 : Fin 2), i) (Y.B.G.F j))
+  ∑ i, MvPowerSeries.C (v i) * ev (n := 1) ![pt C dd 0, 0] (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i) (Y.B.G.F j))
 
 def ExDerSt (Y : FBChart C V O dd) : Prop :=
   ∀ (v : Fin dd → C) (j : Fin dd),
-    ∑ i, MvPowerSeries.C (v i) * MvPowerSeries.pderiv C ((0 : Fin 1), i) (Y.ex j) = ev (n := 1) ![Y.ex] (Y.dF v j)
+    ∑ i, MvPowerSeries.C (v i) * MvPowerSeries.pderiv (R := C) ((0 : Fin 1), i) (Y.ex j) = ev (n := 1) ![Y.ex] (Y.dF v j)
 
 def GermIIMSt (Y : FBChart C V O dd) : Prop :=
   ∀ v : Fin dd → C, (∀ i, V.Ge 0 (v i)) →
     IntS V ((∑ j : Fin dd, (∑ i : Fin dd, MvPowerSeries.C (v i) *
-        ev (n := 2) ![pt C dd 0, 0] (MvPowerSeries.pderiv C ((1 : Fin 2), i) (Y.B.G.F j))) *
-          MvPowerSeries.pderiv C ((0 : Fin 2), j) Y.h) + ev (n := 2) ![pt C dd 1] (Y.sgP v))
+        ev (n := 2) ![pt C dd 0, 0] (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i) (Y.B.G.F j))) *
+          MvPowerSeries.pderiv (R := C) ((0 : Fin 2), j) Y.h) + ev (n := 2) ![pt C dd 1] (Y.sgP v))
 
 end Defs
 
@@ -34,7 +34,7 @@ namespace RowTiePCEqDer
 
 variable {d : ℕ} {I : Fin 2 → Type} [∀ g, Fintype (I g)]
 
-theorem dVar_eq {σ : Type} (w : σ) (F : MvPowerSeries σ C) : dVar w F = MvPowerSeries.pderiv C w F := by
+theorem dVar_eq {σ : Type} (w : σ) (F : MvPowerSeries σ C) : dVar w F = MvPowerSeries.pderiv (R := C) w F := by
   ext μ
   rw [MvPowerSeries.coeff_pderiv]
   show ((μ w + 1 : ℕ) : C) * MvPowerSeries.coeff (μ + Finsupp.single w 1) F = _
@@ -42,7 +42,7 @@ theorem dVar_eq {σ : Type} (w : σ) (F : MvPowerSeries σ C) : dVar w F = MvPow
   ring
 
 theorem pderiv_upG_same (g : Fin 2) (k : I g) (F : MvPowerSeries (I g) C) :
-    MvPowerSeries.pderiv C (⟨g, k⟩ : WV I) (upG g F) = upG g (MvPowerSeries.pderiv C k F) := by
+    MvPowerSeries.pderiv (R := C) (⟨g, k⟩ : WV I) (upG g F) = upG g (MvPowerSeries.pderiv (R := C) k F) := by
   unfold upG
   rw [Formalism.G.LogCR.pderiv_subst (fun _ => MvPowerSeries.constantCoeff_X _), Finset.sum_eq_single k]
   · rw [MvPowerSeries.pderiv_X_self, mul_one]
@@ -54,7 +54,7 @@ theorem pderiv_upG_same (g : Fin 2) (k : I g) (F : MvPowerSeries (I g) C) :
     exact absurd (Finset.mem_univ k) h
 
 theorem pderiv_upG_ne (g g' : Fin 2) (h : g' ≠ g) (k : I g) (F : MvPowerSeries (I g') C) :
-    MvPowerSeries.pderiv C (⟨g, k⟩ : WV I) (upG g' F) = 0 := by
+    MvPowerSeries.pderiv (R := C) (⟨g, k⟩ : WV I) (upG g' F) = 0 := by
   unfold upG
   rw [Formalism.G.LogCR.pderiv_subst (fun _ => MvPowerSeries.constantCoeff_X _)]
   refine Finset.sum_eq_zero fun c _ => ?_
@@ -70,7 +70,7 @@ variable {d : ℕ} {I : Fin 2 → Type} [∀ g, Fintype (I g)]
 variable [CharZero C] {V : VF C} {O : Type} [CommRing O] [StarRing O] {dd : ℕ}
 
 theorem pderiv_uncurry (f : PS C 1 dd) (i : Fin dd) :
-    MvPowerSeries.pderiv C i (un1 f) = un1 (MvPowerSeries.pderiv C ((0 : Fin 1), i) f) := by
+    MvPowerSeries.pderiv (R := C) i (un1 f) = un1 (MvPowerSeries.pderiv (R := C) ((0 : Fin 1), i) f) := by
   rw [uncurry_eq_subst, Formalism.G.LogCR.pderiv_subst (fun _ => MvPowerSeries.constantCoeff_X _),
     Finset.sum_eq_single ((0 : Fin 1), i), uncurry_eq_subst]
   · rw [show (((0 : Fin 1), i) : Fin 1 × Fin dd).2 = i from rfl, MvPowerSeries.pderiv_X_self, mul_one]
@@ -97,7 +97,7 @@ theorem uncurry_eval_exp_raw (Y : FBChart C V O dd) {d : ℕ} {I : Fin 2 → Typ
 
 theorem ev_pt_dF (Y : FBChart C V O dd) (v : Fin dd → C) (g' : Fin 2) (j : Fin dd) :
     ev (n := 2) ![pt C dd g'] (Y.dF v j) =
-      ∑ i, MvPowerSeries.C (v i) * ev (n := 2) ![pt C dd g', 0] (MvPowerSeries.pderiv C ((1 : Fin 2), i) (Y.B.G.F j)) := by
+      ∑ i, MvPowerSeries.C (v i) * ev (n := 2) ![pt C dd g', 0] (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i) (Y.B.G.F j)) := by
   have hZ := z0_1 (pt C (n := 2) dd g') (z0_pt g')
   have hZ' : Z0 (![pt C dd 0, 0] : Fin 2 → Pt C 1 dd) := z0_p0 _ (z0_pt 0)
   unfold FBChart.dF
@@ -111,7 +111,7 @@ theorem ev_pt_dF (Y : FBChart C V O dd) (v : Fin dd → C) (g' : Fin 2) (j : Fin
   · exact ev_zero hZ
 
 theorem pderiv_lin {κ : Type} [Fintype κ] (X : RawChart C d I κ) (g : Fin 2) (k : I g) (i : κ) :
-    MvPowerSeries.pderiv C k (∑ c : I g, X.u g c i • (MvPowerSeries.X c : MvPowerSeries (I g) C)) =
+    MvPowerSeries.pderiv (R := C) k (∑ c : I g, X.u g c i • (MvPowerSeries.X c : MvPowerSeries (I g) C)) =
       MvPowerSeries.C (X.u g k i) := by
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum, Finset.sum_eq_single k]
@@ -123,13 +123,13 @@ theorem pderiv_lin {κ : Type} [Fintype κ] (X : RawChart C d I κ) (g : Fin 2) 
 
 theorem pderiv_expG (Y : FBChart C V O dd) (p : PairData Y d I) (hE : ExDerSt Y) (g : Fin 2) (k : I g)
     (j : Fin dd) :
-    MvPowerSeries.pderiv C k ((Y.raw p).expG g j) =
+    MvPowerSeries.pderiv (R := C) k ((Y.raw p).expG g j) =
       MvPowerSeries.subst ((Y.raw p).expG g) (un1 (Y.dF ((Y.raw p).u g k) j)) := by
   have hlin0 := lin_const (Y.raw p) g
   have hL := MvPowerSeries.hasSubst_of_constantCoeff_zero hlin0
   have hx0 : ∀ i, MvPowerSeries.constantCoeff ((Y.raw p).ex i) = 0 := Y.chart_exp_constantCoeff p
   have e1 : MvPowerSeries.subst (Y.raw p).ex (un1 (Y.dF ((Y.raw p).u g k) j)) =
-      ∑ i, MvPowerSeries.C ((Y.raw p).u g k i) * MvPowerSeries.pderiv C i ((Y.raw p).ex j) := by
+      ∑ i, MvPowerSeries.C ((Y.raw p).u g k i) * MvPowerSeries.pderiv (R := C) i ((Y.raw p).ex j) := by
     rw [← uncurry_eval_exp_raw Y p, ← hE, uncurry_linear_combination]
     simp only [← pderiv_uncurry]
     rfl
@@ -176,7 +176,7 @@ theorem cEqDer_of
     rw [expPt_eq]
     exact upG_const _ (constantCoeff_subst_zero (lin_const (Y.raw p) q.1) (Y.chart_exp_constantCoeff p q.2))
   have hES := MvPowerSeries.hasSubst_of_constantCoeff_zero hE0
-  have hd : ∀ (g' : Fin 2) (j : Fin dd), MvPowerSeries.pderiv C (⟨1 - g, k⟩ : WV I) ((Y.raw p).expPt g' j) =
+  have hd : ∀ (g' : Fin 2) (j : Fin dd), MvPowerSeries.pderiv (R := C) (⟨1 - g, k⟩ : WV I) ((Y.raw p).expPt g' j) =
       if g' = 1 - g then MvPowerSeries.subst ((Y.raw p).expPt (1 - g)) (un1 (Y.dF ((Y.raw p).u (1 - g) k) j))
       else 0 := by
     intro g' j
@@ -188,10 +188,10 @@ theorem cEqDer_of
       funext i
       exact (expPt_eq _ _ _).symm
     · rw [expPt_eq, pderiv_upG_ne (1 - g) g' hg k]
-  have hch : MvPowerSeries.pderiv C (⟨1 - g, k⟩ : WV I)
+  have hch : MvPowerSeries.pderiv (R := C) (⟨1 - g, k⟩ : WV I)
       (MvPowerSeries.subst (fun q : Fin 2 × Fin dd => (Y.raw p).expPt q.1 q.2) Y.h) =
       ∑ j, MvPowerSeries.subst (fun q : Fin 2 × Fin dd => (Y.raw p).expPt q.1 q.2)
-          (MvPowerSeries.pderiv C ((1 - g : Fin 2), j) Y.h) *
+          (MvPowerSeries.pderiv (R := C) ((1 - g : Fin 2), j) Y.h) *
         MvPowerSeries.subst ((Y.raw p).expPt (1 - g)) (un1 (Y.dF ((Y.raw p).u (1 - g) k) j)) := by
     rw [Formalism.G.LogCR.pderiv_subst hE0, Fintype.sum_prod_type, Finset.sum_eq_single (1 - g)]
     · simp only [hd, if_true]
@@ -200,13 +200,13 @@ theorem cEqDer_of
     · intro h
       exact absurd (Finset.mem_univ _) h
   set J : PS C 2 dd := (∑ j, ev (n := 2) ![pt C dd (1 - g)] (Y.dF ((Y.raw p).u (1 - g) k) j) *
-      MvPowerSeries.pderiv C ((1 - g : Fin 2), j) Y.h) + ev (n := 2) ![pt C dd g] (Y.sgP ((Y.raw p).u (1 - g) k))
+      MvPowerSeries.pderiv (R := C) ((1 - g : Fin 2), j) Y.h) + ev (n := 2) ![pt C dd g] (Y.sgP ((Y.raw p).u (1 - g) k))
     with hJd
   have hsubD : MvPowerSeries.subst (fun q : Fin 2 × Fin dd => (Y.raw p).expPt q.1 q.2)
       (∑ j, ev (n := 2) ![pt C dd (1 - g)] (Y.dF ((Y.raw p).u (1 - g) k) j) *
-        MvPowerSeries.pderiv C ((1 - g : Fin 2), j) Y.h) =
+        MvPowerSeries.pderiv (R := C) ((1 - g : Fin 2), j) Y.h) =
       ∑ j, MvPowerSeries.subst (fun q : Fin 2 × Fin dd => (Y.raw p).expPt q.1 q.2)
-          (MvPowerSeries.pderiv C ((1 - g : Fin 2), j) Y.h) *
+          (MvPowerSeries.pderiv (R := C) ((1 - g : Fin 2), j) Y.h) *
         MvPowerSeries.subst ((Y.raw p).expPt (1 - g)) (un1 (Y.dF ((Y.raw p).u (1 - g) k) j)) := by
     set_option synthInstance.maxHeartbeats 100000 in
       rw [← MvPowerSeries.coe_substAlgHom hES, map_sum, MvPowerSeries.coe_substAlgHom]
@@ -227,7 +227,7 @@ theorem cEqDer_of
       rfl
   refine ⟨J, hJ, ?_⟩
   rw [dVar_eq]
-  show MvPowerSeries.pderiv C _ (((Y.k : ℕ) : C) •
+  show MvPowerSeries.pderiv (R := C) _ (((Y.k : ℕ) : C) •
     MvPowerSeries.subst (fun q : Fin 2 × Fin dd => (Y.raw p).expPt q.1 q.2) Y.h) = _
   rw [Derivation.map_smul, hch, ← hsubD, hJd, MvPowerSeries.subst_add hES, subst_exp_eval_two _ hE0, Y.raw_sg p,
     add_sub_cancel_right]

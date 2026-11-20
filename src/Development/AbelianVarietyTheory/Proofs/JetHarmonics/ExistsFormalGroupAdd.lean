@@ -351,10 +351,10 @@ theorem log_deriv {W : WeierstrassCurve k} {U V ℓ : PowerSeries k} {c : k}
     (hℓ : PowerSeries.constantCoeff ℓ = 0)
     (hUℓ : PowerSeries.subst ℓ U = PowerSeries.X (R := k))
     (he : eqn (W.map PowerSeries.C) U V = 0)
-    (hd : PowerSeries.derivative k U = PowerSeries.C c * fu (W.map PowerSeries.C) U V)
+    (hd : PowerSeries.derivative (R := k) U = PowerSeries.C c * fu (W.map PowerSeries.C) U V)
     {s t : MvPowerSeries σ k} (hs : constantCoeff s = 0) (ht : constantCoeff t = 0)
     (hst : eqn (up σ W) s t = 0) :
-    PowerSeries.subst s (PowerSeries.derivative k ℓ) * (C c * fu (up σ W) s t) = 1 := by
+    PowerSeries.subst s (PowerSeries.derivative (R := k) ℓ) * (C c * fu (up σ W) s t) = 1 := by
   have Hs := PowerSeries.HasSubst.of_constantCoeff_zero hs
   have Hℓ := PowerSeries.HasSubst.of_constantCoeff_zero' hℓ
   have hg : constantCoeff (PowerSeries.subst s ℓ) = 0 :=
@@ -367,7 +367,7 @@ theorem log_deriv {W : WeierstrassCurve k} {U V ℓ : PowerSeries k} {c : k}
   have eV : PowerSeries.subst (PowerSeries.subst s ℓ) V = t :=
     eqn_unique hs (PowerSeries.constantCoeff_subst_eq_zero hg _ hV) ht e1.symm hst
   rw [eU, eV] at e2
-  have d1 := congrArg (PowerSeries.derivative k) hUℓ
+  have d1 := congrArg (PowerSeries.derivative (R := k)) hUℓ
   rw [PowerSeries.derivative_subst Hℓ, PowerSeries.derivative_X] at d1
   have d2 := congrArg (PowerSeries.subst s) d1
   rw [PowerSeries.subst_mul Hs, psubst_psubst hs hℓ, hd, PowerSeries.subst_mul Hg, e2,
@@ -380,11 +380,11 @@ theorem log_law [IsAddTorsionFree k] {W : WeierstrassCurve k} {U V ℓ : PowerSe
     (hℓ : PowerSeries.constantCoeff ℓ = 0)
     (hUℓ : PowerSeries.subst ℓ U = PowerSeries.X (R := k))
     (he : eqn (W.map PowerSeries.C) U V = 0)
-    (hd : PowerSeries.derivative k U = PowerSeries.C c * fu (W.map PowerSeries.C) U V)
+    (hd : PowerSeries.derivative (R := k) U = PowerSeries.C c * fu (W.map PowerSeries.C) U V)
     {F G : MvPowerSeries (Fin 2) k} {w : Fin 2 → MvPowerSeries (Fin 2) k}
     (hF : constantCoeff F = 0) (hG : constantCoeff G = 0) (hFG : eqn (up _ W) F G = 0)
     (hw : ∀ i, constantCoeff (w i) = 0 ∧ eqn (up _ W) (X i) (w i) = 0 ∧
-        fu (up _ W) (X i) (w i) * pderiv k i F = fu (up _ W) F G) :
+        fu (up _ W) (X i) (w i) * pderiv (R := k) i F = fu (up _ W) F G) :
     PowerSeries.subst F ℓ = PowerSeries.subst (X 0 : MvPowerSeries (Fin 2) k) ℓ +
       PowerSeries.subst (X 1 : MvPowerSeries (Fin 2) k) ℓ := by
   have HX : ∀ i, PowerSeries.HasSubst (X i : MvPowerSeries (Fin 2) k) := fun i =>
@@ -393,16 +393,16 @@ theorem log_law [IsAddTorsionFree k] {W : WeierstrassCurve k} {U V ℓ : PowerSe
   · have a1 := log_deriv hV hℓ hUℓ he hd hF hG hFG
     have a2 := log_deriv hV hℓ hUℓ he hd (constantCoeff_X i) (hw i).1 (hw i).2.1
     have a3 := (hw i).2.2
-    have a4 : pderiv k i (PowerSeries.subst (X 0 : MvPowerSeries (Fin 2) k) ℓ +
+    have a4 : pderiv (R := k) i (PowerSeries.subst (X 0 : MvPowerSeries (Fin 2) k) ℓ +
       PowerSeries.subst (X 1 : MvPowerSeries (Fin 2) k) ℓ) =
-        PowerSeries.subst (X i : MvPowerSeries (Fin 2) k) (PowerSeries.derivative k ℓ) := by
+        PowerSeries.subst (X i : MvPowerSeries (Fin 2) k) (PowerSeries.derivative (R := k) ℓ) := by
       rw [map_add, GlobalTheory.FormalCalc.pderiv_powerSeries_subst (HX 0),
         GlobalTheory.FormalCalc.pderiv_powerSeries_subst (HX 1)]
       fin_cases i <;> simp [pderiv_X_of_ne]
     rw [id, a4, GlobalTheory.FormalCalc.pderiv_powerSeries_subst (PowerSeries.HasSubst.of_constantCoeff_zero hF)]
-    set p := PowerSeries.subst F (PowerSeries.derivative k ℓ)
-    set r := PowerSeries.subst (X i : MvPowerSeries (Fin 2) k) (PowerSeries.derivative k ℓ)
-    linear_combination r * a1 - p * pderiv k i F * a2 + p * r * C c * a3
+    set p := PowerSeries.subst F (PowerSeries.derivative (R := k) ℓ)
+    set r := PowerSeries.subst (X i : MvPowerSeries (Fin 2) k) (PowerSeries.derivative (R := k) ℓ)
+    linear_combination r * a1 - p * pderiv (R := k) i F * a2 + p * r * C c * a3
   · have : α = 0 := Finsupp.ext hα
     subst this
     simp only [coeff_zero_eq_constantCoeff_apply, map_add]
@@ -420,7 +420,7 @@ theorem exists_formalGroup {R k : Type} [CommRing R] [IsDomain R] [Field k] [Cha
     (hφ : Function.Injective φ) (W : WeierstrassCurve R) {U V : PowerSeries k} {c : k} (hc : c ≠ 0)
     (hU : PowerSeries.constantCoeff U = 0) (hV : PowerSeries.constantCoeff V = 0)
     (he : eqn ((W.map φ).map PowerSeries.C) U V = 0)
-    (hd : PowerSeries.derivative k U = PowerSeries.C c * fu ((W.map φ).map PowerSeries.C) U V) :
+    (hd : PowerSeries.derivative (R := k) U = PowerSeries.C c * fu ((W.map φ).map PowerSeries.C) U V) :
     ∃ F : FormalGroup R,
       subst ![PowerSeries.subst (X 0 : MvPowerSeries (Fin 2) k) U,
         PowerSeries.subst (X 1 : MvPowerSeries (Fin 2) k) U] (map φ F.toPowerSeries) =

@@ -179,7 +179,7 @@ theorem sameJets_taylor (hP : P.Separable) : SameJets (taylor P).toRingHom P := 
     rwa [X_dvd_iff, constantCoeff_taylor, AdjoinRoot.mk_eq_zero] at h1
 
 theorem pow_dvd_derivative {R : Type} [CommRing R] {m : ℕ} {x : R⟦X⟧} (h : X ^ (m + 1) ∣ x) :
-    X ^ m ∣ PowerSeries.derivative R x := by
+    X ^ m ∣ PowerSeries.derivative (R := R) x := by
   rw [X_pow_dvd_iff] at h ⊢
   intro n hn
   rw [coeff_derivative, h _ (by omega), zero_mul]

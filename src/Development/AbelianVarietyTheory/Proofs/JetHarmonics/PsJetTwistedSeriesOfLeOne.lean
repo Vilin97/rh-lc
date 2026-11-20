@@ -32,9 +32,9 @@ open MvPowerSeries
 
 variable {S : Type} [CommRing S]
 
-def lin {σ : Type} (v : σ) (f : MvPowerSeries σ S) : S := constantCoeff (pderiv S v f)
+def lin {σ : Type} (v : σ) (f : MvPowerSeries σ S) : S := constantCoeff (pderiv (R := S) v f)
 
-def quad {σ : Type} (v w : σ) (f : MvPowerSeries σ S) : S := constantCoeff (pderiv S v (pderiv S w f))
+def quad {σ : Type} (v w : σ) (f : MvPowerSeries σ S) : S := constantCoeff (pderiv (R := S) v (pderiv (R := S) w f))
 
 theorem lin_eq_coeff {σ : Type} (v : σ) (f : MvPowerSeries σ S) : lin v f = coeff (Finsupp.single v 1) f := by
   rw [lin, ← coeff_zero_eq_constantCoeff_apply, coeff_pderiv]
@@ -70,14 +70,14 @@ theorem cc_exp {g : PS S n d} (h0 : constantCoeff g = 0) : constantCoeff (expP g
 theorem lin_exp {g : PS S n d} (h0 : constantCoeff g = 0) (v : Fin n × Fin d) : lin v (expP g) = lin v g := by
   have h := TB.WickVanishing.Nab.pderiv_expS h0 v
   have h1 := cc_exp h0
-  change pderiv S v (expP g) = expP g * _ at h
+  change pderiv (R := S) v (expP g) = expP g * _ at h
   simp [lin, h, h1]
 
 theorem quad_exp {g : PS S n d} (h0 : constantCoeff g = 0) (v w : Fin n × Fin d) (h1 : lin w g = 0) :
     quad v w (expP g) = quad v w g := by
   have h := TB.WickVanishing.Nab.pderiv_expS h0 w
   have h2 := cc_exp h0
-  change pderiv S w (expP g) = expP g * _ at h
+  change pderiv (R := S) w (expP g) = expP g * _ at h
   unfold lin at h1
   simp [quad, h, h1, h2, Derivation.leibniz]
 

@@ -69,7 +69,7 @@ theorem weq_subst {s : MvPowerSeries (Fin 2) R} (hs : cc s = 0) :
   exact h2
 
 def Dm (i : Fin 2) (a : MvPowerSeries (Fin 2) R) : MvPowerSeries (Fin 2) R :=
-  (fw W).subst (MvPowerSeries.X i : MvPowerSeries (Fin 2) R) * MvPowerSeries.pderiv R i a
+  (fw W).subst (MvPowerSeries.X i : MvPowerSeries (Fin 2) R) * MvPowerSeries.pderiv (R := R) i a
 
 theorem isDer_Dm (i : Fin 2) : IsDer (Dm W i) := by
   refine ⟨fun a b => ?_, fun a b => ?_⟩
@@ -206,8 +206,8 @@ section Transfer
 variable {R : Type u} {S : Type v} [CommRing R] [CommRing S]
 
 theorem map_pderiv (φ : R →+* S) (i : Fin 2) (f : MvPowerSeries (Fin 2) R) :
-    MvPowerSeries.map φ (MvPowerSeries.pderiv R i f)
-      = MvPowerSeries.pderiv S i (MvPowerSeries.map φ f) := by
+    MvPowerSeries.map φ (MvPowerSeries.pderiv (R := R) i f)
+      = MvPowerSeries.pderiv (R := S) i (MvPowerSeries.map φ f) := by
   ext n
   simp [MvPowerSeries.coeff_pderiv]
 
@@ -237,7 +237,7 @@ theorem fw_mul_om_subst (W : WeierstrassCurve R) {s : MvPowerSeries (Fin 2) R} (
   rw [← PowerSeries.coe_substAlgHom (R := R) hs', ← map_mul, h1, map_one]
 
 theorem om_fgl (W : WeierstrassCurve R) (i : Fin 2) :
-    (om W).subst (fgl W) * MvPowerSeries.pderiv R i (fgl W)
+    (om W).subst (fgl W) * MvPowerSeries.pderiv (R := R) i (fgl W)
       = (om W).subst (MvPowerSeries.X i : MvPowerSeries (Fin 2) R) := by
   have h := Dm_fgl' W i
   unfold Dm at h
@@ -246,7 +246,7 @@ theorem om_fgl (W : WeierstrassCurve R) (i : Fin 2) :
   have h2 := fw_mul_om_subst W (MvPowerSeries.constantCoeff_X i)
   linear_combination ((om W).subst (fgl W) * (om W).subst (MvPowerSeries.X i : MvPowerSeries (Fin 2) R)) * h +
     (om W).subst (MvPowerSeries.X i : MvPowerSeries (Fin 2) R) * h1 -
-    ((om W).subst (fgl W) * MvPowerSeries.pderiv R i (fgl W)) * h2
+    ((om W).subst (fgl W) * MvPowerSeries.pderiv (R := R) i (fgl W)) * h2
 
 theorem mvsubst_psubst {σ τ : Type*} {a : MvPowerSeries σ R} (ha : PowerSeries.HasSubst a)
     {b : σ → MvPowerSeries τ R} (hb : MvPowerSeries.HasSubst b) (f : R⟦X⟧) :
@@ -267,7 +267,7 @@ theorem formal_exponential_spec : ExpSpec.{u} := expSpec_of integration_spec com
 theorem formal_logarithm_neg : LogNeg.{u} := logNeg_of integration_spec composition_inverse_spec invariant_differential_units formal_inverse_spec
 
 private theorem eq_zero_of_pderiv_zero_of_pderiv_one_eq_zero {h : MvPowerSeries (Fin 2) K}
-    (h0 : MvPowerSeries.pderiv K 0 h = 0) (h1 : MvPowerSeries.pderiv K 1 h = 0)
+    (h0 : MvPowerSeries.pderiv (R := K) 0 h = 0) (h1 : MvPowerSeries.pderiv (R := K) 1 h = 0)
     (hc : MvPowerSeries.constantCoeff h = 0) : h = 0 := by
   ext n
   rw [map_zero]
@@ -278,7 +278,7 @@ private theorem eq_zero_of_pderiv_zero_of_pderiv_one_eq_zero {h : MvPowerSeries 
       by_contra hne
       push_neg at hne
       exact hn (Finsupp.ext hne)
-    have hD : MvPowerSeries.pderiv K i h = 0 := by
+    have hD : MvPowerSeries.pderiv (R := K) i h = 0 := by
       fin_cases i
       · exact h0
       · exact h1

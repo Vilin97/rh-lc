@@ -13,7 +13,7 @@ variable {σ R : Type*} [CommRing R] [IsAddTorsionFree R]
 
 theorem mvPowerSeries_eq_zero_of_pderiv_mem_span (S : Set (MvPowerSeries σ R))
     (h0 : ∀ F ∈ S, MvPowerSeries.constantCoeff F = 0)
-    (hd : ∀ F ∈ S, ∀ i, MvPowerSeries.pderiv R i F ∈ Ideal.span S) : ∀ F ∈ S, F = 0 := by
+    (hd : ∀ F ∈ S, ∀ i, MvPowerSeries.pderiv (R := R) i F ∈ Ideal.span S) : ∀ F ∈ S, F = 0 := by
   classical
   have key : ∀ n : ℕ, ∀ F ∈ Ideal.span S, ∀ m : σ →₀ ℕ, m.degree < n →
       MvPowerSeries.coeff m F = 0 := by
@@ -158,7 +158,7 @@ theorem analyticAt_fderiv_apply {x : W} (hf : AnalyticAt ℂ f x) (v : W) :
   ((ContinuousLinearMap.apply ℂ ℂ v).analyticAt _).comp hf.fderiv
 
 theorem taylorDir_fderiv (hf : AnalyticAt ℂ f 0) (i : σ) :
-    taylorDir u (fun z => fderiv ℂ f z (u i)) = MvPowerSeries.pderiv ℂ i (taylorDir u f) := by
+    taylorDir u (fun z => fderiv ℂ f z (u i)) = MvPowerSeries.pderiv (R := ℂ) i (taylorDir u f) := by
   classical
   have h1 : (fun z => fderiv ℂ f z (u i)) =ᶠ[𝓝 0] lineDerivList ℂ [u i] f := by
     filter_upwards [hf.eventually_analyticAt] with z hz
@@ -345,7 +345,7 @@ theorem taylorDir_eq_iff (hu : Submodule.span ℂ (Set.range u) = ⊤)
 
 theorem taylorDir_fderiv_sum (hf : AnalyticAt ℂ f 0) (a : σ → ℂ) :
     taylorDir u (fun z => fderiv ℂ f z (∑ i, a i • u i)) =
-      ∑ i, a i • MvPowerSeries.pderiv ℂ i (taylorDir u f) := by
+      ∑ i, a i • MvPowerSeries.pderiv (R := ℂ) i (taylorDir u f) := by
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [map_sum, map_smul]
   rw [taylorDir_sum u _ (F := fun i z => a i • fderiv ℂ f z (u i))
@@ -399,7 +399,7 @@ theorem taylor_sum {κ : Type*} (s : Finset κ) {F : κ → (σ → ℂ) → ℂ
     taylor (fun z => ∑ k ∈ s, F k z) = ∑ k ∈ s, taylor (F k) := taylorDir_sum _ s hF
 
 theorem taylor_fderiv (hf : AnalyticAt ℂ f 0) (i : σ) :
-    taylor (fun z => fderiv ℂ f z (Pi.single i 1)) = MvPowerSeries.pderiv ℂ i (taylor f) :=
+    taylor (fun z => fderiv ℂ f z (Pi.single i 1)) = MvPowerSeries.pderiv (R := ℂ) i (taylor f) :=
   taylorDir_fderiv (fun i => (Pi.single i 1 : σ → ℂ)) hf i
 
 theorem taylor_clm (ℓ : (σ → ℂ) →L[ℂ] ℂ) :
@@ -476,7 +476,7 @@ example : ReciprocityTheory.ChartRestriction.G.I2.polyDeriv (MvPolynomial.monomi
     MvPolynomial.coeff_X_pow]
   simp
 
-example : MvPowerSeries.pderiv ℂ 0 (taylor fun z : Fin 1 → ℂ => Complex.exp (z 0)) =
+example : MvPowerSeries.pderiv (R := ℂ) 0 (taylor fun z : Fin 1 → ℂ => Complex.exp (z 0)) =
     taylor fun z : Fin 1 → ℂ => Complex.exp (z 0) := by
   have hd : ∀ z : Fin 1 → ℂ, HasFDerivAt (fun z : Fin 1 → ℂ => Complex.exp (z 0))
       (Complex.exp (z 0) • ContinuousLinearMap.proj (R := ℂ) (φ := fun _ : Fin 1 => ℂ) 0) z :=

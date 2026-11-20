@@ -76,7 +76,7 @@ def EulerCoord : Prop :=
     (PowerSeries.X * (ω : PowerSeries K)) * (PowerSeries.C l - PowerSeries.X) =
       PowerSeries.C l * PowerSeries.X ∧
     ∀ j : ℕ, PowerSeries.X * (PowerSeries.X - PowerSeries.C l) *
-        PowerSeries.derivative K ((PowerSeries.X * (ω : PowerSeries K)) ^ j) =
+        PowerSeries.derivative (R := K) ((PowerSeries.X * (ω : PowerSeries K)) ^ j) =
       -(PowerSeries.C l * (j : PowerSeries K)) * (PowerSeries.X * (ω : PowerSeries K)) ^ j
 
 def CokerT : Prop :=

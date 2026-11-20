@@ -16,8 +16,8 @@ def exZero (Y : FBChart C V O dd) : Fin 2 × Fin dd → MvPowerSeries (Fin dd) C
   fun q => if q.1 = 0 then un1 (Y.ex q.2) else 0
 
 def ExpODESt (Y : FBChart C V O dd) : Prop :=
-  ∀ i j : Fin dd, MvPowerSeries.pderiv C i (un1 (Y.ex j)) =
-    MvPowerSeries.subst (exZero Y) (MvPowerSeries.pderiv C ((1 : Fin 2), i) (Y.B.FK C j))
+  ∀ i j : Fin dd, MvPowerSeries.pderiv (R := C) i (un1 (Y.ex j)) =
+    MvPowerSeries.subst (exZero Y) (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i) (Y.B.FK C j))
 
 namespace VP
 
@@ -41,7 +41,7 @@ theorem subst_zero' {σ τ : Type} [Finite σ] {a : σ → MvPowerSeries τ C}
   rw [← MvPowerSeries.coe_substAlgHom (Formalism.L2.FormalSeriesBounds.VP.hs ha), map_zero]
 
 theorem pderiv_rowOf {n : ℕ} (b b' : Fin n) (w : WVO I) (E : MvPowerSeries (WVO I) C) :
-    MvPowerSeries.pderiv C (b, w) (rowOf b' E) = if b' = b then rowOf b (MvPowerSeries.pderiv C w E) else 0 := by
+    MvPowerSeries.pderiv (R := C) (b, w) (rowOf b' E) = if b' = b then rowOf b (MvPowerSeries.pderiv (R := C) w E) else 0 := by
   unfold rowOf
   rw [Formalism.L2.FormalSeriesBounds.pderiv_subst (Formalism.L2.FormalSeriesBounds.VP.og (fun v => MvPowerSeries.constantCoeff_X _))]
   by_cases h : b' = b
@@ -91,9 +91,9 @@ theorem pullback_log_coords_eval_zero {n : ℕ} (b : Fin n) (G : PS C 2 dd) :
     rw [subst_zero' (fun q => cc_pullPt Y p q), subst_zero' hl, subst_zero' (fun w => MvPowerSeries.constantCoeff_X _)]
 
 theorem pderiv_pullN {n : ℕ} (b : Fin n) (w : WVO I) (F : PS C n dd) :
-    MvPowerSeries.pderiv C (b, w) (pullN Y p F) =
-      ∑ j : Fin dd, rowOf b (MvPowerSeries.pderiv C w (expAll Y p j)) *
-        pullN Y p (MvPowerSeries.pderiv C (b, j) F) := by
+    MvPowerSeries.pderiv (R := C) (b, w) (pullN Y p F) =
+      ∑ j : Fin dd, rowOf b (MvPowerSeries.pderiv (R := C) w (expAll Y p j)) *
+        pullN Y p (MvPowerSeries.pderiv (R := C) (b, j) F) := by
   unfold pullN
   rw [Formalism.L2.FormalSeriesBounds.pderiv_subst (Formalism.L2.FormalSeriesBounds.VP.og (fun q => cc_pullPt Y p q))]
   simp only [pderiv_rowOf]
@@ -115,14 +115,14 @@ theorem dpull_of_ode {Y : FBChart C V O dd} (p : ∀ o, PairData Y d (I o)) (hE 
     rw [MvPowerSeries.coe_substAlgHom]; rfl
   have hrow : ∀ G : MvPowerSeries (WVO I) C, rowOf b G = MvPowerSeries.substAlgHom hR G := fun G => by
     rw [MvPowerSeries.coe_substAlgHom]; rfl
-  have key : ∀ j : Fin dd, ∑ w : WVO I, c w • rowOf b (MvPowerSeries.pderiv C w (expAll Y p j)) =
+  have key : ∀ j : Fin dd, ∑ w : WVO I, c w • rowOf b (MvPowerSeries.pderiv (R := C) w (expAll Y p j)) =
       ∑ i : Fin dd, (∑ w : WVO I, c w * (p w.1).u w.2.1 w.2.2 i) •
         rowOf b (MvPowerSeries.subst (linS (VP.Mu Y p)) (MvPowerSeries.subst (exZero Y)
-          (MvPowerSeries.pderiv C ((1 : Fin 2), i) (Y.B.FK C j)))) := by
+          (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i) (Y.B.FK C j)))) := by
     intro j
-    have e1 : ∀ w, MvPowerSeries.pderiv C w (expAll Y p j) = ∑ i : Fin dd, VP.Mu Y p w i •
+    have e1 : ∀ w, MvPowerSeries.pderiv (R := C) w (expAll Y p j) = ∑ i : Fin dd, VP.Mu Y p w i •
         MvPowerSeries.subst (linS (VP.Mu Y p)) (MvPowerSeries.subst (exZero Y)
-          (MvPowerSeries.pderiv C ((1 : Fin 2), i) (Y.B.FK C j))) := by
+          (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i) (Y.B.FK C j))) := by
       intro w
       rw [VP.expAll_eq, Formalism.L2.FormalSeriesBounds.pderiv_subst_linS]
       exact Finset.sum_congr rfl fun i _ => by rw [hE i j]

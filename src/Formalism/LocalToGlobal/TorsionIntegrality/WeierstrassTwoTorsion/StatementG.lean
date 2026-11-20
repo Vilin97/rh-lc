@@ -37,9 +37,9 @@ def FglGroup : Prop :=
 
 def FglInvariant : Prop :=
   ∀ (R : Type u) [CommRing R] (W : WeierstrassCurve R),
-    MvPowerSeries.pderiv R 0 (fgl W) * (fw W).subst (U₁ : MvPowerSeries (Fin 2) R)
+    MvPowerSeries.pderiv (R := R) 0 (fgl W) * (fw W).subst (U₁ : MvPowerSeries (Fin 2) R)
       = (fw W).subst (fgl W) ∧
-    MvPowerSeries.pderiv R 1 (fgl W) * (fw W).subst (U₂ : MvPowerSeries (Fin 2) R)
+    MvPowerSeries.pderiv (R := R) 1 (fgl W) * (fw W).subst (U₂ : MvPowerSeries (Fin 2) R)
       = (fw W).subst (fgl W)
 
 def FglLog : Prop :=

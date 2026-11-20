@@ -63,7 +63,7 @@ private theorem derivative_exp_eq_exp : derivative K (exp K) = exp K := by
   field_simp
 
 private theorem derivative_eq_pderiv_unit (f : PowerSeries K) :
-    derivative K f = MvPowerSeries.pderiv K () f := by
+    derivative K f = MvPowerSeries.pderiv (R := K) () f := by
   ext n
   rw [PowerSeries.coeff_derivative]
   change _ = MvPowerSeries.coeff (Finsupp.single () n) _
@@ -125,7 +125,7 @@ theorem exp_subst_log : (exp K).subst (log K) = 1 + X := by
     simp
 
 private theorem eq_zero_of_forall_pderiv_eq_self {σ : Type} {u : MvPowerSeries σ K}
-    (hu : ∀ i, MvPowerSeries.pderiv K i u = u) (h0 : MvPowerSeries.constantCoeff u = 0) :
+    (hu : ∀ i, MvPowerSeries.pderiv (R := K) i u = u) (h0 : MvPowerSeries.constantCoeff u = 0) :
     u = 0 := by
   classical
   suffices H : ∀ N : ℕ, ∀ n : σ →₀ ℕ, n.degree = N → MvPowerSeries.coeff n u = 0 by
@@ -169,7 +169,7 @@ private theorem eq_zero_of_forall_pderiv_eq_self {σ : Type} {u : MvPowerSeries 
 
 private theorem pderiv_exp_subst_eq_mul_pderiv {ι : Type} [Finite ι] (i : ι) {f : MvPowerSeries ι K}
     (hf : MvPowerSeries.constantCoeff f = 0) :
-    MvPowerSeries.pderiv K i ((exp K).subst f) = (exp K).subst f * MvPowerSeries.pderiv K i f := by
+    MvPowerSeries.pderiv (R := K) i ((exp K).subst f) = (exp K).subst f * MvPowerSeries.pderiv (R := K) i f := by
   rw [Formalism.G.LogCR.pderiv_psubst hf, derivative_exp_eq_exp]
 
 theorem exp_biv :
@@ -265,7 +265,7 @@ theorem mul_pd_fLog [Finite ι] (i : ι) {g : MvPowerSeries ι K}
   have e : (1 : MvPowerSeries ι K) + (g - 1) = g := by ring
   rw [e] at hL
   unfold fLog
-  show g * MvPowerSeries.pderiv K i (PowerSeries.subst (g - 1) (log K)) = MvPowerSeries.pderiv K i g
+  show g * MvPowerSeries.pderiv (R := K) i (PowerSeries.subst (g - 1) (log K)) = MvPowerSeries.pderiv (R := K) i g
   rw [hD, ← mul_assoc, hL, one_mul, map_sub, Derivation.map_one_eq_zero, sub_zero]
 
 theorem subst_fExp {κ : Type} [Finite ι] {φ : ι → MvPowerSeries κ K}

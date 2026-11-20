@@ -11,7 +11,7 @@ namespace PI.UnitaryGroupMassFormula.SimeqPdInt
 variable {p : ℕ} [Fact p.Prime] {σ : Type*}
 
 theorem pd_eq [DecidableEq σ] (k : σ) (F : MvPowerSeries σ ℂ_[p]) :
-    PI.SimeqPdInt.pd k F = pderiv ℂ_[p] k F := by
+    PI.SimeqPdInt.pd k F = pderiv (R := ℂ_[p]) k F := by
   ext n
   rw [coeff_pderiv]
   change ((n k : ℂ_[p]) + 1) * coeff (n + Finsupp.single k 1) F = _
@@ -34,7 +34,7 @@ theorem coeff_expMv_eq_ts {f : MvPowerSeries σ ℂ_[p]} (hf : constantCoeff f =
   exact PI.UnitaryGroupMassFormula.CubeRelationOfParallelogram.coeff_expMv_of_le hf N h
 
 theorem pderiv_ts (k : σ) (f : MvPowerSeries σ ℂ_[p]) (N : ℕ) :
-    pderiv ℂ_[p] k (ts f (N + 1)) = ts f N * pderiv ℂ_[p] k f := by
+    pderiv (R := ℂ_[p]) k (ts f (N + 1)) = ts f N * pderiv (R := ℂ_[p]) k f := by
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [ts, map_sum, Finset.sum_mul]
   rw [Finset.sum_range_succ']
@@ -51,7 +51,7 @@ theorem pderiv_ts (k : σ) (f : MvPowerSeries σ ℂ_[p]) (N : ℕ) :
   ring
 
 theorem pderiv_expMv (k : σ) {f : MvPowerSeries σ ℂ_[p]} (hf : constantCoeff f = 0) :
-    pderiv ℂ_[p] k (PI.FglGram.expMv f) = PI.FglGram.expMv f * pderiv ℂ_[p] k f := by
+    pderiv (R := ℂ_[p]) k (PI.FglGram.expMv f) = PI.FglGram.expMv f * pderiv (R := ℂ_[p]) k f := by
   classical
   ext α
   have hdeg : (α + Finsupp.single k 1).degree ≤ α.degree + 1 := by
@@ -66,7 +66,7 @@ theorem pderiv_expMv (k : σ) {f : MvPowerSeries σ ℂ_[p]} (hf : constantCoeff
   rw [coeff_expMv_eq_ts hf hle]
 
 theorem int_pderiv (k : σ) {F : MvPowerSeries σ ℂ_[p]} (hF : PI.FglGram.IntegralMv F) :
-    PI.FglGram.IntegralMv (pderiv ℂ_[p] k F) := by
+    PI.FglGram.IntegralMv (pderiv (R := ℂ_[p]) k F) := by
   intro n
   have hn := hF (n + Finsupp.single k 1)
   unfold PI.FglGram.IsIntP at hn ⊢
@@ -86,7 +86,7 @@ theorem target : PI.SimeqPdInt.Target := by
     rw [← PI.UnitaryGroupMassFormula.CubeRelationOfParallelogram.expMv_add (by rw [map_neg, h0, neg_zero]) h0, neg_add_cancel,
       PI.UnitaryGroupMassFormula.CubeRelationOfParallelogram.expMv_zero]
   have key : PI.SimeqPdInt.pd k f =
-      PI.FglGram.expMv (-f) * pderiv ℂ_[p] k (PI.FglGram.expMv f) := by
+      PI.FglGram.expMv (-f) * pderiv (R := ℂ_[p]) k (PI.FglGram.expMv f) := by
     rw [pd_eq, pderiv_expMv k h0, ← mul_assoc, hWV, one_mul]
   rw [key]
   exact PI.UnitaryGroupMassFormula.CubeRelationOfParallelogram.int_mul hinv (int_pderiv k hE')

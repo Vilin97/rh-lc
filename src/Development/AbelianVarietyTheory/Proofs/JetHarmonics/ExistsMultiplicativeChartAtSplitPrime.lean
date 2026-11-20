@@ -86,12 +86,12 @@ theorem deriv_of_mul {g : k⟦X⟧}
     PowerSeries.HasSubst.of_constantCoeff_zero (MvPowerSeries.constantCoeff_X i)
   have HS : PowerSeries.HasSubst (MvPowerSeries.X 0 + MvPowerSeries.X 1 : MvPowerSeries (Fin 2) k) :=
     PowerSeries.HasSubst.of_constantCoeff_zero (by simp)
-  have h := congrArg (MvPowerSeries.pderiv k 1) H
+  have h := congrArg (MvPowerSeries.pderiv (R := k) 1) H
   simp only [map_add, Derivation.leibniz, smul_eq_mul, GlobalTheory.FormalCalc.pderiv_powerSeries_subst (HX _),
     GlobalTheory.FormalCalc.pderiv_powerSeries_subst HS] at h
-  have p0 : MvPowerSeries.pderiv k 1 (MvPowerSeries.X 0 : MvPowerSeries (Fin 2) k) = 0 := by
+  have p0 : MvPowerSeries.pderiv (R := k) 1 (MvPowerSeries.X 0 : MvPowerSeries (Fin 2) k) = 0 := by
     simp [MvPowerSeries.pderiv_X_of_ne]
-  have p1 : MvPowerSeries.pderiv k 1 (MvPowerSeries.X 1 : MvPowerSeries (Fin 2) k) = 1 := by simp
+  have p1 : MvPowerSeries.pderiv (R := k) 1 (MvPowerSeries.X 1 : MvPowerSeries (Fin 2) k) = 1 := by simp
   simp only [p0, p1, zero_add, mul_one, mul_zero, add_zero] at h
   have ha : MvPowerSeries.HasSubst (![(X : k⟦X⟧), 0] : Fin 2 → MvPowerSeries Unit k) :=
     hasSubst_two constantCoeff_X (map_zero _)

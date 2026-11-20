@@ -64,13 +64,13 @@ theorem restrictSecondZero_inVar_one {f : PowerSeries K} (hf : PowerSeries.const
   rw [at1_mul, at1_X_eq_X, ev0_mul, ev0_X_one_eq_zero, zero_mul]
 
 theorem partialDeriv_inVar_self (x : Fin 2) (f : PowerSeries K) : pd x (at1 x f) = at1 x (dz f) := by
-  show MvPowerSeries.pderiv K x (PowerSeries.subst (MvPowerSeries.X x : MvPowerSeries (Fin 2) K) f) =
-    PowerSeries.subst (MvPowerSeries.X x : MvPowerSeries (Fin 2) K) (PowerSeries.derivative K f)
+  show MvPowerSeries.pderiv (R := K) x (PowerSeries.subst (MvPowerSeries.X x : MvPowerSeries (Fin 2) K) f) =
+    PowerSeries.subst (MvPowerSeries.X x : MvPowerSeries (Fin 2) K) (PowerSeries.derivative (R := K) f)
   rw [Formalism.G.LogCR.pderiv_psubst (MvPowerSeries.constantCoeff_X x) f x,
     MvPowerSeries.pderiv_X_self, mul_one]
 
 theorem partialDeriv_inVar_of_ne {x y : Fin 2} (h : y ≠ x) (f : PowerSeries K) : pd x (at1 y f) = 0 := by
-  show MvPowerSeries.pderiv K x (PowerSeries.subst (MvPowerSeries.X y : MvPowerSeries (Fin 2) K) f) = 0
+  show MvPowerSeries.pderiv (R := K) x (PowerSeries.subst (MvPowerSeries.X y : MvPowerSeries (Fin 2) K) f) = 0
   rw [Formalism.G.LogCR.pderiv_psubst (MvPowerSeries.constantCoeff_X y) f x,
     MvPowerSeries.pderiv_X_of_ne h, mul_zero]
 
@@ -79,7 +79,7 @@ theorem pd_mul {ι : Type} (i : ι) (x y : MvPowerSeries ι K) :
   simp only [Formalism.L2.Th1.B.pd, Derivation.leibniz, smul_eq_mul]
 
 theorem pd_sub {ι : Type} (i : ι) (x y : MvPowerSeries ι K) : pd i (x - y) = pd i x - pd i y :=
-  map_sub (MvPowerSeries.pderiv K i) x y
+  map_sub (MvPowerSeries.pderiv (R := K) i) x y
 
 theorem wave_alg {R : Type} [CommRing R] (k a u v u1 u2 v1 v2 p0 p1 q0 q1 P0 P1 : R)
     (hW : P0 - P1 = 2 * k * (u - v))
@@ -109,7 +109,7 @@ private theorem ev0_one : Formalism.L2.Th1.B.ev0 (1 : MvPowerSeries (Fin 2) K) =
 
 private theorem pd_neg {ι : Type} (i : ι) (x : MvPowerSeries ι K) :
     Formalism.L2.Th1.B.pd i (-x) = -Formalism.L2.Th1.B.pd i x :=
-  map_neg (MvPowerSeries.pderiv K i) x
+  map_neg (MvPowerSeries.pderiv (R := K) i) x
 
 private theorem pd_one_eq_zero {ι : Type} (i : ι) : Formalism.L2.Th1.B.pd i (1 : MvPowerSeries ι K) = 0 :=
   MvPowerSeries.pderiv_one
@@ -171,8 +171,8 @@ private theorem coeff_one_sig1S_eq_zero (e1 kap : K) (w : PowerSeries K) :
 
 private theorem dz_dz_sig1S_eq_neg_C_add_C_mul (h4 : Formalism.L2.Th1.B.PrimRules) (e1 kap : K) (w : PowerSeries K) :
     Formalism.L2.Th1.B.dz (Formalism.L2.Th1.B.dz (Formalism.L2.Th1.B.sigmaOneSeries e1 kap w)) = -(PowerSeries.C e1 + PowerSeries.C kap * w) := by
-  have hp : ∀ f : PowerSeries K, PowerSeries.derivative K (Formalism.L2.Th1.B.prim f) = f := fun f => (h4 K f).1
-  show PowerSeries.derivative K (PowerSeries.derivative K
+  have hp : ∀ f : PowerSeries K, PowerSeries.derivative (R := K) (Formalism.L2.Th1.B.prim f) = f := fun f => (h4 K f).1
+  show PowerSeries.derivative (R := K) (PowerSeries.derivative (R := K)
       (-Formalism.L2.Th1.B.prim (Formalism.L2.Th1.B.prim (PowerSeries.C e1 + PowerSeries.C kap * w)))) = _
   rw [Derivation.map_neg, Derivation.map_neg, hp, hp]
 

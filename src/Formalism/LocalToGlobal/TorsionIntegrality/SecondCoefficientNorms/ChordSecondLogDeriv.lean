@@ -53,16 +53,16 @@ def SecondCoeffConsistency : Prop :=
 
 def ChordSecondLogDeriv : Prop :=
   ∀ (K : Type) [Field K] [CharZero K] (e : PowerSeries K) (g2 g3 c d : K) (wplus wminus : PowerSeries K),
-    (-2 + PowerSeries.X ^ 3 * PowerSeries.derivative K e) ^ 2 =
+    (-2 + PowerSeries.X ^ 3 * PowerSeries.derivative (R := K) e) ^ 2 =
       4 * (wpShift e 0) ^ 3 - PowerSeries.C g2 * PowerSeries.X ^ 4 * wpShift e 0
         - PowerSeries.C g3 * PowerSeries.X ^ 6 →
     d ^ 2 = 4 * c ^ 3 - g2 * c - g3 →
     4 * PowerSeries.X ^ 2 * (wpShift e c) ^ 2 * wplus =
-      ((-2 + PowerSeries.X ^ 3 * PowerSeries.derivative K e) - PowerSeries.C d * PowerSeries.X ^ 3) ^ 2
+      ((-2 + PowerSeries.X ^ 3 * PowerSeries.derivative (R := K) e) - PowerSeries.C d * PowerSeries.X ^ 3) ^ 2
         - 4 * (wpShift e c) ^ 2 * wpShift e 0
         - 4 * PowerSeries.C c * PowerSeries.X ^ 2 * (wpShift e c) ^ 2 →
     4 * PowerSeries.X ^ 2 * (wpShift e c) ^ 2 * wminus =
-      ((-2 + PowerSeries.X ^ 3 * PowerSeries.derivative K e) + PowerSeries.C d * PowerSeries.X ^ 3) ^ 2
+      ((-2 + PowerSeries.X ^ 3 * PowerSeries.derivative (R := K) e) + PowerSeries.C d * PowerSeries.X ^ 3) ^ 2
         - 4 * (wpShift e c) ^ 2 * wpShift e 0
         - 4 * PowerSeries.C c * PowerSeries.X ^ 2 * (wpShift e c) ^ 2 →
     HasSecondLogDeriv (wpShift e c) (2 * e - wplus - wminus)

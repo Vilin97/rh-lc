@@ -73,8 +73,8 @@ theorem series_at_variable_const (x : Fin 3) (c : K) : (at1 x (PowerSeries.C c) 
 
 theorem pderiv_series_at_variable (i x : Fin 3) (f : PowerSeries K) :
     pd i (at1 x f : A3) = at1 x (dz f) * pd i (MvPowerSeries.X x : A3) := by
-  show MvPowerSeries.pderiv K i (PowerSeries.subst (MvPowerSeries.X x : A3) f) =
-    PowerSeries.subst (MvPowerSeries.X x : A3) (PowerSeries.derivative K f) * MvPowerSeries.pderiv K i (MvPowerSeries.X x : A3)
+  show MvPowerSeries.pderiv (R := K) i (PowerSeries.subst (MvPowerSeries.X x : A3) f) =
+    PowerSeries.subst (MvPowerSeries.X x : A3) (PowerSeries.derivative (R := K) f) * MvPowerSeries.pderiv (R := K) i (MvPowerSeries.X x : A3)
   exact Formalism.G.LogCR.pderiv_psubst (by simp) f i
 
 theorem partialDeriv_inVar_self (x : Fin 3) (f : PowerSeries K) : pd x (at1 x f : A3) = at1 x (dz f) := by
@@ -100,31 +100,31 @@ def dYt (P : PowerSeries K) (j : Fin 3) : A3 :=
   3 * MvPowerSeries.X j ^ 2 * at1 j (dz P) + MvPowerSeries.X j ^ 3 * at1 j (dz (dz P))
 
 theorem pd_Xt_self (P : PowerSeries K) (j : Fin 3) :
-    MvPowerSeries.pderiv K j (Xt P j) = dXt P j := by
+    MvPowerSeries.pderiv (R := K) j (Xt P j) = dXt P j := by
   simp only [Xt, dXt, map_add, Derivation.leibniz, Derivation.leibniz_pow, Derivation.map_one_eq_zero,
     MvPowerSeries.pderiv_X_self, partialDeriv_inVar_self, smul_eq_mul, nsmul_eq_mul]
   push_cast
   ring
 
 theorem pd_Xt_ne (P : PowerSeries K) {i j : Fin 3} (h : j ≠ i) :
-    MvPowerSeries.pderiv K i (Xt P j) = 0 := by
+    MvPowerSeries.pderiv (R := K) i (Xt P j) = 0 := by
   simp [Xt, Derivation.leibniz, Derivation.leibniz_pow, MvPowerSeries.pderiv_X, Pi.single_eq_of_ne h,
     partialDeriv_inVar_of_ne h]
 
-theorem pd_neg_two (i : Fin 3) : MvPowerSeries.pderiv K i (-2 : A3) = 0 := by
-  have h2 : MvPowerSeries.pderiv K i (2 : A3) = 0 := by
-    simpa using (MvPowerSeries.pderiv K i).map_natCast 2
+theorem pd_neg_two (i : Fin 3) : MvPowerSeries.pderiv (R := K) i (-2 : A3) = 0 := by
+  have h2 : MvPowerSeries.pderiv (R := K) i (2 : A3) = 0 := by
+    simpa using (MvPowerSeries.pderiv (R := K) i).map_natCast 2
   rw [map_neg, h2, neg_zero]
 
 theorem pd_Yt_self (P : PowerSeries K) (j : Fin 3) :
-    MvPowerSeries.pderiv K j (Yt P j) = dYt P j := by
+    MvPowerSeries.pderiv (R := K) j (Yt P j) = dYt P j := by
   simp only [Yt, dYt, map_add, Derivation.leibniz, Derivation.leibniz_pow, pd_neg_two,
     MvPowerSeries.pderiv_X_self, partialDeriv_inVar_self, smul_eq_mul, nsmul_eq_mul]
   push_cast
   ring
 
 theorem pd_Yt_ne (P : PowerSeries K) {i j : Fin 3} (h : j ≠ i) :
-    MvPowerSeries.pderiv K i (Yt P j) = 0 := by
+    MvPowerSeries.pderiv (R := K) i (Yt P j) = 0 := by
   simp [Yt, Derivation.leibniz, Derivation.leibniz_pow, MvPowerSeries.pderiv_X, Pi.single_eq_of_ne h,
     partialDeriv_inVar_of_ne h, pd_neg_two]
 

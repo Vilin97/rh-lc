@@ -252,28 +252,28 @@ theorem weierstrass_pair_ne_zero {g2 g3 : K} {P : PowerSeries K} (hP : IsWp g2 g
   exact mul_ne_zero (sq_sub_ne_zero hjk) (fExp_ne_zero (emb_cc j k (constantCoeff_parallelogram_defect (sigS_cc P))))
 
 theorem pdX (i j : Fin 3) :
-    MvPowerSeries.pderiv K i (MvPowerSeries.X j : A3) = if j = i then 1 else 0 := by
+    MvPowerSeries.pderiv (R := K) i (MvPowerSeries.X j : A3) = if j = i then 1 else 0 := by
   split_ifs with h
   · rw [h, MvPowerSeries.pderiv_X_self]
   · rw [MvPowerSeries.pderiv_X_of_ne h]
 
-theorem pd_two (i : Fin 3) : MvPowerSeries.pderiv K i (2 : A3) = 0 := by
-  simpa using (MvPowerSeries.pderiv K i).map_natCast 2
+theorem pd_two (i : Fin 3) : MvPowerSeries.pderiv (R := K) i (2 : A3) = 0 := by
+  simpa using (MvPowerSeries.pderiv (R := K) i).map_natCast 2
 
-theorem pd_three (i : Fin 3) : MvPowerSeries.pderiv K i (3 : A3) = 0 := by
-  simpa using (MvPowerSeries.pderiv K i).map_natCast 3
+theorem pd_three (i : Fin 3) : MvPowerSeries.pderiv (R := K) i (3 : A3) = 0 := by
+  simpa using (MvPowerSeries.pderiv (R := K) i).map_natCast 3
 
 theorem pderiv_series_at_variable (i j : Fin 3) (f : PowerSeries K) :
-    MvPowerSeries.pderiv K i (at1 j f : A3) = at1 j (dz f) * if j = i then 1 else 0 := by
+    MvPowerSeries.pderiv (R := K) i (at1 j f : A3) = at1 j (dz f) * if j = i then 1 else 0 := by
   rw [← pdX]; exact pd_psubst i (by simp) f
 
 theorem pderiv_series_at_difference_three (i j k : Fin 3) (f : PowerSeries K) :
-    MvPowerSeries.pderiv K i (evalDiffThree j k f : A3) =
+    MvPowerSeries.pderiv (R := K) i (evalDiffThree j k f : A3) =
       evalDiffThree j k (dz f) * ((if j = i then 1 else 0) - if k = i then 1 else 0) := by
   rw [← pdX, ← pdX, ← map_sub]; exact pd_psubst i (by simp) f
 
 theorem pderiv_series_at_sum_three (i : Fin 3) (f : PowerSeries K) :
-    MvPowerSeries.pderiv K i (evalSumThree f : A3) = evalSumThree (dz f) := by
+    MvPowerSeries.pderiv (R := K) i (evalSumThree f : A3) = evalSumThree (dz f) := by
   have h := pd_psubst i (u := MvPowerSeries.X 0 + MvPowerSeries.X 1 + MvPowerSeries.X 2)
     (by simp) f
   simp only [pd, map_add, pdX] at h

@@ -6,7 +6,7 @@ namespace Formalism.L2.FormalSeriesBounds
 
 def FrobSerSt : Prop :=
   ∀ (C : Type) [Field C] (V : VF C) (σ : Type) (f : MvPowerSeries σ C),
-    (∀ i (μ : σ →₀ ℕ), V.MM (MvPowerSeries.coeff μ (MvPowerSeries.pderiv C i f))) →
+    (∀ i (μ : σ →₀ ℕ), V.MM (MvPowerSeries.coeff μ (MvPowerSeries.pderiv (R := C) i f))) →
     ∀ μ : σ →₀ ℕ, (∃ i, ¬ V.l ∣ μ i) → V.MM (MvPowerSeries.coeff μ f)
 
 def FrobPowSt : Prop :=

@@ -16,8 +16,8 @@ section Copies
 variable {R : Type} [CommRing R] {d : ℕ}
 
 def DofN (F : Fin d → PS R 2 d) {n : ℕ} (b : Fin n) (u : Fin d → R) (f : PS R n d) : PS R n d :=
-  ∑ j : Fin d, (∑ i : Fin d, C (u i) * ev (n := n) ![pt R d b, 0] (pderiv R ((1 : Fin 2), i) (F j))) *
-    pderiv R (b, j) f
+  ∑ j : Fin d, (∑ i : Fin d, C (u i) * ev (n := n) ![pt R d b, 0] (pderiv (R := R) ((1 : Fin 2), i) (F j))) *
+    pderiv (R := R) (b, j) f
 
 def DmonN (F : Fin d → PS R 2 d) {n : ℕ} {ι : Type} [Fintype ι] (cp : ι → Fin n) (u : ι → Fin d → R)
     (m : ι →₀ ℕ) (f : PS R n d) : PS R n d :=

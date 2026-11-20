@@ -26,7 +26,7 @@ theorem hasSubst_om (p : ℕ) (hp : 0 < p) : PowerSeries.HasSubst (((1 + PowerSe
 def phi (p : ℕ) (hp : 0 < p) : PowerSeries R →ₐ[R] PowerSeries R :=
   PowerSeries.substAlgHom (hasSubst_om (R := R) p hp)
 
-def dd (h : PowerSeries R) : PowerSeries R := (1 + PowerSeries.X) * PowerSeries.derivative R h
+def dd (h : PowerSeries R) : PowerSeries R := (1 + PowerSeries.X) * PowerSeries.derivative (R := R) h
 
 def dlog (u : (PowerSeries R)ˣ) : PowerSeries R := dd (u : PowerSeries R) * ((u⁻¹ : (PowerSeries R)ˣ) : PowerSeries R)
 

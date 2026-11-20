@@ -29,8 +29,8 @@ theorem coeff_subst_congr {g h : PowerSeries A} {a : MvPowerSeries σ A}
 
 theorem pderiv_subst_coe (p : Polynomial A) {a : MvPowerSeries σ A}
     (ha : MvPowerSeries.constantCoeff a = 0) (i : σ) :
-    MvPowerSeries.pderiv A i ((p : PowerSeries A).subst a) =
-      (derivative A (p : PowerSeries A)).subst a * MvPowerSeries.pderiv A i a := by
+    MvPowerSeries.pderiv (R := A) i ((p : PowerSeries A).subst a) =
+      (derivative A (p : PowerSeries A)).subst a * MvPowerSeries.pderiv (R := A) i a := by
   have hs : HasSubst a := HasSubst.of_constantCoeff_zero ha
   rw [subst_coe hs, derivative_coe, subst_coe hs, Derivation.comp_aeval_eq, smul_eq_mul]
 
@@ -42,8 +42,8 @@ theorem degree_le_of_mem_antidiagonal [DecidableEq σ] {d : σ →₀ ℕ} {x : 
 
 theorem pderiv_subst (g : PowerSeries A) {a : MvPowerSeries σ A}
     (ha : MvPowerSeries.constantCoeff a = 0) (i : σ) :
-    MvPowerSeries.pderiv A i (g.subst a) =
-      (derivative A g).subst a * MvPowerSeries.pderiv A i a := by
+    MvPowerSeries.pderiv (R := A) i (g.subst a) =
+      (derivative A g).subst a * MvPowerSeries.pderiv (R := A) i a := by
   classical
   ext d
   have hdeg : (d + Finsupp.single i 1).degree = d.degree + 1 := by
@@ -108,7 +108,7 @@ theorem intMv_prod {ι : Type*} (s : Finset ι) {F : ι → MvPowerSeries σ K}
   Finset.prod_induction F (IntMv R) (fun _ _ => intMv_mul) intMv_one hF
 
 theorem intMv_pderiv {F : MvPowerSeries σ K} (hF : IntMv R F) (i : σ) :
-    IntMv R (MvPowerSeries.pderiv K i F) := by
+    IntMv R (MvPowerSeries.pderiv (R := K) i F) := by
   intro d
   rw [MvPowerSeries.coeff_pderiv]
   exact Subring.mul_mem _ (hF _) (Subring.add_mem _ (natCast_mem _ _) (Subring.one_mem _))
@@ -200,7 +200,7 @@ theorem constantCoeff_mvExp {f : MvPowerSeries σ K} (hf : MvPowerSeries.constan
   simp
 
 theorem pderiv_mvExp {f : MvPowerSeries σ K} (hf : MvPowerSeries.constantCoeff f = 0) (i : σ) :
-    MvPowerSeries.pderiv K i (mvExp f) = mvExp f * MvPowerSeries.pderiv K i f := by
+    MvPowerSeries.pderiv (R := K) i (mvExp f) = mvExp f * MvPowerSeries.pderiv (R := K) i f := by
   unfold mvExp
   rw [pderiv_subst _ hf, derivative_exp]
 
@@ -268,7 +268,7 @@ theorem expIntegralDeriv' : LGDeriv := by
   have hne : MvPowerSeries.constantCoeff (mvExp f) ≠ 0 := by rw [h0]; exact one_ne_zero
   have hinv : mvExp f * (mvExp f)⁻¹ = 1 := MvPowerSeries.mul_inv_cancel _ hne
   have hV : IntMv R (mvExp f)⁻¹ := intMv_of_mul_eq_one hf.2 h0 hinv
-  have : MvPowerSeries.pderiv K i f = (mvExp f)⁻¹ * MvPowerSeries.pderiv K i (mvExp f) := by
+  have : MvPowerSeries.pderiv (R := K) i f = (mvExp f)⁻¹ * MvPowerSeries.pderiv (R := K) i (mvExp f) := by
     rw [pderiv_mvExp hf.1, ← mul_assoc, mul_comm _ (mvExp f), hinv, one_mul]
   rw [this]
   exact intMv_mul hV (intMv_pderiv hf.2 i)

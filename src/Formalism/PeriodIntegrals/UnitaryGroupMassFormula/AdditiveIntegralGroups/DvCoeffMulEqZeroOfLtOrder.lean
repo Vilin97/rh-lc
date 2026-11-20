@@ -24,15 +24,15 @@ theorem dv_coeff_mul_eq_zero_of_lt_order {R : Type*} [CommRing R] {σ : Type*} (
 
 theorem dv_pderiv_subst_coe {R : Type*} [CommRing R] {σ : Type*} {a : MvPowerSeries σ R}
     (ha : PowerSeries.HasSubst a) (P : Polynomial R) (i : σ) :
-    MvPowerSeries.pderiv R i (PowerSeries.subst a (P : PowerSeries R)) =
-      PowerSeries.subst a (PowerSeries.derivative R (P : PowerSeries R)) * MvPowerSeries.pderiv R i a := by
+    MvPowerSeries.pderiv (R := R) i (PowerSeries.subst a (P : PowerSeries R)) =
+      PowerSeries.subst a (PowerSeries.derivative (R := R) (P : PowerSeries R)) * MvPowerSeries.pderiv (R := R) i a := by
   rw [PowerSeries.derivative_coe, PowerSeries.subst_coe ha, PowerSeries.subst_coe ha,
     Derivation.comp_aeval_eq, smul_eq_mul]
 
 theorem pderiv_subst {R : Type*} [CommRing R] {σ : Type*} {a : MvPowerSeries σ R}
     (ha : PowerSeries.HasSubst a) (f : PowerSeries R) (i : σ) :
-    MvPowerSeries.pderiv R i (PowerSeries.subst a f) =
-      PowerSeries.subst a (PowerSeries.derivative R f) * MvPowerSeries.pderiv R i a := by
+    MvPowerSeries.pderiv (R := R) i (PowerSeries.subst a f) =
+      PowerSeries.subst a (PowerSeries.derivative (R := R) f) * MvPowerSeries.pderiv (R := R) i a := by
   rw [← sub_eq_zero]
   ext e
   rw [map_zero]
@@ -44,10 +44,10 @@ theorem pderiv_subst {R : Type*} [CommRing R] {σ : Type*} {a : MvPowerSeries σ
     by_cases hn : n < m
     · simp [hn, not_le.mpr hn]
     · simp [hn, not_lt.mp hn, g, Nat.sub_add_cancel (not_lt.mp hn)]
-  have key : MvPowerSeries.pderiv R i (PowerSeries.subst a f) -
-      PowerSeries.subst a (PowerSeries.derivative R f) * MvPowerSeries.pderiv R i a =
-      a ^ m * (MvPowerSeries.pderiv R i (PowerSeries.subst a g) -
-        PowerSeries.subst a (PowerSeries.derivative R g) * MvPowerSeries.pderiv R i a) := by
+  have key : MvPowerSeries.pderiv (R := R) i (PowerSeries.subst a f) -
+      PowerSeries.subst a (PowerSeries.derivative (R := R) f) * MvPowerSeries.pderiv (R := R) i a =
+      a ^ m * (MvPowerSeries.pderiv (R := R) i (PowerSeries.subst a g) -
+        PowerSeries.subst a (PowerSeries.derivative (R := R) g) * MvPowerSeries.pderiv (R := R) i a) := by
     have hc : PowerSeries.subst a ((m : PowerSeries R)) = (m : MvPowerSeries σ R) := by
       rw [← map_natCast (PowerSeries.C (R := R)), PowerSeries.subst_C, map_natCast]
     conv_lhs => rw [hf]
@@ -62,7 +62,7 @@ theorem pderiv_subst {R : Type*} [CommRing R] {σ : Type*} {a : MvPowerSeries σ
   exact dv_coeff_mul_eq_zero_of_lt_order _ _ e hm
 
 theorem derivative_flog (W : WeierstrassCurve ℂ_[p]) (wq : PowerSeries ℂ_[p]) :
-    PowerSeries.derivative ℂ_[p] (flog W wq) = omegaW W wq := by
+    PowerSeries.derivative (R := ℂ_[p]) (flog W wq) = omegaW W wq := by
   ext n
   rw [PowerSeries.coeff_derivative, flog, PowerSeries.coeff_mk, if_neg (Nat.succ_ne_zero n),
     Nat.add_sub_cancel]

@@ -229,7 +229,7 @@ theorem law_coeff_one_subst {K : Type} [Field K] (l D : PowerSeries K)
       PowerSeries.coeff 1 l * PowerSeries.coeff 1 D := by
   have hs : PowerSeries.HasSubst D := PowerSeries.HasSubst.of_constantCoeff_zero' hD
   have key : ∀ g : PowerSeries K, PowerSeries.coeff 1 g =
-      PowerSeries.constantCoeff (PowerSeries.derivative K g) := by
+      PowerSeries.constantCoeff (PowerSeries.derivative (R := K) g) := by
     intro g
     rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, PowerSeries.coeff_derivative]
     simp

@@ -117,13 +117,13 @@ theorem taylorSigma_of (hr : TaylorRing) (hd : TaylorDeriv) : TaylorSigma := by
     have := (hadd (fun z => z) (u L) hid hu).2
     rw [hX] at this
     exact this
-  have eU : PowerSeries.X * PowerSeries.derivative ℂ (taylor0 (u L))
+  have eU : PowerSeries.X * PowerSeries.derivative (R := ℂ) (taylor0 (u L))
       = PowerSeries.X * (taylor0 (AnalyticIdentityTheoremsZetaFacts.zetaExcept L 0) * taylor0 (u L)) := by
     have hvu : AnalyticAt ℂ (fun z => AnalyticIdentityTheoremsZetaFacts.zetaExcept L 0 z * u L z) 0 := hv.mul hu
     rw [← hd.1 _ hu, ← hX, ← (hadd _ _ hid hu.deriv).2, ← (hadd _ _ hv hu).2,
       ← (hadd _ _ hid hvu).2]
     exact hgerm _ _ (ode_u L)
-  have eV : PowerSeries.X * PowerSeries.derivative ℂ (taylor0 (AnalyticIdentityTheoremsZetaFacts.zetaExcept L 0))
+  have eV : PowerSeries.X * PowerSeries.derivative (R := ℂ) (taylor0 (AnalyticIdentityTheoremsZetaFacts.zetaExcept L 0))
       = -(PowerSeries.X * pSeries L) := by
     have hneg : taylor0 (fun z => (-1 : ℂ) * (z * L.weierstrassPExcept 0 z))
         = -(PowerSeries.X * pSeries L) := by

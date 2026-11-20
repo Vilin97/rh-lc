@@ -74,7 +74,7 @@ theorem mk_psTrunc_of_le {κ : Type} [Fintype κ] [DecidableEq κ] {m N : ℕ} (
 theorem mk_pderiv_psTrunc {κ : Type} [Fintype κ] [DecidableEq κ] {m N : ℕ} (hN : m + 1 ≤ N)
     (f : MvPowerSeries κ k) (q : κ) :
     Ideal.Quotient.mk (orig k κ ^ (m + 1)) (MvPolynomial.pderiv q (psTrunc N f)) =
-      psJet m (MvPowerSeries.pderiv k q f) := by
+      psJet m (MvPowerSeries.pderiv (R := k) q f) := by
   rw [psJet, Ideal.Quotient.eq]
   refine GermD.mem_orig_pow_of fun e he => ?_
   by_contra hlt

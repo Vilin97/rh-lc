@@ -21,7 +21,7 @@ def TaylorRing : Prop :=
   (∀ f g : ℂ → ℂ, f =ᶠ[nhds 0] g → taylor0 f = taylor0 g)
 
 def TaylorDeriv : Prop :=
-  (∀ f : ℂ → ℂ, AnalyticAt ℂ f 0 → taylor0 (deriv f) = PowerSeries.derivative ℂ (taylor0 f)) ∧
+  (∀ f : ℂ → ℂ, AnalyticAt ℂ f 0 → taylor0 (deriv f) = PowerSeries.derivative (R := ℂ) (taylor0 f)) ∧
   (∀ (f : ℂ → ℂ) (a : ℂ), AnalyticAt ℂ f 0 →
     taylor0 (fun z => f (a * z)) = PowerSeries.rescale a (taylor0 f)) ∧
   (∀ f g : ℂ → ℂ, AnalyticAt ℂ f 0 → AnalyticAt ℂ g 0 → taylor0 f = taylor0 g → f =ᶠ[nhds 0] g)

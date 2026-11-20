@@ -158,7 +158,7 @@ private theorem span_X {O σ : Type} [CommRing O] (I : Ideal (MvPowerSeries σ O
 
 private theorem pderiv_even {O : Type} [CommRing O] {a g : ℕ} (I : Ideal (MvPowerSeries (Fin a ⊕ Fin g) O))
     (hI : ∀ j, MvPowerSeries.X (.inr j) ∈ I) {f : MvPowerSeries (Fin a ⊕ Fin g) O}
-    (hf : f ∈ wtPart O (Space.Loc.par a g) 0) (b : Fin g) : MvPowerSeries.pderiv O (.inr b) f ∈ I := by
+    (hf : f ∈ wtPart O (Space.Loc.par a g) 0) (b : Fin g) : MvPowerSeries.pderiv (R := O) (.inr b) f ∈ I := by
   refine span_X I (Finset.univ.map ⟨Sum.inr, Sum.inr_injective⟩) (by simpa using hI) _ fun n hn => ?_
   have h : ∀ j, n (.inr j) = 0 := by simpa using hn
   rw [MvPowerSeries.coeff_pderiv, hf, zero_mul]
@@ -178,10 +178,10 @@ private theorem der_ex {O R Q : Type} [CommRing O] [CommRing R] [CommRing Q] [Is
   simp only [hφ] at hm hM
   obtain ⟨ν, hν, hMν⟩ := (Matrix.exists_mulVec_eq_zero_iff (M := φ.mapMatrix M)).2 (by rw [← RingHom.map_det, hM])
   let D0 : MvPowerSeries (Fin a ⊕ Fin g) O →+ Q :=
-    { toFun := fun f => ∑ c, φ (MvPowerSeries.pderiv O (.inr c) f) * ν c
+    { toFun := fun f => ∑ c, φ (MvPowerSeries.pderiv (R := O) (.inr c) f) * ν c
       map_zero' := by simp
       map_add' := fun x y => by simp [add_mul, Finset.sum_add_distrib] }
-  have e0 f : D0 f = ∑ c, φ (MvPowerSeries.pderiv O (.inr c) f) * ν c := rfl
+  have e0 f : D0 f = ∑ c, φ (MvPowerSeries.pderiv (R := O) (.inr c) f) * ν c := rfl
   have l0 x y : D0 (x * y) = φ x * D0 y + φ y * D0 x := by
     simp [e0, Finset.mul_sum, add_mul, Finset.sum_add_distrib, mul_assoc]
   have x0 j : D0 (MvPowerSeries.X (.inr j)) = ν j := by

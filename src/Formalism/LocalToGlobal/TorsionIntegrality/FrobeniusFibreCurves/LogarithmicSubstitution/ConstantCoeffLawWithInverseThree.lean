@@ -142,7 +142,7 @@ private theorem at1_C_eq_C {ι : Type} (x : ι) (c : K) :
 
 theorem curve3_at {ι : Type} {l P ep : PowerSeries K} {a1 a3 : K}
     (hl : PowerSeries.constantCoeff l = 0)
-    (h : PowerSeries.X ^ 3 * (-2 + l ^ 3 * PowerSeries.subst l (PowerSeries.derivative K P)) =
+    (h : PowerSeries.X ^ 3 * (-2 + l ^ 3 * PowerSeries.subst l (PowerSeries.derivative (R := K) P)) =
       l ^ 3 * (-2 * ep + PowerSeries.C a1 * PowerSeries.X * ep +
         PowerSeries.C a3 * PowerSeries.X ^ 3)) (x : ι) :
     MvPowerSeries.X x ^ 3 * (-2 + at1 x l ^ 3 * PowerSeries.subst (at1 x l) (dz P)) =
@@ -343,7 +343,7 @@ theorem parallelogram_three_weierstrass_key (hA : FrobStickStar) {g2 g3 s2 c0 a1
     (hF : LawLog F l) (hi : IsInv l i)
     (h2 : PowerSeries.X ^ 2 * (1 + l ^ 2 * PowerSeries.subst l P) =
       l ^ 2 * (ep + PowerSeries.C c0 * PowerSeries.X ^ 2))
-    (h3 : PowerSeries.X ^ 3 * (-2 + l ^ 3 * PowerSeries.subst l (PowerSeries.derivative K P)) =
+    (h3 : PowerSeries.X ^ 3 * (-2 + l ^ 3 * PowerSeries.subst l (PowerSeries.derivative (R := K) P)) =
       l ^ 3 * (-2 * ep + PowerSeries.C a1 * PowerSeries.X * ep +
         PowerSeries.C a3 * PowerSeries.X ^ 3))
     (he : Matrix.det (Matrix.of fun j : Fin 3 =>

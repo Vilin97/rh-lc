@@ -54,7 +54,7 @@ theorem tay_comp_anLin {θ : (Fin g → ℂ) → ℂ} (hθ : ContDiffAt ℂ ω �
     rw [Fintype.sum_prod_type, Fin.sum_univ_one]
     exact sum_single_smul _
   have hLd : ∀ (p : Fin 1 × Fin g) (q : Fin 1 × Fin g'),
-      MvPowerSeries.pderiv ℂ q ((anLin A p : MvPolynomial (Fin 1 × Fin g') ℂ) : MvPowerSeries (Fin 1 × Fin g') ℂ) =
+      MvPowerSeries.pderiv (R := ℂ) q ((anLin A p : MvPolynomial (Fin 1 × Fin g') ℂ) : MvPowerSeries (Fin 1 × Fin g') ℂ) =
         MvPowerSeries.C (A (Pi.single q.2 1) p.2) := by
     intro p q
     obtain ⟨a, j⟩ := q

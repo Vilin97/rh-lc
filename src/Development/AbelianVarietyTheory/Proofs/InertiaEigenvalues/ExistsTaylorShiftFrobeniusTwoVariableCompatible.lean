@@ -29,21 +29,21 @@ theorem iterate_leibniz_ps (D : Derivation K K⟦X⟧ K⟦X⟧) (a b : K⟦X⟧)
     simp only [smul_eq_mul]
     ring
 
-theorem iterate_derivative_zero (n : ℕ) : (⇑(PowerSeries.derivative K))^[n] 0 = 0 := by
+theorem iterate_derivative_zero (n : ℕ) : (⇑(PowerSeries.derivative (R := K)))^[n] 0 = 0 := by
   induction n with
   | zero => rfl
   | succ n ih => rw [Function.iterate_succ_apply, map_zero, ih]
 
 def shiftFun (f : K⟦X⟧) : K⟦X⟧⟦X⟧ :=
-  PowerSeries.mk fun i => ((i.factorial : K)⁻¹) • (⇑(PowerSeries.derivative K))^[i] f
+  PowerSeries.mk fun i => ((i.factorial : K)⁻¹) • (⇑(PowerSeries.derivative (R := K)))^[i] f
 
 theorem coeff_shiftFun (f : K⟦X⟧) (i : ℕ) :
-    coeff i (shiftFun f) = ((i.factorial : K)⁻¹) • (⇑(PowerSeries.derivative K))^[i] f :=
+    coeff i (shiftFun f) = ((i.factorial : K)⁻¹) • (⇑(PowerSeries.derivative (R := K)))^[i] f :=
   coeff_mk _ _
 
 theorem iterate_derivative_add (n : ℕ) (f g : K⟦X⟧) :
-    (⇑(PowerSeries.derivative K))^[n] (f + g) =
-      (⇑(PowerSeries.derivative K))^[n] f + (⇑(PowerSeries.derivative K))^[n] g := by
+    (⇑(PowerSeries.derivative (R := K)))^[n] (f + g) =
+      (⇑(PowerSeries.derivative (R := K)))^[n] f + (⇑(PowerSeries.derivative (R := K)))^[n] g := by
   induction n generalizing f g with
   | zero => rfl
   | succ n ih => rw [Function.iterate_succ_apply, Function.iterate_succ_apply, Function.iterate_succ_apply, map_add, ih]
@@ -83,7 +83,7 @@ def shift : K⟦X⟧ →+* K⟦X⟧⟦X⟧ where
     rw [coeff_shiftFun, map_add, coeff_shiftFun, coeff_shiftFun, iterate_derivative_add, smul_add]
 
 theorem coeff_shift (f : K⟦X⟧) (i : ℕ) :
-    coeff i (shift f) = ((i.factorial : K)⁻¹) • (⇑(PowerSeries.derivative K))^[i] f :=
+    coeff i (shift f) = ((i.factorial : K)⁻¹) • (⇑(PowerSeries.derivative (R := K)))^[i] f :=
   coeff_shiftFun f i
 
 theorem shift_C (c : K) : shift (C c) = C (C c : K⟦X⟧) := by
@@ -201,7 +201,7 @@ end Unique
 
 theorem shift_frob_exists : ∀ (l : ℕ) [Fact l.Prime] (K : Type) [NormedField K] [NormedAlgebra ℚ_[l] K],
     ∃ (sh : K⟦X⟧ →+* K⟦X⟧⟦X⟧) (φ₂ : K⟦X⟧⟦X⟧ →+* K⟦X⟧⟦X⟧),
-      (∀ (f : K⟦X⟧) (i : ℕ), (i.factorial : K⟦X⟧) * coeff i (sh f) = (PowerSeries.derivative K)^[i] f) ∧
+      (∀ (f : K⟦X⟧) (i : ℕ), (i.factorial : K⟦X⟧) * coeff i (sh f) = (PowerSeries.derivative (R := K))^[i] f) ∧
       (∀ f : K⟦X⟧, φ₂ (PowerSeries.C f) = PowerSeries.C (frob K l f)) ∧
       (∀ f : K⟦X⟧, φ₂ (sh f) = sh (frob K l f)) := by
   intro l _ K _ _

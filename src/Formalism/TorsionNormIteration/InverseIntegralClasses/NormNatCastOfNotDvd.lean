@@ -139,7 +139,7 @@ lemma term_eq (p c : K) (d m : ℕ) :
   ring
 
 lemma term_bound {p : ℕ} (hp : p.Prime) (hp1 : ‖(p : K)‖ < 1) (z : PowerSeries K)
-    (hdz : IntegralPS (PowerSeries.derivative K z)) (d : ℕ) (e : Fin 2 →₀ ℕ) :
+    (hdz : IntegralPS (PowerSeries.derivative (R := K) z)) (d : ℕ) (e : Fin 2 →₀ ℕ) :
     ‖coeff d z • MvPowerSeries.coeff e
       (((MvPowerSeries.X 0 : MvPowerSeries (Fin 2) K) + (p : K) • MvPowerSeries.X 1) ^ d -
         MvPowerSeries.X 0 ^ d)‖ ≤

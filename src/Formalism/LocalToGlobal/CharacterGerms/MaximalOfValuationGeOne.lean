@@ -164,7 +164,7 @@ theorem MMS.mul_right {f g : MvPowerSeries σ C} (hf : MMS V f) (hg : IntS V g) 
   rw [MvPowerSeries.coeff_mul]
   exact mm_sum _ _ (fun p _ => mm_mul_ge (hf p.1) (hg p.2))
 
-theorem MMS.pderiv {f : MvPowerSeries σ C} (hf : MMS V f) (i : σ) : MMS V (MvPowerSeries.pderiv C i f) := by
+theorem MMS.pderiv {f : MvPowerSeries σ C} (hf : MMS V f) (i : σ) : MMS V (MvPowerSeries.pderiv (R := C) i f) := by
   intro μ
   rw [MvPowerSeries.coeff_pderiv]
   refine mm_mul_ge (hf _) ?_

@@ -11,7 +11,7 @@ open Formalism.DworkPowerSeriesWeights (JetsIntegral jetPair minorProd)
 
 def IntDThmB : Prop :=
   ∀ (K : Type) [NormedField K] [IsUltrametricDist K] [CharZero K] (l linv ph : PowerSeries K) (d : ℕ),
-    Frame (unitBall K) l linv ph → IsOneUnit (unitBall K) (PowerSeries.derivative K l) →
+    Frame (unitBall K) l linv ph → IsOneUnit (unitBall K) (PowerSeries.derivative (R := K) l) →
     F1 (unitBall K) l linv ph → ShapeAt l linv ph d → 0 < ‖(d : K)‖ → ‖(d : K)‖ < 1 →
     ‖(2 : K)‖ = 1 →
     ∀ (O : Type) [CommRing O] [StarRing O] (τ : O →+* K),

@@ -155,7 +155,7 @@ theorem levQ_pt (hs : W.s = 1) (i : ZMod n) (ζ : LL) (hζ : ζ ^ PD.p = 1) (hζ
   refine ⟨hc0, ?_⟩
   obtain ⟨b', hb'⟩ := PowerSeries.X_dvd_iff.2 hc0
   have hEp : PowerSeries.coeff 1 (E ^ PD.p) = (PD.p : LL) := by
-    have hd : PowerSeries.derivative LL (E ^ PD.p) = (PD.p : LL) • E ^ PD.p := by
+    have hd : PowerSeries.derivative (R := LL) (E ^ PD.p) = (PD.p : LL) • E ^ PD.p := by
       rw [Derivation.leibniz_pow, hED, smul_eq_mul, ← pow_succ, Nat.sub_add_cancel PD.hp.one_lt.le,
         Nat.cast_smul_eq_nsmul]
     have h := congrArg (PowerSeries.coeff 0) hd

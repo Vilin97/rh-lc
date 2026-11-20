@@ -14,7 +14,7 @@ namespace Formalism.L2.FormalSeriesBounds
 open Formalism.IncomingBounds ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ
 
 def zl {C : Type} [Field C] {dd : ℕ} (v : Fin dd → C) (F : PS C 2 dd) : PS C 1 dd :=
-  ∑ j, MvPowerSeries.C (v j) * ev (n := 1) ![pt C dd 0, 0] (MvPowerSeries.pderiv C ((1 : Fin 2), j) F)
+  ∑ j, MvPowerSeries.C (v j) * ev (n := 1) ![pt C dd 0, 0] (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) F)
 
 namespace SelfAdjointLinearTerm
 
@@ -128,16 +128,16 @@ theorem product_points_at_zero {A B : Pt C 1 dd} (hB : ∀ i, constantCoeff (B i
     rw [this, ev_zero_pt, hB i, map_zero]
 
 theorem d_A (A : Pt C 1 dd) (j k : Fin dd) :
-    pderiv C ((1 : Fin 2), j) (comp1 A (pt C (n := 2) dd 0) k) = 0 := by
-  show pderiv C ((1 : Fin 2), j) (ev ![pt C (n := 2) dd 0] (A k)) = 0
+    pderiv (R := C) ((1 : Fin 2), j) (comp1 A (pt C (n := 2) dd 0) k) = 0 := by
+  show pderiv (R := C) ((1 : Fin 2), j) (ev ![pt C (n := 2) dd 0] (A k)) = 0
   rw [pderiv_eval_single (fun j => z0_pt 0 j)]
   refine Finset.sum_eq_zero fun m _ => ?_
   rw [pderiv_pt_ne _ _ _ (show (0 : Fin 2) ≠ 1 by decide), mul_zero]
 
 theorem d_B (B : Pt C 1 dd) (j k : Fin dd) :
-    pderiv C ((1 : Fin 2), j) (comp1 B (pt C (n := 2) dd 1) k) =
-      ev ![pt C (n := 2) dd 1] (pderiv C ((0 : Fin 1), j) (B k)) := by
-  show pderiv C ((1 : Fin 2), j) (ev ![pt C (n := 2) dd 1] (B k)) = _
+    pderiv (R := C) ((1 : Fin 2), j) (comp1 B (pt C (n := 2) dd 1) k) =
+      ev ![pt C (n := 2) dd 1] (pderiv (R := C) ((0 : Fin 1), j) (B k)) := by
+  show pderiv (R := C) ((1 : Fin 2), j) (ev ![pt C (n := 2) dd 1] (B k)) = _
   rw [pderiv_eval_single (fun j => z0_pt 1 j), Finset.sum_eq_single j]
   · rw [pderiv_pt_same, if_pos rfl, mul_one]
   · intro m _ hm
@@ -146,7 +146,7 @@ theorem d_B (B : Pt C 1 dd) (j k : Fin dd) :
     exact absurd (Finset.mem_univ j) h
 
 theorem eval_pderiv_constant_linear (B : Pt C 1 dd) (j k : Fin dd) :
-    ev (n := 1) ![pt C dd 0, 0] (ev ![pt C (n := 2) dd 1] (pderiv C ((0 : Fin 1), j) (B k))) =
+    ev (n := 1) ![pt C dd 0, 0] (ev ![pt C (n := 2) dd 1] (pderiv (R := C) ((0 : Fin 1), j) (B k))) =
       MvPowerSeries.C (coeff (Finsupp.single ((0 : Fin 1), j) 1) (B k)) := by
   rw [ev_ev (z0_1 _ fun j => z0_pt 1 j) aux_statement_9]
   have : (fun (k : Fin 1) (i : Fin dd) => ev (n := 1) ![pt C dd 0, 0] ((![pt C (n := 2) dd 1] : Fin 1 → Pt C 2 dd) k i)) =
@@ -164,12 +164,12 @@ theorem zl_hAB (Y : FBChart C V O dd) {A B : Pt C 1 dd} (hA : ∀ i, constantCoe
     zl v (ev (PAB A B) Y.h) = -ev (n := 1) ![A] (Y.sgP (linAct B v)) := by
   rw [ev_sgP Y _ A hA, neg_neg]
   unfold zl
-  have h1 : ∀ j, ev (n := 1) ![pt C dd 0, 0] (pderiv C ((1 : Fin 2), j) (ev (PAB A B) Y.h)) =
-      ∑ k, ev (n := 1) ![A, 0] (pderiv C ((1 : Fin 2), k) Y.h) *
+  have h1 : ∀ j, ev (n := 1) ![pt C dd 0, 0] (pderiv (R := C) ((1 : Fin 2), j) (ev (PAB A B) Y.h)) =
+      ∑ k, ev (n := 1) ![A, 0] (pderiv (R := C) ((1 : Fin 2), k) Y.h) *
         MvPowerSeries.C (coeff (Finsupp.single ((0 : Fin 1), j) 1) (B k)) := by
     intro j
     rw [pderiv_eval_pair (zPAB hA hB)]
-    have e0 : ∑ k, ev (PAB A B) (pderiv C ((0 : Fin 2), k) Y.h) * pderiv C ((1 : Fin 2), j) (PAB A B 0 k) = 0 :=
+    have e0 : ∑ k, ev (PAB A B) (pderiv (R := C) ((0 : Fin 2), k) Y.h) * pderiv (R := C) ((1 : Fin 2), j) (PAB A B 0 k) = 0 :=
       Finset.sum_eq_zero fun k _ => by
         rw [show PAB A B 0 k = comp1 A (pt C (n := 2) dd 0) k from rfl, d_A, mul_zero]
     rw [e0, zero_add, ev_sum aux_statement_9]

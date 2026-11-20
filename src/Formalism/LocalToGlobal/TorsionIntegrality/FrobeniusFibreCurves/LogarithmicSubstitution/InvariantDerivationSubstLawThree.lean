@@ -51,8 +51,8 @@ theorem Dj_psubst {l : PowerSeries K} (h1 : PowerSeries.coeff 1 l = 1) (j : Fin 
   simp only [Dj, pd, Dinv, dz]
   rw [Formalism.G.LogCR.pderiv_psubst hU, Formalism.G.LogCR.pderiv_psubst hU,
     PowerSeries.subst_mul (PowerSeries.HasSubst.of_constantCoeff_zero hU)]
-  linear_combination (-(at1 j (PowerSeries.derivative K l)⁻¹ *
-    PowerSeries.subst U (PowerSeries.derivative K g) * MvPowerSeries.pderiv K j U)) * hinv
+  linear_combination (-(at1 j (PowerSeries.derivative (R := K) l)⁻¹ *
+    PowerSeries.subst U (PowerSeries.derivative (R := K) g) * MvPowerSeries.pderiv (R := K) j U)) * hinv
 
 theorem key {l : PowerSeries K} (h1 : PowerSeries.coeff 1 l = 1) (j k : Fin 3) :
     at1 j (dz l)⁻¹ * pd j (PowerSeries.subst (MvPowerSeries.X k : MvPowerSeries (Fin 3) K) l) =
@@ -257,7 +257,7 @@ theorem inv_dz_eq (hF : MvPowerSeries.constantCoeff F = 0) (hc : cob F l = 0)
     have e := hc
     simp only [cob] at e
     linear_combination e
-  have hd := congrArg (MvPowerSeries.pderiv K 1) hcob
+  have hd := congrArg (MvPowerSeries.pderiv (R := K) 1) hcob
   simp only [at1] at hd
   rw [Formalism.G.LogCR.pderiv_psubst hF, map_add, Formalism.G.LogCR.pderiv_psubst (ccX (0 : Fin 2)),
     Formalism.G.LogCR.pderiv_psubst (ccX (1 : Fin 2)), MvPowerSeries.pderiv_X_of_ne (by decide),

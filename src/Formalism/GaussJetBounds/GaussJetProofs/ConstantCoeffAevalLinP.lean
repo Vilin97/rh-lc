@@ -113,7 +113,7 @@ lemma mfact_add_single (κ : ι →₀ ℕ) (i : ι) :
   ring
 
 lemma jetPair_mul_X (P : MvPolynomial ι K) (i : ι) (F : MvPowerSeries ι K) :
-    jetPair (P * MvPolynomial.X i) F = jetPair P (MvPowerSeries.pderiv K i F) := by
+    jetPair (P * MvPolynomial.X i) F = jetPair P (MvPowerSeries.pderiv (R := K) i F) := by
   classical
   rw [jetPair, MvPolynomial.support_mul_X, Finset.sum_map, jetPair]
   refine Finset.sum_congr rfl (fun κ _ => ?_)
@@ -180,7 +180,7 @@ lemma constantCoeff_aeval_linP (A : ι → ι' → K) (G : MvPolynomial ι' K) :
 
 private theorem mvPowerSeries_pderiv_coe_eq_coe_pderiv {L : Type u} [Field L] {σ : Type} (i : σ)
     (G : MvPolynomial σ L) :
-    MvPowerSeries.pderiv L i (G : MvPowerSeries σ L) =
+    MvPowerSeries.pderiv (R := L) i (G : MvPowerSeries σ L) =
       ((MvPolynomial.pderiv i G : MvPolynomial σ L) : MvPowerSeries σ L) := by
   ext n
   rw [MvPowerSeries.coeff_pderiv, MvPolynomial.coeff_coe, MvPolynomial.coeff_coe,

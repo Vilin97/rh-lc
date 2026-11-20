@@ -20,8 +20,8 @@ section Alg
 variable {K K' : Type} [Field K] [Field K'] (φ : K →+* K')
 
 theorem map_derivative (f : PowerSeries K) :
-    PowerSeries.map φ (PowerSeries.derivative K f) =
-      PowerSeries.derivative K' (PowerSeries.map φ f) := by
+    PowerSeries.map φ (PowerSeries.derivative (R := K) f) =
+      PowerSeries.derivative (R := K') (PowerSeries.map φ f) := by
   ext n
   simp [PowerSeries.coeff_derivative]
 

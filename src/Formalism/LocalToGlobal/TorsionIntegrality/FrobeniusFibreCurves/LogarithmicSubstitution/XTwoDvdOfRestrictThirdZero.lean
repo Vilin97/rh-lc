@@ -59,11 +59,11 @@ private theorem X_two_fin_three_ne_zero : (X 2 : MvPowerSeries (Fin 3) K) ≠ 0 
   simp [coeff_X] at this
 
 private theorem pderiv_X_fin_three_self (i : Fin 3) :
-    MvPowerSeries.pderiv K i (X i : MvPowerSeries (Fin 3) K) = 1 := by
+    MvPowerSeries.pderiv (R := K) i (X i : MvPowerSeries (Fin 3) K) = 1 := by
   simp
 
 private theorem pderiv_two_X_two_pow_succ (m : ℕ) :
-    MvPowerSeries.pderiv K 2 ((X 2 : MvPowerSeries (Fin 3) K) ^ (m + 1)) =
+    MvPowerSeries.pderiv (R := K) 2 ((X 2 : MvPowerSeries (Fin 3) K) ^ (m + 1)) =
       ((m + 1 : ℕ) : MvPowerSeries (Fin 3) K) * X 2 ^ m := by
   induction m with
   | zero => simp
@@ -196,7 +196,7 @@ theorem restrictThirdZero_shear (h : MvPowerSeries (Fin 3) K) : ev3 (sh h) = ev3
   fin_cases s <;> simp [subst_X hasSubst_restrictThirdZero, subst_fin_three_sub hasSubst_restrictThirdZero]
 
 private theorem pderiv_X_fin_three_of_ne {i j : Fin 3} (hij : j ≠ i) :
-    MvPowerSeries.pderiv K i (X j : MvPowerSeries (Fin 3) K) = 0 := by
+    MvPowerSeries.pderiv (R := K) i (X j : MvPowerSeries (Fin 3) K) = 0 := by
   simp [hij]
 
 theorem partialDeriv_two_shear (h : MvPowerSeries (Fin 3) K) : pd 2 (sh h) = sh (pd 2 h) - sh (pd 1 h) := by

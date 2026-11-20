@@ -30,7 +30,7 @@ theorem exists_decomp [Fintype σ] (g : MvPowerSeries σ V) :
   exact ⟨k, by rw [← hk]; ring⟩
 
 theorem coeff_single_eq (q : τ) (f : MvPowerSeries τ V) :
-    coeff (Finsupp.single q 1) f = constantCoeff (pderiv V q f) := by
+    coeff (Finsupp.single q 1) f = constantCoeff (pderiv (R := V) q f) := by
   rw [← coeff_zero_eq_constantCoeff_apply, coeff_pderiv]
   simp
 

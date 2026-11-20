@@ -10,7 +10,7 @@ open Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibl
 namespace GlobalTheory.HWL.LevExp
 
 theorem eq_exp {F : Type} [Field F] [CharZero F] [Algebra ℚ F] (E : PowerSeries F)
-    (h0 : PowerSeries.constantCoeff E = 1) (h1 : PowerSeries.derivative F E = E) :
+    (h0 : PowerSeries.constantCoeff E = 1) (h1 : PowerSeries.derivative (R := F) E = E) :
     E = PowerSeries.exp F := by
   exact PowerSeries.exp_unique_of_derivative_eq_self h1 h0
 

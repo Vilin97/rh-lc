@@ -185,14 +185,14 @@ theorem lev_q_X_mul (i : ZMod n) (ζ : LL) (hζ : IsPrimitiveRoot ζ PD.p) (hp2 
       | simpa using PowerSeries.coeff_succ_X_mul (R := LL) 0 g
       | simp [PowerSeries.coeff_X_mul]
       | simp [mul_comm PowerSeries.X g, PowerSeries.coeff_succ_mul_X]
-  have hd : ∀ f : PowerSeries LL, PowerSeries.constantCoeff (PowerSeries.derivative LL f) = PowerSeries.coeff 1 f := by
+  have hd : ∀ f : PowerSeries LL, PowerSeries.constantCoeff (PowerSeries.derivative (R := LL) f) = PowerSeries.coeff 1 f := by
     intro f
     rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply]
     first
       | (rw [PowerSeries.derivative_coe, PowerSeries.coeff_derivativeFun]; simp)
       | (rw [PowerSeries.coeff_derivative]; simp)
       | simp [PowerSeries.derivative, PowerSeries.coeff_derivativeFun]
-  have hD : PowerSeries.derivative LL (E ^ PD.p) = (PD.p : PowerSeries LL) * E ^ PD.p := by
+  have hD : PowerSeries.derivative (R := LL) (E ^ PD.p) = (PD.p : PowerSeries LL) * E ^ PD.p := by
     rw [Derivation.leibniz_pow, hED, smul_eq_mul, ← pow_succ, Nat.sub_add_cancel (by omega : 1 ≤ PD.p), nsmul_eq_mul]
   have h1 : PowerSeries.coeff 1 (E ^ PD.p) = 0 := by
     have h := congrArg (PowerSeries.coeff 1) hL

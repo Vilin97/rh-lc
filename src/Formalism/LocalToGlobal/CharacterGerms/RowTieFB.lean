@@ -123,7 +123,7 @@ section Steps
 variable [CharZero C] {V : VF C} {O : Type} [CommRing O] [StarRing O] {dd : ℕ}
 
 def FBChart.sgP (Y : FBChart C V O dd) (v : Fin dd → C) : PS C 1 dd :=
-  -∑ i, MvPowerSeries.C (v i) * ev (n := 1) ![pt C dd 0, 0] (MvPowerSeries.pderiv C ((1 : Fin 2), i) Y.h)
+  -∑ i, MvPowerSeries.C (v i) * ev (n := 1) ![pt C dd 0, 0] (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i) Y.h)
 
 def GermISt (Y : FBChart C V O dd) : Prop :=
   ∀ v : Fin dd → C, (∀ i, V.Ge 0 (v i)) →
@@ -133,8 +133,8 @@ def GermISt (Y : FBChart C V O dd) : Prop :=
 def GermIISt (Y : FBChart C V O dd) : Prop :=
   ∀ v : Fin dd → C, (∀ i, V.Ge 0 (v i)) →
     IntS V ((∑ j : Fin dd, (∑ i : Fin dd, MvPowerSeries.C (v i) *
-        ev (n := 2) ![pt C dd 1, 0] (MvPowerSeries.pderiv C ((1 : Fin 2), i) (Y.B.G.F j))) *
-          MvPowerSeries.pderiv C ((1 : Fin 2), j) Y.h) + ev (n := 2) ![pt C dd 0] (Y.sgP v))
+        ev (n := 2) ![pt C dd 1, 0] (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i) (Y.B.G.F j))) *
+          MvPowerSeries.pderiv (R := C) ((1 : Fin 2), j) Y.h) + ev (n := 2) ![pt C dd 0] (Y.sgP v))
 
 def ActCv (Y : FBChart C V O dd) (a : ℕ → O) : Prop :=
   ∀ (N : ℕ) i μ, ∃ n0 : ℕ, ∀ n ≥ n0, V.Ge N (MvPowerSeries.coeff μ (Y.B.A.act (a (n + 1)) i) -

@@ -31,7 +31,7 @@ theorem cz2 {n : ℕ} {a b : Pt S n d} (ha : ∀ i, constantCoeff (a i) = 0) (hb
 
 theorem coeff_mixed (g : PS S 2 d) (i l : Fin d) :
     coeff (Finsupp.single ((0 : Fin 2), i) 1 + Finsupp.single ((1 : Fin 2), l) 1) g =
-      constantCoeff (pderiv S ((0 : Fin 2), i) (pderiv S ((1 : Fin 2), l) g)) := by
+      constantCoeff (pderiv (R := S) ((0 : Fin 2), i) (pderiv (R := S) ((1 : Fin 2), l) g)) := by
   rw [← coeff_zero_eq_constantCoeff_apply, coeff_pderiv, coeff_pderiv, zero_add]
   simp
 

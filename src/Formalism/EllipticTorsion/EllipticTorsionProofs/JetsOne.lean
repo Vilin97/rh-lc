@@ -12,7 +12,7 @@ namespace Formalism.ELL.FormalGroupLinearJets
 variable {K : Type u} [CommRing K]
 
 theorem constantCoeff_pderiv_unit (f : PowerSeries K) :
-    MvPowerSeries.constantCoeff (MvPowerSeries.pderiv K () f) = coeff 1 f := by
+    MvPowerSeries.constantCoeff (MvPowerSeries.pderiv (R := K) () f) = coeff 1 f := by
   rw [← MvPowerSeries.coeff_zero_eq_constantCoeff_apply, MvPowerSeries.coeff_pderiv]
   simp [PowerSeries.coeff]
 
@@ -25,7 +25,7 @@ theorem coeff_one_subst {φ a : PowerSeries K} (ha : constantCoeff a = 0) :
   congr 1
   rw [PowerSeries.subst_def,
     Formalism.G.LogP.constantCoeff_subst_of_zero (σ := Unit) (τ := Unit) _ (fun _ => ha)]
-  show PowerSeries.constantCoeff (PowerSeries.derivative K φ) = _
+  show PowerSeries.constantCoeff (PowerSeries.derivative (R := K) φ) = _
   rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, PowerSeries.coeff_derivative]
   simp
 

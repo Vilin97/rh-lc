@@ -61,7 +61,7 @@ open Formalism.DworkPowerSeriesWeights (Integral)
 variable {K : Type} [NormedField K]
 
 def CurveHyp3 (F : MvPowerSeries (Fin 2) K) (l P ep : PowerSeries K) (a1 a3 : K) : Prop :=
-  PowerSeries.X ^ 3 * (-2 + l ^ 3 * PowerSeries.subst l (PowerSeries.derivative K P)) =
+  PowerSeries.X ^ 3 * (-2 + l ^ 3 * PowerSeries.subst l (PowerSeries.derivative (R := K) P)) =
       l ^ 3 * (-2 * ep + PowerSeries.C a1 * PowerSeries.X * ep +
         PowerSeries.C a3 * PowerSeries.X ^ 3) ∧
     ∃ e : MvPowerSeries (Fin 3) K, Integral e ∧ MvPowerSeries.constantCoeff e = -1 ∧

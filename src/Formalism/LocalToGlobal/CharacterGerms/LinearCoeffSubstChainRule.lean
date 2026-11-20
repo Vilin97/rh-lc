@@ -13,7 +13,7 @@ namespace VP
 
 variable {C : Type} [Field C] [CharZero C] {V : VF C} {O : Type} [CommRing O] [StarRing O] {dd : ℕ} {τ τ' : Type}
 
-def lin1 {σ : Type} (f : MvPowerSeries σ C) (j : σ) : C := MvPowerSeries.constantCoeff (MvPowerSeries.pderiv C j f)
+def lin1 {σ : Type} (f : MvPowerSeries σ C) (j : σ) : C := MvPowerSeries.constantCoeff (MvPowerSeries.pderiv (R := C) j f)
 
 theorem linear_coeff_eq_coeff_single {σ : Type} (f : MvPowerSeries σ C) (j : σ) : lin1 f j = MvPowerSeries.coeff (Finsupp.single j 1) f := by
   unfold lin1
@@ -131,16 +131,16 @@ theorem lin_of_add (f : MvPowerSeries (Fin dd) C) (h0 : MvPowerSeries.constantCo
     rw [map_add, cc_X, cc_X, add_zero]
   set K : Fin 2 × Fin dd → MvPowerSeries (Fin dd) C := P2 MvPowerSeries.X (fun _ => 0) with hK
   have cK : ∀ q, MvPowerSeries.constantCoeff (K q) = 0 := constantCoeff_pair_substitution (fun _ => cc_X _) (fun _ => map_zero _)
-  have hder : ∀ i, MvPowerSeries.pderiv C i f = MvPowerSeries.C (lin1 f i) := by
+  have hder : ∀ i, MvPowerSeries.pderiv (R := C) i f = MvPowerSeries.C (lin1 f i) := by
     intro i
-    have h := congrArg (fun G => MvPowerSeries.subst K (MvPowerSeries.pderiv C ((1 : Fin 2), i) G)) hadd
+    have h := congrArg (fun G => MvPowerSeries.subst K (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i) G)) hadd
     beta_reduce at h
     rw [map_add, pderiv_subst (og cS), pderiv_subst (og fun _ => cc_X _), pderiv_subst (og fun _ => cc_X _),
       subst_add' cK, subst_sum cK, subst_sum cK, subst_sum cK] at h
-    have h1 : ∀ m, MvPowerSeries.subst K (MvPowerSeries.pderiv C ((1 : Fin 2), i)
+    have h1 : ∀ m, MvPowerSeries.subst K (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i)
         (MvPowerSeries.X ((0 : Fin 2), m) + MvPowerSeries.X ((1 : Fin 2), m) : PS C 2 dd) *
         MvPowerSeries.subst (fun m : Fin dd => (MvPowerSeries.X ((0 : Fin 2), m) + MvPowerSeries.X ((1 : Fin 2), m) : PS C 2 dd))
-          (MvPowerSeries.pderiv C m f)) = if m = i then MvPowerSeries.pderiv C i f else 0 := by
+          (MvPowerSeries.pderiv (R := C) m f)) = if m = i then MvPowerSeries.pderiv (R := C) i f else 0 := by
       intro m
       rw [map_add, MvPowerSeries.pderiv_X_of_ne (fun hh => by simpa using (Prod.ext_iff.1 hh).1), zero_add]
       by_cases hm : m = i
@@ -155,16 +155,16 @@ theorem lin_of_add (f : MvPowerSeries (Fin dd) C) (h0 : MvPowerSeries.constantCo
         rw [this, MvPowerSeries.subst_self]
         rfl
       · rw [MvPowerSeries.pderiv_X_of_ne (fun hh => hm (Prod.ext_iff.1 hh).2), zero_mul, subst_zero' cK, if_neg hm]
-    have h2 : ∀ m, MvPowerSeries.subst K (MvPowerSeries.pderiv C ((1 : Fin 2), i)
+    have h2 : ∀ m, MvPowerSeries.subst K (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i)
         (MvPowerSeries.X ((0 : Fin 2), m) : PS C 2 dd) *
         MvPowerSeries.subst (fun m : Fin dd => (MvPowerSeries.X ((0 : Fin 2), m) : PS C 2 dd))
-          (MvPowerSeries.pderiv C m f)) = 0 := by
+          (MvPowerSeries.pderiv (R := C) m f)) = 0 := by
       intro m
       rw [MvPowerSeries.pderiv_X_of_ne (fun hh => by simpa using (Prod.ext_iff.1 hh).1), zero_mul, subst_zero' cK]
-    have h3 : ∀ m, MvPowerSeries.subst K (MvPowerSeries.pderiv C ((1 : Fin 2), i)
+    have h3 : ∀ m, MvPowerSeries.subst K (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i)
         (MvPowerSeries.X ((1 : Fin 2), m) : PS C 2 dd) *
         MvPowerSeries.subst (fun m : Fin dd => (MvPowerSeries.X ((1 : Fin 2), m) : PS C 2 dd))
-          (MvPowerSeries.pderiv C m f)) = if m = i then MvPowerSeries.C (lin1 f i) else 0 := by
+          (MvPowerSeries.pderiv (R := C) m f)) = if m = i then MvPowerSeries.C (lin1 f i) else 0 := by
       intro m
       by_cases hm : m = i
       · subst hm

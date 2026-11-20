@@ -17,10 +17,10 @@ abbrev FK (F : FormalGroup (unitBall K)) : FormalGroup K := F.map (unitBall K).s
 
 def omegaF (F : FormalGroup (unitBall K)) : PowerSeries K :=
   MvPowerSeries.subst ![PowerSeries.X, (0 : PowerSeries K)]
-    (MvPowerSeries.pderiv K 1 (FK F).toPowerSeries)
+    (MvPowerSeries.pderiv (R := K) 1 (FK F).toPowerSeries)
 
 def invD (F : FormalGroup (unitBall K)) (φ : PowerSeries K) : PowerSeries K :=
-  omegaF F * PowerSeries.derivative K φ
+  omegaF F * PowerSeries.derivative (R := K) φ
 
 abbrev Y3 (i : Fin 3) : MvPowerSeries (Fin 3) K := MvPowerSeries.X i
 

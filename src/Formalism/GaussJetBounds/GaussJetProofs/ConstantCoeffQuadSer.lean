@@ -14,13 +14,13 @@ section Analytic
 variable {K : Type u} [Field K] {ι : Type} [Fintype ι]
 
 def dirD (L : ι → K) : Derivation K (MvPowerSeries ι K) (MvPowerSeries ι K) :=
-  ∑ x, L x • MvPowerSeries.pderiv K x
+  ∑ x, L x • MvPowerSeries.pderiv (R := K) x
 
 lemma dirD_apply (L : ι → K) (F : MvPowerSeries ι K) :
-    dirD L F = ∑ x, MvPowerSeries.C (L x) * MvPowerSeries.pderiv K x F := by
+    dirD L F = ∑ x, MvPowerSeries.C (L x) * MvPowerSeries.pderiv (R := K) x F := by
   unfold dirD
   have h := congrFun (map_sum (Derivation.coeFnAddMonoidHom (R := K) (A := MvPowerSeries ι K)
-    (M := MvPowerSeries ι K)) (fun x => L x • MvPowerSeries.pderiv K x) Finset.univ) F
+    (M := MvPowerSeries ι K)) (fun x => L x • MvPowerSeries.pderiv (R := K) x) Finset.univ) F
   rw [Derivation.coeFnAddMonoidHom_apply, Finset.sum_apply] at h
   rw [h]
   refine Finset.sum_congr rfl fun x _ => ?_

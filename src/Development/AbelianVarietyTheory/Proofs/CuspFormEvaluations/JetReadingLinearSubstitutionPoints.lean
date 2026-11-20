@@ -39,7 +39,7 @@ theorem tay_coord {N : ℕ} (k : Fin N) :
       have := (ContinuousLinearMap.proj (R := ℂ) (φ := fun _ : Fin N => ℂ) k).fderiv (x := y)
       exact congrArg (fun T : (Fin N → ℂ) →L[ℂ] ℂ => T (Pi.single j 1)) this
     rw [h2, TM.tay_const] at h1
-    have h3 : MvPowerSeries.pderiv ℂ ((0 : Fin 1), j) (MvPowerSeries.X ((0 : Fin 1), k) :
+    have h3 : MvPowerSeries.pderiv (R := ℂ) ((0 : Fin 1), j) (MvPowerSeries.X ((0 : Fin 1), k) :
         MvPowerSeries (Fin 1 × Fin N) ℂ) = MvPowerSeries.C ((Pi.single j 1 : Fin N → ℂ) k) := by
       rw [MvPowerSeries.pderiv_X]
       by_cases h : k = j

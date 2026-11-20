@@ -24,7 +24,7 @@ theorem IntOpTwoOrth_of (h : Formalism.L2.Th1.B.ThetaZeroTwoCM) : IntOpTwoOrth :
   have hexp := Formalism.L2.Th1.A.expSpec ℂ_[2] W
   have hLP : C.IsLogPair (logSer W) (expSer W) :=
     ⟨hlog.1, hlog.2.1, hexp.1, hexp.2.2.2.1, hexp.2.2.1⟩
-  have hOU : C.IsOneUnit R (PowerSeries.derivative ℂ_[2] (logSer W)) := by
+  have hOU : C.IsOneUnit R (PowerSeries.derivative (R := ℂ_[2]) (logSer W)) := by
     rw [hlog.2.2.1]
     refine ⟨?_, hco.2.2.2.2.1⟩
     simp [Formalism.L2.Th1.A.om]

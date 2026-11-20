@@ -66,7 +66,7 @@ theorem exists_trace_eq {A B σ : Type} [CommRing A] [IsLocalRing A] [IsNoetheri
         ∑ j, a i j * -algebraMap (MvPowerSeries σ A) B (X j)) →
       a.det ∉ (maximalIdeal A).map (algebraMap A B)) :
     ∃ lam : B →ₗ[A] A, ∀ x : B, Algebra.trace A B x =
-      lam (x * algebraMap _ B (Matrix.of fun i j => pderiv A j (f i)).det) := by
+      lam (x * algebraMap _ B (Matrix.of fun i j => pderiv (R := A) j (f i)).det) := by
   let S := MvPowerSeries σ A
   have : Module.Finite S B := Module.Finite.of_restrictScalars_finite A S B
   have : Module.FinitePresentation S B := Module.finitePresentation_of_finite S B
@@ -78,9 +78,9 @@ theorem exists_trace_eq {A B σ : Type} [CommRing A] [IsLocalRing A] [IsNoetheri
     (hker (f i ⊗ₜ 1) (by simp [S, hf0]))
   let P : Matrix σ σ (S ⊗[A] B) := Matrix.of a
   have hmt : ∀ j, mu A S B (t j) = 0 := fun j => by simp [t]
-  have hmu : ∀ i j, mu A S B (a i j) = algebraMap S B (pderiv A j (f i)) := by
+  have hmu : ∀ i j, mu A S B (a i j) = algebraMap S B (pderiv (R := A) j (f i)) := by
     intro i j
-    have := congrArg (der (S := S) (B := B) (pderiv A j)) (ha i)
+    have := congrArg (der (S := S) (B := B) (pderiv (R := A) j)) (ha i)
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, der_mul, hmt, zero_mul, add_zero, der_tmul, mul_one] at this
     rw [← this, Finset.sum_eq_single j]
@@ -108,7 +108,7 @@ theorem exists_trace_eq {A B σ : Type} [CommRing A] [IsLocalRing A] [IsNoetheri
     have := hDt _ (hker (s ⊗ₜ 1 - 1 ⊗ₜ algebraMap S B s) (by simp))
     rwa [map_sub, hπ, hπ, map_one] at this
   have hJ : Algebra.TensorProduct.lmul' (S := B) A (π P.det)
-      = algebraMap S B (Matrix.of fun i j => pderiv A j (f i)).det := by
+      = algebraMap S B (Matrix.of fun i j => pderiv (R := A) j (f i)).det := by
     have e : ∀ z, Algebra.TensorProduct.lmul' (S := B) A (π z) = mu A S B z := by
       intro z
       induction z using TensorProduct.induction_on with
@@ -183,7 +183,7 @@ theorem dvd_trace_of_ringHom {A B σ : Type} [CommRing A] [IsLocalRing A] [IsNoe
     (ε : B →+* ResidueField A) (hε : ∀ s, ε (θ s) = residue A (constantCoeff s))
     (hW : ∀ a : Matrix σ σ B, (∀ i, ι (constantCoeff (f i)) = ∑ j, a i j * -θ (X j)) →
       a.det ∉ (maximalIdeal A).map ι)
-    (δ : A) (U : B) (hJ : θ (Matrix.of fun i j => pderiv A j (f i)).det = ι δ * U)
+    (δ : A) (U : B) (hJ : θ (Matrix.of fun i j => pderiv (R := A) j (f i)).det = ι δ * U)
     {r : ℕ} (b : Fin r → B) (hb : ∀ g, ∃! c : Fin r → A, g = ∑ i, ι (c i) * b i)
     (g : B) (M : Matrix (Fin r) (Fin r) A) (hM : ∀ j, g * b j = ∑ i, ι (M i j) * b i) :
     δ ∣ M.trace := by
@@ -216,7 +216,7 @@ end GlobalTheory.TraceJacobian
 
 namespace GlobalTheory
 
-theorem C_dvd_trace_of_jacobian : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [IsAdicComplete (maximalIdeal V) V] [CharZero V] (σ : Type) [Fintype σ] [DecidableEq σ] (φ : σ → MvPowerSeries σ V), (∀ j, MvPowerSeries.constantCoeff (φ j) = 0) → (∃ M : ℕ, Ideal.span (Set.range (MvPowerSeries.X : σ → MvPowerSeries σ (ResidueField V))) ^ M ≤ Ideal.span (Set.range fun j => MvPowerSeries.map (residue V) (φ j))) → ∀ (δ : V) (U : (MvPowerSeries σ V)ˣ), δ ≠ 0 → Matrix.det (Matrix.of fun i j : σ => MvPowerSeries.pderiv V j (φ i)) = MvPowerSeries.C δ * (U : MvPowerSeries σ V) → ∀ (r : ℕ) (b : Fin r → MvPowerSeries σ V), (∀ f, ∃! cf : Fin r → MvPowerSeries σ V, f = ∑ i, MvPowerSeries.subst φ (cf i) * b i) → ∀ (f : MvPowerSeries σ V) (M : Matrix (Fin r) (Fin r) (MvPowerSeries σ V)), (∀ j, f * b j = ∑ i, MvPowerSeries.subst φ (M i j) * b i) → MvPowerSeries.C δ ∣ M.trace := by
+theorem C_dvd_trace_of_jacobian : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing V] [IsAdicComplete (maximalIdeal V) V] [CharZero V] (σ : Type) [Fintype σ] [DecidableEq σ] (φ : σ → MvPowerSeries σ V), (∀ j, MvPowerSeries.constantCoeff (φ j) = 0) → (∃ M : ℕ, Ideal.span (Set.range (MvPowerSeries.X : σ → MvPowerSeries σ (ResidueField V))) ^ M ≤ Ideal.span (Set.range fun j => MvPowerSeries.map (residue V) (φ j))) → ∀ (δ : V) (U : (MvPowerSeries σ V)ˣ), δ ≠ 0 → Matrix.det (Matrix.of fun i j : σ => MvPowerSeries.pderiv (R := V) j (φ i)) = MvPowerSeries.C δ * (U : MvPowerSeries σ V) → ∀ (r : ℕ) (b : Fin r → MvPowerSeries σ V), (∀ f, ∃! cf : Fin r → MvPowerSeries σ V, f = ∑ i, MvPowerSeries.subst φ (cf i) * b i) → ∀ (f : MvPowerSeries σ V) (M : Matrix (Fin r) (Fin r) (MvPowerSeries σ V)), (∀ j, f * b j = ∑ i, MvPowerSeries.subst φ (M i j) * b i) → MvPowerSeries.C δ ∣ M.trace := by
   intro V _ _ _ _ _ σ _ _ φ h0 hM δ U _ hJ r b hb g M hg
   have hs : HasSubst φ := hasSubst_of_constantCoeff_zero h0
   let ι : MvPowerSeries σ V →ₐ[V] MvPowerSeries σ V := substAlgHom hs
@@ -277,7 +277,7 @@ theorem C_dvd_trace_of_jacobian : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDi
     congr 1
     ext i j : 2
     have : pderiv _ j (MvPowerSeries.map (C : V →+* MvPowerSeries σ V) (φ i) - C (X i))
-        = MvPowerSeries.map C (pderiv V j (φ i)) := by
+        = MvPowerSeries.map C (pderiv (R := V) j (φ i)) := by
       ext m : 1
       simp [coeff_pderiv, coeff_C]
     simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply]

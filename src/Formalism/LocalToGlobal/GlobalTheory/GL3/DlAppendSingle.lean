@@ -12,14 +12,14 @@ section Pd
 variable {σ : Type*} {p : ℕ} [Fact p.Prime]
 
 theorem pd_eq (inst : DecidableEq σ) (k : σ) (F : MvPowerSeries σ ℂ_[p]) :
-    @pd σ inst ℂ_[p] _ k F = MvPowerSeries.pderiv ℂ_[p] k F := by
+    @pd σ inst ℂ_[p] _ k F = MvPowerSeries.pderiv (R := ℂ_[p]) k F := by
   ext n
   rw [MvPowerSeries.coeff_pderiv, mul_comm]
   rfl
 
 theorem pderiv_comm (i j : σ) (F : MvPowerSeries σ ℂ_[p]) :
-    MvPowerSeries.pderiv ℂ_[p] i (MvPowerSeries.pderiv ℂ_[p] j F) =
-      MvPowerSeries.pderiv ℂ_[p] j (MvPowerSeries.pderiv ℂ_[p] i F) := by
+    MvPowerSeries.pderiv (R := ℂ_[p]) i (MvPowerSeries.pderiv (R := ℂ_[p]) j F) =
+      MvPowerSeries.pderiv (R := ℂ_[p]) j (MvPowerSeries.pderiv (R := ℂ_[p]) i F) := by
   ext n
   simp only [MvPowerSeries.coeff_pderiv, Finsupp.add_apply]
   rw [add_right_comm n (Finsupp.single j 1) (Finsupp.single i 1)]
@@ -30,8 +30,8 @@ theorem pderiv_comm (i j : σ) (F : MvPowerSeries σ ℂ_[p]) :
     ring
 
 theorem pderiv_C_mul (k : σ) (c : ℂ_[p]) (F : MvPowerSeries σ ℂ_[p]) :
-    MvPowerSeries.pderiv ℂ_[p] k (algebraMap ℂ_[p] (MvPowerSeries σ ℂ_[p]) c * F) =
-      algebraMap ℂ_[p] (MvPowerSeries σ ℂ_[p]) c * MvPowerSeries.pderiv ℂ_[p] k F := by
+    MvPowerSeries.pderiv (R := ℂ_[p]) k (algebraMap ℂ_[p] (MvPowerSeries σ ℂ_[p]) c * F) =
+      algebraMap ℂ_[p] (MvPowerSeries σ ℂ_[p]) c * MvPowerSeries.pderiv (R := ℂ_[p]) k F := by
   rw [Derivation.leibniz, Derivation.map_algebraMap, smul_zero, add_zero, smul_eq_mul]
 
 end Pd
@@ -44,7 +44,7 @@ local notation "Ser" => MvPowerSeries (D.what₂.Tau × Fin N' × Fin N) ℂ_[p]
 
 theorem der_eq (y : Matrix (Fin N') (Fin N) D.host.E) (F : Ser) :
     der D lam y F = ∑ k : D.what₂.Tau × Fin N' × Fin N,
-      algebraMap ℂ_[p] Ser (lamC lam (embT D k.1 (y k.2.1 k.2.2))) * MvPowerSeries.pderiv ℂ_[p] k F := by
+      algebraMap ℂ_[p] Ser (lamC lam (embT D k.1 (y k.2.1 k.2.2))) * MvPowerSeries.pderiv (R := ℂ_[p]) k F := by
   simp only [der, pd_eq]
 
 theorem der_add (y : Matrix (Fin N') (Fin N) D.host.E) (F G : Ser) :

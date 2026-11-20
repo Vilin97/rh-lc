@@ -86,7 +86,7 @@ theorem constantCoeff_linPull {σ ι : Type} [Fintype σ] [Fintype ι] (e : ι �
   exact MvPowerSeries.constantCoeff_subst_eq_zero (MvPowerSeries.hasSubst_of_constantCoeff_zero h0) h0 hF
 
 theorem pderiv_mainM (V : VF C) (i : ℕ) {ι ι' : Type} [Fintype ι] [Fintype ι'] (Φ : ι' → ι → C) (b : ι') :
-    MvPowerSeries.pderiv C (Sum.inr b) (mainM V i Φ) =
+    MvPowerSeries.pderiv (R := C) (Sum.inr b) (mainM V i Φ) =
       ((V.l : C) ^ expE V.l i)⁻¹ • ∑ c : ι,
         Φ b c • (MvPowerSeries.X (Sum.inl c) : MvPowerSeries (ι ⊕ ι') C) ^ (V.l ^ i) := by
   unfold mainM
@@ -136,7 +136,7 @@ theorem weight_gauge_sub_main : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [N
       rw [le_add_coe_iff, radius_one _ _ hl0, zero_sub] at this
       exact this
     obtain ⟨γ, hγ, hd⟩ := GlobalTheory.T.pderiv_leafGauge_eq_pairing_add_integral C V d I J X hA g a i hi hid S t ht (Fin N) (Fin M) e v' he hv hv' b
-    have hE : MvPowerSeries.pderiv C (Sum.inr b)
+    have hE : MvPowerSeries.pderiv (R := C) (Sum.inr b)
         (X.hM g a i e v' - mainM V i (fun b c => ∑ κ : J g, ∑ k : I (1 - g), Φt c κ * X.pair g κ k * v' b k)) =
         MvPowerSeries.subst (fun w : WV I => hPullW (upG w.1 (t w.1 w.2)) (fun c => toW g (e c))
           (fun b => toW (1 - g) (v' b))) γ + ∑ κ : J g, (∑ k, X.pair g κ k * v' b k) •

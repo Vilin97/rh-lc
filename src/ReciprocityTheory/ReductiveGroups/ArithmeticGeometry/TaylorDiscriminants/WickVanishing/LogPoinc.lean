@@ -28,7 +28,7 @@ theorem degree_eq_sum (n : τ →₀ ℕ) : n.degree = ∑ w, n w := by
   exact Finset.sum_subset (Finset.subset_univ _) (fun i _ hi => by simpa using hi)
 
 theorem pderiv_prim (ω : τ → MvPowerSeries τ k)
-    (hω : ∀ a c, pderiv k c (ω a) = pderiv k a (ω c)) (v : τ) : pderiv k v (prim ω) = ω v := by
+    (hω : ∀ a c, pderiv (R := k) c (ω a) = pderiv (R := k) a (ω c)) (v : τ) : pderiv (R := k) v (prim ω) = ω v := by
   ext m
   rw [coeff_pderiv, coeff_prim]
   set n := m + Finsupp.single v 1 with hn
@@ -75,8 +75,8 @@ theorem pderiv_prim (ω : τ → MvPowerSeries τ k)
   rw [mul_assoc, hsum, ← mul_assoc, ← map_natCast (algebraMap ℚ k) n.degree, ← map_mul,
     inv_mul_cancel₀ hD, map_one, one_mul]
 
-theorem exists_prim (ω : τ → MvPowerSeries τ k) (hω : ∀ a c, pderiv k c (ω a) = pderiv k a (ω c)) :
-    ∃ ℓ : MvPowerSeries τ k, constantCoeff ℓ = 0 ∧ ∀ v, pderiv k v ℓ = ω v :=
+theorem exists_prim (ω : τ → MvPowerSeries τ k) (hω : ∀ a c, pderiv (R := k) c (ω a) = pderiv (R := k) a (ω c)) :
+    ∃ ℓ : MvPowerSeries τ k, constantCoeff ℓ = 0 ∧ ∀ v, pderiv (R := k) v ℓ = ω v :=
   ⟨prim ω, constantCoeff_prim ω, pderiv_prim ω hω⟩
 
 end ReciprocityTheory.ChartRestriction.G.TB.LogPf

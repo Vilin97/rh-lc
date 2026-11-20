@@ -9,8 +9,8 @@ theorem poinc_ex {σ K : Type} [CommRing K] (c : (σ →₀ ℕ) → K) :
   ⟨c, fun _ => rfl⟩
 
 theorem poinc {σ : Type} [Fintype σ] {K : Type} [Field K] [CharZero K] (ω : σ → MvPowerSeries σ K)
-    (hω : ∀ j l, MvPowerSeries.pderiv K j (ω l) = MvPowerSeries.pderiv K l (ω j)) :
-    ∃ g : MvPowerSeries σ K, MvPowerSeries.constantCoeff g = 0 ∧ ∀ j, MvPowerSeries.pderiv K j g = ω j := by
+    (hω : ∀ j l, MvPowerSeries.pderiv (R := K) j (ω l) = MvPowerSeries.pderiv (R := K) l (ω j)) :
+    ∃ g : MvPowerSeries σ K, MvPowerSeries.constantCoeff g = 0 ∧ ∀ j, MvPowerSeries.pderiv (R := K) j g = ω j := by
   classical
   obtain ⟨g, hg⟩ := poinc_ex (fun μ : σ →₀ ℕ => ((μ.degree : ℕ) : K)⁻¹ *
     ∑ l, if μ l = 0 then 0 else coeff (μ - Finsupp.single l 1) (ω l))

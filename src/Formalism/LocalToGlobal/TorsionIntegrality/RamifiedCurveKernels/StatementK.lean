@@ -33,7 +33,7 @@ end DefsK
 
 def KernelShape : Prop :=
   ∀ (K : Type) [NormedField K] [IsUltrametricDist K] [CharZero K] (l linv ph : PowerSeries K) (d : ℕ),
-    IsLogPair l linv → IsOneUnit (unitBall K) (PowerSeries.derivative K l) →
+    IsLogPair l linv → IsOneUnit (unitBall K) (PowerSeries.derivative (R := K) l) →
     PowerSeries.constantCoeff ph = 0 → ShapeAt l linv ph d → (d : K) ≠ 0 →
     ∀ (H : Type) [Fintype H] (N0 N1 : ℕ) (n : Type) [Fintype n] (c : n → K)
       (A : n → ((Bool × H) × Fin N0 × Fin N1) → K) (u : H → K) (th : K)
@@ -47,7 +47,7 @@ def KernelShape : Prop :=
 
 def KernelThmB : Prop :=
   ∀ (K : Type) [NormedField K] [IsUltrametricDist K] [CharZero K] (l linv ph : PowerSeries K) (d : ℕ),
-    IsLogPair l linv → IsOneUnit (unitBall K) (PowerSeries.derivative K l) →
+    IsLogPair l linv → IsOneUnit (unitBall K) (PowerSeries.derivative (R := K) l) →
     PowerSeries.constantCoeff ph = 0 → ShapeAt l linv ph d → 0 < ‖(d : K)‖ → ‖(d : K)‖ < 1 →
     ∀ (H : Type) [Fintype H] [DecidableEq H] (N0 N1 : ℕ) (n : Type) [Fintype n] (c : n → K)
       (A : n → ((Bool × H) × Fin N0 × Fin N1) → K) (u : H → K) (th : K)
@@ -72,7 +72,7 @@ def KernelThmB : Prop :=
 
 def KernelThmBGauss : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (l linv ph : PowerSeries ℂ_[p]),
-    IsLogPair l linv → IsOneUnit (unitBall ℂ_[p]) (PowerSeries.derivative ℂ_[p] l) →
+    IsLogPair l linv → IsOneUnit (unitBall ℂ_[p]) (PowerSeries.derivative (R := ℂ_[p]) l) →
     PowerSeries.constantCoeff ph = 0 → ShapeAt l linv ph p →
     ∀ (H : Type) [Fintype H] [DecidableEq H] (N0 N1 : ℕ) (n : Type) [Fintype n] (c : n → ℂ_[p])
       (A : n → ((Bool × H) × Fin N0 × Fin N1) → ℂ_[p]) (u : H → ℂ_[p]) (th : ℂ_[p])

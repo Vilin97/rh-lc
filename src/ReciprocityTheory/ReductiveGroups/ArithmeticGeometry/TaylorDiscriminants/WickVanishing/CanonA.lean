@@ -67,7 +67,7 @@ def primT (T : Finset τ) (ω : τ → MvPowerSeries τ k) : MvPowerSeries τ k 
   algebraMap ℚ k (((∑ w ∈ T, m w : ℕ) : ℚ)⁻¹) * ∑ w ∈ T, if m w = 0 then 0 else coeff (m - Finsupp.single w 1) (ω w)
 
 theorem pderiv_primT (T : Finset τ) (ω : τ → MvPowerSeries τ k)
-    (hω : ∀ a ∈ T, ∀ c ∈ T, pderiv k c (ω a) = pderiv k a (ω c)) (v : τ) (hv : v ∈ T) : pderiv k v (primT T ω) = ω v := by
+    (hω : ∀ a ∈ T, ∀ c ∈ T, pderiv (R := k) c (ω a) = pderiv (R := k) a (ω c)) (v : τ) (hv : v ∈ T) : pderiv (R := k) v (primT T ω) = ω v := by
   ext n
   rw [MvPowerSeries.coeff_pderiv]
   have hS : (∑ w ∈ T, (n + Finsupp.single v 1 : τ →₀ ℕ) w) = (∑ w ∈ T, n w) + 1 := by
@@ -190,56 +190,56 @@ theorem formalSeriesValueAtThreePoints_genericPoints (f : PS k 3 d) : E3 f (gen 
   show sb ![gen 0, gen 1, gen 2] f = f
   rw [h, sb_gen]
 
-def Dir (j : Fin n) (p : Q k d n) (t : PS k n d) : Prop := ∀ b c, pderiv k (j, b) (p.1 c) = if c = b then t else 0
+def Dir (j : Fin n) (p : Q k d n) (t : PS k n d) : Prop := ∀ b c, pderiv (R := k) (j, b) (p.1 c) = if c = b then t else 0
 
 theorem dir_same (j : Fin n) : Dir j (gen j : Q k d n) 1 := by
   intro b c
-  show pderiv k (j, b) (pt k d j c) = _
+  show pderiv (R := k) (j, b) (pt k d j c) = _
   rw [pderiv_pt]
   simp
 
 theorem dir_ne {i j : Fin n} (h : i ≠ j) : Dir j (gen i : Q k d n) 0 := by
   intro b c
-  show pderiv k (j, b) (pt k d i c) = _
+  show pderiv (R := k) (j, b) (pt k d i c) = _
   rw [pderiv_pt]
   simp [h]
 
 theorem dir_zero (j : Fin n) : Dir j (0 : Q k d n) 0 := by
   intro b c
-  show pderiv k (j, b) 0 = _
+  show pderiv (R := k) (j, b) 0 = _
   simp
 
 theorem Dir.add {j : Fin n} {p q : Q k d n} {s t : PS k n d} (h : Dir j p s) (h' : Dir j q t) : Dir j (p + q) (s + t) := by
   intro b c
-  show pderiv k (j, b) (p.1 c + q.1 c) = _
+  show pderiv (R := k) (j, b) (p.1 c + q.1 c) = _
   rw [map_add, h b c, h' b c]
   split_ifs <;> simp
 
 theorem pd_sb {m : ℕ} (a : Fin m → Q k d n) (t : Fin m → PS k n d) {j : Fin n} (h : ∀ i, Dir j (a i) (t i)) (b : Fin d)
-    (f : PS k m d) : pderiv k (j, b) (sb a f) = ∑ i, sb a (pderiv k (i, b) f) * t i := by
+    (f : PS k m d) : pderiv (R := k) (j, b) (sb a f) = ∑ i, sb a (pderiv (R := k) (i, b) f) * t i := by
   rw [sb_apply, pderiv_ev (czQ a), Fintype.sum_prod_type]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [h i b, mul_ite, mul_zero, Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, if_true, sb_apply]
 
 theorem pderiv_eval_two {j : Fin n} {u v : Q k d n} {s t : PS k n d} (hu : Dir j u s) (hv : Dir j v t) (b : Fin d) (f : PS k 2 d) :
-    pderiv k (j, b) (E2 f u v) = E2 (pderiv k (0, b) f) u v * s + E2 (pderiv k (1, b) f) u v * t := by
+    pderiv (R := k) (j, b) (E2 f u v) = E2 (pderiv (R := k) (0, b) f) u v * s + E2 (pderiv (R := k) (1, b) f) u v * t := by
   have hd : ∀ i, Dir j (![u, v] i) (![s, t] i) := fun i => by
     fin_cases i
     · exact hu
     · exact hv
-  show pderiv k (j, b) (sb ![u, v] f) = _
+  show pderiv (R := k) (j, b) (sb ![u, v] f) = _
   rw [pd_sb ![u, v] ![s, t] hd b f, Fin.sum_univ_two]
   all_goals rfl
 
 theorem pderiv_eval_three {j : Fin n} {u v w : Q k d n} {s t r : PS k n d} (hu : Dir j u s) (hv : Dir j v t) (hw : Dir j w r) (b : Fin d)
-    (f : PS k 3 d) : pderiv k (j, b) (E3 f u v w) =
-      E3 (pderiv k (0, b) f) u v w * s + E3 (pderiv k (1, b) f) u v w * t + E3 (pderiv k (2, b) f) u v w * r := by
+    (f : PS k 3 d) : pderiv (R := k) (j, b) (E3 f u v w) =
+      E3 (pderiv (R := k) (0, b) f) u v w * s + E3 (pderiv (R := k) (1, b) f) u v w * t + E3 (pderiv (R := k) (2, b) f) u v w * r := by
   have hd : ∀ i, Dir j (![u, v, w] i) (![s, t, r] i) := fun i => by
     fin_cases i
     · exact hu
     · exact hv
     · exact hw
-  show pderiv k (j, b) (sb ![u, v, w] f) = _
+  show pderiv (R := k) (j, b) (sb ![u, v, w] f) = _
   rw [pd_sb ![u, v, w] ![s, t, r] hd b f, Fin.sum_univ_three]
   all_goals rfl
 
@@ -290,7 +290,7 @@ theorem coeff_kill (j : Fin n) (f : PS k n d) (m : Fin n × Fin d →₀ ℕ) :
 
 variable [Algebra ℚ k]
 
-theorem zero_of_pd (j : Fin n) {f : PS k n d} (h : ∀ b, pderiv k (j, b) f = 0) (h0 : sb (Function.update gen j 0) f = 0) :
+theorem zero_of_pd (j : Fin n) {f : PS k n d} (h : ∀ b, pderiv (R := k) (j, b) f = 0) (h0 : sb (Function.update gen j 0) f = 0) :
     f = 0 := by
   ext m
   rw [map_zero]
@@ -326,7 +326,7 @@ theorem update_three_two_zero : (Function.update gen 2 0 : Fin 3 → Q k d 3) = 
   fin_cases i <;> first | rfl | simp [Function.update_apply]
 
 private theorem pd_comm_lemma (i j : Fin n × Fin d) (f : PS k n d) :
-    pderiv k i (pderiv k j f) = pderiv k j (pderiv k i f) := by
+    pderiv (R := k) i (pderiv (R := k) j f) = pderiv (R := k) j (pderiv (R := k) i f) := by
   by_cases h : i = j
   · subst h
     rfl
@@ -339,19 +339,19 @@ private theorem pd_comm_lemma (i j : Fin n × Fin d) (f : PS k n d) :
 private theorem d1_lemma_2 (α : PS k 3 d)
     (coc : ∀ {n} (x y t w : Q k d n), E3 α x y w + E3 α (x + y) t w = E3 α y t w + E3 α x (y + t) w)
     (b : Fin d) :
-    pderiv k (1, b) α = E2 (E3 (pderiv k (1, b) α) (gen 0) 0 (gen 1)) (gen 0 + gen 1) (gen 2) -
-      E2 (E3 (pderiv k (1, b) α) (gen 0) 0 (gen 1)) (gen 1) (gen 2) := by
-  have hψ : ∀ (u w : Q k d 3), E2 (E3 (pderiv k (1, b) α) (gen 0) 0 (gen 1)) u w =
-      E3 (pderiv k (1, b) α) u 0 w := by
+    pderiv (R := k) (1, b) α = E2 (E3 (pderiv (R := k) (1, b) α) (gen 0) 0 (gen 1)) (gen 0 + gen 1) (gen 2) -
+      E2 (E3 (pderiv (R := k) (1, b) α) (gen 0) 0 (gen 1)) (gen 1) (gen 2) := by
+  have hψ : ∀ (u w : Q k d 3), E2 (E3 (pderiv (R := k) (1, b) α) (gen 0) 0 (gen 1)) u w =
+      E3 (pderiv (R := k) (1, b) α) u 0 w := by
     intro u w
-    show sb ![u, w] (E3 (pderiv k (1, b) α) (gen 0) 0 (gen 1)) = _
+    show sb ![u, w] (E3 (pderiv (R := k) (1, b) α) (gen 0) 0 (gen 1)) = _
     rw [formalPointSubstitutionSeries_valueAtThreePoints, sq_gen, sq_gen, map_zero]
     all_goals rfl
   have d0 : Dir (3 : Fin 4) (gen 0 : Q k d 4) 0 := dir_ne (by decide)
   have d1 : Dir (3 : Fin 4) (gen 1 : Q k d 4) 0 := dir_ne (by decide)
   have d2 : Dir (3 : Fin 4) (gen 2 : Q k d 4) 0 := dir_ne (by decide)
   have d3 : Dir (3 : Fin 4) (gen 3 : Q k d 4) 1 := dir_same 3
-  have e := congrArg (pderiv k ((3 : Fin 4), b)) (coc (gen 0) (gen 1) (gen 3) (gen 2))
+  have e := congrArg (pderiv (R := k) ((3 : Fin 4), b)) (coc (gen 0) (gen 1) (gen 3) (gen 2))
   rw [map_add, map_add, pderiv_eval_three d0 d1 d2, pderiv_eval_three (d0.add d1) d3 d2, pderiv_eval_three d1 d3 d2,
     pderiv_eval_three d0 (d1.add d3) d2] at e
   simp only [mul_zero, zero_add, add_zero, mul_one] at e
@@ -367,19 +367,19 @@ private theorem d1_lemma_2 (α : PS k 3 d)
 private theorem d0_lemma_4 (α : PS k 3 d) (sym : ∀ {n} (x y w : Q k d n), E3 α x y w = E3 α y x w)
     (coc : ∀ {n} (x y t w : Q k d n), E3 α x y w + E3 α (x + y) t w = E3 α y t w + E3 α x (y + t) w)
     (b : Fin d) :
-    pderiv k (0, b) α = E2 (E3 (pderiv k (1, b) α) (gen 0) 0 (gen 1)) (gen 1 + gen 0) (gen 2) -
-      E2 (E3 (pderiv k (1, b) α) (gen 0) 0 (gen 1)) (gen 0) (gen 2) := by
+    pderiv (R := k) (0, b) α = E2 (E3 (pderiv (R := k) (1, b) α) (gen 0) 0 (gen 1)) (gen 1 + gen 0) (gen 2) -
+      E2 (E3 (pderiv (R := k) (1, b) α) (gen 0) 0 (gen 1)) (gen 0) (gen 2) := by
   have hs : α = E3 α (gen 1) (gen 0) (gen 2) := (formalSeriesValueAtThreePoints_genericPoints α).symm.trans (sym _ _ _)
   have d0 : Dir (0 : Fin 3) (gen 1 : Q k d 3) 0 := dir_ne (by decide)
   have d1 : Dir (0 : Fin 3) (gen 0 : Q k d 3) 1 := dir_same 0
   have d2 : Dir (0 : Fin 3) (gen 2 : Q k d 3) 0 := dir_ne (by decide)
   have h1 := d1_lemma_2 α coc b
-  have e : pderiv k (0, b) α = E3 (pderiv k (1, b) α) (gen 1) (gen 0) (gen 2) := by
+  have e : pderiv (R := k) (0, b) α = E3 (pderiv (R := k) (1, b) α) (gen 1) (gen 0) (gen 2) := by
     conv_lhs => rw [hs]
     rw [pderiv_eval_three d0 d1 d2]
     simp only [mul_zero, zero_add, add_zero, mul_one]
   rw [e]
-  show sb ![gen 1, gen 0, gen 2] (pderiv k (1, b) α) = _
+  show sb ![gen 1, gen 0, gen 2] (pderiv (R := k) (1, b) α) = _
   conv_lhs => rw [h1]
   rw [map_sub, formalPointSubstitutionSeries_valueAtTwoPoints, formalPointSubstitutionSeries_valueAtTwoPoints, map_add, sq_gen, sq_gen, sq_gen]
   all_goals rfl
@@ -387,16 +387,16 @@ private theorem d0_lemma_4 (α : PS k 3 d) (sym : ∀ {n} (x y w : Q k d n), E3 
 private theorem closed_lemma_5 (α : PS k 3 d) (sym : ∀ {n} (x y w : Q k d n), E3 α x y w = E3 α y x w)
     (coc : ∀ {n} (x y t w : Q k d n), E3 α x y w + E3 α (x + y) t w = E3 α y t w + E3 α x (y + t) w)
     (b c : Fin d) :
-    pderiv k (0, c) (E3 (pderiv k (1, b) α) (gen 0 : Q k d 2) 0 (gen 1)) =
-      pderiv k (0, b) (E3 (pderiv k (1, c) α) (gen 0 : Q k d 2) 0 (gen 1)) := by
+    pderiv (R := k) (0, c) (E3 (pderiv (R := k) (1, b) α) (gen 0 : Q k d 2) 0 (gen 1)) =
+      pderiv (R := k) (0, b) (E3 (pderiv (R := k) (1, c) α) (gen 0 : Q k d 2) 0 (gen 1)) := by
   have a0 : Dir (0 : Fin 3) (gen 0 : Q k d 3) 1 := dir_same 0
   have a1 : Dir (0 : Fin 3) (gen 1 : Q k d 3) 0 := dir_ne (by decide)
   have a2 : Dir (0 : Fin 3) (gen 2 : Q k d 3) 0 := dir_ne (by decide)
   have b0 : Dir (1 : Fin 3) (gen 0 : Q k d 3) 0 := dir_ne (by decide)
   have b1 : Dir (1 : Fin 3) (gen 1 : Q k d 3) 1 := dir_same 1
   have b2 : Dir (1 : Fin 3) (gen 2 : Q k d 3) 0 := dir_ne (by decide)
-  have e1 := congrArg (pderiv k ((0 : Fin 3), c)) (d1_lemma_2 α coc b)
-  have e2 := congrArg (pderiv k ((1 : Fin 3), b)) (d0_lemma_4 α sym coc c)
+  have e1 := congrArg (pderiv (R := k) ((0 : Fin 3), c)) (d1_lemma_2 α coc b)
+  have e2 := congrArg (pderiv (R := k) ((1 : Fin 3), b)) (d0_lemma_4 α sym coc c)
   rw [map_sub, pderiv_eval_two (a0.add a1) a2, pderiv_eval_two a1 a2] at e1
   rw [map_sub, pderiv_eval_two (b1.add b0) b2, pderiv_eval_two b0 b2] at e2
   simp only [mul_zero, add_zero, zero_add, mul_one, sub_zero] at e1 e2
@@ -411,15 +411,15 @@ private theorem closed_lemma_5 (α : PS k 3 d) (sym : ∀ {n} (x y w : Q k d n),
 theorem split (α : PS k 3 d) (ax : ∀ {n} (y w : Q k d n), E3 α 0 y w = 0) (sym : ∀ {n} (x y w : Q k d n), E3 α x y w = E3 α y x w)
     (coc : ∀ {n} (x y t w : Q k d n), E3 α x y w + E3 α (x + y) t w = E3 α y t w + E3 α x (y + t) w) :
     ∃ H : PS k 2 d, (∀ {n} (x y w : Q k d n), E3 α x y w = E2 H x w + E2 H y w - E2 H (x + y) w) ∧
-      (∀ {n} (w : Q k d n), E2 H 0 w = 0) ∧ ∀ {n} (b) (w : Q k d n), E2 (pderiv k (0, b) H) 0 w = 0 := by
+      (∀ {n} (w : Q k d n), E2 H 0 w = 0) ∧ ∀ {n} (b) (w : Q k d n), E2 (pderiv (R := k) (0, b) H) 0 w = 0 := by
   let T : Finset (Fin 2 × Fin d) := Finset.univ.filter (fun p => p.1 = 0)
-  let ω : Fin 2 × Fin d → PS k 2 d := fun p => E3 (pderiv k (1, p.2) α) (gen 0) 0 (gen 1)
-  have hω : ∀ a ∈ T, ∀ c ∈ T, pderiv k c (ω a) = pderiv k a (ω c) := by
+  let ω : Fin 2 × Fin d → PS k 2 d := fun p => E3 (pderiv (R := k) (1, p.2) α) (gen 0) 0 (gen 1)
+  have hω : ∀ a ∈ T, ∀ c ∈ T, pderiv (R := k) c (ω a) = pderiv (R := k) a (ω c) := by
     rintro ⟨a1, a2⟩ ha ⟨c1, c2⟩ hc
     simp only [T, Finset.mem_filter, Finset.mem_univ, true_and] at ha hc
     subst ha hc
     exact closed_lemma_5 α sym coc a2 c2
-  have hpd : ∀ b, pderiv k (0, b) (-primT T ω) = -E3 (pderiv k (1, b) α) (gen 0) 0 (gen 1) := by
+  have hpd : ∀ b, pderiv (R := k) (0, b) (-primT T ω) = -E3 (pderiv (R := k) (1, b) α) (gen 0) 0 (gen 1) := by
     intro b
     rw [map_neg, pderiv_primT T ω hω (0, b) (by simp [T])]
     all_goals rfl
@@ -449,12 +449,12 @@ theorem split (α : PS k 3 d) (ax : ∀ {n} (y w : Q k d n), E3 α 0 y w = 0) (s
     show sb ![0, w] (-primT T ω) = 0
     rw [map_neg, neg_eq_zero]
     exact e
-  have hax : ∀ {n : ℕ} (b : Fin d) (w : Q k d n), E3 (pderiv k (1, b) α) 0 0 w = 0 := by
+  have hax : ∀ {n : ℕ} (b : Fin d) (w : Q k d n), E3 (pderiv (R := k) (1, b) α) 0 0 w = 0 := by
     intro n b w
     have z0 : Dir (0 : Fin 2) (0 : Q k d 2) 0 := dir_zero 0
     have z1 : Dir (0 : Fin 2) (gen 0 : Q k d 2) 1 := dir_same 0
     have z2 : Dir (0 : Fin 2) (gen 1 : Q k d 2) 0 := dir_ne (by decide)
-    have e := congrArg (pderiv k ((0 : Fin 2), b)) (ax (gen 0 : Q k d 2) (gen 1))
+    have e := congrArg (pderiv (R := k) ((0 : Fin 2), b)) (ax (gen 0 : Q k d 2) (gen 1))
     rw [pderiv_eval_three z0 z1 z2, map_zero] at e
     simp only [mul_zero, zero_add, add_zero, mul_one] at e
     have e' := congrArg (sb (![0, w] : Fin 2 → Q k d n)) e
@@ -489,20 +489,20 @@ theorem split (α : PS k 3 d) (ax : ∀ {n} (y w : Q k d n), E3 α 0 y w = 0) (s
     exact e
   · intro n b w
     rw [hpd b]
-    show sb ![0, w] (-(E3 (pderiv k (1, b) α) (gen 0) 0 (gen 1))) = 0
+    show sb ![0, w] (-(E3 (pderiv (R := k) (1, b) α) (gen 0) 0 (gen 1))) = 0
     rw [map_neg, neg_eq_zero, formalPointSubstitutionSeries_valueAtThreePoints, sq_gen, sq_gen, map_zero]
     exact hax b w
 
 theorem zero_of_add (f : PS k 3 d) (add : ∀ {n} (x y v v' : Q k d n), E3 f x y (v + v') = E3 f x y v + E3 f x y v')
-    (h : ∀ {n} b (x y : Q k d n), E3 (pderiv k (2, b) f) x y 0 = 0) : f = 0 := by
+    (h : ∀ {n} b (x y : Q k d n), E3 (pderiv (R := k) (2, b) f) x y 0 = 0) : f = 0 := by
   have h0 : ∀ {n : ℕ} (x y : Q k d n), E3 f x y 0 = 0 := by
     intro n x y
     have e := add x y 0 0
     rw [add_zero] at e
     linear_combination -e
-  have hd : ∀ b, pderiv k (2, b) f = 0 := by
+  have hd : ∀ b, pderiv (R := k) (2, b) f = 0 := by
     intro b
-    have e := congrArg (pderiv k ((3 : Fin 4), b)) (add (gen 0) (gen 1) (gen 2) (gen 3))
+    have e := congrArg (pderiv (R := k) ((3 : Fin 4), b)) (add (gen 0) (gen 1) (gen 2) (gen 3))
     have d0 : Dir (3 : Fin 4) (gen 0 : Q k d 4) 0 := dir_ne (by decide)
     have d1 : Dir (3 : Fin 4) (gen 1 : Q k d 4) 0 := dir_ne (by decide)
     have d2 : Dir (3 : Fin 4) (gen 2 : Q k d 4) 0 := dir_ne (by decide)

@@ -54,7 +54,7 @@ theorem fc_add_single [DecidableEq σ] (n : σ →₀ ℕ) (i : σ) :
   ring
 
 theorem fc_coeff_pderiv [DecidableEq σ] (f : MvPowerSeries σ K) (n : σ →₀ ℕ) (i : σ) :
-    fc n * coeff n (pderiv K i f) = fc (n + Finsupp.single i 1) * coeff (n + Finsupp.single i 1) f := by
+    fc n * coeff n (pderiv (R := K) i f) = fc (n + Finsupp.single i 1) * coeff (n + Finsupp.single i 1) f := by
   rw [MvPowerSeries.coeff_pderiv, fc_add_single]
   ring
 
@@ -82,7 +82,7 @@ private theorem sub_single_one_add_single_one_of_ne_zero (n : σ →₀ ℕ) (i 
 
 private theorem hur_of_closed_under_pderiv [DecidableEq σ] (Q : MvPowerSeries σ K → Prop)
     (h0 : ∀ f, Q f → constantCoeff f ∈ R)
-    (hd : ∀ f, Q f → ∀ i, ∃ a b, Q a ∧ Q b ∧ pderiv K i f = a + b) :
+    (hd : ∀ f, Q f → ∀ i, ∃ a b, Q a ∧ Q b ∧ pderiv (R := K) i f = a + b) :
     ∀ f, Q f → Hur R f := by
   suffices H : ∀ n : σ →₀ ℕ, ∀ f, Q f → fc n * coeff n f ∈ R from fun f hf n => H n f hf
   intro n
@@ -106,7 +106,7 @@ private theorem hur_of_closed_under_pderiv [DecidableEq σ] (Q : MvPowerSeries �
     exact R.add_mem (ih _ hlt a ha) (ih _ hlt b hb)
 
 theorem hur_of_closed [DecidableEq σ] (S : Set (MvPowerSeries σ K))
-    (h0 : ∀ f ∈ S, constantCoeff f ∈ R) (hd : ∀ f ∈ S, ∀ i, pderiv K i f ∈ S) :
+    (h0 : ∀ f ∈ S, constantCoeff f ∈ R) (hd : ∀ f ∈ S, ∀ i, pderiv (R := K) i f ∈ S) :
     ∀ f ∈ S, Hur R f := by
   intro f hf
   refine hur_of_closed_under_pderiv R (fun g => g ∈ S ∨ g = 0) ?_ ?_ f (Or.inl hf)
@@ -114,7 +114,7 @@ theorem hur_of_closed [DecidableEq σ] (S : Set (MvPowerSeries σ K))
     · exact h0 g hg
     · rw [map_zero]; exact R.zero_mem
   · rintro g (hg | rfl) i
-    · exact ⟨pderiv K i g, 0, Or.inl (hd g hg i), Or.inr rfl, (add_zero _).symm⟩
+    · exact ⟨pderiv (R := K) i g, 0, Or.inl (hd g hg i), Or.inr rfl, (add_zero _).symm⟩
     · exact ⟨0, 0, Or.inr rfl, Or.inr rfl, by rw [map_zero, add_zero]⟩
 
 theorem hur_zero : Hur R (0 : MvPowerSeries σ K) := by
@@ -161,7 +161,7 @@ theorem hur_X [DecidableEq σ] (i : σ) : Hur R (X i : MvPowerSeries σ K) := by
   · exact R.zero_mem
 
 theorem hur_pderiv [DecidableEq σ] {f : MvPowerSeries σ K} (hf : Hur R f) (i : σ) :
-    Hur R (pderiv K i f) := by
+    Hur R (pderiv (R := K) i f) := by
   intro n
   rw [fc_coeff_pderiv]
   exact hf _
@@ -217,7 +217,7 @@ theorem hur_prod [DecidableEq σ] {α : Type*} (s : Finset α) (f : α → MvPow
 
 theorem hur_gamma [DecidableEq σ] [CharZero K] {f : MvPowerSeries σ K} (hf : Hur R f)
     (hf0 : constantCoeff f = 0) (k : ℕ) : Hur R (C ((k.factorial : K))⁻¹ * f ^ k) := by
-  have hC : ∀ (c : K) (i : σ), pderiv K i (C c : MvPowerSeries σ K) = 0 := by
+  have hC : ∀ (c : K) (i : σ), pderiv (R := K) i (C c : MvPowerSeries σ K) = 0 := by
     intro c i
     ext n
     rw [MvPowerSeries.coeff_pderiv, MvPowerSeries.coeff_C, if_neg, zero_mul, map_zero]
@@ -237,12 +237,12 @@ theorem hur_gamma [DecidableEq σ] [CharZero K] {f : MvPowerSeries σ K} (hf : H
   · rintro h ⟨j, g, hg, rfl⟩ i
     cases j with
     | zero =>
-      refine ⟨C ((Nat.factorial 0 : K))⁻¹ * f ^ 0 * pderiv K i g, 0, ⟨0, _, hur_pderiv R hg i, rfl⟩,
+      refine ⟨C ((Nat.factorial 0 : K))⁻¹ * f ^ 0 * pderiv (R := K) i g, 0, ⟨0, _, hur_pderiv R hg i, rfl⟩,
         ⟨0, 0, hur_zero R, by simp⟩, ?_⟩
       simp
     | succ j =>
-      refine ⟨C ((j.factorial : K))⁻¹ * f ^ j * (pderiv K i f * g),
-        C (((j + 1).factorial : K))⁻¹ * f ^ (j + 1) * pderiv K i g,
+      refine ⟨C ((j.factorial : K))⁻¹ * f ^ j * (pderiv (R := K) i f * g),
+        C (((j + 1).factorial : K))⁻¹ * f ^ (j + 1) * pderiv (R := K) i g,
         ⟨j, _, hur_mul R (hur_pderiv R hf i) hg, rfl⟩, ⟨j + 1, _, hur_pderiv R hg i, rfl⟩, ?_⟩
       have hc : C (((j + 1).factorial : K))⁻¹ * (((j + 1 : ℕ) : MvPowerSeries σ K)) = C ((j.factorial : K))⁻¹ := by
         rw [show (((j + 1 : ℕ) : MvPowerSeries σ K)) = C ((j + 1 : ℕ) : K) from (map_natCast _ _).symm, ← map_mul]
@@ -286,13 +286,13 @@ theorem hur_subst {τ : Type*} [DecidableEq σ] [DecidableEq τ] [Fintype σ] [F
     | zero => simp
     | add x y _ _ hx hy => rw [map_add]; exact R.add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact R.neg_mem hx
-  have hd : ∀ h ∈ S, ∀ i, pderiv K i h ∈ S := by
+  have hd : ∀ h ∈ S, ∀ i, pderiv (R := K) i h ∈ S := by
     intro h hh i
     induction hh using AddSubgroup.closure_induction with
     | mem x hx =>
       obtain ⟨g, b, hg, hb, rfl⟩ := hx
-      have e : pderiv K i (subst a g * b) = subst a g * pderiv K i b +
-          ∑ j, subst a (pderiv K j g) * (pderiv K i (a j) * b) := by
+      have e : pderiv (R := K) i (subst a g * b) = subst a g * pderiv (R := K) i b +
+          ∑ j, subst a (pderiv (R := K) j g) * (pderiv (R := K) i (a j) * b) := by
         rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, Formalism.G.LogCR.pderiv_subst ha0, Finset.mul_sum]
         congr 1
         refine Finset.sum_congr rfl fun j _ => ?_
@@ -345,27 +345,27 @@ theorem int_inv {φ : PowerSeries K} (h1 : PowerSeries.constantCoeff φ = 1)
 
 theorem hur_substInv {L : PowerSeries K} (hL0 : PowerSeries.constantCoeff L = 0)
     (hL1 : IsUnit (PowerSeries.coeff 1 L))
-    (hLd1 : PowerSeries.constantCoeff (PowerSeries.derivative K L) = 1)
-    (hLd : ∀ n, PowerSeries.coeff n (PowerSeries.derivative K L) ∈ R) :
+    (hLd1 : PowerSeries.constantCoeff (PowerSeries.derivative (R := K) L) = 1)
+    (hLd : ∀ n, PowerSeries.coeff n (PowerSeries.derivative (R := K) L) ∈ R) :
     Hur R ((L.substInvOfIsUnit hL1 : PowerSeries K) : MvPowerSeries Unit K) := by
   set E : PowerSeries K := L.substInvOfIsUnit hL1 with hEdef
   have hE0 : PowerSeries.constantCoeff E = 0 := PowerSeries.constantCoeff_substInvOfIsUnit _ _
   have hs : PowerSeries.HasSubst E := PowerSeries.HasSubst.of_constantCoeff_zero' hE0
   have hLE : PowerSeries.subst E L = PowerSeries.X :=
     PowerSeries.subst_substInvOfIsUnit_right (P := L) (hP := hL0) (hP' := hL1)
-  set w : PowerSeries K := (PowerSeries.derivative K L)⁻¹ with hw
+  set w : PowerSeries K := (PowerSeries.derivative (R := K) L)⁻¹ with hw
   have hwi : ∀ n, PowerSeries.coeff n w ∈ R := int_inv R hLd1 hLd
-  have hwL : w * PowerSeries.derivative K L = 1 :=
+  have hwL : w * PowerSeries.derivative (R := K) L = 1 :=
     PowerSeries.inv_mul_cancel _ (by rw [hLd1]; exact one_ne_zero)
   have hone : PowerSeries.subst E (1 : PowerSeries K) = 1 := by
     rw [← PowerSeries.coe_substAlgHom hs, map_one]
-  have hdE : PowerSeries.derivative K E = PowerSeries.subst E w := by
-    have h1 : PowerSeries.subst E (PowerSeries.derivative K L) * PowerSeries.derivative K E = 1 := by
-      have := congrArg (PowerSeries.derivative K) hLE
+  have hdE : PowerSeries.derivative (R := K) E = PowerSeries.subst E w := by
+    have h1 : PowerSeries.subst E (PowerSeries.derivative (R := K) L) * PowerSeries.derivative (R := K) E = 1 := by
+      have := congrArg (PowerSeries.derivative (R := K)) hLE
       rwa [PowerSeries.derivative_subst hs, PowerSeries.derivative_X] at this
-    calc PowerSeries.derivative K E
-        = (PowerSeries.subst E w * PowerSeries.subst E (PowerSeries.derivative K L)) *
-            PowerSeries.derivative K E := by
+    calc PowerSeries.derivative (R := K) E
+        = (PowerSeries.subst E w * PowerSeries.subst E (PowerSeries.derivative (R := K) L)) *
+            PowerSeries.derivative (R := K) E := by
           rw [← PowerSeries.subst_mul hs, hwL, hone, one_mul]
       _ = PowerSeries.subst E w := by rw [mul_assoc, h1, mul_one]
   let S : Set (MvPowerSeries Unit K) :=
@@ -375,15 +375,15 @@ theorem hur_substInv {L : PowerSeries K} (hL0 : PowerSeries.constantCoeff L = 0)
     rw [PowerSeries.subst_def, cc_subst (fun _ => hE0)]
     have := hh 0
     rwa [PowerSeries.coeff_zero_eq_constantCoeff_apply] at this
-  have hd : ∀ F ∈ S, ∀ i, pderiv K i F ∈ S := by
+  have hd : ∀ F ∈ S, ∀ i, pderiv (R := K) i F ∈ S := by
     rintro F ⟨h, hh, rfl⟩ i
-    refine ⟨PowerSeries.derivative K h * w, fun n => ?_, ?_⟩
+    refine ⟨PowerSeries.derivative (R := K) h * w, fun n => ?_, ?_⟩
     · rw [PowerSeries.coeff_mul]
       refine R.sum_mem fun x _ => R.mul_mem ?_ (hwi _)
       rw [PowerSeries.coeff_derivative]
       exact R.mul_mem (hh _) (R.add_mem (natCast_mem R _) R.one_mem)
-    · have e : pderiv K i (PowerSeries.subst E h : MvPowerSeries Unit K) =
-          PowerSeries.derivative K (PowerSeries.subst E h) := rfl
+    · have e : pderiv (R := K) i (PowerSeries.subst E h : MvPowerSeries Unit K) =
+          PowerSeries.derivative (R := K) (PowerSeries.subst E h) := rfl
       rw [e, PowerSeries.derivative_subst hs, hdE, PowerSeries.subst_mul hs]
   have hX : (E : MvPowerSeries Unit K) ∈ S :=
     ⟨PowerSeries.X, fun n => by
@@ -439,7 +439,7 @@ theorem Wr_to (x : K0 p) (hx : x ∈ Wr p) : algebraMap (K0 p) K1 x ∈ R1 := by
   exact hW y
 
 theorem hur_en_E : Hur R1 ((Formalism.MainNotions.FormalGroupSystem.Pf.en_E p K1 : PowerSeries K1) : MvPowerSeries Unit K1) := by
-  have hd : ∀ n, PowerSeries.coeff n (PowerSeries.derivative K1 (Formalism.MainNotions.FormalGroupSystem.Pf.en_L p K1)) =
+  have hd : ∀ n, PowerSeries.coeff n (PowerSeries.derivative (R := K1) (Formalism.MainNotions.FormalGroupSystem.Pf.en_L p K1)) =
       algebraMap (K0 p) K1 (PowerSeries.coeff (n + 1) (logF p) * ((n : K0 p) + 1)) := by
     intro n
     rw [PowerSeries.coeff_derivative, Formalism.MainNotions.FormalGroupSystem.Pf.en_L, PowerSeries.coeff_map, map_mul]
@@ -576,7 +576,7 @@ section Gen2
 variable {K : Type*} [Field K] {σ : Type*} (R : Subring K)
 
 theorem hur_of_pderiv [DecidableEq σ] {f : MvPowerSeries σ K} (h0 : constantCoeff f ∈ R)
-    (hd : ∀ i, Hur R (pderiv K i f)) : Hur R f := by
+    (hd : ∀ i, Hur R (pderiv (R := K) i f)) : Hur R f := by
   intro n
   by_cases hn : n = 0
   · subst hn
@@ -597,14 +597,14 @@ theorem hur_inv [DecidableEq σ] {E : MvPowerSeries σ K} (hE : Hur R E) (h1 : c
     Hur R E⁻¹ := by
   have hEi : E * E⁻¹ = 1 := MvPowerSeries.mul_inv_cancel E (by rw [h1]; exact one_ne_zero)
   have hiE : E⁻¹ * E = 1 := MvPowerSeries.inv_mul_cancel E (by rw [h1]; exact one_ne_zero)
-  have hD : ∀ i, pderiv K i E⁻¹ = -(E⁻¹ ^ 2 * pderiv K i E) := by
+  have hD : ∀ i, pderiv (R := K) i E⁻¹ = -(E⁻¹ ^ 2 * pderiv (R := K) i E) := by
     intro i
-    have e := congrArg (pderiv K i) hEi
+    have e := congrArg (pderiv (R := K) i) hEi
     rw [Derivation.leibniz, Derivation.map_one_eq_zero, smul_eq_mul, smul_eq_mul] at e
-    calc pderiv K i E⁻¹ = (E⁻¹ * E) * pderiv K i E⁻¹ := by rw [hiE, one_mul]
-      _ = E⁻¹ * (E * pderiv K i E⁻¹) := by ring
-      _ = E⁻¹ * (-(E⁻¹ * pderiv K i E)) := by rw [eq_neg_of_add_eq_zero_left e]
-      _ = -(E⁻¹ ^ 2 * pderiv K i E) := by ring
+    calc pderiv (R := K) i E⁻¹ = (E⁻¹ * E) * pderiv (R := K) i E⁻¹ := by rw [hiE, one_mul]
+      _ = E⁻¹ * (E * pderiv (R := K) i E⁻¹) := by ring
+      _ = E⁻¹ * (-(E⁻¹ * pderiv (R := K) i E)) := by rw [eq_neg_of_add_eq_zero_left e]
+      _ = -(E⁻¹ ^ 2 * pderiv (R := K) i E) := by ring
   have hc1 : constantCoeff E⁻¹ = 1 := by rw [MvPowerSeries.constantCoeff_inv, h1, inv_one]
   have := hur_of_closed_under_pderiv R (fun h => ∃ (j : ℕ) (g : MvPowerSeries σ K), Hur R g ∧ h = E⁻¹ ^ j * g) ?_ ?_ E⁻¹
     ⟨1, 1, hur_one R, by rw [pow_one, mul_one]⟩
@@ -613,7 +613,7 @@ theorem hur_inv [DecidableEq σ] {E : MvPowerSeries σ K} (hE : Hur R E) (h1 : c
     rw [map_mul, map_pow, hc1, one_pow, one_mul]
     exact hur_cc R hg
   · rintro h ⟨j, g, hg, rfl⟩ i
-    refine ⟨E⁻¹ ^ j * pderiv K i g, E⁻¹ ^ (j + 1) * (-((j : MvPowerSeries σ K) * (pderiv K i E * g))),
+    refine ⟨E⁻¹ ^ j * pderiv (R := K) i g, E⁻¹ ^ (j + 1) * (-((j : MvPowerSeries σ K) * (pderiv (R := K) i E * g))),
       ⟨j, _, hur_pderiv R hg i, rfl⟩,
       ⟨j + 1, _, hur_neg R (hur_mul R (hur_natCast R j) (hur_mul R (hur_pderiv R hE i) hg)), rfl⟩, ?_⟩
     rw [Derivation.leibniz, Derivation.leibniz_pow, hD]
@@ -690,8 +690,8 @@ variable {K : Type*} [Field K] {τ : Type*} [Finite τ]
 
 theorem pd2 (g : MvPowerSeries (Fin 2) K) {u w : MvPowerSeries τ K} (hu : constantCoeff u = 0)
     (hw : constantCoeff w = 0) (i : τ) :
-    pderiv K i (subst ![u, w] g) =
-      subst ![u, w] (pderiv K 0 g) * pderiv K i u + subst ![u, w] (pderiv K 1 g) * pderiv K i w := by
+    pderiv (R := K) i (subst ![u, w] g) =
+      subst ![u, w] (pderiv (R := K) 0 g) * pderiv (R := K) i u + subst ![u, w] (pderiv (R := K) 1 g) * pderiv (R := K) i w := by
   rw [Formalism.G.LogCR.pderiv_subst (fun j => by fin_cases j <;> simpa), Fin.sum_univ_two]
   rfl
 

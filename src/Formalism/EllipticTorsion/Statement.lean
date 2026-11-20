@@ -83,6 +83,6 @@ def NZpSmul : Prop :=
 
 def NPderiv : Prop :=
   ∀ (K : Type u) [NormedField K] [IsUltrametricDist K] [CharZero K] (σ : Type)
-    (G : MvPowerSeries σ K), InN G → ∀ i : σ, IntegralMv (MvPowerSeries.pderiv K i G)
+    (G : MvPowerSeries σ K), InN G → ∀ i : σ, IntegralMv (MvPowerSeries.pderiv (R := K) i G)
 
 end Formalism.ELL

@@ -19,11 +19,11 @@ theorem constantCoeff_subst_of_zero {τ : Type} {a : MvPowerSeries τ K} (ha : c
     simp [ha, hd]
 
 theorem eq_one_add_X_of_deriv {g : PowerSeries K}
-    (hd : PowerSeries.derivative K g = g * (1 + PowerSeries.X)⁻¹)
+    (hd : PowerSeries.derivative (R := K) g = g * (1 + PowerSeries.X)⁻¹)
     (h0 : PowerSeries.constantCoeff g = 1) : g = 1 + PowerSeries.X := by
   have hu : PowerSeries.constantCoeff (1 + PowerSeries.X : PowerSeries K) ≠ 0 := by simp
   have hinv := PowerSeries.inv_mul_cancel _ hu
-  have hD : PowerSeries.derivative K (g * (1 + PowerSeries.X)⁻¹) = PowerSeries.derivative K 1 := by
+  have hD : PowerSeries.derivative (R := K) (g * (1 + PowerSeries.X)⁻¹) = PowerSeries.derivative (R := K) 1 := by
     simp only [Derivation.leibniz, PowerSeries.derivative_inv', hd, map_add,
       Derivation.map_one_eq_zero, PowerSeries.derivative_X, smul_eq_mul, zero_add]
     ring
@@ -35,7 +35,7 @@ theorem eq_one_add_X_of_deriv {g : PowerSeries K}
     _ = (g * (1 + PowerSeries.X)⁻¹) * (1 + PowerSeries.X) := by ring
     _ = 1 + PowerSeries.X := by rw [h1, one_mul]
 
-theorem derivative_log_eq : PowerSeries.derivative K (PowerSeries.log K) = (1 + PowerSeries.X)⁻¹ := by
+theorem derivative_log_eq : PowerSeries.derivative (R := K) (PowerSeries.log K) = (1 + PowerSeries.X)⁻¹ := by
   rw [PowerSeries.deriv_log, PowerSeries.eq_inv_iff_mul_eq_one (by simp)]
   ext n
   rcases n with _ | n

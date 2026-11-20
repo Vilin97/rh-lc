@@ -357,7 +357,7 @@ theorem c_add_sigma_c_eq_zero : StepIII := by
   obtain ⟨n, hn⟩ : ∃ n : Fin 2 →₀ ℕ, n = Finsupp.single 1 m + Finsupp.single 0 1 := ⟨_, rfl⟩
 
   have hcoefD : MvPowerSeries.coeff (Finsupp.single 1 m) (MvPowerSeries.pderiv (R := K) 0 G -
-      MvPowerSeries.C c * (at1 0 (PowerSeries.derivative K (lgF K p)) * at1 1 (g0F K p))) =
+      MvPowerSeries.C c * (at1 0 (PowerSeries.derivative (R := K) (lgF K p)) * at1 1 (g0F K p))) =
       MvPowerSeries.coeff n G - c * ((p : K) ^ (i + 1))⁻¹ := by
     have hs0 : (Finsupp.single (1 : Fin 2) m) 0 = 0 := by simp
     have hs1 : (Finsupp.single (1 : Fin 2) m) 1 = m := by simp

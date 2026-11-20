@@ -190,7 +190,7 @@ theorem pow_mul_nabVal_mem {R : Type} [CommRing R] {d : ℕ} {O : Type} [CommRin
   have c0 : constantCoeff g = 0 := by
     rw [← coeff_zero_eq_constantCoeff_apply]
     exact coeff_eq_zero_of_axes g hg.ax0 hg.ax1 0 (by simp)
-  have c1 : ∀ s, constantCoeff (pderiv k s g) = 0 := fun s => by
+  have c1 : ∀ s, constantCoeff (pderiv (R := k) s g) = 0 := fun s => by
     rw [const_pderiv]
     exact coeff_eq_zero_of_axes g hg.ax0 hg.ax1 _ (by simp)
   have hp : ∀ j : Fin 3, GP (pt k d j) := gp_pt

@@ -19,11 +19,11 @@ private lemma dl_mul {R : Type} [CommRing R] {f g : PowerSeries R} (hf : IsUnit 
     mul_inv_rev, Units.val_mul, smul_eq_mul, smul_eq_mul]
   have h1 := u.mul_inv
   have h2 := w.mul_inv
-  linear_combination ((1 + PowerSeries.X) * (PowerSeries.derivative R) (w : PowerSeries R) * ((w⁻¹ : (PowerSeries R)ˣ) : PowerSeries R)) * h1 +
-    ((1 + PowerSeries.X) * (PowerSeries.derivative R) (u : PowerSeries R) * ((u⁻¹ : (PowerSeries R)ˣ) : PowerSeries R)) * h2
+  linear_combination ((1 + PowerSeries.X) * (PowerSeries.derivative (R := R)) (w : PowerSeries R) * ((w⁻¹ : (PowerSeries R)ˣ) : PowerSeries R)) * h1 +
+    ((1 + PowerSeries.X) * (PowerSeries.derivative (R := R)) (u : PowerSeries R) * ((u⁻¹ : (PowerSeries R)ˣ) : PowerSeries R)) * h2
 
 private lemma der_eval {R : Type} [CommRing R] (P : Polynomial R) :
-    PowerSeries.derivative R (P.eval₂ PowerSeries.C (1 + PowerSeries.X)) =
+    PowerSeries.derivative (R := R) (P.eval₂ PowerSeries.C (1 + PowerSeries.X)) =
       (Polynomial.derivative P).eval₂ PowerSeries.C (1 + PowerSeries.X) := by
   induction P using Polynomial.induction_on' with
   | add f g hf hg => simp [Polynomial.eval₂_add, hf, hg]

@@ -157,7 +157,7 @@ def CauchyCoeff : Prop :=
 
 def iterPderiv {K : Type u} [CommRing K] {r : ℕ} (α : Fin r → ℕ) :
     Module.End K (MvPowerSeries (Fin r) K) :=
-  ((List.finRange r).map fun i => ((MvPowerSeries.pderiv K i).toLinearMap) ^ (α i)).prod
+  ((List.finRange r).map fun i => ((MvPowerSeries.pderiv (R := K) i).toLinearMap) ^ (α i)).prod
 
 def IterPderivConst : Prop :=
   ∀ (K : Type u) [CommRing K] (r : ℕ) (α : Fin r → ℕ) (F : MvPowerSeries (Fin r) K),

@@ -54,7 +54,7 @@ private theorem coeff_eq_zero_of_mem_span_X_pow_of_degree_lt {σ k : Type} [Comm
       · intro c a _ ha; rw [smul_eq_mul, mul_left_comm]; exact K.mul_mem_left c ha
     exact fun P hP => hle hP
 
-theorem pderiv_eq_zero_of_jet_pow_sub : ∀ (k : Type) [Field k] (p : ℕ) [Fact p.Prime] [CharP k p] (d : ℕ) (F f : MvPowerSeries (Fin 1 × Fin d) k), (∀ q, MvPowerSeries.pderiv k q f = 0) → (∀ m, ∃ v : Jet k (Fin 1 × Fin d) m, psJet m F = v ^ p - psJet m f) → ∀ q, MvPowerSeries.pderiv k q F = 0 := by
+theorem pderiv_eq_zero_of_jet_pow_sub : ∀ (k : Type) [Field k] (p : ℕ) [Fact p.Prime] [CharP k p] (d : ℕ) (F f : MvPowerSeries (Fin 1 × Fin d) k), (∀ q, MvPowerSeries.pderiv (R := k) q f = 0) → (∀ m, ∃ v : Jet k (Fin 1 × Fin d) m, psJet m F = v ^ p - psJet m f) → ∀ q, MvPowerSeries.pderiv (R := k) q F = 0 := by
   intro k _ p _ _ d F f hf hF q
   classical
   ext e
@@ -89,9 +89,9 @@ theorem pderiv_eq_zero_of_jet_pow_sub : ∀ (k : Type) [Field k] (p : ℕ) [Fact
         MvPowerSeries.coeff (e + Finsupp.single q 1) g := by
     intro g
     simp [psTrunc, MvPolynomial.coeff_sum, MvPolynomial.coeff_monomial, hin]
-  have hpow : MvPowerSeries.pderiv k q ((P ^ p : MvPolynomial (Fin 1 × Fin d) k) : MvPowerSeries (Fin 1 × Fin d) k) = 0 := by
+  have hpow : MvPowerSeries.pderiv (R := k) q ((P ^ p : MvPolynomial (Fin 1 × Fin d) k) : MvPowerSeries (Fin 1 × Fin d) k) = 0 := by
     rw [MvPolynomial.coe_pow, Derivation.leibniz_pow, ← Nat.cast_smul_eq_nsmul k, CharP.cast_eq_zero, zero_smul]
-  have hG : MvPowerSeries.pderiv k q F = MvPowerSeries.pderiv k q
+  have hG : MvPowerSeries.pderiv (R := k) q F = MvPowerSeries.pderiv (R := k) q
       (F + f - ((P ^ p : MvPolynomial (Fin 1 × Fin d) k) : MvPowerSeries (Fin 1 × Fin d) k)) := by
     rw [map_sub, map_add, hf q, hpow, add_zero, sub_zero]
   rw [hG, MvPowerSeries.coeff_pderiv, map_zero, map_sub, map_add, MvPolynomial.coeff_coe, ← htr F, ← htr f,

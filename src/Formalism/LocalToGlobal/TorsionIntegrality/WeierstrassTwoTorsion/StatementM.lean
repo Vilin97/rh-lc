@@ -32,9 +32,9 @@ def ChainZSer : Prop :=
 
 def ChainFgl : Prop :=
   ∀ (R : Type u) [CommRing R] (W : WeierstrassCurve R) (f : R⟦X⟧),
-    (fw W).subst (U₁ : MvPowerSeries (Fin 2) R) * MvPowerSeries.pderiv R 0 (f.subst (fgl W))
+    (fw W).subst (U₁ : MvPowerSeries (Fin 2) R) * MvPowerSeries.pderiv (R := R) 0 (f.subst (fgl W))
       = (D W f).subst (fgl W) ∧
-    (fw W).subst (U₂ : MvPowerSeries (Fin 2) R) * MvPowerSeries.pderiv R 1 (f.subst (fgl W))
+    (fw W).subst (U₂ : MvPowerSeries (Fin 2) R) * MvPowerSeries.pderiv (R := R) 1 (f.subst (fgl W))
       = (D W f).subst (fgl W)
 
 def ConstOfD : Prop :=

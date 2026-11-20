@@ -56,7 +56,7 @@ theorem discr_jacobian_of_points :
         (∀ G, ∃! r : Ix → O, G - ∑ a, r a • β a ∈ Ideal.span (Set.range F)) ∧
         (Matrix.of fun a a' => e a (β a')).det ≠ 0 ∧
         Associated ((Matrix.of fun a a' => e a (β a')).det ^ 2)
-          (∏ a, e a (Matrix.of fun i j => MvPowerSeries.pderiv O j (F i)).det) := by
+          (∏ a, e a (Matrix.of fun i j => MvPowerSeries.pderiv (R := O) j (F i)).det) := by
   intro O _ _ _ _ g Ix _ _ F e hF hX hker ⟨c, hc, hs⟩
   let S := MvPowerSeries (Fin g) O
   let I : Ideal S := Ideal.span (Set.range F)

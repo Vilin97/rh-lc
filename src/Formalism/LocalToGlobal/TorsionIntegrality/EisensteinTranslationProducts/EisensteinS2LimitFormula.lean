@@ -20,7 +20,7 @@ def WpNumDen : Prop :=
   ∀ (K : Type) [Field K] [CharZero K] (g2 g3 : K),
     wpNum g2 g3 = 1 + PowerSeries.X ^ 2 * pOf g2 g3 ∧
     wpDen g2 g3 = 1 - PowerSeries.C (1 / 2 : K) * PowerSeries.X ^ 3
-      * PowerSeries.derivative K (pOf g2 g3)
+      * PowerSeries.derivative (R := K) (pOf g2 g3)
 
 def POfLattice : Prop := ∀ L : PeriodPair, pSeries L = pOf L.g₂ L.g₃
 

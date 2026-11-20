@@ -32,7 +32,7 @@ noncomputable def lin (N : ℕ) (ξ : J → PowerSeries k) (s : I → J → Powe
     funext e; rcases e with _ | ⟨i, l⟩ <;> simp [linFun, Finset.mul_sum, mul_assoc, mul_add]
 
 lemma iter_eq (f : PowerSeries k) (l : ℕ) :
-    (PowerSeries.derivativeFun)^[l] f = (PowerSeries.derivative k)^[l] f := by
+    (PowerSeries.derivativeFun)^[l] f = (PowerSeries.derivative (R := k))^[l] f := by
   induction l generalizing f with
   | zero => rfl
   | succ n ih => rw [Function.iterate_succ_apply, Function.iterate_succ_apply, ih]; rfl

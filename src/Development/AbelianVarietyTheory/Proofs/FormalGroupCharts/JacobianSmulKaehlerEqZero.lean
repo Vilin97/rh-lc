@@ -13,7 +13,7 @@ variable {T Q σ : Type*} [CommRing T] [CommRing Q] [Algebra T Q] [Fintype σ]
 theorem derivation_apply_eq_sum [IsNoetherianRing Q] {M : Type*} [AddCommGroup M] [Module T M]
     [Module Q M] [Module.Finite Q M] (φ : MvPowerSeries σ T →ₐ[T] Q)
     (hφ : Function.Surjective φ) (D : Derivation T Q M) (g : MvPowerSeries σ T) :
-    D (φ g) = ∑ j, φ (pderiv T j g) • D (φ (X j)) := by
+    D (φ g) = ∑ j, φ (pderiv (R := T) j g) • D (φ (X j)) := by
   classical
   set J : Ideal Q := Ideal.jacobson ⊥ with hJ
   have hX : ∀ i, φ (X i) ∈ J := by
@@ -25,7 +25,7 @@ theorem derivation_apply_eq_sum [IsNoetherianRing Q] {M : Type*} [AddCommGroup M
       rw [isUnit_iff_constantCoeff]; simp
     simpa using this.map φ
   have key : ∀ (n : ℕ) (g : MvPowerSeries σ T),
-      D (φ g) - ∑ j, φ (pderiv T j g) • D (φ (X j)) ∈ (J ^ n • ⊤ : Submodule Q M) := by
+      D (φ g) - ∑ j, φ (pderiv (R := T) j g) • D (φ (X j)) ∈ (J ^ n • ⊤ : Submodule Q M) := by
     intro n
     induction n with
     | zero => intro g; simp
@@ -41,8 +41,8 @@ theorem derivation_apply_eq_sum [IsNoetherianRing Q] {M : Type*} [AddCommGroup M
       have hC : ∀ c : T, D (φ (C c)) = 0 := fun c => by
         have : φ (C c) = algebraMap T Q c := φ.commutes c
         rw [this, Derivation.map_algebraMap]
-      have h1 : ∀ i, ∑ j, φ (pderiv T j (X i * k i)) • D (φ (X j)) =
-          φ (X i) • ∑ j, φ (pderiv T j (k i)) • D (φ (X j)) + φ (k i) • D (φ (X i)) := by
+      have h1 : ∀ i, ∑ j, φ (pderiv (R := T) j (X i * k i)) • D (φ (X j)) =
+          φ (X i) • ∑ j, φ (pderiv (R := T) j (k i)) • D (φ (X j)) + φ (k i) • D (φ (X i)) := by
         intro i
         simp only [Derivation.leibniz, smul_eq_mul, map_add, map_mul, add_smul,
           Finset.sum_add_distrib, Finset.smul_sum, mul_smul]
@@ -52,8 +52,8 @@ theorem derivation_apply_eq_sum [IsNoetherianRing Q] {M : Type*} [AddCommGroup M
         · intro j _ hj
           simp [pderiv_X_of_ne hj.symm]
         · simp
-      have e : D (φ g) - ∑ j, φ (pderiv T j g) • D (φ (X j)) =
-          ∑ i, φ (X i) • (D (φ (k i)) - ∑ j, φ (pderiv T j (k i)) • D (φ (X j))) := by
+      have e : D (φ g) - ∑ j, φ (pderiv (R := T) j g) • D (φ (X j)) =
+          ∑ i, φ (X i) • (D (φ (k i)) - ∑ j, φ (pderiv (R := T) j (k i)) • D (φ (X j))) := by
         generalize constantCoeff g = c at hg
         subst hg
         set_option synthInstance.maxHeartbeats 100000 in
@@ -71,11 +71,11 @@ theorem derivation_apply_eq_sum [IsNoetherianRing Q] {M : Type*} [AddCommGroup M
 theorem det_smul_kaehler_eq_zero [DecidableEq σ] [IsNoetherianRing T] [Module.Finite T Q]
     (φ : MvPowerSeries σ T →ₐ[T] Q) (hφ : Function.Surjective φ) (f : σ → MvPowerSeries σ T)
     (hf : ∀ i, φ (f i) = 0) (ω : KaehlerDifferential T Q) :
-    φ (Matrix.det (Matrix.of fun i j => pderiv T j (f i))) • ω = 0 := by
+    φ (Matrix.det (Matrix.of fun i j => pderiv (R := T) j (f i))) • ω = 0 := by
   haveI : IsNoetherianRing Q := IsNoetherianRing.of_finite T Q
   set D := KaehlerDifferential.D T Q with hD
-  set A : Matrix σ σ Q := Matrix.of fun i j => φ (pderiv T j (f i)) with hA
-  have hdet : φ (Matrix.det (Matrix.of fun i j => pderiv T j (f i))) = A.det := by
+  set A : Matrix σ σ Q := Matrix.of fun i j => φ (pderiv (R := T) j (f i)) with hA
+  have hdet : φ (Matrix.det (Matrix.of fun i j => pderiv (R := T) j (f i))) = A.det := by
     rw [AlgHom.map_det]; rfl
   have hrel : ∀ i, ∑ j, A i j • D (φ (X j)) = 0 := fun i => by
     have := derivation_apply_eq_sum φ hφ D (f i)
@@ -104,7 +104,7 @@ theorem det_smul_kaehler_eq_zero [DecidableEq σ] [IsNoetherianRing T] [Module.F
 end General
 
 theorem jacobian_smul_kaehler_eq_zero :
-    ∀ (T : Type) [CommRing T] [IsLocalRing T] [IsNoetherianRing T] (σ : Type) [Fintype σ] [DecidableEq σ] (f : σ → MvPowerSeries σ T), Module.Finite T (MvPowerSeries σ T ⧸ Ideal.span (Set.range f)) → ∀ ω : KaehlerDifferential T (MvPowerSeries σ T ⧸ Ideal.span (Set.range f)), (Ideal.Quotient.mk (Ideal.span (Set.range f)) (Matrix.det (Matrix.of fun i j => pderiv T j (f i)))) • ω = 0 := by
+    ∀ (T : Type) [CommRing T] [IsLocalRing T] [IsNoetherianRing T] (σ : Type) [Fintype σ] [DecidableEq σ] (f : σ → MvPowerSeries σ T), Module.Finite T (MvPowerSeries σ T ⧸ Ideal.span (Set.range f)) → ∀ ω : KaehlerDifferential T (MvPowerSeries σ T ⧸ Ideal.span (Set.range f)), (Ideal.Quotient.mk (Ideal.span (Set.range f)) (Matrix.det (Matrix.of fun i j => pderiv (R := T) j (f i)))) • ω = 0 := by
   intro T _ _ _ σ _ _ f hfin ω
   exact det_smul_kaehler_eq_zero (Ideal.Quotient.mkₐ T (Ideal.span (Set.range f)))
     Ideal.Quotient.mk_surjective f

@@ -11,7 +11,7 @@ open Formalism.DworkPowerSeriesWeights (JetsIntegral jetPairPoly minorProd)
 
 def IntDThmBGauss : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (l linv ph : PowerSeries ℂ_[p]),
-    Frame (unitBall ℂ_[p]) l linv ph → IsOneUnit (unitBall ℂ_[p]) (PowerSeries.derivative ℂ_[p] l) →
+    Frame (unitBall ℂ_[p]) l linv ph → IsOneUnit (unitBall ℂ_[p]) (PowerSeries.derivative (R := ℂ_[p]) l) →
     F1 (unitBall ℂ_[p]) l linv ph → ShapeAt l linv ph p → ‖(2 : ℂ_[p])‖ = 1 →
     ∀ (O : Type) [CommRing O] [StarRing O] (τ : O →+* ℂ_[p]),
     (∀ α, EndInt (unitBall ℂ_[p]) l linv (τ α)) →

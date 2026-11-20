@@ -110,7 +110,7 @@ theorem jetsIn_pow {f : MvPowerSeries ι K} (hf : JetsIn R f) (n : ℕ) : JetsIn
   | succ n ih => rw [pow_succ]; exact jetsIn_mul ih hf
 
 theorem jet_pderiv (f : MvPowerSeries ι K) (i : ι) (κ : ι →₀ ℕ) :
-    ((mfact κ : ℕ) : K) * MvPowerSeries.coeff κ (MvPowerSeries.pderiv K i f) =
+    ((mfact κ : ℕ) : K) * MvPowerSeries.coeff κ (MvPowerSeries.pderiv (R := K) i f) =
       ((mfact (κ + Finsupp.single i 1) : ℕ) : K) *
         MvPowerSeries.coeff (κ + Finsupp.single i 1) f := by
   rw [mfact_add_single, MvPowerSeries.coeff_pderiv]
@@ -118,14 +118,14 @@ theorem jet_pderiv (f : MvPowerSeries ι K) (i : ι) (κ : ι →₀ ℕ) :
   ring
 
 theorem jetsIn_pderiv {f : MvPowerSeries ι K} (hf : JetsIn R f) (i : ι) :
-    JetsIn R (MvPowerSeries.pderiv K i f) := by
+    JetsIn R (MvPowerSeries.pderiv (R := K) i f) := by
   intro κ
   rw [jet_pderiv]
   exact hf _
 
 theorem jetsIn_iff_pderiv (f : MvPowerSeries ι K) :
     JetsIn R f ↔ MvPowerSeries.constantCoeff f ∈ R ∧
-      ∀ i, JetsIn R (MvPowerSeries.pderiv K i f) := by
+      ∀ i, JetsIn R (MvPowerSeries.pderiv (R := K) i f) := by
   constructor
   · intro hf
     refine ⟨?_, fun i => jetsIn_pderiv hf i⟩
@@ -165,11 +165,11 @@ section CharZero
 variable {K : Type} [Field K] [CharZero K] {R : Subring K} {ι : Type}
 
 theorem pderiv_divPow (a : MvPowerSeries ι K) (i : ι) (m : ℕ) :
-    MvPowerSeries.pderiv K i (MvPowerSeries.C (((m + 1).factorial : K)⁻¹) * a ^ (m + 1)) =
-      (MvPowerSeries.C ((m.factorial : K)⁻¹) * a ^ m) * MvPowerSeries.pderiv K i a := by
-  have hC : ∀ c : K, MvPowerSeries.pderiv K i (MvPowerSeries.C c : MvPowerSeries ι K) = 0 := by
+    MvPowerSeries.pderiv (R := K) i (MvPowerSeries.C (((m + 1).factorial : K)⁻¹) * a ^ (m + 1)) =
+      (MvPowerSeries.C ((m.factorial : K)⁻¹) * a ^ m) * MvPowerSeries.pderiv (R := K) i a := by
+  have hC : ∀ c : K, MvPowerSeries.pderiv (R := K) i (MvPowerSeries.C c : MvPowerSeries ι K) = 0 := by
     intro c
-    have h := (MvPowerSeries.pderiv K i : Derivation K (MvPowerSeries ι K) (MvPowerSeries ι K)).map_algebraMap c
+    have h := (MvPowerSeries.pderiv (R := K) i : Derivation K (MvPowerSeries ι K) (MvPowerSeries ι K)).map_algebraMap c
     simpa [MvPowerSeries.algebraMap_apply] using h
   have hN : ((m + 1 : ℕ) : MvPowerSeries ι K) = MvPowerSeries.C ((m + 1 : ℕ) : K) :=
     (map_natCast _ _).symm

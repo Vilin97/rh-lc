@@ -148,7 +148,7 @@ theorem sigmaOneSquare : Sigma1Sq := by
     ring
   have hddu : dz (dz u) = 2 * P + 4 * PowerSeries.X * dz P + PowerSeries.X ^ 2 * dz (dz P) -
       2 * PowerSeries.C e1 := by
-    have hd2 : PowerSeries.derivative K (2 : PowerSeries K) = 0 := by
+    have hd2 : PowerSeries.derivative (R := K) (2 : PowerSeries K) = 0 := by
       rw [show (2 : PowerSeries K) = PowerSeries.C 2 from (map_ofNat _ 2).symm]
       exact PowerSeries.derivative_C
     rw [hdu]
@@ -162,7 +162,7 @@ theorem sigmaOneSquare : Sigma1Sq := by
     linear_combination (1 + PowerSeries.X ^ 2 * P - PowerSeries.C e1 * PowerSeries.X ^ 2) * hR2 - hR1 -
       PowerSeries.X ^ 4 * hcC
   have hB : u * dz (dz L) + dz L * dz u = dz (dz u) := by
-    have h := congrArg (PowerSeries.derivative K) huL
+    have h := congrArg (PowerSeries.derivative (R := K)) huL
     rwa [Derivation.leibniz, smul_eq_mul, smul_eq_mul] at h
   have hu2 : u ^ 2 ≠ 0 := pow_ne_zero 2 (fun h => by rw [h] at hu0; simp at hu0)
   have hLdd : dz (dz L) = 2 * P - 2 * PowerSeries.C e1 - 2 * PowerSeries.C (3 * e1 ^ 2 - q) * w := by

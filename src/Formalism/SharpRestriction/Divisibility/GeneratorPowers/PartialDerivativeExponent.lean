@@ -82,7 +82,7 @@ theorem subst_mem {τ : Type} {V : Set σ} (a : τ → MvPowerSeries σ k) (ha :
   exact (mem_subV V _).1 hP e (right_ne_zero_of_mul hd) j hj
 
 theorem pderiv_mem {V : Set σ} (i : σ) {f : MvPowerSeries σ k} (hf : f ∈ subV k V) :
-    pderiv k i f ∈ subV k V := by
+    pderiv (R := k) i f ∈ subV k V := by
   rw [mem_subV] at hf ⊢
   intro e he j hj
   rw [coeff_pderiv] at he
@@ -93,7 +93,7 @@ theorem pderiv_mem {V : Set σ} (i : σ) {f : MvPowerSeries σ k} (hf : f ∈ su
   omega
 
 theorem pderiv_kill {V : Set σ} {i : σ} (hi : i ∉ V) {f : MvPowerSeries σ k} (hf : f ∈ subV k V) :
-    pderiv k i f = 0 := by
+    pderiv (R := k) i f = 0 := by
   rw [mem_subV] at hf
   ext e
   rw [coeff_pderiv, map_zero]

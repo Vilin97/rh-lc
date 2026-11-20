@@ -34,7 +34,7 @@ namespace KAV
 open MvPowerSeries
 
 theorem coeff_iterate_pderiv {σ R : Type} [CommRing R] (i : σ) (k : ℕ) :
-    ∀ (F : MvPowerSeries σ R) (N : σ →₀ ℕ), coeff N ((pderiv R i)^[k] F) =
+    ∀ (F : MvPowerSeries σ R) (N : σ →₀ ℕ), coeff N ((pderiv (R := R) i)^[k] F) =
       (∏ t ∈ Finset.range k, ((N i + t + 1 : ℕ) : R)) * coeff (N + k • Finsupp.single i 1) F := by
   induction k with
   | zero => intro F N; simp
@@ -50,7 +50,7 @@ theorem coeff_iterate_pderiv {σ R : Type} [CommRing R] (i : σ) (k : ℕ) :
 
 theorem coeff_foldr {σ κ R : Type} [CommRing R] (φ : κ → σ) (m : κ → ℕ) (F : MvPowerSeries σ R) :
     ∀ (L : List κ), L.Nodup → (∀ p ∈ L, ∀ q ∈ L, φ p = φ q → p = q) → ∀ N : σ →₀ ℕ, (∀ p ∈ L, N (φ p) = 0) →
-      coeff N (L.foldr (fun p g => (pderiv R (φ p))^[m p] g) F) =
+      coeff N (L.foldr (fun p g => (pderiv (R := R) (φ p))^[m p] g) F) =
         (L.map fun p => ((m p).factorial : R)).prod * coeff (N + (L.map fun p => m p • Finsupp.single (φ p) 1).sum) F
   | [], _, _, N, _ => by simp
   | p :: L, hnd, hinj, N, hN => by
@@ -70,7 +70,7 @@ theorem coeff_foldr {σ κ R : Type} [CommRing R] (φ : κ → σ) (m : κ → �
       simp [hN q (List.mem_cons_of_mem _ hq), hpq.symm]
 
 theorem dAdd_single {S : Type} [CommRing S] {d n : ℕ} (j : Fin d) (b : Fin n) (G : Germ.PS S n d) :
-    TB.dAdd (Pi.single j 1) b G = pderiv S (b, j) G := by
+    TB.dAdd (Pi.single j 1) b G = pderiv (R := S) (b, j) G := by
   unfold TB.dAdd
   rw [Finset.sum_eq_single j]
   · simp
@@ -80,7 +80,7 @@ theorem dAdd_single {S : Type} [CommRing S] {d n : ℕ} (j : Fin d) (b : Fin n) 
     exact absurd (Finset.mem_univ j) h
 
 theorem dAdd_single' {S : Type} [CommRing S] {d n : ℕ} (j : Fin d) (b : Fin n) :
-    (TB.dAdd (Pi.single j 1) b : Germ.PS S n d → Germ.PS S n d) = pderiv S (b, j) :=
+    (TB.dAdd (Pi.single j 1) b : Germ.PS S n d → Germ.PS S n d) = pderiv (R := S) (b, j) :=
   funext fun G => dAdd_single j b G
 
 theorem constantCoeff_polyAdd {S : Type} [CommRing S] {d n : ℕ} {ι : Type} [Fintype ι] (e : ι → Fin d)

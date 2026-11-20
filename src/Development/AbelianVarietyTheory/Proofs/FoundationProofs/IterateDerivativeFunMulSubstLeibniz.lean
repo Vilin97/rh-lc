@@ -33,7 +33,7 @@ theorem iterate_derivativeFun_mul_subst :
   intro k _ a φ ψ l ha
   have hs : PowerSeries.HasSubst a := PowerSeries.HasSubst.of_constantCoeff_zero' ha
   have hit : ∀ (n : ℕ) (f : PowerSeries k),
-      (PowerSeries.derivativeFun)^[n] f = (⇑(PowerSeries.derivative k))^[n] f := by
+      (PowerSeries.derivativeFun)^[n] f = (⇑(PowerSeries.derivative (R := k)))^[n] f := by
     intro n f
     induction n generalizing f with
     | zero => rfl
@@ -44,8 +44,8 @@ theorem iterate_derivativeFun_mul_subst :
   set_option synthInstance.maxHeartbeats 100000 in
     rw [iterate_derivation_mul_antidiagonal,
     Finset.Nat.sum_antidiagonal_eq_sum_range_succ
-      (fun i j => l.choose i • ((⇑(PowerSeries.derivative k))^[i] φ *
-        (⇑(PowerSeries.derivative k))^[j] ψ)) l,
+      (fun i j => l.choose i • ((⇑(PowerSeries.derivative (R := k)))^[i] φ *
+        (⇑(PowerSeries.derivative (R := k)))^[j] ψ)) l,
     ← PowerSeries.coe_substAlgHom hs, map_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [map_nsmul, map_mul]

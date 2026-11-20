@@ -32,12 +32,12 @@ theorem hasSubst_linForm (e : ι → WV I → C) (e' : ι' → WV I → C) :
     MvPowerSeries.HasSubst (linForm e e') := MvPowerSeries.hasSubst_of_constantCoeff_zero (fun w => constantCoeff_linForm e e' w)
 
 theorem pderiv_linForm (e : ι → WV I → C) (e' : ι' → WV I → C) (w : WV I) (b : ι') :
-    MvPowerSeries.pderiv C (Sum.inr b) (linForm e e' w) = MvPowerSeries.C (e' b w) := by
+    MvPowerSeries.pderiv (R := C) (Sum.inr b) (linForm e e' w) = MvPowerSeries.C (e' b w) := by
   classical
   simp [linForm, MvPowerSeries.pderiv_X, Pi.single_apply, MvPowerSeries.smul_eq_C_mul]
 
 theorem dVar_eq {σ : Type} (w : σ) (F : MvPowerSeries σ C) :
-    dVar w F = MvPowerSeries.pderiv C w F := by
+    dVar w F = MvPowerSeries.pderiv (R := C) w F := by
   ext μ
   rw [MvPowerSeries.coeff_pderiv]
   show ((μ w + 1 : ℕ) : C) * MvPowerSeries.coeff (μ + Finsupp.single w 1) F = _
@@ -56,13 +56,13 @@ theorem sum_toW {M : Type} [AddCommGroup M] [Module C M] (g : Fin 2) (u : I g �
 
 theorem pderiv_hPullW (H : MvPowerSeries (WV I) C) (e : ι → WV I → C) (g : Fin 2)
     (v' : ι' → I g → C) (b : ι') :
-    MvPowerSeries.pderiv C (Sum.inr b) (hPullW H e (fun b => toW g (v' b))) =
+    MvPowerSeries.pderiv (R := C) (Sum.inr b) (hPullW H e (fun b => toW g (v' b))) =
       ∑ k, v' b k • hPullW (dVar ⟨g, k⟩ H) e (fun b => toW g (v' b)) := by
   have hs := hasSubst_linForm e (fun b => toW g (v' b))
   rw [hPullW_eq, GlobalTheory.FormalCalc.pderiv_subst hs]
   have key : ∀ w : WV I,
-      MvPowerSeries.subst (linForm e (fun b => toW g (v' b))) (MvPowerSeries.pderiv C w H) *
-          MvPowerSeries.pderiv C (Sum.inr b) (linForm e (fun b => toW g (v' b)) w) =
+      MvPowerSeries.subst (linForm e (fun b => toW g (v' b))) (MvPowerSeries.pderiv (R := C) w H) *
+          MvPowerSeries.pderiv (R := C) (Sum.inr b) (linForm e (fun b => toW g (v' b)) w) =
         toW g (v' b) w • hPullW (dVar w H) e (fun b => toW g (v' b)) := by
     intro w
     rw [pderiv_linForm, hPullW_eq, dVar_eq, MvPowerSeries.smul_eq_C_mul, mul_comm]
@@ -125,7 +125,7 @@ private theorem hPullW_sum_smul {κ : Type} [Fintype κ] (c : κ → C) (F : κ 
   rw [GlobalTheory.FormalCalc.subst_sum' (hasSubst_linForm e e')]
   simp only [MvPowerSeries.subst_smul (hasSubst_linForm e e')]
 
-theorem pderiv_hM : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [NeZero d] (I J : Fin 2 → Type) [∀ g, Fintype (I g)] [∀ g, Fintype (J g)] (X : RowData C V d I J), X.Alt → ∀ (g : Fin 2) (a : ZMod d) (i : ℕ), Odd i → i < d → ∀ (S : ∀ g, Sys (X.G g)) (t : ∀ g, I g → MvPowerSeries (I g) C), (∀ g, (S g).IsT (t g)) → ∀ (ι ι' : Type) [Fintype ι] [Fintype ι'] (e : ι → I g → C) (v' : ι' → I (1 - g) → C), (∀ c x, (X.G g).ty (Sum.inl x) ≠ a → e c x = 0) → (∀ b k, V.Ge 0 (v' b k)) → (∀ b k, (X.G (1 - g)).ty (Sum.inl k) ≠ a + (i : ZMod d) → v' b k = 0) → ∀ b : ι', ∃ γ : MvPowerSeries (WV I) C, (∀ μ, V.Ge 0 (MvPowerSeries.coeff μ γ)) ∧ MvPowerSeries.pderiv C (Sum.inr b) (X.hM g a i e v') = MvPowerSeries.subst (fun w : WV I => hPullW (upG w.1 (t w.1 w.2)) (fun c => toW g (e c)) (fun b => toW (1 - g) (v' b))) γ + ∑ κ : J g, (∑ k, X.pair g κ k * v' b k) • hPullW (upG g ((S g).ze (t g) κ)) (fun c => toW g (e c)) (fun b => toW (1 - g) (v' b)) := by
+theorem pderiv_hM : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [NeZero d] (I J : Fin 2 → Type) [∀ g, Fintype (I g)] [∀ g, Fintype (J g)] (X : RowData C V d I J), X.Alt → ∀ (g : Fin 2) (a : ZMod d) (i : ℕ), Odd i → i < d → ∀ (S : ∀ g, Sys (X.G g)) (t : ∀ g, I g → MvPowerSeries (I g) C), (∀ g, (S g).IsT (t g)) → ∀ (ι ι' : Type) [Fintype ι] [Fintype ι'] (e : ι → I g → C) (v' : ι' → I (1 - g) → C), (∀ c x, (X.G g).ty (Sum.inl x) ≠ a → e c x = 0) → (∀ b k, V.Ge 0 (v' b k)) → (∀ b k, (X.G (1 - g)).ty (Sum.inl k) ≠ a + (i : ZMod d) → v' b k = 0) → ∀ b : ι', ∃ γ : MvPowerSeries (WV I) C, (∀ μ, V.Ge 0 (MvPowerSeries.coeff μ γ)) ∧ MvPowerSeries.pderiv (R := C) (Sum.inr b) (X.hM g a i e v') = MvPowerSeries.subst (fun w : WV I => hPullW (upG w.1 (t w.1 w.2)) (fun c => toW g (e c)) (fun b => toW (1 - g) (v' b))) γ + ∑ κ : J g, (∑ k, X.pair g κ k * v' b k) • hPullW (upG g ((S g).ze (t g) κ)) (fun c => toW g (e c)) (fun b => toW (1 - g) (v' b)) := by
   intro C _ V d _ I J _ _ X hAlt g a i hi hid S t ht ι ι' _ _ e v' he hvint hv b
   have hΦ : MvPowerSeries.HasSubst (fun w : WV I => upG w.1 (t w.1 w.2)) :=
     MvPowerSeries.hasSubst_of_constantCoeff_zero (fun w => constantCoeff_upG w.1 ((ht w.1).1 w.2))

@@ -291,7 +291,7 @@ theorem cc_exp_sub_one [CharZero K] : constantCoeff (PowerSeries.exp K - 1) = 0 
 theorem log_subst_exp_sub_one [CharZero K] :
     (PowerSeries.log K).subst (PowerSeries.exp K - 1) = (PowerSeries.X : PowerSeries K) := by
   have hs : PowerSeries.HasSubst (PowerSeries.exp K - 1) := PowerSeries.HasSubst.exp_sub_one
-  have e : (1 + PowerSeries.X) * PowerSeries.derivative K (PowerSeries.log K) = 1 := by
+  have e : (1 + PowerSeries.X) * PowerSeries.derivative (R := K) (PowerSeries.log K) = 1 := by
     rw [PowerSeries.deriv_log]
     ext n
     cases n with

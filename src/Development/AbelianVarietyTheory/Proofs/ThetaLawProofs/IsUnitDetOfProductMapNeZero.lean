@@ -390,7 +390,7 @@ theorem _root_.GlobalTheory.DiscrJacobian.associated_discr_norm_jacobian (R : Ty
     (b : Module.Basis (Fin d) R (MvPowerSeries (Fin g) R ⧸ Ideal.span (Set.range f)))
     (hf : ∀ i, constantCoeff (f i) ∈ maximalIdeal R) :
     Associated (Algebra.discr R b) (Algebra.norm R (Ideal.Quotient.mk (Ideal.span (Set.range f))
-      (Matrix.of fun i j => pderiv R j (f i)).det)) := by
+      (Matrix.of fun i j => pderiv (R := R) j (f i)).det)) := by
   classical
   haveI : Module.Finite R (MvPowerSeries (Fin g) R ⧸ Ideal.span (Set.range f)) :=
     Module.Finite.of_basis b
@@ -438,7 +438,7 @@ theorem _root_.GlobalTheory.DiscrJacobian.associated_discr_norm_jacobian (R : Ty
       (TensorProduct.tmul R x 1 - TensorProduct.tmul R 1 x) = 0 := by
     intro x; rw [← hDe]; exact hann x
   have hJ : ∑ i, ∑ j, M i j • (b i * b j) = Ideal.Quotient.mk (Ideal.span (Set.range f))
-      (Matrix.of fun i j => pderiv R j (f i)).det := by
+      (Matrix.of fun i j => pderiv (R := R) j (f i)).det := by
     have hlm : ∀ t, Algebra.TensorProduct.lmul' R (Algebra.TensorProduct.map
         (IsScalarTower.toAlgHom R (MvPowerSeries (Fin g) R)
           (MvPowerSeries (Fin g) R ⧸ Ideal.span (Set.range f))) (AlgHom.id R _) t) =
@@ -449,11 +449,11 @@ theorem _root_.GlobalTheory.DiscrJacobian.associated_discr_norm_jacobian (R : Ty
       | zero => simp
       | add y z hy hz => rw [map_add, map_add, hy, hz, map_add]
       | tmul s w => simp
-    have hentry : ∀ i j, Ideal.Quotient.mk (Ideal.span (Set.range f)) (pderiv R j (f i)) =
+    have hentry : ∀ i j, Ideal.Quotient.mk (Ideal.span (Set.range f)) (pderiv (R := R) j (f i)) =
         _root_.GlobalTheory.DiscrJacobian.mu R (MvPowerSeries (Fin g) R)
           (MvPowerSeries (Fin g) R ⧸ Ideal.span (Set.range f)) (a i j) := by
       intro i j
-      have := algebraMap_derivation_eq_sum_mu_mul (pderiv R j) X f (Matrix.of a) ha i
+      have := algebraMap_derivation_eq_sum_mu_mul (pderiv (R := R) j) X f (Matrix.of a) ha i
       rw [← Ideal.Quotient.algebraMap_eq, this]
       simp only [Matrix.of_apply]
       rw [Finset.sum_eq_single j (fun k _ hk => by rw [pderiv_X_of_ne hk, map_zero, mul_zero])

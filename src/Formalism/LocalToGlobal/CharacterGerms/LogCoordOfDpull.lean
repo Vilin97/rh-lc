@@ -15,7 +15,7 @@ variable {C : Type} [Field C] [CharZero C] {V : VF C} {O : Type} [CommRing O] [S
 def DPullSt (Y : FBChart C V O dd) (p : ∀ o, PairData Y d (I o)) : Prop :=
   ∀ (n : ℕ) (b : Fin n) (c : WVO I → C) (F : PS C n dd),
     pullN Y p (DofN (Y.B.FK C) b (fun i => ∑ w : WVO I, c w * (p w.1).u w.2.1 w.2.2 i) F) =
-      ∑ w : WVO I, c w • MvPowerSeries.pderiv C (b, w) (pullN Y p F)
+      ∑ w : WVO I, c w • MvPowerSeries.pderiv (R := C) (b, w) (pullN Y p F)
 
 namespace VP
 
@@ -48,7 +48,7 @@ private theorem jetAt0_finset_sum_left {σ ι : Type} (s : Finset ι) (P : ι �
 
 theorem jet_lin {σ ι : Type} [Fintype ι] (e : ι → σ) (q : MvPolynomial σ C) (c : ι → C) (G : MvPowerSeries σ C) :
     jetAt0 (q * ∑ w, MvPolynomial.C (c w) * MvPolynomial.X (e w)) G =
-      jetAt0 q (∑ w, c w • MvPowerSeries.pderiv C (e w) G) := by
+      jetAt0 q (∑ w, c w • MvPowerSeries.pderiv (R := C) (e w) G) := by
   rw [Finset.mul_sum, jetAt0_finset_sum_left, jet_sum_right]
   refine Finset.sum_congr rfl fun w _ => ?_
   rw [← mul_assoc, jet_mul_X, jet_mul_C, jet_smul_right, dVar_eq_pderiv]

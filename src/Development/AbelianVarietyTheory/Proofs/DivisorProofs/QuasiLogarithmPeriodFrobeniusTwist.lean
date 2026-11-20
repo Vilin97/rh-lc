@@ -88,10 +88,10 @@ private lemma subst_inr_zero_pderiv_coboundary_eq {Q : Type} [CommRing Q] {d : �
     (hν1 : ∀ j, subst (Sum.elim (fun k : Fin d => (X k : MvPowerSeries (Fin d) Q)) fun _ : Fin d => 0)
       (ν j) = X j) (f : MvPowerSeries (Fin d) Q) (i : Fin d) :
     subst (Sum.elim (fun k : Fin d => (X k : MvPowerSeries (Fin d) Q)) fun _ : Fin d => 0)
-      (pderiv Q (Sum.inr i) (subst ν f - subst (fun k => X (Sum.inl k)) f -
+      (pderiv (R := Q) (Sum.inr i) (subst ν f - subst (fun k => X (Sum.inl k)) f -
         subst (fun k => X (Sum.inr k)) f)) =
-      ∑ j, pderiv Q j f * subst (Sum.elim (fun k : Fin d => (X k : MvPowerSeries (Fin d) Q))
-        fun _ : Fin d => 0) (pderiv Q (Sum.inr i) (ν j)) - C (constantCoeff (pderiv Q i f)) := by
+      ∑ j, pderiv (R := Q) j f * subst (Sum.elim (fun k : Fin d => (X k : MvPowerSeries (Fin d) Q))
+        fun _ : Fin d => 0) (pderiv (R := Q) (Sum.inr i) (ν j)) - C (constantCoeff (pderiv (R := Q) i f)) := by
   have he0 : HasSubst (Sum.elim (fun k : Fin d => (X k : MvPowerSeries (Fin d) Q))
       fun _ : Fin d => 0) := hasSubst_of_constantCoeff_zero (by rintro (k | k) <;> simp)
   have hν : HasSubst ν := hasSubst_of_constantCoeff_zero hν0
@@ -124,7 +124,7 @@ private lemma dIn_univ_of_QL_of_isLift {B O Q : Type} [CommRing B] [CommRing O]
   unfold _root_.GlobalTheory.Katz.lin at hlin
   set M : Matrix (Fin d) (Fin d) (MvPowerSeries (Fin d) B) := fun j i =>
     subst (Sum.elim (fun k : Fin d => (X k : MvPowerSeries (Fin d) B)) fun _ : Fin d => 0)
-      (pderiv B (Sum.inr i) (μ j)) with hMdef
+      (pderiv (R := B) (Sum.inr i) (μ j)) with hMdef
   have hM : ∀ j i, constantCoeff (M j i) = if j = i then 1 else 0 := by
     intro j i
     rw [← coeff_zero_eq_constantCoeff_apply, hMdef, (_root_.GlobalTheory.coeff_subst_restrict_sum _).1 0,
@@ -132,7 +132,7 @@ private lemma dIn_univ_of_QL_of_isLift {B O Q : Type} [CommRing B] [CommRing O]
     simp [eq_comm]
   have hmap : ∀ j i, map (algebraMap B Q) (M j i) =
       subst (Sum.elim (fun k : Fin d => (X k : MvPowerSeries (Fin d) Q)) fun _ : Fin d => 0)
-        (pderiv Q (Sum.inr i) (map (algebraMap B Q) (μ j))) := by
+        (pderiv (R := Q) (Sum.inr i) (map (algebraMap B Q) (μ j))) := by
     intro j i
     ext α
     rw [coeff_map, hMdef, (_root_.GlobalTheory.coeff_subst_restrict_sum _).1 α,
@@ -140,7 +140,7 @@ private lemma dIn_univ_of_QL_of_isLift {B O Q : Type} [CommRing B] [CommRing O]
     simp
   have hν1 := fun j => subst_inr_zero_map_eq_X_of_isLift (Q := Q) hμ j
   have hsol := _root_.GlobalTheory.InvSolve.solve (Q := Q) ⊤ M hM
-    (fun j => pderiv Q j f) (fun i => ∑ j, pderiv Q j f * map (algebraMap B Q) (M j i))
+    (fun j => pderiv (R := Q) j f) (fun i => ∑ j, pderiv (R := Q) j f * map (algebraMap B Q) (M j i))
     (fun i => rfl) ?_
   · intro α i
     by_cases hα : α i = 0

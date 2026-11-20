@@ -79,7 +79,7 @@ def pair (P : MvPolynomial σ C) (f : MvPowerSeries σ C) : C :=
   form (fun A => fact C A * MvPowerSeries.coeff A f) P
 
 theorem pair_mul_X (P : MvPolynomial σ C) (f : MvPowerSeries σ C) (i : σ) :
-    pair (P * MvPolynomial.X i) f = pair P (MvPowerSeries.pderiv C i f) := by
+    pair (P * MvPolynomial.X i) f = pair P (MvPowerSeries.pderiv (R := C) i f) := by
   rw [pair, pair, form_mul_X]
   congr 2
   funext A
@@ -121,7 +121,7 @@ theorem slice_smul (b : κ' →₀ ℕ) (c : C) (g : MvPowerSeries (κ ⊕ κ') 
   simp only [coeff_slice, map_smul]
 
 theorem slice_pderiv (b : κ' →₀ ℕ) (g : MvPowerSeries (κ ⊕ κ') C) (j : κ') :
-    slice b (MvPowerSeries.pderiv C (Sum.inr j) g) = ((b j : C) + 1) • slice (b + Finsupp.single j 1) g := by
+    slice b (MvPowerSeries.pderiv (R := C) (Sum.inr j) g) = ((b j : C) + 1) • slice (b + Finsupp.single j 1) g := by
   classical
   ext A
   have h : Finsupp.sumFinsuppEquivProdFinsupp.symm (A, b) + Finsupp.single (Sum.inr j) 1 =
@@ -180,7 +180,7 @@ theorem mixed_smul_right (F : MvPolynomial κ C) (H : MvPolynomial (κ ⊕ κ') 
 
 theorem mixed_mul_X_inr (F : MvPolynomial κ C) (H : MvPolynomial (κ ⊕ κ') C)
     (g : MvPowerSeries (κ ⊕ κ') C) (j : κ') :
-    mixed F (H * MvPolynomial.X (Sum.inr j)) g = mixed F H (MvPowerSeries.pderiv C (Sum.inr j) g) := by
+    mixed F (H * MvPolynomial.X (Sum.inr j)) g = mixed F H (MvPowerSeries.pderiv (R := C) (Sum.inr j) g) := by
   classical
   rw [mixed, mixed, form_mul_X]
   congr 2
@@ -237,7 +237,7 @@ theorem mixed_one (F : MvPolynomial κ C) (g : MvPowerSeries (κ ⊕ κ') C) :
 
 theorem pair_eq_mixed (ζ : κ' → MvPolynomial κ C) (F : MvPolynomial κ C)
     (E : MvPowerSeries (κ ⊕ κ') C) (h0 : ∀ g, slice 0 (E * g) = slice 0 g)
-    (hd : ∀ j, MvPowerSeries.pderiv C (Sum.inr j) E =
+    (hd : ∀ j, MvPowerSeries.pderiv (R := C) (Sum.inr j) E =
       E * ((MvPolynomial.rename Sum.inl (ζ j) : MvPolynomial (κ ⊕ κ') C) : MvPowerSeries (κ ⊕ κ') C))
     (G : MvPolynomial κ' C) : ∀ g : MvPowerSeries (κ ⊕ κ') C,
     pair (MvPolynomial.rename Sum.inl F * MvPolynomial.rename Sum.inr G) (E * g) =

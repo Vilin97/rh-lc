@@ -38,7 +38,7 @@ theorem evaluation_at_zero : Ev0 := by
 
 theorem jet_derivative_integrality : JetD := by
   intro p _ ex ph n
-  have h : (dX (A := ℂ_[p])) = ⇑(PowerSeries.derivative ℂ_[p]) := funext Ch.dX_eq
+  have h : (dX (A := ℂ_[p])) = ⇑(PowerSeries.derivative (R := ℂ_[p])) := funext Ch.dX_eq
   rw [h, PowerSeries.constantCoeff_iterate_derivative]
   rfl
 

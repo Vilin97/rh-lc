@@ -92,7 +92,7 @@ theorem coeff_one_subst {k σ τ : Type} [CommRing k] [Fintype σ] {a : σ → M
     (ha : ∀ s, MvPowerSeries.constantCoeff (a s) = 0) (f : MvPowerSeries σ k) (t : τ) :
     MvPowerSeries.coeff (Finsupp.single t 1) (MvPowerSeries.subst a f) =
       ∑ s, MvPowerSeries.coeff (Finsupp.single s 1) f * MvPowerSeries.coeff (Finsupp.single t 1) (a s) := by
-  have h0 : ∀ {ρ : Type} (u : ρ) (g : MvPowerSeries ρ k), MvPowerSeries.constantCoeff (MvPowerSeries.pderiv k u g) =
+  have h0 : ∀ {ρ : Type} (u : ρ) (g : MvPowerSeries ρ k), MvPowerSeries.constantCoeff (MvPowerSeries.pderiv (R := k) u g) =
       MvPowerSeries.coeff (Finsupp.single u 1) g := by
     intro ρ u g
     rw [← MvPowerSeries.coeff_zero_eq_constantCoeff_apply, MvPowerSeries.coeff_pderiv]

@@ -336,7 +336,7 @@ theorem det_jacobian_matV : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscrete
     [IsAdicComplete (maximalIdeal V) V] [CharZero V] (d : ℕ) (O : Type) [CommRing O] [StarRing O]
     (B : FB V d O) (n : ℕ) (p : Matrix (Fin n) (Fin n) O), ∃ U : (PS V n d)ˣ,
     Matrix.det (Matrix.of fun i j : Fin n × Fin d =>
-      MvPowerSeries.pderiv V j (matV B p (fun j => pt V (n := n) d j) i.1 i.2)) =
+      MvPowerSeries.pderiv (R := V) j (matV B p (fun j => pt V (n := n) d j) i.1 i.2)) =
       MvPowerSeries.C (jacM B p) * (U : PS V n d) := by
   intro V _ _ _ _ _ d O _ _ B n p
   exact det_jac_of_inv B.G _ (fun b => inv_matV B p b)

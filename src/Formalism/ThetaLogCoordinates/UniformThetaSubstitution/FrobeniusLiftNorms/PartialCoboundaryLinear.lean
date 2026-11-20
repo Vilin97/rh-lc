@@ -134,8 +134,8 @@ theorem map_g0F (σ : K →+* K) (p : ℕ) : PowerSeries.map σ (g0F K p) = g0F 
     simp [g0F, map_sum, apply_ite]
 
 theorem map_derivative (σ : K →+* K) (f : PowerSeries K) :
-    PowerSeries.map σ (PowerSeries.derivative K f) =
-      PowerSeries.derivative K (PowerSeries.map σ f) := by
+    PowerSeries.map σ (PowerSeries.derivative (R := K) f) =
+      PowerSeries.derivative (R := K) (PowerSeries.map σ f) := by
   ext n
   simp [PowerSeries.coeff_derivative]
 
@@ -145,13 +145,13 @@ theorem map_inVar {ι : Type} (σ : K →+* K) (x : ι) (f : PowerSeries K) :
   rw [PowerSeries.map_subst (PowerSeries.HasSubst.X x), MvPowerSeries.map_X]
 
 theorem map_pderiv {ι : Type} (σ : K →+* K) (x : ι) (f : MvPowerSeries ι K) :
-    MvPowerSeries.map σ (MvPowerSeries.pderiv K x f) =
-      MvPowerSeries.pderiv K x (MvPowerSeries.map σ f) := by
+    MvPowerSeries.map σ (MvPowerSeries.pderiv (R := K) x f) =
+      MvPowerSeries.pderiv (R := K) x (MvPowerSeries.map σ f) := by
   ext n
   simp [MvPowerSeries.coeff_pderiv]
 
 theorem pderiv_single_self {ι : Type} [Finite ι] (x : ι) (f : PowerSeries K) :
-    MvPowerSeries.pderiv K x (at1 x f) = at1 x (PowerSeries.derivative K f) := by
+    MvPowerSeries.pderiv (R := K) x (at1 x f) = at1 x (PowerSeries.derivative (R := K) f) := by
   unfold at1
   rw [Formalism.G.LogCR.pderiv_psubst (MvPowerSeries.constantCoeff_X x) f x]
   first
@@ -159,7 +159,7 @@ theorem pderiv_single_self {ι : Type} [Finite ι] (x : ι) (f : PowerSeries K) 
     | simp [MvPowerSeries.pderiv_X]
 
 theorem pderiv_single_ne {ι : Type} [Finite ι] {x y : ι} (h : y ≠ x) (f : PowerSeries K) :
-    MvPowerSeries.pderiv K x (at1 y f) = 0 := by
+    MvPowerSeries.pderiv (R := K) x (at1 y f) = 0 := by
   unfold at1
   rw [Formalism.G.LogCR.pderiv_psubst (MvPowerSeries.constantCoeff_X y) f x]
   first
@@ -167,9 +167,9 @@ theorem pderiv_single_ne {ι : Type} [Finite ι] {x y : ι} (h : y ≠ x) (f : P
     | simp [MvPowerSeries.pderiv_X, h]
 
 theorem pderiv_prod (k : K) (f g : PowerSeries K) :
-    MvPowerSeries.pderiv K (0 : Fin 2) (MvPowerSeries.C k * (at1 0 f * at1 1 g)) =
-      MvPowerSeries.C k * (at1 0 (PowerSeries.derivative K f) * at1 1 g) := by
-  have hC : MvPowerSeries.pderiv K (0 : Fin 2) (MvPowerSeries.C k) = 0 := by
+    MvPowerSeries.pderiv (R := K) (0 : Fin 2) (MvPowerSeries.C k * (at1 0 f * at1 1 g)) =
+      MvPowerSeries.C k * (at1 0 (PowerSeries.derivative (R := K) f) * at1 1 g) := by
+  have hC : MvPowerSeries.pderiv (R := K) (0 : Fin 2) (MvPowerSeries.C k) = 0 := by
     ext n
     simp [MvPowerSeries.coeff_pderiv, MvPowerSeries.coeff_C]
   have h10 : (1 : Fin 2) ≠ 0 := by decide
@@ -335,7 +335,7 @@ theorem StepII_of (hW : DworkMv) (hD : DivDeriv) (hDe : DeIntegral) (hL : LawSym
   have hΦi : Integral (MvPowerSeries.pderiv (R := K) 0 Φ) := by
     have e : MvPowerSeries.pderiv (R := K) 0 Φ = MvPowerSeries.map σ
         (MvPowerSeries.pderiv (R := K) 0 G -
-          MvPowerSeries.C c * (at1 0 (PowerSeries.derivative K (lgF K p)) * at1 1 (g0F K p))) := by
+          MvPowerSeries.C c * (at1 0 (PowerSeries.derivative (R := K) (lgF K p)) * at1 1 (g0F K p))) := by
       rw [hΦ, map_sub, pderiv_prod, map_sub, map_mul, map_mul, MvPowerSeries.map_C, map_inVar,
         map_inVar, map_derivative, map_lgF, map_g0F, map_pderiv]
     rw [e]

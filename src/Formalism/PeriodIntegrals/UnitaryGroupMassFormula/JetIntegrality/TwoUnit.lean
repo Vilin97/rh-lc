@@ -9,7 +9,7 @@ open PI.JetsPhW
 
 def Dv {p : ℕ} [Fact p.Prime] {σ : Type*} (v : PowerSeries ℂ_[p]) (i : σ)
     (f : MvPowerSeries σ ℂ_[p]) : MvPowerSeries σ ℂ_[p] :=
-  PowerSeries.subst (MvPowerSeries.X i : MvPowerSeries σ ℂ_[p]) v * MvPowerSeries.pderiv ℂ_[p] i f
+  PowerSeries.subst (MvPowerSeries.X i : MvPowerSeries σ ℂ_[p]) v * MvPowerSeries.pderiv (R := ℂ_[p]) i f
 
 def psi {p : ℕ} [Fact p.Prime] (ex ph : PowerSeries ℂ_[p]) : PowerSeries ℂ_[p] :=
   PowerSeries.subst ex ph
@@ -20,24 +20,24 @@ def IntP {p : ℕ} [Fact p.Prime] (g : PowerSeries ℂ_[p]) : Prop :=
 def Chain : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (σ : Type) (i : σ) (s : MvPowerSeries σ ℂ_[p]) (g : PowerSeries ℂ_[p]),
     MvPowerSeries.constantCoeff s = 0 →
-    MvPowerSeries.pderiv ℂ_[p] i (PowerSeries.subst s g) =
-      MvPowerSeries.pderiv ℂ_[p] i s * PowerSeries.subst s (dX g)
+    MvPowerSeries.pderiv (R := ℂ_[p]) i (PowerSeries.subst s g) =
+      MvPowerSeries.pderiv (R := ℂ_[p]) i s * PowerSeries.subst s (dX g)
 
 def DChain : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (σ : Type) (i : σ) (l v g : PowerSeries ℂ_[p]) (s : MvPowerSeries σ ℂ_[p])
     (c : ℂ_[p]), v * dX l = 1 → MvPowerSeries.constantCoeff s = 0 →
-    MvPowerSeries.pderiv ℂ_[p] i s =
+    MvPowerSeries.pderiv (R := ℂ_[p]) i s =
       MvPowerSeries.C c * PowerSeries.subst (MvPowerSeries.X i : MvPowerSeries σ ℂ_[p]) (dX l) →
     Dv v i (PowerSeries.subst s g) = MvPowerSeries.C c * PowerSeries.subst s (dX g)
 
 def PdSelf : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (σ : Type) (i : σ) (g : PowerSeries ℂ_[p]),
-    MvPowerSeries.pderiv ℂ_[p] i (PowerSeries.subst (MvPowerSeries.X i : MvPowerSeries σ ℂ_[p]) g) =
+    MvPowerSeries.pderiv (R := ℂ_[p]) i (PowerSeries.subst (MvPowerSeries.X i : MvPowerSeries σ ℂ_[p]) g) =
       PowerSeries.subst (MvPowerSeries.X i : MvPowerSeries σ ℂ_[p]) (dX g)
 
 def PdNe : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (σ : Type) (i j : σ) (g : PowerSeries ℂ_[p]), j ≠ i →
-    MvPowerSeries.pderiv ℂ_[p] i (PowerSeries.subst (MvPowerSeries.X j : MvPowerSeries σ ℂ_[p]) g) = 0
+    MvPowerSeries.pderiv (R := ℂ_[p]) i (PowerSeries.subst (MvPowerSeries.X j : MvPowerSeries σ ℂ_[p]) g) = 0
 
 def DSelf : Prop :=
   ∀ (p : ℕ) [Fact p.Prime] (σ : Type) (i : σ) (v g : PowerSeries ℂ_[p]),

@@ -10,7 +10,7 @@ open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.
 
 private theorem map_dl_eq_dl_map_of_isUnit {R : Type} [CommRing R] (φ : R →+* R) (f : PowerSeries R) (hf : IsUnit f) :
     PowerSeries.map φ (dl f) = dl (PowerSeries.map φ f) := by
-  have hd : PowerSeries.map φ (PowerSeries.derivative R f) = PowerSeries.derivative R (PowerSeries.map φ f) := by
+  have hd : PowerSeries.map φ (PowerSeries.derivative (R := R) f) = PowerSeries.derivative (R := R) (PowerSeries.map φ f) := by
     ext n
     simp [PowerSeries.coeff_derivative, PowerSeries.coeff_map]
   obtain ⟨u, rfl⟩ := hf

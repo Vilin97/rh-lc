@@ -12,8 +12,8 @@ private theorem rs_dl_mul {R : Type} [CommRing R] {f g : PowerSeries R} (hf : Is
   have hinv : Ring.inverse ((u : PowerSeries R) * v) = ↑v⁻¹ * ↑u⁻¹ := by
     rw [← Units.val_mul, Ring.inverse_unit, mul_inv_rev, Units.val_mul]
   simp only [dl, dd, Ring.inverse_unit, Derivation.leibniz, smul_eq_mul, hinv]
-  linear_combination ((1 + PowerSeries.X) * PowerSeries.derivative R v * ↑v⁻¹) * hu +
-    ((1 + PowerSeries.X) * PowerSeries.derivative R u * ↑u⁻¹) * hv
+  linear_combination ((1 + PowerSeries.X) * PowerSeries.derivative (R := R) v * ↑v⁻¹) * hu +
+    ((1 + PowerSeries.X) * PowerSeries.derivative (R := R) u * ↑u⁻¹) * hv
 
 private theorem rs_dl_one {R : Type} [CommRing R] : dl (1 : PowerSeries R) = 0 := by
   simp [dl, dd]

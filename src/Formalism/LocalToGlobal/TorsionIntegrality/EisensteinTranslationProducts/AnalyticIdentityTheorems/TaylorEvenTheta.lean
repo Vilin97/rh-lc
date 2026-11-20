@@ -98,13 +98,13 @@ theorem taylor_even_theta : TaylorTh0 := by
   obtain ⟨hdiff, h0, -⟩ := th0Basic L ω₀ hω ht
   have hθ : AnalyticAt ℂ (th0 L t) 0 := hdiff.analyticAt 0
   have hv : AnalyticAt ℂ (v L t) 0 := analyticAt_v L ht
-  have eU : PowerSeries.derivative ℂ (taylor0 (th0 L t)) = taylor0 (v L t) * taylor0 (th0 L t) := by
+  have eU : PowerSeries.derivative (R := ℂ) (taylor0 (th0 L t)) = taylor0 (v L t) * taylor0 (th0 L t) := by
     rw [← Taylor.taylor0_deriv, ← Taylor.taylor0_mul hv hθ]
     exact Taylor.taylor0_congr (ode_th L hω ht)
   have Tid := T.id hr
   have Tzz := T.mul hr Tid Tid
   have Tp : T (L.weierstrassPExcept 0) (pSeries L) := ⟨TaylorSigmaUniqueness.analyticAt_pExcept L, rfl⟩
-  have Tdv : T (deriv (v L t)) (PowerSeries.derivative ℂ (taylor0 (v L t))) :=
+  have Tdv : T (deriv (v L t)) (PowerSeries.derivative (R := ℂ) (taylor0 (v L t))) :=
     ⟨hv.deriv, Taylor.taylor0_deriv _⟩
   have TL := T.mul hr (T.add hr (T.add hr (T.const hr 1) (T.mul hr Tzz Tp)) (T.mul hr (T.const hr (-e)) Tzz))
     (T.add hr (T.add hr Tdv (T.const hr e)) (T.const hr (s2 L)))
@@ -117,13 +117,13 @@ theorem taylor_even_theta : TaylorTh0 := by
       (1 + PowerSeries.X ^ 2 * P - PowerSeries.C e * PowerSeries.X ^ 2 : PowerSeries ℂ) ≠ 0 := by
     simp
   have hD := PowerSeries.mul_inv_cancel _ hD0
-  have eV : PowerSeries.derivative ℂ V
+  have eV : PowerSeries.derivative (R := ℂ) V
       = -(PowerSeries.C e + PowerSeries.C κ * B.wOf e P + PowerSeries.C (s2 L)) := by
     rw [B.wOf]
     generalize (1 + PowerSeries.X ^ 2 * P - PowerSeries.C e * PowerSeries.X ^ 2 : PowerSeries ℂ)⁻¹ = Di
       at hD ⊢
     linear_combination Di * hE
-      - (PowerSeries.derivative ℂ V + PowerSeries.C e + PowerSeries.C (s2 L)) * hD
+      - (PowerSeries.derivative (R := ℂ) V + PowerSeries.C e + PowerSeries.C (s2 L)) * hD
   have key := TaylorSigmaUniqueness.formal_unique
     (PowerSeries.C e + PowerSeries.C κ * B.wOf e P + PowerSeries.C (s2 L)) (taylor0 (th0 L t)) V
     (by rw [eV, mul_neg]) (by rw [TaylorSigmaUniqueness.constantCoeff_taylor0, v_zero])

@@ -42,7 +42,7 @@ def SplitVanishSeries : Prop :=
 
 def JetsAll : Prop :=
   ∀ (K : Type) [Field K] [CharZero K] (R : Subring K) (l linv ph : PowerSeries K) (a b : K),
-    IsLogPair l linv → IsOneUnit R (PowerSeries.derivative K l) →
+    IsLogPair l linv → IsOneUnit R (PowerSeries.derivative (R := K) l) →
     PowerSeries.constantCoeff ph = 0 → (∀ i : ℕ, 3 ≤ i → jet l ph i ∈ R) →
     PhNormAt R l linv ph (-1) (-1) → (2 : K)⁻¹ ∈ R →
     AdjAt R l linv ph a b → (a - b)⁻¹ ∈ R → a ≠ b →

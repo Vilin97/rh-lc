@@ -123,10 +123,10 @@ theorem F_exZero (k : Fin dd) : MvPowerSeries.subst (exZero Y) (Y.B.G.F k) = e Y
     rw [MvPowerSeries.subst_X hz, MvPowerSeries.subst_X hu]
     simp [exZero, u]
 
-def J (m k : Fin dd) : MvPowerSeries (Fin dd) C := MvPowerSeries.subst (e Y) (MvPowerSeries.pderiv C k (l Y m))
+def J (m k : Fin dd) : MvPowerSeries (Fin dd) C := MvPowerSeries.subst (e Y) (MvPowerSeries.pderiv (R := C) k (l Y m))
 
 theorem pderiv_l_zero (m i : Fin dd) :
-    MvPowerSeries.constantCoeff (MvPowerSeries.pderiv C i (l Y m)) = if m = i then 1 else 0 := by
+    MvPowerSeries.constantCoeff (MvPowerSeries.pderiv (R := C) i (l Y m)) = if m = i then 1 else 0 := by
   rw [← MvPowerSeries.coeff_zero_eq_constantCoeff_apply, MvPowerSeries.coeff_pderiv]
   simp only [Finsupp.coe_zero, Pi.zero_apply, zero_add, Nat.cast_zero, Nat.cast_one, one_mul, mul_one]
   change MvPowerSeries.coeff (Finsupp.mapDomain (fun x : Fin dd => ((0 : Fin 1), x)) (Finsupp.single i 1))
@@ -140,7 +140,7 @@ theorem pderiv_l_zero (m i : Fin dd) :
     exact hmi (congrArg Prod.snd this).symm
 
 theorem eqA (m i : Fin dd) :
-    ∑ k, MvPowerSeries.subst (exZero Y) (MvPowerSeries.pderiv C ((1 : Fin 2), i) (Y.B.G.F k)) * J Y m k =
+    ∑ k, MvPowerSeries.subst (exZero Y) (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i) (Y.B.G.F k)) * J Y m k =
       if m = i then 1 else 0 := by
 
   have hF := fun w => (ordGE_one_iff (Y.B.G.F w)).2 (Y.B.G.const w)
@@ -154,18 +154,18 @@ theorem eqA (m i : Fin dd) :
   have hsF : MvPowerSeries.HasSubst (fun k => Y.B.G.F k) := hs (fun k => Y.B.G.const k)
   have hsX1 : MvPowerSeries.HasSubst (fun k : Fin dd => (MvPowerSeries.X ((1 : Fin 2), k) : PS C 2 dd)) :=
     hs (fun k => MvPowerSeries.constantCoeff_X _)
-  have h := congrArg (MvPowerSeries.pderiv C ((1 : Fin 2), i)) (l_add Y m)
+  have h := congrArg (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i)) (l_add Y m)
   rw [map_add, pderiv_subst hF, pderiv_subst (hX 0), pderiv_subst (hX 1)] at h
   beta_reduce at h
-  have s0 : ∑ w : Fin dd, MvPowerSeries.pderiv C ((1 : Fin 2), i) (MvPowerSeries.X ((0 : Fin 2), w) : PS C 2 dd) *
+  have s0 : ∑ w : Fin dd, MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i) (MvPowerSeries.X ((0 : Fin 2), w) : PS C 2 dd) *
       MvPowerSeries.subst (fun k : Fin dd => (MvPowerSeries.X ((0 : Fin 2), k) : PS C 2 dd))
-        (MvPowerSeries.pderiv C w (l Y m)) = 0 :=
+        (MvPowerSeries.pderiv (R := C) w (l Y m)) = 0 :=
     Finset.sum_eq_zero (fun w _ => by rw [MvPowerSeries.pderiv_X_of_ne (by simp), zero_mul])
-  have s1 : ∑ w : Fin dd, MvPowerSeries.pderiv C ((1 : Fin 2), i) (MvPowerSeries.X ((1 : Fin 2), w) : PS C 2 dd) *
+  have s1 : ∑ w : Fin dd, MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i) (MvPowerSeries.X ((1 : Fin 2), w) : PS C 2 dd) *
       MvPowerSeries.subst (fun k : Fin dd => (MvPowerSeries.X ((1 : Fin 2), k) : PS C 2 dd))
-        (MvPowerSeries.pderiv C w (l Y m)) =
+        (MvPowerSeries.pderiv (R := C) w (l Y m)) =
       MvPowerSeries.subst (fun k : Fin dd => (MvPowerSeries.X ((1 : Fin 2), k) : PS C 2 dd))
-        (MvPowerSeries.pderiv C i (l Y m)) := by
+        (MvPowerSeries.pderiv (R := C) i (l Y m)) := by
     rw [Finset.sum_eq_single i (fun w _ hw => by
         rw [MvPowerSeries.pderiv_X_of_ne (by simpa using hw), zero_mul]) (by simp),
       MvPowerSeries.pderiv_X_self, one_mul]
@@ -182,7 +182,7 @@ theorem eqA (m i : Fin dd) :
   split_ifs <;> simp
 
 theorem eqK (n k : Fin dd) :
-    ∑ m, J Y m k * MvPowerSeries.pderiv C m (e Y n) = if n = k then 1 else 0 := by
+    ∑ m, J Y m k * MvPowerSeries.pderiv (R := C) m (e Y n) = if n = k then 1 else 0 := by
 
   have hl := fun w => (ordGE_one_iff (l Y w)).2 (cc_l Y w)
   have hsE : MvPowerSeries.HasSubst (e Y) := hs (cc_e Y)
@@ -192,7 +192,7 @@ theorem eqK (n k : Fin dd) :
     simp_rw [lgex Y]
     rw [MvPowerSeries.subst_self]
     rfl
-  have h := congrArg (MvPowerSeries.subst (e Y)) (congrArg (MvPowerSeries.pderiv C k) (exlg Y n))
+  have h := congrArg (MvPowerSeries.subst (e Y)) (congrArg (MvPowerSeries.pderiv (R := C) k) (exlg Y n))
   set_option synthInstance.maxHeartbeats 100000 in
     rw [pderiv_subst hl k, ← MvPowerSeries.coe_substAlgHom hsE, map_sum] at h
   simp only [map_mul, MvPowerSeries.coe_substAlgHom, key] at h
@@ -214,10 +214,10 @@ theorem expODE {C : Type} [Field C] [CharZero C] {V : VF C} {O : Type} [CommRing
   rw [hFK]
 
   let A : Matrix (Fin dd) (Fin dd) (MvPowerSeries (Fin dd) C) := fun a k =>
-    MvPowerSeries.subst (exZero Y) (MvPowerSeries.pderiv C ((1 : Fin 2), a) (Y.B.G.F k))
+    MvPowerSeries.subst (exZero Y) (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), a) (Y.B.G.F k))
   let Jt : Matrix (Fin dd) (Fin dd) (MvPowerSeries (Fin dd) C) := fun k m => VP.J Y m k
   let D : Matrix (Fin dd) (Fin dd) (MvPowerSeries (Fin dd) C) := fun m n =>
-    MvPowerSeries.pderiv C m (VP.e Y n)
+    MvPowerSeries.pderiv (R := C) m (VP.e Y n)
   have hAJ : A * Jt = 1 := by
     refine Matrix.ext fun a m => ?_
     rw [Matrix.mul_apply, Matrix.one_apply]

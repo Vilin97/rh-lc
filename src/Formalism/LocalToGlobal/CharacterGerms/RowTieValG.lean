@@ -50,22 +50,22 @@ theorem linear_pullback_eval_point_zero (b : Fin n) (G : PS C 2 dd) :
   · simp [exZero, VP.subst_zero' (cc_linPt Y M), VP.subst_zero' hL]
 
 def RR (b : Fin n) (i j : Fin dd) : MvPowerSeries Var C :=
-  linPull Y M (ev (n := n) ![pt C dd b, 0] (MvPowerSeries.pderiv C ((1 : Fin 2), i) (Y.B.FK C j)))
+  linPull Y M (ev (n := n) ![pt C dd b, 0] (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i) (Y.B.FK C j)))
 
 theorem linPull_DofN (b : Fin n) (u : Fin dd → C) (F : PS C n dd) :
     linPull Y M (DofN (Y.B.FK C) b u F) =
-      ∑ j, (∑ i, MvPowerSeries.C (u i) * RR Y M b i j) * linPull Y M (MvPowerSeries.pderiv C (b, j) F) := by
+      ∑ j, (∑ i, MvPowerSeries.C (u i) * RR Y M b i j) * linPull Y M (MvPowerSeries.pderiv (R := C) (b, j) F) := by
   unfold DofN
   simp only [← MvPowerSeries.smul_eq_C_mul]
   simp only [linPull, RR, VP.subst_sum (cc_linPt Y M), VP.subst_mul (cc_linPt Y M), VP.subst_smul (cc_linPt Y M)]
 
 theorem pderiv_linPull (x : Var) (F : PS C n dd) :
-    MvPowerSeries.pderiv C x (linPull Y M F) =
+    MvPowerSeries.pderiv (R := C) x (linPull Y M F) =
       ∑ b, ∑ j, (∑ i, MvPowerSeries.C (M x (b, i)) * RR Y M b i j) *
-        linPull Y M (MvPowerSeries.pderiv C (b, j) F) := by
+        linPull Y M (MvPowerSeries.pderiv (R := C) (b, j) F) := by
   have hE := expODE Y
   unfold ExpODESt at hE
-  have hJ : ∀ b j, MvPowerSeries.pderiv C x (linPt Y M (b, j)) =
+  have hJ : ∀ b j, MvPowerSeries.pderiv (R := C) x (linPt Y M (b, j)) =
       ∑ i, MvPowerSeries.C (M x (b, i)) * RR Y M b i j := by
     intro b j
     simp only [linPt, e, hE, pderiv_subst_linS, colLin, RR, linear_pullback_eval_point_zero, MvPowerSeries.smul_eq_C_mul]
@@ -76,11 +76,11 @@ theorem pderiv_linPull (x : Var) (F : PS C n dd) :
 
 theorem dpullG (b0 : Fin n) (u : Fin dd → C) (c : Var → C)
     (hc : ∀ b i, ∑ x, c x * M x (b, i) = if b = b0 then u i else 0) (F : PS C n dd) :
-    linPull Y M (DofN (Y.B.FK C) b0 u F) = ∑ x, c x • MvPowerSeries.pderiv C x (linPull Y M F) := by
+    linPull Y M (DofN (Y.B.FK C) b0 u F) = ∑ x, c x • MvPowerSeries.pderiv (R := C) x (linPull Y M F) := by
   have key : ∀ b j, ∑ x, c x • ((∑ i, MvPowerSeries.C (M x (b, i)) * RR Y M b i j) *
-      linPull Y M (MvPowerSeries.pderiv C (b, j) F)) =
+      linPull Y M (MvPowerSeries.pderiv (R := C) (b, j) F)) =
       (∑ i, MvPowerSeries.C (if b = b0 then u i else 0) * RR Y M b i j) *
-        linPull Y M (MvPowerSeries.pderiv C (b, j) F) := by
+        linPull Y M (MvPowerSeries.pderiv (R := C) (b, j) F) := by
     intro b j
     simp_rw [← hc b]
     set_option synthInstance.maxHeartbeats 100000 in

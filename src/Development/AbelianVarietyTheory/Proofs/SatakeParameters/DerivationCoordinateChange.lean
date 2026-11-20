@@ -16,10 +16,10 @@ section Formal
 variable {p : ℕ} [Fact p.Prime] {σ κ : Type}
 
 def dirDer [Fintype σ] (v : σ → ℂ_[p]) : MvPowerSeries σ ℂ_[p] →ₗ[ℂ_[p]] MvPowerSeries σ ℂ_[p] :=
-  ∑ k, v k • (pderiv ℂ_[p] k).toLinearMap
+  ∑ k, v k • (pderiv (R := ℂ_[p]) k).toLinearMap
 
 theorem dirDer_apply [Fintype σ] (v : σ → ℂ_[p]) (G : MvPowerSeries σ ℂ_[p]) :
-    dirDer v G = ∑ k, v k • pderiv ℂ_[p] k G := by
+    dirDer v G = ∑ k, v k • pderiv (R := ℂ_[p]) k G := by
   simp [dirDer, LinearMap.sum_apply]
 
 theorem dirDer_add [Fintype σ] (v w : σ → ℂ_[p]) : dirDer (v + w) = dirDer v + dirDer w := by
@@ -35,7 +35,7 @@ theorem jetAt_zero (F : MvPowerSeries κ ℂ_[p]) : jetAt F 0 = constantCoeff F 
   simp [jetAt]
 
 theorem jetAt_add_single (F : MvPowerSeries κ ℂ_[p]) (β : κ →₀ ℕ) (x : κ) :
-    jetAt F (β + Finsupp.single x 1) = jetAt (pderiv ℂ_[p] x F) β := by
+    jetAt F (β + Finsupp.single x 1) = jetAt (pderiv (R := ℂ_[p]) x F) β := by
   classical
   have key : ((β + Finsupp.single x 1).prod fun _ n => (n.factorial : ℂ_[p])) =
       (β.prod fun _ n => (n.factorial : ℂ_[p])) * ((β x : ℂ_[p]) + 1) := by
@@ -58,13 +58,13 @@ theorem constantCoeff_linAt [Fintype σ] [Fintype κ] (c : σ → κ → ℂ_[p]
   ModuliIntegralCharts.H1.ExpTieAlg.const_subst0 (linAt_const c) G
 
 theorem pderiv_linAt [Fintype σ] [Fintype κ] (c : σ → κ → ℂ_[p]) (G : MvPowerSeries σ ℂ_[p]) (x : κ) :
-    pderiv ℂ_[p] x (linAt c G) = linAt c (dirDer (fun k => c k x) G) := by
+    pderiv (R := ℂ_[p]) x (linAt c G) = linAt c (dirDer (fun k => c k x) G) := by
   classical
   have ha := ModuliIntegralCharts.H1.ExpTieAlg.hasSubst0 (linAt_const c)
   unfold linAt
   rw [ModuliIntegralCharts.H1.ExpTieAlg.pderiv_subst ha, dirDer_apply, ModuliIntegralCharts.H1.ExpTieAlg.subst_sum' ha]
   refine Finset.sum_congr rfl fun k _ => ?_
-  have : pderiv ℂ_[p] x (∑ y : κ, algebraMap ℂ_[p] (MvPowerSeries κ ℂ_[p]) (c k y) * X y) =
+  have : pderiv (R := ℂ_[p]) x (∑ y : κ, algebraMap ℂ_[p] (MvPowerSeries κ ℂ_[p]) (c k y) * X y) =
       algebraMap ℂ_[p] (MvPowerSeries κ ℂ_[p]) (c k x) := by
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [← Algebra.smul_def, map_sum, Derivation.map_smul]

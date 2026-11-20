@@ -186,9 +186,9 @@ theorem derivIs_Gser {K : Type} [NormedField K] [IsUltrametricDist K] [CharZero 
     DerivIs p (Gser p c c') c := by
   obtain ⟨h1, h2⟩ := Formalism.InvariantFactorPaths.G7.Top.derivA K p hp hnp
   have e : MvPowerSeries.pderiv (R := K) 0 (Gser p c c') -
-      MvPowerSeries.C c * (at1 0 (PowerSeries.derivative K (lgF K p)) * at1 1 (g0F K p)) =
+      MvPowerSeries.C c * (at1 0 (PowerSeries.derivative (R := K) (lgF K p)) * at1 1 (g0F K p)) =
       c • (MvPowerSeries.pderiv (R := K) 0 (Aser K p) -
-        at1 0 (PowerSeries.derivative K (lgF K p)) * at1 1 (g0F K p)) -
+        at1 0 (PowerSeries.derivative (R := K) (lgF K p)) * at1 1 (g0F K p)) -
       c' • MvPowerSeries.pderiv (R := K) 0 (Aser' K p) := by
     unfold Gser
     rw [← MvPowerSeries.smul_eq_C_mul, ← MvPowerSeries.smul_eq_C_mul, ← MvPowerSeries.smul_eq_C_mul,
@@ -314,7 +314,7 @@ theorem frobenius_partial_coboundary_bound {K : Type} [NormedField K] [IsUltrame
   have hΦi : Integral (MvPowerSeries.pderiv (R := K) 0 Φ) := by
     have e : MvPowerSeries.pderiv (R := K) 0 Φ = MvPowerSeries.map σ
         (MvPowerSeries.pderiv (R := K) 0 G -
-          MvPowerSeries.C c * (at1 0 (PowerSeries.derivative K (lgF K p)) * at1 1 (g0F K p))) := by
+          MvPowerSeries.C c * (at1 0 (PowerSeries.derivative (R := K) (lgF K p)) * at1 1 (g0F K p))) := by
       rw [hΦ, map_sub, pderiv_prod, map_sub, map_mul, map_mul, MvPowerSeries.map_C, map_inVar,
         map_inVar, map_derivative, map_lgF, map_g0F, map_pderiv]
     rw [e]

@@ -138,7 +138,7 @@ theorem bridgeTwo_of (hM : CoeffMem.{0}) (hT : TInZ.{0}) (hZ : TwoTorsionZ.{0}) 
     refine ⟨?_, h2c, ?_⟩
     · rw [hq]
       simp
-    · show (PowerSeries.derivative K ((tS W xT).subst (expSer W))) ^ 2 = _
+    · show (PowerSeries.derivative (R := K) ((tS W xT).subst (expSer W))) ^ 2 = _
       rw [hder, map_mul, h3]
       ring
   · intro hI hx

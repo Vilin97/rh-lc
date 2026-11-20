@@ -49,7 +49,7 @@ theorem succ_mem (m : ℕ) : ((m : ℂ) + 1) ∈ M := add_mem (natCast_mem M m) 
 
 theorem succ_ne (m : ℕ) : ((m : ℂ) + 1) ≠ 0 := by exact_mod_cast m.succ_ne_zero
 
-theorem rec1 (P V : PowerSeries ℂ) (h : PowerSeries.derivative ℂ P = V * P)
+theorem rec1 (P V : PowerSeries ℂ) (h : PowerSeries.derivative (R := ℂ) P = V * P)
     (hV : ∀ k, PowerSeries.coeff k V ∈ M) (h0 : PowerSeries.coeff 0 P ∈ M) : ∀ n, PowerSeries.coeff n P ∈ M := by
   intro n
   induction n using Nat.strong_induction_on with
@@ -65,7 +65,7 @@ theorem rec1 (P V : PowerSeries ℂ) (h : PowerSeries.derivative ℂ P = V * P)
       have := Finset.HasAntidiagonal.mem_antidiagonal.1 hp
       omega
 
-theorem rec0 (V Q : PowerSeries ℂ) (h : PowerSeries.derivative ℂ V = Q)
+theorem rec0 (V Q : PowerSeries ℂ) (h : PowerSeries.derivative (R := ℂ) V = Q)
     (hQ : ∀ k, PowerSeries.coeff k Q ∈ M) (h0 : PowerSeries.coeff 0 V ∈ M) : ∀ n, PowerSeries.coeff n V ∈ M := by
   intro n
   cases n with
@@ -78,7 +78,7 @@ theorem rec0 (V Q : PowerSeries ℂ) (h : PowerSeries.derivative ℂ V = Q)
     exact hQ m
 
 theorem rec2 (W : PowerSeries ℂ) (c : ℂ) (hc : c ∈ M)
-    (h : PowerSeries.derivative ℂ (PowerSeries.derivative ℂ W) = PowerSeries.C (6 : ℂ) * (W * W) + PowerSeries.C c)
+    (h : PowerSeries.derivative (R := ℂ) (PowerSeries.derivative (R := ℂ) W) = PowerSeries.C (6 : ℂ) * (W * W) + PowerSeries.C c)
     (h0 : PowerSeries.coeff 0 W ∈ M) (h1 : PowerSeries.coeff 1 W ∈ M) : ∀ n, PowerSeries.coeff n W ∈ M := by
   intro n
   induction n using Nat.strong_induction_on with
@@ -174,11 +174,11 @@ theorem caseA (L : PeriodPair) (ω₀ s : ℂ) (hω : ω₀ ∈ L.lattice) (hh :
   have hvA : AnalyticAt ℂ v 0 := analyticAt_of_eventually (hev.mono fun z hz => (hV z hz).differentiableAt)
   have hwA : AnalyticAt ℂ w 0 := analyticAt_of_eventually (hev.mono fun z hz => (hW z hz).differentiableAt)
 
-  have TG : PowerSeries.derivative ℂ (taylor0 (opU L s (th0 L (ω₀ / 2)))) =
+  have TG : PowerSeries.derivative (R := ℂ) (taylor0 (opU L s (th0 L (ω₀ / 2)))) =
       taylor0 v * taylor0 (opU L s (th0 L (ω₀ / 2))) := by
     rw [← Taylor.taylor0_deriv, ← Taylor.taylor0_mul hvA hgA]
     exact Taylor.taylor0_congr (hev.mono fun z hz => (hG z hz).deriv)
-  have TV : PowerSeries.derivative ℂ (taylor0 v) = PowerSeries.C (-1 : ℂ) * taylor0 w + PowerSeries.C (-(s2 L)) := by
+  have TV : PowerSeries.derivative (R := ℂ) (taylor0 v) = PowerSeries.C (-1 : ℂ) * taylor0 w + PowerSeries.C (-(s2 L)) := by
     rw [← Taylor.taylor0_deriv]
     have e1 := Taylor.taylor0_add (f := fun z => (-1 : ℂ) * w z) (g := fun _ => -(s2 L))
       (analyticAt_const.mul hwA) analyticAt_const
@@ -192,7 +192,7 @@ theorem caseA (L : PeriodPair) (ω₀ s : ℂ) (hω : ω₀ ∈ L.lattice) (hh :
     hev.mono fun z hz => (hW z hz).deriv
   have hdw' : ∀ᶠ z in 𝓝 (0 : ℂ), ∀ᶠ y in 𝓝 z, deriv w y = L.derivWeierstrassP (y + (s + ω₀ / 2)) :=
     hdw.eventually_nhds
-  have TW : PowerSeries.derivative ℂ (PowerSeries.derivative ℂ (taylor0 w)) =
+  have TW : PowerSeries.derivative (R := ℂ) (PowerSeries.derivative (R := ℂ) (taylor0 w)) =
       PowerSeries.C (6 : ℂ) * (taylor0 w * taylor0 w) + PowerSeries.C (-(L.g₂ / 2)) := by
     rw [← Taylor.taylor0_deriv, ← Taylor.taylor0_deriv]
     have e1 := Taylor.taylor0_add (f := fun z => (6 : ℂ) * (w z * w z)) (g := fun _ => -(L.g₂ / 2))

@@ -51,7 +51,7 @@ private theorem constantCoeff_linPull_eq_zero {C : Type} [Field C] {σ ι : Type
 
 private theorem pderiv_inr_mainM_one {C : Type} [Field C] (V : VF C) {ι ι' : Type} [Fintype ι]
     [Fintype ι'] (Φ : ι' → ι → C) (b : ι') :
-    MvPowerSeries.pderiv C (Sum.inr b) (mainM V 1 Φ) =
+    MvPowerSeries.pderiv (R := C) (Sum.inr b) (mainM V 1 Φ) =
       MvPowerSeries.rename Sum.inl ((V.l : C)⁻¹ • ∑ c : ι,
         Φ b c • (MvPowerSeries.X c : MvPowerSeries ι C) ^ V.l) := by
   have hE : expE V.l 1 = 1 := by simp [expE]
@@ -113,7 +113,7 @@ theorem mPlus_of_good_tangents : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [
     -((V.l : C) * (S g).be (em c) 1 κ) * X.pair g κ k * v' b k with hΦ
   set F := X.hM g a 1 (fun δ => (S g).tan (em δ)) v' - mainM V 1 Φ with hF
   have hcoeff : MvPowerSeries.coeff (μ' + Finsupp.single (Sum.inr b) 1) F =
-      ((μ' (Sum.inr b) : C) + 1)⁻¹ * MvPowerSeries.coeff μ' (MvPowerSeries.pderiv C (Sum.inr b) F) := by
+      ((μ' (Sum.inr b) : C) + 1)⁻¹ * MvPowerSeries.coeff μ' (MvPowerSeries.pderiv (R := C) (Sum.inr b) F) := by
     rw [MvPowerSeries.coeff_pderiv]
     field_simp
   rw [hcoeff]
@@ -121,7 +121,7 @@ theorem mPlus_of_good_tangents : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [
   set G : MvPowerSeries (Fin N) C :=
     (∑ κ : J g, (∑ k, X.pair g κ k * v' b k) • linPull (fun δ => (S g).tan (em δ)) ((S g).ze (t g) κ)) -
       (V.l : C)⁻¹ • ∑ c : Fin N, Φ b c • (MvPowerSeries.X c : MvPowerSeries (Fin N) C) ^ V.l with hG
-  have hsplit : MvPowerSeries.pderiv C (Sum.inr b) F =
+  have hsplit : MvPowerSeries.pderiv (R := C) (Sum.inr b) F =
       MvPowerSeries.subst (fun w : WV I => hPullW (upG w.1 (t w.1 w.2))
         (fun c => toW g ((fun δ => (S g).tan (em δ)) c)) (fun b => toW (1 - g) (v' b))) γ +
       MvPowerSeries.rename Sum.inl G := by

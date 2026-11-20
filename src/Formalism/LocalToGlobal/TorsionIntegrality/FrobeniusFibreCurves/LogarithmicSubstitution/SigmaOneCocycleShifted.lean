@@ -22,7 +22,7 @@ theorem sigma_one_cocycle_shifted : SigmaOneCocycleShifted := by
 theorem cc_Dinv {K : Type} [Field K] [CharZero K] (l f : PowerSeries K)
     (h1 : PowerSeries.coeff 1 l = 1) :
     PowerSeries.constantCoeff (Dinv l f) = PowerSeries.coeff 1 f := by
-  have key : ∀ g : PowerSeries K, PowerSeries.constantCoeff (PowerSeries.derivative K g) =
+  have key : ∀ g : PowerSeries K, PowerSeries.constantCoeff (PowerSeries.derivative (R := K) g) =
       PowerSeries.coeff 1 g := by
     intro g
     rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, PowerSeries.coeff_derivative]

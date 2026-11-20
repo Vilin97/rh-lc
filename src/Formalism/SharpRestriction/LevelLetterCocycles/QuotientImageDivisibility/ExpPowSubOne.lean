@@ -50,7 +50,7 @@ section Zero
 variable {LL : Type} [Field LL]
 
 theorem exp_pow_sub_one (E : PowerSeries LL) (h0 : constantCoeff E = 1)
-    (hd : PowerSeries.derivative LL E = E) (p : ℕ) :
+    (hd : PowerSeries.derivative (R := LL) E = E) (p : ℕ) :
     ∃ w : PowerSeries LL, E ^ p - 1 = X * w ∧ constantCoeff w = (p : LL) := by
   obtain ⟨E₁, hE₁⟩ : ∃ E₁, E = 1 + X * E₁ := by
     refine ⟨PowerSeries.mk fun j => coeff (j + 1) E, ?_⟩

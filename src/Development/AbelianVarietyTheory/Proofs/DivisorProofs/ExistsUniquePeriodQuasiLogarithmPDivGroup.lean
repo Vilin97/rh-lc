@@ -23,7 +23,7 @@ set_option autoImplicit false in
 open MvPowerSeries in
 private lemma dIn_univ_of_forall_pderiv_integral {B Q : Type} [CommRing B] [CommRing Q]
     [Algebra B Q] {d : ℕ} (f : MvPowerSeries (Fin d) Q)
-    (h : ∀ i, ∃ s : MvPowerSeries (Fin d) B, map (algebraMap B Q) s = pderiv Q i f) :
+    (h : ∀ i, ∃ s : MvPowerSeries (Fin d) B, map (algebraMap B Q) s = pderiv (R := Q) i f) :
     _root_.GlobalTheory.QLog.DIn (⊤ : Ideal B) f := by
   intro α i
   obtain ⟨s, hs⟩ := h i
@@ -44,9 +44,9 @@ private lemma subst_pderiv_inr_cob1_eq_sum_sub_C {R : Type} [CommRing R] {d : �
     (hadd : ∀ k, subst (Sum.elim (X : Fin d → MvPowerSeries (Fin d) R) (0 : Fin d → MvPowerSeries (Fin d) R)) (μ k) = X k)
     (f : MvPowerSeries (Fin d) R) (j : Fin d) :
     subst (Sum.elim (X : Fin d → MvPowerSeries (Fin d) R) (0 : Fin d → MvPowerSeries (Fin d) R))
-        (pderiv R (Sum.inr j) (_root_.GlobalTheory.Katz.cob1 μ f)) =
-      ∑ k, pderiv R k f * subst (Sum.elim (X : Fin d → MvPowerSeries (Fin d) R) (0 : Fin d → MvPowerSeries (Fin d) R))
-        (pderiv R (Sum.inr j) (μ k)) - C (constantCoeff (pderiv R j f)) := by
+        (pderiv (R := R) (Sum.inr j) (_root_.GlobalTheory.Katz.cob1 μ f)) =
+      ∑ k, pderiv (R := R) k f * subst (Sum.elim (X : Fin d → MvPowerSeries (Fin d) R) (0 : Fin d → MvPowerSeries (Fin d) R))
+        (pderiv (R := R) (Sum.inr j) (μ k)) - C (constantCoeff (pderiv (R := R) j f)) := by
   have hE : HasSubst (Sum.elim (X : Fin d → MvPowerSeries (Fin d) R) (0 : Fin d → MvPowerSeries (Fin d) R)) :=
     hasSubst_of_constantCoeff_zero (by rintro (i | i) <;> simp)
   have hM : HasSubst μ := hasSubst_of_constantCoeff_zero hμ
@@ -89,7 +89,7 @@ private lemma exists_integral_pderiv_of_integral_cob1_lin {B Q : Type} [CommRing
     (s : MvPowerSeries (Fin d ⊕ Fin d) B)
     (hs : map (algebraMap B Q) s =
       _root_.GlobalTheory.Katz.cob1 (_root_.GlobalTheory.QLog.up Q μ) f) (i : Fin d) :
-    ∃ g, map (algebraMap B Q) g = pderiv Q i f := by
+    ∃ g, map (algebraMap B Q) g = pderiv (R := Q) i f := by
   classical
   choose b hb using hlin
   set EB := Sum.elim (X : Fin d → MvPowerSeries (Fin d) B) (0 : Fin d → MvPowerSeries (Fin d) B)
@@ -98,25 +98,25 @@ private lemma exists_integral_pderiv_of_integral_cob1_lin {B Q : Type} [CommRing
   have hEmap : (fun x => map (algebraMap B Q) (EB x)) = EQ := by
     funext x; rcases x with x | x <;> simp [EB, EQ]
   have hpm : ∀ {σ : Type} (g : MvPowerSeries σ B) (k : σ),
-      pderiv Q k (map (algebraMap B Q) g) = map (algebraMap B Q) (pderiv B k g) := by
+      pderiv (R := Q) k (map (algebraMap B Q) g) = map (algebraMap B Q) (pderiv (R := B) k g) := by
     intro σ g k; ext n; simp [coeff_pderiv]
   have hsm : ∀ g : MvPowerSeries (Fin d ⊕ Fin d) B,
       subst EQ (map (algebraMap B Q) g) = map (algebraMap B Q) (subst EB g) := by
     intro g; rw [map_subst hEB, hEmap]
   let M : Matrix (Fin d) (Fin d) (MvPowerSeries (Fin d) B) :=
-    fun k j => subst EB (pderiv B (Sum.inr j) (μ k))
-  let w : Fin d → MvPowerSeries (Fin d) B := fun j => subst EB (pderiv B (Sum.inr j) s) + C (b j)
+    fun k j => subst EB (pderiv (R := B) (Sum.inr j) (μ k))
+  let w : Fin d → MvPowerSeries (Fin d) B := fun j => subst EB (pderiv (R := B) (Sum.inr j) s) + C (b j)
   have hμQ : ∀ k, constantCoeff (_root_.GlobalTheory.QLog.up Q μ k) = 0 := by
     intro k; simp [_root_.GlobalTheory.QLog.up, hμ k]
   have haddQ : ∀ k, subst EQ (_root_.GlobalTheory.QLog.up Q μ k) = X k := by
     intro k; simp only [_root_.GlobalTheory.QLog.up]; rw [hsm, hadd]; simp
-  have hrow : ∀ j, ∑ k, pderiv Q k f * map (algebraMap B Q) (M k j) = map (algebraMap B Q) (w j) := by
+  have hrow : ∀ j, ∑ k, pderiv (R := Q) k f * map (algebraMap B Q) (M k j) = map (algebraMap B Q) (w j) := by
     intro j
     have h := subst_pderiv_inr_cob1_eq_sum_sub_C hμQ haddQ f j
     rw [← hs, hpm, hsm] at h
-    have hc : (C (constantCoeff (pderiv Q j f)) : MvPowerSeries (Fin d) Q) =
+    have hc : (C (constantCoeff (pderiv (R := Q) j f)) : MvPowerSeries (Fin d) Q) =
         map (algebraMap B Q) (C (b j) : MvPowerSeries (Fin d) B) := by
-      have hcc : constantCoeff (pderiv Q j f) = algebraMap B Q (b j) := by
+      have hcc : constantCoeff (pderiv (R := Q) j f) = algebraMap B Q (b j) := by
         rw [← hb j, ← coeff_zero_eq_constantCoeff_apply, coeff_pderiv]
         simp [_root_.GlobalTheory.Katz.lin]
       rw [hcc, map_C]
@@ -127,23 +127,23 @@ private lemma exists_integral_pderiv_of_integral_cob1_lin {B Q : Type} [CommRing
     rw [isUnit_iff_constantCoeff, RingHom.map_det]
     have : (constantCoeff).mapMatrix M = 1 := by
       ext k j
-      show constantCoeff (subst EB (pderiv B (Sum.inr j) (μ k))) = (1 : Matrix (Fin d) (Fin d) B) k j
+      show constantCoeff (subst EB (pderiv (R := B) (Sum.inr j) (μ k))) = (1 : Matrix (Fin d) (Fin d) B) k j
       rw [Matrix.one_apply, ← coeff_zero_eq_constantCoeff_apply,
         show EB = Sum.elim (fun i => X i) (fun _ => 0) from rfl,
-        (_root_.GlobalTheory.coeff_subst_restrict_sum (pderiv B (Sum.inr j) (μ k))).1 0]
+        (_root_.GlobalTheory.coeff_subst_restrict_sum (pderiv (R := B) (Sum.inr j) (μ k))).1 0]
       simp [coeff_pderiv, hδ]
     rw [this, Matrix.det_one]
     exact isUnit_one
   have hMN := Matrix.mul_nonsing_inv M hdet
   refine ⟨∑ j, w j * M⁻¹ j i, ?_⟩
   calc map (algebraMap B Q) (∑ j, w j * M⁻¹ j i)
-      = ∑ j, (∑ k, pderiv Q k f * map (algebraMap B Q) (M k j)) *
+      = ∑ j, (∑ k, pderiv (R := Q) k f * map (algebraMap B Q) (M k j)) *
           map (algebraMap B Q) (M⁻¹ j i) := by simp [map_sum, hrow]
-    _ = ∑ k, pderiv Q k f * map (algebraMap B Q) ((M * M⁻¹) k i) := by
+    _ = ∑ k, pderiv (R := Q) k f * map (algebraMap B Q) ((M * M⁻¹) k i) := by
         set_option synthInstance.maxHeartbeats 100000 in
           simp only [Matrix.mul_apply, map_sum, map_mul, Finset.sum_mul, Finset.mul_sum, mul_assoc]
         exact Finset.sum_comm
-    _ = pderiv Q i f := by
+    _ = pderiv (R := Q) i f := by
         rw [hMN]; simp [Matrix.one_apply]
 
 set_option autoImplicit false in
