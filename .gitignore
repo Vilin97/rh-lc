@@ -1,1 +1,6 @@
 .lake/
+
+.leanwrap/
+scratch/
+scratch_*
+*.leanwrap.lock
