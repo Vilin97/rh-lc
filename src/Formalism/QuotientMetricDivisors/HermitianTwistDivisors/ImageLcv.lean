@@ -165,9 +165,7 @@ theorem imageLcv_of (h : LcvBasis) : ImageLcv := by
         (Matrix.mulVecLin φ) '' (L : Set (Fin d → K)) := by
       rw [matLat, Submodule.map_coe]
       rfl
-    rw [this, Submodule.span_image, Submodule.IsLattice.span_eq_top (self := hL), Submodule.map_top,
-      LinearMap.range_eq_top]
-    exact hsurj
+    exact fun _ _ hli => (LinearIndependent.iff_fractionRing _ _).mp hli
   obtain ⟨-, h1⟩ := h K d XT hXT (matLat φ L) hLat _ hF
   obtain ⟨-, h2⟩ := h K d XS hXS L hL _ hE
   have hidx : ∀ w : HeightOneSpectrum (𝓞 K),

@@ -171,9 +171,7 @@ theorem lemmaRb_of (hPF : ProdFormula) (hCS : DetCS) (hLB : LcvBasis) (hIC : Idx
         (Matrix.mulVecLin P) '' (M : Set (Fin n → K)) := by
       rw [matLat, Submodule.map_coe]
       rfl
-    rw [this, Submodule.span_image, Submodule.IsLattice.span_eq_top (self := hM), Submodule.map_top,
-      LinearMap.range_eq_top]
-    exact hP
+    exact fun _ _ hli => (LinearIndependent.iff_fractionRing _ _).mp hli
 
   have hli : LinearIndependent K (fun i => (Pi.single i 1 : Fin D → K)) := by
     have : (fun i => (Pi.single i 1 : Fin D → K)) = ⇑(Pi.basisFun K (Fin D)) := by

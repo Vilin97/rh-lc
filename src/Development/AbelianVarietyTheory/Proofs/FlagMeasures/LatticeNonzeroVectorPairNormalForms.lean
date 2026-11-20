@@ -154,7 +154,7 @@ theorem isLattice_map {n m : ℕ} (Λ : Submodule (𝓞 E) (Fin n → E)) (hΛ :
   refine ⟨hΛ.fg.map _, ?_⟩
   have hc : ((Λ.map (f.restrictScalars (𝓞 E)) : Submodule (𝓞 E) (Fin m → E)) : Set (Fin m → E)) =
       f '' (Λ : Set (Fin n → E)) := Submodule.map_coe _ _
-  rw [hc, Submodule.span_image, hΛ.span_eq_top, Submodule.map_top, LinearMap.range_eq_top.mpr hf]
+  exact fun _ _ hli => (LinearIndependent.iff_fractionRing _ _).mp hli
 
 def consZero (k : ℕ) : (Fin k → E) →ₗ[E] (Fin (k + 1) → E) where
   toFun z := Fin.cons 0 z

@@ -234,9 +234,7 @@ theorem matLat_lattice' {n D : ℕ} (P : Matrix (Fin D) (Fin n) K)
       (Matrix.mulVecLin P) '' (M : Set (Fin n → K)) := by
     rw [matLat, Submodule.map_coe]
     rfl
-  rw [this, Submodule.span_image, Submodule.IsLattice.span_eq_top (self := hM), Submodule.map_top,
-    LinearMap.range_eq_top]
-  exact hP
+  exact fun _ _ hli => (LinearIndependent.iff_fractionRing _ _).mp hli
 
 theorem loc_glueLat {D : ℕ} (L : HeightOneSpectrum (𝓞 K) → Submodule (𝓞 K) (Fin D → K))
     (hc : ∀ w, L (conjPl w) = L w) (R : Submodule (𝓞 K) (Fin D → K))

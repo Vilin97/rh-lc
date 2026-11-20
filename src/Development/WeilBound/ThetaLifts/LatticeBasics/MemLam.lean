@@ -109,8 +109,7 @@ private theorem isLattice_map_of_surjective {n d : ℕ} (L : Submodule O (Matrix
       Set (Matrix (Fin n) (Fin d) K)) = G '' (L : Set (Matrix (Fin n) (Fin d) K)) := by
     rw [Submodule.map_coe]
     rfl
-  rw [himg, Submodule.span_image, Submodule.IsLattice.span_eq_top, Submodule.map_top,
-    LinearMap.range_eq_top.mpr hG]
+  exact fun _ _ hli => (LinearIndependent.iff_fractionRing _ _).mp hli
 
 private theorem isUnit_det_lemma_3 [IsLocalRing O] {a : O} {n : ℕ} (ha : a ∈ IsLocalRing.maximalIdeal O)
     (M : Matrix (Fin n) (Fin n) O) : IsUnit (1 + a • M).det := by

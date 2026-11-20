@@ -106,7 +106,7 @@ theorem isLattice_mapE (φ : V ≃ₗ[K] V') {M : Submodule (𝓞 K) V} (hM : Su
   constructor
   · exact hM.fg.map _
   · have e : ((mapE φ M : Submodule (𝓞 K) V') : Set V') = (φ : V →ₗ[K] V') '' (M : Set V) := rfl
-    rw [e, Submodule.span_image, hM.span_eq_top, Submodule.map_top, LinearEquiv.range]
+    exact fun _ _ hli => (LinearIndependent.iff_fractionRing _ _).mp hli
 
 theorem mapE_symm_mapE (φ : V ≃ₗ[K] V') (M : Submodule (𝓞 K) V) : mapE φ.symm (mapE φ M) = M := by
   ext x; simp [mem_mapE]

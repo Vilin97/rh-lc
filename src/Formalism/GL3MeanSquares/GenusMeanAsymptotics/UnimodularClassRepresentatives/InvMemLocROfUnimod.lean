@@ -52,8 +52,7 @@ theorem isLattice_gmap (g : V ≃ₗ[K] V) {L : Submodule (𝓞 K) V} (hL : Subm
     Submodule.IsLattice K (Formalism.HermitianLatticesTheory.gmap g L) := by
   refine ⟨hL.fg.map _, ?_⟩
   have e : ((Formalism.HermitianLatticesTheory.gmap g L : Submodule (𝓞 K) V) : Set V) = (g : V →ₗ[K] V) '' (L : Set V) := rfl
-  rw [e, Submodule.span_image, hL.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
-  exact g.surjective
+  exact fun _ _ hli => (LinearIndependent.iff_fractionRing _ _).mp hli
 
 theorem form_smul_smul (s t : 𝓞 K) (x y : V) :
     h (s • x) (t • y) = (conjO K s * t) • h x y := by

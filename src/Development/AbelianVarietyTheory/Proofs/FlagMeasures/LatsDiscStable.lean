@@ -122,9 +122,16 @@ omit [StarRing K] in
 private lemma isLattice_img_of_isLattice (e : V ≃ₗ[K] V') (L : Submodule R V) (hL : Submodule.IsLattice K L) :
     Submodule.IsLattice K (_root_.GlobalTheory.Mass.Transp.img e L) := by
   refine ⟨hL.fg.map _, ?_⟩
-  rw [_root_.GlobalTheory.Mass.Transp.img, Submodule.map_coe, LinearMap.coe_restrictScalars,
-    Submodule.span_image (e : V →ₗ[K] V'), hL.span_eq_top, Submodule.map_top]
-  exact LinearEquiv.range e
+  rw [_root_.GlobalTheory.Mass.Transp.img, Submodule.map_coe, LinearMap.coe_restrictScalars]
+  intro s hs hli
+  change s ⊆ ⇑e '' _ at hs
+  have hpre := Set.preimage_mono (f := ⇑e) hs
+  rw [Set.preimage_image_eq _ e.injective] at hpre
+  rw [← Set.image_preimage_eq s e.surjective] at hli ⊢
+  exact (linearIndepOn_id_imageₛ_iff (f := e.toLinearMap) e.injective.injOn).2
+    (hL.linearIndepOn _ hpre
+      ((linearIndepOn_id_imageₛ_iff (f := e.toLinearMap.restrictScalars R)
+        e.injective.injOn).1 hli))
 
 open NumberField Matrix in
 open scoped ENNReal Classical in

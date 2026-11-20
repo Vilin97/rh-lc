@@ -211,8 +211,7 @@ theorem matLat_lattice {d d' : ℕ} (φ : Matrix (Fin d') (Fin d) K) (h : Functi
   have h1 : ((matLat φ L : Submodule (𝓞 K) (Fin d' → K)) : Set (Fin d' → K)) =
       φ.mulVecLin '' (L : Set (Fin d → K)) := by
     ext x; simp [matLat]
-  rw [h1, Submodule.span_image, hL.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
-  exact h
+  exact fun _ _ hli => (LinearIndependent.iff_fractionRing _ _).mp hli
 
 theorem twisted_finite {Bs : DefBase K} {Df : DefSide Bs} (S : IndefRows Df) : {w | S.μ w ≠ Bs.μ0}.Finite := (S.Tw.finite_toSet).subset fun w hw => (S.5.2 w).mpr hw
 

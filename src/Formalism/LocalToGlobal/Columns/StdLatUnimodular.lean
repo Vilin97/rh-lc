@@ -227,7 +227,7 @@ theorem gmap_lattice (g : Sp E n ≃ₗ[E] Sp E n) (L : Submodule (𝓞 E) (Sp E
   · have h1 : ((gmap g L : Submodule (𝓞 E) (Sp E n)) : Set (Sp E n)) = (g : Sp E n →ₗ[E] Sp E n) '' L := by
       ext x
       simp [gmap]
-    rw [h1, Submodule.span_image, hL.span_eq_top, Submodule.map_top, LinearEquiv.range]
+    exact fun _ _ hli => (LinearIndependent.iff_fractionRing _ _).mp hli
 
 theorem mem_dual (L : Submodule (𝓞 E) (Sp E n)) (x : Sp E n) :
     x ∈ dual (hStd E n) L ↔ ∀ y ∈ L, hStd E n y x ∈ (1 : Submodule (𝓞 E) E) := by
