@@ -123,11 +123,11 @@ theorem valuativeExtension_algHom (f : L →ₐ[K] M) :
     letI := f.toRingHom.toAlgebra
     ValuativeExtension L M :=
   letI := f.toRingHom.toAlgebra
-  ⟨vle_map_iff f⟩
+  ⟨fun {a b} => vle_map_iff f a b⟩
 
 theorem valuativeExtension_of_isScalarTower [Algebra L M] [IsScalarTower K L M] :
     ValuativeExtension L M :=
-  ⟨vle_map_iff (IsScalarTower.toAlgHom K L M)⟩
+  ⟨fun {a b} => vle_map_iff (IsScalarTower.toAlgHom K L M) a b⟩
 
 end Maps
 
