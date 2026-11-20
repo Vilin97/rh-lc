@@ -81,7 +81,7 @@ lemma formallySmooth_of_split [Algebra R A] [Algebra R B] [Algebra A B] [IsScala
     have hs := KaehlerDifferential.map_surjective R A B
     have h₀ : ∃ l, l ∘ₗ KaehlerDifferential.mapBaseChange R A B = LinearMap.id := ⟨r, hr⟩
     obtain ⟨s, hs'⟩ : ∃ l, KaehlerDifferential.map R A B B ∘ₗ l = LinearMap.id :=
-      ((hex.split_tfae hinj hs).out 1 0).mp h₀
+      ((hex.split_tfae hinj hs).out 2 1).mp h₀
     exact Module.Projective.of_split s _ hs'
   · refine subsingleton_of_forall_eq 0 fun x => ?_
     have h₁ : Algebra.H1Cotangent.δ R A B x = 0 := by

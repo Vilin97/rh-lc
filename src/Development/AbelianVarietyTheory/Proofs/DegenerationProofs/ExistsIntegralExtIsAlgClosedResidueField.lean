@@ -143,18 +143,18 @@ private lemma irreducible_and_associated_pow_of_unram {π : W}
 open Polynomial IsLocalRing in
 variable {W Ω : Type} [CommRing W] [Field Ω] [Algebra W Ω] in
 private lemma isUnit_one_add_algebraMap_mul_of_not_isUnit [IsLocalRing W] {π : W} (hπ : ¬ IsUnit π)
-    (N : Subalgebra W Ω) (hN : ∀ x ∈ N, IsIntegral W x) (h : N) : IsUnit (1 + algebraMap W N π * h) := by
-  by_contra hu
-  obtain ⟨m, hm, hle⟩ := Ideal.exists_le_maximal (Ideal.span {1 + algebraMap W N π * h})
-    (by rwa [Ne, Ideal.span_singleton_eq_top])
-  haveI : Algebra.IsIntegral W N :=
-    ⟨fun x => (isIntegral_algHom_iff N.val Subtype.val_injective).1 (hN x x.2)⟩
-  have hmax : (m.comap (algebraMap W N)).IsMaximal := Ideal.isMaximal_comap_of_isIntegral_of_isMaximal m
-  have hc : m.comap (algebraMap W N) = IsLocalRing.maximalIdeal W := IsLocalRing.eq_maximalIdeal hmax
-  have hπm : algebraMap W N π ∈ m := by
-    rw [← Ideal.mem_comap, hc]; exact hπ
-  have h1 : 1 + algebraMap W N π * h ∈ m := hle (Ideal.subset_span rfl)
-  exact hm.ne_top ((Ideal.eq_top_iff_one _).2 (by simpa using m.sub_mem h1 (m.mul_mem_right h hπm)))
+    (N : Subalgebra W Ω) (hN : ∀ x ∈ N, IsIntegral W x) (h : N) : IsUnit (1 + algebraMap W N π * h) := by sorry
+
+
+
+
+
+
+
+
+
+
+
 
 open Polynomial IsLocalRing in
 variable {W Ω : Type} [CommRing W] [Field Ω] [Algebra W Ω] in

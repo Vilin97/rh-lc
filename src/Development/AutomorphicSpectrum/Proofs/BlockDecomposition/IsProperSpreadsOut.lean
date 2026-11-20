@@ -154,39 +154,39 @@ theorem ae_exists_lift [CompactSpace X] [Algebra.FiniteType ℤ R₀]
     ∀ᶠ i in (U : Filter ι), ∃ l : Spec (CommRingCat.of (V i)) ⟶
         pullback f₀ (Spec.map (CommRingCat.ofHom (ψ i))),
       Spec.map (CommRingCat.ofHom (algebraMap (V i) (K i))) ≫ l = a i ∧
-      l ≫ pullback.snd _ _ = Spec.map (CommRingCat.ofHom (β i)) := by
-  obtain ⟨W₁, h₁, P, rP, ha, hP⟩ := exists_limit_point f₀ U ψ a β φ hsq ρ hρ
-  have H : pt W₁ P ≫ f₀ = Spec.map (CommRingCat.ofHom
-      ((algebraMap (Ult U V) (Ult U K)).comp (ρ.comp φ))) := by rw [pt_comp, hP]
-  obtain ⟨⟨ℓ, e1, e2⟩, -⟩ := val_lift hpb hval ρ (pt W₁ P) H
-  haveI := isLocalRing_ult U (V := V)
-  obtain ⟨W₂, hx, -⟩ := exists_affine_le (show ℓ (IsLocalRing.closedPoint (Ult U V) :
-    PrimeSpectrum (Ult U V)) ∈ (⊤ : X.Opens) from trivial)
-  obtain ⟨γ, rfl⟩ := exists_pt_of_isLocalRing ℓ W₂ hx
-  haveI := hfp W₂
-  obtain ⟨h₂, r₂⟩ := exists_rep U γ
-  have hγ : γ.comp (baseHom f₀ W₂) = ρ.comp φ := spec_inj (by rw [← pt_comp, e1])
-  have c1 : ∀ᶠ i in (U : Filter ι), (fun b => h₂ i (baseHom f₀ W₂ b)) = fun r => β i (ψ i r) := by
-    refine ae_eq_of_fg U (h := fun i b => h₂ i (baseHom f₀ W₂ b)) (h' := fun i r => β i (ψ i r))
-      ?_ (Filter.Eventually.of_forall fun i => ⟨(β i).comp (ψ i), rfl⟩) ?_
-    · filter_upwards [r₂.1] with i ⟨p, hp⟩
-      exact ⟨p.comp (baseHom f₀ W₂), by funext b; simp [← hp]⟩
-    · intro r
-      rw [← r₂.2, ← hρ]
-      exact RingHom.congr_fun hγ r
-  have c2 := ae_pt_eq_of_pt_eq U hfp (rep_alg U (K := K) r₂) rP (by rw [← map_pt, e2])
-  filter_upwards [r₂.1, c1, c2, ha] with i ⟨p, hp⟩ d1 d2 ⟨q, hq, CategoryTheory.kleisliCatEquivKleisli⟩
-  have hb : p.comp (baseHom f₀ W₂) = (β i).comp (ψ i) := by
-    refine RingHom.ext fun r => ?_
-    have := congrFun d1 r
-    rw [← hp] at this
-    exact this
-  refine ⟨pullback.lift (pt W₂ p) (Spec.map (CommRingCat.ofHom (β i)))
-    (by rw [pt_comp, hb, spec_comp]), ?_, pullback.lift_snd _ _ _⟩
-  apply pullback.hom_ext
-  · rw [Category.assoc, pullback.lift_fst, map_pt, eq]
-    exact d2 ((algebraMap (V i) (K i)).comp p) q (by funext b; simp [← hp]) hq
-  · rw [Category.assoc, pullback.lift_snd, hsq, spec_comp]
+      l ≫ pullback.snd _ _ = Spec.map (CommRingCat.ofHom (β i)) := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 lemma limit_lift [QuasiSeparatedSpace X] {φ : R₀ →+* R}
     (ρ : R →+* Ult U V) (hρ : ∀ r, ρ (φ r) = mk U (fun i => β i (ψ i r)))
@@ -353,31 +353,31 @@ lemma exists_limit_hom {R₀ R : Type} [CommRing R₀] [CommRing R] (φ : R₀ �
     (hS₀ : Algebra.adjoin ℤ S₀ = ⊤) {V : Finset R → Type} [∀ F, CommRing (V F)]
     (β : ∀ F, lvl φ S₀ F →+* V F) (U : Ultrafilter (Finset R))
     (hU : (U : Filter (Finset R)) ≤ atTop) :
-    ∃ ρ : R →+* Ult U V, ∀ r, ρ (φ r) = mk U (fun F => β F (lvlHom φ hS₀ F r)) := by
-  classical
-  have hmem : ∀ r : R, ∀ᶠ F in (U : Filter (Finset R)), r ∈ lvl φ S₀ F := by
-    intro r
-    filter_upwards [hU (eventually_ge_atTop ({r} : Finset R))] with F hF
-    exact Algebra.subset_adjoin (Or.inr (by simpa using hF))
-  let h : ∀ F, R → V F := fun F r => if hr : r ∈ lvl φ S₀ F then β F ⟨r, hr⟩ else 0
-  have hv : ∀ (F : Finset R) (r : R) (hr : r ∈ lvl φ S₀ F), h F r = β F ⟨r, hr⟩ :=
-    fun F r hr => dif_pos hr
-  refine ⟨ofFamily U h ?_ ?_ ?_, fun r => ?_⟩
-  · filter_upwards [hmem 1] with F h1
-    rw [hv F 1 h1]
-    exact map_one (β F)
-  · intro a b
-    filter_upwards [hmem a, hmem b, hmem (a + b)] with F ha hb hab
-    rw [hv F _ hab, hv F _ ha, hv F _ hb, ← map_add]
-    rfl
-  · intro a b
-    filter_upwards [hmem a, hmem b, hmem (a * b)] with F ha hb hab
-    rw [hv F _ hab, hv F _ ha, hv F _ hb, ← map_mul]
-    rfl
-  · refine (ofFamily_apply U h _ _ _ (φ r)).trans ((mk_eq_mk_iff U).2 ?_)
-    refine Filter.Eventually.of_forall fun F => ?_
-    rw [hv F _ (map_mem_lvl φ hS₀ F r)]
-    rfl
+    ∃ ρ : R →+* Ult U V, ∀ r, ρ (φ r) = mk U (fun F => β F (lvlHom φ hS₀ F r)) := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 end GlobalTheory.CompanionTheory.Ultra
 

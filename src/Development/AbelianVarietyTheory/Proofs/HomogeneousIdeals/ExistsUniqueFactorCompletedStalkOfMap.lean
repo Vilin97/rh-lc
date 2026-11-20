@@ -97,7 +97,7 @@ theorem isLocalHom_of_extend_adicCompletion [IsLocalRing A] [IsLocalRing R]
     [hψ : IsLocalHom (ψ.comp (algebraMap A (AdicCompletion (maximalIdeal A) A)))] :
     IsLocalHom ψ := by
   have := AdicCompletion.isLocalRing_of_fg hJ
-  apply ((IsLocalRing.local_hom_TFAE ψ).out 0 2).mpr
+  apply ((IsLocalRing.local_hom_TFAE ψ).out 1 3).mpr
   rw [AdicCompletion.maximalIdeal_eq_map_of_fg hJ, Ideal.map_map]
   exact ((IsLocalRing.local_hom_TFAE _).out 0 2).mp hψ
 

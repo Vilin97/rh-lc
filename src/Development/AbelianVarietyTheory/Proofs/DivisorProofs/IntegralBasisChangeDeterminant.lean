@@ -33,7 +33,7 @@ theorem matrix_exists_rightInverse_of_saturated_rows {O : Type} [CommRing O] [Is
     (Submodule.range_mkQ _)
   have hs' : ∃ s, (LinearMap.range g).mkQ ∘ₗ s = LinearMap.id := ⟨s, hs⟩
   have hl' : ∃ l, l ∘ₗ g = LinearMap.id :=
-    ((hex.split_tfae hg (Submodule.mkQ_surjective _)).out 0 1).mp hs'
+    ((hex.split_tfae hg (Submodule.mkQ_surjective _)).out 1 2).mp hs'
   obtain ⟨l, hl⟩ := hl'
   refine ⟨LinearMap.toMatrixRight' l, ?_⟩
   ext i j

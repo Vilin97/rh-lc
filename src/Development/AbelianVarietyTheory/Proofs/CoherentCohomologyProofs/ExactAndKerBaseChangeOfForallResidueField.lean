@@ -85,7 +85,7 @@ theorem split_injective_of_forall_lTensor_residueField_injective [Module.Finite 
       (LinearMap.lTensor_surjective _ (Submodule.mkQ_surjective _))
       (lTensor_exact _ l.exact_map_mkQ_range (Submodule.mkQ_surjective _)) (hloc m)
     infer_instance
-  have := (Exact.split_tfae l.exact_map_mkQ_range hinj (Submodule.mkQ_surjective _)).out 0 1
+  have := (Exact.split_tfae l.exact_map_mkQ_range hinj (Submodule.mkQ_surjective _)).out 1 2
   rw [← this]
   exact Module.projective_lifting_property _ _ (Submodule.mkQ_surjective _)
 

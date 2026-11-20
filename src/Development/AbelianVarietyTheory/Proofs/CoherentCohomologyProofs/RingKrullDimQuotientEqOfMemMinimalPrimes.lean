@@ -74,7 +74,7 @@ theorem quasiFiniteAt_of_isolated (R S : Type*) [CommRing R] [CommRing S] [Algeb
   have : Algebra.QuasiFiniteAt p.ResidueField (e q₀).asIdeal := by
     refine .of_isOpen_singleton _ ?_
     refine ((PrimeSpectrum.isOpen_singleton_tfae_of_isNoetherian_of_isJacobsonRing
-      (e q₀)).out 0 2).mpr (And.intro ?_ ?_)
+      (e q₀)).out 1 3).mpr (And.intro ?_ ?_)
     · rw [PrimeSpectrum.isClosed_singleton_iff_isMaximal, ← PrimeSpectrum.isMax_iff]
       exact (e.isMax_apply).mpr h₂
     · rw [PrimeSpectrum.stableUnderGeneralization_singleton, ← PrimeSpectrum.isMin_iff]

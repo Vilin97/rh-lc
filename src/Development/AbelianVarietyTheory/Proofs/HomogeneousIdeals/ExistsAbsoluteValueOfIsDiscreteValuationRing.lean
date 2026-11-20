@@ -228,7 +228,7 @@ theorem isLocalHom_of_comp_algebraMap_adicCompletion {A B : Type*} [CommRing A] 
     [IsNoetherianRing A] [CommRing B] [IsLocalRing B] (f : A →+* B) [IsLocalHom f]
     (g : AdicCompletion (IsLocalRing.maximalIdeal A) A →+* B) (hg : g.comp (algebraMap A _) = f) :
     IsLocalHom g := by
-  refine ((IsLocalRing.local_hom_TFAE g).out 0 2).2 ?_
+  refine ((IsLocalRing.local_hom_TFAE g).out 1 3).2 ?_
   rw [AdicCompletion.maximalIdeal_eq_map, Ideal.map_map, hg]
   exact ((IsLocalRing.local_hom_TFAE f).out 0 2).1 ‹_›
 

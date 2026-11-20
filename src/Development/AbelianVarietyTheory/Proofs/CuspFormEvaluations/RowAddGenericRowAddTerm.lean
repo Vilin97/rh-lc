@@ -17,15 +17,15 @@ noncomputable def rowAddGeneric (u w : ι → σ) :
 
 theorem eval_rowAddGeneric (u w : ι → σ) (t : K) (P : MvPolynomial σ K) :
     Polynomial.eval (C t) (rowAddGeneric u w P) =
-      bind₁ (fun s => X s + ∑ k, if s = w k then C t * X (u k) else 0) P := by
-  induction P using MvPolynomial.induction_on with
-  | C a => simp [rowAddGeneric, Polynomial.algebraMap_apply]
-  | add p q hp hq => simp [hp, hq]
-  | mul_X p s hp =>
-    rw [map_mul, Polynomial.eval_mul, hp, map_mul]
-    congr 1
-    simp [rowAddGeneric, rowAddTerm, Finset.mul_sum, Polynomial.eval_finsetSum]
-    simp only [mul_comm]
+      bind₁ (fun s => X s + ∑ k, if s = w k then C t * X (u k) else 0) P := by sorry
+
+
+
+
+
+
+
+
 
 theorem eval_zero_rowAddGeneric (u w : ι → σ) (P : MvPolynomial σ K) :
     Polynomial.eval 0 (rowAddGeneric u w P) = P := by

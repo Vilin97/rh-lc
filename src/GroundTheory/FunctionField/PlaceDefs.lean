@@ -338,7 +338,7 @@ theorem isNoetherianRing [IsFunctionField k K] : IsNoetherianRing v.ring := by
 
 instance [IsFunctionField k K] : IsDiscreteValuationRing v.ring := by
   have hN := v.isNoetherianRing
-  have : IsPrincipalIdealRing v.ring := ((IsBezout.TFAE (R := v.ring)).out 0 1).1 hN
+  have : IsPrincipalIdealRing v.ring := ((IsBezout.TFAE (R := v.ring)).out 1 2).1 hN
   refine { (inferInstance : IsPrincipalIdealRing v.ring), (inferInstance : IsLocalRing v.ring) with
     not_a_field' := ?_ }
   obtain ⟨x, hx0, hx⟩ := v.exists_valuation_lt_one_ne_zero

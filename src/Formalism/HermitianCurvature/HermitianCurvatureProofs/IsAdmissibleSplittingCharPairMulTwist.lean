@@ -59,16 +59,16 @@ theorem jacobi_base : Formalism.FourierDecayAlt.MA.EmptyWordEnergyDensity := by
   intro P l L j lam α β Lb c Ntot hH ω
   exact MAx3.dens_nil P l L j lam α β Lb c Ntot ω
 
-theorem jacobi_square_integrable : Formalism.FourierDecayAlt.MA.SourceSquareIntegrable := by sorry
-
-
-
-
-
-
-
-
-
+theorem jacobi_square_integrable : Formalism.FourierDecayAlt.MA.SourceSquareIntegrable := by
+  intro P l L j lam α β Lb c Ntot hH
+  have hD := hH.2.1
+  show Integrable ((sysQ P l L j lam α β Lb c Ntot).dens []) (mu0 P.r P.TT)
+  rw [show (sysQ P l L j lam α β Lb c Ntot).dens [] = fun ω => ∑ π, ‖(j π : Qp P.r P.TT → ℂ) ω‖ ^ 2 from
+    funext (MAx3.dens_nil P l L j lam α β Lb c Ntot)]
+  refine integrable_finset_sum _ fun π _ => ?_
+  have := hD [] (by simp) (by simp) π
+  rw [List.prod_nil, MAx3.one_act] at this
+  exact this
 
 theorem polynomial_regular : Formalism.FourierDecayAlt.MA.PRegQ := by
   intro P l L j lam α β Lb c Ntot hH w hw hl
@@ -1273,16 +1273,16 @@ theorem wordS_nodup : ∀ v : List (Bool × ℝ), ((wordS v).map Letter.intersec
     refine ⟨?_, ?_⟩
     · intro hm
       rw [List.mem_map] at hm
-      obtain ⟨b, hb, e⟩ := by sorry
-
-
-
-
-
-
-
-
-
+      obtain ⟨b, hb, e⟩ := hm
+      have h1 := wordS_position_lt v b hb
+      have h2 := congrArg Fin.val e
+      simp only [Function.comp_apply, Fin.coe_castSucc, Fin.val_last] at h2
+      omega
+    · have := wordS_nodup v
+      convert this.map (Fin.castSucc_injective _) using 1
+      · rfl
+      · rw [List.map_map]
+        rfl
 
 theorem plusWord_slots_nodup (w : List ℝ) : ((wordP w).map Letter.intersection_update_fsHerm_neg_one).Nodup := by
   unfold wordP
@@ -7404,8 +7404,8 @@ noncomputable section
 variable {A : Type} [Ring A] [Algebra ℂ A] {r : ℕ} (L : LevelData A r)
 
 open scoped IsMulCommutative in
-instance instCF : CommRing (Subring.closure (FS L)) := sorry
-
+instance instCF : CommRing (Subring.closure (FS L)) :=
+  have := Subring.isMulCommutative_closure (FS_comm L); inferInstance
 
 theorem hat_Dbi (Y : ℂ) : L.Dbi * L.Ahat Y = L.Ahat Y * L.Dbi ∧ L.Dbi * L.R0 Y = L.R0 Y * L.Dbi := by
   have h := commA L L.Drbi L.Drb (Drbi_Drb L) (Drb_Drbi L)
@@ -7498,28 +7498,28 @@ theorem S_la (y : ℂ) : la L y * (L.ζ * L.ζbi * SS) = (L.ζ * L.ζbi * SS) * 
   rw [hat_commute_D, D_inv_mul_D, hat_commute_D_bar_inv, e1, shift_norm_commute_closure L SS hf hp hpb hn hns (memDi L), sw L (memDbi L) (memDi L), D_mul_D_inv]
 
 theorem S_lb (y : ℂ) : lb L y * (L.ζ * L.ζbi * SS) = (L.ζ * L.ζbi * SS) * lb L y +
-    (algebraMap ℂ A L.TT * (L.ζbi * (L.ζ * L.ζbi * SS))) * la L y := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    (algebraMap ℂ A L.TT * (L.ζbi * (L.ζ * L.ζbi * SS))) * la L y := by
+  rw [S_eq L SS hf hp hpb hn hns]
+  have e1 := ruleSSn L SS hf hp hpb hn hns (y + 1)
+  rw [add_sub_cancel_right] at e1
+  have fid : ∀ x : A, L.Dbi * (L.D * (algebraMap ℂ A L.TT * (L.Drb * (L.Di * (L.Dbi * x))))) =
+      algebraMap ℂ A L.TT * (L.ζbi * (L.D * (L.Dbi * (L.Di * x)))) := by
+    intro x
+    have hz : (⟨L.Drb, memDrb L⟩ : Subring.closure (FS L)) * ⟨L.Dbi, memDbi L⟩ = ⟨L.ζbi, memF L (m_ζbi L)⟩ :=
+      Subtype.ext (Drb_Dbi L)
+    have h := congrArg Subtype.val (show (⟨L.Dbi, memDbi L⟩ : Subring.closure (FS L)) * ⟨L.D, memD L⟩ *
+        (⟨algebraMap ℂ A L.TT, memS L _⟩ * (⟨L.Drb, memDrb L⟩ * ⟨L.Di, memDi L⟩)) * ⟨L.Dbi, memDbi L⟩ =
+        ⟨algebraMap ℂ A L.TT, memS L _⟩ * ⟨L.ζbi, memF L (m_ζbi L)⟩ * (⟨L.D, memD L⟩ * ⟨L.Dbi, memDbi L⟩) *
+          ⟨L.Di, memDi L⟩ by
+      rw [← hz]; ring)
+    simp only [Subring.coe_mul] at h
+    have h2 := congrArg (· * x) h
+    simp only [mul_assoc] at h2
+    exact h2
+  unfold la lb
+  simp only [mul_assoc]
+  rw [raising_commute_D, mul_add, raising_commute_D_bar_inv, e1.2, hat_commute_D_bar_inv, e1.1, fid, shift_norm_commute_closure L SS hf hp hpb hn hns (memDbi L),
+    shift_norm_commute_closure L SS hf hp hpb hn hns (memDi L), sw L (memDbi L) (memD L)]
 
 end S
 
@@ -8511,7 +8511,7 @@ theorem FS_comm : ∀ x ∈ FS L, ∀ y ∈ FS L, x * y = y * x := by
 
 abbrev CF : Type := Subring.closure (FS L)
 
-instance : CommRing (CF L) := sorry
+instance : CommRing (CF L) := Subring.closureCommRingOfComm (FS_comm L)
 
 theorem memF {x : A} (hx : x ∈ L.fns) : x ∈ Subring.closure (FS L) := Subring.subset_closure (Or.inl hx)
 theorem memS (a : ℂ) : algebraMap ℂ A a ∈ Subring.closure (FS L) := Subring.subset_closure (Or.inr ⟨a, rfl⟩)
@@ -8533,9 +8533,9 @@ theorem memDrbi : L.Drbi ∈ Subring.closure (FS L) := by
   exact Subring.list_prod_mem _ fun x hx => by
     obtain ⟨i, rfl⟩ := List.mem_ofFn.1 hx; exact memF L (m_cbi L i)
 
-theorem cl_comm {x y : A} (hx : x ∈ Subring.closure (FS L)) (hy : y ∈ Subring.closure (FS L)) : x * y = y * x := by sorry
-
-
+theorem cl_comm {x y : A} (hx : x ∈ Subring.closure (FS L)) (hy : y ∈ Subring.closure (FS L)) : x * y = y * x := by
+  have := mul_comm (⟨x, hx⟩ : CF L) ⟨y, hy⟩
+  exact congrArg Subtype.val this
 
 theorem comm_cl {z : A} (hz : ∀ x ∈ FS L, z * x = x * z) {y : A} (hy : y ∈ Subring.closure (FS L)) :
     z * y = y * z := by
@@ -8686,7 +8686,7 @@ theorem raising_D_inv_pow (i : ℕ) (Y : ℂ) : ∃ cs : List (ℂ × ℂ), L.R0
           rw [hcs, hX, ← mul_sub, ← mul_assoc, ← pow_succ', e, List.map_append, List.sum_append,
             List.map_singleton, List.sum_singleton, neg_smul, ← sub_eq_add_neg, add_sub_assoc, ← e]
 
-def plusHats : Set A := sorry
+def plusHats : Set A := Set.range L.Ahat ∪ Set.range L.R0
 
 def tm (b : A) (i i' : ℕ) (H : List A) : A := b * (L.Di ^ i * L.Dbi ^ i') * H.prod
 
@@ -9141,27 +9141,27 @@ theorem memζbi : L.ζbi ∈ Subring.closure (FS L) := memF L (m_ζbi L)
 theorem memGG : L.GG ∈ Subring.closure (FS L) := memF L (m_GG L)
 
 theorem coef_ζi : L.ζi * L.Drb * L.GG * L.ζi * L.Dri =
-    L.Db * L.Di - algebraMap ℂ A L.TT * (L.ζi * L.ζbi * (L.Db * L.Di)) := by sorry
+    L.Db * L.Di - algebraMap ℂ A L.TT * (L.ζi * L.ζbi * (L.Db * L.Di)) := by
+  have h1 : e L L.ζ (memζ L) * e L L.ζi (memζi L) = 1 := Subtype.ext L.ζ_ζi
+  have h2 : e L L.ζb (memζb L) * e L L.ζbi (memζbi L) = 1 := Subtype.ext L.ζb_ζbi
+  have hG : e L L.GG (memGG L) = e L L.ζ (memζ L) * e L L.ζb (memζb L) - e L _ (memS L L.TT) :=
+    Subtype.ext L.GG_def
+  have key : e L L.ζi (memζi L) * e L L.Drb (memDrb L) * e L L.GG (memGG L) * e L L.ζi (memζi L) *
+      e L L.Dri (memDri L) = e L L.Drb (memDrb L) * e L L.ζb (memζb L) * (e L L.ζi (memζi L) * e L L.Dri (memDri L)) -
+      e L _ (memS L L.TT) * (e L L.ζi (memζi L) * e L L.ζbi (memζbi L) * (e L L.Drb (memDrb L) * e L L.ζb (memζb L) *
+        (e L L.ζi (memζi L) * e L L.Dri (memDri L)))) := by
+    rw [hG]; linear_combination (e L L.ζi (memζi L) * e L L.Drb (memDrb L) * e L L.ζb (memζb L) * e L L.Dri (memDri L)) * h1 +
+      (e L _ (memS L L.TT) * e L L.ζi (memζi L) * e L L.ζi (memζi L) * e L L.Drb (memDrb L) * e L L.Dri (memDri L)) * h2
+  have := congrArg Subtype.val key
+  simpa [e, LevelData.Db, LevelData.Di, mul_assoc] using this
 
-
-
-
-
-
-
-
-
-
-
-
-
-theorem drb_eq : L.Drb * L.Di = L.Db * L.Di * L.ζbi := by sorry
-
-
-
-
-
-
+theorem drb_eq : L.Drb * L.Di = L.Db * L.Di * L.ζbi := by
+  have h2 : e L L.ζb (memζb L) * e L L.ζbi (memζbi L) = 1 := Subtype.ext L.ζb_ζbi
+  have key : e L L.Drb (memDrb L) * (e L L.ζi (memζi L) * e L L.Dri (memDri L)) =
+      e L L.Drb (memDrb L) * e L L.ζb (memζb L) * (e L L.ζi (memζi L) * e L L.Dri (memDri L)) * e L L.ζbi (memζbi L) := by
+    linear_combination (-(e L L.Drb (memDrb L) * e L L.ζi (memζi L) * e L L.Dri (memDri L))) * h2
+  have := congrArg Subtype.val key
+  simpa [e, LevelData.Db, LevelData.Di, mul_assoc] using this
 
 end Formalism.FourierDecayAlt.P.MAx3.H
 
@@ -9195,17 +9195,17 @@ theorem gen_DD_A (Y : ℂ) : L.Ahat Y * (L.D * L.Dbi) = L.D * L.Dbi * L.Ahat (Y 
   rw [← mul_assoc, Ahat_D, mul_assoc, ← (hat_Dbi L (Y + 1)).1, mul_assoc]
 
 theorem gen_DD_R (Y : ℂ) : L.R0 Y * (L.D * L.Dbi) = L.D * L.Dbi * L.R0 (Y + 1) +
-    L.TT • (L.D * L.Dbi * (L.Drb * L.Di) * L.Ahat (Y + 1)) := by sorry
-
-
-
-
-
-
-
-
-
-
+    L.TT • (L.D * L.Dbi * (L.Drb * L.Di) * L.Ahat (Y + 1)) := by
+  have hf : L.D * (L.Drb * L.Di) * L.Dbi = L.D * L.Dbi * (L.Drb * L.Di) := by
+    have := congrArg Subtype.val (show e L _ (memD L) * (e L _ (memDrb L) * e L _ (memDi L)) * e L _ (memDbi L) =
+      e L _ (memD L) * e L _ (memDbi L) * (e L _ (memDrb L) * e L _ (memDi L)) by ring)
+    simpa [e] using this
+  calc L.R0 Y * (L.D * L.Dbi) = L.R0 Y * L.D * L.Dbi := (mul_assoc _ _ _).symm
+    _ = L.D * (L.R0 (Y + 1) * L.Dbi) + L.TT • (L.D * (L.Drb * L.Di) * (L.Ahat (Y + 1) * L.Dbi)) := by
+        rw [raising_mul_D, mul_add, add_mul, mul_smul_comm, smul_mul_assoc]; simp only [mul_assoc]
+    _ = _ := by
+        rw [← (hat_Dbi L (Y + 1)).1, ← (hat_Dbi L (Y + 1)).2, ← mul_assoc (L.D * (L.Drb * L.Di)), hf]
+        simp only [mul_assoc]
 
 theorem gen_DbD_A (Y : ℂ) : L.Ahat Y * (L.Db * L.Di) = L.Db * L.Di * L.Ahat (Y + -1) := by
   rw [← mul_assoc, ← (hat_Db L Y).1, mul_assoc, Ahat_Di, ← mul_assoc, sub_eq_add_neg]
@@ -9401,90 +9401,90 @@ theorem ruleSS_SSs (i : ℕ) (hi : i ∈ Finset.Icc 1 (P.k - 1)) (Y : ℂ) :
   rw [starSSn_eq hL hLaw]
   exact ⟨h.2.2.2.2.1, h.2.2.2.2.2.1⟩
 
-theorem hyp_model : Hyp L (Submonoid.closure (bddSet P L)) := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+theorem hyp_model : Hyp L (Submonoid.closure (bddSet P L)) := by
+  have gen : ∀ {x}, x ∈ bddSet P L → x ∈ Submonoid.closure (bddSet P L) := fun h => Submonoid.subset_closure h
+  have mDD : L.D * L.Dbi ∈ bddSet P L := Or.inl (Or.inl (Or.inl (by simp)))
+  have mDbD : L.Db * L.Di ∈ bddSet P L := Or.inl (Or.inl (Or.inl (by simp)))
+  have mζi : L.ζi ∈ bddSet P L := Or.inl (Or.inl (Or.inl (by simp)))
+  have mζbi : L.ζbi ∈ bddSet P L := Or.inl (Or.inl (Or.inl (by simp)))
+  have hdrb : L.Drb * L.Di ∈ Submonoid.closure (bddSet P L) := by
+    rw [drb_eq]; exact Submonoid.mul_mem _ (gen mDbD) (gen mζbi)
+  obtain ⟨-, hDi, -, hDbi⟩ := DSC hL
+  have DiDG : L.Di ∈ DG P := by obtain ⟨w, hw⟩ := hDi; rw [← hw]; exact sc_memDG P w
+  have DbiDG : L.Dbi ∈ DG P := by obtain ⟨w, hw⟩ := hDbi; rw [← hw]; exact sc_memDG P w
+  have ssc : ∀ i, L.Drb * L.Dri * SS P (DQ P) i * L.Di = L.Di * (L.Drb * L.Dri * SS P (DQ P) i) ∧
+      L.Drb * L.Dri * SS P (DQ P) i * L.Dbi = L.Dbi * (L.Drb * L.Dri * SS P (DQ P) i) := by
+    intro i
+    have c1 : L.Drb * L.Dri * L.Di = L.Di * (L.Drb * L.Dri) :=
+      Formalism.FourierDecayAlt.P.MAx3.H.cl_comm L (Subring.mul_mem _ (memDrb L) (memDri L)) (memDi L)
+    have c2 : L.Drb * L.Dri * L.Dbi = L.Dbi * (L.Drb * L.Dri) :=
+      Formalism.FourierDecayAlt.P.MAx3.H.cl_comm L (Subring.mul_mem _ (memDrb L) (memDri L)) (memDbi L)
+    exact ⟨by rw [mul_assoc, SS_comm_SC P i hDi, ← mul_assoc, c1, mul_assoc],
+      by rw [mul_assoc, SS_comm_SC P i hDbi, ← mul_assoc, c2, mul_assoc]⟩
+  have sssc : ∀ i, star (L.Drb * L.Dri * SS P (DQ P) i) * L.Di = L.Di * star (L.Drb * L.Dri * SS P (DQ P) i) ∧
+      star (L.Drb * L.Dri * SS P (DQ P) i) * L.Dbi = L.Dbi * star (L.Drb * L.Dri * SS P (DQ P) i) := by
+    intro i
+    have c1 : L.Dr * L.Drbi * L.Di = L.Di * (L.Dr * L.Drbi) :=
+      Formalism.FourierDecayAlt.P.MAx3.H.cl_comm L (Subring.mul_mem _ (memDr L) (memDrbi L)) (memDi L)
+    have c2 : L.Dr * L.Drbi * L.Dbi = L.Dbi * (L.Dr * L.Drbi) :=
+      Formalism.FourierDecayAlt.P.MAx3.H.cl_comm L (Subring.mul_mem _ (memDr L) (memDrbi L)) (memDbi L)
+    rw [starSSn_eq hL hLaw]
+    exact ⟨by rw [mul_assoc, c1, ← mul_assoc, SSs_comm_SC i hDi, mul_assoc],
+      by rw [mul_assoc, c2, ← mul_assoc, SSs_comm_SC i hDbi, mul_assoc]⟩
+  refine hyp_closure (bddSet P L) ?_ ?_ ?_ ?_ hdrb
+  · rintro b ((((hb | ⟨f, rfl⟩) | ⟨i, hi, rfl⟩) | ⟨i, hi, rfl⟩))
+    · simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hb
+      rcases hb with rfl | rfl | rfl | rfl
+      · exact Formalism.FourierDecayAlt.P.MAx3.H.cl_comm L (memζi L) (memDi L)
+      · exact Formalism.FourierDecayAlt.P.MAx3.H.cl_comm L (memζbi L) (memDi L)
+      · exact Formalism.FourierDecayAlt.P.MAx3.H.cl_comm L (memDD L) (memDi L)
+      · exact Formalism.FourierDecayAlt.P.MAx3.H.cl_comm L (memDbD L) (memDi L)
+    · exact kap_comm_DG P f DiDG
+    · exact (ssc i).1
+    · exact (sssc i).1
+  · rintro b ((((hb | ⟨f, rfl⟩) | ⟨i, hi, rfl⟩) | ⟨i, hi, rfl⟩))
+    · simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hb
+      rcases hb with rfl | rfl | rfl | rfl
+      · exact Formalism.FourierDecayAlt.P.MAx3.H.cl_comm L (memζi L) (memDbi L)
+      · exact Formalism.FourierDecayAlt.P.MAx3.H.cl_comm L (memζbi L) (memDbi L)
+      · exact Formalism.FourierDecayAlt.P.MAx3.H.cl_comm L (memDD L) (memDbi L)
+      · exact Formalism.FourierDecayAlt.P.MAx3.H.cl_comm L (memDbD L) (memDbi L)
+    · exact kap_comm_DG P f DbiDG
+    · exact (ssc i).2
+    · exact (sssc i).2
+  · rintro b ((((hb | ⟨f, rfl⟩) | ⟨i, hi, rfl⟩) | ⟨i, hi, rfl⟩))
+    · simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hb
+      rcases hb with rfl | rfl | rfl | rfl
+      · exact ⟨0, fun Y => by rw [add_zero]; exact (hat_ζi L Y).1⟩
+      · exact ⟨0, fun Y => by rw [add_zero]; exact (hat_ζbi L Y).1.symm⟩
+      · exact ⟨1, gen_DD_A L⟩
+      · exact ⟨-1, gen_DbD_A L⟩
+    · exact ⟨0, fun Y => by rw [add_zero]; exact (kap_comm_DG P f (hatDG hL Y).1).symm⟩
+    · exact ⟨-1, fun Y => by rw [← sub_eq_add_neg]; exact (ruleSS_SS hL hLaw i (Finset.mem_Icc.2 (Set.mem_Icc.1 hi)) Y).1⟩
+    · exact ⟨1, fun Y => (ruleSS_SSs hL hLaw i (Finset.mem_Icc.2 (Set.mem_Icc.1 hi)) Y).1⟩
+  · rintro b ((((hb | ⟨f, rfl⟩) | ⟨i, hi, rfl⟩) | ⟨i, hi, rfl⟩)) Y
+    · simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hb
+      rcases hb with rfl | rfl | rfl | rfl
+      · refine ⟨0, _, ?_, gen_ζi_R L Y⟩
+        intro x hx
+        simp only [List.mem_cons, List.not_mem_nil, or_false] at hx
+        rcases hx with rfl | rfl
+        · exact gen mDbD
+        · exact Submonoid.mul_mem _ (Submonoid.mul_mem _ (gen mζi) (gen mζbi)) (gen mDbD)
+      · exact ⟨0, [], by simp, by rw [add_zero]; simpa using (hat_ζbi L Y).2.symm⟩
+      · refine ⟨1, [(L.TT, L.D * L.Dbi * (L.Drb * L.Di), Y + 1)], ?_, ?_⟩
+        · intro x hx
+          simp only [List.mem_cons, List.not_mem_nil, or_false] at hx
+          rw [hx]; exact Submonoid.mul_mem _ (gen mDD) hdrb
+        · rw [gen_DD_R]; simp
+      · refine ⟨-1, [(-L.TT, L.Db * L.Di * (L.Drb * L.Di), Y + -1)], ?_, ?_⟩
+        · intro x hx
+          simp only [List.mem_cons, List.not_mem_nil, or_false] at hx
+          rw [hx]; exact Submonoid.mul_mem _ (gen mDbD) hdrb
+        · rw [gen_DbD_R]; simp
+    · exact ⟨0, [], by simp, by rw [add_zero]; simpa using (kap_comm_DG P f (hatDG hL Y).2).symm⟩
+    · exact ⟨-1, [], by simp, by rw [← sub_eq_add_neg]; simpa using (ruleSS_SS hL hLaw i (Finset.mem_Icc.2 (Set.mem_Icc.1 hi)) Y).2⟩
+    · exact ⟨1, [], by simp, by simpa using (ruleSS_SSs hL hLaw i (Finset.mem_Icc.2 (Set.mem_Icc.1 hi)) Y).2⟩
 
 end
 
@@ -9534,38 +9534,38 @@ include hL hLaw
 
 theorem gen_BA {x : A P (DQ P)} (hx : x ∈ bddSet P L) : x ∈ BA L := Algebra.subset_adjoin hx
 
-theorem kap_BA (f : M.Ty P → ℂ) : kap P (DQ P) f ∈ BA L := by sorry
-theorem ζbi_BA : L.ζbi ∈ BA L := by sorry
+theorem kap_BA (f : M.Ty P → ℂ) : kap P (DQ P) f ∈ BA L := gen_BA hL hLaw (Or.inl (Or.inl (Or.inr ⟨f, rfl⟩)))
+theorem ζbi_BA : L.ζbi ∈ BA L := gen_BA hL hLaw (Or.inl (Or.inl (Or.inl (by simp))))
 
-theorem ζζbi_eq : L.ζ * L.ζbi = L.D * L.Dbi * (L.Drb * L.Dri) := by sorry
+theorem ζζbi_eq : L.ζ * L.ζbi = L.D * L.Dbi * (L.Drb * L.Dri) := by
+  have h1 : e L L.Dr (memDr L) * e L L.Dri (memDri L) = 1 := Subtype.ext (RuleGD.Dr_Dri L)
+  have h2 : e L L.Drb (memDrb L) * e L L.Drbi (memDrbi L) = 1 := Subtype.ext (RuleGD.Drb_Drbi L)
+  have key : e L L.ζ (memζ L) * e L L.ζbi (memζbi L) = e L L.Dr (memDr L) * e L L.ζ (memζ L) *
+      (e L L.ζbi (memζbi L) * e L L.Drbi (memDrbi L)) * (e L L.Drb (memDrb L) * e L L.Dri (memDri L)) := by
+    linear_combination (-(e L L.ζ (memζ L) * e L L.ζbi (memζbi L) * e L L.Drb (memDrb L) * e L L.Drbi (memDrbi L))) * h1 +
+      (-(e L L.ζ (memζ L) * e L L.ζbi (memζbi L))) * h2
+  have := congrArg Subtype.val key
+  simpa [e, LevelData.D, LevelData.Dbi, mul_assoc] using this
 
-
-
-
-
-
-
-
-
-theorem eeA_BA (Y : ℂ) : eeA P (DQ P) Y ∈ BA L := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+theorem eeA_BA (Y : ℂ) : eeA P (DQ P) Y ∈ BA L := by
+  obtain ⟨-, -, -, -, -, -, hz, -, -, hzbi, -⟩ := id hL
+  have hDrDG : L.Drb * L.Dri ∈ DG P := by
+    obtain ⟨-, d2, d3, -⟩ := DrSC hL
+    obtain ⟨w, hw⟩ := Subring.mul_mem _ d2 d3
+    rw [← hw]; exact sc_memDG P w
+  show zA P (DQ P) * zbiA P (DQ P) * _ ∈ BA L
+  rw [← hz, ← hzbi, Finset.mul_sum]
+  refine Subalgebra.sum_mem _ fun i hi => ?_
+  have hgen : L.Drb * L.Dri * SS P (DQ P) i ∈ bddSet P L :=
+    Or.inl (Or.inr ⟨i, Set.mem_Icc.2 (Finset.mem_Icc.1 hi), rfl⟩)
+  have hDD : L.D * L.Dbi ∈ bddSet P L := Or.inl (Or.inl (Or.inl (by simp)))
+  have e1 : L.ζ * L.ζbi * (kap P (DQ P) (fun π => (Y + (M.rho P π i : ℂ))⁻¹) * SS P (DQ P) i) =
+      L.D * L.Dbi * (kap P (DQ P) (fun π => (Y + (M.rho P π i : ℂ))⁻¹) * (L.Drb * L.Dri * SS P (DQ P) i)) := by
+    rw [ζζbi_eq hL hLaw, mul_assoc (L.D * L.Dbi), ← mul_assoc (L.Drb * L.Dri),
+      ← kap_comm_DG P _ hDrDG]
+    simp only [mul_assoc]
+  rw [e1]
+  exact mul_mem (gen_BA hL hLaw hDD) (mul_mem (kap_BA hL hLaw _) (gen_BA hL hLaw hgen))
 
 theorem io_B {S : Type} [Fintype S] [DecidableEq S] {x : A P (DQ P)} (h : x ∈ BA L) : (io x : SlopeTestRemainingChoices S (A P (DQ P))) ∈ UB L S :=
   MAx2.Jet.scalar_mem _ _ h
@@ -10062,21 +10062,21 @@ theorem PW_DrDrbi : PW (L.Dr * L.Drbi) 1 :=
 
 include hLaw
 
-theorem PW_gen {b : A P (DQ P)} (hb : b ∈ bddSet P L) : ∃ C, PW b C := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+theorem PW_gen {b : A P (DQ P)} (hb : b ∈ bddSet P L) : ∃ C, PW b C := by
+  rcases hb with (((hb | ⟨f, rfl⟩) | ⟨i, hi, rfl⟩) | ⟨i, hi, rfl⟩)
+  · simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hb
+    rcases hb with rfl | rfl | rfl | rfl
+    · exact ⟨_, PW_ζi hTTp hL⟩
+    · exact ⟨_, PW_ζbi hTTp hL⟩
+    · exact ⟨_, PW_DDbi hTTp hL⟩
+    · exact ⟨_, PW_DbDi hTTp hL⟩
+  · exact ⟨_, PW_kap f⟩
+  · obtain ⟨C, hC⟩ := PW_SS (P := P) i
+    exact ⟨_, PW_mul (PW_DrbDri hTTp hL) hC⟩
+  · obtain ⟨C, hC⟩ := PW_starSS (P := P) i
+    show ∃ C, PW (star (L.Drb * L.Dri * SS P (DQ P) i)) C
+    rw [starSSn_eq hL hLaw]
+    exact ⟨_, PW_mul hC (PW_DrDrbi hTTp hL)⟩
 
 theorem PW_SB {b : A P (DQ P)} (hb : b ∈ SB L) : ∃ C, PW b C := by
   induction hb using Submonoid.closure_induction with
@@ -10304,68 +10304,68 @@ variable {l : ℕ} {L : LevelData (A P (DQ P)) P.r} {j : M.Ty P → SmQ P.r P.TT
 
 theorem hat_product_square_integrable (hD : JDecay P L j (2 * Ntot + 2)) (H : List (A P (DQ P))) (hH : H.length ≤ 2 * Ntot + 2)
     (hH2 : ∀ h ∈ H, h ∈ plusHats L) (π : M.Ty P) :
-    MemLp (fun q => ‖evQ P (actA P H.prod j π) q‖) 2 (mu0 P.r P.TT) := by sorry
-
-
-
-
-
-
+    MemLp (fun q => ‖evQ P (actA P H.prod j π) q‖) 2 (mu0 P.r P.TT) := by
+  have hint := hD H hH (fun a ha => by
+    rcases hH2 a ha with ⟨y, rfl⟩ | ⟨y, rfl⟩
+    · exact Or.inl (Or.inl (Or.inl ⟨y, rfl⟩))
+    · exact Or.inl (Or.inl (Or.inr ⟨y, rfl⟩))) π
+  refine (memLp_two_iff_integrable_sq ?_).2 hint
+  exact (MAx3.evQ_cont P _).norm.aestronglyMeasurable
 
 theorem gs_int (hH : Hyps P l L j lam α β Lb Ntot) (w : List ℝ) (hl : w.length < Ntot) (ε : ℝ) (hε : 0 < ε)
     (Y s : ℝ) : Integrable (fun ω => LE.th ε (4 * Ntot) (Gq P ω) *
       LE.sq (baseQ P) (dwW P l (Y :: w)) (LE.conjS (baseQ P) (gL P l L w Y) (Xw P l L (ju P j) w) s) ω)
-      (mu0 P.r P.TT) := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      (mu0 P.r P.TT) := by
+  have hOK := hH.1.1
+  have hTTp : 0 < P.TT := mul_pos hOK.T_pos hOK.T'_pos
+  have hL := hH.1.2.2.2.1
+  have hLaw := Formalism.FourierDecayAlt.P.analytic_laws P.r P.TT hTTp.le
+  have hD := hH.2.1
+  obtain ⟨𝒵, h𝒵, hrep⟩ := conj_rep hL hLaw hTTp.le l j w Y s
+  choose C T hC hT hb using fun e => normal_form_two_bounded hTTp hL hLaw j (h𝒵 e)
+  have hσ : ((w.length + 1 : ℕ) : ℝ) ≤ 4 * (Ntot : ℝ) := by
+    have : w.length + 1 ≤ Ntot := by omega
+    have h2 : ((w.length + 1 : ℕ) : ℝ) ≤ Ntot := by exact_mod_cast this
+    nlinarith [(Nat.cast_nonneg Ntot : (0 : ℝ) ≤ Ntot)]
+  let F : Ix (Fin (w.length + 1)) → Qp P.r P.TT → ℝ :=
+    fun e q => ((T e).map fun t => ‖evQ P (actA P t.1.prod j t.2) q‖).sum
+  have hF2 : ∀ e, Integrable (fun q => F e q ^ 2) (mu0 P.r P.TT) := fun e =>
+    (memLp_listsum (T e) _ fun t ht => hat_product_square_integrable hD t.1 (by rw [(hT e t ht).1]; omega) (hT e t ht).2 t.2).integrable_sq
+  let n := w.length + 1
+  let cc : Iota P n → ℝ := fun a => |(cs (M.x0 P l (ixOf P n a).2) (M.qC P) (wordP (Y :: w)) (ixOf P n a).1).re|
+  refine Integrable.mono' (g := fun q => ∑ a : Iota P n, cc a * (ε⁻¹) ^ n * (C (ixOf P n a).1 * F (ixOf P n a).1 q) ^ 2)
+    ?_ ?_ ?_
+  · refine integrable_finset_sum _ fun a _ => ?_
+    have := (hF2 (ixOf P n a).1).const_mul (cc a * (ε⁻¹) ^ n * C (ixOf P n a).1 ^ 2)
+    refine this.congr (Filter.Eventually.of_forall fun q => ?_)
+    simp only []; ring
+  · refine (Measurable.mul (th_meas ε _) ?_).aestronglyMeasurable
+    exact Finset.measurable_sum _ fun a _ => (MAx3.dwW_meas P l (Y :: w) a).mul
+      ((gs_meas l L w Y s _ a).norm.pow_const 2)
+  · refine Filter.Eventually.of_forall fun q => ?_
+    have hth0 : 0 ≤ LE.th ε (4 * Ntot) (Gq P q) := by unfold LE.th; have := Gq_pos P q; positivity
+    rw [Real.norm_eq_abs]
+    unfold LE.sq
+    rw [Finset.mul_sum]
+    refine (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum fun a _ => ?_)
+    have hz := hb (ixOf P n a).1 (ixOf P n a).2 q
+    rw [← hrep q a] at hz
+    have h1 := comp_le hTTp.le ε (4 * Ntot) n hε hσ
+      (|(cs (M.x0 P l (ixOf P n a).2) (M.qC P) (wordP (Y :: w)) (ixOf P n a).1).re|)
+      (LE.conjS (baseQ P) (gL P l L w Y) (Xw P l L (ju P j) w) s q a) q
+    rw [abs_abs] at h1
+    have hDp : 0 ≤ ‖LE.conjS (baseQ P) (gL P l L w Y) (Xw P l L (ju P j) w) s q a‖ * Dabs q ^ n :=
+      mul_nonneg (norm_nonneg _) (pow_nonneg (Dabs_pos hTTp.le q).le _)
+    calc |LE.th ε (4 * Ntot) (Gq P q) * (dwW P l (Y :: w) q a *
+          ‖LE.conjS (baseQ P) (gL P l L w Y) (Xw P l L (ju P j) w) s q a‖ ^ 2)|
+        = LE.th ε (4 * Ntot) (Gq P q) * (Wq P q ^ n * cc a) *
+          ‖LE.conjS (baseQ P) (gL P l L w Y) (Xw P l L (ju P j) w) s q a‖ ^ 2 := by
+          rw [abs_mul, abs_of_nonneg hth0, abs_mul, abs_pow, abs_norm]
+          simp only [dwW, cc, n, abs_mul, abs_pow, abs_of_pos (MAx3.Wq_pos P hTTp.le q), List.length_cons]
+          ring
+      _ ≤ cc a * (ε⁻¹) ^ n * (‖LE.conjS (baseQ P) (gL P l L w Y) (Xw P l L (ju P j) w) s q a‖ * Dabs q ^ n) ^ 2 := h1
+      _ ≤ cc a * (ε⁻¹) ^ n * (C (ixOf P n a).1 * F (ixOf P n a).1 q) ^ 2 := by
+          gcongr
 
 end
 
@@ -10496,20 +10496,20 @@ variable (hL : IsModelLevel P (DQ P) L) (hLaw : (DQ P).Laws P.TT)
 include hL hLaw
 
 theorem KSS_BA (f : M.Ty P → ℂ) (j : ℕ) (hj : j ∈ Finset.Icc 1 (P.k - 1)) :
-    L.ζ * L.ζbi * (kap P (DQ P) f * SS P (DQ P) j) ∈ BA L := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
+    L.ζ * L.ζbi * (kap P (DQ P) f * SS P (DQ P) j) ∈ BA L := by
+  have hDrDG : L.Drb * L.Dri ∈ DG P := by
+    obtain ⟨-, d2, d3, -⟩ := DrSC hL
+    obtain ⟨w, hw⟩ := Subring.mul_mem _ d2 d3
+    rw [← hw]; exact sc_memDG P w
+  have hgen : L.Drb * L.Dri * SS P (DQ P) j ∈ bddSet P L :=
+    Or.inl (Or.inr ⟨j, Set.mem_Icc.2 (Finset.mem_Icc.1 hj), rfl⟩)
+  have hDD : L.D * L.Dbi ∈ bddSet P L := Or.inl (Or.inl (Or.inl (by simp)))
+  have e1 : L.ζ * L.ζbi * (kap P (DQ P) f * SS P (DQ P) j) =
+      L.D * L.Dbi * (kap P (DQ P) f * (L.Drb * L.Dri * SS P (DQ P) j)) := by
+    rw [ζζbi_eq hL hLaw, mul_assoc (L.D * L.Dbi), ← mul_assoc (L.Drb * L.Dri), ← kap_comm_DG P _ hDrDG]
+    simp only [mul_assoc]
+  rw [e1]
+  exact mul_mem (gen_BA hL hLaw hDD) (mul_mem (kap_BA hL hLaw _) (gen_BA hL hLaw hgen))
 
 theorem eeA_rep : Rep L (Gbase P) (fun Y => (io (eeA P (DQ P) Y) : SlopeTestRemainingChoices S (A P (DQ P)))) := by
   obtain ⟨-, -, -, -, -, -, hz, -, -, hzbi, -⟩ := id hL
@@ -10578,32 +10578,32 @@ theorem ee_rep (l : ℕ) : ∀ v : List (Letter ℂ S), (∀ a ∈ v, a.plus = t
     Rep L (Gw P v) (fun Y => (ofWord L (startM P (DQ P) l) v).ee Y)
   | [], _ => rep_mono (fun Y hY => hY.1) (eeA_rep hL hLaw)
   | a :: v, h => by
-    have ih := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    have ih := rep_mono (fun Y (hY : Y ∈ Gw P (a :: v)) => (⟨hY.1, fun b hb => hY.2 b (List.mem_cons_of_mem _ hb)⟩ :
+      Y ∈ Gw P v)) (ee_rep l v fun b hb => h b (List.mem_cons_of_mem _ hb))
+    obtain ⟨he, hx, hxi⟩ := frame_memB hL hLaw l v
+    have hpl : a.plus = true := h a List.mem_cons_self
+    have hcont : ∀ Y ∈ Gw P (a :: v), ContinuousAt (fun Y : ℂ => (Y - a.pt)⁻¹) Y := fun Y hY =>
+      (continuousAt_id.sub continuousAt_const).inv₀ (sub_ne_zero.2 (hY.2 a List.mem_cons_self))
+    have htz : (tz L : SlopeTestRemainingChoices S (A P (DQ P))) ∈ UB L S := io_B hL hLaw (Subalgebra.smul_mem _ (ζbi_BA hL hLaw) _)
+    simp only [ofWord, hpl, if_true]
+    show Rep L (Gw P (a :: v)) (fun Y => ins a.intersection_update_fsHerm_neg_one !![(ofWord L (startM P (DQ P) l) v).ee Y -
+      (ofWord L (startM P (DQ P) l) v).DD Y a.pt + tz L, -((Y - a.pt)⁻¹ • 1); 0,
+      (ofWord L (startM P (DQ P) l) v).xi a.pt * (ofWord L (startM P (DQ P) l) v).ee Y *
+        (ofWord L (startM P (DQ P) l) v).x a.pt])
+    refine rep_ins hL hLaw a.intersection_update_fsHerm_neg_one _ fun i j => ?_
+    fin_cases i <;> fin_cases j
+    · simp only [Fin.zero_eta, Fin.isValue, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero,
+        Matrix.empty_val', Matrix.cons_val_fin_one, FrameData.DD]
+      exact rep_add (rep_sub ih (rep_smul _ hcont (rep_sub ih (rep_const (he a.pt))))) (rep_const htz)
+    · simp only [Fin.zero_eta, Fin.isValue, Fin.mk_one, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero,
+        Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons]
+      exact rep_neg (rep_smul _ hcont (rep_const (Subalgebra.one_mem _)))
+    · simp only [Fin.zero_eta, Fin.isValue, Fin.mk_one, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero,
+        Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons]
+      exact rep_const (Subalgebra.zero_mem _)
+    · simp only [Fin.mk_one, Fin.isValue, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_one,
+        Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons]
+      exact rep_rmul _ (hx a.pt) (rep_lmul _ (hxi a.pt) ih)
 
 end
 
@@ -10699,21 +10699,21 @@ end PWBA
 
 theorem lagrange (d : ℕ) (c : Fin (d + 1) → ℂ) (Y : ℂ) :
     ∑ k : Fin (d + 1), Y ^ (k : ℕ) * c k = ∑ m : Fin (d + 1), (∑ k : Fin (d + 1), ((m : ℕ) : ℂ) ^ (k : ℕ) * c k) *
-      (Lagrange.basis Finset.univ (fun m : Fin (d + 1) => ((m : ℕ) : ℂ)) m).eval Y := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      (Lagrange.basis Finset.univ (fun m : Fin (d + 1) => ((m : ℕ) : ℂ)) m).eval Y := by
+  set f : ℂ[X] := ∑ k : Fin (d + 1), C (c k) * X ^ (k : ℕ)
+  have hinj : Set.InjOn (fun m : Fin (d + 1) => ((m : ℕ) : ℂ)) (Finset.univ : Finset (Fin (d + 1))) := by
+    intro a _ b _ h; simp only at h; exact Fin.ext (by exact_mod_cast h)
+  have hdeg : f.degree < (Finset.univ : Finset (Fin (d + 1))).card := by
+    rw [Finset.card_univ, Fintype.card_fin]; exact degree_sum_fin_lt c
+  have hf := Lagrange.eq_interpolate hinj hdeg
+  have hev : ∀ Z, f.eval Z = ∑ k : Fin (d + 1), Z ^ (k : ℕ) * c k := fun Z => by
+    simp only [f, eval_finset_sum, eval_mul, eval_C, eval_pow, eval_X]
+    exact Finset.sum_congr rfl fun k _ => mul_comm _ _
+  have := congrArg (eval Y) hf
+  rw [hev, Lagrange.interpolate_apply, eval_finset_sum] at this
+  rw [this]
+  refine Finset.sum_congr rfl fun m _ => ?_
+  rw [eval_mul, eval_C, hev]
 
 end
 
@@ -10800,17 +10800,17 @@ section lists
 variable {S : Type} [Fintype S] [DecidableEq S]
 
 theorem phR_cont (v : List (Letter ℂ S)) (e : Ix S) (Y : ℝ) (h : ∀ a ∈ v, Y - a.pt.re - 1 ≠ 0) :
-    ContinuousAt (fun Z => MAx3.R.phR v e Z) Y := by sorry
-
-
-
-
-
-
-
-
-
-
+    ContinuousAt (fun Z => MAx3.R.phR v e Z) Y := by
+  induction v with
+  | nil => simpa [MAx3.R.phR] using continuousAt_const
+  | cons a v ih =>
+    have ih' := ih fun b hb => h b (List.mem_cons_of_mem _ hb)
+    have ha := h a List.mem_cons_self
+    simp only [MAx3.R.phR, List.map_cons, List.prod_cons] at ih' ⊢
+    refine ContinuousAt.mul ?_ ih'
+    split_ifs
+    · exact (continuousAt_id.sub continuousAt_const).div (continuousAt_id.sub continuousAt_const |>.sub continuousAt_const) ha
+    · exact continuousAt_const
 
 theorem psR_cont (v : List (Letter ℂ S)) (Y : ℝ) (h : ∀ a ∈ v, Y - a.pt.re ≠ 0) :
     ContinuousAt (fun Z => MAx3.R.psR v Z) Y := by
@@ -10840,15 +10840,15 @@ variable {P : M.Par}
 
 theorem ofReal_add_one' (Y : ℝ) : (Y : ℂ) + 1 = ((Y + 1 : ℝ) : ℂ) := by push_cast; ring
 
-theorem sx_cont (l : ℕ) (π : M.Ty P) : Continuous (fun Z => MAx3.R.sx P l π Z) := by sorry
+theorem sx_cont (l : ℕ) (π : M.Ty P) : Continuous (fun Z => MAx3.R.sx P l π Z) := by
+  unfold MAx3.R.sx I.xpoly
+  exact continuous_const.mul (continuous_finset_prod _ fun i _ => continuous_id.add continuous_const)
 
-
-
-theorem qp_cont : Continuous (fun Z => MAx3.R.qp P Z) := by sorry
-
-
-
-
+theorem qp_cont : Continuous (fun Z => MAx3.R.qp P Z) := by
+  unfold MAx3.R.qp I.qpoly
+  exact continuous_const.mul (continuous_finset_prod _ fun i _ =>
+    ((continuous_id.add continuous_const).add continuous_const).mul
+      ((continuous_id.add continuous_const).add continuous_const))
 
 theorem kt_cont (l : ℕ) (w : List ℝ) (π : M.Ty P) (e : Ix (Fin (w.length + 1))) (Y : ℝ)
     (h : ∀ p ∈ w, Y - p - 1 ≠ 0) :
@@ -11250,34 +11250,34 @@ theorem cont_dw (w : List ℝ) {K : Set ℝ} (hkc : ∀ a : Bool × Iota P w.len
   exact continuousOn_const.mul (hkc (b, i))
 
 theorem cont_gA (w : List ℝ) (X : Qp P.r P.TT → Iota P w.length → ℂ) (K : Set ℝ) (q : Qp P.r P.TT)
-    (i : Iota P w.length) : ContinuousOn (fun Y : ℝ => gL P l L w Y X q (false, i)) K := by sorry
-
-
-
-
-
-
+    (i : Iota P w.length) : ContinuousOn (fun Y : ℝ => gL P l L w Y X q (false, i)) K := by
+  obtain ⟨αc, hα⟩ := part_poly2 L false X
+  have e : (fun Y : ℝ => gL P l L w Y X q (false, i)) =
+      fun Y : ℝ => ∑ k : Fin (P.r + 1 + 1), ((Y : ℝ) : ℂ) ^ (k : ℕ) * αc k q i :=
+    funext fun Y => (gL_false w Y X q i).trans (hα _ q i)
+  rw [e]
+  exact (continuous_finset_sum _ fun k _ => (Complex.continuous_ofReal.pow _).mul continuous_const).continuousOn
 
 theorem cont_gR (hL : IsModelLevel P (DQ P) L) (w : List ℝ) (X : Qp P.r P.TT → Iota P w.length → ℂ) (K : Set ℝ)
     (ts : List ((ℂ → ℂ) × SlopeTestRemainingChoices (Fin w.length) (A P (DQ P)))) (q : Qp P.r P.TT)
     (hEc : ∀ i i', ContinuousOn (fun Y : ℝ => (ts.map fun t => t.1 (Y : ℂ) * ptMat P t.2 q i i').sum) K)
     (hpt : ∀ (Y : ℝ) i i', ptMat P ((frW P l L w).ee (Y : ℂ)) q i i' =
       (ts.map fun t => t.1 (Y : ℂ) * ptMat P t.2 q i i').sum) (i : Iota P w.length) :
-    ContinuousOn (fun Y : ℝ => gL P l L w Y X q (true, i)) K := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    ContinuousOn (fun Y : ℝ => gL P l L w Y X q (true, i)) K := by
+  obtain ⟨αc, hα⟩ := part_poly2 L true X
+  have e : (fun Y : ℝ => gL P l L w Y X q (true, i)) = fun Y : ℝ =>
+      ∑ k : Fin (P.r + 1 + 1), ((Y : ℝ) : ℂ) ^ (k : ℕ) * αc k q i +
+        ∑ i', (ts.map fun t => t.1 (Y : ℂ) * ptMat P t.2 q i i').sum * gL P l L w Y X q (false, i') := by
+    funext Y
+    rw [G.gX_split P hL w Y X q i]
+    have h1 := hα (Y : ℂ) q i
+    simp only [if_true] at h1
+    rw [h1]
+    congr 1
+    exact Finset.sum_congr rfl fun i' _ => by rw [hpt]
+  rw [e]
+  refine ContinuousOn.add ?_ (continuousOn_finset_sum _ fun i' _ => (hEc i i').mul (cont_gA w X K q i'))
+  exact (continuous_finset_sum _ fun k _ => (Complex.continuous_ofReal.pow _).mul continuous_const).continuousOn
 
 theorem cont_integrand (hL : IsModelLevel P (DQ P) L) (w : List ℝ) (X : Qp P.r P.TT → Iota P w.length → ℂ)
     {K : Set ℝ} {ε σ : ℝ} (hkc : ∀ a : Bool × Iota P w.length, ContinuousOn (kap' P l w a.1 a.2) K)
@@ -11314,61 +11314,61 @@ namespace Formalism.FourierDecayAlt.P
 
 open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.MA Formalism.FourierDecayAlt.R Formalism.FourierDecayAlt.Wd Formalism.FourierDecayAlt.Fr Formalism.FourierDecayAlt.P.MAx3.H Formalism.FourierDecayAlt.P.MAx1.An MeasureTheory
 
-theorem fourth_identity_dual : Formalism.FourierDecayAlt.MA.I4'Q := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+theorem fourth_identity_dual : Formalism.FourierDecayAlt.MA.I4'Q := by
+  intro P l L j lam α β Lb c Ntot hH w hw hl ε hε
+  have hOK := hH.1.1
+  have hTTp : 0 < P.TT := mul_pos hOK.T_pos hOK.T'_pos
+  have hTT := hTTp.le
+  have hL := hH.1.2.2.2.1
+  have hLaw := Formalism.FourierDecayAlt.P.analytic_laws P.r P.TT hTT
+  refine ⟨fun Y _ s => MAx3.I4.gs_int hH w hl ε hε Y s, ?_⟩
+  have hJc : IsCompact (MAx3.I4.Jbox α β Lb w.length) := isCompact_Icc
+  have hfacts : ∀ Y ∈ MAx3.I4.Jbox α β Lb w.length, (∀ p ∈ w, Lb ≤ Y - p) ∧ Y ∈ Set.Icc α β ∧
+      Y + 1 ∈ Set.Icc α β ∧ 2 < Lb := fun Y hY => MAx3.I4.jbox_facts c hH w hw hl hY
+  obtain ⟨BA, hBA, hBA0, hBAb⟩ := MAx3.I4.part_unif hH w hl false _ hJc
+  obtain ⟨BR, hBR, hBR0, hBRb⟩ := MAx3.I4.part_unif hH w hl true _ hJc
+  obtain ⟨ts, hts, hee⟩ := MAx3.I4.ee_rep hL hLaw l (wordP w) (MAx3.R.plusWord_letters_plus w)
+  obtain ⟨E, hE⟩ := MAx3.I4.listsum_ptMat hTTp hL hLaw _ hJc (MAx3.I4.Gw P (wordP w))
+    (fun Y hY => MAx3.I4.inGw hH w (hfacts Y hY).2.1 (hfacts Y hY).1 (hfacts Y hY).2.2.2) ts hts
+  have hpt : ∀ (Y : ℝ) q i i', ptMat P ((frW P l L w).ee (Y : ℂ)) q i i' =
+      (ts.map fun t => t.1 (Y : ℂ) * ptMat P t.2 q i i').sum := fun Y q i i' =>
+    (congrArg (fun b => ptMat P b q i i') (hee (Y : ℂ))).trans (MAx3.I4.ptMat_listsum ts (Y : ℂ) q i i')
+  have hgx : ∀ Y ∈ MAx3.I4.Jbox α β Lb w.length, ∀ q a,
+      ‖gL P l L w Y (Xw P l L (ju P j) w) q a‖ * MAx3.I4.Dabs q ^ (w.length + 1) ≤ MAx3.I4.BdF BA BR E a q := by
+    intro Y hY q a
+    rcases a with ⟨_ | _, i⟩
+    · exact hBAb Y hY q i
+    · have hR := hBRb Y hY q i
+      simp only [if_true] at hR
+      exact MAx3.I4.gx_true_bound hL w Y _ q i BA BR E _ (pow_nonneg (MAx3.I4.Dabs_pos hTT q).le _) hR
+        (fun i' => hBAb Y hY q i') (fun i' => by rw [hpt]; exact ((hE q i i').1 Y hY).trans (le_abs_self _))
+  have hkc : ∀ a : Bool × Iota P w.length, ContinuousOn (MAx3.I4.kap' P l w a.1 a.2) (MAx3.I4.Jbox α β Lb w.length) :=
+    fun a Y hY => (MAx3.I4.kap'_cont hH w a.1 a.2 (hfacts Y hY).1 (hfacts Y hY).2.1 (hfacts Y hY).2.2.2).continuousWithinAt
+  choose K hK using fun a => hJc.exists_bound_of_continuousOn (hkc a)
+  have hσ : ((w.length + 1 : ℕ) : ℝ) ≤ 4 * (Ntot : ℝ) := by
+    have : w.length + 1 ≤ Ntot := by omega
+    have h2 : ((w.length + 1 : ℕ) : ℝ) ≤ Ntot := by exact_mod_cast this
+    nlinarith [(Nat.cast_nonneg Ntot : (0 : ℝ) ≤ Ntot)]
+  show ContinuousOn (fun Y : ℝ => ∫ ω, LE.th ε (4 * Ntot) (Gq P ω) *
+    LE.sq (baseQ P) (dwW P l (Y :: w)) (gL P l L w Y (Xw P l L (ju P j) w)) ω ∂(mu0 P.r P.TT))
+    (MAx3.I4.Jbox α β Lb w.length)
+  refine MeasureTheory.continuousOn_of_dominated
+    (bound := fun q => ∑ a : Bool × Iota P w.length, |K a| * (ε⁻¹) ^ (w.length + 1) * (MAx3.I4.BdF BA BR E a q) ^ 2)
+    ?_ ?_ ?_ ?_
+  · intro Y hY
+    exact ((MAx3.I4.th_meas ε _).mul (Finset.measurable_sum _ fun a _ => (MAx3.dwW_meas P l (Y :: w) a).mul
+      ((MAx3.gL_cont P l L w Y _ a).measurable.norm.pow_const 2))).aestronglyMeasurable
+  · intro Y hY
+    refine Filter.Eventually.of_forall fun q => ?_
+    exact MAx3.I4.dom_bound hTT ε hε hσ K (MAx3.I4.BdF BA BR E) _ (fun a => hK a Y hY) (fun a => hgx Y hY q a)
+  · refine integrable_finset_sum _ fun a _ => ?_
+    have hBd : MemLp (MAx3.I4.BdF BA BR E a) 2 (mu0 P.r P.TT) := by
+      rcases a with ⟨_ | _, i⟩
+      · exact hBA i
+      · exact (hBR i).add ((MAx3.I4.memLp_finsum _ _ fun i' _ => hBA i').const_mul |E|)
+    exact hBd.integrable_sq.const_mul _
+  · refine Filter.Eventually.of_forall fun q => ?_
+    exact MAx3.I4.cont_integrand hL w _ hkc ts (fun i i' => (hE q i i').2) (fun Y i i' => hpt Y q i i')
 
 end Formalism.FourierDecayAlt.P
 
@@ -11423,33 +11423,33 @@ theorem isJ_group {F : (ℝ → ℝ) → SmQ P.r P.TT} (hF : IsJ P F) :
 theorem group_unique (K : ℕ) (a b : ℕ → SmQ P.r P.TT)
     (h : ∀ s : ℝ, ∑ k ∈ Finset.range (K + 1), Phi P (fun x : ℝ => x ^ s) k * a k =
       ∑ k ∈ Finset.range (K + 1), Phi P (fun x : ℝ => x ^ s) k * b k) :
-    ∀ k ∈ Finset.range (K + 1), a k = b k := by sorry
+    ∀ k ∈ Finset.range (K + 1), a k = b k := by
+  intro k hk
+  apply Subtype.ext; funext x
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  let pa : Polynomial ℂ := ∑ k ∈ Finset.range (K + 1), Polynomial.C (evQ P (a k) x) * Polynomial.X ^ k
+  let pb : Polynomial ℂ := ∑ k ∈ Finset.range (K + 1), Polynomial.C (evQ P (b k) x) * Polynomial.X ^ k
+  have hev : ∀ s : ℝ, pa.eval (s : ℂ) = pb.eval (s : ℂ) := by
+    intro s
+    have hs := congrArg (fun f : SmQ P.r P.TT => evQ P f x) (h s)
+    simp only [MAx2.Jet.evQ_sum, MAx2.Jet.evQ_mul, Phiq_rpow, G.evQ_smul, G.ev_Gpow] at hs
+    have hG : ((Gq P x ^ s : ℝ) : ℂ) ≠ 0 := by exact_mod_cast (Real.rpow_pos_of_pos (Gq_pos P x) s).ne'
+    simp only [pa, pb, Polynomial.eval_finset_sum, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
+      Polynomial.eval_X]
+    have e1 : ∀ (c : ℕ → SmQ P.r P.TT), ∑ k ∈ Finset.range (K + 1), (s : ℂ) ^ k * ((Gq P x ^ s : ℝ) : ℂ) * evQ P (c k) x =
+        ((Gq P x ^ s : ℝ) : ℂ) * ∑ k ∈ Finset.range (K + 1), evQ P (c k) x * (s : ℂ) ^ k := by
+      intro c; rw [Finset.mul_sum]; exact Finset.sum_congr rfl fun k _ => by ring
+    rw [e1, e1] at hs
+    exact mul_left_cancel₀ hG hs
+  have hpab : pa = pb := by
+    apply Polynomial.eq_of_infinite_eval_eq
+    apply Set.infinite_of_injective_forall_mem (f := fun n : ℕ => ((n : ℝ) : ℂ))
+    · intro m n hmn; simpa using hmn
+    · intro n; exact hev n
+  have hc := congrArg (fun p : Polynomial ℂ => p.coeff k) hpab
+  simp only [pa, pb, Polynomial.finset_sum_coeff, Polynomial.coeff_C_mul_X_pow] at hc
+  rw [Finset.sum_ite_eq _ k, Finset.sum_ite_eq _ k, if_pos hk, if_pos hk] at hc
+  exact hc
 
 theorem isJ_unique {F F' : (ℝ → ℝ) → SmQ P.r P.TT} (hF : IsJ P F) (hF' : IsJ P F')
     (h : ∀ s : ℝ, F (fun x : ℝ => x ^ s) = F' (fun x : ℝ => x ^ s)) :
@@ -11597,27 +11597,27 @@ theorem Gs_comm_cl (s : ℝ) {x : A P (DQ P)} (hx : x ∈ Subring.closure (FS L)
   · exact (G.fns_comm hTT hL s y hy).symm
   · exact (Algebra.commutes a _).symm
 
-theorem Gs_comm_SB (s : ℝ) {b : A P (DQ P)} (hb : b ∈ I4.SB L) : Gs P s * b = b * Gs P s := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+theorem Gs_comm_SB (s : ℝ) {b : A P (DQ P)} (hb : b ∈ I4.SB L) : Gs P s * b = b * Gs P s := by
+  induction hb using Submonoid.closure_induction with
+  | mem x hx =>
+    rcases hx with (((hx | ⟨f, rfl⟩) | ⟨i, hi, rfl⟩) | ⟨i, hi, rfl⟩)
+    · simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hx
+      rcases hx with rfl | rfl | rfl | rfl
+      · exact Gs_comm_cl hTT hL hLaw s (memζi L)
+      · exact Gs_comm_cl hTT hL hLaw s (memζbi L)
+      · exact Gs_comm_cl hTT hL hLaw s (memDD L)
+      · exact Gs_comm_cl hTT hL hLaw s (memDbD L)
+    · exact (kap_comm_DG P f (sc_memDG P _)).symm
+    · dsimp only
+      rw [← mul_assoc, Gs_comm_cl hTT hL hLaw s (Subring.mul_mem _ (memDrb L) (memDri L)), mul_assoc,
+        (SS_comm_SC P i (Gs_SC s)).symm, mul_assoc]
+      simp only [mul_assoc]
+    · dsimp only
+      rw [starSSn_eq hL hLaw, ← mul_assoc, (SSs_comm_SC i (Gs_SC s)).symm, mul_assoc,
+        Gs_comm_cl hTT hL hLaw s (Subring.mul_mem _ (memDr L) (memDrbi L)), mul_assoc]
+      simp only [mul_assoc]
+  | one => simp
+  | mul x y _ _ h1 h2 => rw [← mul_assoc, h1, mul_assoc, h2, mul_assoc]
 
 theorem conj_word : ∀ H : List (A P (DQ P)), (∀ h ∈ H, h ∈ plusHats L) →
     ∃ Hf : ℂ → List (A P (DQ P)), (∀ t, (Hf t).length = H.length) ∧ (∀ t, ∀ h ∈ Hf t, h ∈ plusHats L) ∧
@@ -11814,26 +11814,26 @@ theorem DTS : L.D ∈ MAx2.Jet.TS P ∧ L.Di ∈ MAx2.Jet.TS P ∧ L.Db ∈ MAx2
   obtain ⟨d1, d2, d3, d4⟩ := MAx2.Jet.Dr_mem P hL
   exact ⟨mul_mem d1 hz, mul_mem hzi d3, mul_mem d2 hzb, mul_mem hzbi d4⟩
 
-theorem SB_TS {b : A P (DQ P)} (hb : b ∈ I4.SB L) : b ∈ MAx2.Jet.TS P := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+theorem SB_TS {b : A P (DQ P)} (hb : b ∈ I4.SB L) : b ∈ MAx2.Jet.TS P := by
+  obtain ⟨-, -, -, -, -, -, hz, hzi, hzb, hzbi, -⟩ := MAx2.Jet.lev_mem P hL
+  obtain ⟨d1, d2, d3, d4⟩ := MAx2.Jet.Dr_mem P hL
+  obtain ⟨D1, D2, D3, D4⟩ := DTS hL hLaw
+  induction hb using Submonoid.closure_induction with
+  | mem x hx =>
+    rcases hx with (((hx | ⟨f, rfl⟩) | ⟨i, hi, rfl⟩) | ⟨i, hi, rfl⟩)
+    · simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hx
+      rcases hx with rfl | rfl | rfl | rfl
+      · exact hzi
+      · exact hzbi
+      · exact mul_mem D1 D4
+      · exact mul_mem D3 D2
+    · exact MAx2.Jet.kap_mem P f
+    · exact mul_mem (mul_mem d2 d3) (MAx2.Jet.SS_mem P i)
+    · dsimp only
+      rw [starSSn_eq hL hLaw]
+      exact mul_mem (starSS_mem hL i) (mul_mem d1 d4)
+  | one => exact Subalgebra.one_mem _
+  | mul x y _ _ h1 h2 => exact mul_mem h1 h2
 
 theorem normal_form_two_jet {d ℓ : ℕ} {x : A P (DQ P)} (hx : x ∈ NormalFormTwo L (I4.SB L) d ℓ) : x ∈ MAx2.Jet.TS P := by
   obtain ⟨-, D2, -, D4⟩ := DTS hL hLaw
@@ -12081,8 +12081,8 @@ theorem integrable_list_sum {α : Type} {μ : Measure (Qp P.r P.TT)} (T : List �
     simp only [List.map_cons, List.sum_cons]
     exact (h a (by simp)).add (ih fun t ht => h t (by simp [ht]))
 
-theorem plus_sub_hat {L : LevelData (A P (DQ P)) P.r} {h : A P (DQ P)} (hh : h ∈ plusHats L) : h ∈ hatSet P L := by sorry
-
+theorem plus_sub_hat {L : LevelData (A P (DQ P)) P.r} {h : A P (DQ P)} (hh : h ∈ plusHats L) : h ∈ hatSet P L :=
+  Or.inl (Or.inl hh)
 
 variable {L : LevelData (A P (DQ P)) P.r} (hTTp : 0 < P.TT) (hL : IsModelLevel P (DQ P) L) (hLaw : (DQ P).Laws P.TT)
 include hTTp hL hLaw
@@ -12462,13 +12462,13 @@ noncomputable section
 section Abs
 variable {A : Type} [Ring A] [Algebra ℂ A] {r : ℕ} (L : LevelData A r)
 
-theorem Dpow_conv (i i' : ℕ) : L.Di ^ i * L.Dbi ^ i' = (L.Db * L.Di) ^ i * L.Dbi ^ (i + i') := by sorry
-
-
-
-
-
-
+theorem Dpow_conv (i i' : ℕ) : L.Di ^ i * L.Dbi ^ i' = (L.Db * L.Di) ^ i * L.Dbi ^ (i + i') := by
+  have h := congrArg Subtype.val (show (e L _ (memDi L)) ^ i * (e L _ (memDbi L)) ^ i' =
+      (e L _ (memDb L) * e L _ (memDi L)) ^ i * (e L _ (memDbi L)) ^ (i + i') by
+    rw [mul_pow, pow_add, ← mul_assoc, mul_comm ((e L _ (memDb L)) ^ i), mul_assoc ((e L _ (memDi L)) ^ i),
+      ← mul_pow (e L _ (memDb L)), show e L _ (memDb L) * e L _ (memDbi L) = 1 from Subtype.ext (Db_Dbi L), one_pow,
+      mul_one])
+  simpa [e] using h
 
 theorem tm_conv (b : A) (i i' : ℕ) (H : List A) :
     tm L b i i' H = (b * (L.Db * L.Di) ^ i) * L.Dbi ^ (i + i') * H.prod := by
@@ -12485,12 +12485,12 @@ def NFD (L : LevelData (A P (DQ P)) P.r) (N : ℕ) : Submodule ℂ (A P (DQ P)) 
 variable {L : LevelData (A P (DQ P)) P.r} (hL : IsModelLevel P (DQ P) L) (hLaw : (DQ P).Laws P.TT)
 include hL hLaw
 
-theorem normal_form_two_le_degree (N : ℕ) : NormalFormTwo L (SB L) N N ≤ NFD L N := by sorry
-
-
-
-
-
+theorem normal_form_two_le_degree (N : ℕ) : NormalFormTwo L (SB L) N N ≤ NFD L N := by
+  refine Submodule.span_le.2 ?_
+  rintro x ⟨b, hb, i, i', H, h1, h2, h3, rfl⟩
+  rw [tm_conv, h1]
+  have hDD : L.Db * L.Di ∈ SB L := Submonoid.subset_closure (Or.inl (Or.inl (Or.inl (by simp))))
+  exact Submodule.subset_span ⟨_, H, Submonoid.mul_mem _ hb (Submonoid.pow_mem _ hDD i), h3, h2, rfl⟩
 
 end
 
@@ -13253,7 +13253,7 @@ open Formalism.FourierDecayAlt.R Formalism.FourierDecayAlt.R.LevelData Formalism
 
 variable {A : Type} [Ring A] [Algebra ℂ A] {r : ℕ} {L : LevelData A r} {S : Submonoid A} {Hs : Set A}
 
-def minusHats (L : LevelData A r) : Set A := sorry
+def minusHats (L : LevelData A r) : Set A := Set.range L.Ahatv ∪ Set.range L.R0v
 
 structure HypV (L : LevelData A r) (S : Submonoid A) : Prop where
   ahatv : ∀ b ∈ S, ∃ t : ℂ, ∀ Y, L.Ahatv Y * b = b * L.Ahatv (Y + t)
@@ -13429,37 +13429,37 @@ theorem vgen_DbD_R (Y : ℂ) : L.R0v Y * (L.Db * L.Di) = L.Db * L.Di * L.R0v (Y 
     (hatv_D_fns L).1, ← mul_assoc (L.Dr * L.Dbi), c, mul_sub, neg_smul, ← sub_eq_add_neg, ← sub_eq_add_neg]
   simp only [mul_smul_comm, mul_assoc]
 
-theorem coef_ζbi : L.G * L.Dbi * L.Dbi = L.D * L.Dbi - algebraMap ℂ A L.TT * (L.ζi * L.ζbi * (L.D * L.Dbi)) := by sorry
+theorem coef_ζbi : L.G * L.Dbi * L.Dbi = L.D * L.Dbi - algebraMap ℂ A L.TT * (L.ζi * L.ζbi * (L.D * L.Dbi)) := by
+  have h1 : e L L.ζ (memζ L) * e L L.ζi (memζi L) = 1 := Subtype.ext L.ζ_ζi
+  have h2 : e L L.ζb (memζb L) * e L L.ζbi (memζbi L) = 1 := Subtype.ext L.ζb_ζbi
+  have h3 : e L L.Drb (memDrb L) * e L L.Drbi (memDrbi L) = 1 := Subtype.ext (Drb_Drbi L)
+  have hG : e L L.GG (memGG L) = e L L.ζ (memζ L) * e L L.ζb (memζb L) - e L _ (memS L L.TT) :=
+    Subtype.ext L.GG_def
+  have key : e L L.Dr (memDr L) * e L L.Drb (memDrb L) * e L L.GG (memGG L) *
+      (e L L.ζbi (memζbi L) * e L L.Drbi (memDrbi L)) * (e L L.ζbi (memζbi L) * e L L.Drbi (memDrbi L)) =
+      e L L.Dr (memDr L) * e L L.ζ (memζ L) * (e L L.ζbi (memζbi L) * e L L.Drbi (memDrbi L)) -
+      e L _ (memS L L.TT) * (e L L.ζi (memζi L) * e L L.ζbi (memζbi L) * (e L L.Dr (memDr L) * e L L.ζ (memζ L) *
+        (e L L.ζbi (memζbi L) * e L L.Drbi (memDrbi L)))) := by
+    rw [hG]
+    linear_combination (e L L.Dr (memDr L) * e L L.ζ (memζ L) * e L L.ζbi (memζbi L) * e L L.Drbi (memDrbi L) *
+        e L L.ζb (memζb L) * e L L.ζbi (memζbi L)) * h3 +
+      (e L L.Dr (memDr L) * e L L.ζ (memζ L) * e L L.ζbi (memζbi L) * e L L.Drbi (memDrbi L)) * h2 -
+      (e L _ (memS L L.TT) * e L L.Dr (memDr L) * e L L.ζbi (memζbi L) * e L L.ζbi (memζbi L) *
+        e L L.Drbi (memDrbi L) * e L L.Drbi (memDrbi L) * e L L.Drb (memDrb L)) * 0 -
+      (e L _ (memS L L.TT) * e L L.Dr (memDr L) * e L L.ζbi (memζbi L) * e L L.ζbi (memζbi L) *
+        e L L.Drbi (memDrbi L)) * h3 +
+      (e L _ (memS L L.TT) * e L L.ζbi (memζbi L) * e L L.Dr (memDr L) * e L L.ζbi (memζbi L) *
+        e L L.Drbi (memDrbi L)) * h1
+  have := congrArg Subtype.val key
+  simpa [e, LevelData.G, LevelData.D, LevelData.Dbi, mul_assoc] using this
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-theorem drv_eq : L.Dr * L.Dbi = L.D * L.Dbi * L.ζi := by sorry
-
-
-
-
-
-
+theorem drv_eq : L.Dr * L.Dbi = L.D * L.Dbi * L.ζi := by
+  have h1 : e L L.ζ (memζ L) * e L L.ζi (memζi L) = 1 := Subtype.ext L.ζ_ζi
+  have key : e L L.Dr (memDr L) * e L L.Dbi (memDbi L) =
+      e L L.Dr (memDr L) * e L L.ζ (memζ L) * e L L.Dbi (memDbi L) * e L L.ζi (memζi L) := by
+    linear_combination (-(e L L.Dr (memDr L) * e L L.Dbi (memDbi L))) * h1
+  have := congrArg Subtype.val key
+  simpa [e, LevelData.D, mul_assoc] using this
 
 theorem vgen_ζbi_R (Y : ℂ) : L.R0v Y * L.ζbi = L.ζbi * L.R0v (Y + 0) +
     ([((-1 : ℂ), L.D * L.Dbi, Y), (L.TT, L.ζi * L.ζbi * (L.D * L.Dbi), Y)].map
@@ -13531,50 +13531,50 @@ theorem ruleSSv_SSs (i : ℕ) (hi : i ∈ Finset.Icc 1 (P.k - 1)) (Y : ℂ) :
   rw [starSSn_eq hL hLaw]
   exact ⟨h.2.2.2.2.2.2.1, h.2.2.2.2.2.2.2⟩
 
-theorem hypV_model : HypV L (Submonoid.closure (bddSet P L)) := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+theorem hypV_model : HypV L (Submonoid.closure (bddSet P L)) := by
+  have gen : ∀ {x}, x ∈ bddSet P L → x ∈ Submonoid.closure (bddSet P L) := fun h => Submonoid.subset_closure h
+  have mDD : L.D * L.Dbi ∈ bddSet P L := Or.inl (Or.inl (Or.inl (by simp)))
+  have mDbD : L.Db * L.Di ∈ bddSet P L := Or.inl (Or.inl (Or.inl (by simp)))
+  have mζi : L.ζi ∈ bddSet P L := Or.inl (Or.inl (Or.inl (by simp)))
+  have mζbi : L.ζbi ∈ bddSet P L := Or.inl (Or.inl (Or.inl (by simp)))
+  have hdrv : L.Dr * L.Dbi ∈ Submonoid.closure (bddSet P L) := by
+    rw [drv_eq]; exact Submonoid.mul_mem _ (gen mDD) (gen mζi)
+  have hInv := fun Y => Formalism.FourierDecayAlt.P.inverseCommutators _ P.r L Y
+  refine hypV_closure (bddSet P L) ?_ ?_ hdrv
+  · rintro b ((((hb | ⟨f, rfl⟩) | ⟨i, hi, rfl⟩) | ⟨i, hi, rfl⟩))
+    · simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hb
+      rcases hb with rfl | rfl | rfl | rfl
+      · exact ⟨0, fun Y => by rw [add_zero]; exact (hInv Y).2.2.2.2.2.1.symm⟩
+      · exact ⟨0, fun Y => by rw [add_zero]; exact (hInv Y).2.2.1.symm⟩
+      · exact ⟨1, vgen_DD_A L⟩
+      · exact ⟨-1, vgen_DbD_A L⟩
+    · exact ⟨0, fun Y => by rw [add_zero]; exact (kap_comm_DG P f (hatvDG hL Y).1).symm⟩
+    · exact ⟨-1, fun Y => by rw [← sub_eq_add_neg]; exact (ruleSSv_SS hL hLaw i (Finset.mem_Icc.2 (Set.mem_Icc.1 hi)) Y).1⟩
+    · exact ⟨1, fun Y => (ruleSSv_SSs hL hLaw i (Finset.mem_Icc.2 (Set.mem_Icc.1 hi)) Y).1⟩
+  · rintro b ((((hb | ⟨f, rfl⟩) | ⟨i, hi, rfl⟩) | ⟨i, hi, rfl⟩)) Y
+    · simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hb
+      rcases hb with rfl | rfl | rfl | rfl
+      · exact ⟨0, [], by simp, by rw [add_zero]; simpa using (hInv Y).2.2.2.2.2.2.1.symm⟩
+      · refine ⟨0, _, ?_, vgen_ζbi_R L Y⟩
+        intro x hx
+        simp only [List.mem_cons, List.not_mem_nil, or_false] at hx
+        rcases hx with rfl | rfl
+        · exact gen mDD
+        · exact Submonoid.mul_mem _ (Submonoid.mul_mem _ (gen mζi) (gen mζbi)) (gen mDD)
+      · refine ⟨1, [(L.TT, L.D * L.Dbi * (L.Dr * L.Dbi), Y + 1)], ?_, ?_⟩
+        · intro x hx
+          simp only [List.mem_cons, List.not_mem_nil, or_false] at hx
+          rw [hx]; exact Submonoid.mul_mem _ (gen mDD) hdrv
+        · rw [vgen_DD_R]; simp
+      · refine ⟨-1, [(-L.TT, L.Db * L.Di * (L.Dr * L.Dbi), Y + -1)], ?_, ?_⟩
+        · intro x hx
+          simp only [List.mem_cons, List.not_mem_nil, or_false] at hx
+          rw [hx]; exact Submonoid.mul_mem _ (gen mDbD) hdrv
+        · rw [vgen_DbD_R]; simp
+    · exact ⟨0, [], by simp, by rw [add_zero]; simpa using (kap_comm_DG P f (hatvDG hL Y).2).symm⟩
+    · exact ⟨-1, [], by simp, by rw [← sub_eq_add_neg]; simpa using
+        (ruleSSv_SS hL hLaw i (Finset.mem_Icc.2 (Set.mem_Icc.1 hi)) Y).2⟩
+    · exact ⟨1, [], by simp, by simpa using (ruleSSv_SSs hL hLaw i (Finset.mem_Icc.2 (Set.mem_Icc.1 hi)) Y).2⟩
 
 end
 
@@ -13597,10 +13597,10 @@ section Abs
 variable {A : Type} [Ring A]
 
 theorem transpose_mul_comm (M N : Matrix (Fin 2) (Fin 2) A) (h : ∀ i j k l, M i j * N k l = N k l * M i j) :
-    (M * N)ᵀ = Nᵀ * Mᵀ := by sorry
-
-
-
+    (M * N)ᵀ = Nᵀ * Mᵀ := by
+  ext i j
+  simp only [transpose_apply, mul_apply]
+  exact Finset.sum_congr rfl fun k _ => h _ _ _ _
 
 theorem transpose_list_prod : ∀ (l : List (Matrix (Fin 2) (Fin 2) A)),
     l.Pairwise (fun M N => ∀ i j k m, M i j * N k m = N k m * M i j) →
@@ -13611,19 +13611,19 @@ theorem transpose_list_prod : ∀ (l : List (Matrix (Fin 2) (Fin 2) A)),
     rw [List.prod_cons, transpose_mul_comm, transpose_list_prod l h.2, List.map_cons, List.reverse_cons,
       List.prod_append, List.prod_singleton]
     intro i j k m
-    have key : ∀ N ∈ l, ∀ i j k m, M i j * N k m = N k m * M i j := by sorry
+    have key : ∀ N ∈ l, ∀ i j k m, M i j * N k m = N k m * M i j := h.1
 
-
-
-
-
-
-
-
-
-
-
-
+    have hc : ∀ (L' : List (Matrix (Fin 2) (Fin 2) A)), (∀ N ∈ L', ∀ k m, M i j * N k m = N k m * M i j) →
+        ∀ k m, M i j * L'.prod k m = L'.prod k m * M i j := by
+      intro L' hL'
+      induction L' with
+      | nil => intro k m; simp only [List.prod_nil, one_apply]; split_ifs <;> simp
+      | cons N L' ih =>
+        intro k m
+        rw [List.prod_cons, mul_apply, Finset.mul_sum, Finset.sum_mul]
+        refine Finset.sum_congr rfl fun t _ => ?_
+        rw [← mul_assoc, hL' N (by simp) k t, mul_assoc, ih (fun N' hN' => hL' N' (by simp [hN'])) t m, mul_assoc]
+    exact hc l (fun N hN k m => key N hN i j k m) k m
 
 end Abs
 
@@ -13954,16 +13954,16 @@ theorem Z_mono {k k' : ℕ} (h : k ≤ k') : Z P L k ≤ Z P L k' :=
 variable {P L}
 
 theorem mem_hatSet {X : A P (DQ P)} : X ∈ hatSet P L ↔
-    (∃ y, X = L.Ahat y) ∨ (∃ y, X = L.R0 y) ∨ (∃ y, X = L.Ahatv y) ∨ (∃ y, X = L.R0v y) := by sorry
-
-
-
-
-
-
-
-
-
+    (∃ y, X = L.Ahat y) ∨ (∃ y, X = L.R0 y) ∨ (∃ y, X = L.Ahatv y) ∨ (∃ y, X = L.R0v y) := by
+  unfold hatSet
+  simp only [Set.mem_union, Set.mem_range]
+  constructor
+  · rintro (((⟨y, rfl⟩ | ⟨y, rfl⟩) | ⟨y, rfl⟩) | ⟨y, rfl⟩)
+    exacts [Or.inl ⟨y, rfl⟩, Or.inr (Or.inl ⟨y, rfl⟩), Or.inr (Or.inr (Or.inl ⟨y, rfl⟩)),
+      Or.inr (Or.inr (Or.inr ⟨y, rfl⟩))]
+  · rintro (⟨y, rfl⟩ | ⟨y, rfl⟩ | ⟨y, rfl⟩ | ⟨y, rfl⟩)
+    exacts [Or.inl (Or.inl (Or.inl ⟨y, rfl⟩)), Or.inl (Or.inl (Or.inr ⟨y, rfl⟩)), Or.inl (Or.inr ⟨y, rfl⟩),
+      Or.inr ⟨y, rfl⟩]
 
 variable (hL : IsModelLevel P (DQ P) L) (hLaw : (DQ P).Laws P.TT)
 include hL hLaw
@@ -14172,30 +14172,30 @@ theorem int_gen {m : ℕ} (hD : JDecay P L j m) {φ : ℝ → ℝ} (hφ : admitt
     {v W : List (A P (DQ P))} (hv : ∀ a ∈ v, a ∈ hatSet P L) (hW : ∀ a ∈ W, a ∈ hatSet P L)
     (hvl : v.length ≤ m) (hWl : W.length ≤ m) (π : M.Ty P) :
     Integrable (fun q => evQ P (actA P (Ph P φ * b * v.prod) j π) q * conj (evQ P (actA P W.prod j π) q))
-      (mu0 P.r P.TT) := by sorry
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      (mu0 P.r P.TT) := by
+  obtain ⟨Mx, hM, e⟩ := ev_gen (j := j) hφ.1 hb
+  obtain ⟨Cφ, hCφ⟩ := hφ.2.2 0
+  have hC0 : 0 ≤ C := hb.1
+  have hg : Integrable (fun q => |Cφ| * C * ∑ π', (‖evQ P (actA P v.prod j π') q‖ ^ 2 +
+      ‖evQ P (actA P W.prod j π) q‖ ^ 2)) (mu0 P.r P.TT) :=
+    (integrable_finset_sum _ fun π' _ => (hD v hvl hv π').add (hD W hWl hW π)).const_mul _
+  refine hg.mono' (((MAx3.evQ_cont P _).mul (Complex.continuous_conj.comp (MAx3.evQ_cont P _))).aestronglyMeasurable)
+    (Filter.Eventually.of_forall fun q => ?_)
+  have h1 : |φ (Gq P q)| ≤ |Cφ| := by
+    have := hCφ _ (Gq_pos P q); rw [ld_zero (Gq_pos P q)] at this; exact this.trans (le_abs_self _)
+  have h2 : ‖∑ π', Mx q π π' * evQ P (actA P v.prod j π') q‖ ≤ ∑ π', C * ‖evQ P (actA P v.prod j π') q‖ :=
+    (norm_sum_le _ _).trans (Finset.sum_le_sum fun π' _ => by
+      rw [norm_mul]; exact mul_le_mul_of_nonneg_right (hM q π π') (norm_nonneg _))
+  rw [e v q π, norm_mul, norm_mul, Complex.norm_conj, Complex.norm_real, Real.norm_eq_abs]
+  calc |φ (Gq P q)| * ‖∑ π', Mx q π π' * evQ P (actA P v.prod j π') q‖ * ‖evQ P (actA P W.prod j π) q‖
+      ≤ |Cφ| * (∑ π', C * ‖evQ P (actA P v.prod j π') q‖) * ‖evQ P (actA P W.prod j π) q‖ :=
+        mul_le_mul_of_nonneg_right (mul_le_mul h1 h2 (norm_nonneg _) (abs_nonneg _)) (norm_nonneg _)
+    _ = |Cφ| * C * ∑ π', ‖evQ P (actA P v.prod j π') q‖ * ‖evQ P (actA P W.prod j π) q‖ := by
+        simp only [Finset.mul_sum, Finset.sum_mul]
+        exact Finset.sum_congr rfl fun _ _ => by ring
+    _ ≤ |Cφ| * C * ∑ π', (‖evQ P (actA P v.prod j π') q‖ ^ 2 + ‖evQ P (actA P W.prod j π) q‖ ^ 2) :=
+        mul_le_mul_of_nonneg_left (Finset.sum_le_sum fun π' _ => sq_bound _ _)
+          (mul_nonneg (abs_nonneg _) hC0)
 
 end
 

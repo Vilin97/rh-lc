@@ -303,7 +303,7 @@ omit [IsNoetherianRing R] [IsAdicComplete (maximalIdeal R) R] [Finite σ] in
 
 theorem isLocalHom_of_constantCoeff_mem (φ : MvPowerSeries τ R →ₐ[R] MvPowerSeries σ R)
     (h0 : ∀ j, constantCoeff (φ (X j)) ∈ maximalIdeal R) : IsLocalHom φ.toRingHom := by
-  refine ((IsLocalRing.local_hom_TFAE _).out 0 3).2 fun g hg => ?_
+  refine ((IsLocalRing.local_hom_TFAE _).out 1 4).2 fun g hg => ?_
   have h1 := algHom_sub_constantCoeff_mem φ (K := maximalIdeal _)
     (fun j => mem_maximalIdeal_iff_constantCoeff.2 (h0 j)) g
   have h2 : algebraMap R (MvPowerSeries σ R) (constantCoeff g) ∈ maximalIdeal _ := by

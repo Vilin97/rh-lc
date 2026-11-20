@@ -429,7 +429,7 @@ theorem flat_of_surjective_cotangent_of_residue {k : Type*} [CommRing k] [Algebr
     [IsLocalRing A] (hk : Function.Surjective (algebraMap k (ResidueField A))) (φ : A →ₐ[k] A)
     (hle : maximalIdeal A ≤ (maximalIdeal A).comap φ)
     (h₁ : Function.Surjective (Ideal.mapCotangent _ _ φ hle)) : (φ : A →+* A).Flat := by
-  haveI : IsLocalHom (φ : A →+* A) := ((local_hom_TFAE (φ : A →+* A)).out 0 3).mpr hle
+  haveI : IsLocalHom (φ : A →+* A) := ((local_hom_TFAE (φ : A →+* A)).out 1 4).mpr hle
   refine (flat_of_surjective_cotangent φ hle (fun x => ?_) h₁).2
   obtain ⟨c, rfl⟩ := hk x
   refine ⟨algebraMap k _ c, ?_⟩
@@ -537,7 +537,7 @@ theorem ideal_eq_bot_of_flat_quotient_of_map_maximalIdeal (T : Type*) {R : Type*
     [IsDomain T] [IsDiscreteValuationRing T] [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
     [Algebra T R] (h : (maximalIdeal T).map (algebraMap T R) = maximalIdeal R) {J : Ideal R}
     (hJ : J ≠ ⊤) [Module.Flat T (R ⧸ J)] : J = ⊥ :=
-  haveI : IsLocalHom (algebraMap T R) := ((local_hom_TFAE (algebraMap T R)).out 0 2).mpr h.le
+  haveI : IsLocalHom (algebraMap T R) := ((local_hom_TFAE (algebraMap T R)).out 1 3).mpr h.le
   ideal_eq_bot_of_flat_quotient T hJ
 
 theorem flat_endomorphism_and_local_criterion :
@@ -565,7 +565,7 @@ theorem flat_endomorphism_and_local_criterion :
     fun T A B _ _ _ _ _ _ _ _ _ _ _ _ φ h => flat_of_flat_residueField_baseChange_dvr φ h,
     fun k K A B _ _ _ _ _ _ _ _ φ h => flat_of_flat_baseChange K φ h,
     fun T R _ _ _ _ _ _ _ _ J hJ _ => ideal_eq_bot_of_flat_quotient T hJ⟩
-  have hle : maximalIdeal A ≤ (maximalIdeal A).comap φ := ((local_hom_TFAE φ).out 0 3).mp ‹_›
+  have hle : maximalIdeal A ≤ (maximalIdeal A).comap φ := ((local_hom_TFAE φ).out 1 4).mp ‹_›
   have h₀' : ∀ b, ∃ a, φ a - b ∈ maximalIdeal A := fun b => by
     obtain ⟨a, ha⟩ := h₀ (residue A b)
     obtain ⟨a, rfl⟩ := residue_surjective a

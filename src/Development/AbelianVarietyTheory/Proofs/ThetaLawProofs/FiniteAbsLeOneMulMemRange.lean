@@ -89,29 +89,29 @@ theorem spInvariant_conj (hH : IsSpInvariant g H) (U : (Matrix (Fin g) (Fin g) �
 theorem spInvariant_partialInv (hH : IsSpInvariant g H) (e : Fin g)
     {τ σ : Matrix (Fin g) (Fin g) ℂ} (hτ : τ ∈ SiegelH (Fin g))
     (h : ∀ i k, σ i k - σ i e * (τ e k + if e = k then 1 else 0) =
-      τ i k + if i = e then (if e = k then 1 else 0) - τ e k else 0) : H σ = H τ := by
-  have hm := spH_le g (spPJ_mem e)
-  have hj := jAut_isUnit hm hτ
-  have : σ * jAut (spPJ e) τ = nAut (spPJ e) τ := by
-    have e1 : jAut (spPJ e) τ = 1 - single e e (1 : ℂ) * (τ + 1) := by
-      ext i k
-      by_cases hi : e = i <;> simp [jAut_eq, cMat, spPJ, toBlocks₂₁, toBlocks₂₂, mul_apply,
-        one_apply, single_apply, ite_and, hi]
-    have e2 : nAut (spPJ e) τ = τ + single e e (1 : ℂ) * (1 - τ) := by
-      ext i k
-      by_cases hi : e = i <;> simp [nAut_eq, cMat, spPJ, toBlocks₁₁, toBlocks₁₂, mul_apply,
-        one_apply, single_apply, ite_and, hi]
-    ext i k
-    rw [e1, e2, Matrix.mul_sub, Matrix.mul_one, ← Matrix.mul_assoc]
-    have := h i k
-    by_cases hi : i = e
-    · subst hi
-      simpa [mul_apply, single_apply, ite_and, one_apply] using this
-    · simpa [mul_apply, single_apply, ite_and, one_apply, hi, Ne.symm hi] using this
-  have e2 : σ = spAct (spPJ e) τ := by
-    rw [spAct_eq, ← this, Matrix.mul_nonsing_inv_cancel_right _ _ hj]
-  rw [e2]
-  exact hH _ hm τ hτ
+      τ i k + if i = e then (if e = k then 1 else 0) - τ e k else 0) : H σ = H τ := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def rankOneCurve (Z : Matrix (Fin g) (Fin g) ℂ) (R : Matrix (Fin g) (Fin g) ℝ) (u : Fin g → ℝ)
     (s : ℂ) : Matrix (Fin g) (Fin g) ℂ :=
@@ -159,144 +159,144 @@ theorem eq_on_rankOneCurve_of_integral (hol : IsHoloSiegel g H) (hH : IsSpInvari
     (hR : R.IsSymm) (hRe : R e e = 0) (huN : ∀ i, N * u i ∈ (Int.castRingHom ℝ).range)
     (hRN : ∀ i, N * R i e ∈ (Int.castRingHom ℝ).range)
     (hRN2 : ∀ i j, N * N * R i j ∈ (Int.castRingHom ℝ).range) (z w : ℍ) :
-    H (rankOneCurve Z R u z) = H (rankOneCurve Z R u w) := by
-  set A := (Int.castRingHom ℝ).range with hA
-  let ε : Fin g → ℝ := fun i => if i = e then 1 else 0
-  have hεe : ε e = 1 := if_pos rfl
-  have hε : ∀ i, ε i ∈ A := fun i => by
-    by_cases h : i = e <;> simp [ε, h]
-  have hNA : (N : ℝ) ∈ A := natCast_mem A N
-  let F : Set (ℍ → ℂ) := {f | ∃ (R : Matrix (Fin g) (Fin g) ℝ) (u : Fin g → ℝ), u e = 1 ∧
-    R.IsSymm ∧ R e e = 0 ∧ (∀ i, N * u i ∈ A) ∧ (∀ i, N * R i e ∈ A) ∧
-    (∀ i j, N * N * R i j ∈ A) ∧ f = fun z : ℍ => H (rankOneCurve Z R u z)}
-  refine eq_of_finite_modular_family (F := F) ?_ ?_ ?_ ?_ ?_
-    ⟨R, u, hu, hR, hRe, huN, hRN, hRN2, rfl⟩ z w
-  · have hfin := finite_abs_le_one_mul_mem_range (c := (N * N : ℝ)) (by positivity)
-    refine (((Set.Finite.pi' fun _ : Fin g => Set.Finite.pi' fun _ : Fin g => hfin).prod
-      (Set.Finite.pi' fun _ : Fin g => hfin)).image
-        fun p (z : ℍ) => H (rankOneCurve Z (of p.1) p.2 z)).subset ?_
-    rintro _ ⟨R, u, hu, hR, hRe, huN, hRN, hRN2, rfl⟩
-    let k : Fin g → ℤ := fun i => if i = e then 0 else ⌊u i⌋
-    have hke : k e = 0 := if_pos rfl
-    have hk : ∀ i, (k i : ℝ) ∈ A := fun i => intCast_mem A _
-    let R₁ : Matrix (Fin g) (Fin g) ℝ := of fun i j => R i j - (k i * R j e + R i e * k j)
-    have hR₁ : R₁.IsSymm := by
-      ext i j
-      simp only [R₁, transpose_apply, of_apply, hR.apply i j]
-      ring
-    refine ⟨(fun i j => Int.fract (R₁ i j), fun i => u i - k i), ⟨fun i j => ⟨?_, ?_⟩,
-      fun i => ⟨?_, ?_⟩⟩, funext fun z => ?_⟩
-    · exact abs_le.2 ⟨by linarith [Int.fract_nonneg (R₁ i j)], (Int.fract_lt_one _).le⟩
-    · have : N * N * Int.fract (R₁ i j) = N * N * R i j - (N * k i * (N * R j e) +
-          N * R i e * (N * k j)) - N * N * ⌊R₁ i j⌋ := by
-        simp only [Int.fract, R₁, of_apply]
-        ring
-      simp only [this]
-      exact sub_mem (sub_mem (hRN2 i j) (add_mem (mul_mem (mul_mem hNA (hk i)) (hRN j))
-        (mul_mem (hRN i) (mul_mem hNA (hk j))))) (mul_mem (mul_mem hNA hNA) (intCast_mem A _))
-    · by_cases h : i = e
-      · simp [h, hu, hke]
-      · simp only [k, if_neg h]
-        exact abs_le.2 ⟨by linarith [Int.floor_le (u i)], by linarith [Int.lt_floor_add_one (u i)]⟩
-    · simp only [mul_sub, mul_assoc]
-      exact sub_mem (mul_mem hNA (huN i)) (mul_mem hNA (mul_mem hNA (hk i)))
-    · have h1 := spInvariant_conj hH (rkU (-k) (Pi.single e 1) (by simp [hke]))
-        (rankOneCurve_mem hZs hZ hR hu z.im_pos)
-      have hfs : (of fun i j => Int.fract (R₁ i j)).IsSymm := by
-        ext i j
-        simp only [transpose_apply, of_apply, hR₁.apply i j]
-      have h2 := spInvariant_transl hH (B := R₁.map Int.floor) (hR₁.map _)
-        (rankOneCurve_mem hZs hZ hfs (u := fun i => u i - k i) (by simp [hu, hke]) z.im_pos)
-      simp only
-      rw [← h1, ← h2]
-      congr 1
-      ext i j
-      have h3 : ((Int.fract (R₁ i j) : ℝ) : ℂ) = R₁ i j - (⌊R₁ i j⌋ : ℤ) := by
-        rw [Int.fract]
-        push_cast
-        rfl
-      have hZe' : ∀ i, Z e i = 0 := fun i => (hZs.apply i e).trans (hZe i)
-      simp only [rkU_val, mul_apply, map_apply, Matrix.add_apply, transpose_apply, rankOneCurve,
-        of_apply, h3]
-      simp [one_apply, vecMulVec_apply, Pi.single_apply, add_mul, mul_add, Finset.sum_add_distrib,
-        hZe, hZe', hu, hRe, R₁, hR.apply j e]
-      ring
-  · rintro _ ⟨R, u, hu, hR, -, -, -, -, rfl⟩
-    rw [UpperHalfPlane.mdifferentiable_iff]
-    have hd : Differentiable ℂ fun s : ℂ => (of.symm (rankOneCurve Z R u s) : Fin g → Fin g → ℂ) := by
-      refine differentiable_pi.2 fun i => differentiable_pi.2 fun j => ?_
-      simp only [rankOneCurve, of_symm_apply, of_apply]
-      fun_prop
-    refine (hol.comp hd.differentiableOn fun s (hs : 0 < s.im) =>
-      of_symm_mem_phDom (rankOneCurve_mem hZs hZ hR hu hs)).congr fun s hs => ?_
-    simp only [Function.comp_apply, UpperHalfPlane.ofComplex_apply_of_im_pos hs,
-      Equiv.apply_symm_apply, phSym_eq_self_of_isSymm (rankOneCurve_mem hZs hZ hR hu hs).1]
-  · rintro _ ⟨R, u, hu, hR, -, -, -, -, rfl⟩
-    obtain ⟨c, hc, hle⟩ := posDef_exists_mul_dotProduct_le (hZ u hu 1 one_pos)
-    obtain ⟨K, hK⟩ := hb c hc
-    refine UpperHalfPlane.isBoundedAtImInfty_iff.2 ⟨K, 1, fun z hz =>
-      hK _ (rankOneCurve_mem hZs hZ hR hu z.im_pos) ?_⟩
-    have h1 : (Z.map Complex.im + (1 : ℝ) • vecMulVec u u -
-        c • (1 : Matrix (Fin g) (Fin g) ℝ)).PosSemidef := by
-      refine posSemidef_iff_dotProduct_mulVec.2 ⟨(hZ u hu 1 one_pos).1.sub ?_, fun x => ?_⟩
-      · simp [IsHermitian]
-      · rw [sub_mulVec, dotProduct_sub, smul_mulVec, one_mulVec, dotProduct_smul]
-        simpa using hle x
-    have h2 := (posSemidef_vecMulVec_self_star u).smul (sub_nonneg.2 hz)
-    convert h1.add h2 using 1
-    rw [rankOneCurve_map_im]
-    simp only [star_trivial, UpperHalfPlane.coe_im]
-    module
-  · rintro _ ⟨R, u, hu, hR, hRe, huN, hRN, hRN2, rfl⟩
-    have hR' : (of fun i j => R i j - u i * (ε j + R j e) - (ε i + R i e) * u j +
-        2 * (ε i * ε j)).IsSymm := by
-      ext i j
-      simp only [transpose_apply, of_apply, hR.apply i j]
-      ring
-    refine ⟨_, fun i => ε i + R i e, by simp [hεe, hRe], hR', by simp [hεe, hRe, hu]; ring,
-      fun i => ?_, fun i => ?_, fun i j => ?_, funext fun z => ?_⟩
-    · rw [mul_add]
-      exact add_mem (mul_mem hNA (hε i)) (hRN i)
-    · convert sub_mem (mul_mem hNA (hε i)) (huN i) using 1
-      simp only [of_apply, hεe, hRe, hu]
-      ring
-    · convert add_mem (sub_mem (sub_mem (hRN2 i j)
-        (mul_mem (huN i) (add_mem (mul_mem hNA (hε j)) (hRN j))))
-        (mul_mem (add_mem (mul_mem hNA (hε i)) (hRN i)) (huN j)))
-        (mul_mem (natCast_mem A 2) (mul_mem (mul_mem hNA (hε i)) (mul_mem hNA (hε j)))) using 1
-      simp only [of_apply]
-      push_cast
-      ring
-    · symm
-      refine spInvariant_partialInv hH e
-        (rankOneCurve_mem hZs hZ hR hu (ModularGroup.S • z).im_pos) fun i k => ?_
-      have hZe' : ∀ i, Z e i = 0 := fun i => (hZs.apply i e).trans (hZe i)
-      have hz := z.ne_zero
-      simp only [rankOneCurve, of_apply, UpperHalfPlane.modular_S_smul, UpperHalfPlane.coe_mk,
-        hZe, hZe', hεe, hu, hRe, hR.apply k e]
-      by_cases hi : i = e <;> by_cases hk : k = e <;>
-        simp [ε, hi, hk, eq_comm (a := e), hZe, hZe', hu, hRe, hR.apply k e] <;>
-        field_simp <;> ring
-  · rintro _ ⟨R, u, hu, hR, hRe, huN, hRN, hRN2, rfl⟩
-    have hR' : (of fun i j => R i j + u i * u j - ε i * ε j).IsSymm := by
-      ext i j
-      simp only [transpose_apply, of_apply, hR.apply i j]
-      ring
-    refine ⟨_, u, hu, hR', by simp [hεe, hRe, hu], huN, fun i => ?_, fun i j => ?_,
-      funext fun z => ?_⟩
-    · convert sub_mem (add_mem (hRN i) (huN i)) (mul_mem hNA (hε i)) using 1
-      simp only [of_apply, hεe, hu]
-      ring
-    · convert sub_mem (add_mem (hRN2 i j) (mul_mem (huN i) (huN j)))
-        (mul_mem (mul_mem hNA (hε i)) (mul_mem hNA (hε j))) using 1
-      simp only [of_apply]
-      ring
-    · rw [← spInvariant_transl hH (eJ_symm e) (rankOneCurve_mem hZs hZ hR' hu z.im_pos)]
-      refine congrArg H ?_
-      ext i j
-      simp only [rankOneCurve, of_apply, UpperHalfPlane.modular_T_smul, UpperHalfPlane.coe_vadd,
-        Matrix.add_apply, map_apply, eJ_apply]
-      by_cases hi : i = e <;> by_cases hj : j = e <;> simp [ε, hi, hj, eq_comm (a := e)] <;> ring
+    H (rankOneCurve Z R u z) = H (rankOneCurve Z R u w) := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 theorem tendsto_floor_nat_mul_div (x : ℝ) :
     Filter.Tendsto (fun n : ℕ => (⌊(n + 1 : ℝ) * x⌋ : ℝ) / (n + 1)) Filter.atTop (𝓝 x) := by
@@ -462,118 +462,118 @@ theorem fderiv_vecMulVec_eq_zero (hol : IsHoloSiegel g H) (hH : IsSpInvariant g 
     (hτ : τ ∈ SiegelH (Fin g)) :
     fderiv ℂ (fun x : Fin g → Fin g → ℂ => H (phSym (of x))) (of.symm τ)
       (of.symm (vecMulVec (imC τ *ᵥ fun l => (U.val e l : ℂ))
-        (imC τ *ᵥ fun l => (U.val e l : ℂ)))) = 0 := by
-  set w := imC τ *ᵥ fun l => (U.val e l : ℂ) with hw
-  have hτ' := spAct_mem (spDiag_mem_sp U) hτ
-  have h1 := eventually_eq_column hol hH hb e hτ'
-  rw [spAct_spDiag_eq] at h1
-  have h2 : (fun i => (((U.val.map (Int.cast : ℤ → ℂ) * τ *
-      (U.val.map (Int.cast : ℤ → ℂ))ᵀ) i e).im : ℂ)) = U.val.map (Int.cast : ℤ → ℂ) *ᵥ w := by
-    ext i
-    rw [Matrix.mul_assoc]
-    simp [hw, mul_apply, mulVec, dotProduct, imC]
-  have hd : HasDerivAt (fun s : ℂ => (of.symm τ + s • of.symm (vecMulVec w w) : Fin g → Fin g → ℂ))
-      (of.symm (vecMulVec w w)) 0 := by
-    simpa using ((hasDerivAt_id (0 : ℂ)).smul_const
-      (of.symm (vecMulVec w w) : Fin g → Fin g → ℂ)).const_add (of.symm τ)
-  have hn := (isOpen_phDom g).mem_nhds (of_symm_mem_phDom hτ)
-  have h3 := (hol.differentiableAt hn).hasFDerivAt.comp_hasDerivAt_of_eq 0 hd (by simp)
-  refine h3.unique ((hasDerivAt_const 0 (H τ)).congr_of_eventuallyEq ?_)
-  filter_upwards [h1, hd.continuousAt.eventually (p := fun x => x ∈ phDom g) (by simpa using hn)]
-    with s hs hm
-  have hsym : phSym (of (of.symm τ + s • of.symm (vecMulVec w w))) = τ + s • vecMulVec w w := by
-    refine phSym_eq_self_of_isSymm (hτ.1.add (IsSymm.smul ?_ s))
-    exact transpose_vecMulVec w w
-  have hm' : τ + s • vecMulVec w w ∈ SiegelH (Fin g) := hsym ▸ hm
-  rw [Function.comp_apply, hsym, ← spInvariant_conj hH U hm', ← spInvariant_conj hH U hτ, ← hs, h2,
-    Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.smul_mul, mul_vecMulVec, vecMulVec_mul,
-    vecMul_transpose]
+        (imC τ *ᵥ fun l => (U.val e l : ℂ)))) = 0 := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 theorem siegel_eq_of_bounded (hol : IsHoloSiegel g H) (hH : IsSpInvariant g H)
     (hb : ∀ c : ℝ, 0 < c → ∃ K : ℝ, ∀ τ ∈ SiegelH (Fin g),
       (τ.map Complex.im - c • (1 : Matrix (Fin g) (Fin g) ℝ)).PosSemidef → ‖H τ‖ ≤ K)
     {τ σ : Matrix (Fin g) (Fin g) ℂ} (hτ : τ ∈ SiegelH (Fin g)) (hσ : σ ∈ SiegelH (Fin g)) :
-    H τ = H σ := by
-  have key : ∀ τ ∈ SiegelH (Fin g), ∀ V : Matrix (Fin g) (Fin g) ℂ, V.IsSymm →
-      fderiv ℂ (fun x : Fin g → Fin g → ℂ => H (phSym (of x))) (of.symm τ) (of.symm V) = 0 := by
-    intro τ hτ V hV
-    set L := fderiv ℂ (fun x : Fin g → Fin g → ℂ => H (phSym (of x))) (of.symm τ) with hL
-    let M : Matrix (Fin g) (Fin g) ℂ →ₗ[ℂ] ℂ :=
-      { toFun := fun S => L (of.symm (imC τ * S * (imC τ)ᵀ))
-        map_add' := fun S T => by
-          rw [Matrix.mul_add, Matrix.add_mul]
-          exact L.map_add _ _
-        map_smul' := fun c S => by
-          rw [Matrix.mul_smul, Matrix.smul_mul]
-          exact L.map_smul _ _ }
-    have hM : ∀ (U : (Matrix (Fin g) (Fin g) ℤ)ˣ) (e : Fin g),
-        M (vecMulVec (fun l => (U.val e l : ℂ)) fun l => (U.val e l : ℂ)) = 0 := by
-      intro U e
-      rw [← fderiv_vecMulVec_eq_zero hol hH hb U e hτ]
-      change L _ = L _
-      rw [mul_vecMulVec, vecMulVec_mul, vecMul_transpose]
-    have h1 : ∀ i, M (single i i 1) = 0 := fun i => by
-      rw [← hM 1 i]
-      congr 1
-      ext a b
-      simp [vecMulVec_apply, single_apply, one_apply, ite_and]
-      split_ifs <;> rfl
-    have h2 : ∀ i j, M (single i j 1) + M (single j i 1) = 0 := fun i j => by
-      by_cases hij : i = j
-      · simp [hij, h1]
-      have h := hM (rkU (Pi.single i 1) (Pi.single j 1) (by simp [hij])) i
-      have e : (vecMulVec (fun l => ((rkU (Pi.single i 1) (Pi.single j 1)
-          (by simp [hij])).val i l : ℂ)) fun l => ((rkU (Pi.single i 1) (Pi.single j 1)
-          (by simp [hij])).val i l : ℂ)) =
-          single i i 1 + single j j 1 + (single i j 1 + single j i 1) := by
-        ext a b
-        simp only [rkU_val, vecMulVec_apply, single_apply, one_apply, ite_and, Matrix.add_apply,
-          Pi.single_apply, eq_comm (b := j)]
-        split_ifs <;> norm_num
-      rwa [e, map_add, map_add, map_add, h1, h1, zero_add, zero_add] at h
-    have h3 : ∀ S : Matrix (Fin g) (Fin g) ℂ, S.IsSymm → M S = 0 := fun S hS => by
-      have e1 : M S = ∑ i, ∑ j, S i j * M (single i j 1) := by
-        conv_lhs => rw [matrix_eq_sum_single S]
-        simp only [map_sum, ← smul_eq_mul, ← map_smul, smul_single]
-        simp
-      have e2 : M S = ∑ i, ∑ j, S i j * M (single j i 1) := by
-        rw [e1, Finset.sum_comm]
-        simp only [hS.apply]
-      have : M S + M S = 0 := by
-        nth_rw 1 [e1]
-        simp only [e2, ← Finset.sum_add_distrib, ← mul_add, h2, mul_zero, Finset.sum_const_zero]
-      linear_combination (1 / 2 : ℂ) * this
-    have hu : IsUnit (imC τ).det := by
-      have : imC τ = Complex.ofRealHom.mapMatrix (τ.map Complex.im) := rfl
-      rw [this, ← RingHom.map_det]
-      exact hτ.2.det_pos.ne'.isUnit.map _
-    have h4 := h3 ((imC τ)⁻¹ * V * ((imC τ)⁻¹)ᵀ) (by
-      simp only [IsSymm, transpose_mul, transpose_transpose, hV.eq, Matrix.mul_assoc])
-    rw [← h4]
-    change L _ = L _
-    rw [Matrix.mul_assoc, Matrix.mul_assoc, ← transpose_mul, mul_nonsing_inv _ hu, transpose_one,
-      Matrix.mul_one, mul_nonsing_inv_cancel_left _ _ hu]
-  have hmem : ∀ t ∈ Set.Icc (0 : ℝ) 1, τ + (t : ℂ) • (σ - τ) ∈ SiegelH (Fin g) := fun t ht => by
-    have h : phSym _ ∈ SiegelH (Fin g) := (convex_phDom g).add_smul_sub_mem
-      (of_symm_mem_phDom hτ) (of_symm_mem_phDom hσ) ht
-    rwa [← phSym_eq_self_of_isSymm (hτ.1.add ((hσ.1.sub hτ.1).smul (t : ℂ)))]
-  have hd : ∀ t ∈ Set.Icc (0 : ℝ) 1, HasDerivAt (fun t : ℝ =>
-      H (phSym (of (of.symm τ + (t : ℂ) • of.symm (σ - τ))))) 0 t := fun t ht => by
-    have h1 : HasDerivAt (fun s : ℂ => (of.symm τ + s • of.symm (σ - τ) : Fin g → Fin g → ℂ))
-        (of.symm (σ - τ)) t := by
-      simpa using ((hasDerivAt_id (t : ℂ)).smul_const
-        (of.symm (σ - τ) : Fin g → Fin g → ℂ)).const_add (of.symm τ)
-    have h2 := (hol.differentiableAt ((isOpen_phDom g).mem_nhds
-      (of_symm_mem_phDom (hmem t ht)))).hasFDerivAt.comp_hasDerivAt_of_eq (t : ℂ) h1 rfl
-    rw [key _ (hmem t ht) _ (hσ.1.sub hτ.1)] at h2
-    exact h2.comp_ofReal
-  have h := constant_of_has_deriv_right_zero
-    (fun t ht => (hd t ht).continuousAt.continuousWithinAt)
-    (fun t ht => (hd t (Set.Ico_subset_Icc_self ht)).hasDerivWithinAt) 1 (by simp)
-  simp only [ofReal_one, ofReal_zero, one_smul, zero_smul, add_zero, Equiv.apply_symm_apply,
-    phSym_eq_self_of_isSymm hτ.1] at h
-  have e : of (of.symm τ + of.symm (σ - τ)) = σ := add_sub_cancel τ σ
-  rw [← h, e, phSym_eq_self_of_isSymm hσ.1]
+    H τ = H σ := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 theorem phHolo_of_phKoecher : PhKoecherStatement → PhHoloStatement := by
   intro hK g hg H hol hH

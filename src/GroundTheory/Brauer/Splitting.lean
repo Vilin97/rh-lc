@@ -228,14 +228,14 @@ theorem tfae_maximal_subfield (F : Subalgebra K D) [IsMulCommutative F] :
 theorem finrank_eq_degree_of_maximal (F : Subalgebra K D) [IsMulCommutative F]
     (hF : Maximal (fun G : Subalgebra K D ↦ IsMulCommutative G) F) :
     finrank K F = degree K D :=
-  ((tfae_maximal_subfield F).out 0 3).mp hF
+  ((tfae_maximal_subfield F).out 1 4).mp hF
 
 theorem nonempty_algEquiv_matrix_of_maximal (F : Subalgebra K D) [IsMulCommutative F]
     (hF : Maximal (fun G : Subalgebra K D ↦ IsMulCommutative G) F) :
     letI := fieldOfIsMulCommutative F
     Nonempty (F ⊗[K] D ≃ₐ[F] Matrix (Fin (degree K D)) (Fin (degree K D)) F) := by
   let _ := fieldOfIsMulCommutative F
-  have h2 : finrank K F ^ 2 = finrank K D := ((tfae_maximal_subfield F).out 0 2).mp hF
+  have h2 : finrank K F ^ 2 = finrank K D := ((tfae_maximal_subfield F).out 1 3).mp hF
   rw [← finrank_eq_degree_of_maximal F hF]
   exact nonempty_algEquiv_matrix_of_algHom F.val h2
 

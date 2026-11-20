@@ -170,20 +170,20 @@ theorem LiesOver.isTorsionFree {w : Place k K'} {v : Place k K} (h : w.LiesOver 
 omit [IsScalarTower k K K'] in
 
 theorem LiesOver.valuation_algebraMap {w : Place k K'} {v : Place k K} (h : w.LiesOver v) (x : K) :
-    letI := h.algebra
-    v.valuation x ^ (IsLocalRing.maximalIdeal v.ring).ramificationIdx'
-        (IsLocalRing.maximalIdeal w.ring) =
-      w.valuation (algebraMap K K' x) := by
-  let := h.algebra
-  have := h.isLocalHom
-  have := h.isTorsionFree
-  let : Algebra v.ring K' := ((algebraMap K K').comp (algebraMap v.ring K)).toAlgebra
-  have : IsScalarTower v.ring K K' := IsScalarTower.of_algebraMap_eq fun _ => rfl
-  have : IsScalarTower v.ring w.ring K' := IsScalarTower.of_algebraMap_eq fun _ => rfl
-  have : w.heightOneSpectrum.asIdeal.LiesOver v.heightOneSpectrum.asIdeal :=
-    inferInstanceAs ((IsLocalRing.maximalIdeal w.ring).LiesOver (IsLocalRing.maximalIdeal v.ring))
-  exact IsDedekindDomain.HeightOneSpectrum.valuation_liesOver K' v.heightOneSpectrum
-    w.heightOneSpectrum x
+    letI := by sorry
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 theorem LiesOver.ramificationIdx'_eq {w : Place k K'} {v : Place k K} (h : w.LiesOver v) :
     letI := h.algebra

@@ -39,7 +39,7 @@ theorem exists_isLocalHom_extension {A B O C : Type} [CommRing A] [IsDomain A] [
   refine ⟨ι', ?_, hcomp⟩
 
   have hA : (IsLocalRing.maximalIdeal O).comap ι = IsLocalRing.maximalIdeal A :=
-    ((IsLocalRing.local_hom_TFAE ι).out 0 4).mp (inferInstance : IsLocalHom ι)
+    ((IsLocalRing.local_hom_TFAE ι).out 1 5).mp (inferInstance : IsLocalHom ι)
   have hp : (((IsLocalRing.maximalIdeal O).comap ι').comap (algebraMap A B)).IsMaximal := by
     rw [Ideal.comap_comap, show ι'.comp (algebraMap A B) = ι from hcomp, hA]
     exact IsLocalRing.maximalIdeal.isMaximal A

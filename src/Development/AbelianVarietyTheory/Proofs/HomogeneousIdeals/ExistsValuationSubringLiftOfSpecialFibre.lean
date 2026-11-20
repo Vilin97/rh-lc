@@ -328,7 +328,7 @@ theorem exists_valuationSubring_lift_of_isOpen {Z : Scheme.{u}} (f : Z ⟶ Spec 
     rw [← Ideal.comap_comap, hφm]
     exact hxO
   refine ⟨K', inferInstance, inferInstance, inferInstance, O', φ.comp ψ.hom,
-    ((local_hom_TFAE _).out 4 0).mp hcomap, Spec.map (CommRingCat.ofHom φ) ≫ j, hφ, ?_, ?_, ?_⟩
+    ((local_hom_TFAE _).out 5 1).mp hcomap, Spec.map (CommRingCat.ofHom φ) ≫ j, hφ, ?_, ?_, ?_⟩
   · rw [Category.assoc, ← hψ, ← Spec.map_comp]
     rfl
   · exact (Scheme.Hom.comp_apply _ _ _).trans (congrArg j (PrimeSpectrum.ext hφm))
