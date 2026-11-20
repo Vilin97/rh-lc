@@ -129,7 +129,7 @@ theorem tstR_sound {h d : ℕ} (ht : tstR h d = true) (h2 : 2 ≤ h) :
     mul_le_mul_of_nonneg_left hL2.le (by positivity)
   have hE : (10 * (d : ℝ)) * (((q : ℝ) + 1) * Real.log 2) ≤ (10 * (d : ℝ)) * (256 * Real.log ((h : ℝ) / 2)) :=
     mul_le_mul_of_nonneg_left hB2 (by positivity)
-  nlinarith
+  linarith only [hlt, hC, hE]
 
 theorem tests : ∀ m, 41 ≤ m → m < 131072 → tstR m (D m) = true := by
   have r1 := run1

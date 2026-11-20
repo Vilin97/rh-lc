@@ -87,11 +87,11 @@ theorem q_p_threshold_bound : QPThreshold := by
         linarith
     have hq : d * Q * (2 : ℝ) ^ 2 ≤ c ^ 4 := by
       have h1 : d * Q ≤ c * c ^ 2 := mul_le_mul hdc hQc hQ0 hc0.le
-      nlinarith [mul_nonneg (pow_nonneg hc0.le 3) (by linarith : (0 : ℝ) ≤ c - 4)]
+      linarith only [h1, mul_nonneg (pow_nonneg hc0.le 3) (by linarith : (0 : ℝ) ≤ c - 4)]
     have h4 : (1 : ℝ) ≤ c ^ 4 := one_le_pow₀ hc1
     calc (d * Q * (2 : ℝ) ^ 2) ^ ((1 : ℝ) / 1000) * m ≤ (1 + c ^ 4) * c ^ 2 :=
           mul_le_mul (by linarith) hmc hm0 (by positivity)
-      _ ≤ 2 * c ^ 6 := by nlinarith [mul_le_mul_of_nonneg_left h4 (sq_nonneg c)]
+      _ ≤ 2 * c ^ 6 := by linarith only [mul_le_mul_of_nonneg_left h4 (sq_nonneg c)]
   have f1 : c ^ 1256 ≤ c ^ 1736 := pow_le_pow_right₀ hc1 (by norm_num)
   have f2 : c ^ 6 ≤ c ^ 1736 := pow_le_pow_right₀ hc1 (by norm_num)
   have f3 : 4 * c ^ 1736 ≤ c ^ 2020 := by
@@ -294,8 +294,8 @@ theorem prop1FromCount_of (hDW : DyadicWindow) (hES : ExcludedSimplify) (hP1 : P
       have h4 : (1 : ℝ) ≤ c ^ 480 := one_le_pow₀ hc
       have hNpos : (0 : ℝ) < N := by linarith
       have h5 : 20 * (N : ℝ) ^ 3 < (N : ℝ) ^ 4 := by
-        nlinarith [mul_pos (pow_pos hNpos 3) (by linarith : (0 : ℝ) < N - 20)]
-      nlinarith [mul_le_mul_of_nonneg_left h4 (pow_pos hNpos 4).le]
+        linarith only [mul_pos (pow_pos hNpos 3) (by linarith : (0 : ℝ) < N - 20)]
+      linarith only [h2, h3, h5, mul_le_mul_of_nonneg_left h4 (pow_pos hNpos 4).le]
     calc 20 * (N : ℝ) ^ 3 * Y ^ ((3 : ℝ) / 4) < κ * Y ^ ((1 : ℝ) / 4) * Y ^ ((3 : ℝ) / 4) :=
           mul_lt_mul_of_pos_right h1 hY34
       _ = κ * (Y ^ ((3 : ℝ) / 4) * Y ^ ((1 : ℝ) / 4)) := by ring
@@ -317,7 +317,7 @@ theorem prop1FromCount_of (hDW : DyadicWindow) (hES : ExcludedSimplify) (hP1 : P
   calc 2 * Y = 2 * X / 2 ^ j := by rw [hYdef]; ring
     _ ≤ X := by
         rw [div_le_iff₀ (by positivity)]
-        nlinarith
+        nlinarith only [h2j, hX.le]
 
 end Formalism.IrreducibleCountingLemmas.GaloisIrreducibility
 end
