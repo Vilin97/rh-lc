@@ -10,15 +10,21 @@ private theorem lam_dom {n : ℕ} {S H G : Type} [CommRing S] [Group H] [Group G
     (i : ℕ) (z : MonoidAlgebra S H) : (D.comap φ).lam i z = D.lam i (MonoidAlgebra.mapDomainRingHom S φ z) := by
   unfold GDet.lam
   congr 2
-  change D.D (Polynomial S) (MonoidAlgebra.mapDomainRingHom (Polynomial S) φ _) = D.D (Polynomial S) _
-  congr 1
-  rw [map_sub]
-  congr 1
-  · simp
-  · induction z using MonoidAlgebra.induction_linear with
+  change (D.D (Polynomial S) (MonoidAlgebra.mapDomainRingHom (Polynomial S) φ _)).coeff =
+    (D.D (Polynomial S) _).coeff
+  ext k
+  have hcomm : ∀ z : MonoidAlgebra S H,
+      MonoidAlgebra.mapDomainRingHom (Polynomial S) φ (MonoidAlgebra.mapRingHom H Polynomial.C z) =
+        MonoidAlgebra.mapRingHom G Polynomial.C (MonoidAlgebra.mapDomainRingHom S φ z) := by
+    intro z
+    induction z using MonoidAlgebra.induction_linear with
     | zero => simp
     | add a b ha hb => simp only [map_add, ha, hb]
     | single g r => simp
+  congr 1
+  rw [map_sub]
+  rw [hcomm]
+  simp
 
 private theorem mapDomain_single_mul_charpoly_element {n : ℕ} {S H G : Type} [CommRing S] [Group H] [Group G] (φ : H →* G) (h g : H)
     (U : Fin n → S) : MonoidAlgebra.mapDomainRingHom S φ (MonoidAlgebra.single h 1 * q1El g U) =

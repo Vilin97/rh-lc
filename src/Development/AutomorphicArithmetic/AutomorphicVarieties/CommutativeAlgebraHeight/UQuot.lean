@@ -26,7 +26,7 @@ theorem coord_comap (D : GDet n A G) {H : Type} [Group H] (φ : H →* G) (t : �
     coord (D.comap φ) t = coord D (t.1, φ t.2) := by
   unfold coord GDet.lam GDet.chi
   congr 2
-  change D.D A[X] (MonoidAlgebra.mapDomainRingHom A[X] φ _) = _
+  change (D.D A[X] (MonoidAlgebra.mapDomainRingHom A[X] φ _)).coeff = (D.D A[X] _).coeff
   congr 1
   rw [map_sub]
   simp
