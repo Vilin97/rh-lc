@@ -36,7 +36,7 @@ theorem setIntegral_mul_right (μ : Measure G) [μ.IsHaarMeasure] {𝓕 : Set G}
   have e : μ.map (· * g) = ((μ.map (· * g)).haarScalarFactor μ : ℝ≥0∞) • μ :=
     Measure.isMulLeftInvariant_eq_smul _ μ
   have h' : IsFundamentalDomain Γ ((· * g) ⁻¹' 𝓕) μ :=
-    h.preimage_of_equiv (f := (· * g)) ⟨measurable_mul_const g, by rw [e]; exact Measure.smul_absolutelyContinuous⟩
+    h.preimage_of_equiv (f := (· * g)) ⟨(measurable_mul_const g).aemeasurable, by rw [e]; exact Measure.smul_absolutelyContinuous⟩
       Function.bijective_id fun γ x => mul_assoc _ _ _
   have h1 : μ.map (· * g) 𝓕 = μ 𝓕 :=
     ((MeasurableEquiv.mulRight g).map_apply 𝓕).trans (h'.measure_eq h)

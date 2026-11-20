@@ -22,7 +22,7 @@ theorem measurePreserving_mul_right_of_fundDom {Gr : Type} [Group Gr] [Topologic
   set c := Measure.haarScalarFactor (Measure.map (· * g) μ) μ with hcdef
   have e : Measure.map (· * g) μ = c • μ := Measure.isMulLeftInvariant_eq_smul _ _
   have hq : Measure.QuasiMeasurePreserving (· * g) μ μ :=
-    ⟨measurable_mul_const g, by rw [e]; exact Measure.smul_absolutelyContinuous⟩
+    ⟨(measurable_mul_const g).aemeasurable, by rw [e]; exact Measure.smul_absolutelyContinuous⟩
   have h2 : IsFundamentalDomain Γ ((· * g) ⁻¹' 𝓕) μ :=
     h𝓕.preimage_of_equiv hq (e := id) Function.bijective_id fun γ x => by
       show γ.1 * x * g = γ.1 * (x * g)

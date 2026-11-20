@@ -14,7 +14,7 @@ theorem setLIntegral_mul_right (μ : Measure H) [μ.IsHaarMeasure] (Γ : Subgrou
   let e : H ≃ᵐ H := MeasurableEquiv.mulRight h
   let T : Set H := (fun y => y * h⁻¹) ⁻¹' 𝓕
   have hq : Measure.QuasiMeasurePreserving (fun y : H => y * h⁻¹) μ μ :=
-    ⟨measurable_mul_const _, by
+    ⟨(measurable_mul_const _).aemeasurable, by
       rw [Measure.map_right_mul_eq_modularCharacterFun_smul]
       exact Measure.smul_absolutelyContinuous⟩
   have hT : IsFundamentalDomain Γ T μ :=

@@ -80,7 +80,7 @@ theorem right_of_fd [LocallyCompactSpace G] [SecondCountableTopology G] (μ : Me
   have e := Measure.isMulLeftInvariant_eq_smul (μ.map (· * g)) μ
   set c := Measure.haarScalarFactor (μ.map (· * g)) μ
   have q : Measure.QuasiMeasurePreserving (· * g) μ μ :=
-    ⟨measurable_mul_const g, by rw [e]; exact Measure.smul_absolutelyContinuous⟩
+    ⟨(measurable_mul_const g).aemeasurable, by rw [e]; exact Measure.smul_absolutelyContinuous⟩
   have h2 : IsFundamentalDomain Γ ((Equiv.mulRight g) ⁻¹' 𝓕) μ :=
     h.preimage_of_equiv q Function.bijective_id fun γ x => by
       change _ * x * g = _ * (x * g)

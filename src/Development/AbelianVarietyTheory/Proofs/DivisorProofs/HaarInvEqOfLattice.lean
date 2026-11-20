@@ -16,7 +16,7 @@ theorem haar_inv_eq_of_lattice : ∀ (N : Type) [Group N] [TopologicalSpace N] [
     set c := Measure.haarScalarFactor (Measure.map (· * g) ν) ν with hcdef
     have hc : Measure.map (· * g) ν = c • ν := Measure.isMulLeftInvariant_eq_smul _ _
     have hqmp : Measure.QuasiMeasurePreserving (· * g) ν ν :=
-      ⟨measurable_mul_const g, by rw [hc]; exact Measure.smul_absolutelyContinuous⟩
+      ⟨(measurable_mul_const g).aemeasurable, by rw [hc]; exact Measure.smul_absolutelyContinuous⟩
     have hfd : IsFundamentalDomain Λ ((· * g) ⁻¹' 𝓕) ν :=
       h𝓕.preimage_of_equiv hqmp (e := id) Function.bijective_id
         (fun l x => by simp [Subgroup.smul_def, smul_eq_mul, mul_assoc])

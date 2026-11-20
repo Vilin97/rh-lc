@@ -54,7 +54,7 @@ theorem mean_mul_right [SecondCountableTopology H] (h𝓕 : IsFundamentalDomain 
   have hm := Measure.isMulLeftInvariant_eq_smul (Measure.map (· * r) μ) μ
   set c := Measure.haarScalarFactor (Measure.map (· * r) μ) μ
   have hq : Measure.QuasiMeasurePreserving (· * r) μ μ :=
-    ⟨measurable_mul_const r, by rw [hm]; exact Measure.smul_absolutelyContinuous⟩
+    ⟨(measurable_mul_const r).aemeasurable, by rw [hm]; exact Measure.smul_absolutelyContinuous⟩
   have h' : IsFundamentalDomain Γ ((· * r) ⁻¹' 𝓕) μ :=
     h𝓕.preimage_of_equiv hq (e := id) Function.bijective_id fun g x => by
       simp [Subgroup.smul_def, mul_assoc]

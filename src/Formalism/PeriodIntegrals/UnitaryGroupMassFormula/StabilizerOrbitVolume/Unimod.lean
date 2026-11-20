@@ -150,7 +150,7 @@ theorem um_rightInv (Γ : Subgroup G) [Countable Γ] (μ : Measure G) [IsHaarMea
     exact ((Homeomorph.mulRight g).isCompact_preimage.2 hK).measure_lt_top
   have hc := um_eq_smul_of_sigmaCompact (map (· * g) μ) μ
   have h𝓕' : IsFundamentalDomain Γ ((· * g) ⁻¹' 𝓕) μ :=
-    h𝓕.preimage_of_equiv ⟨measurable_mul_const g, by rw [hc]; exact Measure.smul_absolutelyContinuous⟩
+    h𝓕.preimage_of_equiv ⟨(measurable_mul_const g).aemeasurable, by rw [hc]; exact Measure.smul_absolutelyContinuous⟩
       Function.bijective_id
       (fun γ x => by simp [Subgroup.smul_def, mul_assoc])
   have heq : μ ((· * g) ⁻¹' 𝓕) = μ 𝓕 := h𝓕'.measure_eq h𝓕

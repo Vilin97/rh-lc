@@ -137,7 +137,7 @@ theorem isMulRightInvariant (μ : Measure N) [μ.IsHaarMeasure] : μ.IsMulRightI
   have h := isFundamentalDomain_stdDom (Γ.subgroupOf N) μ
   have e := Measure.isMulLeftInvariant_eq_smul (μ.map (· * g)) μ
   have h' : IsFundamentalDomain (Γ.subgroupOf N) ((· * g) ⁻¹' stdDom (Γ.subgroupOf N)) μ :=
-    h.preimage_of_equiv ⟨measurable_mul_const g, e ▸ Measure.smul_absolutelyContinuous⟩ Function.bijective_id
+    h.preimage_of_equiv ⟨(measurable_mul_const g).aemeasurable, e ▸ Measure.smul_absolutelyContinuous⟩ Function.bijective_id
       fun γ x => mul_assoc _ _ _
   have h1 := h'.measure_eq h
   rw [← Measure.map_apply (measurable_mul_const g) (measurableSet_stdDom _), e, Measure.smul_apply, ENNReal.smul_def,

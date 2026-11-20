@@ -45,7 +45,7 @@ theorem isMulRightInvariant_of_cover (hc : ∃ C : Set G, IsCompact C ∧ ∀ g,
     exact ⟨_, hx, (mk_eq_iff.2 ⟨⟨γ, hγ⟩, rfl⟩).symm⟩
   have e := Measure.isMulLeftInvariant_eq_smul (μ.map (· * g)) μ
   have h' : IsFundamentalDomain Γ ((· * g) ⁻¹' stdDom Γ) μ :=
-    h.preimage_of_equiv ⟨measurable_mul_const g, e ▸ Measure.smul_absolutelyContinuous⟩ Function.bijective_id
+    h.preimage_of_equiv ⟨(measurable_mul_const g).aemeasurable, e ▸ Measure.smul_absolutelyContinuous⟩ Function.bijective_id
       fun γ x => mul_assoc _ _ _
   have h1 := h'.measure_eq h
   rw [← Measure.map_apply (measurable_mul_const g) (measurableSet_stdDom _), e, Measure.smul_apply, ENNReal.smul_def,

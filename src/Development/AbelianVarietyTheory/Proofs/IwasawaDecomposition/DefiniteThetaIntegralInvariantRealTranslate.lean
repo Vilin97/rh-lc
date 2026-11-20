@@ -29,7 +29,7 @@ theorem map_mul_right_of_cocompact {G : Type} [Group G] [TopologicalSpace G] [Is
   have h := Measure.isMulLeftInvariant_eq_smul (Measure.map (fun g => g * k) μ) μ
   set c := Measure.haarScalarFactor (Measure.map (fun g => g * k) μ) μ with hc
   have hq : Measure.QuasiMeasurePreserving (fun g : G => g * k) μ μ :=
-    ⟨measurable_mul_const k, by rw [h]; exact Measure.smul_absolutelyContinuous⟩
+    ⟨(measurable_mul_const k).aemeasurable, by rw [h]; exact Measure.smul_absolutelyContinuous⟩
   have h2 : IsFundamentalDomain Γ ((fun g : G => g * k) ⁻¹' 𝓕) μ := by
     refine h𝓕.preimage_of_equiv hq (e := id) Function.bijective_id ?_
     intro γ g

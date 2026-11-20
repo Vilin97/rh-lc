@@ -50,7 +50,7 @@ theorem haar_invariances {K : Type} [Group K] [TopologicalSpace K] [IsTopologica
     intro g
     have e := Measure.isMulLeftInvariant_eq_smul (μ.map (· * g)) μ
     have hq : Measure.QuasiMeasurePreserving (· * g) μ μ :=
-      ⟨measurable_mul_const g, by rw [e]; exact Measure.smul_absolutelyContinuous⟩
+      ⟨(measurable_mul_const g).aemeasurable, by rw [e]; exact Measure.smul_absolutelyContinuous⟩
     refine key _ (measurable_mul_const g) _ e ?_
     exact hE.preimage_of_equiv hq (e := id) Function.bijective_id fun γ x => by
       simp only [id, Subgroup.smul_def, smul_eq_mul, mul_assoc]
