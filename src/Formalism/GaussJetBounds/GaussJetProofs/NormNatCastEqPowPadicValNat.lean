@@ -83,7 +83,7 @@ theorem exponential_weight_le : ExpWtLe.{u, v} := by
 
   have hv : (padicValNat l k.factorial : ℝ) ≤ (k : ℝ) * (1 / ((l : ℝ) - 1)) := by
     rcases Nat.eq_zero_or_pos k with hk0 | hk0
-    · subst hk0; simp
+    · subst hk0; simp [_root_.Nat.padicValNat_def (n := 1)]
     · have := (Formalism.IncomingBounds.padicValFactorialBounds l hl k hk0).2
       have hl0 : (0 : ℝ) < (l : ℝ) - 1 := by linarith
       calc (padicValNat l k.factorial : ℝ) ≤ ((k : ℝ) - 1) / ((l : ℝ) - 1) := this

@@ -314,13 +314,13 @@ lemma rset_sub_range {g : B.Mat k (j + ρ)} (hg : g ∈ Rset k j ρ) : ∃ x, Rn
   conv_rhs => rw [hgeta]
   unfold Rn
   refine block3_congr rfl ?_ ?_ rfl rfl ?_ rfl rfl rfl
-  · simp [hA]
+  · simp [hA] <;> rfl
   · rw [hq, hSdef]
     simp only [Equiv.apply_symm_apply]
     have : (-(1 / 2 : ℂ)) • ((b23 g)ᴴ * Hpk k ρ * b23 g) +
         (G.wMat j * b13 g + (1 / 2 : ℂ) • ((b23 g)ᴴ * Hpk k ρ * b23 g)) = G.wMat j * b13 g := by module
     rw [this, wMat_sq_assoc]
-  · simp
+  · simp <;> rfl
 
 theorem radicalParam : RadicalParam := by
   intro k j ρ

@@ -74,7 +74,7 @@ theorem padicValNat_absNorm_one_sub {K : Type*} [Field K] [NumberField K] (l : �
           omega
         · exact hpp ⟨p, j, hp, hj.symm⟩
       rw [h1, rootWeight, if_neg]
-      · simp
+      · simp [_root_.Nat.padicValNat_def (n := 1)]
       · rintro ⟨-, s, hs⟩
         rcases s with _ | s
         · rw [pow_zero] at hs

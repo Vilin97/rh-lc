@@ -165,7 +165,7 @@ theorem statement : Statement := by
       obtain ⟨h1, h2, _⟩ := GlobalTheory.T.divided_powers_valuations
       intro m
       rcases Nat.eq_zero_or_pos m with rfl | hm
-      · simp
+      · simp [_root_.Nat.padicValNat_def (n := 1)]
       by_cases h2l : l = 2
       · subst h2l
         have := h2 m hm

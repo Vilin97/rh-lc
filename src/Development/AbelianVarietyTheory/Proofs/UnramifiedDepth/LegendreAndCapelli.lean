@@ -32,7 +32,7 @@ private lemma padicValNat_factorial_eq_div_of_lt_sq (l : ℕ) (hl : l.Prime) (N 
   have : Fact l.Prime := ⟨hl⟩
   rcases Nat.eq_zero_or_pos N with h0 | hpos
   · subst h0
-    simp
+    simp [_root_.Nat.padicValNat_def (n := 1)]
   · rw [padicValNat_factorial (b := 2) (Nat.log_lt_of_lt_pow hpos.ne' hN)]
     simp
 

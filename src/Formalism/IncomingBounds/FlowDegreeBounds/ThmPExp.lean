@@ -176,7 +176,7 @@ theorem expWeight_of (hV : ValNat) : ExpWeight := by
   rw [hfk] at hdiv
   have hbound : (padicValNat l k.factorial : ℝ) ≤ (k : ℝ) * (1 / ((l:ℝ) - 1)) := by
     rcases Nat.eq_zero_or_pos k with rfl | hk
-    · simp
+    · simp [_root_.Nat.padicValNat_def (n := 1)]
     · calc (padicValNat l k.factorial : ℝ) ≤ ((k:ℝ) - 1) / ((l:ℝ) - 1) :=
             (padicValFactorialBounds l hl k hk).2
         _ ≤ (k : ℝ) * (1 / ((l:ℝ) - 1)) := by

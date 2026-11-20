@@ -19,7 +19,7 @@ theorem bound_one {D : D7} {L : SizeData₂ D} {c : ErrC}
     (if (p : ℝ) ≤ L.sc.X'' D.R.n then 3 * (D.R.f : ℝ) * (D.R.N D.R.m : ℝ) ^ 2 * Real.logb p L.sc.a +
       (∑ τ : D.what₂.Tau, wj D j τ) / ((p : ℝ) ^ 2 - 1) else 0)|) := by
     intro p hp
-    have e0 : padicValNat p 1 = 0 := by simp
+    have e0 : padicValNat p 1 = 0 := by simp [_root_.Nat.padicValNat_def (n := 1)]
     rw [if_pos (hQ p hp).2, e0, Nat.cast_zero, zero_add]
     unfold EatC Formalism.MainNotions.G.Nm
     rw [hc, mul_assoc]

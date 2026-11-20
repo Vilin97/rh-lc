@@ -21,7 +21,7 @@ theorem legendre_divided_powers : Formalism.PairingDivisionLocalBalance.DivPow :
   · intro j
     haveI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
     induction j with
-    | zero => simp
+    | zero => simp [_root_.Nat.padicValNat_def (n := 1)]
     | succ j ih =>
       rw [pow_succ, mul_comm, padicValNat_factorial_mul]
       have : 1 ≤ 2 ^ j := Nat.one_le_two_pow

@@ -12,7 +12,7 @@ theorem padicValNat_factorial_le_sub (l i j : ℕ) [hp : Fact l.Prime] (hji : j 
     padicValNat l i.factorial ≤ i - j := by
   have hL := sub_one_mul_padicValNat_factorial (p := l) i
   rcases Nat.eq_zero_or_pos i with rfl | hi
-  · simp
+  · simp [_root_.Nat.padicValNat_def (n := 1)]
   have hpos : 0 < (l.digits i).sum := by
     rcases Nat.eq_zero_or_pos (l.digits i).sum with h0 | h0
     · exfalso
