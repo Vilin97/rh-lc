@@ -19,7 +19,7 @@ def split : SplitEpi (toImg π W) where
   section_ := TypeCat.ofHom fun t => ⟨t.2.choose⟩
   id := by
     ext t
-    exact Subtype.ext (ULift.ext _ _ t.2.choose_spec)
+    exact Subtype.ext (ULift.ext t.2.choose_spec)
 
 abbrev Pow (k : ℕ) : Scheme.{0} := widePullback.{0} U (fun _ : Fin (k + 1) => V) (fun _ => π)
 
@@ -30,7 +30,7 @@ def ptCone (k : ℕ) : Cone (WidePullbackShape.wideCospan (Img π W)
     (fun j => TypeCat.ofHom fun x => (⟨x.down ≫ WidePullback.π _ j⟩ : ULift.{1} (W ⟶ V)))
     (fun j => by
       ext x
-      exact Subtype.ext (ULift.ext _ _
+      exact Subtype.ext (ULift.ext
         (show (x.down ≫ WidePullback.π _ j) ≫ π = x.down ≫ WidePullback.base _ by simp)))
 
 def ptConeIsLimit (k : ℕ) : IsLimit (ptCone π W k) where
@@ -41,8 +41,8 @@ def ptConeIsLimit (k : ℕ) : IsLimit (ptCone π W k) where
   fac c j := by
     ext x
     cases j with
-    | none => exact Subtype.ext (ULift.ext _ _ (WidePullback.lift_base ..))
-    | some j => exact ULift.ext _ _ (WidePullback.lift_π ..)
+    | none => exact Subtype.ext (ULift.ext (WidePullback.lift_base ..))
+    | some j => exact ULift.ext (WidePullback.lift_π ..)
   uniq c m hm := by
     ext x
     apply ULift.ext

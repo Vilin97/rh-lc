@@ -96,7 +96,7 @@ theorem mono_free_away (R : Type) [CommRing R] (A : Type) [CommRing A] (f : A) :
         (mono_iff_injective _).1 inferInstance
       rw [ModuleCat.mono_iff_injective]
       change Function.Injective (Finsupp.mapDomain _)
-      exact Finsupp.mapDomain_injective (fun x y hxy => ULift.ext _ _ (hinj (congrArg ULift.down hxy)))
+      exact Finsupp.mapDomain_injective (fun x y hxy => ULift.ext (hinj (congrArg ULift.down hxy)))
     exact NatTrans.mono_of_mono_app _
   change Mono ((presheafToSheaf _ _).map ((freeP R).map _))
   infer_instance

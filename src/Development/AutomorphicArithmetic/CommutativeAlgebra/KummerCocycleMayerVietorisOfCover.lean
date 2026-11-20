@@ -106,7 +106,7 @@ theorem unitSec_pow {U : Scheme.{0}} (v : (Γ(U, ⊤))ˣ) (n : ℕ) : ((n : ℤ)
     (ULift.up (Additive.ofMul v) : (Scheme.Γ ⋙ unitsF).obj (op U))
   refine this.symm.trans ?_
   refine congrArg ((toSheafify Scheme.etaleTopology (Scheme.Γ ⋙ unitsF)).app (op U)).hom ?_
-  refine ULift.ext _ _ ?_
+  refine ULift.ext ?_
   change (n : ℤ) • Additive.ofMul v = Additive.ofMul (v ^ n)
   simp
 

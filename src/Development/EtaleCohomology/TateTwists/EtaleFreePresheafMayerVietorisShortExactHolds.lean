@@ -121,10 +121,10 @@ theorem pointwise (R : Type) [CommRing R] {P Q E : PSh} (f : P ⟶ E) (g : Q ⟶
     (fun y : ULift.{1} ((pullback f g).obj X) => ULift.up ((pullback.snd f g).app X y.down))
     (fun y : ULift.{1} (P.obj X) => ULift.up (f.app X y.down))
     (fun y : ULift.{1} (Q.obj X) => ULift.up (g.app X y.down))
-    (fun x y h => ULift.ext _ _ (hf (congrArg ULift.down h)))
-    (fun x y h => ULift.ext _ _ (hg (congrArg ULift.down h)))
+    (fun x y h => ULift.ext (hf (congrArg ULift.down h)))
+    (fun x y h => ULift.ext (hg (congrArg ULift.down h)))
     (fun t => congrArg ULift.up (by simpa using ConcreteCategory.congr_hom hw t.down))
-    (fun t t' h => ULift.ext _ _ (hj _ _ ⟨congrArg ULift.down h.1, congrArg ULift.down h.2⟩))
+    (fun t t' h => ULift.ext (hj _ _ ⟨congrArg ULift.down h.1, congrArg ULift.down h.2⟩))
     (fun x y h => by
       obtain ⟨t, h1, h2⟩ := hs x.down y.down (congrArg ULift.down h)
       exact ⟨ULift.up t, congrArg ULift.up h1, congrArg ULift.up h2⟩)

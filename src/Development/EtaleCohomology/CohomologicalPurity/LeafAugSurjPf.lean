@@ -94,7 +94,7 @@ theorem gen_mem (hcov : ∀ x : X, ∃ j, x ∈ Set.range (c j)) [∀ j, IsOpenI
   let σ : Fin (0 + 1) ⥤ J := (Functor.const _).obj (j t)
   refine ⟨ModuleCat.freeMk (ULift.up ((inj (D ⋙ yoneda) (op (SimplexCategory.mk 0)) σ).app (op (V t).toScheme) a)), ?_⟩
   erw [ModuleCat.free_map_apply, ModuleCat.free_map_apply]
-  refine congrArg ModuleCat.freeMk (ULift.ext _ _ ?_)
+  refine congrArg ModuleCat.freeMk (ULift.ext ?_)
   show (a ≫ D.map (𝟙 (j t))) ≫ c (j t) = (V t).ι ≫ g
   rw [D.map_id, Category.comp_id]
   exact IsOpenImmersion.lift_fac _ _ _

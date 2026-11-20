@@ -58,7 +58,7 @@ variable {Q : ℕ} [NeZero Q]
 theorem zmod_smul {M N : Type*} [AddCommGroup M] [AddCommGroup N] [Module (ULift.{1} (ZMod Q)) M]
     [Module (ULift.{1} (ZMod Q)) N] (f : M →+ N) (c : ULift.{1} (ZMod Q)) (x : M) : f (c • x) = c • f x := by
   have hc : c = ((c.down.val : ℕ) : ULift.{1} (ZMod Q)) :=
-    ULift.ext _ _ (ZMod.natCast_zmod_val c.down).symm
+    ULift.ext (ZMod.natCast_zmod_val c.down).symm
   rw [hc]
   simp only [Nat.cast_smul_eq_nsmul, map_nsmul]
 

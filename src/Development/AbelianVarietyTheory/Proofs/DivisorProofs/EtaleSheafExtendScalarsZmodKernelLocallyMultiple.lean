@@ -28,7 +28,7 @@ theorem unit_eq_zero_dvd {Q q : ℕ} [NeZero Q] (hq : q ∣ Q) (N : ModuleCat.{1
     obtain ⟨a, ha⟩ := ZMod.intCast_surjective (ULift.down r)
     obtain ⟨b, hb⟩ := ZMod.intCast_surjective (ULift.down (s : ULift.{1} (ZMod q)))
     have hr : r • n = a • n := by
-      rw [show r = ((a : ℤ) : ULift.{1} (ZMod Q)) from ULift.ext _ _ (by simp [ha]), Int.cast_smul_eq_zsmul]
+      rw [show r = ((a : ℤ) : ULift.{1} (ZMod Q)) from ULift.ext (by simp [ha]), Int.cast_smul_eq_zsmul]
     change g (ZMod.castHom hq (ZMod q) (ULift.down r) * ULift.down (s : ULift.{1} (ZMod q))) n =
       g (ULift.down (s : ULift.{1} (ZMod q))) (r • n)
     rw [hr, ← ha, ← hb, map_intCast, ← Int.cast_mul, ZMod.lift_coe, ZMod.lift_coe]

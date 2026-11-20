@@ -158,7 +158,7 @@ theorem eq_zero_tateCompactCohomologyRes_coind_of_two_nsmul (n : ℕ) (W : OpenS
         change zmodTwoAddHom m (h2 m) (k : ZMod 2) = N.ρ w (zmodTwoAddHom m (h2 m) (k : ZMod 2))
         rw [zmodTwoAddHom_intCast, map_zsmul, hfix]
       have hfinj : Function.Injective f.hom := fun a b hab =>
-        ULift.ext _ _ (zmodTwoAddHom_injective (h2 m) hm0 hab)
+        ULift.ext (zmodTwoAddHom_injective (h2 m) hm0 hab)
       let S : ShortComplex (Rep.{u} (ULift.{u} ℤ) (W : Subgroup G)) :=
         ShortComplex.mk f (Rep.mkQ N T hT) (by
           apply Rep.hom_ext

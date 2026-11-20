@@ -40,9 +40,9 @@ theorem zmod_P (q : ℕ) [NeZero q] (a : ZMod q) :
 theorem ulift_P (q : ℕ) [NeZero q] (a : ULift.{1} (ZMod q)) :
     ∃ b : ULift.{1} (ZMod q), b * a = 0 ∧ ∀ r : ULift.{1} (ZMod q), r * b = 0 → ∃ c, c * a = r := by
   obtain ⟨b, hb, h⟩ := zmod_P q a.down
-  refine ⟨ULift.up b, ULift.ext _ _ hb, fun r hr => ?_⟩
+  refine ⟨ULift.up b, ULift.ext hb, fun r hr => ?_⟩
   obtain ⟨c, hc⟩ := h r.down (congrArg ULift.down hr)
-  exact ⟨ULift.up c, ULift.ext _ _ hc⟩
+  exact ⟨ULift.up c, ULift.ext hc⟩
 
 theorem key {R : Type u} {M : Type v} [CommRing R] [Small.{v} R] [AddCommGroup M] [Module R M] (hM : Module.Injective R M)
     (hP : ∀ a : R, ∃ b : R, b * a = 0 ∧ ∀ r : R, r * b = 0 → ∃ c, c * a = r)

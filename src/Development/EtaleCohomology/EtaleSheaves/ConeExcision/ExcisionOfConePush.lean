@@ -14,7 +14,7 @@ theorem mono_freePresheaf_map {X Y : PSh} (g : X ⟶ Y) [Mono g] : Mono ((freeP 
     (mono_iff_injective _).1 ((NatTrans.mono_iff_mono_app g).1 ‹_› T)
   rw [ModuleCat.mono_iff_injective]
   change Function.Injective (Finsupp.mapDomain (ULift.map (g.app T)))
-  exact Finsupp.mapDomain_injective (fun a b h => ULift.ext _ _ (hg (congrArg ULift.down h)))
+  exact Finsupp.mapDomain_injective (fun a b h => ULift.ext (hg (congrArg ULift.down h)))
 
 theorem free_mono {X Y : PSh} (g : X ⟶ Y) [Mono g] : Mono ((free R).map g) := by
   have := mono_freePresheaf_map R g

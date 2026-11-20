@@ -118,7 +118,7 @@ theorem exists_bijective_hom_of_isProPGroup {p : ℕ} (hp : p.Prime) (hG : IsPro
         rw [← map_zsmul]
         rfl }
   refine ⟨Rep.ofHom ⟨F, fun g => LinearMap.ext fun x => (htriv g (F x)).symm⟩, ?_⟩
-  exact ⟨fun x y hxy => ULift.ext _ _ (e.injective hxy),
+  exact ⟨fun x y hxy => ULift.ext (e.injective hxy),
     fun a => ⟨⟨e.symm a⟩, e.apply_symm_apply a⟩⟩
 
 end Simple

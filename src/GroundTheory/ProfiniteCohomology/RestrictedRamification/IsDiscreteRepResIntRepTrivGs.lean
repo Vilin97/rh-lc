@@ -62,7 +62,7 @@ theorem cohomologyMap_galUnitsToZ_cupPairing_δ_bockSeq (z : cocycles (zmodRep.{
         (cochainOf (intRepTriv Γ) (cocycleι (intRepTriv Γ) 2 x₁) (⇑ψ ∘ fun j : Fin 2 => s ⟨0 + j, by omega⟩))) = _
   rw [hs]
   have hx : cochainOf (intRepTriv Γ) (cocycleι (intRepTriv Γ) 2 x₁) ![ψ (s 0), ψ (s 1)] =
-      ULift.up (bockInt (zmodCocycleHom z) (ψ (s 0)) (ψ (s 1))) := ULift.ext _ _ hb
+      ULift.up (bockInt (zmodCocycleHom z) (ψ (s 0)) (ψ (s 1))) := ULift.ext hb
   rw [hx]
   exact mulIntRight_tmul ψ (galUnits.{0} F E) _ _
 

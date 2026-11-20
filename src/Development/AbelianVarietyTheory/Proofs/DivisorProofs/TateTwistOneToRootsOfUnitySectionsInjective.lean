@@ -103,7 +103,7 @@ theorem local_zero (V : Scheme.{0}) [IsAffine V] (m : (twF q 1).obj Γ(V, ⊤))
     simp only [smul_eq, toMul_nsmul, toMul_ofMul] at this
     rw [root_pow_coe] at this
     exact this.trans rfl
-  have hC0 : C = 0 := ULift.ext _ _ (eq_zero_of_pow_eq_one q ζ₁ C.down h1)
+  have hC0 : C = 0 := ULift.ext (eq_zero_of_pow_eq_one q ζ₁ C.down h1)
   rw [hC0, Finsupp.single_zero, map_zero]
   rfl
 

@@ -58,7 +58,7 @@ theorem sec_single {q : ℕ} {j : ℤ} {U : Scheme.{0}} (ξ : Prim q Γ(U, ⊤))
 
 theorem ulift_smul_eq {q : ℕ} {M : Type*} [AddCommGroup M] [Module (ULift.{1} (ZMod q)) M] (c : ULift.{1} (ZMod q)) (v : M) :
     c • v = ((c.down.cast : ℤ)) • v := by
-  have hc : c = (((c.down.cast : ℤ)) : ULift.{1} (ZMod q)) := ULift.ext _ _ (by
+  have hc : c = (((c.down.cast : ℤ)) : ULift.{1} (ZMod q)) := ULift.ext (by
     show c.down = ((c.down.cast : ℤ) : ULift.{1} (ZMod q)).down
     exact (ZMod.intCast_zmod_cast c.down).symm)
   conv_lhs => rw [hc]

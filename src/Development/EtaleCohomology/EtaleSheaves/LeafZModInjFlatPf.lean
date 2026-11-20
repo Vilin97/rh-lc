@@ -92,9 +92,9 @@ theorem ulift_ann (q : ℕ) [NeZero q] :
     ∀ a : ULift.{1} (ZMod q), ∃ b, b * a = 0 ∧ ∀ r, r * b = 0 → ∃ s, r = s * a := by
   intro a
   obtain ⟨b, hba, hb⟩ := zmod_ann q a.down
-  refine ⟨ULift.up b, ULift.ext _ _ hba, fun r hr => ?_⟩
+  refine ⟨ULift.up b, ULift.ext hba, fun r hr => ?_⟩
   obtain ⟨s, hs⟩ := hb r.down (congrArg ULift.down hr)
-  exact ⟨ULift.up s, ULift.ext _ _ hs⟩
+  exact ⟨ULift.up s, ULift.ext hs⟩
 
 theorem LeafZModInjFlat_of : LateralTheory.E.LeafTensQIsoPf.LeafZModInjFlat := by
   intro q _ M _ _ hM

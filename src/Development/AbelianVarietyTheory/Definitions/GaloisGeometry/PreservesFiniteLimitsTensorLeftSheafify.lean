@@ -169,10 +169,10 @@ example (p : ℕ) [Fact p.Prime] : FlatCoef ℚ_[p] := inferInstance
 def coefMulPre : coefPre R ⊗ coefPre R ⟶ coefPre R where
   app U := ModuleCat.ofHom (TensorProduct.lift (LinearMap.mk₂ (ULift.{1} R)
     (fun f g : ULift.{1} C(U.unop, R) => (⟨f.down * g.down⟩ : ULift.{1} C(U.unop, R)))
-    (fun _ _ _ => ULift.ext _ _ (add_mul _ _ _))
-    (fun c _ _ => ULift.ext _ _ (smul_mul_assoc c.down _ _))
-    (fun _ _ _ => ULift.ext _ _ (mul_add _ _ _))
-    (fun c _ _ => ULift.ext _ _ (mul_smul_comm c.down _ _))))
+    (fun _ _ _ => ULift.ext (add_mul _ _ _))
+    (fun c _ _ => ULift.ext (smul_mul_assoc c.down _ _))
+    (fun _ _ _ => ULift.ext (mul_add _ _ _))
+    (fun c _ _ => ULift.ext (mul_smul_comm c.down _ _))))
   naturality U V f := by
     apply ModuleCat.MonoidalCategory.tensor_ext
     intro x y
@@ -182,7 +182,7 @@ def coefOnePre : 𝟙_ (Scheme.{0}ᵒᵖ ⥤ ModuleCat.{1} (ULift.{1} R)) ⟶ co
   app U := ModuleCat.ofHom (LinearMap.toSpanSingleton (ULift.{1} R) _ (⟨1⟩ : ULift.{1} C(U.unop, R)))
   naturality U V f := by
     ext c
-    exact ULift.ext _ _ (ContinuousMap.ext fun x => rfl)
+    exact ULift.ext (ContinuousMap.ext fun x => rfl)
 
 def freeDiagPre (X : Scheme.{0}) : freePre R X ⟶ freePre R X ⊗ freePre R X where
   app U := ModuleCat.ofHom (Finsupp.linearCombination (ULift.{1} R)

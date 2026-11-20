@@ -144,7 +144,7 @@ theorem LeafFreeLoc_of (_hRel : LeafRel) : LeafFreeLoc := by
       ⟨w0, hw0⟩
     refine ⟨w, hw', ?_⟩
     have hfi : Function.Injective (fun v : ULift (U.obj (op V)) => ULift.up (f.app (op V) v.down)) :=
-      fun a b h => ULift.ext _ _ (hinj V (congrArg ULift.down h))
+      fun a b h => ULift.ext (hinj V (congrArg ULift.down h))
     have fInj : Function.Injective (((freeP R).map f).app (op V)).hom := by
       intro a b h
       rw [mapApp, mapApp] at h

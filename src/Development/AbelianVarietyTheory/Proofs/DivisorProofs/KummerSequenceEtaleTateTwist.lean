@@ -47,7 +47,7 @@ theorem coefHom_one {A : Type} [CommRing A] (u : Aˣ) (hu : u ^ q = 1) : coefHom
 theorem ulift_smul_eq {M : Type*} [AddCommGroup M] [Module (ULift.{1} (ZMod q)) M] (c : ULift.{1} (ZMod q)) (x : M) :
     c • x = c.down.val • x := by
   have : c = ((c.down.val : ℕ) : ULift.{1} (ZMod q)) := by
-    refine ULift.ext _ _ ?_
+    refine ULift.ext ?_
     rw [ULift.down_natCast, ZMod.natCast_zmod_val]
   conv_lhs => rw [this]
   rw [Nat.cast_smul_eq_nsmul]
@@ -95,7 +95,7 @@ variable {q : ℕ} [NeZero q]
 theorem kapA_smul (A : Type) [CommRing A] (n : ℤ) (x : (Prim q A →₀ ULift.{1} (ZMod q)) ⧸ twRel q 1 A) :
     kapA A ((ULift.up.{1} (n : ZMod q)) • x) = n • kapA A x := by
   have : (ULift.up.{1} (n : ZMod q) : ULift.{1} (ZMod q)) = (n : ULift.{1} (ZMod q)) := by
-    refine ULift.ext _ _ ?_
+    refine ULift.ext ?_
     rw [ULift.down_intCast]
   exact (congrArg (fun c => kapA A (c • x)) this).trans (by rw [Int.cast_smul_eq_zsmul, map_zsmul])
 
@@ -240,7 +240,7 @@ variable {q : ℕ} [NeZero q]
 theorem sec_q_smul (F : Shv (ZMod q)) (U : Scheme.{0}) (x : Sec F U) : q • x = 0 := by
   rw [← Nat.cast_smul_eq_nsmul (ULift.{1} (ZMod q))]
   have : ((q : ℕ) : ULift.{1} (ZMod q)) = 0 := by
-    refine ULift.ext _ _ ?_
+    refine ULift.ext ?_
     rw [ULift.down_natCast, ZMod.natCast_self]
     rfl
   rw [this, zero_smul]

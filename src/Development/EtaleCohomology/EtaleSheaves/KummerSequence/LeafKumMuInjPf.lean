@@ -59,7 +59,7 @@ theorem kerGen_of (hG : GmSep) (hA : CycPow) (hE : EmptySec) : KerGen := by
   · rw [mul_comm, mul_nsmul]
     have : ∀ x : Sec (tw q 1) V, q • x = 0 := fun x => by
       rw [← Nat.cast_smul_eq_nsmul (ULift.{1} (ZMod q))]
-      have : ((q : ℕ) : ULift.{1} (ZMod q)) = 0 := ULift.ext _ _ (by simp)
+      have : ((q : ℕ) : ULift.{1} (ZMod q)) = 0 := ULift.ext (by simp)
       rw [this, zero_smul]
     exact this _
   · exact hE _ _ V hs _

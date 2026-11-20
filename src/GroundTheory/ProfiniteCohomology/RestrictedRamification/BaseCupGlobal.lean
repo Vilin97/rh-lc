@@ -235,7 +235,7 @@ theorem exists_gsUnitsData_cup_bock (t : sInvariantSubgroup (F := K.1) ℚ̄ S)
     (cochainsComplex (galSUnitsMax K.1 ℚ̄ S)).cyclesMk (sInvCochain S t) 2 (by simp) (d_sInvCochain S t)
   have hc : cocycleι _ 1 c = sInvCochain S t := (cochainsComplex (galSUnitsMax K.1 ℚ̄ S)).i_cyclesMk _ _ _ _
   have hnz : n • cohomologyπ (zmodRep.{0} (galUnramifiedOutside K.1 ℚ̄ S) n) 1 z = 0 :=
-    nsmul_cohomology_eq_zero _ (fun a => ULift.ext _ _ (by
+    nsmul_cohomology_eq_zero _ (fun a => ULift.ext (by
       change n • a.down = 0
       rw [nsmul_eq_mul, ZMod.natCast_self, zero_mul])) 1 _
   have hb' : n • cohomologyπ _ 2 x₁ = 0 :=

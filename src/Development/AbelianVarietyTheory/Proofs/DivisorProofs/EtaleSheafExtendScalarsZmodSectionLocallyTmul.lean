@@ -26,7 +26,7 @@ theorem uliftHom_surjective {R S : Type} [CommRing R] [CommRing S] (φ : R →+*
     Function.Surjective (uliftHom φ) := by
   intro s
   obtain ⟨r, hr⟩ := hφ s.down
-  exact ⟨⟨r⟩, ULift.ext _ _ hr⟩
+  exact ⟨⟨r⟩, ULift.ext hr⟩
 
 theorem ext_onto : ∀ (Q q : ℕ) [NeZero Q] (hq : q ∣ Q) (M : Shv (ZMod Q)) (U : Scheme.{0})
     (y : Sec ((extSh (ZMod.castHom hq (ZMod q))).obj M) U),

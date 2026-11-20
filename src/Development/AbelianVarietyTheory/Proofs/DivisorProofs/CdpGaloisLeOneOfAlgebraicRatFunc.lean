@@ -142,7 +142,7 @@ theorem artinSchreierSequence_shortExact [IsSepClosed Ω] :
     obtain ⟨a, ha⟩ := exists_zmod_cast_eq_of_pow_sub_self (p := p) (Ω := Ω) y hy
     exact ⟨ULift.up a, ha⟩
   mono_f := (Rep.mono_iff_injective _).2 fun x y h =>
-    ULift.ext _ _ ((ZMod.castHom (dvd_refl p) Ω).injective h)
+    ULift.ext ((ZMod.castHom (dvd_refl p) Ω).injective h)
   epi_g := (Rep.epi_iff_surjective _).2 fun a => by
     obtain ⟨x, hx⟩ := exists_pow_sub_self_eq (p := p) (Ω := Ω) a
     exact ⟨x, hx⟩

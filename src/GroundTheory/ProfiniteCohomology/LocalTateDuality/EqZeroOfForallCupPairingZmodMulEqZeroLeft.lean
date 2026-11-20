@@ -91,7 +91,7 @@ theorem eq_zero_of_forall_cupPairing_zmodMul_eq_zero_left (hn : (n : K) ≠ 0)
     abel
   have htop := eq_top_of_forall_exists_norm _ hopen hcomm hnorm
   rw [cohomologyπ_one_eq_zero_iff_of_trivial _ (fun _ _ => rfl)]
-  exact fun g => ULift.ext _ _ (zmodCocycleHom_eq_zero_of_charKer_eq_top hn U z htop g)
+  exact fun g => ULift.ext (zmodCocycleHom_eq_zero_of_charKer_eq_top hn U z htop g)
 
 theorem eq_zero_of_forall_cupPairing_zmodMul_eq_zero_right (hn : (n : K) ≠ 0)
     (U : OpenSubgroup Gal(Ksep/K))

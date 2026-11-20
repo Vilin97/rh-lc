@@ -217,7 +217,7 @@ theorem g_logLattice_add_one :
     intro x y h
     rw [hψ, hψ] at h
     have h' := hφi h
-    exact _root_.Prod.ext (Prod.mk.inj h').1 (ULift.ext _ _ (Prod.mk.inj h').2)
+    exact _root_.Prod.ext (Prod.mk.inj h').1 (ULift.ext (Prod.mk.inj h').2)
   have hψγ : ∀ (γ : L ≃ₐ[K] L) x, ψ (γ • x) = γ • ψ x := by
     intro γ x
     change φ (logLatticeRep K L γ x.1, x.2.down) =

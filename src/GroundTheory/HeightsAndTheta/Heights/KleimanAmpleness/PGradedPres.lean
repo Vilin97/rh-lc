@@ -100,7 +100,7 @@ def freeGraded (d : Fin r → ℤ) : GradedPMod S N (ULift.{v} (Fin r → Poly S
         (fun j => (LinearMap.proj j : (Fin r → Poly S N) →ₗ[S] Poly S N) ∘ₗ
           (ULift.moduleEquiv (R := S)).toLinearMap)
         (fun j c => c - d j) (fun j => sub_left_injective) (fun j c x hx => hx j)
-        (fun x hx => ULift.ext _ _ (funext hx))
+        (fun x hx => ULift.ext (funext hx))
     · rw [eq_top_iff]
       intro x _
       have hx : x = ∑ j, coordIncl.{u, v} j (x.down j) := by

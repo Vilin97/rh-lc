@@ -67,7 +67,7 @@ theorem nsmul_mod_of {q : ℕ} {M : Type*} [AddCommGroup M] [Module (ULift.{1} (
     n • x = (n % q) • x := by
   have hq : q • x = 0 := by
     rw [← Nat.cast_smul_eq_nsmul (ULift.{1} (ZMod q))]
-    have : ((q : ℕ) : ULift.{1} (ZMod q)) = 0 := ULift.ext _ _ (by simp)
+    have : ((q : ℕ) : ULift.{1} (ZMod q)) = 0 := ULift.ext (by simp)
     rw [this, zero_smul]
   conv_lhs => rw [← Nat.mod_add_div n q]
   rw [add_nsmul, mul_comm q, mul_smul, hq, smul_zero, add_zero]

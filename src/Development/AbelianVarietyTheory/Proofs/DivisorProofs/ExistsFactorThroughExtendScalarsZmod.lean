@@ -11,7 +11,7 @@ namespace FactorExt
 theorem intCast_surj (Q : ℕ) : Function.Surjective (Int.cast : ℤ → ULift.{1} (ZMod Q)) := by
   intro r
   obtain ⟨z, hz⟩ := ZMod.intCast_surjective r.down
-  exact ⟨z, ULift.ext _ _ (by simp [hz])⟩
+  exact ⟨z, ULift.ext (by simp [hz])⟩
 
 theorem map_smul_of_add {A B M N : Type*} [Ring A] [Ring B] (f : A →+* B)
     (hA : Function.Surjective (Int.cast : ℤ → A)) [AddCommGroup M] [Module A M] [AddCommGroup N] [Module B N]
